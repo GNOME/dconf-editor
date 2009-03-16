@@ -117,7 +117,6 @@ namespace Editor {
 
       child.get (iter, 0, out path);
       return path != null && !path.has_suffix ("/");
-      return true;
     }
 
     public KeysFilter (Model child_model, TreePath path) {

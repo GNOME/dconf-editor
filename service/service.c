@@ -1,6 +1,6 @@
 #include "dconf-writer.h"
-#include <gbus/gbus.h>
 #include <string.h>
+#include <gbus.h>
 
 static DConfWriter *writer;
 

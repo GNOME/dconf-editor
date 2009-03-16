@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <glib.h>
+#include <gbus.h>
 
 DConfReader *default_db, *user_db, *system_db;
 
@@ -95,7 +96,6 @@ dconf_list (const gchar *path,
   return list;
 }
 
-#include <gbus/gbus.h>
 
 void
 dconf_set (const gchar *key,
