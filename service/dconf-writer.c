@@ -244,23 +244,6 @@ dconf_writer_set_index (DConfWriter *writer,
   return TRUE;
 }
 
-gboolean
-dconf_writer_set (DConfWriter *writer,
-                  const gchar *key,
-                  GVariant    *value)
-{
-  guint32 root_index;
-
-  root_index = writer->super->root_index;
-  
-  if (!dconf_writer_set_index (writer, key + 1, value, &root_index))
-    return FALSE;
-
-  writer->super->root_index = root_index;
-
-  return TRUE;
-}
-
 static gboolean
 dconf_writer_open (DConfWriter *writer)
 {
@@ -294,7 +277,96 @@ dconf_writer_open (DConfWriter *writer)
   return TRUE;
 }
 
-gboolean
+static gboolean
+dconf_writer_invalid_dir (DConfWriter *writer,
+                          guint32     *index)
+{
+  struct dir_entry *entry;
+  gpointer pointer;
+
+  if (!dconf_writer_allocate (writer, sizeof (struct dir_entry),
+                              &pointer, index))
+    return FALSE;
+
+  entry = pointer;
+
+  entry->type = 'b';
+  entry->namelen = 8;
+  entry->locked = FALSE;
+  strcpy (entry->name.direct, ".invalid");
+  entry->data.direct = 0;
+
+  return TRUE;
+}
+
+static gboolean
+dconf_writer_copy_block (DConfWriter *writer,
+                         DConfWriter *src,
+                         guint32      src_index,
+                         guint32     *index)
+{
+  static volatile void *old_pointer;
+  gpointer pointer;
+  gsize size;
+
+  old_pointer = dconf_writer_get_block (src, src_index, &size);
+
+  if (!dconf_writer_allocate (writer, size, &pointer, index))
+    return FALSE;
+
+  memcpy (pointer, (gconstpointer) old_pointer, size);
+
+  return TRUE;
+}
+
+static gboolean
+dconf_writer_copy_directory (DConfWriter *writer,
+                             DConfWriter *src,
+                             guint32      src_index,
+                             guint32     *index)
+{
+  volatile struct dir_entry *old_entries;
+  struct dir_entry *entries;
+  gpointer pointer;
+  gint length;
+  gint i;
+
+  old_entries = dconf_writer_get_dir (src, src_index, &length);
+
+  if (old_entries == NULL)
+    return dconf_writer_invalid_dir (writer, index);
+
+  if (!dconf_writer_allocate (writer,
+                              length * sizeof (struct dir_entry),
+                              &pointer, index))
+    return FALSE;
+
+  entries = pointer;
+
+  for (i = 0; i < length; i++)
+    {
+      entries[i] = old_entries[i];
+
+      if (entries[i].type == '/')
+        {
+          if (!dconf_writer_copy_directory (writer, src,
+                                            entries[i].data.index,
+                                            &entries[i].data.index))
+            return FALSE;
+        }
+      else if (entries[i].type == 'v')
+        {
+          if (!dconf_writer_copy_block (writer, src,
+                                        entries[i].data.index,
+                                        &entries[i].data.index))
+            return FALSE;
+        }
+    }
+
+  return TRUE;
+}
+
+static gboolean
 dconf_writer_create (DConfWriter *writer)
 {
   /* the sun came up
@@ -323,6 +395,35 @@ dconf_writer_create (DConfWriter *writer)
   writer->super->signature[1] = DCONF_SIGNATURE_1;
   writer->super->next = sizeof (struct superblock) / 8;
   writer->super->root_index = 0;
+
+  return TRUE;
+}
+
+gboolean
+dconf_writer_set (DConfWriter *writer,
+                  const gchar *key,
+                  GVariant    *value)
+{
+  guint32 root_index;
+
+  root_index = writer->super->root_index;
+  
+  if (!dconf_writer_set_index (writer, key + 1, value, &root_index))
+    {
+      DConfWriter *new;
+
+      new = g_slice_new (DConfWriter);
+      new->filename = writer->filename;
+      new->super = NULL;
+      // not quite right.. need to copy -then- rename
+      dconf_writer_create (new);
+      if (!dconf_writer_copy_directory (new, writer, root_index, &root_index))
+        g_assert_not_reached ();
+      *writer = *new; // leak internals.  fix it.
+      g_slice_free (DConfWriter, new);
+    }
+
+  writer->super->root_index = root_index;
 
   return TRUE;
 }
