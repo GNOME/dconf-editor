@@ -4,7 +4,10 @@
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <fcntl.h>
+#include <glib/gstdio.h>
+#include <errno.h>
 
 
 #include <common/dconf-format.h>
@@ -18,6 +21,7 @@ struct OPAQUE_TYPE__DConfWriter
   struct superblock *super;
   struct block_header *blocks;
   guint32 n_blocks;
+  gchar *floating;
 };
   
 static gboolean
@@ -244,6 +248,282 @@ dconf_writer_set_index (DConfWriter *writer,
   return TRUE;
 }
 
+static int
+dconf_writer_part_length (const gchar  *path,
+                          const gchar **rest)
+{
+  gint length;
+
+  for (length = 0; path[length]; length++)
+    if (path[length] == '/')
+      {
+        length++;
+        break;
+      }
+
+  if (rest != NULL)
+    *rest = &path[length];
+
+  return length;
+}
+
+
+static gint
+dconf_writer_choose (DConfWriter *writer,
+                     volatile struct dir_entry  *old_entries,
+                     gint                        n_old_entries,
+                     const gchar               **new_names,
+                     gint                        n_new_names)
+{
+  if (n_old_entries == 0)
+    return 1;
+
+  else if (n_new_names == 0)
+    return -1;
+
+  else
+    return dconf_writer_check_name (writer, old_entries,
+                                    new_names[0], -1);
+}
+
+static gint
+dconf_writer_merge_size (DConfWriter                *writer,
+                         volatile struct dir_entry  *old_entries,
+                         gint                        n_old_entries,
+                         const gchar               **new_names,
+                         gint                        n_new_names)
+{
+  const gchar *last_name = NULL;
+  gint last_length = 0;
+  gint n_entries = 0;
+
+  while (n_old_entries && n_new_names)
+    {
+      const gchar *name;
+      gint length;
+
+      /* it doesn't matter who wins the tie. */
+      if (dconf_writer_choose (writer, old_entries, n_old_entries,
+                               new_names, n_new_names) < 0)
+        {
+          /* XXX long filenames */
+          name = (const gchar *) old_entries->name.direct;
+          length = old_entries->namelen;
+          n_old_entries--;
+          old_entries++;
+        }
+      else
+        {
+          name = new_names[0];
+          length = dconf_writer_part_length (*new_names, NULL);
+          n_new_names--;
+          new_names++;
+        }
+
+      /* only count unique names */
+      if (length != last_length || memcmp (name, last_name, length))
+        {
+          last_length = length;
+          last_name = name;
+          n_entries++;
+        }
+    }
+
+  return n_entries;
+}
+
+static char
+dconf_writer_get_type (const gchar *name,
+                       gint         length,
+                       GVariant    *value)
+{
+  if (name[length - 1] == '/')
+    return '/';
+
+  return 'v';
+}
+
+
+static gboolean
+dconf_writer_merge_directory (DConfWriter  *writer,
+                              gint          source_index,
+                              const gchar **new_names,
+                              GVariant    **new_values,
+                              gint          new_length,
+                              guint32      *index);
+
+static gboolean
+dconf_writer_write_entry (DConfWriter                *writer,
+                          volatile struct dir_entry  *entry,
+                          const gchar               **new_names,
+                          GVariant                  **new_values,
+                          gint                        new_length,
+                          gchar                       type,
+                          gint                        name_skip)
+{
+  if (type == 'v')
+    {
+      guint32 index;
+
+      if (new_length != 1)
+        g_warning ("Got %d keys with the same name", new_length);
+
+      if (!dconf_writer_write_value (writer, new_values[0], &index))
+        return FALSE;
+
+      entry->data.index = index;
+
+      return TRUE;
+    }
+
+  else if (type == '/')
+    {
+      guint32 index = entry->data.index;
+      gboolean result;
+      int i;
+
+      for (i = 0; i < new_length; i++)
+        new_names[i] += name_skip;
+
+      result = dconf_writer_merge_directory (writer, index, new_names,
+                                             new_values, new_length, &index);
+
+      if (result)
+        entry->data.index = index;
+
+      for (i = 0; i < new_length; i++)
+        new_names[i] -= name_skip;
+
+      return result;
+    }
+
+  g_assert_not_reached ();
+}
+
+static gboolean
+dconf_writer_merge_directory (DConfWriter  *writer,
+                              gint          source_index,
+                              const gchar **new_names,
+                              GVariant    **new_values,
+                              gint          new_length,
+                              guint32      *index)
+{
+  volatile struct dir_entry *old_entries;
+  gint n_old_entries;
+  gint n_entries;
+
+  old_entries = dconf_writer_get_dir (writer, *index, &n_old_entries);
+  n_entries = dconf_writer_merge_size (writer,
+                                       old_entries, n_old_entries,
+                                       new_names, new_length);
+
+  if (n_entries == n_old_entries && new_length == 1)
+    /* simple case: can probably do an in-place atomic update. */
+    {
+      const gchar *name;
+      gint length, i;
+      char type;
+
+      length = dconf_writer_part_length (name, NULL);
+      type = dconf_writer_get_type (name, length, new_values[0]);
+
+      for (i = 0; i < n_entries; i++)
+        if (!dconf_writer_check_name (writer, &old_entries[i], name, length))
+          break;
+
+      /* since n_entries == old_entries it must be in the list */
+      g_assert (i < n_entries);
+
+      if (old_entries[i].type == type)
+        /* can only do in-place atomic update if it's the same type */
+        return dconf_writer_write_entry (writer, &old_entries[i],
+                                         new_names, new_values, 1,
+                                         type, length);
+    }
+
+  /* non-simple case: need to allocate a new directory and link it. */
+  {
+    struct dir_entry *entries;
+    gpointer pointer;
+    gint i, j, k;
+
+    if (!dconf_writer_allocate (writer,
+                                sizeof (struct dir_entry) * n_entries,
+                                &pointer, index))
+      return FALSE;
+
+    entries = pointer;
+
+    i = j = k = 0;
+    /* merge old_entries[i] and new_names[j] into entries[k] */
+    while (i < n_old_entries || j < new_length)
+      {
+        gint cmp, l;
+        gint length;
+        char type;
+
+        g_assert (k < n_entries);
+
+        cmp = dconf_writer_choose (writer,
+                                   &old_entries[i], n_old_entries - i,
+                                   new_names + j, new_length - j);
+        length = dconf_writer_part_length (new_names[j], NULL);
+        type = dconf_writer_get_type (new_names[j], length, new_values[j]);
+
+        if (cmp < 0)
+          /* the simple case is to copy the old entry
+           * with no contribution from the new entries
+           */
+          {
+            entries[k++] = old_entries[i++];
+            continue;
+          }
+
+        /* the remaining two cases involve contribution
+         * from the new entries.
+         *
+         * first: if we're merging (cmp == 0) then copy
+         * the old entry to start.
+         */
+        if (cmp == 0)
+          entries[k] = old_entries[i++];
+
+        else
+          {
+            memcpy (entries[k].name.direct, new_names[j], length);
+            entries[k].namelen = length;
+            entries[k].locked = FALSE;
+            entries[k].data.index = 0;
+          }
+
+        /* we can update the type field because we don't
+         * have to appear atomic (since the new dir entries
+         * are not linked into the parent yet).
+         */
+        entries[k].type = type;
+
+        /* find out how many new entries have the same name */
+        for (l = j + 1; l < new_length; l++)
+          if (strncmp (new_names[j], new_names[k], length) == 0)
+            break;
+
+        /* handle them all at once */
+        if (!dconf_writer_write_entry (writer, &entries[k],
+                                       new_names + j, new_values + j,
+                                       l - j, type, length))
+          return FALSE;
+
+        /* move past the ones we just handled */
+        j = l;
+
+        /* and onto the next entry */
+        k++;
+      }
+  }
+
+  return TRUE;
+}
+
 static gboolean
 dconf_writer_open (DConfWriter *writer)
 {
@@ -378,10 +658,12 @@ dconf_writer_create (DConfWriter *writer)
   gpointer contents;
   int fd;
 
+  writer->floating = g_strdup_printf ("%s.XXXXXX", writer->filename);
+
   g_assert (writer->super == NULL);
 
   /* XXX flink() plz */
-  fd = open (writer->filename, O_RDWR | O_CREAT, 0666);
+  fd = g_mkstemp (writer->floating);
   posix_fallocate (fd, 0, 4096);
 
   writer->n_blocks = 4096 / 8;
@@ -395,6 +677,29 @@ dconf_writer_create (DConfWriter *writer)
   writer->super->signature[1] = DCONF_SIGNATURE_1;
   writer->super->next = sizeof (struct superblock) / 8;
   writer->super->root_index = 0;
+
+  return TRUE;
+}
+
+gboolean
+dconf_writer_post (DConfWriter  *writer,
+                   GError      **error)
+{
+  if (g_rename (writer->floating, writer->filename))
+    {
+      gint saved_error = errno;
+
+      g_set_error (error, G_FILE_ERROR,
+                   g_file_error_from_errno (saved_error),
+                   "rename '%s' to '%s': %s",
+                   writer->floating, writer->filename,
+                   g_strerror (saved_error));
+
+      return FALSE;
+    }
+
+  g_free (writer->floating);
+  writer->floating = NULL;
 
   return TRUE;
 }
@@ -425,6 +730,9 @@ dconf_writer_set (DConfWriter *writer,
 
   writer->super->root_index = root_index;
 
+  if (writer->floating)
+    dconf_writer_post (writer, NULL);
+
   return TRUE;
 }
 
@@ -436,6 +744,7 @@ dconf_writer_new (const gchar *filename)
   writer = g_slice_new (DConfWriter);
   writer->filename = g_strdup (filename);
   writer->super = NULL;
+  writer->floating = NULL;
 
   if (dconf_writer_open (writer))
     return writer;
