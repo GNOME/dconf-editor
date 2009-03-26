@@ -27,6 +27,18 @@ dconf_service_handler (GBus              *bus,
       return g_bus_return (message, "");
     }
 
+  if (g_bus_message_is_call (message, "ca.desrt.dconf", "Merge", "sa(sv)"))
+    {
+      const gchar *key;
+      GVariant *value;
+
+      g_bus_message_get (message, "s*", &key, &value);
+      dconf_writer_merge (writer, key, value, NULL);
+      g_variant_unref (value);
+
+      return g_bus_return (message, "");
+    }
+
   if (g_bus_message_is_call (message, "ca.desrt.dconf", "Get", "s"))
     {
       const gchar *key;
@@ -57,6 +69,10 @@ dconf_service_handler (GBus              *bus,
       "    <method name='Set'>\n"
       "      <arg name='key' direction='in' type='s'/>\n"
       "      <arg name='value' direction='in' type='v'/>\n"
+      "    </method>\n"
+      "    <method name='Merge'>\n"
+      "      <arg name='key' direction='in' type='s'/>\n"
+      "      <arg name='value' direction='in' type='a(sv)'/>\n"
       "    </method>\n"
       "  </interface>\n"
       "</node>");

@@ -297,7 +297,7 @@ dconf_writer_merge_size (DConfWriter                *writer,
   gint last_length = 0;
   gint n_entries = 0;
 
-  while (n_old_entries && n_new_names)
+  while (n_old_entries || n_new_names)
     {
       const gchar *name;
       gint length;
@@ -388,7 +388,8 @@ dconf_writer_write_entry (DConfWriter                *writer,
       result = dconf_writer_merge_directory (writer, index, new_names,
                                              new_values, new_length, &index);
 
-      if (result)
+      /* check before writing; we may avoid dirtying a page. */
+      if (result && index != entry->data.index)
         entry->data.index = index;
 
       for (i = 0; i < new_length; i++)
@@ -504,7 +505,7 @@ dconf_writer_merge_directory (DConfWriter  *writer,
 
         /* find out how many new entries have the same name */
         for (l = j + 1; l < new_length; l++)
-          if (strncmp (new_names[j], new_names[k], length) == 0)
+          if (strncmp (new_names[j], new_names[l], length))
             break;
 
         /* handle them all at once */
@@ -753,4 +754,54 @@ dconf_writer_new (const gchar *filename)
     g_assert_not_reached ();
 
   return writer;
+}
+
+gboolean
+dconf_writer_merge (DConfWriter  *writer,
+                    const gchar  *prefix,
+                    GVariant     *array,
+                    GError      **error)
+{
+  guint32 root_index;
+  GVariantIter iter;
+  gboolean result;
+  gsize length;
+  gchar **names;
+  const gchar *name;
+  GVariant **values;
+  GVariant *value;
+  gint i;
+
+  root_index = writer->super->root_index;
+
+  length = g_variant_iter_init (&iter, array);
+  names = g_new (char *, length);
+  values = g_new (GVariant *, length);
+
+  i = 0;
+  while (g_variant_iterate (&iter, "(sv)", &name, &value))
+    {
+      names[i] = g_strdup_printf ("%s%s", prefix + 1, name);
+      values[i] = g_variant_ref (value);
+      i++;
+    }
+  g_assert (i == length);
+
+  result = dconf_writer_merge_directory (writer, root_index,
+                                         (const gchar **) names,
+                                         values, length,
+                                         &root_index);
+
+  if (result && root_index != writer->super->root_index)
+    writer->super->root_index = root_index;
+
+  for (i = 0; i < length; i++)
+    {
+      g_variant_unref (values[i]);
+      g_free (names[i]);
+    }
+  g_free (values);
+  g_free (names);
+
+  return result;
 }

@@ -6,3 +6,4 @@ gboolean dconf_writer_set (DConfWriter *writer,
                            const gchar *key,
                            GVariant    *value);
 DConfWriter *dconf_writer_new (const gchar *filename);
+gboolean dconf_writer_merge (DConfWriter *, const gchar *, GVariant *, GError **);
