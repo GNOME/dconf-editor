@@ -13,5 +13,7 @@ AC_OUTPUT([
   editor/Makefile
   service/Makefile
   dconf/Makefile
+  dconf/dconf.pc
+  tests/Makefile
   Makefile
 ])

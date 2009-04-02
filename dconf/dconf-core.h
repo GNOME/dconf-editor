@@ -8,3 +8,5 @@ void dconf_set (const gchar *key,
 void dconf_watch (const gchar *match,
                   DConfWatchFunc  func,
                   gpointer        user_data);
+void dconf_merge_zipped (const gchar *prefix,
+                         GVariant *valueset);

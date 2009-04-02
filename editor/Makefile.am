@@ -1,10 +1,11 @@
-AM_CFLAGS = -I.. $(gvariant_CFLAGS) $(gtk_CFLAGS)
+AM_CFLAGS = -I.. $(glib_CFLAGS) $(gtk_CFLAGS)
 
 noinst_PROGRAMS = editor
 
 editor_VALASOURCES = \
 	editor.vala
 
+DEFS =
 BUILT_SOURCES = editor.vala.stamp
 
 editor_LDADD = $(gvariant_LIBS) $(gtk_LIBS) ../dconf/libdconf.la
