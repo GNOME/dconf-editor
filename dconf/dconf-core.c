@@ -174,3 +174,79 @@ dconf_watch (const gchar    *match,
       g_free (rule);
     }
 }
+
+struct OPAQUE_TYPE__DConfAsyncResult
+{
+  GBusMessage *message;
+};
+
+typedef struct
+{
+  DConfAsyncReadyCallback callback;
+  gpointer user_data;
+} DConfClosure;
+
+gboolean
+dconf_merge_finish (DConfAsyncResult  *result,
+                    guint32           *sequence,
+                    GError           **error)
+{
+  return g_bus_call_finish (result->message, error, "u", &sequence);
+}
+
+static DConfClosure *
+dconf_closure_new (DConfAsyncReadyCallback callback,
+                   gpointer                user_data)
+{
+  DConfClosure *closure;
+
+  closure = g_slice_new (DConfClosure);
+  closure->callback = callback;
+  closure->user_data = user_data;
+
+  return closure;
+}
+
+static void
+dconf_closure_fire (DConfClosure      *closure,
+                    const GBusMessage *message)
+{
+  closure->callback ((DConfAsyncResult *) &message, closure->user_data);
+  g_slice_free (DConfClosure, closure);
+}
+
+static gboolean
+dconf_merge_tree_ready (GBus              *bus,
+                        const GBusMessage *message,
+                        gpointer           user_data)
+{
+  dconf_closure_fire (user_data, message);
+  return TRUE;
+}
+
+static gboolean
+dconf_merge_append_value (gpointer key,
+                          gpointer value,
+                          gpointer builder)
+{
+  g_variant_builder_add (builder, "(sv)", key, value);
+  return FALSE;
+}
+
+void
+dconf_merge_tree_async (const gchar             *prefix,
+                        GTree                   *values,
+                        DConfAsyncReadyCallback  callback,
+                        gpointer                 user_data)
+{
+  GVariantBuilder *builder;
+
+  builder = g_variant_builder_new (G_VARIANT_TYPE_CLASS_ARRAY,
+                                   G_VARIANT_TYPE ("a(sv)"));
+  g_tree_foreach (values, dconf_merge_append_value, builder);
+  g_bus_call_async (G_BUS_SESSION,
+                    "ca.desrt.dconf", "/", "ca.desrt.dconf", "Merge",
+                    dconf_merge_tree_ready,
+                    dconf_closure_new (callback, user_data),
+                    "sa(sv)", prefix, builder);
+}

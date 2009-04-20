@@ -1,4 +1,4 @@
-#include <glib/gvariant.h>
+#include <glib.h>
 typedef void (*DConfWatchFunc) (const gchar *path, gpointer user_data);
 GVariant * dconf_get (const gchar *key);
 char ** dconf_list (const gchar *path,
@@ -10,3 +10,13 @@ void dconf_watch (const gchar *match,
                   gpointer        user_data);
 void dconf_merge_zipped (const gchar *prefix,
                          GVariant *valueset);
+
+typedef struct OPAQUE_TYPE__DConfAsyncResult DConfAsyncResult;
+gboolean dconf_merge_finish (DConfAsyncResult *result,
+                             guint32 *sequence,
+                             GError **error);
+typedef void (*DConfAsyncReadyCallback) (DConfAsyncResult *, gpointer user_data);
+void dconf_merge_tree_async (const gchar *prefix,
+                             GTree *values,
+                             DConfAsyncReadyCallback callback,
+                             gpointer user_data);
