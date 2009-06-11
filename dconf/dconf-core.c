@@ -133,18 +133,77 @@ dconf_watch (const gchar    *match,
              DConfWatchFunc  callback,
              gpointer        user_data)
 {
-  DConfMount *mount;
+  if G_UNLIKELY (dconf_mounts == NULL)
+    dconf_setup_mounts ();
 
-  /* XXX special case '/' */
-
-  mount = dconf_demux_path (&match, FALSE);
-
-  if (mount)
+  if (strcmp (match, "/") == 0)
     {
-      gint i;
+      GSList *node;
 
-      for (i = 0; i < mount->n_dbs; i++)
-        dconf_dbus_watch (mount->dbs[i]->bus, match, callback, user_data);
+      for (node = dconf_mounts; node; node = node->next)
+        {
+          DConfMount *mount = node->data;
+          gint i;
+
+          for (i = 0; i < mount->n_dbs; i++)
+            dconf_dbus_watch (mount->dbs[i]->bus, mount->prefix,
+                              callback, user_data);
+        }
+    }
+  else
+    {
+      DConfMount *mount;
+
+      mount = dconf_demux_path (&match, FALSE);
+
+      if (mount)
+        {
+          gint i;
+
+          for (i = 0; i < mount->n_dbs; i++)
+            dconf_dbus_watch (mount->dbs[i]->bus, match,
+                              callback, user_data);
+        }
+    }
+}
+
+
+void
+dconf_unwatch (const gchar    *match,
+               DConfWatchFunc  callback,
+               gpointer        user_data)
+{
+  if G_UNLIKELY (dconf_mounts == NULL)
+    dconf_setup_mounts ();
+
+  if (strcmp (match, "/") == 0)
+    {
+      GSList *node;
+
+      for (node = dconf_mounts; node; node = node->next)
+        {
+          DConfMount *mount = node->data;
+          gint i;
+
+          for (i = 0; i < mount->n_dbs; i++)
+            dconf_dbus_unwatch (mount->dbs[i]->bus, mount->prefix,
+                                callback, user_data);
+        }
+    }
+  else
+    {
+      DConfMount *mount;
+
+      mount = dconf_demux_path (&match, FALSE);
+
+      if (mount)
+        {
+          gint i;
+
+          for (i = 0; i < mount->n_dbs; i++)
+            dconf_dbus_unwatch (mount->dbs[i]->bus, match,
+                                callback, user_data);
+        }
     }
 }
 

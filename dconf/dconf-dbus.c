@@ -164,12 +164,22 @@ static gchar *
 dconf_dbus_make_rule (DConfDBus   *bus,
                       const gchar *prefix)
 {
-  return g_strdup_printf ("type='signal',"
-                          "interface='ca.desrt.dconf',"
-                          "member='Notify',"
-                          "path='%s',"
-                          "arg0path='%s'",
-                          bus->name, dconf_dbus_find_relative (prefix));
+  const gchar *relative;
+
+  relative = dconf_dbus_find_relative (prefix);
+
+  if (relative[0])
+    return g_strdup_printf ("type='signal',"
+                            "interface='ca.desrt.dconf',"
+                            "member='Notify',"
+                            "path='%s',"
+                            "arg0path='%s'",
+                            bus->name, relative);
+  else
+    return g_strdup_printf ("type='signal',"
+                            "interface='ca.desrt.dconf',"
+                            "member='Notify',"
+                            "path='%s'", bus->name);
 }
 
 void

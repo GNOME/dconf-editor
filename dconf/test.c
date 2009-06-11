@@ -39,7 +39,7 @@ main (void)
   g_tree_insert (tree, "global/options", g_variant_ref_sink (g_variant_new ("i", 123)));
   g_tree_insert (tree, "global/preferences", g_variant_ref_sink (g_variant_new ("s", "hello world!")));
 
-  dconf_watch ("/user/apps/", cb, NULL);
+  dconf_watch ("/", cb, NULL);
   dconf_merge_tree_async ("/user/apps/terminal", tree, done, NULL);
 
   g_main_loop_run (g_main_loop_new (NULL, FALSE));
