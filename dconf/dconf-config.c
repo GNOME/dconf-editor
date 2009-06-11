@@ -109,6 +109,7 @@ dconf_config_parse_mount_decl (GSList **mounts,
     }
 
   *mounts = g_slist_prepend (*mounts, mount);
+  g_strfreev (db_strings);
 
   return TRUE;
 }
