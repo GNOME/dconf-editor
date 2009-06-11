@@ -5,46 +5,78 @@
 
 #include <string.h>
 #include <glib.h>
-#include <gbus.h>
 
-DConfReader *default_db, *user_db, *system_db;
+#include "dconf-config.h"
+#include "dconf-dbus.h"
+
+static GSList *dconf_mounts;
+
+static void
+dconf_setup_mounts (void)
+{
+  GSList *node;
+
+  dconf_mounts = dconf_config_read ();
+
+  for (node = dconf_mounts; node; node = node->next)
+    {
+      DConfMount *mount = node->data;
+      gint i;
+
+      for (i = 0; i < mount->n_dbs; i++)
+        if (mount->dbs[i]->bus == NULL)
+          mount->dbs[i]->bus = dconf_dbus_new (mount->dbs[i]->bus_name, NULL);
+    }
+}
+
+static DConfMount *
+dconf_demux_path (const gchar **path,
+                  gboolean      rel)
+{
+  GSList *node;
+
+  if G_UNLIKELY (dconf_mounts == NULL)
+    dconf_setup_mounts ();
+
+  for (node = dconf_mounts; node; node = node->next)
+    {
+      DConfMount *mount = node->data;
+g_print ("check %s vs %s\n", *path, mount->prefix);
+
+      if (g_str_has_prefix (*path, mount->prefix))
+        {
+          if (rel)
+            *path += strlen (mount->prefix);
+          return mount;
+        }
+    }
+
+  return NULL;
+}
 
 GVariant *
 dconf_get (const gchar *key)
 {
   GVariant *value = NULL;
-  gboolean locked = FALSE;
+  DConfMount *mount;
 
-  g_return_val_if_fail (dconf_is_key (key), NULL);
+  mount = dconf_demux_path (&key, TRUE);
 
-  if (g_str_has_prefix (key, "/user/"))
+  if (mount)
     {
-      dconf_reader_get (".d", &default_db, key + 6, &value, &locked);
-      if (!locked)
-        dconf_reader_get (".u", &user_db, key + 6, &value, &locked);
-    }
-  else if (g_str_has_prefix (key, "/system/"))
-    {
-      dconf_reader_get (".s", &system_db, key + 8, &value, &locked);
-    }
-  else if (g_str_has_prefix (key, "/default/"))
-    {
-      dconf_reader_get (".d", &default_db, key + 9, &value, &locked);
+      gboolean locked = FALSE;
+      gint i;
+
+      for (i = mount->n_dbs; !locked && i >= 0; i--)
+        dconf_reader_get (mount->dbs[i]->filename,
+                          &mount->dbs[i]->reader,
+                          key, &value, &locked);
     }
 
   return value;
 }
 
-static gboolean
-append_to_array (gpointer               key,
-                 G_GNUC_UNUSED gpointer value,
-                 gpointer               data)
-{
-  *((*(gchar ***) data)++) = (gchar *) key;
-
-  return FALSE;
-}
-
+/*
 gchar **
 dconf_list (const gchar *path,
             gint        *length)
@@ -95,142 +127,35 @@ dconf_list (const gchar *path,
 
   return list;
 }
-
-
-void
-dconf_set (const gchar *key,
-           GVariant    *value)
-{
-  if (g_str_has_prefix (key, "/user/"))
-    g_bus_call (G_BUS_SESSION, "ca.desrt.dconf", "/user",
-                "ca.desrt.dconf", "Set", NULL, "sv", "",
-                key + 5, value);
-}
-
-typedef struct
-{
-  DConfWatchFunc callback;
-  gchar *prefix;
-  gpointer user_data;
-} DConfWatchData;
-
-static gboolean
-dconf_change_notify (GBus              *bus,
-                     const GBusMessage *message,
-                     gpointer           user_data)
-{
-  DConfWatchData *data = user_data;
-  const gchar *key;
-  gchar *absolute;
-
-  /* XXX double check signature */
-  g_bus_message_get (message, "s", &key);
-  absolute = g_strdup_printf ("%s%s", data->prefix, key);
-  data->callback (absolute, data->user_data);
-  g_free (absolute);
-
-  return TRUE;
-}
+*/
 
 void
 dconf_watch (const gchar    *match,
              DConfWatchFunc  callback,
              gpointer        user_data)
 {
-  if (strcmp (match, "/") == 0)
+  DConfMount *mount;
+
+  /* XXX special case '/' */
+
+  mount = dconf_demux_path (&match, FALSE);
+
+  if (mount)
     {
-      DConfWatchData *data;
-      gchar *rule;
+      gint i;
 
-      rule = g_strdup_printf ("type='signal',"
-                              "interface='ca.desrt.dconf',"
-                              "member='Notify',"
-                              "path='/user'");
-
-      data = g_slice_new (DConfWatchData);
-      data->callback = callback;
-      data->user_data = user_data;
-      data->prefix = "/user";
-      g_bus_add_match (G_BUS_SESSION, rule, dconf_change_notify, data);
-      g_free (rule);
-    }
-
-  if (g_str_has_prefix (match, "/user/"))
-    {
-      DConfWatchData *data;
-      gchar *rule;
-
-      rule = g_strdup_printf ("type='signal',"
-                              "interface='ca.desrt.dconf',"
-                              "member='Notify',"
-                              "path='/user',"
-                              "arg0path='%s'", match + 5);
-
-      data = g_slice_new (DConfWatchData);
-      data->callback = callback;
-      data->user_data = user_data;
-      data->prefix = "/user";
-      g_bus_add_match (G_BUS_SESSION, rule, dconf_change_notify, data);
-      g_free (rule);
+      for (i = 0; i < mount->n_dbs; i++)
+        dconf_dbus_watch (mount->dbs[i]->bus, match, callback, user_data);
     }
 }
-
-struct OPAQUE_TYPE__DConfAsyncResult
-{
-  GBusMessage *message;
-};
-
-typedef struct
-{
-  DConfAsyncReadyCallback callback;
-  gpointer user_data;
-} DConfClosure;
 
 gboolean
 dconf_merge_finish (DConfAsyncResult  *result,
                     guint32           *sequence,
                     GError           **error)
 {
-  return g_bus_call_finish (result->message, error, "u", &sequence);
-}
-
-static DConfClosure *
-dconf_closure_new (DConfAsyncReadyCallback callback,
-                   gpointer                user_data)
-{
-  DConfClosure *closure;
-
-  closure = g_slice_new (DConfClosure);
-  closure->callback = callback;
-  closure->user_data = user_data;
-
-  return closure;
-}
-
-static void
-dconf_closure_fire (DConfClosure      *closure,
-                    const GBusMessage *message)
-{
-  closure->callback ((DConfAsyncResult *) &message, closure->user_data);
-  g_slice_free (DConfClosure, closure);
-}
-
-static gboolean
-dconf_merge_tree_ready (GBus              *bus,
-                        const GBusMessage *message,
-                        gpointer           user_data)
-{
-  dconf_closure_fire (user_data, message);
-  return TRUE;
-}
-
-static gboolean
-dconf_merge_append_value (gpointer key,
-                          gpointer value,
-                          gpointer builder)
-{
-  g_variant_builder_add (builder, "(sv)", key, value);
-  return FALSE;
+  return dconf_dbus_merge_finish ((DConfDBusAsyncResult *) result,
+                                  sequence, error);
 }
 
 void
@@ -239,14 +164,12 @@ dconf_merge_tree_async (const gchar             *prefix,
                         DConfAsyncReadyCallback  callback,
                         gpointer                 user_data)
 {
-  GVariantBuilder *builder;
+  DConfMount *mount;
 
-  builder = g_variant_builder_new (G_VARIANT_TYPE_CLASS_ARRAY,
-                                   G_VARIANT_TYPE ("a(sv)"));
-  g_tree_foreach (values, dconf_merge_append_value, builder);
-  g_bus_call_async (G_BUS_SESSION,
-                    "ca.desrt.dconf", "/", "ca.desrt.dconf", "Merge",
-                    dconf_merge_tree_ready,
-                    dconf_closure_new (callback, user_data),
-                    "sa(sv)", prefix, builder);
+  mount = dconf_demux_path (&prefix, TRUE);
+  g_assert (mount);
+
+  dconf_dbus_merge_tree_async (mount->dbs[0]->bus, prefix, values,
+                               (DConfDBusAsyncReadyCallback) callback,
+                               user_data);
 }

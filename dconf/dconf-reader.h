@@ -14,10 +14,10 @@
 #ifndef _dconf_reader_h_
 #define _dconf_reader_h_
 
+#include "dconf-private-types.h"
+
 #include <glib/gvariant.h>
 #include <glib/gtree.h>
-
-typedef struct OPAQUE_TYPE__DConfReader DConfReader;
 
 void    dconf_reader_list          (const gchar  *filename,
                                     DConfReader **reader,

@@ -1,5 +1,5 @@
 #include <glib.h>
-typedef void (*DConfWatchFunc) (const gchar *path, gpointer user_data);
+typedef void (*DConfWatchFunc) (const gchar *prefix, const gchar * const *items, guint32 sequence, gpointer user_data);
 GVariant * dconf_get (const gchar *key);
 char ** dconf_list (const gchar *path,
                     gint        *length);
