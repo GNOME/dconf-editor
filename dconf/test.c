@@ -2,12 +2,15 @@
 #include <string.h>
 
 static void
-cb (const gchar *prefix,
-    const gchar *const*items,
-    guint32      sequence,
-    gpointer user_data)
+cb (const gchar         *prefix,
+    const gchar * const *items,
+    guint32              sequence,
+    gpointer             user_data)
 {
-  g_print ("got not\n");
+  g_print ("got not %s (seq %d)\n", prefix, sequence);
+  while (*items)
+    g_print ("  %s\n", *items++);
+  g_print ("\n");
 }
 
 static void

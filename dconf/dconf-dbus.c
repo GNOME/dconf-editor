@@ -22,6 +22,12 @@ struct OPAQUE_TYPE__DConfDBus
 /* alexl code */
 static void _g_dbus_connection_integrate_with_main (DBusConnection *);
 
+static const gchar *
+dconf_dbus_find_relative (const gchar *path)
+{
+  return strchr (path + 1, '/') + 1;
+}
+
 static void
 dconf_dbus_notify (DConfDBus           *bus,
                    const gchar         *prefix,
@@ -36,17 +42,16 @@ dconf_dbus_notify (DConfDBus           *bus,
   for (node = bus->watches; node; node = node->next)
     {
       DConfDBusWatch *watch = node->data;
-      gchar *relative_prefix;
+      const gchar *relative_prefix;
       gint relative_len;
-      gint common_len;
       gint skip;
 
-      relative_prefix = strchr (watch->prefix + 1, '/');
-      skip = ++relative_prefix - watch->prefix;
+      relative_prefix = dconf_dbus_find_relative (watch->prefix);
+      skip = relative_prefix - watch->prefix;
       relative_len = strlen (relative_prefix);
-      common_len = MIN (relative_len, prefix_len);
 
-      if (memcmp (prefix, relative_prefix, common_len) &&
+      if ((memcmp (prefix, relative_prefix,
+                   MIN (relative_len, prefix_len)) == 0) &&
           (relative_len == prefix_len ||
            (relative_len < prefix_len &&
             relative_prefix[relative_len - 1] == '/') ||
@@ -164,7 +169,7 @@ dconf_dbus_make_rule (DConfDBus   *bus,
                           "member='Notify',"
                           "path='%s',"
                           "arg0path='%s'",
-                          bus->name, prefix);
+                          bus->name, dconf_dbus_find_relative (prefix));
 }
 
 void
