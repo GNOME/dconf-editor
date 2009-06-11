@@ -124,14 +124,21 @@ dconf_dbus_new (const gchar  *path,
 
   bus = g_slice_new (DConfDBus);
 
+  /* XXX yes.  this is extremely stupid.  we make no attempt to share
+     dbus connections, even with ourselves.  it's easier to register
+     with the mainloop this way, though.
+
+     fix this later in order to waste less memory.
+   */
+
   if (g_str_has_prefix (path, "system/"))
     {
-      bus->connection = dbus_bus_get (DBUS_BUS_SYSTEM, NULL);
+      bus->connection = dbus_bus_get_private (DBUS_BUS_SYSTEM, NULL);
       bus->name = g_strdup (path + 6);
     }
   else if (g_str_has_prefix (path, "session/"))
     {
-      bus->connection = dbus_bus_get (DBUS_BUS_SESSION, NULL);
+      bus->connection = dbus_bus_get_private (DBUS_BUS_SESSION, NULL);
       bus->name = g_strdup (path + 7);
     }
   else

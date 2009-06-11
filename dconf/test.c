@@ -35,7 +35,6 @@ main (void)
   tree = g_tree_new ((GCompareFunc) strcmp);
   g_tree_insert (tree, "global/options", g_variant_ref_sink (g_variant_new ("i", 123)));
   g_tree_insert (tree, "global/preferences", g_variant_ref_sink (g_variant_new ("s", "hello world!")));
-g_print ("n:%d\n", g_tree_nnodes (tree));
 
   dconf_watch ("/user/apps/", cb, NULL);
   dconf_merge_tree_async ("/user/apps/terminal", tree, done, NULL);

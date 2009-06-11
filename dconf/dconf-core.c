@@ -41,7 +41,6 @@ dconf_demux_path (const gchar **path,
   for (node = dconf_mounts; node; node = node->next)
     {
       DConfMount *mount = node->data;
-g_print ("check %s vs %s\n", *path, mount->prefix);
 
       if (g_str_has_prefix (*path, mount->prefix))
         {
