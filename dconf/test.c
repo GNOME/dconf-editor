@@ -40,7 +40,11 @@ main (void)
   g_tree_insert (tree, "global/preferences", g_variant_ref_sink (g_variant_new ("s", "hello world!")));
 
   dconf_watch ("/", cb, NULL);
-  dconf_merge_tree_async ("/user/apps/terminal", tree, done, NULL);
+  dconf_merge_tree_async ("/user/apps/terminal/", tree, done, NULL);
+  GVariant *var = dconf_get ("/user/apps/terminal/global/preferences");
+
+  g_assert (var != NULL);
+  g_print ("%s\n", g_variant_get_string (var, NULL));
 
   g_main_loop_run (g_main_loop_new (NULL, FALSE));
 

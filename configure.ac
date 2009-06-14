@@ -7,6 +7,7 @@ AC_PROG_CC
 
 
 PKG_CHECK_MODULES(glib, glib-2.0)
+PKG_CHECK_MODULES(gbus, gbus)
 PKG_CHECK_MODULES(dbus, dbus-1)
 PKG_CHECK_MODULES(gtk, gtk+-2.0)
 

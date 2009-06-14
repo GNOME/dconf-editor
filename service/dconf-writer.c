@@ -1,4 +1,4 @@
-#include "dconf-writer.h"
+#include "dconf-writer-internals.h"
 #include <glib/gvariant-loadstore.h>
 
 #include <sys/stat.h>
@@ -10,21 +10,10 @@
 #include <errno.h>
 
 
-#include <common/dconf-format.h>
 #include <glib/gvariant.h>
 #include <string.h>
 
-
-struct OPAQUE_TYPE__DConfWriter
-{
-  gchar *filename;
-  struct superblock *super;
-  struct block_header *blocks;
-  guint32 n_blocks;
-  gchar *floating;
-};
-  
-static gboolean
+gboolean
 dconf_writer_allocate (DConfWriter *writer,
                        gsize        size,
                        gpointer    *pointer,
@@ -77,7 +66,7 @@ dconf_writer_get_block (DConfWriter *writer,
   return &writer->blocks[index + 1];
 }
 
-static volatile struct dir_entry *
+volatile struct dir_entry *
 dconf_writer_get_dir (DConfWriter *writer,
                       guint32      index,
                       gint        *length)
@@ -463,7 +452,7 @@ dconf_writer_merge_directory (DConfWriter  *writer,
         gint length;
         char type;
 
-        g_assert (k < n_entries);
+        g_assert_cmpint (k, <, n_entries);
 
         cmp = dconf_writer_choose (writer,
                                    &old_entries[i], n_old_entries - i,
@@ -714,7 +703,7 @@ dconf_writer_set (DConfWriter *writer,
 
   root_index = writer->super->root_index;
   
-  if (!dconf_writer_set_index (writer, key + 1, value, &root_index))
+  if (!dconf_writer_set_index (writer, key, value, &root_index))
     {
       DConfWriter *new;
 
@@ -753,55 +742,29 @@ dconf_writer_new (const gchar *filename)
   if (!dconf_writer_create (writer))
     g_assert_not_reached ();
 
+  if (!dconf_writer_post (writer, NULL))
+    g_error ("could not post\n");
+
   return writer;
 }
 
-gboolean
-dconf_writer_merge (DConfWriter  *writer,
-                    const gchar  *prefix,
-                    GVariant     *array,
-                    GError      **error)
+volatile struct dir_entry *
+dconf_writer_find_entry (DConfWriter               *writer,
+                         volatile struct dir_entry *entries,
+                         gint                       n_entries,
+                         const gchar               *name,
+                         gint                       name_length)
 {
-  guint32 root_index;
-  GVariantIter iter;
-  gboolean result;
-  gsize length;
-  gchar **names;
-  const gchar *name;
-  GVariant **values;
-  GVariant *value;
+  /* XXX replace with a binary search */
   gint i;
 
-  root_index = writer->super->root_index;
-
-  length = g_variant_iter_init (&iter, array);
-  names = g_new (char *, length);
-  values = g_new (GVariant *, length);
-
-  i = 0;
-  while (g_variant_iterate (&iter, "(sv)", &name, &value))
+  for (i = 0; i < n_entries; i++)
     {
-      names[i] = g_strdup_printf ("%s%s", prefix + 1, name);
-      values[i] = g_variant_ref (value);
-      i++;
+      g_assert (entries[i].namelen < sizeof entries[i].name.direct);
+      if (entries[i].namelen == name_length &&
+          !memcmp ((const gchar *) entries[i].name.direct, name, name_length))
+        return &entries[i];
     }
-  g_assert (i == length);
 
-  result = dconf_writer_merge_directory (writer, root_index,
-                                         (const gchar **) names,
-                                         values, length,
-                                         &root_index);
-
-  if (result && root_index != writer->super->root_index)
-    writer->super->root_index = root_index;
-
-  for (i = 0; i < length; i++)
-    {
-      g_variant_unref (values[i]);
-      g_free (names[i]);
-    }
-  g_free (values);
-  g_free (names);
-
-  return result;
+  return NULL;
 }

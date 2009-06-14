@@ -66,7 +66,7 @@ dconf_get (const gchar *key)
       gboolean locked = FALSE;
       gint i;
 
-      for (i = mount->n_dbs; !locked && i >= 0; i--)
+      for (i = mount->n_dbs - 1; !locked && i >= 0; i--)
         dconf_reader_get (mount->dbs[i]->filename,
                           &mount->dbs[i]->reader,
                           key, &value, &locked);
@@ -299,16 +299,22 @@ dconf_unwatch (const gchar    *match,
  **/
 void
 dconf_merge_tree_async (const gchar             *prefix,
-                        GTree                   *values,
+                        GTree                   *tree,
                         DConfAsyncReadyCallback  callback,
                         gpointer                 user_data)
 {
   DConfMount *mount;
 
+  g_assert (prefix != NULL);
+  g_assert (tree != NULL);
+
+  g_assert (g_str_has_suffix (prefix, "/") || g_tree_nnodes (tree) == 1);
+  g_assert (g_str_has_prefix (prefix, "/"));
+
   mount = dconf_demux_path (&prefix, TRUE);
   g_assert (mount);
 
-  dconf_dbus_merge_tree_async (mount->dbs[0]->bus, prefix, values,
+  dconf_dbus_merge_tree_async (mount->dbs[0]->bus, prefix, tree,
                                (DConfDBusAsyncReadyCallback) callback,
                                user_data);
 }

@@ -330,7 +330,7 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
         DBusMessageIter sub;
         GVariant *child;
 
-        child = g_variant_get_child (value, 0);
+        child = g_variant_get_child_value (value, 0);
         dbus_message_iter_open_container (iter, DBUS_TYPE_VARIANT,
                                           g_variant_get_type_string (child),
                                           &sub);
@@ -357,7 +357,7 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
                                           type_string, &dbus_iter);
         g_variant_iter_init (&gv_iter, value);
 
-        while ((item = g_variant_iter_next (&gv_iter)))
+        while ((item = g_variant_iter_next_value (&gv_iter)))
           dconf_dbus_from_gv (&dbus_iter, item);
 
         dbus_message_iter_close_container (iter, &dbus_iter);
@@ -374,7 +374,7 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
                                           NULL, &dbus_iter);
         g_variant_iter_init (&gv_iter, value);
 
-        while ((item = g_variant_iter_next (&gv_iter)))
+        while ((item = g_variant_iter_next_value (&gv_iter)))
           dconf_dbus_from_gv (&dbus_iter, item);
 
         dbus_message_iter_close_container (iter, &dbus_iter);
@@ -388,11 +388,11 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
 
         dbus_message_iter_open_container (iter, DBUS_TYPE_DICT_ENTRY,
                                           NULL, &dbus_iter);
-        key = g_variant_get_child (value, 0);
+        key = g_variant_get_child_value (value, 0);
         dconf_dbus_from_gv (&dbus_iter, key);
         g_variant_unref (key);
 
-        val = g_variant_get_child (value, 1);
+        val = g_variant_get_child_value (value, 1);
         dconf_dbus_from_gv (&dbus_iter, val);
         g_variant_unref (val);
 

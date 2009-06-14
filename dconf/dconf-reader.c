@@ -268,8 +268,10 @@ dconf_reader_get (const gchar  *filename,
   if (!dconf_reader_ensure_valid (filename, reader))
     return;
 
-  entry = dconf_reader_get_entry (*reader, key, strlen (key), locked);
+  g_print ("trying for %s\n", key);
 
+  entry = dconf_reader_get_entry (*reader, key, strlen (key), locked);
+g_print ("%p\n", entry);
   if (entry == NULL)
     return;
 

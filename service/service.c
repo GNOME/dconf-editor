@@ -29,14 +29,29 @@ dconf_service_handler (GBus              *bus,
 
   if (g_bus_message_is_call (message, "ca.desrt.dconf", "Merge", "sa(sv)"))
     {
-      const gchar *key;
-      GVariant *value;
+      const gchar *prefix;
+      const gchar **names;
+      GVariant **values;
+      GVariant *array;
+      gint n_items;
+      gint i;
 
-      g_bus_message_get (message, "s*", &key, &value);
-      dconf_writer_merge (writer, key, value, NULL);
-      g_variant_unref (value);
+      g_bus_message_get (message, "s*", &prefix, &array);
+      n_items = g_variant_n_children (array);
 
-      return g_bus_return (message, "");
+      names = g_new (const gchar *, n_items);
+      values = g_new (GVariant *, n_items);
+      for (i = 0; i < n_items; i++)
+        g_variant_get_child (array, i, "(&sv)", &names[i], &values[i]);
+      dconf_writer_merge (writer, prefix, names, values, n_items);
+
+      for (i = 0; i < n_items; i++)
+        g_variant_unref (values[i]);
+      g_variant_unref (array);
+      g_free (values);
+      g_free (names);
+
+      return g_bus_return (message, "u", 1234);
     }
 
   if (g_bus_message_is_call (message, "ca.desrt.dconf", "Get", "s"))
@@ -88,7 +103,7 @@ main (void)
   gchar *file;
 
   config_dir = g_get_user_config_dir ();
-  file = g_strdup_printf ("%s/dconf.db", config_dir);
+  file = g_strdup_printf ("%s/dconf/user.db", config_dir);
 
   writer = dconf_writer_new (file);
 
@@ -96,7 +111,7 @@ main (void)
                           "org.freedesktop.DBus",
                           "/org/freedesktop/DBus",
                           "org.freedesktop.DBus");
-  g_bus_remote_call (bus, "RequestName", NULL, "su", "u", "ca.desrt.dconf", 0, NULL);
+  g_bus_remote_call (bus, "RequestName", NULL, "su", "u", "ca.desrt.dconf.user", 0, NULL);
   g_bus_register_object (G_BUS_SESSION, "/user", dconf_service_handler, writer);
 
   g_main_loop_run (g_main_loop_new (NULL, FALSE));
