@@ -205,8 +205,11 @@ merge_state_setup_new_name (MergeState *state)
 
   if (new_name != state->prefix)
     {
+      gint cmplen = state->name_is_dir ? length : length + 1;
+      /* length + 1 for the not-directory case to check the '\0' too. */
+
       for (i = state->new_offset + 1; i < state->new_length; i++)
-        if (memcmp (state->new_names[i], new_name, length) != 0)
+        if (memcmp (state->new_names[i], new_name, cmplen) != 0)
           break;
     }
   else
