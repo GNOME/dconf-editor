@@ -53,10 +53,12 @@ dconf_reader_new (const gchar *filename)
 static gboolean
 dconf_reader_ensure_valid (DConfReader *reader)
 {
-  if (reader->data.super->invalid)
+  if (reader->data.super && reader->data.super->invalid)
     {
       g_mapped_file_unref (reader->mapped_file);
       reader->mapped_file = NULL;
+      reader->data.super = NULL;
+      reader->end = NULL;
     }
 
   if (reader->mapped_file == NULL)
@@ -116,6 +118,10 @@ dconf_reader_get_block (DConfReader *reader,
     return NULL;
 
   header = &reader->data.blocks[index];
+
+  if (header->contents + header->size < header->contents)
+    /* size so big that it wraps the pointer value */
+    return NULL;
 
   if (dconf_reader_past_end (reader, header->contents + header->size))
     return NULL;
@@ -262,7 +268,9 @@ dconf_reader_get (DConfReader  *reader,
       gsize size;
 
       data = dconf_reader_get_block (reader, entry->data.index, &size);
-      *value = g_variant_load (NULL, (gpointer) data, size, 0);
+
+      if (data)
+        *value = g_variant_load (NULL, (gpointer) data, size, 0);
     }
 
   else
