@@ -49,7 +49,8 @@ dconf_setup_mounts (void)
 
 static DConfMount *
 dconf_demux_path (const gchar **path,
-                  gboolean      rel)
+                  gboolean      rel,
+                  GError      **error)
 {
   GSList *node;
 
@@ -67,6 +68,9 @@ dconf_demux_path (const gchar **path,
           return mount;
         }
     }
+
+  g_set_error (error, 0, 0,
+               "the specified path is outside of any configuration database");
 
   return NULL;
 }
@@ -94,7 +98,7 @@ dconf_get (const gchar *key)
   GVariant *value = NULL;
   DConfMount *mount;
 
-  mount = dconf_demux_path (&key, TRUE);
+  mount = dconf_demux_path (&key, TRUE, NULL);
 
   if (mount)
     {
@@ -188,7 +192,7 @@ dconf_list (const gchar *path,
 
       tree = g_tree_new ((GCompareFunc) strcmp);
 
-      mount = dconf_demux_path (&path, TRUE);
+      mount = dconf_demux_path (&path, TRUE, NULL);
 
       if (mount)
         {
@@ -247,7 +251,7 @@ dconf_get_locked (const gchar *path)
   gboolean locked = FALSE;
   DConfMount *mount;
 
-  mount = dconf_demux_path (&path, TRUE);
+  mount = dconf_demux_path (&path, TRUE, NULL);
   if (mount->n_dbs)
     locked = dconf_reader_get_locked (mount->dbs[0]->reader, path);
 
@@ -278,7 +282,7 @@ dconf_get_writable (const gchar *path)
   gboolean writable = TRUE;
   DConfMount *mount;
 
-  mount = dconf_demux_path (&path, TRUE);
+  mount = dconf_demux_path (&path, TRUE, NULL);
    if (mount)
     {
       gint i;
@@ -332,7 +336,7 @@ dconf_watch (const gchar    *match,
     {
       DConfMount *mount;
 
-      mount = dconf_demux_path (&match, FALSE);
+      mount = dconf_demux_path (&match, FALSE, NULL);
 
       if (mount)
         {
@@ -384,7 +388,7 @@ dconf_unwatch (const gchar    *match,
     {
       DConfMount *mount;
 
-      mount = dconf_demux_path (&match, FALSE);
+      mount = dconf_demux_path (&match, FALSE, NULL);
 
       if (mount)
         {
@@ -472,7 +476,7 @@ dconf_merge_tree_async (const gchar             *prefix,
   g_assert (g_str_has_suffix (prefix, "/") || g_tree_nnodes (tree) == 1);
   g_assert (g_str_has_prefix (prefix, "/"));
 
-  mount = dconf_demux_path (&prefix, TRUE);
+  mount = dconf_demux_path (&prefix, TRUE, NULL);
   g_assert (mount);
 
   dconf_dbus_merge_tree_async (mount->dbs[0]->bus, prefix, tree,
@@ -513,8 +517,8 @@ dconf_set (const gchar  *key,
   g_assert (dconf_is_key (key));
   g_assert (value != NULL);
 
-  mount = dconf_demux_path (&key, TRUE);
-  g_assert (mount);
+  if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
+    return FALSE;
 
   return dconf_dbus_set (mount->dbs[0]->bus, key, value, sequence, error);
 }
