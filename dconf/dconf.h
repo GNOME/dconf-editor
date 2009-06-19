@@ -35,6 +35,11 @@ gchar **                dconf_list                                      (const g
 gboolean                dconf_get_writable                              (const gchar              *path);
 gboolean                dconf_get_locked                                (const gchar              *path);
 
+gboolean                dconf_set                                       (const gchar              *key,
+                                                                         GVariant                 *value,
+                                                                         guint32                  *sequence,
+                                                                         GError                  **error);
+
 void                    dconf_merge_tree_async                          (const gchar              *prefix,
                                                                          GTree                    *tree,
                                                                          DConfAsyncReadyCallback   callback,

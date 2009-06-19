@@ -409,27 +409,40 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
     }
 }
 
-static gboolean
-dconf_dbus_append_to_iter (gpointer key,
-                           gpointer value,
-                           gpointer user_data)
+gboolean
+dconf_dbus_set (DConfDBus    *bus,
+                const gchar  *key,
+                GVariant     *value,
+                guint32      *sequence,
+                GError      **error)
 {
-  DBusMessageIter *iter = user_data;
-  DBusMessageIter struc;
-  DBusMessageIter var;
+  DBusMessageIter iter, variant;
+  DBusMessage *message;
+  DBusMessage *reply;
 
-  dbus_message_iter_open_container (iter, DBUS_TYPE_STRUCT, NULL, &struc);
-  dbus_message_iter_append_basic (&struc, DBUS_TYPE_STRING, &key);
+  {
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    message = dbus_message_new_method_call (bus_name, bus->name,
+                                            "ca.desrt.dconf", "Set");
+    g_free (bus_name);
+  }
 
-  dbus_message_iter_open_container (&struc, DBUS_TYPE_VARIANT,
+  dbus_message_iter_init_append (message, &iter);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
+  dbus_message_iter_open_container (&iter, DBUS_TYPE_VARIANT,
                                     g_variant_get_type_string (value),
-                                    &var);
-  dconf_dbus_from_gv (&var, value);
-  dbus_message_iter_close_container (&struc, &var);
+                                    &variant);
+  dconf_dbus_from_gv (&variant, value);
+  dbus_message_iter_close_container (&iter, &variant);
 
-  dbus_message_iter_close_container (iter, &struc);
+  reply = dbus_connection_send_with_reply_and_block (bus->connection,
+                                                     message,
+                                                     -1, NULL);
 
-  return FALSE;
+  dbus_message_unref (reply);
+  *sequence = 123;
+
+  return TRUE;
 }
 
 typedef struct
@@ -466,6 +479,29 @@ dconf_dbus_merge_ready (DBusPendingCall *pending,
   DConfDBusClosure *closure = user_data;
 
   dconf_dbus_closure_fire (closure, pending);
+}
+
+static gboolean
+dconf_dbus_append_to_iter (gpointer key,
+                           gpointer value,
+                           gpointer user_data)
+{
+  DBusMessageIter *iter = user_data;
+  DBusMessageIter struc;
+  DBusMessageIter var;
+
+  dbus_message_iter_open_container (iter, DBUS_TYPE_STRUCT, NULL, &struc);
+  dbus_message_iter_append_basic (&struc, DBUS_TYPE_STRING, &key);
+
+  dbus_message_iter_open_container (&struc, DBUS_TYPE_VARIANT,
+                                    g_variant_get_type_string (value),
+                                    &var);
+  dconf_dbus_from_gv (&var, value);
+  dbus_message_iter_close_container (&struc, &var);
+
+  dbus_message_iter_close_container (iter, &struc);
+
+  return FALSE;
 }
 
 void

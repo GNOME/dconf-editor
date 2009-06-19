@@ -28,14 +28,11 @@ typedef void          (*DConfDBusNotify)                                (const g
 DConfDBus *             dconf_dbus_new                                  (const gchar                  *path,
                                                                          GError                      **error);
 
-void                    dconf_dbus_watch                                (DConfDBus                    *bus,
-                                                                         const gchar                  *prefix,
-                                                                         DConfDBusNotify               callback,
-                                                                         gpointer                      user_data);
-void                    dconf_dbus_unwatch                              (DConfDBus                    *bus,
-                                                                         const gchar                  *prefix,
-                                                                         DConfDBusNotify               callback,
-                                                                         gpointer                      user_data);
+gboolean                dconf_dbus_set                                  (DConfDBus                    *bus,
+                                                                         const gchar                  *path,
+                                                                         GVariant                     *value,
+                                                                         guint32                      *sequence,
+                                                                         GError                      **error);
 
 void                    dconf_dbus_merge_tree_async                     (DConfDBus                    *bus,
                                                                          const gchar                  *prefix,
@@ -46,5 +43,15 @@ void                    dconf_dbus_merge_tree_async                     (DConfDB
 gboolean                dconf_dbus_merge_finish                         (DConfDBusAsyncResult         *result,
                                                                          guint32                      *sequence,
                                                                          GError                      **error);
+
+void                    dconf_dbus_watch                                (DConfDBus                    *bus,
+                                                                         const gchar                  *prefix,
+                                                                         DConfDBusNotify               callback,
+                                                                         gpointer                      user_data);
+void                    dconf_dbus_unwatch                              (DConfDBus                    *bus,
+                                                                         const gchar                  *prefix,
+                                                                         DConfDBusNotify               callback,
+                                                                         gpointer                      user_data);
+
 
 #endif /* _dconf_dbus_h_ */

@@ -466,3 +466,20 @@ dconf_merge_finish (DConfAsyncResult  *result,
   return dconf_dbus_merge_finish ((DConfDBusAsyncResult *) result,
                                   sequence, error);
 }
+
+gboolean
+dconf_set (const gchar  *key,
+           GVariant     *value,
+           guint32      *sequence,
+           GError      **error)
+{
+  DConfMount *mount;
+
+  g_assert (dconf_is_key (key));
+  g_assert (value != NULL);
+
+  mount = dconf_demux_path (&key, TRUE);
+  g_assert (mount);
+
+  return dconf_dbus_set (mount->dbs[0]->bus, key, value, sequence, error);
+}
