@@ -206,9 +206,13 @@ GSList *
 dconf_config_read (void)
 {
   GError *error = NULL;
+  gchar *conf_file;
   GSList *mounts;
 
-  mounts = dconf_config_parse_file ("dconf.conf", &error);
+  conf_file = g_strdup_printf ("%s/dconf/dconf.conf",
+                               g_get_user_config_dir ());
+  mounts = dconf_config_parse_file (conf_file, &error);
+  g_free (conf_file);
 
   if (mounts == NULL)
     {
