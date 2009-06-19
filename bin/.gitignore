@@ -1,0 +1,4 @@
+dconf-get
+dconf-list
+dconf-set
+dconf-watch

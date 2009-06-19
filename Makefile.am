@@ -1,1 +1,1 @@
-SUBDIRS = dconf editor service tests
+SUBDIRS = dconf bin editor service tests
