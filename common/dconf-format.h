@@ -20,6 +20,8 @@ struct block_header
 {
   guint32 size;
   guint32 reserved;
+
+  gchar contents[0];
 };
 
 struct dir_entry

@@ -10,7 +10,7 @@
 
 #include <string.h>
 
-#include "dconf-base.h"
+#include "dconf.h"
 
 /**
  * dconf_is_key:

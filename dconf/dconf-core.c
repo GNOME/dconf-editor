@@ -1,7 +1,18 @@
-#include "dconf-core.h"
+/*
+ * Copyright © 2009 Codethink Limited
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * See the included COPYING file for more information.
+ *
+ * Authors: Ryan Lortie <desrt@desrt.ca>
+ */
+
+#include "dconf.h"
 
 #include "dconf-reader.h"
-#include "dconf-base.h"
 
 #include <string.h>
 #include <glib.h>
@@ -24,8 +35,15 @@ dconf_setup_mounts (void)
       gint i;
 
       for (i = 0; i < mount->n_dbs; i++)
-        if (mount->dbs[i]->bus == NULL)
-          mount->dbs[i]->bus = dconf_dbus_new (mount->dbs[i]->bus_name, NULL);
+        {
+          DConfDB *db = mount->dbs[i];
+
+          if (db->bus == NULL)
+            db->bus = dconf_dbus_new (db->bus_name, NULL);
+
+          if (db->reader == NULL)
+            db->reader = dconf_reader_new (db->filename);
+        }
     }
 }
 
@@ -53,6 +71,23 @@ dconf_demux_path (const gchar **path,
   return NULL;
 }
 
+/**
+ * dconf_get:
+ * @key: a dconf key
+ * @returns: a #GVariant, or %NULL
+ *
+ * Lookup a key in dconf.
+ *
+ * If the key exists, it is returned.  If the key does not exist then
+ * %NULL is returned.
+ *
+ * dconf doesn't really have errors when reading keys.  If, for example,
+ * the configuration database file does not exist then it is equivalent
+ * to being empty (ie: %NULL will always be returned).
+ *
+ * It is a programmer error to call this function with a @key that is
+ * not a valid dconf key (as per dconf_is_key()).
+ **/
 GVariant *
 dconf_get (const gchar *key)
 {
@@ -67,49 +102,68 @@ dconf_get (const gchar *key)
       gint i;
 
       for (i = mount->n_dbs - 1; !locked && i >= 0; i--)
-        dconf_reader_get (mount->dbs[i]->filename,
-                          &mount->dbs[i]->reader,
+        dconf_reader_get (mount->dbs[i]->reader,
                           key, &value, &locked);
     }
 
   return value;
 }
 
-/*
+static gboolean
+append_to_array (gpointer               key,
+                 G_GNUC_UNUSED gpointer value,
+                 gpointer               data)
+{
+  *((*(gchar ***) data)++) = (gchar *) key;
+  return FALSE;
+}
+
+/**
+ * dconf_list:
+ * @path: a dconf path
+ * @length: a pointer to the length of the return value
+ * @returns: a %NULL-terminated list of strings
+ *
+ * Get a list of sub-items directly below a given path in dconf.
+ *
+ * Directory existence in dconf is not strong -- that is, directories
+ * exist only to hold keys.  There is no distinction between an "empty
+ * directory" and a directory that does not exist.  For this reason,
+ * this function will always return a list -- it may simply be empty.
+ *
+ * Additionally, dconf doesn't really have errors when reading keys.
+ * If, for example, the configuration database file does not exist then
+ * it is equivalent to being empty (ie: the empty list will always be
+ * returned).
+ *
+ * If @length is non-%NULL then it will be set to the length of the
+ * return array, excluding the %NULL.
+ *
+ * It is appropriate to free the return value using g_strfreev().
+ *
+ * It is a programmer error to call this function with a @path that is
+ * not a valid dconf path (as per dconf_is_path()).
+ **/
 gchar **
 dconf_list (const gchar *path,
             gint        *length)
 {
+  DConfMount *mount;
   gchar **list;
   GTree *tree;
 
-  g_print ("asking for '%s'\n", path);
+  tree = g_tree_new ((GCompareFunc) strcmp);
 
-  if (strcmp (path, "/") == 0)
-    {
-      if (length)
-        *length = 3;
+  mount = dconf_demux_path (&path, TRUE);
 
-      return g_strsplit ("default/ user/ system/", " ", 3);
-    }
-
-  tree = g_tree_new_full ((GCompareDataFunc) strcmp, NULL, NULL, NULL);
-
-  if (g_str_has_prefix (path, "/user/"))
+  if (mount)
     {
       gboolean locked = FALSE;
+      gint i;
 
-      dconf_reader_list (".d", &default_db, path + 6, tree, &locked);
-
-      if (!locked)
-        dconf_reader_list (".u", &user_db, path + 6, tree, &locked);
+      for (i = mount->n_dbs - 1; !locked && i >= 0; i--)
+        dconf_reader_list (mount->dbs[i]->reader, path, tree, &locked);
     }
-
-  else if (g_str_has_prefix (path, "/system/"))
-    dconf_reader_list (".s", &system_db, path + 8, tree, NULL);
-
-  else if (g_str_has_prefix (path, "/default/"))
-    dconf_reader_list (".d", &default_db, path + 8, tree, NULL);
 
   list = g_new (gchar *, g_tree_nnodes (tree) + 1);
 
@@ -126,7 +180,80 @@ dconf_list (const gchar *path,
 
   return list;
 }
-*/
+
+/**
+ * dconf_get_locked:
+ * @path: a dconf key or path
+ * @returns: %TRUE if @path is locked
+ *
+ * Checks if a lock exists at the current position in the tree.  This
+ * call is the exact dual of dconf_set_locked(); the return value here
+ * is exactly equal to what was last set with dconf_set_locked() on the
+ * exact same @path.
+ *
+ * This is the value you would show in a lockdown editor for it a lock
+ * exists at the current point.
+ *
+ * If the path doesn't exist in the tree then %FALSE is returned.
+ *
+ * This result of this function is not impacted by locks installed in
+ * 'default' databases -- only those in the toplevel database that the
+ * user would modify by calling dconf_set_locked().  It is also not
+ * impacted by entire-directory locks installed at higher points in the
+ * tree.  See dconf_get_writable() if you are interested in that.
+ *
+ * It is a programmer error to call this function with a @path that is
+ * not a valid dconf path (as per dconf_is_path()) or key (as per
+ * dconf_is_key()).
+ **/
+gboolean
+dconf_get_locked (const gchar *path)
+{
+  gboolean locked = FALSE;
+  DConfMount *mount;
+
+  mount = dconf_demux_path (&path, TRUE);
+  if (mount->n_dbs)
+    locked = dconf_reader_get_locked (mount->dbs[0]->reader, path);
+
+  return locked;
+}
+
+/**
+ * dconf_get_writable:
+ * @path: a dconf key or path
+ * @returns: %TRUE if writing to @path would work
+ *
+ * Checks if writing to a given @path would work.  For a key to be
+ * writable, it may not be locked in any database nor may any of its
+ * parents.
+ *
+ * This is the value you would use to determine if a settings widget
+ * should be displayed in a UI as sensitive.
+ *
+ * If the path doesn't exist in the tree then %FALSE is returned.
+ *
+ * It is a programmer error to call this function with a @path that is
+ * not a valid dconf path (as per dconf_is_path()) or key (as per
+ * dconf_is_key()).
+ **/
+gboolean
+dconf_get_writable (const gchar *path)
+{
+  gboolean writable = TRUE;
+  DConfMount *mount;
+
+  mount = dconf_demux_path (&path, TRUE);
+   if (mount)
+    {
+      gint i;
+
+      for (i = mount->n_dbs - 1; writable && i >= 0; i--)
+        writable = dconf_reader_get_writable (mount->dbs[i]->reader, path);
+    }
+
+  return writable;
+}
 
 /**
  * dconf_watch:
@@ -182,7 +309,6 @@ dconf_watch (const gchar    *match,
         }
     }
 }
-
 
 /**
  * dconf_unwatch:
