@@ -32,6 +32,7 @@ static void
 dconf_dbus_notify (DConfDBus           *bus,
                    const gchar         *prefix,
                    const gchar * const *items,
+                   gint                 items_length,
                    guint32              sequence)
 {
   gint prefix_len;
@@ -65,7 +66,8 @@ dconf_dbus_notify (DConfDBus           *bus,
           memcpy (full + skip, prefix, prefix_len);
           full[skip + prefix_len] = '\0';
 
-          watch->callback (full, items,sequence, watch->user_data);
+          watch->callback (full, items, items_length,
+                           sequence, watch->user_data);
 
           g_free (full);
         }
@@ -114,7 +116,9 @@ dconf_dbus_filter (DBusConnection *connection,
 
   dbus_message_iter_get_basic (&iter, &seq);
 
-  dconf_dbus_notify (bus, prefix, (const gchar **) items->pdata, seq);
+  dconf_dbus_notify (bus, prefix,
+                     (const gchar **) items->pdata, items->len,
+                     seq);
 
   g_ptr_array_free (items, TRUE);
 

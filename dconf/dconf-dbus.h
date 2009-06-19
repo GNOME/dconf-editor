@@ -21,6 +21,7 @@ typedef void          (*DConfDBusAsyncReadyCallback)                    (DConfDB
                                                                          gpointer                      user_data);
 typedef void          (*DConfDBusNotify)                                (const gchar                  *path,
                                                                          const gchar * const          *items,
+                                                                         gint                          items_length,
                                                                          guint32                       sequence,
                                                                          gpointer                      user_data);
 

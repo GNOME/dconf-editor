@@ -20,6 +20,7 @@ typedef void          (*DConfAsyncReadyCallback)                        (DConfAs
                                                                          gpointer                  user_data);
 typedef void          (*DConfWatchFunc)                                 (const gchar              *prefix,
                                                                          const gchar * const      *items,
+                                                                         gint                      items_length,
                                                                          guint32                   sequence,
                                                                          gpointer                  user_data);
 
