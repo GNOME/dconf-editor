@@ -19,10 +19,18 @@ namespace GLib {
 }
 
 [CCode (cheader_filename = "dconf/dconf.h")]
-namespace DConf {
-  string[] list (string path);
+
+namespace dconf {
+  delegate void WatchFunc (string key, string[] items, uint32 sequence);
+
   GLib.Variant? get (string key);
-  void set (string key, GLib.Variant value);
-  delegate void WatchFunc (string key);
+  string[] list (string path);
+  bool get_locked (string path);
+  bool get_writable (string path);
+
+  void set (string key, GLib.Variant value,
+            out uint32 sequence = null) throws GLib.Error;
+
   void watch (string path, WatchFunc callback);
+  void unwatch (string path, WatchFunc callback);
 }

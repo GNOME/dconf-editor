@@ -1,4 +1,5 @@
 AM_CFLAGS = -I.. $(glib_CFLAGS) $(gtk_CFLAGS)
+CFLAGS += -Wno-error
 
 noinst_PROGRAMS = editor
 
