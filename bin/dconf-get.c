@@ -20,7 +20,7 @@ main (int argc, char **argv)
 
   if (argc != 2 || !dconf_is_key (argv[1]))
     {
-      fprintf (stderr, "usage: dconf-get /dconf/path\n");
+      fprintf (stderr, "usage: dconf-get /dconf/key\n");
       return 1;
     }
 
