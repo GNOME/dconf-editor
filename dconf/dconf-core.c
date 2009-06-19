@@ -148,37 +148,72 @@ gchar **
 dconf_list (const gchar *path,
             gint        *length)
 {
-  DConfMount *mount;
-  gchar **list;
-  GTree *tree;
+  g_assert (dconf_is_path (path));
 
-  tree = g_tree_new ((GCompareFunc) strcmp);
-
-  mount = dconf_demux_path (&path, TRUE);
-
-  if (mount)
+  if (path[1] == '\0') /* '/' */
     {
-      gboolean locked = FALSE;
-      gint i;
+      GSList *node;
+      gchar **list;
+      gint mounts;
 
-      for (i = mount->n_dbs - 1; !locked && i >= 0; i--)
-        dconf_reader_list (mount->dbs[i]->reader, path, tree, &locked);
+      if G_UNLIKELY (dconf_mounts == NULL)
+        dconf_setup_mounts ();
+
+      mounts = 0;
+      for (node = dconf_mounts; node; node = node->next)
+        mounts++;
+
+      list = g_new (gchar *, mounts + 1);
+      mounts = 0;
+
+      for (node = dconf_mounts; node; node = node->next)
+        {
+          DConfMount *mount = node->data;
+
+          list[mounts++] = g_strdup (mount->prefix + 1);
+        }
+
+      list[mounts] = NULL;
+
+      if (length)
+        *length = mounts;
+
+      return list;
     }
+  else
+    {
+      DConfMount *mount;
+      gchar **list;
+      GTree *tree;
 
-  list = g_new (gchar *, g_tree_nnodes (tree) + 1);
+      tree = g_tree_new ((GCompareFunc) strcmp);
 
-  {
-    gchar **ptr = list;
-    g_tree_foreach (tree, append_to_array, &ptr);
-    *ptr = NULL;
-  }
+      mount = dconf_demux_path (&path, TRUE);
 
-  if (length)
-    *length = g_tree_nnodes (tree);
+      if (mount)
+        {
+          gboolean locked = FALSE;
+          gint i;
 
-  g_tree_destroy (tree);
+          for (i = mount->n_dbs - 1; !locked && i >= 0; i--)
+            dconf_reader_list (mount->dbs[i]->reader, path, tree, &locked);
+        }
 
-  return list;
+      list = g_new (gchar *, g_tree_nnodes (tree) + 1);
+
+      {
+        gchar **ptr = list;
+        g_tree_foreach (tree, append_to_array, &ptr);
+        *ptr = NULL;
+      }
+
+      if (length)
+        *length = g_tree_nnodes (tree);
+
+      g_tree_destroy (tree);
+
+      return list;
+   }
 }
 
 /**
