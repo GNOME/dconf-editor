@@ -129,7 +129,7 @@ dconf_dbus_filter (DBusConnection *connection,
   dbus_message_iter_get_basic (&iter, &seq);
 
   dconf_dbus_notify (bus, prefix,
-                     (const gchar **) items->pdata, items->len,
+                     (const gchar **) items->pdata, items->len - 1,
                      seq);
 
   g_ptr_array_free (items, TRUE);
