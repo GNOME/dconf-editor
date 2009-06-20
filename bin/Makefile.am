@@ -1,4 +1,5 @@
-AM_CFLAGS = -I../dconf $(glib_CFLAGS)
+AM_CFLAGS = -I$(top_srcdir)/dconf $(glib_CFLAGS) \
+		-Wall -Wmissing-prototypes -Wwrite-strings -g
 
 bin_PROGRAMS = dconf-get dconf-list dconf-set dconf-watch
 

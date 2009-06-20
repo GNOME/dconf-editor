@@ -1,4 +1,16 @@
-#include "dconf-writer-internals.h"
+/*
+ * Copyright © 2009 Codethink Limited
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * See the included COPYING file for more information.
+ *
+ * Authors: Ryan Lortie <desrt@desrt.ca>
+ */
+
+#include "dconf-writer-private.h"
 #include <glib/gvariant-loadstore.h>
 
 #include <sys/stat.h>
@@ -241,7 +253,7 @@ dconf_writer_create (DConfWriter *writer)
   return TRUE;
 }
 
-gboolean
+static gboolean
 dconf_writer_post (DConfWriter  *writer,
                    GError      **error)
 {

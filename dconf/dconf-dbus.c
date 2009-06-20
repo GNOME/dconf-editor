@@ -599,7 +599,7 @@ typedef gboolean (*GFDSourceFunc) (gpointer data,
                                    GIOCondition condition,
                                    int fd);
 
-void
+static void
 _g_dbus_oom (void)
 {
   g_error ("DBus failed with out of memory error");
@@ -654,7 +654,7 @@ static GSourceFuncs fd_source_funcs = {
 };
 
 /* Two __ to avoid conflict with gio version */
-GSource *
+static GSource *
 __g_fd_source_new (int fd,
 		   gushort events)
 {

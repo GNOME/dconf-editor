@@ -1,7 +1,19 @@
-#ifndef _dconf_writer_internals_h_
-#define _dconf_writer_internals_h_
+/*
+ * Copyright © 2009 Codethink Limited
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of version 3 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * See the included COPYING file for more information.
+ *
+ * Authors: Ryan Lortie <desrt@desrt.ca>
+ */
 
-#include <common/dconf-format.h>
+#ifndef _dconf_writer_private_h_
+#define _dconf_writer_private_h_
+
+#include "dconf-format.h"
 #include "dconf-writer.h"
 
 struct OPAQUE_TYPE__DConfWriter
@@ -61,4 +73,4 @@ dconf_writer_set_entry_name (DConfWriter               *writer,
                              const gchar               *name,
                              gint                       name_length);
 
-#endif /* _dconf_writer_internals_h_ */
+#endif /* _dconf_writer_private_h_ */

@@ -18,7 +18,7 @@ namespace GLib {
   }
 }
 
-[CCode (cheader_filename = "dconf/dconf.h")]
+[CCode (cheader_filename = "dconf.h")]
 
 namespace dconf {
   delegate void WatchFunc (string key, string[] items, uint32 sequence);

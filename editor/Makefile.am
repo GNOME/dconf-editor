@@ -1,4 +1,5 @@
-AM_CFLAGS = -I.. $(glib_CFLAGS) $(gtk_CFLAGS)
+AM_CFLAGS = -I$(top_srcdir)/dconf $(gtk_CFLAGS) \
+		-Wall -Wmissing-prototypes -Wwrite-strings -g
 CFLAGS += -Wno-error
 
 noinst_PROGRAMS = editor
@@ -21,3 +22,4 @@ editor.vala.stamp: $(editor_VALASOURCES)
 	touch $@
 
 CLEANFILES = *.c *.h editor.vala.stamp
+EXTRA_DIST = $(editor_VALASOURCES)

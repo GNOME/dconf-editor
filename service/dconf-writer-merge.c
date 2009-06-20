@@ -10,7 +10,7 @@
  * Authors: Ryan Lortie <desrt@desrt.ca>
  */
 
-#include "dconf-writer-internals.h"
+#include "dconf-writer-private.h"
 
 #include <string.h>
 

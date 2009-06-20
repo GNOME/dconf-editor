@@ -143,7 +143,7 @@ dconf_dbus_to_gv (DBusMessageIter *iter)
     }
 }
 
-GVariant *
+static GVariant *
 dconf_dbus_variant_to_gv (DBusMessageIter *iter)
 {
   DBusMessageIter sub;
@@ -221,7 +221,7 @@ dconf_dbus_service_notify (DConfDBusService  *service,
   service->signals = g_slist_prepend (service->signals, notify);
 }
 
-DBusMessage *
+static DBusMessage *
 dconf_dbus_service_handle_message (DConfDBusService *service)
 {
   DBusMessageIter iter;
