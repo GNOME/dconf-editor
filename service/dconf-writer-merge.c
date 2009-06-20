@@ -68,7 +68,7 @@
  * the empty string) then @prefix must either be the empty string or end
  * in '/'.  Each item in @names is relative to that path.
  **/
-gboolean
+void
 dconf_writer_merge_index (DConfWriter  *writer,
                           guint32      *index,
                           const gchar  *prefix,
@@ -386,30 +386,28 @@ dconf_writer_merge_copy_old (MergeState *state)
   *entry = *old;
 }
 
-static gboolean
+static void
 dconf_writer_merge_write_to_entry (DConfWriter                *writer,
                                    volatile struct dir_entry  *entry,
                                    MergeState                 *state,
-                                   gboolean                    must_copy)
+                                   gboolean                    merging)
 {
   const gchar *prefix;
   const gchar **names;
   GVariant **values;
-  gboolean result;
   gint count;
 
   merge_state_begin_consume_new (state, &prefix, &names, &values, &count);
 
   if (merge_state_name_is_directory (state))
     {
-      guint32 index = entry->data.index;
+      guint32 index = dconf_writer_get_entry_index (writer, entry, FALSE);
 
-      result = dconf_writer_merge_index (writer, &index, prefix,
-                                         names, values, count,
-                                         must_copy);
+      dconf_writer_merge_index (writer, &index, prefix,
+                                names, values, count,
+                                merging);
 
-      if (entry->data.index != index)
-        entry->data.index = index;
+      dconf_writer_set_entry_index (writer, entry, index, merging);
     }
   else
     {
@@ -418,15 +416,12 @@ dconf_writer_merge_write_to_entry (DConfWriter                *writer,
       g_assert (names[0][0] == '\0');
 
       /* XXX do actual write. */
-      result = TRUE;
     }
 
   merge_state_end_consume_new (state);
-
-  return result;
 }
 
-static gboolean
+static void
 dconf_writer_merge_install_new (DConfWriter *writer,
                                 MergeState  *state,
                                 gboolean     merge_old)
@@ -448,10 +443,7 @@ dconf_writer_merge_install_new (DConfWriter *writer,
       gint name_length;
 
       name = merge_state_get_new_name (state, &name_length);
-
-      g_assert (name_length < sizeof entry->name.direct); /* XXX */
-      memcpy (entry->name.direct, name, name_length);
-      entry->namelen = name_length;
+      dconf_writer_set_entry_name (writer, entry, name, name_length);
 
       entry->data.index = 0;
       entry->locked = FALSE;
@@ -467,6 +459,8 @@ dconf_writer_merge_compare (DConfWriter *writer,
                             MergeState  *state)
 {
   const struct dir_entry *old;
+  const gchar *entry_name;
+  guint32 entry_length;
   const gchar *name;
   gint name_length;
   gint result;
@@ -474,13 +468,13 @@ dconf_writer_merge_compare (DConfWriter *writer,
   old = merge_state_get_old (state);
   name = merge_state_get_new_name (state, &name_length);
 
-  g_assert (old->namelen < sizeof old->name.direct); /* XXX */
+  entry_name = dconf_writer_get_entry_name (writer, old, &entry_length);
 
-  result = memcmp (old->name.direct, name,
-                   MIN (old->namelen, name_length));
+  result = memcmp (entry_name, name,
+                   MIN (entry_length, name_length));
 
   if (!result)
-    result = old->namelen - name_length;
+    result = entry_length - name_length;
 
   return result;
 }
@@ -527,7 +521,7 @@ merge_state_has_single_item (MergeState *state)
   return state->name_group_ends == state->new_length;
 }
 
-static gboolean
+static void
 dconf_writer_merge_allocate (DConfWriter *writer,
                              MergeState  *state,
                              guint32     *index)
@@ -579,11 +573,9 @@ dconf_writer_merge_allocate (DConfWriter *writer,
   {
     gpointer pointer;
 
-    if (!dconf_writer_allocate (writer,
-                                sizeof (struct dir_entry) * entries,
-                                &pointer,
-                                index))
-      return FALSE;
+    dconf_writer_allocate (writer,
+                           sizeof (struct dir_entry) * entries,
+                           &pointer, index);
 
     state->entries_length = entries;
     state->entries = pointer;
@@ -592,11 +584,9 @@ dconf_writer_merge_allocate (DConfWriter *writer,
   g_assert (state->entries != NULL);
   g_assert (state->entries_length != 0);
   g_assert (state->entries_offset == 0);
-
-  return TRUE;
 }
 
-gboolean
+void
 dconf_writer_merge_index (DConfWriter  *writer,
                           guint32      *index,
                           const gchar  *prefix,
@@ -640,40 +630,30 @@ dconf_writer_merge_index (DConfWriter  *writer,
     }
 
   /* inplace update is not possible.  allocate a new directory. */
-  if (!dconf_writer_merge_allocate (writer, &state, index))
-    return FALSE;
+  dconf_writer_merge_allocate (writer, &state, index);
 
   /* now do the merge */
   while (merge_state_has_work (&state))
     {
       if (!merge_state_has_new (&state))
-        {
-          dconf_writer_merge_copy_old (&state);
-        }
+        dconf_writer_merge_copy_old (&state);
+
       else if (!merge_state_has_old (&state))
-        {
-          if (!dconf_writer_merge_install_new (writer, &state, FALSE))
-            return FALSE;
-        }
+        dconf_writer_merge_install_new (writer, &state, FALSE);
+
       else
         {
           int cmp = dconf_writer_merge_compare (writer, &state);
 
           if (cmp < 0)
-            {
-              dconf_writer_merge_copy_old (&state);
-            }
+            dconf_writer_merge_copy_old (&state);
+
           else
-            {
-              if (!dconf_writer_merge_install_new (writer, &state, cmp == 0))
-                return FALSE;
-            }
+            dconf_writer_merge_install_new (writer, &state, cmp == 0);
         }
     }
 
   merge_state_assert_done (&state);
-
-  return TRUE;
 }
 
 gboolean
@@ -687,9 +667,8 @@ dconf_writer_merge (DConfWriter  *writer,
 
   index = writer->super->root_index;
 
-  if (!dconf_writer_merge_index (writer, &index, prefix,
-                                 names, values, n_items, FALSE))
-    return FALSE;
+  dconf_writer_merge_index (writer, &index, prefix,
+                            names, values, n_items, FALSE);
 
   if (index != writer->super->root_index)
     writer->super->root_index = index;
