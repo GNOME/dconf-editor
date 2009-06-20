@@ -15,7 +15,6 @@ AC_OUTPUT([
   service/Makefile
   dconf/Makefile
   dconf/dconf.pc
-  tests/Makefile
   bin/Makefile
   Makefile
 ])
