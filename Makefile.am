@@ -1,1 +1,1 @@
-SUBDIRS = common dconf bin editor service
+SUBDIRS = common dconf bin editor writer

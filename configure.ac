@@ -13,7 +13,7 @@ PKG_CHECK_MODULES(gtk, gtk+-2.0)
 AC_OUTPUT([
   common/Makefile
   editor/Makefile
-  service/Makefile
+  writer/Makefile
   dconf/Makefile
   dconf/dconf.pc
   bin/Makefile
