@@ -20,6 +20,7 @@
 typedef struct
 {
   DConfService *service;
+  const gchar *name;
 
   DBusConnection *bus;
   DBusMessage *this;
@@ -314,10 +315,55 @@ int
 main (int argc, char **argv)
 {
   DConfDBusService service = { 0, };
+  DBusError d_error = { 0, };
+  GError *error = NULL;
+  gchar *name;
 
-  service.service = dconf_service_new ();
-  service.bus = dbus_bus_get (DBUS_BUS_SESSION, NULL);
-  dbus_bus_request_name (service.bus, "ca.desrt.dconf.user", 0, NULL);
+  if (argc != 2)
+    {
+      fprintf (stderr, "usage: %s [servicename]\n", argv[0]);
+      return 1;
+    }
+
+  service.service = dconf_service_new (argv[1], &error);
+
+  if (service.service == NULL)
+    {
+      fprintf (stderr, "%s\n", error->message);
+      return 1;
+    }
+
+  service.name = dconf_service_get_bus_name (service.service);
+  switch (dconf_service_get_bus_type (service.service))
+    {
+     case DCONF_SERVICE_SESSION_BUS:
+      service.bus = dbus_bus_get (DBUS_BUS_SESSION, &d_error);
+      break;
+
+     case DCONF_SERVICE_SYSTEM_BUS:
+      service.bus = dbus_bus_get (DBUS_BUS_SYSTEM, &d_error);
+      break;
+
+     default:
+      g_assert_not_reached ();
+    }
+
+  if (service.bus == NULL)
+    {
+      fprintf (stderr, "%s: %s\n", d_error.name, d_error.message);
+      return 1;
+    }
+
+  name = g_strdup_printf ("ca.desrt.dconf.%s", service.name);
+  if (dbus_bus_request_name (service.bus, name, 0, &d_error) !=
+      DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
+    {
+      fprintf (stderr, "fatal: failed to acquire bus name %s\n", name);
+      g_free (name);
+
+      return 1;
+    }
+  g_free (name);
 
   dbus_connection_add_filter (service.bus,
                               dconf_dbus_service_filter,

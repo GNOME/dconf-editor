@@ -14,9 +14,14 @@
 
 #include <glib.h>
 
+#include "dconf-writer.h"
+
 struct OPAQUE_TYPE__DConfService
 {
-  gint i;
+  const gchar *name;
+
+  DConfWriter *writers;
+  gint n_writers;
 };
 
 gboolean
@@ -43,7 +48,25 @@ dconf_service_set_locked (DConfService  *service,
 }
 
 DConfService *
-dconf_service_new (void)
+dconf_service_new (const gchar  *name,
+                   GError      **error)
 {
-  return NULL;
+  DConfService *service;
+
+  service = g_slice_new (DConfService);
+  service->name = g_strdup (name);
+
+  return service;
+}
+
+const gchar *
+dconf_service_get_bus_name (DConfService *service)
+{
+  return service->name;
+}
+
+DConfServiceBusType
+dconf_service_get_bus_type (DConfService *service)
+{
+  return DCONF_SERVICE_SESSION_BUS;
 }
