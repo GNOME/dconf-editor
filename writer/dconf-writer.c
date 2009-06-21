@@ -277,7 +277,8 @@ dconf_writer_post (DConfWriter  *writer,
 }
 
 DConfWriter *
-dconf_writer_new (const gchar *filename)
+dconf_writer_new (const gchar  *filename,
+                  GError      **error)
 {
   DConfWriter *writer;
 
@@ -390,4 +391,36 @@ dconf_writer_set_entry_name (DConfWriter               *writer,
       memcpy ((gchar *) entry->name.direct, name, name_length);
       entry->namelen = name_length;
     }
+}
+
+const gchar *
+dconf_writer_get_bus_name (DConfWriter *writer)
+{
+  return writer->name;
+}
+
+DConfWriterBusType
+dconf_writer_get_bus_type (DConfWriter *writer)
+{
+  return DCONF_WRITER_SESSION_BUS;
+}
+
+gboolean
+dconf_writer_set (DConfWriter  *writer,
+                  const gchar  *key,
+                  GVariant     *value,
+                  GError      **error)
+{
+  g_set_error (error, 0, 0, "unsupported.");
+  return FALSE;
+}
+
+gboolean
+dconf_writer_set_locked (DConfWriter  *writer,
+                         const gchar  *key,
+                         gboolean      locked,
+                         GError      **error)
+{
+  g_set_error (error, 0, 0, "unsupported.");
+  return FALSE;
 }

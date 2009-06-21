@@ -1,2 +1,2 @@
-libdconf-service.a
-dconf-service
+libdconf-writer.a
+dconf-writer

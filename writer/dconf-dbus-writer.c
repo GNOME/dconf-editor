@@ -15,18 +15,18 @@
 #include <stdio.h>
 #include <glib.h>
 
-#include "dconf-service.h"
+#include "dconf-writer.h"
 
 typedef struct
 {
-  DConfService *service;
+  DConfWriter *writer;
   const gchar *name;
 
   DBusConnection *bus;
   DBusMessage *this;
 
   GSList *signals;
-} DConfDBusService;
+} DConfDBusWriter;
 
 static GVariant *
 dconf_dbus_to_gv (DBusMessageIter *iter)
@@ -156,17 +156,17 @@ dconf_dbus_variant_to_gv (DBusMessageIter *iter)
 }
 
 static gboolean
-dconf_dbus_service_is_call (DConfDBusService *service,
+dconf_dbus_writer_is_call (DConfDBusWriter *writer,
                             const gchar      *method,
                             const gchar      *signature)
 {
-  return dbus_message_is_method_call (service->this,
+  return dbus_message_is_method_call (writer->this,
                                       "ca.desrt.dconf", method) &&
-         dbus_message_has_signature (service->this, signature);
+         dbus_message_has_signature (writer->this, signature);
 }
 
 static DBusMessage *
-dconf_dbus_service_reply (DConfDBusService *service,
+dconf_dbus_writer_reply (DConfDBusWriter *writer,
                           gboolean          success,
                           gint              sequence,
                           GError           *error)
@@ -177,7 +177,7 @@ dconf_dbus_service_reply (DConfDBusService *service,
 
   if (success)
     {
-      reply = dbus_message_new_method_return (service->this);
+      reply = dbus_message_new_method_return (writer->this);
 
       if (sequence >= 0)
         dbus_message_append_args (reply,
@@ -186,7 +186,7 @@ dconf_dbus_service_reply (DConfDBusService *service,
     }
   else
     {
-      reply = dbus_message_new_error (service->this,
+      reply = dbus_message_new_error (writer->this,
                                       "ca.desrt.dconf.error",
                                       error->message);
       g_error_free (error);
@@ -196,7 +196,7 @@ dconf_dbus_service_reply (DConfDBusService *service,
 }
 
 static void
-dconf_dbus_service_notify (DConfDBusService  *service,
+dconf_dbus_writer_notify (DConfDBusWriter  *writer,
                            const gchar       *prefix,
                            const gchar      **items,
                            guint32            sequence)
@@ -219,17 +219,17 @@ dconf_dbus_service_notify (DConfDBusService  *service,
   dbus_message_iter_close_container (&iter, &array);
   dbus_message_iter_append_basic (&iter, DBUS_TYPE_UINT32, &sequence);
 
-  service->signals = g_slist_prepend (service->signals, notify);
+  writer->signals = g_slist_prepend (writer->signals, notify);
 }
 
 static DBusMessage *
-dconf_dbus_service_handle_message (DConfDBusService *service)
+dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
 {
   DBusMessageIter iter;
 
-  dbus_message_iter_init (service->this, &iter);
+  dbus_message_iter_init (writer->this, &iter);
 
-  if (dconf_dbus_service_is_call (service, "Set", "sv"))
+  if (dconf_dbus_writer_is_call (writer, "Set", "sv"))
     {
       GError *error = NULL;
       guint32 sequence;
@@ -242,17 +242,17 @@ dconf_dbus_service_handle_message (DConfDBusService *service)
       value = dconf_dbus_variant_to_gv (&iter);
       dbus_message_iter_next (&iter);
 
-      status = dconf_service_set (service->service,
-                                  key, value, &sequence, &error);
+      status = dconf_writer_set (writer->writer,
+                                 key, value, &error);
       g_variant_unref (value);
 
       if (status == TRUE)
-        dconf_dbus_service_notify (service, key, NULL, sequence);
+        dconf_dbus_writer_notify (writer, key, NULL, sequence);
 
-      return dconf_dbus_service_reply (service, status, sequence, error);
+      return dconf_dbus_writer_reply (writer, status, sequence, error);
     }
 
-  if (dconf_dbus_service_is_call (service, "SetLocked", "sb"))
+  if (dconf_dbus_writer_is_call (writer, "SetLocked", "sb"))
     {
       GError *error = NULL;
       dbus_bool_t locked;
@@ -264,49 +264,49 @@ dconf_dbus_service_handle_message (DConfDBusService *service)
       dbus_message_iter_get_basic (&iter, &locked);
       dbus_message_iter_next (&iter);
 
-      status = dconf_service_set_locked (service->service,
+      status = dconf_writer_set_locked (writer->writer,
                                          key, locked, &error);
 
-      return dconf_dbus_service_reply (service, status, -1, error);
+      return dconf_dbus_writer_reply (writer, status, -1, error);
     }
 
   return NULL;
 }
 
 static DBusHandlerResult
-dconf_dbus_service_filter (DBusConnection *connection,
+dconf_dbus_writer_filter (DBusConnection *connection,
                            DBusMessage    *message,
                            gpointer        user_data)
 {
-  DConfDBusService *service = user_data;
+  DConfDBusWriter *writer = user_data;
   DBusMessage *reply;
 
-  g_assert (connection == service->bus);
+  g_assert (connection == writer->bus);
 
   if (dbus_message_has_path (message, "/user"))
     {
-      service->this = message;
-      reply = dconf_dbus_service_handle_message (service);
-      service->this = NULL;
+      writer->this = message;
+      reply = dconf_dbus_writer_handle_message (writer);
+      writer->this = NULL;
 
       if (reply)
         {
           dbus_connection_send (connection, reply, NULL);
           dbus_message_unref (reply);
 
-          while (service->signals)
+          while (writer->signals)
             {
-              dbus_connection_send (connection, service->signals->data, NULL);
-              dbus_message_unref (service->signals->data);
-              service->signals = g_slist_delete_link (service->signals,
-                                                      service->signals);
+              dbus_connection_send (connection, writer->signals->data, NULL);
+              dbus_message_unref (writer->signals->data);
+              writer->signals = g_slist_delete_link (writer->signals,
+                                                      writer->signals);
             }
 
           return DBUS_HANDLER_RESULT_HANDLED;
         }
     }
 
-  g_assert (service->signals == NULL);
+  g_assert (writer->signals == NULL);
 
   return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
@@ -314,48 +314,48 @@ dconf_dbus_service_filter (DBusConnection *connection,
 int
 main (int argc, char **argv)
 {
-  DConfDBusService service = { 0, };
+  DConfDBusWriter writer = { 0, };
   DBusError d_error = { 0, };
   GError *error = NULL;
   gchar *name;
 
   if (argc != 2)
     {
-      fprintf (stderr, "usage: %s [servicename]\n", argv[0]);
+      fprintf (stderr, "usage: %s [writername]\n", argv[0]);
       return 1;
     }
 
-  service.service = dconf_service_new (argv[1], &error);
+  writer.writer = dconf_writer_new (argv[1], &error);
 
-  if (service.service == NULL)
+  if (writer.writer == NULL)
     {
       fprintf (stderr, "%s\n", error->message);
       return 1;
     }
 
-  service.name = dconf_service_get_bus_name (service.service);
-  switch (dconf_service_get_bus_type (service.service))
+  writer.name = dconf_writer_get_bus_name (writer.writer);
+  switch (dconf_writer_get_bus_type (writer.writer))
     {
-     case DCONF_SERVICE_SESSION_BUS:
-      service.bus = dbus_bus_get (DBUS_BUS_SESSION, &d_error);
+     case DCONF_WRITER_SESSION_BUS:
+      writer.bus = dbus_bus_get (DBUS_BUS_SESSION, &d_error);
       break;
 
-     case DCONF_SERVICE_SYSTEM_BUS:
-      service.bus = dbus_bus_get (DBUS_BUS_SYSTEM, &d_error);
+     case DCONF_WRITER_SYSTEM_BUS:
+      writer.bus = dbus_bus_get (DBUS_BUS_SYSTEM, &d_error);
       break;
 
      default:
       g_assert_not_reached ();
     }
 
-  if (service.bus == NULL)
+  if (writer.bus == NULL)
     {
       fprintf (stderr, "%s: %s\n", d_error.name, d_error.message);
       return 1;
     }
 
-  name = g_strdup_printf ("ca.desrt.dconf.%s", service.name);
-  if (dbus_bus_request_name (service.bus, name, 0, &d_error) !=
+  name = g_strdup_printf ("ca.desrt.dconf.%s", writer.name);
+  if (dbus_bus_request_name (writer.bus, name, 0, &d_error) !=
       DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
     {
       fprintf (stderr, "fatal: failed to acquire bus name %s\n", name);
@@ -365,11 +365,11 @@ main (int argc, char **argv)
     }
   g_free (name);
 
-  dbus_connection_add_filter (service.bus,
-                              dconf_dbus_service_filter,
-                              &service, NULL);
+  dbus_connection_add_filter (writer.bus,
+                              dconf_dbus_writer_filter,
+                              &writer, NULL);
 
-  while (dbus_connection_read_write_dispatch (service.bus, -1));
+  while (dbus_connection_read_write_dispatch (writer.bus, -1));
 
   return 0;
 }

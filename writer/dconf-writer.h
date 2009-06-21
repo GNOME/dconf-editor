@@ -17,16 +17,34 @@
 
 typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;
 
-DConfWriter *           dconf_writer_new                                (const gchar  *filename);
+typedef enum
+{
+  DCONF_WRITER_SESSION_BUS,
+  DCONF_WRITER_SYSTEM_BUS
+} DConfWriterBusType;
+
+DConfWriter *           dconf_writer_new                                (const gchar  *name,
+                                                                         GError      **error);
+
+const gchar            *dconf_writer_get_bus_name                       (DConfWriter  *writer);
+DConfWriterBusType      dconf_writer_get_bus_type                       (DConfWriter  *writer);
+
 
 gboolean                dconf_writer_set                                (DConfWriter  *writer,
                                                                          const gchar  *key,
-                                                                         GVariant     *value);
+                                                                         GVariant     *value,
+                                                                         GError      **error);
+
+gboolean                dconf_writer_set_locked                         (DConfWriter  *writer,
+                                                                         const gchar  *key,
+                                                                         gboolean      locked,
+                                                                         GError      **error);
 
 gboolean                dconf_writer_merge                              (DConfWriter  *writer,
                                                                          const gchar  *prefix,
                                                                          const gchar **names,
                                                                          GVariant    **values,
-                                                                         gint          n_items);
+                                                                         gint          n_items,
+                                                                         GError      **error);
 
 #endif /* _dconf_writer_h_ */

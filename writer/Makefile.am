@@ -1,18 +1,16 @@
 AM_CFLAGS = -I$(top_srcdir)/common $(glib_CFLAGS) $(dbus_CFLAGS) \
 		-Wall -Wmissing-prototypes -Wwrite-strings -g
 
-noinst_LIBRARIES = libdconf-service.a
+noinst_LIBRARIES = libdconf-writer.a
 
-libdconf_service_a_SOURCES = \
+libdconf_writer_a_SOURCES = \
 	dconf-writer.c		\
-	dconf-writer-merge.c	\
-	dconf-service.c
+	dconf-writer-merge.c
 
 noinst_HEADERS = \
 	dconf-writer-private.h	\
-	dconf-writer.h		\
-	dconf-service.h
+	dconf-writer.h
 
-noinst_PROGRAMS = dconf-service
-dconf_service_LDADD = $(glib_LIBS) $(dbus_LIBS) libdconf-service.a
-dconf_service_SOURCES = dconf-dbus-service.c
+noinst_PROGRAMS = dconf-writer
+dconf_writer_LDADD = $(glib_LIBS) $(dbus_LIBS) libdconf-writer.a
+dconf_writer_SOURCES = dconf-dbus-writer.c

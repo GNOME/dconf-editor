@@ -661,7 +661,8 @@ dconf_writer_merge (DConfWriter  *writer,
                     const gchar  *prefix,
                     const gchar **names,
                     GVariant    **values,
-                    gint          n_items)
+                    gint          n_items,
+                    GError      **error)
 {
   guint32 index;
 

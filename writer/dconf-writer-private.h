@@ -18,7 +18,9 @@
 
 struct OPAQUE_TYPE__DConfWriter
 {
+  gchar *name;
   gchar *filename;
+
   struct superblock *super;
   struct block_header *blocks;
   guint32 n_blocks;
