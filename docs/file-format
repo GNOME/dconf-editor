@@ -1,0 +1,203 @@
+  This document describes the dconf database file format.
+
+  The dconf database file is a binary file.  Its size must be a multiple
+  of 8 and a minimum of 32 bytes.  If the file is missing or fails to
+  satisfy either of these requirements then the effect is if the file was
+  present but empty (ie: no entries).
+
+
+SUPERBLOCK FORMAT
+
+  The first 32 bytes of the file are the "superblock".  The superblock is
+  formatted as follows:
+
+     0        1        2        3        4        5        6        7
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+  0 |            1852793700             |             813047910             |
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+  1 |            root_index             |             next_index            |
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+  2 | flags  |                                                              |
+    +--------+                      RESERVED                                |
+  3 |                                                                       |
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+
+  The numbers 1852793700 and 813047910 are 32 bit unsigned integers.
+  These numbers are a signature and must appear at the start of the file.
+  They may be in either byte order and the byte order that they appear in
+  is taken to be the byte order of the entire file.
+
+  'root_index' is the index of the root directory.  'next_index' is the
+  index of the next free block.  More on indexes and directories soon.  
+
+  'flags' is a bitfield of boolean flags.  Currently only two flags are
+  defined:
+
+    0 - Stale:   The contents of this file should be considered to be
+                 stale.  This is set when the file has been replaced.  The
+                 reader should reopen the file and try their read again.
+
+    1 - Locked:  The root directory is locked.
+
+  All other flags must have their value cleared.
+
+  All areas marked RESERVED must be zero-filled.
+
+
+BLOCKS
+
+  The dconf file format is based on 8-byte blocks.  Each block is 8-byte
+  aligned and 8 bytes in length.
+
+
+CHUNKS
+
+  A chunk is a contiguous sequence of 1 or more blocks.  The purpose of a
+  chunk is to contain some piece of binary data with a specified size.
+
+  Each chunk begins with a chunk header.  The chunk header is 8 bytes and
+  has this format:
+
+     0        1        2        3        4        5        6        7
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+  0 |           contents_size           |             RESERVED              |
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+
+  'contents_size' is the unsigned size of the data contained by the chunk.
+  It is exclusive of the size used by the chunk header and it is not
+  rounded up to a multiple of 8.
+
+  The data of the chunk immediately follows the chunk header.  In the
+  event that the 'contents_size' is not a multiple of 8 then there will
+  necessarily be extra padding bytes that follow the data.
+
+  Implementations must check that 'contents_size' does not expend beyond
+  the end of the file.  In this case, implementations must proceed as if
+  'contents_size' were zero.
+
+  All areas marked RESERVED must be zero-filled.
+
+
+INDEXES
+
+  Indexes are 32bit unsigned integers used to refer to chunks.  The index
+  is the index of the block that contains the chunk header, counting from
+  the start of the file.  Indexes of less than 4 would point to a chunk
+  header that lies inside the superblock and are therefore invalid.
+
+  Implementations must check that indexes are in range.  In the event that
+  an index is used that is less than 4 or is too large to be contained in
+  the file, implementations behave as if the chunk referred to by the
+  index is valid and contains zero bytes of data.
+
+
+DIRECTORIES
+
+  Directories are a particular sort of chunk.  The contents of the
+  directory is stored as the data of the chunk in the usual way.  The size
+  of this data must be a multiple of 48 bytes and must not be zero.
+
+  Implementations must check the size.  If it is not a multiple of 48
+  bytes or if it is zero then the directory is not valid.
+
+  The number of entries in a directory is equal to the size of the
+  directory data, divided by 48.  This is not the same as the number of
+  items in a directory -- which may be less than the number of entries due
+  to some entries being invalid.
+
+  Each entry in a directory appears sequentially.  All entries must be
+  sorted in strcmp order according to their names.
+
+
+DIRECTORY ENTRIES
+
+  Directory entries are 48 bytes in length and have the following format:
+
+     0        1        2        3        4        5        6        7
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+  0 |  type  | length | flags  |RESERVED|                                   |
+    +--------+--------+--------+--------+                                   +
+  1 |                                                                       |
+    +                                                                       +
+  2 |                                                                       |
+    +                                 name                                  +
+  3 |                                                                       |
+    +                                                                       +
+  4 |                                                                       |
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+  5 |                                 data                                  |
+    +--------+--------+--------+--------+--------+--------+--------+--------+
+
+  If 'length' is between 1 and 36 then it is the length of the name of
+  this entry and the name is stored directly in 'name' (with a proper
+  number of arbitrary padding bytes added to the end).  'name' is not
+  nul-terminated.
+
+  If 'length' is (nominally) 0, or is more than 36, then 'name' contains,
+  in its first 4 bytes, an index to a chunk that contains the name of this
+  directory entry (with no padding or nul-termination).  In this way,
+  names of arbitrary length are permitted.
+
+  'data' is interpreted according to the type of directory entry.
+
+  'flags' is a bitfield of flags, only one of which is currently defined:
+
+    0 - Locked:  The directory entry is locked.
+
+  All other flags must have their value cleared.
+
+  If the name of the entry ends in '/' then the 'type' field is ignored
+  and this entry is taken to represent another directory.  See 'DIRECTORY
+  ENTRIES: DIRECTORIES'
+
+  If the name of the entry does not end in '/' then this entry is taken to
+  represent a key.  'type' determines how the key is stored -- if it is
+  one of the letters 'b', 'y', 'n', 'q', 'i', 'u', 't', 'x' or 'd' then
+  the value of the key is stored directly in the entry; see 'DIRECTORY
+  ENTRIES: DIRECT VALUES'.  If 'type' is zero ('\0') then this directory
+  entry is invalid (so is not a directory item, and must not appear in
+  listings).  If 'type' is any other value (nominally 'v') then the value
+  of the key is stored in a separate chunk; see 'DIRECTORY ENTRIES:
+  INDIRECT VALUES'.
+
+  All areas marked RESERVED must be zero-filled.
+
+
+DIRECTORY ENTRIES: DIRECTORIES
+
+  The first 4 bytes of 'data' store an index that refers to another
+  directory.  If the index is zero then the directory entry is invalid (so
+  is not a directory item, and must not appear in listings).
+
+  If the index is non-zero then the entry is valid and is a directory item
+  and must appear in listings -- even in the event that the index is out
+  of bounds or there is some other problem with the directory.
+
+
+DIRECTORY ENTRIES: DIRECT VALUES
+
+  These directory entries store a GVariant value of the type given in the
+  type field.  The data for the value is always less than 8 bytes in size
+  and is stored directly in the 'data' field.
+
+  In general, this method can only be used to hold values that can be
+  written with a single atomic hardware write operation.  It is always
+  safe for the reader to read these values, but writers must ensure that
+  they are able to perform the write atomically, or they must be certain
+  that nobody else is looking.
+
+
+DIRECTORY ENTRIES: INDIRECT VALUES
+
+  These directory entries, like those for subdirectories, store an index
+  in the first 4 bytes of 'data'.  This index refers to a chunk that
+  contains the binary data for a GVariant value of type "v" (ie: variant).
+  The data that is stored at this key is the data that is stored inside of
+  that variant, not the variant itself.
+
+  If the index is zero then the directory entry is invalid (so is not a
+  directory item, and must not appear in listings).
+
+  If the index is non-zero then the entry is valid and is a directory item
+  and must appear in listings -- even in the event that the index is out
+  of bounds or there is some other problem with the chunk.
