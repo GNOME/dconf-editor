@@ -1,3 +1,5 @@
+DCONF FILE FORMAT
+
   This document describes the dconf database file format.
 
   The dconf database file is a binary file.  Its size must be a multiple
@@ -195,9 +197,7 @@ DIRECTORY ENTRIES: INDIRECT VALUES
   The data that is stored at this key is the data that is stored inside of
   that variant, not the variant itself.
 
-  If the index is zero then the directory entry is invalid (so is not a
-  directory item, and must not appear in listings).
-
-  If the index is non-zero then the entry is valid and is a directory item
-  and must appear in listings -- even in the event that the index is out
-  of bounds or there is some other problem with the chunk.
+  If the index is zero then the directory entry is still valid and must
+  must continue to appear in listings.  Accessing the key will result in
+  attempting to read a zero-length GVariant value of type "v".  This will
+  result in the value "()" being read.

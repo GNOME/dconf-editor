@@ -1,0 +1,54 @@
+DCONF FILE OPERATIONS
+
+  This document describes the methods by which the dconf writer modifies
+  the dconf database.
+
+
+UNSET OPERATION
+
+  The method used for performing an unset operation ensures that no
+  additional allocations will be required.  This means that the operation
+  cannot possibly fail.
+
+  The unset operation takes advantage of the fact that it is possible to
+  have a directory entry that is not a directory item (ie: an invalid
+  one).  Assuming the key to unset exists, the unset operation will create
+  exactly one invalid directory entry out of a previously valid one.
+
+  The directory entry that is made invalid is not necessarily that of the
+  key.  In the case that the key is the only valid key in a given
+  directory, the directory itself must be removed.  If that directory were
+  the only valid entry in its parent directory then it must be removed
+  (and so on).  If the key was the last key in the entire database, then
+  the root directory index must be set to zero.
+
+  The entry is made invalid in one of two ways:
+
+    - in the case of directories, the index is set to zero
+
+    - in the case of values, the type is set to zero ('\0')
+
+
+"SET LOCKED" OPERATION
+
+  The method used for performing a "set lock" operation ensures that no
+  additional allocations will be required.  This means that the operation
+  cannot possibly fail.
+
+  The operation occurs in the most obvious way -- the directory entry that
+  corresponds to the item requested for locking is looked up.  If it does
+  not exist, an error is returned.
+
+  When the item is found, its directory entry "locked" flag is set.
+
+
+SET OPERATION
+
+  The "set" operation is a special case of the "merge" operation in which
+  a single key is changed.
+
+
+MERGE OPERATION
+
+  The merge operation is very complicated and is not yet documented.
+  TODO.
