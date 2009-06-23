@@ -12,7 +12,6 @@
 
 #include "dconf-config.h"
 
-#include <gio/gio.h>
 #include <string.h>
 #include <stdio.h>
 
