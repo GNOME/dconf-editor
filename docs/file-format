@@ -105,10 +105,16 @@ DIRECTORIES
   The number of entries in a directory is equal to the size of the
   directory data, divided by 48.  This is not the same as the number of
   items in a directory -- which may be less than the number of entries due
-  to some entries being invalid.
+  to some entries being marked as deleted.
 
   Each entry in a directory appears sequentially.  All entries must be
-  sorted in strcmp order according to their names.
+  sorted in strcmp order according to their names -- even for entries
+  marked as deleted.  The names must always be valid and sorted in order
+  to facilitate binary search.  Invalid names or entries out of order can
+  result in failure to lookup items (even unrelated ones).
+
+  No two entries in one directory may have the same name -- even in the case
+  that one is deleted.
 
 
 DIRECTORY ENTRIES
@@ -140,6 +146,8 @@ DIRECTORY ENTRIES
   directory entry (with no padding or nul-termination).  In this way,
   names of arbitrary length are permitted.
 
+  The name may not contain '/' except as its last character.
+
   'data' is interpreted according to the type of directory entry.
 
   'flags' is a bitfield of flags, only one of which is currently defined:
@@ -148,32 +156,37 @@ DIRECTORY ENTRIES
 
   All other flags must have their value cleared.
 
-  If the name of the entry ends in '/' then the 'type' field is ignored
-  and this entry is taken to represent another directory.  See 'DIRECTORY
-  ENTRIES: DIRECTORIES'
+  If 'type' is a zero byte then the entry is marked as deleted.
+  Otherwise, the entry is not deleted (and must appear in directory
+  listings).  The meaning of a specific non-zero value of the 'type' field 
+  varies depending on the type of directory entry.
 
-  If the name of the entry does not end in '/' then this entry is taken to
-  represent a key.  'type' determines how the key is stored -- if it is
-  one of the letters 'b', 'y', 'n', 'q', 'i', 'u', 't', 'x' or 'd' then
-  the value of the key is stored directly in the entry; see 'DIRECTORY
-  ENTRIES: DIRECT VALUES'.  If 'type' is zero ('\0') then this directory
-  entry is invalid (so is not a directory item, and must not appear in
-  listings).  If 'type' is any other value (nominally 'v') then the value
-  of the key is stored in a separate chunk; see 'DIRECTORY ENTRIES:
-  INDIRECT VALUES'.
+  If the name of the entry ends in '/' then this entry is taken to
+  represent a subdirectory.  See 'DIRECTORY ENTRIES: SUBDIRECTORIES'.
+
+  Else, the entry is taken to represent a value.  See 'DIRECTORY ENTRIES:
+  VALUES'.
 
   All areas marked RESERVED must be zero-filled.
 
 
-DIRECTORY ENTRIES: DIRECTORIES
+DIRECTORY ENTRIES: SUBDIRECTORIES
+
+  The 'type' field may have any non-zero value (nominally '/').
 
   The first 4 bytes of 'data' store an index that refers to another
-  directory.  If the index is zero then the directory entry is invalid (so
-  is not a directory item, and must not appear in listings).
+  directory.
 
-  If the index is non-zero then the entry is valid and is a directory item
-  and must appear in listings -- even in the event that the index is out
-  of bounds or there is some other problem with the directory.
+
+DIRECTORY ENTRIES: VALUES
+
+  'type' determines how the value is stored -- if it is one of the letters
+  'b', 'y', 'n', 'q', 'i', 'u', 't', 'x' or 'd' then the value of the key
+  is stored directly in the entry; see 'DIRECTORY ENTRIES: DIRECT VALUES'.
+
+  If 'type' is any other non-zero value (nominally 'v') then the value of
+  the key is stored in a separate chunk; see 'DIRECTORY ENTRIES: INDIRECT
+  VALUES'.
 
 
 DIRECTORY ENTRIES: DIRECT VALUES
@@ -196,8 +209,3 @@ DIRECTORY ENTRIES: INDIRECT VALUES
   contains the binary data for a GVariant value of type "v" (ie: variant).
   The data that is stored at this key is the data that is stored inside of
   that variant, not the variant itself.
-
-  If the index is zero then the directory entry is still valid and must
-  must continue to appear in listings.  Accessing the key will result in
-  attempting to read a zero-length GVariant value of type "v".  This will
-  result in the value "()" being read.
