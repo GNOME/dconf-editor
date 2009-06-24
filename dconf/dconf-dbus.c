@@ -483,7 +483,7 @@ dconf_dbus_set (DConfDBus    *bus,
   dconf_dbus_from_gv (&variant, value);
   dbus_message_iter_close_container (&iter, &variant);
 
-  return dconf_dbus_blocking_call (bus, message, "s", sequence, error);
+  return dconf_dbus_blocking_call (bus, message, "u", sequence, error);
 }
 
 gboolean
@@ -510,7 +510,7 @@ dconf_dbus_unset (DConfDBus    *bus,
                                                      message,
                                                      -1, NULL);
 
-  return dconf_dbus_blocking_call (bus, message, "s", sequence, error);
+  return dconf_dbus_blocking_call (bus, message, "u", sequence, error);
 }
 
 gboolean
