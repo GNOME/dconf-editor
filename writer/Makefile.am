@@ -14,6 +14,7 @@ libdconf_writer_a_SOURCES = \
 
 noinst_HEADERS = \
 	dconf-writer-private.h	\
+	dconf-writer-config.h	\
 	dconf-writer.h
 
 noinst_PROGRAMS = dconf-writer
