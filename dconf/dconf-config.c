@@ -14,6 +14,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <errno.h>
 
 typedef struct
 {
@@ -21,72 +22,35 @@ typedef struct
   DConfDB *db;
 } DConfMapping;
 
-static void
-dconf_config_split (gchar  *line,
-                    gchar **parts,
-                    gint   *n_parts)
-{
-  gint i, n;
-
-  n = i = 0;
-
-  while (n < *n_parts)
-    {
-      for (i = i; line[i] && line[i] != '#'; i++)
-        if (!g_ascii_isspace (line[i]))
-          break;
-
-      if (!line[i] || line[i] == '#')
-        break;
-
-      parts[n++] = &line[i];
-
-      for (i = i; line[i] && line[i] != '#'; i++)
-        if (g_ascii_isspace (line[i]))
-          break;
-
-      if (!line[i] || line[i] == '#')
-        break;
-
-      line[i++] = '\0';
-    }
-
-  *n_parts = n;
-}
-
 static gboolean
 dconf_config_parse_mount_decl (GSList **mounts,
                                GSList  *mappings,
-                               gchar   *line,
+                               gint     argc,
+                               gchar  **argv,
                                GError **error)
 {
   gchar **db_strings;
   DConfMount *mount;
-  gchar *parts[3];
-  gint n_parts;
   gint i;
  
-  n_parts = 3;
-  dconf_config_split (line, parts, &n_parts);
-
-  if (n_parts != 2)
+  if (argc != 2)
     {
-      g_set_error (error, 0, 0,
-                   "expected list of files for mount declaration");
+      g_set_error (error, G_SHELL_ERROR, G_SHELL_ERROR_FAILED,
+                   "expected list of databases for mount declaration");
       return FALSE;
     }
 
-  if (!g_str_has_suffix (parts[0], "/"))
+  if (!g_str_has_suffix (argv[0], "/"))
     {
-      g_set_error (error, 0, 0,
-                   "mount point '%s' must end in /", parts[0]);
+      g_set_error (error, G_SHELL_ERROR, G_SHELL_ERROR_FAILED,
+                   "mount point '%s' must end in /", argv[0]);
       return FALSE;
     }
 
   mount = g_slice_new (DConfMount);
-  mount->prefix = g_strdup (parts[0]);
+  mount->prefix = g_strdup (argv[0]);
 
-  db_strings = g_strsplit (parts[1], ":", 0);
+  db_strings = g_strsplit (argv[1], ":", 0);
   mount->n_dbs = g_strv_length (db_strings);
   mount->dbs = g_new (DConfDB *, mount->n_dbs);
 
@@ -125,81 +89,132 @@ dconf_config_parse_mount_decl (GSList **mounts,
   return TRUE;
 }
 
+static gchar *
+dconf_config_expand_path (const gchar *path)
+{
+  if (path[0] == '~' && path[1] == '/')
+    return g_strdup_printf ("%s/%s", g_get_home_dir (), path + 2);
+  else
+    return g_strdup (path);
+}
+
 static gboolean
 dconf_config_parse_db_decl (GSList **mappings,
-                            gchar   *line,
+                            gint     argc,
+                            gchar  **argv,
                             GError **error)
 {
   DConfMapping *mapping;
-  gchar *parts[3];
-  gint n_parts;
 
-  n_parts = 3;
-  dconf_config_split (line, parts, &n_parts);
-
-  if (n_parts != 3)
+  if (argc != 3)
     {
       g_set_error (error, 0, 0,
-                   "expected a database name, file path and dbus path");
+                   "expected a database name, file path and dbus location");
       return FALSE;
     }
 
   mapping = g_slice_new (DConfMapping);
-  mapping->name = g_strdup (parts[0]);
+  mapping->name = g_strdup (argv[0]);
 
   mapping->db = g_slice_new (DConfDB);
   mapping->db->reader = NULL;
   mapping->db->bus = NULL;
 
-  mapping->db->filename = g_strdup (parts[1]);
-  mapping->db->bus_name = g_strdup (parts[2]);
+  mapping->db->filename = dconf_config_expand_path (argv[1]);
+  mapping->db->bus_name = g_strdup (argv[2]);
 
   *mappings = g_slist_prepend (*mappings, mapping);
 
   return TRUE;
 }
 
-static gboolean
-dconf_config_parse_line (GSList **mounts,
-                         GSList **mappings,
-                         gchar   *line,
-                         GError **error)
-{
-  gchar *hash;
-
-  hash = strchr (line, '#');
-  if (hash)
-    *hash = '\0';
-  g_strstrip (line);
-
-  if (line[0] == '/')
-    return dconf_config_parse_mount_decl (mounts, *mappings, line, error);
-
-  else if (line[0])
-    return dconf_config_parse_db_decl (mappings, line, error);
-
-  return TRUE;
-}
-
 static GSList *
-dconf_config_parse_file (const gchar  *filename,
-                         GError      **error)
+dconf_config_parse_file (GError **error)
 {
-  gchar buffer[4096];
-  GSList *mappings;
-  GSList *mounts;
-  FILE *conf;
+  GSList *mappings = NULL;
+  GSList *mounts = NULL;
+  gchar buffer[1024];
+  FILE *file;
+  gchar *tmp;
+  gint line;
 
-  conf = fopen (filename, "r");
-  g_assert (conf);
+  tmp = dconf_config_expand_path ("~/.config/dconf/dconf.conf");
+  file = fopen (tmp, "r");
 
-  mounts = mappings = NULL;
+  if (file == NULL)
+    {
+      gint saved_errno = errno;
 
-  while (fgets (buffer, sizeof buffer, conf))
-    if (!dconf_config_parse_line (&mounts, &mappings, buffer, error))
+      g_set_error (error, G_FILE_ERROR,
+                   g_file_error_from_errno (saved_errno),
+                   "Cannot open dconf config file %s: %s",
+                   tmp, g_strerror (saved_errno));
+      g_free (tmp);
+
       return NULL;
+    }
 
-  fclose (conf);
+  line = 0;
+  while (fgets (buffer, sizeof buffer, file))
+    {
+      GError *my_error = NULL;
+      gboolean success;
+      gchar **argv;
+      gint argc;
+
+      line++;
+
+      if (strlen (buffer) > 1000)
+        {
+          g_set_error (error, G_SHELL_ERROR, G_SHELL_ERROR_FAILED,
+                       "%s:%d: excessively long line", tmp, line);
+          fclose (file);
+          g_free (tmp);
+
+          return NULL;
+        }
+
+      if (!g_shell_parse_argv (buffer, &argc, &argv, &my_error))
+        {
+          if (my_error->domain == G_SHELL_ERROR &&
+              my_error->code == G_SHELL_ERROR_EMPTY_STRING)
+            {
+              g_clear_error (&my_error);
+              continue;
+            }
+
+          g_propagate_prefixed_error (error, my_error, "%s:%d: ", tmp, line);
+          fclose (file);
+          g_free (tmp);
+
+          return NULL;
+        }
+
+      if (argv[0][0] == '/')
+        success = dconf_config_parse_mount_decl (&mounts, mappings,
+                                                 argc, argv, error);
+      else
+        success = dconf_config_parse_db_decl (&mappings, argc, argv, error);
+
+      g_strfreev (argv);
+
+      if (!success)
+        {
+          g_prefix_error (error, "%s:%d: ", tmp, line);
+          fclose (file);
+          g_free (tmp);
+
+          return NULL;
+        }
+    }
+
+  fclose (file);
+
+  if (mounts == NULL)
+    g_set_error (error, G_SHELL_ERROR, G_SHELL_ERROR_FAILED,
+                 "%s: no mountpoints declared", tmp);
+
+  g_free (tmp);
 
   while (mappings)
     {
@@ -217,21 +232,12 @@ GSList *
 dconf_config_read (void)
 {
   GError *error = NULL;
-  gchar *conf_file;
   GSList *mounts;
 
-  conf_file = g_strdup_printf ("%s/dconf/dconf.conf",
-                               g_get_user_config_dir ());
-  mounts = dconf_config_parse_file (conf_file, &error);
-  g_free (conf_file);
+  mounts = dconf_config_parse_file (&error);
 
   if (mounts == NULL)
-    {
-      if (error)
-        g_error ("failed: %s\n", error->message);
-      else
-        g_error ("failed with no message");
-    }
+    g_error ("failed: %s\n", error->message);
 
   return mounts; 
 }
