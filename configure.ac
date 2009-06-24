@@ -14,6 +14,7 @@ AC_OUTPUT([
   common/Makefile
   editor/Makefile
   writer/Makefile
+  config/Makefile
   dconf/Makefile
   dconf/dconf.pc
   bin/Makefile

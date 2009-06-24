@@ -138,7 +138,7 @@ dconf_config_parse_file (GError **error)
   gchar *tmp;
   gint line;
 
-  tmp = dconf_config_expand_path ("~/.config/dconf/dconf.conf");
+  tmp = g_strdup ("/etc/xdg/dconf/dconf.conf");
   file = fopen (tmp, "r");
 
   if (file == NULL)

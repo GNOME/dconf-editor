@@ -1,1 +1,1 @@
-SUBDIRS = common dconf bin editor writer
+SUBDIRS = common dconf bin editor writer config
