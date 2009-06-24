@@ -1,6 +1,6 @@
 dconf-get
 dconf-list
+dconf-lock
 dconf-reset
 dconf-set
-dconf-set-locked
 dconf-watch
