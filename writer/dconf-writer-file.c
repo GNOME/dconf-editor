@@ -156,7 +156,7 @@ dconf_writer_create (DConfWriter  *writer,
     return FALSE;
 
   new_writer.data.super = contents;
-  new_writer.end = writer->data.blocks +
+  new_writer.end = new_writer.data.blocks +
                    (bytes / sizeof (struct chunk_header));
 
   new_writer.data.super->signature[0] = DCONF_SIGNATURE_0;

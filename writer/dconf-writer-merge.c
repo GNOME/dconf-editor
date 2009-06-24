@@ -413,11 +413,24 @@ dconf_writer_merge_write_to_entry (DConfWriter                *writer,
     }
   else
     {
+      GVariant *variant;
+      gpointer data;
+      guint32 index;
+
       g_assert (prefix[0] == '\0');
       g_assert (count == 1);
       g_assert (names[0][0] == '\0');
 
-      /* XXX do actual write. */
+      variant = g_variant_ref_sink (g_variant_new_variant (values[0]));
+
+      data = dconf_writer_allocate (writer,
+                                    g_variant_get_size (variant),
+                                    &index);
+      g_variant_store (variant, data);
+
+      g_variant_unref (variant);
+
+      dconf_writer_set_index (writer, &entry->data.index, index, merging);
     }
 
   merge_state_end_consume_new (state);
