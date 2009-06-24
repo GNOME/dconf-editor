@@ -421,6 +421,43 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
     }
 }
 
+static gboolean
+dconf_dbus_blocking_call (DConfDBus    *bus,
+                          DBusMessage  *message,
+                          const gchar  *reply_signature,
+                          guint32      *sequence,
+                          GError      **error)
+{
+  DBusError d_error = { 0, };
+  DBusMessage *reply;
+
+  reply = dbus_connection_send_with_reply_and_block (bus->connection,
+                                                     message, -1, &d_error);
+  dbus_message_unref (message);
+
+  if (reply == NULL)
+    {
+      g_set_error (error, 0, 0, "%s: %s", d_error.name, d_error.message);
+      return FALSE;
+    }
+
+  if (!dbus_message_has_signature (reply, reply_signature))
+    {
+      g_set_error (error, 0, 0, "DBus reply message has incorrect signature.");
+      dbus_message_unref (reply);
+      return FALSE;
+    }
+
+  if (sequence)
+    dbus_message_get_args (reply, NULL,
+                           DBUS_TYPE_UINT32, sequence,
+                           DBUS_TYPE_INVALID);
+
+  dbus_message_unref (reply);
+
+  return TRUE;
+}
+
 gboolean
 dconf_dbus_set (DConfDBus    *bus,
                 const gchar  *key,
@@ -430,7 +467,6 @@ dconf_dbus_set (DConfDBus    *bus,
 {
   DBusMessageIter iter, variant;
   DBusMessage *message;
-  DBusMessage *reply;
 
   {
     gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
@@ -447,14 +483,7 @@ dconf_dbus_set (DConfDBus    *bus,
   dconf_dbus_from_gv (&variant, value);
   dbus_message_iter_close_container (&iter, &variant);
 
-  reply = dbus_connection_send_with_reply_and_block (bus->connection,
-                                                     message,
-                                                     -1, NULL);
-
-  dbus_message_unref (reply);
-  *sequence = 123;
-
-  return TRUE;
+  return dconf_dbus_blocking_call (bus, message, "s", sequence, error);
 }
 
 gboolean
@@ -481,10 +510,7 @@ dconf_dbus_unset (DConfDBus    *bus,
                                                      message,
                                                      -1, NULL);
 
-  dbus_message_unref (reply);
-  *sequence = 123;
-
-  return TRUE;
+  return dconf_dbus_blocking_call (bus, message, "s", sequence, error);
 }
 
 gboolean
@@ -495,7 +521,6 @@ dconf_dbus_set_locked (DConfDBus    *bus,
 {
   DBusMessageIter iter;
   DBusMessage *message;
-  DBusMessage *reply;
   dbus_bool_t val;
 
   {
@@ -511,15 +536,8 @@ dconf_dbus_set_locked (DConfDBus    *bus,
   dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
   dbus_message_iter_append_basic (&iter, DBUS_TYPE_BOOLEAN, &val);
 
-  reply = dbus_connection_send_with_reply_and_block (bus->connection,
-                                                     message,
-                                                     -1, NULL);
-
-  dbus_message_unref (reply);
-
-  return TRUE;
+  return dconf_dbus_blocking_call (bus, message, "", NULL, error);
 }
-
 
 typedef struct
 {
