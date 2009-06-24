@@ -522,3 +522,35 @@ dconf_set (const gchar  *key,
 
   return dconf_dbus_set (mount->dbs[0]->bus, key, value, sequence, error);
 }
+
+gboolean
+dconf_reset (const gchar  *key,
+             guint32      *sequence,
+             GError      **error)
+{
+  DConfMount *mount;
+
+  g_assert (dconf_is_key (key) || dconf_is_path (key));
+
+  if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
+    return FALSE;
+
+  return dconf_dbus_unset (mount->dbs[0]->bus, key, sequence, error);
+}
+
+gboolean
+dconf_set_locked (const gchar  *key,
+                  gboolean      locked,
+                  GError      **error)
+{
+  DConfMount *mount;
+
+  g_assert (dconf_is_key (key));
+
+  if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
+    return FALSE;
+
+  return dconf_dbus_set_locked (mount->dbs[0]->bus, key, locked, error);
+}
+
+

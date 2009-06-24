@@ -457,6 +457,70 @@ dconf_dbus_set (DConfDBus    *bus,
   return TRUE;
 }
 
+gboolean
+dconf_dbus_unset (DConfDBus    *bus,
+                  const gchar  *key,
+                  guint32      *sequence,
+                  GError      **error)
+{
+  DBusMessageIter iter;
+  DBusMessage *message;
+  DBusMessage *reply;
+
+  {
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    message = dbus_message_new_method_call (bus_name, bus->name,
+                                            "ca.desrt.dconf", "Unset");
+    g_free (bus_name);
+  }
+
+  dbus_message_iter_init_append (message, &iter);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
+
+  reply = dbus_connection_send_with_reply_and_block (bus->connection,
+                                                     message,
+                                                     -1, NULL);
+
+  dbus_message_unref (reply);
+  *sequence = 123;
+
+  return TRUE;
+}
+
+gboolean
+dconf_dbus_set_locked (DConfDBus    *bus,
+                       const gchar  *key,
+                       gboolean      locked,
+                       GError      **error)
+{
+  DBusMessageIter iter;
+  DBusMessage *message;
+  DBusMessage *reply;
+  dbus_bool_t val;
+
+  {
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    message = dbus_message_new_method_call (bus_name, bus->name,
+                                            "ca.desrt.dconf", "Unset");
+    g_free (bus_name);
+  }
+
+  val = !!locked;
+
+  dbus_message_iter_init_append (message, &iter);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_BOOLEAN, &val);
+
+  reply = dbus_connection_send_with_reply_and_block (bus->connection,
+                                                     message,
+                                                     -1, NULL);
+
+  dbus_message_unref (reply);
+
+  return TRUE;
+}
+
+
 typedef struct
 {
   DConfDBusAsyncReadyCallback callback;

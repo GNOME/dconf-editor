@@ -40,6 +40,14 @@ gboolean                dconf_set                                       (const g
                                                                          guint32                  *sequence,
                                                                          GError                  **error);
 
+gboolean                dconf_set_locked                                (const gchar              *key,
+                                                                         gboolean                  locked,
+                                                                         GError                  **error);
+
+gboolean                dconf_reset                                     (const gchar              *key,
+                                                                         guint32                  *sequence,
+                                                                         GError                  **error);
+
 void                    dconf_merge_tree_async                          (const gchar              *prefix,
                                                                          GTree                    *tree,
                                                                          DConfAsyncReadyCallback   callback,

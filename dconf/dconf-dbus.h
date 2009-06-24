@@ -34,6 +34,16 @@ gboolean                dconf_dbus_set                                  (DConfDB
                                                                          guint32                      *sequence,
                                                                          GError                      **error);
 
+gboolean                dconf_dbus_unset                                (DConfDBus                    *bus,
+                                                                         const gchar                  *path,
+                                                                         guint32                      *sequence,
+                                                                         GError                      **error);
+
+gboolean                dconf_dbus_set_locked                           (DConfDBus                    *bus,
+                                                                         const gchar                  *path,
+                                                                         gboolean                      locked,
+                                                                         GError                      **error);
+
 void                    dconf_dbus_merge_tree_async                     (DConfDBus                    *bus,
                                                                          const gchar                  *prefix,
                                                                          GTree                        *values,
