@@ -239,64 +239,6 @@ dconf_writer_set_entry_name (DConfWriter               *writer,
     }
 }
 
-
-
-static gboolean
-dconf_writer_open (DConfWriter *writer)
-{
-  gpointer contents;
-  struct stat buf;
-  gint fd;
-
-  fd = open (writer->filename, O_RDWR);
-
-  if (fd < 0)
-    return FALSE;
-
-  if (fstat (fd, &buf))
-    {
-      g_assert_not_reached ();
-      close (fd);
-
-      return FALSE;
-    }
-
-  g_assert (buf.st_size % 4194304 == 0);
-
-  contents = mmap (NULL, buf.st_size,
-                   PROT_READ | PROT_WRITE,
-                   MAP_SHARED, fd, 0);
-
-  writer->data.super = contents;
-  writer->end = &writer->data.blocks[buf.st_size / 8];
-
-  return TRUE;
-}
-
-DConfWriter *
-dconf_writer_new (const gchar  *filename,
-                  GError      **error)
-{
-  DConfWriter *writer;
-
-  writer = g_slice_new (DConfWriter);
-  writer->filename = g_strdup (filename);
-  writer->extras = g_ptr_array_new ();
-
-  writer->changed_pointer = NULL;
-  writer->changed_value = 0;
-  writer->data.super = NULL;
-  writer->end = NULL;
-
-  if (dconf_writer_open (writer))
-    return writer;
-
-  if (!dconf_writer_create (writer, error))
-    return NULL;
-
-  return writer;
-}
-
 gboolean
 dconf_writer_set (DConfWriter  *writer,
                   const gchar  *key,

@@ -12,6 +12,7 @@
 
 #include "dconf-writer-private.h"
 
+#include <sys/stat.h>
 #include <sys/mman.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -207,4 +208,136 @@ dconf_writer_create (DConfWriter  *writer,
   *writer = new_writer;
 
   return TRUE;
+}
+
+static gboolean
+dconf_writer_open (DConfWriter  *writer,
+                   GError      **error)
+{
+  struct superblock *super;
+  struct stat buf;
+  gint fd;
+
+  if ((fd = open (writer->filename, O_RDWR)) < 0)
+    {
+      gint saved_errno = errno;
+ 
+      g_set_error (error, G_FILE_ERROR,
+                   g_file_error_from_errno (saved_errno),
+                   "failed to open existing dconf database %s: %s",
+                   writer->filename, g_strerror (saved_errno));
+
+      return FALSE;
+    }
+
+  if (fstat (fd, &buf))
+    {
+      gint saved_errno = errno;
+ 
+      g_set_error (error, G_FILE_ERROR,
+                   g_file_error_from_errno (saved_errno),
+                   "failed to fstat existing dconf database %s: %s",
+                   writer->filename, g_strerror (saved_errno));
+      close (fd);
+
+      return FALSE;
+    }
+
+  if (buf.st_size < sizeof (struct superblock))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "existing dconf database file %s is too small "
+                   "(%ld < 32 bytes)", writer->filename, buf.st_size);
+      close (fd);
+
+      return FALSE;
+    }
+
+  if (buf.st_size % sizeof (struct chunk_header))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "existing dconf database file %s must be a multiple of "
+                   "8 bytes in size (is %ld bytes)",
+                   writer->filename, buf.st_size);
+      close (fd);
+
+      return FALSE;
+     }
+
+  if ((super = mmap (NULL, buf.st_size,
+                     PROT_READ | PROT_WRITE,
+                     MAP_SHARED, fd, 0)) == MAP_FAILED)
+    {
+      gint saved_errno = errno;
+
+      g_set_error (error, G_FILE_ERROR,
+                   g_file_error_from_errno (saved_errno),
+                   "failed to memory-map existing dconf database file %s: %s",
+                   writer->filename, g_strerror (saved_errno));
+      close (fd);
+
+      return FALSE;
+    }
+
+  close (fd);
+
+  if (super->signature[0] != DCONF_SIGNATURE_0 ||
+      super->signature[1] != DCONF_SIGNATURE_1)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   "existing dconf database file %s has invalid signature",
+                   writer->filename);
+
+      munmap (super, buf.st_size);
+
+      return FALSE;
+    }
+
+  writer->data.super = super;
+  writer->end = writer->data.blocks + buf.st_size / 8;
+
+  return TRUE;
+}
+
+DConfWriter *
+dconf_writer_new (const gchar  *filename,
+                  GError      **error)
+{
+  GError *my_error = NULL;
+  DConfWriter *writer;
+
+  writer = g_slice_new (DConfWriter);
+  writer->filename = g_strdup (filename);
+  writer->extras = g_ptr_array_new ();
+
+  writer->changed_pointer = NULL;
+  writer->changed_value = 0;
+  writer->data.super = NULL;
+  writer->end = NULL;
+
+  if (dconf_writer_open (writer, &my_error))
+    return writer;
+
+  if (my_error->domain != G_FILE_ERROR &&
+      my_error->code != G_FILE_ERROR_NOENT)
+    {
+      g_propagate_error (error, my_error);
+
+      g_free (writer->filename);
+      g_slice_free (DConfWriter, writer);
+
+      return FALSE;
+    }
+
+  g_clear_error (&my_error);
+
+  if (!dconf_writer_create (writer, error))
+    {
+      g_free (writer->filename);
+      g_slice_free (DConfWriter, writer);
+
+      return NULL;
+    }
+
+  return writer;
 }
