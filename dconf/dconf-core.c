@@ -118,7 +118,7 @@ append_to_array (gpointer               key,
                  G_GNUC_UNUSED gpointer value,
                  gpointer               data)
 {
-  *((*(gchar ***) data)++) = (gchar *) key;
+  *((*(gchar ***) data)++) = g_strdup ((gchar *) key);
   return FALSE;
 }
 
@@ -190,7 +190,8 @@ dconf_list (const gchar *path,
       gchar **list;
       GTree *tree;
 
-      tree = g_tree_new ((GCompareFunc) strcmp);
+      tree = g_tree_new_full ((GCompareDataFunc) strcmp,
+                              NULL, g_free, NULL);
 
       mount = dconf_demux_path (&path, TRUE, NULL);
 
