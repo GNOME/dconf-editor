@@ -162,7 +162,7 @@ dconf_dbus_writer_is_call (DConfDBusWriter *writer,
                             const gchar      *signature)
 {
   return dbus_message_is_method_call (writer->this,
-                                      "ca.desrt.dconf", method) &&
+                                      "ca.desrt.dconf.writer", method) &&
          dbus_message_has_signature (writer->this, signature);
 }
 
@@ -188,7 +188,7 @@ dconf_dbus_writer_reply (DConfDBusWriter *writer,
   else
     {
       reply = dbus_message_new_error (writer->this,
-                                      "ca.desrt.dconf.error",
+                                      "ca.desrt.dconf.writer.error",
                                       error->message);
       g_error_free (error);
     }
@@ -198,15 +198,19 @@ dconf_dbus_writer_reply (DConfDBusWriter *writer,
 
 static void
 dconf_dbus_writer_notify (DConfDBusWriter  *writer,
-                           const gchar       *prefix,
-                           const gchar      **items,
-                           guint32            sequence)
+                           const gchar     *prefix,
+                           const gchar    **items,
+                           guint32          sequence)
 {
   const gchar *my_items[] = { "", NULL };
   DBusMessageIter iter, array;
   DBusMessage *notify;
+  gchar *path;
 
-  notify = dbus_message_new_signal ("/user", "ca.desrt.dconf", "Notify");
+  path = g_strdup_printf ("/%s", writer->name);
+  notify = dbus_message_new_signal (path, "ca.desrt.dconf.writer", "Notify");
+  g_free (path);
+
   dbus_message_iter_init_append (notify, &iter);
   dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &prefix);
   dbus_message_iter_open_container (&iter, DBUS_TYPE_ARRAY, "s", &array);
@@ -296,10 +300,12 @@ dconf_dbus_writer_filter (DBusConnection *connection,
 {
   DConfDBusWriter *writer = user_data;
   DBusMessage *reply;
+  const gchar *path;
 
   g_assert (connection == writer->bus);
+  path = dbus_message_get_path (message);
 
-  if (dbus_message_has_path (message, "/user"))
+  if (path && strcmp (path + 1, writer->name) == 0)
     {
       writer->this = message;
       reply = dconf_dbus_writer_handle_message (writer);
@@ -373,7 +379,7 @@ main (int argc, char **argv)
       return 1;
     }
 
-  name = g_strdup_printf ("ca.desrt.dconf.%s", writer.name);
+  name = g_strdup_printf ("ca.desrt.dconf.writer.%s", writer.name);
   if (dbus_bus_request_name (writer.bus, name, 0, &d_error) !=
       DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
     {

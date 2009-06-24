@@ -17,6 +17,6 @@ noinst_HEADERS = \
 	dconf-writer-config.h	\
 	dconf-writer.h
 
-noinst_PROGRAMS = dconf-writer
+libexec_PROGRAMS = dconf-writer
 dconf_writer_LDADD = $(glib_LIBS) $(dbus_LIBS) libdconf-writer.a
 dconf_writer_SOURCES = dconf-dbus-writer.c

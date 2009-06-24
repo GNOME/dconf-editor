@@ -99,7 +99,7 @@ dconf_dbus_filter (DBusConnection *connection,
 
   g_assert (bus->connection == connection);
 
-  if (!dbus_message_is_signal (message, "ca.desrt.dconf", "Notify"))
+  if (!dbus_message_is_signal (message, "ca.desrt.dconf.writer", "Notify"))
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 
   if (!dbus_message_has_signature (message, "sasu"))
@@ -186,14 +186,14 @@ dconf_dbus_make_rule (DConfDBus   *bus,
 
   if (relative[0])
     return g_strdup_printf ("type='signal',"
-                            "interface='ca.desrt.dconf',"
+                            "interface='ca.desrt.dconf.writer',"
                             "member='Notify',"
                             "path='%s',"
                             "arg0path='%s'",
                             bus->name, relative);
   else
     return g_strdup_printf ("type='signal',"
-                            "interface='ca.desrt.dconf',"
+                            "interface='ca.desrt.dconf.writer',"
                             "member='Notify',"
                             "path='%s'", bus->name);
 }
@@ -469,9 +469,10 @@ dconf_dbus_set (DConfDBus    *bus,
   DBusMessage *message;
 
   {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
+                                       bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf", "Set");
+                                            "ca.desrt.dconf.writer", "Set");
     g_free (bus_name);
   }
 
@@ -497,9 +498,10 @@ dconf_dbus_unset (DConfDBus    *bus,
   DBusMessage *reply;
 
   {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
+                                       bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf", "Unset");
+                                            "ca.desrt.dconf.writer", "Unset");
     g_free (bus_name);
   }
 
@@ -526,7 +528,8 @@ dconf_dbus_set_locked (DConfDBus    *bus,
   {
     gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf", "SetLocked");
+                                            "ca.desrt.dconf.writer",
+                                            "SetLocked");
     g_free (bus_name);
   }
 
@@ -612,7 +615,7 @@ dconf_dbus_merge_tree_async (DConfDBus                   *bus,
   {
     gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf", "Merge");
+                                            "ca.desrt.dconf.writer", "Merge");
     g_free (bus_name);
   }
 
