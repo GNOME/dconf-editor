@@ -19,7 +19,6 @@
 struct OPAQUE_TYPE__DConfWriter
 {
   gchar *filename;
-  gchar *floating;
 
   union
   {
@@ -79,5 +78,9 @@ guint32
 dconf_writer_get_index (DConfWriter            *writer,
                         const volatile guint32 *pointer,
                         gboolean                for_copy);
+
+gboolean
+dconf_writer_create (DConfWriter  *writer,
+                     GError      **error);
 
 #endif /* _dconf_writer_private_h_ */

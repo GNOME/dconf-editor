@@ -273,63 +273,6 @@ dconf_writer_open (DConfWriter *writer)
   return TRUE;
 }
 
-static gboolean
-dconf_writer_create (DConfWriter *writer)
-{
-  /* the sun came up
-   * shot through the blinds
-   *
-   * today was the day
-   * and i was already behind
-   */
-  gpointer contents;
-  int fd;
-
-  writer->floating = g_strdup_printf ("%s.XXXXXX", writer->filename);
-
-  g_assert (writer->data.super == NULL);
-
-  /* XXX flink() plz */
-  fd = g_mkstemp (writer->floating);
-  posix_fallocate (fd, 0, 4194304);
-
-  contents = mmap (NULL, 4194304,
-                   PROT_READ | PROT_WRITE,
-                   MAP_SHARED, fd, 0);
-
-  writer->data.super = contents;
-  writer->data.super->signature[0] = DCONF_SIGNATURE_0;
-  writer->data.super->signature[1] = DCONF_SIGNATURE_1;
-  writer->data.super->next = sizeof (struct superblock) / 8;
-  writer->data.super->root_index = 0;
-  writer->end = &writer->data.blocks[4194304/8];
-
-  return TRUE;
-}
-
-static gboolean
-dconf_writer_post (DConfWriter  *writer,
-                   GError      **error)
-{
-  if (g_rename (writer->floating, writer->filename))
-    {
-      gint saved_error = errno;
-
-      g_set_error (error, G_FILE_ERROR,
-                   g_file_error_from_errno (saved_error),
-                   "rename '%s' to '%s': %s",
-                   writer->floating, writer->filename,
-                   g_strerror (saved_error));
-
-      return FALSE;
-    }
-
-  g_free (writer->floating);
-  writer->floating = NULL;
-
-  return TRUE;
-}
-
 DConfWriter *
 dconf_writer_new (const gchar  *filename,
                   GError      **error)
@@ -338,20 +281,18 @@ dconf_writer_new (const gchar  *filename,
 
   writer = g_slice_new (DConfWriter);
   writer->filename = g_strdup (filename);
-  writer->data.super = NULL;
-  writer->floating = NULL;
   writer->extras = g_ptr_array_new ();
+
   writer->changed_pointer = NULL;
   writer->changed_value = 0;
+  writer->data.super = NULL;
+  writer->end = NULL;
 
   if (dconf_writer_open (writer))
     return writer;
 
-  if (!dconf_writer_create (writer))
-    g_assert_not_reached ();
-
-  if (!dconf_writer_post (writer, NULL))
-    g_error ("could not post\n");
+  if (!dconf_writer_create (writer, error))
+    return NULL;
 
   return writer;
 }

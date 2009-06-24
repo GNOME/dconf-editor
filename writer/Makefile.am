@@ -4,6 +4,7 @@ AM_CFLAGS = -I$(top_srcdir)/common $(glib_CFLAGS) $(dbus_CFLAGS) \
 noinst_LIBRARIES = libdconf-writer.a
 
 libdconf_writer_a_SOURCES = \
+	dconf-writer-file.c	\
 	dconf-writer.c		\
 	dconf-writer-merge.c	\
 	dconf-writer-unset.c    \
