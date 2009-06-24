@@ -526,7 +526,7 @@ dconf_dbus_set_locked (DConfDBus    *bus,
   {
     gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf", "Unset");
+                                            "ca.desrt.dconf", "SetLocked");
     g_free (bus_name);
   }
 
