@@ -31,7 +31,7 @@ struct OPAQUE_TYPE__DConfReader
   union
   {
     const volatile struct superblock *super;
-    const volatile struct block_header *blocks;
+    const volatile struct chunk_header *blocks;
   } data;
 
   const volatile void *end;
@@ -44,6 +44,10 @@ dconf_reader_new (const gchar *filename)
 {
   DConfReader *reader;
 
+  g_assert (sizeof (struct superblock) == 32);
+  g_assert (sizeof (struct dir_entry) == 48);
+  g_assert (sizeof (struct chunk_header) == 8);
+
   reader = g_slice_new0 (DConfReader);
   reader->filename = g_strdup (filename);
 
@@ -53,7 +57,8 @@ dconf_reader_new (const gchar *filename)
 static gboolean
 dconf_reader_ensure_valid (DConfReader *reader)
 {
-  if (reader->data.super && reader->data.super->invalid)
+  if (reader->data.super &&
+      (reader->data.super->flags & DCONF_FLAG_STALE))
     {
       g_mapped_file_unref (reader->mapped_file);
       reader->mapped_file = NULL;
@@ -76,7 +81,7 @@ dconf_reader_ensure_valid (DConfReader *reader)
       data = g_mapped_file_get_contents (mapped_file);
       size = g_mapped_file_get_length (mapped_file);
 
-      if (size < 4096)
+      if (size < sizeof (struct superblock))
         {
           g_mapped_file_unref (mapped_file);
           return FALSE;
@@ -106,11 +111,16 @@ dconf_reader_past_end (DConfReader         *reader,
 }
 
 static const volatile void *
-dconf_reader_get_block (DConfReader *reader,
+dconf_reader_get_chunk (DConfReader *reader,
                         guint32      index,
                         guint32     *size)
 {
-  const volatile struct block_header *header;
+  const volatile struct chunk_header *header;
+
+  *size = 0;
+
+  if (index < 4)
+    return NULL;
 
   header = &reader->data.blocks[index];
 
@@ -139,16 +149,12 @@ dconf_reader_get_dir (DConfReader *reader,
   const volatile struct dir_entry *entries;
   guint32 size;
 
-  if ((entries = dconf_reader_get_block (reader, index, &size)) == NULL)
-    {
-      *n_items = 0;
-      return NULL;
-    }
+  entries = dconf_reader_get_chunk (reader, index, &size);
 
   if (size % sizeof (struct dir_entry))
     {
-      *n_items = 0;
-      return NULL;
+      entries = NULL;
+      size = 0;
     }
 
   *n_items = size / sizeof (struct dir_entry);
@@ -163,8 +169,9 @@ dconf_reader_get_entry_name (DConfReader                     *reader,
 {
   *name_length = entry->namelen;
 
-  if (*name_length > sizeof entry->name.direct)
-    return dconf_reader_get_block (reader, entry->name.index, name_length);
+  if (*name_length == 0 || *name_length > sizeof entry->name.direct)
+    return dconf_reader_get_chunk (reader, entry->name.index, name_length);
+
   else
     return entry->name.direct;
 }
@@ -187,15 +194,37 @@ dconf_reader_find_entry (DConfReader                     *reader,
       entry_name = dconf_reader_get_entry_name (reader, entry,
                                                 &entry_namelen);
 
-      if (entry_name == NULL)
-        continue;
-
-      if (entry_namelen == name_length &&
+      if (entry->type &&
+          entry_namelen == name_length &&
           memcmp ((gchar *) entry_name, name, name_length) == 0)
         return entry;
     }
 
   return NULL;
+}
+
+static const volatile struct dir_entry *
+dconf_reader_find_next (DConfReader                      *reader,
+                        const volatile struct dir_entry  *entries,
+                        gint                              n_entries,
+                        const gchar                      *name,
+                        const gchar                     **next_name)
+{
+  const gchar *next;
+
+  for (next= name; *next; next++)
+    if (*next== '/')
+      {
+        next++;
+        break;
+      }
+
+  if (next_name)
+    *next_name = next;
+
+  return dconf_reader_find_entry (reader,
+                                  entries, n_entries,
+                                  name, next - name);
 }
 
 static const volatile struct dir_entry *
@@ -206,34 +235,24 @@ dconf_reader_get_entry (DConfReader *reader,
 {
   const volatile struct dir_entry *entries;
   const volatile struct dir_entry *entry;
+  const gchar *next;
   gint n_entries;
-  gint namelen;
 
   entries = dconf_reader_get_dir (reader, starting_index, &n_entries);
+  entry = dconf_reader_find_next (reader, entries, n_entries, name, &next);
 
-  if (entries == NULL)
-    return NULL;
+  if (entry != NULL)
+    {
+      if (locked && entry->locked)
+        *locked = TRUE;
 
-  for (namelen = 0; name[namelen]; namelen++)
-    if (name[namelen] == '/')
-      {
-        namelen++;
-        break;
-      }
+      if (*next)
+        return dconf_reader_get_entry (reader, next,
+                                       entry->data.index,
+                                       locked);
+    }
 
-  entry = dconf_reader_find_entry (reader, entries, n_entries, name, namelen);
-
-  if (entry == NULL)
-    return NULL;
-
-  if (entry->locked)
-    *locked = TRUE;
-
-  if (name[namelen] == '\0')
-    return entry;
-
-  return dconf_reader_get_entry (reader, name + namelen,
-                                 entry->data.index, locked);
+  return entry;
 }
 
 void
@@ -243,66 +262,83 @@ dconf_reader_get (DConfReader  *reader,
                   gboolean     *locked)
 {
   const volatile struct dir_entry *entry;
-  guint32 index;
   char type;
-
-  g_assert (key[0]);
 
   if (!dconf_reader_ensure_valid (reader))
     return;
 
-  index = reader->data.super->root_index;
-  entry = dconf_reader_get_entry (reader, key, index, locked);
+  if (reader->data.super->flags & DCONF_FLAG_LOCKED)
+    *locked = TRUE;
 
-  if (entry == NULL)
+  entry = dconf_reader_get_entry (reader, key,
+                                  reader->data.super->root_index,
+                                  locked);
+
+  if (!entry || !(type = entry->type))
     return;
-
-  type = entry->type;
 
   if (*value)
     g_variant_unref (*value);
 
-  if (type == 'v')
+  switch (type)
     {
-      const volatile void *data;
-      gsize size;
+     case G_VARIANT_TYPE_CLASS_BOOLEAN:
+      *value = g_variant_new_boolean (entry->data.byte);
+      g_variant_ref_sink (*value);
+      break;
 
-      data = dconf_reader_get_block (reader, entry->data.index, &size);
+     case G_VARIANT_TYPE_CLASS_BYTE:
+      *value = g_variant_new_byte (entry->data.byte);
+      g_variant_ref_sink (*value);
+      break;
 
-      if (data)
-        *value = g_variant_load (NULL, (gpointer) data, size, 0);
-    }
+     case G_VARIANT_TYPE_CLASS_INT16:
+      *value = g_variant_new_int16 (entry->data.uint16);
+      g_variant_ref_sink (*value);
+      break;
 
-  else
-    {
-      guint64 data = entry->data.direct;
-      gsize size;
+     case G_VARIANT_TYPE_CLASS_UINT16:
+      *value = g_variant_new_uint16 (entry->data.uint16);
+      g_variant_ref_sink (*value);
+      break;
 
-      switch (type)
-        {
-          case 'y': case 'b':
-            size = 1;
-            break;
+     case G_VARIANT_TYPE_CLASS_INT32:
+      *value = g_variant_new_int32 (entry->data.uint32);
+      g_variant_ref_sink (*value);
+      break;
 
-          case 'n': case 'q':
-            size = 2;
-            break;
+     case G_VARIANT_TYPE_CLASS_UINT32:
+      *value = g_variant_new_uint32 (entry->data.uint32);
+      g_variant_ref_sink (*value);
+      break;
 
-          case 'i': case 'u':
-            size = 4;
-            break;
+     case G_VARIANT_TYPE_CLASS_INT64:
+      *value = g_variant_new_int64 (entry->data.uint64);
+      g_variant_ref_sink (*value);
+      break;
 
-          case 'x': case 't': case 'd':
-            size = 8;
-            break;
+     case G_VARIANT_TYPE_CLASS_UINT64:
+      *value = g_variant_new_uint64 (entry->data.uint64);
+      g_variant_ref_sink (*value);
+      break;
 
-          default:
-            g_warning ("dconf: invalid type '%c' for key %s", type, key);
-            *value = NULL;
-            return;
-        }
+     case G_VARIANT_TYPE_CLASS_DOUBLE:
+      *value = g_variant_new_double (entry->data.floating);
+      g_variant_ref_sink (*value);
+      break;
 
-      *value = g_variant_load ((GVariantType *) &type, &data, size, 0);
+     default:
+      {
+        const volatile void *data;
+        guint32 size;
+
+        data = dconf_reader_get_chunk (reader, entry->data.index, &size);
+
+        *value = g_variant_from_data (NULL, (gconstpointer) data, size, 0,
+                                      (GDestroyNotify) g_mapped_file_unref,
+                                      reader->mapped_file);
+        break;
+      }
     }
 }
 
@@ -322,7 +358,7 @@ dconf_reader_list (DConfReader *reader,
 
   index = reader->data.super->root_index;
 
-  if (path[0] != '\0')
+  if (*path) /* ie: not the root directory */
     {
       const volatile struct dir_entry *entry;
 
@@ -336,28 +372,15 @@ dconf_reader_list (DConfReader *reader,
 
   entries = dconf_reader_get_dir (reader, index, &n_entries);
 
-  if (entries == NULL)
-    return;
-
   for (i = 0; i < n_entries; i++)
-    {
-      const volatile gchar *name;
-      guint32 namelen;
+    if (entries[i].type != '\0')
+      {
+        const volatile gchar *name;
+        guint32 namelen;
 
-      name = dconf_reader_get_entry_name (reader, &entries[i], &namelen);
-
-      if (name != NULL)
-        {
-          gchar *my_name;
-
-          my_name = g_strndup ((const gchar *) name, namelen);
-
-          if (g_tree_lookup (tree, my_name) == NULL)
-            g_tree_insert (tree, my_name, my_name);
-          else
-            g_free (my_name);
-        }
-    }
+        name = dconf_reader_get_entry_name (reader, &entries[i], &namelen);
+        g_tree_insert (tree, g_strndup ((const gchar *) name, namelen), 0);
+      }
 }
 
 gboolean
@@ -370,7 +393,10 @@ dconf_reader_get_writable (DConfReader *reader,
   if (!dconf_reader_ensure_valid (reader))
     return FALSE;
 
-  if (name[0] != '\0')
+  if (reader->data.super->flags & DCONF_FLAG_LOCKED)
+    locked = TRUE;
+
+  if (*name)
     entry = dconf_reader_get_entry (reader, name,
                                     reader->data.super->root_index,
                                     &locked);
@@ -382,21 +408,21 @@ gboolean
 dconf_reader_get_locked (DConfReader *reader,
                          const gchar *name)
 {
-  const volatile struct dir_entry *entry;
-  gboolean locked = FALSE;
-
   if (!dconf_reader_ensure_valid (reader))
     return FALSE;
 
-  if (name[0] == '\0')
-    return FALSE;
+  if (*name)
+    {
+      const volatile struct dir_entry *entry;
 
-  entry = dconf_reader_get_entry (reader, name,
-                                  reader->data.super->root_index,
-                                  &locked);
+      if ((entry = dconf_reader_get_entry (reader, name,
+                                           reader->data.super->root_index,
+                                           NULL)) == NULL)
+        return FALSE;
 
-  if (entry == NULL)
-    return FALSE;
+      return entry->locked;
+    }
 
-  return entry->locked;
+  else
+    return (reader->data.super->flags & DCONF_FLAG_LOCKED) != 0;
 }

@@ -16,7 +16,7 @@
 
 #include <glib.h>
 
-struct block_header
+struct chunk_header
 {
   guint32 size;
   guint32 reserved;
@@ -39,13 +39,21 @@ struct dir_entry
 
   union
   {
+    guint8  byte;
+    guint16 uint16;
+    guint32 uint32;
+    guint64 uint64;
+    gdouble floating;
+
     guint32 index;
-    guint64 direct;
   } data;
 };
 
 #define DCONF_SIGNATURE_0    1852793700
 #define DCONF_SIGNATURE_1     813047910
+
+#define DCONF_FLAG_STALE    1
+#define DCONF_FLAG_LOCKED   2
 
 struct superblock
 {
@@ -53,10 +61,14 @@ struct superblock
 
   guint32 root_index;
   guint32 next;
-  char invalid;
+
+  char flags;
+
   char type;
   char pad, padd;
+
   guint32 pade;
+  guint32 padf, padg;
 };
 
 #endif /* _dconf_format_h_ */
