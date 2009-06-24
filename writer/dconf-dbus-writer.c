@@ -168,7 +168,7 @@ dconf_dbus_writer_is_call (DConfDBusWriter *writer,
 static DBusMessage *
 dconf_dbus_writer_reply (DConfDBusWriter *writer,
                           gboolean          success,
-                          gint              sequence,
+                          guint32          *sequence,
                           GError           *error)
 {
   DBusMessage *reply;
@@ -179,9 +179,9 @@ dconf_dbus_writer_reply (DConfDBusWriter *writer,
     {
       reply = dbus_message_new_method_return (writer->this);
 
-      if (sequence >= 0)
+      if (sequence)
         dbus_message_append_args (reply,
-                                  DBUS_TYPE_UINT32, &sequence,
+                                  DBUS_TYPE_UINT32, sequence,
                                   DBUS_TYPE_INVALID);
     }
   else
@@ -242,6 +242,7 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       value = dconf_dbus_variant_to_gv (&iter);
       dbus_message_iter_next (&iter);
 
+      sequence = 7654321;
       status = dconf_writer_set (writer->writer,
                                  key, value, &error);
       g_variant_unref (value);
@@ -249,7 +250,7 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       if (status == TRUE)
         dconf_dbus_writer_notify (writer, key, NULL, sequence);
 
-      return dconf_dbus_writer_reply (writer, status, sequence, error);
+      return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }
 
   if (dconf_dbus_writer_is_call (writer, "SetLocked", "sb"))
@@ -267,7 +268,21 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       status = dconf_writer_set_locked (writer->writer,
                                          key, locked, &error);
 
-      return dconf_dbus_writer_reply (writer, status, -1, error);
+      return dconf_dbus_writer_reply (writer, status, NULL, error);
+    }
+
+  if (dconf_dbus_writer_is_call (writer, "Unset", "s"))
+    {
+      GError *error = NULL;
+      const gchar *key;
+      gboolean status;
+
+      dbus_message_iter_get_basic (&iter, &key);
+      dbus_message_iter_next (&iter);
+
+      status = dconf_writer_unset (writer->writer, key, &error);
+
+      return dconf_dbus_writer_reply (writer, status, NULL, error);
     }
 
   return NULL;
@@ -325,7 +340,7 @@ main (int argc, char **argv)
       return 1;
     }
 
-  writer.writer = dconf_writer_new (argv[1], &error);
+  writer.writer = dconf_writer_new ("/home/desrt/.config/dconf/user.db", &error);
 
   if (writer.writer == NULL)
     {
@@ -333,8 +348,8 @@ main (int argc, char **argv)
       return 1;
     }
 
-  writer.name = dconf_writer_get_bus_name (writer.writer);
-  switch (dconf_writer_get_bus_type (writer.writer))
+  writer.name = "user";
+  switch (DCONF_WRITER_SESSION_BUS)
     {
      case DCONF_WRITER_SESSION_BUS:
       writer.bus = dbus_bus_get (DBUS_BUS_SESSION, &d_error);

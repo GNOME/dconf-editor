@@ -401,13 +401,15 @@ dconf_writer_merge_write_to_entry (DConfWriter                *writer,
 
   if (merge_state_name_is_directory (state))
     {
-      guint32 index = dconf_writer_get_entry_index (writer, entry, FALSE);
+      guint32 index;
+
+      index = dconf_writer_get_index (writer, &entry->data.index, FALSE);
 
       dconf_writer_merge_index (writer, &index, prefix,
                                 names, values, count,
                                 merging);
 
-      dconf_writer_set_entry_index (writer, entry, index, merging);
+      dconf_writer_set_index (writer, &entry->data.index, index, merging);
     }
   else
     {
@@ -570,16 +572,10 @@ dconf_writer_merge_allocate (DConfWriter *writer,
         }
     }
 
-  {
-    gpointer pointer;
-
-    dconf_writer_allocate (writer,
-                           sizeof (struct dir_entry) * entries,
-                           &pointer, index);
-
-    state->entries_length = entries;
-    state->entries = pointer;
-  }
+  state->entries = dconf_writer_allocate (writer,
+                                          sizeof (struct dir_entry) * entries,
+                                          index);
+  state->entries_length = entries;
 
   g_assert (state->entries != NULL);
   g_assert (state->entries_length != 0);
@@ -664,15 +660,21 @@ dconf_writer_merge (DConfWriter  *writer,
                     gint          n_items,
                     GError      **error)
 {
+  volatile struct superblock *super = writer->data.super;
   guint32 index;
 
-  index = writer->super->root_index;
-
+  index = dconf_writer_get_index (writer, &super->root_index, FALSE);
   dconf_writer_merge_index (writer, &index, prefix,
                             names, values, n_items, FALSE);
+  dconf_writer_set_index (writer, &super->root_index, index, FALSE);
 
-  if (index != writer->super->root_index)
-    writer->super->root_index = index;
+  if (writer->changed_pointer)
+    {
+      *writer->changed_pointer = writer->changed_value;
+      writer->changed_pointer = NULL;
+    }
+  else
+    g_assert (n_items == 1);
 
   return TRUE;
 }

@@ -16,79 +16,44 @@
 
 static gboolean
 dconf_writer_unset_index (DConfWriter  *writer,
-                          guint32       index,
+                          guint32      *index,
                           const gchar  *name,
-                          gboolean     *delete_entire_dir,
                           GError      **error)
 {
   volatile struct dir_entry *entries;
   volatile struct dir_entry *entry;
-  gboolean other_content = FALSE;
   const gchar *next;
   gint n_entries;
   gint i;
 
-  if ((entries = dconf_writer_get_dir (writer, index, &n_entries)) == NULL)
-    {
-      *delete_entire_dir = TRUE;
-      return TRUE;
-    }
-
+  entries = dconf_writer_get_dir (writer, *index, &n_entries);
   entry = dconf_writer_next_entry (writer, entries, n_entries, name, &next);
 
-  if (entry == NULL)
+  if (entry == NULL || entry->type == '\0')
     {
       g_set_error (error, 0, 0, "no such entry");
       return FALSE;
     }
 
   for (i = 0; i < n_entries; i++)
-    {
-      if (&entries[i] == entry)
-        continue;
+    if (&entries[i] != entry && entries[i].type != '\0')
+      break;
 
-      if (dconf_writer_entry_is_valid (writer, &entries[i]))
-        {
-          other_content = TRUE;
-          break;
-        }
+  if (*next)
+    {
+      guint32 subindex = entry->data.index;
+
+      if (!dconf_writer_unset_index (writer, &subindex, next, error))
+        return FALSE;
+
+      if (subindex)
+        return TRUE;
     }
 
-  if (other_content == FALSE)
-    {
-      if (*next)
-        return dconf_writer_unset_index (writer, entry->data.index,
-                                         next, delete_entire_dir, error);
-
-      else
-        *delete_entire_dir = TRUE;
-    }
-
+  if (i < n_entries)
+    entry->type = '\0';
   else
-    {
-      if (*next)
-        {
-          gboolean delete_this_dir;
-
-          if (!dconf_writer_unset_index (writer, entry->data.index,
-                                         next, &delete_this_dir, error))
-            return FALSE;
-
-          if (delete_this_dir)
-            entry->data.index = 0;
-        }
-
-      else
-        {
-          if (entry->type == 'v')
-            entry->data.index = 0;
-
-          else
-            entry->type = '\0';
-        }
-
-      *delete_entire_dir = FALSE;
-    }
+    *index = 0;
 
   return TRUE;
 }
@@ -98,15 +63,13 @@ dconf_writer_unset (DConfWriter  *writer,
                     const gchar  *key,
                     GError      **error)
 {
-  gboolean delete_all;
+  volatile struct superblock *super = writer->data.super;
+  guint32 index;
 
-  if (!dconf_writer_unset_index (writer,
-                                 writer->super->root_index,
-                                 key, &delete_all, error))
+  index = dconf_writer_get_index (writer, &super->root_index, FALSE);
+  if (!dconf_writer_unset_index (writer, &index, key, error))
     return FALSE;
-
-  if (delete_all)
-    writer->super->root_index = 0;
+  dconf_writer_set_index (writer, &super->root_index, index, TRUE);
 
   return TRUE;
 }

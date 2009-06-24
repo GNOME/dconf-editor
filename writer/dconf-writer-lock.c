@@ -42,7 +42,8 @@ static volatile struct dir_entry *
 dconf_writer_lookup (DConfWriter *writer,
                      const gchar *name)
 {
-  return dconf_writer_get_entry (writer, name, writer->super->root_index);
+  return dconf_writer_get_entry (writer, name,
+                                 writer->data.super->root_index);
 }
 
 gboolean

@@ -5,7 +5,10 @@ noinst_LIBRARIES = libdconf-writer.a
 
 libdconf_writer_a_SOURCES = \
 	dconf-writer.c		\
-	dconf-writer-merge.c
+	dconf-writer-merge.c	\
+	dconf-writer-unset.c    \
+	dconf-writer-lock.c
+
 
 noinst_HEADERS = \
 	dconf-writer-private.h	\

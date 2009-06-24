@@ -35,6 +35,10 @@ gboolean                dconf_writer_set                                (DConfWr
                                                                          GVariant     *value,
                                                                          GError      **error);
 
+gboolean                dconf_writer_unset                              (DConfWriter  *writer,
+                                                                         const gchar  *key,
+                                                                         GError      **error);
+
 gboolean                dconf_writer_set_locked                         (DConfWriter  *writer,
                                                                          const gchar  *key,
                                                                          gboolean      locked,

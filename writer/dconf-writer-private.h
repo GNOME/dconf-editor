@@ -18,21 +18,20 @@
 
 struct OPAQUE_TYPE__DConfWriter
 {
-  gchar *name;
   gchar *filename;
-
-  struct superblock *super;
-  struct block_header *blocks;
-  guint32 n_blocks;
   gchar *floating;
 
-  gpointer *extras;
-  gint *extra_sizes;
-  gint extras_size;
-  gint n_extras;
+  union
+  {
+    struct superblock *super;
+    struct chunk_header *blocks;
+  } data;
 
-  volatile struct dir_entry *changed_entry;
-  guint32 changed_index;
+  volatile void *end;
+
+  volatile guint32 *changed_pointer;
+  guint32 changed_value;
+  GPtrArray *extras;
 };
 
 volatile struct dir_entry *
@@ -41,28 +40,16 @@ dconf_writer_get_dir (DConfWriter *writer,
                       gint        *n_entries);
 
 volatile struct dir_entry *
-dconf_writer_find_entry (DConfWriter               *writer,
-                         volatile struct dir_entry *entries,
-                         gint                       n_entries,
-                         const gchar               *name,
-                         gint                       name_length);
+dconf_writer_find_entry (DConfWriter                *writer,
+                         volatile struct dir_entry  *entries,
+                         gint                        n_entries,
+                         const gchar                *name,
+                         gint                        name_length);
 
-void
+gpointer
 dconf_writer_allocate (DConfWriter *writer,
                        gsize        size,
-                       gpointer    *pointer,
                        guint32     *index);
-
-void
-dconf_writer_set_entry_index (DConfWriter               *writer,
-                              volatile struct dir_entry *entry,
-                              guint32                    index,
-                              gboolean                   blind_write);
-
-guint32
-dconf_writer_get_entry_index (DConfWriter               *writer,
-                              volatile struct dir_entry *entry,
-                              gboolean                   for_copy);
 
 const gchar *
 dconf_writer_get_entry_name (DConfWriter                     *writer,
@@ -74,5 +61,23 @@ dconf_writer_set_entry_name (DConfWriter               *writer,
                              volatile struct dir_entry *entry,
                              const gchar               *name,
                              gint                       name_length);
+
+volatile struct dir_entry *
+dconf_writer_next_entry (DConfWriter                *writer,
+                         volatile struct dir_entry  *entries,
+                         gint                        n_entries,
+                         const gchar                *name,
+                         const gchar               **next);
+
+void
+dconf_writer_set_index (DConfWriter      *writer,
+                        volatile guint32 *pointer,
+                        guint32           value,
+                        gboolean          blind_write);
+
+guint32
+dconf_writer_get_index (DConfWriter            *writer,
+                        const volatile guint32 *pointer,
+                        gboolean                for_copy);
 
 #endif /* _dconf_writer_private_h_ */
