@@ -17,18 +17,8 @@
 
 typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;
 
-typedef enum
-{
-  DCONF_WRITER_SESSION_BUS,
-  DCONF_WRITER_SYSTEM_BUS
-} DConfWriterBusType;
-
-DConfWriter *           dconf_writer_new                                (const gchar  *name,
+DConfWriter *           dconf_writer_new                                (const gchar  *filename,
                                                                          GError      **error);
-
-const gchar            *dconf_writer_get_bus_name                       (DConfWriter  *writer);
-DConfWriterBusType      dconf_writer_get_bus_type                       (DConfWriter  *writer);
-
 
 gboolean                dconf_writer_set                                (DConfWriter  *writer,
                                                                          const gchar  *key,

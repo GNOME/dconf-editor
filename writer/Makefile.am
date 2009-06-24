@@ -7,7 +7,8 @@ libdconf_writer_a_SOURCES = \
 	dconf-writer.c		\
 	dconf-writer-merge.c	\
 	dconf-writer-unset.c    \
-	dconf-writer-lock.c
+	dconf-writer-lock.c	\
+	dconf-writer-config.c
 
 
 noinst_HEADERS = \

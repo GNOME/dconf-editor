@@ -15,12 +15,13 @@
 #include <stdio.h>
 #include <glib.h>
 
+#include "dconf-writer-config.h"
 #include "dconf-writer.h"
 
 typedef struct
 {
   DConfWriter *writer;
-  const gchar *name;
+  gchar *name;
 
   DBusConnection *bus;
   DBusMessage *this;
@@ -330,8 +331,10 @@ int
 main (int argc, char **argv)
 {
   DConfDBusWriter writer = { 0, };
+  DConfWriterBusType bus_type;
   DBusError d_error = { 0, };
   GError *error = NULL;
+  gchar *filename;
   gchar *name;
 
   if (argc != 2)
@@ -340,16 +343,17 @@ main (int argc, char **argv)
       return 1;
     }
 
-  writer.writer = dconf_writer_new ("/home/desrt/.config/dconf/user.db", &error);
-
-  if (writer.writer == NULL)
+  if (!dconf_writer_config_read (argv[1], &bus_type,
+                                 &writer.name,
+                                 &filename, &error))
     {
       fprintf (stderr, "%s\n", error->message);
-      return 1;
+      g_error_free (error);
+
+      return 2;
     }
 
-  writer.name = "user";
-  switch (DCONF_WRITER_SESSION_BUS)
+  switch (bus_type)
     {
      case DCONF_WRITER_SESSION_BUS:
       writer.bus = dbus_bus_get (DBUS_BUS_SESSION, &d_error);
@@ -383,6 +387,17 @@ main (int argc, char **argv)
   dbus_connection_add_filter (writer.bus,
                               dconf_dbus_writer_filter,
                               &writer, NULL);
+
+  writer.writer = dconf_writer_new (filename, &error);
+  g_free (filename);
+
+  if (writer.writer == NULL)
+    {
+      fprintf (stderr, "%s\n", error->message);
+      g_error_free (error);
+
+      return 2;
+    }
 
   while (dbus_connection_read_write_dispatch (writer.bus, -1));
 
