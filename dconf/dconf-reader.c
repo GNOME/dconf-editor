@@ -107,7 +107,7 @@ static gboolean
 dconf_reader_past_end (DConfReader         *reader,
                        const volatile void *item)
 {
-  return (gpointer) item > reader->end;
+  return item > reader->end;
 }
 
 static const volatile void *
