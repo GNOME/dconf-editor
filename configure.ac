@@ -5,10 +5,30 @@ AM_MAINTAINER_MODE
 AC_PROG_LIBTOOL
 AC_PROG_CC
 
-
 PKG_CHECK_MODULES(glib, glib-2.0)
 PKG_CHECK_MODULES(dbus, dbus-1)
 PKG_CHECK_MODULES(gtk, gtk+-2.0)
+
+AC_ARG_ENABLE(gio,
+              AS_HELP_STRING([--enable-gio],
+                             [Enable dconf backend for GIO]),
+              [], [
+                if ${PKG_CONFIG} --exists gsettings; then
+                  enable_gio=yes
+                else
+                  enable_gio=no
+                fi
+              ])
+
+if test "$enable_gio" = "yes"; then
+  PKG_CHECK_MODULES(gio, gsettings)
+
+  giomodulesdir=`pkg-config --variable=giomoduledir gsettings`
+  AC_SUBST(giomodulesdir)
+fi
+
+AM_CONDITIONAL(ENABLE_GIO, test "$enable_gio" = "yes")
+AC_DEFINE(ENABLE_GIO)
 
 AC_OUTPUT([
   common/Makefile
@@ -18,5 +38,6 @@ AC_OUTPUT([
   dconf/Makefile
   dconf/dconf.pc
   bin/Makefile
+  gio/Makefile
   Makefile
 ])
