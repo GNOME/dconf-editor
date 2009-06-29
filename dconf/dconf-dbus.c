@@ -526,7 +526,8 @@ dconf_dbus_set_locked (DConfDBus    *bus,
   dbus_bool_t val;
 
   {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
+                                       bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
                                             "ca.desrt.dconf.writer",
                                             "SetLocked");
@@ -613,7 +614,8 @@ dconf_dbus_merge_tree_async (DConfDBus                   *bus,
   DBusMessage *message;
 
   {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.%s", bus->name + 1);
+    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
+                                       bus->name + 1);
     message = dbus_message_new_method_call (bus_name, bus->name,
                                             "ca.desrt.dconf.writer", "Merge");
     g_free (bus_name);
@@ -647,7 +649,20 @@ dconf_dbus_merge_finish (DConfDBusAsyncResult  *result,
   reply = dbus_pending_call_steal_reply (result->pending);
   if (dbus_message_get_type (reply) == DBUS_MESSAGE_TYPE_ERROR)
     {
-      g_set_error (error, 0, 0, "broken.");
+      const gchar *code, *message;
+      gboolean have_message;
+
+      code = dbus_message_get_error_name (reply);
+
+      have_message = dbus_message_get_args (reply, NULL,
+                                            DBUS_TYPE_STRING, &message,
+                                            DBUS_TYPE_INVALID);
+
+      if (have_message)
+        g_set_error (error, 0, 0, "%s: %s", code, message);
+      else
+        g_set_error (error, 0, 0, "dbus error: %s", code);
+
       success = FALSE;
     }
   else if (!dbus_message_has_signature (reply, "u"))
