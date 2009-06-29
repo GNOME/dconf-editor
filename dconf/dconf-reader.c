@@ -337,6 +337,8 @@ dconf_reader_get (DConfReader  *reader,
         *value = g_variant_from_data (NULL, (gconstpointer) data, size, 0,
                                       (GDestroyNotify) g_mapped_file_unref,
                                       reader->mapped_file);
+        g_mapped_file_ref (reader->mapped_file);
+
         break;
       }
     }

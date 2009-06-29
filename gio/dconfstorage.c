@@ -118,7 +118,12 @@ dconf_storage_read (GSettingsStorage   *g_storage,
     }
 
   if (node == &storage->item_tail)
-    result = g_variant_ref_sink (g_variant_new_string (key));
+    {
+      gchar *path;
+
+      path = g_strjoin (NULL, storage->base, key, NULL);
+      result = dconf_get (path);
+    }
 
   return result;
 }
