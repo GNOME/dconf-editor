@@ -258,6 +258,60 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }
 
+  if (dconf_dbus_writer_is_call (writer, "Merge", "sa(sv)"))
+    {
+      GPtrArray *names, *values;
+      DBusMessageIter array;
+      GError *error = NULL;
+      const gchar *prefix;
+      guint32 sequence;
+      gboolean status;
+      gint i;
+
+      names = g_ptr_array_new ();
+      values = g_ptr_array_new ();
+
+      dbus_message_iter_get_basic (&iter, &prefix);
+      dbus_message_iter_next (&iter);
+      dbus_message_iter_recurse (&iter, &array);
+      while (dbus_message_iter_get_arg_type (&array))
+        {
+          DBusMessageIter struc;
+          const gchar *name;
+          GVariant *value;
+
+          dbus_message_iter_recurse (&array, &struc);
+          dbus_message_iter_get_basic (&struc, &name);
+          dbus_message_iter_next (&struc);
+          value = dconf_dbus_variant_to_gv (&struc);
+          dbus_message_iter_next (&struc);
+
+          dbus_message_iter_next (&array);
+
+          g_ptr_array_add (names, (gpointer) name);
+          g_ptr_array_add (values, value);
+        }
+
+      g_assert (names->len == values->len);
+      sequence = 7654321;
+
+      status = dconf_writer_merge (writer->writer, prefix,
+                                   (const gchar **) names->pdata,
+                                   (GVariant **) values->pdata,
+                                   names->len, &error);
+
+      for (i = 0; i < values->len; i++)
+        g_variant_unref (values->pdata[i]);
+
+      g_ptr_array_free (names, TRUE);
+      g_ptr_array_free (values, TRUE);
+
+      if (status == TRUE)
+        /* notify XXX */;
+
+      return dconf_dbus_writer_reply (writer, status, &sequence, error);
+ }
+
   if (dconf_dbus_writer_is_call (writer, "SetLocked", "sb"))
     {
       GError *error = NULL;
