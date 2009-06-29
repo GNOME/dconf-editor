@@ -10,39 +10,19 @@
  * Authors: Ryan Lortie <desrt@desrt.ca>
  */
 
-#include <gio/gsettingsstorage.h>
 #include <gio/gio.h>
+
+#include "dconfstorage.h"
 
 void g_io_module_load   (GIOModule *module);
 void g_io_module_unload (GIOModule *module);
-static GType dconf_settings_get_type (void);
-
-typedef struct
-{
-  GSettingsStorage parent_instance;
-
-} DConfSettings;
-
-typedef GSettingsStorageClass DConfSettingsClass;
-
-G_DEFINE_TYPE (DConfSettings, dconf_settings, G_TYPE_SETTINGS_STORAGE)
-
-static void
-dconf_settings_init (DConfSettings *settings)
-{
-}
-
-static void
-dconf_settings_class_init (DConfSettingsClass *class)
-{
-}
 
 void
 g_io_module_load (GIOModule *module)
 {
   g_type_module_use (G_TYPE_MODULE (module));
   g_io_extension_point_implement ("gsettings-storage",
-                                  dconf_settings_get_type (),
+                                  DCONF_TYPE_STORAGE,
                                   "dconf-settings", 10);
 }
 
