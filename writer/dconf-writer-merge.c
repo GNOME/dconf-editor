@@ -349,7 +349,6 @@ merge_state_consume_old (MergeState *state)
 static struct dir_entry *
 merge_state_get_entry (MergeState *state)
 {
-  g_assert (merge_state_has_work (state));
   g_assert (state->entries_offset < state->entries_length);
   g_assert (state->entries != NULL);
 
@@ -359,7 +358,7 @@ merge_state_get_entry (MergeState *state)
 static void
 merge_state_next_entry (MergeState *state)
 {
-  g_assert (merge_state_has_work (state));
+  g_assert (state->entries_offset < state->entries_length);
 
   state->entries_offset++;
 }
