@@ -126,10 +126,13 @@ dconf_dbus_to_gv (DBusMessageIter *iter)
         GVariantBuilder *builder;
         GVariantTypeClass class;
         DBusMessageIter sub;
+        gchar *type;
 
         dbus_message_iter_recurse (iter, &sub);
         class = dbus_message_iter_get_arg_type (iter);
-        builder = g_variant_builder_new (class, NULL);
+        type = dbus_message_iter_get_signature (iter);
+        builder = g_variant_builder_new (class, G_VARIANT_TYPE (type));
+        g_free (type);
 
         while (dbus_message_iter_get_arg_type (&sub))
           {
