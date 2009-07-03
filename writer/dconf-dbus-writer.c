@@ -21,6 +21,7 @@
 typedef struct
 {
   DConfWriter *writer;
+  guint32 sequence;
   gchar *name;
 
   DBusConnection *bus;
@@ -161,8 +162,8 @@ dconf_dbus_variant_to_gv (DBusMessageIter *iter)
 
 static gboolean
 dconf_dbus_writer_is_call (DConfDBusWriter *writer,
-                            const gchar      *method,
-                            const gchar      *signature)
+                           const gchar      *method,
+                           const gchar      *signature)
 {
   return dbus_message_is_method_call (writer->this,
                                       "ca.desrt.dconf.writer", method) &&
@@ -171,9 +172,9 @@ dconf_dbus_writer_is_call (DConfDBusWriter *writer,
 
 static DBusMessage *
 dconf_dbus_writer_reply (DConfDBusWriter *writer,
-                          gboolean          success,
-                          guint32          *sequence,
-                          GError           *error)
+                         gboolean          success,
+                         guint32          *sequence,
+                         GError           *error)
 {
   DBusMessage *reply;
 
@@ -201,9 +202,9 @@ dconf_dbus_writer_reply (DConfDBusWriter *writer,
 
 static void
 dconf_dbus_writer_notify (DConfDBusWriter  *writer,
-                           const gchar     *prefix,
-                           const gchar    **items,
-                           guint32          sequence)
+                          const gchar     *prefix,
+                          const gchar    **items,
+                          guint32          sequence)
 {
   const gchar *my_items[] = { "", NULL };
   DBusMessageIter iter, array;
@@ -250,13 +251,13 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       value = dconf_dbus_variant_to_gv (&iter);
       dbus_message_iter_next (&iter);
 
-      sequence = 7654321;
       status = dconf_writer_set (writer->writer,
                                  key, value, &error);
       g_variant_unref (value);
 
       if (status == TRUE)
-        dconf_dbus_writer_notify (writer, key, NULL, sequence);
+        dconf_dbus_writer_notify (writer, key, NULL,
+                                  sequence = writer->sequence++);
 
       return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }
@@ -296,7 +297,6 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
         }
 
       g_assert (names->len == values->len);
-      sequence = 7654321;
 
       status = dconf_writer_merge (writer->writer, prefix,
                                    (const gchar **) names->pdata,
@@ -306,11 +306,16 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       for (i = 0; i < values->len; i++)
         g_variant_unref (values->pdata[i]);
 
+      if (status == TRUE)
+        {
+          g_ptr_array_add (names, NULL);
+          dconf_dbus_writer_notify (writer, prefix,
+                                    (const gchar **) names->pdata,
+                                    sequence = writer->sequence++);
+        }
+
       g_ptr_array_free (names, TRUE);
       g_ptr_array_free (values, TRUE);
-
-      if (status == TRUE)
-        /* notify XXX */;
 
       return dconf_dbus_writer_reply (writer, status, &sequence, error);
  }
@@ -336,6 +341,7 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
   if (dconf_dbus_writer_is_call (writer, "Unset", "s"))
     {
       GError *error = NULL;
+      guint32 sequence;
       const gchar *key;
       gboolean status;
 
@@ -344,7 +350,7 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
 
       status = dconf_writer_unset (writer->writer, key, &error);
 
-      return dconf_dbus_writer_reply (writer, status, NULL, error);
+      return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }
 
   return NULL;
@@ -352,8 +358,8 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
 
 static DBusHandlerResult
 dconf_dbus_writer_filter (DBusConnection *connection,
-                           DBusMessage    *message,
-                           gpointer        user_data)
+                          DBusMessage    *message,
+                          gpointer        user_data)
 {
   DConfDBusWriter *writer = user_data;
   DBusMessage *reply;

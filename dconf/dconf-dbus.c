@@ -26,7 +26,8 @@ typedef struct
 struct OPAQUE_TYPE__DConfDBus
 {
   DBusConnection *connection;
-  const gchar *name;
+  const gchar *type;
+  gchar *name;
 
   GSList *watches;
 };
@@ -45,11 +46,14 @@ dconf_dbus_notify (DConfDBus           *bus,
                    const gchar         *prefix,
                    const gchar * const *items,
                    gint                 items_length,
-                   guint32              sequence)
+                   const gchar         *event_id)
 {
+  gpointer dispatched_user_data;
+  gpointer dispatched_callback;
   gint prefix_len;
   GSList *node;
 
+  dispatched_callback = dispatched_user_data = NULL;
   prefix_len = strlen (prefix);
 
   for (node = bus->watches; node; node = node->next)
@@ -58,6 +62,10 @@ dconf_dbus_notify (DConfDBus           *bus,
       const gchar *relative_prefix;
       gint relative_len;
       gint skip;
+
+      if (watch->callback == dispatched_callback &&
+          watch->user_data == dispatched_user_data)
+        continue;
 
       relative_prefix = dconf_dbus_find_relative (watch->prefix);
       skip = relative_prefix - watch->prefix;
@@ -79,11 +87,33 @@ dconf_dbus_notify (DConfDBus           *bus,
           full[skip + prefix_len] = '\0';
 
           watch->callback (full, items, items_length,
-                           sequence, watch->user_data);
+                           event_id, watch->user_data);
+
+          dispatched_callback = watch->callback;
+          dispatched_user_data = watch->user_data;
 
           g_free (full);
         }
     }
+}
+
+static gchar *
+dconf_dbus_format_event_id (DConfDBus   *bus,
+                            DBusMessage *message,
+                            guint32      sequence)
+{
+  gchar *event_id;
+  gint i;
+
+  event_id = g_strdup_printf ("%s+%s+%x",
+                              bus->type,
+                              dbus_message_get_sender (message),
+                              sequence);
+  /* :) */
+  for (i = 0; event_id[i]; i++)
+    event_id[i] ^= 0x17;
+
+  return event_id;
 }
 
 static DBusHandlerResult
@@ -95,6 +125,7 @@ dconf_dbus_filter (DBusConnection *connection,
   DConfDBus *bus = user_data;
   const gchar *prefix;
   GPtrArray *items;
+  gchar *event_id;
   guint32 seq;
 
   g_assert (bus->connection == connection);
@@ -107,6 +138,7 @@ dconf_dbus_filter (DBusConnection *connection,
 
   if (!dbus_message_has_path (message, bus->name))
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+
 
   items = g_ptr_array_new ();
   dbus_message_iter_init (message, &iter);
@@ -128,9 +160,11 @@ dconf_dbus_filter (DBusConnection *connection,
 
   dbus_message_iter_get_basic (&iter, &seq);
 
+  event_id = dconf_dbus_format_event_id (bus, message, seq);
   dconf_dbus_notify (bus, prefix,
                      (const gchar **) items->pdata, items->len - 1,
-                     seq);
+                     event_id);
+  g_free (event_id);
 
   g_ptr_array_free (items, TRUE);
 
@@ -156,11 +190,13 @@ dconf_dbus_new (const gchar  *path,
     {
       bus->connection = dbus_bus_get_private (DBUS_BUS_SYSTEM, NULL);
       bus->name = g_strdup (path + 6);
+      bus->type = "system";
     }
   else if (g_str_has_prefix (path, "session/"))
     {
       bus->connection = dbus_bus_get_private (DBUS_BUS_SESSION, NULL);
       bus->name = g_strdup (path + 7);
+      bus->type = "session";
     }
   else
     g_error ("fail.");
@@ -198,6 +234,28 @@ dconf_dbus_make_rule (DConfDBus   *bus,
                             "path='%s'", bus->name);
 }
 
+static gint
+dconf_dbus_watch_sorter (gconstpointer a,
+                         gconstpointer b)
+{
+  const DConfDBusWatch *wa = a;
+  const DConfDBusWatch *wb = b;
+
+  if (wa->callback < wb->callback)
+    return -1;
+
+  if (wa->callback > wb->callback)
+    return 1;
+
+  if (wa->user_data < wb->user_data)
+    return -1;
+
+  if (wa->user_data > wb->user_data)
+    return 1;
+
+  return 0;
+}
+
 void
 dconf_dbus_watch (DConfDBus       *bus,
                   const gchar     *prefix,
@@ -212,7 +270,8 @@ dconf_dbus_watch (DConfDBus       *bus,
   watch->callback = callback;
   watch->user_data = user_data;
 
-  bus->watches = g_slist_prepend (bus->watches, watch);
+  bus->watches = g_slist_insert_sorted (bus->watches, watch,
+                                        dconf_dbus_watch_sorter);
 
   rule = dconf_dbus_make_rule (bus, prefix);
   dbus_bus_add_match (bus->connection, rule, NULL);
@@ -425,7 +484,7 @@ static gboolean
 dconf_dbus_blocking_call (DConfDBus    *bus,
                           DBusMessage  *message,
                           const gchar  *reply_signature,
-                          guint32      *sequence,
+                          gchar       **event_id,
                           GError      **error)
 {
   DBusError d_error = { 0, };
@@ -448,10 +507,15 @@ dconf_dbus_blocking_call (DConfDBus    *bus,
       return FALSE;
     }
 
-  if (sequence)
-    dbus_message_get_args (reply, NULL,
-                           DBUS_TYPE_UINT32, sequence,
-                           DBUS_TYPE_INVALID);
+  if (event_id)
+    {
+      guint32 sequence;
+
+      dbus_message_get_args (reply, NULL,
+                             DBUS_TYPE_UINT32, &sequence,
+                             DBUS_TYPE_INVALID);
+      *event_id = dconf_dbus_format_event_id (bus, reply, sequence);
+    }
 
   dbus_message_unref (reply);
 
@@ -462,7 +526,7 @@ gboolean
 dconf_dbus_set (DConfDBus    *bus,
                 const gchar  *key,
                 GVariant     *value,
-                guint32      *sequence,
+                gchar       **event_id,
                 GError      **error)
 {
   DBusMessageIter iter, variant;
@@ -484,13 +548,13 @@ dconf_dbus_set (DConfDBus    *bus,
   dconf_dbus_from_gv (&variant, value);
   dbus_message_iter_close_container (&iter, &variant);
 
-  return dconf_dbus_blocking_call (bus, message, "u", sequence, error);
+  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
 }
 
 gboolean
 dconf_dbus_unset (DConfDBus    *bus,
                   const gchar  *key,
-                  guint32      *sequence,
+                  gchar       **event_id,
                   GError      **error)
 {
   DBusMessageIter iter;
@@ -512,7 +576,7 @@ dconf_dbus_unset (DConfDBus    *bus,
                                                      message,
                                                      -1, NULL);
 
-  return dconf_dbus_blocking_call (bus, message, "u", sequence, error);
+  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
 }
 
 gboolean
@@ -545,28 +609,39 @@ dconf_dbus_set_locked (DConfDBus    *bus,
 
 typedef struct
 {
+  DConfDBus *bus;
   DConfDBusAsyncReadyCallback callback;
   gpointer user_data;
 } DConfDBusClosure;
 
 static DConfDBusClosure *
-dconf_dbus_closure_new (DConfDBusAsyncReadyCallback callback,
-                        gpointer                    user_data)
+dconf_dbus_closure_new (DConfDBus                   *bus,
+                        DConfDBusAsyncReadyCallback  callback,
+                        gpointer                     user_data)
 {
   DConfDBusClosure *closure;
 
   closure = g_slice_new (DConfDBusClosure);
+  closure->bus = bus;
   closure->callback = callback;
   closure->user_data = user_data;
 
   return closure;
 }
 
+struct OPAQUE_TYPE__DConfDBusAsyncResult
+{
+  DConfDBus *bus;
+  DBusPendingCall *pending;
+};
+
 static void
 dconf_dbus_closure_fire (DConfDBusClosure *closure,
                          DBusPendingCall  *pending)
 {
-  closure->callback ((DConfDBusAsyncResult *) &pending, closure->user_data);
+  DConfDBusAsyncResult result = { closure->bus, pending };
+
+  closure->callback (&result, closure->user_data);
   g_slice_free (DConfDBusClosure, closure);
 }
 
@@ -629,18 +704,14 @@ dconf_dbus_merge_tree_async (DConfDBus                   *bus,
 
   dbus_connection_send_with_reply (bus->connection, message, &pending, -1);
   dbus_pending_call_set_notify (pending, dconf_dbus_merge_ready,
-                                dconf_dbus_closure_new (callback, user_data),
+                                dconf_dbus_closure_new (bus, callback,
+                                                        user_data),
                                 NULL);
 }
 
-struct OPAQUE_TYPE__DConfDBusAsyncResult
-{
-  DBusPendingCall *pending;
-};
-
 gboolean
 dconf_dbus_merge_finish (DConfDBusAsyncResult  *result,
-                         guint32               *sequence,
+                         gchar                **event_id,
                          GError               **error)
 {
   DBusMessage *reply;
@@ -672,12 +743,19 @@ dconf_dbus_merge_finish (DConfDBusAsyncResult  *result,
     }
   else
     {
-      dbus_message_get_args (reply, NULL,
-                             DBUS_TYPE_UINT32, sequence,
-                             DBUS_TYPE_INVALID);
+      if (event_id)
+        {
+          guint32 sequence;
+
+          dbus_message_get_args (reply, NULL,
+                                 DBUS_TYPE_UINT32, &sequence,
+                                 DBUS_TYPE_INVALID);
+          *event_id = dconf_dbus_format_event_id (result->bus,
+                                                  reply, sequence);
+        }
+
       success = TRUE;
     }
-
 
   dbus_message_unref (reply);
 

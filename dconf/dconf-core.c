@@ -406,7 +406,7 @@ dconf_unwatch (const gchar    *match,
  * dconf_merge_tree:
  * @prefix: the common part of the path to write to
  * @tree: a list of the values to store
- * @sequence: a pointer for the sequence number return (or %NULL)
+ * @event_id: a pointer for the event ID return (or %NULL)
  * @error: a pointer to a %NULL #GError pointer (or %NULL)
  * @returns: %TRUE on success
  *
@@ -443,10 +443,11 @@ dconf_unwatch (const gchar    *match,
  * the database, %error (if non-%NULL) will be set and %FALSE will be
  * returned.
  *
- * If the merge is successful then %TRUE will be returned.  If @sequence
- * is non-%NULL it will be set to the sequence number of the merge.  The
- * sequence number will be the same as the number that is sent for the
- * change notification corresponding to this modification.
+ * If the merge is successful then %TRUE will be returned.  If @event_id
+ * is non-%NULL it will be set to the event ID number of the merge.  The
+ * event ID will be the same as the ID that is sent for the change
+ * notification corresponding to this modification and is unique for the
+ * life of the program.  It has no particular format.
  **/
 
 /**
@@ -488,7 +489,7 @@ dconf_merge_tree_async (const gchar             *prefix,
 /**
  * dconf_merge_tree:
  * @result: the #DConfAsyncResult given to your callback
- * @sequence: a pointer for the sequence number return (or %NULL)
+ * @event_id: a pointer for the event ID return (or %NULL)
  * @error: a pointer to a %NULL #GError pointer (or %NULL)
  * @returns: %TRUE on success
  *
@@ -500,17 +501,17 @@ dconf_merge_tree_async (const gchar             *prefix,
  **/
 gboolean
 dconf_merge_finish (DConfAsyncResult  *result,
-                    guint32           *sequence,
+                    gchar            **event_id,
                     GError           **error)
 {
   return dconf_dbus_merge_finish ((DConfDBusAsyncResult *) result,
-                                  sequence, error);
+                                  event_id, error);
 }
 
 gboolean
 dconf_set (const gchar  *key,
            GVariant     *value,
-           guint32      *sequence,
+           gchar       **event_id,
            GError      **error)
 {
   DConfMount *mount;
@@ -521,12 +522,12 @@ dconf_set (const gchar  *key,
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
 
-  return dconf_dbus_set (mount->dbs[0]->bus, key, value, sequence, error);
+  return dconf_dbus_set (mount->dbs[0]->bus, key, value, event_id, error);
 }
 
 gboolean
 dconf_reset (const gchar  *key,
-             guint32      *sequence,
+             gchar       **event_id,
              GError      **error)
 {
   DConfMount *mount;
@@ -536,7 +537,7 @@ dconf_reset (const gchar  *key,
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
 
-  return dconf_dbus_unset (mount->dbs[0]->bus, key, sequence, error);
+  return dconf_dbus_unset (mount->dbs[0]->bus, key, event_id, error);
 }
 
 gboolean

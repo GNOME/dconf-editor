@@ -21,7 +21,7 @@ typedef void          (*DConfAsyncReadyCallback)                        (DConfAs
 typedef void          (*DConfWatchFunc)                                 (const gchar              *prefix,
                                                                          const gchar * const      *items,
                                                                          gint                      items_length,
-                                                                         guint32                   sequence,
+                                                                         const gchar              *event_id,
                                                                          gpointer                  user_data);
 
 gboolean                dconf_is_key                                    (const gchar              *key);
@@ -37,7 +37,7 @@ gboolean                dconf_get_locked                                (const g
 
 gboolean                dconf_set                                       (const gchar              *key,
                                                                          GVariant                 *value,
-                                                                         guint32                  *sequence,
+                                                                         gchar                   **event_id,
                                                                          GError                  **error);
 
 gboolean                dconf_set_locked                                (const gchar              *key,
@@ -45,7 +45,7 @@ gboolean                dconf_set_locked                                (const g
                                                                          GError                  **error);
 
 gboolean                dconf_reset                                     (const gchar              *key,
-                                                                         guint32                  *sequence,
+                                                                         gchar                   **event_id,
                                                                          GError                  **error);
 
 void                    dconf_merge_tree_async                          (const gchar              *prefix,
@@ -54,7 +54,7 @@ void                    dconf_merge_tree_async                          (const g
                                                                          gpointer                  user_data);
 
 gboolean                dconf_merge_finish                              (DConfAsyncResult         *result,
-                                                                         guint32                  *sequence,
+                                                                         gchar                   **event_id,
                                                                          GError                  **error);
 
 void                    dconf_watch                                     (const gchar              *match,

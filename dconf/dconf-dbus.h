@@ -22,7 +22,7 @@ typedef void          (*DConfDBusAsyncReadyCallback)                    (DConfDB
 typedef void          (*DConfDBusNotify)                                (const gchar                  *path,
                                                                          const gchar * const          *items,
                                                                          gint                          items_length,
-                                                                         guint32                       sequence,
+                                                                         const gchar                  *event_id,
                                                                          gpointer                      user_data);
 
 DConfDBus *             dconf_dbus_new                                  (const gchar                  *path,
@@ -31,12 +31,12 @@ DConfDBus *             dconf_dbus_new                                  (const g
 gboolean                dconf_dbus_set                                  (DConfDBus                    *bus,
                                                                          const gchar                  *path,
                                                                          GVariant                     *value,
-                                                                         guint32                      *sequence,
+                                                                         gchar                       **event_id,
                                                                          GError                      **error);
 
 gboolean                dconf_dbus_unset                                (DConfDBus                    *bus,
                                                                          const gchar                  *path,
-                                                                         guint32                      *sequence,
+                                                                         gchar                       **event_id,
                                                                          GError                      **error);
 
 gboolean                dconf_dbus_set_locked                           (DConfDBus                    *bus,
@@ -51,7 +51,7 @@ void                    dconf_dbus_merge_tree_async                     (DConfDB
                                                                          gpointer                      user_data);
 
 gboolean                dconf_dbus_merge_finish                         (DConfDBusAsyncResult         *result,
-                                                                         guint32                      *sequence,
+                                                                         gchar                       **event_id,
                                                                          GError                      **error);
 
 void                    dconf_dbus_watch                                (DConfDBus                    *bus,

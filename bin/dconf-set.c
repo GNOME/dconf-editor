@@ -19,7 +19,7 @@ main (int argc, char **argv)
   GError *error = NULL;
   gboolean success;
   GVariant *value;
-  guint32 seq;
+  gchar *event_id;
 
   if (argc != 3 || !dconf_is_key (argv[1]))
     {
@@ -35,12 +35,13 @@ main (int argc, char **argv)
       return 1;
     }
 
-  success = dconf_set (argv[1], value, &seq, &error);
+  success = dconf_set (argv[1], value, &event_id, &error);
   g_variant_unref (value);
   
   if (success)
     {
-      g_print ("%d\n", seq);
+      g_print ("%s\n", event_id);
+      g_free (event_id);
       return 0;
     }
   else

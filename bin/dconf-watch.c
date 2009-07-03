@@ -17,14 +17,14 @@ static void
 watch_notify (const gchar         *prefix,
               const gchar * const *items,
               gint                 n_items,
-              guint32              sequence,
+              const gchar         *event_id,
               gpointer             user_data)
 {
   if (items[0][0])
     {
       const gchar *comma = "";
 
-      g_print ("%d: %s: ", sequence, prefix);
+      g_print ("%s: %s: ", event_id, prefix);
       while (*items)
         {
           g_print ("%s%s", comma, *items++);
@@ -36,7 +36,7 @@ watch_notify (const gchar         *prefix,
     {
       g_assert (n_items == 1);
 
-      g_print ("%d: %s\n", sequence, prefix);
+      g_print ("%s: %s\n", event_id, prefix);
     }
 }
 

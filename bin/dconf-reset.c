@@ -18,7 +18,7 @@ main (int argc, char **argv)
 {
   GError *error = NULL;
   gboolean success;
-  guint32 seq;
+  gchar *event_id;
 
   if (argc != 2 ||
       (!dconf_is_key (argv[1]) && !dconf_is_path (argv[1])))
@@ -28,11 +28,12 @@ main (int argc, char **argv)
       return 1;
     }
 
-  success = dconf_reset (argv[1], &seq, &error);
+  success = dconf_reset (argv[1], &event_id, &error);
   
   if (success)
     {
-      g_print ("%d\n", seq);
+      g_print ("%s\n", event_id);
+      g_free (event_id);
       return 0;
     }
   else
