@@ -118,7 +118,10 @@ g_print ("read %s\n", key);
       if (g_str_has_prefix (key, item->prefix))
         if ((result = g_tree_lookup (item->values,
                                      key + item->prefix_len)))
-          break;
+          {
+            g_variant_ref (result);
+            break;
+          }
     }
 
   if (node == &storage->item_tail)
@@ -154,7 +157,7 @@ dconf_storage_notify (const gchar         *prefix,
 g_print ("changed %s\n", prefix);
   g_settings_storage_changed (G_SETTINGS_STORAGE (storage),
                               prefix + strlen (storage->base),
-                              items, NULL);
+                              items, n_items, NULL);
 }
 
 static void
