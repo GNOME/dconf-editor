@@ -83,7 +83,7 @@ dconf_storage_write (GSettingsStorage     *g_storage,
   item = g_slice_new (DConfStorageItem);
   g_assert (prefix != NULL);
   item->prefix = g_strdup (prefix);
-  item->values = values;
+  item->values = g_tree_ref (values);
   item->prefix_len = strlen (item->prefix);
 
   path = g_strconcat (storage->base, prefix, NULL);
@@ -108,8 +108,6 @@ dconf_storage_read (GSettingsStorage   *g_storage,
   DConfStorage *storage = DCONF_STORAGE (g_storage);
   GVariant *result;
   GList *node;
-
-g_print ("read %s\n", key);
 
   for (node = storage->item_list; node != &storage->item_tail; node = node->next)
     {

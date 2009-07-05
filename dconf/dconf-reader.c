@@ -124,10 +124,9 @@ dconf_reader_get_chunk (DConfReader *reader,
 
   header = &reader->data.blocks[index];
 
-  if (dconf_reader_past_end (reader, header + 1))
+  if (dconf_reader_past_end (reader, header) ||
+      dconf_reader_past_end (reader, header + 1))
     return NULL;
-
-  header = &reader->data.blocks[index];
 
   if (header->contents + header->size < header->contents)
     /* size so big that it wraps the pointer value */
