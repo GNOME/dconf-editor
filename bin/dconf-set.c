@@ -20,14 +20,17 @@ main (int argc, char **argv)
   gboolean success;
   GVariant *value;
   gchar *event_id;
+  gchar *string;
 
-  if (argc != 3 || !dconf_is_key (argv[1]))
+  if (argc < 3 || !dconf_is_key (argv[1]))
     {
-      fprintf (stderr, "usage: dconf-set /dconf/key '<gvariant-markup/>'\n");
+      fprintf (stderr, "usage: dconf-set /dconf/key value...'\n");
       return 1;
     }
 
-  value = g_variant_markup_parse (argv[2], -1, NULL, &error);
+  string = g_strjoinv (" ", argv + 2);
+  value = g_variant_parse (string, -1, NULL, &error);
+  g_free (string);
 
   if (value == NULL)
     {
