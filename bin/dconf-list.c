@@ -30,5 +30,7 @@ main (int argc, char **argv)
   for (i = 0; list[i]; i++)
     g_print ("%s\n", list[i]);
 
+  g_strfreev (list);
+
   return 0;
 }
