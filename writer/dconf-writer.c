@@ -58,7 +58,7 @@ dconf_writer_allocate (DConfWriter *writer,
 }
 
 static volatile void *
-dconf_writer_get_block (DConfWriter *writer,
+dconf_writer_get_chunk (DConfWriter *writer,
                         guint32      index,
                         guint32     *size)
 {
@@ -105,7 +105,7 @@ dconf_writer_get_dir (DConfWriter *writer,
   volatile struct dir_entry *entries;
   guint32 size;
 
-  entries = dconf_writer_get_block (writer, index, &size);
+  entries = dconf_writer_get_chunk (writer, index, &size);
 
   if (size % sizeof (struct dir_entry))
     size = 0;
@@ -208,7 +208,7 @@ dconf_writer_get_entry_name (DConfWriter                     *writer,
                              guint32                         *name_length)
 {
   if G_UNLIKELY (entry->namelen > sizeof entry->name.direct)
-    return (const gchar *) dconf_writer_get_block (writer,
+    return (const gchar *) dconf_writer_get_chunk (writer,
                                                    entry->name.index,
                                                    name_length);
 
@@ -248,4 +248,22 @@ dconf_writer_set (DConfWriter  *writer,
   const gchar *empty_string = "";
 
   return dconf_writer_merge (writer, key, &empty_string, &value, 1, error);
+}
+
+GVariant *
+dconf_writer_get_entry_value (DConfWriter                     *writer,
+                              const volatile struct dir_entry *entry)
+{
+  const volatile void *data;
+  guint32 index;
+  guint32 size;
+
+  g_assert (entry->type == 'v');
+
+  index = dconf_writer_get_index (writer, &entry->data.index, TRUE);
+  data = dconf_writer_get_chunk (writer, entry->data.index, &size);
+
+  return g_variant_ref_sink (g_variant_from_data (NULL,
+                                                  (gconstpointer) data, size,
+                                                  0, NULL, NULL));
 }

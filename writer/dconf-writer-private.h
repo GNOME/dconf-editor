@@ -83,4 +83,11 @@ gboolean
 dconf_writer_create (DConfWriter  *writer,
                      GError      **error);
 
+GVariant *
+dconf_writer_get_entry_value (DConfWriter                     *writer,
+                              const volatile struct dir_entry *entry);
+
+GTree *
+dconf_writer_flatten (DConfWriter *writer);
+
 #endif /* _dconf_writer_private_h_ */

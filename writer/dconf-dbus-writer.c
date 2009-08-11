@@ -353,6 +353,12 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }
 
+  if (dconf_dbus_writer_is_call (writer, "Dump", ""))
+    {
+      dconf_writer_dump (writer->writer);
+      return dconf_dbus_writer_reply (writer, TRUE, NULL, NULL);
+    }
+
   return NULL;
 }
 

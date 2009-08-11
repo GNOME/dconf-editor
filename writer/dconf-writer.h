@@ -41,4 +41,6 @@ gboolean                dconf_writer_merge                              (DConfWr
                                                                          gint          n_items,
                                                                          GError      **error);
 
+void                    dconf_writer_dump                               (DConfWriter  *writer);
+
 #endif /* _dconf_writer_h_ */
