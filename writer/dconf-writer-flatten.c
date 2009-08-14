@@ -102,11 +102,11 @@ dconf_writer_dump_entry (gpointer key,
                          gpointer value,
                          gpointer user_data)
 {
-  GString *string;
+  gchar *string;
 
-  string = g_variant_markup_print (value, NULL, 0, 0, 0);
-  g_message ("  %s = %s", (const gchar *) key, string->str);
-  g_string_free (string, TRUE);
+  string = g_variant_print (value, TRUE);
+  g_message ("  %s = %s", (const gchar *) key, string);
+  g_free (string);
 
   return FALSE;
 }
