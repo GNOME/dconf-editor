@@ -1,6 +1,8 @@
 AM_CFLAGS = -I$(top_srcdir)/common $(glib_CFLAGS) $(dbus_CFLAGS) \
 		-Wall -Wmissing-prototypes -Wwrite-strings -g
 
+DEFS = -DDCONF_CONF=\"$(sysconfdir)/dconf/dconf.conf\"
+
 noinst_LIBRARIES = libdconf-writer.a
 
 libdconf_writer_a_SOURCES = \

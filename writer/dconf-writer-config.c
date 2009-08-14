@@ -38,7 +38,7 @@ dconf_writer_config_read (const gchar         *name,
   gchar *tmp;
   gint line;
 
-  tmp = g_strdup ("/etc/xdg/dconf/dconf.conf");
+  tmp = g_strdup (DCONF_CONF);
   file = fopen (tmp, "r");
 
   if (file == NULL)

@@ -30,6 +30,12 @@ fi
 AM_CONDITIONAL(ENABLE_GIO, test "$enable_gio" = "yes")
 AC_DEFINE(ENABLE_GIO)
 
+AC_ARG_WITH(dbus_service_dir, [  --with-dbus-service-dir=PATH choose directory for dbus service files, [default=PREFIX/share/dbus-1/services]], dbusservicedir="$withval", dbusservicedir=${datadir}/dbus-1/services)
+AC_SUBST(dbusservicedir)
+
+AC_ARG_WITH(dbus_system_service_dir, [  --with-dbus-system-service-dir=PATH choose directory for dbus system service files, [default=PREFIX/share/dbus-1/system-services]], dbussystemservicedir="$withval", dbussystemservicedir=${datadir}/dbus-1/system-services)
+AC_SUBST(dbussystemservicedir)
+
 AC_OUTPUT([
   common/Makefile
   editor/Makefile

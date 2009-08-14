@@ -1,2 +1,3 @@
+dconf.conf
 *.db
 *.service

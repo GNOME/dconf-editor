@@ -1,5 +1,5 @@
-system          /etc/xdg/dconf/system.db      system/system
-default         /etc/xdg/dconf/default.db     system/default
+system          @sysconfdir@/dconf/system.db      system/system
+default         @sysconfdir@/dconf/default.db     system/default
 user            ~/.config/dconf/user.db       session/user
 
 /user/          user:default
