@@ -30,8 +30,8 @@ main (int argc, char **argv)
     {
       gchar *str;
 
-      str = g_variant_markup_print (value, TRUE, 0, 2);
-      printf ("%s", str);
+      str = g_variant_print (value, TRUE);
+      printf ("%s\n", str);
       g_free (str);
 
       g_variant_unref (value);
