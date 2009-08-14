@@ -28,11 +28,11 @@ main (int argc, char **argv)
 
   if (value != NULL)
     {
-      GString *string;
+      gchar *str;
 
-      string = g_variant_markup_print (value, NULL, TRUE, 0, 2);
-      printf ("%s", string->str);
-      g_string_free (string, TRUE);
+      str = g_variant_markup_print (value, TRUE, 0, 2);
+      printf ("%s", str);
+      g_free (str);
 
       g_variant_unref (value);
     }
