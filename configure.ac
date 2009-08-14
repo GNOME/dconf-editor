@@ -7,7 +7,24 @@ AC_PROG_CC
 
 PKG_CHECK_MODULES(glib, glib-2.0)
 PKG_CHECK_MODULES(dbus, dbus-1)
-PKG_CHECK_MODULES(gtk, gtk+-2.0)
+
+AC_ARG_ENABLE(gtk,
+              AS_HELP_STRING([--enable-gtk],
+                             [Enable GTK frontends (dconf-editor)]),
+              [], [
+                if ${PKG_CONFIG} --exists gtk+-2.0; then
+                  enable_gtk=yes
+                else
+                  enable_gtk=no
+                fi
+              ])
+
+if test "$enable_gtk" = "yes"; then
+  PKG_CHECK_MODULES(gtk, gtk+-2.0)
+fi
+
+AM_CONDITIONAL(ENABLE_GTK, test "$enable_gtk" = "yes")
+AC_DEFINE(ENABLE_GTK)
 
 AC_ARG_ENABLE(gio,
               AS_HELP_STRING([--enable-gio],
