@@ -47,17 +47,17 @@ dconf_writer_create_directory (const gchar  *filename,
 
 static gpointer
 dconf_writer_create_temp_file (const gchar  *filename,
+                               gint         *fd,
                                gint          bytes,
                                gchar       **tmpname,
                                GError      **error)
 {
   gpointer contents;
   gint saved_errno;
-  gint fd;
 
   *tmpname = g_strdup_printf ("%s.XXXXXX", filename);
 
-  if ((fd = g_mkstemp (*tmpname)) < 0)
+  if ((*fd = g_mkstemp (*tmpname)) < 0)
     {
       saved_errno = errno;
 
@@ -70,7 +70,7 @@ dconf_writer_create_temp_file (const gchar  *filename,
       return NULL;
     }
 
-  if ((saved_errno = posix_fallocate (fd, 0, bytes)))
+  if ((saved_errno = posix_fallocate (*fd, 0, bytes)))
     {
       g_set_error (error, G_FILE_ERROR,
                    g_file_error_from_errno (saved_errno),
@@ -78,13 +78,13 @@ dconf_writer_create_temp_file (const gchar  *filename,
                    bytes, *tmpname, g_strerror (saved_errno));
       unlink (*tmpname); 
       g_free (*tmpname);
-      close (fd);
+      close (*fd);
 
       return NULL;
     }
 
   if ((contents = mmap (NULL, bytes, PROT_READ | PROT_WRITE,
-                        MAP_SHARED, fd, 0)) == MAP_FAILED)
+                        MAP_SHARED, *fd, 0)) == MAP_FAILED)
     {
       saved_errno = errno;
 
@@ -94,14 +94,13 @@ dconf_writer_create_temp_file (const gchar  *filename,
                    *tmpname, g_strerror (saved_errno));
       unlink (*tmpname); 
       g_free (*tmpname);
-      close (fd);
+      close (*fd);
 
       return NULL;
     }
 
   /* surely nobody's mmap is really this evil... */
   g_assert (contents != NULL);
-  close (fd);
 
   return contents;
 }
@@ -129,17 +128,13 @@ dconf_writer_rename_temp (gchar        *tmpname,
   return TRUE;
 }
 
-static guint
-dconf_writer_calculate_size (DConfWriter *writer)
-{
-  return 4;
-}
-
 gboolean
 dconf_writer_create (DConfWriter  *writer,
                      GError      **error)
 {
-  DConfWriter new_writer;
+  struct superblock *previous_super = NULL;
+  GTree *previous_contents = NULL;
+  gsize previous_size;
   gint blocks, bytes;
   gpointer contents;
   gchar *tmpname;
@@ -147,65 +142,88 @@ dconf_writer_create (DConfWriter  *writer,
   if (!dconf_writer_create_directory (writer->filename, error))
     return FALSE;
 
-  blocks = dconf_writer_calculate_size (writer);
-  bytes = blocks * sizeof (struct chunk_header) * 8;
-  bytes = (bytes + 4095) & ~4095;
-
-  if ((contents = dconf_writer_create_temp_file (writer->filename, bytes,
-                                                 &tmpname, error)) == NULL)
-    return FALSE;
-
-  new_writer.data.super = contents;
-  new_writer.end = new_writer.data.blocks +
-                   (bytes / sizeof (struct chunk_header));
-
-  new_writer.data.super->signature[0] = DCONF_SIGNATURE_0;
-  new_writer.data.super->signature[1] = DCONF_SIGNATURE_1;
-  new_writer.data.super->next = sizeof (struct superblock) /
-                                sizeof (struct chunk_header);
-  new_writer.data.super->root_index = 0;
-
-  /* the copy process should never create extras.
-     set this to NULL so that attempting to do so will crash
-   */
-  new_writer.extras = NULL;
-  new_writer.changed_pointer = NULL;
-  new_writer.changed_value = 0;
-
-  if (writer->data.super)
+  /* if there was a database already open... */
+  if (writer->data.super != NULL)
     {
-      g_assert_not_reached ();
-      /* copy stuff */
+      /* store the information we need */
+      previous_contents = dconf_writer_flatten (writer);
+      previous_super = writer->data.super;
+      previous_size = (gchar *) writer->end - (gchar *) previous_super;
+
+      /* clear/reset the rest */
+      g_ptr_array_foreach (writer->extras, (GFunc) g_free, NULL);
+      g_ptr_array_set_size (writer->extras, 0);
+      writer->changed_pointer = NULL;
+      writer->changed_value = 0;
+      writer->data.super = NULL;
+      writer->end = NULL;
+      close (writer->fd);
+      writer->fd = -1;
+
+      /* treat an empty db as if there were no db at all */
+      if (g_tree_nnodes (previous_contents) == 0)
+        {
+          g_tree_unref (previous_contents);
+          previous_contents = NULL;
+        }
+      else
+        blocks = dconf_writer_measure_tree (previous_contents);
+    }
+
+  if (previous_contents == NULL)
+    blocks = sizeof (struct superblock) / 8;
+
+  bytes = blocks * sizeof (struct chunk_header);
+  bytes += 100;
+
+  if ((contents = dconf_writer_create_temp_file (writer->filename,
+                                                 &writer->fd, bytes,
+                                                 &tmpname, error)) == NULL)
+    {
+      munmap (previous_super, previous_size);
+      return FALSE;
+    }
+
+  writer->data.super = contents;
+  writer->end = ((gchar *) contents) + bytes;
+  writer->data.super->signature[0] = DCONF_SIGNATURE_0;
+  writer->data.super->signature[1] = DCONF_SIGNATURE_1;
+  writer->data.super->next = sizeof (struct superblock) /
+                               sizeof (struct chunk_header);
+  writer->data.super->root_index = 0;
+
+  if (previous_contents != NULL)
+    {
+      const gchar **names;
+      GVariant **values;
+      gint num;
+
+      dconf_writer_unzip_tree (previous_contents, &names, &values, &num);
+      dconf_writer_merge (writer, "", names, values, num);
+      g_tree_unref (previous_contents);
+      g_free (values);
+      g_free (names);
+
+      g_assert (writer->extras->len == 0);
+      dconf_writer_sync (writer, NULL);
     }
 
   if (!dconf_writer_rename_temp (tmpname, writer->filename, error))
     {
+      munmap (previous_super, previous_size);
       munmap (contents, bytes);
-
       return FALSE;
     }
 
-  if (writer->data.super)
+  if (previous_super != NULL)
     {
-      gint i;
-
-      for (i = 0; i < writer->extras->len; i++)
-        g_free (g_ptr_array_index (writer->extras, i));
-
-      g_ptr_array_set_size (writer->extras, 0);
-
-      writer->data.super->flags |= DCONF_FLAG_STALE;
-      munmap (writer->data.super,
-              (gchar *) writer->end - (gchar *) writer->data.super);
+      previous_super->flags |= DCONF_FLAG_STALE;
+      munmap (previous_super, previous_size);
     }
 
-  g_assert (writer->extras->len == 0);
-  new_writer.extras = writer->extras;
-
-  g_assert (new_writer.changed_pointer == NULL);
-  g_assert (new_writer.changed_value == 0);
-
-  *writer = new_writer;
+  if G_UNLIKELY (writer->data.super->next != blocks)
+    g_critical ("New file should have been be %d blocks, but it was %d",
+                blocks, writer->data.super->next);
 
   return TRUE;
 }
@@ -216,9 +234,8 @@ dconf_writer_open (DConfWriter  *writer,
 {
   struct superblock *super;
   struct stat buf;
-  gint fd;
 
-  if ((fd = open (writer->filename, O_RDWR)) < 0)
+  if ((writer->fd = open (writer->filename, O_RDWR)) < 0)
     {
       gint saved_errno = errno;
  
@@ -230,7 +247,7 @@ dconf_writer_open (DConfWriter  *writer,
       return FALSE;
     }
 
-  if (fstat (fd, &buf))
+  if (fstat (writer->fd, &buf))
     {
       gint saved_errno = errno;
  
@@ -238,7 +255,7 @@ dconf_writer_open (DConfWriter  *writer,
                    g_file_error_from_errno (saved_errno),
                    "failed to fstat existing dconf database %s: %s",
                    writer->filename, g_strerror (saved_errno));
-      close (fd);
+      close (writer->fd);
 
       return FALSE;
     }
@@ -248,7 +265,7 @@ dconf_writer_open (DConfWriter  *writer,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "existing dconf database file %s is too small "
                    "(%ld < 32 bytes)", writer->filename, buf.st_size);
-      close (fd);
+      close (writer->fd);
 
       return FALSE;
     }
@@ -259,14 +276,14 @@ dconf_writer_open (DConfWriter  *writer,
                    "existing dconf database file %s must be a multiple of "
                    "8 bytes in size (is %ld bytes)",
                    writer->filename, buf.st_size);
-      close (fd);
+      close (writer->fd);
 
       return FALSE;
      }
 
   if ((super = mmap (NULL, buf.st_size,
                      PROT_READ | PROT_WRITE,
-                     MAP_SHARED, fd, 0)) == MAP_FAILED)
+                     MAP_SHARED, writer->fd, 0)) == MAP_FAILED)
     {
       gint saved_errno = errno;
 
@@ -274,12 +291,10 @@ dconf_writer_open (DConfWriter  *writer,
                    g_file_error_from_errno (saved_errno),
                    "failed to memory-map existing dconf database file %s: %s",
                    writer->filename, g_strerror (saved_errno));
-      close (fd);
+      close (writer->fd);
 
       return FALSE;
     }
-
-  close (fd);
 
   if (super->signature[0] != DCONF_SIGNATURE_0 ||
       super->signature[1] != DCONF_SIGNATURE_1)
@@ -340,4 +355,26 @@ dconf_writer_new (const gchar  *filename,
     }
 
   return writer;
+}
+
+gboolean
+dconf_writer_sync (DConfWriter  *writer,
+                   GError      **error)
+{
+  if (writer->extras->len > 0)
+    return dconf_writer_create (writer, error);
+
+  fdatasync (writer->fd);
+
+  if (writer->changed_pointer != NULL)
+    {
+      *writer->changed_pointer = writer->changed_value;
+      writer->changed_pointer = NULL;
+      writer->changed_value = 0;
+
+      fdatasync (writer->fd);
+   
+   }
+
+  return TRUE;
 }

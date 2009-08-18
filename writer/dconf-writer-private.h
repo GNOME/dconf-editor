@@ -19,6 +19,7 @@
 struct OPAQUE_TYPE__DConfWriter
 {
   gchar *filename;
+  gint fd;
 
   union
   {
@@ -89,5 +90,14 @@ dconf_writer_get_entry_value (DConfWriter                     *writer,
 
 GTree *
 dconf_writer_flatten (DConfWriter *writer);
+
+void
+dconf_writer_unzip_tree (GTree         *tree,
+                         const gchar ***names,
+                         GVariant    ***values,
+                         gint          *num);
+
+gint
+dconf_writer_measure_tree (GTree *tree);
 
 #endif /* _dconf_writer_private_h_ */

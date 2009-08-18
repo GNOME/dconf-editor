@@ -239,15 +239,14 @@ dconf_writer_set_entry_name (DConfWriter               *writer,
     }
 }
 
-gboolean
+void
 dconf_writer_set (DConfWriter  *writer,
                   const gchar  *key,
-                  GVariant     *value,
-                  GError      **error)
+                  GVariant     *value)
 {
   const gchar *empty_string = "";
 
-  return dconf_writer_merge (writer, key, &empty_string, &value, 1, error);
+  return dconf_writer_merge (writer, key, &empty_string, &value, 1);
 }
 
 GVariant *

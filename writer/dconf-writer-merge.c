@@ -664,13 +664,12 @@ dconf_writer_merge_index (DConfWriter  *writer,
   merge_state_assert_done (&state);
 }
 
-gboolean
+void
 dconf_writer_merge (DConfWriter  *writer,
                     const gchar  *prefix,
                     const gchar **names,
                     GVariant    **values,
-                    gint          n_items,
-                    GError      **error)
+                    gint          n_items)
 {
   volatile struct superblock *super = writer->data.super;
   guint32 index;
@@ -687,6 +686,4 @@ dconf_writer_merge (DConfWriter  *writer,
     }
   else
     g_assert (n_items == 1);
-
-  return TRUE;
 }

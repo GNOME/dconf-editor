@@ -20,10 +20,9 @@ typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;
 DConfWriter *           dconf_writer_new                                (const gchar  *filename,
                                                                          GError      **error);
 
-gboolean                dconf_writer_set                                (DConfWriter  *writer,
+void                    dconf_writer_set                                (DConfWriter  *writer,
                                                                          const gchar  *key,
-                                                                         GVariant     *value,
-                                                                         GError      **error);
+                                                                         GVariant     *value);
 
 gboolean                dconf_writer_unset                              (DConfWriter  *writer,
                                                                          const gchar  *key,
@@ -34,11 +33,13 @@ gboolean                dconf_writer_set_locked                         (DConfWr
                                                                          gboolean      locked,
                                                                          GError      **error);
 
-gboolean                dconf_writer_merge                              (DConfWriter  *writer,
+void                    dconf_writer_merge                              (DConfWriter  *writer,
                                                                          const gchar  *prefix,
                                                                          const gchar **names,
                                                                          GVariant    **values,
-                                                                         gint          n_items,
+                                                                         gint          n_items);
+
+gboolean                dconf_writer_sync                               (DConfWriter  *writer,
                                                                          GError      **error);
 
 void                    dconf_writer_dump                               (DConfWriter  *writer);
