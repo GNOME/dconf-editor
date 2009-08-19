@@ -52,7 +52,7 @@ namespace Editor {
         var _value = dconf.get (_key);
 
         if (_value != null)
-          text = _value.get_string ();
+          text = _value.print (true);
         else
           text = "<none>";
       }

@@ -2,4 +2,4 @@
 *.h
 *.vala.stamp
 
-editor
+dconf-editor

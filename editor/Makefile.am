@@ -2,24 +2,24 @@ AM_CFLAGS = -I$(top_srcdir)/dconf $(gtk_CFLAGS) \
 		-Wall -Wmissing-prototypes -Wwrite-strings -g
 CFLAGS += -Wno-error
 
-noinst_PROGRAMS = editor
+bin_PROGRAMS = dconf-editor
 
-editor_VALASOURCES = \
+dconf_editor_VALASOURCES = \
 	editor.vala
 
 DEFS =
-BUILT_SOURCES = editor.vala.stamp
+BUILT_SOURCES = dconf-editor.vala.stamp
 
-editor_LDADD = $(gvariant_LIBS) $(gtk_LIBS) ../dconf/libdconf.la
-editor_SOURCES = \
-	editor.vala.stamp		\
-	$(editor_VALASOURCES:.vala=.c)	\
-	$(editor_VALASOURCES:.vala=.h)
+dconf_editor_LDADD = $(gvariant_LIBS) $(gtk_LIBS) ../dconf/libdconf.la
+dconf_editor_SOURCES = \
+	dconf-editor.vala.stamp			\
+	$(dconf_editor_VALASOURCES:.vala=.c)	\
+	$(dconf_editor_VALASOURCES:.vala=.h)
 
 
-editor.vala.stamp: $(editor_VALASOURCES)
+dconf-editor.vala.stamp: $(dconf_editor_VALASOURCES)
 	valac -C --pkg gtk+-2.0 dconf.vapi $^
 	touch $@
 
 CLEANFILES = *.c *.h editor.vala.stamp
-EXTRA_DIST = $(editor_VALASOURCES)
+EXTRA_DIST = $(dconf_editor_VALASOURCES)

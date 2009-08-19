@@ -9,6 +9,7 @@ namespace GLib {
     public Variant.string (string value);
 
     public weak string get_string (out size_t length = null);
+    public string print (bool add_type);
     public int32 get_int32 ();
 
     public GLib.StringBuilder markup_print (GLib.StringBuilder ?string = null,
