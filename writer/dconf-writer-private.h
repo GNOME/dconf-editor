@@ -80,10 +80,6 @@ dconf_writer_get_index (DConfWriter            *writer,
                         const volatile guint32 *pointer,
                         gboolean                for_copy);
 
-gboolean
-dconf_writer_create (DConfWriter  *writer,
-                     GError      **error);
-
 GVariant *
 dconf_writer_get_entry_value (DConfWriter                     *writer,
                               const volatile struct dir_entry *entry);
