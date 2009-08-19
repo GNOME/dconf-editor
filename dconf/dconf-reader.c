@@ -104,11 +104,17 @@ dconf_reader_ensure_valid (DConfReader *reader)
 }
 
 static gboolean
-dconf_reader_past_end (DConfReader         *reader,
-                       const volatile void *item)
+dconf_reader_range_ok (DConfReader         *reader,
+                       const volatile void *start,
+                       const volatile void *end)
 {
-  return item > reader->end;
+  return (const volatile void *) reader->data.blocks <= start &&
+         start <= end &&
+         end <= reader->end;
 }
+
+#define dconf_reader_index_ok(reader, array, index) \
+  (dconf_reader_range_ok (reader, &array[index], &array[index + 1]))
 
 static const volatile void *
 dconf_reader_get_chunk (DConfReader *reader,
@@ -122,17 +128,13 @@ dconf_reader_get_chunk (DConfReader *reader,
   if (index < 4)
     return NULL;
 
+  if (!dconf_reader_index_ok (reader, reader->data.blocks, index))
+    return NULL;
+
   header = &reader->data.blocks[index];
 
-  if (dconf_reader_past_end (reader, header) ||
-      dconf_reader_past_end (reader, header + 1))
-    return NULL;
-
-  if (header->contents + header->size < header->contents)
-    /* size so big that it wraps the pointer value */
-    return NULL;
-
-  if (dconf_reader_past_end (reader, header->contents + header->size))
+  if (!dconf_reader_range_ok (reader, header->contents,
+                              header->contents + header->size))
     return NULL;
 
   *size = header->size;
