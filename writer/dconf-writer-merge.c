@@ -678,12 +678,4 @@ dconf_writer_merge (DConfWriter  *writer,
   dconf_writer_merge_index (writer, &index, prefix,
                             names, values, n_items, FALSE);
   dconf_writer_set_index (writer, &super->root_index, index, FALSE);
-
-  if (writer->changed_pointer)
-    {
-      *writer->changed_pointer = writer->changed_value;
-      writer->changed_pointer = NULL;
-    }
-  else
-    g_assert (n_items == 1);
 }

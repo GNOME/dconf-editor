@@ -171,7 +171,7 @@ dconf_writer_create (DConfWriter  *writer,
     return FALSE;
 
   bytes = blocks * sizeof (struct chunk_header);
-  bytes += 100;
+  bytes += 80;
 
   if ((contents = dconf_writer_create_temp_file (writer->filename,
                                                  &writer->fd, bytes,
@@ -368,6 +368,9 @@ dconf_writer_sync (DConfWriter  *writer,
       GTree *previous_contents;
       gsize previous_size;
       gboolean success;
+
+      g_message ("Doing rebuild now.");
+      dconf_writer_dump (writer);
 
       /* store the information we need */
       previous_contents = dconf_writer_flatten (writer);

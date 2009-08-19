@@ -194,7 +194,7 @@ dconf_writer_get_index (DConfWriter            *writer,
   /* if we already have a changed pointer then this means that we have
    * (theoretically) visible changes.  so why are we doing more work?
    */
-  g_assert (!for_copy || !writer->changed_pointer);
+  g_assert (for_copy || !writer->changed_pointer);
 
   if G_UNLIKELY (writer->changed_pointer == pointer)
     return writer->changed_value;

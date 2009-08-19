@@ -86,13 +86,17 @@ dconf_writer_flatten_index (DConfWriter *writer,
 GTree *
 dconf_writer_flatten (DConfWriter *writer)
 {
+  guint32 root_index;
   GTree *tree;
 
   tree = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
                           g_free, (GDestroyNotify) g_variant_unref);
 
-  dconf_writer_flatten_index (writer, tree, "", 0,
-                              writer->data.super->root_index);
+  root_index = dconf_writer_get_index (writer,
+                                       &writer->data.super->root_index,
+                                       TRUE);
+
+  dconf_writer_flatten_index (writer, tree, "", 0, root_index);
 
   return tree;
 }
@@ -163,8 +167,12 @@ dconf_writer_measure_entry (gpointer key,
    */
   if (! (/*atomic*/0))
     {
+      GVariant *variant;
+
+      variant = g_variant_ref_sink (g_variant_new_variant (value));
       mts->blocks += sizeof (struct chunk_header) / 8;
-      mts->blocks += (g_variant_get_size (value) + 7) / 8;
+      mts->blocks += (g_variant_get_size (variant) + 7) / 8;
+      g_variant_unref (variant);
     }
 
   mts->blocks += sizeof (struct dir_entry) / 8;
