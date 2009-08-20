@@ -21,17 +21,38 @@ namespace GLib {
 
 [CCode (cheader_filename = "dconf.h")]
 
-namespace dconf {
-  delegate void WatchFunc (string key, string[] items, uint32 sequence);
+namespace DConf {
+  public struct AsyncResult {
+  }
+
+  public delegate void AsyncReadyCallback (AsyncResult result);
+
+  bool is_key (string key);
+  bool is_path (string path);
+  bool match (string left, string right);
 
   GLib.Variant? get (string key);
   string[] list (string path);
-  bool get_locked (string path);
   bool get_writable (string path);
+  bool get_locked (string path);
 
-  void set (string key, GLib.Variant value,
-            out uint32 sequence = null) throws GLib.Error;
+  void set (string key, GLib.Variant value, out string event_id = null) throws GLib.Error;
+  void set_async (string key, GLib.Variant value, DConf.AsyncReadyCallback callback);
+  void set_finish (DConf.AsyncResult result, out string event_id = null) throws GLib.Error;
 
+  void set_locked (string key, bool value) throws GLib.Error;
+  void set_locked_async (string key, bool value, DConf.AsyncReadyCallback callback);
+  void set_locked_finish (DConf.AsyncResult result) throws GLib.Error;
+
+  void reset (string key, out string event_id = null) throws GLib.Error;
+  void reset_async (string key, DConf.AsyncReadyCallback callback);
+  void reset_finish (DConf.AsyncResult result, out string event_id = null) throws GLib.Error;
+
+  void merge (string prefix, GLib.Tree tree, out string event_id = null) throws GLib.Error;
+  void merge_async (string prefix, GLib.Tree tree, DConf.AsyncReadyCallback callback);
+  void merge_finish (DConf.AsyncResult result, out string event_id = null) throws GLib.Error;
+
+  delegate void WatchFunc (string prefix, string[] items, string event_id);
   void watch (string path, WatchFunc callback);
   void unwatch (string path, WatchFunc callback);
 }

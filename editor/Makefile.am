@@ -21,5 +21,5 @@ dconf-editor.vala.stamp: $(dconf_editor_VALASOURCES)
 	valac -C --pkg gtk+-2.0 dconf.vapi $^
 	touch $@
 
-CLEANFILES = *.c *.h editor.vala.stamp
+CLEANFILES = *.c *.h dconf-editor.vala.stamp
 EXTRA_DIST = $(dconf_editor_VALASOURCES)

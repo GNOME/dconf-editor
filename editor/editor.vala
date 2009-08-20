@@ -49,7 +49,7 @@ namespace Editor {
     public string key {
       set {
         _key = value;
-        var _value = dconf.get (_key);
+        var _value = DConf.get (_key);
 
         if (_value != null)
           text = _value.print (true);
@@ -66,7 +66,7 @@ namespace Editor {
       // XXX using _key might be wrong...
       // XXX is the most recently rendered thing the one?
       print ("  %s <= '%s'\n", _key, text);
-      dconf.set (_key, new Variant.string (text));
+      DConf.set (_key, new Variant.string (text));
     }
   }
 
@@ -131,7 +131,7 @@ namespace Editor {
       set_column_types (new GLib.Type [] { typeof (string),
                                            typeof (string) });
 
-      dconf.watch ("/", change);
+      DConf.watch ("/", change);
 
       insert (out root, null, 0);
       set (root, 0, "/");
@@ -139,10 +139,10 @@ namespace Editor {
       introduce_path ("/", root);
     }
 
-    void change (string key) {
-      var value = dconf.get (key);
+    void change (string prefix, string[] items, string event_id) {
+      var value = DConf.get (prefix);
 
-      change_value ("", key, null, value);
+      change_value ("", prefix, null, value);
     }
 
     void change_value (string path, string key, TreeIter ?iter, Variant ?value) {
@@ -190,7 +190,7 @@ namespace Editor {
     }
 
     void introduce_path (string path, TreeIter ?parent) {
-      foreach (var item in dconf.list (path)) {
+      foreach (var item in DConf.list (path)) {
         TreeIter iter;
 
         append (out iter, parent);
