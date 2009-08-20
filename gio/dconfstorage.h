@@ -11,7 +11,7 @@
 #ifndef _dconfstorage_h_
 #define _dconfstorage_h_
 
-#include <gio/gsettingsstorage.h>
+#include <gio/gsettingsbackend.h>
 
 #define DCONF_TYPE_STORAGE                                  (dconf_storage_get_type ())
 #define DCONF_STORAGE(inst)                                 (G_TYPE_CHECK_INSTANCE_CAST ((inst),                             \

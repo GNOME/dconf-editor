@@ -15,7 +15,7 @@
 
 struct OPAQUE_TYPE__DConfStorage
 {
-  GSettingsStorage parent_instance;
+  GSettingsBackend parent_instance;
   gchar *blocked_event;
   gchar *base;
 
@@ -25,10 +25,10 @@ struct OPAQUE_TYPE__DConfStorage
 
 struct OPAQUE_TYPE__DConfStorageClass
 {
-  GSettingsStorageClass parent_class;
+  GSettingsBackendClass parent_class;
 };
 
-G_DEFINE_TYPE (DConfStorage, dconf_storage, G_TYPE_SETTINGS_STORAGE)
+G_DEFINE_TYPE (DConfStorage, dconf_storage, G_TYPE_SETTINGS_BACKEND)
 
 typedef struct
 {
@@ -61,7 +61,7 @@ dconf_storage_merge_complete (DConfAsyncResult *result,
       g_warning ("%s", error->message);
       g_error_free (error);
 
-      g_settings_storage_changed_tree (G_SETTINGS_STORAGE (storage),
+      g_settings_backend_changed_tree (G_SETTINGS_BACKEND (storage),
                                        item->prefix, item->values, NULL);
     }
 
@@ -71,12 +71,12 @@ dconf_storage_merge_complete (DConfAsyncResult *result,
 }
 
 static void
-dconf_storage_write (GSettingsStorage     *g_storage,
+dconf_storage_write (GSettingsBackend     *backend,
                      const gchar          *prefix,
                      GTree                *values,
                      gpointer              origin_tag)
 {
-  DConfStorage *storage = DCONF_STORAGE (g_storage);
+  DConfStorage *storage = DCONF_STORAGE (backend);
   DConfStorageItem *item;
   gchar *path;
 
@@ -96,16 +96,16 @@ dconf_storage_write (GSettingsStorage     *g_storage,
                                              &storage->item_tail,
                                              item);
 
-  g_settings_storage_changed_tree (G_SETTINGS_STORAGE (storage),
+  g_settings_backend_changed_tree (G_SETTINGS_BACKEND (storage),
                                    prefix, values, origin_tag);
 }
 
 static GVariant *
-dconf_storage_read (GSettingsStorage   *g_storage,
+dconf_storage_read (GSettingsBackend   *backend,
                     const gchar        *key,
                     const GVariantType *expected_type)
 {
-  DConfStorage *storage = DCONF_STORAGE (g_storage);
+  DConfStorage *storage = DCONF_STORAGE (backend);
   GVariant *result;
   GList *node;
 
@@ -153,38 +153,38 @@ dconf_storage_notify (const gchar         *prefix,
     return;
 
 g_print ("changed %s\n", prefix);
-  g_settings_storage_changed (G_SETTINGS_STORAGE (storage),
+  g_settings_backend_changed (G_SETTINGS_BACKEND (storage),
                               prefix + strlen (storage->base),
                               items, n_items, NULL);
 }
 
 static void
-dconf_storage_subscribe (GSettingsStorage *g_storage,
+dconf_storage_subscribe (GSettingsBackend *backend,
                          const gchar      *name)
 {
-  DConfStorage *storage = DCONF_STORAGE (g_storage);
+  DConfStorage *storage = DCONF_STORAGE (backend);
   gchar *full;
 
   full = g_strdup_printf ("%s%s", storage->base, name);
-  dconf_watch (full, dconf_storage_notify, g_storage);
+  dconf_watch (full, dconf_storage_notify, backend);
   g_free (full);
 }
 
 static void
-dconf_storage_unsubscribe (GSettingsStorage *g_storage,
+dconf_storage_unsubscribe (GSettingsBackend *backend,
                            const gchar      *name)
 {
-  DConfStorage *storage = DCONF_STORAGE (g_storage);
+  DConfStorage *storage = DCONF_STORAGE (backend);
   gchar *full;
 
   full = g_strdup_printf ("%s%s", storage->base, name);
-  dconf_unwatch (full, dconf_storage_notify, g_storage);
+  dconf_unwatch (full, dconf_storage_notify, backend);
   g_free (full);
 }
 
 static gboolean
-dconf_storage_sensitive (GSettingsStorage *g_storage,
-                         const gchar      *name)
+dconf_storage_get_writable (GSettingsBackend *backend,
+                            const gchar      *name)
 {
   return TRUE;
 }
@@ -215,15 +215,15 @@ dconf_storage_finalize (GObject *object)
 static void
 dconf_storage_class_init (DConfStorageClass *class)
 {
-  GSettingsStorageClass *storage_class = G_SETTINGS_STORAGE_CLASS (class);
+  GSettingsBackendClass *backend_class = G_SETTINGS_BACKEND_CLASS (class);
 
   GObjectClass *object_class = G_OBJECT_CLASS (class);
   object_class->constructed = dconf_storage_constructed;
   object_class->finalize = dconf_storage_finalize;
 
-  storage_class->read = dconf_storage_read;
-  storage_class->write = dconf_storage_write;
-  storage_class->subscribe = dconf_storage_subscribe;
-  storage_class->unsubscribe = dconf_storage_unsubscribe;
-  storage_class->sensitive = dconf_storage_sensitive;
+  backend_class->read = dconf_storage_read;
+  backend_class->write = dconf_storage_write;
+  backend_class->subscribe = dconf_storage_subscribe;
+  backend_class->unsubscribe = dconf_storage_unsubscribe;
+  backend_class->get_writable = dconf_storage_get_writable;
 }

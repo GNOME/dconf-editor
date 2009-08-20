@@ -30,7 +30,7 @@ AC_ARG_ENABLE(gio,
               AS_HELP_STRING([--enable-gio],
                              [Enable dconf backend for GIO]),
               [], [
-                if ${PKG_CONFIG} --exists gsettings; then
+                if ${PKG_CONFIG} --exists gio-2.0; then
                   enable_gio=yes
                 else
                   enable_gio=no
@@ -38,9 +38,9 @@ AC_ARG_ENABLE(gio,
               ])
 
 if test "$enable_gio" = "yes"; then
-  PKG_CHECK_MODULES(gio, gsettings)
+  PKG_CHECK_MODULES(gio, gio-2.0)
 
-  giomodulesdir=`pkg-config --variable=giomoduledir gsettings`
+  giomodulesdir=`pkg-config --variable=giomoduledir gio-2.0`
   AC_SUBST(giomodulesdir)
 fi
 
