@@ -21,7 +21,7 @@ void
 g_io_module_load (GIOModule *module)
 {
   g_type_module_use (G_TYPE_MODULE (module));
-  g_io_extension_point_implement ("gsettings-storage",
+  g_io_extension_point_implement ("gsettings-backend",
                                   DCONF_TYPE_STORAGE,
                                   "dconf-settings", 10);
 }
