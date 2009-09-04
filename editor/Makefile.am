@@ -18,7 +18,7 @@ dconf_editor_SOURCES = \
 
 
 dconf-editor.vala.stamp: $(dconf_editor_VALASOURCES)
-	valac -C --pkg gtk+-2.0 dconf.vapi $^
+	valac -C --pkg gtk+-2.0 --pkg dconf $^
 	touch $@
 
 CLEANFILES = *.c *.h dconf-editor.vala.stamp
