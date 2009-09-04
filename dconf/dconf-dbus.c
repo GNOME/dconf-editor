@@ -439,7 +439,7 @@ dconf_dbus_from_gv (DBusMessageIter *iter,
         break;
       }
 
-     case G_VARIANT_TYPE_CLASS_STRUCT:
+     case G_VARIANT_TYPE_CLASS_TUPLE:
       {
         DBusMessageIter dbus_iter;
         GVariantIter gv_iter;
