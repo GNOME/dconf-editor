@@ -18,7 +18,6 @@
 #include <string.h>
 #include <fcntl.h>
 
-#include <glib/gvariant-loadstore.h>
 #include <glib.h>
 
 #include "dconf-format.h"

@@ -12,7 +12,6 @@
 
 #include "dconf-writer-private.h"
 
-#include <glib/gvariant-loadstore.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <unistd.h>
