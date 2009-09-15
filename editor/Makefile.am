@@ -4,22 +4,6 @@ CFLAGS += -Wno-error
 
 bin_PROGRAMS = dconf-editor
 
-dconf_editor_VALASOURCES = \
-	editor.vala
-
-DEFS =
-BUILT_SOURCES = dconf-editor.vala.stamp
-
+AM_VALAFLAGS = --pkg gtk+-2.0 --pkg dconf
 dconf_editor_LDADD = $(gvariant_LIBS) $(gtk_LIBS) ../dconf/libdconf.la
-dconf_editor_SOURCES = \
-	dconf-editor.vala.stamp			\
-	$(dconf_editor_VALASOURCES:.vala=.c)	\
-	$(dconf_editor_VALASOURCES:.vala=.h)
-
-
-dconf-editor.vala.stamp: $(dconf_editor_VALASOURCES)
-	valac -C --pkg gtk+-2.0 --pkg dconf $^
-	touch $@
-
-CLEANFILES = *.c *.h dconf-editor.vala.stamp
-EXTRA_DIST = $(dconf_editor_VALASOURCES)
+dconf_editor_SOURCES = editor.vala

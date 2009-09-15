@@ -19,4 +19,4 @@ CFLAGS=${CFLAGS=-ggdb -Werror}
 LDFLAGS=${LDFLAGS=-Wl,-O1}
 export CFLAGS LDFLAGS
 
-./configure --enable-maintainer-mode "$@"
+./configure --enable-maintainer-mode --enable-silent-rules "$@"

@@ -1,5 +1,5 @@
 *.c
 *.h
-*.vala.stamp
+*_vala.stamp
 
 dconf-editor
