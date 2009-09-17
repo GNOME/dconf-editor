@@ -261,7 +261,5 @@ dconf_writer_get_entry_value (DConfWriter                     *writer,
   index = dconf_writer_get_index (writer, &entry->data.index, TRUE);
   data = dconf_writer_get_chunk (writer, entry->data.index, &size);
 
-  return g_variant_ref_sink (g_variant_from_data (NULL,
-                                                  (gconstpointer) data, size,
-                                                  0, NULL, NULL));
+  return g_variant_load (NULL, (gconstpointer) data, size, 0);
 }
