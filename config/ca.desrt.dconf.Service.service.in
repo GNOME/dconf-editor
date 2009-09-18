@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=ca.desrt.dconf.Service
+Exec=@libexecdir@/dconf-service

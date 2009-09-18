@@ -1,4 +1,4 @@
-SUBDIRS = common dconf bin writer config
+SUBDIRS = common dconf bin writer service config
 
 if ENABLE_GIO
 SUBDIRS += gio

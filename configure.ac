@@ -37,6 +37,7 @@ AC_ARG_WITH(dbus_system_service_dir, [  --with-dbus-system-service-dir=PATH choo
 AC_SUBST(dbussystemservicedir)
 
 AC_OUTPUT([
+  service/Makefile
   common/Makefile
   writer/Makefile
   config/Makefile
