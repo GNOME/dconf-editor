@@ -253,7 +253,7 @@ dconf_get_locked (const gchar *path)
   DConfMount *mount;
 
   mount = dconf_demux_path (&path, TRUE, NULL);
-  if (mount->n_dbs)
+  if (mount && mount->n_dbs)
     locked = dconf_reader_get_locked (mount->dbs[0]->reader, path);
 
   return locked;
@@ -284,7 +284,7 @@ dconf_get_writable (const gchar *path)
   DConfMount *mount;
 
   mount = dconf_demux_path (&path, TRUE, NULL);
-   if (mount)
+  if (mount)
     {
       gint i;
 
