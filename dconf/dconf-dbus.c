@@ -522,97 +522,18 @@ dconf_dbus_blocking_call (DConfDBus    *bus,
   return TRUE;
 }
 
-gboolean
-dconf_dbus_set (DConfDBus    *bus,
-                const gchar  *key,
-                GVariant     *value,
-                gchar       **event_id,
-                GError      **error)
-{
-  DBusMessageIter iter, variant;
-  DBusMessage *message;
-
-  {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
-                                       bus->name + 1);
-    message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf.writer", "Set");
-    g_free (bus_name);
-  }
-
-  dbus_message_iter_init_append (message, &iter);
-  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
-  dbus_message_iter_open_container (&iter, DBUS_TYPE_VARIANT,
-                                    g_variant_get_type_string (value),
-                                    &variant);
-  dconf_dbus_from_gv (&variant, value);
-  dbus_message_iter_close_container (&iter, &variant);
-
-  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
-}
-
-gboolean
-dconf_dbus_unset (DConfDBus    *bus,
-                  const gchar  *key,
-                  gchar       **event_id,
-                  GError      **error)
-{
-  DBusMessageIter iter;
-  DBusMessage *message;
-  DBusMessage *reply;
-
-  {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
-                                       bus->name + 1);
-    message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf.writer", "Unset");
-    g_free (bus_name);
-  }
-
-  dbus_message_iter_init_append (message, &iter);
-  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
-
-  reply = dbus_connection_send_with_reply_and_block (bus->connection,
-                                                     message,
-                                                     -1, NULL);
-
-  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
-}
-
-gboolean
-dconf_dbus_set_locked (DConfDBus    *bus,
-                       const gchar  *key,
-                       gboolean      locked,
-                       GError      **error)
-{
-  DBusMessageIter iter;
-  DBusMessage *message;
-  dbus_bool_t val;
-
-  {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
-                                       bus->name + 1);
-    message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf.writer",
-                                            "SetLocked");
-    g_free (bus_name);
-  }
-
-  val = !!locked;
-
-  dbus_message_iter_init_append (message, &iter);
-  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
-  dbus_message_iter_append_basic (&iter, DBUS_TYPE_BOOLEAN, &val);
-
-  return dconf_dbus_blocking_call (bus, message, "", NULL, error);
-}
-
 typedef struct
 {
   DConfDBus *bus;
   DConfDBusAsyncReadyCallback callback;
   gpointer user_data;
 } DConfDBusClosure;
+
+struct OPAQUE_TYPE__DConfDBusAsyncResult
+{
+  DConfDBus *bus;
+  DBusPendingCall *pending;
+};
 
 static DConfDBusClosure *
 dconf_dbus_closure_new (DConfDBus                   *bus,
@@ -629,12 +550,6 @@ dconf_dbus_closure_new (DConfDBus                   *bus,
   return closure;
 }
 
-struct OPAQUE_TYPE__DConfDBusAsyncResult
-{
-  DConfDBus *bus;
-  DBusPendingCall *pending;
-};
-
 static void
 dconf_dbus_closure_fire (DConfDBusClosure *closure,
                          DBusPendingCall  *pending)
@@ -646,7 +561,7 @@ dconf_dbus_closure_fire (DConfDBusClosure *closure,
 }
 
 static void
-dconf_dbus_merge_ready (DBusPendingCall *pending,
+dconf_dbus_async_ready (DBusPendingCall *pending,
                         gpointer         user_data)
 {
   DConfDBusClosure *closure = user_data;
@@ -654,6 +569,158 @@ dconf_dbus_merge_ready (DBusPendingCall *pending,
   dconf_dbus_closure_fire (closure, pending);
 }
 
+static void
+dconf_dbus_async_call (DConfDBus                   *bus,
+                       DBusMessage                 *message,
+                       DConfDBusAsyncReadyCallback  callback,
+                       gpointer                     user_data)
+{
+  DBusPendingCall *pending;
+
+  dbus_connection_send_with_reply (bus->connection, message, &pending, -1);
+  dbus_pending_call_set_notify (pending, dconf_dbus_async_ready,
+                                dconf_dbus_closure_new (bus, callback,
+                                                        user_data),
+                                NULL);
+  dbus_message_unref (message);
+}
+
+
+static DBusMessage *
+dconf_dbus_new_call (DConfDBus   *bus,
+                     const gchar *method)
+{
+  DBusMessage *message;
+  gchar *bus_name;
+
+  bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s", bus->name + 1);
+  message = dbus_message_new_method_call (bus_name, bus->name,
+                                          "ca.desrt.dconf.writer", method);
+  g_free (bus_name);
+
+  return message;
+}
+
+static DBusMessage *
+dconf_dbus_new_set_call (DConfDBus   *bus,
+                         const gchar *key,
+                         GVariant    *value)
+{
+  DBusMessageIter iter, variant;
+  DBusMessage *message;
+
+  message = dconf_dbus_new_call (bus, "Set");
+
+  dbus_message_iter_init_append (message, &iter);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
+  dbus_message_iter_open_container (&iter, DBUS_TYPE_VARIANT,
+                                    g_variant_get_type_string (value),
+                                    &variant);
+  dconf_dbus_from_gv (&variant, value);
+  dbus_message_iter_close_container (&iter, &variant);
+
+  return message;
+}
+
+/* == set == */
+gboolean
+dconf_dbus_set (DConfDBus    *bus,
+                const gchar  *key,
+                GVariant     *value,
+                gchar       **event_id,
+                GError      **error)
+{
+  DBusMessage *message = dconf_dbus_new_set_call (bus, key, value);
+  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
+}
+
+void
+dconf_dbus_set_async (DConfDBus                   *bus,
+                      const gchar                 *key,
+                      GVariant                    *value,
+                      DConfDBusAsyncReadyCallback  callback,
+                      gpointer                     user_data)
+{
+  DBusMessage *message = dconf_dbus_new_set_call (bus, key, value);
+  dconf_dbus_async_call (bus, message, callback, user_data);
+}
+
+/* == reset == */
+static DBusMessage *
+dconf_dbus_new_reset_call (DConfDBus    *bus,
+                           const gchar  *key)
+{
+  DBusMessageIter iter;
+  DBusMessage *message;
+
+  message = dconf_dbus_new_call (bus, "Reset");
+
+  dbus_message_iter_init_append (message, &iter);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
+
+  return message;
+}
+
+gboolean
+dconf_dbus_reset (DConfDBus    *bus,
+                  const gchar  *key,
+                  gchar       **event_id,
+                  GError      **error)
+{
+  DBusMessage *message = dconf_dbus_new_reset_call (bus, key);
+  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
+}
+
+void
+dconf_dbus_reset_async (DConfDBus                   *bus,
+                        const gchar                 *key,
+                        DConfDBusAsyncReadyCallback  callback,
+                        gpointer                     user_data)
+{
+  DBusMessage *message = dconf_dbus_new_reset_call (bus, key);
+  dconf_dbus_async_call (bus, message, callback, user_data);
+}
+
+/* == set_locked == */
+static DBusMessage *
+dconf_dbus_new_set_locked_call (DConfDBus    *bus,
+                                const gchar  *key,
+                                dbus_bool_t   locked)
+{
+  DBusMessageIter iter;
+  DBusMessage *message;
+
+  message = dconf_dbus_new_call (bus, "SetLocked");
+
+  dbus_message_iter_init_append (message, &iter);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
+  dbus_message_iter_append_basic (&iter, DBUS_TYPE_BOOLEAN, &locked);
+
+  return message;
+}
+
+gboolean
+dconf_dbus_set_locked (DConfDBus    *bus,
+                       const gchar  *key,
+                       gboolean      locked,
+                       GError      **error)
+{
+  DBusMessage *message = dconf_dbus_new_set_locked_call (bus, key, locked);
+  return dconf_dbus_blocking_call (bus, message, "", NULL, error);
+}
+
+void
+dconf_dbus_set_locked_async (DConfDBus                   *bus,
+                             const gchar                 *key,
+                             gboolean                     locked,
+                             DConfDBusAsyncReadyCallback  callback,
+                             gpointer                     user_data)
+{
+  DBusMessage *message = dconf_dbus_new_set_locked_call (bus, key, locked);
+  dconf_dbus_async_call (bus, message, callback, user_data);
+}
+
+/* == merge == */
 static gboolean
 dconf_dbus_append_to_iter (gpointer key,
                            gpointer value,
@@ -677,40 +744,51 @@ dconf_dbus_append_to_iter (gpointer key,
   return FALSE;
 }
 
-void
-dconf_dbus_merge_tree_async (DConfDBus                   *bus,
-                             const gchar                 *prefix,
-                             GTree                       *values,
-                             DConfDBusAsyncReadyCallback  callback,
-                             gpointer                     user_data)
+static DBusMessage *
+dconf_dbus_new_merge_call (DConfDBus                   *bus,
+                           const gchar                 *prefix,
+                           GTree                       *tree)
 {
   DBusMessageIter iter, array;
-  DBusPendingCall *pending;
   DBusMessage *message;
 
-  {
-    gchar *bus_name = g_strdup_printf ("ca.desrt.dconf.writer.%s",
-                                       bus->name + 1);
-    message = dbus_message_new_method_call (bus_name, bus->name,
-                                            "ca.desrt.dconf.writer", "Merge");
-    g_free (bus_name);
-  }
+  message = dconf_dbus_new_call (bus, "Merge");
 
   dbus_message_iter_init_append (message, &iter);
   dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &prefix);
   dbus_message_iter_open_container (&iter, DBUS_TYPE_ARRAY, "(sv)", &array);
-  g_tree_foreach (values, dconf_dbus_append_to_iter, &array);
+  g_tree_foreach (tree, dconf_dbus_append_to_iter, &array);
   dbus_message_iter_close_container (&iter, &array);
 
-  dbus_connection_send_with_reply (bus->connection, message, &pending, -1);
-  dbus_pending_call_set_notify (pending, dconf_dbus_merge_ready,
-                                dconf_dbus_closure_new (bus, callback,
-                                                        user_data),
-                                NULL);
+  return message;
+}
+
+
+gboolean
+dconf_dbus_merge (DConfDBus    *bus,
+                  const gchar  *prefix,
+                  GTree        *tree,
+                  gchar       **event_id,
+                  GError      **error)
+{
+  DBusMessage *message = dconf_dbus_new_merge_call (bus, prefix, tree);
+  return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
+}
+
+void
+dconf_dbus_merge_async (DConfDBus                   *bus,
+                        const gchar                 *prefix,
+                        GTree                       *tree,
+                        DConfDBusAsyncReadyCallback  callback,
+                        gpointer                     user_data)
+{
+  DBusMessage *message = dconf_dbus_new_merge_call (bus, prefix, tree);
+  dconf_dbus_async_call (bus, message, callback, user_data);
 }
 
 gboolean
-dconf_dbus_merge_finish (DConfDBusAsyncResult  *result,
+dconf_dbus_async_finish (DConfDBusAsyncResult  *result,
+                         const gchar           *signature,
                          gchar                **event_id,
                          GError               **error)
 {
@@ -732,13 +810,13 @@ dconf_dbus_merge_finish (DConfDBusAsyncResult  *result,
       if (have_message)
         g_set_error (error, 0, 0, "%s: %s", code, message);
       else
-        g_set_error (error, 0, 0, "dbus error: %s", code);
+        g_set_error (error, 0, 0, "DBus error: %s", code);
 
       success = FALSE;
     }
-  else if (!dbus_message_has_signature (reply, "u"))
+  else if (!dbus_message_has_signature (reply, signature))
     {
-      g_set_error (error, 0, 0, "bad sig");
+      g_set_error (error, 0, 0, "unexpected signature in DBus reply");
       success = FALSE;
     }
   else

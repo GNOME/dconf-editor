@@ -33,24 +33,44 @@ gboolean                dconf_dbus_set                                  (DConfDB
                                                                          GVariant                     *value,
                                                                          gchar                       **event_id,
                                                                          GError                      **error);
+void                    dconf_dbus_set_async                            (DConfDBus                    *bus,
+                                                                         const gchar                  *path,
+                                                                         GVariant                     *value,
+                                                                         DConfDBusAsyncReadyCallback   callback,
+                                                                         gpointer                      user_data);
 
-gboolean                dconf_dbus_unset                                (DConfDBus                    *bus,
+gboolean                dconf_dbus_reset                                (DConfDBus                    *bus,
                                                                          const gchar                  *path,
                                                                          gchar                       **event_id,
                                                                          GError                      **error);
+void                    dconf_dbus_reset_async                          (DConfDBus                    *bus,
+                                                                         const gchar                  *path,
+                                                                         DConfDBusAsyncReadyCallback   callback,
+                                                                         gpointer                      user_data);
 
 gboolean                dconf_dbus_set_locked                           (DConfDBus                    *bus,
                                                                          const gchar                  *path,
                                                                          gboolean                      locked,
                                                                          GError                      **error);
+void                    dconf_dbus_set_locked_async                     (DConfDBus                    *bus,
+                                                                         const gchar                  *path,
+                                                                         gboolean                      locked,
+                                                                         DConfDBusAsyncReadyCallback   callback,
+                                                                         gpointer                      user_data);
 
-void                    dconf_dbus_merge_tree_async                     (DConfDBus                    *bus,
+gboolean                dconf_dbus_merge                                (DConfDBus                    *bus,
+                                                                         const gchar                  *prefix,
+                                                                         GTree                        *values,
+                                                                         gchar                       **event_id,
+                                                                         GError                      **error);
+void                    dconf_dbus_merge_async                          (DConfDBus                    *bus,
                                                                          const gchar                  *prefix,
                                                                          GTree                        *values,
                                                                          DConfDBusAsyncReadyCallback   callback,
                                                                          gpointer                      user_data);
 
-gboolean                dconf_dbus_merge_finish                         (DConfDBusAsyncResult         *result,
+gboolean                dconf_dbus_async_finish                         (DConfDBusAsyncResult         *result,
+                                                                         const gchar                  *signature,
                                                                          gchar                       **event_id,
                                                                          GError                      **error);
 

@@ -403,7 +403,7 @@ dconf_unwatch (const gchar    *match,
 }
 
 /**
- * dconf_merge_tree:
+ * dconf_merge:
  * @prefix: the common part of the path to write to
  * @tree: a list of the values to store
  * @event_id: a pointer for the event ID return (or %NULL)
@@ -449,26 +449,11 @@ dconf_unwatch (const gchar    *match,
  * notification corresponding to this modification and is unique for the
  * life of the program.  It has no particular format.
  **/
-
-/**
- * dconf_merge_tree_async:
- * @prefix: the common part of the path to write to
- * @values: a list of the values to store
- * @callback: the completion callback
- * @user_data: user data for @callback
- *
- * Atomically set the value of several keys.
- *
- * This is the asynchronous variant of dconf_merge_tree().  When the
- * merge is complete, @callback will be called with a #DConfAsyncResult
- * and @user_data.  You should pass the #DConfAsyncResult to
- * dconf_merge_finish() to collect the result.
- **/
-void
-dconf_merge_tree_async (const gchar             *prefix,
-                        GTree                   *tree,
-                        DConfAsyncReadyCallback  callback,
-                        gpointer                 user_data)
+gboolean
+dconf_merge (const gchar  *prefix,
+             GTree        *tree,
+             gchar       **event_id,
+             GError      **error)
 {
   DConfMount *mount;
 
@@ -481,31 +466,63 @@ dconf_merge_tree_async (const gchar             *prefix,
   mount = dconf_demux_path (&prefix, TRUE, NULL);
   g_assert (mount);
 
-  dconf_dbus_merge_tree_async (mount->dbs[0]->bus, prefix, tree,
-                               (DConfDBusAsyncReadyCallback) callback,
-                               user_data);
+  return dconf_dbus_merge (mount->dbs[0]->bus, prefix, tree, event_id, error);
 }
 
 /**
- * dconf_merge_tree:
+ * dconf_merge_async:
+ * @prefix: the common part of the path to write to
+ * @values: a list of the values to store
+ * @callback: the completion callback
+ * @user_data: user data for @callback
+ *
+ * Atomically set the value of several keys.
+ *
+ * This is the asynchronous variant of dconf_merge().  When the merge is
+ * complete, @callback will be called with a #DConfAsyncResult and
+ * @user_data.  You should pass the #DConfAsyncResult to
+ * dconf_merge_finish() to collect the result.
+ **/
+void
+dconf_merge_async (const gchar             *prefix,
+                   GTree                   *tree,
+                   DConfAsyncReadyCallback  callback,
+                   gpointer                 user_data)
+{
+  DConfMount *mount;
+
+  g_assert (prefix != NULL);
+  g_assert (tree != NULL);
+
+  g_assert (g_str_has_suffix (prefix, "/") || g_tree_nnodes (tree) == 1);
+  g_assert (g_str_has_prefix (prefix, "/"));
+
+  mount = dconf_demux_path (&prefix, TRUE, NULL);
+  g_assert (mount);
+
+  dconf_dbus_merge_async (mount->dbs[0]->bus, prefix, tree,
+                          (DConfDBusAsyncReadyCallback) callback,
+                          user_data);
+}
+
+/**
+ * dconf_merge_finish:
  * @result: the #DConfAsyncResult given to your callback
  * @event_id: a pointer for the event ID return (or %NULL)
  * @error: a pointer to a %NULL #GError pointer (or %NULL)
  * @returns: %TRUE on success
  *
- * Collects the results from a call to dconf_merge_tree_async() or
- * dconf_merge_array_async().
+ * Collects the results from a call to dconf_merge_async().
  *
- * This is the shared second half of the asyncronous variants of
- * dconf_merge_array() and dconf_merge_tree().
+ * This is the second half of the asyncronous variant of dconf_merge().
  **/
 gboolean
 dconf_merge_finish (DConfAsyncResult  *result,
                     gchar            **event_id,
                     GError           **error)
 {
-  return dconf_dbus_merge_finish ((DConfDBusAsyncResult *) result,
-                                  event_id, error);
+  return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
+                                  "u", event_id, error);
 }
 
 gboolean
@@ -525,6 +542,34 @@ dconf_set (const gchar  *key,
   return dconf_dbus_set (mount->dbs[0]->bus, key, value, event_id, error);
 }
 
+void
+dconf_set_async (const gchar             *key,
+                 GVariant                *value,
+                 DConfAsyncReadyCallback  callback,
+                 gpointer                 user_data)
+{
+  DConfMount *mount;
+
+  g_assert (dconf_is_key (key));
+  g_assert (value != NULL);
+
+  mount = dconf_demux_path (&key, TRUE, NULL);
+  g_assert (mount);
+
+  dconf_dbus_set_async (mount->dbs[0]->bus, key, value,
+                        (DConfDBusAsyncReadyCallback) callback,
+                        user_data);
+}
+
+gboolean
+dconf_set_finish (DConfAsyncResult  *result,
+                  gchar            **event_id,
+                  GError           **error)
+{
+  return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
+                                  "u", event_id, error);
+}
+
 gboolean
 dconf_reset (const gchar  *key,
              gchar       **event_id,
@@ -537,7 +582,33 @@ dconf_reset (const gchar  *key,
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
 
-  return dconf_dbus_unset (mount->dbs[0]->bus, key, event_id, error);
+  return dconf_dbus_reset (mount->dbs[0]->bus, key, event_id, error);
+}
+
+void
+dconf_reset_async (const gchar             *key,
+                   DConfAsyncReadyCallback  callback,
+                   gpointer                 user_data)
+{
+  DConfMount *mount;
+
+  g_assert (dconf_is_key (key));
+
+  mount = dconf_demux_path (&key, TRUE, NULL);
+  g_assert (mount);
+
+  dconf_dbus_reset_async (mount->dbs[0]->bus, key,
+                          (DConfDBusAsyncReadyCallback) callback,
+                          user_data);
+}
+
+gboolean
+dconf_reset_finish (DConfAsyncResult  *result,
+                    gchar            **event_id,
+                    GError           **error)
+{
+  return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
+                                  "u", event_id, error);
 }
 
 gboolean
@@ -552,7 +623,31 @@ dconf_set_locked (const gchar  *key,
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
 
-  return dconf_dbus_set_locked (mount->dbs[0]->bus, key, locked, error);
+  return dconf_dbus_set_locked (mount->dbs[0]->bus, key, !!locked, error);
 }
 
+void
+dconf_set_locked_async (const gchar             *key,
+                        gboolean                 locked,
+                        DConfAsyncReadyCallback  callback,
+                        gpointer                 user_data)
+{
+  DConfMount *mount;
 
+  g_assert (dconf_is_key (key));
+
+  mount = dconf_demux_path (&key, TRUE, NULL);
+  g_assert (mount);
+
+  dconf_dbus_set_locked_async (mount->dbs[0]->bus, key, !!locked,
+                               (DConfDBusAsyncReadyCallback) callback,
+                               user_data);
+}
+
+gboolean
+dconf_set_locked_finish (DConfAsyncResult  *result,
+                         GError           **error)
+{
+  return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
+                                  "", NULL, error);
+}

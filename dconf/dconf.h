@@ -35,27 +35,55 @@ gchar **                dconf_list                                      (const g
 gboolean                dconf_get_writable                              (const gchar              *path);
 gboolean                dconf_get_locked                                (const gchar              *path);
 
+
+
 gboolean                dconf_set                                       (const gchar              *key,
                                                                          GVariant                 *value,
                                                                          gchar                   **event_id,
                                                                          GError                  **error);
+void                    dconf_set_async                                 (const gchar              *key,
+                                                                         GVariant                 *value,
+                                                                         DConfAsyncReadyCallback   callback,
+                                                                         gpointer                  user_data);
+gboolean                dconf_set_finish                                (DConfAsyncResult         *result,
+                                                                         gchar                   **event_id,
+                                                                         GError                  **error);
+
 
 gboolean                dconf_set_locked                                (const gchar              *key,
                                                                          gboolean                  locked,
                                                                          GError                  **error);
+void                    dconf_set_locked_async                          (const gchar              *key,
+                                                                         gboolean                  locked,
+                                                                         DConfAsyncReadyCallback   callback,
+                                                                         gpointer                  user_data);
+gboolean                dconf_set_locked_finish                         (DConfAsyncResult         *result,
+                                                                         GError                  **error);
+
 
 gboolean                dconf_reset                                     (const gchar              *key,
                                                                          gchar                   **event_id,
                                                                          GError                  **error);
+void                    dconf_reset_async                               (const gchar              *key,
+                                                                         DConfAsyncReadyCallback   callback,
+                                                                         gpointer                  user_data);
+gboolean                dconf_reset_finish                              (DConfAsyncResult         *result,
+                                                                         gchar                   **event_id,
+                                                                         GError                  **error);
 
-void                    dconf_merge_tree_async                          (const gchar              *prefix,
+
+gboolean                dconf_merge                                     (const gchar              *prefix,
+                                                                         GTree                    *tree,
+                                                                         gchar                   **event_id,
+                                                                         GError                  **error);
+void                    dconf_merge_async                               (const gchar              *prefix,
                                                                          GTree                    *tree,
                                                                          DConfAsyncReadyCallback   callback,
                                                                          gpointer                  user_data);
-
 gboolean                dconf_merge_finish                              (DConfAsyncResult         *result,
                                                                          gchar                   **event_id,
                                                                          GError                  **error);
+
 
 void                    dconf_watch                                     (const gchar              *match,
                                                                          DConfWatchFunc            func,

@@ -87,9 +87,9 @@ dconf_storage_write (GSettingsBackend     *backend,
   item->prefix_len = strlen (item->prefix);
 
   path = g_strconcat (storage->base, prefix, NULL);
-  dconf_merge_tree_async (path, values,
-                          dconf_storage_merge_complete,
-                          storage);
+  dconf_merge_async (path, values,
+                     dconf_storage_merge_complete,
+                     storage);
   g_free (path);
 
   storage->item_list = g_list_insert_before (storage->item_list,
