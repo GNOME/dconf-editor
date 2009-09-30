@@ -186,7 +186,15 @@ static gboolean
 dconf_storage_get_writable (GSettingsBackend *backend,
                             const gchar      *name)
 {
-  return TRUE;
+  DConfStorage *storage = DCONF_STORAGE (backend);
+  gboolean writable;
+  gchar *full;
+
+  full = g_strdup_printf ("%s%s", storage->base, name);
+  writable = dconf_get_writable (full);
+  g_free (full);
+
+  return writable;
 }
 
 static void
