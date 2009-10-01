@@ -295,6 +295,63 @@ dconf_get_writable (const gchar *path)
   return writable;
 }
 
+static gboolean
+dconf_check_writable (DConfMount   *mount,
+                      const gchar  *key,
+                      GError      **error)
+{
+  gboolean writable = TRUE;
+  gint i;
+
+  for (i = 0; writable && i < mount->n_dbs; i++)
+    writable = dconf_reader_get_writable (mount->dbs[i]->reader, key);
+
+  if (!writable)
+    {
+      g_set_error (error, 0, 0,
+                   "this key is locked");
+    }
+
+  return writable;
+}
+
+
+static gboolean
+dconf_check_tree_writable (DConfMount   *mount,
+                           const gchar  *prefix,
+                           GTree        *tree,
+                           GError      **error)
+{
+  const gchar * const *const_items;
+  gboolean writable = TRUE;
+  gchar **items;
+  gint length;
+  gint i;
+
+  length = g_tree_nnodes (tree);
+  items = g_new (gchar *, length + 1);
+  const_items = (const gchar * const *) items;
+
+  {
+    gchar **ptr;
+    g_tree_foreach (tree, append_to_array, &ptr);
+    *ptr = NULL;
+  }
+
+  for (i = 0; writable && i < mount->n_dbs; i++)
+    writable = dconf_reader_get_several_writable (mount->dbs[i]->reader,
+                                                  prefix, const_items);
+  g_strfreev (items);
+
+  if (!writable)
+    {
+      g_set_error (error, 0, 0,
+                   "one or more keys are locked");
+    }
+
+  return writable;
+}
+
 /**
  * dconf_watch:
  * @match: a key or path to watch
@@ -466,6 +523,9 @@ dconf_merge (const gchar  *prefix,
   mount = dconf_demux_path (&prefix, TRUE, NULL);
   g_assert (mount);
 
+  if (!dconf_check_tree_writable (mount, prefix, tree, error))
+    return FALSE;
+
   return dconf_dbus_merge (mount->dbs[0]->bus, prefix, tree, event_id, error);
 }
 
@@ -499,6 +559,16 @@ dconf_merge_async (const gchar             *prefix,
 
   mount = dconf_demux_path (&prefix, TRUE, NULL);
   g_assert (mount);
+
+  {
+    GError *error = NULL;
+
+    if (!dconf_check_tree_writable (mount, prefix, tree, &error))
+      {
+        g_assert_not_reached ();
+        // XXX dispatch in idle...
+      }
+  }
 
   dconf_dbus_merge_async (mount->dbs[0]->bus, prefix, tree,
                           (DConfDBusAsyncReadyCallback) callback,
@@ -539,6 +609,9 @@ dconf_set (const gchar  *key,
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
 
+  if (!dconf_check_writable (mount, key, error))
+    return FALSE;
+
   return dconf_dbus_set (mount->dbs[0]->bus, key, value, event_id, error);
 }
 
@@ -555,6 +628,16 @@ dconf_set_async (const gchar             *key,
 
   mount = dconf_demux_path (&key, TRUE, NULL);
   g_assert (mount);
+
+  {
+    GError *error = NULL;
+
+    if (!dconf_check_writable (mount, key, &error))
+      {
+        g_assert_not_reached ();
+        // XXX dispatch in idle...
+      }
+  }
 
   dconf_dbus_set_async (mount->dbs[0]->bus, key, value,
                         (DConfDBusAsyncReadyCallback) callback,
