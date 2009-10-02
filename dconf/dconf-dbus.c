@@ -526,6 +526,8 @@ typedef struct
 {
   DConfDBus *bus;
   DConfDBusAsyncReadyCallback callback;
+  GMainContext *context;
+  DBusPendingCall *pending;
   gpointer user_data;
 } DConfDBusClosure;
 
@@ -538,6 +540,7 @@ struct OPAQUE_TYPE__DConfDBusAsyncResult
 static DConfDBusClosure *
 dconf_dbus_closure_new (DConfDBus                   *bus,
                         DConfDBusAsyncReadyCallback  callback,
+                        DBusPendingCall             *pending,
                         gpointer                     user_data)
 {
   DConfDBusClosure *closure;
@@ -545,19 +548,32 @@ dconf_dbus_closure_new (DConfDBus                   *bus,
   closure = g_slice_new (DConfDBusClosure);
   closure->bus = bus;
   closure->callback = callback;
+  closure->pending = dbus_pending_call_ref (pending);
   closure->user_data = user_data;
+  closure->context = g_main_context_get_thread_default ();
+  if (closure->context)
+    g_main_context_ref (closure->context);
 
   return closure;
 }
 
-static void
-dconf_dbus_closure_fire (DConfDBusClosure *closure,
-                         DBusPendingCall  *pending)
+static gboolean
+dconf_dbus_closure_fire (gpointer user_data)
 {
-  DConfDBusAsyncResult result = { closure->bus, pending };
+  DConfDBusClosure *closure = user_data;
+  DConfDBusAsyncResult result;
+
+  result.bus = closure->bus;
+  result.pending = closure->pending;
 
   closure->callback (&result, closure->user_data);
+
+  dbus_pending_call_unref (closure->pending);
+  if (closure->context)
+    g_main_context_unref (closure->context);
   g_slice_free (DConfDBusClosure, closure);
+
+  return FALSE;
 }
 
 static void
@@ -565,8 +581,13 @@ dconf_dbus_async_ready (DBusPendingCall *pending,
                         gpointer         user_data)
 {
   DConfDBusClosure *closure = user_data;
+  GSource *source;
 
-  dconf_dbus_closure_fire (closure, pending);
+  source = g_idle_source_new ();
+  g_source_set_priority (source, G_PRIORITY_DEFAULT);
+  g_source_set_callback (source, dconf_dbus_closure_fire, closure, NULL);
+  g_source_attach (source, closure->context);
+  g_source_unref (source);
 }
 
 static void
@@ -580,8 +601,9 @@ dconf_dbus_async_call (DConfDBus                   *bus,
   dbus_connection_send_with_reply (bus->connection, message, &pending, -1);
   dbus_pending_call_set_notify (pending, dconf_dbus_async_ready,
                                 dconf_dbus_closure_new (bus, callback,
-                                                        user_data),
+                                                        pending, user_data),
                                 NULL);
+  dbus_pending_call_unref (pending);
   dbus_message_unref (message);
 }
 
