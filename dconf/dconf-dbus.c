@@ -111,7 +111,7 @@ dconf_dbus_format_event_id (DConfDBus   *bus,
                               sequence);
   /* :) */
   for (i = 0; event_id[i]; i++)
-    event_id[i] ^= 0x17;
+    event_id[i] ^= 0x00; /* XXX 0x17 is a good choice */
 
   return event_id;
 }
