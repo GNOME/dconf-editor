@@ -392,7 +392,7 @@ dconf_reader_get_writable (DConfReader *reader,
   gboolean locked = FALSE;
 
   if (!dconf_reader_ensure_valid (reader))
-    return FALSE;
+    return TRUE;
 
   if (reader->data.super->flags & DCONF_FLAG_LOCKED)
     return FALSE;
