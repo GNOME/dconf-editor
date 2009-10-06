@@ -333,7 +333,7 @@ dconf_check_tree_writable (DConfMount   *mount,
   const_items = (const gchar * const *) items;
 
   {
-    gchar **ptr;
+    gchar **ptr = items;
     g_tree_foreach (tree, append_to_array, &ptr);
     *ptr = NULL;
   }

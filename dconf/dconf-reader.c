@@ -430,29 +430,23 @@ dconf_reader_get_locked (DConfReader *reader,
 
 gboolean
 dconf_reader_get_several_writable (DConfReader         *reader,
-                                   const gchar         *name,
+                                   const gchar         *prefix,
                                    const gchar * const *items)
 {
   const volatile struct dir_entry *entry;
   gboolean locked = FALSE;
 
   if (!dconf_reader_ensure_valid (reader))
-    return FALSE;
+    return TRUE;
 
-  entry = dconf_reader_get_entry (reader, name,
+  entry = dconf_reader_get_entry (reader, prefix,
                                   reader->data.super->root_index,
                                   &locked);
 
-  if (items[0][0] == '\0')
-    {
-      g_assert (items[1] == NULL);
-
-      return !locked;
-    }
-
-  /* not *the* most efficient way possible, but simple. */
-  while (!locked && *items != NULL)
-    dconf_reader_get_entry (reader, *items++, entry->data.index, &locked);
+  if (entry != NULL && items[0][0] != '\0')
+    /* not *the* most efficient way possible, but simple. */
+    while (!locked && *items != NULL)
+      dconf_reader_get_entry (reader, *items++, entry->data.index, &locked);
 
   return !locked;
 }
