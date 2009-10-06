@@ -64,7 +64,7 @@ dconf_demux_path (const gchar **path,
       if (g_str_has_prefix (*path, mount->prefix))
         {
           if (rel)
-            *path += strlen (mount->prefix);
+            *path += strlen (mount->prefix) - 1;
           return mount;
         }
     }

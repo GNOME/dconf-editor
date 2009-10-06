@@ -66,10 +66,44 @@ dconf_writer_unset (DConfWriter  *writer,
   volatile struct superblock *super = writer->data.super;
   guint32 index;
 
+  g_assert (key[0] == '/');
+  key++;
+
   index = dconf_writer_get_index (writer, &super->root_index, FALSE);
   if (!dconf_writer_unset_index (writer, &index, key, error))
     return FALSE;
   dconf_writer_set_index (writer, &super->root_index, index, TRUE);
+
+  return TRUE;
+}
+
+gboolean
+dconf_writer_check_unset (const gchar  *key,
+                          GError      **error)
+{
+  gint i;
+
+  if (key[0] != '/')
+    {
+      g_set_error (error, 0, 0,
+                   "key must start with a slash");
+      return FALSE;
+    }
+
+  for (i = 1; key[i]; i++)
+    if (key[i] == '/' && key[i - 1] == '/')
+      {
+        g_set_error (error, 0, 0,
+                     "key must not contain two adjacent slashes");
+        return FALSE;
+      }
+
+  if (key[i - 1] == '/')
+    {
+      g_set_error (error, 0, 0,
+                   "key must not end with a slash");
+      return FALSE;
+    }
 
   return TRUE;
 }

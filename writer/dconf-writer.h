@@ -23,15 +23,22 @@ DConfWriter *           dconf_writer_new                                (const g
 void                    dconf_writer_set                                (DConfWriter  *writer,
                                                                          const gchar  *key,
                                                                          GVariant     *value);
+gboolean                dconf_writer_check_set                          (const gchar  *key,
+                                                                         GError      **error);
 
 gboolean                dconf_writer_unset                              (DConfWriter  *writer,
                                                                          const gchar  *key,
+                                                                         GError      **error);
+gboolean                dconf_writer_check_unset                        (const gchar  *key,
                                                                          GError      **error);
 
 gboolean                dconf_writer_set_locked                         (DConfWriter  *writer,
                                                                          const gchar  *key,
                                                                          gboolean      locked,
                                                                          GError      **error);
+gboolean                dconf_writer_check_set_locked                   (const gchar  *name,
+                                                                         GError      **error);
+
 
 void                    dconf_writer_merge                              (DConfWriter  *writer,
                                                                          const gchar  *prefix,

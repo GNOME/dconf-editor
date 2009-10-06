@@ -674,6 +674,9 @@ dconf_writer_merge (DConfWriter  *writer,
   volatile struct superblock *super = writer->data.super;
   guint32 index;
 
+  g_assert (prefix[0] == '/');
+  prefix++;
+
   index = dconf_writer_get_index (writer, &super->root_index, FALSE);
   dconf_writer_merge_index (writer, &index, prefix,
                             names, values, n_items, FALSE);
@@ -688,10 +691,10 @@ dconf_writer_check_merge (const gchar  *prefix,
 {
   gint i;
 
-  if (prefix[0] == '/')
+  if (prefix[0] != '/')
     {
       g_set_error (error, 0, 0,
-                   "prefix must not start with a slash");
+                   "prefix must start with a slash");
       return FALSE;
     }
 

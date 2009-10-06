@@ -251,8 +251,12 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       value = dconf_dbus_variant_to_gv (&iter);
       dbus_message_iter_next (&iter);
 
-      dconf_writer_set (writer->writer, key, value);
-      status = dconf_writer_sync (writer->writer, &error);
+      if ((status = dconf_writer_check_set (key, &error)))
+        {
+          dconf_writer_set (writer->writer, key, value);
+          status = dconf_writer_sync (writer->writer, &error);
+        }
+
       g_variant_unref (value);
 
       if (status == TRUE)
@@ -298,9 +302,9 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
 
       g_assert (names->len == values->len);
 
-      if (dconf_writer_check_merge (prefix,
-                                    (const gchar **) names->pdata,
-                                    names->len, &error))
+      if ((status = dconf_writer_check_merge (prefix,
+                                              (const gchar **) names->pdata,
+                                              names->len, &error)))
         {
           dconf_writer_merge (writer->writer, prefix,
                               (const gchar **) names->pdata,
@@ -308,8 +312,6 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
                               names->len);
           status = dconf_writer_sync (writer->writer, &error);
         }
-      else
-        status = FALSE;
 
       for (i = 0; i < values->len; i++)
         g_variant_unref (values->pdata[i]);
@@ -340,8 +342,9 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       dbus_message_iter_get_basic (&iter, &locked);
       dbus_message_iter_next (&iter);
 
-      status = dconf_writer_set_locked (writer->writer,
-                                         key, locked, &error);
+      if ((status = dconf_writer_check_set_locked (key, &error)))
+        status = dconf_writer_set_locked (writer->writer,
+                                           key, locked, &error);
 
       return dconf_dbus_writer_reply (writer, status, NULL, error);
     }
@@ -356,7 +359,8 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       dbus_message_iter_get_basic (&iter, &key);
       dbus_message_iter_next (&iter);
 
-      status = dconf_writer_unset (writer->writer, key, &error);
+      if ((status = dconf_writer_check_unset (key, &error)))
+        status = dconf_writer_unset (writer->writer, key, &error);
 
       return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }

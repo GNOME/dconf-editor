@@ -264,6 +264,9 @@ dconf_reader_get (DConfReader  *reader,
   const volatile struct dir_entry *entry;
   char type;
 
+  g_assert (key[0] == '/');
+  key++;
+
   if (!dconf_reader_ensure_valid (reader))
     return;
 
@@ -355,6 +358,9 @@ dconf_reader_list (DConfReader *reader,
   guint32 index;
   gint i;
 
+  g_assert (path[0] == '/');
+  path++;
+
   if (!dconf_reader_ensure_valid (reader))
     return;
 
@@ -390,6 +396,9 @@ dconf_reader_get_writable (DConfReader *reader,
                            const gchar *name)
 {
   gboolean locked = FALSE;
+
+  g_assert (name[0] == '/');
+  name++;
 
   if (!dconf_reader_ensure_valid (reader))
     return TRUE;
@@ -435,6 +444,9 @@ dconf_reader_get_several_writable (DConfReader         *reader,
 {
   const volatile struct dir_entry *entry;
   gboolean locked = FALSE;
+
+  g_assert (prefix[0] == '/');
+  prefix++;
 
   if (!dconf_reader_ensure_valid (reader))
     return TRUE;

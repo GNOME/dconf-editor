@@ -54,6 +54,9 @@ dconf_writer_set_locked (DConfWriter  *writer,
 {
   volatile struct dir_entry *entry;
 
+  g_assert (name[0] == '/');
+  name++;
+
   if ((entry = dconf_writer_lookup (writer, name)) == NULL)
     {
       g_set_error (error, 0, 0, "Unable to lock non-existent entry.");
@@ -61,6 +64,30 @@ dconf_writer_set_locked (DConfWriter  *writer,
     }
 
   entry->locked = locked;
+
+  return TRUE;
+}
+
+gboolean
+dconf_writer_check_set_locked (const gchar  *name,
+                               GError      **error)
+{
+  gint i;
+
+  if (name[0] != '/')
+    {
+      g_set_error (error, 0, 0,
+                   "name must start with a slash");
+      return FALSE;
+    }
+
+  for (i = 1; name[i]; i++)
+    if (name[i] == '/' && name[i - 1] == '/')
+      {
+        g_set_error (error, 0, 0,
+                     "name must not contain two adjacent slashes");
+        return FALSE;
+      }
 
   return TRUE;
 }

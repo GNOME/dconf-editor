@@ -248,6 +248,37 @@ dconf_writer_set (DConfWriter  *writer,
   return dconf_writer_merge (writer, key, &empty_string, &value, 1);
 }
 
+gboolean
+dconf_writer_check_set (const gchar  *key,
+                        GError      **error)
+{
+  gint i;
+
+  if (key[0] != '/')
+    {
+      g_set_error (error, 0, 0,
+                   "key must start with a slash");
+      return FALSE;
+    }
+
+  for (i = 1; key[i]; i++)
+    if (key[i] == '/' && key[i - 1] == '/')
+      {
+        g_set_error (error, 0, 0,
+                     "key must not contain two adjacent slashes");
+        return FALSE;
+      }
+
+  if (key[i - 1] == '/')
+    {
+      g_set_error (error, 0, 0,
+                   "key must not end with a slash");
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 GVariant *
 dconf_writer_get_entry_value (DConfWriter                     *writer,
                               const volatile struct dir_entry *entry)
