@@ -298,11 +298,18 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
 
       g_assert (names->len == values->len);
 
-      dconf_writer_merge (writer->writer, prefix,
-                          (const gchar **) names->pdata,
-                          (GVariant **) values->pdata,
-                          names->len);
-      status = dconf_writer_sync (writer->writer, &error);
+      if (dconf_writer_check_merge (prefix,
+                                    (const gchar **) names->pdata,
+                                    names->len, &error))
+        {
+          dconf_writer_merge (writer->writer, prefix,
+                              (const gchar **) names->pdata,
+                              (GVariant **) values->pdata,
+                              names->len);
+          status = dconf_writer_sync (writer->writer, &error);
+        }
+      else
+        status = FALSE;
 
       for (i = 0; i < values->len; i++)
         g_variant_unref (values->pdata[i]);

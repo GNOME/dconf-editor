@@ -43,5 +43,9 @@ gboolean                dconf_writer_sync                               (DConfWr
                                                                          GError      **error);
 
 void                    dconf_writer_dump                               (DConfWriter  *writer);
+gboolean                dconf_writer_check_merge                        (const gchar  *prefix,
+                                                                         const gchar **names,
+                                                                         gint          n_names,
+                                                                         GError      **error);
 
 #endif /* _dconf_writer_h_ */

@@ -679,3 +679,99 @@ dconf_writer_merge (DConfWriter  *writer,
                             names, values, n_items, FALSE);
   dconf_writer_set_index (writer, &super->root_index, index, FALSE);
 }
+
+gboolean
+dconf_writer_check_merge (const gchar  *prefix,
+                          const gchar **names,
+                          gint          n_names,
+                          GError      **error)
+{
+  gint i;
+
+  if (prefix[0] == '/')
+    {
+      g_set_error (error, 0, 0,
+                   "prefix must not start with a slash");
+      return FALSE;
+    }
+
+  for (i = 1; prefix[i]; i++)
+    if (prefix[i] == '/' && prefix[i - 1] == '/')
+      {
+        g_set_error (error, 0, 0,
+                     "prefix must not contain two adjacent slashes");
+        return FALSE;
+      }
+
+  if (prefix[i - 1] == '/')
+    {
+      if (n_names < 1)
+        {
+          g_set_error (error, 0, 0,
+                       "if prefix ends with a slash then the item list "
+                       "must contain at least one item");
+          return FALSE;
+        }
+
+      for (i = 0; i < n_names; i++)
+        {
+          gint j;
+          
+          if (names[i][0] == '\0')
+            {
+              g_set_error (error, 0, 0,
+                           "if prefix ends with a slash then no key in the "
+                           "item list may be the empty string");
+              return FALSE;
+            }
+
+          if (names[i][0] == '/')
+            {
+              g_set_error (error, 0, 0,
+                           "no key in the item list may start with a slash");
+              return FALSE;
+            }
+
+          for (j = 1; names[i][j]; j++)
+            if (names[i][j] == '/' && names[i][j - 1] == '/')
+              {
+                g_set_error (error, 0, 0,
+                             "no key in the item list may contain two "
+                             "adjacent slashes");
+                return FALSE;
+              }
+
+          if (i > 0)
+            {
+              gint cmp = strcmp (names[i - 1], names[i]);
+
+              if (cmp == 0)
+                {
+                  g_set_error (error, 0, 0,
+                               "no two keys in the item list may be equal");
+                  return FALSE;
+                }
+
+              if (cmp > 0)
+                {
+                  g_set_error (error, 0, 0,
+                               "the keys in the item list must be sorted "
+                               "alphabetically (in ascii strcmp() order)");
+                  return FALSE;
+                }
+            }
+        }
+    }
+  else
+    {
+      if (n_names != 1 || names[0][0] != '\0')
+        {
+          g_set_error (error, 0, 0,
+                       "if prefix doesn't end with a slash then the item "
+                       "list must contain a single item: the empty string");
+          return FALSE;
+        }
+    }
+
+  return TRUE;
+}
