@@ -590,10 +590,12 @@ dconf_dbus_closure_fire (gpointer user_data)
 
   if (closure->pending)
     dbus_pending_call_unref (closure->pending);
+
   if (closure->context)
     g_main_context_unref (closure->context);
-  if (closure->error)
-    g_error_free (closure->error);
+
+  if (result.error)
+    g_error_free (result.error);
 
   g_slice_free (DConfDBusClosure, closure);
 
