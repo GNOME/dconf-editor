@@ -39,11 +39,11 @@ void                    dconf_dbus_set_async                            (DConfDB
                                                                          DConfDBusAsyncReadyCallback   callback,
                                                                          gpointer                      user_data);
 
-gboolean                dconf_dbus_reset                                (DConfDBus                    *bus,
+gboolean                dconf_dbus_unset                                (DConfDBus                    *bus,
                                                                          const gchar                  *path,
                                                                          gchar                       **event_id,
                                                                          GError                      **error);
-void                    dconf_dbus_reset_async                          (DConfDBus                    *bus,
+void                    dconf_dbus_unset_async                          (DConfDBus                    *bus,
                                                                          const gchar                  *path,
                                                                          DConfDBusAsyncReadyCallback   callback,
                                                                          gpointer                      user_data);

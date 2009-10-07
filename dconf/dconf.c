@@ -920,7 +920,7 @@ dconf_reset (const gchar  *key,
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
 
-  return dconf_dbus_reset (mount->dbs[0]->bus, key, event_id, error);
+  return dconf_dbus_unset (mount->dbs[0]->bus, key, event_id, error);
 }
 
 /**
@@ -954,7 +954,7 @@ dconf_reset_async (const gchar             *key,
       return;
     }
 
-  dconf_dbus_reset_async (mount->dbs[0]->bus, key,
+  dconf_dbus_unset_async (mount->dbs[0]->bus, key,
                           (DConfDBusAsyncReadyCallback) callback,
                           user_data);
 }

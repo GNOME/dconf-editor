@@ -693,15 +693,15 @@ dconf_dbus_set_async (DConfDBus                   *bus,
   dconf_dbus_async_call (bus, message, callback, user_data);
 }
 
-/* == reset == */
+/* == unset == */
 static DBusMessage *
-dconf_dbus_new_reset_call (DConfDBus    *bus,
+dconf_dbus_new_unset_call (DConfDBus    *bus,
                            const gchar  *key)
 {
   DBusMessageIter iter;
   DBusMessage *message;
 
-  message = dconf_dbus_new_call (bus, "Reset");
+  message = dconf_dbus_new_call (bus, "Unset");
 
   dbus_message_iter_init_append (message, &iter);
   dbus_message_iter_append_basic (&iter, DBUS_TYPE_STRING, &key);
@@ -710,22 +710,22 @@ dconf_dbus_new_reset_call (DConfDBus    *bus,
 }
 
 gboolean
-dconf_dbus_reset (DConfDBus    *bus,
+dconf_dbus_unset (DConfDBus    *bus,
                   const gchar  *key,
                   gchar       **event_id,
                   GError      **error)
 {
-  DBusMessage *message = dconf_dbus_new_reset_call (bus, key);
+  DBusMessage *message = dconf_dbus_new_unset_call (bus, key);
   return dconf_dbus_blocking_call (bus, message, "u", event_id, error);
 }
 
 void
-dconf_dbus_reset_async (DConfDBus                   *bus,
+dconf_dbus_unset_async (DConfDBus                   *bus,
                         const gchar                 *key,
                         DConfDBusAsyncReadyCallback  callback,
                         gpointer                     user_data)
 {
-  DBusMessage *message = dconf_dbus_new_reset_call (bus, key);
+  DBusMessage *message = dconf_dbus_new_unset_call (bus, key);
   dconf_dbus_async_call (bus, message, callback, user_data);
 }
 
