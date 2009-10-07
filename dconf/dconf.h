@@ -33,8 +33,8 @@ gboolean                dconf_match                                     (const g
 GVariant *              dconf_get                                       (const gchar              *key);
 gchar **                dconf_list                                      (const gchar              *path,
                                                                          gint                     *length);
-gboolean                dconf_get_writable                              (const gchar              *path);
-gboolean                dconf_get_locked                                (const gchar              *path);
+gboolean                dconf_get_writable                              (const gchar              *key_or_path);
+gboolean                dconf_get_locked                                (const gchar              *key_or_path);
 
 
 

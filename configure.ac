@@ -6,6 +6,8 @@ AM_SILENT_RULES
 AC_PROG_LIBTOOL
 AC_PROG_CC
 
+GTK_DOC_CHECK
+
 PKG_CHECK_MODULES(glib, glib-2.0)
 PKG_CHECK_MODULES(dbus, dbus-1)
 
@@ -45,5 +47,8 @@ AC_OUTPUT([
   dconf/dconf.pc
   bin/Makefile
   gio/Makefile
+  docs/Makefile
+  docs/reference/Makefile
+  docs/reference/dconf-docs.xml
   Makefile
 ])

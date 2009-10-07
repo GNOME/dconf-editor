@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!--
+
+    NOTE: dconf-docs.xml is auto-generated.
+          ensure that you edit the dconf-docs.xml.in file
+
+-->
+
+<book id='index' xmlns:xi='http://www.w3.org/2003/XInclude'>
+  <bookinfo>
+    <title>dconf Reference Manual</title>
+    <releaseinfo>
+      for dconf @PACKAGE_VERSION@.
+      The latest version of this documentation can be found on-line at
+      <ulink role='online-location' url='http://library.gnome.org/devel/dconf/'
+        >http://library.gnome.org/devel/dconf/</ulink>.
+    </releaseinfo>
+  </bookinfo>
+
+  <chapter>
+    <title>Core API</title>
+    <xi:include href='xml/api.xml'/>
+  </chapter>
+
+  <index id='api-index-full'>
+    <title>API Index</title>
+    <xi:include href='xml/api-index-full.xml'><xi:fallback/></xi:include>
+  </index>
+</book>

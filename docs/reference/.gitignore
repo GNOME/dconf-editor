@@ -1,0 +1,17 @@
+dconf-decl-list.txt
+dconf-decl.txt
+dconf-docs.xml
+dconf-overrides.txt
+dconf-undeclared.txt
+dconf-undocumented.txt
+dconf.args
+dconf.hierarchy
+dconf.interfaces
+dconf.prerequisites
+dconf.signals
+gtk-doc.make
+
+*.stamp
+html/
+xml/
+

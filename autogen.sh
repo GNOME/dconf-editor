@@ -11,6 +11,7 @@ if [ "$1" = "clean" ]; then
 fi
 
 libtoolize --automake
+gtkdocize --docdir docs/reference --flavour no-tmpl
 aclocal
 automake --add-missing --foreign
 autoconf
