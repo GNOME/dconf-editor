@@ -663,8 +663,8 @@ dconf_merge (const gchar  *prefix,
   g_return_val_if_fail (g_tree_nnodes (tree) > 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  mount = dconf_demux_path (&prefix, TRUE, NULL);
-  g_assert (mount);
+  if ((mount = dconf_demux_path (&prefix, TRUE, error)) == NULL)
+    return FALSE;
 
   if (!dconf_check_tree_writable (mount, prefix, tree, error))
     return FALSE;
@@ -692,6 +692,7 @@ dconf_merge_async (const gchar             *prefix,
                    DConfAsyncReadyCallback  callback,
                    gpointer                 user_data)
 {
+  GError *error = NULL;
   DConfMount *mount;
 
   g_return_if_fail (prefix != NULL);
@@ -702,20 +703,14 @@ dconf_merge_async (const gchar             *prefix,
   g_return_if_fail (g_tree_nnodes (tree) > 0);
 
 
-  mount = dconf_demux_path (&prefix, TRUE, NULL);
-  g_assert (mount);
-
-  {
-    GError *error = NULL;
-
-    if (!dconf_check_tree_writable (mount, prefix, tree, &error))
-      {
-        dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
-                                   user_data, error);
-        g_error_free (error);
-        return;
-      }
-  }
+  if ((mount = dconf_demux_path (&prefix, TRUE, &error)) == NULL ||
+      !dconf_check_tree_writable (mount, prefix, tree, &error))
+    {
+      dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
+                                 user_data, error);
+      g_error_free (error);
+      return;
+    }
 
   dconf_dbus_merge_async (mount->dbs[0]->bus, prefix, tree,
                           (DConfDBusAsyncReadyCallback) callback,
@@ -813,25 +808,20 @@ dconf_set_async (const gchar             *key,
                  DConfAsyncReadyCallback  callback,
                  gpointer                 user_data)
 {
+  GError *error = NULL;
   DConfMount *mount;
 
   g_return_if_fail (dconf_is_key (key));
   g_return_if_fail (value != NULL);
 
-  mount = dconf_demux_path (&key, TRUE, NULL);
-  g_assert (mount);
-
-  {
-    GError *error = NULL;
-
-    if (!dconf_check_writable (mount, key, &error))
-      {
-        dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
-                                   user_data, error);
-        g_error_free (error);
-        return;
-      }
-  }
+  if ((mount = dconf_demux_path (&key, TRUE, &error)) == NULL ||
+      !dconf_check_writable (mount, key, &error))
+    {
+      dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
+                                 user_data, error);
+      g_error_free (error);
+      return;
+    }
 
   dconf_dbus_set_async (mount->dbs[0]->bus, key, value,
                         (DConfDBusAsyncReadyCallback) callback,
@@ -919,12 +909,18 @@ dconf_reset_async (const gchar             *key,
                    DConfAsyncReadyCallback  callback,
                    gpointer                 user_data)
 {
+  GError *error = NULL;
   DConfMount *mount;
 
   g_return_if_fail (dconf_is_key (key));
 
-  mount = dconf_demux_path (&key, TRUE, NULL);
-  g_assert (mount);
+  if ((mount = dconf_demux_path (&key, TRUE, &error)) == NULL)
+    {
+      dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
+                                 user_data, error);
+      g_error_free (error);
+      return;
+    }
 
   dconf_dbus_reset_async (mount->dbs[0]->bus, key,
                           (DConfDBusAsyncReadyCallback) callback,
@@ -1010,12 +1006,18 @@ dconf_set_locked_async (const gchar             *key_or_path,
                         DConfAsyncReadyCallback  callback,
                         gpointer                 user_data)
 {
+  GError *error = NULL;
   DConfMount *mount;
 
   g_return_if_fail (dconf_is_key_or_path (key_or_path));
 
-  mount = dconf_demux_path (&key_or_path, TRUE, NULL);
-  g_assert (mount);
+  if ((mount = dconf_demux_path (&key_or_path, TRUE, &error)) == NULL)
+    {
+      dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
+                                 user_data, error);
+      g_error_free (error);
+      return;
+    }
 
   dconf_dbus_set_locked_async (mount->dbs[0]->bus, key_or_path, !!locked,
                                (DConfDBusAsyncReadyCallback) callback,
