@@ -9,6 +9,7 @@ DConfWatchFunc
 dconf_is_key
 dconf_is_path
 dconf_is_key_or_path
+dconf_is_relative_key
 
 <SUBSECTION>
 dconf_match
