@@ -1,5 +1,4 @@
-dconf-get
-dconf-list
+dconf
 dconf-lock
 dconf-reset
 dconf-set
