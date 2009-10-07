@@ -525,6 +525,7 @@ dconf_dbus_blocking_call (DConfDBus    *bus,
 typedef struct
 {
   DConfDBus *bus;
+  GError *error;
   DConfDBusAsyncReadyCallback callback;
   GMainContext *context;
   DBusPendingCall *pending;
@@ -534,25 +535,43 @@ typedef struct
 struct OPAQUE_TYPE__DConfDBusAsyncResult
 {
   DConfDBus *bus;
+  GError *error;
   DBusPendingCall *pending;
 };
 
 static DConfDBusClosure *
 dconf_dbus_closure_new (DConfDBus                   *bus,
-                        DConfDBusAsyncReadyCallback  callback,
                         DBusPendingCall             *pending,
+                        GError                      *error,
+                        DConfDBusAsyncReadyCallback  callback,
                         gpointer                     user_data)
 {
   DConfDBusClosure *closure;
+  GMainContext *context;
+
+  g_assert ((error == NULL) ^ (pending == NULL));
+
+  context = g_main_context_get_thread_default ();
 
   closure = g_slice_new (DConfDBusClosure);
   closure->bus = bus;
   closure->callback = callback;
-  closure->pending = dbus_pending_call_ref (pending);
   closure->user_data = user_data;
-  closure->context = g_main_context_get_thread_default ();
-  if (closure->context)
-    g_main_context_ref (closure->context);
+
+  if (context)
+    closure->context = g_main_context_ref (context);
+  else
+    closure->context = NULL;
+
+  if (error)
+    closure->error = g_error_copy (error);
+  else
+    closure->error = NULL;
+
+  if (pending)
+    closure->pending = dbus_pending_call_ref (pending);
+  else
+    closure->pending = NULL;
 
   return closure;
 }
@@ -565,12 +584,17 @@ dconf_dbus_closure_fire (gpointer user_data)
 
   result.bus = closure->bus;
   result.pending = closure->pending;
+  result.error = closure->error;
 
   closure->callback (&result, closure->user_data);
 
-  dbus_pending_call_unref (closure->pending);
+  if (closure->pending)
+    dbus_pending_call_unref (closure->pending);
   if (closure->context)
     g_main_context_unref (closure->context);
+  if (closure->error)
+    g_error_free (closure->error);
+
   g_slice_free (DConfDBusClosure, closure);
 
   return FALSE;
@@ -600,8 +624,8 @@ dconf_dbus_async_call (DConfDBus                   *bus,
 
   dbus_connection_send_with_reply (bus->connection, message, &pending, -1);
   dbus_pending_call_set_notify (pending, dconf_dbus_async_ready,
-                                dconf_dbus_closure_new (bus, callback,
-                                                        pending, user_data),
+                                dconf_dbus_closure_new (bus, pending, NULL,
+                                                        callback, user_data),
                                 NULL);
   dbus_pending_call_unref (pending);
   dbus_message_unref (message);
@@ -817,49 +841,69 @@ dconf_dbus_async_finish (DConfDBusAsyncResult  *result,
   DBusMessage *reply;
   gboolean success;
 
-  reply = dbus_pending_call_steal_reply (result->pending);
-  if (dbus_message_get_type (reply) == DBUS_MESSAGE_TYPE_ERROR)
+  if (result->error)
     {
-      const gchar *code, *message;
-      gboolean have_message;
-
-      code = dbus_message_get_error_name (reply);
-
-      have_message = dbus_message_get_args (reply, NULL,
-                                            DBUS_TYPE_STRING, &message,
-                                            DBUS_TYPE_INVALID);
-
-      if (have_message)
-        g_set_error (error, 0, 0, "%s: %s", code, message);
-      else
-        g_set_error (error, 0, 0, "DBus error: %s", code);
-
-      success = FALSE;
-    }
-  else if (!dbus_message_has_signature (reply, signature))
-    {
-      g_set_error (error, 0, 0, "unexpected signature in DBus reply");
+      g_propagate_error (error, result->error);
+      result->error = NULL;
       success = FALSE;
     }
   else
     {
-      if (event_id)
+      reply = dbus_pending_call_steal_reply (result->pending);
+      if (dbus_message_get_type (reply) == DBUS_MESSAGE_TYPE_ERROR)
         {
-          guint32 sequence;
+          const gchar *code, *message;
+          gboolean have_message;
 
-          dbus_message_get_args (reply, NULL,
-                                 DBUS_TYPE_UINT32, &sequence,
-                                 DBUS_TYPE_INVALID);
-          *event_id = dconf_dbus_format_event_id (result->bus,
-                                                  reply, sequence);
+          code = dbus_message_get_error_name (reply);
+
+          have_message = dbus_message_get_args (reply, NULL,
+                                                DBUS_TYPE_STRING, &message,
+                                                DBUS_TYPE_INVALID);
+
+          if (have_message)
+            g_set_error (error, 0, 0, "%s: %s", code, message);
+          else
+            g_set_error (error, 0, 0, "DBus error: %s", code);
+
+          success = FALSE;
+        }
+      else if (!dbus_message_has_signature (reply, signature))
+        {
+          g_set_error (error, 0, 0, "unexpected signature in DBus reply");
+          success = FALSE;
+        }
+      else
+        {
+          if (event_id)
+            {
+              guint32 sequence;
+
+              dbus_message_get_args (reply, NULL,
+                                     DBUS_TYPE_UINT32, &sequence,
+                                     DBUS_TYPE_INVALID);
+              *event_id = dconf_dbus_format_event_id (result->bus,
+                                                      reply, sequence);
+            }
+
+          success = TRUE;
         }
 
-      success = TRUE;
+      dbus_message_unref (reply);
     }
 
-  dbus_message_unref (reply);
-
   return success;
+}
+
+void
+dconf_dbus_dispatch_error (DConfDBusAsyncReadyCallback  callback,
+                           gpointer                     user_data,
+                           GError                      *error)
+{
+  DConfDBusClosure *closure;
+
+  closure = dconf_dbus_closure_new (NULL, NULL, error, callback, user_data);
+  g_idle_add (dconf_dbus_closure_fire, closure);
 }
 
 /* ------------------------------------------------------------------------ */

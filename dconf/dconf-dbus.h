@@ -82,6 +82,8 @@ void                    dconf_dbus_unwatch                              (DConfDB
                                                                          const gchar                  *prefix,
                                                                          DConfDBusNotify               callback,
                                                                          gpointer                      user_data);
-
+void                    dconf_dbus_dispatch_error                       (DConfDBusAsyncReadyCallback   callback,
+                                                                         gpointer                      user_data,
+                                                                         GError                       *error);
 
 #endif /* _dconf_dbus_h_ */

@@ -565,8 +565,10 @@ dconf_merge_async (const gchar             *prefix,
 
     if (!dconf_check_tree_writable (mount, prefix, tree, &error))
       {
-        g_assert_not_reached ();
-        // XXX dispatch in idle...
+        dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
+                                   user_data, error);
+        g_error_free (error);
+        return;
       }
   }
 
@@ -634,8 +636,10 @@ dconf_set_async (const gchar             *key,
 
     if (!dconf_check_writable (mount, key, &error))
       {
-        g_assert_not_reached ();
-        // XXX dispatch in idle...
+        dconf_dbus_dispatch_error ((DConfDBusAsyncReadyCallback) callback,
+                                   user_data, error);
+        g_error_free (error);
+        return;
       }
   }
 
