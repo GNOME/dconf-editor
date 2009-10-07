@@ -98,6 +98,8 @@ dconf_get (const gchar *key)
   GVariant *value = NULL;
   DConfMount *mount;
 
+  g_return_val_if_fail (dconf_is_key (key), NULL);
+
   mount = dconf_demux_path (&key, TRUE, NULL);
 
   if (mount)
@@ -152,7 +154,7 @@ gchar **
 dconf_list (const gchar *path,
             gint        *length)
 {
-  g_assert (dconf_is_path (path));
+  g_return_val_if_fail (dconf_is_path (path), NULL);
 
   if (path[1] == '\0') /* '/' */
     {
@@ -223,13 +225,13 @@ dconf_list (const gchar *path,
 
 /**
  * dconf_get_locked:
- * @path: a dconf key or path
- * @returns: %TRUE if @path is locked
+ * @key_or_path: a dconf key or path
+ * @returns: %TRUE if @key_or_path is locked
  *
  * Checks if a lock exists at the current position in the tree.  This
  * call is the exact dual of dconf_set_locked(); the return value here
  * is exactly equal to what was last set with dconf_set_locked() on the
- * exact same @path.
+ * exact same @key_or_path.
  *
  * This is the value you would show in a lockdown editor for it a lock
  * exists at the current point.
@@ -242,30 +244,32 @@ dconf_list (const gchar *path,
  * impacted by entire-directory locks installed at higher points in the
  * tree.  See dconf_get_writable() if you are interested in that.
  *
- * It is a programmer error to call this function with a @path that is
- * not a valid dconf path (as per dconf_is_path()) or key (as per
- * dconf_is_key()).
+ * It is a programmer error to call this function with a @key_or_path
+ * that is not a valid dconf path (as per dconf_is_path()) or key (as
+ * per dconf_is_key()).
  **/
 gboolean
-dconf_get_locked (const gchar *path)
+dconf_get_locked (const gchar *key_or_path)
 {
   gboolean locked = FALSE;
   DConfMount *mount;
 
-  mount = dconf_demux_path (&path, TRUE, NULL);
+  g_return_val_if_fail (dconf_is_key_or_path (key_or_path), FALSE);
+
+  mount = dconf_demux_path (&key_or_path, TRUE, NULL);
   if (mount && mount->n_dbs)
-    locked = dconf_reader_get_locked (mount->dbs[0]->reader, path);
+    locked = dconf_reader_get_locked (mount->dbs[0]->reader, key_or_path);
 
   return locked;
 }
 
 /**
  * dconf_get_writable:
- * @path: a dconf key or path
- * @returns: %TRUE if writing to @path would work
+ * @key_or_path: a dconf key or path
+ * @returns: %TRUE if writing to @key_or_path would work
  *
- * Checks if writing to a given @path would work.  For a key to be
- * writable, it may not be locked in any database nor may any of its
+ * Checks if writing to a given @key_or_path would work.  For a key to
+ * be writable, it may not be locked in any database nor may any of its
  * parents.
  *
  * This is the value you would use to determine if a settings widget
@@ -273,23 +277,26 @@ dconf_get_locked (const gchar *path)
  *
  * If the path doesn't exist in the tree then %FALSE is returned.
  *
- * It is a programmer error to call this function with a @path that is
- * not a valid dconf path (as per dconf_is_path()) or key (as per
- * dconf_is_key()).
+ * It is a programmer error to call this function with a @key_or_path
+ * that is not a valid dconf path (as per dconf_is_path()) or key (as
+ * per dconf_is_key()).
  **/
 gboolean
-dconf_get_writable (const gchar *path)
+dconf_get_writable (const gchar *key_or_path)
 {
   gboolean writable = TRUE;
   DConfMount *mount;
 
-  mount = dconf_demux_path (&path, TRUE, NULL);
+  g_return_val_if_fail (dconf_is_key_or_path (key_or_path), FALSE);
+
+  mount = dconf_demux_path (&key_or_path, TRUE, NULL);
   if (mount)
     {
       gint i;
 
       for (i = mount->n_dbs - 1; writable && i >= 0; i--)
-        writable = dconf_reader_get_writable (mount->dbs[i]->reader, path);
+        writable = dconf_reader_get_writable (mount->dbs[i]->reader,
+                                              key_or_path);
     }
 
   return writable;
@@ -415,7 +422,8 @@ dconf_watch (const gchar    *match,
  *
  * Removes an existing watch.  The given arguments must exactly match
  * the ones given to an earlier call to dconf_watch() (@callback and
- * @user_data must be identical; @match need only be equal by value).
+ * @user_data must be identical; @match need only be equal by string
+ * comparison).
  *
  * In the event that more than one watch was registered with the same
  * values then this call removes only one of them.
@@ -463,13 +471,14 @@ dconf_unwatch (const gchar    *match,
  * dconf_merge:
  * @prefix: the common part of the path to write to
  * @tree: a list of the values to store
- * @event_id: a pointer for the event ID return (or %NULL)
- * @error: a pointer to a %NULL #GError pointer (or %NULL)
+ * @event_id: a pointer for the event ID return, or %NULL
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
  * @returns: %TRUE on success
  *
- * Atomically set the value of several keys.  This is a "merge" in the
- * sense that the values in @tree are merged into the existing
- * configuration database at @prefix.
+ * Atomically set the value of several keys in the dconf database.
+ *
+ * This is a "merge" in the sense that the values in @tree are merged
+ * into the existing configuration database at @prefix.
  *
  * @tree should be a #GTree created by a call to dconf_tree_new().
  *
@@ -514,11 +523,13 @@ dconf_merge (const gchar  *prefix,
 {
   DConfMount *mount;
 
-  g_assert (prefix != NULL);
-  g_assert (tree != NULL);
-
-  g_assert (g_str_has_suffix (prefix, "/") || g_tree_nnodes (tree) == 1);
-  g_assert (g_str_has_prefix (prefix, "/"));
+  g_return_val_if_fail (prefix != NULL, FALSE);
+  g_return_val_if_fail (tree != NULL, FALSE);
+  g_return_val_if_fail (g_str_has_suffix (prefix, "/") ||
+                        g_tree_nnodes (tree) == 1, FALSE);
+  g_return_val_if_fail (g_str_has_prefix (prefix, "/"), FALSE);
+  g_return_val_if_fail (g_tree_nnodes (tree) > 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   mount = dconf_demux_path (&prefix, TRUE, NULL);
   g_assert (mount);
@@ -536,7 +547,7 @@ dconf_merge (const gchar  *prefix,
  * @callback: the completion callback
  * @user_data: user data for @callback
  *
- * Atomically set the value of several keys.
+ * Atomically set the value of several keys in the dconf database.
  *
  * This is the asynchronous variant of dconf_merge().  When the merge is
  * complete, @callback will be called with a #DConfAsyncResult and
@@ -551,11 +562,13 @@ dconf_merge_async (const gchar             *prefix,
 {
   DConfMount *mount;
 
-  g_assert (prefix != NULL);
-  g_assert (tree != NULL);
+  g_return_if_fail (prefix != NULL);
+  g_return_if_fail (tree != NULL);
+  g_return_if_fail (g_str_has_suffix (prefix, "/") ||
+                        g_tree_nnodes (tree) == 1);
+  g_return_if_fail (g_str_has_prefix (prefix, "/"));
+  g_return_if_fail (g_tree_nnodes (tree) > 0);
 
-  g_assert (g_str_has_suffix (prefix, "/") || g_tree_nnodes (tree) == 1);
-  g_assert (g_str_has_prefix (prefix, "/"));
 
   mount = dconf_demux_path (&prefix, TRUE, NULL);
   g_assert (mount);
@@ -580,23 +593,53 @@ dconf_merge_async (const gchar             *prefix,
 /**
  * dconf_merge_finish:
  * @result: the #DConfAsyncResult given to your callback
- * @event_id: a pointer for the event ID return (or %NULL)
- * @error: a pointer to a %NULL #GError pointer (or %NULL)
+ * @event_id: a pointer for the event ID return, or %NULL
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
  * @returns: %TRUE on success
  *
  * Collects the results from a call to dconf_merge_async().
  *
- * This is the second half of the asyncronous variant of dconf_merge().
+ * This is the second half of the asynchronous variant of dconf_merge().
  **/
 gboolean
 dconf_merge_finish (DConfAsyncResult  *result,
                     gchar            **event_id,
                     GError           **error)
 {
+  g_return_val_if_fail (result != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
                                   "u", event_id, error);
 }
 
+/**
+ * dconf_set:
+ * @key: a dconf key
+ * @value: a #GVariant, which will be sunk
+ * @event_id: a pointer for the event ID return, or %NULL
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
+ *
+ * Sets the value of a key in the dconf database.
+ *
+ * If @value has a floating reference, it will be consumed by this call.
+ *
+ * @value may not be %NULL.  If you wish to reset the value of a key,
+ * then use dconf_reset().
+ *
+ * In the event of a failure of any kind then no changes will be made to
+ * the database, %error (if non-%NULL) will be set and %FALSE will be
+ * returned.
+ *
+ * If the set is successful then %TRUE will be returned.  If @event_id
+ * is non-%NULL it will be set to the event ID number of the merge.  The
+ * event ID will be the same as the ID that is sent for the change
+ * notification corresponding to this modification and is unique for the
+ * life of the program.  It has no particular format.
+ *
+ * It is a programmer error to call this function with a @key that is
+ * not a valid dconf key (as per dconf_is_key()).
+ **/
 gboolean
 dconf_set (const gchar  *key,
            GVariant     *value,
@@ -605,8 +648,9 @@ dconf_set (const gchar  *key,
 {
   DConfMount *mount;
 
-  g_assert (dconf_is_key (key));
-  g_assert (value != NULL);
+  g_return_val_if_fail (dconf_is_key (key), FALSE);
+  g_return_val_if_fail (value != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
@@ -617,6 +661,20 @@ dconf_set (const gchar  *key,
   return dconf_dbus_set (mount->dbs[0]->bus, key, value, event_id, error);
 }
 
+/**
+ * dconf_set_async:
+ * @key: a dconf key
+ * @value: a #GVariant, on which g_variant_ref_sink() will be called
+ * @callback: the completion callback
+ * @user_data: user data for @callback
+ *
+ * Sets the value of a key in the dconf database.
+ *
+ * This is the asynchronous variant of dconf_set().  When the merge is
+ * complete, @callback will be called with a #DConfAsyncResult and
+ * @user_data.  You should pass the #DConfAsyncResult to
+ * dconf_set_finish() to collect the result.
+ **/
 void
 dconf_set_async (const gchar             *key,
                  GVariant                *value,
@@ -625,8 +683,8 @@ dconf_set_async (const gchar             *key,
 {
   DConfMount *mount;
 
-  g_assert (dconf_is_key (key));
-  g_assert (value != NULL);
+  g_return_if_fail (dconf_is_key (key));
+  g_return_if_fail (value != NULL);
 
   mount = dconf_demux_path (&key, TRUE, NULL);
   g_assert (mount);
@@ -648,15 +706,53 @@ dconf_set_async (const gchar             *key,
                         user_data);
 }
 
+/**
+ * dconf_set_finish:
+ * @result: the #DConfAsyncResult given to your callback
+ * @event_id: a pointer for the event ID return, or %NULL
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
+ * @returns: %TRUE on success
+ *
+ * Collects the results from a call to dconf_set_async().
+ *
+ * This is the second half of the asynchronous variant of dconf_set().
+ **/
 gboolean
 dconf_set_finish (DConfAsyncResult  *result,
                   gchar            **event_id,
                   GError           **error)
 {
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
                                   "u", event_id, error);
 }
 
+/**
+ * dconf_reset:
+ * @key: a dconf key
+ * @event_id: a pointer for the event ID return, or %NULL
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
+ *
+ * Resets the value of a key in the dconf database.
+ *
+ * This unsets the value in the toplevel database.  This will either
+ * result in the key no longer existing, or it reverting to a default
+ * value (as specified in a lower-level database).
+ *
+ * In the event of a failure of any kind then no changes will be made to
+ * the database, %error (if non-%NULL) will be set and %FALSE will be
+ * returned.
+ *
+ * If the reset is successful then %TRUE will be returned.  If @event_id
+ * is non-%NULL it will be set to the event ID number of the merge.  The
+ * event ID will be the same as the ID that is sent for the change
+ * notification corresponding to this modification and is unique for the
+ * life of the program.  It has no particular format.
+ *
+ * It is a programmer error to call this function with a @key that is
+ * not a valid dconf key (as per dconf_is_key()).
+ **/
 gboolean
 dconf_reset (const gchar  *key,
              gchar       **event_id,
@@ -664,7 +760,8 @@ dconf_reset (const gchar  *key,
 {
   DConfMount *mount;
 
-  g_assert (dconf_is_key (key) || dconf_is_path (key));
+  g_return_val_if_fail (dconf_is_key (key), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
     return FALSE;
@@ -672,6 +769,19 @@ dconf_reset (const gchar  *key,
   return dconf_dbus_reset (mount->dbs[0]->bus, key, event_id, error);
 }
 
+/**
+ * dconf_reset_async:
+ * @key: a dconf key
+ * @callback: the completion callback
+ * @user_data: user data for @callback
+ *
+ * Resets the value of a key in the dconf database.
+ *
+ * This is the asynchronous variant of dconf_reset().  When the merge is
+ * complete, @callback will be called with a #DConfAsyncResult and
+ * @user_data.  You should pass the #DConfAsyncResult to
+ * dconf_reset_finish() to collect the result.
+ **/
 void
 dconf_reset_async (const gchar             *key,
                    DConfAsyncReadyCallback  callback,
@@ -679,7 +789,7 @@ dconf_reset_async (const gchar             *key,
 {
   DConfMount *mount;
 
-  g_assert (dconf_is_key (key));
+  g_return_if_fail (dconf_is_key (key));
 
   mount = dconf_demux_path (&key, TRUE, NULL);
   g_assert (mount);
@@ -689,52 +799,114 @@ dconf_reset_async (const gchar             *key,
                           user_data);
 }
 
+/**
+ * dconf_reset_finish:
+ * @result: the #DConfAsyncResult given to your callback
+ * @event_id: a pointer for the event ID return, or %NULL
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
+ * @returns: %TRUE on success
+ *
+ * Collects the results from a call to dconf_reset_async().
+ *
+ * This is the second half of the asynchronous variant of dconf_reset().
+ **/
 gboolean
 dconf_reset_finish (DConfAsyncResult  *result,
                     gchar            **event_id,
                     GError           **error)
 {
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
                                   "u", event_id, error);
 }
 
+/**
+ * dconf_set_locked:
+ * @key_or_path: a dconf key or path
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
+ *
+ * Locks or unlocks a key or path in the dconf database.
+ *
+ * This marks a given key or set of keys in the dconf database as
+ * locked.  Writes will be prevented to any key that is locked or is
+ * contained inside of a path that is locked.
+ *
+ * If the operation is successful then %TRUE will be returned.  In the
+ * event of a failure of any kind then no changes will be made to the
+ * database, %error (if non-%NULL) will be set and %FALSE will be
+ * returned.
+ *
+ * It is a programmer error to call this function with a @key_or_path
+ * that is not a valid dconf path (as per dconf_is_path()) or key (as
+ * per dconf_is_key()).
+ **/
 gboolean
-dconf_set_locked (const gchar  *key,
+dconf_set_locked (const gchar  *key_or_path,
                   gboolean      locked,
                   GError      **error)
 {
   DConfMount *mount;
 
-  g_assert (dconf_is_key (key));
+  g_return_val_if_fail (dconf_is_key_or_path (key_or_path), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if ((mount = dconf_demux_path (&key, TRUE, error)) == NULL)
+  if ((mount = dconf_demux_path (&key_or_path, TRUE, error)) == NULL)
     return FALSE;
 
-  return dconf_dbus_set_locked (mount->dbs[0]->bus, key, !!locked, error);
+  return dconf_dbus_set_locked (mount->dbs[0]->bus,
+                                key_or_path,
+                                !!locked, error);
 }
 
+/**
+ * dconf_set_locked_async:
+ * @key_or_path: a dconf key or path
+ * @callback: the completion callback
+ * @user_data: user data for @callback
+ *
+ * Locks or unlocks a key or path in the dconf database.
+ *
+ * This is the asynchronous variant of dconf_set_locked().  When the
+ * operation is complete, @callback will be called with a
+ * #DConfAsyncResult and @user_data.  You should pass the
+ * #DConfAsyncResult to dconf_set_locked_finish() to collect the result.
+ **/
 void
-dconf_set_locked_async (const gchar             *key,
+dconf_set_locked_async (const gchar             *key_or_path,
                         gboolean                 locked,
                         DConfAsyncReadyCallback  callback,
                         gpointer                 user_data)
 {
   DConfMount *mount;
 
-  g_assert (dconf_is_key (key));
+  g_return_if_fail (dconf_is_key_or_path (key_or_path));
 
-  mount = dconf_demux_path (&key, TRUE, NULL);
+  mount = dconf_demux_path (&key_or_path, TRUE, NULL);
   g_assert (mount);
 
-  dconf_dbus_set_locked_async (mount->dbs[0]->bus, key, !!locked,
+  dconf_dbus_set_locked_async (mount->dbs[0]->bus, key_or_path, !!locked,
                                (DConfDBusAsyncReadyCallback) callback,
                                user_data);
 }
 
+/**
+ * dconf_set_locked_finish:
+ * @result: the #DConfAsyncResult given to your callback
+ * @error: a pointer to a %NULL #GError pointer, or %NULL
+ * @returns: %TRUE on success
+ *
+ * Collects the results from a call to dconf_set_locked_async().
+ *
+ * This is the second half of the asynchronous variant of
+ * dconf_set_locked().
+ **/
 gboolean
 dconf_set_locked_finish (DConfAsyncResult  *result,
                          GError           **error)
 {
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   return dconf_dbus_async_finish ((DConfDBusAsyncResult *) result,
                                   "", NULL, error);
 }

@@ -26,8 +26,9 @@ typedef void          (*DConfWatchFunc)                                 (const g
 
 gboolean                dconf_is_key                                    (const gchar              *key);
 gboolean                dconf_is_path                                   (const gchar              *path);
-gboolean                dconf_match                                     (const gchar              *path_or_key1,
-                                                                         const gchar              *path_or_key2);
+gboolean                dconf_is_key_or_path                            (const gchar              *key_or_path);
+gboolean                dconf_match                                     (const gchar              *key_or_path1,
+                                                                         const gchar              *key_or_path2);
 
 GVariant *              dconf_get                                       (const gchar              *key);
 gchar **                dconf_list                                      (const gchar              *path,
@@ -50,10 +51,10 @@ gboolean                dconf_set_finish                                (DConfAs
                                                                          GError                  **error);
 
 
-gboolean                dconf_set_locked                                (const gchar              *key,
+gboolean                dconf_set_locked                                (const gchar              *key_or_path,
                                                                          gboolean                  locked,
                                                                          GError                  **error);
-void                    dconf_set_locked_async                          (const gchar              *key,
+void                    dconf_set_locked_async                          (const gchar              *key_or_path,
                                                                          gboolean                  locked,
                                                                          DConfAsyncReadyCallback   callback,
                                                                          gpointer                  user_data);
