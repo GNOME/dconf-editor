@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V4.3//EN'
+               'http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd'
+[
+  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+]>
+
 <!--
 
     NOTE: dconf-docs.xml is auto-generated.
@@ -20,7 +26,7 @@
 
   <chapter>
     <title>Core API</title>
-    <xi:include href='xml/api.xml'/>
+    <xi:include href='xml/dconf.xml'/>
   </chapter>
 
   <index id='api-index-full'>
