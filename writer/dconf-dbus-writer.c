@@ -362,6 +362,10 @@ dconf_dbus_writer_handle_message (DConfDBusWriter *writer)
       if ((status = dconf_writer_check_unset (key, &error)))
         status = dconf_writer_unset (writer->writer, key, &error);
 
+      if (status == TRUE)
+        dconf_dbus_writer_notify (writer, key, NULL,
+                                  sequence = writer->sequence++);
+
       return dconf_dbus_writer_reply (writer, status, &sequence, error);
     }
 
