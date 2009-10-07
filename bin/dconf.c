@@ -13,6 +13,7 @@ static const char help_message[] =
 "   is-key              check if a string is a valid dconf key\n"
 "   is-path             check if a string is a valid dconf path\n"
 "   is-key-or-path      check if a string is a valid dconf key or path\n"
+"   is-relative-key     check if a string is a valid dconf relative key\n"
 "   match               check if two strings are a dconf match\n"
 "   get                 get the value of a key from dconf\n"
 "   list                list the entries at a path in dconf\n"
@@ -31,94 +32,141 @@ struct option longopts[] = {
   { "help",    no_argument, NULL, 'h' }
 };
 
-static gboolean
-is_key (gint       argc,
-        gchar    **argv,
-        gboolean   async)
+union result
 {
-  gboolean result;
+  gboolean boolean;
+  gchar *string;
+};
 
-  if (argc != 1)
-    {
-      fprintf (stderr, "dconf is-key: expected one string to check\n");
-      return FALSE;
-    }
+struct asyncinfo
+{
+  gboolean success;
+  GError *error;
+  union result result;
+  GMainLoop *loop;
+};
 
-  result = dconf_is_key (argv[0]);
-  g_print ("%s\n", result ? "true" : "false");
-
-  return result;
+static void
+async_init (struct asyncinfo *asi)
+{
+  asi->error = NULL;
+  asi->loop = g_main_loop_new (NULL, FALSE);
 }
 
 static gboolean
-is_path (gint       argc,
-         gchar    **argv,
-         gboolean   async)
+async_wait (struct asyncinfo  *asi,
+            union result      *result,
+            GError           **error)
 {
-  gboolean result;
+  g_main_loop_run (asi->loop);
 
+  if (asi->success)
+    *result = asi->result;
+  else
+    g_propagate_error (error, asi->error);
+
+  g_main_loop_unref (asi->loop);
+
+  asi->result.string = NULL;
+  asi->error = NULL;
+  asi->loop = NULL;
+
+  return asi->success;
+}
+
+static void
+async_done (struct asyncinfo *asi)
+{
+  g_main_loop_quit (asi->loop);
+}
+
+#define throw(...) \
+  G_STMT_START {                                \
+    g_set_error (error, 0, 0, __VA_ARGS__);     \
+    return 0;                                   \
+  } G_STMT_END
+
+static gboolean
+is_key (gint           argc,
+        gchar        **argv,
+        gboolean       async,
+        union result  *result,
+        GError       **error)
+{
   if (argc != 1)
-    {
-      fprintf (stderr, "dconf is-path: expected one string to check\n");
-      return FALSE;
-    }
+    throw ("expected one string to check");
 
-  result = dconf_is_path (argv[0]);
-  g_print ("%s\n", result ? "true" : "false");
-
-  return result;
+  result->boolean = dconf_is_key (argv[0]);
+  return TRUE;
 }
 
 static gboolean
-is_key_or_path (gint       argc,
-                gchar    **argv,
-                gboolean   async)
+is_path (gint           argc,
+         gchar        **argv,
+         gboolean       async,
+         union result  *result,
+         GError       **error)
 {
-  gboolean result;
-
   if (argc != 1)
-    {
-      fprintf (stderr, "dconf is-key-or-path: expected one string to check\n");
-      return FALSE;
-    }
+    throw ("expected one string to check");
 
-  result = dconf_is_key_or_path (argv[0]);
-  g_print ("%s\n", result ? "true" : "false");
-
-  return result;
+  result->boolean = dconf_is_path (argv[0]);
+  return TRUE;
 }
 
 static gboolean
-match (gint       argc,
-       gchar    **argv,
-       gboolean   async)
+is_key_or_path (gint           argc,
+                gchar        **argv,
+                gboolean       async,
+                union result  *result,
+                GError       **error)
 {
-  gboolean result;
+  if (argc != 1)
+    throw ("expected one string to check");
 
+  result->boolean = dconf_is_key_or_path (argv[0]);
+  return TRUE;
+}
+
+static gboolean
+is_relative_key (gint           argc,
+                 gchar        **argv,
+                 gboolean       async,
+                 union result  *result,
+                 GError       **error)
+{
+  if (argc != 1)
+    throw ("expected one string to check");
+
+  result->boolean = dconf_is_relative_key (argv[0]);
+  return TRUE;
+}
+
+static gboolean
+match (gint           argc,
+       gchar        **argv,
+       gboolean       async,
+       union result  *result,
+       GError       **error)
+{
   if (argc != 2)
-    {
-      fprintf (stderr, "dconf match: expected two strings to check\n");
-      return FALSE;
-    }
+    throw ("expected two strings to check");
 
-  result = dconf_match (argv[0], argv[1]);
-  g_print ("%s\n", result ? "true" : "false");
-
-  return result;
+  result->boolean = dconf_match (argv[0], argv[1]);
+  return TRUE;
 }
 
 static gboolean
-get (gint       argc,
-     gchar    **argv,
-     gboolean   async)
+get (gint           argc,
+     gchar        **argv,
+     gboolean       async,
+     union result  *result,
+     GError       **error)
 {
   GVariant *value;
 
   if (argc != 1 || !dconf_is_key (argv[0]))
-    {
-      fprintf (stderr, "dconf get: expected key\n");
-      return FALSE;
-    }
+    throw ("expected one key");
 
   value = dconf_get (argv[0]);
 
@@ -137,18 +185,17 @@ get (gint       argc,
 }
 
 static gboolean
-list (gint       argc,
-      gchar    **argv,
-      gboolean   async)
+list (gint           argc,
+      gchar        **argv,
+      gboolean       async,
+      union result  *result,
+      GError       **error)
 {
   gchar **list;
   gint i;
 
   if (argc != 1 || !dconf_is_path (argv[0]))
-    {
-      fprintf (stderr, "dconf list: expected path\n");
-      return FALSE;
-    }
+    throw ("expected one path");
 
   list = dconf_list (argv[0], NULL);
 
@@ -161,97 +208,241 @@ list (gint       argc,
 }
 
 static gboolean
-get_writable (gint       argc,
-              gchar    **argv,
-              gboolean   async)
+get_writable (gint           argc,
+              gchar        **argv,
+              gboolean       async,
+              union result  *result,
+              GError       **error)
 {
-  gboolean result;
-
   if (argc != 1 || !dconf_is_key_or_path (argv[0]))
+    throw ("expected key or path");
+
+  result->boolean = dconf_get_writable (argv[0]);
+  return TRUE;
+}
+
+static gboolean
+get_locked (gint           argc,
+            gchar        **argv,
+            gboolean       async,
+            union result  *result,
+            GError       **error)
+{
+  if (argc != 1 || !dconf_is_key_or_path (argv[0]))
+    throw ("expected key or path");
+
+  result->boolean = dconf_get_locked (argv[0]);
+  return TRUE;
+}
+
+static void
+set_done (DConfAsyncResult *result,
+          gpointer          user_data)
+{
+  struct asyncinfo *asi = user_data;
+
+  asi->success = dconf_set_finish (result,
+                                   &asi->result.string,
+                                   &asi->error);
+  async_done (asi);
+}
+
+static gboolean
+set (gint           argc,
+     gchar        **argv,
+     gboolean       async,
+     union result  *result,
+     GError       **error)
+{
+  gboolean success = FALSE;
+  GVariant *value;
+  gchar *string;
+
+  if (argc < 2 || !dconf_is_key (argv[0]))
+    throw ("expected key and value");
+
+  string = g_strjoinv (" ", argv + 1);
+  value = g_variant_parse (string, -1, NULL, error);
+  g_free (string);
+
+  if (value != NULL)
     {
-      fprintf (stderr, "dconf get-writable: expected key or path\n");
-      return FALSE;
+      if (async)
+        {
+          struct asyncinfo asi;
+
+          async_init (&asi);
+          dconf_set_async (argv[0], value, set_done, &asi);
+          success = async_wait (&asi, result, error);
+        }
+      else
+        success = dconf_set (argv[0], value, &result->string, error);
+
+      g_variant_unref (value);
     }
 
-  result = dconf_get_writable (argv[0]);
-  g_print ("%s\n", result ? "true" : "false");
+  return success;
+}
 
-  return result;
+static void
+reset_done (DConfAsyncResult *result,
+            gpointer          user_data)
+{
+  struct asyncinfo *asi = user_data;
+
+  asi->success = dconf_reset_finish (result,
+                                     &asi->result.string,
+                                     &asi->error);
+  async_done (asi);
 }
 
 static gboolean
-get_locked (gint       argc,
-            gchar    **argv,
-            gboolean   async)
+reset (gint           argc,
+       gchar        **argv,
+       gboolean       async,
+       union result  *result,
+       GError       **error)
 {
-  gboolean result;
+  if (argc != 1 || !dconf_is_key (argv[0]))
+    throw ("expected key");
 
-  if (argc != 1 || !dconf_is_key_or_path (argv[0]))
+  if (async)
     {
-      fprintf (stderr, "dconf get-locked: expected key or path\n");
-      return FALSE;
+      struct asyncinfo asi;
+
+      async_init (&asi);
+      dconf_reset_async (argv[0], reset_done, &asi);
+      return async_wait (&asi, result, error);
+    }
+  else
+    return dconf_reset (argv[0], &result->string, error);
+}
+
+static void
+set_locked_done (DConfAsyncResult *result,
+                 gpointer          user_data)
+{
+  struct asyncinfo *asi = user_data;
+
+  asi->success = dconf_set_locked_finish (result, &asi->error);
+  async_done (asi);
+}
+
+static gboolean
+set_locked (gint           argc,
+            gchar        **argv,
+            gboolean       async,
+            union result  *result,
+            GError       **error)
+{
+  gboolean lock;
+
+  if (argc != 2 || !dconf_is_key (argv[0]) ||
+      (strcmp (argv[1], "true") && strcmp (argv[1], "false")))
+    throw ("expected one key and 'true' or 'false'");
+
+  lock = strcmp (argv[1], "true") == 0;
+
+  if (async)
+    {
+      struct asyncinfo asi;
+
+      async_init (&asi);
+      dconf_set_locked_async (argv[0], lock, set_locked_done, &asi);
+      return async_wait (&asi, result, error);
+    }
+  else
+    return dconf_set_locked (argv[0], lock, error);
+}
+
+static void
+merge_done (DConfAsyncResult *result,
+            gpointer          user_data)
+{
+  struct asyncinfo *asi = user_data;
+
+  asi->success = dconf_merge_finish (result,
+                                     &asi->result.string,
+                                     &asi->error);
+  async_done (asi);
+}
+
+static gboolean
+merge (gint           argc,
+       gchar        **argv,
+       gboolean       async,
+       union result  *result,
+       GError       **error)
+{
+  gboolean success = FALSE;
+  GTree *tree;
+  gint i;
+
+  if (argc < 3 || (argc & 1) == 0 || !dconf_is_path (argv[0]))
+    throw ("expected a path, followed by relative-key/value pairs");
+
+  tree = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
+                          g_free, (GDestroyNotify) g_variant_unref);
+
+  for (i = 1; i < argc; i += 2)
+    {
+      GVariant *value;
+
+      if (!dconf_is_relative_key (argv[i]))
+        {
+          g_set_error (error, 0, 0,
+                       "'%s' is not a relative key", argv[i]);
+          break;
+        }
+
+      if ((value = g_variant_parse (argv[i + 1], -1, NULL, error)) == NULL)
+        break;
+
+      g_tree_insert (tree, g_strdup (argv[i]), value);
     }
 
-  result = dconf_get_locked (argv[0]);
-  g_print ("%s\n", result ? "true" : "false");
+  if (i == argc)
+    {
+      if (async)
+        {
+          struct asyncinfo asi;
 
-  return result;
+          async_init (&asi);
+          dconf_merge_async (argv[0], tree, merge_done, &asi);
+          return async_wait (&asi, result, error);
+        }
+      else
+        success = dconf_merge (argv[0], tree, &result->string, error);
+    }
+
+  g_tree_unref (tree);
+
+  return success;
 }
 
-static gboolean
-set (gint       argc,
-     gchar    **argv,
-     gboolean   async)
-{
-  fprintf (stderr, "not yet implemented\n");
-  return FALSE;
-}
-
-static gboolean
-reset (gint       argc,
-       gchar    **argv,
-       gboolean   async)
-{
-  fprintf (stderr, "not yet implemented\n");
-  return FALSE;
-}
-
-static gboolean
-set_locked (gint       argc,
-            gchar    **argv,
-            gboolean   async)
-{
-  fprintf (stderr, "not yet implemented\n");
-  return FALSE;
-}
-
-static gboolean
-merge (gint       argc,
-       gchar    **argv,
-       gboolean   async)
-{
-  fprintf (stderr, "not yet implemented\n");
-  return FALSE;
-}
+#define BOOL_RESULT     1
+#define ASYNC           2
+#define EVENT_ID        4
 
 struct
 {
   const gchar *command;
-  gboolean async_meaningful;
-  gboolean (*func) (int argc, char **argv, gboolean async);
+  guint flags;
+  gboolean (*func) (int, char **, gboolean, union result *, GError **);
 } commands[] = {
-  { "is-key",           FALSE,  is_key          },
-  { "is-path",          FALSE,  is_path         },
-  { "is-key-or-path",   FALSE,  is_key_or_path  },
-  { "match",            FALSE,  match           },
-  { "get",              FALSE,  get             },
-  { "list",             FALSE,  list            },
-  { "get-writable",     FALSE,  get_writable    },
-  { "get-locked",       FALSE,  get_locked      },
-  { "set",              TRUE,   set             },
-  { "reset",            TRUE,   reset           },
-  { "set-locked",       TRUE,   set_locked      },
-  { "merge",            TRUE,   merge           }
+  { "is-key",           BOOL_RESULT,            is_key          },
+  { "is-path",          BOOL_RESULT,            is_path         },
+  { "is-key-or-path",   BOOL_RESULT,            is_key_or_path  },
+  { "is-relative-key",  BOOL_RESULT,            is_relative_key },
+  { "match",            BOOL_RESULT,            match           },
+  { "get",              0,                      get             },
+  { "list",             0,                      list            },
+  { "get-writable",     BOOL_RESULT,            get_writable    },
+  { "get-locked",       BOOL_RESULT,            get_locked      },
+  { "set",              ASYNC | EVENT_ID,       set             },
+  { "reset",            ASYNC | EVENT_ID,       reset           },
+  { "set-locked",       ASYNC,                  set_locked      },
+  { "merge",            ASYNC | EVENT_ID,       merge           }
 };
 
 int
@@ -307,11 +498,36 @@ main (int argc, char **argv)
   for (i = 0; i < G_N_ELEMENTS (commands); i++)
     if (strcmp (argv[0], commands[i].command) == 0)
       {
-        if (async && !commands[i].async_meaningful)
+        GError *error = NULL;
+        union result result;
+
+        if (async && ~commands[i].flags & ASYNC)
           fprintf (stderr, "warning: --async has no effect for '%s'\n",
                    argv[0]);
 
-        return !commands[i].func (argc - 1, argv + 1, async);
+        if (!commands[i].func (argc - 1, argv + 1, async, &result, &error))
+          {
+            fprintf (stderr, "dconf %s: %s\n", argv[0], error->message);
+            g_error_free (error);
+
+            return 1;
+          }
+
+        if (commands[i].flags & BOOL_RESULT)
+          {
+            g_print ("%s\n", result.boolean ? "true" : "false");
+            return result.boolean ? 0 : 1;
+          }
+
+        else if (commands[i].flags & EVENT_ID)
+          {
+            g_print ("%s\n", result.string);
+            return 0;
+          }
+
+        else
+          return 0;
+
       }
 
   fprintf (stderr, "dconf: '%s' is not a dconf command."

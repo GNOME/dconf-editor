@@ -1,5 +1,2 @@
 dconf
-dconf-lock
-dconf-reset
-dconf-set
 dconf-watch
