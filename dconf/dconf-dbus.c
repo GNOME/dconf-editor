@@ -935,22 +935,22 @@ _g_dbus_oom (void)
  *             Helper fd source                                          *
  ************************************************************************/
 
-typedef struct 
+typedef struct
 {
   GSource source;
   GPollFD pollfd;
 } FDSource;
 
-static gboolean 
+static gboolean
 fd_source_prepare (GSource  *source,
 		   gint     *timeout)
 {
   *timeout = -1;
-  
+
   return FALSE;
 }
 
-static gboolean 
+static gboolean
 fd_source_check (GSource  *source)
 {
   FDSource *fd_source = (FDSource *)source;
@@ -1010,14 +1010,14 @@ static GOnce once_init_main_integration = G_ONCE_INIT;
  * A GSource subclass for dispatching DBusConnection messages.
  * We need this on top of the IO handlers, because sometimes
  * there are messages to dispatch queued up but no IO pending.
- * 
+ *
  * The source is owned by the connection (and the main context
  * while that is alive)
  */
-typedef struct 
+typedef struct
 {
   GSource source;
-  
+
   DBusConnection *connection;
   GSList *ios;
   GSList *timeouts;
@@ -1051,10 +1051,10 @@ dbus_source_prepare (GSource *source,
 		     gint    *timeout)
 {
   DBusConnection *connection = ((DBusSource *)source)->connection;
-  
+
   *timeout = -1;
 
-  return (dbus_connection_get_dispatch_status (connection) == DBUS_DISPATCH_DATA_REMAINS);  
+  return (dbus_connection_get_dispatch_status (connection) == DBUS_DISPATCH_DATA_REMAINS);
 }
 
 static gboolean
@@ -1074,7 +1074,7 @@ dbus_source_dispatch (GSource     *source,
 
   /* Only dispatch once - we don't want to starve other GSource */
   dbus_connection_dispatch (connection);
-  
+
   dbus_connection_unref (connection);
 
   return TRUE;
@@ -1090,10 +1090,10 @@ io_handler_dispatch (gpointer data,
   DBusConnection *connection;
 
   connection = handler->dbus_source->connection;
-  
+
   if (connection)
     dbus_connection_ref (connection);
-  
+
   if (condition & G_IO_IN)
     dbus_condition |= DBUS_WATCH_READABLE;
   if (condition & G_IO_OUT)
@@ -1112,7 +1112,7 @@ io_handler_dispatch (gpointer data,
 
   if (connection)
     dbus_connection_unref (connection);
-  
+
   return TRUE;
 }
 
@@ -1120,10 +1120,10 @@ static void
 io_handler_free (IOHandler *handler)
 {
   DBusSource *dbus_source;
-  
+
   dbus_source = handler->dbus_source;
   dbus_source->ios = g_slist_remove (dbus_source->ios, handler);
-  
+
   g_source_destroy (handler->source);
   g_source_unref (handler->source);
   g_free (handler);
@@ -1140,9 +1140,9 @@ dbus_source_add_watch (DBusSource *dbus_source,
 
   if (!dbus_watch_get_enabled (watch))
     return;
-  
+
   g_assert (dbus_watch_get_data (watch) == NULL);
-  
+
   flags = dbus_watch_get_flags (watch);
 
   condition = G_IO_ERR | G_IO_HUP;
@@ -1160,13 +1160,13 @@ dbus_source_add_watch (DBusSource *dbus_source,
 #else
   fd = dbus_watch_get_fd (watch);
 #endif
-    
+
   handler->source = __g_fd_source_new (fd, condition);
   g_source_set_callback (handler->source,
 			 (GSourceFunc) io_handler_dispatch, handler,
                          NULL);
   g_source_attach (handler->source, NULL);
- 
+
   dbus_source->ios = g_slist_prepend (dbus_source->ios, handler);
   dbus_watch_set_data (watch, handler,
 		       (DBusFreeFunction)io_handler_free);
@@ -1198,7 +1198,7 @@ timeout_handler_dispatch (gpointer      data)
   TimeoutHandler *handler = data;
 
   dbus_timeout_handle (handler->timeout);
-  
+
   return TRUE;
 }
 
@@ -1207,10 +1207,10 @@ dbus_source_add_timeout (DBusSource *dbus_source,
 			 DBusTimeout *timeout)
 {
   TimeoutHandler *handler;
-  
+
   if (!dbus_timeout_get_enabled (timeout))
     return;
-  
+
   g_assert (dbus_timeout_get_data (timeout) == NULL);
 
   handler = g_new0 (TimeoutHandler, 1);
@@ -1244,7 +1244,7 @@ add_watch (DBusWatch *watch,
   DBusSource *dbus_source = data;
 
   dbus_source_add_watch (dbus_source, watch);
-  
+
   return TRUE;
 }
 
@@ -1274,7 +1274,7 @@ add_timeout (DBusTimeout *timeout,
 	     void        *data)
 {
   DBusSource *source = data;
-  
+
   if (!dbus_timeout_get_enabled (timeout))
     return TRUE;
 
@@ -1324,14 +1324,14 @@ dbus_source_free (DBusSource *dbus_source)
   while (dbus_source->ios)
     {
       IOHandler *handler = dbus_source->ios->data;
-      
+
       dbus_watch_set_data (handler->watch, NULL, NULL);
     }
 
   while (dbus_source->timeouts)
     {
       TimeoutHandler *handler = dbus_source->timeouts->data;
-      
+
       dbus_timeout_set_data (handler->timeout, NULL, NULL);
     }
 
@@ -1358,7 +1358,7 @@ _g_dbus_connection_integrate_with_main (DBusConnection *connection)
   DBusSource *dbus_source;
 
   g_once (&once_init_main_integration, main_integration_init, NULL);
-  
+
   g_assert (connection != NULL);
 
   _g_dbus_connection_remove_from_main (connection);
@@ -1366,9 +1366,9 @@ _g_dbus_connection_integrate_with_main (DBusConnection *connection)
   dbus_source = (DBusSource *)
     g_source_new ((GSourceFuncs*)&dbus_source_funcs,
 		  sizeof (DBusSource));
-  
+
   dbus_source->connection = connection;
-  
+
   if (!dbus_connection_set_watch_functions (connection,
                                             add_watch,
                                             remove_watch,
@@ -1382,7 +1382,7 @@ _g_dbus_connection_integrate_with_main (DBusConnection *connection)
                                               timeout_toggled,
                                               dbus_source, NULL))
     _g_dbus_oom ();
-    
+
   dbus_connection_set_wakeup_main_function (connection,
 					    wakeup_main,
 					    dbus_source, NULL);

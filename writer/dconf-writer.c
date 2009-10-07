@@ -38,7 +38,7 @@ dconf_writer_allocate (DConfWriter *writer,
                        gsize        size,
                        guint32     *index)
 {
-  struct chunk_header *chunk = (gpointer) (writer->data.blocks + 
+  struct chunk_header *chunk = (gpointer) (writer->data.blocks +
                                            writer->data.super->next);
 
   if (!dconf_writer_in_bounds (writer, chunk, &chunk->contents[size]))

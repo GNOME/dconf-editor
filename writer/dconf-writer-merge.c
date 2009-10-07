@@ -252,7 +252,7 @@ merge_state_get_new_type (MergeState *state)
 {
   if (state->name == NULL)
     merge_state_setup_new_name (state);
-  
+
   if (state->name_is_dir)
     return '/';
 
@@ -721,7 +721,7 @@ dconf_writer_check_merge (const gchar  *prefix,
       for (i = 0; i < n_names; i++)
         {
           gint j;
-          
+
           if (names[i][0] == '\0')
             {
               g_set_error (error, 0, 0,

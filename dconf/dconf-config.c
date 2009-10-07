@@ -34,7 +34,7 @@ dconf_config_parse_mount_decl (GSList **mounts,
   gchar **db_strings;
   DConfMount *mount;
   gint i;
- 
+
   if (argc != 2)
     {
       g_set_error (error, G_SHELL_ERROR, G_SHELL_ERROR_FAILED,
@@ -241,5 +241,5 @@ dconf_config_read (void)
   if (mounts == NULL)
     g_error ("failed: %s\n", error->message);
 
-  return mounts; 
+  return mounts;
 }

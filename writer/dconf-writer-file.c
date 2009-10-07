@@ -92,7 +92,7 @@ dconf_writer_create_temp_file (const gchar  *filename,
                    g_file_error_from_errno (saved_errno),
                    "failed to allocate %d bytes for temporary file %s: %s",
                    bytes, *tmpname, g_strerror (saved_errno));
-      unlink (*tmpname); 
+      unlink (*tmpname);
       g_free (*tmpname);
       close (*fd);
 
@@ -108,7 +108,7 @@ dconf_writer_create_temp_file (const gchar  *filename,
                    g_file_error_from_errno (saved_errno),
                    "failed to memory-map temporary file %s: %s",
                    *tmpname, g_strerror (saved_errno));
-      unlink (*tmpname); 
+      unlink (*tmpname);
       g_free (*tmpname);
       close (*fd);
 
@@ -246,7 +246,7 @@ dconf_writer_open (DConfWriter  *writer,
           *missing = TRUE;
           return TRUE;
         }
- 
+
       g_set_error (error, G_FILE_ERROR,
                    g_file_error_from_errno (saved_errno),
                    "failed to open existing dconf database %s: %s",
@@ -258,7 +258,7 @@ dconf_writer_open (DConfWriter  *writer,
   if (fstat (writer->fd, &buf))
     {
       gint saved_errno = errno;
- 
+
       g_set_error (error, G_FILE_ERROR,
                    g_file_error_from_errno (saved_errno),
                    "failed to fstat existing dconf database %s: %s",
