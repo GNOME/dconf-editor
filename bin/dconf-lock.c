@@ -54,7 +54,7 @@ main (int argc, char **argv)
 
   if (!dconf_set_locked (argv[1], locked, &error))
     {
-      fprintf (stderr, "failed to reset: %s\n", error->message);
+      fprintf (stderr, "failed to lock: %s\n", error->message);
       return 2;
     }
 
