@@ -112,6 +112,38 @@ dconf_is_key_or_path (const gchar *key_or_path)
 }
 
 /**
+ * dconf_is_relative_key:
+ * @relative_key: a possible relative key
+ * @Returns: %TRUE if @relative_key is valid
+ *
+ * Determines if @relative_key is a valid relative key.
+ *
+ * A relative key is valid if it does not start with a slash, does not
+ * end with a slash, and contains no two consecutive slashes.  The empty
+ * string is not a valid relative key.
+ *
+ * Another definition is that a relative key is any string that may be
+ * appended to a valid path to form a valid key.
+ **/
+gboolean
+dconf_is_relative_key (const char *relative_key)
+{
+  int i;
+
+  if (relative_key == NULL)
+    return FALSE;
+
+  if (relative_key[0] == '/')
+    return FALSE;
+
+  for (i = 0; relative_key[i]; i++)
+    if (relative_key[i] == '/' && relative_key[i + 1] == '/')
+      return FALSE;
+
+  return relative_key[i - 1] != '/';
+}
+
+/**
  * dconf_match:
  * @key_or_path1: a dconf key or path
  * @key_or_path2: a dconf key or path

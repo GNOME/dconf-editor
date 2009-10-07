@@ -27,6 +27,7 @@ typedef void          (*DConfWatchFunc)                                 (const g
 gboolean                dconf_is_key                                    (const gchar              *key);
 gboolean                dconf_is_path                                   (const gchar              *path);
 gboolean                dconf_is_key_or_path                            (const gchar              *key_or_path);
+gboolean                dconf_is_relative_key                           (const gchar              *relative_key);
 gboolean                dconf_match                                     (const gchar              *key_or_path1,
                                                                          const gchar              *key_or_path2);
 
