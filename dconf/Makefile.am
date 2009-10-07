@@ -8,10 +8,9 @@ lib_LTLIBRARIES = libdconf.la
 libdconf_la_LIBADD = $(glib_LIBS) $(dbus_LIBS)
 libdconf_la_SOURCES = \
 	dconf-reader.c		\
-	dconf-core.c		\
-	dconf-base.c		\
 	dconf-config.c		\
-	dconf-dbus.c
+	dconf-dbus.c		\
+	dconf.c	
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = dconf.pc
