@@ -219,7 +219,7 @@ list (gint           argc,
 
   g_strfreev (list);
 
-  return i > 0;
+  return TRUE;
 }
 
 static gboolean
