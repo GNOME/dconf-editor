@@ -198,7 +198,7 @@ dconf_writer_create (DConfWriter  *writer,
       gint num;
 
       dconf_writer_unzip_tree (previous_contents, &names, &values, &num);
-      dconf_writer_merge (writer, "", names, values, num);
+      dconf_writer_merge (writer, "/", names, values, num);
       g_free (values);
       g_free (names);
 
