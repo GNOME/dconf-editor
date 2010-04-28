@@ -1,0 +1,1 @@
+SUBDIRS = gvdb service gsettings

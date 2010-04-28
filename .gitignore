@@ -1,0 +1,21 @@
+# for all subdirectories
+Makefile.in
+Makefile
+.libs
+.deps
+*.o
+*.lo
+*.la
+*.pc
+
+# autofoo stuff here
+compile
+config.*
+configure
+depcomp
+aclocal.m4
+autom4te.cache
+libtool
+ltmain.sh
+missing
+install-sh
