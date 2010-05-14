@@ -4,7 +4,7 @@ AM_SILENT_RULES
 AC_PROG_LIBTOOL
 AC_PROG_CC
 
-PKG_CHECK_MODULES(gio, gdbus-standalone)
+PKG_CHECK_MODULES(gio, gio-2.0)
 giomodulesdir=`pkg-config --variable=giomoduledir gio-2.0`
 AC_SUBST(giomodulesdir)
 

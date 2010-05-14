@@ -19,24 +19,41 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#include <gdbus/gdbus.h>
+#include <gio/gio.h>
 #include <string.h>
 #include <stdio.h>
 
 #include "dconf-rebuilder.h"
 
-static const GDBusArgInfo lock_in_args[] = {
-      { "name", "s" }, { "locked", "b" }
+static const GDBusArgInfo name_arg = { -1, "name", "s" };
+static const GDBusArgInfo names_arg = { -1, "names", "as" };
+static const GDBusArgInfo serial_arg = { -1, "serial", "t" };
+static const GDBusArgInfo locked_arg = { -1, "locked", "b" };
+static const GDBusArgInfo value_arg = { -1, "value", "av" };
+static const GDBusArgInfo values_arg = { -1, "values", "a(sav)" };
+
+static const GDBusArgInfo *write_inargs[] = { &name_arg, &value_arg, NULL };
+static const GDBusArgInfo *write_outargs[] = { &serial_arg, NULL };
+
+static const GDBusArgInfo *merge_inargs[] = { &name_arg, &values_arg, NULL };
+static const GDBusArgInfo *merge_outargs[] = { &serial_arg, NULL };
+
+static const GDBusArgInfo *gsd_inargs[] = { NULL };
+static const GDBusArgInfo *gsd_outargs[] = { &name_arg, NULL };
+
+static const GDBusMethodInfo write_method = {
+  -1, "Write",         (gpointer) write_inargs, (gpointer) write_outargs };
+static const GDBusMethodInfo merge_method = {
+  -1, "Merge",         (gpointer) merge_inargs, (gpointer) merge_outargs };
+static const GDBusMethodInfo gsd_method = {
+  -1, "GetSessionDir", (gpointer) gsd_inargs,   (gpointer) gsd_outargs };
+
+static const GDBusMethodInfo *writer_methods[] = {
+  &write_method, &merge_method, &gsd_method, NULL
 };
-static const GDBusArgInfo in_args[] = { { "inargs", "s" } };
-static const GDBusArgInfo out_args[] = { { "serial", "t" } };
-static const GDBusMethodInfo writer_methods[] = {
-  { "Write", "s", 1, in_args, "t", 1, out_args },
-  { "Merge", "s", 1, in_args, "t", 1, out_args },
-/*  { "Lock", "sb", 1, lock_in_args, "" } */
-};
+
 static const GDBusInterfaceInfo writer_interface = {
-  "ca.desrt.dconf.Writer", 1, writer_methods
+  -1, "ca.desrt.dconf.Writer", (gpointer) writer_methods
 };
 
 typedef struct
@@ -281,7 +298,6 @@ bus_acquired (GDBusConnection *connection,
   DConfWriter *writer = user_data;
 
   g_dbus_connection_register_object (connection, "/",
-                                     "ca.desrt.dconf.Writer",
                                      &writer_interface, &interface_vtable,
                                      writer, NULL, NULL);
 }
