@@ -23,8 +23,9 @@
 #include <gio/gsettingsbackend.h>
 #include "dconfdatabase.h"
 
+#include <gio/gio.h>
+
 #include <string.h>
-#include <gdbus/gdbus.h>
 #include "gvdb-reader.h"
 
 typedef struct _Outstanding Outstanding;
@@ -295,7 +296,7 @@ dconf_database_filter_function (GDBusConnection *connection,
 {
   DConfDatabase *database = user_data;
 
-  switch (g_dbus_message_get_type (message))
+  switch (g_dbus_message_get_message_type (message))
     {
     case G_DBUS_MESSAGE_TYPE_METHOD_RETURN:
       return dconf_database_remove_outstanding (database, message,
