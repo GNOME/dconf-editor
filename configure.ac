@@ -5,7 +5,8 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.4)
-giomodulesdir=`pkg-config --variable=giomoduledir gio-2.0`
+
+AC_ARG_WITH(gio_modules_dir, [  --with-gio-modules-dir=PATH choose directory for the GIO module, [default=LIBDIR/gio/modules]], giomodulesdir="$withval", giomodulesdir=${libdir}/gio/modules)
 AC_SUBST(giomodulesdir)
 
 AC_ARG_WITH(dbus_service_dir, [  --with-dbus-service-dir=PATH choose directory for dbus service files, [default=PREFIX/share/dbus-1/services]], dbusservicedir="$withval", dbusservicedir=${datadir}/dbus-1/services)
