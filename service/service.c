@@ -123,15 +123,31 @@ emit_notify_signal (GDBusConnection  *connection,
   g_free (path);
 }
 
+static GVariant *
+unwrap_maybe (GVariant **ptr)
+{
+  GVariant *array, *child;
+
+  array = *ptr;
+
+  if (g_variant_n_children (array))
+    child = g_variant_get_child_value (array, 0);
+  else
+    child = NULL;
+
+  g_variant_unref (array);
+  *ptr = child;
+}
+
 static void
 method_call (GDBusConnection       *connection,
-             gpointer               user_data,
              const gchar           *sender,
              const gchar           *object_path,
              const gchar           *interface_name,
              const gchar           *method_name,
              GVariant              *parameters,
-             GDBusMethodInvocation *invocation)
+             GDBusMethodInvocation *invocation,
+             gpointer               user_data)
 {
   DConfWriter *writer = user_data;
 
@@ -145,9 +161,10 @@ method_call (GDBusConnection       *connection,
       guint64 serial;
       GVariant *none;
 
-      g_variant_get (parameters, "(@smv)", &keyvalue, &value);
+      g_variant_get (parameters, "(@s@av)", &keyvalue, &value);
       key = g_variant_get_string (keyvalue, &key_length);
       g_variant_unref (keyvalue);
+      unwrap_maybe (&value);
 
       if (key[0] != '/' || strstr (key, "//"))
         {
@@ -199,13 +216,15 @@ method_call (GDBusConnection       *connection,
       gint i = 0;
       gint j;
 
-      g_variant_get (parameters, "(&sa{smv})", &prefix, &iter);
+      g_variant_get (parameters, "(&sa(sav))", &prefix, &iter);
       length = g_variant_iter_n_children (iter);
 
       keys = g_new (const gchar *, length);
       values = g_new (GVariant *, length);
-      while (g_variant_iter_next (iter, "{&smv}", &keys[i], &values[i]))
+      while (g_variant_iter_next (iter, "(&s@av)", &keys[i], &values[i]))
         {
+          unwrap_maybe (&values[i]);
+
           if (keys[i][0] == '/' || strstr (keys[i], "//") ||
               (i > 0 && !(strcmp (keys[i - 1], keys[i]) < 0)))
             {
@@ -254,47 +273,11 @@ method_call (GDBusConnection       *connection,
 }
 
 static void
-fake_method_call (GDBusConnection       *connection,
-                  const gchar           *sender,
-                  const gchar           *object_path,
-                  const gchar           *interface_name,
-                  const gchar           *method_name,
-                  GVariant              *parameters,
-                  GDBusMethodInvocation *invocation,
-                  gpointer               user_data)
-{
-  GVariant *real_parameters;
-  const GVariantType *type;
-  const gchar *printed;
-  GError *error = NULL;
-
-  if (strcmp (method_name, "Merge") == 0)
-    type = G_VARIANT_TYPE ("(sa{smv})");
-  else
-    type = G_VARIANT_TYPE ("(smv)");
-
-  g_variant_get (parameters, "(&s)", &printed);
-  real_parameters = g_variant_parse (type, printed, NULL, NULL, &error);
-
-  if (real_parameters == NULL)
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      return;
-    }
-
-  method_call (connection, user_data, sender, object_path,
-               interface_name, method_name, real_parameters, invocation);
-
-  g_variant_unref (real_parameters);
-}
-
-static void
 bus_acquired (GDBusConnection *connection,
               const gchar     *name,
               gpointer         user_data)
 {
-  static const GDBusInterfaceVTable interface_vtable = { fake_method_call };
+  static const GDBusInterfaceVTable interface_vtable = { method_call };
   DConfWriter *writer = user_data;
 
   g_dbus_connection_register_object (connection, "/",

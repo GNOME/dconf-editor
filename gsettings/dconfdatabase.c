@@ -317,6 +317,19 @@ dconf_database_filter_function (GDBusConnection *connection,
     }
 }
 
+GVariant *
+fake_maybe (GVariant *value)
+{
+  GVariantBuilder builder;
+
+  g_variant_builder_init (&builder, G_VARIANT_TYPE ("av"));
+
+  if (value != NULL)
+    g_variant_builder_add (&builder, "v", value);
+
+  return g_variant_builder_end (&builder);
+}
+
 void
 dconf_database_write_tree (DConfDatabase  *database,
                            GTree          *tree,
@@ -347,13 +360,12 @@ dconf_database_write_tree (DConfDatabase  *database,
       g_dbus_message_new_method_call ("ca.desrt.dconf", "/",
                                       "ca.desrt.dconf.Writer", "Write");
 
-    g_variant_builder_init (&args, G_VARIANT_TYPE ("(ssa{smv})"));
-    g_variant_builder_add (&args, "s", database->context);
+    g_variant_builder_init (&args, G_VARIANT_TYPE ("(sa(sav))"));
     g_variant_builder_add (&args, "s", path);
 
-    g_variant_builder_open (&args, G_VARIANT_TYPE ("a{smv}"));
+    g_variant_builder_open (&args, G_VARIANT_TYPE ("a(sav)"));
     for (i = 0; keys[i]; i++)
-      g_variant_builder_add (&args, "{smv}", keys[i], values[i]);
+      g_variant_builder_add (&args, "(s@av)", keys[i], fake_maybe (values[i]));
 
     g_variant_builder_close (&args);
 
@@ -384,20 +396,6 @@ dconf_database_list (DConfDatabase *database,
   return result;
 }
 
-static void
-dconf__message_set_body (GDBusMessage *message,
-                         GVariant     *body)
-{
-  gchar *printed;
-
-  g_variant_ref_sink (body);
-  printed = g_variant_print (body, FALSE);
-  g_variant_unref (body);
-
-  g_dbus_message_set_body (message, g_variant_new ("(s)", printed));
-  g_free (printed);
-}
-
 void
 dconf_database_write (DConfDatabase *database,
                       const gchar   *path_or_key,
@@ -413,7 +411,8 @@ dconf_database_write (DConfDatabase *database,
 
   message = g_dbus_message_new_method_call ("ca.desrt.dconf", "/",
                                             "ca.desrt.dconf.Writer", "Write");
-  dconf__message_set_body (message, g_variant_new ("(smv)", path_or_key, value));
+  g_dbus_message_set_body (message, g_variant_new ("(s@av)", path_or_key,
+                                                   fake_maybe (value)));
   g_dbus_connection_send_message (database->bus, message, serial, NULL);
   g_object_unref (message);
 
