@@ -70,7 +70,7 @@ dconf_database_new_outstanding (DConfDatabase *database,
   outstanding->set_key = g_strdup (set_key);
 
   if (set_value)
-    outstanding->set_value = g_variant_ref (set_value);
+    outstanding->set_value = g_variant_ref_sink (set_value);
   else
     outstanding->set_value = NULL;
 
@@ -92,6 +92,7 @@ dconf_database_remove_outstanding (DConfDatabase *database,
                                    GDBusMessage  *message,
                                    guint64       *anti_expose)
 {
+  gboolean found = FALSE;
   Outstanding **node;
   guint32 serial;
 
@@ -132,12 +133,13 @@ dconf_database_remove_outstanding (DConfDatabase *database,
         if (tmp->tree)
           g_tree_unref (tmp->tree);
 
-        return TRUE;
+        found = TRUE;
+        break;
       }
 
   g_static_mutex_unlock (&database->lock);
 
-  return FALSE;
+  return found;
 }
 
 static gboolean
@@ -168,6 +170,7 @@ dconf_database_scan_outstanding (DConfDatabase  *database,
                                  const gchar    *key,
                                  GVariant      **value)
 {
+  gboolean found = FALSE;
   Outstanding *node;
   gsize length;
 
@@ -185,7 +188,8 @@ dconf_database_scan_outstanding (DConfDatabase  *database,
           if (g_str_has_prefix (key, node->reset_path))
             {
               *value = NULL;
-              return TRUE;
+              found = TRUE;
+              break;
             }
         }
 
@@ -194,11 +198,12 @@ dconf_database_scan_outstanding (DConfDatabase  *database,
           if (strcmp (key, node->set_key) == 0)
             {
               if (node->set_value != NULL)
-                *value = g_variant_ref (*value);
+                *value = g_variant_ref (node->set_value);
               else
                 *value = NULL;
 
-              return TRUE;
+              found = TRUE;
+              break;
             }
         }
 
@@ -214,14 +219,15 @@ dconf_database_scan_outstanding (DConfDatabase  *database,
               else
                 *value = NULL;
 
-              return TRUE;
+              found = TRUE;
+              break;
             }
         }
     }
 
   g_static_mutex_unlock (&database->lock);
 
-  return FALSE;
+  return found;
 }
 
 static void
