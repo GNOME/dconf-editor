@@ -266,6 +266,7 @@ dconf_database_incoming_signal (DConfDatabase *database,
 {
   const gchar **keys;
   const gchar *name;
+  gboolean is_path;
   guint64 serial;
 
   if (strcmp (g_dbus_message_get_interface (message),
@@ -276,6 +277,8 @@ dconf_database_incoming_signal (DConfDatabase *database,
   g_variant_get (g_dbus_message_get_body (message),
                  "(t&s^a&s)", &serial, &name, &keys);
 
+  is_path = g_str_has_suffix (name, "/");
+
   if (serial != database->anti_expose)
     {
       GSList *node;
@@ -283,9 +286,12 @@ dconf_database_incoming_signal (DConfDatabase *database,
       if (keys[0] == NULL)
         {
           for (node = database->backends; node; node = node->next)
-            g_settings_backend_changed (node->data, name, NULL);
+            if (is_path)
+              g_settings_backend_path_changed (node->data, name, NULL);
+            else
+              g_settings_backend_changed (node->data, name, NULL);
         }
-      else
+      else if (is_path)
         {
           for (node = database->backends; node; node = node->next)
             g_settings_backend_keys_changed (node->data, name, keys, NULL);

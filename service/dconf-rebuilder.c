@@ -74,6 +74,7 @@ dconf_rebuilder_insert (GHashTable  *table,
                         const gchar *key,
                         GVariant    *value)
 {
+  GVariant *ouch;
   GvdbItem *item;
   gchar *mykey;
   gint length;
@@ -88,7 +89,12 @@ dconf_rebuilder_insert (GHashTable  *table,
   gvdb_item_set_parent (item,
                         dconf_rebuilder_get_parent (table, mykey, length));
 
-  gvdb_item_set_value (item, value);
+  ouch = g_variant_get_variant (value);
+  gvdb_item_set_value (item, ouch);
+  g_variant_unref (ouch);
+
+  g_variant_ref_sink (value);
+  g_variant_unref (value);
 }
 
 static void
