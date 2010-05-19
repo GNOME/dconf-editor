@@ -74,7 +74,6 @@ dconf_rebuilder_insert (GHashTable  *table,
                         const gchar *key,
                         GVariant    *value)
 {
-  GVariant *ouch;
   GvdbItem *item;
   gchar *mykey;
   gint length;
@@ -89,12 +88,7 @@ dconf_rebuilder_insert (GHashTable  *table,
   gvdb_item_set_parent (item,
                         dconf_rebuilder_get_parent (table, mykey, length));
 
-  ouch = g_variant_get_variant (value);
-  gvdb_item_set_value (item, ouch);
-  g_variant_unref (ouch);
-
-  g_variant_ref_sink (value);
-  g_variant_unref (value);
+  gvdb_item_set_value (item, value);
 }
 
 static void
@@ -103,10 +97,12 @@ dconf_rebuilder_put_item (DConfRebuilderState *state)
   if (state->values[state->index] != NULL)
     {
       gchar *fullname;
+      GVariant *ouch;
 
       fullname = g_strconcat (state->prefix, state->keys[state->index], NULL);
-      dconf_rebuilder_insert (state->table, fullname,
-                              state->values[state->index]);
+      ouch = g_variant_get_variant (state->values[state->index]);
+      dconf_rebuilder_insert (state->table, fullname, ouch);
+      g_variant_unref (ouch);
       g_free (fullname);
     }
 
