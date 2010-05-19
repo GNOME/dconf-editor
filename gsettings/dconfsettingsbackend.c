@@ -121,6 +121,11 @@ dconf_settings_backend_unsubscribe (GSettingsBackend *backend,
 }
 
 static void
+dconf_settings_backend_sync (GSettingsBackend *backend)
+{
+}
+
+static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
   dcsb->database = dconf_database_get_for_backend (dcsb);
@@ -138,6 +143,7 @@ dconf_settings_backend_class_init (GSettingsBackendClass *class)
   class->get_writable = dconf_settings_backend_get_writable;
   class->subscribe = dconf_settings_backend_subscribe;
   class->unsubscribe = dconf_settings_backend_unsubscribe;
+  class->sync = dconf_settings_backend_sync;
 }
 
 void
