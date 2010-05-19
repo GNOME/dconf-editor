@@ -10,7 +10,7 @@ if [ "$1" = "clean" ]; then
 fi
 
 libtoolize --automake
-aclocal
+aclocal ${ACLOCAL_FLAGS}
 automake --add-missing --foreign
 autoconf
 
