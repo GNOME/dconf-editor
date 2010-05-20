@@ -164,5 +164,5 @@ g_io_module_unload (GIOModule *module)
 gchar **
 g_io_module_query (void)
 {
-  return g_strsplit (",", G_SETTINGS_BACKEND_EXTENSION_POINT_NAME, 0);
+  return g_strsplit (G_SETTINGS_BACKEND_EXTENSION_POINT_NAME, "!", 0);
 }
