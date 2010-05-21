@@ -204,7 +204,7 @@ method_call (GDBusConnection       *connection,
                                                     serial, key, none),
                                      NULL);
     }
-  else if (strcmp (method_name, "Merge"))
+  else if (strcmp (method_name, "Merge") == 0)
     {
       GError *error = NULL;
       const gchar *prefix;

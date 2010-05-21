@@ -1,13 +1,13 @@
-AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb
+AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)
 
 giomodules_LTLIBRARIES = libdconfsettings.la
 
 libdconfsettings_la_LIBADD = $(gio_LIBS)
 libdconfsettings_la_LDFLAGS = -module -avoid-version -shared
 libdconfsettings_la_SOURCES = \
+	../client/dconf-client.h\
+	../client/dconf-client.c\
 	../gvdb/gvdb-reader.c	\
-	dconfdatabase.h		\
-	dconfdatabase.c		\
 	dconfsettingsbackend.c
 
 install-data-hook:
