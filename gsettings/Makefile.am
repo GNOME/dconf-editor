@@ -12,3 +12,6 @@ libdconfsettings_la_SOURCES = \
 
 install-data-hook:
 	rm -f $(giomodulesdir)/libdconfsettings.la
+	if test -z "$(DESTDIR)" -a "$(gio_QUERYMODULES)" != "no" ; then \
+	  $(gio_QUERYMODULES) $(giomodulesdir) ;  \
+	fi
