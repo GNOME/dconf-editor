@@ -21,7 +21,7 @@
 
 #define G_SETTINGS_ENABLE_BACKEND
 #include <gio/gsettingsbackend.h>
-#include <client/dconf-client.h>
+#include <engine/dconf-engine.h>
 #include <gio/gio.h>
 
 #include <string.h>
@@ -34,7 +34,7 @@ typedef struct
   GSettingsBackend backend;
   GStaticMutex lock;
 
-  DConfClient *client;
+  DConfEngine *engine;
 
   Outstanding *outstanding;
   GDBusConnection *bus;
@@ -248,7 +248,7 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
                              gboolean            default_value)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfClientReadType type;
+  DConfEngineReadType type;
 
   if (!default_value)
     {
@@ -257,26 +257,26 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
       if (dconf_settings_backend_scan_outstanding (dcsb, key, &value))
         return value;
 
-      type = DCONF_CLIENT_READ_NORMAL;
+      type = DCONF_ENGINE_READ_NORMAL;
     }
   else
-    type = DCONF_CLIENT_READ_RESET;
+    type = DCONF_ENGINE_READ_RESET;
 
-  return dconf_client_read (dcsb->client, key, expected_type, type);
+  return dconf_engine_read (dcsb->engine, key, expected_type, type);
 }
 
 static void
 dconf_settings_backend_send (GDBusConnection    *bus,
-                             DConfClientMessage *dccm,
+                             DConfEngineMessage *dcem,
                              volatile guint32   *serial)
 {
   GDBusMessage *message;
 
-  message = g_dbus_message_new_method_call (dccm->destination,
-                                            dccm->object_path,
-                                            dccm->interface,
-                                            dccm->method);
-  g_dbus_message_set_body (message, dccm->body);
+  message = g_dbus_message_new_method_call (dcem->destination,
+                                            dcem->object_path,
+                                            dcem->interface,
+                                            dcem->method);
+  g_dbus_message_set_body (message, dcem->body);
 
   if (serial)
     g_dbus_connection_send_message (bus, message, serial, NULL);
@@ -284,15 +284,15 @@ dconf_settings_backend_send (GDBusConnection    *bus,
     g_dbus_connection_send_message_with_reply_sync (bus, message, -1,
                                                     NULL, NULL, NULL);
 
-  g_variant_unref (dccm->body);
+  g_variant_unref (dcem->body);
   g_object_unref (message);
 }
 
 static gboolean
 dconf_settings_backend_get_bus (GDBusConnection    **bus,
-                                DConfClientMessage  *dccm)
+                                DConfEngineMessage  *dcem)
 {
-  switch (dccm->bus_type)
+  switch (dcem->bus_type)
     {
     case 'e':
       *bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
@@ -306,8 +306,8 @@ dconf_settings_backend_get_bus (GDBusConnection    **bus,
       g_assert_not_reached ();
     }
 
-  if (*bus == NULL && dccm->body)
-    g_variant_unref (dccm->body);
+  if (*bus == NULL && dcem->body)
+    g_variant_unref (dcem->body);
 
   return *bus != NULL;
 }
@@ -319,11 +319,11 @@ dconf_settings_backend_write (GSettingsBackend *backend,
                               gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfClientMessage message;
+  DConfEngineMessage message;
   volatile guint32 *serial;
   GDBusConnection *bus;
 
-  if (!dconf_client_write (dcsb->client, &message, path_or_key, value))
+  if (!dconf_engine_write (dcsb->engine, &message, path_or_key, value))
     return FALSE;
 
   if (!dconf_settings_backend_get_bus (&bus, &message))
@@ -350,7 +350,7 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
                                    gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfClientMessage message;
+  DConfEngineMessage message;
   volatile guint32 *serial;
   GDBusConnection *bus;
   const gchar **keys;
@@ -359,7 +359,7 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
 
   g_settings_backend_flatten_tree (tree, &prefix, &keys, &values);
 
-  if (dconf_client_write_many (dcsb->client, &message, prefix, keys, values))
+  if (dconf_engine_write_many (dcsb->engine, &message, prefix, keys, values))
     {
       if (dconf_settings_backend_get_bus (&bus, &message))
         {
@@ -394,10 +394,10 @@ dconf_settings_backend_get_writable (GSettingsBackend *backend,
                                      const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfClientMessage message;
+  DConfEngineMessage message;
   GDBusConnection *bus;
 
-  if (!dconf_client_is_writable (dcsb->client, &message, name))
+  if (!dconf_engine_is_writable (dcsb->engine, &message, name))
     return FALSE;
 
   return dconf_settings_backend_get_bus (&bus, &message);
@@ -408,10 +408,10 @@ dconf_settings_backend_subscribe (GSettingsBackend *backend,
                                   const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfClientMessage message;
+  DConfEngineMessage message;
   GDBusConnection *bus;
 
-  dconf_client_watch (dcsb->client, &message, name);
+  dconf_engine_watch (dcsb->engine, &message, name);
 
   if (dconf_settings_backend_get_bus (&bus, &message))
     dconf_settings_backend_send (bus, &message, NULL);
@@ -422,10 +422,10 @@ dconf_settings_backend_unsubscribe (GSettingsBackend *backend,
                                     const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfClientMessage message;
+  DConfEngineMessage message;
   GDBusConnection *bus;
 
-  dconf_client_unwatch (dcsb->client, &message, name);
+  dconf_engine_unwatch (dcsb->engine, &message, name);
 
   if (dconf_settings_backend_get_bus (&bus, &message))
     dconf_settings_backend_send (bus, &message, NULL);
@@ -439,7 +439,7 @@ dconf_settings_backend_sync (GSettingsBackend *backend)
 static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
-  dcsb->client = dconf_client_new (NULL);
+  dcsb->engine = dconf_engine_new (NULL);
 }
 
 static void

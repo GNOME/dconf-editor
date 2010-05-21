@@ -1,49 +1,49 @@
 
-#include "dconf-client.h"
+#include "dconf-engine.h"
 #include <gvdb/gvdb-reader.h>
 
-struct _DConfClient
+struct _DConfEngine
 {
   gint ref_count;
 };
 
-DConfClient *
-dconf_client_new (DConfClientServiceFunc service_func)
+DConfEngine *
+dconf_engine_new (DConfEngineServiceFunc service_func)
 {
-  DConfClient *client;
+  DConfEngine *engine;
 
-  client = g_slice_new (DConfClient);
-  client->ref_count = 1;
+  engine = g_slice_new (DConfEngine);
+  engine->ref_count = 1;
 
-  return client;
+  return engine;
 }
 
-DConfClient *
-dconf_client_ref (DConfClient *client)
+DConfEngine *
+dconf_engine_ref (DConfEngine *engine)
 {
-  g_atomic_int_inc (&client->ref_count);
+  g_atomic_int_inc (&engine->ref_count);
 
-  return client;
+  return engine;
 }
 
 void
-dconf_client_unref (DConfClient *client)
+dconf_engine_unref (DConfEngine *engine)
 {
-  if (g_atomic_int_dec_and_test (&client->ref_count))
-    g_slice_free (DConfClient, client);
+  if (g_atomic_int_dec_and_test (&engine->ref_count))
+    g_slice_free (DConfEngine, engine);
 }
 
 GVariant *
-dconf_client_read (DConfClient        *client,
+dconf_engine_read (DConfEngine        *engine,
                    const gchar        *key,
                    const GVariantType *required_type,
-                   DConfClientReadType type)
+                   DConfEngineReadType type)
 {
   GvdbTable *table;
   GVariant *value;
   gchar *filename;
 
-  if (type == DCONF_CLIENT_READ_RESET)
+  if (type == DCONF_ENGINE_READ_RESET)
     return NULL;
 
   filename = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
@@ -58,47 +58,47 @@ dconf_client_read (DConfClient        *client,
 }
 
 static void
-dconf_client_make_match_rule (DConfClient        *client,
-                              DConfClientMessage *dccm,
+dconf_engine_make_match_rule (DConfEngine        *engine,
+                              DConfEngineMessage *dcem,
                               const gchar        *name)
 {
   gchar *rule;
 
   rule = g_strdup_printf ("interface='ca.desrt.dconf.Writer',"
                           "arg1path='%s'", name);
-  dccm->bus_type = 'e';
-  dccm->destination = "org.freedesktop.DBus";
-  dccm->object_path = "/";
-  dccm->interface = "org.freedesktop.DBus";
-  dccm->body = g_variant_ref_sink (g_variant_new ("(s)", rule));
+  dcem->bus_type = 'e';
+  dcem->destination = "org.freedesktop.DBus";
+  dcem->object_path = "/";
+  dcem->interface = "org.freedesktop.DBus";
+  dcem->body = g_variant_ref_sink (g_variant_new ("(s)", rule));
   g_free (rule);
 }
 
 void
-dconf_client_watch (DConfClient        *client,
-                    DConfClientMessage *dccm,
+dconf_engine_watch (DConfEngine        *engine,
+                    DConfEngineMessage *dcem,
                     const gchar        *name)
 {
-  dconf_client_make_match_rule (client, dccm, name);
-  dccm->method = "AddMatch";
+  dconf_engine_make_match_rule (engine, dcem, name);
+  dcem->method = "AddMatch";
 }
 
 void
-dconf_client_unwatch (DConfClient        *client,
-                      DConfClientMessage *dccm,
+dconf_engine_unwatch (DConfEngine        *engine,
+                      DConfEngineMessage *dcem,
                       const gchar        *name)
 {
-  dconf_client_make_match_rule (client, dccm, name);
-  dccm->method = "RemoveMatch";
+  dconf_engine_make_match_rule (engine, dcem, name);
+  dcem->method = "RemoveMatch";
 }
 
 gboolean
-dconf_client_is_writable (DConfClient        *client,
-                          DConfClientMessage *dccm,
+dconf_engine_is_writable (DConfEngine        *engine,
+                          DConfEngineMessage *dcem,
                           const gchar        *name)
 {
-  dccm->bus_type = 'e';
-  dccm->body = NULL;
+  dcem->bus_type = 'e';
+  dcem->body = NULL;
 
   return TRUE;
 }
@@ -117,33 +117,33 @@ fake_maybe (GVariant *value)
 }
 
 static void
-dconf_client_dccm (DConfClient        *client,
-                   DConfClientMessage *dccm,
+dconf_engine_dcem (DConfEngine        *engine,
+                   DConfEngineMessage *dcem,
                    const gchar        *method,
                    const gchar        *format_string,
                    ...)
 {
   va_list ap;
 
-  dccm->bus_type = 'e';
-  dccm->destination = "ca.desrt.dconf";
-  dccm->object_path = "/";
-  dccm->interface = "ca.desrt.dconf.Writer";
-  dccm->method = method;
+  dcem->bus_type = 'e';
+  dcem->destination = "ca.desrt.dconf";
+  dcem->object_path = "/";
+  dcem->interface = "ca.desrt.dconf.Writer";
+  dcem->method = method;
 
   va_start (ap, format_string);
-  dccm->body = g_variant_ref_sink (g_variant_new_va (format_string,
+  dcem->body = g_variant_ref_sink (g_variant_new_va (format_string,
                                                      NULL, &ap));
   va_end (ap);
 }
 
 gboolean
-dconf_client_write (DConfClient        *client,
-                    DConfClientMessage *dccm,
+dconf_engine_write (DConfEngine        *engine,
+                    DConfEngineMessage *dcem,
                     const gchar        *name,
                     GVariant           *value)
 {
-  dconf_client_dccm (client, dccm,
+  dconf_engine_dcem (engine, dcem,
                      "Write", "(s@av)",
                      name, fake_maybe (value));
 
@@ -151,8 +151,8 @@ dconf_client_write (DConfClient        *client,
 }
 
 gboolean
-dconf_client_write_many (DConfClient          *client,
-                         DConfClientMessage   *dccm,
+dconf_engine_write_many (DConfEngine          *engine,
+                         DConfEngineMessage   *dcem,
                          const gchar          *prefix,
                          const gchar * const  *keys,
                          GVariant            **values)
@@ -166,7 +166,7 @@ dconf_client_write_many (DConfClient          *client,
     g_variant_builder_add (&builder, "(s@av)",
                            keys[i], fake_maybe (values[i]));
 
-  dconf_client_dccm (client, dccm, "Merge", "(sa(sav))", prefix, &builder);
+  dconf_engine_dcem (engine, dcem, "Merge", "(sa(sav))", prefix, &builder);
 
   return TRUE;
 }

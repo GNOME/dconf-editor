@@ -5,8 +5,8 @@ giomodules_LTLIBRARIES = libdconfsettings.la
 libdconfsettings_la_LIBADD = $(gio_LIBS)
 libdconfsettings_la_LDFLAGS = -module -avoid-version -shared
 libdconfsettings_la_SOURCES = \
-	../client/dconf-client.h\
-	../client/dconf-client.c\
+	../engine/dconf-engine.h\
+	../engine/dconf-engine.c\
 	../gvdb/gvdb-reader.c	\
 	dconfsettingsbackend.c
 
