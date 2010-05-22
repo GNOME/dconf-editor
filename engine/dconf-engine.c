@@ -1,6 +1,6 @@
 
 #include "dconf-engine.h"
-#include <gvdb/gvdb-reader.h>
+#include <gvdb-reader.h>
 
 struct _DConfEngine
 {
@@ -8,7 +8,7 @@ struct _DConfEngine
 };
 
 DConfEngine *
-dconf_engine_new (DConfEngineServiceFunc service_func)
+dconf_engine_new (const gchar *context)
 {
   DConfEngine *engine;
 
@@ -29,21 +29,19 @@ dconf_engine_ref (DConfEngine *engine)
 void
 dconf_engine_unref (DConfEngine *engine)
 {
-  if (g_atomic_int_dec_and_test (&engine->ref_count))
-    g_slice_free (DConfEngine, engine);
+  g_slice_free (DConfEngine, engine);
 }
 
 GVariant *
-dconf_engine_read (DConfEngine        *engine,
-                   const gchar        *key,
-                   const GVariantType *required_type,
-                   DConfEngineReadType type)
+dconf_engine_read (DConfEngine   *engine,
+                   const gchar   *key,
+                   DConfReadType  type)
 {
   GvdbTable *table;
   GVariant *value;
   gchar *filename;
 
-  if (type == DCONF_ENGINE_READ_RESET)
+  if (type == DCONF_READ_RESET)
     return NULL;
 
   filename = g_build_filename (g_get_user_config_dir (), "dconf", NULL);

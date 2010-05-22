@@ -20,6 +20,9 @@ AC_PATH_PROG(gio_QUERYMODULES, gio-querymodules, no)
 AC_OUTPUT([
   gsettings/Makefile
   service/Makefile
+  client/Makefile
+  tests/Makefile
   gvdb/Makefile
+  bin/Makefile
   Makefile
 ])

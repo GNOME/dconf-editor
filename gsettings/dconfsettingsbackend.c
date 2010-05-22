@@ -21,7 +21,7 @@
 
 #define G_SETTINGS_ENABLE_BACKEND
 #include <gio/gsettingsbackend.h>
-#include <engine/dconf-engine.h>
+#include <dconf-engine.h>
 #include <gio/gio.h>
 
 #include <string.h>
@@ -248,7 +248,7 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
                              gboolean            default_value)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfEngineReadType type;
+  DConfReadType type;
 
   if (!default_value)
     {
@@ -257,12 +257,12 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
       if (dconf_settings_backend_scan_outstanding (dcsb, key, &value))
         return value;
 
-      type = DCONF_ENGINE_READ_NORMAL;
+      type = DCONF_READ_NORMAL;
     }
   else
-    type = DCONF_ENGINE_READ_RESET;
+    type = DCONF_READ_RESET;
 
-  return dconf_engine_read (dcsb->engine, key, expected_type, type);
+  return dconf_engine_read (dcsb->engine, key, type);
 }
 
 static void

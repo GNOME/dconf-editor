@@ -1,4 +1,4 @@
-AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)
+AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine -I$(top_srcdir)/common
 
 giomodules_LTLIBRARIES = libdconfsettings.la
 

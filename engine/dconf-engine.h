@@ -1,17 +1,11 @@
 #ifndef _dconf_engine_h_
 #define _dconf_engine_h_
 
+#include <dconf-readtype.h>
 #include <glib.h>
 
 typedef struct _DConfEngine DConfEngine;
 typedef struct _DConfEngineResetList DConfEngineResetList;
-
-typedef enum
-{
-  DCONF_ENGINE_READ_NORMAL,
-  DCONF_ENGINE_READ_SET,
-  DCONF_ENGINE_READ_RESET
-} DConfEngineReadType;
 
 typedef struct
 {
@@ -28,14 +22,13 @@ typedef struct
 typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message);
 
-DConfEngine *           dconf_engine_new                                (DConfEngineServiceFunc   service_func);
+DConfEngine *           dconf_engine_new                                (const gchar             *context);
 void                    dconf_engine_unref                              (DConfEngine             *engine);
 DConfEngine *           dconf_engine_ref                                (DConfEngine             *engine);
 
 GVariant *              dconf_engine_read                               (DConfEngine             *engine,
                                                                          const gchar             *key,
-                                                                         const GVariantType      *required_type,
-                                                                         DConfEngineReadType      type);
+                                                                         DConfReadType            type);
 gchar **                dconf_engine_list                               (DConfEngine             *engine,
                                                                          const gchar             *path,
                                                                          DConfEngineResetList    *resets);
