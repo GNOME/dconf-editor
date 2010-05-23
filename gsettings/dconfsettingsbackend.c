@@ -323,7 +323,7 @@ dconf_settings_backend_write (GSettingsBackend *backend,
   volatile guint32 *serial;
   GDBusConnection *bus;
 
-  if (!dconf_engine_write (dcsb->engine, &message, path_or_key, value))
+  if (!dconf_engine_write (dcsb->engine, &message, path_or_key, value, NULL))
     return FALSE;
 
   if (!dconf_settings_backend_get_bus (&bus, &message))
@@ -397,7 +397,7 @@ dconf_settings_backend_get_writable (GSettingsBackend *backend,
   DConfEngineMessage message;
   GDBusConnection *bus;
 
-  if (!dconf_engine_is_writable (dcsb->engine, &message, name))
+  if (!dconf_engine_is_writable (dcsb->engine, &message, name, NULL))
     return FALSE;
 
   return dconf_settings_backend_get_bus (&bus, &message);

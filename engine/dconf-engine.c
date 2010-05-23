@@ -91,9 +91,10 @@ dconf_engine_unwatch (DConfEngine        *engine,
 }
 
 gboolean
-dconf_engine_is_writable (DConfEngine        *engine,
-                          DConfEngineMessage *dcem,
-                          const gchar        *name)
+dconf_engine_is_writable (DConfEngine         *engine,
+                          DConfEngineMessage  *dcem,
+                          const gchar         *name,
+                          GError             **error)
 {
   dcem->bus_type = 'e';
   dcem->body = NULL;
@@ -127,6 +128,7 @@ dconf_engine_dcem (DConfEngine        *engine,
   dcem->destination = "ca.desrt.dconf";
   dcem->object_path = "/";
   dcem->interface = "ca.desrt.dconf.Writer";
+  dcem->reply_type = G_VARIANT_TYPE ("(t)");
   dcem->method = method;
 
   va_start (ap, format_string);
@@ -136,10 +138,11 @@ dconf_engine_dcem (DConfEngine        *engine,
 }
 
 gboolean
-dconf_engine_write (DConfEngine        *engine,
-                    DConfEngineMessage *dcem,
-                    const gchar        *name,
-                    GVariant           *value)
+dconf_engine_write (DConfEngine         *engine,
+                    DConfEngineMessage  *dcem,
+                    const gchar         *name,
+                    GVariant            *value,
+                    GError             **error)
 {
   dconf_engine_dcem (engine, dcem,
                      "Write", "(s@av)",

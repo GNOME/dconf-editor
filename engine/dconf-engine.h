@@ -9,12 +9,13 @@ typedef struct _DConfEngineResetList DConfEngineResetList;
 
 typedef struct
 {
-  gint         bus_type;
-  const gchar *destination;
-  const gchar *object_path;
-  const gchar *interface;
-  const gchar *method;
-  GVariant    *body;
+  gint                bus_type;
+  const gchar        *destination;
+  const gchar        *object_path;
+  const gchar        *interface;
+  const gchar        *method;
+  const GVariantType *reply_type;
+  GVariant           *body;
 } DConfEngineMessage;
 
 
@@ -39,14 +40,17 @@ void                    dconf_engine_get_service_info                   (DConfEn
                                                                          const gchar            **object_path);
 gboolean                dconf_engine_is_writable                        (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
-                                                                         const gchar             *name);
+                                                                         const gchar             *name,
+                                                                         GError                 **error);
 gboolean                dconf_engine_write                              (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
                                                                          const gchar             *key,
-                                                                         GVariant                *value);
+                                                                         GVariant                *value,
+                                                                         GError                 **error);
 gboolean                dconf_engine_write_tree                         (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
-                                                                         GTree                   *tree);
+                                                                         GTree                   *tree,
+                                                                         GError                 **error);
 void                    dconf_engine_watch                              (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
                                                                          const gchar             *name);

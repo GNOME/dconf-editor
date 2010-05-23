@@ -39,6 +39,8 @@ gboolean                dconf_client_is_writable                        (DConfCl
 gboolean                dconf_client_write                              (DConfClient          *client,
                                                                          const gchar          *key,
                                                                          GVariant             *value,
+                                                                         guint64              *sequence,
+                                                                         GCancellable         *cancellable,
                                                                          GError              **error);
 void                    dconf_client_write_async                        (DConfClient          *client,
                                                                          const gchar          *key,
