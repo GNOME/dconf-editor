@@ -9,13 +9,13 @@ typedef struct _DConfEngineResetList DConfEngineResetList;
 
 typedef struct
 {
-  gint                bus_type;
-  const gchar        *destination;
-  const gchar        *object_path;
-  const gchar        *interface;
-  const gchar        *method;
-  const GVariantType *reply_type;
-  GVariant           *body;
+  gint         bus_type;
+  const gchar *destination;
+  const gchar *object_path;
+  const gchar *interface;
+  const gchar *method;
+  const gchar *reply_type;
+  GVariant    *body;
 } DConfEngineMessage;
 
 

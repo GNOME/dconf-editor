@@ -1,5 +1,6 @@
 #include <dconf-engine.h>
 #include "dconf-client.h"
+#include <string.h>
 
 typedef GObjectClass DConfClientClass;
 
@@ -15,6 +16,172 @@ struct _DConfClient
 };
 
 G_DEFINE_TYPE (DConfClient, dconf_client, G_TYPE_OBJECT)
+
+static gboolean
+dconf_client_check_reply_type (DConfEngineMessage  *dcem,
+                               GVariant            *reply,
+                               GError             **error)
+{
+  const gchar *type_string = g_variant_get_type_string (reply);
+
+  if (strcmp (type_string, dcem->reply_type) == 0)
+    return TRUE;
+
+  g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_INVALID_ARGS,
+               "method '%s.%s' should return '%s', but we got '%s'\n",
+               dcem->interface, dcem->method, dcem->reply_type, type_string);
+  g_variant_unref (reply);
+
+  return FALSE;
+}
+
+static GBusType
+dconf_client_bus_type (DConfEngineMessage *dcem)
+{
+  switch (dcem->bus_type)
+    {
+    case 'e':
+      return G_BUS_TYPE_SESSION;
+
+    case 'y':
+      return G_BUS_TYPE_SYSTEM;
+
+    default:
+      g_assert_not_reached ();
+    }
+}
+
+typedef struct
+{
+  GSimpleAsyncResult *simple;
+  GCancellable *cancellable;
+  DConfEngineMessage dcem;
+  GError *error;
+} DConfClientAsyncOp;
+
+static DConfClientAsyncOp *
+dconf_client_async_op_new (DConfClient         *client,
+                           gpointer             source_tag,
+                           GCancellable        *cancellable,
+                           GAsyncReadyCallback  callback,
+                           gpointer             user_data)
+{
+  DConfClientAsyncOp *op;
+
+  op = g_slice_new (DConfClientAsyncOp);
+  op->simple = g_simple_async_result_new (G_OBJECT (client), callback,
+                                          user_data, source_tag);
+  if (cancellable)
+    op->cancellable = g_object_ref (cancellable);
+  else
+    op->cancellable = NULL;
+
+  op->error = NULL;
+
+  return op;
+}
+
+static void
+dconf_client_async_op_complete (DConfClientAsyncOp *op,
+                                gboolean            in_idle)
+{
+  if (op->error != NULL)
+    {
+      g_assert (!g_simple_async_result_get_op_res_gpointer (op->simple));
+      g_simple_async_result_set_from_error (op->simple, op->error);
+      g_error_free (op->error);
+    }
+
+  else
+    g_assert (g_simple_async_result_get_op_res_gpointer (op->simple) ||
+              op->dcem.body == NULL);
+
+  if (op->cancellable)
+    g_object_unref (op->cancellable);
+
+  if (op->dcem.body)
+    g_object_unref (op->dcem.body);
+
+  if (in_idle)
+    g_simple_async_result_complete_in_idle (op->simple);
+  else
+    g_simple_async_result_complete (op->simple);
+
+  g_object_unref (op->simple);
+
+  g_slice_free (DConfClientAsyncOp, op);
+}
+
+static void
+dconf_client_async_op_call_done (GObject      *object,
+                                 GAsyncResult *result,
+                                 gpointer      user_data)
+{
+  DConfClientAsyncOp *op = user_data;
+  GVariant *reply;
+
+  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (object),
+                                         result, &op->error);
+
+  if (reply && dconf_client_check_reply_type (&op->dcem, reply, &op->error))
+      g_simple_async_result_set_op_res_gpointer (op->simple, reply,
+                                                 (GDestroyNotify) g_variant_unref);
+
+  dconf_client_async_op_complete (op, FALSE);
+}
+
+static void
+dconf_client_async_op_get_bus_done (GObject      *no_object,
+                                    GAsyncResult *result,
+                                    gpointer      user_data)
+{
+  DConfClientAsyncOp *op = user_data;
+  GDBusConnection *connection;
+
+  if ((connection = g_bus_get_finish (result, &op->error)) && op->dcem.body)
+    g_dbus_connection_call (connection,
+                            op->dcem.destination, op->dcem.object_path,
+                            op->dcem.interface, op->dcem.method,
+                            op->dcem.body, 0, -1, op->cancellable,
+                            dconf_client_async_op_call_done, op);
+
+  else
+    dconf_client_async_op_complete (op, FALSE);
+}
+
+static void
+dconf_client_async_op_run (DConfClientAsyncOp *op)
+{
+  if (op->error)
+    dconf_client_async_op_complete (op, TRUE);
+  else
+    g_bus_get (dconf_client_bus_type (&op->dcem), op->cancellable,
+               dconf_client_async_op_get_bus_done, op);
+}
+
+static gboolean
+dconf_client_async_op_finish (gpointer       client,
+                              GAsyncResult  *result,
+                              gpointer       source_tag,
+                              guint64       *sequence,
+                              GError       **error)
+{
+  GSimpleAsyncResult *simple;
+
+  g_return_val_if_fail (DCONF_IS_CLIENT (client), FALSE);
+  g_return_val_if_fail (g_simple_async_result_is_valid (result, client,
+                                                        source_tag), FALSE);
+  simple = G_SIMPLE_ASYNC_RESULT (result);
+
+  if (g_simple_async_result_propagate_error (simple, error))
+    return FALSE;
+
+  if (sequence)
+    g_variant_get (g_simple_async_result_get_op_res_gpointer (simple),
+                   "(t)", sequence);
+
+  return TRUE;
+}
 
 static void
 dconf_client_finalize (GObject *object)
@@ -67,22 +234,6 @@ dconf_client_get_connection (guint    bus_type,
 {
 }
 
-static GBusType
-dconf_client_bus_type (DConfEngineMessage *dcem)
-{
-  switch (dcem->bus_type)
-    {
-    case 'e':
-      return G_BUS_TYPE_SESSION;
-
-    case 'y':
-      return G_BUS_TYPE_SYSTEM;
-
-    default:
-      g_assert_not_reached ();
-    }
-}
-
 static gboolean
 dconf_client_call_sync (DConfClient          *client,
                         DConfEngineMessage   *dcem,
@@ -111,14 +262,8 @@ dconf_client_call_sync (DConfClient          *client,
       if (reply == NULL)
         return FALSE;
 
-      if (!g_variant_is_of_type (reply, dcem->reply_type))
-        {
-          g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_INVALID_ARGS,
-                       "incorrect return type for '%s' method call",
-                       dcem->method);
-          g_variant_unref (reply);
-          return FALSE;
-        }
+      if (!dconf_client_check_reply_type (dcem, reply, error))
+        return FALSE;
 
       if (sequence)
         g_variant_get (reply, "(t)", sequence);
@@ -145,6 +290,35 @@ dconf_client_write (DConfClient   *client,
   return dconf_client_call_sync (client, &dcem, sequence, cancellable, error);
 }
 
+void
+dconf_client_write_async (DConfClient          *client,
+                          const gchar          *key,
+                          GVariant             *value,
+                          GCancellable         *cancellable,
+                          GAsyncReadyCallback   callback,
+                          gpointer              user_data)
+{
+  DConfClientAsyncOp *op;
+
+  op = dconf_client_async_op_new (client, dconf_client_write_async,
+                                  cancellable, callback, user_data);
+  dconf_engine_write (client->engine, &op->dcem, key, value, &op->error);
+  dconf_client_async_op_run (op);
+}
+
+gboolean
+dconf_client_write_finish (DConfClient   *client,
+                           GAsyncResult  *result,
+                           guint64       *sequence,
+                           GError       **error)
+{
+  return dconf_client_async_op_finish (client, result,
+                                       dconf_client_write_async,
+                                       sequence, error);
+}
+
+
+
 #if 0
 
 GVariant *              dconf_client_read                               (DConfClient          *client,
@@ -157,15 +331,6 @@ gchar **                dconf_client_list                               (DConfCl
 
 gboolean                dconf_client_is_writable                        (DConfClient          *client,
                                                                          const gchar          *prefix,
-                                                                         GError              **error);
-
-void                    dconf_client_write_async                        (DConfClient          *client,
-                                                                         const gchar          *key,
-                                                                         GVariant             *value,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_write_finish                       (DConfClient          *client,
-                                                                         GAsyncResult         *result,
                                                                          GError              **error);
 
 gboolean                dconf_client_write_many                         (DConfClient          *client,
@@ -205,5 +370,4 @@ gboolean                dconf_client_unwatch_finish                     (DConfCl
                                                                          gpointer              user_data);
 
 #endif
-
 

@@ -128,7 +128,7 @@ dconf_engine_dcem (DConfEngine        *engine,
   dcem->destination = "ca.desrt.dconf";
   dcem->object_path = "/";
   dcem->interface = "ca.desrt.dconf.Writer";
-  dcem->reply_type = G_VARIANT_TYPE ("(t)");
+  dcem->reply_type = "(t)";
   dcem->method = method;
 
   va_start (ap, format_string);

@@ -45,10 +45,12 @@ gboolean                dconf_client_write                              (DConfCl
 void                    dconf_client_write_async                        (DConfClient          *client,
                                                                          const gchar          *key,
                                                                          GVariant             *value,
+                                                                         GCancellable         *cancellable,
                                                                          GAsyncReadyCallback   callback,
                                                                          gpointer              user_data);
 gboolean                dconf_client_write_finish                       (DConfClient          *client,
                                                                          GAsyncResult         *result,
+                                                                         guint64              *sequence,
                                                                          GError              **error);
 
 gboolean                dconf_client_write_many                         (DConfClient          *client,
