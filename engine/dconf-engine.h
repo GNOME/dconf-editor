@@ -47,9 +47,11 @@ gboolean                dconf_engine_write                              (DConfEn
                                                                          const gchar             *key,
                                                                          GVariant                *value,
                                                                          GError                 **error);
-gboolean                dconf_engine_write_tree                         (DConfEngine             *engine,
+gboolean                dconf_engine_write_many                         (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
-                                                                         GTree                   *tree,
+                                                                         const gchar             *prefix,
+                                                                         const gchar * const     *keys,
+                                                                         GVariant               **values,
                                                                          GError                 **error);
 void                    dconf_engine_watch                              (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
@@ -57,9 +59,16 @@ void                    dconf_engine_watch                              (DConfEn
 void                    dconf_engine_unwatch                            (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
                                                                          const gchar             *name);
-void                    dconf_engine_decode_notify                      (DConfEngine             *engine,
+gboolean                dconf_engine_decode_notify                      (DConfEngine             *engine,
+                                                                         guint64                  anti_expose,
                                                                          const gchar            **prefix,
                                                                          const gchar           ***keys,
+                                                                         const gchar             *interface,
+                                                                         const gchar             *member,
                                                                          GVariant                *body);
+void                    dconf_engine_set_locked                         (DConfEngine             *engine,
+                                                                         DConfEngineMessage      *message,
+                                                                         const gchar             *path,
+                                                                         gboolean                 locked);
 
 #endif /* _dconf_engine_h_ */

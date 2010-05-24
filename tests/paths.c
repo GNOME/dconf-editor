@@ -1,4 +1,4 @@
-#include <common/dconf-paths.h>
+#include <dconf-paths.h>
 
 static void
 test_paths (void)
@@ -95,4 +95,6 @@ int
 main (void)
 {
   test_paths ();
+
+  return 0;
 }

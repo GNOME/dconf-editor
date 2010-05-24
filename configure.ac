@@ -15,11 +15,15 @@ AC_SUBST(dbusservicedir)
 AC_ARG_WITH(dbus_system_service_dir, [  --with-dbus-system-service-dir=PATH choose directory for dbus system service files, [default=PREFIX/share/dbus-1/system-services]], dbussystemservicedir="$withval", dbussystemservicedir=${datadir}/dbus-1/system-services)
 AC_SUBST(dbussystemservicedir)
 
+AC_SUBST(dconfincludedir, ${includedir}/dconf)
+
 AC_PATH_PROG(gio_QUERYMODULES, gio-querymodules, no)
 
 AC_OUTPUT([
   gsettings/Makefile
   service/Makefile
+  common/Makefile
+  engine/Makefile
   client/Makefile
   tests/Makefile
   gvdb/Makefile

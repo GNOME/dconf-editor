@@ -1,6 +1,7 @@
 
 #include "dconf-engine.h"
 #include <gvdb-reader.h>
+#include <string.h>
 
 struct _DConfEngine
 {
@@ -203,4 +204,31 @@ dconf_engine_list (DConfEngine    *engine,
   gvdb_table_unref (table);
 
   return list;
+}
+
+gboolean
+dconf_engine_decode_notify (DConfEngine   *engine,
+                            guint64        anti_expose,
+                            const gchar  **path,
+                            const gchar ***rels,
+                            const gchar   *iface,
+                            const gchar   *method,
+                            GVariant      *body)
+{
+  guint64 ae;
+
+  if (strcmp (iface, "ca.desrt.dconf.Writer") || strcmp (method, "Notify"))
+    return FALSE;
+
+  if (!g_variant_is_of_type (body, G_VARIANT_TYPE ("(tsas)")))
+    return FALSE;
+
+  g_variant_get_child (body, 0, "t", &ae);
+
+  if (ae == anti_expose)
+    return FALSE;
+
+  g_variant_get (body, "(t&s^a&s)", NULL, path, rels);
+
+  return TRUE;
 }

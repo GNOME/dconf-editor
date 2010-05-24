@@ -1,6 +1,6 @@
 #include <dconf.h>
 
-const gchar *
+static const gchar *
 shift (int *argc, char ***argv)
 {
   if (argc == 0)
@@ -8,15 +8,6 @@ shift (int *argc, char ***argv)
 
   (*argc)--;
   return *(*argv)++;
-}
-
-const gchar *
-peek (int argc, char **argv)
-{
-  if (argc == 0)
-    return NULL;
-
-  return *argv;
 }
 
 static gboolean
@@ -40,6 +31,8 @@ grab_args (int           argc,
   while (num--)
     *va_arg (ap, gchar **) = *argv++;
   va_end (ap);
+
+  return TRUE;
 }
 
 static gboolean
@@ -146,7 +139,7 @@ do_sync_command (DConfClient  *client,
       if (!ensure ("path", path, dconf_is_path, error))
         return FALSE;
 
-      return dconf_client_set_locked (client, path, TRUE);
+      return dconf_client_set_locked (client, path, TRUE, NULL, NULL);
     }
 
   else if (g_strcmp0 (cmd, "unlock") == 0)
@@ -159,7 +152,7 @@ do_sync_command (DConfClient  *client,
       if (!ensure ("path", path, dconf_is_path, error))
         return FALSE;
 
-      return dconf_client_set_locked (client, path, FALSE);
+      return dconf_client_set_locked (client, path, FALSE, NULL, NULL);
     }
 
   else if (g_strcmp0 (cmd, "is-writable") == 0)
@@ -173,6 +166,12 @@ do_sync_command (DConfClient  *client,
         return FALSE;
 
       return dconf_client_is_writable (client, path, error);
+    }
+
+  else
+    {
+      g_set_error (error, 0, 0, "unknown command");
+      return FALSE;
     }
 }
 

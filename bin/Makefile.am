@@ -1,4 +1,6 @@
-bin_PROGRAMS = dconf 
+AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings
+INCLUDES = -I$(top_srcdir)/{common,engine,client} $(gio_CFLAGS)
 
-AM_CFLAGS = -I$(top_srcdir)/common -I$(top_srcdir)/client -I$(top_srcdir)/engine $(gio_CFLAGS)
+bin_PROGRAMS = dconf
+
 dconf_LDADD = ../client/libdconf.la

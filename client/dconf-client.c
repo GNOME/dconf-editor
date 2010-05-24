@@ -218,6 +218,8 @@ dconf_client_new (const gchar          *context,
   client->watch_func = watch_func;
   client->user_data = user_data;
   client->notify = notify;
+
+  return client;
 }
 
 GVariant *
@@ -226,12 +228,6 @@ dconf_client_read (DConfClient   *client,
                    DConfReadType  type)
 {
   return dconf_engine_read (client->engine, key, type);
-}
-
-static GDBusConnection *
-dconf_client_get_connection (guint    bus_type,
-                             GError **error)
-{
 }
 
 static gboolean

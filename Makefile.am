@@ -1,1 +1,1 @@
-SUBDIRS = gvdb service gsettings tests client bin
+SUBDIRS = gvdb service gsettings tests client bin engine common
