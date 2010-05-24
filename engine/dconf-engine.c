@@ -87,7 +87,7 @@ dconf_engine_unwatch (DConfEngine        *engine,
                       const gchar        *name)
 {
   dconf_engine_make_match_rule (engine, dcem, name);
-  dcem->method = "DeleteMatch";
+  dcem->method = "RemoveMatch";
 }
 
 gboolean
