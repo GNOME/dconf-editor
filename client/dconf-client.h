@@ -72,15 +72,19 @@ gboolean                dconf_client_write_many                         (DConfCl
                                                                          const gchar          *prefix,
                                                                          const gchar * const  *keys,
                                                                          GVariant            **values,
+                                                                         guint64              *sequence,
+                                                                         GCancellable         *cancellable,
                                                                          GError              **error);
 void                    dconf_client_write_many_async                   (DConfClient          *client,
                                                                          const gchar          *prefix,
                                                                          const gchar * const  *keys,
                                                                          GVariant            **values,
+                                                                         GCancellable         *cancellable,
                                                                          GAsyncReadyCallback   callback,
                                                                          gpointer              user_data);
 gboolean                dconf_client_write_many_finish                  (DConfClient          *client,
                                                                          GAsyncResult         *result,
+                                                                         guint64              *sequence,
                                                                          GError              **error);
 
 gboolean                dconf_client_watch                              (DConfClient          *client,

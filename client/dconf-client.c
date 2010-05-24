@@ -351,28 +351,53 @@ dconf_client_is_writable (DConfClient  *client,
 
 
 
+gboolean
+dconf_client_write_many (DConfClient          *client,
+                         const gchar          *prefix,
+                         const gchar * const  *rels,
+                         GVariant            **values,
+                         guint64              *sequence,
+                         GCancellable         *cancellable,
+                         GError              **error)
+{
+  DConfEngineMessage dcem;
+
+  if (!dconf_engine_write_many (client->engine, &dcem, prefix, rels, values, error))
+    return FALSE;
+
+  return dconf_client_call_sync (client, &dcem, sequence, cancellable, error);
+}
+
+void
+dconf_client_write_many_async (DConfClient          *client,
+                               const gchar          *prefix,
+                               const gchar * const  *rels,
+                               GVariant            **values,
+                               GCancellable         *cancellable,
+                               GAsyncReadyCallback   callback,
+                               gpointer              user_data)
+{
+  DConfClientAsyncOp *op;
+
+  op = dconf_client_async_op_new (client, dconf_client_write_async,
+                                  cancellable, callback, user_data);
+  dconf_engine_write_many (client->engine, &op->dcem, prefix,
+                           rels, values, &op->error);
+  dconf_client_async_op_run (op);
+}
+
+gboolean
+dconf_client_write_many_finish (DConfClient   *client,
+                                GAsyncResult  *result,
+                                guint64       *sequence,
+                                GError       **error)
+{
+  return dconf_client_async_op_finish (client, result,
+                                       dconf_client_write_many_async,
+                                       sequence, error);
+}
+
 #if 0
-
-GVariant *              dconf_client_read                               (DConfClient          *client,
-                                                                         const gchar          *key,
-                                                                         DConfReadType         type);
-
-
-gboolean                dconf_client_write_many                         (DConfClient          *client,
-                                                                         const gchar          *prefix,
-                                                                         const gchar * const  *keys,
-                                                                         GVariant            **values,
-                                                                         GError              **error);
-void                    dconf_client_write_many_async                   (DConfClient          *client,
-                                                                         const gchar          *prefix,
-                                                                         const gchar * const  *keys,
-                                                                         GVariant            **values,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_write_many_finish                  (DConfClient          *client,
-                                                                         GAsyncResult         *result,
-                                                                         GError              **error);
-
 gboolean                dconf_client_watch                              (DConfClient          *client,
                                                                          const gchar          *name,
                                                                          GError              **error);
