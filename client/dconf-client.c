@@ -318,6 +318,42 @@ dconf_client_write_finish (DConfClient   *client,
 }
 
 
+gchar **
+dconf_client_list (DConfClient    *client,
+                   const gchar    *prefix,
+                   DConfResetList *resets)
+{
+  return dconf_engine_list (client->engine, prefix, resets);
+}
+
+gboolean
+dconf_client_set_locked (DConfClient   *client,
+                         const gchar   *path,
+                         gboolean       locked,
+                         GCancellable  *cancellable,
+                         GError       **error)
+{
+  DConfEngineMessage dcem;
+
+  dconf_engine_set_locked (client->engine, &dcem, path, locked);
+
+  return dconf_client_call_sync (client, &dcem, NULL, cancellable, error);
+}
+
+gboolean
+dconf_client_is_writable (DConfClient  *client,
+                          const gchar  *path,
+                          GError      **error)
+{
+  DConfEngineMessage dcem;
+
+  if (!dconf_engine_is_writable (client->engine, &dcem, path, error))
+    return FALSE;
+
+  return dconf_client_call_sync (client, &dcem, NULL, NULL, error);
+}
+
+
 
 #if 0
 
@@ -325,13 +361,6 @@ GVariant *              dconf_client_read                               (DConfCl
                                                                          const gchar          *key,
                                                                          DConfReadType         type);
 
-gchar **                dconf_client_list                               (DConfClient          *client,
-                                                                         const gchar          *prefix,
-                                                                         DConfResetList       *resets);
-
-gboolean                dconf_client_is_writable                        (DConfClient          *client,
-                                                                         const gchar          *prefix,
-                                                                         GError              **error);
 
 gboolean                dconf_client_write_many                         (DConfClient          *client,
                                                                          const gchar          *prefix,

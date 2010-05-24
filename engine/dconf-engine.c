@@ -156,7 +156,8 @@ dconf_engine_write_many (DConfEngine          *engine,
                          DConfEngineMessage   *dcem,
                          const gchar          *prefix,
                          const gchar * const  *keys,
-                         GVariant            **values)
+                         GVariant            **values,
+                         GError              **error)
 {
   GVariantBuilder builder;
   gsize i;
@@ -170,4 +171,36 @@ dconf_engine_write_many (DConfEngine          *engine,
   dconf_engine_dcem (engine, dcem, "Merge", "(sa(sav))", prefix, &builder);
 
   return TRUE;
+}
+
+void
+dconf_engine_set_locked (DConfEngine        *engine,
+                         DConfEngineMessage *dcem,
+                         const gchar        *path,
+                         gboolean            locked)
+{
+  dconf_engine_dcem (engine, dcem, "SetLocked", "(sb)", path, locked);
+}
+
+gchar **
+dconf_engine_list (DConfEngine    *engine,
+                   const gchar    *dir,
+                   DConfResetList *resets)
+{
+  GvdbTable *table;
+  gchar *filename;
+  gchar **list;
+
+  /* not yet supported */
+  g_assert (resets == NULL);
+
+  filename = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
+  table = gvdb_table_new (filename, FALSE, NULL);
+  g_free (filename);
+
+  list = gvdb_table_list (table, dir);
+
+  gvdb_table_unref (table);
+
+  return list;
 }
