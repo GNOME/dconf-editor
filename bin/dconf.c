@@ -51,6 +51,48 @@ ensure (const gchar  *type,
   return TRUE;
 }
 
+static void
+write_done (GObject      *object,
+            GAsyncResult *result,
+            gpointer      user_data)
+{
+  GError *error = NULL;
+
+  if (!dconf_client_write_finish (DCONF_CLIENT (object), result, NULL, &error))
+    g_error ("%s\n", error->message);
+
+  g_print ("done\n");
+}
+
+static void
+do_async_command (DConfClient  *client,
+                  int           argc,
+                  char        **argv)
+{
+  const gchar *cmd;
+
+  cmd = shift (&argc, &argv);
+
+  if (g_strcmp0 (cmd, "write") == 0)
+    {
+      const gchar *key, *strval;
+      GVariant *value;
+
+      if (!grab_args (argc, argv, "key and value", NULL, 2, &key, &strval))
+        g_assert_not_reached ();
+
+      if (!ensure ("key", key, dconf_is_key, NULL))
+        g_assert_not_reached ();
+
+      value = g_variant_parse (NULL, strval, NULL, NULL, NULL);
+
+      g_assert (value != NULL);
+
+      return dconf_client_write_async (client, key, value,
+                                       NULL, write_done, NULL);
+    }
+}
+
 static gboolean
 do_sync_command (DConfClient  *client,
                  int           argc,
@@ -61,7 +103,14 @@ do_sync_command (DConfClient  *client,
 
   cmd = shift (&argc, &argv);
 
-  if (g_strcmp0 (cmd, "read") == 0)
+  if (g_strcmp0 (cmd, "async") == 0)
+    {
+      do_async_command (client, argc, argv);
+      g_main_loop_run (g_main_loop_new (NULL, FALSE));
+      return TRUE;
+    }
+
+  else if (g_strcmp0 (cmd, "read") == 0)
     {
       const gchar *key;
       GVariant *value;

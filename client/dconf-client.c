@@ -100,7 +100,7 @@ dconf_client_async_op_complete (DConfClientAsyncOp *op,
     g_object_unref (op->cancellable);
 
   if (op->dcem.body)
-    g_object_unref (op->dcem.body);
+    g_variant_unref (op->dcem.body);
 
   if (in_idle)
     g_simple_async_result_complete_in_idle (op->simple);
