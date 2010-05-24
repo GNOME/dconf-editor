@@ -14,7 +14,7 @@ typedef struct
   const gchar *object_path;
   const gchar *interface;
   const gchar *method;
-  const gchar *reply_type;
+  const GVariantType *reply_type;
   GVariant    *body;
 } DConfEngineMessage;
 

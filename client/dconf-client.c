@@ -17,24 +17,6 @@ struct _DConfClient
 
 G_DEFINE_TYPE (DConfClient, dconf_client, G_TYPE_OBJECT)
 
-static gboolean
-dconf_client_check_reply_type (DConfEngineMessage  *dcem,
-                               GVariant            *reply,
-                               GError             **error)
-{
-  const gchar *type_string = g_variant_get_type_string (reply);
-
-  if (strcmp (type_string, dcem->reply_type) == 0)
-    return TRUE;
-
-  g_set_error (error, G_DBUS_ERROR, G_DBUS_ERROR_INVALID_ARGS,
-               "method '%s.%s' should return '%s', but we got '%s'\n",
-               dcem->interface, dcem->method, dcem->reply_type, type_string);
-  g_variant_unref (reply);
-
-  return FALSE;
-}
-
 static GBusType
 dconf_client_bus_type (DConfEngineMessage *dcem)
 {
@@ -120,12 +102,10 @@ dconf_client_async_op_call_done (GObject      *object,
   DConfClientAsyncOp *op = user_data;
   GVariant *reply;
 
-  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (object),
-                                         result, &op->error);
-
-  if (reply && dconf_client_check_reply_type (&op->dcem, reply, &op->error))
-      g_simple_async_result_set_op_res_gpointer (op->simple, reply,
-                                                 (GDestroyNotify) g_variant_unref);
+  if ((reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (object),
+                                              result, &op->error)))
+    g_simple_async_result_set_op_res_gpointer (op->simple, reply,
+                                               (GDestroyNotify) g_variant_unref);
 
   dconf_client_async_op_complete (op, FALSE);
 }
@@ -139,10 +119,10 @@ dconf_client_async_op_get_bus_done (GObject      *no_object,
   GDBusConnection *connection;
 
   if ((connection = g_bus_get_finish (result, &op->error)) && op->dcem.body)
-    g_dbus_connection_call (connection,
-                            op->dcem.destination, op->dcem.object_path,
-                            op->dcem.interface, op->dcem.method,
-                            op->dcem.body, 0, -1, op->cancellable,
+    g_dbus_connection_call (connection, op->dcem.destination,
+                            op->dcem.object_path, op->dcem.interface,
+                            op->dcem.method, op->dcem.body,
+                            op->dcem.reply_type, 0, -1, op->cancellable,
                             dconf_client_async_op_call_done, op);
 
   else
@@ -252,13 +232,11 @@ dconf_client_call_sync (DConfClient          *client,
       reply = g_dbus_connection_call_sync (connection, dcem->destination,
                                            dcem->object_path, dcem->interface,
                                            dcem->method, dcem->body,
+                                           dcem->reply_type,
                                            G_DBUS_CALL_FLAGS_NONE, -1,
                                            cancellable, error);
 
       if (reply == NULL)
-        return FALSE;
-
-      if (!dconf_client_check_reply_type (dcem, reply, error))
         return FALSE;
 
       if (sequence)
