@@ -24,6 +24,7 @@ AC_OUTPUT([
   service/Makefile
   common/Makefile
   engine/Makefile
+  client/dconf.pc
   client/Makefile
   tests/Makefile
   gvdb/Makefile

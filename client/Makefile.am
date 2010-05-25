@@ -13,3 +13,6 @@ libdconf_la_SOURCES = \
 	../engine/dconf-engine.c	\
 	../gvdb/gvdb-reader.c		\
 	dconf-client.c
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = dconf.pc
