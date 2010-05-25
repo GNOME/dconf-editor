@@ -328,13 +328,17 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
 }
 
 static gchar **
-dconf_settings_backend_list (GSettingsBackend *backend,
-                             const gchar      *dir,
-                             gsize            *length)
+dconf_settings_backend_list (GSettingsBackend  *backend,
+                             const gchar       *dir,
+                             gchar            **resets,
+                             gsize              n_resets,
+                             gsize             *length)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
 
-  return dconf_engine_list (dcsb->engine, dir, NULL);
+  g_assert (n_resets == 0);
+
+  return dconf_engine_list (dcsb->engine, dir, NULL, length);
 }
 
 static void

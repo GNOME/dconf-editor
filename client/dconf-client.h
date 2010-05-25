@@ -30,7 +30,8 @@ GVariant *              dconf_client_read                               (DConfCl
 
 gchar **                dconf_client_list                               (DConfClient          *client,
                                                                          const gchar          *prefix,
-                                                                         DConfResetList       *resets);
+                                                                         DConfResetList       *resets,
+                                                                         gsize                *length);
 
 gboolean                dconf_client_is_writable                        (DConfClient          *client,
                                                                          const gchar          *prefix,

@@ -295,9 +295,10 @@ dconf_client_write_finish (DConfClient   *client,
 gchar **
 dconf_client_list (DConfClient    *client,
                    const gchar    *prefix,
-                   DConfResetList *resets)
+                   DConfResetList *resets,
+                   gsize          *length)
 {
-  return dconf_engine_list (client->engine, prefix, resets);
+  return dconf_engine_list (client->engine, prefix, resets, length);
 }
 
 gboolean

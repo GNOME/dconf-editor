@@ -32,7 +32,8 @@ GVariant *              dconf_engine_read                               (DConfEn
                                                                          DConfReadType            type);
 gchar **                dconf_engine_list                               (DConfEngine             *engine,
                                                                          const gchar             *path,
-                                                                         DConfResetList          *resets);
+                                                                         DConfResetList          *resets,
+                                                                         gsize                   *length);
 
 void                    dconf_engine_get_service_info                   (DConfEngine             *engine,
                                                                          const gchar            **bus_type,

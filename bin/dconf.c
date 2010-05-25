@@ -170,7 +170,7 @@ do_sync_command (DConfClient  *client,
       if (!ensure ("dir", dir, dconf_is_dir, error))
         return FALSE;
 
-      list = dconf_client_list (client, dir, NULL);
+      list = dconf_client_list (client, dir, NULL, NULL);
 
       while (*list)
         g_print ("%s\n", *list++);

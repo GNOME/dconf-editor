@@ -186,7 +186,8 @@ dconf_engine_set_locked (DConfEngine        *engine,
 gchar **
 dconf_engine_list (DConfEngine    *engine,
                    const gchar    *dir,
-                   DConfResetList *resets)
+                   DConfResetList *resets,
+                   gsize          *length)
 {
   GvdbTable *table;
   gchar *filename;
@@ -202,6 +203,9 @@ dconf_engine_list (DConfEngine    *engine,
   list = gvdb_table_list (table, dir);
 
   gvdb_table_unref (table);
+
+  if (length)
+    *length = g_strv_length (list);
 
   return list;
 }
