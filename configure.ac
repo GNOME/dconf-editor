@@ -4,7 +4,7 @@ AM_SILENT_RULES
 AC_PROG_LIBTOOL
 AC_PROG_CC
 
-PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.6)
+PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.7)
 
 AC_ARG_WITH(gio_modules_dir, [  --with-gio-modules-dir=PATH choose directory for the GIO module, [default=LIBDIR/gio/modules]], giomodulesdir="$withval", giomodulesdir=${libdir}/gio/modules)
 AC_SUBST(giomodulesdir)
