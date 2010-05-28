@@ -18,4 +18,4 @@ CFLAGS=${CFLAGS=-ggdb -Werror}
 LDFLAGS=${LDFLAGS=-Wl,-O1}
 export CFLAGS LDFLAGS
 
-./configure --enable-silent-rules "$@"
+./configure "$@"
