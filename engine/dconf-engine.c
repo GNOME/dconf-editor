@@ -204,6 +204,9 @@ dconf_engine_list (DConfEngine    *engine,
 
   gvdb_table_unref (table);
 
+  if (list == NULL)
+    list = g_new0 (char *, 1);
+
   if (length)
     *length = g_strv_length (list);
 
