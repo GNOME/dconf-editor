@@ -2,8 +2,6 @@
 #include "dconf-client.h"
 #include <string.h>
 
-typedef GObjectClass DConfClientClass;
-
 struct _DConfClient
 {
   GObject parent_instance;
@@ -183,9 +181,21 @@ dconf_client_init (DConfClient *client)
 static void
 dconf_client_class_init (DConfClientClass *class)
 {
-  class->finalize = dconf_client_finalize;
+  GObjectClass *object_class = G_OBJECT_CLASS (class);
+
+  object_class->finalize = dconf_client_finalize;
 }
 
+/**
+ * dconf_client_new:
+ * @context: the context string (must by %NULL for now)
+ * @watch_func: the function to call when changes occur
+ * @user_data: the user_data to pass to @watch_func
+ * @notify: the function to free @user_data when no longer needed
+ * @returns: a new #DConfClient
+ *
+ * Creates a new #DConfClient for the given context.
+ **/
 DConfClient *
 dconf_client_new (const gchar          *context,
                   DConfWatchFunc        watch_func,
@@ -202,12 +212,64 @@ dconf_client_new (const gchar          *context,
   return client;
 }
 
+/**
+ * dconf_client_read:
+ * @client: a #DConfClient
+ * @key: a valid dconf key
+ * @returns: the value corresponding to @key, or %NULL if there is none
+ *
+ * Reads the value named by @key from dconf.  If no such value exists,
+ * %NULL is returned.
+ **/
 GVariant *
 dconf_client_read (DConfClient   *client,
-                   const gchar   *key,
-                   DConfReadType  type)
+                   const gchar   *key)
 {
-  return dconf_engine_read (client->engine, key, type);
+  return dconf_engine_read (client->engine, key, DCONF_READ_NORMAL);
+}
+
+/**
+ * dconf_client_read_default:
+ * @client: a #DConfClient
+ * @key: a valid dconf key
+ * @returns: the default value corresponding to @key, or %NULL if there
+ *           is none
+ *
+ * Reads the value named by @key from any existing default/mandatory
+ * databases but ignoring any value set by the user.  The result is as
+ * if the named key had just been reset.
+ **/
+GVariant *
+dconf_client_read_default (DConfClient *client,
+                           const gchar *key)
+{
+  return dconf_engine_read (client->engine, key, DCONF_READ_RESET);
+}
+
+/**
+ * dconf_client_read_no_default:
+ * @client: a #DConfClient
+ * @key: a valid dconf key
+ * @returns: the user value corresponding to @key, or %NULL if there is
+ *           none
+ *
+ * Reads the value named by @key as set by the user, ignoring any
+ * default/mandatory databases.  Normal applications will never want to
+ * do this, but it may be useful for administrative or configuration
+ * tweaking utilities to have access to this information.
+ *
+ * Note that in the case of mandatory keys, the result of
+ * dconf_client_read_no_default() with a fallback to
+ * dconf_client_read_default() is not necessarily the same as the result
+ * of a dconf_client_read().  This is because the user may have set a
+ * value before the key became marked as mandatory, in which case this
+ * call will see the user's (otherwise inaccessible) key.
+ **/
+GVariant *
+dconf_client_read_no_default (DConfClient *client,
+                              const gchar *key)
+{
+  return dconf_engine_read (client->engine, key, DCONF_READ_SET);
 }
 
 static gboolean
@@ -248,6 +310,20 @@ dconf_client_call_sync (DConfClient          *client,
   return TRUE;
 }
 
+/**
+ * dconf_client_write:
+ * @client: a #DConfClient
+ * @value (allow-none): a #GVariant, or %NULL
+ * @sequence: (out) (allow-none): the sequence number of this write
+ * @cancellable: a #GCancellable, or %NULL
+ * @error: a pointer to a #GError, or %NULL
+ * @returns: %TRUE if the write is successful
+ *
+ * Write a value to the given @key, or reset @key to its default value.
+ *
+ * If @value is %NULL then @key is reset to its default value (which may
+ * be completely unset), otherwise @value becomes the new value.
+ **/
 gboolean
 dconf_client_write (DConfClient   *client,
                     const gchar   *key,
@@ -291,14 +367,24 @@ dconf_client_write_finish (DConfClient   *client,
                                        sequence, error);
 }
 
-
+/**
+ * dconf_client_list:
+ * @client: a #DConfClient
+ * @dir: a dconf dir
+ * @length: the number of items that were returned
+ * @returns: (array length=length): the paths located directly below @dir
+ *
+ * Lists the keys and dirs located directly below @dir.
+ *
+ * You should free the return result with g_strfreev() when it is no
+ * longer needed.
+ **/
 gchar **
 dconf_client_list (DConfClient    *client,
                    const gchar    *prefix,
-                   DConfResetList *resets,
                    gsize          *length)
 {
-  return dconf_engine_list (client->engine, prefix, resets, length);
+  return dconf_engine_list (client->engine, prefix, NULL, length);
 }
 
 gboolean

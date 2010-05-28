@@ -11,6 +11,7 @@ G_BEGIN_DECLS
 #define DCONF_CLIENT(inst)      (G_TYPE_CHECK_INSTANCE_CAST ((inst), DCONF_TYPE_CLIENT, DConfClient))
 #define DCONF_IS_CLIENT(inst)   (G_TYPE_CHECK_INSTANCE_TYPE ((inst), DCONF_TYPE_CLIENT))
 
+typedef GObjectClass DConfClientClass;
 typedef struct _DConfClient DConfClient;
 
 typedef void          (*DConfWatchFunc)                                 (DConfClient          *client,
@@ -25,12 +26,14 @@ DConfClient *           dconf_client_new                                (const g
                                                                          GDestroyNotify        notify);
 
 GVariant *              dconf_client_read                               (DConfClient          *client,
-                                                                         const gchar          *key,
-                                                                         DConfReadType         type);
+                                                                         const gchar          *key);
+GVariant *              dconf_client_read_default                       (DConfClient          *client,
+                                                                         const gchar          *key);
+GVariant *              dconf_client_read_no_default                    (DConfClient          *client,
+                                                                         const gchar          *key);
 
 gchar **                dconf_client_list                               (DConfClient          *client,
                                                                          const gchar          *prefix,
-                                                                         DConfResetList       *resets,
                                                                          gsize                *length);
 
 gboolean                dconf_client_is_writable                        (DConfClient          *client,
