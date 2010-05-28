@@ -1,8 +1,6 @@
 #ifndef _dconf_client_h_
 #define _dconf_client_h_
 
-#include <dconf-resetlist.h>
-#include <dconf-readtype.h>
 #include <gio/gio.h>
 
 G_BEGIN_DECLS

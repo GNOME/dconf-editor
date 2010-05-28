@@ -7,7 +7,7 @@ dconf-0.3.gir: libdconf.la
 dconf_0_3_gir_INCLUDES = Gio-2.0
 dconf_0_3_gir_CFLAGS = $(INCLUDES)
 dconf_0_3_gir_LIBS = libdconf.la
-dconf_0_3_gir_FILES = dconf-client.c dconf-client.h ../engine/dconf-resetlist.h
+dconf_0_3_gir_FILES = dconf-client.c dconf-client.h
 INTROSPECTION_GIRS = dconf-0.3.gir
 
 lib_LTLIBRARIES = libdconf.la
