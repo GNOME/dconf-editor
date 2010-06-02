@@ -1,7 +1,7 @@
 include $(INTROSPECTION_MAKEFILE)
 
 AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings
-INCLUDES = -I$(top_srcdir)/{common,gvdb,engine} $(gio_CFLAGS)
+INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
 
 dconf-0.3.gir: libdconf.la
 dconf_0_3_gir_INCLUDES = Gio-2.0

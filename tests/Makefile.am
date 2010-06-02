@@ -1,5 +1,5 @@
 AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings
-INCLUDES = -I$(top_srcdir)/{common,engine,client} $(gio_CFLAGS)
+INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client $(gio_CFLAGS)
 
 noinst_PROGRAMS = paths
 
