@@ -49,9 +49,13 @@ dconf_engine_read (DConfEngine   *engine,
   table = gvdb_table_new (filename, FALSE, NULL);
   g_free (filename);
 
-  value = gvdb_table_get_value (table, key, NULL);
-
-  gvdb_table_unref (table);
+  if (table)
+    {
+      value = gvdb_table_get_value (table, key, NULL);
+      gvdb_table_unref (table);
+    }
+  else
+    value = NULL;
 
   return value;
 }
@@ -200,9 +204,13 @@ dconf_engine_list (DConfEngine    *engine,
   table = gvdb_table_new (filename, FALSE, NULL);
   g_free (filename);
 
-  list = gvdb_table_list (table, dir);
-
-  gvdb_table_unref (table);
+  if (table)
+    {
+      list = gvdb_table_list (table, dir);
+      gvdb_table_unref (table);
+    }
+  else
+    list = NULL;
 
   if (list == NULL)
     list = g_new0 (char *, 1);
