@@ -280,6 +280,9 @@ bus_acquired (GDBusConnection *connection,
   static const GDBusInterfaceVTable interface_vtable = { method_call };
   DConfWriter *writer = user_data;
 
+  writer->serial = time (NULL);
+  writer->serial <<= 32;
+
   g_dbus_connection_register_object (connection, "/",
                                      &writer_interface, &interface_vtable,
                                      writer, NULL, NULL);
@@ -290,10 +293,6 @@ name_acquired (GDBusConnection *connection,
                const gchar     *name,
                gpointer         user_data)
 {
-  DConfWriter *writer = user_data;
-
-  writer->serial = time (NULL);
-  writer->serial <<= 32;
 }
 
 static void
@@ -322,7 +321,7 @@ main (void)
   writer.loop = g_main_loop_new (NULL, FALSE);
   writer.path = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
 
-  g_bus_own_name (G_BUS_TYPE_SESSION, "ca.desrt.dconf", 0,
+  g_bus_own_name (G_BUS_TYPE_STARTER, "ca.desrt.dconf", 0,
                   bus_acquired, name_acquired, name_lost, &writer, NULL);
 
   g_main_loop_run (writer.loop);
