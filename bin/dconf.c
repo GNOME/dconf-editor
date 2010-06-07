@@ -233,7 +233,7 @@ main (int argc, char **argv)
   g_type_init ();
   g_set_prgname (shift (&argc, &argv));
 
-  client = dconf_client_new (NULL, NULL, NULL, NULL);
+  client = dconf_client_new (NULL, FALSE, NULL, NULL, NULL);
 
   if (!do_sync_command (client, argc, argv, &error))
     g_error ("%s\n", error->message);

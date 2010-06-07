@@ -61,9 +61,11 @@ void                    dconf_engine_unwatch                            (DConfEn
                                                                          DConfEngineMessage      *message,
                                                                          const gchar             *name);
 gboolean                dconf_engine_decode_notify                      (DConfEngine             *engine,
-                                                                         guint64                  anti_expose,
+                                                                         const gchar             *anti_expose,
                                                                          const gchar            **prefix,
                                                                          const gchar           ***keys,
+                                                                         guint                    bus_type,
+                                                                         const gchar             *sender,
                                                                          const gchar             *interface,
                                                                          const gchar             *member,
                                                                          GVariant                *body);
@@ -71,5 +73,11 @@ void                    dconf_engine_set_locked                         (DConfEn
                                                                          DConfEngineMessage      *message,
                                                                          const gchar             *path,
                                                                          gboolean                 locked);
+
+gboolean                dconf_engine_interpret_reply                    (DConfEngineMessage      *message,
+                                                                         const gchar             *sender,
+                                                                         GVariant                *body,
+                                                                         gchar                  **tag,
+                                                                         GError                 **error);
 
 #endif /* _dconf_engine_h_ */

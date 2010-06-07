@@ -6,7 +6,11 @@ struct _DConfClient
 {
   GObject parent_instance;
 
+  GDBusConnection *session_bus;
+  GDBusConnection *system_bus;
+
   DConfEngine *engine;
+  gboolean will_write;
 
   DConfWatchFunc watch_func;
   gpointer user_data;
@@ -92,18 +96,49 @@ dconf_client_async_op_complete (DConfClientAsyncOp *op,
   g_slice_free (DConfClientAsyncOp, op);
 }
 
+static gboolean
+dconf_client_interpret_reply (DConfEngineMessage  *dcem,
+                              GDBusMessage        *reply,
+                              gchar              **tag,
+                              GError             **error)
+{
+  gboolean success;
+
+  if (reply == NULL)
+    /* error will already have been set */
+    return FALSE;
+
+  
+  success = dconf_engine_interpret_reply (dcem,
+                                          g_dbus_message_get_sender (reply),
+                                          g_dbus_message_get_body (reply),
+                                          tag, error);
+  g_object_unref (reply);
+
+  return success;
+}
+
+
 static void
 dconf_client_async_op_call_done (GObject      *object,
                                  GAsyncResult *result,
                                  gpointer      user_data)
 {
   DConfClientAsyncOp *op = user_data;
-  GVariant *reply;
+  GDBusMessage *reply;
 
-  if ((reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (object),
-                                              result, &op->error)))
-    g_simple_async_result_set_op_res_gpointer (op->simple, reply,
-                                               (GDestroyNotify) g_variant_unref);
+  reply = g_dbus_connection_send_message_with_reply_finish (G_DBUS_CONNECTION (object),
+                                                            result, &op->error);
+
+  if (reply != NULL)
+    {
+      gchar *tag;
+
+      if (dconf_client_interpret_reply (&op->dcem, reply, &tag, &op->error))
+        g_simple_async_result_set_op_res_gpointer (op->simple, tag, g_free);
+
+      g_object_unref (reply);
+    }
 
   dconf_client_async_op_complete (op, FALSE);
 }
@@ -141,7 +176,7 @@ static gboolean
 dconf_client_async_op_finish (gpointer       client,
                               GAsyncResult  *result,
                               gpointer       source_tag,
-                              guint64       *sequence,
+                              gchar        **tag,
                               GError       **error)
 {
   GSimpleAsyncResult *simple;
@@ -154,9 +189,8 @@ dconf_client_async_op_finish (gpointer       client,
   if (g_simple_async_result_propagate_error (simple, error))
     return FALSE;
 
-  if (sequence)
-    g_variant_get (g_simple_async_result_get_op_res_gpointer (simple),
-                   "(t)", sequence);
+  if (tag)
+    *tag = g_strdup (g_simple_async_result_get_op_res_gpointer (simple));
 
   return TRUE;
 }
@@ -198,6 +232,7 @@ dconf_client_class_init (DConfClientClass *class)
  **/
 DConfClient *
 dconf_client_new (const gchar          *context,
+                  gboolean              will_write,
                   DConfWatchFunc        watch_func,
                   gpointer              user_data,
                   GDestroyNotify        notify)
@@ -205,6 +240,7 @@ dconf_client_new (const gchar          *context,
   DConfClient *client = g_object_new (DCONF_TYPE_CLIENT, NULL);
 
   client->engine = dconf_engine_new (context);
+  client->will_write = will_write;
   client->watch_func = watch_func;
   client->user_data = user_data;
   client->notify = notify;
@@ -272,10 +308,24 @@ dconf_client_read_no_default (DConfClient *client,
   return dconf_engine_read (client->engine, key, DCONF_READ_SET);
 }
 
+static GDBusMessage *
+dconf_client_create_call (DConfEngineMessage *dcem)
+{
+  GDBusMessage *message;
+
+  message = g_dbus_message_new_method_call (dcem->destination,
+                                            dcem->object_path,
+                                            dcem->interface,
+                                            dcem->method);
+  g_dbus_message_set_body (message, dcem->body);
+
+  return message;
+}
+
 static gboolean
 dconf_client_call_sync (DConfClient          *client,
                         DConfEngineMessage   *dcem,
-                        guint64              *sequence,
+                        gchar               **tag,
                         GCancellable         *cancellable,
                         GError              **error)
 {
@@ -289,22 +339,17 @@ dconf_client_call_sync (DConfClient          *client,
 
   if (dcem->body)
     {
-      GVariant *reply;
+      GDBusMessage *message, *reply;
 
-      reply = g_dbus_connection_call_sync (connection, dcem->destination,
-                                           dcem->object_path, dcem->interface,
-                                           dcem->method, dcem->body,
-                                           dcem->reply_type,
-                                           G_DBUS_CALL_FLAGS_NONE, -1,
-                                           cancellable, error);
+      message = dconf_client_create_call (dcem);
+      reply = g_dbus_connection_send_message_with_reply_sync (connection,
+                                                              message,
+                                                              -1, NULL,
+                                                              cancellable,
+                                                              error);
+      g_object_unref (message);
 
-      if (reply == NULL)
-        return FALSE;
-
-      if (sequence)
-        g_variant_get (reply, "(t)", sequence);
-
-      g_variant_unref (reply);
+      return dconf_client_interpret_reply (dcem, reply, tag, error);
     }
 
   return TRUE;
@@ -313,6 +358,7 @@ dconf_client_call_sync (DConfClient          *client,
 /**
  * dconf_client_write:
  * @client: a #DConfClient
+ * @key: a dconf key
  * @value (allow-none): a #GVariant, or %NULL
  * @sequence: (out) (allow-none): the sequence number of this write
  * @cancellable: a #GCancellable, or %NULL
@@ -323,12 +369,15 @@ dconf_client_call_sync (DConfClient          *client,
  *
  * If @value is %NULL then @key is reset to its default value (which may
  * be completely unset), otherwise @value becomes the new value.
+ *
+ * If @sequence is non-%NULL then it is set to the sequence number of
+ * this write.  The sequence number is unique to this process.
  **/
 gboolean
 dconf_client_write (DConfClient   *client,
                     const gchar   *key,
                     GVariant      *value,
-                    guint64       *sequence,
+                    gchar        **tag,
                     GCancellable  *cancellable,
                     GError       **error)
 {
@@ -337,9 +386,24 @@ dconf_client_write (DConfClient   *client,
   if (!dconf_engine_write (client->engine, &dcem, key, value, error))
     return FALSE;
 
-  return dconf_client_call_sync (client, &dcem, sequence, cancellable, error);
+  return dconf_client_call_sync (client, &dcem, tag, cancellable, error);
 }
 
+/**
+ * dconf_client_write_async:
+ * @client: a #DConfClient
+ * @key: a dconf key
+ * @value (allow-none): a #GVariant, or %NULL
+ * @cancellable: a #GCancellable, or %NULL
+ * @callback: the function to call when complete
+ * @user_data: the user data for @callback
+ *
+ * Writes a value to the given @key, or reset @key to its default value.
+ *
+ * This is the asynchronous version of dconf_client_write().  You should
+ * call dconf_client_write_finish() from @callback to collect the
+ * result.
+ **/
 void
 dconf_client_write_async (DConfClient          *client,
                           const gchar          *key,
@@ -356,15 +420,23 @@ dconf_client_write_async (DConfClient          *client,
   dconf_client_async_op_run (op);
 }
 
+/**
+ * dconf_client_write_finish:
+ * @client: a #DConfClient
+ * @sequence: (out) (allow-none): the sequence number of this write
+ * @error: a pointer to a #GError, or %NULL
+ *
+ * Collects the result from a prior call to dconf_client_write_async().
+ **/
 gboolean
 dconf_client_write_finish (DConfClient   *client,
                            GAsyncResult  *result,
-                           guint64       *sequence,
+                           gchar        **tag,
                            GError       **error)
 {
   return dconf_client_async_op_finish (client, result,
                                        dconf_client_write_async,
-                                       sequence, error);
+                                       tag, error);
 }
 
 /**
@@ -414,14 +486,12 @@ dconf_client_is_writable (DConfClient  *client,
   return dconf_client_call_sync (client, &dcem, NULL, NULL, error);
 }
 
-
-
 gboolean
 dconf_client_write_many (DConfClient          *client,
                          const gchar          *prefix,
                          const gchar * const  *rels,
                          GVariant            **values,
-                         guint64              *sequence,
+                         gchar               **tag,
                          GCancellable         *cancellable,
                          GError              **error)
 {
@@ -430,7 +500,7 @@ dconf_client_write_many (DConfClient          *client,
   if (!dconf_engine_write_many (client->engine, &dcem, prefix, rels, values, error))
     return FALSE;
 
-  return dconf_client_call_sync (client, &dcem, sequence, cancellable, error);
+  return dconf_client_call_sync (client, &dcem, tag, cancellable, error);
 }
 
 void
@@ -454,12 +524,12 @@ dconf_client_write_many_async (DConfClient          *client,
 gboolean
 dconf_client_write_many_finish (DConfClient   *client,
                                 GAsyncResult  *result,
-                                guint64       *sequence,
+                                gchar        **tag,
                                 GError       **error)
 {
   return dconf_client_async_op_finish (client, result,
                                        dconf_client_write_many_async,
-                                       sequence, error);
+                                       tag, error);
 }
 
 #if 0
@@ -485,4 +555,3 @@ gboolean                dconf_client_unwatch_finish                     (DConfCl
                                                                          gpointer              user_data);
 
 #endif
-

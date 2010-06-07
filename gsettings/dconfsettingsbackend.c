@@ -37,9 +37,9 @@ typedef struct
   DConfEngine *engine;
 
   GDBusConnection *session_bus;
-  guint64 session_anti_expose;
+  gchar *session_anti_expose;
   GDBusConnection *system_bus;
-  guint64 system_anti_expose;
+  gchar *system_anti_expose;
 
   Outstanding *outstanding;
 } DConfSettingsBackend;
@@ -103,9 +103,10 @@ dconf_settings_backend_new_outstanding (DConfSettingsBackend *dcsb,
 }
 
 static gboolean
-dconf_settings_backend_remove_outstanding (DConfSettingsBackend *dcsb,
-                                           GDBusMessage         *message,
-                                           guint64              *anti_expose)
+dconf_settings_backend_remove_outstanding (DConfSettingsBackend  *dcsb,
+                                           guint                  bus_type,
+                                           GDBusMessage          *message,
+                                           gchar                **anti_expose)
 {
   gboolean found = FALSE;
   Outstanding **node;
@@ -247,13 +248,15 @@ dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
 
 static void
 dconf_settings_backend_incoming_signal (DConfSettingsBackend *dcsb,
+                                        guint                 bt,
                                         GDBusMessage         *message,
-                                        const guint64        *anti_expose)
+                                        const gchar          *anti_expose)
 {
   const gchar **rels;
   const gchar *path;
 
-  if (dconf_engine_decode_notify (dcsb->engine, *anti_expose, &path, &rels,
+  if (dconf_engine_decode_notify (dcsb->engine, anti_expose, &path, &rels, bt,
+                                  g_dbus_message_get_sender (message),
                                   g_dbus_message_get_interface (message),
                                   g_dbus_message_get_member (message),
                                   g_dbus_message_get_body (message)))
@@ -279,13 +282,19 @@ dconf_settings_backend_filter (GDBusConnection *connection,
                                gpointer         user_data)
 {
   DConfSettingsBackend *dcsb = user_data;
-  guint64 *ae;
+  guint bus_type;
+  gchar **ae;
 
   if (connection == dcsb->session_bus)
-    ae = &dcsb->session_anti_expose;
-
+    {
+      ae = &dcsb->session_anti_expose;
+      bus_type = 'e';
+    }
   else if (connection == dcsb->system_bus)
-    ae = &dcsb->system_anti_expose;
+    {
+      ae = &dcsb->system_anti_expose;
+      bus_type = 'y';
+    }
 
   else
     g_assert_not_reached ();
@@ -293,10 +302,11 @@ dconf_settings_backend_filter (GDBusConnection *connection,
   switch (g_dbus_message_get_message_type (message))
     {
     case G_DBUS_MESSAGE_TYPE_METHOD_RETURN:
-      return dconf_settings_backend_remove_outstanding (dcsb, message, ae);
+      return dconf_settings_backend_remove_outstanding (dcsb, bus_type,
+                                                        message, ae);
 
     case G_DBUS_MESSAGE_TYPE_SIGNAL:
-      dconf_settings_backend_incoming_signal (dcsb, message, ae);
+      dconf_settings_backend_incoming_signal (dcsb, bus_type, message, *ae);
 
     default:
       return FALSE;

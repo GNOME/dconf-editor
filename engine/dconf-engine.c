@@ -221,16 +221,28 @@ dconf_engine_list (DConfEngine    *engine,
   return list;
 }
 
+static gchar *
+dconf_engine_make_tag (guint        bus_type,
+                       const gchar *sender,
+                       guint64      seqno)
+{
+  return g_strdup_printf ("%c/%s/%"G_GUINT64_FORMAT, bus_type, sender, seqno);
+}
+
 gboolean
 dconf_engine_decode_notify (DConfEngine   *engine,
-                            guint64        anti_expose,
+                            const gchar   *anti_expose,
                             const gchar  **path,
                             const gchar ***rels,
+                            guint          bus_type,
+                            const gchar   *sender,
                             const gchar   *iface,
                             const gchar   *method,
                             GVariant      *body)
 {
-  guint64 ae;
+  gboolean matched;
+  guint64 seqno;
+  gchar *ae;
 
   if (strcmp (iface, "ca.desrt.dconf.Writer") || strcmp (method, "Notify"))
     return FALSE;
@@ -238,12 +250,37 @@ dconf_engine_decode_notify (DConfEngine   *engine,
   if (!g_variant_is_of_type (body, G_VARIANT_TYPE ("(tsas)")))
     return FALSE;
 
-  g_variant_get_child (body, 0, "t", &ae);
+  g_variant_get_child (body, 0, "t", &seqno);
 
-  if (ae == anti_expose)
+  ae = dconf_engine_make_tag (bus_type, sender, seqno);
+  matched = strcmp (ae, anti_expose) == 0;
+  g_free (ae);
+
+  if (matched)
     return FALSE;
 
   g_variant_get (body, "(t&s^a&s)", NULL, path, rels);
+
+  return TRUE;
+}
+
+gboolean
+dconf_engine_interpret_reply (DConfEngineMessage  *dcem,
+                              const gchar         *sender,
+                              GVariant            *body,
+                              gchar              **tag,
+                              GError             **error)
+{
+  /* typecheck and so on... */
+
+  if (tag != NULL)
+    {
+      guint64 sequence;
+
+      g_variant_get_child (body, 0, "t", &sequence);
+
+      *tag = dconf_engine_make_tag (dcem->bus_type, sender, sequence);
+    }
 
   return TRUE;
 }
