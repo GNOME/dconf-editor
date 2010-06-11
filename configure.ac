@@ -3,6 +3,7 @@ AM_INIT_AUTOMAKE
 AM_SILENT_RULES(yes)
 GOBJECT_INTROSPECTION_CHECK([0.6.7])
 AC_PROG_LIBTOOL
+GTK_DOC_CHECK
 AC_PROG_CC
 
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.7)
@@ -21,14 +22,15 @@ AC_SUBST(dconfincludedir, ${includedir}/dconf)
 AC_PATH_PROG(gio_QUERYMODULES, gio-querymodules, no)
 
 AC_OUTPUT([
-  gsettings/Makefile
-  service/Makefile
   common/Makefile
+  gvdb/Makefile
   engine/Makefile
+  gsettings/Makefile
   client/dconf.pc
   client/Makefile
-  tests/Makefile
-  gvdb/Makefile
+  service/Makefile
   bin/Makefile
+  tests/Makefile
+  docs/Makefile
   Makefile
 ])

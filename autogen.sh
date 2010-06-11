@@ -9,6 +9,7 @@ if [ "$1" = "clean" ]; then
   exit
 fi
 
+gtkdocize --docdir docs --flavour no-tmpl
 libtoolize --automake
 aclocal ${ACLOCAL_FLAGS}
 automake --add-missing --foreign
