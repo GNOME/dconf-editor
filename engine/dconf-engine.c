@@ -51,7 +51,7 @@ dconf_engine_read (DConfEngine   *engine,
 
   if (table)
     {
-      value = gvdb_table_get_value (table, key, NULL);
+      value = gvdb_table_get_value (table, key);
       gvdb_table_unref (table);
     }
   else
