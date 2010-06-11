@@ -244,12 +244,17 @@ dconf_client_class_init (DConfClientClass *class)
 /**
  * dconf_client_new:
  * @context: the context string (must by %NULL for now)
+ * @will_write: %TRUE if you intend to use the client to write
  * @watch_func: the function to call when changes occur
  * @user_data: the user_data to pass to @watch_func
  * @notify: the function to free @user_data when no longer needed
- * @returns: a new #DConfClient
+ * Returns: a new #DConfClient
  *
  * Creates a new #DConfClient for the given context.
+ *
+ * If @will_write is %FALSE then you will not be able to use the created
+ * client to write.  The benefit of this is that when combined with
+ * @watch_func being %NULL, no connection to D-Bus is required.
  **/
 DConfClient *
 dconf_client_new (const gchar          *context,
@@ -273,7 +278,7 @@ dconf_client_new (const gchar          *context,
  * dconf_client_read:
  * @client: a #DConfClient
  * @key: a valid dconf key
- * @returns: the value corresponding to @key, or %NULL if there is none
+ * Returns: the value corresponding to @key, or %NULL if there is none
  *
  * Reads the value named by @key from dconf.  If no such value exists,
  * %NULL is returned.
@@ -289,7 +294,7 @@ dconf_client_read (DConfClient   *client,
  * dconf_client_read_default:
  * @client: a #DConfClient
  * @key: a valid dconf key
- * @returns: the default value corresponding to @key, or %NULL if there
+ * Returns: the default value corresponding to @key, or %NULL if there
  *           is none
  *
  * Reads the value named by @key from any existing default/mandatory
@@ -307,7 +312,7 @@ dconf_client_read_default (DConfClient *client,
  * dconf_client_read_no_default:
  * @client: a #DConfClient
  * @key: a valid dconf key
- * @returns: the user value corresponding to @key, or %NULL if there is
+ * Returns: the user value corresponding to @key, or %NULL if there is
  *           none
  *
  * Reads the value named by @key as set by the user, ignoring any
@@ -380,19 +385,20 @@ dconf_client_call_sync (DConfClient          *client,
  * dconf_client_write:
  * @client: a #DConfClient
  * @key: a dconf key
- * @value (allow-none): a #GVariant, or %NULL
- * @sequence: (out) (allow-none): the sequence number of this write
+ * @value: (allow-none): a #GVariant, or %NULL
+ * @tag: (out) (allow-none): the tag from this write
  * @cancellable: a #GCancellable, or %NULL
  * @error: a pointer to a #GError, or %NULL
- * @returns: %TRUE if the write is successful
+ * Returns: %TRUE if the write is successful
  *
  * Write a value to the given @key, or reset @key to its default value.
  *
  * If @value is %NULL then @key is reset to its default value (which may
  * be completely unset), otherwise @value becomes the new value.
  *
- * If @sequence is non-%NULL then it is set to the sequence number of
- * this write.  The sequence number is unique to this process.
+ * If @tag is non-%NULL then it is set to the unique tag associated with
+ * this write.  This is the same tag that appears in change
+ * notifications.
  **/
 gboolean
 dconf_client_write (DConfClient   *client,
@@ -414,7 +420,7 @@ dconf_client_write (DConfClient   *client,
  * dconf_client_write_async:
  * @client: a #DConfClient
  * @key: a dconf key
- * @value (allow-none): a #GVariant, or %NULL
+ * @value: (allow-none): a #GVariant, or %NULL
  * @cancellable: a #GCancellable, or %NULL
  * @callback: the function to call when complete
  * @user_data: the user data for @callback
@@ -444,7 +450,8 @@ dconf_client_write_async (DConfClient          *client,
 /**
  * dconf_client_write_finish:
  * @client: a #DConfClient
- * @sequence: (out) (allow-none): the sequence number of this write
+ * @result: the #GAsyncResult passed to the #GAsyncReadyCallback
+ * @tag: (out) (allow-none): the tag from this write
  * @error: a pointer to a #GError, or %NULL
  *
  * Collects the result from a prior call to dconf_client_write_async().
@@ -465,7 +472,7 @@ dconf_client_write_finish (DConfClient   *client,
  * @client: a #DConfClient
  * @dir: a dconf dir
  * @length: the number of items that were returned
- * @returns: (array length=length): the paths located directly below @dir
+ * Returns: (array length=length): the paths located directly below @dir
  *
  * Lists the keys and dirs located directly below @dir.
  *
@@ -474,10 +481,10 @@ dconf_client_write_finish (DConfClient   *client,
  **/
 gchar **
 dconf_client_list (DConfClient    *client,
-                   const gchar    *prefix,
+                   const gchar    *dir,
                    gsize          *length)
 {
-  return dconf_engine_list (client->engine, prefix, NULL, length);
+  return dconf_engine_list (client->engine, dir, NULL, length);
 }
 
 /**
@@ -487,7 +494,7 @@ dconf_client_list (DConfClient    *client,
  * @locked: %TRUE to lock, %FALSE to unlock
  * @cancellable: a #GCancellable, or %NULL
  * @error: a pointer to a #GError, or %NULL
- * @returns: %TRUE if setting the lock was successful
+ * Returns: %TRUE if setting the lock was successful
  *
  * Marks a dconf path as being locked.
  *

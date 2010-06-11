@@ -53,7 +53,7 @@
 /**
  * dconf_is_path:
  * @string: a string
- * @returns: %TRUE if @string is a path
+ * Returns: %TRUE if @string is a path
  *
  * Checks if @string is a valid dconf path.  dconf keys must start with
  * '/' and not contain '//'.
@@ -70,7 +70,7 @@ dconf_is_path (const gchar *string)
 /**
  * dconf_is_key:
  * @string: a string
- * @returns: %TRUE if @string is a key
+ * Returns: %TRUE if @string is a key
  *
  * Checks if @string is a valid dconf key.  dconf keys must start with
  * '/', not contain '//' and not end with '/'.
@@ -91,7 +91,7 @@ dconf_is_key (const gchar *string)
 /**
  * dconf_is_dir:
  * @string: a string
- * @returns: %TRUE if @string is a dir
+ * Returns: %TRUE if @string is a dir
  *
  * Checks if @string is a valid dconf dir.  dconf dirs must start and
  * end with '/' and not contain '//'.
@@ -113,7 +113,7 @@ dconf_is_dir (const gchar *string)
 /**
  * dconf_is_rel:
  * @string: a string
- * @returns: %TRUE if @string is a relative path
+ * Returns: %TRUE if @string is a relative path
  *
  * Checks if @string is a valid dconf relative path.  A relative path is
  * a string that, when concatenated to a dir, forms a valid dconf path.
@@ -132,7 +132,7 @@ dconf_is_rel (const gchar *string)
 /**
  * dconf_is_rel_key:
  * @string: a string
- * @returns: %TRUE if @string is a relative key
+ * Returns: %TRUE if @string is a relative key
  *
  * Checks if @string is a valid dconf relative key.  A relative key is a
  * string that, when concatenated to a dir, forms a valid dconf key.
@@ -152,7 +152,7 @@ dconf_is_rel_key (const gchar *string)
 /**
  * dconf_is_rel_dir:
  * @string: a string
- * @returns: %TRUE if @string is a relative dir
+ * Returns: %TRUE if @string is a relative dir
  *
  * Checks if @string is a valid dconf relative dir.  A relative dir is a
  * string that, when appended to a dir, forms a valid dconf dir.  This

@@ -65,17 +65,17 @@ GVariant *              dconf_client_read_no_default                    (DConfCl
                                                                          const gchar          *key);
 
 gchar **                dconf_client_list                               (DConfClient          *client,
-                                                                         const gchar          *prefix,
+                                                                         const gchar          *dir,
                                                                          gsize                *length);
 
 gboolean                dconf_client_is_writable                        (DConfClient          *client,
-                                                                         const gchar          *prefix,
+                                                                         const gchar          *path,
                                                                          GError              **error);
 
 gboolean                dconf_client_write                              (DConfClient          *client,
                                                                          const gchar          *key,
                                                                          GVariant             *value,
-                                                                         gchar               **sequence,
+                                                                         gchar               **tag,
                                                                          GCancellable         *cancellable,
                                                                          GError              **error);
 void                    dconf_client_write_async                        (DConfClient          *client,
@@ -86,7 +86,7 @@ void                    dconf_client_write_async                        (DConfCl
                                                                          gpointer              user_data);
 gboolean                dconf_client_write_finish                       (DConfClient          *client,
                                                                          GAsyncResult         *result,
-                                                                         gchar               **sequence,
+                                                                         gchar               **tag,
                                                                          GError              **error);
 
 gboolean                dconf_client_set_locked                         (DConfClient          *client,
@@ -108,7 +108,7 @@ gboolean                dconf_client_write_many                         (DConfCl
                                                                          const gchar          *prefix,
                                                                          const gchar * const  *keys,
                                                                          GVariant            **values,
-                                                                         gchar               **sequence,
+                                                                         gchar               **tag,
                                                                          GCancellable         *cancellable,
                                                                          GError              **error);
 void                    dconf_client_write_many_async                   (DConfClient          *client,
@@ -120,7 +120,7 @@ void                    dconf_client_write_many_async                   (DConfCl
                                                                          gpointer              user_data);
 gboolean                dconf_client_write_many_finish                  (DConfClient          *client,
                                                                          GAsyncResult         *result,
-                                                                         gchar               **sequence,
+                                                                         gchar               **tag,
                                                                          GError              **error);
 
 gboolean                dconf_client_watch                              (DConfClient          *client,

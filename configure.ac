@@ -31,7 +31,6 @@ AC_OUTPUT([
   service/Makefile
   bin/Makefile
   tests/Makefile
-  docs/sources/Makefile
   docs/Makefile
   Makefile
 ])
