@@ -1,3 +1,24 @@
+/*
+ * Copyright © 2010 Codethink Limited
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the licence, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ * Author: Ryan Lortie <desrt@desrt.ca>
+ */
+
 #include <dconf-engine.h>
 #include "dconf-client.h"
 #include <string.h>
@@ -459,6 +480,25 @@ dconf_client_list (DConfClient    *client,
   return dconf_engine_list (client->engine, prefix, NULL, length);
 }
 
+/**
+ * dconf_client_set_locked:
+ * @client: a #DConfClient
+ * @path: a dconf path
+ * @locked: %TRUE to lock, %FALSE to unlock
+ * @cancellable: a #GCancellable, or %NULL
+ * @error: a pointer to a #GError, or %NULL
+ * @returns: %TRUE if setting the lock was successful
+ *
+ * Marks a dconf path as being locked.
+ *
+ * Locks do not affect writes to this #DConfClient.  You can still write
+ * to a key that is marked as being locked without problems.
+ *
+ * Locks are only effective when they are set on a database that is
+ * being used as the source of default/mandatory values.  In that case,
+ * the lock will prevent writes from occuring to the database that has
+ * this database as its defaults.
+ **/
 gboolean
 dconf_client_set_locked (DConfClient   *client,
                          const gchar   *path,
