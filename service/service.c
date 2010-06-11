@@ -280,9 +280,6 @@ bus_acquired (GDBusConnection *connection,
   static const GDBusInterfaceVTable interface_vtable = { method_call };
   DConfWriter *writer = user_data;
 
-  writer->serial = time (NULL);
-  writer->serial <<= 32;
-
   g_dbus_connection_register_object (connection, "/",
                                      &writer_interface, &interface_vtable,
                                      writer, NULL, NULL);
@@ -302,11 +299,7 @@ name_lost (GDBusConnection *connection,
 {
   DConfWriter *writer = user_data;
 
-  if (writer->serial != 0)
-    g_critical ("dbus signaled that we lost our "
-                "name but it wrong wrong to do so");
-  else
-    g_critical ("unable to acquire name: '%s'", name);
+  g_critical ("unable to acquire name: '%s'", name);
 
   g_main_loop_quit (writer->loop);
 }
@@ -321,7 +314,7 @@ main (void)
   writer.loop = g_main_loop_new (NULL, FALSE);
   writer.path = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
 
-  g_bus_own_name (G_BUS_TYPE_STARTER, "ca.desrt.dconf", 0,
+  g_bus_own_name (G_BUS_TYPE_SESSION, "ca.desrt.dconf", 0,
                   bus_acquired, name_acquired, name_lost, &writer, NULL);
 
   g_main_loop_run (writer.loop);
