@@ -1,5 +1,7 @@
 include gtk-doc.make
 
+SUBDIRS = sources
+
 DOC_MODULE = dconf
 
 DOC_MAIN_SGML_FILE = dconf-docs.xml
