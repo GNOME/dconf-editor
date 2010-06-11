@@ -1,0 +1,17 @@
+Changes in dconf 0.4
+=====================
+
+ - fix crashes when the dconf database doesn't yet exist
+ - add some incomplete gtk-doc
+ - use new GVDB (note: dconf file format has incompatibly changed)
+ - implement GSettings sync()
+ - use string tags instead of sequence numbers since it was impossible
+   to have universally unique sequence numbers
+ - theoretical support for sharing dconf databases between machines with
+   different byte orders
+ - fix bug where first write was not successful when auto-starting
+   service
+ - FreeBSD build fixes
+ - client API cleanups
+ - GObject introspection support
+ - enable automake silent rules by default for tarball builds
