@@ -3,4 +3,4 @@ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client 
 
 bin_PROGRAMS = dconf
 
-dconf_LDADD = ../client/libdconf.la
+dconf_LDADD = ../client/libdconf.la $(gio_LIBS)
