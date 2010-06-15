@@ -19,11 +19,11 @@ namespace DConf {
 		public bool watch (string name) throws GLib.Error;
 		public async bool watch_async (string name);
 		public bool watch_finish (GLib.AsyncResult _result);
-		public bool write (string key, GLib.Variant value, uint64 sequence, GLib.Cancellable cancellable) throws GLib.Error;
-		public async bool write_async (string key, GLib.Variant value, GLib.Cancellable cancellable) throws GLib.Error;
+		public bool write (string key, GLib.Variant value, uint64 sequence, GLib.Cancellable? cancellable) throws GLib.Error;
+		public async bool write_async (string key, GLib.Variant value, GLib.Cancellable? cancellable) throws GLib.Error;
 		public bool write_finish (GLib.AsyncResult _result, uint64 sequence) throws GLib.Error;
-		public bool write_many (string prefix, string keys, out unowned GLib.Variant values, uint64 sequence, GLib.Cancellable cancellable) throws GLib.Error;
-		public async bool write_many_async (string prefix, string keys, out unowned GLib.Variant values, GLib.Cancellable cancellable) throws GLib.Error;
+		public bool write_many (string prefix, string keys, out unowned GLib.Variant values, uint64 sequence, GLib.Cancellable? cancellable) throws GLib.Error;
+		public async bool write_many_async (string prefix, string keys, out unowned GLib.Variant values, GLib.Cancellable? cancellable) throws GLib.Error;
 		public bool write_many_finish (GLib.AsyncResult _result, uint64 sequence) throws GLib.Error;
 	}
 	[CCode (cheader_filename = "dconf.h")]

@@ -1,61 +1,18 @@
-public class ConfModel : Gtk.TreeStore
-{
-    public ConfModel()
-    {
-        set_column_types({typeof(string), typeof(string)});
-    }
-    
-    private Gtk.TreeIter? get_iter(string[] split_key, int length)
-    {
-        if (length == 1) // NOTE: Assumes key started with /
-            return null;
-
-        Gtk.TreeIter? parent = get_iter(split_key, length - 1);
-        string key = split_key[length - 1];
-
-        Gtk.TreeIter iter;
-        bool have_iter = iter_children(out iter, parent);
-        while (have_iter)
-        {
-            string name;
-            get(iter, 0, out name, -1);
-            if (name == key)
-                return iter;
-            if (name > key)
-            {
-                insert_before(out iter, parent, iter);
-                break;
-            }
-            have_iter = iter_next(ref iter);
-        }
-        if (!have_iter)
-            append(out iter, parent);
-
-        set(iter, 0, key, -1);
-
-        return iter;
-    }
-
-    public void add_key(string key)
-    {
-        string[] tokens = key.split("/", -1);    
-        Gtk.TreeIter? iter = get_iter(tokens, tokens.length);
-        set(iter, 1, key, -1);
-    }
-}
-
 public class EditorWindow : Gtk.Window
 {
-    public ConfModel model;
+    public SettingsModel model;
+    public SchemaList schemas;
 
-    private DConf.Client client;
-    private Gtk.TreeView tree_view;
-    private Gtk.Label name_label;
-    private Gtk.Label value_label;
+    private Gtk.TreeView dir_tree_view;
+    private Gtk.TreeView key_tree_view;
+    private Gtk.Label schema_label;
+    private Gtk.Label summary_label;
+    private Gtk.Label description_label;
+    private Gtk.Label type_label;
+    private Gtk.Label default_label;
 
-    public EditorWindow(DConf.Client client)
+    public EditorWindow()
     {
-        this.client = client;
         set_title("Configuration Editor");
         set_default_size(600, 300);
         set_border_width(6);
@@ -64,85 +21,161 @@ public class EditorWindow : Gtk.Window
         hbox.show();
         add(hbox);
 
-        model = new ConfModel();
+        model = new SettingsModel();
+        schemas = new SchemaList();
+        try
+        {
+            schemas.load_directory("/usr/share/glib-2.0/schemas");
+        } catch (Error e) {
+            warning("Failed to parse schemas: %s", e.message);
+        }
 
-        tree_view = new Gtk.TreeView();
-        tree_view.set_headers_visible(false);
-        tree_view.set_model(model);
-        tree_view.insert_column_with_attributes(-1, "Key", new Gtk.CellRendererText(), "text", 0, null);
-        tree_view.get_selection().changed.connect(key_selected_cb);
-        tree_view.show();
-        hbox.pack_start(tree_view, false, false, 0);
+        Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow(null, null);
+        scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+        scroll.show();
+        hbox.pack_start(scroll, false, false, 0);
+
+        dir_tree_view = new DConfDirView();
+        dir_tree_view.set_model(model);
+        dir_tree_view.get_selection().changed.connect(dir_selected_cb); // FIXME: Put in view
+        dir_tree_view.show();
+        scroll.add(dir_tree_view);
 
         Gtk.VBox vbox = new Gtk.VBox(false, 6);
         vbox.show();
         hbox.pack_start(vbox, true, true, 0);
+        
+        scroll = new Gtk.ScrolledWindow(null, null);
+        scroll.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
+        scroll.show();
+        vbox.pack_start(scroll, true, true, 0);
 
-        name_label = new Gtk.Label("");
+        key_tree_view = new DConfKeyView();
+        key_tree_view.show();
+        key_tree_view.get_selection().changed.connect(key_selected_cb);
+        scroll.add(key_tree_view);
+
+        Gtk.Table schema_table = new Gtk.Table(0, 2, false);
+        schema_table.set_row_spacings(6);
+        schema_table.set_col_spacings(6);
+        schema_table.show();
+        vbox.pack_start(schema_table, false, true, 0);
+
+        schema_label = add_row(schema_table, 0, "Schema:");
+        summary_label = add_row(schema_table, 1, "Summary:");
+        description_label = add_row(schema_table, 2, "Description:");
+        type_label = add_row(schema_table, 3, "Type:");
+        default_label = add_row(schema_table, 4, "Default:");
+
+        /* Always select something */
+        Gtk.TreeIter iter;
+        if (model.get_iter_first(out iter))
+            dir_tree_view.get_selection().select_iter(iter);
+    }
+    
+    private Gtk.Label add_row(Gtk.Table table, int row, string label)
+    {
+        Gtk.Label name_label, value_label;
+
+        name_label = new Gtk.Label(label);
         name_label.set_alignment(0.0f, 0.5f);
-        name_label.show();
-        vbox.pack_start(name_label, false, true, 0);
+        table.attach(name_label, 0, 1, row, row+1, Gtk.AttachOptions.FILL, Gtk.AttachOptions.FILL, 0, 0);
 
         value_label = new Gtk.Label("");
         value_label.set_alignment(0.0f, 0.5f);
+        table.attach_defaults(value_label, 1, 2, row, row+1);
+        
+        name_label.show();
         value_label.show();
-        vbox.pack_start(value_label, false, true, 0);
+
+        return value_label;
     }
     
-    private string? get_selected_key()
+    private void dir_selected_cb()
+    {
+        KeyModel? key_model = null;
+
+        Gtk.TreeIter iter;
+        if (dir_tree_view.get_selection().get_selected(null, out iter))
+            key_model = model.get_directory(iter).key_model;
+
+        key_tree_view.set_model(key_model);
+
+        /* Always select something */
+        if (key_model != null && key_model.get_iter_first(out iter))
+            key_tree_view.get_selection().select_iter(iter);
+    }
+
+    private Key? get_selected_key()
     {
         Gtk.TreeIter iter;
-        if (!tree_view.get_selection().get_selected(null, out iter))
-            return null;
-
-        string key;
-        model.get(iter, 1, out key, -1);
-        return key;
-    }
-    
-    private void key_selected_cb()
-    {
-        string? key = get_selected_key();
-        if (key == null)
+        Gtk.TreeModel model;
+        if (key_tree_view.get_selection().get_selected(out model, out iter))
         {
-            name_label.set_text("");
-            value_label.set_text("");
+            KeyModel key_model = (KeyModel) model;
+            return key_model.get_key(iter);
         }
         else
+            return null;
+    }
+
+    private string type_to_description(string type)
+    {
+        switch(type)
         {
-            GLib.Variant value = client.read(key);
-            name_label.set_text(key);
-            value_label.set_text(value == null ? "(unset)" : value.print(false));
+        case "i":
+           return "Integer";
+        case "b":
+           return "Boolean";
+        case "s":
+           return "String";
+        default:
+           return type;
         }
+    }
+
+    private void key_selected_cb()
+    {
+        Key? key = get_selected_key();
+        string schema_name = "", summary = "", description = "", type = "", default_value = "";
+
+        if (key != null)
+        {
+            SchemaKey? schema = schemas.keys.get(key.full_name);
+            if (schema != null)
+            {
+                schema_name = schema.schema.id;
+                if (schema.summary != null)
+                    summary = schema.summary;
+                if (schema.description != null)
+                    description = schema.description;
+                type = type_to_description(schema.type);
+                default_value = schema.default_value;
+            }
+            else
+            {
+                schema_name = "No schema";
+            }
+        }
+
+        schema_label.set_text(schema_name);
+        summary_label.set_text(summary);
+        description_label.set_text(description);
+        type_label.set_text(type);
+        default_label.set_text(default_value);
     }
 }
 
 class ConfigurationEditor
 {
-    private DConf.Client client;
     private EditorWindow window;
     
     public ConfigurationEditor()
     {
-        client = new DConf.Client("", true, null, null);
-        window = new EditorWindow(client);
+        window = new EditorWindow();
         window.destroy.connect(Gtk.main_quit);
         
-        read_keys("/");
-
         window.show();
-    }
-
-    private void read_keys(string parent)
-    {
-        string[] keys = client.list(parent);
-        for (int i = 0; i < keys.length; i++)
-        {
-            if (DConf.is_rel_dir(keys[i]))
-                read_keys(parent + keys[i]);
-            else
-                window.model.add_key(parent + keys[i]);
-        }
     }
 
     public static int main(string[] args)

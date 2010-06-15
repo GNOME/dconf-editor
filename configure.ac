@@ -9,6 +9,8 @@ AC_PROG_CC
 
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.7)
 PKG_CHECK_MODULES(gtk, gtk+-2.0)
+PKG_CHECK_MODULES(gee, gee-1.0)
+PKG_CHECK_MODULES(libxml, libxml-2.0)
 
 AC_ARG_WITH(gio_modules_dir, [  --with-gio-modules-dir=PATH choose directory for the GIO module, [default=LIBDIR/gio/modules]], giomodulesdir="$withval", giomodulesdir=${libdir}/gio/modules)
 AC_SUBST(giomodulesdir)
