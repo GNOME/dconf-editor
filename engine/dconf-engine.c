@@ -252,9 +252,12 @@ dconf_engine_decode_notify (DConfEngine   *engine,
 
   g_variant_get_child (body, 0, "t", &seqno);
 
-  ae = dconf_engine_make_tag (bus_type, sender, seqno);
-  matched = strcmp (ae, anti_expose) == 0;
-  g_free (ae);
+  if (anti_expose)
+    {
+      ae = dconf_engine_make_tag (bus_type, sender, seqno);
+      matched = strcmp (ae, anti_expose) == 0;
+      g_free (ae);
+    }
 
   if (matched)
     return FALSE;
