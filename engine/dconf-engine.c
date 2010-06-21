@@ -240,7 +240,6 @@ dconf_engine_decode_notify (DConfEngine   *engine,
                             const gchar   *method,
                             GVariant      *body)
 {
-  gboolean matched;
   guint64 seqno;
   gchar *ae;
 
@@ -254,13 +253,15 @@ dconf_engine_decode_notify (DConfEngine   *engine,
 
   if (anti_expose)
     {
+      gboolean matched;
+
       ae = dconf_engine_make_tag (bus_type, sender, seqno);
       matched = strcmp (ae, anti_expose) == 0;
       g_free (ae);
-    }
 
-  if (matched)
-    return FALSE;
+      if (matched)
+        return FALSE;
+    }
 
   g_variant_get (body, "(t&s^a&s)", NULL, path, rels);
 

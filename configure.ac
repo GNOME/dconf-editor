@@ -40,6 +40,10 @@ AC_SUBST(dbussystemservicedir)
 
 AC_SUBST(dconfincludedir, ${includedir}/dconf)
 
+LDFLAGS='-Wl,-Bsymbolic-functions'
+AC_TRY_LINK([], [int main (void) { return 0; }],
+            [echo good], [echo bad])
+
 AC_PATH_PROG(gio_QUERYMODULES, gio-querymodules, no)
 
 AC_CONFIG_FILES([
