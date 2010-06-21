@@ -14,7 +14,7 @@ AC_PROG_CC
 AM_PROG_VALAC([0.8])
 
 # Initialise libtool
-LT_PREREQ([2.2.6])
+LT_PREREQ([2.2])
 LT_INIT
 
 # Introspection
