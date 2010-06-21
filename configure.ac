@@ -1,12 +1,29 @@
-AC_INIT(dconf, 0.4.1)
-AM_INIT_AUTOMAKE
-AM_SILENT_RULES(yes)
-GOBJECT_INTROSPECTION_CHECK([0.6.7])
-AC_PROG_LIBTOOL
-AM_PROG_VALAC
-GTK_DOC_CHECK
-AC_PROG_CC
+AC_INIT([dconf],
+        [0.4.1],
+        [https://bugzilla.gnome.org/enter_bug.cgi?product=dconf],
+        [dconf])
 
+AC_CONFIG_SRCDIR([configure.ac])
+AC_CONFIG_MACRO_DIR([m4])
+
+AM_INIT_AUTOMAKE([1.11 -Wno-portability])
+AM_SILENT_RULES([yes])
+
+# Check for programs
+AC_PROG_CC
+AM_PROG_VALAC([0.8])
+
+# Initialise libtool
+LT_PREREQ([2.2.6])
+LT_INIT
+
+# Introspection
+GOBJECT_INTROSPECTION_CHECK([0.6.7])
+
+# Gtk-doc support
+GTK_DOC_CHECK([1.14])
+
+# Dependencies
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.7)
 PKG_CHECK_MODULES(gtk, gtk+-2.0)
 PKG_CHECK_MODULES(gee, gee-1.0)
@@ -25,7 +42,7 @@ AC_SUBST(dconfincludedir, ${includedir}/dconf)
 
 AC_PATH_PROG(gio_QUERYMODULES, gio-querymodules, no)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
   common/Makefile
   gvdb/Makefile
   engine/Makefile
@@ -39,3 +56,4 @@ AC_OUTPUT([
   docs/Makefile
   Makefile
 ])
+AC_OUTPUT
