@@ -298,11 +298,15 @@ dconf_settings_backend_incoming_signal (DConfSettingsBackend  *dcsb,
 static gboolean
 dconf_settings_backend_filter (GDBusConnection *connection,
                                GDBusMessage    *message,
+                               gboolean         is_incoming,
                                gpointer         user_data)
 {
   DConfSettingsBackend *dcsb = user_data;
   guint bus_type;
   gchar **ae;
+
+  if (!is_incoming)
+    return FALSE;
 
   if (connection == dcsb->session_bus)
     {
