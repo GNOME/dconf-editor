@@ -24,7 +24,7 @@ GOBJECT_INTROSPECTION_CHECK([0.6.7])
 GTK_DOC_CHECK([1.14])
 
 # Dependencies
-PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.7)
+PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.10)
 PKG_CHECK_MODULES(gtk, gtk+-2.0)
 PKG_CHECK_MODULES(gee, gee-1.0)
 PKG_CHECK_MODULES(libxml, libxml-2.0)
