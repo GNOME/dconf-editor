@@ -11,7 +11,7 @@ AM_SILENT_RULES([yes])
 
 # Check for programs
 AC_PROG_CC
-AM_PROG_VALAC([0.8])
+AM_PROG_VALAC([0.9.2])
 
 # Initialise libtool
 LT_PREREQ([2.2])
@@ -24,7 +24,7 @@ GOBJECT_INTROSPECTION_CHECK([0.6.7])
 GTK_DOC_CHECK([1.14])
 
 # Dependencies
-PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.10)
+PKG_CHECK_MODULES(gio, gio-2.0 >= 2.23.10)
 PKG_CHECK_MODULES(gtk, gtk+-2.0)
 PKG_CHECK_MODULES(gee, gee-1.0)
 PKG_CHECK_MODULES(libxml, libxml-2.0)
