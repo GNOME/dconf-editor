@@ -19,4 +19,7 @@ CFLAGS=${CFLAGS=-ggdb -Werror}
 LDFLAGS=${LDFLAGS=-Wl,-O1}
 export CFLAGS LDFLAGS
 
-./configure "$@"
+if test -z "$NOCONFIGURE"; then
+  ./configure "$@"
+fi
+
