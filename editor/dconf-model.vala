@@ -58,6 +58,12 @@ public class Key : GLib.Object
             }
         }
     }
+    
+    public bool is_default
+    {
+        private set {}
+        public get { update_value(); return _value == null; }
+    }
 
     public Key(SettingsModel model, Directory parent, int index, string name, string full_name)
     {
@@ -247,10 +253,20 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
             value = key;
         else if (column == 1)
             value = key.name;
-        else if (key.value != null)
-            value = key.value.print(false);
-        else
-            value = "";
+        else if (column == 2)
+        {
+            if (key.value != null)
+                value = key.value.print(false);
+            else
+                value = "";
+        }
+        else if (column == 4)
+        {
+            if (key.is_default)
+                value = Pango.Weight.NORMAL;            
+            else
+                value = Pango.Weight.BOLD;
+        }
     }
 
     public bool iter_next(ref Gtk.TreeIter iter)

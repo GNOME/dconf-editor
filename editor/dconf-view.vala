@@ -247,7 +247,7 @@ public class DConfKeyView : Gtk.TreeView
 {
     public DConfKeyView()
     {
-        var column = new Gtk.TreeViewColumn.with_attributes("Name", new Gtk.CellRendererText(), "text", 1, null);
+        var column = new Gtk.TreeViewColumn.with_attributes("Name", new Gtk.CellRendererText(), "text", 1, "weight", 4, null);
         /*column.set_sort_column_id(1);*/
         append_column(column);
         insert_column_with_attributes(-1, "Value", new KeyValueRenderer(this), "key", 0, null);
