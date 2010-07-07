@@ -1,13 +1,15 @@
 public class Key : GLib.Object
 {
-    private DConf.Client client;
+    private SettingsModel model;
 
     public string name;
     public string full_name;
 
     public Key? next;
-    
-    private Variant _value;
+
+    public SchemaKey? schema;
+
+    private Variant? _value;
     public Variant value
     {
         get { update_value(); return _value; }
@@ -15,7 +17,7 @@ public class Key : GLib.Object
             _value = value;
             try
             {
-                client.write(full_name, value, 0, null);
+                model.client.write(full_name, value, 0, null);
             }
             catch (GLib.Error e)
             {
@@ -23,22 +25,23 @@ public class Key : GLib.Object
         }
     }
 
-    public Key(DConf.Client client, string name, string full_name)
+    public Key(SettingsModel model, string name, string full_name)
     {
-        this.client = client;
+        this.model = model;
         this.name = name;
         this.full_name = full_name;
+        this.schema = model.schemas.keys.get(full_name);
     }
-    
+
     private void update_value()
     {
-        _value = client.read(full_name);
+        _value = model.client.read(full_name);
     }
 }
 
 public class Directory : GLib.Object
 {
-    private DConf.Client client;
+    private SettingsModel model;
 
     public string name;
     public string full_name;
@@ -81,9 +84,9 @@ public class Directory : GLib.Object
 
     private bool have_children;
     
-    public Directory(DConf.Client client, string name, string full_name, Directory? parent = null)
+    public Directory(SettingsModel model, string name, string full_name, Directory? parent = null)
     {
-        this.client = client;
+        this.model = model;
         this.parent = parent;
         this.name = name;
         this.full_name = full_name;
@@ -97,7 +100,7 @@ public class Directory : GLib.Object
 
         Directory? last_directory = null;
         Key? last_key = null;
-        string[] items = client.list(full_name);
+        string[] items = model.client.list(full_name);
         _n_children = 0;
         _n_keys = 0;
         for (int i = 0; i < items.length; i++)
@@ -108,7 +111,7 @@ public class Directory : GLib.Object
             {
                 string dir_name = items[i][0:-1];
 
-                Directory directory = new Directory(client, dir_name, item_name, this);
+                Directory directory = new Directory(model, dir_name, item_name, this);
                 if (last_directory == null)
                    child = directory;
                 else
@@ -118,7 +121,7 @@ public class Directory : GLib.Object
             }
             else
             {
-                Key key = new Key(client, items[i], item_name);
+                Key key = new Key(model, items[i], item_name);
                 if (last_key == null)
                     keys = key;
                 else
@@ -269,9 +272,133 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
     }
 }
 
+public class EnumModel: GLib.Object, Gtk.TreeModel
+{
+    private SchemaEnum schema_enum;
+
+    construct {}
+
+    public EnumModel(SchemaEnum schema_enum)
+    {
+        this.schema_enum = schema_enum;
+    }
+
+    public Gtk.TreeModelFlags get_flags()
+    {
+        return Gtk.TreeModelFlags.LIST_ONLY;
+    }
+
+    public int get_n_columns()
+    {
+        return 2;
+    }
+
+    public Type get_column_type(int index)
+    {
+        if (index == 0)
+            return typeof(string);
+        else
+            return typeof(int);
+    }
+    
+    private void set_iter(out Gtk.TreeIter iter, SchemaEnumValue value)
+    {
+        iter.stamp = 0;
+        iter.user_data = value;
+        iter.user_data2 = value;
+        iter.user_data3 = value;
+    }
+
+    public SchemaEnumValue get_enum_value(Gtk.TreeIter iter)
+    {
+        return (SchemaEnumValue)iter.user_data;
+    }
+
+    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
+    {
+        if (path.get_depth() != 1)
+            return false;
+
+        return iter_nth_child(out iter, null, path.get_indices()[0]);
+    }
+
+    public Gtk.TreePath get_path(Gtk.TreeIter iter)
+    {
+        Gtk.TreePath path = new Gtk.TreePath();
+        path.append_index(get_enum_value(iter).index);
+        return path;
+    }
+
+    public void get_value(Gtk.TreeIter iter, int column, out Value value)
+    {
+        if (column == 0)
+            value = get_enum_value(iter).nick;
+        else if (column == 1)
+            value = get_enum_value(iter).value;
+    }
+
+    public bool iter_next(ref Gtk.TreeIter iter)
+    {
+        int index = get_enum_value(iter).index;
+        if (index >= schema_enum.values.size - 1)
+            return false;
+        set_iter(out iter, schema_enum.values[index + 1]);
+        return true;
+    }
+
+    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    {
+        if (parent != null || schema_enum.values.size == 0)
+            return false;
+        set_iter(out iter, schema_enum.values[0]);
+        return true;
+    }
+
+    public bool iter_has_child(Gtk.TreeIter iter)
+    {
+        return false;
+    }
+
+    public int iter_n_children(Gtk.TreeIter? iter)
+    {
+        if (iter == null)
+            return schema_enum.values.size;
+        else
+            return 0;
+    }
+
+    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    {
+        if (parent != null)
+            return false;
+
+        if (n >= schema_enum.values.size)
+            return false;
+        set_iter(out iter, schema_enum.values[n]);
+        return true;
+    }
+
+    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
+    {
+        return false;
+    }
+
+    public void ref_node(Gtk.TreeIter iter)
+    {
+        get_enum_value(iter).ref();
+    }
+
+    public void unref_node(Gtk.TreeIter iter)
+    {
+        get_enum_value(iter).unref();
+    }
+}
+
 public class SettingsModel: GLib.Object, Gtk.TreeModel
 {
-    private DConf.Client client;
+    public SchemaList schemas;
+
+    public DConf.Client client;
     private Directory root;
 
     construct {}
@@ -279,7 +406,15 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public SettingsModel()
     {
         client = new DConf.Client("", true, null, null);
-        root = new Directory(client, "/", "/");
+        root = new Directory(this, "/", "/");
+
+        schemas = new SchemaList();
+        try
+        {
+            schemas.load_directory("/usr/share/glib-2.0/schemas");
+        } catch (Error e) {
+            warning("Failed to parse schemas: %s", e.message);
+        }
     }
 
     public Gtk.TreeModelFlags get_flags()

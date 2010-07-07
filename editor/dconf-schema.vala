@@ -6,6 +6,7 @@ public class SchemaKey
     public string name;
     public string type;
     public string default_value;
+    public string? enum_name;
     public string? summary;
     public string? description;
     public string? gettext_domain;
@@ -21,6 +22,11 @@ public class SchemaKey
                 name = prop->children->content;
             else if (prop->name == "type")
                 type = prop->children->content;
+            else if (prop->name == "enum")
+            {
+                type = "enum";
+                enum_name = prop->children->content;
+            }
             //else
             //    ?
         }
@@ -36,6 +42,75 @@ public class SchemaKey
                summary = child->children->content;
             else if (child->name == "description")
                description = child->children->content;
+            //else
+            //   ?
+        }
+        
+        //if (default_value == null)
+        //    ?
+    }
+}
+
+public class SchemaEnumValue : GLib.Object
+{
+    public SchemaEnum schema_enum;
+    public int index;
+    public string nick;
+    public int value;
+
+    public SchemaEnumValue(SchemaEnum schema_enum, int index, string nick, int value)
+    {
+        this.schema_enum = schema_enum;
+        this.index = index;
+        this.nick = nick;
+        this.value = value;
+    }
+}
+
+public class SchemaEnum
+{
+    public SchemaList list;
+    public string id;
+    public ArrayList<SchemaEnumValue> values = new ArrayList<SchemaEnumValue>();
+
+    public SchemaEnum(SchemaList list, Xml.Node* node)
+    {
+        this.list = list;
+
+        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next)
+        {
+            if (prop->name == "id")
+                id = prop->children->content;
+            //else
+            //    ?
+        }
+
+        //if (id = null)
+        //    ?
+
+        for (Xml.Node* child = node->children; child != null; child = child->next)
+        {
+            if (child->name == "value")
+            {
+                string? nick = null;
+                int value = -1;
+
+                for (Xml.Attr* prop = child->properties; prop != null; prop = prop->next)
+                {
+                    if (prop->name == "value")
+                        value = prop->children->content.to_int();
+                    else if (prop->name == "nick")
+                        nick = prop->children->content;
+                    //else
+                    //    ?
+                }
+
+                //if (value < 0 || nick == null)
+                //    ?
+
+                SchemaEnumValue schema_value = new SchemaEnumValue(this, values.size, nick, value);
+                values.add(schema_value);
+            }
             //else
             //   ?
         }
@@ -85,6 +160,7 @@ public class SchemaList
 {
     public ArrayList<Schema> schemas = new ArrayList<Schema>();
     public HashMap<string, SchemaKey> keys = new HashMap<string, SchemaKey>();
+    public HashMap<string, SchemaEnum> enums = new HashMap<string, SchemaEnum>();
 
     public void parse_file(string path)
     {
@@ -107,22 +183,29 @@ public class SchemaList
 
         for (Xml.Node* node = root->children; node != null; node = node->next)
         {
-            if (node->name != "schema")
-               continue;
+            if (node->name == "schema")
+            {
+                Schema schema = new Schema(this, node, gettext_domain);
+                schemas.add(schema);
+                if (schema.path == null)
+                {
+                    // FIXME: What to do here?
+                    continue;
+                }
 
-            Schema schema = new Schema(this, node, gettext_domain);
-            schemas.add(schema);
-            if (schema.path == null)
-            {
-                // FIXME: What to do here?
-                continue;
+                foreach (var key in schema.keys.values)
+                {
+                    string full_name = schema.path + key.name;
+                    keys.set(full_name, key);
+                }
             }
-            
-            foreach (var key in schema.keys.values)
+            else if (node->name == "enum")
             {
-                string full_name = schema.path + key.name;
-                keys.set(full_name, key);
+                SchemaEnum enum = new SchemaEnum(this, node);
+                enums.set(enum.id, enum);
             }
+            //else
+            //    ?
         }
 
         delete doc;

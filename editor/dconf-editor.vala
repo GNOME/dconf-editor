@@ -1,7 +1,6 @@
 public class EditorWindow : Gtk.Window
 {
     public SettingsModel model;
-    public SchemaList schemas;
 
     private Gtk.TreeView dir_tree_view;
     private Gtk.TreeView key_tree_view;
@@ -22,13 +21,6 @@ public class EditorWindow : Gtk.Window
         add(hbox);
 
         model = new SettingsModel();
-        schemas = new SchemaList();
-        try
-        {
-            schemas.load_directory("/usr/share/glib-2.0/schemas");
-        } catch (Error e) {
-            warning("Failed to parse schemas: %s", e.message);
-        }
 
         Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow(null, null);
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
@@ -83,6 +75,7 @@ public class EditorWindow : Gtk.Window
 
         value_label = new Gtk.Label("");
         value_label.set_alignment(0.0f, 0.5f);
+        value_label.wrap = true;
         table.attach_defaults(value_label, 1, 2, row, row+1);
         
         name_label.show();
@@ -90,7 +83,7 @@ public class EditorWindow : Gtk.Window
 
         return value_label;
     }
-    
+
     private void dir_selected_cb()
     {
         KeyModel? key_model = null;
@@ -129,6 +122,8 @@ public class EditorWindow : Gtk.Window
            return "Boolean";
         case "s":
            return "String";
+        case "enum":
+           return "Enumeration";
         default:
            return type;
         }
@@ -141,16 +136,15 @@ public class EditorWindow : Gtk.Window
 
         if (key != null)
         {
-            SchemaKey? schema = schemas.keys.get(key.full_name);
-            if (schema != null)
+            if (key.schema != null)
             {
-                schema_name = schema.schema.id;
-                if (schema.summary != null)
-                    summary = schema.summary;
-                if (schema.description != null)
-                    description = schema.description;
-                type = type_to_description(schema.type);
-                default_value = schema.default_value;
+                schema_name = key.schema.schema.id;
+                if (key.schema.summary != null)
+                    summary = key.schema.summary;
+                if (key.schema.description != null)
+                    description = key.schema.description;
+                type = type_to_description(key.schema.type);
+                default_value = key.schema.default_value;
             }
             else
             {
