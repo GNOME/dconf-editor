@@ -144,7 +144,7 @@ public class EditorWindow : Gtk.Window
                 if (key.schema.description != null)
                     description = key.schema.description;
                 type = type_to_description(key.schema.type);
-                default_value = key.schema.default_value;
+                default_value = key.schema.default_value.print(false);
             }
             else
             {

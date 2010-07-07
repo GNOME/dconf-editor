@@ -5,7 +5,7 @@ public class SchemaKey
     public Schema schema;
     public string name;
     public string type;
-    public string default_value;
+    public Variant default_value;
     public string? enum_name;
     public string? summary;
     public string? description;
@@ -24,7 +24,7 @@ public class SchemaKey
                 type = prop->children->content;
             else if (prop->name == "enum")
             {
-                type = "enum";
+                type = "s";
                 enum_name = prop->children->content;
             }
             //else
@@ -37,7 +37,16 @@ public class SchemaKey
         for (Xml.Node* child = node->children; child != null; child = child->next)
         {
             if (child->name == "default")
-               default_value = child->children->content;
+            {
+               try
+               {
+                   default_value = Variant.parse(new VariantType(type), child->children->content);
+               }
+               catch (VariantParseError e)
+               {
+                   // ...
+               }
+            }
             else if (child->name == "summary")
                summary = child->children->content;
             else if (child->name == "description")

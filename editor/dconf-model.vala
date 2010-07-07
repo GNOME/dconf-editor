@@ -1,19 +1,53 @@
+using Gee;
+
 public class Key : GLib.Object
 {
     private SettingsModel model;
 
+    public Directory? parent;
+    public int index;
+
     public string name;
     public string full_name;
 
-    public Key? next;
-
     public SchemaKey? schema;
+    
+    public bool has_schema
+    {
+       private set {}
+       public get { return schema != null; }
+    }
+
+    public string type_string
+    {
+       private set {}
+       public get
+       {
+           if (_value != null)
+           {
+               if (_value.is_of_type(VariantType.STRING) && has_schema && schema.enum_name != null)
+                   return "<enum>";
+               else
+                   return _value.get_type_string();
+           }
+           else
+               return schema.type;
+       }
+    }
 
     private Variant? _value;
     public Variant value
     {
-        get { update_value(); return _value; }
-        set {
+        get
+        {
+            update_value();
+            if (_value != null)
+                return _value;
+            else
+                return schema.default_value;
+        }
+        set
+        {
             _value = value;
             try
             {
@@ -25,9 +59,11 @@ public class Key : GLib.Object
         }
     }
 
-    public Key(SettingsModel model, string name, string full_name)
+    public Key(SettingsModel model, Directory parent, int index, string name, string full_name)
     {
         this.model = model;
+        this.parent = parent;
+        this.index = index;
         this.name = name;
         this.full_name = full_name;
         this.schema = model.schemas.keys.get(full_name);
@@ -47,7 +83,8 @@ public class Directory : GLib.Object
     public string full_name;
 
     public Directory? parent;
-    
+    public int index;
+
     private KeyModel _key_model;
     public KeyModel key_model
     {
@@ -55,41 +92,70 @@ public class Directory : GLib.Object
         private set {}
     }
 
-    private int _n_children;
-    public int n_children
+    public HashMap<string, Directory> _child_map = new HashMap<string, Directory>();
+    public ArrayList<Directory> _children = new ArrayList<Directory>();
+    public ArrayList<Directory> children
     {
-        get { update_children(); return _n_children; }
-        private set { _n_children = value; }
+        get { update_children(); return _children; }
+        private set { }
     }
-    public Directory? _child;
-    public Directory? child
-    {
-        get { update_children(); return _child; }
-        private set { _child = value; }
-    }
-    public Directory? next;
 
-    private int _n_keys;
-    public int n_keys
-    {
-        get { update_children(); return _n_keys; }
-        private set { _n_keys = value; }
-    }
-    private Key? _keys;
-    public Key? keys
+    public HashMap<string, Key> _key_map = new HashMap<string, Key>();
+    private ArrayList<Key> _keys = new ArrayList<Key>();
+    public ArrayList<Key> keys
     {
         get { update_children(); return _keys; }
-        private set { _keys = value; }
+        private set { }
     }
 
     private bool have_children;
     
-    public Directory(SettingsModel model, string name, string full_name, Directory? parent = null)
+    public Directory(SettingsModel model, Directory? parent, int index, string name, string full_name)
     {
         this.model = model;
         this.parent = parent;
+        this.index = index;
         this.name = name;
         this.full_name = full_name;
+    }
+    
+    public Directory get_child(string name)
+    {
+        if (_child_map.has_key(name))
+            return _child_map[name];
+
+        Directory directory = new Directory(model, this, _children.size, name, full_name + name + "/");
+        _children.add(directory);
+        _child_map.set(name, directory);
+        return directory;
+    }
+
+    public Key get_key(string name)
+    {
+        if (_key_map.has_key(name))
+            return _key_map[name];
+
+        Key key = new Key(model, this, _keys.size, name, full_name + name);
+        _keys.add(key);
+        _key_map.set(name, key);
+        return key;
+    }
+
+    public void load_schema(Schema schema, string path)
+    {
+        if (path == "")
+        {
+            foreach (var schema_key in schema.keys.values)
+                get_key(schema_key.name);
+        }
+        else
+        {
+            string[] tokens = path.split("/", 2);
+            string name = tokens[0];
+
+            Directory directory = get_child(name);
+            directory.load_schema(schema, tokens[1]);
+        }
     }
 
     private void update_children()
@@ -97,12 +163,8 @@ public class Directory : GLib.Object
         if (have_children)
             return;
         have_children = true;
-
-        Directory? last_directory = null;
-        Key? last_key = null;
+        
         string[] items = model.client.list(full_name);
-        _n_children = 0;
-        _n_keys = 0;
         for (int i = 0; i < items.length; i++)
         {
             string item_name = full_name + items[i];
@@ -110,24 +172,11 @@ public class Directory : GLib.Object
             if (DConf.is_dir(item_name))
             {
                 string dir_name = items[i][0:-1];
-
-                Directory directory = new Directory(model, dir_name, item_name, this);
-                if (last_directory == null)
-                   child = directory;
-                else
-                   last_directory.next = directory;
-                last_directory = directory;
-                _n_children++;
+                get_child(dir_name);
             }
             else
             {
-                Key key = new Key(model, items[i], item_name);
-                if (last_key == null)
-                    keys = key;
-                else
-                    last_key.next = key;
-                last_key = key;
-                _n_keys++;
+                get_key(items[i]);
             }
         }
     }
@@ -186,41 +235,38 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
         Gtk.TreePath path = new Gtk.TreePath();
-        Key key = directory.keys;
-        int index = 0;
-        while (key != get_key(iter))
-        {
-            key = key.next;
-            index++;
-        }
-        path.append_index(index);
+        path.append_index(get_key(iter).index);
         return path;
     }
 
     public void get_value(Gtk.TreeIter iter, int column, out Value value)
     {
+        Key key = get_key(iter);
+
         if (column == 0)
-            value = get_key(iter);
+            value = key;
         else if (column == 1)
-            value = get_key(iter).name;
+            value = key.name;
+        else if (key.value != null)
+            value = key.value.print(false);
         else
-            value = get_key(iter).value.print(false);
+            value = "";
     }
 
     public bool iter_next(ref Gtk.TreeIter iter)
     {
-        Key key = get_key(iter);
-        if (key.next == null)
+        int index = get_key(iter).index;
+        if (index >= directory.keys.size - 1)
             return false;
-        set_iter(out iter, key.next);
+        set_iter(out iter, directory.keys[index+1]);
         return true;
     }
 
     public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
-        if (parent != null || directory.n_keys == 0)
+        if (parent != null || directory.keys.size == 0)
             return false;
-        set_iter(out iter, directory.keys);
+        set_iter(out iter, directory.keys[0]);
         return true;
     }
 
@@ -232,7 +278,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
     public int iter_n_children(Gtk.TreeIter? iter)
     {
         if (iter == null)
-            return directory.n_keys;
+            return directory.keys.size;
         else
             return 0;
     }
@@ -242,17 +288,9 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
         if (parent != null)
             return false;
 
-        Key key = directory.keys;
-        if (key == null)
+        if (n >= directory.keys.size)
             return false;
-        for (int i = 0; i < n; i++)
-        {
-           key = key.next;
-           if (key == null)
-               return false;
-        }
-
-        set_iter(out iter, key);
+        set_iter(out iter, directory.keys[n]);
         return true;
     }
 
@@ -406,7 +444,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public SettingsModel()
     {
         client = new DConf.Client("", true, null, null);
-        root = new Directory(this, "/", "/");
+        root = new Directory(this, null, 0, "/", "/");
 
         schemas = new SchemaList();
         try
@@ -415,6 +453,10 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         } catch (Error e) {
             warning("Failed to parse schemas: %s", e.message);
         }
+
+        /* Add keys for the values in the schemas */
+        foreach (var schema in schemas.schemas)
+            root.load_schema(schema, schema.path[1:schema.path.length]);
     }
 
     public Gtk.TreeModelFlags get_flags()
@@ -468,23 +510,8 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
-        Gtk.TreePath path;
-        Gtk.TreeIter parent;
-        if (iter_parent(out parent, iter))
-            path = get_path(parent);
-        else
-            path = new Gtk.TreePath();
-
-        int index = 0;
-        Directory directory = get_directory(iter);
-        Directory d = directory.parent.child;
-        while (d != directory)
-        {
-            d = d.next;
-            index++;
-        }
-        path.append_index(index);
-
+        Gtk.TreePath path = new Gtk.TreePath();
+        path.append_index(get_directory(iter).index);
         return path;
     }
 
@@ -499,46 +526,37 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public bool iter_next(ref Gtk.TreeIter iter)
     {
         Directory directory = get_directory(iter);
-        if (directory.next == null)
+        if (directory.index >= directory.parent.children.size - 1)
             return false;
-        set_iter(out iter, directory.next);
+        set_iter(out iter, directory.parent.children[directory.index+1]);
         return true;
     }
 
     public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
         Directory directory = get_directory(parent);
-        if (directory.n_children == 0)
+        if (directory.children.size == 0)
             return false;
-        set_iter(out iter, directory.child);
+        set_iter(out iter, directory.children[0]);
         return true;
     }
 
     public bool iter_has_child(Gtk.TreeIter iter)
     {
-        return get_directory(iter).n_children > 0;
+        return get_directory(iter).children.size > 0;
     }
 
     public int iter_n_children(Gtk.TreeIter? iter)
     {
-        return get_directory(iter).n_children;
+        return get_directory(iter).children.size;
     }
 
     public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
         Directory directory = get_directory(parent);
-
-        directory = directory.child;
-        if (directory == null)
+        if (n >= directory.children.size)
             return false;       
-        for (int i = 0; i < n; i++)
-        {
-           directory = directory.next;
-           if (directory == null)
-               return false;
-        }
-
-        set_iter(out iter, directory);
+        set_iter(out iter, directory.children[n]);
         return true;
     }
 
