@@ -22,9 +22,17 @@ GTK_DOC_CHECK([1.15])
 
 # Dependencies
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.12)
-PKG_CHECK_MODULES(gtk, gtk+-2.0)
-PKG_CHECK_MODULES(gee, gee-1.0)
-PKG_CHECK_MODULES(libxml, libxml-2.0)
+
+AC_ARG_ENABLE(editor,
+              AC_HELP_STRING([--disable-editor],
+                             [Disable the dconf editor]))
+AM_CONDITIONAL(ENABLE_EDITOR, test "x$enable_editor" != "xno")
+
+if test "x$enable_editor" != "xno"; then
+  PKG_CHECK_MODULES(gtk, gtk+-2.0)
+  PKG_CHECK_MODULES(gee, gee-1.0)
+  PKG_CHECK_MODULES(libxml, libxml-2.0)
+fi
 
 AC_ARG_WITH(gio_modules_dir, [  --with-gio-modules-dir=PATH choose directory for the GIO module, [default=LIBDIR/gio/modules]], giomodulesdir="$withval", giomodulesdir=${libdir}/gio/modules)
 AC_SUBST(giomodulesdir)
