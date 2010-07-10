@@ -1,5 +1,5 @@
 AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings
-INCLUDES = -I$(top_srcdir)/{common,gvdb,engine} $(gio_CFLAGS)
+INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
 
 giomodules_LTLIBRARIES = libdconfsettings.la
 
