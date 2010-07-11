@@ -219,7 +219,7 @@ method_call (GDBusConnection       *connection,
       g_variant_get (parameters, "(&sa(sav))", &prefix, &iter);
       length = g_variant_iter_n_children (iter);
 
-      keys = g_new (const gchar *, length);
+      keys = g_new (const gchar *, length + 1);
       values = g_new (GVariant *, length);
       while (g_variant_iter_next (iter, "(&s@av)", &keys[i], &values[i]))
         {
