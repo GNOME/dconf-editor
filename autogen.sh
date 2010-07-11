@@ -9,10 +9,16 @@ if [ "$1" = "clean" ]; then
   exit
 fi
 
+if automake-1.11 --version > /dev/null; then
+  automake=automake-1.11
+else
+  automake=automake
+fi
+
 gtkdocize --docdir docs --flavour no-tmpl
 libtoolize --automake
 aclocal ${ACLOCAL_FLAGS}
-automake --add-missing --foreign
+${automake} --add-missing --foreign
 autoconf
 
 CFLAGS=${CFLAGS=-ggdb -Werror}
