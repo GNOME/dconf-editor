@@ -23,45 +23,9 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "dconf-rebuilder.h"
+#include "dconf-writer.h"
 
-static const GDBusArgInfo name_arg = { -1, "name", "s" };
-static const GDBusArgInfo names_arg = { -1, "names", "as" };
-static const GDBusArgInfo serial_arg = { -1, "serial", "t" };
-static const GDBusArgInfo locked_arg = { -1, "locked", "b" };
-static const GDBusArgInfo value_arg = { -1, "value", "av" };
-static const GDBusArgInfo values_arg = { -1, "values", "a(sav)" };
-
-static const GDBusArgInfo *write_inargs[] = { &name_arg, &value_arg, NULL };
-static const GDBusArgInfo *write_outargs[] = { &serial_arg, NULL };
-
-static const GDBusArgInfo *merge_inargs[] = { &name_arg, &values_arg, NULL };
-static const GDBusArgInfo *merge_outargs[] = { &serial_arg, NULL };
-
-static const GDBusArgInfo *gsd_inargs[] = { NULL };
-static const GDBusArgInfo *gsd_outargs[] = { &name_arg, NULL };
-
-static const GDBusMethodInfo write_method = {
-  -1, "Write",         (gpointer) write_inargs, (gpointer) write_outargs };
-static const GDBusMethodInfo merge_method = {
-  -1, "Merge",         (gpointer) merge_inargs, (gpointer) merge_outargs };
-static const GDBusMethodInfo gsd_method = {
-  -1, "GetSessionDir", (gpointer) gsd_inargs,   (gpointer) gsd_outargs };
-
-static const GDBusMethodInfo *writer_methods[] = {
-  &write_method, &merge_method, &gsd_method, NULL
-};
-
-static const GDBusInterfaceInfo writer_interface = {
-  -1, "ca.desrt.dconf.Writer", (gpointer) writer_methods
-};
-
-typedef struct
-{
-  GMainLoop *loop;
-  guint64 serial;
-  gchar *path;
-} DConfWriter;
+static guint64 dconf_service_serial;
 
 static void
 emit_notify_signal (GDBusConnection  *connection,
@@ -123,7 +87,7 @@ emit_notify_signal (GDBusConnection  *connection,
   g_free (path);
 }
 
-static GVariant *
+static void
 unwrap_maybe (GVariant **ptr)
 {
   GVariant *array, *child;
@@ -186,15 +150,14 @@ method_call (GDBusConnection       *connection,
           return;
         }
 
-      if (!dconf_rebuilder_rebuild (writer->path, "", &key,
-                                    &value, 1, &error))
+      if (!dconf_writer_write (writer, key, value, &error))
         {
           g_dbus_method_invocation_return_gerror (invocation, error);
           g_error_free (error);
           return;
         }
 
-      serial = writer->serial++;
+      serial = dconf_service_serial++;
       g_dbus_method_invocation_return_value (invocation,
                                              g_variant_new ("(t)", serial));
       none = g_variant_new_array (G_VARIANT_TYPE_STRING, NULL, 0);
@@ -247,15 +210,14 @@ method_call (GDBusConnection       *connection,
       g_variant_iter_free (iter);
       keys[i] = NULL;
 
-      if (!dconf_rebuilder_rebuild (writer->path, prefix, keys,
-                                    values, i, &error))
+      if (!dconf_writer_write_many (writer, prefix, keys, values, i, &error))
         {
           g_dbus_method_invocation_return_gerror (invocation, error);
           g_error_free (error);
           return;
         }
 
-      serial = writer->serial++;
+      serial = dconf_service_serial++;
 
       g_dbus_method_invocation_return_value (invocation,
                                              g_variant_new ("(t)", serial));
@@ -272,17 +234,168 @@ method_call (GDBusConnection       *connection,
     g_assert_not_reached ();
 }
 
+static GVariant *
+writer_info_get_property (GDBusConnection  *connection,
+                          const gchar      *sender,
+                          const gchar      *object_path,
+                          const gchar      *interface_name,
+                          const gchar      *property_name,
+                          GError          **error,
+                          gpointer          user_data)
+{
+  return g_variant_new_string (dconf_writer_get_shm_dir ());
+}
+
+static const GDBusInterfaceVTable *
+subtree_dispatch (GDBusConnection *connection,
+                  const gchar     *sender,
+                  const gchar     *object_path,
+                  const gchar     *interface_name,
+                  const gchar     *node,
+                  gpointer        *out_user_data,
+                  gpointer         user_data)
+{
+  if (strcmp (interface_name, "ca.desrt.dconf.Writer") == 0)
+    {
+      static const GDBusInterfaceVTable vtable = {
+        method_call, NULL, NULL
+      };
+      static GHashTable *writer_table;
+      DConfWriter *writer;
+
+      if (node == NULL)
+        return NULL;
+
+      if G_UNLIKELY (writer_table == NULL)
+        writer_table = g_hash_table_new (g_str_hash, g_str_equal);
+
+      writer = g_hash_table_lookup (writer_table, node);
+
+      if G_UNLIKELY (writer == NULL)
+        {
+          writer = dconf_writer_new (node);
+          g_hash_table_insert (writer_table, g_strdup (node), writer);
+        }
+
+      *out_user_data = writer;
+
+      return &vtable;
+    }
+
+  else if (strcmp (interface_name, "ca.desrt.dconf.WriterInfo") == 0)
+    {
+      static const GDBusInterfaceVTable vtable = {
+        NULL, writer_info_get_property, NULL
+      };
+
+      *out_user_data = NULL;
+      return &vtable;
+    }
+
+  else
+    return NULL;
+}
+
+static gchar **
+subtree_enumerate (GDBusConnection *connection,
+                   const gchar     *sender,
+                   const gchar     *object_path,
+                   gpointer         user_data)
+{
+  return dconf_writer_list_existing ();
+}
+
+static GDBusInterfaceInfo **
+subtree_introspect (GDBusConnection *connection,
+                    const gchar     *sender,
+                    const gchar     *object_path,
+                    const gchar     *node,
+                    gpointer         user_data)
+{
+  static const GDBusArgInfo name_arg = { -1, (gchar *) "name", (gchar *) "s" };
+  static const GDBusArgInfo path_arg = { -1, (gchar *) "path", (gchar *) "s" };
+  static const GDBusArgInfo names_arg = { -1, (gchar *) "names", (gchar *) "as" };
+  static const GDBusArgInfo serial_arg = { -1, (gchar *) "serial", (gchar *) "t" };
+  static const GDBusArgInfo value_arg = { -1, (gchar *) "value", (gchar *) "av" };
+  static const GDBusArgInfo values_arg = { -1, (gchar *) "values", (gchar *) "a(sav)" };
+
+  static const GDBusArgInfo *write_in[] = { &name_arg, &value_arg, NULL };
+  static const GDBusArgInfo *write_out[] = { &serial_arg, NULL };
+  static const GDBusArgInfo *many_in[] = { &path_arg, &values_arg, NULL };
+  static const GDBusArgInfo *many_out[] = { &serial_arg, NULL };
+  static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, NULL };
+
+  static const GDBusMethodInfo write_method = {
+    -1, (gchar *) "Write",
+    (GDBusArgInfo **) write_in,
+    (GDBusArgInfo **) write_out
+  };
+  static const GDBusMethodInfo writemany_method = {
+    -1, (gchar *) "WriteMany",
+    (GDBusArgInfo **) many_in,
+    (GDBusArgInfo **) many_out
+  };
+  static const GDBusSignalInfo notify_signal = {
+    -1, (gchar *) "Notify",
+    (GDBusArgInfo **) notify_args
+  };
+  static const GDBusPropertyInfo shmdir_property = {
+    -1, (gchar *) "ShmDirectory", (gchar *) "s", G_DBUS_PROPERTY_INFO_FLAGS_READABLE
+  };
+  static const GDBusMethodInfo *writer_methods[] = {
+    &write_method, &writemany_method, NULL
+  };
+  static const GDBusSignalInfo *writer_signals[] = {
+    &notify_signal, NULL
+  };
+  static const GDBusPropertyInfo *writer_info_properties[] = {
+    &shmdir_property, NULL
+  };
+  static const GDBusInterfaceInfo writer_interface = {
+    -1, (gchar *) "ca.desrt.dconf.Writer",
+    (GDBusMethodInfo **) writer_methods,
+    (GDBusSignalInfo **) writer_signals,
+    (GDBusPropertyInfo **) NULL
+  };
+  static const GDBusInterfaceInfo writer_info_interface = {
+    -1, (gchar *) "ca.desrt.dconf.WriterInfo",
+    (GDBusMethodInfo **) NULL,
+    (GDBusSignalInfo **) NULL,
+    (GDBusPropertyInfo **) writer_info_properties
+  };
+
+  /* The root node supports only the info iface */
+  if (node == NULL)
+    {
+      const GDBusInterfaceInfo *interfaces[] = {
+        &writer_info_interface, NULL
+      };
+
+      return g_memdup (interfaces, sizeof interfaces);
+    }
+  else
+    {
+      const GDBusInterfaceInfo *interfaces[] = {
+        &writer_info_interface, &writer_interface, NULL
+      };
+
+      return g_memdup (interfaces, sizeof interfaces);
+    }
+}
+
 static void
 bus_acquired (GDBusConnection *connection,
               const gchar     *name,
               gpointer         user_data)
 {
-  static const GDBusInterfaceVTable interface_vtable = { method_call };
-  DConfWriter *writer = user_data;
+  static GDBusSubtreeVTable vtable = {
+    subtree_enumerate, subtree_introspect, subtree_dispatch
+  };
+  GDBusSubtreeFlags flags;
 
-  g_dbus_connection_register_object (connection, "/",
-                                     &writer_interface, &interface_vtable,
-                                     writer, NULL, NULL);
+  flags = G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES;
+  g_dbus_connection_register_subtree (connection, "/ca/desrt/dconf/Writer",
+                                      &vtable, flags, NULL, NULL, NULL);
 }
 
 static void
@@ -297,27 +410,20 @@ name_lost (GDBusConnection *connection,
            const gchar     *name,
            gpointer         user_data)
 {
-  DConfWriter *writer = user_data;
-
-  g_critical ("unable to acquire name: '%s'", name);
-
-  g_main_loop_quit (writer->loop);
+  g_error ("unable to acquire name: '%s'", name);
 }
 
 int
 main (void)
 {
-  DConfWriter writer = {  };
-
   g_type_init ();
 
-  writer.loop = g_main_loop_new (NULL, FALSE);
-  writer.path = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
+  dconf_writer_init ();
 
   g_bus_own_name (G_BUS_TYPE_SESSION, "ca.desrt.dconf", 0,
-                  bus_acquired, name_acquired, name_lost, &writer, NULL);
+                  bus_acquired, name_acquired, name_lost, NULL, NULL);
 
-  g_main_loop_run (writer.loop);
+  g_main_loop_run (g_main_loop_new (NULL, FALSE));
 
   return 0;
 }

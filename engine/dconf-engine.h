@@ -20,10 +20,13 @@ typedef struct
 
 
 
-typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message);
+typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngineMessage      *message);
 
-DConfEngine *           dconf_engine_new                                (const gchar             *context);
+void                    dconf_engine_set_service_func                   (DConfEngineServiceFunc   func);
+DConfEngine *           dconf_engine_new                                (void);
+DConfEngine *           dconf_engine_new_for_db                         (DConfEngineServiceFunc  *service,
+                                                                         const gchar             *db_name);
+
 void                    dconf_engine_unref                              (DConfEngine             *engine);
 DConfEngine *           dconf_engine_ref                                (DConfEngine             *engine);
 

@@ -241,6 +241,19 @@ dconf_client_class_init (DConfClientClass *class)
   object_class->finalize = dconf_client_finalize;
 }
 
+static GVariant *
+dconf_client_service_func (DConfEngineMessage *dcem)
+{
+  g_assert (dcem->bus_type == 'e');
+
+  return g_dbus_connection_call_sync (g_bus_get_sync (G_BUS_TYPE_SESSION,
+                                                      NULL, NULL),
+                                      dcem->destination, dcem->object_path,
+                                      dcem->interface, dcem->method,
+                                      dcem->body, dcem->reply_type,
+                                      0, -1, NULL, NULL);
+}
+
 /**
  * dconf_client_new:
  * @context: the context string (must by %NULL for now)
@@ -265,7 +278,9 @@ dconf_client_new (const gchar          *context,
 {
   DConfClient *client = g_object_new (DCONF_TYPE_CLIENT, NULL);
 
-  client->engine = dconf_engine_new (context);
+  dconf_engine_set_service_func (dconf_client_service_func);
+
+  client->engine = dconf_engine_new ();
   client->will_write = will_write;
   client->watch_func = watch_func;
   client->user_data = user_data;

@@ -32,8 +32,8 @@ typedef struct
   gint prefix_len;
 
   GHashTable *table;
-  const gchar **keys;
-  GVariant **values;
+  const gchar *const*keys;
+  GVariant *const*values;
   gint n_items;
   gint index;
 
@@ -181,8 +181,8 @@ dconf_rebuilder_walk_close (gpointer user_data)
 gboolean
 dconf_rebuilder_rebuild (const gchar  *filename,
                          const gchar  *prefix,
-                         const gchar **keys,
-                         GVariant    **values,
+                         const gchar *const*keys,
+                         GVariant    *const*values,
                          int           n_items,
                          GError      **error)
 {

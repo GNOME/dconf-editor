@@ -1,4 +1,4 @@
-AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb
+AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb -Wall -Wmissing-prototypes -Wwrite-strings
 
 libexec_PROGRAMS = dconf-service
 
@@ -12,6 +12,8 @@ dconf_service_SOURCES = \
 	dconf-rebuilder.h	\
 	dconf-rebuilder.h	\
 	dconf-rebuilder.c	\
+	dconf-writer.h		\
+	dconf-writer.c		\
 	service.c
 
 DISTCLEANFILES = ca.desrt.dconf.service
