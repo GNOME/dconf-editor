@@ -9,7 +9,8 @@ dconf_service_LDADD = $(gio_LIBS)
 dconf_service_SOURCES = \
 	../gvdb/gvdb-builder.c	\
 	../gvdb/gvdb-reader.c	\
-	dconf-rebuilder.h	\
+	dconf-interfaces.h	\
+	dconf-interfaces.c	\
 	dconf-rebuilder.h	\
 	dconf-rebuilder.c	\
 	dconf-writer.h		\

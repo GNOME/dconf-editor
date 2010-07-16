@@ -21,8 +21,8 @@
 
 #include <gio/gio.h>
 #include <string.h>
-#include <stdio.h>
 
+#include "dconf-interfaces.h"
 #include "dconf-writer.h"
 
 static guint64 dconf_service_serial;
@@ -312,63 +312,11 @@ subtree_introspect (GDBusConnection *connection,
                     const gchar     *node,
                     gpointer         user_data)
 {
-  static const GDBusArgInfo name_arg = { -1, (gchar *) "name", (gchar *) "s" };
-  static const GDBusArgInfo path_arg = { -1, (gchar *) "path", (gchar *) "s" };
-  static const GDBusArgInfo names_arg = { -1, (gchar *) "names", (gchar *) "as" };
-  static const GDBusArgInfo serial_arg = { -1, (gchar *) "serial", (gchar *) "t" };
-  static const GDBusArgInfo value_arg = { -1, (gchar *) "value", (gchar *) "av" };
-  static const GDBusArgInfo values_arg = { -1, (gchar *) "values", (gchar *) "a(sav)" };
-
-  static const GDBusArgInfo *write_in[] = { &name_arg, &value_arg, NULL };
-  static const GDBusArgInfo *write_out[] = { &serial_arg, NULL };
-  static const GDBusArgInfo *many_in[] = { &path_arg, &values_arg, NULL };
-  static const GDBusArgInfo *many_out[] = { &serial_arg, NULL };
-  static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, NULL };
-
-  static const GDBusMethodInfo write_method = {
-    -1, (gchar *) "Write",
-    (GDBusArgInfo **) write_in,
-    (GDBusArgInfo **) write_out
-  };
-  static const GDBusMethodInfo writemany_method = {
-    -1, (gchar *) "WriteMany",
-    (GDBusArgInfo **) many_in,
-    (GDBusArgInfo **) many_out
-  };
-  static const GDBusSignalInfo notify_signal = {
-    -1, (gchar *) "Notify",
-    (GDBusArgInfo **) notify_args
-  };
-  static const GDBusPropertyInfo shmdir_property = {
-    -1, (gchar *) "ShmDirectory", (gchar *) "s", G_DBUS_PROPERTY_INFO_FLAGS_READABLE
-  };
-  static const GDBusMethodInfo *writer_methods[] = {
-    &write_method, &writemany_method, NULL
-  };
-  static const GDBusSignalInfo *writer_signals[] = {
-    &notify_signal, NULL
-  };
-  static const GDBusPropertyInfo *writer_info_properties[] = {
-    &shmdir_property, NULL
-  };
-  static const GDBusInterfaceInfo writer_interface = {
-    -1, (gchar *) "ca.desrt.dconf.Writer",
-    (GDBusMethodInfo **) writer_methods,
-    (GDBusSignalInfo **) writer_signals,
-    (GDBusPropertyInfo **) NULL
-  };
-  static const GDBusInterfaceInfo writer_info_interface = {
-    -1, (gchar *) "ca.desrt.dconf.WriterInfo",
-    (GDBusMethodInfo **) NULL,
-    (GDBusSignalInfo **) NULL,
-    (GDBusPropertyInfo **) writer_info_properties
-  };
-
   /* The root node supports only the info iface */
   if (node == NULL)
     {
       const GDBusInterfaceInfo *interfaces[] = {
-        &writer_info_interface, NULL
+        &ca_desrt_dconf_WriterInfo, NULL
       };
 
       return g_memdup (interfaces, sizeof interfaces);
@@ -376,7 +324,7 @@ subtree_introspect (GDBusConnection *connection,
   else
     {
       const GDBusInterfaceInfo *interfaces[] = {
-        &writer_info_interface, &writer_interface, NULL
+        &ca_desrt_dconf_WriterInfo, &ca_desrt_dconf_Writer, NULL
       };
 
       return g_memdup (interfaces, sizeof interfaces);
