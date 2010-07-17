@@ -1,4 +1,5 @@
 #include "dconf-shmdir.h"
+
 #include <sys/statfs.h>
 #include <sys/vfs.h>
 #include <errno.h>
@@ -41,13 +42,15 @@ dconf_shmdir_from_environment (void)
       const gchar *cache = g_get_user_cache_dir ();
 
       if (is_local (cache))
-        result = g_build_filename (cache, "dconf", NULL);
-    }
+        {
+          result = g_build_filename (cache, "dconf", NULL);
 
-  if (g_mkdir_with_parents (result, 0700))
-    {
-      g_free (result);
-      result = NULL;
+          if (g_mkdir_with_parents (result, 0700) != 0)
+            {
+              g_free (result);
+              result = NULL;
+            }
+        }
     }
 
   return result;

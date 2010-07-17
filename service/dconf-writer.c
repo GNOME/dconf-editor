@@ -3,6 +3,7 @@
 #include "dconf-shmdir.h"
 #include "dconf-rebuilder.h"
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -119,7 +120,6 @@ void
 dconf_writer_init (void)
 {
   const gchar *config_dir = g_get_user_config_dir ();
-  const gchar *cache_dir = g_get_user_cache_dir ();
 
   dconf_writer_db_dir = g_build_filename (config_dir, "dconf", NULL);
 
@@ -163,10 +163,12 @@ dconf_writer_init (void)
 
   if (dconf_writer_shm_dir == NULL)
     {
-      dconf_writer_shm_dir = g_build_filename (cache_dir, "dconf", NULL);
+      const gchar *tmpdir = g_get_tmp_dir ();
+      gchar *shmdir;
 
-      if (g_mkdir_with_parents (dconf_writer_shm_dir, 0700))
-        g_error ("Can not create directory '%s': %s",
-                 dconf_writer_shm_dir, g_strerror (errno));
+      shmdir = g_build_filename (tmpdir, "dconf.XXXXXX", NULL);
+
+      if ((dconf_writer_shm_dir = mkdtemp (shmdir)) == NULL)
+        g_error ("Can not create reasonable shm directory");
     }
 }

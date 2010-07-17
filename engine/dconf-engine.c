@@ -53,7 +53,7 @@ dconf_engine_get_session_dir (void)
               g_variant_get (result, "(v)", &str);
 
               if (g_variant_is_of_type (str, G_VARIANT_TYPE_STRING))
-                session_dir = g_variant_get_string (str, NULL);
+                session_dir = g_variant_dup_string (str, NULL);
               else
                 g_critical ("dconf service sent invalid reply");
 
