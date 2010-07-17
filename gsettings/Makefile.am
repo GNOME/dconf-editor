@@ -7,6 +7,7 @@ libdconfsettings_la_LIBADD = $(gio_LIBS)
 libdconfsettings_la_LDFLAGS = -module -avoid-version -shared
 libdconfsettings_la_SOURCES = \
 	../engine/dconf-engine.c	\
+	../common/dconf-shmdir.c	\
 	../gvdb/gvdb-reader.c		\
 	dconfsettingsbackend.c
 

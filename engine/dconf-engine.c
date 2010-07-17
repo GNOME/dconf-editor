@@ -1,5 +1,6 @@
 
 #define _XOPEN_SOURCE 600
+#include "dconf-shmdir.h"
 #include "dconf-engine.h"
 #include <gvdb-reader.h>
 #include <string.h>
@@ -26,7 +27,7 @@ dconf_engine_get_session_dir (void)
 
   if (g_once_init_enter (&initialised))
     {
-      session_dir = g_strdup (getenv ("DCONF_SESSION_DIR"));
+      session_dir = dconf_shmdir_from_environment ();
 
       if (session_dir == NULL)
         {

@@ -26,6 +26,7 @@ dconfinclude_HEADERS = \
 
 libdconf_la_LIBADD = $(gio_LIBS)
 libdconf_la_SOURCES = \
+	../common/dconf-shmdir.c	\
 	../common/dconf-paths.c		\
 	../engine/dconf-engine.c	\
 	../gvdb/gvdb-reader.c		\

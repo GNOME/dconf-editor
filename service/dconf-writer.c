@@ -1,5 +1,6 @@
 #include "dconf-writer.h"
 
+#include "dconf-shmdir.h"
 #include "dconf-rebuilder.h"
 
 #include <unistd.h>
@@ -158,9 +159,14 @@ dconf_writer_init (void)
                  dconf_writer_db_dir, g_strerror (errno));
     }
 
-  dconf_writer_shm_dir = g_build_filename (cache_dir, "dconf", NULL);
+  dconf_writer_shm_dir = dconf_shmdir_from_environment ();
 
-  if (g_mkdir_with_parents (dconf_writer_shm_dir, 0700))
-    g_error ("Can not create directory '%s': %s",
-             dconf_writer_shm_dir, g_strerror (errno));
+  if (dconf_writer_shm_dir == NULL)
+    {
+      dconf_writer_shm_dir = g_build_filename (cache_dir, "dconf", NULL);
+
+      if (g_mkdir_with_parents (dconf_writer_shm_dir, 0700))
+        g_error ("Can not create directory '%s': %s",
+                 dconf_writer_shm_dir, g_strerror (errno));
+    }
 }
