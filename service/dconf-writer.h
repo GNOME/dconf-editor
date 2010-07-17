@@ -16,3 +16,7 @@ gboolean                dconf_writer_write_many                         (DConfWr
                                                                          GVariant * const     *values,
                                                                          gsize n_items,
                                                                          GError              **error);
+gboolean                dconf_writer_set_lock                           (DConfWriter          *writer,
+                                                                         const gchar          *name,
+                                                                         gboolean              locked,
+                                                                         GError              **error);
