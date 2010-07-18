@@ -1,1 +1,4 @@
 dconf
+dconf-update
+dconf-update.c
+*.stamp
