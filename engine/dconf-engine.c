@@ -72,20 +72,24 @@ dconf_engine_get_session_dir (void)
 
 struct _DConfEngine
 {
-  guint8 *shm;
-  GvdbTable *gvdb;
-  gchar *name;
-  gchar *object_path;
-  gint ref_count;
+  gint        ref_count;
+  guint64     state;
+
+  guint8     *shm;
+
+  GvdbTable **gvdbs;
+  gchar     **object_paths;
+  gchar     **names;
+  gint        n_dbs;
 };
 
 static void
-dconf_engine_setup (DConfEngine *engine)
+dconf_engine_setup_user (DConfEngine *engine)
 {
-  /* invariant: we never have gvdb without shm */
-  g_assert ((engine->gvdb == NULL) >= (engine->shm == NULL));
+  /* invariant: we never have user gvdb without shm */
+  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
 
-  if (engine->object_path)
+  if (engine->names[0])
     {
       const gchar *session_dir = dconf_engine_get_session_dir ();
 
@@ -95,7 +99,7 @@ dconf_engine_setup (DConfEngine *engine)
           gint fd;
 
           filename = g_build_filename (session_dir,
-                                       engine->name,
+                                       engine->names[0],
                                        NULL);
           fd = open (filename, O_RDWR | O_CREAT, 0600);
           g_free (filename);
@@ -120,39 +124,81 @@ dconf_engine_setup (DConfEngine *engine)
 
           filename = g_build_filename (g_get_user_config_dir (),
                                        "dconf",
-                                       engine->name,
+                                       engine->names[0],
                                        NULL);
-          engine->gvdb = gvdb_table_new (filename, FALSE, NULL);
+          engine->gvdbs[0] = gvdb_table_new (filename, FALSE, NULL);
           g_free (filename);
         }
     }
 
-  g_assert ((engine->gvdb == NULL) >= (engine->shm == NULL));
+  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
 }
 
 static void
-dconf_engine_refresh (DConfEngine *engine)
+dconf_engine_refresh_user (DConfEngine *engine)
 {
-  g_assert ((engine->gvdb == NULL) >= (engine->shm == NULL));
+  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
 
   /* if we failed the first time, fail forever */
   if (engine->shm && *engine->shm == 1)
     {
-      if (engine->gvdb)
+      if (engine->gvdbs[0])
         {
-          gvdb_table_unref (engine->gvdb);
-          engine->gvdb = NULL;
+          gvdb_table_unref (engine->gvdbs[0]);
+          engine->gvdbs[0] = NULL;
         }
 
       munmap (engine->shm, 1);
       engine->shm = NULL;
 
-      dconf_engine_setup (engine);
+      dconf_engine_setup_user (engine);
+      engine->state++;
     }
 
-  g_assert ((engine->gvdb == NULL) >= (engine->shm == NULL));
+  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
 }
 
+static void
+dconf_engine_refresh_system (DConfEngine *engine)
+{
+  gint i;
+
+  for (i = 1; i < engine->n_dbs; i++)
+    {
+      if (engine->gvdbs[i] && !gvdb_table_is_valid (engine->gvdbs[i]))
+        {
+          gvdb_table_unref (engine->gvdbs[i]);
+          engine->gvdbs[i] = NULL;
+        }
+
+      if (engine->gvdbs[i] == NULL)
+        {
+          gchar *filename = g_build_filename ("/etc/dconf/db",
+                                              engine->names[i], NULL);
+          engine->gvdbs[i] = gvdb_table_new (filename, TRUE, NULL);
+          if (engine->gvdbs[i] == NULL)
+            g_error ("Unable to open '%s', specified in dconf profile\n",
+                     filename);
+          g_free (filename);
+          engine->state++;
+        }
+    }
+}
+
+static void
+dconf_engine_refresh (DConfEngine *engine)
+{
+  dconf_engine_refresh_system (engine);
+  dconf_engine_refresh_user (engine);
+}
+
+guint64
+dconf_engine_get_state (DConfEngine *engine)
+{
+  dconf_engine_refresh (engine);
+
+  return engine->state;
+}
 
 static gboolean
 dconf_engine_load_profile (const gchar   *profile,
@@ -220,8 +266,11 @@ dconf_engine_new (void)
 {
   const gchar *profile;
   DConfEngine *engine;
-  gchar **dbs;
-  gint n_dbs;
+  gint i;
+
+  engine = g_slice_new (DConfEngine);
+  engine->ref_count = 1;
+  engine->shm = NULL;
 
   profile = getenv ("DCONF_PROFILE");
 
@@ -229,39 +278,42 @@ dconf_engine_new (void)
     {
       GError *error = NULL;
 
-      if (!dconf_engine_load_profile (profile, &dbs, &n_dbs, &error))
+      if (!dconf_engine_load_profile (profile, &engine->names,
+                                      &engine->n_dbs, &error))
         g_error ("Error loading dconf profile '%s': %s\n",
                  profile, error->message);
     }
   else
     {
-      if (!dconf_engine_load_profile ("user", &dbs, &n_dbs, NULL))
+      if (!dconf_engine_load_profile ("user", &engine->names,
+                                      &engine->n_dbs, NULL))
         {
-          dbs = g_new (gchar *, 1);
-          dbs[0] = g_strdup ("user");
-          n_dbs = 1;
+          engine->names = g_new (gchar *, 1);
+          engine->names[0] = g_strdup ("user");
+          engine->n_dbs = 1;
         }
     }
 
-  engine = g_slice_new (DConfEngine);
-  engine->ref_count = 1;
-  engine->gvdb = NULL;
-  engine->shm = NULL;
-
-  if (strcmp (dbs[0], "-") != 0)
+  if (strcmp (engine->names[0], "-") == 0)
     {
-      engine->name = g_strdup (dbs[0]);
-      engine->object_path = g_strjoin (NULL,
-                                       "/ca/desrt/dconf/Writer/",
-                                       dbs[0], NULL);
-    }
-  else
-    {
-      engine->name = NULL;
-      engine->object_path = NULL;
+      g_free (engine->names[0]);
+      engine->names[0] = NULL;
     }
 
-  dconf_engine_setup (engine);
+  engine->object_paths = g_new (gchar *, engine->n_dbs);
+  engine->gvdbs = g_new0 (GvdbTable *, engine->n_dbs);
+
+  for (i = 0; i < engine->n_dbs; i++)
+    if (engine->names[i])
+        engine->object_paths[i] = g_strjoin (NULL,
+                                             "/ca/desrt/dconf/Writer/",
+                                             engine->names[i],
+                                             NULL);
+    else
+      engine->object_paths[i] = NULL;
+
+  dconf_engine_refresh_system (engine);
+  dconf_engine_setup_user (engine);
 
   return engine;
 }
@@ -287,12 +339,20 @@ dconf_engine_read (DConfEngine   *engine,
 {
   GVariant *value = NULL;
 
+  dconf_engine_refresh (engine);
+
   if (type != DCONF_READ_RESET)
     {
-      dconf_engine_refresh (engine);
+      if (engine->gvdbs[0])
+        value = gvdb_table_get_value (engine->gvdbs[0], key);
+    }
 
-      if (engine->gvdb)
-        value = gvdb_table_get_value (engine->gvdb, key);
+  if (type != DCONF_READ_SET)
+    {
+      gint i;
+
+      for (i = 1; i < engine->n_dbs && value == NULL; i++)
+        value = gvdb_table_get_value (engine->gvdbs[i], key);
     }
 
   return value;
@@ -309,7 +369,7 @@ dconf_engine_make_match_rule (DConfEngine        *engine,
                           "arg1path='%s'", name);
   dcem->bus_type = 'e';
   dcem->destination = "org.freedesktop.DBus";
-  dcem->object_path = engine->object_path;
+  dcem->object_path = engine->object_paths[0];
   dcem->interface = "org.freedesktop.DBus";
   dcem->body = g_variant_ref_sink (g_variant_new ("(s)", rule));
   g_free (rule);
@@ -369,7 +429,7 @@ dconf_engine_dcem (DConfEngine        *engine,
 
   dcem->bus_type = 'e';
   dcem->destination = "ca.desrt.dconf";
-  dcem->object_path = engine->object_path;
+  dcem->object_path = engine->object_paths[0];
   dcem->interface = "ca.desrt.dconf.Writer";
   dcem->reply_type = G_VARIANT_TYPE ("(t)");
   dcem->method = method;
@@ -438,8 +498,8 @@ dconf_engine_list (DConfEngine    *engine,
 
   dconf_engine_refresh (engine);
 
-  if (engine->gvdb)
-    list = gvdb_table_list (engine->gvdb, dir);
+  if (engine->gvdbs[0])
+    list = gvdb_table_list (engine->gvdbs[0], dir);
   else
     list = NULL;
 

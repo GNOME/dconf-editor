@@ -26,6 +26,7 @@ void                    dconf_engine_set_service_func                   (DConfEn
 DConfEngine *           dconf_engine_new                                (void);
 DConfEngine *           dconf_engine_new_for_db                         (DConfEngineServiceFunc  *service,
                                                                          const gchar             *db_name);
+guint64                 dconf_engine_get_state                          (DConfEngine             *engine);
 
 void                    dconf_engine_unref                              (DConfEngine             *engine);
 DConfEngine *           dconf_engine_ref                                (DConfEngine             *engine);
