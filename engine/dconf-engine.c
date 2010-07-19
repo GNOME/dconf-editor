@@ -210,6 +210,7 @@ dconf_engine_load_profile (const gchar   *profile,
 
   *dbs = g_renew (gchar *, *dbs, *n_dbs);
   g_free (filename);
+  fclose (f);
 
   return TRUE;
 }
