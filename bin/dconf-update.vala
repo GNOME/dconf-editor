@@ -98,11 +98,16 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 			throw new FileError.FAILED ("Can not open '%s' for replacement: %s", filename, strerror (saved_error));
 		}
 
-		table.write_contents (filename);
+		try {
+			table.write_contents (filename);
 
-		if (fd >= 0) {
-			Posix.write (fd, "\0\0\0\0\0\0\0\0", 8);
-			Posix.close (fd);
+			if (fd >= 0) {
+				Posix.write (fd, "\0\0\0\0\0\0\0\0", 8);
+			}
+		} finally {
+			if (fd >= 0) {
+				Posix.close (fd);
+			}
 		}
 
 		try {
