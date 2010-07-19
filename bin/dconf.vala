@@ -44,6 +44,10 @@ void main (string[] args) {
 				do_write (client, args[2], args[3]);
 				break;
 
+			case "update":
+				do_update ();
+				break;
+
 			default:
 				error ("unknown command");
 				break;
