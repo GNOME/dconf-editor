@@ -34,6 +34,25 @@
 static DConfEngineServiceFunc dconf_engine_service_func;
 
 void
+dconf_engine_message_destroy (DConfEngineMessage *dcem)
+{
+  if (dcem->body)
+    {
+      g_variant_unref (dcem->body);
+      dcem->body = NULL;
+    }
+}
+
+void
+dconf_engine_message_copy (DConfEngineMessage *orig,
+                           DConfEngineMessage *copy)
+{
+  *copy = *orig;
+  if (orig->body)
+    copy->body = g_variant_ref (orig->body);
+}
+
+void
 dconf_engine_set_service_func (DConfEngineServiceFunc func)
 {
   dconf_engine_service_func = func;
@@ -60,7 +79,7 @@ dconf_engine_get_session_dir (void)
           dcem.interface = "org.freedesktop.DBus.Properties";
           dcem.method = "Get";
           dcem.reply_type = G_VARIANT_TYPE ("(v)");
-          dcem.body = g_variant_new ("(ss)",
+          dcem.body = g_variant_new ("((ss))",
                                      "ca.desrt.dconf.WriterInfo",
                                      "ShmDirectory");
 
@@ -92,7 +111,6 @@ dconf_engine_get_session_dir (void)
 
 struct _DConfEngine
 {
-  gint        ref_count;
   guint64     state;
 
   guint8     *shm;
@@ -288,7 +306,6 @@ dconf_engine_new (const gchar *profile)
   gint i;
 
   engine = g_slice_new (DConfEngine);
-  engine->ref_count = 1;
   engine->shm = NULL;
 
   if (profile == NULL)
@@ -338,42 +355,75 @@ dconf_engine_new (const gchar *profile)
   return engine;
 }
 
-DConfEngine *
-dconf_engine_ref (DConfEngine *engine)
-{
-  g_atomic_int_inc (&engine->ref_count);
-
-  return engine;
-}
-
 void
-dconf_engine_unref (DConfEngine *engine)
+dconf_engine_free (DConfEngine *engine)
 {
+  gint i;
+
+  for (i = 0; i < engine->n_dbs; i++)
+    {
+      g_free (engine->object_paths[i]);
+      g_free (engine->names[i]);
+
+      if (engine->gvdbs[i])
+        gvdb_table_unref (engine->gvdbs[i]);
+    }
+
+  if (engine->shm)
+    {
+      munmap (engine->shm, 1);
+    }
+
+  g_free (engine->object_paths);
+  g_free (engine->names);
+  g_free (engine->gvdbs);
+
   g_slice_free (DConfEngine, engine);
 }
 
 GVariant *
-dconf_engine_read (DConfEngine   *engine,
-                   const gchar   *key,
-                   DConfReadType  type)
+dconf_engine_read (DConfEngine  *engine,
+                   const gchar  *key)
 {
   GVariant *value = NULL;
+  gint i;
 
   dconf_engine_refresh (engine);
 
-  if (type != DCONF_READ_RESET)
-    {
-      if (engine->gvdbs[0])
-        value = gvdb_table_get_value (engine->gvdbs[0], key);
-    }
+  if (engine->gvdbs[0])
+    value = gvdb_table_get_value (engine->gvdbs[0], key);
 
-  if (type != DCONF_READ_SET)
-    {
-      gint i;
+  for (i = 1; i < engine->n_dbs && value == NULL; i++)
+    value = gvdb_table_get_value (engine->gvdbs[i], key);
 
-      for (i = 1; i < engine->n_dbs && value == NULL; i++)
-        value = gvdb_table_get_value (engine->gvdbs[i], key);
-    }
+  return value;
+}
+
+GVariant *
+dconf_engine_read_default (DConfEngine  *engine,
+                           const gchar  *key)
+{
+  GVariant *value = NULL;
+  gint i;
+
+  dconf_engine_refresh_system (engine);
+
+  for (i = 1; i < engine->n_dbs && value == NULL; i++)
+    value = gvdb_table_get_value (engine->gvdbs[i], key);
+
+  return value;
+}
+
+GVariant *
+dconf_engine_read_no_default (DConfEngine  *engine,
+                              const gchar  *key)
+{
+  GVariant *value = NULL;
+
+  dconf_engine_refresh_user (engine);
+
+  if (engine->gvdbs[0])
+    value = gvdb_table_get_value (engine->gvdbs[0], key);
 
   return value;
 }
@@ -391,14 +441,14 @@ dconf_engine_make_match_rule (DConfEngine        *engine,
   dcem->destination = "org.freedesktop.DBus";
   dcem->object_path = engine->object_paths[0];
   dcem->interface = "org.freedesktop.DBus";
-  dcem->body = g_variant_ref_sink (g_variant_new ("(s)", rule));
+  dcem->body = g_variant_ref_sink (g_variant_new ("((s))", rule));
   g_free (rule);
 }
 
 void
 dconf_engine_watch (DConfEngine        *engine,
-                    DConfEngineMessage *dcem,
-                    const gchar        *name)
+                    const gchar        *name,
+                    DConfEngineMessage *dcem)
 {
   dconf_engine_make_match_rule (engine, dcem, name);
   dcem->method = "AddMatch";
@@ -406,8 +456,8 @@ dconf_engine_watch (DConfEngine        *engine,
 
 void
 dconf_engine_unwatch (DConfEngine        *engine,
-                      DConfEngineMessage *dcem,
-                      const gchar        *name)
+                      const gchar        *name,
+                      DConfEngineMessage *dcem)
 {
   dconf_engine_make_match_rule (engine, dcem, name);
   dcem->method = "RemoveMatch";
@@ -415,12 +465,12 @@ dconf_engine_unwatch (DConfEngine        *engine,
 
 gboolean
 dconf_engine_is_writable (DConfEngine         *engine,
-                          DConfEngineMessage  *dcem,
                           const gchar         *name,
+                          DConfEngineMessage  *dcem,
                           GError             **error)
 {
   dcem->bus_type = 'e';
-  dcem->body = NULL;
+  dcem->body = g_variant_new ("()");
 
   return TRUE;
 }
@@ -451,20 +501,20 @@ dconf_engine_dcem (DConfEngine        *engine,
   dcem->destination = "ca.desrt.dconf";
   dcem->object_path = engine->object_paths[0];
   dcem->interface = "ca.desrt.dconf.Writer";
-  dcem->reply_type = G_VARIANT_TYPE ("(t)");
+  dcem->reply_type = G_VARIANT_TYPE ("(s)");
   dcem->method = method;
+  dcem->tagged = TRUE;
 
   va_start (ap, format_string);
-  dcem->body = g_variant_ref_sink (g_variant_new_va (format_string,
-                                                     NULL, &ap));
+  dcem->body = g_variant_ref_sink (g_variant_new_variant (g_variant_new_va (format_string, NULL, &ap)));
   va_end (ap);
 }
 
 gboolean
 dconf_engine_write (DConfEngine         *engine,
-                    DConfEngineMessage  *dcem,
                     const gchar         *name,
                     GVariant            *value,
+                    DConfEngineMessage  *dcem,
                     GError             **error)
 {
   dconf_engine_dcem (engine, dcem,
@@ -476,10 +526,10 @@ dconf_engine_write (DConfEngine         *engine,
 
 gboolean
 dconf_engine_write_many (DConfEngine          *engine,
-                         DConfEngineMessage   *dcem,
                          const gchar          *prefix,
                          const gchar * const  *keys,
                          GVariant            **values,
+                         DConfEngineMessage   *dcem,
                          GError              **error)
 {
   GVariantBuilder builder;
@@ -498,9 +548,9 @@ dconf_engine_write_many (DConfEngine          *engine,
 
 void
 dconf_engine_set_lock (DConfEngine        *engine,
-                       DConfEngineMessage *dcem,
                        const gchar        *path,
-                       gboolean            locked)
+                       gboolean            locked,
+                       DConfEngineMessage *dcem)
 {
   dconf_engine_dcem (engine, dcem, "SetLock", "(sb)", path, locked);
 }
@@ -509,7 +559,7 @@ gchar **
 dconf_engine_list (DConfEngine    *engine,
                    const gchar    *dir,
                    DConfResetList *resets,
-                   gsize          *length)
+                   gint           *length)
 {
   gchar **list;
 

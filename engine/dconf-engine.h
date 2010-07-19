@@ -35,13 +35,16 @@ typedef struct
   const gchar *object_path;
   const gchar *interface;
   const gchar *method;
+  gboolean     tagged;
   const GVariantType *reply_type;
   GVariant    *body;
 } DConfEngineMessage;
 
 
-
 typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngineMessage      *message);
+void                    dconf_engine_message_copy                       (DConfEngineMessage      *orig,
+                                                                         DConfEngineMessage      *copy);
+void                    dconf_engine_message_destroy                    (DConfEngineMessage      *message);
 
 void                    dconf_engine_set_service_func                   (DConfEngineServiceFunc   func);
 DConfEngine *           dconf_engine_new                                (const gchar             *profile);
@@ -49,42 +52,44 @@ DConfEngine *           dconf_engine_new_for_db                         (DConfEn
                                                                          const gchar             *db_name);
 guint64                 dconf_engine_get_state                          (DConfEngine             *engine);
 
-void                    dconf_engine_unref                              (DConfEngine             *engine);
-DConfEngine *           dconf_engine_ref                                (DConfEngine             *engine);
+void                    dconf_engine_free                               (DConfEngine             *engine);
 
 GVariant *              dconf_engine_read                               (DConfEngine             *engine,
-                                                                         const gchar             *key,
-                                                                         DConfReadType            type);
+                                                                         const gchar             *key);
+GVariant *              dconf_engine_read_default                       (DConfEngine             *engine,
+                                                                         const gchar             *key);
+GVariant *              dconf_engine_read_no_default                    (DConfEngine             *engine,
+                                                                         const gchar             *key);
 gchar **                dconf_engine_list                               (DConfEngine             *engine,
                                                                          const gchar             *path,
                                                                          DConfResetList          *resets,
-                                                                         gsize                   *length);
+                                                                         gint                    *length);
 
 void                    dconf_engine_get_service_info                   (DConfEngine             *engine,
                                                                          const gchar            **bus_type,
                                                                          const gchar            **destination,
                                                                          const gchar            **object_path);
 gboolean                dconf_engine_is_writable                        (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message,
                                                                          const gchar             *name,
+                                                                         DConfEngineMessage      *message,
                                                                          GError                 **error);
 gboolean                dconf_engine_write                              (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message,
                                                                          const gchar             *key,
                                                                          GVariant                *value,
+                                                                         DConfEngineMessage      *message,
                                                                          GError                 **error);
 gboolean                dconf_engine_write_many                         (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message,
                                                                          const gchar             *prefix,
                                                                          const gchar * const     *keys,
                                                                          GVariant               **values,
+                                                                         DConfEngineMessage      *message,
                                                                          GError                 **error);
 void                    dconf_engine_watch                              (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message,
-                                                                         const gchar             *name);
+                                                                         const gchar             *name,
+                                                                         DConfEngineMessage      *message);
 void                    dconf_engine_unwatch                            (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message,
-                                                                         const gchar             *name);
+                                                                         const gchar             *name,
+                                                                         DConfEngineMessage      *message);
 gboolean                dconf_engine_decode_notify                      (DConfEngine             *engine,
                                                                          const gchar             *anti_expose,
                                                                          const gchar            **prefix,
@@ -95,9 +100,9 @@ gboolean                dconf_engine_decode_notify                      (DConfEn
                                                                          const gchar             *member,
                                                                          GVariant                *body);
 void                    dconf_engine_set_lock                           (DConfEngine             *engine,
-                                                                         DConfEngineMessage      *message,
                                                                          const gchar             *path,
-                                                                         gboolean                 locked);
+                                                                         gboolean                 locked,
+                                                                         DConfEngineMessage      *message);
 
 gboolean                dconf_engine_interpret_reply                    (DConfEngineMessage      *message,
                                                                          const gchar             *sender,

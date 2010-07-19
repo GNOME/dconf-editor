@@ -1,0 +1,4 @@
+dconf.vapi
+*.c
+*.stamp
+*.deps

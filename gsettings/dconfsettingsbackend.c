@@ -343,7 +343,6 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
                              gboolean            default_value)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfReadType type;
 
   if (!default_value)
     {
@@ -352,12 +351,10 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
       if (dconf_settings_backend_scan_outstanding (dcsb, key, &value))
         return value;
 
-      type = DCONF_READ_NORMAL;
+      return dconf_engine_read (dcsb->engine, key);
     }
   else
-    type = DCONF_READ_RESET;
-
-  return dconf_engine_read (dcsb->engine, key, type);
+    return dconf_engine_read_default (dcsb->engine, key);
 }
 
 static gchar **
@@ -367,11 +364,7 @@ dconf_settings_backend_list (GSettingsBackend  *backend,
                              gsize              n_resets,
                              gsize             *length)
 {
-  DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-
-  g_assert (n_resets == 0);
-
-  return dconf_engine_list (dcsb->engine, dir, NULL, length);
+  g_assert_not_reached ();
 }
 
 static void
@@ -380,12 +373,15 @@ dconf_settings_backend_send (GDBusConnection    *bus,
                              volatile guint32   *serial)
 {
   GDBusMessage *message;
+  GVariant *body;
 
   message = g_dbus_message_new_method_call (dcem->destination,
                                             dcem->object_path,
                                             dcem->interface,
                                             dcem->method);
-  g_dbus_message_set_body (message, dcem->body);
+  body = g_variant_get_child_value (dcem->body, 0);
+  g_dbus_message_set_body (message, body);
+  g_variant_unref (body);
 
   if (serial)
     g_dbus_connection_send_message (bus, message, serial, NULL);
@@ -462,7 +458,7 @@ dconf_settings_backend_write (GSettingsBackend *backend,
   DConfEngineMessage dcem;
   GDBusConnection *bus;
 
-  if (!dconf_engine_write (dcsb->engine, &dcem, path_or_key, value, NULL))
+  if (!dconf_engine_write (dcsb->engine, path_or_key, value, &dcem, NULL))
     return FALSE;
 
   if (!dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
@@ -499,8 +495,8 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
 
   g_settings_backend_flatten_tree (tree, &prefix, &keys, &values);
 
-  if (dconf_engine_write_many (dcsb->engine, &dcem,
-                               prefix, keys, values, NULL))
+  if (dconf_engine_write_many (dcsb->engine,
+                               prefix, keys, values, &dcem, NULL))
     {
       if (dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
         {
@@ -538,7 +534,7 @@ dconf_settings_backend_get_writable (GSettingsBackend *backend,
   DConfEngineMessage dcem;
   GDBusConnection *bus;
 
-  if (!dconf_engine_is_writable (dcsb->engine, &dcem, name, NULL))
+  if (!dconf_engine_is_writable (dcsb->engine, name, &dcem, NULL))
     return FALSE;
 
   return dconf_settings_backend_get_bus (dcsb, &bus, &dcem);
@@ -552,7 +548,7 @@ dconf_settings_backend_subscribe (GSettingsBackend *backend,
   DConfEngineMessage dcem;
   GDBusConnection *bus;
 
-  dconf_engine_watch (dcsb->engine, &dcem, name);
+  dconf_engine_watch (dcsb->engine, name, &dcem);
 
   if (dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
     dconf_settings_backend_send (bus, &dcem, NULL);
@@ -566,7 +562,7 @@ dconf_settings_backend_unsubscribe (GSettingsBackend *backend,
   DConfEngineMessage dcem;
   GDBusConnection *bus;
 
-  dconf_engine_unwatch (dcsb->engine, &dcem, name);
+  dconf_engine_unwatch (dcsb->engine, name, &dcem);
 
   if (dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
     dconf_settings_backend_send (bus, &dcem, NULL);

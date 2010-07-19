@@ -15,7 +15,7 @@ typelibdir = $(libdir)/girepository-1.0
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 endif
 
-AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings
+AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -D__dconf_h__
 INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
 
 lib_LTLIBRARIES = libdconf.la
@@ -30,7 +30,16 @@ libdconf_la_SOURCES = \
 	../common/dconf-paths.c		\
 	../engine/dconf-engine.c	\
 	../gvdb/gvdb-reader.c		\
-	dconf-client.c
+	dconf-client.vala engine.vapi
+libdconf_la_VALAFLAGS = --library dconf --pkg=gio-2.0
+
+dconf.vapi: libdconf.la
+
+dconf.deps:
+	echo gio-2.0 > dconf.deps
+
+vapi_DATA = dconf.vapi dconf.deps
+vapidir = $(datadir)/vala/vapi
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = dconf.pc

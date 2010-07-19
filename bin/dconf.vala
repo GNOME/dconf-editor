@@ -44,6 +44,19 @@ void do_write (DConf.Client client, string key, string val) throws Error {
 	client.write (key, Variant.parse (null, val));
 }
 
+void do_lock (DConf.Client client, string key, bool locked) throws Error {
+	DConf.verify_key (key);
+
+	client.set_lock (key, locked);
+}
+
+void do_watch (DConf.Client client, string name) throws Error {
+	DConf.verify_path (name);
+
+	client.watch (name);
+	new MainLoop (null, false).run ();
+}
+
 void main (string[] args) {
 	try {
 		var client = new DConf.Client ();
@@ -65,6 +78,18 @@ void main (string[] args) {
 
 			case "update":
 				do_update ();
+				break;
+
+			case "lock":
+				do_lock (client, args[2], true);
+				break;
+
+			case "unlock":
+				do_lock (client, args[2], false);
+				break;
+
+			case "watch":
+				do_watch (client, args[2]);
 				break;
 
 			default:
