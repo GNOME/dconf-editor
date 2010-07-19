@@ -19,8 +19,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef _dconf_client_h_
-#define _dconf_client_h_
+#ifndef __dconf_client_h__
+#define __dconf_client_h__
 
 #include <gio/gio.h>
 
@@ -136,4 +136,4 @@ gboolean                dconf_client_unwatch_finish                     (DConfCl
                                                                          gpointer              user_data);
 G_END_DECLS
 
-#endif
+#endif /* __dconf_client_h__ */

@@ -19,10 +19,10 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef _dconf_h_
-#define _dconf_h_
+#ifndef __dconf_h__
+#define __dconf_h__
 
 #include <dconf-paths.h>
 #include <dconf-client.h>
 
-#endif /* _dconf_h_ */
+#endif /* __dconf_h__ */

@@ -1,5 +1,5 @@
-#ifndef _dconf_readtype_h_
-#define _dconf_readtype_h_
+#ifndef __dconf_readtype_h__
+#define __dconf_readtype_h__
 
 typedef enum
 {
@@ -8,4 +8,4 @@ typedef enum
   DCONF_READ_RESET
 } DConfReadType;
 
-#endif
+#endif /* __dconf_readtype_h__ */

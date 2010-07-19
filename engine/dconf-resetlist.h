@@ -1,5 +1,5 @@
-#ifndef _dconf_resetlist_h_
-#define _dconf_resetlist_h_
+#ifndef __dconf_resetlist_h__
+#define __dconf_resetlist_h__
 
 #include <glib.h>
 
@@ -17,4 +17,4 @@ void                    dconf_reset_list_add                            (DConfRe
 void                    dconf_reset_list_clear                          (DConfResetList      *list);
 
 
-#endif
+#endif /* __dconf_resetlist_h__ */

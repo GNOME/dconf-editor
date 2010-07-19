@@ -19,6 +19,9 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#ifndef __dconf_rebuilder_h__
+#define __dconf_rebuilder_h__
+
 #include <glib.h>
 
 gboolean dconf_rebuilder_rebuild (const gchar  *filename,
@@ -27,3 +30,5 @@ gboolean dconf_rebuilder_rebuild (const gchar  *filename,
                                   GVariant    *const*values,
                                   gint          n_items,
                                   GError      **error);
+
+#endif /* __dconf_rebuilder_h__ */
