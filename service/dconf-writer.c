@@ -35,6 +35,7 @@ static const gchar *dconf_writer_db_dir;
 
 struct OPAQUE_TYPE__DConfWriter
 {
+  gchar *name;
   gchar *path;
   gchar *shm;
 };
@@ -134,6 +135,12 @@ dconf_writer_set_lock (DConfWriter  *writer,
   return TRUE;
 }
 
+const gchar *
+dconf_writer_get_name (DConfWriter *writer)
+{
+  return writer->name;
+}
+
 DConfWriter *
 dconf_writer_new (const gchar *name)
 {
@@ -142,6 +149,7 @@ dconf_writer_new (const gchar *name)
   writer = g_slice_new (DConfWriter);
   writer->path = g_build_filename (dconf_writer_db_dir, name, NULL);
   writer->shm = g_build_filename (dconf_writer_shm_dir, name, NULL);
+  writer->name = g_strdup (name);
 
   return writer;
 }

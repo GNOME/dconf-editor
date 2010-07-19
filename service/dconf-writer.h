@@ -30,6 +30,7 @@ const gchar *           dconf_writer_get_shm_dir                        (void);
 gchar **                dconf_writer_list_existing                      (void);
 void                    dconf_writer_init                               (void);
 DConfWriter *           dconf_writer_new                                (const gchar          *name);
+const gchar *           dconf_writer_get_name                           (DConfWriter          *writer);
 gboolean                dconf_writer_write                              (DConfWriter          *writer,
                                                                          const gchar          *name,
                                                                          GVariant             *value,

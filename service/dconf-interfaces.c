@@ -24,16 +24,16 @@
 static const GDBusArgInfo name_arg = { -1, (gchar *) "name", (gchar *) "s" };
 static const GDBusArgInfo path_arg = { -1, (gchar *) "path", (gchar *) "s" };
 static const GDBusArgInfo names_arg = { -1, (gchar *) "names", (gchar *) "as" };
-static const GDBusArgInfo serial_arg = { -1, (gchar *) "serial", (gchar *) "t" };
+static const GDBusArgInfo tag_arg = { -1, (gchar *) "tag", (gchar *) "s" };
 static const GDBusArgInfo value_arg = { -1, (gchar *) "value", (gchar *) "av" };
 static const GDBusArgInfo values_arg = { -1, (gchar *) "values", (gchar *) "a(sav)" };
 static const GDBusArgInfo locked_arg = { -1, (gchar *) "locked", (gchar *) "b" };
 
 static const GDBusArgInfo *write_in[] = { &name_arg, &value_arg, NULL };
-static const GDBusArgInfo *write_out[] = { &serial_arg, NULL };
+static const GDBusArgInfo *write_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *many_in[] = { &path_arg, &values_arg, NULL };
-static const GDBusArgInfo *many_out[] = { &serial_arg, NULL };
-static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, NULL };
+static const GDBusArgInfo *many_out[] = { &tag_arg, NULL };
+static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, &tag_arg, NULL };
 static const GDBusArgInfo *setlock_in[] = { &name_arg, &locked_arg, NULL };
 static const GDBusArgInfo *setlock_out[] = { NULL };
 

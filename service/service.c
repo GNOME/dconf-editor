@@ -21,6 +21,7 @@
 
 #include <gio/gio.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "dconf-interfaces.h"
 #include "dconf-writer.h"
@@ -29,7 +30,8 @@ static guint64 dconf_service_serial;
 
 static void
 emit_notify_signal (GDBusConnection  *connection,
-                    guint64           serial,
+                    DConfWriter      *writer,
+                    const gchar      *tag,
                     const gchar      *prefix,
                     const gchar     **keys,
                     guint             n_keys)
@@ -37,6 +39,7 @@ emit_notify_signal (GDBusConnection  *connection,
   GVariantBuilder builder;
   GVariant *items;
   gchar *path;
+  gchar *obj;
 
   g_variant_builder_init (&builder, G_VARIANT_TYPE ("as"));
 
@@ -79,12 +82,15 @@ emit_notify_signal (GDBusConnection  *connection,
   else
     path = g_strdup (prefix);
 
+  obj = g_strjoin (NULL, "/ca/desrt/dconf/Writer/",
+                   dconf_writer_get_name (writer), NULL);
   g_dbus_connection_emit_signal (connection, NULL, "/",
                                  "ca.desrt.dconf.Writer", "Notify",
-                                 g_variant_new ("(ts@as)",
-                                                serial, path, items),
+                                 g_variant_new ("(s@ass)",
+                                                path, items, tag),
                                  NULL);
   g_free (path);
+  g_free (obj);
 }
 
 static void
@@ -122,8 +128,9 @@ method_call (GDBusConnection       *connection,
       const gchar *key;
       gsize key_length;
       GVariant *value;
-      guint64 serial;
       GVariant *none;
+      gchar tag[20];
+      gchar *path;
 
       g_variant_get (parameters, "(@s@av)", &keyvalue, &value);
       key = g_variant_get_string (keyvalue, &key_length);
@@ -157,15 +164,18 @@ method_call (GDBusConnection       *connection,
           return;
         }
 
-      serial = dconf_service_serial++;
+      snprintf (tag, sizeof tag, "%"G_GUINT64_FORMAT, dconf_service_serial++);
       g_dbus_method_invocation_return_value (invocation,
-                                             g_variant_new ("(t)", serial));
+                                             g_variant_new ("(s)", tag));
       none = g_variant_new_array (G_VARIANT_TYPE_STRING, NULL, 0);
-      g_dbus_connection_emit_signal (connection, NULL, "/",
+      path = g_strjoin (NULL, "/ca/desrt/dconf/Writer/",
+                        dconf_writer_get_name (writer), NULL);
+      g_dbus_connection_emit_signal (connection, NULL, path,
                                      "ca.desrt.dconf.Writer", "Notify",
-                                     g_variant_new ("(ts@as)",
-                                                    serial, key, none),
+                                     g_variant_new ("(s@ass)",
+                                                    key, none, tag),
                                      NULL);
+      g_free (path);
     }
 
   else if (strcmp (method_name, "Merge") == 0)
@@ -175,7 +185,7 @@ method_call (GDBusConnection       *connection,
       GVariantIter *iter;
       const gchar **keys;
       GVariant **values;
-      guint64 serial;
+      gchar tag[20];
       gsize length;
       gint i = 0;
       gint j;
@@ -218,11 +228,10 @@ method_call (GDBusConnection       *connection,
           return;
         }
 
-      serial = dconf_service_serial++;
-
+      snprintf (tag, sizeof tag, "%"G_GUINT64_FORMAT, dconf_service_serial++);
       g_dbus_method_invocation_return_value (invocation,
-                                             g_variant_new ("(t)", serial));
-      emit_notify_signal (connection, serial, prefix, keys, i);
+                                             g_variant_new ("(s)", tag));
+      emit_notify_signal (connection, writer, tag, prefix, keys, i);
 
       for (j = 0; j < i; j++)
         if (values[j] != NULL)

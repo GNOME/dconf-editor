@@ -435,11 +435,12 @@ dconf_engine_make_match_rule (DConfEngine        *engine,
 {
   gchar *rule;
 
-  rule = g_strdup_printf ("interface='ca.desrt.dconf.Writer',"
-                          "arg1path='%s'", name);
+  rule = g_strdup_printf ("type='signal',interface='ca.desrt.dconf.Writer',"
+                          "path='%s',arg0path='%s'",
+                          engine->object_paths[0], name);
   dcem->bus_type = 'e';
   dcem->destination = "org.freedesktop.DBus";
-  dcem->object_path = engine->object_paths[0];
+  dcem->object_path = "/org/freedesktop/DBus";
   dcem->interface = "org.freedesktop.DBus";
   dcem->body = g_variant_ref_sink (g_variant_new ("((s))", rule));
   g_free (rule);

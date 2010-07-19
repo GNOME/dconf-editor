@@ -3,22 +3,26 @@ namespace DConf {
 	public delegate void WatchFunc (DConf.Client client, string path, string[] items, string tag);
 
 	public class Client : Object {
-		Engine engine;
+		DBusConnection? session;
+		DBusConnection? system;
 		WatchFunc watch_func;
-
-		static BusType get_bus_type (EngineMessage dcem) {
-			switch (dcem.bus_type) {
-				case 'e':
-					return BusType.SESSION;
-				case 'y':
-					return BusType.SYSTEM;
-				default:
-					assert_not_reached ();
-			}
-		}
+		Engine engine;
 
 		void call_sync (EngineMessage dcem, out string tag, Cancellable? cancellable) throws Error {
-			var connection = Bus.get_sync (get_bus_type (dcem), cancellable);
+			DBusConnection connection;
+
+			if (dcem.bus_type == 'e') {
+				if (session == null) {
+					session = Bus.get_sync (BusType.SESSION, cancellable);
+				}
+				connection = session;
+			} else {
+				assert (dcem.bus_type == 'y');
+				if (system == null) {
+					system = Bus.get_sync (BusType.SYSTEM, cancellable);
+				}
+				connection = system;
+			}
 
 			foreach (var message in dcem.body) {
 				var reply = connection.call_sync (dcem.destination, dcem.object_path, dcem.@interface, dcem.method,
@@ -30,7 +34,20 @@ namespace DConf {
 		}
 
 		async void call_async (EngineMessage dcem, out string tag, Cancellable? cancellable) throws Error {
-			var connection = yield Bus.get (get_bus_type (dcem), cancellable);
+			DBusConnection connection;
+
+			if (dcem.bus_type == 'e') {
+				if (session == null) {
+					session = yield Bus.get (BusType.SESSION, cancellable);
+				}
+				connection = session;
+			} else {
+				assert (dcem.bus_type == 'y');
+				if (system == null) {
+					system = yield Bus.get (BusType.SYSTEM, cancellable);
+				}
+				connection = system;
+			}
 
 			foreach (var message in dcem.body) {
 				var reply = yield connection.call (dcem.destination, dcem.object_path, dcem.@interface, dcem.method,
@@ -104,7 +121,8 @@ namespace DConf {
 
 		static Variant? service_func (EngineMessage dcem) {
 			try {
-				var connection = Bus.get_sync (get_bus_type (dcem), null);
+				assert (dcem.bus_type == 'e');
+				var connection = Bus.get_sync (BusType.SESSION, null);
 				return connection.call_sync (dcem.destination, dcem.object_path, dcem.@interface, dcem.method,
 				                             dcem.body, dcem.reply_type, DBusCallFlags.NONE, -1, null);
 			} catch {
