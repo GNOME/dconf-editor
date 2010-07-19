@@ -165,7 +165,7 @@ dconf_engine_load_profile (const gchar   *profile,
   char line[80];
   FILE *f;
 
-  filename = g_build_filename ("/etc/dconf/profiles", profile, NULL);
+  filename = g_build_filename ("/etc/dconf/profile", profile, NULL);
   f = fopen (filename, "r");
 
   if (f == NULL)
