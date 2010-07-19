@@ -611,7 +611,7 @@ static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
   dconf_engine_set_service_func (dconf_settings_backend_service_func);
-  dcsb->engine = dconf_engine_new ();
+  dcsb->engine = dconf_engine_new (NULL);
 }
 
 static void

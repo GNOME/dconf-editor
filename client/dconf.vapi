@@ -5,7 +5,7 @@ namespace DConf {
 	[CCode (cheader_filename = "dconf.h")]
 	public class Client : GLib.Object {
 		[CCode (has_construct_function = false)]
-		public Client (string context, bool can_write, DConf.WatchFunc? watch_func, GLib.DestroyNotify? notify);
+		public Client (string? profile = null, owned DConf.WatchFunc? watch_func = null);
 		public bool is_writable (string prefix) throws GLib.Error;
 		[CCode (array_length_type = "gsize")]
 		public string[] list (string prefix);
@@ -19,25 +19,42 @@ namespace DConf {
 		public bool watch (string name) throws GLib.Error;
 		public async bool watch_async (string name);
 		public bool watch_finish (GLib.AsyncResult _result);
-		public bool write (string key, GLib.Variant value, uint64 sequence, GLib.Cancellable? cancellable) throws GLib.Error;
+		public bool write (string key, GLib.Variant? value, out string? tag = null, GLib.Cancellable? cancellable = null) throws GLib.Error;
 		public async bool write_async (string key, GLib.Variant value, GLib.Cancellable? cancellable) throws GLib.Error;
-		public bool write_finish (GLib.AsyncResult _result, uint64 sequence) throws GLib.Error;
-		public bool write_many (string prefix, string keys, out unowned GLib.Variant values, uint64 sequence, GLib.Cancellable? cancellable) throws GLib.Error;
+		public bool write_finish (GLib.AsyncResult _result, out string? tag = null) throws GLib.Error;
+		public bool write_many (string prefix, string[] keys, GLib.Variant?[] values, out string? tag = null, GLib.Cancellable? cancellable = null) throws GLib.Error;
 		public async bool write_many_async (string prefix, string keys, out unowned GLib.Variant values, GLib.Cancellable? cancellable) throws GLib.Error;
 		public bool write_many_finish (GLib.AsyncResult _result, uint64 sequence) throws GLib.Error;
 	}
+
 	[CCode (cheader_filename = "dconf.h")]
 	public delegate void WatchFunc (DConf.Client client, string path, string items);
 	[CCode (cheader_filename = "dconf.h")]
-	public static bool is_dir (string str);
+	public bool is_dir (string str, void *error = null);
 	[CCode (cheader_filename = "dconf.h")]
-	public static bool is_key (string str);
+	public bool is_key (string str, void *error = null);
 	[CCode (cheader_filename = "dconf.h")]
-	public static bool is_path (string str);
+	public bool is_path (string str, void *error = null);
 	[CCode (cheader_filename = "dconf.h")]
-	public static bool is_rel (string str);
+	public bool is_rel (string str, void *error = null);
 	[CCode (cheader_filename = "dconf.h")]
-	public static bool is_rel_dir (string str);
+	public bool is_rel_dir (string str, void *error = null);
 	[CCode (cheader_filename = "dconf.h")]
-	public static bool is_rel_key (string str);
+	public bool is_rel_key (string str, void *error = null);
+
+
+	[CCode (cheader_filename = "dconf.h", cname="dconf_is_dir")]
+	public void verify_dir (string str) throws GLib.Error;
+	[CCode (cheader_filename = "dconf.h", cname="dconf_is_key")]
+	public void verify_key (string str) throws GLib.Error;
+	[CCode (cheader_filename = "dconf.h", cname="dconf_is_path")]
+	public void verify_path (string str) throws GLib.Error;
+	[CCode (cheader_filename = "dconf.h", cname="dconf_is_rel")]
+	public void verify_rel (string str) throws GLib.Error;
+	[CCode (cheader_filename = "dconf.h", cname="dconf_is_rel_dir")]
+	public void verify_rel_dir (string str) throws GLib.Error;
+	[CCode (cheader_filename = "dconf.h", cname="dconf_is_rel_key")]
+	public void verify_rel_key (string str) throws GLib.Error;
 }
+
+// vim:noet ts=4 sw=4

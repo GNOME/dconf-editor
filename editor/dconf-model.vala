@@ -51,7 +51,7 @@ public class Key : GLib.Object
             _value = value;
             try
             {
-                model.client.write(full_name, value, 0, null);
+                model.client.write(full_name, value);
             }
             catch (GLib.Error e)
             {
@@ -459,7 +459,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public SettingsModel()
     {
-        client = new DConf.Client("", true, null, null);
+        client = new DConf.Client ();
         root = new Directory(this, null, 0, "/", "/");
 
         schemas = new SchemaList();

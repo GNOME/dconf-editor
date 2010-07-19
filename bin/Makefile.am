@@ -8,3 +8,7 @@ dconf_LDADD = ../client/libdconf.la $(gio_LIBS)
 dconf_update_VALAFLAGS = --pkg=posix --pkg=gio-2.0
 dconf_update_LDADD = $(gio_LIBS)
 dconf_update_SOURCES = dconf-update.vala ../gvdb/gvdb-builder.c gvdb.vapi fixes.vapi
+
+dconf_VALAFLAGS = --pkg=gio-2.0 ../client/dconf.vapi
+dconf_LDADD = $(gio_LIBS) ../client/libdconf.la
+dconf_SOURCES = dconf.vala

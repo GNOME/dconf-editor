@@ -23,7 +23,7 @@ typedef struct
 typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngineMessage      *message);
 
 void                    dconf_engine_set_service_func                   (DConfEngineServiceFunc   func);
-DConfEngine *           dconf_engine_new                                (void);
+DConfEngine *           dconf_engine_new                                (const gchar             *profile);
 DConfEngine *           dconf_engine_new_for_db                         (DConfEngineServiceFunc  *service,
                                                                          const gchar             *db_name);
 guint64                 dconf_engine_get_state                          (DConfEngine             *engine);
@@ -73,7 +73,7 @@ gboolean                dconf_engine_decode_notify                      (DConfEn
                                                                          const gchar             *interface,
                                                                          const gchar             *member,
                                                                          GVariant                *body);
-void                    dconf_engine_set_locked                         (DConfEngine             *engine,
+void                    dconf_engine_set_lock                           (DConfEngine             *engine,
                                                                          DConfEngineMessage      *message,
                                                                          const gchar             *path,
                                                                          gboolean                 locked);

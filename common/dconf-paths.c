@@ -24,29 +24,59 @@
 
 #define vars gchar c, l
 
+#define DCONF_ERROR 0
+#define DCONF_ERROR_PATH 0
+
 #define absolute \
-  if ((l = *string++) != '/')           \
-    return FALSE                        \
+  if ((l = *string++) != '/')                                           \
+    {                                                                   \
+      g_set_error (error, DCONF_ERROR, DCONF_ERROR_PATH,                \
+                   "dconf %s must begin with a slash", type);           \
+      return FALSE;                                                     \
+    }
 
 #define relative \
+  if (*string == '/')                                                   \
+    {                                                                   \
+      g_set_error (error, DCONF_ERROR, DCONF_ERROR_PATH,                \
+                   "dconf %s must not begin with a slash", type);       \
+      return FALSE;                                                     \
+    }                                                                   \
   l = '/'
 
 #define no_double_slash \
-  while ((c = *string++))               \
-    {                                   \
-      if (c == '/' && l == '/')         \
-        return FALSE;                   \
-      l = c;                            \
-    }                                   \
+  while ((c = *string++))                                               \
+    {                                                                   \
+      if (c == '/' && l == '/')                                         \
+        {                                                               \
+          g_set_error (error, DCONF_ERROR, DCONF_ERROR_PATH,            \
+                       "dconf %s must not contain two "                 \
+                       "consecutive slashes", type);                    \
+          return FALSE;                                                 \
+        }                                                               \
+      l = c;                                                            \
+    }                                                                   \
 
 #define path \
   return TRUE
 
 #define key \
-  return l != '/'
+  if (l == '/')                                                         \
+    {                                                                   \
+      g_set_error (error, DCONF_ERROR, DCONF_ERROR_PATH,                \
+                   "dconf %s must not end with a slash", type);         \
+      return FALSE;                                                     \
+    }                                                                   \
+  return TRUE
 
 #define dir \
-  return l == '/'
+  if (l != '/')                                                         \
+    {                                                                   \
+      g_set_error (error, DCONF_ERROR, DCONF_ERROR_PATH,                \
+                   "dconf %s must end with a slash", type);             \
+      return FALSE;                                                     \
+    }                                                                   \
+  return TRUE
 
 
 
@@ -62,9 +92,12 @@
  * dconf_is_dir() for examples of each.
  **/
 gboolean
-dconf_is_path (const gchar *string)
+dconf_is_path (const gchar  *string,
+               GError      **error)
 {
+#define type "path"
   vars; absolute; no_double_slash; path;
+#undef type
 }
 
 /**
@@ -83,9 +116,12 @@ dconf_is_path (const gchar *string)
  * keys.
  **/
 gboolean
-dconf_is_key (const gchar *string)
+dconf_is_key (const gchar *string,
+              GError      **error)
 {
+#define type "key"
   vars; absolute; no_double_slash; key;
+#undef type
 }
 
 /**
@@ -105,9 +141,12 @@ dconf_is_key (const gchar *string)
  * dirs.
  **/
 gboolean
-dconf_is_dir (const gchar *string)
+dconf_is_dir (const gchar  *string,
+              GError      **error)
 {
+#define type "dir"
   vars; absolute; no_double_slash; dir;
+#undef type
 }
 
 /**
@@ -123,9 +162,12 @@ dconf_is_dir (const gchar *string)
  * dconf_is_rel_key() and dconf_is_rel_dir() for examples of each.
  **/
 gboolean
-dconf_is_rel (const gchar *string)
+dconf_is_rel (const gchar  *string,
+              GError      **error)
 {
+#define type "relative path"
   vars; relative; no_double_slash; path;
+#undef type
 }
 
 
@@ -144,9 +186,12 @@ dconf_is_rel (const gchar *string)
  * not relative keys.
  **/
 gboolean
-dconf_is_rel_key (const gchar *string)
+dconf_is_rel_key (const gchar  *string,
+                  GError      **error)
 {
+#define type "relative key"
   vars; relative; no_double_slash; key;
+#undef type
 }
 
 /**
@@ -166,7 +211,10 @@ dconf_is_rel_key (const gchar *string)
  * not relative dirs.
  **/
 gboolean
-dconf_is_rel_dir (const gchar *string)
+dconf_is_rel_dir (const gchar  *string,
+                  GError      **error)
 {
+#define type "relative dir"
   vars; relative; no_double_slash; dir;
+#undef type
 }

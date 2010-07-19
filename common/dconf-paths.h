@@ -25,12 +25,18 @@
 
 #include <glib.h>
 
-gboolean                dconf_is_path                                   (const gchar         *string);
-gboolean                dconf_is_key                                    (const gchar         *string);
-gboolean                dconf_is_dir                                    (const gchar         *string);
+gboolean                dconf_is_path                                   (const gchar         *string,
+                                                                         GError             **error);
+gboolean                dconf_is_key                                    (const gchar         *string,
+                                                                         GError             **error);
+gboolean                dconf_is_dir                                    (const gchar         *string,
+                                                                         GError             **error);
 
-gboolean                dconf_is_rel                                    (const gchar         *string);
-gboolean                dconf_is_rel_key                                (const gchar         *string);
-gboolean                dconf_is_rel_dir                                (const gchar         *string);
+gboolean                dconf_is_rel                                    (const gchar         *string,
+                                                                         GError             **error);
+gboolean                dconf_is_rel_key                                (const gchar         *string,
+                                                                         GError             **error);
+gboolean                dconf_is_rel_dir                                (const gchar         *string,
+                                                                         GError             **error);
 
 #endif /* _dconf_common_h_ */

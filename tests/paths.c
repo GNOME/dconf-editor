@@ -75,12 +75,12 @@ test_paths (void)
       const gchar *string = cases[i].string;
       guint flags;
 
-      flags = (dconf_is_path    (string) ? 001 : 000) |
-              (dconf_is_key     (string) ? 002 : 000) |
-              (dconf_is_dir     (string) ? 004 : 000) |
-              (dconf_is_rel     (string) ? 010 : 000) |
-              (dconf_is_rel_key (string) ? 020 : 000) |
-              (dconf_is_rel_dir (string) ? 040 : 000);
+      flags = (dconf_is_path    (string, NULL) ? 001 : 000) |
+              (dconf_is_key     (string, NULL) ? 002 : 000) |
+              (dconf_is_dir     (string, NULL) ? 004 : 000) |
+              (dconf_is_rel     (string, NULL) ? 010 : 000) |
+              (dconf_is_rel_key (string, NULL) ? 020 : 000) |
+              (dconf_is_rel_dir (string, NULL) ? 040 : 000);
 
       if (flags != cases[i].flags)
         {

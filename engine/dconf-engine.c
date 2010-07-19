@@ -262,9 +262,8 @@ dconf_engine_load_profile (const gchar   *profile,
 }
 
 DConfEngine *
-dconf_engine_new (void)
+dconf_engine_new (const gchar *profile)
 {
-  const gchar *profile;
   DConfEngine *engine;
   gint i;
 
@@ -272,7 +271,8 @@ dconf_engine_new (void)
   engine->ref_count = 1;
   engine->shm = NULL;
 
-  profile = getenv ("DCONF_PROFILE");
+  if (profile == NULL)
+    profile = getenv ("DCONF_PROFILE");
 
   if (profile)
     {
@@ -477,12 +477,12 @@ dconf_engine_write_many (DConfEngine          *engine,
 }
 
 void
-dconf_engine_set_locked (DConfEngine        *engine,
-                         DConfEngineMessage *dcem,
-                         const gchar        *path,
-                         gboolean            locked)
+dconf_engine_set_lock (DConfEngine        *engine,
+                       DConfEngineMessage *dcem,
+                       const gchar        *path,
+                       gboolean            locked)
 {
-  dconf_engine_dcem (engine, dcem, "SetLocked", "(sb)", path, locked);
+  dconf_engine_dcem (engine, dcem, "SetLock", "(sb)", path, locked);
 }
 
 gchar **

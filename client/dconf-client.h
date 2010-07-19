@@ -41,21 +41,10 @@ typedef void          (*DConfWatchFunc)                                 (DConfCl
 
 GType                   dconf_client_get_type                           (void);
 
-DConfClient *           dconf_client_new                                (const gchar          *context,
-                                                                         gboolean              will_write,
+DConfClient *           dconf_client_new                                (const gchar          *profile,
                                                                          DConfWatchFunc        watch_func,
                                                                          gpointer              user_data,
                                                                          GDestroyNotify        notify);
-
-void                    dconf_client_new_async                          (const gchar          *context,
-                                                                         gboolean              will_write,
-                                                                         DConfWatchFunc        watch_func,
-                                                                         gpointer              watch_func_data,
-                                                                         GDestroyNotify        notify,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-
-DConfClient *           dconf_client_new_finish                         (GAsyncResult         *result);
 
 GVariant *              dconf_client_read                               (DConfClient          *client,
                                                                          const gchar          *key);
@@ -69,7 +58,7 @@ gchar **                dconf_client_list                               (DConfCl
                                                                          gsize                *length);
 
 gboolean                dconf_client_is_writable                        (DConfClient          *client,
-                                                                         const gchar          *path,
+                                                                         const gchar          *key,
                                                                          GError              **error);
 
 gboolean                dconf_client_write                              (DConfClient          *client,
@@ -89,18 +78,18 @@ gboolean                dconf_client_write_finish                       (DConfCl
                                                                          gchar               **tag,
                                                                          GError              **error);
 
-gboolean                dconf_client_set_locked                         (DConfClient          *client,
+gboolean                dconf_client_set_lock                           (DConfClient          *client,
                                                                          const gchar          *path,
                                                                          gboolean              locked,
                                                                          GCancellable         *cancellable,
                                                                          GError              **error);
-void                    dconf_client_set_locked_async                   (DConfClient          *client,
+void                    dconf_client_set_lock_async                     (DConfClient          *client,
                                                                          const gchar          *path,
                                                                          gboolean              locked,
                                                                          GCancellable         *cancellable,
                                                                          GAsyncReadyCallback   callback,
                                                                          gpointer              user_data);
-gboolean                dconf_client_set_locked_finish                  (DConfClient          *client,
+gboolean                dconf_client_set_lock_finish                    (DConfClient          *client,
                                                                          GAsyncResult         *result,
                                                                          GError              **error);
 
@@ -108,6 +97,7 @@ gboolean                dconf_client_write_many                         (DConfCl
                                                                          const gchar          *prefix,
                                                                          const gchar * const  *keys,
                                                                          GVariant            **values,
+                                                                         gsize                 n_values,
                                                                          gchar               **tag,
                                                                          GCancellable         *cancellable,
                                                                          GError              **error);
@@ -115,6 +105,7 @@ void                    dconf_client_write_many_async                   (DConfCl
                                                                          const gchar          *prefix,
                                                                          const gchar * const  *keys,
                                                                          GVariant            **values,
+                                                                         gsize                 n_values,
                                                                          GCancellable         *cancellable,
                                                                          GAsyncReadyCallback   callback,
                                                                          gpointer              user_data);

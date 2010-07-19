@@ -31,7 +31,6 @@ struct _DConfClient
   GDBusConnection *system_bus;
 
   DConfEngine *engine;
-  gboolean will_write;
 
   DConfWatchFunc watch_func;
   gpointer user_data;
@@ -256,7 +255,7 @@ dconf_client_service_func (DConfEngineMessage *dcem)
 
 /**
  * dconf_client_new:
- * @context: the context string (must by %NULL for now)
+ * @profile: the dconf profile to use, or %NULL
  * @will_write: %TRUE if you intend to use the client to write
  * @watch_func: the function to call when changes occur
  * @user_data: the user_data to pass to @watch_func
@@ -265,23 +264,23 @@ dconf_client_service_func (DConfEngineMessage *dcem)
  *
  * Creates a new #DConfClient for the given context.
  *
- * If @will_write is %FALSE then you will not be able to use the created
- * client to write.  The benefit of this is that when combined with
- * @watch_func being %NULL, no connection to D-Bus is required.
+ * If @profile is non-%NULL then it specifies the name of the profile to
+ * use.  If @profile is %NULL then the DCONF_PROFILE environment
+ * variable is consulted.  If that is unset then the default profile of
+ * "user" is used.  If a profile named "user" is not installed then
+ * the dconf client is setup to access ~/.config/dconf/user.
  **/
 DConfClient *
-dconf_client_new (const gchar          *context,
-                  gboolean              will_write,
-                  DConfWatchFunc        watch_func,
-                  gpointer              user_data,
-                  GDestroyNotify        notify)
+dconf_client_new (const gchar    *profile,
+                  DConfWatchFunc  watch_func,
+                  gpointer        user_data,
+                  GDestroyNotify  notify)
 {
   DConfClient *client = g_object_new (DCONF_TYPE_CLIENT, NULL);
 
   dconf_engine_set_service_func (dconf_client_service_func);
 
-  client->engine = dconf_engine_new ();
-  client->will_write = will_write;
+  client->engine = dconf_engine_new (profile);
   client->watch_func = watch_func;
   client->user_data = user_data;
   client->notify = notify;
@@ -503,7 +502,7 @@ dconf_client_list (DConfClient    *client,
 }
 
 /**
- * dconf_client_set_locked:
+ * dconf_client_set_lock:
  * @client: a #DConfClient
  * @path: a dconf path
  * @locked: %TRUE to lock, %FALSE to unlock
@@ -522,15 +521,15 @@ dconf_client_list (DConfClient    *client,
  * this database as its defaults.
  **/
 gboolean
-dconf_client_set_locked (DConfClient   *client,
-                         const gchar   *path,
-                         gboolean       locked,
-                         GCancellable  *cancellable,
-                         GError       **error)
+dconf_client_set_lock (DConfClient   *client,
+                       const gchar   *path,
+                       gboolean       locked,
+                       GCancellable  *cancellable,
+                       GError       **error)
 {
   DConfEngineMessage dcem;
 
-  dconf_engine_set_locked (client->engine, &dcem, path, locked);
+  dconf_engine_set_lock (client->engine, &dcem, path, locked);
 
   return dconf_client_call_sync (client, &dcem, NULL, cancellable, error);
 }
@@ -553,6 +552,7 @@ dconf_client_write_many (DConfClient          *client,
                          const gchar          *prefix,
                          const gchar * const  *rels,
                          GVariant            **values,
+                         gsize                 n_values,
                          gchar               **tag,
                          GCancellable         *cancellable,
                          GError              **error)
@@ -570,6 +570,7 @@ dconf_client_write_many_async (DConfClient          *client,
                                const gchar          *prefix,
                                const gchar * const  *rels,
                                GVariant            **values,
+                               gsize                 n_values,
                                GCancellable         *cancellable,
                                GAsyncReadyCallback   callback,
                                gpointer              user_data)

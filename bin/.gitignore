@@ -1,4 +1,4 @@
 dconf
 dconf-update
-dconf-update.c
+*.c
 *.stamp
