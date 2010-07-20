@@ -384,10 +384,10 @@ dconf_settings_backend_send (GDBusConnection    *bus,
   g_variant_unref (body);
 
   if (serial)
-    g_dbus_connection_send_message (bus, message, serial, NULL);
+    g_dbus_connection_send_message (bus, message, G_DBUS_SEND_MESSAGE_FLAGS_NONE, serial, NULL);
   else
-    g_dbus_connection_send_message_with_reply_sync (bus, message, -1,
-                                                    NULL, NULL, NULL);
+    g_dbus_connection_send_message_with_reply_sync (bus, message, G_DBUS_SEND_MESSAGE_FLAGS_NONE,
+                                                    -1, NULL, NULL, NULL);
 
   g_variant_unref (dcem->body);
   g_object_unref (message);
