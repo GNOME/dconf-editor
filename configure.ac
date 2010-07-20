@@ -5,6 +5,7 @@ AC_INIT([dconf],
 
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([aux])
 
 AM_INIT_AUTOMAKE([1.11 -Wno-portability])
 AM_SILENT_RULES([yes])

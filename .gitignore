@@ -11,14 +11,10 @@ Makefile
 *.typelib
 
 # autofoo stuff here
-/compile
+/m4/
+/aux/
+/libtool
 /config.*
 /configure
-/depcomp
-/aclocal.m4
 /autom4te.cache
-/libtool
-/ltmain.sh
-/missing
-/install-sh
-/mkinstalldirs
+/aclocal.m4

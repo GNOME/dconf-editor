@@ -3,9 +3,8 @@
 set -e
 
 if [ "$1" = "clean" ]; then
-  rm -f aclocal.m4 configure missing install-sh depcomp ltmain.sh \
-        config.* `find . -name Makefile.in` compile libtool
-  rm -rf autom4te.cache
+  rm -f aclocal.m4 configure config.* `find . -name Makefile.in` libtool
+  rm -rf autom4te.cache m4 aux
   exit
 fi
 
@@ -15,6 +14,7 @@ else
   automake=automake
 fi
 
+mkdir -p m4
 gtkdocize --docdir docs --flavour no-tmpl
 libtoolize --automake
 aclocal ${ACLOCAL_FLAGS}
