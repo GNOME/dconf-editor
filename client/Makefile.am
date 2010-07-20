@@ -33,6 +33,7 @@ libdconf_la_SOURCES = \
 	dconf-client.vala engine.vapi
 libdconf_la_VALAFLAGS = --library dconf --pkg=gio-2.0
 
+EXTRA_DIST = dconf.vapi
 dconf.vapi: libdconf.la
 
 dconf.deps:
