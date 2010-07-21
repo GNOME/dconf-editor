@@ -583,14 +583,6 @@ dconf_engine_list (DConfEngine    *engine,
   return list;
 }
 
-static gchar *
-dconf_engine_make_tag (guint        bus_type,
-                       const gchar *sender,
-                       guint64      seqno)
-{
-  return g_strdup_printf ("%c/%s/%"G_GUINT64_FORMAT, bus_type, sender, seqno);
-}
-
 gboolean
 dconf_engine_decode_notify (DConfEngine   *engine,
                             const gchar   *anti_expose,
@@ -602,30 +594,23 @@ dconf_engine_decode_notify (DConfEngine   *engine,
                             const gchar   *method,
                             GVariant      *body)
 {
-  guint64 seqno;
-  gchar *ae;
-
   if (strcmp (iface, "ca.desrt.dconf.Writer") || strcmp (method, "Notify"))
     return FALSE;
 
-  if (!g_variant_is_of_type (body, G_VARIANT_TYPE ("(tsas)")))
+  if (!g_variant_is_of_type (body, G_VARIANT_TYPE ("(sass)")))
     return FALSE;
-
-  g_variant_get_child (body, 0, "t", &seqno);
 
   if (anti_expose)
     {
-      gboolean matched;
+      const gchar *ae;
 
-      ae = dconf_engine_make_tag (bus_type, sender, seqno);
-      matched = strcmp (ae, anti_expose) == 0;
-      g_free (ae);
+      g_variant_get_child (body, 2, "&s", &ae);
 
-      if (matched)
+      if (strcmp (ae, anti_expose) == 0)
         return FALSE;
     }
 
-  g_variant_get (body, "(t&s^a&s)", NULL, path, rels);
+  g_variant_get (body, "(&s^a&ss)", path, rels, NULL);
 
   return TRUE;
 }
@@ -637,16 +622,6 @@ dconf_engine_interpret_reply (DConfEngineMessage  *dcem,
                               gchar              **tag,
                               GError             **error)
 {
-  /* typecheck and so on... */
-
-  if (tag != NULL)
-    {
-      guint64 sequence;
-
-      g_variant_get_child (body, 0, "t", &sequence);
-
-      *tag = dconf_engine_make_tag (dcem->bus_type, sender, sequence);
-    }
-
+  g_variant_get_child (body, 0, "s", tag);
   return TRUE;
 }
