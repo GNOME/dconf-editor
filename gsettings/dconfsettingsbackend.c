@@ -523,7 +523,7 @@ dconf_settings_backend_reset (GSettingsBackend *backend,
                               const gchar      *path_or_key,
                               gpointer          origin_tag)
 {
-  g_assert_not_reached ();
+  dconf_settings_backend_write (backend, path_or_key, NULL, origin_tag);
 }
 
 static gboolean
