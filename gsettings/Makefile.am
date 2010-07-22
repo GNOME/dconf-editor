@@ -1,11 +1,11 @@
-AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings
+AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -fPIC -DPIC
 INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
 
-giomodules_LTLIBRARIES = libdconfsettings.la
+giomodules_PROGRAMS = libdconfsettings.so
 
-libdconfsettings_la_LIBADD = $(gio_LIBS)
-libdconfsettings_la_LDFLAGS = -module -avoid-version -shared
-libdconfsettings_la_SOURCES = \
+libdconfsettings_so_LDADD = $(gio_LIBS)
+libdconfsettings_so_LDFLAGS = -module -avoid-version -shared
+libdconfsettings_so_SOURCES = \
 	../engine/dconf-engine.c	\
 	../common/dconf-shmdir.c	\
 	../gvdb/gvdb-reader.c		\

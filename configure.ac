@@ -14,10 +14,6 @@ AM_SILENT_RULES([yes])
 AC_PROG_CC
 AM_PROG_VALAC([0.9.2])
 
-# Initialise libtool
-LT_PREREQ([2.2])
-LT_INIT
-
 # Introspection
 GOBJECT_INTROSPECTION_CHECK([0.6.7])
 

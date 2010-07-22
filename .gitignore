@@ -1,11 +1,8 @@
 # for all subdirectories
 Makefile.in
 Makefile
-.libs
 .deps
 *.o
-*.lo
-*.la
 *.pc
 *.gir
 *.typelib

@@ -14,9 +14,8 @@ else
   automake=automake
 fi
 
-mkdir -p m4
+mkdir -p m4 aux
 gtkdocize --docdir docs --flavour no-tmpl
-libtoolize --automake
 aclocal ${ACLOCAL_FLAGS}
 ${automake} --add-missing --foreign
 autoconf

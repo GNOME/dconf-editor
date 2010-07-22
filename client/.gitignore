@@ -2,3 +2,5 @@ dconf.vapi
 *.c
 *.stamp
 *.deps
+libdconf.so
+libdconf.so.0
