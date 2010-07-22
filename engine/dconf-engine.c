@@ -542,7 +542,7 @@ dconf_engine_write_many (DConfEngine          *engine,
     g_variant_builder_add (&builder, "(s@av)",
                            keys[i], fake_maybe (values[i]));
 
-  dconf_engine_dcem (engine, dcem, "Merge", "(sa(sav))", prefix, &builder);
+  dconf_engine_dcem (engine, dcem, "WriteMany", "(sa(sav))", prefix, &builder);
 
   return TRUE;
 }

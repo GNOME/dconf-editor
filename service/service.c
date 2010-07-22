@@ -178,7 +178,7 @@ method_call (GDBusConnection       *connection,
       g_free (path);
     }
 
-  else if (strcmp (method_name, "Merge") == 0)
+  else if (strcmp (method_name, "WriteMany") == 0)
     {
       GError *error = NULL;
       const gchar *prefix;

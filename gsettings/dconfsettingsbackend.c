@@ -58,7 +58,7 @@ struct _Outstanding
   DConfEngineMessage dcem;
   volatile guint32 serial;
 
-  gchar *reset_path, *set_key;
+  gchar *set_key;
   GVariant *set_value;
 
   GTree *tree;
@@ -74,18 +74,10 @@ dconf_settings_backend_new_outstanding (DConfSettingsBackend *dcsb,
   Outstanding *outstanding;
 
   outstanding = g_slice_new (Outstanding);
-  outstanding->reset_path = NULL;
   outstanding->set_key = NULL;
   outstanding->dcem = *dcem;
 
-  if (!set_key || g_str_has_suffix (set_key, "/"))
-    {
-      g_assert (set_value == NULL);
-      outstanding->reset_path = g_strdup (set_key);
-    }
-  else
-    outstanding->set_key = g_strdup (set_key);
-
+  outstanding->set_key = g_strdup (set_key);
   outstanding->serial = 0;
 
   if (set_value)
@@ -145,7 +137,6 @@ dconf_settings_backend_remove_outstanding (DConfSettingsBackend  *dcsb,
 
         g_static_mutex_unlock (&dcsb->lock);
 
-        g_free (tmp->reset_path);
         g_free (tmp->set_key);
 
         if (tmp->set_value)
@@ -215,17 +206,7 @@ dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
 
   for (node = backend->outstanding; node; node = node->next)
     {
-      if (node->reset_path)
-        {
-          if (g_str_has_prefix (key, node->reset_path))
-            {
-              *value = NULL;
-              found = TRUE;
-              break;
-            }
-        }
-
-      else if (node->set_key)
+      if (node->set_key)
         {
           if (strcmp (key, node->set_key) == 0)
             {
@@ -244,7 +225,7 @@ dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
           gpointer result;
 
           if (dconf_settings_backend_scan_outstanding_tree (node->tree, key,
-                                                    length, &result))
+                                                            length, &result))
             {
               if (result)
                 *value = g_variant_ref (result);
@@ -357,16 +338,6 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
     return dconf_engine_read_default (dcsb->engine, key);
 }
 
-static gchar **
-dconf_settings_backend_list (GSettingsBackend  *backend,
-                             const gchar       *dir,
-                             gchar            **resets,
-                             gsize              n_resets,
-                             gsize             *length)
-{
-  g_assert_not_reached ();
-}
-
 static void
 dconf_settings_backend_send (GDBusConnection    *bus,
                              DConfEngineMessage *dcem,
@@ -449,7 +420,7 @@ dconf_settings_backend_get_bus (DConfSettingsBackend  *dcsb,
 
 static gboolean
 dconf_settings_backend_write (GSettingsBackend *backend,
-                              const gchar      *path_or_key,
+                              const gchar      *key,
                               GVariant         *value,
                               gpointer          origin_tag)
 {
@@ -458,24 +429,17 @@ dconf_settings_backend_write (GSettingsBackend *backend,
   DConfEngineMessage dcem;
   GDBusConnection *bus;
 
-  if (!dconf_engine_write (dcsb->engine, path_or_key, value, &dcem, NULL))
+  if (!dconf_engine_write (dcsb->engine, key, value, &dcem, NULL))
     return FALSE;
 
   if (!dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
     return FALSE;
 
-  serial = dconf_settings_backend_new_outstanding (dcsb,
-                                                   &dcem,
-                                                   path_or_key,
-                                                   value,
-                                                   NULL);
-
+  serial = dconf_settings_backend_new_outstanding (dcsb, &dcem, key,
+                                                   value, NULL);
   dconf_settings_backend_send (bus, &dcem, serial);
 
-  if (g_str_has_suffix (path_or_key, "/"))
-    g_settings_backend_path_changed (backend, path_or_key, origin_tag);
-  else
-    g_settings_backend_changed (backend, path_or_key, origin_tag);
+  g_settings_backend_changed (backend, key, origin_tag);
 
   return TRUE;
 }
@@ -520,10 +484,10 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
 
 static void
 dconf_settings_backend_reset (GSettingsBackend *backend,
-                              const gchar      *path_or_key,
+                              const gchar      *key,
                               gpointer          origin_tag)
 {
-  dconf_settings_backend_write (backend, path_or_key, NULL, origin_tag);
+  dconf_settings_backend_write (backend, key, NULL, origin_tag);
 }
 
 static gboolean
@@ -614,11 +578,9 @@ static void
 dconf_settings_backend_class_init (GSettingsBackendClass *class)
 {
   class->read = dconf_settings_backend_read;
-  class->list = dconf_settings_backend_list;
   class->write = dconf_settings_backend_write;
-  class->write_keys = dconf_settings_backend_write_tree;
+  class->write_tree = dconf_settings_backend_write_tree;
   class->reset = dconf_settings_backend_reset;
-  class->reset_path = dconf_settings_backend_reset;
   class->get_writable = dconf_settings_backend_get_writable;
   class->subscribe = dconf_settings_backend_subscribe;
   class->unsubscribe = dconf_settings_backend_unsubscribe;
