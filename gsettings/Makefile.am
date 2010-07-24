@@ -12,13 +12,11 @@ libdconfsettings_so_SOURCES = \
 	dconfsettingsbackend.c
 
 uninstall-hook:
-	rm -f $(DESTDIR)$(giomodulesdir)/libdconfsettings.so
 	if test -z "$(DESTDIR)" -a "$(gio_QUERYMODULES)" != "no" ; then \
 	  $(gio_QUERYMODULES) $(giomodulesdir) ;  \
 	fi
 
 install-data-hook:
-	rm -f $(DESTDIR)$(giomodulesdir)/libdconfsettings.la
 	if test -z "$(DESTDIR)" -a "$(gio_QUERYMODULES)" != "no" ; then \
 	  $(gio_QUERYMODULES) $(giomodulesdir) ;  \
 	fi
