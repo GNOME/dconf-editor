@@ -50,4 +50,4 @@ vapidir = $(datadir)/vala/vapi
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = dconf.pc
 
-CLEANFILES = $(dist_gir_DATA) $(typelib_DATA)
+CLEANFILES = $(dist_gir_DATA) $(typelib_DATA) dconf.deps
