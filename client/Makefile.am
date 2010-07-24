@@ -26,7 +26,7 @@ libdconf.so: libdconf.so.0
 	ln -fs libdconf.so.0 libdconf.so
 
 install-data-hook:
-	ln -fs libdconf.so.0 $(shlibdir)/libdconf.so
+	ln -fs libdconf.so.0 $(DESTDIR)$(shlibdir)/libdconf.so
 
 dconfinclude_HEADERS = \
 	dconf-client.h	\
