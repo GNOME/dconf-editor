@@ -20,10 +20,13 @@ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(
 
 shlibdir=$(libdir)
 shlib_PROGRAMS = libdconf.so.0
-shlib_DATA = libdconf.so
+noinst_DATA = libdconf.so
 
 libdconf.so: libdconf.so.0
 	ln -fs libdconf.so.0 libdconf.so
+
+install-data-hook:
+	ln -fs libdconf.so.0 $(shlibdir)/libdconf.so
 
 dconfinclude_HEADERS = \
 	dconf-client.h	\
