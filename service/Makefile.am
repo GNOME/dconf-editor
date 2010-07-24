@@ -16,6 +16,8 @@ dconf_service_SOURCES = \
 	dconf-rebuilder.c		\
 	dconf-writer.h			\
 	dconf-writer.c			\
+	dconf-state.h			\
+	dconf-state.c			\
 	service.c
 
 DISTCLEANFILES = ca.desrt.dconf.service

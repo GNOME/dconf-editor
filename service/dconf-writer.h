@@ -22,14 +22,14 @@
 #ifndef __dconf_writer_h__
 #define __dconf_writer_h__
 
-#include <glib.h>
+#include "dconf-state.h"
 
 typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;
 
-const gchar *           dconf_writer_get_shm_dir                        (void);
 gchar **                dconf_writer_list_existing                      (void);
-void                    dconf_writer_init                               (void);
-DConfWriter *           dconf_writer_new                                (const gchar          *name);
+DConfWriter *           dconf_writer_new                                (DConfState           *state,
+                                                                         const gchar          *name);
+DConfState *            dconf_writer_get_state                          (DConfWriter          *writer);
 const gchar *           dconf_writer_get_name                           (DConfWriter          *writer);
 gboolean                dconf_writer_write                              (DConfWriter          *writer,
                                                                          const gchar          *name,

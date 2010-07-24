@@ -21,8 +21,8 @@
 
 #include "dconf-writer.h"
 
-#include "dconf-shmdir.h"
 #include "dconf-rebuilder.h"
+#include "dconf-state.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -30,21 +30,13 @@
 #include <errno.h>
 #include <stdio.h>
 
-static const gchar *dconf_writer_shm_dir;
-static const gchar *dconf_writer_db_dir;
-
 struct OPAQUE_TYPE__DConfWriter
 {
+  DConfState *state;
   gchar *name;
   gchar *path;
   gchar *shm;
 };
-
-const gchar *
-dconf_writer_get_shm_dir (void)
-{
-  return dconf_writer_shm_dir;
-}
 
 /* Each element must only contain the ASCII characters "[A-Z][a-z][0-9]_"
  */
@@ -141,72 +133,22 @@ dconf_writer_get_name (DConfWriter *writer)
   return writer->name;
 }
 
+DConfState *
+dconf_writer_get_state (DConfWriter *writer)
+{
+  return writer->state;
+}
+
 DConfWriter *
-dconf_writer_new (const gchar *name)
+dconf_writer_new (DConfState  *state,
+                  const gchar *name)
 {
   DConfWriter *writer;
 
   writer = g_slice_new (DConfWriter);
-  writer->path = g_build_filename (dconf_writer_db_dir, name, NULL);
-  writer->shm = g_build_filename (dconf_writer_shm_dir, name, NULL);
+  writer->path = g_build_filename (state->db_dir, name, NULL);
+  writer->shm = g_build_filename (state->shm_dir, name, NULL);
   writer->name = g_strdup (name);
 
   return writer;
-}
-
-void
-dconf_writer_init (void)
-{
-  const gchar *config_dir = g_get_user_config_dir ();
-
-  dconf_writer_db_dir = g_build_filename (config_dir, "dconf", NULL);
-
-  if (g_mkdir_with_parents (dconf_writer_db_dir, 0700))
-    {
-      /* XXX remove this after a while... */
-      if (errno == ENOTDIR)
-        {
-          gchar *tmp, *final;
-
-          g_message ("Attempting to migrate ~/.config/dconf "
-                     "to ~/.config/dconf/user");
-
-          tmp = g_build_filename (config_dir, "dconf-user.db", NULL);
-
-          if (rename (dconf_writer_db_dir, tmp))
-            g_error ("Can not rename '%s' to '%s': %s",
-                     dconf_writer_db_dir, tmp, g_strerror (errno));
-
-          if (g_mkdir_with_parents (dconf_writer_db_dir, 0700))
-            g_error ("Can not create directory '%s': %s",
-                     dconf_writer_db_dir, g_strerror (errno));
-
-          final = g_build_filename (dconf_writer_db_dir, "user", NULL);
-
-          if (rename (tmp, final))
-            g_error ("Can not rename '%s' to '%s': %s",
-                     tmp, final, g_strerror (errno));
-
-          g_message ("Successful.");
-
-          g_free (final);
-          g_free (tmp);
-        }
-      else
-        g_error ("Can not create directory '%s': %s",
-                 dconf_writer_db_dir, g_strerror (errno));
-    }
-
-  dconf_writer_shm_dir = dconf_shmdir_from_environment ();
-
-  if (dconf_writer_shm_dir == NULL)
-    {
-      const gchar *tmpdir = g_get_tmp_dir ();
-      gchar *shmdir;
-
-      shmdir = g_build_filename (tmpdir, "dconf.XXXXXX", NULL);
-
-      if ((dconf_writer_shm_dir = mkdtemp (shmdir)) == NULL)
-        g_error ("Can not create reasonable shm directory");
-    }
 }

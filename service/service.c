@@ -25,8 +25,7 @@
 
 #include "dconf-interfaces.h"
 #include "dconf-writer.h"
-
-static guint64 dconf_service_serial;
+#include "dconf-state.h"
 
 static void
 emit_notify_signal (GDBusConnection  *connection,
@@ -120,6 +119,9 @@ method_call (GDBusConnection       *connection,
              gpointer               user_data)
 {
   DConfWriter *writer = user_data;
+  DConfState *state;
+
+  state = dconf_writer_get_state (writer);
 
   if (strcmp (method_name, "Write") == 0)
     {
@@ -129,8 +131,8 @@ method_call (GDBusConnection       *connection,
       gsize key_length;
       GVariant *value;
       GVariant *none;
-      gchar tag[20];
       gchar *path;
+      gchar *tag;
 
       g_variant_get (parameters, "(@s@av)", &keyvalue, &value);
       key = g_variant_get_string (keyvalue, &key_length);
@@ -164,7 +166,7 @@ method_call (GDBusConnection       *connection,
           return;
         }
 
-      snprintf (tag, sizeof tag, "%"G_GUINT64_FORMAT, dconf_service_serial++);
+      tag = dconf_state_get_tag (state);
       g_dbus_method_invocation_return_value (invocation,
                                              g_variant_new ("(s)", tag));
       none = g_variant_new_array (G_VARIANT_TYPE_STRING, NULL, 0);
@@ -176,6 +178,7 @@ method_call (GDBusConnection       *connection,
                                                     key, none, tag),
                                      NULL);
       g_free (path);
+      g_free (tag);
     }
 
   else if (strcmp (method_name, "WriteMany") == 0)
@@ -185,8 +188,8 @@ method_call (GDBusConnection       *connection,
       GVariantIter *iter;
       const gchar **keys;
       GVariant **values;
-      gchar tag[20];
       gsize length;
+      gchar *tag;
       gint i = 0;
       gint j;
 
@@ -228,7 +231,7 @@ method_call (GDBusConnection       *connection,
           return;
         }
 
-      snprintf (tag, sizeof tag, "%"G_GUINT64_FORMAT, dconf_service_serial++);
+      tag = dconf_state_get_tag (state);
       g_dbus_method_invocation_return_value (invocation,
                                              g_variant_new ("(s)", tag));
       emit_notify_signal (connection, writer, tag, prefix, keys, i);
@@ -239,6 +242,7 @@ method_call (GDBusConnection       *connection,
 
       g_free (values);
       g_free (keys);
+      g_free (tag);
     }
 
   else if (strcmp (method_name, "SetLock") == 0)
@@ -272,7 +276,9 @@ writer_info_get_property (GDBusConnection  *connection,
                           GError          **error,
                           gpointer          user_data)
 {
-  return g_variant_new_string (dconf_writer_get_shm_dir ());
+  DConfState *state = user_data;
+
+  return g_variant_new_string (state->shm_dir);
 }
 
 static const GDBusInterfaceVTable *
@@ -284,6 +290,8 @@ subtree_dispatch (GDBusConnection *connection,
                   gpointer        *out_user_data,
                   gpointer         user_data)
 {
+  DConfState *state = user_data;
+
   if (strcmp (interface_name, "ca.desrt.dconf.Writer") == 0)
     {
       static const GDBusInterfaceVTable vtable = {
@@ -302,7 +310,7 @@ subtree_dispatch (GDBusConnection *connection,
 
       if G_UNLIKELY (writer == NULL)
         {
-          writer = dconf_writer_new (node);
+          writer = dconf_writer_new (state, node);
           g_hash_table_insert (writer_table, g_strdup (node), writer);
         }
 
@@ -317,7 +325,7 @@ subtree_dispatch (GDBusConnection *connection,
         NULL, writer_info_get_property, NULL
       };
 
-      *out_user_data = NULL;
+      *out_user_data = state;
       return &vtable;
     }
 
@@ -368,11 +376,14 @@ bus_acquired (GDBusConnection *connection,
   static GDBusSubtreeVTable vtable = {
     subtree_enumerate, subtree_introspect, subtree_dispatch
   };
+  DConfState *state = user_data;
   GDBusSubtreeFlags flags;
+
+  dconf_state_set_id (state, g_dbus_connection_get_unique_name (connection));
 
   flags = G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES;
   g_dbus_connection_register_subtree (connection, "/ca/desrt/dconf/Writer",
-                                      &vtable, flags, NULL, NULL, NULL);
+                                      &vtable, flags, state, NULL, NULL);
 }
 
 static void
@@ -393,14 +404,23 @@ name_lost (GDBusConnection *connection,
 int
 main (void)
 {
+  DConfState state;
+  GBusType type;
+
   g_type_init ();
+  dconf_state_init (&state);
 
-  dconf_writer_init ();
+  if (state.is_session)
+    type = G_BUS_TYPE_SESSION;
+  else
+    type = G_BUS_TYPE_SYSTEM;
 
-  g_bus_own_name (G_BUS_TYPE_SESSION, "ca.desrt.dconf", 0,
-                  bus_acquired, name_acquired, name_lost, NULL, NULL);
+  g_bus_own_name (type, "ca.desrt.dconf", G_BUS_NAME_OWNER_FLAGS_NONE,
+                  bus_acquired, name_acquired, name_lost, &state, NULL);
 
-  g_main_loop_run (g_main_loop_new (NULL, FALSE));
+  g_main_loop_run (state.main_loop);
+
+  dconf_state_destroy (&state);
 
   return 0;
 }
