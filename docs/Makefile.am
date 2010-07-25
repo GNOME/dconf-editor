@@ -9,7 +9,7 @@ DOC_SOURCE_DIR = ..
 MKDB_OPTIONS = --output-format=xml
 
 INCLUDES = $(gio_CFLAGS)
-GTKDOC_LIBS = $(gio_LIBS) ../client/libdconf.so
+GTKDOC_LIBS = $(gio_LIBS) -L../client -ldconf -Wl,-rpath=../client
 
 IGNORE_HFILES = \
 	dconf-engine.h		\
