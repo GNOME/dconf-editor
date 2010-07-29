@@ -74,8 +74,6 @@ dconf_state_init (DConfState *state)
 
   if (state->is_session)
     dconf_state_init_session (state);
-
-  g_print ("db is %s\n", state->db_dir);
 }
 
 void
