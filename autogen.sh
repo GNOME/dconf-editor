@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -8,16 +8,16 @@ if [ "$1" = "clean" ]; then
   exit
 fi
 
-if automake-1.11 --version > /dev/null; then
-  automake=automake-1.11
+if automake-1.11 --version &> /dev/null; then
+  automake_suffix='-1.11'
 else
-  automake=automake
+  automake_suffix=''
 fi
 
 mkdir -p m4 aux
 gtkdocize --docdir docs --flavour no-tmpl
-aclocal ${ACLOCAL_FLAGS}
-${automake} --add-missing --foreign
+aclocal${automake_suffix} ${ACLOCAL_FLAGS}
+automake${automake_suffix} --add-missing --foreign
 autoconf
 
 CFLAGS=${CFLAGS=-ggdb -Werror}
