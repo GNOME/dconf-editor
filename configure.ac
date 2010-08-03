@@ -18,7 +18,7 @@ AM_PROG_VALAC([0.9.2])
 GOBJECT_INTROSPECTION_CHECK([0.9.3])
 
 # Gtk-doc support
-GTK_DOC_CHECK([1.14])
+GTK_DOC_CHECK([1.15])
 
 # Dependencies
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.12)

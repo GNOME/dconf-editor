@@ -34,8 +34,8 @@ static const GDBusArgInfo *write_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *many_in[] = { &path_arg, &values_arg, NULL };
 static const GDBusArgInfo *many_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, &tag_arg, NULL };
-static const GDBusArgInfo *setlock_in[] = { &name_arg, &locked_arg, NULL };
-static const GDBusArgInfo *setlock_out[] = { NULL };
+static const GDBusArgInfo *setlocked_in[] = { &name_arg, &locked_arg, NULL };
+static const GDBusArgInfo *setlocked_out[] = { NULL };
 
 static const GDBusMethodInfo write_method = {
   -1, (gchar *) "Write",
@@ -49,10 +49,10 @@ static const GDBusMethodInfo writemany_method = {
   (GDBusArgInfo **) many_out
 };
 
-static const GDBusMethodInfo setlock_method = {
-  -1, (gchar *) "SetLock",
-  (GDBusArgInfo **) setlock_in,
-  (GDBusArgInfo **) setlock_out
+static const GDBusMethodInfo setlocked_method = {
+  -1, (gchar *) "SetLocked",
+  (GDBusArgInfo **) setlocked_in,
+  (GDBusArgInfo **) setlocked_out
 };
 
 static const GDBusSignalInfo notify_signal = {
@@ -65,7 +65,7 @@ static const GDBusPropertyInfo shmdir_property = {
 };
 
 static const GDBusMethodInfo *writer_methods[] = {
-  &write_method, &writemany_method, &setlock_method, NULL
+  &write_method, &writemany_method, &setlocked_method, NULL
 };
 
 static const GDBusSignalInfo *writer_signals[] = {

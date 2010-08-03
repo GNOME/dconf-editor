@@ -4,8 +4,6 @@ DConfClientClass
 DConfClient
 DConfWatchFunc
 dconf_client_new
-dconf_client_new_async
-dconf_client_new_finish
 dconf_client_read
 dconf_client_read_default
 dconf_client_read_no_default

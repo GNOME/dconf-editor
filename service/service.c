@@ -245,7 +245,7 @@ method_call (GDBusConnection       *connection,
       g_free (tag);
     }
 
-  else if (strcmp (method_name, "SetLock") == 0)
+  else if (strcmp (method_name, "SetLocked") == 0)
     {
       GError *error = NULL;
       const gchar *name;

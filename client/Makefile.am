@@ -46,7 +46,7 @@ EXTRA_DIST = dconf.vapi
 dconf.vapi: libdconf.so.0
 
 dconf.deps:
-	echo gio-2.0 > dconf.deps
+	$(AM_V_GEN) echo gio-2.0 > dconf.deps
 
 vapi_DATA = dconf.vapi dconf.deps
 vapidir = $(datadir)/vala/vapi

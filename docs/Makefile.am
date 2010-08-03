@@ -4,7 +4,7 @@ DOC_MODULE = dconf
 
 DOC_MAIN_SGML_FILE = dconf-docs.xml
 
-DOC_SOURCE_DIR = ..
+DOC_SOURCE_DIR = ../client ../common
 
 MKDB_OPTIONS = --output-format=xml
 
@@ -13,6 +13,7 @@ GTKDOC_LIBS = $(gio_LIBS) -L../client -ldconf -Wl,-rpath=../client
 
 IGNORE_HFILES = \
 	dconf-engine.h		\
+	dconf-shmdir.h		\
 	dconf-resetlist.h	\
 	dconf-readtype.h	\
 	dconf-rebuilder.h	\

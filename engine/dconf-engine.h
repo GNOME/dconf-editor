@@ -99,7 +99,7 @@ gboolean                dconf_engine_decode_notify                      (DConfEn
                                                                          const gchar             *interface,
                                                                          const gchar             *member,
                                                                          GVariant                *body);
-void                    dconf_engine_set_lock                           (DConfEngine             *engine,
+void                    dconf_engine_set_locked                         (DConfEngine             *engine,
                                                                          const gchar             *path,
                                                                          gboolean                 locked,
                                                                          DConfEngineMessage      *message);

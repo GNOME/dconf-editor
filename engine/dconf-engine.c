@@ -548,12 +548,12 @@ dconf_engine_write_many (DConfEngine          *engine,
 }
 
 void
-dconf_engine_set_lock (DConfEngine        *engine,
-                       const gchar        *path,
-                       gboolean            locked,
-                       DConfEngineMessage *dcem)
+dconf_engine_set_locked (DConfEngine        *engine,
+                         const gchar        *path,
+                         gboolean            locked,
+                         DConfEngineMessage *dcem)
 {
-  dconf_engine_dcem (engine, dcem, "SetLock", "(sb)", path, locked);
+  dconf_engine_dcem (engine, dcem, "SetLocked", "(sb)", path, locked);
 }
 
 gchar **

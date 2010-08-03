@@ -47,7 +47,7 @@ void do_write (DConf.Client client, string key, string val) throws Error {
 void do_lock (DConf.Client client, string key, bool locked) throws Error {
 	DConf.verify_key (key);
 
-	client.set_lock (key, locked);
+	client.set_locked (key, locked);
 }
 
 void do_watch (DConf.Client client, string name) throws Error {
