@@ -22,6 +22,20 @@
 
 #include "dconf-paths.h"
 
+/**
+ * SECTION:paths
+ * @title: DConf Paths
+ * @short_description: utility functions to validate dconf paths
+ *
+ * Various places in the dconf API speak of "paths", "keys", "dirs" and
+ * relative versions of each of these.  This file contains functions to
+ * check if a given string is a valid member of each of these classes
+ * and to report errors when a string is not.
+ *
+ * See each function in this section for a precise description of what
+ * makes a string a valid member of a given class.
+ **/
+
 #define vars gchar c, l
 
 #define DCONF_ERROR 0

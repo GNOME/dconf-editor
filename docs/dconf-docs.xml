@@ -12,7 +12,7 @@
   <chapter>
     <title>DConf Client API</title>
     <xi:include href='xml/paths.xml'/>
-    <xi:include href='xml/dconf-client.xml'/>
+    <xi:include href='xml/client.xml'/>
   </chapter>
 
   <chapter id='object-tree'>

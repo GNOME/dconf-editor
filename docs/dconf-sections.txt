@@ -1,6 +1,5 @@
 <SECTION>
-<FILE>dconf-client</FILE>
-DConfClientClass
+<FILE>client</FILE>
 DConfClient
 DConfWatchFunc
 dconf_client_new
@@ -16,8 +15,6 @@ dconf_client_set_locked
 dconf_client_set_locked_async
 dconf_client_set_locked_finish
 dconf_client_write_many
-dconf_client_write_many_async
-dconf_client_write_many_finish
 dconf_client_watch
 dconf_client_watch_async
 dconf_client_watch_finish
@@ -25,6 +22,7 @@ dconf_client_unwatch
 dconf_client_unwatch_async
 dconf_client_unwatch_finish
 <SUBSECTION Standard>
+DConfClientClass
 DCONF_CLIENT
 DCONF_IS_CLIENT
 DCONF_TYPE_CLIENT

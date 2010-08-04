@@ -59,6 +59,22 @@ namespace DConf {
 		}
 
 		/**
+		 * dconf_client_is_writable:
+		 * @client: a #DConfClient
+		 * @key: a dconf key
+		 * Returns: %TRUE is @key is writable
+		 *
+		 * Checks if @key is writable (ie: the key has no mandatory setting).
+		 *
+		 * This call does not verify that writing to the key will actually be successful.  It only checks for
+		 * the existence of mandatory keys/locks that might affect writing to @key.  Other issues (such as a
+		 * full disk or an inability to connect to the bus and start the service) may cause the write to fail.
+		 **/
+		public bool is_writable (string key) {
+			return engine.is_writable (key);
+		}
+
+		/**
 		 * dconf_client_write:
 		 * @client: a #DConfClient
 		 * @key: a dconf key
@@ -66,7 +82,7 @@ namespace DConf {
 		 * @tag: (out) (allow-none): the tag from this write
 		 * @cancellable: a #GCancellable, or %NULL
 		 * @error: a pointer to a #GError, or %NULL
-		 * @returns: %TRUE if the write is successful
+		 * Returns: %TRUE if the write is successful
 		 *
 		 * Write a value to the given @key, or reset @key to its default value.
 		 *
@@ -95,7 +111,7 @@ namespace DConf {
 		 * @callback: the function to call when complete
 		 * @user_data: the user data for @callback
 		 *
-		 * Writes a value to the given @key, or reset @key to its default value.
+		 * Write a value to the given @key, or reset @key to its default value.
 		 *
 		 * This is the asynchronous version of dconf_client_write().  You should call
 		 * dconf_client_write_finish() from @callback to collect the result.
@@ -106,13 +122,65 @@ namespace DConf {
 		}
 
 		/**
+		 * dconf_client_write_many:
+		 * @client: a #DConfClient
+		 * @dir: the dconf directory under which to make the writes
+		 * @rels: a %NULL-terminated array of relative keys
+		 * @values: an array of possibly-%NULL #GVariant pointers
+		 * @n_values: the length of @values, which must be equal to the length of @rels
+		 * @tag: (out) (allow-none): the tag from this write
+		 * @cancellable: a #GCancellable, or %NULL
+		 * @error: a pointer to a #GError, or %NULL
+		 * Returns: %TRUE if the write is successful
+		 *
+		 * Write multiple values at once.
+		 *
+		 * For each pair of items from @rels and @values, the value is written to the result of concatenating
+		 * @dir with the relative path.  As with dconf_client_write(), if a given value is %NULL then the effect
+		 * is that the specified key is reset.
+		 *
+		 * If @tag is non-%NULL then it is set to the unique tag associated with this write.  This is the same
+		 * tag that appears in change notifications.
+		 **/
+		public bool write_many (string dir, [CCode (array_length = false, array_null_terminated = true)] string[] rels, Variant?[] values, out string? tag = null, Cancellable? cancellable = null) throws Error {
+			if (&tag == null) { /* bgo #591673 */
+				string junk;
+				call_sync (engine.write_many (dir, rels, values), out junk, cancellable);
+			} else {
+				call_sync (engine.write_many (dir, rels, values), out tag, cancellable);
+			}
+			return true;
+		}
+
+		/*< disabled due to Vala compiler bugs >
+		 * dconf_client_write_many_async:
+		 * @client: a #DConfClient
+		 * @dir: the dconf directory under which to make the writes
+		 * @rels: a %NULL-terminated array of relative keys
+		 * @values: an array of possibly-%NULL #GVariant pointers
+		 * @n_values: the length of @values, which must be equal to the length of @rels
+		 * @cancellable: a #GCancellable, or %NULL
+		 * @callback: a #GAsyncReadyCallback to call when finished
+		 * @user_data: a pointer to pass as the last argument to @callback
+		 *
+		 * Write multiple values at once.
+		 *
+		 * This is the asynchronous version of dconf_client_write_many().  You should call
+		 * dconf_client_write_many_finish() from @callback to collect the result.
+		 *
+			public async bool write_many_async (string dir, [CCode (array_length = false, array_null_terminated = true)] string[] rels, Variant?[] values, out string? tag = null, Cancellable? cancellable = null) throws Error {
+			yield call_async (engine.write_many (dir, rels, values), out tag, cancellable);
+			return true;
+		}*/
+
+		/**
 		 * dconf_client_set_locked:
 		 * @client: a #DConfClient
 		 * @path: a dconf path
 		 * @locked: %TRUE to lock, %FALSE to unlock
 		 * @cancellable: a #GCancellable, or %NULL
 		 * @error: a pointer to a #GError, or %NULL
-		 * @returns: %TRUE if setting the lock was successful
+		 * Returns: %TRUE if setting the lock was successful
 		 *
 		 * Marks a dconf path as being locked.
 		 *
@@ -140,7 +208,7 @@ namespace DConf {
 		 * Marks a dconf path as being locked.
 		 *
 		 * This is the asynchronous version of dconf_client_set_locked().  You should call
-		 * dconf_client_write_finish() from @callback to collect the result.
+		 * dconf_client_set_locked_finish() from @callback to collect the result.
 		 **/
 		public async bool set_locked_async (string key, bool locked, Cancellable? cancellable = null) throws Error {
 			yield call_async (engine.set_locked (key, locked), null, cancellable);
@@ -148,12 +216,13 @@ namespace DConf {
 		}
 
 		/**
+		 * dconf_client_read:
 		 * @client: a #DConfClient
 		 * @key: a valid dconf key
-		 * @returns: the value corresponding to @key, or %NULL if there is none
+		 * Returns: the value corresponding to @key, or %NULL if there is none
 		 *
 		 * Reads the value named by @key from dconf.  If no such value exists, %NULL is returned.
-		 */
+		 **/
 		public Variant? read (string key) {
 			return engine.read (key);
 		}
@@ -162,7 +231,7 @@ namespace DConf {
 		 * dconf_client_read_default:
 		 * @client: a #DConfClient
 		 * @key: a valid dconf key
-		 * @returns: the default value corresponding to @key, or %NULL if there is none
+		 * Returns: the default value corresponding to @key, or %NULL if there is none
 		 *
 		 * Reads the value named by @key from any existing default/mandatory databases but ignoring any value
 		 * set by the user.  The result is as if the named key had just been reset.
@@ -175,7 +244,7 @@ namespace DConf {
 		 * dconf_client_read_no_default:
 		 * @client: a #DConfClient
 		 * @key: a valid dconf key
-		 * @returns: the user value corresponding to @key, or %NULL if there is none
+		 * Returns: the user value corresponding to @key, or %NULL if there is none
 		 *
 		 * Reads the value named by @key as set by the user, ignoring any default/mandatory databases.  Normal
 		 * applications will never want to do this, but it may be useful for administrative or configuration
@@ -195,7 +264,7 @@ namespace DConf {
 		 * @client: a #DConfClient
 		 * @dir: a dconf dir
 		 * @length: the number of items that were returned
-		 * @returns: (array length=length): the paths located directly below @dir
+		 * Returns: (array length=length): the paths located directly below @dir
 		 *
 		 * Lists the keys and dirs located directly below @dir.
 		 *
@@ -205,21 +274,81 @@ namespace DConf {
 			return engine.list (dir);
 		}
 
-		public bool watch (string name, Cancellable? cancellable = null) throws GLib.Error {
-			call_sync (engine.watch (name), null, cancellable);
+		/**
+		 * dconf_client_watch:
+		 * @client: a #DConfClient
+		 * @path: a dconf path
+		 * @cancellable: a #GCancellable, or %NULL
+		 * @error: a pointer to a %NULL #GError, or %NULL
+		 * Returns: %TRUE on success, else %FALSE with @error set
+		 *
+		 * Requests monitoring of a portion of the dconf database.
+		 *
+		 * If @path is a key (ie: doesn't end with a slash) then a single key is monitored for changes.  If
+		 * @path is a dir (ie: sending with a slash) then all keys that have @path as a prefix are monitored.
+		 *
+		 * This function blocks until the watch has definitely been established with the bus daemon.  If you
+		 * would like a non-blocking version of this call, see dconf_client_watch_async().
+		 **/
+		public bool watch (string path, Cancellable? cancellable = null) throws GLib.Error {
+			call_sync (engine.watch (path), null, cancellable);
 			return true;
 		}
 
+		/**
+		 * dconf_client_watch_async:
+		 * @client: a #DConfClient
+		 * @path: a dconf path
+		 * @cancellable: a #GCancellable, or %NULL
+		 * @callback: a #GAsyncReadyCallback to call when finished
+		 * @user_data: a pointer to pass as the last argument to @callback
+		 *
+		 * Requests monitoring of a portion of the dconf database.
+		 *
+		 * This is the asynchronous version of dconf_client_watch().  You should call
+		 * dconf_client_watch_finish() from @callback to collect the result.
+		 **/
 		public async bool watch_async (string name, Cancellable? cancellable = null) throws GLib.Error {
 			yield call_async (engine.watch (name), null, cancellable);
 			return true;
 		}
 
+		/**
+		 * dconf_client_unwatch:
+		 * @client: a #DConfClient
+		 * @path: a dconf path
+		 * @cancellable: a #GCancellable, or %NULL
+		 * @error: a pointer to a %NULL #GError, or %NULL
+		 * Returns: %TRUE on success, else %FALSE with @error set
+		 *
+		 * Cancels the effect of a previous call to dconf_client_watch().
+		 *
+		 * If the same path has been watched multiple times then only one of the watches is cancelled and the
+		 * net effect is that the path is still watched.
+		 *
+		 * This function blocks until the watch has definitely been removed from the bus daemon.  It is possible
+		 * that notifications in transit will arrive after this call returns.  For an asynchronous version of
+		 * this call, see dconf_client_unwatch_async().
+		 **/
 		public bool unwatch (string name, Cancellable? cancellable = null) throws GLib.Error {
 			call_sync (engine.unwatch (name), null, cancellable);
 			return true;
 		}
 
+		/**
+		 * dconf_client_unwatch_async:
+		 * @client: a #DConfClient
+		 * @path: a dconf path
+		 * @cancellable: a #GCancellable, or %NULL
+		 * @callback: a #GAsyncReadyCallback to call when finished
+		 * @user_data: a pointer to pass as the last argument to @callback
+		 *
+		 * Cancels the effect of a previous call to dconf_client_watch().
+		 *
+		 * This is the asynchronous version of dconf_client_unwatch().  You should call
+		 * dconf_client_unwatch_finish() from @callback to collect the result.  No additional notifications will
+		 * be delivered for this watch after @callback is called.
+		 **/
 		public async bool unwatch_async (string name, Cancellable? cancellable = null) throws GLib.Error {
 			yield call_async (engine.unwatch (name), null, cancellable);
 			return true;
@@ -242,7 +371,7 @@ namespace DConf {
 		 * @watch_func: the function to call when changes occur
 		 * @user_data: the user_data to pass to @watch_func
 		 * @notify: the function to free @user_data when no longer needed
-		 * @returns: a new #DConfClient
+		 * Returns: a new #DConfClient
 		 *
 		 * Creates a new #DConfClient for the given context.
 		 *

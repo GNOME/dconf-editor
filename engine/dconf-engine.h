@@ -70,9 +70,7 @@ void                    dconf_engine_get_service_info                   (DConfEn
                                                                          const gchar            **destination,
                                                                          const gchar            **object_path);
 gboolean                dconf_engine_is_writable                        (DConfEngine             *engine,
-                                                                         const gchar             *name,
-                                                                         DConfEngineMessage      *message,
-                                                                         GError                 **error);
+                                                                         const gchar             *name);
 gboolean                dconf_engine_write                              (DConfEngine             *engine,
                                                                          const gchar             *key,
                                                                          GVariant                *value,

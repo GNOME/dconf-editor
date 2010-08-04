@@ -495,13 +495,8 @@ dconf_settings_backend_get_writable (GSettingsBackend *backend,
                                      const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfEngineMessage dcem;
-  GDBusConnection *bus;
 
-  if (!dconf_engine_is_writable (dcsb->engine, name, &dcem, NULL))
-    return FALSE;
-
-  return dconf_settings_backend_get_bus (dcsb, &bus, &dcem);
+  return dconf_engine_is_writable (dcsb->engine, name);
 }
 
 static void

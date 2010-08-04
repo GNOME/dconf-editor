@@ -466,13 +466,8 @@ dconf_engine_unwatch (DConfEngine        *engine,
 
 gboolean
 dconf_engine_is_writable (DConfEngine         *engine,
-                          const gchar         *name,
-                          DConfEngineMessage  *dcem,
-                          GError             **error)
+                          const gchar         *name)
 {
-  dcem->bus_type = 'e';
-  dcem->body = g_variant_new ("()");
-
   return TRUE;
 }
 

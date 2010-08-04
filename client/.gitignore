@@ -1,5 +1,5 @@
 dconf.vapi
-*.c
+dconf-client.c
 *.stamp
 *.deps
 libdconf.so
