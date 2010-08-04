@@ -94,6 +94,7 @@ void main (string[] args) {
 
 			default:
 				error ("unknown command");
+				break;
 		}
 	} catch (Error e) {
 		stderr.printf ("error: %s\n", e.message);
