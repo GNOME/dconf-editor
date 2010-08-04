@@ -146,6 +146,7 @@ dconf_writer_new (DConfState  *state,
   DConfWriter *writer;
 
   writer = g_slice_new (DConfWriter);
+  writer->state = state;
   writer->path = g_build_filename (state->db_dir, name, NULL);
   writer->shm = g_build_filename (state->shm_dir, name, NULL);
   writer->name = g_strdup (name);
