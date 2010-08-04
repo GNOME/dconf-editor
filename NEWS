@@ -1,3 +1,26 @@
+Changes in dconf 0.5
+=====================
+
+ - Include a dconf-editor
+ - drop libtool
+ - allow compiling without gobject-introspection
+ - autotools/build fixups
+ - repair some broken use of tags
+ - many updates for glib API changes
+ - fix a crasher in the service
+ - prefer 'automake-1.11' if it is in the path
+ - add support for layering (ie: for system defaults)
+ - add support for multiple writers in one service
+ - add a shared memory status region to indicate if the gvdb is stale
+     this prevents dconf from having to reopen the file each time
+ - support keyfile-maintained system settings (via 'dconf update')
+ - port client library and commandline tool to vala
+ - client library no longer has unimplemented calls
+   (except for write_many_async, due to bugs in valac)
+ - gtk-doc is now complete for the client library
+ - install our own vapi
+ - support 'reset' in the GSettingsBackend
+
 Changes in dconf 0.4
 =====================
 
