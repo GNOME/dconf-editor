@@ -12,7 +12,7 @@ AM_SILENT_RULES([yes])
 
 # Check for programs
 AC_PROG_CC
-AM_PROG_VALAC([0.9.2])
+AM_PROG_VALAC([0.9.4])
 
 # Introspection
 GOBJECT_INTROSPECTION_CHECK([0.9.3])
