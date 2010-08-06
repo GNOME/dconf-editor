@@ -1,13 +1,13 @@
 if HAVE_INTROSPECTION
 include $(INTROSPECTION_MAKEFILE)
 
-dconf-0.3.gir: libdconf.so
-dconf_0_3_gir_INCLUDES = Gio-2.0
-dconf_0_3_gir_CFLAGS = $(INCLUDES)
-dconf_0_3_gir_LIBS = dconf
-dconf_0_3_gir_FILES = dconf-client.c dconf-client.h
-dconf_0_3_gir_SCANNERFLAGS = --no-libtool
-INTROSPECTION_GIRS = dconf-0.3.gir
+dconf-1.0.gir: libdconf.so
+dconf_1_0_gir_INCLUDES = Gio-2.0
+dconf_1_0_gir_CFLAGS = $(INCLUDES)
+dconf_1_0_gir_LIBS = dconf
+dconf_1_0_gir_FILES = dconf-client.c dconf-client.h
+dconf_1_0_gir_SCANNERFLAGS = --no-libtool
+INTROSPECTION_GIRS = dconf-1.0.gir
 
 girdir = $(datadir)/gir-1.0
 dist_gir_DATA = $(INTROSPECTION_GIRS)
