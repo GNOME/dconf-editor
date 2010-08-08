@@ -4,3 +4,4 @@ dconf-client.c
 *.deps
 libdconf.so
 libdconf.so.0
+libdconf.so.0.0.0
