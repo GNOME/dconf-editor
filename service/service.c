@@ -83,7 +83,7 @@ emit_notify_signal (GDBusConnection  *connection,
 
   obj = g_strjoin (NULL, "/ca/desrt/dconf/Writer/",
                    dconf_writer_get_name (writer), NULL);
-  g_dbus_connection_emit_signal (connection, NULL, "/",
+  g_dbus_connection_emit_signal (connection, NULL, obj,
                                  "ca.desrt.dconf.Writer", "Notify",
                                  g_variant_new ("(s@ass)",
                                                 path, items, tag),
