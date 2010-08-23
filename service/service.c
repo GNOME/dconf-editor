@@ -21,6 +21,7 @@
 
 #include <gio/gio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "dconf-interfaces.h"
@@ -398,7 +399,8 @@ name_lost (GDBusConnection *connection,
            const gchar     *name,
            gpointer         user_data)
 {
-  g_error ("unable to acquire name: '%s'", name);
+  fprintf (stderr, "unable to acquire name: '%s'", name);
+  exit (1);
 }
 
 int
