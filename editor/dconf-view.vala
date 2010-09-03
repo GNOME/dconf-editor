@@ -20,7 +20,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
             else if (key.type_string == "<enum>")
             {
                 combo_renderer.text = key.value.get_string();
-                combo_renderer.model = new EnumModel(key.schema.schema.list.enums[key.schema.enum_name]);
+                combo_renderer.model = new EnumModel(key.schema.schema.list.enums.lookup(key.schema.enum_name));
                 mode = Gtk.CellRendererMode.EDITABLE;
             }
             else if (key.type_string == "b")

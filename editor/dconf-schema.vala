@@ -1,5 +1,3 @@
-using Gee;
-
 public class SchemaKey
 {
     public Schema schema;
@@ -63,11 +61,11 @@ public class SchemaKey
 public class SchemaEnumValue : GLib.Object
 {
     public SchemaEnum schema_enum;
-    public int index;
+    public uint index;
     public string nick;
     public int value;
 
-    public SchemaEnumValue(SchemaEnum schema_enum, int index, string nick, int value)
+    public SchemaEnumValue(SchemaEnum schema_enum, uint index, string nick, int value)
     {
         this.schema_enum = schema_enum;
         this.index = index;
@@ -80,7 +78,7 @@ public class SchemaEnum
 {
     public SchemaList list;
     public string id;
-    public ArrayList<SchemaEnumValue> values = new ArrayList<SchemaEnumValue>();
+    public GLib.List<SchemaEnumValue> values = new GLib.List<SchemaEnumValue>();
 
     public SchemaEnum(SchemaList list, Xml.Node* node)
     {
@@ -117,8 +115,8 @@ public class SchemaEnum
                 //if (value < 0 || nick == null)
                 //    ?
 
-                SchemaEnumValue schema_value = new SchemaEnumValue(this, values.size, nick, value);
-                values.add(schema_value);
+                SchemaEnumValue schema_value = new SchemaEnumValue(this, values.length(), nick, value);
+                values.append(schema_value);
             }
             //else
             //   ?
@@ -134,7 +132,7 @@ public class Schema
     public SchemaList list;
     public string id;
     public string? path;
-    public HashMap<string, SchemaKey> keys = new HashMap<string, SchemaKey>();
+    public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey>(str_hash, str_equal);
 
     public Schema(SchemaList list, Xml.Node* node, string? gettext_domain)
     {
@@ -160,16 +158,16 @@ public class Schema
             if (child->name != "key")
                continue;
             SchemaKey key = new SchemaKey(child, this, gettext_domain);
-            keys.set(key.name, key);
+            keys.insert(key.name, key);
         }
     }
 }
 
 public class SchemaList
 {
-    public ArrayList<Schema> schemas = new ArrayList<Schema>();
-    public HashMap<string, SchemaKey> keys = new HashMap<string, SchemaKey>();
-    public HashMap<string, SchemaEnum> enums = new HashMap<string, SchemaEnum>();
+    public GLib.List<Schema> schemas = new GLib.List<Schema>();
+    public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey>(str_hash, str_equal);
+    public GLib.HashTable<string, SchemaEnum> enums = new GLib.HashTable<string, SchemaEnum>(str_hash, str_equal);
 
     public void parse_file(string path)
     {
@@ -195,23 +193,23 @@ public class SchemaList
             if (node->name == "schema")
             {
                 Schema schema = new Schema(this, node, gettext_domain);
-                schemas.add(schema);
+                schemas.append(schema);
                 if (schema.path == null)
                 {
                     // FIXME: What to do here?
                     continue;
                 }
 
-                foreach (var key in schema.keys.values)
+                foreach (var key in schema.keys.get_values())
                 {
                     string full_name = schema.path + key.name;
-                    keys.set(full_name, key);
+                    keys.insert(full_name, key);
                 }
             }
             else if (node->name == "enum")
             {
                 SchemaEnum enum = new SchemaEnum(this, node);
-                enums.set(enum.id, enum);
+                enums.insert(enum.id, enum);
             }
             //else
             //    ?

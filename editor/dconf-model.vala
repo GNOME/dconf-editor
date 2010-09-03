@@ -1,5 +1,3 @@
-using Gee;
-
 public class Key : GLib.Object
 {
     private SettingsModel model;
@@ -72,7 +70,7 @@ public class Key : GLib.Object
         this.index = index;
         this.name = name;
         this.full_name = full_name;
-        this.schema = model.schemas.keys.get(full_name);
+        this.schema = model.schemas.keys.lookup(full_name);
     }
 
     private void update_value()
@@ -98,17 +96,17 @@ public class Directory : GLib.Object
         private set {}
     }
 
-    public HashMap<string, Directory> _child_map = new HashMap<string, Directory>();
-    public ArrayList<Directory> _children = new ArrayList<Directory>();
-    public ArrayList<Directory> children
+    public GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory>(str_hash, str_equal);
+    public GLib.List<Directory> _children = new GLib.List<Directory>();
+    public GLib.List<Directory> children
     {
         get { update_children(); return _children; }
         private set { }
     }
 
-    public HashMap<string, Key> _key_map = new HashMap<string, Key>();
-    private ArrayList<Key> _keys = new ArrayList<Key>();
-    public ArrayList<Key> keys
+    public GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key>(str_hash, str_equal);
+    private GLib.List<Key> _keys = new GLib.List<Key>();
+    public GLib.List<Key> keys
     {
         get { update_children(); return _keys; }
         private set { }
@@ -127,23 +125,29 @@ public class Directory : GLib.Object
     
     public Directory get_child(string name)
     {
-        if (_child_map.has_key(name))
-            return _child_map[name];
+        Directory? directory = _child_map.lookup(name);
 
-        Directory directory = new Directory(model, this, _children.size, name, full_name + name + "/");
-        _children.add(directory);
-        _child_map.set(name, directory);
+        if (directory == null)
+        {
+            directory = new Directory(model, this, (int)_children.length(), name, full_name + name + "/");
+            _children.append(directory);
+            _child_map.insert(name, directory);
+        }
+
         return directory;
     }
 
     public Key get_key(string name)
     {
-        if (_key_map.has_key(name))
-            return _key_map[name];
+        Key? key = _key_map.lookup(name);
 
-        Key key = new Key(model, this, _keys.size, name, full_name + name);
-        _keys.add(key);
-        _key_map.set(name, key);
+        if (key == null)
+        {
+            key = new Key(model, this, (int)_keys.length(), name, full_name + name);
+            _keys.append(key);
+            _key_map.insert(name, key);
+        }
+
         return key;
     }
 
@@ -151,7 +155,7 @@ public class Directory : GLib.Object
     {
         if (path == "")
         {
-            foreach (var schema_key in schema.keys.values)
+            foreach (var schema_key in schema.keys.get_values())
                 get_key(schema_key.name);
         }
         else
@@ -272,17 +276,17 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
     public bool iter_next(ref Gtk.TreeIter iter)
     {
         int index = get_key(iter).index;
-        if (index >= directory.keys.size - 1)
+        if (index >= directory.keys.length() - 1)
             return false;
-        set_iter(out iter, directory.keys[index+1]);
+        set_iter(out iter, directory.keys.nth_data(index+1));
         return true;
     }
 
     public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
-        if (parent != null || directory.keys.size == 0)
+        if (parent != null || directory.keys.length() == 0)
             return false;
-        set_iter(out iter, directory.keys[0]);
+        set_iter(out iter, directory.keys.nth_data(0));
         return true;
     }
 
@@ -294,7 +298,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
     public int iter_n_children(Gtk.TreeIter? iter)
     {
         if (iter == null)
-            return directory.keys.size;
+            return (int)directory.keys.length();
         else
             return 0;
     }
@@ -304,9 +308,9 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
         if (parent != null)
             return false;
 
-        if (n >= directory.keys.size)
+        if (n >= directory.keys.length())
             return false;
-        set_iter(out iter, directory.keys[n]);
+        set_iter(out iter, directory.keys.nth_data(n));
         return true;
     }
 
@@ -379,7 +383,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
         Gtk.TreePath path = new Gtk.TreePath();
-        path.append_index(get_enum_value(iter).index);
+        path.append_index((int)get_enum_value(iter).index);
         return path;
     }
 
@@ -393,18 +397,18 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
 
     public bool iter_next(ref Gtk.TreeIter iter)
     {
-        int index = get_enum_value(iter).index;
-        if (index >= schema_enum.values.size - 1)
+        uint index = get_enum_value(iter).index;
+        if (index >= schema_enum.values.length () - 1)
             return false;
-        set_iter(out iter, schema_enum.values[index + 1]);
+        set_iter(out iter, schema_enum.values.nth_data(index + 1));
         return true;
     }
 
     public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
-        if (parent != null || schema_enum.values.size == 0)
+        if (parent != null || schema_enum.values.length() == 0)
             return false;
-        set_iter(out iter, schema_enum.values[0]);
+        set_iter(out iter, schema_enum.values.nth_data(0));
         return true;
     }
 
@@ -416,7 +420,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
     public int iter_n_children(Gtk.TreeIter? iter)
     {
         if (iter == null)
-            return schema_enum.values.size;
+            return (int) schema_enum.values.length();
         else
             return 0;
     }
@@ -426,9 +430,9 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         if (parent != null)
             return false;
 
-        if (n >= schema_enum.values.size)
+        if (n >= schema_enum.values.length())
             return false;
-        set_iter(out iter, schema_enum.values[n]);
+        set_iter(out iter, schema_enum.values.nth_data(n));
         return true;
     }
 
@@ -527,7 +531,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
         Gtk.TreePath path = new Gtk.TreePath();
-        path.append_index(get_directory(iter).index);
+        path.append_index((int)get_directory(iter).index);
         return path;
     }
 
@@ -542,37 +546,37 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public bool iter_next(ref Gtk.TreeIter iter)
     {
         Directory directory = get_directory(iter);
-        if (directory.index >= directory.parent.children.size - 1)
+        if (directory.index >= directory.parent.children.length() - 1)
             return false;
-        set_iter(out iter, directory.parent.children[directory.index+1]);
+        set_iter(out iter, directory.parent.children.nth_data(directory.index+1));
         return true;
     }
 
     public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
         Directory directory = get_directory(parent);
-        if (directory.children.size == 0)
+        if (directory.children.length() == 0)
             return false;
-        set_iter(out iter, directory.children[0]);
+        set_iter(out iter, directory.children.nth_data(0));
         return true;
     }
 
     public bool iter_has_child(Gtk.TreeIter iter)
     {
-        return get_directory(iter).children.size > 0;
+        return get_directory(iter).children.length() > 0;
     }
 
     public int iter_n_children(Gtk.TreeIter? iter)
     {
-        return get_directory(iter).children.size;
+        return (int) get_directory(iter).children.length();
     }
 
     public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
         Directory directory = get_directory(parent);
-        if (n >= directory.children.size)
+        if (n >= directory.children.length())
             return false;       
-        set_iter(out iter, directory.children[n]);
+        set_iter(out iter, directory.children.nth_data(n));
         return true;
     }
 

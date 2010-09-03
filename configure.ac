@@ -30,7 +30,6 @@ AM_CONDITIONAL(ENABLE_EDITOR, test "x$enable_editor" != "xno")
 
 if test "x$enable_editor" != "xno"; then
   PKG_CHECK_MODULES(gtk, gtk+-2.0)
-  PKG_CHECK_MODULES(gee, gee-1.0)
   PKG_CHECK_MODULES(libxml, libxml-2.0)
 fi
 
