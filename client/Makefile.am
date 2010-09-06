@@ -6,7 +6,7 @@ dconf_1_0_gir_INCLUDES = Gio-2.0
 dconf_1_0_gir_CFLAGS = $(INCLUDES)
 dconf_1_0_gir_LIBS = dconf
 dconf_1_0_gir_FILES = dconf-client.c dconf-client.h
-dconf_1_0_gir_SCANNERFLAGS = --no-libtool
+dconf_1_0_gir_SCANNERFLAGS = --no-libtool --identifier-prefix=DConf
 INTROSPECTION_GIRS = dconf-1.0.gir
 
 girdir = $(datadir)/gir-1.0
