@@ -98,7 +98,7 @@ dconf_settings_backend_new_outstanding (DConfSettingsBackend *dcsb,
   return &outstanding->serial;
 }
 
-static GDBusMessageFilterResult
+static gboolean
 dconf_settings_backend_remove_outstanding (DConfSettingsBackend  *dcsb,
                                            guint                  bus_type,
                                            GDBusMessage          *message,
@@ -162,9 +162,7 @@ dconf_settings_backend_remove_outstanding (DConfSettingsBackend  *dcsb,
 
   g_static_mutex_unlock (&dcsb->lock);
 
-  return found ?
-    G_DBUS_MESSAGE_FILTER_RESULT_MESSAGE_CONSUMED :
-    G_DBUS_MESSAGE_FILTER_RESULT_NO_EFFECT;
+  return found;
 }
 
 static gboolean
@@ -278,7 +276,7 @@ dconf_settings_backend_incoming_signal (DConfSettingsBackend  *dcsb,
     }
 }
 
-static GDBusMessageFilterResult
+static GDBusMessage *
 dconf_settings_backend_filter (GDBusConnection *connection,
                                GDBusMessage    *message,
                                gboolean         is_incoming,
@@ -308,14 +306,19 @@ dconf_settings_backend_filter (GDBusConnection *connection,
   switch (g_dbus_message_get_message_type (message))
     {
     case G_DBUS_MESSAGE_TYPE_METHOD_RETURN:
-      return dconf_settings_backend_remove_outstanding (dcsb, bus_type,
-                                                        message, ae);
+      if (dconf_settings_backend_remove_outstanding (dcsb, bus_type,
+                                                     message, ae))
+        {
+          /* consume message */
+          g_object_unref (message);
+          return NULL;
+        }
 
     case G_DBUS_MESSAGE_TYPE_SIGNAL:
       dconf_settings_backend_incoming_signal (dcsb, bus_type, message, ae);
 
     default:
-      return G_DBUS_MESSAGE_FILTER_RESULT_NO_EFFECT;
+      return message;
     }
 }
 

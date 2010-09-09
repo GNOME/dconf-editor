@@ -21,7 +21,7 @@ GOBJECT_INTROSPECTION_CHECK([0.9.3])
 GTK_DOC_CHECK([1.15])
 
 # Dependencies
-PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.12)
+PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.16)
 
 AC_ARG_ENABLE(editor,
               AC_HELP_STRING([--disable-editor],
