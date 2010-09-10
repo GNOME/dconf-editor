@@ -287,7 +287,7 @@ dconf_settings_backend_filter (GDBusConnection *connection,
   gchar **ae;
 
   if (!is_incoming)
-    return FALSE;
+    return message;
 
   if (connection == dcsb->session_bus)
     {
