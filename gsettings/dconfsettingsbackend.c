@@ -313,6 +313,8 @@ dconf_settings_backend_filter (GDBusConnection *connection,
           g_object_unref (message);
           return NULL;
         }
+      else
+        return message;
 
     case G_DBUS_MESSAGE_TYPE_SIGNAL:
       dconf_settings_backend_incoming_signal (dcsb, bus_type, message, ae);
