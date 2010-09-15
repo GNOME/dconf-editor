@@ -5,6 +5,7 @@ Changes in dconf 0.5.1
  - Send correct object path in Notify on WriteMany
  - Use printf() and exit() instead of g_error() to avoid too many crash
    reports for now
+ - Require gobject-introspection 0.9.5
  - Require vala 0.9.5
  - Make dconf-editor optional
  - Drop libgee requirement for dconf-editor
