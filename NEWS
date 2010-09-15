@@ -1,3 +1,18 @@
+Changes in dconf 0.5.1
+======================
+
+ - Adjust to GDBus API changes
+ - Send correct object path in Notify on WriteMany
+ - Use printf() and exit() instead of g_error() to avoid too many crash
+   reports for now
+ - Require vala 0.9.5
+ - Make dconf-editor optional
+ - Drop libgee requirement for dconf-editor
+ - Tweak shared library installation to make ldconfig happy
+ - Bump .gir version to dconf-1.0
+ - Fix introspection build with recent gobject-introspection
+ - Minor bug fixes
+
 Changes in dconf 0.5
 =====================
 
