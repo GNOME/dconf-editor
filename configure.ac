@@ -23,13 +23,32 @@ GTK_DOC_CHECK([1.15])
 # Dependencies
 PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.16)
 
+AC_MSG_CHECKING([which gtk+ version to compile against])
+AC_ARG_WITH([gtk],
+  [AS_HELP_STRING([--with-gtk=2.0|3.0],[which gtk+ version to compile against (default: 2.0)])],
+  [case "$with_gtk" in
+     2.0|3.0) ;;
+     *) AC_MSG_ERROR([invalid gtk version specified]) ;;
+   esac],
+  [with_gtk=2.0])
+AC_MSG_RESULT([$with_gtk])
+
+case "$with_gtk" in
+  2.0) GTK_API_VERSION=2.0
+       GTK_REQUIRED=2.21.8
+       ;;
+  3.0) GTK_API_VERSION=3.0
+       GTK_REQUIRED=2.90.7
+       ;;
+esac
+
 AC_ARG_ENABLE(editor,
               AC_HELP_STRING([--disable-editor],
                              [Disable the dconf editor]))
 AM_CONDITIONAL(ENABLE_EDITOR, test "x$enable_editor" != "xno")
 
 if test "x$enable_editor" != "xno"; then
-  PKG_CHECK_MODULES(gtk, gtk+-2.0)
+  PKG_CHECK_MODULES(gtk, gtk+-$GTK_API_VERSION >= $GTK_REQUIRED)
   PKG_CHECK_MODULES(libxml, libxml-2.0)
 fi
 
