@@ -41,6 +41,7 @@ case "$with_gtk" in
        GTK_REQUIRED=2.90.7
        ;;
 esac
+AC_SUBST(GTK_API_VERSION)
 
 AC_ARG_ENABLE(editor,
               AC_HELP_STRING([--disable-editor],

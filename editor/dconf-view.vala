@@ -159,6 +159,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
         renderer.get_size(widget, cell_area, out x_offset, out y_offset, out width, out height);
     }
 
+#if GTK2
     public override void render(Gdk.Window    window,
                                 Gtk.Widget    widget,
                                 Gdk.Rectangle background_area,
@@ -168,6 +169,17 @@ private class KeyValueRenderer: Gtk.CellRenderer
     {
         renderer.render(window, widget, background_area, cell_area, expose_area, flags);
     }
+#else
+    public override void render(Cairo.Context context,
+                                Gtk.Widget    widget,
+                                Gdk.Rectangle background_area,
+                                Gdk.Rectangle cell_area,
+                                Gtk.CellRendererState flags)
+    {
+        renderer.render(context, widget, background_area, cell_area, flags);
+    }
+#endif
+
 
     public override bool activate(Gdk.Event event,
                                   Gtk.Widget widget,
