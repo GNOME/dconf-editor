@@ -193,7 +193,6 @@ public class SchemaList
             if (node->name == "schema")
             {
                 Schema schema = new Schema(this, node, gettext_domain);
-                schemas.append(schema);
                 if (schema.path == null)
                 {
                     // FIXME: What to do here?
@@ -205,6 +204,7 @@ public class SchemaList
                     string full_name = schema.path + key.name;
                     keys.insert(full_name, key);
                 }
+                schemas.append(schema);
             }
             else if (node->name == "enum")
             {
