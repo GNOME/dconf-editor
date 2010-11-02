@@ -23,6 +23,8 @@
 
 #include <sys/statfs.h>
 #include <sys/vfs.h>
+#include <sys/param.h>
+#include <sys/mount.h>
 #include <errno.h>
 
 #ifndef NFS_SUPER_MAGIC
