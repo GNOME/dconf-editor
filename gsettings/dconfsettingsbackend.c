@@ -155,6 +155,7 @@ dconf_settings_backend_remove_outstanding (DConfSettingsBackend  *dcsb,
                                       g_dbus_message_get_sender (message),
                                       g_dbus_message_get_body (message),
                                       anti_expose, NULL);
+        g_slice_free (Outstanding, tmp);
 
         found = TRUE;
         break;
@@ -457,6 +458,7 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
                                    gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
+  gboolean success = FALSE;
   volatile guint32 *serial;
   DConfEngineMessage dcem;
   GDBusConnection *bus;
@@ -478,15 +480,11 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
 
           g_settings_backend_keys_changed (backend, prefix, keys, origin_tag);
 
-          return TRUE;
+          success = TRUE;
         }
     }
 
-  g_free (prefix);
-  g_free (values);
-  g_free (keys);
-
-  return FALSE;
+  return success;
 }
 
 static void
