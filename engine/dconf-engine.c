@@ -144,7 +144,7 @@ dconf_engine_setup_user (DConfEngine *engine)
 
           if (fd >= 0)
             {
-              if (posix_fallocate (fd, 0, 1) == 0)
+              if (ftruncate (fd, 1) == 0)
                 {
                   engine->shm = mmap (NULL, 1, PROT_READ, MAP_SHARED, fd, 0);
 
