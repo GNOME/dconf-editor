@@ -11,23 +11,23 @@ namespace DConf {
 		void call_sync (EngineMessage dcem, out string tag, Cancellable? cancellable) throws Error {
 			DBusConnection connection;
 
-			if (dcem.bus_type == 'e') {
+			if (dcem.bus_types[0] == 'e') {
 				if (session == null) {
 					session = Bus.get_sync (BusType.SESSION, cancellable);
 				}
 				connection = session;
 			} else {
-				assert (dcem.bus_type == 'y');
+				assert (dcem.bus_types[0] == 'y');
 				if (system == null) {
 					system = Bus.get_sync (BusType.SYSTEM, cancellable);
 				}
 				connection = system;
 			}
 
-			foreach (var message in dcem.body) {
-				var reply = connection.call_sync (dcem.destination, dcem.object_path, dcem.@interface, dcem.method,
+			foreach (var message in dcem.parameters) {
+				var reply = connection.call_sync (dcem.bus_name, dcem.object_path, dcem.interface_name, dcem.method_name,
 				                                  message, dcem.reply_type, DBusCallFlags.NONE, -1, cancellable);
-				if (dcem.tagged) {
+				if (dcem.reply_type != VariantType.UNIT) {
 					reply.get ("(s)", out tag);
 				}
 			}
@@ -36,23 +36,23 @@ namespace DConf {
 		async void call_async (EngineMessage dcem, out string tag, Cancellable? cancellable) throws Error {
 			DBusConnection connection;
 
-			if (dcem.bus_type == 'e') {
+			if (dcem.bus_types[0] == 'e') {
 				if (session == null) {
 					session = yield Bus.get (BusType.SESSION, cancellable);
 				}
 				connection = session;
 			} else {
-				assert (dcem.bus_type == 'y');
+				assert (dcem.bus_types[0] == 'y');
 				if (system == null) {
 					system = yield Bus.get (BusType.SYSTEM, cancellable);
 				}
 				connection = system;
 			}
 
-			foreach (var message in dcem.body) {
-				var reply = yield connection.call (dcem.destination, dcem.object_path, dcem.@interface, dcem.method,
+			foreach (var message in dcem.parameters) {
+				var reply = yield connection.call (dcem.bus_name, dcem.object_path, dcem.interface_name, dcem.method_name,
 				                                   message, dcem.reply_type, DBusCallFlags.NONE, -1, cancellable);
-				if (dcem.tagged) {
+				if (dcem.reply_type != VariantType.UNIT) {
 					reply.get ("(s)", out tag);
 				}
 			}
@@ -356,10 +356,10 @@ namespace DConf {
 
 		static Variant? service_func (EngineMessage dcem) {
 			try {
-				assert (dcem.bus_type == 'e');
+				assert (dcem.bus_types[0] == 'e');
 				var connection = Bus.get_sync (BusType.SESSION, null);
-				return connection.call_sync (dcem.destination, dcem.object_path, dcem.@interface, dcem.method,
-				                             dcem.body, dcem.reply_type, DBusCallFlags.NONE, -1, null);
+				return connection.call_sync (dcem.bus_name, dcem.object_path, dcem.interface_name, dcem.method_name,
+				                             dcem.parameters[0], dcem.reply_type, DBusCallFlags.NONE, -1, null);
 			} catch {
 				return null;
 			}

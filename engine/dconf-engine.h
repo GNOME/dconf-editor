@@ -28,18 +28,46 @@
 
 typedef struct _DConfEngine DConfEngine;
 
+/**
+ * DConfEngineMessage:
+ *
+ * This structure represents a number of DBus method call messages that #DConfEngine would like to send.
+ *
+ * #DConfEngine itself is unaware of a particular DBus or main loop implementation.  As such, all requests are
+ * synchronous and non-blocking, but most of them produce a #DConfEngineMessage describing messages that must be
+ * sent in order for the operation to be completed.
+ *
+ * @bus_name, @object_path, @interface_name, @method_name specify the respective header fields of the method
+ * call.  These are always equal for all of the calls contained within a single #DConfEngineMessage.
+ *
+ * @reply_type is the expected reply type of the method call.  This is also the same for all calls contained
+ * within a single #DConfEngineMessage.
+ *
+ * @n_messages is the number of messages to send.
+ *
+ * @bus_types and @parameters are both arrays, of length @n_messages.  Each element of @bus_type is the bus type
+ * to send each method call on and each of @parameters is the body of that call.  The reason that there may be
+ * several messages is that a single dconf "watch" operation may need to send multiple DBus "AddMatch" calls
+ * (and usually to multiple busses).
+ *
+ * Each element in @bus_types is either 'y' for system bus or 'e' for session bus.
+ *
+ * A #DConfEngineMessage is always stack-allocated by the caller.  It must be cleared using
+ * dconf_engine_message_destroy() when done.  It may be copied using dconf_engine_message_copy().
+ */
 typedef struct
 {
-  gint         bus_type;
-  const gchar *destination;
-  const gchar *object_path;
-  const gchar *interface;
-  const gchar *method;
-  gboolean     tagged;
-  const GVariantType *reply_type;
-  GVariant    *body;
-} DConfEngineMessage;
+  const gchar         *bus_name;
+  const gchar         *object_path;
+  const gchar         *interface_name;
+  const gchar         *method_name;
 
+  gint                 n_messages;
+  GVariant           **parameters;
+  const gchar         *bus_types;
+
+  const GVariantType  *reply_type;
+} DConfEngineMessage;
 
 typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngineMessage      *message);
 void                    dconf_engine_message_copy                       (DConfEngineMessage      *orig,

@@ -26,22 +26,25 @@
 
 #include <string.h>
 
+#include "dconfcontext.h"
+
 typedef GSettingsBackendClass DConfSettingsBackendClass;
 typedef struct _Outstanding Outstanding;
 
 typedef struct
 {
   GSettingsBackend backend;
-  GStaticMutex lock;
-
-  DConfEngine *engine;
 
   GDBusConnection *session_bus;
-  gchar *session_anti_expose;
   GDBusConnection *system_bus;
-  gchar *system_anti_expose;
+  guint session_subscription;
+  guint system_subscription;
 
   Outstanding *outstanding;
+  gchar *anti_expose_tag;
+
+  DConfEngine *engine;
+  GStaticMutex lock;
   GCond *sync_cond;
 } DConfSettingsBackend;
 
@@ -50,120 +53,263 @@ G_DEFINE_TYPE (DConfSettingsBackend,
                dconf_settings_backend,
                G_TYPE_SETTINGS_BACKEND)
 
+static void
+dconf_settings_backend_signal (GDBusConnection *connection,
+                               const gchar     *sender_name,
+                               const gchar     *object_path,
+                               const gchar     *interface_name,
+                               const gchar     *signal_name,
+                               GVariant        *parameters,
+                               gpointer         user_data)
+{
+  DConfSettingsBackend *dcsb = user_data;
+  const gchar *anti_expose;
+  const gchar **rels;
+  const gchar *path;
+  gchar bus_type;
+
+  if (connection == dcsb->session_bus)
+    {
+      anti_expose = dcsb->anti_expose_tag;
+      bus_type = 'e';
+    }
+
+  else if (connection == dcsb->system_bus)
+    {
+      anti_expose = NULL;
+      bus_type = 'y';
+    }
+
+  else
+    g_assert_not_reached ();
+
+  if (dconf_engine_decode_notify (dcsb->engine, anti_expose,
+                                  &path, &rels, bus_type,
+                                  sender_name, interface_name,
+                                  signal_name, parameters))
+    {
+      GSettingsBackend *backend = G_SETTINGS_BACKEND (dcsb);
+
+      if (!g_str_has_suffix (path, "/"))
+        g_settings_backend_changed (backend, path, NULL);
+
+      else if (rels[0] == NULL)
+        g_settings_backend_path_changed (backend, path, NULL);
+
+      else
+        g_settings_backend_keys_changed (backend, path, rels, NULL);
+
+      g_free (rels);
+    }
+}
+
+static void
+dconf_settings_backend_send (DConfSettingsBackend *dcsb,
+                             DConfEngineMessage   *dcem,
+                             GAsyncReadyCallback   callback,
+                             gpointer              user_data)
+{
+  GDBusConnection *connection;
+  GError *error = NULL;
+  gint i;
+
+  for (i = 0; i < dcem->n_messages; i++)
+    {
+      switch (dcem->bus_types[i])
+        {
+        case 'e':
+          if (dcsb->session_bus == NULL && callback)
+            {
+              dcsb->session_bus =
+                g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
+
+              if (dcsb->session_bus != NULL)
+                dcsb->session_subscription =
+                  g_dbus_connection_signal_subscribe (dcsb->session_bus, NULL,
+                                                      "ca.desrt.dconf.Writer",
+                                                      NULL, NULL, NULL,
+                                                      G_DBUS_SIGNAL_FLAGS_NO_MATCH_RULE,
+                                                      dconf_settings_backend_signal,
+                                                      dcsb, NULL);
+            }
+          connection = dcsb->session_bus;
+          break;
+
+        case 'y':
+          if (dcsb->system_bus == NULL && callback)
+            {
+              dcsb->system_bus =
+                g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+
+              if (dcsb->system_bus != NULL)
+                dcsb->system_subscription =
+                  g_dbus_connection_signal_subscribe (dcsb->system_bus, NULL,
+                                                      "ca.desrt.dconf.Writer",
+                                                      NULL, NULL, NULL,
+                                                      G_DBUS_SIGNAL_FLAGS_NO_MATCH_RULE,
+                                                      dconf_settings_backend_signal,
+                                                      dcsb, NULL);
+            }
+          connection = dcsb->system_bus;
+          break;
+
+        default:
+          g_assert_not_reached ();
+        }
+
+      if (connection == NULL && callback != NULL)
+        callback (NULL, NULL, user_data);
+
+      if (connection != NULL)
+        g_dbus_connection_call (connection,
+                                dcem->bus_name,
+                                dcem->object_path,
+                                dcem->interface_name,
+                                dcem->method_name,
+                                dcem->parameters[i],
+                                dcem->reply_type,
+                                0, -1, NULL, callback, user_data);
+    }
+}
+
+static GVariant *
+dconf_settings_backend_send_finish (GObject      *source,
+                                    GAsyncResult *result)
+{
+  if (source == NULL)
+    return NULL;
+
+  return g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
+                                        result, NULL);
+}
 
 struct _Outstanding
 {
   Outstanding *next;
 
-  DConfEngineMessage dcem;
-  volatile guint32 serial;
+  DConfSettingsBackend *dcsb;
+  DConfEngineMessage    dcem;
 
-  gchar *set_key;
+  gchar    *set_key;
   GVariant *set_value;
-
-  GTree *tree;
+  GTree    *tree;
 };
 
-static volatile guint32 *
-dconf_settings_backend_new_outstanding (DConfSettingsBackend *dcsb,
-                                        DConfEngineMessage   *dcem,
-                                        const gchar          *set_key,
-                                        GVariant             *set_value,
-                                        GTree                *tree)
+static void
+dconf_settings_backend_outstanding_returned (GObject      *source,
+                                             GAsyncResult *result,
+                                             gpointer      user_data)
+{
+  Outstanding *outstanding = user_data;
+  DConfSettingsBackend *dcsb;
+  GVariant *reply;
+
+  dcsb = outstanding->dcsb;
+
+  /* One way or another we no longer need this hooked into the list.
+   */
+  g_static_mutex_lock (&dcsb->lock);
+  {
+    Outstanding **tmp;
+
+    for (tmp = &dcsb->outstanding; tmp; tmp = &(*tmp)->next)
+      if (*tmp == outstanding)
+        {
+          *tmp = outstanding->next;
+          break;
+        }
+
+    if (dcsb->outstanding == NULL && dcsb->sync_cond)
+      g_cond_broadcast (dcsb->sync_cond);
+  }
+  g_static_mutex_unlock (&dcsb->lock);
+
+  reply = dconf_settings_backend_send_finish (source, result);
+
+  if (reply)
+    {
+      /* Success.
+       *
+       * We want to ensure that we don't emit an extra change
+       * notification signal when we see the signal that the service is
+       * about to send, so store the tag so we know to ignore it when
+       * the signal comes.
+       *
+       * No thread safety issue here since this variable is only
+       * accessed from the worker thread.
+       */
+      g_free (dcsb->anti_expose_tag);
+      g_variant_get_child (reply, 0, "s", &dcsb->anti_expose_tag);
+      g_variant_unref (reply);
+    }
+  else
+    {
+      /* An error of some kind.
+       *
+       * We already removed the outstanding entry from the list, so the
+       * unmodified database is now visible to the client.  Change
+       * notify so that they see it.
+       */
+      if (outstanding->set_key)
+        g_settings_backend_changed (G_SETTINGS_BACKEND (dcsb),
+                                    outstanding->set_key, NULL);
+
+      else
+        g_settings_backend_changed_tree (G_SETTINGS_BACKEND (dcsb),
+                                         outstanding->tree, NULL);
+    }
+
+  dconf_engine_message_destroy (&outstanding->dcem);
+  g_object_unref (outstanding->dcsb);
+  g_free (outstanding->set_key);
+
+  if (outstanding->set_value)
+    g_variant_unref (outstanding->set_value);
+
+  if (outstanding->tree)
+    g_tree_unref (outstanding->tree);
+
+  g_slice_free (Outstanding, outstanding);
+}
+
+static gboolean
+dconf_settings_backend_send_outstanding (gpointer data)
+{
+  Outstanding *outstanding = data;
+
+  dconf_settings_backend_send (outstanding->dcsb,
+                               &outstanding->dcem,
+                               dconf_settings_backend_outstanding_returned,
+                               outstanding);
+
+  return FALSE;
+}
+
+static void
+dconf_settings_backend_queue (DConfSettingsBackend *dcsb,
+                              DConfEngineMessage   *dcem,
+                              const gchar          *set_key,
+                              GVariant             *set_value,
+                              GTree                *tree)
 {
   Outstanding *outstanding;
 
   outstanding = g_slice_new (Outstanding);
-  outstanding->set_key = NULL;
+  outstanding->dcsb = g_object_ref (dcsb);
   outstanding->dcem = *dcem;
 
   outstanding->set_key = g_strdup (set_key);
-  outstanding->serial = 0;
-
-  if (set_value)
-    outstanding->set_value = g_variant_ref_sink (set_value);
-  else
-    outstanding->set_value = NULL;
-
-  if (tree)
-    outstanding->tree = g_tree_ref (tree);
-  else
-    outstanding->tree = NULL;
+  outstanding->set_value = set_value ? g_variant_ref_sink (set_value) : NULL;
+  outstanding->tree = tree ? g_tree_ref (tree) : NULL;
 
   g_static_mutex_lock (&dcsb->lock);
   outstanding->next = dcsb->outstanding;
   dcsb->outstanding = outstanding;
   g_static_mutex_unlock (&dcsb->lock);
 
-  return &outstanding->serial;
-}
-
-static gboolean
-dconf_settings_backend_remove_outstanding (DConfSettingsBackend  *dcsb,
-                                           guint                  bus_type,
-                                           GDBusMessage          *message,
-                                           gchar                **anti_expose)
-{
-  gboolean found = FALSE;
-  Outstanding **node;
-  guint32 serial;
-
-  if G_LIKELY (dcsb->outstanding == NULL)
-    return FALSE;
-
-  serial = g_dbus_message_get_reply_serial (message);
-
-  if (serial == 0)
-    return FALSE;
-
-  g_static_mutex_lock (&dcsb->lock);
-
-  /* this could be made more asymptotically efficient by using a queue
-   * or a double-linked list with a 'tail' pointer but the usual case
-   * here will be one outstanding item and very rarely more than a few.
-   *
-   * so we scan...
-   */
-  for (node = &dcsb->outstanding; *node; node = &(*node)->next)
-    if ((*node)->serial == serial)
-      {
-        Outstanding *tmp;
-
-        tmp = *node;
-        *node = tmp->next;
-
-        if (dcsb->outstanding == NULL && dcsb->sync_cond != NULL)
-          g_cond_signal (dcsb->sync_cond);
-
-        g_static_mutex_unlock (&dcsb->lock);
-
-        g_free (tmp->set_key);
-
-        if (tmp->set_value)
-          g_variant_unref (tmp->set_value);
-
-        if (tmp->tree)
-          g_tree_unref (tmp->tree);
-
-        if (*anti_expose)
-          {
-            g_free (*anti_expose);
-            *anti_expose = NULL;
-          }
-
-        dconf_engine_interpret_reply (&tmp->dcem,
-                                      g_dbus_message_get_sender (message),
-                                      g_dbus_message_get_body (message),
-                                      anti_expose, NULL);
-        g_slice_free (Outstanding, tmp);
-
-        found = TRUE;
-        break;
-      }
-
-  g_static_mutex_unlock (&dcsb->lock);
-
-  return found;
+  g_main_context_invoke (dconf_context_get (),
+                         dconf_settings_backend_send_outstanding,
+                         outstanding);
 }
 
 static gboolean
@@ -244,87 +390,6 @@ dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
   return found;
 }
 
-static void
-dconf_settings_backend_incoming_signal (DConfSettingsBackend  *dcsb,
-                                        guint                  bt,
-                                        GDBusMessage          *message,
-                                        gchar                **anti_expose)
-{
-  const gchar **rels;
-  const gchar *path;
-
-  if (dconf_engine_decode_notify (dcsb->engine, *anti_expose,
-                                  &path, &rels, bt,
-                                  g_dbus_message_get_sender (message),
-                                  g_dbus_message_get_interface (message),
-                                  g_dbus_message_get_member (message),
-                                  g_dbus_message_get_body (message)))
-    {
-      GSettingsBackend *backend = G_SETTINGS_BACKEND (dcsb);
-
-      if (!g_str_has_suffix (path, "/"))
-        g_settings_backend_changed (backend, path, NULL);
-
-      else if (rels[0] == NULL)
-        g_settings_backend_path_changed (backend, path, NULL);
-
-      else
-        g_settings_backend_keys_changed (backend, path, rels, NULL);
-
-      g_free (*anti_expose);
-      *anti_expose = NULL;
-      g_free (rels);
-    }
-}
-
-static GDBusMessage *
-dconf_settings_backend_filter (GDBusConnection *connection,
-                               GDBusMessage    *message,
-                               gboolean         is_incoming,
-                               gpointer         user_data)
-{
-  DConfSettingsBackend *dcsb = user_data;
-  guint bus_type;
-  gchar **ae;
-
-  if (!is_incoming)
-    return message;
-
-  if (connection == dcsb->session_bus)
-    {
-      ae = &dcsb->session_anti_expose;
-      bus_type = 'e';
-    }
-  else if (connection == dcsb->system_bus)
-    {
-      ae = &dcsb->system_anti_expose;
-      bus_type = 'y';
-    }
-
-  else
-    g_assert_not_reached ();
-
-  switch (g_dbus_message_get_message_type (message))
-    {
-    case G_DBUS_MESSAGE_TYPE_METHOD_RETURN:
-      if (dconf_settings_backend_remove_outstanding (dcsb, bus_type,
-                                                     message, ae))
-        {
-          /* consume message */
-          g_object_unref (message);
-          return NULL;
-        }
-      else
-        return message;
-
-    case G_DBUS_MESSAGE_TYPE_SIGNAL:
-      dconf_settings_backend_incoming_signal (dcsb, bus_type, message, ae);
-
-    default:
-      return message;
-    }
-}
-
 static GVariant *
 dconf_settings_backend_read (GSettingsBackend   *backend,
                              const gchar        *key,
@@ -346,86 +411,6 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
     return dconf_engine_read_default (dcsb->engine, key);
 }
 
-static void
-dconf_settings_backend_send (GDBusConnection    *bus,
-                             DConfEngineMessage *dcem,
-                             volatile guint32   *serial)
-{
-  GDBusMessage *message;
-  GVariant *body;
-
-  message = g_dbus_message_new_method_call (dcem->destination,
-                                            dcem->object_path,
-                                            dcem->interface,
-                                            dcem->method);
-  body = g_variant_get_child_value (dcem->body, 0);
-  g_dbus_message_set_body (message, body);
-  g_variant_unref (body);
-
-  if (serial)
-    g_dbus_connection_send_message (bus, message, G_DBUS_SEND_MESSAGE_FLAGS_NONE, serial, NULL);
-  else
-    g_dbus_connection_send_message_with_reply_sync (bus, message, G_DBUS_SEND_MESSAGE_FLAGS_NONE,
-                                                    -1, NULL, NULL, NULL);
-
-  g_variant_unref (dcem->body);
-  g_object_unref (message);
-}
-
-static gboolean
-dconf_settings_backend_get_bus (DConfSettingsBackend  *dcsb,
-                                GDBusConnection      **bus,
-                                DConfEngineMessage    *dcem)
-{
-  switch (dcem->bus_type)
-    {
-    case 'e':
-      if (dcsb->session_bus == NULL)
-        {
-          g_static_mutex_lock (&dcsb->lock);
-          if (dcsb->session_bus == NULL)
-            {
-              dcsb->session_bus = g_bus_get_sync (G_BUS_TYPE_SESSION,
-                                                  NULL, NULL);
-              g_dbus_connection_add_filter (dcsb->session_bus,
-                                            dconf_settings_backend_filter,
-                                            dcsb, NULL);
-            }
-
-          g_static_mutex_unlock (&dcsb->lock);
-        }
-
-      *bus = dcsb->session_bus;
-      break;
-
-    case 'y':
-      if (dcsb->system_bus == NULL)
-        {
-          g_static_mutex_lock (&dcsb->lock);
-          if (dcsb->system_bus == NULL)
-            {
-              dcsb->system_bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM,
-                                                  NULL, NULL);
-              g_dbus_connection_add_filter (dcsb->session_bus,
-                                            dconf_settings_backend_filter,
-                                            dcsb, NULL);
-            }
-          g_static_mutex_unlock (&dcsb->lock);
-        }
-
-      *bus = dcsb->system_bus;
-      break;
-
-    default:
-      g_assert_not_reached ();
-    }
-
-  if (*bus == NULL && dcem->body)
-    g_variant_unref (dcem->body);
-
-  return *bus != NULL;
-}
-
 static gboolean
 dconf_settings_backend_write (GSettingsBackend *backend,
                               const gchar      *key,
@@ -433,20 +418,12 @@ dconf_settings_backend_write (GSettingsBackend *backend,
                               gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  volatile guint32 *serial;
   DConfEngineMessage dcem;
-  GDBusConnection *bus;
 
   if (!dconf_engine_write (dcsb->engine, key, value, &dcem, NULL))
     return FALSE;
 
-  if (!dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
-    return FALSE;
-
-  serial = dconf_settings_backend_new_outstanding (dcsb, &dcem, key,
-                                                   value, NULL);
-  dconf_settings_backend_send (bus, &dcem, serial);
-
+  dconf_settings_backend_queue (dcsb, &dcem, key, value, NULL);
   g_settings_backend_changed (backend, key, origin_tag);
 
   return TRUE;
@@ -458,31 +435,24 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
                                    gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  gboolean success = FALSE;
-  volatile guint32 *serial;
   DConfEngineMessage dcem;
-  GDBusConnection *bus;
   const gchar **keys;
   GVariant **values;
+  gboolean success;
   gchar *prefix;
 
   g_settings_backend_flatten_tree (tree, &prefix, &keys, &values);
 
-  if (dconf_engine_write_many (dcsb->engine,
-                               prefix, keys, values, &dcem, NULL))
+  if ((success = dconf_engine_write_many (dcsb->engine, prefix,
+                                          keys, values, &dcem, NULL)))
     {
-      if (dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
-        {
-          serial = dconf_settings_backend_new_outstanding (dcsb, &dcem,
-                                                           NULL, NULL, tree);
-
-          dconf_settings_backend_send (bus, &dcem, serial);
-
-          g_settings_backend_keys_changed (backend, prefix, keys, origin_tag);
-
-          success = TRUE;
-        }
+      dconf_settings_backend_queue (dcsb, &dcem, NULL, NULL, tree);
+      g_settings_backend_keys_changed (backend, prefix, keys, origin_tag);
     }
+
+  g_free (prefix);
+  g_free (values);
+  g_free (keys);
 
   return success;
 }
@@ -504,18 +474,97 @@ dconf_settings_backend_get_writable (GSettingsBackend *backend,
   return dconf_engine_is_writable (dcsb->engine, name);
 }
 
+typedef struct
+{
+  DConfSettingsBackend *dcsb;
+  guint64 state;
+  gchar name[1];
+} OutstandingWatch;
+
+static OutstandingWatch *
+outstanding_watch_new (DConfSettingsBackend *dcsb,
+                       const gchar          *name)
+{
+  OutstandingWatch *watch;
+  gsize length;
+
+  length = strlen (name);
+  watch = g_malloc (G_STRUCT_OFFSET (OutstandingWatch, name) + length + 1);
+  watch->dcsb = g_object_ref (dcsb);
+  watch->state = dconf_engine_get_state (dcsb->engine);
+  strcpy (watch->name, name);
+
+  return watch;
+}
+
+static void
+outstanding_watch_free (OutstandingWatch *watch)
+{
+  g_object_unref (watch->dcsb);
+  g_free (watch);
+}
+
+static void
+add_match_done (GObject      *source,
+                GAsyncResult *result,
+                gpointer      user_data)
+{
+  OutstandingWatch *watch = user_data;
+  GError *error = NULL;
+  GVariant *reply;
+
+  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
+                                         result, &error);
+
+  if (reply == NULL)
+    {
+      g_critical ("DBus AddMatch for dconf path '%s': %s",
+                  watch->name, error->message);
+      outstanding_watch_free (watch);
+      g_error_free (error);
+
+      return;
+    }
+
+  else
+    g_variant_unref (reply); /* it is just an empty tuple */
+
+  /* In the normal case we can just free everything and be done.
+   *
+   * There is a fleeting chance, however, that the database has changed
+   * in the meantime.  In that case we can only assume that the subject
+   * of this watch changed in that time period and emit a signal to that
+   * effect.
+   */
+  if (dconf_engine_get_state (watch->dcsb->engine) != watch->state)
+    g_settings_backend_path_changed (G_SETTINGS_BACKEND (watch->dcsb),
+                                     watch->name, NULL);
+
+  outstanding_watch_free (watch);
+}
+
+static gboolean
+dconf_settings_backend_subscribe_context_func (gpointer data)
+{
+  OutstandingWatch *watch = data;
+  DConfEngineMessage dcem;
+
+  dconf_engine_watch (watch->dcsb->engine, watch->name, &dcem);
+  dconf_settings_backend_send (watch->dcsb, &dcem, add_match_done, watch);
+  dconf_engine_message_destroy (&dcem);
+
+  return FALSE;
+}
+
 static void
 dconf_settings_backend_subscribe (GSettingsBackend *backend,
                                   const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfEngineMessage dcem;
-  GDBusConnection *bus;
 
-  dconf_engine_watch (dcsb->engine, name, &dcem);
-
-  if (dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
-    dconf_settings_backend_send (bus, &dcem, NULL);
+  g_main_context_invoke (dconf_context_get (),
+                         dconf_settings_backend_subscribe_context_func,
+                         outstanding_watch_new (dcsb, name));
 }
 
 static void
@@ -524,12 +573,10 @@ dconf_settings_backend_unsubscribe (GSettingsBackend *backend,
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
   DConfEngineMessage dcem;
-  GDBusConnection *bus;
 
   dconf_engine_unwatch (dcsb->engine, name, &dcem);
-
-  if (dconf_settings_backend_get_bus (dcsb, &bus, &dcem))
-    dconf_settings_backend_send (bus, &dcem, NULL);
+  dconf_settings_backend_send (dcsb, &dcem, NULL, NULL);
+  dconf_engine_message_destroy (&dcem);
 }
 
 static void
@@ -557,13 +604,13 @@ dconf_settings_backend_sync (GSettingsBackend *backend)
 static GVariant *
 dconf_settings_backend_service_func (DConfEngineMessage *dcem)
 {
-  g_assert (dcem->bus_type == 'e');
+  g_assert (dcem->bus_types[0] == 'e');
 
   return g_dbus_connection_call_sync (g_bus_get_sync (G_BUS_TYPE_SESSION,
                                                       NULL, NULL),
-                                      dcem->destination, dcem->object_path,
-                                      dcem->interface, dcem->method,
-                                      dcem->body, dcem->reply_type,
+                                      dcem->bus_name, dcem->object_path,
+                                      dcem->interface_name, dcem->method_name,
+                                      dcem->parameters[0], dcem->reply_type,
                                       0, -1, NULL, NULL);
 }
 

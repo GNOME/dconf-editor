@@ -17,14 +17,16 @@ namespace DConf {
 	}
 
 	struct EngineMessage {
-		int bus_type;
-		string destination;
+		string bus_name;
 		string object_path;
-		string @interface;
-		string method;
-		bool tagged;
+		string interface_name;
+		string method_name;
+		int n_messages;
+		[CCode (array_length_cname = "n_messages")]
+		GLib.Variant[] parameters;
+		[CCode (array_length_cname = "n_messages")]
+		char[] bus_types;
 		GLib.VariantType reply_type;
-		GLib.Variant body;
 	}
 
 	[CCode (has_target = false)]

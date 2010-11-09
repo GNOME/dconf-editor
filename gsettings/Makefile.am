@@ -9,6 +9,7 @@ libdconfsettings_so_SOURCES = \
 	../engine/dconf-engine.c	\
 	../common/dconf-shmdir.c	\
 	../gvdb/gvdb-reader.c		\
+	dconfcontext.c			\
 	dconfsettingsbackend.c
 
 uninstall-hook:

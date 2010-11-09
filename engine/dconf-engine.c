@@ -36,20 +36,26 @@ static DConfEngineServiceFunc dconf_engine_service_func;
 void
 dconf_engine_message_destroy (DConfEngineMessage *dcem)
 {
-  if (dcem->body)
-    {
-      g_variant_unref (dcem->body);
-      dcem->body = NULL;
-    }
+  gint i;
+
+  for (i = 0; dcem->parameters[i]; i++)
+    g_variant_unref (dcem->parameters[i]);
+  g_free (dcem->parameters);
 }
 
 void
 dconf_engine_message_copy (DConfEngineMessage *orig,
                            DConfEngineMessage *copy)
 {
+  gint i, n;
+
   *copy = *orig;
-  if (orig->body)
-    copy->body = g_variant_ref (orig->body);
+
+  for (n = 0; orig->parameters[n]; n++);
+  copy->parameters = g_new (GVariant *, n + 1);
+  for (i = 0; i < n; i++)
+    copy->parameters[i] = g_variant_ref (orig->parameters[i]);
+  copy->parameters[i] = NULL;
 }
 
 void
@@ -71,19 +77,24 @@ dconf_engine_get_session_dir (void)
       if (session_dir == NULL)
         {
           DConfEngineMessage dcem;
+          GVariant *parameters[2];
           GVariant *result;
 
-          dcem.bus_type = 'e';
-          dcem.destination = "ca.desrt.dconf";
+          dcem.bus_types = "e";
+          dcem.bus_name = "ca.desrt.dconf";
           dcem.object_path = "/ca/desrt/dconf/Writer";
-          dcem.interface = "org.freedesktop.DBus.Properties";
-          dcem.method = "Get";
+          dcem.interface_name = "org.freedesktop.DBus.Properties";
+          dcem.method_name = "Get";
           dcem.reply_type = G_VARIANT_TYPE ("(v)");
-          dcem.body = g_variant_new ("((ss))",
-                                     "ca.desrt.dconf.WriterInfo",
-                                     "ShmDirectory");
+          parameters[0] = g_variant_new ("(ss)",
+                                         "ca.desrt.dconf.WriterInfo",
+                                         "ShmDirectory");
+          parameters[1] = NULL;
+          dcem.parameters = parameters;
 
           result = dconf_engine_service_func (&dcem);
+
+          g_variant_unref (parameters[0]);
 
           if (result != NULL)
             {
@@ -117,6 +128,7 @@ struct _DConfEngine
 
   GvdbTable **gvdbs;
   gchar     **object_paths;
+  gchar      *bus_types;
   gchar     **names;
   gint        n_dbs;
 };
@@ -339,6 +351,8 @@ dconf_engine_new (const gchar *profile)
 
   engine->object_paths = g_new (gchar *, engine->n_dbs);
   engine->gvdbs = g_new0 (GvdbTable *, engine->n_dbs);
+  engine->bus_types = g_strdup ("eyyyyyyyyyyyyy");
+  engine->state = 0;
 
   for (i = 0; i < engine->n_dbs; i++)
     if (engine->names[i])
@@ -375,6 +389,7 @@ dconf_engine_free (DConfEngine *engine)
     }
 
   g_free (engine->object_paths);
+  g_free (engine->bus_types);
   g_free (engine->names);
   g_free (engine->gvdbs);
 
@@ -431,19 +446,36 @@ dconf_engine_read_no_default (DConfEngine  *engine,
 static void
 dconf_engine_make_match_rule (DConfEngine        *engine,
                               DConfEngineMessage *dcem,
-                              const gchar        *name)
+                              const gchar        *name,
+                              const gchar        *method_name)
 {
-  gchar *rule;
+  gint i;
 
-  rule = g_strdup_printf ("type='signal',interface='ca.desrt.dconf.Writer',"
-                          "path='%s',arg0path='%s'",
-                          engine->object_paths[0], name);
-  dcem->bus_type = 'e';
-  dcem->destination = "org.freedesktop.DBus";
+  dcem->bus_name = "org.freedesktop.DBus";
   dcem->object_path = "/org/freedesktop/DBus";
-  dcem->interface = "org.freedesktop.DBus";
-  dcem->body = g_variant_ref_sink (g_variant_new ("((s))", rule));
-  g_free (rule);
+  dcem->interface_name = "org.freedesktop.DBus";
+  dcem->method_name = method_name;
+
+  dcem->parameters = g_new (GVariant *, engine->n_dbs + 1);
+  for (i = 0; i < engine->n_dbs; i++)
+    {
+      gchar *rule;
+
+      rule = g_strdup_printf ("type='signal',"
+                              "interface='ca.desrt.dconf.Writer',"
+                              "path='%s',"
+                              "arg0path='%s'",
+                              engine->object_paths[i],
+                              name);
+      dcem->parameters[i] = g_variant_new ("(s)", rule);
+      g_variant_ref_sink (dcem->parameters[i]);
+      g_free (rule);
+    }
+  dcem->parameters[i] = NULL;
+
+  dcem->bus_types = engine->bus_types;
+  dcem->n_messages = engine->n_dbs;
+  dcem->reply_type = G_VARIANT_TYPE_UNIT;
 }
 
 void
@@ -451,8 +483,7 @@ dconf_engine_watch (DConfEngine        *engine,
                     const gchar        *name,
                     DConfEngineMessage *dcem)
 {
-  dconf_engine_make_match_rule (engine, dcem, name);
-  dcem->method = "AddMatch";
+  dconf_engine_make_match_rule (engine, dcem, name, "AddMatch");
 }
 
 void
@@ -460,8 +491,7 @@ dconf_engine_unwatch (DConfEngine        *engine,
                       const gchar        *name,
                       DConfEngineMessage *dcem)
 {
-  dconf_engine_make_match_rule (engine, dcem, name);
-  dcem->method = "RemoveMatch";
+  dconf_engine_make_match_rule (engine, dcem, name, "RemoveMatch");
 }
 
 gboolean
@@ -487,23 +517,27 @@ fake_maybe (GVariant *value)
 static void
 dconf_engine_dcem (DConfEngine        *engine,
                    DConfEngineMessage *dcem,
-                   const gchar        *method,
+                   const gchar        *method_name,
                    const gchar        *format_string,
                    ...)
 {
   va_list ap;
 
-  dcem->bus_type = 'e';
-  dcem->destination = "ca.desrt.dconf";
+  dcem->bus_name = "ca.desrt.dconf";
   dcem->object_path = engine->object_paths[0];
-  dcem->interface = "ca.desrt.dconf.Writer";
-  dcem->reply_type = G_VARIANT_TYPE ("(s)");
-  dcem->method = method;
-  dcem->tagged = TRUE;
+  dcem->interface_name = "ca.desrt.dconf.Writer";
+  dcem->method_name = method_name;
+  dcem->parameters = g_new (GVariant *, 2);
+  dcem->n_messages = 1;
 
   va_start (ap, format_string);
-  dcem->body = g_variant_ref_sink (g_variant_new_variant (g_variant_new_va (format_string, NULL, &ap)));
+  dcem->parameters[0] = g_variant_new_va (format_string, NULL, &ap);
+  g_variant_ref_sink (dcem->parameters[0]);
+  dcem->parameters[1] = NULL;
   va_end (ap);
+
+  dcem->bus_types = engine->bus_types;
+  dcem->reply_type = G_VARIANT_TYPE ("(s)");
 }
 
 gboolean
