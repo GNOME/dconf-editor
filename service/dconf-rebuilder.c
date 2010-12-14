@@ -171,11 +171,12 @@ dconf_rebuilder_walk_open (const gchar *name,
 }
 
 static void
-dconf_rebuilder_walk_close (gpointer user_data)
+dconf_rebuilder_walk_close (gsize    name_len,
+                            gpointer user_data)
 {
   DConfRebuilderState *state = user_data;
 
-  while (--state->name_len && state->name[state->name_len - 1] != '/');
+  state->name_len -= name_len;
 }
 
 gboolean
