@@ -34,11 +34,11 @@ struct _GvdbTable {
   gboolean byteswapped;
   gboolean trusted;
 
-  const guint32 *bloom_words;
+  const guint32_le *bloom_words;
   guint32 n_bloom_words;
   guint bloom_shift;
 
-  const guint32 *hash_buckets;
+  const guint32_le *hash_buckets;
   guint32 n_buckets;
 
   struct gvdb_hash_item *hash_items;
@@ -206,7 +206,7 @@ gvdb_table_bloom_filter (GvdbTable *file,
   mask = 1 << (hash_value & 31);
   mask |= 1 << ((hash_value >> file->bloom_shift) & 31);
 
-  return (file->bloom_words[word] & mask) == mask;
+  return (guint32_from_le (file->bloom_words[word]) & mask) == mask;
 }
 
 static gboolean
@@ -262,10 +262,10 @@ gvdb_table_lookup (GvdbTable   *file,
     return NULL;
 
   bucket = hash_value % file->n_buckets;
-  itemno = file->hash_buckets[bucket];
+  itemno = guint32_from_le (file->hash_buckets[bucket]);
 
   if (bucket == file->n_buckets - 1 ||
-      (lastno = file->hash_buckets[bucket + 1]) > file->n_hash_items)
+      (lastno = guint32_from_le(file->hash_buckets[bucket + 1])) > file->n_hash_items)
     lastno = file->n_hash_items;
 
   while G_LIKELY (itemno < lastno)
@@ -458,6 +458,29 @@ gvdb_table_get_value (GvdbTable    *file,
 }
 
 /**
+ * gvdb_table_get_raw_value:
+ * @table: a #GvdbTable
+ * @key: a string
+ * @returns: a #GVariant, or %NULL
+ *
+ * Looks up a value named @key in @file.
+ *
+ * This call is equivalent to gvdb_table_get_value() except that it
+ * never byteswaps the value.
+ **/
+GVariant *
+gvdb_table_get_raw_value (GvdbTable   *table,
+                          const gchar *key)
+{
+  const struct gvdb_hash_item *item;
+
+  if ((item = gvdb_table_lookup (table, key, 'v')) == NULL)
+    return NULL;
+
+  return gvdb_table_value_from_item (table, item);
+}
+
+/**
  * gvdb_table_get_table:
  * @file: a #GvdbTable
  * @key: a string
@@ -551,6 +574,30 @@ gvdb_table_is_valid (GvdbTable *table)
   return !!*table->data;
 }
 
+/**
+ * gvdb_table_walk:
+ * @table: a #GvdbTable
+ * @key: a key corresponding to a list
+ * @open_func: the #GvdbWalkOpenFunc
+ * @value_func: the #GvdbWalkValueFunc
+ * @close_func: the #GvdbWalkCloseFunc
+ * @user_data: data to pass to the callbacks
+ *
+ * Looks up the list at @key and iterate over the items in it.
+ *
+ * First, @open_func is called to signal that we are starting to iterate over
+ * the list.  Then the list is iterated.  When all items in the list have been
+ * iterated over, the @close_func is called.
+ *
+ * When iterating, if a given item in the list is a value then @value_func is
+ * called.
+ *
+ * If a given item in the list is itself a list then @open_func is called.  If
+ * that function returns %TRUE then the walk begins iterating the items in the
+ * sublist, until there are no more items, at which point a matching
+ * @close_func call is made.  If @open_func returns %FALSE then no iteration of
+ * the sublist occurs and no corresponding @close_func call is made.
+ **/
 void
 gvdb_table_walk (GvdbTable         *table,
                  const gchar       *key,
@@ -562,16 +609,18 @@ gvdb_table_walk (GvdbTable         *table,
   const struct gvdb_hash_item *item;
   const guint32_le *pointers[64];
   const guint32_le *enders[64];
+  gsize name_lengths[64];
   gint index = 0;
 
   item = gvdb_table_lookup (table, key, 'L');
+  name_lengths[0] = 0;
   pointers[0] = NULL;
   enders[0] = NULL;
   goto start_here;
 
   while (index)
     {
-      close_func (user_data);
+      close_func (name_lengths[index], user_data);
       index--;
 
       while (pointers[index] < enders[index])
@@ -598,6 +647,7 @@ gvdb_table_walk (GvdbTable         *table,
                                                  &pointers[index],
                                                  &length);
                       enders[index] = pointers[index] + length;
+                      name_lengths[index] = name_len;
                     }
                 }
               else if (item->type == 'v')
