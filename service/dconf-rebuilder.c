@@ -189,19 +189,26 @@ dconf_rebuilder_rebuild (const gchar  *filename,
 {
   DConfRebuilderState state = { prefix, strlen (prefix),
                                 0, keys, values, n_items };
+  gboolean success;
   GvdbTable *old;
 
   state.table = gvdb_hash_table_new (NULL, NULL);
 
   if ((old = gvdb_table_new (filename, FALSE, NULL)))
-    gvdb_table_walk (old, "/",
-                     dconf_rebuilder_walk_open,
-                     dconf_rebuilder_walk_value,
-                     dconf_rebuilder_walk_close,
-                     &state);
+    {
+      gvdb_table_walk (old, "/",
+                       dconf_rebuilder_walk_open,
+                       dconf_rebuilder_walk_value,
+                       dconf_rebuilder_walk_close,
+                       &state);
+      gvdb_table_unref (old);
+    }
 
   while (state.index != state.n_items)
     dconf_rebuilder_put_item (&state);
 
-  return gvdb_table_write_contents (state.table, filename, FALSE, error);
+  success = gvdb_table_write_contents (state.table, filename, FALSE, error);
+  g_hash_table_unref (state.table);
+
+  return success;
 }

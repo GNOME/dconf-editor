@@ -163,6 +163,7 @@ method_call (GDBusConnection       *connection,
       if (!dconf_writer_write (writer, key, value, &error))
         {
           g_dbus_method_invocation_return_gerror (invocation, error);
+          g_variant_unref (value);
           g_error_free (error);
           return;
         }
@@ -178,6 +179,7 @@ method_call (GDBusConnection       *connection,
                                      g_variant_new ("(s@ass)",
                                                     key, none, tag),
                                      NULL);
+      g_variant_unref (value);
       g_free (path);
       g_free (tag);
     }
