@@ -34,7 +34,7 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 	parent = table.lookup (parent_name);
 
 	if (parent == null) {
-		paren = table.insert (parent_name);
+		parent = table.insert (parent_name);
 		parent.set_parent (get_parent (table, parent_name));
 	}
 
