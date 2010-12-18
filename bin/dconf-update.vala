@@ -34,7 +34,7 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 	parent = table.lookup (parent_name);
 
 	if (parent == null) {
-		parent = table.insert (parent_name);
+		paren = table.insert (parent_name);
 		parent.set_parent (get_parent (table, parent_name));
 	}
 
@@ -114,7 +114,7 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 
 		var fd = Posix.open (filename, Posix.O_WRONLY);
 
-		if (fd < 0 && errno != Posix.EEXIST) {
+		if (fd < 0 && errno != Posix.ENOENT) {
 			var saved_error = errno;
 			throw new FileError.FAILED ("Can not open '%s' for replacement: %s", filename, strerror (saved_error));
 		}
