@@ -168,7 +168,7 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
                                 dcem->method_name,
                                 dcem->parameters[i],
                                 dcem->reply_type,
-                                0, -1, NULL, callback, user_data);
+                                0, 120000, NULL, callback, user_data);
     }
 }
 
