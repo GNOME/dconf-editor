@@ -81,10 +81,17 @@ dconf_writer_touch_shm (DConfWriter *writer)
   gint fd;
 
   fd = open (writer->shm, O_WRONLY);
-  write (fd, &one, sizeof one);
-  close (fd);
 
-  unlink (writer->shm);
+  if (fd >= 0)
+    {
+      write (fd, &one, sizeof one);
+      close (fd);
+
+      unlink (writer->shm);
+    }
+
+  else if (errno != ENOENT)
+    unlink (writer->shm);
 }
 
 gboolean
