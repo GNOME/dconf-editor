@@ -167,11 +167,15 @@ g_settings_backend_changed (GSettingsBackend *backend_,
                             const gchar      *key,
                             gpointer          origin_tag)
 {
+  GVariant *value;
+
   /* ensure that we see no dupes from the bus */
   g_assert (origin_tag == do_write);
   g_assert (backend == backend_);
 
-  apply_change (implicit, key, do_read (key));
+  value = do_read (key);
+  apply_change (implicit, key, value);
+  g_variant_unref (value);
 }
 
 /* interpose */
@@ -189,8 +193,15 @@ g_settings_backend_keys_changed (GSettingsBackend    *backend_,
 
   for (i = 0; items[i]; i++)
     {
-      gchar *key = g_strconcat (path, items[i], NULL);
-      apply_change (implicit, key, do_read (key));
+      GVariant *value;
+      gchar *key;
+
+      key = g_strconcat (path, items[i], NULL);
+      value = do_read (key);
+
+      apply_change (implicit, key, value);
+
+      g_variant_unref (value);
       g_free (key);
     }
 }
@@ -225,7 +236,9 @@ setup (void)
   g_setenv ("DCONF_PROFILE", "test", false);
 
   g_type_init ();
-  g_file_new_for_path (".");
+
+  /* Cause GIO modules to be loaded... */
+  g_object_unref (g_file_new_for_path ("."));
 
   point = g_io_extension_point_lookup ("gsettings-backend");
   extension = g_io_extension_point_get_extension_by_name (point, "dconf");
@@ -378,6 +391,9 @@ test (void)
            ((double) dconf_time / lookups));
   g_print ("GHashTable lookup time: %f µs/lookup\n",
            ((double) ghash_time / lookups));
+
+  g_hash_table_unref (explicit);
+  g_hash_table_unref (implicit);
 }
 
 int
