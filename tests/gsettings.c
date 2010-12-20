@@ -308,7 +308,7 @@ verify_consistency (void)
           GVariant *other;
 
           ghash_time -= g_get_monotonic_time ();
-          other = g_hash_table_lookup (explicit, key);
+          other = g_hash_table_lookup (implicit, key);
           ghash_time += g_get_monotonic_time ();
           g_assert (g_variant_equal (value, other));
 
