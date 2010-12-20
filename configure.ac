@@ -21,8 +21,9 @@ GOBJECT_INTROSPECTION_CHECK([0.9.5])
 GTK_DOC_CHECK([1.15])
 
 # Dependencies
-PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.16)
-
+PKG_CHECK_MODULES(glib, glib-2.0 >= 2.25.16)
+PKG_CHECK_MODULES(gio, gio-2.0)
+PKG_CHECK_MODULES(dbus, dbus-1)
 
 AC_ARG_ENABLE(editor,
               AC_HELP_STRING([--disable-editor],
@@ -55,6 +56,7 @@ AC_CONFIG_FILES([
   client/dconf.pc
   client/Makefile
   service/Makefile
+  dbus-1/Makefile
   bin/Makefile
   editor/Makefile
   tests/Makefile
