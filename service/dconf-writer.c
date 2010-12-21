@@ -56,11 +56,13 @@ gchar **
 dconf_writer_list_existing (void)
 {
   GPtrArray *array;
+  gchar *path;
   GDir *dir;
 
+  path = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
   array = g_ptr_array_new ();
 
-  if ((dir = g_dir_open ("/home/desrt/.config/dconf", 0, NULL)))
+  if ((dir = g_dir_open (path, 0, NULL)))
     {
       const gchar *name;
 
@@ -70,6 +72,7 @@ dconf_writer_list_existing (void)
     }
 
   g_ptr_array_add (array, NULL);
+  g_free (path);
 
   return (gchar **) g_ptr_array_free (array, FALSE);
 }
