@@ -1,3 +1,14 @@
+Changes in dconf 0.6
+====================
+
+ - Rewrite a lot of the GSettings backend to reduce GDBus abuse.  We use
+   our own worker thread now instead of trying to hijack GDBus's.
+ - disable gobject-introspection support for now
+ - drop support for GTK2 in dconf-editor
+ - Add a new torture-test case
+ - Increase dbus timeout to 2 minutes (in case the service is heavily loaded)
+ - Fix several memory leaks and other bugs
+
 Changes in dconf 0.5.1
 ======================
 
