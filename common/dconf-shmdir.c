@@ -21,8 +21,11 @@
 
 #include "dconf-shmdir.h"
 
+#ifndef __FreeBSD__
 #include <sys/statfs.h>
 #include <sys/vfs.h>
+#endif
+
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <errno.h>
