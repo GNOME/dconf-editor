@@ -14,9 +14,6 @@ AM_SILENT_RULES([yes])
 AC_PROG_CC
 AM_PROG_VALAC([0.9.5])
 
-# Introspection
-GOBJECT_INTROSPECTION_CHECK([0.9.5])
-
 # Gtk-doc support
 GTK_DOC_CHECK([1.15])
 

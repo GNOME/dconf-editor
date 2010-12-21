@@ -1,21 +1,3 @@
-if HAVE_INTROSPECTION
-include $(INTROSPECTION_MAKEFILE)
-
-dconf-1.0.gir: libdconf.so.0 libdconf.so
-dconf_1_0_gir_INCLUDES = Gio-2.0
-dconf_1_0_gir_CFLAGS = $(INCLUDES)
-dconf_1_0_gir_LIBS = dconf
-dconf_1_0_gir_FILES = dconf-client.c dconf-client.h
-dconf_1_0_gir_SCANNERFLAGS = --no-libtool --identifier-prefix=DConf
-INTROSPECTION_GIRS = dconf-1.0.gir
-
-girdir = $(datadir)/gir-1.0
-dist_gir_DATA = $(INTROSPECTION_GIRS)
-
-typelibdir = $(libdir)/girepository-1.0
-typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
-endif
-
 AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -D__dconf_h__ -fPIC -DPIC
 CFLAGS += -Wno-error
 INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
@@ -60,4 +42,4 @@ vapidir = $(datadir)/vala/vapi
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = dconf.pc
 
-CLEANFILES = $(dist_gir_DATA) $(typelib_DATA) dconf.deps libdconf.so.0 libdconf.so
+CLEANFILES = $(typelib_DATA) dconf.deps libdconf.so.0 libdconf.so
