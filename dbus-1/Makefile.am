@@ -12,6 +12,8 @@ libdconf_dbus_1_so_0_0_0_SOURCES = \
 	../gvdb/gvdb-reader.c		\
 	dconf-dbus-1.c
 
+noinst_DATA = libdconf-dbus-1.so libdconf-dbus-1.so.0
+
 libdconf-dbus-1.so.0 libdconf-dbus-1.so: libdconf-dbus-1.so.0.0.0
 	$(AM_V_GEN) ln -fs libdconf-dbus-1.so.0.0.0 $@
 
