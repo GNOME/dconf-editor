@@ -29,6 +29,7 @@ struct _DConfDBusClient
 {
   DBusConnection *session_bus;
   DBusConnection *system_bus;
+  GSList *watches;
   guint session_filter;
   guint system_filter;
   gint ref_count;
@@ -161,48 +162,6 @@ dconf_dbus_client_add_value_to_iter (DBusMessageIter *iter,
       g_assert_not_reached ();
     }
 }
-
-#if 0
-static void
-dconf_settings_backend_signal (DBusConnection *connection,
-                               const gchar    *sender_name,
-                               const gchar    *object_path,
-                               const gchar    *interface_name,
-                               const gchar    *signal_name,
-                               GVariant       *parameters,
-                               gpointer        user_data)
-{
-  DConfDBusClient *dcdbc = user_data;
-  const gchar *anti_expose;
-  const gchar **rels;
-  const gchar *path;
-  gchar bus_type;
-
-  if (connection == dcdbc->session_bus)
-    {
-      anti_expose = dcdbc->anti_expose_tag;
-      bus_type = 'e';
-    }
-
-  else if (connection == dcdbc->system_bus)
-    {
-      anti_expose = NULL;
-      bus_type = 'y';
-    }
-
-  else
-    g_assert_not_reached ();
-
-  if (dconf_engine_decode_notify (dcdbc->engine, anti_expose,
-                                  &path, &rels, bus_type,
-                                  sender_name, interface_name,
-                                  signal_name, parameters))
-    {
-      /** XXX EMIT CHANGES XXX **/
-      g_free (rels);
-    }
-}
-#endif
 
 static void
 dconf_settings_backend_send (DConfDBusClient               *dcdbc,
@@ -460,6 +419,43 @@ dconf_settings_backend_scan_outstanding (DConfDBusClient  *backend,
   return found;
 }
 
+/* Watches are reference counted because they can be held both by the
+ * list of watches and by the pending watch registration.  In the normal
+ * case, the registration completes before the watch is unsubscribed
+ * from but it might be the case that the watch is unsubscribed from
+ * before the AddMatch completes.  For that reason, either thing could
+ * be responsible for freeing the watch structure; we solve that
+ * ambiguity using a reference count.
+ *
+ * We just initially set it to 2, since these are the only two users.
+ * That way we can skip having the ref() function.
+ */
+typedef struct
+{
+  DConfDBusClient *dcdbc;
+  gchar           *name;
+  DConfDBusNotify  notify;
+  gpointer         user_data;
+  guint64          initial_state;
+  gint             ref_count;
+} Watch;
+
+
+
+static void
+dconf_dbus_emit_change (DConfDBusClient *dcdbc,
+                        const gchar     *key)
+{
+  GSList *iter;
+
+  for (iter = dcdbc->watches; iter; iter = iter->next)
+    {
+      Watch *watch = iter->data;
+
+      if (g_str_has_prefix (key, watch->name))
+        watch->notify (dcdbc, key, watch->user_data);
+    }
+}
 
 GVariant *
 dconf_dbus_client_read (DConfDBusClient *dcdbc,
@@ -484,46 +480,49 @@ dconf_dbus_client_write (DConfDBusClient *dcdbc,
     return FALSE;
 
   dconf_settings_backend_queue (dcdbc, &dcem, key, value, NULL);
-  /* XXX emit */
+  dconf_dbus_emit_change (dcdbc, key);
 
   return TRUE;
 }
 
-typedef struct
+static Watch *
+watch_new (DConfDBusClient *dcdbc,
+           const gchar     *name,
+           DConfDBusNotify  notify,
+           gpointer         user_data)
 {
-  DConfDBusClient *dcdbc;
-  guint64 state;
-  gchar name[1];
-} OutstandingWatch;
+  Watch *watch;
 
-static OutstandingWatch *
-outstanding_watch_new (DConfDBusClient *dcdbc,
-                       const gchar     *name)
-{
-  OutstandingWatch *watch;
-  gsize length;
-
-  length = strlen (name);
-  watch = g_malloc (G_STRUCT_OFFSET (OutstandingWatch, name) + length + 1);
+  watch = g_slice_new (Watch);
   watch->dcdbc = dconf_dbus_client_ref (dcdbc);
-  watch->state = dconf_engine_get_state (dcdbc->engine);
-  strcpy (watch->name, name);
+  watch->user_data = user_data;
+  watch->name = g_strdup (name);
+  watch->notify = notify;
+
+  watch->initial_state = dconf_engine_get_state (dcdbc->engine);
+  watch->ref_count = 2;
+
+  dcdbc->watches = g_slist_prepend (dcdbc->watches, watch);
 
   return watch;
 }
 
 static void
-outstanding_watch_free (OutstandingWatch *watch)
+watch_unref (Watch *watch)
 {
-  dconf_dbus_client_unref (watch->dcdbc);
-  g_free (watch);
+  if (--watch->ref_count == 0)
+    {
+      dconf_dbus_client_unref (watch->dcdbc);
+      g_free (watch->name);
+      g_slice_free (Watch, watch);
+    }
 }
 
 static void
 add_match_done (DBusPendingCall *pending,
                 gpointer         user_data)
 {
-  OutstandingWatch *watch = user_data;
+  Watch *watch = user_data;
   GError *error = NULL;
   GVariant *reply;
 
@@ -531,10 +530,16 @@ add_match_done (DBusPendingCall *pending,
 
   if (reply == NULL)
     {
+      /* This is extremely unlikely to happen and it happens
+       * asynchronous to the user's call.  Since the user doesn't know
+       * that it happened, we pretend that it didn't (ie: we leave the
+       * watch structure in the list).
+       */
+
       g_critical ("DBus AddMatch for dconf path '%s': %s",
                   watch->name, error->message);
-      outstanding_watch_free (watch);
       g_error_free (error);
+      watch_unref (watch);
 
       return;
     }
@@ -542,27 +547,29 @@ add_match_done (DBusPendingCall *pending,
   else
     g_variant_unref (reply); /* it is just an empty tuple */
 
-  /* In the normal case we can just free everything and be done.
+  /* In the normal case we're done.
    *
    * There is a fleeting chance, however, that the database has changed
    * in the meantime.  In that case we can only assume that the subject
    * of this watch changed in that time period and emit a signal to that
    * effect.
    */
-  if (dconf_engine_get_state (watch->dcdbc->engine) != watch->state)
-      /* XXX emit watch->name */
+  if (dconf_engine_get_state (watch->dcdbc->engine) != watch->initial_state)
+    watch->notify (watch->dcdbc, watch->name, watch->user_data);
 
-  outstanding_watch_free (watch);
+  watch_unref (watch);
 }
 
 void
 dconf_dbus_client_subscribe (DConfDBusClient *dcdbc,
-                             const gchar     *name)
+                             const gchar     *name,
+                             DConfDBusNotify  notify,
+                             gpointer         user_data)
 {
-  OutstandingWatch *watch;
   DConfEngineMessage dcem;
+  Watch *watch;
  
-  watch = outstanding_watch_new (dcdbc, name);
+  watch = watch_new (dcdbc, name, notify, user_data);
   dconf_engine_watch (dcdbc->engine, name, &dcem);
   dconf_settings_backend_send (dcdbc, &dcem, add_match_done, watch);
   dconf_engine_message_destroy (&dcem);
@@ -570,13 +577,30 @@ dconf_dbus_client_subscribe (DConfDBusClient *dcdbc,
 
 void
 dconf_dbus_client_unsubscribe (DConfDBusClient *dcdbc,
-                               const gchar     *name)
+                               DConfDBusNotify  notify,
+                               gpointer         user_data)
 {
   DConfEngineMessage dcem;
+  GSList **ptr;
 
-  dconf_engine_unwatch (dcdbc->engine, name, &dcem);
-  dconf_settings_backend_send (dcdbc, &dcem, NULL, NULL);
-  dconf_engine_message_destroy (&dcem);
+  for (ptr = &dcdbc->watches; *ptr; ptr = &(*ptr)->next)
+    {
+      Watch *watch = (*ptr)->data;
+
+      if (watch->notify == notify && watch->user_data == user_data)
+        {
+          *ptr = g_slist_remove (*ptr, *ptr);
+
+          dconf_engine_unwatch (dcdbc->engine, watch->name, &dcem);
+          dconf_settings_backend_send (dcdbc, &dcem, NULL, NULL);
+          dconf_engine_message_destroy (&dcem);
+          watch_unref (watch);
+
+          return;
+        }
+    }
+
+  g_warning ("No matching watch found to unsubscribe");
 }
 
 gboolean
@@ -589,6 +613,41 @@ static GVariant *
 dconf_settings_backend_service_func (DConfEngineMessage *dcem)
 {
   g_assert_not_reached ();
+}
+
+static DBusHandlerResult
+dconf_dbus_client_filter (DBusConnection *connection,
+                          DBusMessage    *message,
+                          void           *user_data)
+{
+  DConfDBusClient *dcdbc = user_data;
+
+  if (dbus_message_is_signal (message, "ca.desrt.dconf.Writer", "Notify") &&
+      dbus_message_has_signature (message, "sass"))
+    {
+      DBusMessageIter iter, sub;
+      const gchar *path, *tag;
+
+      dbus_message_iter_init (message, &iter);
+      dbus_message_iter_get_basic (&iter, &path);
+      dbus_message_iter_recurse (&iter, &sub);
+      dbus_message_iter_get_basic (&iter, &tag);
+
+      /* XXX todo: anti-expose */
+
+      while (dbus_message_iter_get_arg_type (&sub) == 's')
+        {
+          const gchar *item;
+          gchar *full;
+
+          dbus_message_iter_get_basic (&iter, &item);
+          full = g_strconcat (path, item, NULL);
+          dconf_dbus_emit_change (dcdbc, full);
+          g_free (full);
+        }
+    }
+
+  return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 DConfDBusClient *
@@ -606,6 +665,9 @@ dconf_dbus_client_new (const gchar    *profile,
   dcdbc->session_bus = dbus_connection_ref (session);
   dcdbc->ref_count = 1;
 
+  dbus_connection_add_filter (system, dconf_dbus_client_filter, dcdbc, NULL);
+  dbus_connection_add_filter (session, dconf_dbus_client_filter, dcdbc, NULL);
+
   return dcdbc;
 }
 
@@ -614,6 +676,10 @@ dconf_dbus_client_unref (DConfDBusClient *dcdbc)
 {
   if (--dcdbc->ref_count == 0)
     {
+      dbus_connection_remove_filter (dcdbc->session_bus,
+                                     dconf_dbus_client_filter, dcdbc);
+      dbus_connection_remove_filter (dcdbc->system_bus,
+                                     dconf_dbus_client_filter, dcdbc);
       dbus_connection_unref (dcdbc->session_bus);
       dbus_connection_unref (dcdbc->system_bus);
 

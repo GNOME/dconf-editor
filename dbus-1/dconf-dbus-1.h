@@ -25,9 +25,13 @@
 
 typedef struct _DConfDBusClient DConfDBusClient;
 
-DConfDBusClient *       dconf_dbus_client_new                           (const gchar    *profile,
-                                                                         DBusConnection *system,
-                                                                         DBusConnection *session);
+typedef void         (* DConfDBusNotify)                                (DConfDBusClient *dcdbc,
+                                                                         const gchar     *key,
+                                                                         gpointer         user_data);
+
+DConfDBusClient *       dconf_dbus_client_new                           (const gchar     *profile,
+                                                                         DBusConnection  *system,
+                                                                         DBusConnection  *session);
 void                    dconf_dbus_client_unref                         (DConfDBusClient *dcdbc);
 DConfDBusClient *       dconf_dbus_client_ref                           (DConfDBusClient *dcdbc);
 
@@ -37,9 +41,12 @@ gboolean                dconf_dbus_client_write                         (DConfDB
                                                                          const gchar     *key,
                                                                          GVariant        *value);
 void                    dconf_dbus_client_subscribe                     (DConfDBusClient *dcdbc,
-                                                                         const gchar     *name);
+                                                                         const gchar     *name,
+                                                                         DConfDBusNotify  notify,
+                                                                         gpointer         user_data);
 void                    dconf_dbus_client_unsubscribe                   (DConfDBusClient *dcdbc,
-                                                                         const gchar     *name);
+                                                                         DConfDBusNotify  notify,
+                                                                         gpointer         user_data);
 gboolean                dconf_dbus_client_has_pending                   (DConfDBusClient *dcdbc);
 
 #endif /* _dconf_dbus_1_h_ */

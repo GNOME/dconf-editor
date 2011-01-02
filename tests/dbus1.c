@@ -54,7 +54,7 @@ do_write_tree (GTree *tree)
 static void
 do_sync (void)
 {
-  g_assert_not_reached ();
+/*  g_assert_not_reached (); */
 }
 
 #define RANDOM_ELEMENT(array) \
@@ -156,52 +156,21 @@ apply_change_tree (GHashTable *table,
 static GHashTable *implicit;
 static GHashTable *explicit;
 
-#if 0
-/* interpose */
-void
-g_settings_backend_changed (GSettingsBackend *backend_,
-                            const gchar      *key,
-                            gpointer          origin_tag)
+static void
+watch_func (DConfDBusClient *client,
+            const gchar     *key,
+            gpointer         user_data)
 {
   GVariant *value;
 
   /* ensure that we see no dupes from the bus */
-  g_assert (origin_tag == do_write);
-  g_assert (backend == backend_);
+/*  g_assert (origin_tag == do_write); */
+  g_assert (client == backend);
 
   value = do_read (key);
   apply_change (implicit, key, value);
   g_variant_unref (value);
 }
-
-/* interpose */
-void
-g_settings_backend_keys_changed (GSettingsBackend    *backend_,
-                                 const gchar         *path,
-                                 const gchar * const *items,
-                                 gpointer             origin_tag)
-{
-  gint i;
-
-  /* ensure that we see no dupes from the bus */
-  g_assert (origin_tag == do_write);
-  g_assert (backend == backend_);
-
-  for (i = 0; items[i]; i++)
-    {
-      GVariant *value;
-      gchar *key;
-
-      key = g_strconcat (path, items[i], NULL);
-      value = do_read (key);
-
-      apply_change (implicit, key, value);
-
-      g_variant_unref (value);
-      g_free (key);
-    }
-}
-#endif
 
 static void
 setup (void)
@@ -218,7 +187,7 @@ setup (void)
   backend = dconf_dbus_client_new ("test",
                                    dbus_bus_get (DBUS_BUS_SYSTEM, 0),
                                    dbus_bus_get (DBUS_BUS_SESSION, 0));
-  dconf_dbus_client_subscribe (backend, "/");
+  dconf_dbus_client_subscribe (backend, "/", watch_func, NULL);
 
   implicit = g_hash_table_new_full (g_str_hash, g_str_equal,
                                     g_free, free_variant);
@@ -271,14 +240,19 @@ verify_consistency (void)
   else
     g_print ("(%d)", g_hash_table_size (explicit));
 
-  /*g_assert (g_hash_table_size (explicit) == g_hash_table_size
-   * (implicit)); */
+  g_assert (g_hash_table_size (explicit) == g_hash_table_size (implicit));
   g_hash_table_iter_init (&iter, explicit);
   while (g_hash_table_iter_next (&iter, &key, &value))
     {
       if (value)
         {
           GVariant *other;
+
+          ghash_time -= g_get_monotonic_time ();
+          other = g_hash_table_lookup (implicit, key);
+          ghash_time += g_get_monotonic_time ();
+          g_assert (g_variant_equal (value, other));
+
 
           dconf_time -= g_get_monotonic_time ();
           other = do_read (key);
