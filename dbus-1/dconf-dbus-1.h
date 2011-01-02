@@ -23,6 +23,8 @@
 #include <dbus/dbus.h>
 #include <glib.h>
 
+G_BEGIN_DECLS
+
 typedef struct _DConfDBusClient DConfDBusClient;
 
 typedef void         (* DConfDBusNotify)                                (DConfDBusClient *dcdbc,
@@ -48,5 +50,7 @@ void                    dconf_dbus_client_unsubscribe                   (DConfDB
                                                                          DConfDBusNotify  notify,
                                                                          gpointer         user_data);
 gboolean                dconf_dbus_client_has_pending                   (DConfDBusClient *dcdbc);
+
+G_END_DECLS
 
 #endif /* _dconf_dbus_1_h_ */
