@@ -1,6 +1,12 @@
 AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -fPIC -DPIC
 INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(dbus_CFLAGS) $(glib_CFLAGS)
 
+dconf_dbus_1includedir = $(includedir)/dconf-dbus-1
+dconf_dbus_1include_HEADERS = dconf-dbus-1.h
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = dconf-dbus-1.pc
+
 shlibdir = $(libdir)
 shlib_PROGRAMS = libdconf-dbus-1.so.0.0.0
 
