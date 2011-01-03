@@ -30,8 +30,6 @@ struct _DConfDBusClient
   DBusConnection *session_bus;
   DBusConnection *system_bus;
   GSList *watches;
-  guint session_filter;
-  guint system_filter;
   gint ref_count;
 
   Outstanding *outstanding;
@@ -663,6 +661,9 @@ dconf_dbus_client_new (const gchar    *profile,
   dcdbc->engine = dconf_engine_new (profile);
   dcdbc->system_bus = dbus_connection_ref (system);
   dcdbc->session_bus = dbus_connection_ref (session);
+  dcdbc->anti_expose_tag = NULL;
+  dcdbc->outstanding = NULL;
+  dcdbc->watches = NULL;
   dcdbc->ref_count = 1;
 
   dbus_connection_add_filter (system, dconf_dbus_client_filter, dcdbc, NULL);
