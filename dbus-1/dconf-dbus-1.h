@@ -32,8 +32,8 @@ typedef void         (* DConfDBusNotify)                                (DConfDB
                                                                          gpointer         user_data);
 
 DConfDBusClient *       dconf_dbus_client_new                           (const gchar     *profile,
-                                                                         DBusConnection  *system,
-                                                                         DBusConnection  *session);
+                                                                         DBusConnection  *session,
+                                                                         DBusConnection  *system);
 void                    dconf_dbus_client_unref                         (DConfDBusClient *dcdbc);
 DConfDBusClient *       dconf_dbus_client_ref                           (DConfDBusClient *dcdbc);
 

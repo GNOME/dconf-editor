@@ -652,8 +652,8 @@ dconf_dbus_client_filter (DBusConnection *connection,
 
 DConfDBusClient *
 dconf_dbus_client_new (const gchar    *profile,
-                       DBusConnection *system,
-                       DBusConnection *session)
+                       DBusConnection *session,
+                       DBusConnection *system)
 {
   DConfDBusClient *dcdbc;
 
