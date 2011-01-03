@@ -164,10 +164,10 @@ dconf_dbus_client_add_value_to_iter (DBusMessageIter *iter,
 }
 
 static void
-dconf_settings_backend_send (DConfDBusClient               *dcdbc,
-                             DConfEngineMessage            *dcem,
-                             DBusPendingCallNotifyFunction  callback,
-                             gpointer                       user_data)
+dconf_dbus_client_send (DConfDBusClient               *dcdbc,
+                        DConfEngineMessage            *dcem,
+                        DBusPendingCallNotifyFunction  callback,
+                        gpointer                       user_data)
 {
   DBusConnection *connection;
   gint i;
@@ -222,7 +222,7 @@ dconf_settings_backend_send (DConfDBusClient               *dcdbc,
 }
 
 static GVariant *
-dconf_settings_backend_send_finish (DBusPendingCall *pending)
+dconf_dbus_client_send_finish (DBusPendingCall *pending)
 {
   DBusMessage *message;
 
@@ -252,8 +252,8 @@ struct _Outstanding
 };
 
 static void
-dconf_settings_backend_outstanding_returned (DBusPendingCall *pending,
-                                             gpointer         user_data)
+dconf_dbus_client_outstanding_returned (DBusPendingCall *pending,
+                                        gpointer         user_data)
 {
   Outstanding *outstanding = user_data;
   DConfDBusClient *dcdbc;
@@ -274,7 +274,7 @@ dconf_settings_backend_outstanding_returned (DBusPendingCall *pending,
         }
   }
 
-  reply = dconf_settings_backend_send_finish (pending);
+  reply = dconf_dbus_client_send_finish (pending);
 
   if (reply)
     {
@@ -320,11 +320,11 @@ dconf_settings_backend_outstanding_returned (DBusPendingCall *pending,
 }
 
 static void
-dconf_settings_backend_queue (DConfDBusClient *dcdbc,
-                              DConfEngineMessage   *dcem,
-                              const gchar          *set_key,
-                              GVariant             *set_value,
-                              GTree                *tree)
+dconf_dbus_client_queue (DConfDBusClient *dcdbc,
+                         DConfEngineMessage   *dcem,
+                         const gchar          *set_key,
+                         GVariant             *set_value,
+                         GTree                *tree)
 {
   Outstanding *outstanding;
 
@@ -339,17 +339,17 @@ dconf_settings_backend_queue (DConfDBusClient *dcdbc,
   outstanding->next = dcdbc->outstanding;
   dcdbc->outstanding = outstanding;
 
-  dconf_settings_backend_send (outstanding->dcdbc,
+  dconf_dbus_client_send (outstanding->dcdbc,
                                &outstanding->dcem,
-                               dconf_settings_backend_outstanding_returned,
+                               dconf_dbus_client_outstanding_returned,
                                outstanding);
 }
 
 static gboolean
-dconf_settings_backend_scan_outstanding_tree (GTree       *tree,
-                                              const gchar *key,
-                                              gsize        key_length,
-                                              gpointer    *value)
+dconf_dbus_client_scan_outstanding_tree (GTree       *tree,
+                                         const gchar *key,
+                                         gsize        key_length,
+                                         gpointer    *value)
 {
   gchar *mykey;
 
@@ -369,9 +369,9 @@ dconf_settings_backend_scan_outstanding_tree (GTree       *tree,
 }
 
 static gboolean
-dconf_settings_backend_scan_outstanding (DConfDBusClient  *backend,
-                                         const gchar           *key,
-                                         GVariant             **value)
+dconf_dbus_client_scan_outstanding (DConfDBusClient  *dcdbc,
+                                    const gchar      *key,
+                                    GVariant        **value)
 {
   gboolean found = FALSE;
   Outstanding *node;
@@ -379,10 +379,10 @@ dconf_settings_backend_scan_outstanding (DConfDBusClient  *backend,
 
   length = strlen (key);
 
-  if G_LIKELY (backend->outstanding == NULL)
+  if G_LIKELY (dcdbc->outstanding == NULL)
     return FALSE;
 
-  for (node = backend->outstanding; node; node = node->next)
+  for (node = dcdbc->outstanding; node; node = node->next)
     {
       if (node->set_key)
         {
@@ -402,7 +402,7 @@ dconf_settings_backend_scan_outstanding (DConfDBusClient  *backend,
         {
           gpointer result;
 
-          if (dconf_settings_backend_scan_outstanding_tree (node->tree, key,
+          if (dconf_dbus_client_scan_outstanding_tree (node->tree, key,
                                                             length, &result))
             {
               if (result)
@@ -463,7 +463,7 @@ dconf_dbus_client_read (DConfDBusClient *dcdbc,
 {
   GVariant *value;
 
-  if (dconf_settings_backend_scan_outstanding (dcdbc, key, &value))
+  if (dconf_dbus_client_scan_outstanding (dcdbc, key, &value))
     return value;
 
   return dconf_engine_read (dcdbc->engine, key);
@@ -479,7 +479,7 @@ dconf_dbus_client_write (DConfDBusClient *dcdbc,
   if (!dconf_engine_write (dcdbc->engine, key, value, &dcem, NULL))
     return FALSE;
 
-  dconf_settings_backend_queue (dcdbc, &dcem, key, value, NULL);
+  dconf_dbus_client_queue (dcdbc, &dcem, key, value, NULL);
   dconf_dbus_emit_change (dcdbc, key);
 
   return TRUE;
@@ -526,7 +526,7 @@ add_match_done (DBusPendingCall *pending,
   GError *error = NULL;
   GVariant *reply;
 
-  reply = dconf_settings_backend_send_finish (pending);
+  reply = dconf_dbus_client_send_finish (pending);
 
   if (reply == NULL)
     {
@@ -571,7 +571,7 @@ dconf_dbus_client_subscribe (DConfDBusClient *dcdbc,
  
   watch = watch_new (dcdbc, name, notify, user_data);
   dconf_engine_watch (dcdbc->engine, name, &dcem);
-  dconf_settings_backend_send (dcdbc, &dcem, add_match_done, watch);
+  dconf_dbus_client_send (dcdbc, &dcem, add_match_done, watch);
   dconf_engine_message_destroy (&dcem);
 }
 
@@ -592,7 +592,7 @@ dconf_dbus_client_unsubscribe (DConfDBusClient *dcdbc,
           *ptr = g_slist_remove (*ptr, *ptr);
 
           dconf_engine_unwatch (dcdbc->engine, watch->name, &dcem);
-          dconf_settings_backend_send (dcdbc, &dcem, NULL, NULL);
+          dconf_dbus_client_send (dcdbc, &dcem, NULL, NULL);
           dconf_engine_message_destroy (&dcem);
           watch_unref (watch);
 
@@ -610,7 +610,7 @@ dconf_dbus_client_has_pending (DConfDBusClient *dcdbc)
 }
 
 static GVariant *
-dconf_settings_backend_service_func (DConfEngineMessage *dcem)
+dconf_dbus_client_service_func (DConfEngineMessage *dcem)
 {
   g_assert_not_reached ();
 }
@@ -657,7 +657,7 @@ dconf_dbus_client_new (const gchar    *profile,
 {
   DConfDBusClient *dcdbc;
 
-  dconf_engine_set_service_func (dconf_settings_backend_service_func);
+  dconf_engine_set_service_func (dconf_dbus_client_service_func);
 
   dcdbc = g_slice_new (DConfDBusClient);
   dcdbc->engine = dconf_engine_new (profile);
