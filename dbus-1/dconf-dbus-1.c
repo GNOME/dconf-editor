@@ -223,6 +223,7 @@ static GVariant *
 dconf_dbus_client_send_finish (DBusPendingCall *pending)
 {
   DBusMessage *message;
+  GVariant *result;
 
   if (pending == NULL)
     return NULL;
@@ -230,11 +231,20 @@ dconf_dbus_client_send_finish (DBusPendingCall *pending)
   message = dbus_pending_call_steal_reply (pending);
   dbus_pending_call_unref (pending);
 
-  /* XXX remove args */
+  /* We only have to deal with two types of replies: () and (s) */
+  if (dbus_message_has_signature (message, "s"))
+    {
+      dbus_message_get_args (message, NULL,
+                             DBUS_TYPE_STRING, &result,
+                             DBUS_TYPE_INVALID);
+      result = g_variant_new ("(s)", result);
+    }
+  else
+    result = g_variant_new ("()");
 
   dbus_message_unref (message);
 
-  return g_variant_new ("()");
+  return result;
 }
 
 struct _Outstanding
@@ -287,7 +297,10 @@ dconf_dbus_client_outstanding_returned (DBusPendingCall *pending,
        * accessed from the worker thread.
        */
       g_free (dcdbc->anti_expose_tag);
-      g_variant_get_child (reply, 0, "s", &dcdbc->anti_expose_tag);
+
+      if (g_variant_is_of_type (reply, G_VARIANT_TYPE ("(s)")))
+        g_variant_get_child (reply, 0, "s", dcdbc->anti_expose_tag);
+
       g_variant_unref (reply);
     }
   else
@@ -628,20 +641,32 @@ dconf_dbus_client_filter (DBusConnection *connection,
 
       dbus_message_iter_init (message, &iter);
       dbus_message_iter_get_basic (&iter, &path);
+      dbus_message_iter_next (&iter);
       dbus_message_iter_recurse (&iter, &sub);
+      dbus_message_iter_next (&iter);
       dbus_message_iter_get_basic (&iter, &tag);
+      dbus_message_iter_next (&iter);
 
-      /* XXX todo: anti-expose */
-
-      while (dbus_message_iter_get_arg_type (&sub) == 's')
+      /* Only emit the event if it hasn't been anti-exposed */
+      if (dcdbc->anti_expose_tag == NULL ||
+          strcmp (tag, dcdbc->anti_expose_tag) != 0)
         {
-          const gchar *item;
-          gchar *full;
+          /* Empty list means that only one key changed */
+          if (!dbus_message_iter_get_arg_type (&sub))
+            dconf_dbus_emit_change (dcdbc, path);
 
-          dbus_message_iter_get_basic (&iter, &item);
-          full = g_strconcat (path, item, NULL);
-          dconf_dbus_emit_change (dcdbc, full);
-          g_free (full);
+          while (dbus_message_iter_get_arg_type (&sub) == 's')
+            {
+              const gchar *item;
+              gchar *full;
+
+              dbus_message_iter_get_basic (&iter, &item);
+              full = g_strconcat (path, item, NULL);
+              dconf_dbus_emit_change (dcdbc, full);
+              g_free (full);
+
+              dbus_message_iter_next (&sub);
+            }
         }
     }
 
