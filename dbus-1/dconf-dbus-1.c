@@ -655,6 +655,12 @@ dconf_dbus_client_new (const gchar    *profile,
 {
   DConfDBusClient *dcdbc;
 
+  if (session == NULL)
+    session = dbus_bus_get (DBUS_BUS_SESSION, NULL);
+
+  if (system == NULL)
+    system = dbus_bus_get (DBUS_BUS_SYSTEM, NULL);
+
   dconf_engine_set_service_func (dconf_dbus_client_service_func);
 
   dcdbc = g_slice_new (DConfDBusClient);
