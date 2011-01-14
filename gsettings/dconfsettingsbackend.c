@@ -479,6 +479,7 @@ typedef struct
   DConfSettingsBackend *dcsb;
   guint64 state;
   gchar name[1];
+  gint outstanding;
 } OutstandingWatch;
 
 static OutstandingWatch *
@@ -492,6 +493,7 @@ outstanding_watch_new (DConfSettingsBackend *dcsb,
   watch = g_malloc (G_STRUCT_OFFSET (OutstandingWatch, name) + length + 1);
   watch->dcsb = g_object_ref (dcsb);
   watch->state = dconf_engine_get_state (dcsb->engine);
+  watch->outstanding = 0;
   strcpy (watch->name, name);
 
   return watch;
@@ -500,8 +502,11 @@ outstanding_watch_new (DConfSettingsBackend *dcsb,
 static void
 outstanding_watch_free (OutstandingWatch *watch)
 {
-  g_object_unref (watch->dcsb);
-  g_free (watch);
+  if (--watch->outstanding == 0)
+    {
+      g_object_unref (watch->dcsb);
+      g_free (watch);
+    }
 }
 
 static void
@@ -550,6 +555,8 @@ dconf_settings_backend_subscribe_context_func (gpointer data)
   DConfEngineMessage dcem;
 
   dconf_engine_watch (watch->dcsb->engine, watch->name, &dcem);
+  watch->outstanding = dcem.n_messages;
+
   dconf_settings_backend_send (watch->dcsb, &dcem, add_match_done, watch);
   dconf_engine_message_destroy (&dcem);
 
