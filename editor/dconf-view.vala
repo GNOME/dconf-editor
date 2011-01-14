@@ -97,8 +97,10 @@ private class KeyValueRenderer: Gtk.CellRenderer
         }
     }
 
-    construct
+    public KeyValueRenderer(DConfKeyView view)
     {
+        this.view = view;
+
         text_renderer = new Gtk.CellRendererText();
         text_renderer.editable = true;
         text_renderer.edited.connect(text_edited_cb);
@@ -117,11 +119,6 @@ private class KeyValueRenderer: Gtk.CellRenderer
         combo_renderer.text_column = 0;
         combo_renderer.editable = true;
         combo_renderer.edited.connect(text_edited_cb);
-    }
-
-    public KeyValueRenderer(DConfKeyView view)
-    {
-        this.view = view;
     }
 
     private Gtk.CellRenderer renderer
@@ -145,7 +142,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
                      key.type_string == "d")
                 return spin_renderer;
             else
-                return text_renderer;            
+                return text_renderer;
         }
     }
 
@@ -157,6 +154,36 @@ private class KeyValueRenderer: Gtk.CellRenderer
                                   out int        height)
     {
         renderer.get_size(widget, cell_area, out x_offset, out y_offset, out width, out height);
+    }
+
+    public override void get_preferred_width(Gtk.Widget widget,
+                                             out int    minimum_size,
+                                             out int    natural_size)
+    {
+        renderer.get_preferred_width(widget, out minimum_size, out natural_size);
+    }
+
+    public override void get_preferred_height_for_width(Gtk.Widget widget,
+                                                        int        width,
+                                                        out int    minimum_height,
+                                                        out int    natural_height)
+    {
+        renderer.get_preferred_height_for_width(widget, width, out minimum_height, out natural_height);
+    }
+
+    public override void get_preferred_height(Gtk.Widget widget,
+                                              out int    minimum_size,
+                                              out int    natural_size)
+    {
+        renderer.get_preferred_height(widget, out minimum_size, out natural_size);
+    }
+
+    public override void get_preferred_width_for_height(Gtk.Widget widget,
+                                                        int        height,
+                                                        out int    minimum_width,
+                                                        out int    natural_width)
+    {
+        renderer.get_preferred_width_for_height(widget, height, out minimum_width, out natural_width);
     }
 
     public override void render(Cairo.Context context,
