@@ -478,7 +478,7 @@ typedef struct
 {
   DConfSettingsBackend *dcsb;
   guint64 state;
-  gchar name[1];
+  gchar *name;
   gint outstanding;
 } OutstandingWatch;
 
@@ -490,11 +490,11 @@ outstanding_watch_new (DConfSettingsBackend *dcsb,
   gsize length;
 
   length = strlen (name);
-  watch = g_malloc (G_STRUCT_OFFSET (OutstandingWatch, name) + length + 1);
+  watch = g_slice_new (OutstandingWatch);
   watch->dcsb = g_object_ref (dcsb);
   watch->state = dconf_engine_get_state (dcsb->engine);
   watch->outstanding = 0;
-  strcpy (watch->name, name);
+  watch->name = g_strdup (name);
 
   return watch;
 }
@@ -505,7 +505,9 @@ outstanding_watch_free (OutstandingWatch *watch)
   if (--watch->outstanding == 0)
     {
       g_object_unref (watch->dcsb);
-      g_free (watch);
+      g_free (watch->name);
+
+      g_slice_free (OutstandingWatch, watch);
     }
 }
 
