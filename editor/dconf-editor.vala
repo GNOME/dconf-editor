@@ -65,19 +65,21 @@ public class EditorWindow : Gtk.Window
             dir_tree_view.get_selection().select_iter(iter);
     }
     
-    private Gtk.Label add_row(Gtk.Table table, int row, string label)
+    private Gtk.Label add_row(Gtk.Table table, int row, string title)
     {
-        Gtk.Label name_label, value_label;
+        var name_label = new Gtk.Label(title);
+        name_label.set_alignment(0.0f, 0.0f);
+        table.attach(name_label, 0, 1, row, row+1,
+                     Gtk.AttachOptions.FILL,
+                     Gtk.AttachOptions.SHRINK | Gtk.AttachOptions.FILL, 0, 0);
 
-        name_label = new Gtk.Label(label);
-        name_label.set_alignment(0.0f, 0.5f);
-        table.attach(name_label, 0, 1, row, row+1, Gtk.AttachOptions.FILL, Gtk.AttachOptions.FILL, 0, 0);
-
-        value_label = new Gtk.Label("");
-        value_label.set_alignment(0.0f, 0.5f);
+        var value_label = new Gtk.Label("");
+        value_label.set_alignment(0.0f, 0.0f);
         value_label.wrap = true;
-        table.attach_defaults(value_label, 1, 2, row, row+1);
-        
+        table.attach(value_label, 1, 2, row, row+1,
+                     Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
+                     Gtk.AttachOptions.SHRINK | Gtk.AttachOptions.FILL, 0, 0);
+
         name_label.show();
         value_label.show();
 
@@ -154,7 +156,7 @@ public class EditorWindow : Gtk.Window
 
         schema_label.set_text(schema_name);
         summary_label.set_text(summary);
-        description_label.set_text(description);
+        description_label.set_text(description.strip());
         type_label.set_text(type);
         default_label.set_text(default_value);
     }
