@@ -196,8 +196,6 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
 {
     private Directory directory;
 
-    construct {}
-
     public KeyModel(Directory directory)
     {
         this.directory = directory;
@@ -334,8 +332,6 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
 {
     private SchemaEnum schema_enum;
 
-    construct {}
-
     public EnumModel(SchemaEnum schema_enum)
     {
         this.schema_enum = schema_enum;
@@ -458,8 +454,6 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public DConf.Client client;
     private Directory root;
-
-    construct {}
 
     public SettingsModel()
     {
