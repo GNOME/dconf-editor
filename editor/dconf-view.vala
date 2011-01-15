@@ -129,23 +129,25 @@ private class KeyValueRenderer: Gtk.CellRenderer
         set {}
         get
         {
-            if (key.type_string == "<enum>")
+            switch (key.type_string)
+            {
+            case "<enum>":
                 return combo_renderer;
-            else if (key.type_string == "b")
+            case "b":
                 return toggle_renderer;
-            else if (key.type_string == "s")
-                return text_renderer;
-            else if (key.type_string == "y" ||
-                     key.type_string == "n" ||
-                     key.type_string == "q" ||
-                     key.type_string == "i" ||
-                     key.type_string == "u" ||
-                     key.type_string == "x" ||
-                     key.type_string == "t" ||
-                     key.type_string == "d")
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":
+            case "d":
                 return spin_renderer;
-            else
+            default:
+            case "s":
                 return text_renderer;
+            }
         }
     }
 
