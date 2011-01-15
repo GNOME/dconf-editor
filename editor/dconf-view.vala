@@ -13,87 +13,90 @@ private class KeyValueRenderer: Gtk.CellRenderer
         set
         {
             _key = value;
-            if (key.type_string == "s")
+            switch (key.type_string)
             {
-                text_renderer.text = key.value.get_string();
-            }
-            else if (key.type_string == "<enum>")
-            {            
+            case "<enum>":
                 combo_renderer.text = key.value.get_string();
                 combo_renderer.model = new EnumModel(key.schema.schema.list.enums.lookup(key.schema.enum_name));
                 mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "b")
-            {
+                break;
+            case "b":
                 toggle_renderer.active = key.value.get_boolean();
                 mode = Gtk.CellRendererMode.ACTIVATABLE;
-            }
-            else if (key.type_string == "s")
-            {
+                break;
+            case "s":
                 text_renderer.text = key.value.get_string();
                 mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "y")
-            {
+                break;
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":
+            case "d":
                 spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_byte(), 0, 255, 1, 0, 0);
+                double min, max;
+                var v = get_variant_as_double(key.value, out min, out max);
+                if (key.schema.range != null)
+                {
+                    double t;
+                    min = get_variant_as_double(key.schema.range.min, out t, out t);
+                    max = get_variant_as_double(key.schema.range.max, out t, out t);
+                }
+                spin_renderer.adjustment = new Gtk.Adjustment(v, min, max, 1, 0, 0);
                 spin_renderer.digits = 0;
                 mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "n")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_int16(), int16.MIN, int16.MAX, 1, 0, 0);
-                spin_renderer.digits = 0;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "q")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_uint16(), uint16.MIN, uint16.MAX, 1, 0, 0);
-                spin_renderer.digits = 0;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "i")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_int32(), int32.MIN, int32.MAX, 1, 0, 0);
-                spin_renderer.digits = 0;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "u")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_uint32(), int32.MIN, uint32.MAX, 1, 0, 0);
-                spin_renderer.digits = 0;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "x")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_int64(), int64.MIN, int64.MAX, 1, 0, 0);
-                spin_renderer.digits = 0;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "t")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_uint64(), uint64.MIN, uint64.MAX, 1, 0, 0);
-                spin_renderer.digits = 0;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else if (key.type_string == "d")
-            {
-                spin_renderer.text = key.value.print(false);
-                spin_renderer.adjustment = new Gtk.Adjustment(key.value.get_double(), double.MIN, double.MAX, 1, 0, 0);
-                spin_renderer.digits = 6;
-                mode = Gtk.CellRendererMode.EDITABLE;
-            }
-            else
-            {
+                break;
+            default:
                 text_renderer.text = key.value.print(false);            
                 mode = Gtk.CellRendererMode.INERT;
+                break;
             }
+        }
+    }
+
+    private static double get_variant_as_double(Variant value, out double min, out double max)
+    {
+        switch (value.classify ())
+        {
+        case Variant.Class.BYTE:
+            min = 0.0;
+            max = 255.0;
+            return (double)value.get_byte();
+        case Variant.Class.INT16:
+            min = int16.MIN;
+            max = int16.MAX;
+            return (double)value.get_int16();
+        case Variant.Class.UINT16:
+            min = uint16.MIN;
+            max = uint16.MAX;
+            return (double)value.get_uint16();
+        case Variant.Class.INT32:
+            min = int32.MIN;
+            max = int32.MAX;
+            return (double)value.get_int32();
+        case Variant.Class.UINT32:
+            min = uint32.MAX;
+            max = uint32.MIN;
+            return (double)value.get_uint32();
+        case Variant.Class.INT64:
+            min = int64.MIN;
+            max = int64.MAX;
+            return (double)value.get_int64();
+        case Variant.Class.UINT64:
+            min = uint64.MIN;
+            max = uint64.MAX;
+            return (double)value.get_uint64();
+        case Variant.Class.DOUBLE:
+            min = double.MIN;
+            max = double.MAX;
+            return value.get_double();
+        default:
+            min = 0.0;
+            max = 0.0;
+            return 0.0;
         }
     }
 

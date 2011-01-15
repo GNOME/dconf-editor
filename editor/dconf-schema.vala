@@ -111,6 +111,9 @@ public class SchemaValueRange
             else
                 warning ("Unknown property in <range>, %s", prop->name);
         }
+        
+        //if (min == null || max == null)
+        //    ?
    }
 }
 
