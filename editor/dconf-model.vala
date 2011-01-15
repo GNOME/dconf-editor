@@ -11,13 +11,12 @@ public class Key : GLib.Object
     
     public bool has_schema
     {
-       private set {}
-       public get { return schema != null; }
+        get { return schema != null; }
     }
 
     public int index
     {
-       get { return parent.keys.index (this); }
+        get { return parent.keys.index (this); }
     }
 
     public string type_string
@@ -58,14 +57,16 @@ public class Key : GLib.Object
             catch (GLib.Error e)
             {
             }
+            value_changed();
         }
     }
-    
+
     public bool is_default
     {
-        private set {}
-        public get { update_value(); return _value == null; }
+        get { update_value(); return _value == null; }
     }
+
+    public signal void value_changed();
 
     public Key(SettingsModel model, Directory parent, string name, string full_name)
     {
@@ -74,6 +75,22 @@ public class Key : GLib.Object
         this.name = name;
         this.full_name = full_name;
         this.schema = model.schemas.keys.lookup(full_name);
+    }
+
+    public void set_to_default()
+    {
+        if (!has_schema)
+            return;
+
+        _value = null;
+        try
+        {
+            model.client.write(full_name, null);
+        }
+        catch (GLib.Error e)
+        {
+        }
+        value_changed();
     }
 
     private void update_value()
@@ -215,6 +232,24 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
     public KeyModel(Directory directory)
     {
         this.directory = directory;
+        foreach (var key in directory.keys)
+            key.value_changed.connect(key_changed_cb); // FIXME: Need to delete this callbacks
+    }
+
+    private void key_changed_cb(Key key)
+    {
+        Gtk.TreeIter iter;
+        if (!get_iter_first(out iter))
+            return;
+
+        do
+        {
+            if(get_key(iter) == key)
+            {
+                row_changed(get_path(iter), iter);
+                return;
+            }
+        } while(iter_next(ref iter));
     }
 
     public Gtk.TreeModelFlags get_flags()
