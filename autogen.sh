@@ -17,6 +17,7 @@ fi
 mkdir -p m4 aux
 gtkdocize --docdir docs --flavour no-tmpl
 aclocal${automake_suffix} ${ACLOCAL_FLAGS}
+autoheader
 automake${automake_suffix} --add-missing --foreign
 autoconf
 

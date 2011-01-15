@@ -1,7 +1,9 @@
-public class EditorWindow : Gtk.Window
+class ConfigurationEditor
 {
-    public SettingsModel model;
+    private SettingsModel model;
 
+    private Gtk.Builder ui;
+    private Gtk.Window window;
     private Gtk.TreeView dir_tree_view;
     private Gtk.TreeView key_tree_view;
     private Gtk.Label schema_label;
@@ -10,80 +12,50 @@ public class EditorWindow : Gtk.Window
     private Gtk.Label type_label;
     private Gtk.Label default_label;
 
-    public EditorWindow()
+    public ConfigurationEditor()
     {
-        set_title("Configuration Editor");
-        set_default_size(600, 300);
-        set_border_width(6);
-        
-        var hbox = new Gtk.HBox(false, 6);
-        hbox.show();
-        add(hbox);
-
         model = new SettingsModel();
 
-        var scroll = new Gtk.ScrolledWindow(null, null);
-        scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-        scroll.show();
-        hbox.pack_start(scroll, false, false, 0);
+        ui = new Gtk.Builder();
+        try
+        {
+            ui.add_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor.ui"));
+        }
+        catch (Error e)
+        {
+            critical("Failed to load UI: %s", e.message);
+        }
+        window = (Gtk.Window)ui.get_object("main_window");
+        window.destroy.connect(Gtk.main_quit);
 
         dir_tree_view = new DConfDirView();
         dir_tree_view.set_model(model);
         dir_tree_view.get_selection().changed.connect(dir_selected_cb); // FIXME: Put in view
         dir_tree_view.show();
+        var scroll = (Gtk.ScrolledWindow)ui.get_object("directory_scrolledwindow");
         scroll.add(dir_tree_view);
-
-        var vbox = new Gtk.VBox(false, 6);
-        vbox.show();
-        hbox.pack_start(vbox, true, true, 0);
-        
-        scroll = new Gtk.ScrolledWindow(null, null);
-        scroll.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
-        scroll.show();
-        vbox.pack_start(scroll, true, true, 0);
 
         key_tree_view = new DConfKeyView();
         key_tree_view.show();
         key_tree_view.get_selection().changed.connect(key_selected_cb);
+        scroll = (Gtk.ScrolledWindow)ui.get_object("key_scrolledwindow");
         scroll.add(key_tree_view);
 
-        var schema_table = new Gtk.Table(0, 2, false);
-        schema_table.set_row_spacings(6);
-        schema_table.set_col_spacings(6);
-        schema_table.show();
-        vbox.pack_start(schema_table, false, true, 0);
-
-        schema_label = add_row(schema_table, 0, "Schema:");
-        summary_label = add_row(schema_table, 1, "Summary:");
-        description_label = add_row(schema_table, 2, "Description:");
-        type_label = add_row(schema_table, 3, "Type:");
-        default_label = add_row(schema_table, 4, "Default:");
+        schema_label = (Gtk.Label)ui.get_object("schema_label");
+        summary_label = (Gtk.Label)ui.get_object("summary_label");
+        description_label = (Gtk.Label)ui.get_object("description_label");
+        type_label = (Gtk.Label)ui.get_object("type_label");
+        default_label = (Gtk.Label)ui.get_object("default_label");
 
         /* Always select something */
         Gtk.TreeIter iter;
         if (model.get_iter_first(out iter))
             dir_tree_view.get_selection().select_iter(iter);
     }
-    
-    private Gtk.Label add_row(Gtk.Table table, int row, string title)
+
+    public void show()
     {
-        var name_label = new Gtk.Label(title);
-        name_label.set_alignment(0.0f, 0.0f);
-        table.attach(name_label, 0, 1, row, row+1,
-                     Gtk.AttachOptions.FILL,
-                     Gtk.AttachOptions.SHRINK | Gtk.AttachOptions.FILL, 0, 0);
-
-        var value_label = new Gtk.Label("");
-        value_label.set_alignment(0.0f, 0.0f);
-        value_label.wrap = true;
-        table.attach(value_label, 1, 2, row, row+1,
-                     Gtk.AttachOptions.EXPAND | Gtk.AttachOptions.FILL,
-                     Gtk.AttachOptions.SHRINK | Gtk.AttachOptions.FILL, 0, 0);
-
-        name_label.show();
-        value_label.show();
-
-        return value_label;
+        window.show();
     }
 
     private void dir_selected_cb()
@@ -160,25 +132,13 @@ public class EditorWindow : Gtk.Window
         type_label.set_text(type);
         default_label.set_text(default_value);
     }
-}
-
-class ConfigurationEditor
-{
-    private EditorWindow window;
-    
-    public ConfigurationEditor()
-    {
-        window = new EditorWindow();
-        window.destroy.connect(Gtk.main_quit);
-        
-        window.show();
-    }
 
     public static int main(string[] args)
     {
         Gtk.init(ref args);
 
-        new ConfigurationEditor();
+        var editor = new ConfigurationEditor();
+        editor.show ();
 
         Gtk.main();
 
