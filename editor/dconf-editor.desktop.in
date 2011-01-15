@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Configuration Editor
+Comment=Directly edit your entire configuration database
+Exec=dconf-editor
+Terminal=false
+Type=Application
+Icon=dconf-editor
+StartupNotify=true
+NoDisplay=true
+Categories=GNOME;GTK;System;
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=dconf
+X-GNOME-Bugzilla-Component=editor
+X-GNOME-Bugzilla-Version=@VERSION@

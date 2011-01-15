@@ -54,6 +54,7 @@ AC_CONFIG_FILES([
   service/Makefile
   bin/Makefile
   editor/Makefile
+  editor/dconf-editor.desktop
   tests/Makefile
   docs/Makefile
   Makefile
