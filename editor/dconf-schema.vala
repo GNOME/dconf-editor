@@ -4,6 +4,7 @@ public class SchemaKey
     public string name;
     public string type;
     public Variant default_value;
+    public SchemaValueRange? range;
     public string? enum_name;
     public string? summary;
     public string? description;
@@ -14,7 +15,7 @@ public class SchemaKey
         this.schema = schema;
         this.gettext_domain = gettext_domain;
 
-        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next)
+        for (var prop = node->properties; prop != null; prop = prop->next)
         {
             if (prop->name == "name")
                 name = prop->children->content;
@@ -25,14 +26,14 @@ public class SchemaKey
                 type = "s";
                 enum_name = prop->children->content;
             }
-            //else
-            //    ?
+            else
+                warning ("Unknown property on <key>, %s", prop->name);
         }
 
         //if (name == null || type == null)
         //    ?
 
-        for (Xml.Node* child = node->children; child != null; child = child->next)
+        for (var child = node->children; child != null; child = child->next)
         {
             if (child->name == "default")
             {
@@ -49,10 +50,12 @@ public class SchemaKey
                summary = child->children->content;
             else if (child->name == "description")
                description = child->children->content;
-            //else
-            //   ?
+            else if (child->name == "range")
+               range = new SchemaValueRange (type, child);
+            else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
+                warning ("Unknown child tag in <key>, <%s>", child->name);
         }
-        
+
         //if (default_value == null)
         //    ?
     }
@@ -74,6 +77,43 @@ public class SchemaEnumValue : GLib.Object
     }
 }
 
+public class SchemaValueRange
+{
+   public Variant min;
+   public Variant max;
+
+   public SchemaValueRange(string type, Xml.Node* node)
+   {
+        for (var prop = node->properties; prop != null; prop = prop->next)
+        {
+            if (prop->name == "min")
+            {
+               try
+               {
+                   min = Variant.parse(new VariantType(type), prop->children->content);
+               }
+               catch (VariantParseError e)
+               {
+                   // ...
+               }
+            }
+            else if (prop->name == "max")
+            {
+               try
+               {
+                   max = Variant.parse(new VariantType(type), prop->children->content);
+               }
+               catch (VariantParseError e)
+               {
+                   // ...
+               }
+            }
+            else
+                warning ("Unknown property in <range>, %s", prop->name);
+        }
+   }
+}
+
 public class SchemaEnum
 {
     public SchemaList list;
@@ -84,32 +124,32 @@ public class SchemaEnum
     {
         this.list = list;
 
-        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next)
+        for (var prop = node->properties; prop != null; prop = prop->next)
         {
             if (prop->name == "id")
                 id = prop->children->content;
-            //else
-            //    ?
+            else
+                warning ("Unknown property in <enum>, %s", prop->name);
         }
 
         //if (id = null)
         //    ?
 
-        for (Xml.Node* child = node->children; child != null; child = child->next)
+        for (var child = node->children; child != null; child = child->next)
         {
             if (child->name == "value")
             {
                 string? nick = null;
                 int value = -1;
 
-                for (Xml.Attr* prop = child->properties; prop != null; prop = prop->next)
+                for (var prop = child->properties; prop != null; prop = prop->next)
                 {
                     if (prop->name == "value")
                         value = prop->children->content.to_int();
                     else if (prop->name == "nick")
                         nick = prop->children->content;
-                    //else
-                    //    ?
+                    else
+                        warning ("Unknown property in enum <value>, %s", prop->name);
                 }
 
                 //if (value < 0 || nick == null)
@@ -118,8 +158,8 @@ public class SchemaEnum
                 SchemaEnumValue schema_value = new SchemaEnumValue(this, values.length(), nick, value);
                 values.append(schema_value);
             }
-            //else
-            //   ?
+            else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
+                warning ("Unknown tag in <enum>, <%s>", child->name);
         }
         
         //if (default_value == null)
@@ -138,7 +178,7 @@ public class Schema
     {
         this.list = list;
 
-        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next)
+        for (var prop = node->properties; prop != null; prop = prop->next)
         {
             if (prop->name == "id")
                 id = prop->children->content;
@@ -146,18 +186,18 @@ public class Schema
                 path = prop->children->content; // FIXME: Does the path have to end with '/'?
             else if (prop->name == "gettext-domain")
                 gettext_domain = prop->children->content;
-            //else
-            //    ?
+            else
+                warning ("Unknown property on <schema>, %s", prop->name);
         }
 
         //if (id == null)
-        //    ?
+            //?
 
-        for (Xml.Node* child = node->children; child != null; child = child->next)
+        for (var child = node->children; child != null; child = child->next)
         {
             if (child->name != "key")
                continue;
-            SchemaKey key = new SchemaKey(child, this, gettext_domain);
+            var key = new SchemaKey(child, this, gettext_domain);
             keys.insert(key.name, key);
         }
     }
@@ -171,24 +211,24 @@ public class SchemaList
 
     public void parse_file(string path)
     {
-        Xml.Doc* doc = Xml.Parser.parse_file(path);
+        var doc = Xml.Parser.parse_file(path);
         if (doc == null)
             return;
 
-        Xml.Node* root = doc->get_root_element();
+        var root = doc->get_root_element();
         if (root == null)
             return;
         if (root->name != "schemalist")
             return;
 
         string? gettext_domain = null;
-        for (Xml.Attr* prop = root->properties; prop != null; prop = prop->next)
+        for (var prop = root->properties; prop != null; prop = prop->next)
         {
             if (prop->name == "gettext-domain")
                 gettext_domain = prop->children->content;
         }
 
-        for (Xml.Node* node = root->children; node != null; node = node->next)
+        for (var node = root->children; node != null; node = node->next)
         {
             if (node->name == "schema")
             {
@@ -211,8 +251,8 @@ public class SchemaList
                 SchemaEnum enum = new SchemaEnum(this, node);
                 enums.insert(enum.id, enum);
             }
-            //else
-            //    ?
+            else if (node->type != Xml.ElementType.TEXT_NODE)
+                warning ("Unknown tag <%s>", node->name);
         }
 
         delete doc;

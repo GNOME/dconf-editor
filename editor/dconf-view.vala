@@ -18,7 +18,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
                 text_renderer.text = key.value.get_string();
             }
             else if (key.type_string == "<enum>")
-            {
+            {            
                 combo_renderer.text = key.value.get_string();
                 combo_renderer.model = new EnumModel(key.schema.schema.list.enums.lookup(key.schema.enum_name));
                 mode = Gtk.CellRendererMode.EDITABLE;
@@ -228,13 +228,13 @@ private class KeyValueRenderer: Gtk.CellRenderer
 
     private void toggle_cb(Gtk.CellRendererToggle renderer, string path)
     {
-        Key key = get_key_from_path(path);
+        var key = get_key_from_path(path);
         key.value = new Variant.boolean(!key.value.get_boolean());
     }
 
     private void text_edited_cb(Gtk.CellRendererText renderer, string path, string text)
     {
-        Key key = get_key_from_path(path);
+        var key = get_key_from_path(path);
         key.value = new Variant.string(text);
     }
 

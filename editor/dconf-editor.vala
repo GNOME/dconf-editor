@@ -16,13 +16,13 @@ public class EditorWindow : Gtk.Window
         set_default_size(600, 300);
         set_border_width(6);
         
-        Gtk.HBox hbox = new Gtk.HBox(false, 6);
+        var hbox = new Gtk.HBox(false, 6);
         hbox.show();
         add(hbox);
 
         model = new SettingsModel();
 
-        Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow(null, null);
+        var scroll = new Gtk.ScrolledWindow(null, null);
         scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
         scroll.show();
         hbox.pack_start(scroll, false, false, 0);
@@ -33,7 +33,7 @@ public class EditorWindow : Gtk.Window
         dir_tree_view.show();
         scroll.add(dir_tree_view);
 
-        Gtk.VBox vbox = new Gtk.VBox(false, 6);
+        var vbox = new Gtk.VBox(false, 6);
         vbox.show();
         hbox.pack_start(vbox, true, true, 0);
         
@@ -47,7 +47,7 @@ public class EditorWindow : Gtk.Window
         key_tree_view.get_selection().changed.connect(key_selected_cb);
         scroll.add(key_tree_view);
 
-        Gtk.Table schema_table = new Gtk.Table(0, 2, false);
+        var schema_table = new Gtk.Table(0, 2, false);
         schema_table.set_row_spacings(6);
         schema_table.set_col_spacings(6);
         schema_table.show();
@@ -107,7 +107,7 @@ public class EditorWindow : Gtk.Window
         Gtk.TreeModel model;
         if (key_tree_view.get_selection().get_selected(out model, out iter))
         {
-            KeyModel key_model = (KeyModel) model;
+            var key_model = (KeyModel) model;
             return key_model.get_key(iter);
         }
         else
@@ -133,7 +133,7 @@ public class EditorWindow : Gtk.Window
 
     private void key_selected_cb()
     {
-        Key? key = get_selected_key();
+        var key = get_selected_key();
         string schema_name = "", summary = "", description = "", type = "", default_value = "";
 
         if (key != null)

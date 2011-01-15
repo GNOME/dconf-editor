@@ -173,7 +173,7 @@ public class Directory : GLib.Object
         if (have_children)
             return;
         have_children = true;
-        
+
         string[] items = model.client.list(full_name);
         for (int i = 0; i < items.length; i++)
         {
@@ -242,7 +242,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
 
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
-        Gtk.TreePath path = new Gtk.TreePath();
+        var path = new Gtk.TreePath();
         path.append_index(get_key(iter).index);
         return path;
     }
@@ -378,7 +378,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
 
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
-        Gtk.TreePath path = new Gtk.TreePath();
+        var path = new Gtk.TreePath();
         path.append_index((int)get_enum_value(iter).index);
         return path;
     }
@@ -524,7 +524,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
-        Gtk.TreePath path = new Gtk.TreePath();
+        var path = new Gtk.TreePath();
         path.append_index((int)get_directory(iter).index);
         return path;
     }
