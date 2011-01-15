@@ -3,7 +3,6 @@ public class Key : GLib.Object
     private SettingsModel model;
 
     public Directory? parent;
-    public int index;
 
     public string name;
     public string full_name;
@@ -14,6 +13,11 @@ public class Key : GLib.Object
     {
        private set {}
        public get { return schema != null; }
+    }
+
+    public int index
+    {
+       get { return parent.keys.index (this); }
     }
 
     public string type_string
@@ -63,11 +67,10 @@ public class Key : GLib.Object
         public get { update_value(); return _value == null; }
     }
 
-    public Key(SettingsModel model, Directory parent, int index, string name, string full_name)
+    public Key(SettingsModel model, Directory parent, string name, string full_name)
     {
         this.model = model;
         this.parent = parent;
-        this.index = index;
         this.name = name;
         this.full_name = full_name;
         this.schema = model.schemas.keys.lookup(full_name);
@@ -87,13 +90,17 @@ public class Directory : GLib.Object
     public string full_name;
 
     public Directory? parent;
-    public int index;
 
     private KeyModel _key_model;
     public KeyModel key_model
     {
         get { update_children(); if (_key_model == null) _key_model = new KeyModel(this); return _key_model; }
         private set {}
+    }
+
+    public int index
+    {
+       get { return parent.children.index (this); }
     }
 
     public GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory>(str_hash, str_equal);
@@ -114,11 +121,10 @@ public class Directory : GLib.Object
 
     private bool have_children;
     
-    public Directory(SettingsModel model, Directory? parent, int index, string name, string full_name)
+    public Directory(SettingsModel model, Directory? parent, string name, string full_name)
     {
         this.model = model;
         this.parent = parent;
-        this.index = index;
         this.name = name;
         this.full_name = full_name;
     }
@@ -129,12 +135,17 @@ public class Directory : GLib.Object
 
         if (directory == null)
         {
-            directory = new Directory(model, this, (int)_children.length(), name, full_name + name + "/");
-            _children.append(directory);
+            directory = new Directory(model, this, name, full_name + name + "/");
+            _children.insert_sorted(directory, compare_directories);
             _child_map.insert(name, directory);
         }
 
         return directory;
+    }
+
+    private static int compare_directories(Directory a, Directory b)
+    {
+        return strcmp(a.name, b.name);
     }
 
     public Key get_key(string name)
@@ -143,12 +154,17 @@ public class Directory : GLib.Object
 
         if (key == null)
         {
-            key = new Key(model, this, (int)_keys.length(), name, full_name + name);
-            _keys.append(key);
+            key = new Key(model, this, name, full_name + name);
+            _keys.insert_sorted(key, compare_keys);
             _key_map.insert(name, key);
         }
 
         return key;
+    }
+
+    public static int compare_keys(Key a, Key b)
+    {
+        return strcmp(a.name, b.name);
     }
 
     public void load_schema(Schema schema, string path)
@@ -192,7 +208,7 @@ public class Directory : GLib.Object
     }
 }
 
-public class KeyModel: GLib.Object, Gtk.TreeModel/*, Gtk.TreeSortable*/
+public class KeyModel: GLib.Object, Gtk.TreeModel
 {
     private Directory directory;
 
@@ -458,7 +474,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public SettingsModel()
     {
         client = new DConf.Client ();
-        root = new Directory(this, null, 0, "/", "/");
+        root = new Directory(this, null, "/", "/");
 
         schemas = new SchemaList();
         try
