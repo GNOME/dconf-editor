@@ -12,3 +12,4 @@ desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 
 uidir = $(datadir)/dconf-editor
 ui_DATA = dconf-editor.ui
+EXTRA_DIST = dconf-editor.ui
