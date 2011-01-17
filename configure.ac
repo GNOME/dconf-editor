@@ -19,8 +19,9 @@ AM_PROG_VALAC([0.11.4])
 GTK_DOC_CHECK([1.15])
 
 # Dependencies
-PKG_CHECK_MODULES(gio, gio-2.0 >= 2.25.16)
-
+PKG_CHECK_MODULES(glib, glib-2.0 >= 2.25.16)
+PKG_CHECK_MODULES(gio, gio-2.0)
+PKG_CHECK_MODULES(dbus, dbus-1)
 
 AC_ARG_ENABLE(editor,
               AC_HELP_STRING([--disable-editor],
@@ -51,9 +52,11 @@ AC_CONFIG_FILES([
   gvdb/Makefile
   engine/Makefile
   gsettings/Makefile
+  dbus-1/dconf-dbus-1.pc
   client/dconf.pc
   client/Makefile
   service/Makefile
+  dbus-1/Makefile
   bin/Makefile
   editor/Makefile
   editor/dconf-editor.desktop
