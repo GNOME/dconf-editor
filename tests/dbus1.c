@@ -184,9 +184,7 @@ setup (void)
 
   g_setenv ("DCONF_PROFILE", "test", false);
 
-  backend = dconf_dbus_client_new ("test",
-                                   dbus_bus_get (DBUS_BUS_SYSTEM, 0),
-                                   dbus_bus_get (DBUS_BUS_SESSION, 0));
+  backend = dconf_dbus_client_new ("test", NULL, NULL);
   dconf_dbus_client_subscribe (backend, "/", watch_func, NULL);
 
   implicit = g_hash_table_new_full (g_str_hash, g_str_equal,
