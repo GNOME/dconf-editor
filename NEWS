@@ -1,3 +1,14 @@
+Changes in dconf 0.7
+====================
+
+ - new library to use dconf with libdbus-1
+ - quite a lot of improvements and bug-fixes in dconf-editor, thanks to
+   Robert Ancell
+ - some bug fixes in the GSettings backend (crashers caused by use if
+   custom dconf profiles)
+ - some FreeBSD build fixes
+ - increased Vala dependency to 0.11.4 (required for dconf-editor fixes)
+
 Changes in dconf 0.6
 ====================
 
