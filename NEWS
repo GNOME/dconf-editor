@@ -1,3 +1,9 @@
+Changes in dconf 0.7.1
+======================
+
+The last release contained a few problems that caused build failures on
+some strict linkers.  Those should be fixed now.
+
 Changes in dconf 0.7
 ====================
 
