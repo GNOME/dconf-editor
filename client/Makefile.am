@@ -21,7 +21,8 @@ dconfinclude_HEADERS = \
 	dconf-client.h	\
 	dconf.h
 
-libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0 $(gio_LIBS)
+libdconf_so_0_0_0_LDADD = $(gio_LIBS)
+libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0
 libdconf_so_0_0_0_SOURCES = \
 	../common/dconf-shmdir.c	\
 	../common/dconf-paths.c		\
