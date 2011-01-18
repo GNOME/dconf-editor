@@ -43,4 +43,4 @@ vapidir = $(datadir)/vala/vapi
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = dconf.pc
 
-CLEANFILES = $(typelib_DATA) dconf.deps libdconf.so.0 libdconf.so
+CLEANFILES = dconf.deps libdconf.so.0 libdconf.so

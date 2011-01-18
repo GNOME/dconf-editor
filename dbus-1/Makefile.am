@@ -31,3 +31,4 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(shlibdir)/libdconf-dbus-1.so.0
 	rm -f $(DESTDIR)$(shlibdir)/libdconf-dbus-1.so
 
+CLEANFILES = libdconf-dbus-1.so.0 libdconf-dbus-1.so
