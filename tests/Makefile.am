@@ -3,8 +3,8 @@ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client 
 
 noinst_PROGRAMS = paths gsettings dbus1
 
-dbus1_LDFLAGS = -L../dbus-1 -ldconf-dbus-1 $(glib_LIBS)
 gsettings_LDADD = $(gio_LIBS)
+dbus1_LDADD = -L../dbus-1 -ldconf-dbus-1 $(glib_LIBS)
 paths_LDADD = $(gio_LIBS)
 paths_SOURCES = \
 	../common/dconf-paths.c		\
