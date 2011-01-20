@@ -156,14 +156,16 @@ method_call (GDBusConnection       *connection,
           g_dbus_method_invocation_return_error (invocation, G_DBUS_ERROR,
                                                  G_DBUS_ERROR_INVALID_ARGS,
                                                  "can not set value to path");
-          g_variant_unref (value);
+          if (value != NULL)
+            g_variant_unref (value);
           return;
         }
 
       if (!dconf_writer_write (writer, key, value, &error))
         {
           g_dbus_method_invocation_return_gerror (invocation, error);
-          g_variant_unref (value);
+          if (value != NULL)
+            g_variant_unref (value);
           g_error_free (error);
           return;
         }
@@ -179,7 +181,8 @@ method_call (GDBusConnection       *connection,
                                      g_variant_new ("(s@ass)",
                                                     key, none, tag),
                                      NULL);
-      g_variant_unref (value);
+      if (value != NULL)
+        g_variant_unref (value);
       g_free (path);
       g_free (tag);
     }
