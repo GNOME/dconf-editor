@@ -24,6 +24,7 @@
 
 #include <glib.h>
 
+G_GNUC_INTERNAL
 gchar *dconf_shmdir_from_environment (void);
 
 #endif /* __dconf_shmdir_h__ */

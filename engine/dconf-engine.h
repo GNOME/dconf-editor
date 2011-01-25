@@ -70,52 +70,70 @@ typedef struct
 } DConfEngineMessage;
 
 typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngineMessage      *message);
+G_GNUC_INTERNAL
 void                    dconf_engine_message_copy                       (DConfEngineMessage      *orig,
                                                                          DConfEngineMessage      *copy);
+G_GNUC_INTERNAL
 void                    dconf_engine_message_destroy                    (DConfEngineMessage      *message);
 
+G_GNUC_INTERNAL
 void                    dconf_engine_set_service_func                   (DConfEngineServiceFunc   func);
+G_GNUC_INTERNAL
 DConfEngine *           dconf_engine_new                                (const gchar             *profile);
+G_GNUC_INTERNAL
 DConfEngine *           dconf_engine_new_for_db                         (DConfEngineServiceFunc  *service,
                                                                          const gchar             *db_name);
+G_GNUC_INTERNAL
 guint64                 dconf_engine_get_state                          (DConfEngine             *engine);
 
+G_GNUC_INTERNAL
 void                    dconf_engine_free                               (DConfEngine             *engine);
 
+G_GNUC_INTERNAL
 GVariant *              dconf_engine_read                               (DConfEngine             *engine,
                                                                          const gchar             *key);
+G_GNUC_INTERNAL
 GVariant *              dconf_engine_read_default                       (DConfEngine             *engine,
                                                                          const gchar             *key);
+G_GNUC_INTERNAL
 GVariant *              dconf_engine_read_no_default                    (DConfEngine             *engine,
                                                                          const gchar             *key);
+G_GNUC_INTERNAL
 gchar **                dconf_engine_list                               (DConfEngine             *engine,
                                                                          const gchar             *path,
                                                                          DConfResetList          *resets,
                                                                          gint                    *length);
 
+G_GNUC_INTERNAL
 void                    dconf_engine_get_service_info                   (DConfEngine             *engine,
                                                                          const gchar            **bus_type,
                                                                          const gchar            **destination,
                                                                          const gchar            **object_path);
+G_GNUC_INTERNAL
 gboolean                dconf_engine_is_writable                        (DConfEngine             *engine,
                                                                          const gchar             *name);
+G_GNUC_INTERNAL
 gboolean                dconf_engine_write                              (DConfEngine             *engine,
                                                                          const gchar             *key,
                                                                          GVariant                *value,
                                                                          DConfEngineMessage      *message,
                                                                          GError                 **error);
+G_GNUC_INTERNAL
 gboolean                dconf_engine_write_many                         (DConfEngine             *engine,
                                                                          const gchar             *prefix,
                                                                          const gchar * const     *keys,
                                                                          GVariant               **values,
                                                                          DConfEngineMessage      *message,
                                                                          GError                 **error);
+G_GNUC_INTERNAL
 void                    dconf_engine_watch                              (DConfEngine             *engine,
                                                                          const gchar             *name,
                                                                          DConfEngineMessage      *message);
+G_GNUC_INTERNAL
 void                    dconf_engine_unwatch                            (DConfEngine             *engine,
                                                                          const gchar             *name,
                                                                          DConfEngineMessage      *message);
+G_GNUC_INTERNAL
 gboolean                dconf_engine_decode_notify                      (DConfEngine             *engine,
                                                                          const gchar             *anti_expose,
                                                                          const gchar            **prefix,
@@ -125,11 +143,13 @@ gboolean                dconf_engine_decode_notify                      (DConfEn
                                                                          const gchar             *interface,
                                                                          const gchar             *member,
                                                                          GVariant                *body);
+G_GNUC_INTERNAL
 void                    dconf_engine_set_locked                         (DConfEngine             *engine,
                                                                          const gchar             *path,
                                                                          gboolean                 locked,
                                                                          DConfEngineMessage      *message);
 
+G_GNUC_INTERNAL
 gboolean                dconf_engine_interpret_reply                    (DConfEngineMessage      *message,
                                                                          const gchar             *sender,
                                                                          GVariant                *body,
