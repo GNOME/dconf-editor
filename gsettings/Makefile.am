@@ -4,7 +4,7 @@ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(
 giomodules_PROGRAMS = libdconfsettings.so
 
 libdconfsettings_so_LDADD = $(gio_LIBS)
-libdconfsettings_so_LDFLAGS = -module -avoid-version -shared
+libdconfsettings_so_LDFLAGS = -shared
 libdconfsettings_so_SOURCES = \
 	../engine/dconf-engine.c	\
 	../common/dconf-shmdir.c	\
