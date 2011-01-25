@@ -487,9 +487,7 @@ outstanding_watch_new (DConfSettingsBackend *dcsb,
                        const gchar          *name)
 {
   OutstandingWatch *watch;
-  gsize length;
 
-  length = strlen (name);
   watch = g_slice_new (OutstandingWatch);
   watch->dcsb = g_object_ref (dcsb);
   watch->state = dconf_engine_get_state (dcsb->engine);
