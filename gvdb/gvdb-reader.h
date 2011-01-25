@@ -26,6 +26,8 @@
 
 typedef struct _GvdbTable GvdbTable;
 
+G_BEGIN_DECLS
+
 G_GNUC_INTERNAL
 GvdbTable *             gvdb_table_new                                  (const gchar  *filename,
                                                                          gboolean      trusted,
@@ -65,6 +67,7 @@ typedef gboolean      (*GvdbWalkOpenFunc)                               (const g
 typedef void          (*GvdbWalkCloseFunc)                              (gsize              name_len,
                                                                          gpointer           user_data);
 
+G_GNUC_INTERNAL
 void                    gvdb_table_walk                                 (GvdbTable         *table,
                                                                          const gchar       *key,
                                                                          GvdbWalkOpenFunc   open_func,
@@ -72,5 +75,6 @@ void                    gvdb_table_walk                                 (GvdbTab
                                                                          GvdbWalkCloseFunc  close_func,
                                                                          gpointer           user_data);
 
+G_END_DECLS
 
 #endif /* __gvdb_reader_h__ */
