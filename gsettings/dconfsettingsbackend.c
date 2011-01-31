@@ -518,6 +518,13 @@ add_match_done (GObject      *source,
   GError *error = NULL;
   GVariant *reply;
 
+  /* couldn't connect to DBus */
+  if (source == NULL)
+    {
+      outstanding_watch_free (watch);
+      return;
+    }
+
   reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
                                          result, &error);
 
