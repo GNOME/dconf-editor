@@ -238,8 +238,14 @@ dconf_engine_refresh_system (DConfEngine *engine)
 static void
 dconf_engine_refresh (DConfEngine *engine)
 {
+  static GStaticMutex lock;
+
+  g_static_mutex_lock (&lock);
+
   dconf_engine_refresh_system (engine);
   dconf_engine_refresh_user (engine);
+
+  g_static_mutex_unlock (&lock);
 }
 
 guint64
@@ -421,7 +427,7 @@ dconf_engine_read_default (DConfEngine  *engine,
   GVariant *value = NULL;
   gint i;
 
-  dconf_engine_refresh_system (engine);
+  dconf_engine_refresh (engine);
 
   for (i = 1; i < engine->n_dbs && value == NULL; i++)
     value = gvdb_table_get_value (engine->gvdbs[i], key);
@@ -435,7 +441,7 @@ dconf_engine_read_no_default (DConfEngine  *engine,
 {
   GVariant *value = NULL;
 
-  dconf_engine_refresh_user (engine);
+  dconf_engine_refresh (engine);
 
   if (engine->gvdbs[0])
     value = gvdb_table_get_value (engine->gvdbs[0], key);
