@@ -1,3 +1,17 @@
+Changes in dconf 0.7.2
+======================
+
+This is entirely a cleanup/fixes release.  Some fixes here to make the
+increasingly-strict toolchain happy, and also some fixes for some
+crashers in the GSettings backend and service.
+
+ - remove some unused variables (new GCC gives a warning: #640566, another)
+ - add a mutex to fix multi-threading issue (#640611)
+ - don't crash if we have no D-Bus
+ - clean up symbol exports
+ - fix a crash in the service when using 'reset'
+ - drop old linker options that were for libtool
+
 Changes in dconf 0.7.1
 ======================
 
