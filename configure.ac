@@ -19,7 +19,7 @@ AM_PROG_VALAC([0.11.7])
 GTK_DOC_CHECK([1.15])
 
 # Dependencies
-PKG_CHECK_MODULES(glib, glib-2.0 >= 2.25.16)
+PKG_CHECK_MODULES(glib, glib-2.0 >= 2.27.2)
 PKG_CHECK_MODULES(gio, gio-2.0)
 PKG_CHECK_MODULES(dbus, dbus-1)
 
