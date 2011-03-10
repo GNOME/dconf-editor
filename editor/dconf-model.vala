@@ -626,7 +626,8 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public Gtk.TreePath get_path(Gtk.TreeIter iter)
     {
         var path = new Gtk.TreePath();
-        path.append_index((int)get_directory(iter).index);
+        for (var d = get_directory(iter); d != root; d = d.parent)
+            path.prepend_index((int)d.index);
         return path;
     }
 
@@ -670,7 +671,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     {
         Directory directory = get_directory(parent);
         if (n >= directory.children.length())
-            return false;       
+            return false;
         set_iter(out iter, directory.children.nth_data(n));
         return true;
     }
