@@ -39,7 +39,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
                 spin_renderer.text = key.value.print(false);
                 var v = get_variant_as_double(key.value);
                 double min = 0.0, max = 0.0;
-                if (key.schema.range != null)
+                if (key.schema != null && key.schema.range != null)
                 {
                     min = get_variant_as_double(key.schema.range.min);
                     max = get_variant_as_double(key.schema.range.max);
