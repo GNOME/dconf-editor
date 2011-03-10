@@ -157,7 +157,7 @@ class ConfigurationEditor
         }
 
         schema_label.set_text(schema_name);
-        summary_label.set_text(summary);
+        summary_label.set_text(summary.strip());
         description_label.set_text(description.strip());
         type_label.set_text(type);
         default_label.set_text(default_value);
