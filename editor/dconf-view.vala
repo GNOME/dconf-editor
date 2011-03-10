@@ -238,28 +238,28 @@ private class KeyValueRenderer: Gtk.CellRenderer
         switch (key.type_string)
         {
         case "y":
-            key.value = new Variant.byte((uchar)text.to_int());
+            key.value = new Variant.byte((uchar)int.parse(text));
             break;
         case "n":
-            key.value = new Variant.int16((int16)text.to_int());
+            key.value = new Variant.int16((int16)int.parse(text));
             break;
         case "q":
-            key.value = new Variant.uint16((uint16)text.to_int());
+            key.value = new Variant.uint16((uint16)int.parse(text));
             break;
         case "i":
-            key.value = new Variant.int32(text.to_int());
+            key.value = new Variant.int32(int.parse(text));
             break;
         case "u":
-            key.value = new Variant.uint32(text.to_int());
+            key.value = new Variant.uint32(int.parse(text));
             break;
         case "x":
-            key.value = new Variant.int64(text.to_int());
+            key.value = new Variant.int64(int.parse(text));
             break;
         case "t":
-            key.value = new Variant.uint64(text.to_int());
+            key.value = new Variant.uint64(int.parse(text));
             break;
         case "d":
-            key.value = new Variant.double(text.to_double());
+            key.value = new Variant.double(double.parse(text));
             break;
         }
     }

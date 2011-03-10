@@ -222,7 +222,7 @@ public class SchemaEnum
                 for (var prop = child->properties; prop != null; prop = prop->next)
                 {
                     if (prop->name == "value")
-                        value = prop->children->content.to_int();
+                        value = int.parse(prop->children->content);
                     else if (prop->name == "nick")
                         nick = prop->children->content;
                     else
