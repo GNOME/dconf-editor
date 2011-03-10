@@ -6,6 +6,7 @@ public class SchemaKey
     public Variant default_value;
     public SchemaValueRange? range;
     public SchemaValueRange type_range;
+    public List<Variant> choices;
     public string? enum_name;
     public string? summary;
     public string? description;
@@ -38,21 +39,93 @@ public class SchemaKey
         {
             if (child->name == "default")
             {
-               try
-               {
-                   default_value = Variant.parse(new VariantType(type), child->children->content);
-               }
-               catch (VariantParseError e)
-               {
-                   // ...
-               }
+                try
+                {
+                    default_value = Variant.parse(new VariantType(type), child->children->content);
+                }
+                catch (VariantParseError e)
+                {
+                    // ...
+                }
             }
             else if (child->name == "summary")
-               summary = child->children->content;
+                summary = child->children->content;
             else if (child->name == "description")
-               description = child->children->content;
+                description = child->children->content;
             else if (child->name == "range")
-               range = new SchemaValueRange.from_xml(type, child);
+                range = new SchemaValueRange.from_xml(type, child);
+            else if (child->name == "choices")
+            {
+                for (var n = child->children; n != null; n = n->next)
+                {
+                    if (n->name != "choice")
+                    {
+                        warning ("Unknown child tag in <choices>, <%s>", n->name);
+                        continue;
+                    }
+
+                    string? value = null;
+                    for (var prop = n->properties; prop != null; prop = prop->next)
+                    {
+                        if (prop->name == "value")
+                            value = prop->children->content;
+                        else
+                            warning ("Unknown property on <choice>, %s", prop->name);
+                    }
+
+                    if (value == null)
+                    {
+                        warning ("Ignoring <choice> with no value");
+                        continue;
+                    }
+
+                    Variant v;
+                    try
+                    {
+                        v = Variant.parse(new VariantType(type), value);
+                        choices.append (v);
+                    }
+                    catch (VariantParseError e)
+                    {
+                        warning ("Invalid choice value '%s'", value);
+                    }
+                }
+            }
+            else if (child->name == "aliases")
+            {
+                for (var n = child->children; n != null; n = n->next)
+                {
+                    if (n->name != "alias")
+                    {
+                        warning ("Unknown child tag in <aliases>, <%s>", n->name);
+                        continue;
+                    }
+
+                    string? value = null, target = null;
+                    for (var prop = n->properties; prop != null; prop = prop->next)
+                    {
+                        if (prop->name == "value")
+                            value = prop->children->content;
+                        else if (prop->name == "target")
+                            target = prop->children->content;
+                        else
+                            warning ("Unknown property on <alias>, %s", prop->name);
+                    }
+
+                    if (value == null)
+                    {
+                        warning ("Ignoring <alias> with no value");
+                        continue;
+                    }
+                    if (target == null)
+                    {
+                        warning ("Ignoring <alias> with no target");
+                        continue;
+                    }
+
+                    // FIXME: Use it
+                }
+            }
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
                 warning ("Unknown child tag in <key>, <%s>", child->name);
         }
