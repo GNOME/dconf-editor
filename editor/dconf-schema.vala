@@ -5,12 +5,13 @@ public class SchemaKey
     public string type;
     public Variant default_value;
     public SchemaValueRange? range;
+    public SchemaValueRange type_range;
     public string? enum_name;
     public string? summary;
     public string? description;
     public string? gettext_domain;
 
-    public SchemaKey(Xml.Node* node, Schema schema, string? gettext_domain)
+    public SchemaKey.from_xml(Xml.Node* node, Schema schema, string? gettext_domain)
     {
         this.schema = schema;
         this.gettext_domain = gettext_domain;
@@ -51,7 +52,7 @@ public class SchemaKey
             else if (child->name == "description")
                description = child->children->content;
             else if (child->name == "range")
-               range = new SchemaValueRange (type, child);
+               range = new SchemaValueRange.from_xml(type, child);
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
                 warning ("Unknown child tag in <key>, <%s>", child->name);
         }
@@ -79,34 +80,34 @@ public class SchemaEnumValue : GLib.Object
 
 public class SchemaValueRange
 {
-   public Variant min;
-   public Variant max;
-
-   public SchemaValueRange(string type, Xml.Node* node)
-   {
+    public Variant min;
+    public Variant max;
+   
+    public SchemaValueRange.from_xml(string type, Xml.Node* node)
+    {
         for (var prop = node->properties; prop != null; prop = prop->next)
         {
             if (prop->name == "min")
             {
-               try
-               {
-                   min = Variant.parse(new VariantType(type), prop->children->content);
-               }
-               catch (VariantParseError e)
-               {
-                   // ...
-               }
+                try
+                {
+                    min = Variant.parse(new VariantType(type), prop->children->content);
+                }
+                catch (VariantParseError e)
+                {
+                    // ...
+                }
             }
             else if (prop->name == "max")
             {
-               try
-               {
-                   max = Variant.parse(new VariantType(type), prop->children->content);
-               }
-               catch (VariantParseError e)
-               {
-                   // ...
-               }
+                try
+                {
+                    max = Variant.parse(new VariantType(type), prop->children->content);
+                }
+                catch (VariantParseError e)
+                {
+                    // ...
+                }
             }
             else
                 warning ("Unknown property in <range>, %s", prop->name);
@@ -114,7 +115,7 @@ public class SchemaValueRange
         
         //if (min == null || max == null)
         //    ?
-   }
+    }
 }
 
 public class SchemaEnum
@@ -123,7 +124,7 @@ public class SchemaEnum
     public string id;
     public GLib.List<SchemaEnumValue> values = new GLib.List<SchemaEnumValue>();
 
-    public SchemaEnum(SchemaList list, Xml.Node* node)
+    public SchemaEnum.from_xml(SchemaList list, Xml.Node* node)
     {
         this.list = list;
 
@@ -177,7 +178,7 @@ public class Schema
     public string? path;
     public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey>(str_hash, str_equal);
 
-    public Schema(SchemaList list, Xml.Node* node, string? gettext_domain)
+    public Schema.from_xml(SchemaList list, Xml.Node* node, string? gettext_domain)
     {
         this.list = list;
 
@@ -200,7 +201,7 @@ public class Schema
         {
             if (child->name != "key")
                continue;
-            var key = new SchemaKey(child, this, gettext_domain);
+            var key = new SchemaKey.from_xml(child, this, gettext_domain);
             keys.insert(key.name, key);
         }
     }
@@ -235,7 +236,7 @@ public class SchemaList
         {
             if (node->name == "schema")
             {
-                Schema schema = new Schema(this, node, gettext_domain);
+                Schema schema = new Schema.from_xml(this, node, gettext_domain);
                 if (schema.path == null)
                 {
                     // FIXME: What to do here?
@@ -251,7 +252,7 @@ public class SchemaList
             }
             else if (node->name == "enum")
             {
-                SchemaEnum enum = new SchemaEnum(this, node);
+                SchemaEnum enum = new SchemaEnum.from_xml(this, node);
                 enums.insert(enum.id, enum);
             }
             else if (node->type != Xml.ElementType.TEXT_NODE)

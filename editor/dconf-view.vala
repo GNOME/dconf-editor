@@ -37,13 +37,17 @@ private class KeyValueRenderer: Gtk.CellRenderer
             case "t":
             case "d":
                 spin_renderer.text = key.value.print(false);
-                double min, max;
-                var v = get_variant_as_double(key.value, out min, out max);
+                var v = get_variant_as_double(key.value);
+                double min = 0.0, max = 0.0;
                 if (key.schema.range != null)
                 {
-                    double t;
-                    min = get_variant_as_double(key.schema.range.min, out t, out t);
-                    max = get_variant_as_double(key.schema.range.max, out t, out t);
+                    min = get_variant_as_double(key.schema.range.min);
+                    max = get_variant_as_double(key.schema.range.max);
+                }
+                else
+                {
+                    min = get_variant_as_double(key.get_min());
+                    max = get_variant_as_double(key.get_max());
                 }
                 spin_renderer.adjustment = new Gtk.Adjustment(v, min, max, 1, 0, 0);
                 spin_renderer.digits = 0;
@@ -57,45 +61,30 @@ private class KeyValueRenderer: Gtk.CellRenderer
         }
     }
 
-    private static double get_variant_as_double(Variant value, out double min, out double max)
+    private static double get_variant_as_double(Variant value)
     {
+        if (value == null)
+            return 0.0;
+
         switch (value.classify ())
         {
         case Variant.Class.BYTE:
-            min = 0.0;
-            max = 255.0;
             return (double)value.get_byte();
         case Variant.Class.INT16:
-            min = int16.MIN;
-            max = int16.MAX;
             return (double)value.get_int16();
         case Variant.Class.UINT16:
-            min = uint16.MIN;
-            max = uint16.MAX;
             return (double)value.get_uint16();
         case Variant.Class.INT32:
-            min = int32.MIN;
-            max = int32.MAX;
             return (double)value.get_int32();
         case Variant.Class.UINT32:
-            min = uint32.MAX;
-            max = uint32.MIN;
             return (double)value.get_uint32();
         case Variant.Class.INT64:
-            min = int64.MIN;
-            max = int64.MAX;
             return (double)value.get_int64();
         case Variant.Class.UINT64:
-            min = uint64.MIN;
-            max = uint64.MAX;
             return (double)value.get_uint64();
         case Variant.Class.DOUBLE:
-            min = double.MIN;
-            max = double.MAX;
             return value.get_double();
         default:
-            min = 0.0;
-            max = 0.0;
             return 0.0;
         }
     }
@@ -246,22 +235,33 @@ private class KeyValueRenderer: Gtk.CellRenderer
     private void spin_edited_cb(Gtk.CellRendererText renderer, string path, string text)
     {
         Key key = get_key_from_path(path);
-        if (key.type_string == "y")
+        switch (key.type_string)
+        {
+        case "y":
             key.value = new Variant.byte((uchar)text.to_int());
-        else if (key.type_string == "n")
+            break;
+        case "n":
             key.value = new Variant.int16((int16)text.to_int());
-        else if (key.type_string == "q")
+            break;
+        case "q":
             key.value = new Variant.uint16((uint16)text.to_int());
-        else if (key.type_string == "i")
+            break;
+        case "i":
             key.value = new Variant.int32(text.to_int());
-        else if (key.type_string == "u")
+            break;
+        case "u":
             key.value = new Variant.uint32(text.to_int());
-        else if (key.type_string == "x")
+            break;
+        case "x":
             key.value = new Variant.int64(text.to_int());
-        else if (key.type_string == "t")
+            break;
+        case "t":
             key.value = new Variant.uint64(text.to_int());
-        else if (key.type_string == "d")
+            break;
+        case "d":
             key.value = new Variant.double(text.to_double());
+            break;
+        }
     }
 }
 

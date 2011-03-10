@@ -80,20 +80,38 @@ class ConfigurationEditor
             key_tree_view.get_selection().select_iter(iter);
     }
 
-    private string type_to_description(string type)
+    private string key_to_description(Key key)
     {
-        switch(type)
+        switch(key.schema.type)
         {
+        case "y":
+        case "n":
+        case "q":
         case "i":
-           return "Integer";
+        case "u":
+        case "x":
+        case "t":
+        case "d":
+            Variant min, max;
+            if (key.schema.range != null)
+            {
+                min = key.schema.range.min;
+                max = key.schema.range.max;
+            }
+            else
+            {
+                min = key.get_min();
+                max = key.get_max();
+            }
+            return "Integer [%s..%s]".printf(min.print(false), max.print(false));
         case "b":
-           return "Boolean";
+            return "Boolean";
         case "s":
-           return "String";
-        case "enum":
-           return "Enumeration";
+            return "String";
+        case "<enum>":
+            return "Enumeration";
         default:
-           return type;
+            return key.schema.type;
         }
     }
 
@@ -129,7 +147,7 @@ class ConfigurationEditor
                     summary = selected_key.schema.summary;
                 if (selected_key.schema.description != null)
                     description = selected_key.schema.description;
-                type = type_to_description(selected_key.schema.type);
+                type = key_to_description(selected_key);
                 default_value = selected_key.schema.default_value.print(false);
             }
             else
