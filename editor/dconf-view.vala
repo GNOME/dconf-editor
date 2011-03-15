@@ -71,7 +71,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
                 break;
             default:
                 text_renderer.text = key.value.print(false);            
-                mode = Gtk.CellRendererMode.INERT;
+                mode = Gtk.CellRendererMode.EDITABLE;
                 break;
             }
         }
@@ -248,7 +248,25 @@ private class KeyValueRenderer: Gtk.CellRenderer
     private void text_edited_cb(Gtk.CellRendererText renderer, string path, string text)
     {
         var key = get_key_from_path(path);
-        key.value = new Variant.string(text);
+        if (key.type_string == "s" || key.type_string == "<enum>")
+        {
+            key.value = new Variant.string(text);
+        }
+        else
+        {
+            debug("%s %s", key.type_string, text);
+            try
+            {
+                var value = Variant.parse(new VariantType(key.type_string), text);
+                key.value = value;
+            }
+            catch (VariantParseError e)
+            {
+                var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK, "Error setting value: %s", e.message);
+                dialog.run();
+                dialog.destroy();
+            }
+        }
     }
 
     private void spin_edited_cb(Gtk.CellRendererText renderer, string path, string text)
