@@ -254,7 +254,6 @@ private class KeyValueRenderer: Gtk.CellRenderer
         }
         else
         {
-            debug("%s %s", key.type_string, text);
             try
             {
                 var value = Variant.parse(new VariantType(key.type_string), text);
