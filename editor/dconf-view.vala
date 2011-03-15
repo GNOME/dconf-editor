@@ -13,6 +13,22 @@ private class KeyValueRenderer: Gtk.CellRenderer
         set
         {
             _key = value;
+            
+            if (key.has_schema && key.schema.choices != null)
+            {
+                combo_renderer.text = key.value.print(false);
+                var model = new Gtk.ListStore(2, typeof(string), typeof(string));
+                foreach (var choice in key.schema.choices)
+                {
+                    Gtk.TreeIter iter;
+                    model.append(out iter);
+                    model.set(iter, 0, choice.name, 1, choice.value.print(false), -1);
+                }
+                combo_renderer.model = model;
+                mode = Gtk.CellRendererMode.EDITABLE;
+                return;
+            }
+
             switch (key.type_string)
             {
             case "<enum>":
@@ -39,7 +55,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
                 spin_renderer.text = key.value.print(false);
                 var v = get_variant_as_double(key.value);
                 double min = 0.0, max = 0.0;
-                if (key.schema != null && key.schema.range != null)
+                if (key.has_schema && key.schema.range != null)
                 {
                     min = get_variant_as_double(key.schema.range.min);
                     max = get_variant_as_double(key.schema.range.max);
@@ -118,6 +134,9 @@ private class KeyValueRenderer: Gtk.CellRenderer
         set {}
         get
         {
+            if (key.has_schema && key.schema.choices != null)
+                return combo_renderer;
+
             switch (key.type_string)
             {
             case "<enum>":

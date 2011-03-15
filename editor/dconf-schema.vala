@@ -6,7 +6,7 @@ public class SchemaKey
     public Variant default_value;
     public SchemaValueRange? range;
     public SchemaValueRange type_range;
-    public List<Variant> choices;
+    public List<SchemaChoice> choices;
     public string? enum_name;
     public string? summary;
     public string? description;
@@ -58,6 +58,8 @@ public class SchemaKey
             {
                 for (var n = child->children; n != null; n = n->next)
                 {
+                    if (n->type != Xml.ElementType.ELEMENT_NODE)
+                        continue;
                     if (n->name != "choice")
                     {
                         warning ("Unknown child tag in <choices>, <%s>", n->name);
@@ -82,8 +84,8 @@ public class SchemaKey
                     Variant v;
                     try
                     {
-                        v = Variant.parse(new VariantType(type), value);
-                        choices.append (v);
+                        v = new Variant(type, value);
+                        choices.append (new SchemaChoice(value, v));
                     }
                     catch (VariantParseError e)
                     {
@@ -95,6 +97,8 @@ public class SchemaKey
             {
                 for (var n = child->children; n != null; n = n->next)
                 {
+                    if (n->type != Xml.ElementType.ELEMENT_NODE)
+                        continue;
                     if (n->name != "alias")
                     {
                         warning ("Unknown child tag in <aliases>, <%s>", n->name);
@@ -123,7 +127,16 @@ public class SchemaKey
                         continue;
                     }
 
-                    // FIXME: Use it
+                    Variant v;
+                    try
+                    {
+                        v = new Variant(type, target);
+                        choices.append (new SchemaChoice(value, v));
+                    }
+                    catch (VariantParseError e)
+                    {
+                        warning ("Invalid alias value '%s'", target);
+                    }
                 }
             }
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
@@ -147,6 +160,18 @@ public class SchemaEnumValue : GLib.Object
         this.schema_enum = schema_enum;
         this.index = index;
         this.nick = nick;
+        this.value = value;
+    }
+}
+
+public class SchemaChoice
+{
+    public string name;
+    public Variant value;
+
+    public SchemaChoice(string name, Variant value)
+    {
+        this.name = name;
         this.value = value;
     }
 }
