@@ -24,12 +24,12 @@ public class Key : GLib.Object
        private set {}
        public get
        {
-           if (_value != null)
+           if (value != null)
            {
-               if (_value.is_of_type(VariantType.STRING) && has_schema && schema.enum_name != null)
+               if (value.is_of_type(VariantType.STRING) && has_schema && schema.enum_name != null)
                    return "<enum>";
                else
-                   return _value.get_type_string();
+                   return value.get_type_string();
            }
            else
                return schema.type;
