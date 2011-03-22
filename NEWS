@@ -1,3 +1,10 @@
+Changes in dconf 0.7.3
+======================
+
+This release consists almost entirely of fixes made by Robert to
+dconf-editor.  A few other trivial build fixes are included as well
+(bumping library version dependencies to match reality, etc).
+
 Changes in dconf 0.7.2
 ======================
 
