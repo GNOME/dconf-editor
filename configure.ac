@@ -13,7 +13,7 @@ AM_SILENT_RULES([yes])
 
 # Check for programs
 AC_PROG_CC
-AM_PROG_VALAC([0.11.4])
+AM_PROG_VALAC([0.11.7])
 
 # Gtk-doc support
 GTK_DOC_CHECK([1.15])
