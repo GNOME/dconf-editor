@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Configuration Editor
+Name=dconf Editor
 Comment=Directly edit your entire configuration database
 Exec=dconf-editor
 Terminal=false
