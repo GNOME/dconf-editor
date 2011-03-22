@@ -28,6 +28,9 @@ public class SchemaKey
                 type = "s";
                 enum_name = prop->children->content;
             }
+			else if (prop->name == "flags")
+				/* TODO: support this properly */
+				type = "as";
             else
                 warning ("Unknown property on <key>, %s", prop->name);
         }
@@ -84,7 +87,7 @@ public class SchemaKey
                     Variant v;
                     try
                     {
-                        v = new Variant(type, value);
+                        v = new Variant.string (value);
                         choices.append (new SchemaChoice(value, v));
                     }
                     catch (VariantParseError e)
@@ -130,7 +133,7 @@ public class SchemaKey
                     Variant v;
                     try
                     {
-                        v = new Variant(type, target);
+                        v = new Variant.string (target);
                         choices.append (new SchemaChoice(value, v));
                     }
                     catch (VariantParseError e)
