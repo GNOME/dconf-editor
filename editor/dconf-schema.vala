@@ -371,7 +371,7 @@ public class SchemaList
         while ((info = i.next_file (null)) != null) {
             string name = info.get_name();
 
-            if (!name.has_suffix(".gschema.xml"))
+            if (!name.has_suffix(".gschema.xml") && !name.has_suffix(".enums.xml"))
                 continue;
 
             string path = Path.build_filename(dir, name, null);
