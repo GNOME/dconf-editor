@@ -198,6 +198,35 @@ void dconf_watch (string?[] args) throws Error {
 	new MainLoop (null, false).run ();
 }
 
+void dconf_complete (string[] args) throws Error {
+	var path = args[2];
+
+	if (path == "") {
+		print ("/\n");
+		return;
+	}
+
+	if (path[0] == '/') {
+		var client = new DConf.Client ();
+		var last = 0;
+
+		for (var i = 1; path[i] != '\0'; i++) {
+			if (path[i] == '/') {
+				last = i;
+			}
+		}
+
+		var dir = path.substring (0, last + 1);
+		foreach (var item in client.list (dir)) {
+			var full_item = dir + item;
+
+			if (full_item.has_prefix (path)) {
+				print ("%s\n", full_item);
+			}
+		}
+	}
+}
+
 delegate void Command (string[] args) throws Error;
 
 struct CommandMapping {
@@ -215,14 +244,15 @@ int main (string[] args) {
 	Environment.set_prgname (args[0]);
 
 	var map = new CommandMapping[] {
-		CommandMapping ("help",   dconf_help),
-		CommandMapping ("read",   dconf_read),
-		CommandMapping ("list",   dconf_list),
-		CommandMapping ("write",  dconf_write),
-		CommandMapping ("update", dconf_update),
-		CommandMapping ("lock",   dconf_lock),
-		CommandMapping ("unlock", dconf_unlock),
-		CommandMapping ("watch",  dconf_watch)
+		CommandMapping ("help",      dconf_help),
+		CommandMapping ("read",      dconf_read),
+		CommandMapping ("list",      dconf_list),
+		CommandMapping ("write",     dconf_write),
+		CommandMapping ("update",    dconf_update),
+		CommandMapping ("lock",      dconf_lock),
+		CommandMapping ("unlock",    dconf_unlock),
+		CommandMapping ("watch",     dconf_watch),
+		CommandMapping ("_complete", dconf_complete)
 	};
 
 	try {
