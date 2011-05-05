@@ -199,7 +199,8 @@ void dconf_watch (string?[] args) throws Error {
 }
 
 void dconf_complete (string[] args) throws Error {
-	var path = args[2];
+	var suffix = args[2];
+	var path = args[3];
 
 	if (path == "") {
 		print ("/\n");
@@ -220,7 +221,7 @@ void dconf_complete (string[] args) throws Error {
 		foreach (var item in client.list (dir)) {
 			var full_item = dir + item;
 
-			if (full_item.has_prefix (path)) {
+			if (full_item.has_prefix (path) && item.has_suffix (suffix)) {
 				print ("%s\n", full_item);
 			}
 		}

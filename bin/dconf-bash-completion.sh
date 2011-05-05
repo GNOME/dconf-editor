@@ -17,8 +17,11 @@ __dconf() {
         help)
           choices=$'help \nread \nlist \nwrite \nupdate \nlock \nunlock \nwatch '
           ;;
+        list)
+          choices="$(dconf _complete / "${COMP_WORDS[2]}")"
+          ;;
         read|list|write|lock|unlock|watch)
-          choices="$(dconf _complete "${COMP_WORDS[2]}")"
+          choices="$(dconf _complete '' "${COMP_WORDS[2]}")"
           ;;
       esac
       ;;
