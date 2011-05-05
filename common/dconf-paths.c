@@ -41,6 +41,14 @@
 #define DCONF_ERROR 0
 #define DCONF_ERROR_PATH 0
 
+#define nonnull \
+  if (string == NULL) {                                                 \
+    g_set_error (error, DCONF_ERROR, DCONF_ERROR_PATH,                  \
+                 "%s not specified", type);                             \
+    return FALSE;                                                       \
+  }
+
+
 #define absolute \
   if ((l = *string++) != '/')                                           \
     {                                                                   \
@@ -111,7 +119,7 @@ dconf_is_path (const gchar  *string,
                GError      **error)
 {
 #define type "path"
-  vars; absolute; no_double_slash; path;
+  vars; nonnull; absolute; no_double_slash; path;
 #undef type
 }
 
@@ -136,7 +144,7 @@ dconf_is_key (const gchar *string,
               GError      **error)
 {
 #define type "key"
-  vars; absolute; no_double_slash; key;
+  vars; nonnull; absolute; no_double_slash; key;
 #undef type
 }
 
@@ -162,7 +170,7 @@ dconf_is_dir (const gchar  *string,
               GError      **error)
 {
 #define type "dir"
-  vars; absolute; no_double_slash; dir;
+  vars; nonnull; absolute; no_double_slash; dir;
 #undef type
 }
 
@@ -184,7 +192,7 @@ dconf_is_rel (const gchar  *string,
               GError      **error)
 {
 #define type "relative path"
-  vars; relative; no_double_slash; path;
+  vars; nonnull; relative; no_double_slash; path;
 #undef type
 }
 
@@ -209,7 +217,7 @@ dconf_is_rel_key (const gchar  *string,
                   GError      **error)
 {
 #define type "relative key"
-  vars; relative; no_double_slash; key;
+  vars; nonnull; relative; no_double_slash; key;
 #undef type
 }
 
@@ -235,6 +243,6 @@ dconf_is_rel_dir (const gchar  *string,
                   GError      **error)
 {
 #define type "relative dir"
-  vars; relative; no_double_slash; dir;
+  vars; nonnull; relative; no_double_slash; dir;
 #undef type
 }
