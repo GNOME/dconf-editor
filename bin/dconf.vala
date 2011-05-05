@@ -222,7 +222,7 @@ void dconf_complete (string[] args) throws Error {
 			var full_item = dir + item;
 
 			if (full_item.has_prefix (path) && item.has_suffix (suffix)) {
-				print ("%s\n", full_item);
+				print ("%s%s\n", full_item, full_item.has_suffix ("/") ? "" : " ");
 			}
 		}
 	}
