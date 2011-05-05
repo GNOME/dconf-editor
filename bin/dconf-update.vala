@@ -50,6 +50,12 @@ Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
 	var dir = Dir.open (dirname);
 	while ((name = dir.read_name ()) != null) {
 		var filename = Path.build_filename (dirname, name);
+		Posix.Stat buf;
+
+		// only 'normal' files
+		if (Posix.stat (filename, out buf) < 0 || !Posix.S_ISREG (buf.st_mode)) {
+			continue;
+		}
 
 		var kf = new KeyFile ();
 
