@@ -20,7 +20,7 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-int dconf_help (bool requested, string? command) {
+void show_help (bool requested, string? command) {
 	var str = new StringBuilder ();
 	string? description = null;
 	string? synopsis = null;
@@ -31,22 +31,22 @@ int dconf_help (bool requested, string? command) {
 
 		case "help":
 			description = "Print help";
-			synopsis = "[COMMAND]";
+			synopsis = "COMMAND";
 			break;
 
 		case "read":
 			description = "Read the value of a key";
-			synopsis = "[KEY]";
+			synopsis = "KEY";
 			break;
 
 		case "list":
 			description = "List the sub-keys and sub-dirs of a dir";
-			synopsis = "[DIR]";
+			synopsis = "DIR";
 			break;
 
 		case "write":
 			description = "Write a new value to a key";
-			synopsis = "[KEY] [VALUE]";
+			synopsis = "KEY VALUE";
 			break;
 
 		case "update":
@@ -56,22 +56,21 @@ int dconf_help (bool requested, string? command) {
 
 		case "lock":
 			description = "Set a lock on a path";
-			synopsis = "[PATH]";
+			synopsis = "PATH";
 			break;
 
 		case "unlock":
 			description = "Clear a lock on a path";
-			synopsis = "[PATH]";
+			synopsis = "PATH";
 			break;
 
 		case "watch":
 			description = "Watch a path for key changes";
-			synopsis = "[PATH]";
+			synopsis = "PATH";
 			break;
 
 		default:
-			str.printf ("Unknown command %s\n\n", command);
-			requested = false;
+			str.append_printf ("Unknown command '%s'\n\n", command);
 			command = null;
 			break;
 	}
@@ -91,34 +90,34 @@ Commands:
   unlock            Clear a lock on a path
   watch             Watch a path for changes
 
-Use 'dconf help [COMMAND]' to get detailed help.
+Use 'dconf help COMMAND' to get detailed help.
 
 """);
 	} else {
 		str.append ("Usage:\n");
-		str.printf ("  dconf %s %s\n\n", command, synopsis);
-		str.printf ("%s\n\n", description);
+		str.append_printf ("  dconf %s %s\n\n", command, synopsis);
+		str.append_printf ("%s\n\n", description);
 
 		if (synopsis != "") {
 			str.append ("Arguments:\n");
 
-			if ("[COMMAND]" in synopsis) {
+			if ("COMMAND" in synopsis) {
 				str.append ("  COMMAND   The (optional) command to explain\n");
 			}
 
-			if ("[PATH]" in synopsis) {
+			if ("PATH" in synopsis) {
 				str.append ("  PATH      Either a KEY or DIR\n");
 			}
 
-			if ("[PATH]" in synopsis || "[KEY]" in synopsis) {
+			if ("PATH" in synopsis || "KEY" in synopsis) {
 				str.append ("  KEY       A key path (starting, but not ending with '/')\n");
 			}
 
-			if ("[PATH]" in synopsis || "[DIR]" in synopsis) {
+			if ("PATH" in synopsis || "DIR" in synopsis) {
 				str.append ("  DIR       A directory path (starting and ending with '/')\n");
 			}
 
-			if ("[VALUE]" in synopsis) {
+			if ("VALUE" in synopsis) {
 				str.append ("  VALUE     The value to write (in GVariant format)\n");
 			}
 		}
@@ -131,94 +130,117 @@ Use 'dconf help [COMMAND]' to get detailed help.
 	} else {
 		printerr ("%s", str.str);
 	}
-
-	return requested ? 0 : 1;
 }
 
-void do_read (DConf.Client client, string key) throws Error {
+void dconf_help (string[] args) throws Error {
+	show_help (true, args[2]);
+}
+
+void dconf_read (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	var key = args[2];
+
 	DConf.verify_key (key);
 
 	var result = client.read (key);
+
 	if (result != null) {
-		stdout.puts (result.print (true));
-		stdout.putc ('\n');
+		print ("%s\n", result.print (true));
 	}
 }
 
-void do_list (DConf.Client client, string dir) throws Error {
+void dconf_list (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	var dir = args[2];
+
 	DConf.verify_dir (dir);
 
 	foreach (var item in client.list (dir)) {
-		stdout.puts (item);
-		stdout.putc ('\n');
+		print ("%s\n", item);
 	}
 }
 
-void do_write (DConf.Client client, string key, string val) throws Error {
+void dconf_write (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	var key = args[2];
+	var val = args[3];
+
 	DConf.verify_key (key);
 
 	client.write (key, Variant.parse (null, val));
 }
 
-void do_lock (DConf.Client client, string key, bool locked) throws Error {
+void dconf_lock (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	var key = args[2];
+
 	DConf.verify_key (key);
 
-	client.set_locked (key, locked);
+	client.set_locked (key, true);
 }
 
-void do_watch (DConf.Client client, string name) throws Error {
-	DConf.verify_path (name);
+void dconf_unlock (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	var key = args[2];
 
-	client.watch (name);
+	DConf.verify_key (key);
+
+	client.set_locked (key, false);
+}
+
+void dconf_watch (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	var path = args[2];
+
+	DConf.verify_path (path);
+
+	client.watch (path);
 	new MainLoop (null, false).run ();
 }
 
-void main (string[] args) {
-	try {
-		var client = new DConf.Client ();
+delegate void Command (string[] args) throws Error;
 
-		Environment.set_prgname (args[0]);
+struct CommandMapping {
+	Command func;
+	string name;
 
-		switch (args[1]) {
-			case "help":
-				dconf_help (true, args[2]);
-				break;
-
-			case "read":
-				do_read (client, args[2]);
-				break;
-
-			case "list":
-				do_list (client, args[2]);
-				break;
-
-			case "write":
-				do_write (client, args[2], args[3]);
-				break;
-
-			case "update":
-				do_update ();
-				break;
-
-			case "lock":
-				do_lock (client, args[2], true);
-				break;
-
-			case "unlock":
-				do_lock (client, args[2], false);
-				break;
-
-			case "watch":
-				do_watch (client, args[2]);
-				break;
-
-			default:
-				dconf_help (false, args[1]);
-				break;
-		}
-	} catch (Error e) {
-		stderr.printf ("error: %s\n", e.message);
+	public CommandMapping (string name, Command func) {
+		this.name = name;
+		this.func = func;
 	}
 }
 
-// vim:noet sw=4 ts=4
+int main (string[] args) {
+	assert (args.length != 0);
+	Environment.set_prgname (args[0]);
+
+	var map = new CommandMapping[] {
+		CommandMapping ("help",   dconf_help),
+		CommandMapping ("read",   dconf_read),
+		CommandMapping ("list",   dconf_list),
+		CommandMapping ("write",  dconf_write),
+		CommandMapping ("update", dconf_update),
+		CommandMapping ("lock",   dconf_lock),
+		CommandMapping ("unlock", dconf_unlock),
+		CommandMapping ("watch",  dconf_watch)
+	};
+
+	try {
+		if (args[1] == null) {
+			throw new OptionError.FAILED ("no command specified");
+		}
+
+		foreach (var mapping in map) {
+			if (mapping.name == args[1]) {
+				mapping.func (args);
+				return 0;
+			}
+		}
+
+		throw new OptionError.FAILED ("unknown command %s", args[1]);
+	} catch (Error e) {
+		stderr.printf ("error: %s\n\n", e.message);
+		show_help (false, args[1]);
+		return 1;
+	}
+}

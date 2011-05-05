@@ -158,7 +158,7 @@ void update_all (string dirname) throws GLib.Error {
 	}
 }
 
-void do_update () {
+void dconf_update (string[] args) {
 	try {
 		update_all ("/etc/dconf/db");
 	} catch (GLib.Error e) {
