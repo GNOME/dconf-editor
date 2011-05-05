@@ -41,6 +41,38 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 	return parent;
 }
 
+Gvdb.HashTable? read_locks_directory (string dirname) throws GLib.Error {
+	var dir = Dir.open (dirname);
+
+	if (dir == null) {
+		return null;
+	}
+
+	var table = new Gvdb.HashTable ();
+	unowned string? name;
+
+	while ((name = dir.read_name ()) != null) {
+		var filename = Path.build_filename (dirname, name);
+		Posix.Stat buf;
+
+		// only 'normal' files
+		if (Posix.stat (filename, out buf) < 0 || !Posix.S_ISREG (buf.st_mode)) {
+			continue;
+		}
+
+		string contents;
+		FileUtils.get_contents (filename, out contents, null);
+
+		foreach (var line in contents.split ("\n")) {
+			if (line.has_prefix ("/")) {
+				table.insert (line);
+			}
+		}
+	}
+
+	return table;
+}
+
 Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
 	var table = new Gvdb.HashTable ();
 	unowned string? name;
@@ -99,6 +131,13 @@ Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
 				}
 			}
 		}
+	}
+
+	var locks = read_locks_directory (dirname + "/locks");
+
+	if (locks != null) {
+		unowned Gvdb.Item item = table.insert (".locks");
+		item.set_hash_table (locks);
 	}
 
 	return table;
