@@ -122,6 +122,7 @@ dconf_engine_get_session_dir (void)
 
 struct _DConfEngine
 {
+  GStaticMutex lock;
   guint64     state;
 
   guint8     *shm;
@@ -238,22 +239,23 @@ dconf_engine_refresh_system (DConfEngine *engine)
 static void
 dconf_engine_refresh (DConfEngine *engine)
 {
-  static GStaticMutex lock;
-
-  g_static_mutex_lock (&lock);
-
   dconf_engine_refresh_system (engine);
   dconf_engine_refresh_user (engine);
-
-  g_static_mutex_unlock (&lock);
 }
 
 guint64
 dconf_engine_get_state (DConfEngine *engine)
 {
-  dconf_engine_refresh (engine);
+  guint64 state;
 
-  return engine->state;
+  g_static_mutex_lock (&engine->lock);
+
+  dconf_engine_refresh (engine);
+  state = engine->state;
+
+  g_static_mutex_unlock (&engine->lock);
+
+  return state;
 }
 
 static gboolean
@@ -324,6 +326,7 @@ dconf_engine_new (const gchar *profile)
   gint i;
 
   engine = g_slice_new (DConfEngine);
+  g_static_mutex_init (&engine->lock);
   engine->shm = NULL;
 
   if (profile == NULL)
@@ -394,6 +397,8 @@ dconf_engine_free (DConfEngine *engine)
       munmap (engine->shm, 1);
     }
 
+  g_static_mutex_free (&engine->lock);
+
   g_free (engine->object_paths);
   g_free (engine->bus_types);
   g_free (engine->names);
@@ -409,6 +414,8 @@ dconf_engine_read (DConfEngine  *engine,
   GVariant *value = NULL;
   gint i;
 
+  g_static_mutex_lock (&engine->lock);
+
   dconf_engine_refresh (engine);
 
   if (engine->gvdbs[0])
@@ -416,6 +423,8 @@ dconf_engine_read (DConfEngine  *engine,
 
   for (i = 1; i < engine->n_dbs && value == NULL; i++)
     value = gvdb_table_get_value (engine->gvdbs[i], key);
+
+  g_static_mutex_unlock (&engine->lock);
 
   return value;
 }
@@ -427,10 +436,14 @@ dconf_engine_read_default (DConfEngine  *engine,
   GVariant *value = NULL;
   gint i;
 
+  g_static_mutex_lock (&engine->lock);
+
   dconf_engine_refresh (engine);
 
   for (i = 1; i < engine->n_dbs && value == NULL; i++)
     value = gvdb_table_get_value (engine->gvdbs[i], key);
+
+  g_static_mutex_unlock (&engine->lock);
 
   return value;
 }
@@ -441,10 +454,14 @@ dconf_engine_read_no_default (DConfEngine  *engine,
 {
   GVariant *value = NULL;
 
+  g_static_mutex_lock (&engine->lock);
+
   dconf_engine_refresh (engine);
 
   if (engine->gvdbs[0])
     value = gvdb_table_get_value (engine->gvdbs[0], key);
+
+  g_static_mutex_unlock (&engine->lock);
 
   return value;
 }
@@ -602,6 +619,8 @@ dconf_engine_list (DConfEngine    *engine,
   /* not yet supported */
   g_assert (resets == NULL);
 
+  g_static_mutex_lock (&engine->lock);
+
   dconf_engine_refresh (engine);
 
   if (engine->gvdbs[0])
@@ -614,6 +633,8 @@ dconf_engine_list (DConfEngine    *engine,
 
   if (length)
     *length = g_strv_length (list);
+
+  g_static_mutex_unlock (&engine->lock);
 
   return list;
 }
