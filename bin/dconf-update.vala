@@ -30,7 +30,7 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 		}
 	}
 
-	var parent_name = name.ndup (end);
+	var parent_name = name.substring (0, end);
 	parent = table.lookup (parent_name);
 
 	if (parent == null) {
@@ -61,13 +61,13 @@ Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
 		}
 
 		foreach (var group in kf.get_groups ()) {
-			if (group.has_prefix ("/") || group.has_suffix ("/") || group.str ("//") != null) {
+			if (group.has_prefix ("/") || group.has_suffix ("/") || "//" in group) {
 				stderr.printf ("%s: ignoring invalid group name: %s\n", filename, group);
 				continue;
 			}
 
 			foreach (var key in kf.get_keys (group)) {
-				if (key.str ("/") != null) {
+				if ("/" in key) {
 					stderr.printf ("%s: [%s]: ignoring invalid key name: %s\n", filename, group, key);
 					continue;
 				}
@@ -104,7 +104,7 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 	if (Posix.stat (dirname, out dir_buf) == 0 && Posix.S_ISDIR (dir_buf.st_mode)) {
 		Posix.Stat file_buf;
 
-		var filename = dirname.ndup (dirname.length - 2);
+		var filename = dirname.substring (0, dirname.length - 2);
 
 		if (Posix.stat (filename, out file_buf) == 0 && file_buf.st_mtime > dir_buf.st_mtime) {
 			return;
