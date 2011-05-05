@@ -1,5 +1,6 @@
 /*
  * Copyright © 2010 Codethink Limited
+ * Copyright © 2010 Codethink Limited
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,6 +19,121 @@
  *
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
+
+int dconf_help (bool requested, string? command) {
+	var str = new StringBuilder ();
+	string? description = null;
+	string? synopsis = null;
+
+	switch (command) {
+		case null:
+			break;
+
+		case "help":
+			description = "Print help";
+			synopsis = "[COMMAND]";
+			break;
+
+		case "read":
+			description = "Read the value of a key";
+			synopsis = "[KEY]";
+			break;
+
+		case "list":
+			description = "List the sub-keys and sub-dirs of a dir";
+			synopsis = "[DIR]";
+			break;
+
+		case "write":
+			description = "Write a new value to a key";
+			synopsis = "[KEY] [VALUE]";
+			break;
+
+		case "update":
+			description = "Update the system dconf databases";
+			synopsis = "";
+			break;
+
+		case "lock":
+			description = "Set a lock on a path";
+			synopsis = "[PATH]";
+			break;
+
+		case "unlock":
+			description = "Clear a lock on a path";
+			synopsis = "[PATH]";
+			break;
+
+		case "watch":
+			description = "Watch a path for key changes";
+			synopsis = "[PATH]";
+			break;
+
+		default:
+			str.printf ("Unknown command %s\n\n", command);
+			requested = false;
+			command = null;
+			break;
+	}
+
+	if (command == null) {
+		str.append (
+"""Usage:
+  dconf COMMAND [ARGS...]
+
+Commands:
+  help              Show this information
+  read              Read the value of a key
+  list              List the contents of a dir
+  write             Change the value of a key
+  update            Update the system databases
+  lock              Set a lock on a path
+  unlock            Clear a lock on a path
+  watch             Watch a path for changes
+
+Use 'dconf help [COMMAND]' to get detailed help.
+
+""");
+	} else {
+		str.append ("Usage:\n");
+		str.printf ("  dconf %s %s\n\n", command, synopsis);
+		str.printf ("%s\n\n", description);
+
+		if (synopsis != "") {
+			str.append ("Arguments:\n");
+
+			if ("[COMMAND]" in synopsis) {
+				str.append ("  COMMAND   The (optional) command to explain\n");
+			}
+
+			if ("[PATH]" in synopsis) {
+				str.append ("  PATH      Either a KEY or DIR\n");
+			}
+
+			if ("[PATH]" in synopsis || "[KEY]" in synopsis) {
+				str.append ("  KEY       A key path (starting, but not ending with '/')\n");
+			}
+
+			if ("[PATH]" in synopsis || "[DIR]" in synopsis) {
+				str.append ("  DIR       A directory path (starting and ending with '/')\n");
+			}
+
+			if ("[VALUE]" in synopsis) {
+				str.append ("  VALUE     The value to write (in GVariant format)\n");
+			}
+		}
+
+		str.append ("\n");
+	}
+
+	if (requested) {
+		print ("%s", str.str);
+	} else {
+		printerr ("%s", str.str);
+	}
+
+	return requested ? 0 : 1;
+}
 
 void do_read (DConf.Client client, string key) throws Error {
 	DConf.verify_key (key);
@@ -64,6 +180,10 @@ void main (string[] args) {
 		Environment.set_prgname (args[0]);
 
 		switch (args[1]) {
+			case "help":
+				dconf_help (true, args[2]);
+				break;
+
 			case "read":
 				do_read (client, args[2]);
 				break;
@@ -93,7 +213,8 @@ void main (string[] args) {
 				break;
 
 			default:
-				error ("unknown command");
+				dconf_help (false, args[1]);
+				break;
 		}
 	} catch (Error e) {
 		stderr.printf ("error: %s\n", e.message);
