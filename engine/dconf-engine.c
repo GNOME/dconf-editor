@@ -456,8 +456,6 @@ dconf_engine_read_internal (DConfEngine  *engine,
 
   g_static_mutex_unlock (&engine->lock);
 
-  g_print ("you read %s, i say %s\n", key, value ? g_variant_print (value, TRUE) : "(null)");
-
   return value;
 }
 
