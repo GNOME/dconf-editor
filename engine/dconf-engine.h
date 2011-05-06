@@ -144,6 +144,12 @@ gboolean                dconf_engine_decode_notify                      (DConfEn
                                                                          const gchar             *member,
                                                                          GVariant                *body);
 G_GNUC_INTERNAL
+gboolean                dconf_engine_decode_writability_notify          (const gchar            **path,
+                                                                         const gchar             *iface,
+                                                                         const gchar             *method,
+                                                                         GVariant                *body);
+
+G_GNUC_INTERNAL
 void                    dconf_engine_set_locked                         (DConfEngine             *engine,
                                                                          const gchar             *path,
                                                                          gboolean                 locked,

@@ -128,6 +128,7 @@ struct _DConfEngine
   guint8     *shm;
 
   GvdbTable **gvdbs;
+  GvdbTable **lock_tables;
   gchar     **object_paths;
   gchar      *bus_types;
   gchar     **names;
@@ -230,6 +231,8 @@ dconf_engine_refresh_system (DConfEngine *engine)
           if (engine->gvdbs[i] == NULL)
             g_error ("Unable to open '%s', specified in dconf profile\n",
                      filename);
+          engine->lock_tables[i] = gvdb_table_get_table (engine->gvdbs[i],
+                                                         ".locks");
           g_free (filename);
           engine->state++;
         }
@@ -360,6 +363,7 @@ dconf_engine_new (const gchar *profile)
 
   engine->object_paths = g_new (gchar *, engine->n_dbs);
   engine->gvdbs = g_new0 (GvdbTable *, engine->n_dbs);
+  engine->lock_tables = g_new0 (GvdbTable *, engine->n_dbs);
   engine->bus_types = g_strdup ("eyyyyyyyyyyyyy");
   engine->state = 0;
 
@@ -390,6 +394,9 @@ dconf_engine_free (DConfEngine *engine)
 
       if (engine->gvdbs[i])
         gvdb_table_unref (engine->gvdbs[i]);
+
+      if (engine->lock_tables[i])
+        gvdb_table_unref (engine->lock_tables[i]);
     }
 
   if (engine->shm)
@@ -403,67 +410,76 @@ dconf_engine_free (DConfEngine *engine)
   g_free (engine->bus_types);
   g_free (engine->names);
   g_free (engine->gvdbs);
+  g_free (engine->lock_tables);
 
   g_slice_free (DConfEngine, engine);
+}
+
+static GVariant *
+dconf_engine_read_internal (DConfEngine  *engine,
+                            const gchar  *key,
+                            gboolean      user,
+                            gboolean      system)
+{
+  GVariant *value = NULL;
+  gint lowest;
+  gint limit;
+  gint i;
+
+  g_static_mutex_lock (&engine->lock);
+
+  dconf_engine_refresh (engine);
+
+  /* Bound the search space depending on the databases that we are
+   * interested in.
+   */
+  limit = system ? engine->n_dbs : 1;
+  lowest = user ? 0 : 1;
+
+  /* We want i equal to the index of the highest database containing a
+   * lock, or i == lowest if there is no lock.  For that reason, we
+   * don't actually check the lowest database for a lock.  That makes
+   * sense, because even if it had a lock, it would not change our
+   * search policy (which would be to check the lowest one first).
+   *
+   * Note that we intentionally dishonour 'limit' here -- we want to
+   * ensure that values in the user database are always ignored when
+   * locks are present.
+   */
+  for (i = engine->n_dbs - 1; lowest < i; i--)
+    if (engine->lock_tables[i] != NULL &&
+        gvdb_table_has_value (engine->lock_tables[i], key))
+      break;
+
+  while (i < limit && value == NULL)
+    value = gvdb_table_get_value (engine->gvdbs[i++], key);
+
+  g_static_mutex_unlock (&engine->lock);
+
+  g_print ("you read %s, i say %s\n", key, value ? g_variant_print (value, TRUE) : "(null)");
+
+  return value;
 }
 
 GVariant *
 dconf_engine_read (DConfEngine  *engine,
                    const gchar  *key)
 {
-  GVariant *value = NULL;
-  gint i;
-
-  g_static_mutex_lock (&engine->lock);
-
-  dconf_engine_refresh (engine);
-
-  if (engine->gvdbs[0])
-    value = gvdb_table_get_value (engine->gvdbs[0], key);
-
-  for (i = 1; i < engine->n_dbs && value == NULL; i++)
-    value = gvdb_table_get_value (engine->gvdbs[i], key);
-
-  g_static_mutex_unlock (&engine->lock);
-
-  return value;
+  return dconf_engine_read_internal (engine, key, TRUE, TRUE);
 }
 
 GVariant *
 dconf_engine_read_default (DConfEngine  *engine,
                            const gchar  *key)
 {
-  GVariant *value = NULL;
-  gint i;
-
-  g_static_mutex_lock (&engine->lock);
-
-  dconf_engine_refresh (engine);
-
-  for (i = 1; i < engine->n_dbs && value == NULL; i++)
-    value = gvdb_table_get_value (engine->gvdbs[i], key);
-
-  g_static_mutex_unlock (&engine->lock);
-
-  return value;
+  return dconf_engine_read_internal (engine, key, FALSE, TRUE);
 }
 
 GVariant *
 dconf_engine_read_no_default (DConfEngine  *engine,
                               const gchar  *key)
 {
-  GVariant *value = NULL;
-
-  g_static_mutex_lock (&engine->lock);
-
-  dconf_engine_refresh (engine);
-
-  if (engine->gvdbs[0])
-    value = gvdb_table_get_value (engine->gvdbs[0], key);
-
-  g_static_mutex_unlock (&engine->lock);
-
-  return value;
+  return dconf_engine_read_internal (engine, key, TRUE, FALSE);
 }
 
 static void
@@ -518,10 +534,30 @@ dconf_engine_unwatch (DConfEngine        *engine,
 }
 
 gboolean
-dconf_engine_is_writable (DConfEngine         *engine,
-                          const gchar         *name)
+dconf_engine_is_writable (DConfEngine *engine,
+                          const gchar *name)
 {
-  return TRUE;
+  gboolean writable = TRUE;
+  gint i;
+
+  g_static_mutex_lock (&engine->lock);
+
+  dconf_engine_refresh (engine);
+
+  /* Don't check for locks in the user database.
+   * If there is only a user database then the loop won't run at all.
+   */
+  for (i = engine->n_dbs - 1; 0 < i; i--)
+    if (engine->lock_tables[i] != NULL &&
+        gvdb_table_has_value (engine->lock_tables[i], name))
+      {
+        writable = FALSE;
+        break;
+      }
+
+  g_static_mutex_unlock (&engine->lock);
+
+  return writable;
 }
 
 static GVariant *
@@ -667,6 +703,24 @@ dconf_engine_decode_notify (DConfEngine   *engine,
     }
 
   g_variant_get (body, "(&s^a&ss)", path, rels, NULL);
+
+  return TRUE;
+}
+
+gboolean
+dconf_engine_decode_writability_notify (const gchar **path,
+                                        const gchar  *iface,
+                                        const gchar  *method,
+                                        GVariant     *body)
+{
+  if (strcmp (iface, "ca.desrt.dconf.Writer") ||
+      strcmp (method, "WritabilityNotify"))
+    return FALSE;
+
+  if (!g_variant_is_of_type (body, G_VARIANT_TYPE ("(s)")))
+    return FALSE;
+
+  g_variant_get_child (body, 0, "&s", path);
 
   return TRUE;
 }

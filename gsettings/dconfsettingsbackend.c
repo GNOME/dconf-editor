@@ -101,6 +101,24 @@ dconf_settings_backend_signal (GDBusConnection *connection,
 
       g_free (rels);
     }
+
+  if (dconf_engine_decode_writability_notify (&path, interface_name,
+                                              signal_name, parameters))
+    {
+      GSettingsBackend *backend = G_SETTINGS_BACKEND (dcsb);
+
+      if (g_str_has_suffix (path, "/"))
+        {
+          g_settings_backend_path_writable_changed (backend, path);
+          g_settings_backend_path_changed (backend, path, NULL);
+        }
+
+      else
+        {
+          g_settings_backend_writable_changed (backend, path);
+          g_settings_backend_changed (backend, path, NULL);
+        }
+    }
 }
 
 static void
