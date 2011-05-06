@@ -65,7 +65,7 @@ Gvdb.HashTable? read_locks_directory (string dirname) throws GLib.Error {
 
 		foreach (var line in contents.split ("\n")) {
 			if (line.has_prefix ("/")) {
-				table.insert (line);
+				table.insert_string (line, "");
 			}
 		}
 	}
@@ -147,9 +147,15 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 	Posix.Stat dir_buf;
 
 	if (Posix.stat (dirname, out dir_buf) == 0 && Posix.S_ISDIR (dir_buf.st_mode)) {
+		Posix.Stat lockdir_buf;
 		Posix.Stat file_buf;
 
 		var filename = dirname.substring (0, dirname.length - 2);
+
+		if (Posix.stat (dirname + "/locks", out lockdir_buf) == 0 && lockdir_buf.st_mtime > dir_buf.st_mtime) {
+			// if the lock directory has been updated more recently then consider its timestamp instead
+			dir_buf.st_mtime = lockdir_buf.st_mtime;
+		}
 
 		if (Posix.stat (filename, out file_buf) == 0 && file_buf.st_mtime > dir_buf.st_mtime) {
 			return;
@@ -178,8 +184,8 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 
 		try {
 			var system_bus = Bus.get_sync (BusType.SYSTEM);
-			system_bus.emit_signal (null, "/" + Path.get_basename (filename), "ca.desrt.dconf.Writer", "Notify",
-			                        new Variant ("(tsas)", (uint64) 0, "/", new VariantBuilder (STRING_ARRAY)));
+			system_bus.emit_signal (null, "/ca/desrt/dconf/Writer/" + Path.get_basename (filename), "ca.desrt.dconf.Writer",
+			                        "WritabilityNotify", new Variant ("(s)", "/"));
 			flush_the_bus (system_bus);
 		} catch {
 			/* if we can't, ... don't. */
