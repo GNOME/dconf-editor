@@ -1,3 +1,24 @@
+Changes in dconf 0.7.4
+======================
+
+Changes in this version:
+
+  - #648949: multithreading issue fixed (which actually affects all
+    GSettings-using programs since dconf is used from a helper thread in
+    that case)
+
+  - dconf commandline tool is vastly more friendly now
+
+    - no more aborting on unrecognised arguments
+
+    - proper help
+
+    - bash completion support
+
+  - support for sysadmin lockdown
+
+  - the editor now properly reads installed enum xml files
+
 Changes in dconf 0.7.3
 ======================
 
