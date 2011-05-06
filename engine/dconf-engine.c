@@ -536,24 +536,27 @@ dconf_engine_is_writable (DConfEngine *engine,
                           const gchar *name)
 {
   gboolean writable = TRUE;
-  gint i;
 
-  g_static_mutex_lock (&engine->lock);
+  /* Only check if we have at least one system database */
+  if (engine->n_dbs > 1)
+    {
+      gint i;
 
-  dconf_engine_refresh (engine);
+      g_static_mutex_lock (&engine->lock);
 
-  /* Don't check for locks in the user database.
-   * If there is only a user database then the loop won't run at all.
-   */
-  for (i = engine->n_dbs - 1; 0 < i; i--)
-    if (engine->lock_tables[i] != NULL &&
-        gvdb_table_has_value (engine->lock_tables[i], name))
-      {
-        writable = FALSE;
-        break;
-      }
+      dconf_engine_refresh_system (engine);
 
-  g_static_mutex_unlock (&engine->lock);
+      /* Don't check for locks in the user database (i == 0). */
+      for (i = engine->n_dbs - 1; 0 < i; i--)
+        if (engine->lock_tables[i] != NULL &&
+            gvdb_table_has_value (engine->lock_tables[i], name))
+          {
+            writable = FALSE;
+            break;
+          }
+
+      g_static_mutex_unlock (&engine->lock);
+    }
 
   return writable;
 }
