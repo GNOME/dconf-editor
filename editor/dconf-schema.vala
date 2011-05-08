@@ -52,9 +52,9 @@ public class SchemaKey
                 }
             }
             else if (child->name == "summary")
-                summary = child->children->content;
+                summary = child->children == null ? "" : child->children->content;
             else if (child->name == "description")
-                description = child->children->content;
+                description = child->children == null ? "" : child->children->content;
             else if (child->name == "range")
                 range = new SchemaValueRange.from_xml(type, child);
             else if (child->name == "choices")
