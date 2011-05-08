@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/glchess/" gettext-domain="dconf-editor">
+  <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <key name="width" type="i">
       <default>600</default>
       <summary>The width of the window</summary>
