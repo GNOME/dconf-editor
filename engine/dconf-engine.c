@@ -452,7 +452,11 @@ dconf_engine_read_internal (DConfEngine  *engine,
       break;
 
   while (i < limit && value == NULL)
-    value = gvdb_table_get_value (engine->gvdbs[i++], key);
+    {
+      if (engine->gvdbs[i] != NULL)
+        value = gvdb_table_get_value (engine->gvdbs[i], key);
+      i++;
+    }
 
   g_static_mutex_unlock (&engine->lock);
 
