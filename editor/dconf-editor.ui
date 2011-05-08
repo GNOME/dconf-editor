@@ -13,6 +13,8 @@
     <property name="title" translatable="yes">Configuration Editor</property>
     <property name="default_width">600</property>
     <property name="default_height">300</property>
+    <signal name="window-state-event" handler="main_window_window_state_event_cb" swapped="no"/>
+    <signal name="configure-event" handler="main_window_configure_event_cb" swapped="no"/>
     <child>
       <object class="GtkHBox" id="hbox1">
         <property name="visible">True</property>

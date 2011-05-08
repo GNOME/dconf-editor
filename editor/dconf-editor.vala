@@ -2,6 +2,7 @@ class ConfigurationEditor
 {
     private SettingsModel model;
 
+    private Settings settings;
     private Gtk.Builder ui;
     private Gtk.Window window;
     private Gtk.TreeView dir_tree_view;
@@ -18,6 +19,8 @@ class ConfigurationEditor
 
     public ConfigurationEditor()
     {
+        settings = new Settings ("ca.desrt.dconf-editor.Settings");
+
         model = new SettingsModel();
 
         ui = new Gtk.Builder();
@@ -32,6 +35,10 @@ class ConfigurationEditor
         ui.connect_signals(this);
         window = (Gtk.Window)ui.get_object("main_window");
         window.destroy.connect(Gtk.main_quit);
+
+        window.set_default_size (settings.get_int ("width"), settings.get_int ("height"));
+        if (settings.get_boolean ("maximized"))
+            window.maximize ();
 
         dir_tree_view = new DConfDirView();
         dir_tree_view.set_model(model);
@@ -174,6 +181,30 @@ class ConfigurationEditor
         if (selected_key == null)
             return;
         selected_key.set_to_default();
+    }
+
+    [CCode (cname = "G_MODULE_EXPORT main_window_configure_event_cb", instance_pos = -1)]
+    public bool main_window_configure_event_cb (Gtk.Widget widget, Gdk.EventConfigure event)
+    {
+        if (!settings.get_boolean ("maximized"))
+        {
+            settings.set_int ("width", event.width);
+            settings.set_int ("height", event.height);
+        }
+
+        return false;
+    }
+
+    [CCode (cname = "G_MODULE_EXPORT main_window_window_state_event_cb", instance_pos = -1)]
+    public bool main_window_window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
+    {
+        if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
+        {
+            var is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
+            settings.set_boolean ("maximized", is_maximized);
+        }
+
+        return false;
     }
 
     public static int main(string[] args)

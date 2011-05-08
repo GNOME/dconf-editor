@@ -10,6 +10,10 @@ desktopdir = $(datadir)/applications
 desktop_in_files = dconf-editor.desktop.in.in
 desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 
+gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
+@GSETTINGS_RULES@
+
 uidir = $(datadir)/dconf-editor
-ui_DATA = dconf-editor.ui
-EXTRA_DIST = dconf-editor.ui
+dist_ui_DATA = dconf-editor.ui
+
+EXTRA_DIST = $(gsettings_SCHEMAS)

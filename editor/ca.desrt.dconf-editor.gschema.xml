@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/glchess/" gettext-domain="dconf-editor">
+    <key name="width" type="i">
+      <default>600</default>
+      <summary>The width of the window</summary>
+      <description>The width of the main window in pixels.</description>
+    </key>
+    <key name="height" type="i">
+      <default>300</default>
+      <summary>The height of the window</summary>
+      <description>The height of the main window in pixels.</description>
+    </key>
+    <key name="maximized" type="b">
+      <default>false</default>
+      <summary>A flag to enable maximized mode</summary>
+      <description>A flag to enable maximized mode</description>
+    </key>
+  </schema>
+</schemalist>
