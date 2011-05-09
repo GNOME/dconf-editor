@@ -564,7 +564,16 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         schemas = new SchemaList();
         try
         {
-            schemas.load_directory("/usr/share/glib-2.0/schemas");
+            foreach (var dir in GLib.Environment.get_system_data_dirs())
+            {
+                var path = Path.build_filename (dir, "glib-2.0", "schemas", null);
+                if (File.new_for_path (path).query_exists ())
+                    schemas.load_directory (path);
+            }
+
+            var dir = GLib.Environment.get_variable ("GSETTINGS_SCHEMA_DIR");
+            if (dir != null)
+                schemas.load_directory(dir);
         } catch (Error e) {
             warning("Failed to parse schemas: %s", e.message);
         }
