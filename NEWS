@@ -1,3 +1,16 @@
+Changes in dconf 0.7.5
+======================
+
+This release corrects a serious flaw in the previous release: crashing
+if the database did not already exist.
+
+It also contains many fixes and improvements to the dconf-editor,
+including use of GSettings to store the window geometry.
+
+This is the final release before 0.8.0 which will become the first
+release in a new stable series.  Feature development will continue on
+'master' toward 0.9 past that point.
+
 Changes in dconf 0.7.4
 ======================
 
