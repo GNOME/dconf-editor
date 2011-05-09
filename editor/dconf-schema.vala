@@ -151,16 +151,14 @@ public class SchemaKey
     }
 }
 
-public class SchemaEnumValue : GLib.Object
+public class SchemaValue : GLib.Object
 {
-    public SchemaEnum schema_enum;
     public uint index;
     public string nick;
     public int value;
 
-    public SchemaEnumValue(SchemaEnum schema_enum, uint index, string nick, int value)
+    public SchemaValue(uint index, string nick, int value)
     {
-        this.schema_enum = schema_enum;
         this.index = index;
         this.nick = nick;
         this.value = value;
@@ -223,7 +221,7 @@ public class SchemaEnum
 {
     public SchemaList list;
     public string id;
-    public GLib.List<SchemaEnumValue> values = new GLib.List<SchemaEnumValue>();
+    public GLib.List<SchemaValue> values = new GLib.List<SchemaValue>();
 
     public SchemaEnum.from_xml(SchemaList list, Xml.Node* node)
     {
@@ -260,11 +258,64 @@ public class SchemaEnum
                 //if (value < 0 || nick == null)
                 //    ?
 
-                SchemaEnumValue schema_value = new SchemaEnumValue(this, values.length(), nick, value);
+                var schema_value = new SchemaValue (values.length(), nick, value);
                 values.append(schema_value);
             }
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
                 warning ("Unknown tag in <enum>, <%s>", child->name);
+        }
+        
+        //if (default_value == null)
+        //    ?
+    }
+}
+
+public class SchemaFlags
+{
+    public SchemaList list;
+    public string id;
+    public GLib.List<SchemaValue> values = new GLib.List<SchemaValue>();
+
+    public SchemaFlags.from_xml(SchemaList list, Xml.Node* node)
+    {
+        this.list = list;
+
+        for (var prop = node->properties; prop != null; prop = prop->next)
+        {
+            if (prop->name == "id")
+                id = prop->children->content;
+            else
+                warning ("Unknown property in <flags>, %s", prop->name);
+        }
+
+        //if (id = null)
+        //    ?
+
+        for (var child = node->children; child != null; child = child->next)
+        {
+            if (child->name == "value")
+            {
+                string? nick = null;
+                int value = -1;
+
+                for (var prop = child->properties; prop != null; prop = prop->next)
+                {
+                    if (prop->name == "value")
+                        value = int.parse(prop->children->content);
+                    else if (prop->name == "nick")
+                        nick = prop->children->content;
+                    else
+                        warning ("Unknown property in flags <value>, %s", prop->name);
+                }
+
+                //if (value < 0 || nick == null)
+                //    ?
+
+                var schema_value = new SchemaValue (values.length(), nick, value);
+                values.append(schema_value);
+            }
+            else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
+                warning ("Unknown tag in <flags>, <%s>", child->name);
         }
         
         //if (default_value == null)
@@ -313,6 +364,7 @@ public class SchemaList
     public GLib.List<Schema> schemas = new GLib.List<Schema>();
     public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey>(str_hash, str_equal);
     public GLib.HashTable<string, SchemaEnum> enums = new GLib.HashTable<string, SchemaEnum>(str_hash, str_equal);
+    public GLib.HashTable<string, SchemaFlags> flags = new GLib.HashTable<string, SchemaFlags>(str_hash, str_equal);
 
     public void parse_file(string path)
     {
@@ -337,7 +389,7 @@ public class SchemaList
         {
             if (node->name == "schema")
             {
-                Schema schema = new Schema.from_xml(this, node, gettext_domain);
+                var schema = new Schema.from_xml(this, node, gettext_domain);
                 if (schema.path == null)
                 {
                     // FIXME: What to do here?
@@ -353,8 +405,13 @@ public class SchemaList
             }
             else if (node->name == "enum")
             {
-                SchemaEnum enum = new SchemaEnum.from_xml(this, node);
+                var enum = new SchemaEnum.from_xml(this, node);
                 enums.insert(enum.id, enum);
+            }
+            else if (node->name == "flags")
+            {
+                var f = new SchemaFlags.from_xml(this, node);
+                flags.insert(f.id, f);
             }
             else if (node->type != Xml.ElementType.TEXT_NODE)
                 warning ("Unknown tag <%s>", node->name);

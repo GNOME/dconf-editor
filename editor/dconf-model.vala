@@ -456,7 +456,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
             return typeof(int);
     }
     
-    private void set_iter(out Gtk.TreeIter iter, SchemaEnumValue value)
+    private void set_iter(out Gtk.TreeIter iter, SchemaValue value)
     {
         iter.stamp = 0;
         iter.user_data = value;
@@ -464,9 +464,9 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         iter.user_data3 = value;
     }
 
-    public SchemaEnumValue get_enum_value(Gtk.TreeIter iter)
+    public SchemaValue get_enum_value(Gtk.TreeIter iter)
     {
-        return (SchemaEnumValue)iter.user_data;
+        return (SchemaValue)iter.user_data;
     }
 
     public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
