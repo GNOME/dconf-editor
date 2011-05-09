@@ -49,6 +49,11 @@ void show_help (bool requested, string? command) {
 			synopsis = "KEY VALUE";
 			break;
 
+		case "reset":
+			description = "Reset a key or dir.  -f is required for dirs.";
+			synopsis = "[-f] PATH";
+			break;
+
 		case "update":
 			description = "Update the system dconf databases";
 			synopsis = "";
@@ -85,6 +90,7 @@ Commands:
   read              Read the value of a key
   list              List the contents of a dir
   write             Change the value of a key
+  reset             Reset the value of a key or dir
   update            Update the system databases
   lock              Set a lock on a path
   unlock            Clear a lock on a path
@@ -170,6 +176,27 @@ void dconf_write (string?[] args) throws Error {
 	client.write (key, Variant.parse (null, val));
 }
 
+void dconf_reset (string?[] args) throws Error {
+	var client = new DConf.Client ();
+	bool force = false;
+	var index = 2;
+
+	if (args[index] == "-f") {
+		force = true;
+		index++;
+	}
+
+	var path = args[index];
+
+	DConf.verify_path (path);
+
+	if (DConf.is_dir (path) && !force) {
+		throw new OptionError.FAILED ("-f must be given to (recursively) reset entire dirs");
+	}
+
+	client.write (path, null);
+}
+
 void dconf_lock (string?[] args) throws Error {
 	var client = new DConf.Client ();
 	var key = args[2];
@@ -249,6 +276,7 @@ int main (string[] args) {
 		CommandMapping ("read",      dconf_read),
 		CommandMapping ("list",      dconf_list),
 		CommandMapping ("write",     dconf_write),
+		CommandMapping ("reset",     dconf_reset),
 		CommandMapping ("update",    dconf_update),
 		CommandMapping ("lock",      dconf_lock),
 		CommandMapping ("unlock",    dconf_unlock),

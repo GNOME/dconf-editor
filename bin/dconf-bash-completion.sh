@@ -9,19 +9,27 @@ __dconf() {
 
   case "${COMP_CWORD}" in
     1)
-      choices=$'help \nread \nlist \nwrite \nupdate \nlock \nunlock \nwatch '
+      choices=$'help \nread \nlist \nwrite \nreset\n update \nlock \nunlock \nwatch '
       ;;
 
     2)
       case "${COMP_WORDS[1]}" in
         help)
-          choices=$'help \nread \nlist \nwrite \nupdate \nlock \nunlock \nwatch '
+          choices=$'help \nread \nlist \nwrite \nreset\n update \nlock \nunlock \nwatch '
           ;;
         list)
           choices="$(dconf _complete / "${COMP_WORDS[2]}")"
           ;;
-        read|list|write|lock|unlock|watch)
+        read|list|write|lock|unlock|watch|reset)
           choices="$(dconf _complete '' "${COMP_WORDS[2]}")"
+          ;;
+      esac
+      ;;
+
+    3)
+      case "${COMP_WORDS[1]} ${COMP_WORDS[2]}" in
+	reset\ -f)
+          choices="$(dconf _complete '' "${COMP_WORDS[3]}")"
           ;;
       esac
       ;;
