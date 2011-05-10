@@ -27,7 +27,7 @@ namespace DConf {
 			foreach (var message in dcem.parameters) {
 				var reply = connection.call_sync (dcem.bus_name, dcem.object_path, dcem.interface_name, dcem.method_name,
 				                                  message, dcem.reply_type, DBusCallFlags.NONE, -1, cancellable);
-				if (dcem.reply_type != VariantType.UNIT) {
+				if (!dcem.reply_type.equal (VariantType.UNIT)) {
 					reply.get ("(s)", out tag);
 				}
 			}
