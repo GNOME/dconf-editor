@@ -215,8 +215,31 @@ void dconf_unlock (string?[] args) throws Error {
 	client.set_locked (key, false);
 }
 
+void show_path (DConf.Client client, string path) {
+	if (DConf.is_key (path)) {
+		var value = client.read (path);
+
+		print ("  %s\n", value != null ? value.print (true) : "unset");
+	}
+}
+
+void watch_function (DConf.Client client, string path, string[] items, string tag) {
+	if (items.length == 0) {
+		print ("%s\n", path);
+		show_path (client, path);
+		print ("\n");
+	} else {
+		foreach (var item in items) {
+			var full = path + item;
+			print ("%s\n", full);
+			show_path (client, full);
+		}
+		print ("\n");
+	}
+}
+
 void dconf_watch (string?[] args) throws Error {
-	var client = new DConf.Client ();
+	var client = new DConf.Client (null, watch_function);
 	var path = args[2];
 
 	DConf.verify_path (path);
