@@ -9,5 +9,5 @@ dconf_LDADD = $(gio_LIBS) ../client/libdconf.so.0
 dconf_SOURCES = dconf.vala dconf-update.vala ../gvdb/gvdb-builder.c gvdb.vapi fixes.vapi
 
 completiondir = $(sysconfdir)/bash_completion.d
-completion_SCRIPTS = dconf-bash-completion.sh
+completion_DATA = dconf-bash-completion.sh
 EXTRA_DIST = $(completion_SCRIPTS)
