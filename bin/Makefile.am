@@ -10,4 +10,4 @@ dconf_SOURCES = dconf.vala dconf-update.vala ../gvdb/gvdb-builder.c gvdb.vapi fi
 
 completiondir = $(sysconfdir)/bash_completion.d
 completion_DATA = dconf-bash-completion.sh
-EXTRA_DIST = $(completion_SCRIPTS)
+EXTRA_DIST = $(completion_DATA)
