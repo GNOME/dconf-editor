@@ -9,15 +9,15 @@ __dconf() {
 
   case "${COMP_CWORD}" in
     1)
-      choices=$'help \nread \nlist \nwrite \nreset\n update \nlock \nunlock \nwatch '
+      choices=$'help \nread \nlist \nwrite \nreset\n update \nlock \nunlock \nwatch \ndump \nload '
       ;;
 
     2)
       case "${COMP_WORDS[1]}" in
         help)
-          choices=$'help \nread \nlist \nwrite \nreset\n update \nlock \nunlock \nwatch '
+          choices=$'help \nread \nlist \nwrite \nreset\n update \nlock \nunlock \nwatch \ndump \nload '
           ;;
-        list)
+        list|dump|load)
           choices="$(dconf _complete / "${COMP_WORDS[2]}")"
           ;;
         read|list|write|lock|unlock|watch|reset)

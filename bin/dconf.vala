@@ -74,6 +74,16 @@ void show_help (bool requested, string? command) {
 			synopsis = "PATH";
 			break;
 
+		case "dump":
+			description = "Dump an entire subpath to stdout";
+			synopsis = "DIR";
+			break;
+
+		case "load":
+			description = "Populate a subpath from stdin";
+			synopsis = "DIR";
+			break;
+
 		default:
 			str.append_printf ("Unknown command '%s'\n\n", command);
 			command = null;
@@ -304,6 +314,8 @@ int main (string[] args) {
 		CommandMapping ("lock",      dconf_lock),
 		CommandMapping ("unlock",    dconf_unlock),
 		CommandMapping ("watch",     dconf_watch),
+		CommandMapping ("dump",      dconf_dump),
+		CommandMapping ("load",      dconf_load),
 		CommandMapping ("_complete", dconf_complete)
 	};
 
