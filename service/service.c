@@ -97,13 +97,42 @@ static void
 unwrap_maybe (GVariant **ptr)
 {
   GVariant *array, *child;
+  gsize n_children;
 
   array = *ptr;
+  n_children = g_variant_n_children (array);
 
-  if (g_variant_n_children (array))
-    child = g_variant_get_child_value (array, 0);
-  else
-    child = NULL;
+  switch (n_children)
+    {
+    case 0:
+      child = NULL;
+      break;
+    case 1: default:
+      child = g_variant_get_child_value (array, 0);
+      break;
+    case 2:
+      {
+        GVariant *untrusted;
+        GVariant *ay;
+
+        g_variant_get_child (array, 0, "v", &ay);
+        if (!g_variant_is_of_type (ay, G_VARIANT_TYPE_BYTESTRING))
+          {
+            g_variant_unref (ay);
+            child = NULL;
+            break;
+          }
+
+        untrusted = g_variant_new_from_data (G_VARIANT_TYPE_VARIANT,
+                                             g_variant_get_data (ay),
+                                             g_variant_get_size (ay),
+                                             FALSE,
+                                             (GDestroyNotify) g_variant_unref, ay);
+        g_variant_ref_sink (untrusted);
+        child = g_variant_get_normal_form (untrusted);
+        g_variant_unref (untrusted);
+      }
+    }
 
   g_variant_unref (array);
   *ptr = child;

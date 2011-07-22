@@ -565,6 +565,28 @@ dconf_engine_is_writable (DConfEngine *engine,
   return writable;
 }
 
+/* be conservative and fast:  false negatives are OK */
+static gboolean
+is_dbusable (GVariant *value)
+{
+  const gchar *type;
+
+  type = g_variant_get_type_string (value);
+
+  /* maybe definitely won't work.
+   * variant?  too lazy to check inside...
+   */
+  if (strchr (type, 'v') || strchr (type, 'm'))
+    return FALSE;
+
+  /* XXX: we could also check for '{}' not inside an array...
+   * but i'm not sure we want to support that anyway.
+   */
+
+  /* this will avoid any too-deeply-nested limits */
+  return strlen (type) < 32;
+}
+
 static GVariant *
 fake_maybe (GVariant *value)
 {
@@ -573,7 +595,28 @@ fake_maybe (GVariant *value)
   g_variant_builder_init (&builder, G_VARIANT_TYPE ("av"));
 
   if (value != NULL)
-    g_variant_builder_add (&builder, "v", value);
+    {
+      if (is_dbusable (value))
+        g_variant_builder_add (&builder, "v", value);
+
+      else
+        {
+          GVariant *variant;
+          GVariant *ay;
+
+          variant = g_variant_new_variant (value);
+          ay = g_variant_new_from_data (G_VARIANT_TYPE_BYTESTRING,
+                                        g_variant_get_data (variant),
+                                        g_variant_get_size (variant),
+                                        TRUE,
+                                        (GDestroyNotify) g_variant_unref,
+                                        variant);
+          g_variant_builder_add (&builder, "v", ay);
+
+          g_variant_builder_add (&builder, "v",
+                                 g_variant_new_string ("serialised GVariant"));
+        }
+    }
 
   return g_variant_builder_end (&builder);
 }
