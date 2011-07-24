@@ -128,7 +128,6 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
                              gpointer              user_data)
 {
   GDBusConnection *connection;
-  GError *error = NULL;
   gint i;
 
   for (i = 0; i < dcem->n_messages; i++)
@@ -139,7 +138,7 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
           if (dcsb->session_bus == NULL && callback)
             {
               dcsb->session_bus =
-                g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
+                g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
 
               if (dcsb->session_bus != NULL)
                 dcsb->session_subscription =
@@ -157,7 +156,7 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
           if (dcsb->system_bus == NULL && callback)
             {
               dcsb->system_bus =
-                g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+                g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
 
               if (dcsb->system_bus != NULL)
                 dcsb->system_subscription =
