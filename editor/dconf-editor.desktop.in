@@ -6,7 +6,6 @@ Terminal=false
 Type=Application
 Icon=dconf-editor
 StartupNotify=true
-NoDisplay=true
 Categories=GNOME;GTK;System;
 X-GNOME-Bugzilla-Bugzilla=GNOME
 X-GNOME-Bugzilla-Product=dconf
