@@ -1,3 +1,49 @@
+Changes in dconf 0.9.0
+======================
+
+There has been an extremely minor incompatible change in the D-Bus API
+of dconf this release.  From a practical standpoint, this change will
+have no effect.  However, it serves as a reminder that the dconf D-Bus
+API is private and can change from version to version (and will likely
+change in the future).
+
+As such, it is appropriate for those packaging dconf to kill all running
+instances of dconf ('killall dconf-service') as part of their postinst
+for the package.  It will be dbus-activated again on the next use.
+
+  - support loading/storing of maybe types in dconf
+
+  - remove NFS detection hackery and rely on XDG runtime dir
+
+  - add proper support for change notification to DConfClient
+
+  - commandline tool improvements
+
+    - reset: reset keys or entire subpaths
+
+    - dump: dump entire subpaths to keyfile format
+
+    - load: load them back again (maybe at a different path)
+
+    - watch: actually works now
+
+  - editor improvements
+
+    - keys now change in editor when changed from outside
+
+    - support for flags
+
+    - show dconf-editor in applications list
+
+  - work around incompatible Vala bindings changes with an #if
+
+  - don't install the bash completion script as executable
+
+  - fix a warning caused by reusing a GError variable
+
+  - other small fixes
+
+
 Changes in dconf 0.7.5
 ======================
 
