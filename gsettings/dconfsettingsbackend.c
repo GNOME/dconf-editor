@@ -132,13 +132,15 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
 
   for (i = 0; i < dcem->n_messages; i++)
     {
+      GError *error = NULL;
+
       switch (dcem->bus_types[i])
         {
         case 'e':
           if (dcsb->session_bus == NULL && callback)
             {
               dcsb->session_bus =
-                g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
+                g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
 
               if (dcsb->session_bus != NULL)
                 dcsb->session_subscription =
@@ -156,7 +158,7 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
           if (dcsb->system_bus == NULL && callback)
             {
               dcsb->system_bus =
-                g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
+                g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
               if (dcsb->system_bus != NULL)
                 dcsb->system_subscription =
@@ -175,7 +177,14 @@ dconf_settings_backend_send (DConfSettingsBackend *dcsb,
         }
 
       if (connection == NULL && callback != NULL)
-        callback (NULL, NULL, user_data);
+        {
+          g_assert (error != NULL);
+
+          g_warning ("%s", error->message);
+          g_error_free (error);
+
+          callback (NULL, NULL, user_data);
+        }
 
       if (connection != NULL)
         g_dbus_connection_call (connection,
@@ -193,11 +202,29 @@ static GVariant *
 dconf_settings_backend_send_finish (GObject      *source,
                                     GAsyncResult *result)
 {
+  GError *error = NULL;
+  GVariant *reply;
+
   if (source == NULL)
     return NULL;
 
-  return g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
-                                        result, NULL);
+  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
+                                         result, &error);
+
+  if (reply == NULL)
+    {
+      /* This should only be hit in the case that something is seriously
+       * wrong with the installation (ie: the service can't be started,
+       * etc).  Bug #641768 requests some notification of these kinds of
+       * situations in the context of the gsettings(1) commandline tool,
+       * so a g_warning() is appropriate here.
+       */
+
+      g_warning ("%s", error->message);
+      g_error_free (error);
+    }
+
+  return reply;
 }
 
 struct _Outstanding
