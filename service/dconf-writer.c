@@ -128,15 +128,6 @@ dconf_writer_write_many (DConfWriter          *writer,
   return TRUE;
 }
 
-gboolean
-dconf_writer_set_lock (DConfWriter  *writer,
-                       const gchar  *name,
-                       gboolean      locked,
-                       GError      **error)
-{
-  return TRUE;
-}
-
 const gchar *
 dconf_writer_get_name (DConfWriter *writer)
 {

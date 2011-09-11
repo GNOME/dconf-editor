@@ -280,24 +280,6 @@ method_call (GDBusConnection       *connection,
       g_free (tag);
     }
 
-  else if (strcmp (method_name, "SetLocked") == 0)
-    {
-      GError *error = NULL;
-      const gchar *name;
-      gboolean locked;
-
-      g_variant_get (parameters, "(&sb)", &name, &locked);
-
-      if (!dconf_writer_set_lock (writer, name, locked, &error))
-        {
-          g_dbus_method_invocation_return_gerror (invocation, error);
-          g_error_free (error);
-          return;
-        }
-
-      g_dbus_method_invocation_return_value (invocation, NULL);
-    }
-
   else
     g_assert_not_reached ();
 }

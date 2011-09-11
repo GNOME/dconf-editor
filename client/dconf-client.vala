@@ -204,48 +204,6 @@ namespace DConf {
 		}*/
 
 		/**
-		 * dconf_client_set_locked:
-		 * @client: a #DConfClient
-		 * @path: a dconf path
-		 * @locked: %TRUE to lock, %FALSE to unlock
-		 * @cancellable: a #GCancellable, or %NULL
-		 * @error: a pointer to a #GError, or %NULL
-		 * Returns: %TRUE if setting the lock was successful
-		 *
-		 * Marks a dconf path as being locked.
-		 *
-		 * Locks do not affect writes to this #DConfClient.  You can still write to a key that is marked as
-		 * being locked without problems.
-		 *
-		 * Locks are only effective when they are set on a database that is being used as the source of
-		 * default/mandatory values.  In that case, the lock will prevent writes from occuring to the database
-		 * that has this database as its defaults.
-		 **/
-		public bool set_locked (string path, bool locked, Cancellable? cancellable = null) throws Error {
-			call_sync (engine.set_locked (path, locked), null, cancellable);
-			return true;
-		}
-
-		/**
-		 * dconf_client_set_locked_async:
-		 * @client: a #DConfClient
-		 * @path: a dconf path
-		 * @locked: %TRUE to lock, %FALSE to unlock
-		 * @cancellable: a #GCancellable, or %NULL
-		 * @callback: the function to call when complete
-		 * @user_data: the user data for @callback
-		 *
-		 * Marks a dconf path as being locked.
-		 *
-		 * This is the asynchronous version of dconf_client_set_locked().  You should call
-		 * dconf_client_set_locked_finish() from @callback to collect the result.
-		 **/
-		public async bool set_locked_async (string key, bool locked, Cancellable? cancellable = null) throws Error {
-			yield call_async (engine.set_locked (key, locked), null, cancellable);
-			return true;
-		}
-
-		/**
 		 * dconf_client_read:
 		 * @client: a #DConfClient
 		 * @key: a valid dconf key

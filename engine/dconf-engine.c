@@ -683,15 +683,6 @@ dconf_engine_write_many (DConfEngine          *engine,
   return TRUE;
 }
 
-void
-dconf_engine_set_locked (DConfEngine        *engine,
-                         const gchar        *path,
-                         gboolean            locked,
-                         DConfEngineMessage *dcem)
-{
-  dconf_engine_dcem (engine, dcem, "SetLocked", "(sb)", path, locked);
-}
-
 gchar **
 dconf_engine_list (DConfEngine    *engine,
                    const gchar    *dir,

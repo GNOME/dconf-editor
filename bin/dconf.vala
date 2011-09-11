@@ -59,16 +59,6 @@ void show_help (bool requested, string? command) {
 			synopsis = "";
 			break;
 
-		case "lock":
-			description = "Set a lock on a path";
-			synopsis = "PATH";
-			break;
-
-		case "unlock":
-			description = "Clear a lock on a path";
-			synopsis = "PATH";
-			break;
-
 		case "watch":
 			description = "Watch a path for key changes";
 			synopsis = "PATH";
@@ -102,8 +92,6 @@ Commands:
   write             Change the value of a key
   reset             Reset the value of a key or dir
   update            Update the system databases
-  lock              Set a lock on a path
-  unlock            Clear a lock on a path
   watch             Watch a path for changes
 
 Use 'dconf help COMMAND' to get detailed help.
@@ -207,24 +195,6 @@ void dconf_reset (string?[] args) throws Error {
 	client.write (path, null);
 }
 
-void dconf_lock (string?[] args) throws Error {
-	var client = new DConf.Client ();
-	var key = args[2];
-
-	DConf.verify_key (key);
-
-	client.set_locked (key, true);
-}
-
-void dconf_unlock (string?[] args) throws Error {
-	var client = new DConf.Client ();
-	var key = args[2];
-
-	DConf.verify_key (key);
-
-	client.set_locked (key, false);
-}
-
 void show_path (DConf.Client client, string path) {
 	if (DConf.is_key (path)) {
 		var value = client.read (path);
@@ -311,8 +281,6 @@ int main (string[] args) {
 		CommandMapping ("write",     dconf_write),
 		CommandMapping ("reset",     dconf_reset),
 		CommandMapping ("update",    dconf_update),
-		CommandMapping ("lock",      dconf_lock),
-		CommandMapping ("unlock",    dconf_unlock),
 		CommandMapping ("watch",     dconf_watch),
 		CommandMapping ("dump",      dconf_dump),
 		CommandMapping ("load",      dconf_load),
