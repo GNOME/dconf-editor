@@ -19,6 +19,7 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#include <glib-unix.h>
 #include <gio/gio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -419,6 +420,16 @@ name_lost (GDBusConnection *connection,
   exit (1);
 }
 
+static gboolean
+exit_service (gpointer data)
+{
+  DConfState *state = data;
+
+  g_main_loop_quit (state->main_loop);
+
+  return TRUE;
+}
+
 int
 main (void)
 {
@@ -426,12 +437,17 @@ main (void)
   GBusType type;
 
   g_type_init ();
+
   dconf_state_init (&state);
 
   if (state.is_session)
     type = G_BUS_TYPE_SESSION;
   else
     type = G_BUS_TYPE_SYSTEM;
+
+  g_unix_signal_add (SIGTERM, exit_service, &state);
+  g_unix_signal_add (SIGINT, exit_service, &state);
+  g_unix_signal_add (SIGHUP, exit_service, &state);
 
   g_bus_own_name (type, "ca.desrt.dconf", G_BUS_NAME_OWNER_FLAGS_NONE,
                   bus_acquired, name_acquired, name_lost, &state, NULL);
