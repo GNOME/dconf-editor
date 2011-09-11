@@ -415,7 +415,7 @@ name_lost (GDBusConnection *connection,
            const gchar     *name,
            gpointer         user_data)
 {
-  fprintf (stderr, "unable to acquire name: '%s'", name);
+  fprintf (stderr, "unable to acquire name: '%s'\n", name);
   exit (1);
 }
 
