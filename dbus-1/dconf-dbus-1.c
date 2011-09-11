@@ -620,12 +620,6 @@ dconf_dbus_client_has_pending (DConfDBusClient *dcdbc)
   return dcdbc->outstanding != NULL;
 }
 
-static GVariant *
-dconf_dbus_client_service_func (DConfEngineMessage *dcem)
-{
-  g_assert_not_reached ();
-}
-
 static DBusHandlerResult
 dconf_dbus_client_filter (DBusConnection *connection,
                           DBusMessage    *message,
@@ -685,8 +679,6 @@ dconf_dbus_client_new (const gchar    *profile,
 
   if (system == NULL)
     system = dbus_bus_get (DBUS_BUS_SYSTEM, NULL);
-
-  dconf_engine_set_service_func (dconf_dbus_client_service_func);
 
   dcdbc = g_slice_new (DConfDBusClient);
   dcdbc->engine = dconf_engine_new (profile);

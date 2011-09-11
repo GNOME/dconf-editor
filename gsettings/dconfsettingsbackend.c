@@ -659,23 +659,9 @@ dconf_settings_backend_sync (GSettingsBackend *backend)
   g_static_mutex_unlock (&dcsb->lock);
 }
 
-static GVariant *
-dconf_settings_backend_service_func (DConfEngineMessage *dcem)
-{
-  g_assert (dcem->bus_types[0] == 'e');
-
-  return g_dbus_connection_call_sync (g_bus_get_sync (G_BUS_TYPE_SESSION,
-                                                      NULL, NULL),
-                                      dcem->bus_name, dcem->object_path,
-                                      dcem->interface_name, dcem->method_name,
-                                      dcem->parameters[0], dcem->reply_type,
-                                      0, -1, NULL, NULL);
-}
-
 static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
-  dconf_engine_set_service_func (dconf_settings_backend_service_func);
   dcsb->engine = dconf_engine_new (NULL);
 }
 

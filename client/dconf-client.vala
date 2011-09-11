@@ -342,17 +342,6 @@ namespace DConf {
 			return true;
 		}
 
-		static Variant? service_func (EngineMessage dcem) {
-			try {
-				assert (dcem.bus_types[0] == 'e');
-				var connection = Bus.get_sync (BusType.SESSION, null);
-				return connection.call_sync (dcem.bus_name, dcem.object_path, dcem.interface_name, dcem.method_name,
-				                             dcem.parameters[0], dcem.reply_type, DBusCallFlags.NONE, -1, null);
-			} catch {
-				return null;
-			}
-		}
-
 		/**
 		 * dconf_client_new:
 		 * @profile: the dconf profile to use, or %NULL
@@ -369,8 +358,6 @@ namespace DConf {
 		 * ~/.config/dconf/user.
 		 **/
 		public Client (string? profile = null, owned WatchFunc? watch_func = null) {
-			Engine.set_service_func (service_func);
-
 			engine = new Engine (profile);
 			this.watch_func = watch_func;
 		}

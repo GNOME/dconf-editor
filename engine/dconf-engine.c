@@ -31,8 +31,6 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-static DConfEngineServiceFunc dconf_engine_service_func;
-
 void
 dconf_engine_message_destroy (DConfEngineMessage *dcem)
 {
@@ -58,12 +56,6 @@ dconf_engine_message_copy (DConfEngineMessage *orig,
   copy->parameters[i] = NULL;
 }
 
-void
-dconf_engine_set_service_func (DConfEngineServiceFunc func)
-{
-  dconf_engine_service_func = func;
-}
-
 static const gchar *
 dconf_engine_get_session_dir (void)
 {
@@ -73,47 +65,6 @@ dconf_engine_get_session_dir (void)
   if (g_once_init_enter (&initialised))
     {
       session_dir = dconf_shmdir_from_environment ();
-
-      if (session_dir == NULL)
-        {
-          DConfEngineMessage dcem;
-          GVariant *parameters[2];
-          GVariant *result;
-
-          dcem.bus_types = "e";
-          dcem.bus_name = "ca.desrt.dconf";
-          dcem.object_path = "/ca/desrt/dconf/Writer";
-          dcem.interface_name = "org.freedesktop.DBus.Properties";
-          dcem.method_name = "Get";
-          dcem.reply_type = G_VARIANT_TYPE ("(v)");
-          parameters[0] = g_variant_new ("(ss)",
-                                         "ca.desrt.dconf.WriterInfo",
-                                         "ShmDirectory");
-          parameters[1] = NULL;
-          dcem.parameters = parameters;
-
-          result = dconf_engine_service_func (&dcem);
-
-          g_variant_unref (parameters[0]);
-
-          if (result != NULL)
-            {
-              GVariant *str;
-
-              g_variant_get (result, "(v)", &str);
-
-              if (g_variant_is_of_type (str, G_VARIANT_TYPE_STRING))
-                session_dir = g_variant_dup_string (str, NULL);
-              else
-                g_critical ("dconf service sent invalid reply");
-
-              g_variant_unref (result);
-              g_variant_unref (str);
-            }
-          else
-            g_critical ("Unable to contact dconf service");
-        }
-
       g_once_init_leave (&initialised, 1);
     }
 

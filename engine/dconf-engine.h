@@ -69,7 +69,6 @@ typedef struct
   const GVariantType  *reply_type;
 } DConfEngineMessage;
 
-typedef GVariant *    (*DConfEngineServiceFunc)                         (DConfEngineMessage      *message);
 G_GNUC_INTERNAL
 void                    dconf_engine_message_copy                       (DConfEngineMessage      *orig,
                                                                          DConfEngineMessage      *copy);
@@ -77,12 +76,9 @@ G_GNUC_INTERNAL
 void                    dconf_engine_message_destroy                    (DConfEngineMessage      *message);
 
 G_GNUC_INTERNAL
-void                    dconf_engine_set_service_func                   (DConfEngineServiceFunc   func);
-G_GNUC_INTERNAL
 DConfEngine *           dconf_engine_new                                (const gchar             *profile);
 G_GNUC_INTERNAL
-DConfEngine *           dconf_engine_new_for_db                         (DConfEngineServiceFunc  *service,
-                                                                         const gchar             *db_name);
+DConfEngine *           dconf_engine_new_for_db                         (const gchar             *db_name);
 G_GNUC_INTERNAL
 guint64                 dconf_engine_get_state                          (DConfEngine             *engine);
 
