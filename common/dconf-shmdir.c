@@ -28,7 +28,7 @@ dconf_shmdir_from_environment (void)
 
   result = g_build_filename (g_get_user_runtime_dir (), "dconf", NULL);
 
-  if (!g_mkdir_with_parents (result, 0700) != 0)
+  if (g_mkdir_with_parents (result, 0700) != 0)
     g_critical ("unable to create '%s'; dconf will not work properly.", result);
 
   return result;
