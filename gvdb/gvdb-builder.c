@@ -24,7 +24,9 @@
 
 #include <glib.h>
 #include <fcntl.h>
+#if !defined(G_OS_WIN32) || !defined(_MSC_VER)
 #include <unistd.h>
+#endif
 #include <string.h>
 
 
@@ -91,7 +93,7 @@ djb_hash (const gchar *key)
   guint32 hash_value = 5381;
 
   while (*key)
-    hash_value = hash_value * 33 + *key++;
+    hash_value = hash_value * 33 + *(signed char *)key++;
 
   return hash_value;
 }
