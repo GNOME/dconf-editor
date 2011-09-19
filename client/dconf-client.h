@@ -78,21 +78,6 @@ gboolean                dconf_client_write_finish                       (DConfCl
                                                                          gchar               **tag,
                                                                          GError              **error);
 
-gboolean                dconf_client_set_locked                         (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         gboolean              locked,
-                                                                         GCancellable         *cancellable,
-                                                                         GError              **error);
-void                    dconf_client_set_locked_async                   (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         gboolean              locked,
-                                                                         GCancellable         *cancellable,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_set_locked_finish                  (DConfClient          *client,
-                                                                         GAsyncResult         *result,
-                                                                         GError              **error);
-
 gboolean                dconf_client_write_many                         (DConfClient          *client,
                                                                          const gchar          *dir,
                                                                          const gchar * const  *rels,

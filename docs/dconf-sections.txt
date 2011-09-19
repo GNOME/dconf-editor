@@ -11,9 +11,6 @@ dconf_client_is_writable
 dconf_client_write
 dconf_client_write_async
 dconf_client_write_finish
-dconf_client_set_locked
-dconf_client_set_locked_async
-dconf_client_set_locked_finish
 dconf_client_write_many
 dconf_client_watch
 dconf_client_watch_async
