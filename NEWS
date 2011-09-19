@@ -1,3 +1,14 @@
+Changes in dconf 0.9.1
+======================
+
+  - give a g_warning() on failure to communicate with service
+
+  - remove unworking 'set lock' call from dconf API and commandline tool
+
+  - add code to exit gracefully on receipt of SIGINT, SIGHUP, SIGTERM
+
+  - remove "service function" logic; always use the XDG runtime directory
+
 Changes in dconf 0.9.0
 ======================
 
