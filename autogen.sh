@@ -21,7 +21,7 @@ autoheader
 automake${automake_suffix} --add-missing --foreign
 autoconf
 
-CFLAGS=${CFLAGS=-ggdb -Werror}
+CFLAGS=${CFLAGS=-ggdb}
 LDFLAGS=${LDFLAGS=-Wl,-O1}
 export CFLAGS LDFLAGS
 
