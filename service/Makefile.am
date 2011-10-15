@@ -2,7 +2,6 @@ AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common -Wall -Wmi
 
 libexec_PROGRAMS = dconf-service
 
-dbussystemservice_DATA = ca.desrt.dconf.service
 dbusservice_DATA = ca.desrt.dconf.service
 
 dconf_service_LDADD = $(gio_LIBS)
