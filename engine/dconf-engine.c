@@ -73,7 +73,7 @@ dconf_engine_get_session_dir (void)
 
 struct _DConfEngine
 {
-  GStaticMutex lock;
+  GMutex      lock;
   guint64     state;
 
   guint8     *shm;
@@ -202,12 +202,12 @@ dconf_engine_get_state (DConfEngine *engine)
 {
   guint64 state;
 
-  g_static_mutex_lock (&engine->lock);
+  g_mutex_lock (&engine->lock);
 
   dconf_engine_refresh (engine);
   state = engine->state;
 
-  g_static_mutex_unlock (&engine->lock);
+  g_mutex_unlock (&engine->lock);
 
   return state;
 }
@@ -280,7 +280,7 @@ dconf_engine_new (const gchar *profile)
   gint i;
 
   engine = g_slice_new (DConfEngine);
-  g_static_mutex_init (&engine->lock);
+  g_mutex_init (&engine->lock);
   engine->shm = NULL;
 
   if (profile == NULL)
@@ -355,7 +355,7 @@ dconf_engine_free (DConfEngine *engine)
       munmap (engine->shm, 1);
     }
 
-  g_static_mutex_free (&engine->lock);
+  g_mutex_clear (&engine->lock);
 
   g_free (engine->object_paths);
   g_free (engine->bus_types);
@@ -377,7 +377,7 @@ dconf_engine_read_internal (DConfEngine  *engine,
   gint limit;
   gint i;
 
-  g_static_mutex_lock (&engine->lock);
+  g_mutex_lock (&engine->lock);
 
   dconf_engine_refresh (engine);
 
@@ -409,7 +409,7 @@ dconf_engine_read_internal (DConfEngine  *engine,
       i++;
     }
 
-  g_static_mutex_unlock (&engine->lock);
+  g_mutex_unlock (&engine->lock);
 
   return value;
 }
@@ -497,7 +497,7 @@ dconf_engine_is_writable (DConfEngine *engine,
     {
       gint i;
 
-      g_static_mutex_lock (&engine->lock);
+      g_mutex_lock (&engine->lock);
 
       dconf_engine_refresh_system (engine);
 
@@ -510,7 +510,7 @@ dconf_engine_is_writable (DConfEngine *engine,
             break;
           }
 
-      g_static_mutex_unlock (&engine->lock);
+      g_mutex_unlock (&engine->lock);
     }
 
   return writable;
@@ -645,7 +645,7 @@ dconf_engine_list (DConfEngine    *engine,
   /* not yet supported */
   g_assert (resets == NULL);
 
-  g_static_mutex_lock (&engine->lock);
+  g_mutex_lock (&engine->lock);
 
   dconf_engine_refresh (engine);
 
@@ -660,7 +660,7 @@ dconf_engine_list (DConfEngine    *engine,
   if (length)
     *length = g_strv_length (list);
 
-  g_static_mutex_unlock (&engine->lock);
+  g_mutex_unlock (&engine->lock);
 
   return list;
 }

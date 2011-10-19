@@ -44,8 +44,9 @@ typedef struct
   gchar *anti_expose_tag;
 
   DConfEngine *engine;
-  GStaticMutex lock;
-  GCond *sync_cond;
+  GMutex lock;
+  GCond sync_cond;
+  gint sync_waiters;
 } DConfSettingsBackend;
 
 static GType dconf_settings_backend_get_type (void);
@@ -252,7 +253,7 @@ dconf_settings_backend_outstanding_returned (GObject      *source,
 
   /* One way or another we no longer need this hooked into the list.
    */
-  g_static_mutex_lock (&dcsb->lock);
+  g_mutex_lock (&dcsb->lock);
   {
     Outstanding **tmp;
 
@@ -263,10 +264,10 @@ dconf_settings_backend_outstanding_returned (GObject      *source,
           break;
         }
 
-    if (dcsb->outstanding == NULL && dcsb->sync_cond)
-      g_cond_broadcast (dcsb->sync_cond);
+    if (dcsb->outstanding == NULL && dcsb->sync_waiters)
+      g_cond_broadcast (&dcsb->sync_cond);
   }
-  g_static_mutex_unlock (&dcsb->lock);
+  g_mutex_unlock (&dcsb->lock);
 
   reply = dconf_settings_backend_send_finish (source, result);
 
@@ -346,10 +347,10 @@ dconf_settings_backend_queue (DConfSettingsBackend *dcsb,
   outstanding->set_value = set_value ? g_variant_ref_sink (set_value) : NULL;
   outstanding->tree = tree ? g_tree_ref (tree) : NULL;
 
-  g_static_mutex_lock (&dcsb->lock);
+  g_mutex_lock (&dcsb->lock);
   outstanding->next = dcsb->outstanding;
   dcsb->outstanding = outstanding;
-  g_static_mutex_unlock (&dcsb->lock);
+  g_mutex_unlock (&dcsb->lock);
 
   g_main_context_invoke (dconf_context_get (),
                          dconf_settings_backend_send_outstanding,
@@ -393,7 +394,7 @@ dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
   if G_LIKELY (backend->outstanding == NULL)
     return FALSE;
 
-  g_static_mutex_lock (&backend->lock);
+  g_mutex_lock (&backend->lock);
 
   for (node = backend->outstanding; node; node = node->next)
     {
@@ -429,7 +430,7 @@ dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
         }
     }
 
-  g_static_mutex_unlock (&backend->lock);
+  g_mutex_unlock (&backend->lock);
 
   return found;
 }
@@ -645,24 +646,22 @@ dconf_settings_backend_sync (GSettingsBackend *backend)
   if (!dcsb->outstanding)
     return;
 
-  g_static_mutex_lock (&dcsb->lock);
+  g_mutex_lock (&dcsb->lock);
 
-  g_assert (dcsb->sync_cond == NULL);
-  dcsb->sync_cond = g_cond_new ();
-
+  dcsb->sync_waiters++;
   while (dcsb->outstanding)
-    g_cond_wait (dcsb->sync_cond, g_static_mutex_get_mutex (&dcsb->lock));
+    g_cond_wait (&dcsb->sync_cond, &dcsb->lock);
+  dcsb->sync_waiters--;
 
-  g_cond_free (dcsb->sync_cond);
-  dcsb->sync_cond = NULL;
-
-  g_static_mutex_unlock (&dcsb->lock);
+  g_mutex_unlock (&dcsb->lock);
 }
 
 static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
   dcsb->engine = dconf_engine_new (NULL);
+  g_mutex_init (&dcsb->lock);
+  g_cond_init (&dcsb->sync_cond);
 }
 
 static void

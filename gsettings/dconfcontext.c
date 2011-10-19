@@ -24,10 +24,8 @@ dconf_context_get (void)
       GThread *thread;
 
       context = g_main_context_new ();
-      thread = g_thread_create (dconf_context_thread,
-                                context, FALSE, NULL);
-      g_assert (thread != NULL);
-
+      thread = g_thread_new ("dconf worker", dconf_context_thread, context);
+      g_thread_unref (thread);
       g_once_init_leave (&initialised, 1);
     }
 
