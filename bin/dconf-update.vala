@@ -188,7 +188,7 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 			var system_bus = Bus.get_sync (BusType.SYSTEM);
 			system_bus.emit_signal (null, "/ca/desrt/dconf/Writer/" + Path.get_basename (filename), "ca.desrt.dconf.Writer",
 			                        "WritabilityNotify", new Variant ("(s)", "/"));
-			flush_the_bus (system_bus);
+			system_bus.flush_sync ();
 		} catch {
 			/* if we can't, ... don't. */
 		}
