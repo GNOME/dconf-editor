@@ -714,14 +714,3 @@ dconf_engine_decode_writability_notify (const gchar **path,
 
   return TRUE;
 }
-
-gboolean
-dconf_engine_interpret_reply (DConfEngineMessage  *dcem,
-                              const gchar         *sender,
-                              GVariant            *body,
-                              gchar              **tag,
-                              GError             **error)
-{
-  g_variant_get_child (body, 0, "s", tag);
-  return TRUE;
-}

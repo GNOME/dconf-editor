@@ -144,12 +144,4 @@ gboolean                dconf_engine_decode_writability_notify          (const g
                                                                          const gchar             *iface,
                                                                          const gchar             *method,
                                                                          GVariant                *body);
-
-G_GNUC_INTERNAL
-gboolean                dconf_engine_interpret_reply                    (DConfEngineMessage      *message,
-                                                                         const gchar             *sender,
-                                                                         GVariant                *body,
-                                                                         gchar                  **tag,
-                                                                         GError                 **error);
-
 #endif /* __dconf_engine_h__ */
