@@ -42,9 +42,11 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 }
 
 Gvdb.HashTable? read_locks_directory (string dirname) throws GLib.Error {
-	var dir = Dir.open (dirname);
+	Dir dir;
 
-	if (dir == null) {
+	try {
+		dir = Dir.open (dirname);
+	} catch {
 		return null;
 	}
 
