@@ -534,7 +534,6 @@ add_match_done (DBusPendingCall *pending,
                 gpointer         user_data)
 {
   Watch *watch = user_data;
-  GError *error = NULL;
   GVariant *reply;
 
   reply = dconf_dbus_client_send_finish (pending);
@@ -547,9 +546,7 @@ add_match_done (DBusPendingCall *pending,
        * watch structure in the list).
        */
 
-      g_critical ("DBus AddMatch for dconf path '%s': %s",
-                  watch->name, error->message);
-      g_error_free (error);
+      g_critical ("DBus AddMatch for dconf path '%s'", watch->name);
       watch_unref (watch);
 
       return;
