@@ -10,7 +10,6 @@ AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([1.11 -Wno-portability no-dist-gzip dist-xz])
 AM_SILENT_RULES([yes])
-GNOME_MAINTAINER_MODE_DEFINES
 
 # Check for programs
 AC_PROG_CC
