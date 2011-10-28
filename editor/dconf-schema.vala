@@ -432,7 +432,6 @@ public class SchemaList
                 continue;
 
             string path = Path.build_filename(dir, name, null);
-            debug("Loading schema: %s", path);
             parse_file(path);
         }
     }
