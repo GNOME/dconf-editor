@@ -7,7 +7,7 @@ class ConfigurationEditor
     private Gtk.Window window;
     private Gtk.TreeView dir_tree_view;
     private Gtk.TreeView key_tree_view;
-    private Gtk.Table key_info_table;
+    private Gtk.Grid key_info_grid;
     private Gtk.Label schema_label;
     private Gtk.Label summary_label;
     private Gtk.Label description_label;
@@ -53,7 +53,7 @@ class ConfigurationEditor
         scroll = (Gtk.ScrolledWindow)ui.get_object("key_scrolledwindow");
         scroll.add(key_tree_view);
 
-        key_info_table = (Gtk.Table)ui.get_object("key_info_table");
+        key_info_grid = (Gtk.Grid)ui.get_object("key_info_grid");
         schema_label = (Gtk.Label)ui.get_object("schema_label");
         summary_label = (Gtk.Label)ui.get_object("summary_label");
         description_label = (Gtk.Label)ui.get_object("description_label");
@@ -140,7 +140,7 @@ class ConfigurationEditor
         if(selected_key != null)
             selected_key.value_changed.connect(key_changed_cb);
 
-        key_info_table.sensitive = selected_key != null;
+        key_info_grid.sensitive = selected_key != null;
         set_default_action.sensitive = selected_key != null && !selected_key.is_default;
 
         string schema_name = "", summary = "", description = "", type = "", default_value = "";
