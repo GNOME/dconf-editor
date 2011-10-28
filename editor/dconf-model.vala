@@ -118,10 +118,10 @@ public class Key : GLib.Object
 
     public signal void value_changed();
 
-	void item_changed (string key) {
-		if ((key.has_suffix ("/") && full_name.has_prefix (key)) || key == full_name) {
+	void item_changed (string key)
+    {
+		if ((key.has_suffix ("/") && full_name.has_prefix (key)) || key == full_name)
 			value_changed ();
-		}
 	}
 
     public Key(SettingsModel model, Directory parent, string name, string full_name)
@@ -328,7 +328,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
             return typeof(string);
     }
     
-    private void set_iter(out Gtk.TreeIter iter, Key key)
+    private void set_iter(ref Gtk.TreeIter iter, Key key)
     {
         iter.stamp = 0;
         iter.user_data = key;
@@ -341,7 +341,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         return (Key)iter.user_data;
     }
 
-    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
+    public bool get_iter(ref Gtk.TreeIter iter, Gtk.TreePath path)
     {
         if (path.get_depth() != 1)
             return false;
@@ -382,6 +382,8 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
             else
                 value = Pango.Weight.BOLD;
         }
+        else
+            value = 0;
     }
 
     public bool iter_next(ref Gtk.TreeIter iter)
@@ -389,15 +391,15 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         int index = get_key(iter).index;
         if (index >= directory.keys.length() - 1)
             return false;
-        set_iter(out iter, directory.keys.nth_data(index+1));
+        set_iter(ref iter, directory.keys.nth_data(index+1));
         return true;
     }
 
-    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    public bool iter_children(ref Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
         if (parent != null || directory.keys.length() == 0)
             return false;
-        set_iter(out iter, directory.keys.nth_data(0));
+        set_iter(ref iter, directory.keys.nth_data(0));
         return true;
     }
 
@@ -414,18 +416,18 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
             return 0;
     }
 
-    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    public bool iter_nth_child(ref Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
         if (parent != null)
             return false;
 
         if (n >= directory.keys.length())
             return false;
-        set_iter(out iter, directory.keys.nth_data(n));
+        set_iter(ref iter, directory.keys.nth_data(n));
         return true;
     }
 
-    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
+    public bool iter_parent(ref Gtk.TreeIter iter, Gtk.TreeIter child)
     {
         return false;
     }
@@ -468,7 +470,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
             return typeof(int);
     }
     
-    private void set_iter(out Gtk.TreeIter iter, SchemaValue value)
+    private void set_iter(ref Gtk.TreeIter iter, SchemaValue value)
     {
         iter.stamp = 0;
         iter.user_data = value;
@@ -481,7 +483,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         return (SchemaValue)iter.user_data;
     }
 
-    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
+    public bool get_iter(ref Gtk.TreeIter iter, Gtk.TreePath path)
     {
         if (path.get_depth() != 1)
             return false;
@@ -506,6 +508,8 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
             value = get_enum_value(iter).nick;
         else if (column == 1)
             value = get_enum_value(iter).value;
+        else
+            value = 0;
     }
 
     public bool iter_next(ref Gtk.TreeIter iter)
@@ -513,15 +517,15 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         uint index = get_enum_value(iter).index;
         if (index >= schema_enum.values.length () - 1)
             return false;
-        set_iter(out iter, schema_enum.values.nth_data(index + 1));
+        set_iter(ref iter, schema_enum.values.nth_data(index + 1));
         return true;
     }
 
-    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    public bool iter_children(ref Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
         if (parent != null || schema_enum.values.length() == 0)
             return false;
-        set_iter(out iter, schema_enum.values.nth_data(0));
+        set_iter(ref iter, schema_enum.values.nth_data(0));
         return true;
     }
 
@@ -538,18 +542,18 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
             return 0;
     }
 
-    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    public bool iter_nth_child(ref Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
         if (parent != null)
             return false;
 
         if (n >= schema_enum.values.length())
             return false;
-        set_iter(out iter, schema_enum.values.nth_data(n));
+        set_iter(ref iter, schema_enum.values.nth_data(n));
         return true;
     }
 
-    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
+    public bool iter_parent(ref Gtk.TreeIter iter, Gtk.TreeIter child)
     {
         return false;
     }
@@ -588,7 +592,14 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     {
         client = new DConf.Client (null, watch_func);
         root = new Directory(this, null, "/", "/");
-		client.watch ("/");
+        try
+        {
+            client.watch ("/");
+        }
+        catch (Error e)
+        {
+            warning ("Failed to watch all keys: %s", e.message);
+        }
 
         schemas = new SchemaList();
         try
@@ -630,7 +641,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
             return typeof(string);
     }
     
-    private void set_iter(out Gtk.TreeIter iter, Directory directory)
+    private void set_iter(ref Gtk.TreeIter iter, Directory directory)
     {
         iter.stamp = 0;
         iter.user_data = directory;
@@ -646,7 +657,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
             return (Directory)iter.user_data;
     }
 
-    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
+    public bool get_iter(ref Gtk.TreeIter iter, Gtk.TreePath path)
     {
         if (!iter_nth_child(out iter, null, path.get_indices()[0]))
             return false;
@@ -686,16 +697,16 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         Directory directory = get_directory(iter);
         if (directory.index >= directory.parent.children.length() - 1)
             return false;
-        set_iter(out iter, directory.parent.children.nth_data(directory.index+1));
+        set_iter(ref iter, directory.parent.children.nth_data(directory.index+1));
         return true;
     }
 
-    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    public bool iter_children(ref Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
         Directory directory = get_directory(parent);
         if (directory.children.length() == 0)
             return false;
-        set_iter(out iter, directory.children.nth_data(0));
+        set_iter(ref iter, directory.children.nth_data(0));
         return true;
     }
 
@@ -709,21 +720,21 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         return (int) get_directory(iter).children.length();
     }
 
-    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    public bool iter_nth_child(ref Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
         Directory directory = get_directory(parent);
         if (n >= directory.children.length())
             return false;
-        set_iter(out iter, directory.children.nth_data(n));
+        set_iter(ref iter, directory.children.nth_data(n));
         return true;
     }
 
-    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
+    public bool iter_parent(ref Gtk.TreeIter iter, Gtk.TreeIter child)
     {
         Directory directory = get_directory(child);
         if (directory.parent == root)
             return false;
-        set_iter(out iter, directory.parent);
+        set_iter(ref iter, directory.parent);
         return true;
     }
 
