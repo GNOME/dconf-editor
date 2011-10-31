@@ -24,11 +24,13 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 
 	int end = 0;
 
-	for (int i = 0; name[i] != '\0'; i++) {
+	for (int i = 1; name[i] != '\0'; i++) {
 		if (name[i - 1] == '/') {
 			end = i;
 		}
 	}
+
+	assert (end != 0);
 
 	var parent_name = name.substring (0, end);
 	parent = table.lookup (parent_name);
