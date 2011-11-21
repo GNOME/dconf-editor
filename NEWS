@@ -1,3 +1,12 @@
+Changes in dconf 0.11.2
+=======================
+
+ - many bugfixes and improvements to the editor, most notably porting to
+   GtkGrid to avoid the GtkTable layout bug that was causing size to be
+   incorrectly allocated
+
+ - fix a crasher due to invalid string index of -1
+
 Changes in dconf 0.10.0
 =======================
 
