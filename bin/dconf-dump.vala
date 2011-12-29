@@ -49,13 +49,13 @@ KeyFile keyfile_from_stdin () throws Error {
 
 class DConfLoadState {
 	public string[] keys;
-	public Variant[] vals;
+	public Variant?[] vals;
 	int n_keys;
 	int i;
 
 	public DConfLoadState (int n) {
 		keys = new string[n + 1];
-		vals = new Variant[n];
+		vals = new Variant?[n];
 		n_keys = n;
 		i = 0;
 	}
