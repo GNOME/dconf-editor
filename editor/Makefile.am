@@ -13,6 +13,21 @@ desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@
 
+nobase_data_DATA = \
+	icons/hicolor/14x14/apps/dconf-editor.png	\
+	icons/hicolor/32x32/apps/dconf-editor.png	\
+	icons/hicolor/48x48/apps/dconf-editor.png	\
+	icons/hicolor/64x64/apps/dconf-editor.png	\
+	icons/hicolor/92x92/apps/dconf-editor.png	\
+	icons/hicolor/128x128/apps/dconf-editor.png
+
+install-data-hook: update-icon-cache
+uninstall-hook: update-icon-cache
+update-icon-cache:
+	if test -z "$(DESTDIR)"; then \
+		gtk-update-icon-cache -f -t $(datadir)/icons/hicolor; \
+	fi
+
 uidir = $(datadir)/dconf-editor
 dist_ui_DATA = dconf-editor.ui
 
