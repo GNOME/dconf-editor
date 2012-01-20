@@ -16,6 +16,11 @@ if test "${CFLAGS+yes}" != "yes"; then
   CFLAGS='-O2 -g -Wall -Wwrite-strings -Wmissing-prototypes -fno-common'
 fi
 
+dnl http://people.gnome.org/~walters/docs/build-api.txt
+dnl The vala-automake integration blows up currently
+dnl because it expects C files in the srcdir, not the builddir
+echo \#buildapi-variable-no-builddir >/dev/null
+
 # Check for programs
 AC_PROG_CC
 AM_PROG_VALAC([0.17.0])
