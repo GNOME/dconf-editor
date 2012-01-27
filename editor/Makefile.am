@@ -13,7 +13,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@
 
-nobase_data_DATA = \
+nobase_data_DATA = $(icons)
+
+icons = \
 	icons/hicolor/14x14/apps/dconf-editor.png	\
 	icons/hicolor/32x32/apps/dconf-editor.png	\
 	icons/hicolor/48x48/apps/dconf-editor.png	\
@@ -31,4 +33,4 @@ update-icon-cache:
 uidir = $(datadir)/dconf-editor
 dist_ui_DATA = dconf-editor.ui
 
-EXTRA_DIST = $(gsettings_SCHEMAS)
+EXTRA_DIST = $(gsettings_SCHEMAS) $(icons)
