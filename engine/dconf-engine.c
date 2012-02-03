@@ -397,7 +397,7 @@ dconf_engine_read_internal (DConfEngine  *engine,
    * ensure that values in the user database are always ignored when
    * locks are present.
    */
-  for (i = engine->n_dbs - 1; lowest < i; i--)
+  for (i = MAX (engine->n_dbs - 1, lowest); lowest < i; i--)
     if (engine->lock_tables[i] != NULL &&
         gvdb_table_has_value (engine->lock_tables[i], key))
       break;
