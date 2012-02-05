@@ -22,4 +22,7 @@ dconf_service_SOURCES = \
 DISTCLEANFILES = ca.desrt.dconf.service
 
 ca.desrt.dconf.service: Makefile
-	$(AM_V_GEN) echo -e '[D-BUS Service]\nName=ca.desrt.dconf\nExec=${libexecdir}/dconf-service' > $@
+	$(AM_V_GEN) (echo '[D-BUS Service]'; \
+	             echo 'Name=ca.desrt.dconf'; \
+	             echo 'Exec=${libexecdir}/dconf-service') > $@.tmp && \
+	            mv $@.tmp $@
