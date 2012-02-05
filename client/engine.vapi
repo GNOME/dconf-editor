@@ -10,7 +10,7 @@ namespace DConf {
 		internal GLib.Variant? read_default (string key);
 		internal GLib.Variant? read_no_default (string key);
 		internal EngineMessage set_locked (string key, bool locked);
-		internal string[] list (string dir, void*junk = null);
+		internal string[] list (string dir);
 		internal EngineMessage watch (string name);
 		internal EngineMessage unwatch (string name);
 	}

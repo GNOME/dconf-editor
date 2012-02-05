@@ -22,8 +22,6 @@
 #ifndef __dconf_engine_h__
 #define __dconf_engine_h__
 
-#include <dconf-readtype.h>
-#include <dconf-resetlist.h>
 #include <glib.h>
 
 typedef struct _DConfEngine DConfEngine;
@@ -97,7 +95,6 @@ GVariant *              dconf_engine_read_no_default                    (DConfEn
 G_GNUC_INTERNAL
 gchar **                dconf_engine_list                               (DConfEngine             *engine,
                                                                          const gchar             *path,
-                                                                         DConfResetList          *resets,
                                                                          gint                    *length);
 
 G_GNUC_INTERNAL

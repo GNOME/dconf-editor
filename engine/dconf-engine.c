@@ -637,13 +637,9 @@ dconf_engine_write_many (DConfEngine          *engine,
 gchar **
 dconf_engine_list (DConfEngine    *engine,
                    const gchar    *dir,
-                   DConfResetList *resets,
                    gint           *length)
 {
   gchar **list;
-
-  /* not yet supported */
-  g_assert (resets == NULL);
 
   g_mutex_lock (&engine->lock);
 
