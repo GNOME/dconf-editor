@@ -35,6 +35,8 @@ namespace DConf {
 		void call_sync (EngineMessage dcem, out string tag, Cancellable? cancellable) throws Error {
 			DBusConnection connection;
 
+			tag = null;
+
 			if (dcem.bus_types[0] == 'e') {
 				if (session == null) {
 					session = Bus.get_sync (BusType.SESSION, cancellable);
@@ -65,6 +67,8 @@ namespace DConf {
 
 		async void call_async (EngineMessage dcem, out string tag, Cancellable? cancellable) throws Error {
 			DBusConnection connection;
+
+			tag = null;
 
 			if (dcem.bus_types[0] == 'e') {
 				if (session == null) {
@@ -123,12 +127,7 @@ namespace DConf {
 		 * tag that appears in change notifications.
 		 **/
 		public bool write (string key, Variant? value, out string tag = null, Cancellable? cancellable = null) throws Error {
-			if (&tag == null) { /* bgo #591673 */
-				string junk;
-				call_sync (engine.write (key, value), out junk, cancellable);
-			} else {
-				call_sync (engine.write (key, value), out tag, cancellable);
-			}
+			call_sync (engine.write (key, value), out tag, cancellable);
 			return true;
 		}
 
@@ -173,12 +172,7 @@ namespace DConf {
 		 * tag that appears in change notifications.
 		 **/
 		public bool write_many (string dir, [CCode (array_length = false, array_null_terminated = true)] string[] rels, Variant?[] values, out string? tag = null, Cancellable? cancellable = null) throws Error {
-			if (&tag == null) { /* bgo #591673 */
-				string junk;
-				call_sync (engine.write_many (dir, rels, values), out junk, cancellable);
-			} else {
-				call_sync (engine.write_many (dir, rels, values), out tag, cancellable);
-			}
+			call_sync (engine.write_many (dir, rels, values), out tag, cancellable);
 			return true;
 		}
 
@@ -359,7 +353,7 @@ namespace DConf {
 		 **/
 		public Client (string? profile = null, owned WatchFunc? watch_func = null) {
 			engine = new Engine (profile);
-			this.watch_func = watch_func;
+			this.watch_func = (owned) watch_func;
 		}
 	}
 
