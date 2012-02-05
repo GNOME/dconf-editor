@@ -16,11 +16,9 @@ gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 nobase_data_DATA = $(icons)
 
 icons = \
-	icons/hicolor/14x14/apps/dconf-editor.png	\
 	icons/hicolor/32x32/apps/dconf-editor.png	\
 	icons/hicolor/48x48/apps/dconf-editor.png	\
 	icons/hicolor/64x64/apps/dconf-editor.png	\
-	icons/hicolor/92x92/apps/dconf-editor.png	\
 	icons/hicolor/128x128/apps/dconf-editor.png
 
 install-data-hook: update-icon-cache
