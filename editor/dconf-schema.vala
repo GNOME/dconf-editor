@@ -84,16 +84,8 @@ public class SchemaKey
                         continue;
                     }
 
-                    Variant v;
-                    try
-                    {
-                        v = new Variant.string (value);
-                        choices.append (new SchemaChoice(value, v));
-                    }
-                    catch (VariantParseError e)
-                    {
-                        warning ("Invalid choice value '%s'", value);
-                    }
+                    var v = new Variant.string (value);
+                    choices.append (new SchemaChoice(value, v));
                 }
             }
             else if (child->name == "aliases")
@@ -130,16 +122,8 @@ public class SchemaKey
                         continue;
                     }
 
-                    Variant v;
-                    try
-                    {
-                        v = new Variant.string (target);
-                        choices.append (new SchemaChoice(value, v));
-                    }
-                    catch (VariantParseError e)
-                    {
-                        warning ("Invalid alias value '%s'", target);
-                    }
+                    var v = new Variant.string (target);
+                    choices.append (new SchemaChoice(value, v));
                 }
             }
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
@@ -423,7 +407,7 @@ public class SchemaList
     public void load_directory(string dir) throws Error
     {
         File directory = File.new_for_path(dir);
-        var i = directory.enumerate_children (FILE_ATTRIBUTE_STANDARD_NAME, 0, null);
+        var i = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0, null);
         FileInfo info;
         while ((info = i.next_file (null)) != null) {
             string name = info.get_name();
