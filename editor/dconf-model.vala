@@ -349,11 +349,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         return iter_nth_child(out iter, null, path.get_indices()[0]);
     }
 
-#if VALA_0_14
     public Gtk.TreePath? get_path(Gtk.TreeIter iter)
-#else
-    public Gtk.TreePath get_path(Gtk.TreeIter iter)
-#endif
     {
         var path = new Gtk.TreePath();
         path.append_index(get_key(iter).index);
@@ -491,11 +487,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         return iter_nth_child(out iter, null, path.get_indices()[0]);
     }
 
-#if VALA_0_14
     public Gtk.TreePath? get_path(Gtk.TreeIter iter)
-#else
-    public Gtk.TreePath get_path(Gtk.TreeIter iter)
-#endif
     {
         var path = new Gtk.TreePath();
         path.append_index((int)get_enum_value(iter).index);
@@ -672,11 +664,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-#if VALA_0_14
     public Gtk.TreePath? get_path(Gtk.TreeIter iter)
-#else
-    public Gtk.TreePath get_path(Gtk.TreeIter iter)
-#endif
     {
         var path = new Gtk.TreePath();
         for (var d = get_directory(iter); d != root; d = d.parent)
