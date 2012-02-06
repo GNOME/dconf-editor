@@ -1,3 +1,14 @@
+Changes in dconf 0.11.5
+=======================
+
+ - do not install non-standard icon sizes
+
+ - fix a bug with getting default values when no profile is in use
+
+ - some general code cleanups on the client side
+
+ - improve Makefile compatibility: avoid using 'echo -e'
+
 Changes in dconf 0.11.3
 =======================
 

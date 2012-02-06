@@ -93,6 +93,8 @@ Commands:
   reset             Reset the value of a key or dir
   update            Update the system databases
   watch             Watch a path for changes
+  dump              Dump an entire subpath to stdout
+  load              Populate a subpath from stdin
 
 Use 'dconf help COMMAND' to get detailed help.
 
