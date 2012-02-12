@@ -651,7 +651,7 @@ dconf_dbus_client_filter (DBusConnection *connection,
               const gchar *item;
               gchar *full;
 
-              dbus_message_iter_get_basic (&iter, &item);
+              dbus_message_iter_get_basic (&sub, &item);
               full = g_strconcat (path, item, NULL);
               dconf_dbus_emit_change (dcdbc, full);
               g_free (full);
