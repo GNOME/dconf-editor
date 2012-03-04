@@ -76,10 +76,10 @@ struct _DConfEngine
   GMutex      lock;
   guint64     state;
 
-  guint8     *shm;
 
   GvdbTable **gvdbs;
   GvdbTable **lock_tables;
+  guint8    **shm;
   gchar     **object_paths;
   gchar      *bus_types;
   gchar     **names;
@@ -87,12 +87,13 @@ struct _DConfEngine
 };
 
 static void
-dconf_engine_setup_user (DConfEngine *engine)
+dconf_engine_setup_user (DConfEngine *engine,
+                         gint         i)
 {
   /* invariant: we never have user gvdb without shm */
-  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
+  g_assert ((engine->gvdbs[i] == NULL) >= (engine->shm[i] == NULL));
 
-  if (engine->names[0])
+  if (engine->names[i])
     {
       const gchar *session_dir = dconf_engine_get_session_dir ();
 
@@ -102,7 +103,7 @@ dconf_engine_setup_user (DConfEngine *engine)
           gint fd;
 
           filename = g_build_filename (session_dir,
-                                       engine->names[0],
+                                       engine->names[i],
                                        NULL);
           fd = open (filename, O_RDWR | O_CREAT, 0600);
           g_free (filename);
@@ -111,90 +112,104 @@ dconf_engine_setup_user (DConfEngine *engine)
             {
               if (ftruncate (fd, 1) == 0)
                 {
-                  engine->shm = mmap (NULL, 1, PROT_READ, MAP_SHARED, fd, 0);
+                  engine->shm[i] = mmap (NULL, 1, PROT_READ, MAP_SHARED, fd, 0);
 
-                  if (engine->shm == MAP_FAILED)
-                    engine->shm = NULL;
+                  if (engine->shm[i] == MAP_FAILED)
+                    engine->shm[i] = NULL;
                 }
 
               close (fd);
             }
         }
 
-      if (engine->shm)
+      if (engine->shm[i])
         {
           gchar *filename;
 
           filename = g_build_filename (g_get_user_config_dir (),
                                        "dconf",
-                                       engine->names[0],
+                                       engine->names[i],
                                        NULL);
-          engine->gvdbs[0] = gvdb_table_new (filename, FALSE, NULL);
+          engine->gvdbs[i] = gvdb_table_new (filename, FALSE, NULL);
           g_free (filename);
         }
     }
 
-  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
+  g_assert ((engine->gvdbs[i] == NULL) >= (engine->shm[i] == NULL));
 }
 
 static void
-dconf_engine_refresh_user (DConfEngine *engine)
+dconf_engine_refresh_user (DConfEngine *engine,
+                           gint         i)
 {
-  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
+  g_assert ((engine->gvdbs[i] == NULL) >= (engine->shm[i] == NULL));
 
   /* if we failed the first time, fail forever */
-  if (engine->shm && *engine->shm == 1)
+  if (engine->shm[i] && *engine->shm[i] == 1)
     {
-      if (engine->gvdbs[0])
-        {
-          gvdb_table_unref (engine->gvdbs[0]);
-          engine->gvdbs[0] = NULL;
-        }
-
-      munmap (engine->shm, 1);
-      engine->shm = NULL;
-
-      dconf_engine_setup_user (engine);
-      engine->state++;
-    }
-
-  g_assert ((engine->gvdbs[0] == NULL) >= (engine->shm == NULL));
-}
-
-static void
-dconf_engine_refresh_system (DConfEngine *engine)
-{
-  gint i;
-
-  for (i = 1; i < engine->n_dbs; i++)
-    {
-      if (engine->gvdbs[i] && !gvdb_table_is_valid (engine->gvdbs[i]))
+      if (engine->gvdbs[i])
         {
           gvdb_table_unref (engine->gvdbs[i]);
           engine->gvdbs[i] = NULL;
         }
 
+      munmap (engine->shm[i], 1);
+      engine->shm[i] = NULL;
+
+      dconf_engine_setup_user (engine, i);
+      engine->state++;
+    }
+
+  g_assert ((engine->gvdbs[i] == NULL) >= (engine->shm[i] == NULL));
+}
+
+static void
+dconf_engine_refresh_system (DConfEngine *engine,
+                             gint         i)
+{
+  if (engine->gvdbs[i] && !gvdb_table_is_valid (engine->gvdbs[i]))
+    {
+      gvdb_table_unref (engine->gvdbs[i]);
+      engine->gvdbs[i] = NULL;
+    }
+
+  if (engine->gvdbs[i] == NULL)
+    {
+      gchar *filename = g_build_filename ("/etc/dconf/db",
+                                          engine->names[i], NULL);
+      engine->gvdbs[i] = gvdb_table_new (filename, TRUE, NULL);
       if (engine->gvdbs[i] == NULL)
-        {
-          gchar *filename = g_build_filename ("/etc/dconf/db",
-                                              engine->names[i], NULL);
-          engine->gvdbs[i] = gvdb_table_new (filename, TRUE, NULL);
-          if (engine->gvdbs[i] == NULL)
-            g_error ("Unable to open '%s', specified in dconf profile\n",
-                     filename);
-          engine->lock_tables[i] = gvdb_table_get_table (engine->gvdbs[i],
-                                                         ".locks");
-          g_free (filename);
-          engine->state++;
-        }
+        g_error ("Unable to open '%s', specified in dconf profile\n",
+                 filename);
+      engine->lock_tables[i] = gvdb_table_get_table (engine->gvdbs[i],
+                                                     ".locks");
+      g_free (filename);
+      engine->state++;
     }
 }
 
 static void
 dconf_engine_refresh (DConfEngine *engine)
 {
-  dconf_engine_refresh_system (engine);
-  dconf_engine_refresh_user (engine);
+  gint i;
+
+  for (i = 0; i < engine->n_dbs; i++)
+    if (engine->bus_types[i] == 'e')
+      dconf_engine_refresh_user (engine, i);
+    else
+      dconf_engine_refresh_system (engine, i);
+}
+
+static void
+dconf_engine_setup (DConfEngine *engine)
+{
+  gint i;
+
+  for (i = 0; i < engine->n_dbs; i++)
+    if (engine->bus_types[i] == 'e')
+      dconf_engine_setup_user (engine, i);
+    else
+      dconf_engine_refresh_system (engine, i);
 }
 
 guint64
@@ -214,7 +229,8 @@ dconf_engine_get_state (DConfEngine *engine)
 
 static gboolean
 dconf_engine_load_profile (const gchar   *profile,
-                           gchar       ***dbs,
+                           gchar        **bus_types,
+                           gchar       ***names,
                            gint          *n_dbs,
                            GError       **error)
 {
@@ -243,13 +259,15 @@ dconf_engine_load_profile (const gchar   *profile,
     }
 
   allocated = 4;
-  *dbs = g_new (gchar *, allocated);
+  *bus_types = g_new (gchar, allocated);
+  *names = g_new (gchar *, allocated);
   *n_dbs = 0;
 
   /* quick and dirty is good enough for now */
   while (fgets (line, sizeof line, f))
     {
       const gchar *end;
+      const gchar *sep;
 
       end = strchr (line, '\n');
 
@@ -265,13 +283,32 @@ dconf_engine_load_profile (const gchar   *profile,
       if (*n_dbs == allocated)
         {
           allocated *= 2;
-          *dbs = g_renew (gchar *, *dbs, allocated);
+          *names = g_renew (gchar *, *names, allocated);
+          *bus_types = g_renew (gchar, *bus_types, allocated);
         }
 
-      (*dbs)[(*n_dbs)++] = g_strndup (line, end - line);
+      sep = strchr (line, ':');
+
+      if (sep)
+        {
+          /* strings MUST be 'user-db' or 'system-db'.  we do the check
+           * this way here merely because it is the fastest.
+           */
+          (*bus_types)[*n_dbs] = (line[0] == 'u') ? 'e' : 'y';
+          (*names)[*n_dbs] = g_strndup (sep + 1, end - (sep + 1));
+        }
+      else
+        {
+          /* default is for first DB to be user and rest to be system */
+          (*bus_types)[*n_dbs] = (*n_dbs == 0) ? 'e' : 'y';
+          (*names)[*n_dbs] = g_strndup (line, end - line);
+        }
+
+      (*n_dbs)++;
     }
 
-  *dbs = g_renew (gchar *, *dbs, *n_dbs);
+  *bus_types = g_renew (gchar, *bus_types, *n_dbs);
+  *names = g_renew (gchar *, *names, *n_dbs);
   g_free (filename);
   fclose (f);
 
@@ -286,7 +323,6 @@ dconf_engine_new (const gchar *profile)
 
   engine = g_slice_new (DConfEngine);
   g_mutex_init (&engine->lock);
-  engine->shm = NULL;
 
   if (profile == NULL)
     profile = getenv ("DCONF_PROFILE");
@@ -295,18 +331,17 @@ dconf_engine_new (const gchar *profile)
     {
       GError *error = NULL;
 
-      if (!dconf_engine_load_profile (profile, &engine->names,
-                                      &engine->n_dbs, &error))
+      if (!dconf_engine_load_profile (profile, &engine->bus_types, &engine->names, &engine->n_dbs, &error))
         g_error ("Error loading dconf profile '%s': %s\n",
                  profile, error->message);
     }
   else
     {
-      if (!dconf_engine_load_profile ("user", &engine->names,
-                                      &engine->n_dbs, NULL))
+      if (!dconf_engine_load_profile ("user", &engine->bus_types, &engine->names, &engine->n_dbs, NULL))
         {
           engine->names = g_new (gchar *, 1);
           engine->names[0] = g_strdup ("user");
+          engine->bus_types = g_strdup ("e");
           engine->n_dbs = 1;
         }
     }
@@ -320,7 +355,7 @@ dconf_engine_new (const gchar *profile)
   engine->object_paths = g_new (gchar *, engine->n_dbs);
   engine->gvdbs = g_new0 (GvdbTable *, engine->n_dbs);
   engine->lock_tables = g_new0 (GvdbTable *, engine->n_dbs);
-  engine->bus_types = g_strdup ("eyyyyyyyyyyyyy");
+  engine->shm = g_new0 (guint8 *, engine->n_dbs);
   engine->state = 0;
 
   for (i = 0; i < engine->n_dbs; i++)
@@ -332,8 +367,7 @@ dconf_engine_new (const gchar *profile)
     else
       engine->object_paths[i] = NULL;
 
-  dconf_engine_refresh_system (engine);
-  dconf_engine_setup_user (engine);
+  dconf_engine_setup (engine);
 
   return engine;
 }
@@ -497,16 +531,16 @@ dconf_engine_is_writable (DConfEngine *engine,
 {
   gboolean writable = TRUE;
 
-  /* Only check if we have at least one system database */
+  /* Only check if we have more than one database */
   if (engine->n_dbs > 1)
     {
       gint i;
 
       g_mutex_lock (&engine->lock);
 
-      dconf_engine_refresh_system (engine);
+      dconf_engine_refresh (engine);
 
-      /* Don't check for locks in the user database (i == 0). */
+      /* Don't check for locks in the top database (i == 0). */
       for (i = engine->n_dbs - 1; 0 < i; i--)
         if (engine->lock_tables[i] != NULL &&
             gvdb_table_has_value (engine->lock_tables[i], name))
