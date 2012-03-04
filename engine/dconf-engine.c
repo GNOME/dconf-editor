@@ -223,7 +223,12 @@ dconf_engine_load_profile (const gchar   *profile,
   char line[80];
   FILE *f;
 
-  filename = g_build_filename ("/etc/dconf/profile", profile, NULL);
+  /* DCONF_PROFILE starting with '/' gives an absolute path to a profile */
+  if (profile[0] != '/')
+    filename = g_build_filename ("/etc/dconf/profile", profile, NULL);
+  else
+    filename = g_strdup (profile);
+
   f = fopen (filename, "r");
 
   if (f == NULL)
