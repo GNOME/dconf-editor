@@ -387,12 +387,11 @@ dconf_engine_free (DConfEngine *engine)
 
       if (engine->lock_tables[i])
         gvdb_table_unref (engine->lock_tables[i]);
+
+      if (engine->shm[i])
+        munmap (engine->shm[i], 1);
     }
 
-  if (engine->shm)
-    {
-      munmap (engine->shm, 1);
-    }
 
   g_mutex_clear (&engine->lock);
 
@@ -401,6 +400,7 @@ dconf_engine_free (DConfEngine *engine)
   g_free (engine->names);
   g_free (engine->gvdbs);
   g_free (engine->lock_tables);
+  g_free (engine->shm);
 
   g_slice_free (DConfEngine, engine);
 }
