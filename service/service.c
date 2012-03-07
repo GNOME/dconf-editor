@@ -140,6 +140,75 @@ unwrap_maybe (GVariant **ptr)
 }
 
 static void
+gather_blame_info (DConfState      *state,
+                   GDBusConnection *connection,
+                   const gchar     *sender,
+                   const gchar     *object_path,
+                   const gchar     *method_name,
+                   GVariant        *parameters)
+{
+  GError *error = NULL;
+  GVariant *reply;
+  GString *info;
+
+  info = g_string_new (NULL);
+
+  g_string_append_printf (info, "Sender: %s\n", sender);
+  g_string_append_printf (info, "Object path: %s\n", object_path);
+  g_string_append_printf (info, "Method: %s\n", method_name);
+
+  if (parameters)
+    {
+      gchar *tmp;
+
+      tmp = g_variant_print (parameters, FALSE);
+      g_string_append_printf (info, "Parameters: %s\n", tmp);
+      g_free (tmp);
+    }
+
+  reply = g_dbus_connection_call_sync (connection, "org.freedesktop.DBus", "/", "org.freedesktop.DBus",
+                                       "GetConnectionUnixProcessID", g_variant_new ("(s)", sender),
+                                       G_VARIANT_TYPE ("(u)"), G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
+
+  if (reply != NULL)
+    {
+      guint pid;
+
+      g_variant_get (reply, "(u)", &pid);
+      g_string_append_printf (info, "PID: %u\n", pid);
+      g_variant_unref (reply);
+    }
+  else
+    {
+      g_string_append_printf (info, "Unable to acquire PID: %s\n", error->message);
+      g_error_free (error);
+    }
+
+  {
+    const gchar * const ps_fx[] = { "ps", "fx", NULL };
+    gchar *result_out;
+    gchar *result_err;
+    gint status;
+
+    if (g_spawn_sync (NULL, (gchar **) ps_fx, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL,
+                      &result_out, &result_err, &status, &error))
+      {
+        g_string_append (info, "\n=== Process table from time of call follows ('ps fx') ===\n");
+        g_string_append (info, result_out);
+        g_string_append (info, result_err);
+        g_string_append_printf (info, "\nps exit status: %u\n", status);
+      }
+    else
+      {
+        g_string_append_printf (info, "\nUnable to spawn 'ps fx': %s\n", error->message);
+        g_error_free (error);
+      }
+  }
+
+  state->blame_info = g_string_free (info, FALSE);
+}
+
+static void
 method_call (GDBusConnection       *connection,
              const gchar           *sender,
              const gchar           *object_path,
@@ -153,6 +222,10 @@ method_call (GDBusConnection       *connection,
   DConfState *state;
 
   state = dconf_writer_get_state (writer);
+
+  /* debugging... */
+  if (state->blame_mode && state->blame_info == NULL)
+    gather_blame_info (state, connection, sender, object_path, method_name, parameters);
 
   if (strcmp (method_name, "Write") == 0)
     {
@@ -285,6 +358,34 @@ method_call (GDBusConnection       *connection,
     g_assert_not_reached ();
 }
 
+static void
+writer_info_method (GDBusConnection       *connection,
+                    const gchar           *sender,
+                    const gchar           *object_path,
+                    const gchar           *interface_name,
+                    const gchar           *method_name,
+                    GVariant              *parameters,
+                    GDBusMethodInvocation *invocation,
+                    gpointer               user_data)
+{
+  DConfState *state = user_data;
+
+  /* debugging... */
+  if (state->blame_mode && state->blame_info == NULL)
+    gather_blame_info (state, connection, sender, object_path, method_name, parameters);
+
+  if (g_str_equal (method_name, "Blame"))
+    {
+      if (state->blame_info == NULL)
+        state->blame_info = g_strdup ("DCONF_BLAME is not in the environment of dconf-service\n");
+
+      g_dbus_method_invocation_return_value (invocation, g_variant_new ("(s)", state->blame_info));
+    }
+
+  else
+    g_assert_not_reached ();
+}
+
 static GVariant *
 writer_info_get_property (GDBusConnection  *connection,
                           const gchar      *sender,
@@ -295,6 +396,10 @@ writer_info_get_property (GDBusConnection  *connection,
                           gpointer          user_data)
 {
   DConfState *state = user_data;
+
+  /* debugging... */
+  if (state->blame_mode && state->blame_info == NULL)
+    gather_blame_info (state, connection, sender, object_path, "GetProperty", NULL);
 
   return g_variant_new_string (state->shm_dir);
 }
@@ -340,7 +445,7 @@ subtree_dispatch (GDBusConnection *connection,
   else if (strcmp (interface_name, "ca.desrt.dconf.WriterInfo") == 0)
     {
       static const GDBusInterfaceVTable vtable = {
-        NULL, writer_info_get_property, NULL
+        writer_info_method, writer_info_get_property, NULL
       };
 
       *out_user_data = state;

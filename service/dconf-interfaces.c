@@ -32,6 +32,7 @@ static const GDBusArgInfo *write_in[] = { &name_arg, &value_arg, NULL };
 static const GDBusArgInfo *write_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *many_in[] = { &path_arg, &values_arg, NULL };
 static const GDBusArgInfo *many_out[] = { &tag_arg, NULL };
+static const GDBusArgInfo *blame_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, &tag_arg, NULL };
 
 static const GDBusMethodInfo write_method = {
@@ -51,6 +52,12 @@ static const GDBusSignalInfo notify_signal = {
   (GDBusArgInfo **) notify_args
 };
 
+static const GDBusMethodInfo blame_method = {
+  -1, (gchar *) "Blame",
+  NULL,
+  (GDBusArgInfo **) blame_out
+};
+
 static const GDBusPropertyInfo shmdir_property = {
   -1, (gchar *) "ShmDirectory", (gchar *) "s", G_DBUS_PROPERTY_INFO_FLAGS_READABLE
 };
@@ -61,6 +68,10 @@ static const GDBusMethodInfo *writer_methods[] = {
 
 static const GDBusSignalInfo *writer_signals[] = {
   &notify_signal, NULL
+};
+
+static const GDBusMethodInfo *writer_info_methods[] = {
+  &blame_method, NULL
 };
 
 static const GDBusPropertyInfo *writer_info_properties[] = {
@@ -76,7 +87,7 @@ const GDBusInterfaceInfo ca_desrt_dconf_Writer = {
 
 const GDBusInterfaceInfo ca_desrt_dconf_WriterInfo = {
   -1, (gchar *) "ca.desrt.dconf.WriterInfo",
-  (GDBusMethodInfo **) NULL,
+  (GDBusMethodInfo **) writer_info_methods,
   (GDBusSignalInfo **) NULL,
   (GDBusPropertyInfo **) writer_info_properties
 };
