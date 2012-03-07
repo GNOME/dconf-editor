@@ -151,7 +151,12 @@ gather_blame_info (DConfState      *state,
   GVariant *reply;
   GString *info;
 
-  info = g_string_new (NULL);
+  if (state->blame_info == NULL)
+    state->blame_info = g_string_new (NULL);
+  else
+    g_string_append (state->blame_info, "\n====================================================================\n");
+
+  info = state->blame_info;
 
   g_string_append_printf (info, "Sender: %s\n", sender);
   g_string_append_printf (info, "Object path: %s\n", object_path);
@@ -204,8 +209,6 @@ gather_blame_info (DConfState      *state,
         g_error_free (error);
       }
   }
-
-  state->blame_info = g_string_free (info, FALSE);
 }
 
 static void
@@ -224,7 +227,7 @@ method_call (GDBusConnection       *connection,
   state = dconf_writer_get_state (writer);
 
   /* debugging... */
-  if (state->blame_mode && state->blame_info == NULL)
+  if G_UNLIKELY (state->blame_mode)
     gather_blame_info (state, connection, sender, object_path, method_name, parameters);
 
   if (strcmp (method_name, "Write") == 0)
@@ -370,16 +373,16 @@ writer_info_method (GDBusConnection       *connection,
 {
   DConfState *state = user_data;
 
-  /* debugging... */
-  if (state->blame_mode && state->blame_info == NULL)
+  /* only record this if it's the first */
+  if G_UNLIKELY (state->blame_mode && state->blame_info == NULL)
     gather_blame_info (state, connection, sender, object_path, method_name, parameters);
 
   if (g_str_equal (method_name, "Blame"))
     {
       if (state->blame_info == NULL)
-        state->blame_info = g_strdup ("DCONF_BLAME is not in the environment of dconf-service\n");
+        state->blame_info = g_string_new ("DCONF_BLAME is not in the environment of dconf-service\n");
 
-      g_dbus_method_invocation_return_value (invocation, g_variant_new ("(s)", state->blame_info));
+      g_dbus_method_invocation_return_value (invocation, g_variant_new ("(s)", state->blame_info->str));
     }
 
   else
@@ -398,7 +401,7 @@ writer_info_get_property (GDBusConnection  *connection,
   DConfState *state = user_data;
 
   /* debugging... */
-  if (state->blame_mode && state->blame_info == NULL)
+  if G_UNLIKELY (state->blame_mode)
     gather_blame_info (state, connection, sender, object_path, "GetProperty", NULL);
 
   return g_variant_new_string (state->shm_dir);

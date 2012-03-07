@@ -6,7 +6,7 @@
 typedef struct
 {
   gboolean blame_mode;
-  gchar *blame_info;
+  GString *blame_info;
   gboolean is_session;
   GMainLoop *main_loop;
   guint64 serial;
