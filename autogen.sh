@@ -2,6 +2,12 @@
 
 set -e
 
+test -n "$srcdir" || srcdir=`dirname "$0"`
+test -n "$srcdir" || srcdir=.
+
+olddir=`pwd`
+cd "$srcdir"
+
 if [ "$1" = "clean" ]; then
   rm -f aclocal.m4 configure config.* `find . -name Makefile.in` libtool
   rm -rf autom4te.cache m4 aux
@@ -25,7 +31,9 @@ CFLAGS=${CFLAGS=-ggdb}
 LDFLAGS=${LDFLAGS=-Wl,-O1}
 export CFLAGS LDFLAGS
 
+cd "$olddir"
+
 if test -z "$NOCONFIGURE"; then
-  ./configure "$@"
+  "$srcdir"/configure "$@"
 fi
 
