@@ -1,3 +1,17 @@
+Changes in dconf 0.11.6
+=======================
+
+ - new DCONF_BLAME mode for debugging spurious dconf writes at login
+
+ - stop hardcoding the assumption that there will be exactly one user
+   database followed by zero or more system databases
+
+ - allow DCONF_PROFILE to specify a profile file by absolute path
+
+ - dbus-1: fix multiple-key change notifications
+
+ - autogen.sh can now be called from out of tree
+
 Changes in dconf 0.11.5
 =======================
 
