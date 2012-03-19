@@ -1,3 +1,19 @@
+Changes in dconf 0.11.7
+=======================
+
+ - engine: don't leak the lock table if a system database changes while
+   a program is running
+
+ - dbus-1: call g_slist_remove_link instead of g_slist_remove
+
+ - editor: set 'wrap' property on default value label
+
+ - dconf update:
+
+   - code cleanup, better error handling
+   - read keyfiles in a defined order (later files take precedence)
+   - don't issue warnings if a key is defined in multiple files
+
 Changes in dconf 0.11.6
 =======================
 
