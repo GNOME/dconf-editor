@@ -136,8 +136,10 @@ Gvdb.HashTable read_directory (string dirname) {
 					var path = "/" + group + "/" + key;
 
 					if (table.lookup (path) != null) {
-						stderr.printf ("%s: [%s]: %s: ignoring duplicate definition of key %s\n",
-									   filename, group, key, path);
+						/* We process the files in reverse alphabetical order.  If the key is already set then
+						 * it must have been set from a file with higher precedence so we should ignore this
+						 * one.
+						 */
 						continue;
 					}
 
