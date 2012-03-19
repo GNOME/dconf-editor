@@ -169,6 +169,12 @@ dconf_engine_refresh_system (DConfEngine *engine,
 {
   if (engine->gvdbs[i] && !gvdb_table_is_valid (engine->gvdbs[i]))
     {
+      if (engine->lock_tables[i])
+        {
+          gvdb_table_unref (engine->lock_tables[i]);
+          engine->lock_tables[i] = NULL;
+        }
+
       gvdb_table_unref (engine->gvdbs[i]);
       engine->gvdbs[i] = NULL;
     }
