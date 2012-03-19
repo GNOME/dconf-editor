@@ -50,6 +50,10 @@ SList<string>? list_directory (string dirname, Posix.mode_t mode) {
 		unowned string? name;
 
 		while ((name = dir.read_name ()) != null) {
+			if (name.has_prefix (".")) {
+				continue;
+			}
+
 			var filename = Path.build_filename (dirname, name);
 			Posix.Stat buf;
 
