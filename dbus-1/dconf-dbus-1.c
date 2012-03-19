@@ -597,7 +597,7 @@ dconf_dbus_client_unsubscribe (DConfDBusClient *dcdbc,
 
       if (watch->notify == notify && watch->user_data == user_data)
         {
-          *ptr = g_slist_remove (*ptr, *ptr);
+          *ptr = g_slist_remove_link (*ptr, *ptr);
 
           dconf_engine_unwatch (dcdbc->engine, watch->name, &dcem);
           dconf_dbus_client_send (dcdbc, &dcem, NULL, NULL);
