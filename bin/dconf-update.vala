@@ -43,97 +43,120 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 	return parent;
 }
 
-Gvdb.HashTable? read_locks_directory (string dirname) throws GLib.Error {
-	Dir dir;
-
+SList<string>? list_directory (string dirname, Posix.mode_t mode) {
 	try {
-		dir = Dir.open (dirname);
-	} catch {
+		var list = new SList<string> ();
+		var dir = Dir.open (dirname);
+		unowned string? name;
+
+		while ((name = dir.read_name ()) != null) {
+			var filename = Path.build_filename (dirname, name);
+			Posix.Stat buf;
+
+			// only files of the requested type
+			if (Posix.stat (filename, out buf) < 0 || (buf.st_mode & Posix.S_IFMT) != mode) {
+				continue;
+			}
+
+			list.prepend (filename);
+		}
+
+		return list;
+	} catch (FileError.NOENT e) {
+		/* This is expected if the directory does not exist.
+		 * Just return the empty list in that case...
+		 */
+		return null;
+	} catch (Error e) {
+		/* Unexpected error.  Report it and return null. */
+		printerr ("warning: %s\n", e.message);
+		return null;
+	}
+}
+
+Gvdb.HashTable? read_locks_directory (string dirname) {
+	var files = list_directory (dirname, Posix.S_IFREG);
+
+	if (files == null) {
+		/* No locks directory or directory is empty? */
 		return null;
 	}
 
 	var table = new Gvdb.HashTable ();
-	unowned string? name;
 
-	while ((name = dir.read_name ()) != null) {
-		var filename = Path.build_filename (dirname, name);
-		Posix.Stat buf;
+	foreach (var filename in files) {
+		try {
+			string contents;
+			FileUtils.get_contents (filename, out contents, null);
 
-		// only 'normal' files
-		if (Posix.stat (filename, out buf) < 0 || !Posix.S_ISREG (buf.st_mode)) {
-			continue;
-		}
-
-		string contents;
-		FileUtils.get_contents (filename, out contents, null);
-
-		foreach (var line in contents.split ("\n")) {
-			if (line.has_prefix ("/")) {
-				table.insert_string (line, "");
+			foreach (var line in contents.split ("\n")) {
+				if (line.has_prefix ("/")) {
+					table.insert_string (line, "");
+				}
 			}
+		} catch (Error e) {
+			printerr ("warning: %s\n", e.message);
 		}
 	}
 
 	return table;
 }
 
-Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
+Gvdb.HashTable read_directory (string dirname) {
 	var table = new Gvdb.HashTable ();
-	unowned string? name;
-
 	table.insert ("/");
 
-	var dir = Dir.open (dirname);
-	while ((name = dir.read_name ()) != null) {
-		var filename = Path.build_filename (dirname, name);
-		Posix.Stat buf;
+	var files = list_directory (dirname, Posix.S_IFREG);
+	files.sort (strcmp);
+	files.reverse ();
 
-		// only 'normal' files
-		if (Posix.stat (filename, out buf) < 0 || !Posix.S_ISREG (buf.st_mode)) {
-			continue;
-		}
-
+	foreach (var filename in files) {
 		var kf = new KeyFile ();
 
 		try {
 			kf.load_from_file (filename, KeyFileFlags.NONE);
 		} catch (GLib.Error e) {
-			stderr.printf ("%s: %s\n", filename, e.message);
+			stderr.printf ("warning: Failed to read keyfile '%s': %s\n", filename, e.message);
 			continue;
 		}
 
-		foreach (var group in kf.get_groups ()) {
-			if (group.has_prefix ("/") || group.has_suffix ("/") || "//" in group) {
-				stderr.printf ("%s: ignoring invalid group name: %s\n", filename, group);
-				continue;
-			}
-
-			foreach (var key in kf.get_keys (group)) {
-				if ("/" in key) {
-					stderr.printf ("%s: [%s]: ignoring invalid key name: %s\n", filename, group, key);
+		try {
+			foreach (var group in kf.get_groups ()) {
+				if (group.has_prefix ("/") || group.has_suffix ("/") || "//" in group) {
+					stderr.printf ("%s: ignoring invalid group name: %s\n", filename, group);
 					continue;
 				}
 
-				var path = "/" + group + "/" + key;
+				foreach (var key in kf.get_keys (group)) {
+					if ("/" in key) {
+						stderr.printf ("%s: [%s]: ignoring invalid key name: %s\n", filename, group, key);
+						continue;
+					}
 
-				if (table.lookup (path) != null) {
-					stderr.printf ("%s: [%s]: %s: ignoring duplicate definition of key %s\n",
-					               filename, group, key, path);
-					continue;
-				}
+					var path = "/" + group + "/" + key;
 
-				var text = kf.get_value (group, key);
+					if (table.lookup (path) != null) {
+						stderr.printf ("%s: [%s]: %s: ignoring duplicate definition of key %s\n",
+									   filename, group, key, path);
+						continue;
+					}
 
-				try {
-					var value = Variant.parse (null, text);
-					unowned Gvdb.Item item = table.insert (path);
-					item.set_parent (get_parent (table, path));
-					item.set_value (value);
-				} catch (VariantParseError e) {
-					stderr.printf ("%s: [%s]: %s: skipping invalid value: %s (%s)\n",
-					               filename, group, key, text, e.message);
+					var text = kf.get_value (group, key);
+
+					try {
+						var value = Variant.parse (null, text);
+						unowned Gvdb.Item item = table.insert (path);
+						item.set_parent (get_parent (table, path));
+						item.set_value (value);
+					} catch (VariantParseError e) {
+						stderr.printf ("%s: [%s]: %s: skipping invalid value: %s (%s)\n",
+									   filename, group, key, text, e.message);
+					}
 				}
 			}
+		} catch (KeyFileError e) {
+			/* This should never happen... */
+			warning ("unexpected keyfile error: %s.  Please file a bug.", e.message);
 		}
 	}
 
@@ -147,7 +170,7 @@ Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
 	return table;
 }
 
-void maybe_update_from_directory (string dirname) throws GLib.Error {
+void maybe_update_from_directory (string dirname) {
 	Posix.Stat dir_buf;
 
 	if (Posix.stat (dirname, out dir_buf) == 0 && Posix.S_ISDIR (dir_buf.st_mode)) {
@@ -171,8 +194,11 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 
 		if (fd < 0 && errno != Posix.ENOENT) {
 			var saved_error = errno;
-			throw new FileError.FAILED ("Can not open '%s' for replacement: %s", filename, strerror (saved_error));
+			printerr ("warning: Failed to open '%s' for replacement: %s\n", filename, strerror (saved_error));
+			return;
 		}
+
+		// We expect that fd < 0 here if ENOENT (ie: the db merely didn't exist yet)
 
 		try {
 			table.write_contents (filename);
@@ -180,6 +206,9 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 			if (fd >= 0) {
 				Posix.write (fd, "\0\0\0\0\0\0\0\0", 8);
 			}
+		} catch (Error e) {
+			printerr ("warning: %s\n", e.message);
+			return;
 		} finally {
 			if (fd >= 0) {
 				Posix.close (fd);
@@ -197,28 +226,16 @@ void maybe_update_from_directory (string dirname) throws GLib.Error {
 	}
 }
 
-void update_all (string dirname) throws GLib.Error {
-	unowned string? name;
-
-	var dir = Dir.open (dirname);
-
-	while ((name = dir.read_name ()) != null) {
+void update_all (string dirname) {
+	foreach (var name in list_directory (dirname, Posix.S_IFDIR)) {
 		if (name.has_suffix (".d")) {
-			try {
-				maybe_update_from_directory (Path.build_filename (dirname, name));
-			} catch (GLib.Error e) {
-				stderr.printf ("%s\n", e.message);
-			}
+			maybe_update_from_directory (name);
 		}
 	}
 }
 
 void dconf_update (string[] args) {
-	try {
-		update_all ("/etc/dconf/db");
-	} catch (GLib.Error e) {
-		stderr.printf ("fatal: %s\n", e.message);
-	}
+	update_all ("/etc/dconf/db");
 }
 
 // vim:noet ts=4 sw=4
