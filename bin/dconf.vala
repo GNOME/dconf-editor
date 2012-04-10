@@ -283,6 +283,8 @@ int main (string[] args) {
 	assert (args.length != 0);
 	Environment.set_prgname (args[0]);
 
+	Intl.setlocale (LocaleCategory.ALL, "");
+
 	var map = new CommandMapping[] {
 		CommandMapping ("help",      dconf_help),
 		CommandMapping ("read",      dconf_read),
