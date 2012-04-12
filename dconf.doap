@@ -6,7 +6,7 @@
          xmlns:gnome='http://api.gnome.org/doap-extensions#'>
 
   <name xml:lang='en'>dconf</name>
-  <shortdesc xml:lang='en'>configuation database system</shortdesc>
+  <shortdesc xml:lang='en'>Configuation database system</shortdesc>
 
   <maintainer>
     <foaf:Person>
