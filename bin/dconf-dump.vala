@@ -60,14 +60,14 @@ class DConfLoadState {
 		i = 0;
 	}
 
-	public int add (void *key, void *value) {
+	public bool add (void *key, void *value) {
 		assert (i < n_keys);
 
 		keys[i] = (string) key;
 		vals[i] = (Variant) value;
 		i++;
 
-		return (int) false;
+		return false;
 	}
 }
 
