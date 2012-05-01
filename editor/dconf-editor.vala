@@ -1,10 +1,10 @@
-class ConfigurationEditor
+class ConfigurationEditor : Gtk.Application
 {
     private SettingsModel model;
 
     private Settings settings;
     private Gtk.Builder ui;
-    private Gtk.Window window;
+    private Gtk.ApplicationWindow window;
     private Gtk.TreeView dir_tree_view;
     private Gtk.TreeView key_tree_view;
     private Gtk.Grid key_info_grid;
@@ -19,6 +19,13 @@ class ConfigurationEditor
 
     public ConfigurationEditor()
     {
+        Object(application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.FLAGS_NONE);
+    }
+    
+    protected override void startup()
+    {
+        base.startup();
+
         settings = new Settings ("ca.desrt.dconf-editor.Settings");
 
         model = new SettingsModel();
@@ -26,15 +33,19 @@ class ConfigurationEditor
         ui = new Gtk.Builder();
         try
         {
-            ui.add_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor.ui"));
+            string[] objects = { "set_default_action", "hpaned1" };
+            ui.add_objects_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor.ui"), objects);
         }
         catch (Error e)
         {
             critical("Failed to load UI: %s", e.message);
         }
-        ui.connect_signals(this);
-        window = (Gtk.Window)ui.get_object("main_window");
-        window.destroy.connect(Gtk.main_quit);
+        window = new Gtk.ApplicationWindow(this);
+        window.set_default_size(600, 300);
+        window.title = _("Configuration Editor");
+        window.window_state_event.connect(main_window_window_state_event_cb);
+        window.configure_event.connect(main_window_configure_event_cb);
+        window.add((Gtk.HPaned)ui.get_object("hpaned1"));
 
         window.set_default_size (settings.get_int ("width"), settings.get_int ("height"));
         if (settings.get_boolean ("maximized"))
@@ -60,6 +71,7 @@ class ConfigurationEditor
         type_label = (Gtk.Label)ui.get_object("type_label");
         default_label = (Gtk.Label)ui.get_object("default_label");
         set_default_action = (Gtk.Action)ui.get_object("set_default_action");
+        set_default_action.activate.connect(set_default_cb);
 
         /* Always select something */
         Gtk.TreeIter iter;
@@ -67,9 +79,9 @@ class ConfigurationEditor
             dir_tree_view.get_selection().select_iter(iter);
     }
 
-    public void show()
+    protected override void activate()
     {
-        window.show();
+        window.present();
     }
 
     private void dir_selected_cb()
@@ -175,16 +187,14 @@ class ConfigurationEditor
         set_default_action.sensitive = selected_key != null && !selected_key.is_default;
     }
 
-    [CCode (cname = "G_MODULE_EXPORT set_default_cb", instance_pos = -1)]
-    public void set_default_cb (Gtk.Action action)
+    private void set_default_cb (Gtk.Action action)
     {
         if (selected_key == null)
             return;
         selected_key.set_to_default();
     }
 
-    [CCode (cname = "G_MODULE_EXPORT main_window_configure_event_cb", instance_pos = -1)]
-    public bool main_window_configure_event_cb (Gtk.Widget widget, Gdk.EventConfigure event)
+    private bool main_window_configure_event_cb (Gtk.Widget widget, Gdk.EventConfigure event)
     {
         if (!settings.get_boolean ("maximized"))
         {
@@ -195,8 +205,7 @@ class ConfigurationEditor
         return false;
     }
 
-    [CCode (cname = "G_MODULE_EXPORT main_window_window_state_event_cb", instance_pos = -1)]
-    public bool main_window_window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
+    private bool main_window_window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
         {
@@ -209,13 +218,7 @@ class ConfigurationEditor
 
     public static int main(string[] args)
     {
-        Gtk.init(ref args);
-
-        var editor = new ConfigurationEditor();
-        editor.show ();
-
-        Gtk.main();
-
-        return 0;
+        var app = new ConfigurationEditor();
+        return app.run(args);
     }
 }
