@@ -14,11 +14,15 @@ class ConfigurationEditor : Gtk.Application
     private Gtk.Label type_label;
     private Gtk.Label default_label;
     private Gtk.Action set_default_action;
+    private Gtk.Box search_box;
+    private Gtk.Entry search_entry;
+    private Gtk.Label search_label;
 
     private Key? selected_key;
 
     private const GLib.ActionEntry[] action_entries =
     {
+        { "find",  find_cb  },
         { "about", about_cb },
         { "quit",  quit_cb  }
     };
@@ -43,7 +47,7 @@ class ConfigurationEditor : Gtk.Application
         ui = new Gtk.Builder();
         try
         {
-            string[] objects = { "set_default_action", "hpaned1", "menu" };
+            string[] objects = { "set_default_action", "box1", "menu" };
             ui.add_objects_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor.ui"), objects);
         }
         catch (Error e)
@@ -55,7 +59,7 @@ class ConfigurationEditor : Gtk.Application
         window.title = _("Configuration Editor");
         window.window_state_event.connect(main_window_window_state_event_cb);
         window.configure_event.connect(main_window_configure_event_cb);
-        window.add((Gtk.HPaned)ui.get_object("hpaned1"));
+        window.add((Gtk.Box)ui.get_object("box1"));
 
         var menu_ui = new Gtk.Builder();
         try
@@ -94,10 +98,25 @@ class ConfigurationEditor : Gtk.Application
         set_default_action = (Gtk.Action)ui.get_object("set_default_action");
         set_default_action.activate.connect(set_default_cb);
 
+        search_box = (Gtk.Box)ui.get_object("search_box");
+        search_entry = (Gtk.Entry)ui.get_object("search_entry");
+        search_label = (Gtk.Label)ui.get_object("search_label");
+        search_entry.activate.connect(find_next_cb);
+        var search_box_close_button = (Gtk.Button)ui.get_object("search_box_close_button");
+        search_box_close_button.clicked.connect(close_search_cb);
+
+        var search_next_button = (Gtk.Button)ui.get_object("search_next_button");
+        search_next_button.clicked.connect(find_next_cb);
+
         /* Always select something */
         Gtk.TreeIter iter;
         if (model.get_iter_first(out iter))
             dir_tree_view.get_selection().select_iter(iter);
+    }
+    
+    private void close_search_cb ()
+    {
+        search_box.hide();
     }
 
     protected override void activate()
@@ -235,6 +254,79 @@ class ConfigurationEditor : Gtk.Application
         }
 
         return false;
+    }
+
+    private void find_cb()
+    {
+        search_box.show();
+        search_entry.grab_focus();
+    }
+
+    private void find_next_cb()
+    {
+        search_label.set_text("");
+
+        Gtk.TreeIter iter;
+        var key_iter = Gtk.TreeIter();
+        var have_key_iter = false;
+        if (dir_tree_view.get_selection().get_selected(null, out iter))
+        {
+            if (key_tree_view.get_selection().get_selected(null, out key_iter))
+            {
+                var dir = model.get_directory(iter);            
+                if (dir.key_model.iter_next(ref key_iter))
+                    have_key_iter = true;
+                else
+                    get_next_iter(ref iter);
+            }
+        }
+        else if (!model.get_iter_first(out iter))
+            return;
+
+        do
+        {
+            var dir = model.get_directory(iter);
+            if (!have_key_iter)
+                have_key_iter = dir.key_model.get_iter_first(out key_iter);
+            if (have_key_iter)
+            {
+                do
+                {
+                    var key = dir.key_model.get_key(key_iter);
+                    if (key.name == search_entry.text)
+                    {
+                        dir_tree_view.expand_to_path(model.get_path(iter));
+                        dir_tree_view.get_selection().select_iter(iter);
+                        dir_tree_view.scroll_to_cell(model.get_path(iter), null, false, 0, 0);
+                        key_tree_view.get_selection().select_iter(key_iter);
+                        return;
+                    }
+                } while(dir.key_model.iter_next(ref key_iter));
+            }
+            have_key_iter = false;
+        } while(get_next_iter(ref iter));
+
+        search_label.set_text(_("Not found"));
+    }
+
+    private bool get_next_iter(ref Gtk.TreeIter iter)
+    {
+        /* Search children next */
+        if (model.iter_has_child(iter))
+        {
+            model.iter_nth_child(out iter, iter, 0);
+            return true;
+        }
+
+        /* Move to the next branch */
+        while (!model.iter_next(ref iter))
+        {
+            /* Otherwise move to the parent and onto the next iter */
+            if (!model.iter_parent(out iter, iter))
+                return false;
+        }
+
+        return true;
     }
 
     private void about_cb()
