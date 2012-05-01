@@ -17,14 +17,24 @@ class ConfigurationEditor : Gtk.Application
 
     private Key? selected_key;
 
+    private const GLib.ActionEntry[] action_entries =
+    {
+        { "about", about_cb },
+        { "quit",  quit_cb  }
+    };
+
     public ConfigurationEditor()
     {
         Object(application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.FLAGS_NONE);
     }
-    
+
     protected override void startup()
     {
         base.startup();
+        
+        Environment.set_application_name (_("DConf Editor"));
+
+        add_action_entries (action_entries, this);
 
         settings = new Settings ("ca.desrt.dconf-editor.Settings");
 
@@ -33,7 +43,7 @@ class ConfigurationEditor : Gtk.Application
         ui = new Gtk.Builder();
         try
         {
-            string[] objects = { "set_default_action", "hpaned1" };
+            string[] objects = { "set_default_action", "hpaned1", "menu" };
             ui.add_objects_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor.ui"), objects);
         }
         catch (Error e)
@@ -46,6 +56,17 @@ class ConfigurationEditor : Gtk.Application
         window.window_state_event.connect(main_window_window_state_event_cb);
         window.configure_event.connect(main_window_configure_event_cb);
         window.add((Gtk.HPaned)ui.get_object("hpaned1"));
+
+        var menu_ui = new Gtk.Builder();
+        try
+        {
+            menu_ui.add_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor-menu.ui"));
+        }
+        catch (Error e)
+        {
+            critical("Failed to load menu UI: %s", e.message);
+        }
+        set_app_menu((MenuModel)menu_ui.get_object("menu"));
 
         window.set_default_size (settings.get_int ("width"), settings.get_int ("height"));
         if (settings.get_boolean ("maximized"))
@@ -214,6 +235,29 @@ class ConfigurationEditor : Gtk.Application
         }
 
         return false;
+    }
+
+    private void about_cb()
+    {
+        string[] authors = { "Robert Ancell", null };
+        string license = _("This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA");
+        Gtk.show_about_dialog (window,
+                               "program-name", _("DConf Editor"),
+                               "version", Config.VERSION,
+                               "comments",
+                               _("Directly edit your entire configuration database"),
+                               "copyright", "Copyright \xc2\xa9 Canonical Ltd",
+                               "license", license,
+                               "wrap-license", true,
+                               "authors", authors,
+                               "translator-credits", _("translator-credits"),
+                               "logo-icon-name", "dconf-editor",
+                               null);
+    }
+
+    private void quit_cb()
+    {
+        window.destroy();
     }
 
     public static int main(string[] args)
