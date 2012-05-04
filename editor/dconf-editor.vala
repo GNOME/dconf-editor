@@ -293,12 +293,13 @@ class ConfigurationEditor : Gtk.Application
                 do
                 {
                     var key = dir.key_model.get_key(key_iter);
-                    if (key.name == search_entry.text)
+                    if (key.name.index_of (search_entry.text) >= 0)
                     {
                         dir_tree_view.expand_to_path(model.get_path(iter));
                         dir_tree_view.get_selection().select_iter(iter);
                         dir_tree_view.scroll_to_cell(model.get_path(iter), null, false, 0, 0);
                         key_tree_view.get_selection().select_iter(key_iter);
+                        key_tree_view.scroll_to_cell(dir.key_model.get_path(key_iter), null, false, 0, 0);
                         return;
                     }
                 } while(dir.key_model.iter_next(ref key_iter));
