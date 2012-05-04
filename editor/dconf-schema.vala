@@ -397,6 +397,9 @@ public class SchemaList
                 var f = new SchemaFlags.from_xml(this, node);
                 flags.insert(f.id, f);
             }
+            else if (node->type == Xml.ElementType.COMMENT_NODE)
+            {
+            }
             else if (node->type != Xml.ElementType.TEXT_NODE)
                 warning ("Unknown tag <%s>", node->name);
         }
