@@ -1,3 +1,13 @@
+Changes in dconf 0.13.0
+=======================
+
+ - now requiring Vala 0.18 (ie: at least 0.17.0)
+
+ - editor: use GtkApplication and GMenu
+ - editor: support searching for keys
+
+ - dconf cli: call setlocale() on startup
+
 Changes in dconf 0.11.7
 =======================
 
