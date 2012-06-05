@@ -13,7 +13,7 @@ AM_SILENT_RULES([yes])
 
 # Check for programs
 AC_PROG_CC
-AM_PROG_VALAC([0.15.1])
+AM_PROG_VALAC([0.17.0])
 
 # Use GSettings
 GLIB_GSETTINGS
