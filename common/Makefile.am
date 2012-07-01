@@ -6,6 +6,8 @@ libdconf_common_a_CFLAGS = -Wall
 INCLUDES = $(glib_CFLAGS)
 
 libdconf_common_a_SOURCES = \
+	dconf-changeset.h	\
+	dconf-changeset.c	\
 	dconf-paths.c		\
 	dconf-shmdir.h		\
 	dconf-shmdir.c
