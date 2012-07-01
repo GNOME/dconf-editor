@@ -13,6 +13,7 @@ AM_SILENT_RULES([yes])
 
 # Check for programs
 AC_PROG_CC
+AC_PROG_RANLIB
 AM_PROG_VALAC([0.15.1])
 
 # Use GSettings

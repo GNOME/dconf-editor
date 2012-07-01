@@ -1,7 +1,14 @@
 dconfinclude_HEADERS = \
 	dconf-paths.h
 
-EXTRA_DIST = \
-	dconf-shmdir.h	\
-	dconf-paths.h	\
-	dconf-paths.c
+noinst_LIBRARIES = libdconf-common.a libdconf-common-shared.a
+libdconf_common_a_CFLAGS = -Wall
+INCLUDES = $(glib_CFLAGS)
+
+libdconf_common_a_SOURCES = \
+	dconf-paths.c		\
+	dconf-shmdir.h		\
+	dconf-shmdir.c
+
+libdconf_common_shared_a_CFLAGS = -fPIC -DPIC $(libdconf_common_a_CFLAGS)
+libdconf_common_shared_a_SOURCES = $(libdconf_common_a_SOURCES)

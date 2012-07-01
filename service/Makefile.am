@@ -4,11 +4,10 @@ libexec_PROGRAMS = dconf-service
 
 dbusservice_DATA = ca.desrt.dconf.service
 
-dconf_service_LDADD = $(gio_LIBS)
+dconf_service_LDADD = $(gio_LIBS) ../common/libdconf-common.a
 dconf_service_SOURCES = \
 	../gvdb/gvdb-builder.c		\
 	../gvdb/gvdb-reader.c		\
-	../common/dconf-shmdir.c	\
 	dconf-interfaces.h		\
 	dconf-interfaces.c		\
 	dconf-rebuilder.h		\

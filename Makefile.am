@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = gvdb service gsettings dbus-1 tests client bin engine common docs
+SUBDIRS = gvdb common service gsettings dbus-1 tests client bin engine docs
 
 if ENABLE_EDITOR
 SUBDIRS += editor

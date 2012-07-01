@@ -21,11 +21,9 @@ dconfinclude_HEADERS = \
 	dconf-client.h	\
 	dconf.h
 
-libdconf_so_0_0_0_LDADD = $(gio_LIBS)
+libdconf_so_0_0_0_LDADD = $(gio_LIBS) ../common/libdconf-common-shared.a
 libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0
 libdconf_so_0_0_0_SOURCES = \
-	../common/dconf-shmdir.c	\
-	../common/dconf-paths.c		\
 	../engine/dconf-engine.c	\
 	../gvdb/gvdb-reader.c		\
 	dconf-client.vala engine.vapi

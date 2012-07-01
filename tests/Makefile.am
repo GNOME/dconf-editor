@@ -5,7 +5,5 @@ noinst_PROGRAMS = paths gsettings dbus1
 
 gsettings_LDADD = $(gio_LIBS)
 dbus1_LDADD = -L../dbus-1 -ldconf-dbus-1 $(glib_LIBS)
-paths_LDADD = $(gio_LIBS)
-paths_SOURCES = \
-	../common/dconf-paths.c		\
-	paths.c
+paths_LDADD = $(gio_LIBS) ../common/libdconf-common.a
+paths_SOURCES = paths.c

@@ -10,11 +10,10 @@ pkgconfig_DATA = dconf-dbus-1.pc
 shlibdir = $(libdir)
 shlib_PROGRAMS = libdconf-dbus-1.so.0.0.0
 
-libdconf_dbus_1_so_0_0_0_LDADD = $(glib_LIBS) $(dbus_LIBS)
+libdconf_dbus_1_so_0_0_0_LDADD = $(glib_LIBS) $(dbus_LIBS) ../common/libdconf-common-shared.a
 libdconf_dbus_1_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf-dbus-1.so.0
 libdconf_dbus_1_so_0_0_0_SOURCES = \
 	../engine/dconf-engine.c	\
-	../common/dconf-shmdir.c	\
 	../gvdb/gvdb-reader.c		\
 	dconf-dbus-1.c
 
