@@ -95,7 +95,7 @@ emit_notify_signal (GDBusConnection  *connection,
 }
 
 static void
-unwrap_maybe (GVariant **ptr)
+unwrap_maybe_and_variant (GVariant **ptr)
 {
   GVariant *array, *child;
   gsize n_children;
@@ -109,11 +109,12 @@ unwrap_maybe (GVariant **ptr)
       child = NULL;
       break;
     case 1: default:
-      child = g_variant_get_child_value (array, 0);
+      g_variant_get_child (array, 0, "v", &child);
       break;
     case 2:
       {
         GVariant *untrusted;
+        GVariant *trusted;
         GVariant *ay;
 
         g_variant_get_child (array, 0, "v", &ay);
@@ -130,8 +131,10 @@ unwrap_maybe (GVariant **ptr)
                                              FALSE,
                                              (GDestroyNotify) g_variant_unref, ay);
         g_variant_ref_sink (untrusted);
-        child = g_variant_get_normal_form (untrusted);
+        trusted = g_variant_get_normal_form (untrusted);
         g_variant_unref (untrusted);
+
+        g_variant_get (trusted, "v", &child);
       }
     }
 
@@ -244,7 +247,7 @@ method_call (GDBusConnection       *connection,
       g_variant_get (parameters, "(@s@av)", &keyvalue, &value);
       key = g_variant_get_string (keyvalue, &key_length);
       g_variant_unref (keyvalue);
-      unwrap_maybe (&value);
+      unwrap_maybe_and_variant (&value);
 
       if (key[0] != '/' || strstr (key, "//"))
         {
@@ -312,7 +315,7 @@ method_call (GDBusConnection       *connection,
       values = g_new (GVariant *, length);
       while (g_variant_iter_next (iter, "(&s@av)", &keys[i], &values[i]))
         {
-          unwrap_maybe (&values[i]);
+          unwrap_maybe_and_variant (&values[i]);
 
           if (keys[i][0] == '/' || strstr (keys[i], "//") ||
               (i > 0 && !(strcmp (keys[i - 1], keys[i]) < 0)))

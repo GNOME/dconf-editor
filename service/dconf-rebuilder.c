@@ -97,12 +97,9 @@ dconf_rebuilder_put_item (DConfRebuilderState *state)
   if (state->values[state->index] != NULL)
     {
       gchar *fullname;
-      GVariant *ouch;
 
       fullname = g_strconcat (state->prefix, state->keys[state->index], NULL);
-      ouch = g_variant_get_variant (state->values[state->index]);
-      dconf_rebuilder_insert (state->table, fullname, ouch);
-      g_variant_unref (ouch);
+      dconf_rebuilder_insert (state->table, fullname, state->values[state->index]);
       g_free (fullname);
     }
 
