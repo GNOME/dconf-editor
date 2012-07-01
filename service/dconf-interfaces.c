@@ -21,6 +21,7 @@
 
 #include "dconf-interfaces.h"
 
+static const GDBusArgInfo payload_arg = { -1, (gchar *) "payload", (gchar *) "ay" };
 static const GDBusArgInfo name_arg = { -1, (gchar *) "name", (gchar *) "s" };
 static const GDBusArgInfo path_arg = { -1, (gchar *) "path", (gchar *) "s" };
 static const GDBusArgInfo names_arg = { -1, (gchar *) "names", (gchar *) "as" };
@@ -28,12 +29,20 @@ static const GDBusArgInfo tag_arg = { -1, (gchar *) "tag", (gchar *) "s" };
 static const GDBusArgInfo value_arg = { -1, (gchar *) "value", (gchar *) "av" };
 static const GDBusArgInfo values_arg = { -1, (gchar *) "values", (gchar *) "a(sav)" };
 
+static const GDBusArgInfo *change_in[] = { &payload_arg, NULL };
+static const GDBusArgInfo *change_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *write_in[] = { &name_arg, &value_arg, NULL };
 static const GDBusArgInfo *write_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *many_in[] = { &path_arg, &values_arg, NULL };
 static const GDBusArgInfo *many_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *blame_out[] = { &tag_arg, NULL };
 static const GDBusArgInfo *notify_args[] = { &path_arg, &names_arg, &tag_arg, NULL };
+
+static const GDBusMethodInfo change_method = {
+  -1, (gchar *) "Change",
+  (GDBusArgInfo **) change_in,
+  (GDBusArgInfo **) change_out
+};
 
 static const GDBusMethodInfo write_method = {
   -1, (gchar *) "Write",
@@ -63,7 +72,7 @@ static const GDBusPropertyInfo shmdir_property = {
 };
 
 static const GDBusMethodInfo *writer_methods[] = {
-  &write_method, &writemany_method, NULL
+  &change_method, &write_method, &writemany_method, NULL
 };
 
 static const GDBusSignalInfo *writer_signals[] = {

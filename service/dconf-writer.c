@@ -128,6 +128,29 @@ dconf_writer_write_many (DConfWriter          *writer,
   return TRUE;
 }
 
+gboolean
+dconf_writer_change (DConfWriter     *writer,
+                     DConfChangeset  *change,
+                     GError         **error)
+{
+  const gchar * const *keys;
+  GVariant * const *values;
+  const gchar *prefix;
+  gint n_items;
+
+  n_items = dconf_changeset_describe (change, &prefix, &keys, &values);
+
+  if (!n_items)
+    return TRUE;
+
+  if (!dconf_rebuilder_rebuild (writer->path, prefix, keys, values, n_items, error))
+    return FALSE;
+
+  dconf_writer_touch_shm (writer);
+
+  return TRUE;
+}
+
 const gchar *
 dconf_writer_get_name (DConfWriter *writer)
 {

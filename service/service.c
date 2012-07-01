@@ -26,6 +26,7 @@
 #include <stdio.h>
 
 #include "dconf-interfaces.h"
+#include "dconf-changeset.h"
 #include "dconf-writer.h"
 #include "dconf-state.h"
 
@@ -92,6 +93,28 @@ emit_notify_signal (GDBusConnection  *connection,
                                  NULL);
   g_free (path);
   g_free (obj);
+}
+
+static void
+emit_notify_signal_change (GDBusConnection *connection,
+                           DConfWriter     *writer,
+                           gchar           *tag,
+                           DConfChangeset  *change)
+{
+  const gchar *path;
+  const gchar * const *names;
+
+  if (dconf_changeset_describe (change, &path, &names, NULL))
+    {
+      gchar *obj;
+
+      obj = g_strjoin (NULL, "/ca/desrt/dconf/Writer/", dconf_writer_get_name (writer), NULL);
+      g_dbus_connection_emit_signal (connection, NULL, obj,
+                                     "ca.desrt.dconf.Writer", "Notify",
+                                     g_variant_new ("(s^ass)", path, names, tag),
+                                     NULL);
+      g_free (obj);
+    }
 }
 
 static void
@@ -233,7 +256,39 @@ method_call (GDBusConnection       *connection,
   if G_UNLIKELY (state->blame_mode)
     gather_blame_info (state, connection, sender, object_path, method_name, parameters);
 
-  if (strcmp (method_name, "Write") == 0)
+  if (strcmp (method_name, "Change") == 0)
+    {
+      DConfChangeset *change;
+      GError *error = NULL;
+      GVariant *args;
+      GVariant *tmp;
+      gchar *tag;
+
+      tmp = g_variant_new_from_data (G_VARIANT_TYPE ("a{smv}"),
+                                     g_variant_get_data (parameters), g_variant_get_size (parameters), FALSE,
+                                     (GDestroyNotify) g_variant_unref, g_variant_ref (parameters));
+      g_variant_ref_sink (tmp);
+      args = g_variant_get_normal_form (tmp);
+      g_variant_unref (tmp);
+
+      change = dconf_changeset_deserialise (args);
+      g_variant_unref (args);
+
+      if (!dconf_writer_change (writer, change, &error))
+        {
+          g_dbus_method_invocation_return_gerror (invocation, error);
+          g_error_free (error);
+          return;
+        }
+
+      tag = dconf_state_get_tag (state);
+      g_dbus_method_invocation_return_value (invocation, g_variant_new ("(s)", tag));
+      emit_notify_signal_change (connection, writer, tag, change);
+      dconf_changeset_unref (change);
+      g_free (tag);
+    }
+
+  else if (strcmp (method_name, "Write") == 0)
     {
       GError *error = NULL;
       GVariant *keyvalue;

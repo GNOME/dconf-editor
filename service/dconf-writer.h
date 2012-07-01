@@ -22,6 +22,7 @@
 #ifndef __dconf_writer_h__
 #define __dconf_writer_h__
 
+#include "dconf-changeset.h"
 #include "dconf-state.h"
 
 typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;
@@ -40,6 +41,10 @@ gboolean                dconf_writer_write_many                         (DConfWr
                                                                          const gchar * const  *keys,
                                                                          GVariant * const     *values,
                                                                          gsize n_items,
+                                                                         GError              **error);
+
+gboolean                dconf_writer_change                             (DConfWriter          *writer,
+                                                                         DConfChangeset       *change,
                                                                          GError              **error);
 
 #endif /* __dconf_writer_h__ */
