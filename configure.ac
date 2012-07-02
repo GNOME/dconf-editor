@@ -55,6 +55,7 @@ AC_CONFIG_FILES([
   common/Makefile
   gvdb/Makefile
   engine/Makefile
+  gdbus/Makefile
   gsettings/Makefile
   dbus-1/dconf-dbus-1.pc
   client/dconf.pc

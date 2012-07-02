@@ -49,6 +49,7 @@ dconf_changeset_new (void)
 
   change = g_slice_new0 (DConfChangeset);
   change->table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) g_variant_unref);
+  change->ref_count = 1;
 
   return change;
 }
@@ -100,7 +101,7 @@ dconf_changeset_set (DConfChangeset *change,
 {
   g_return_if_fail (change->root == NULL);
 
-  g_hash_table_insert (change->table, g_strdup (key), g_variant_ref_sink (value));
+  g_hash_table_insert (change->table, g_strdup (key), value ? g_variant_ref_sink (value) : NULL);
 }
 
 /**
@@ -409,4 +410,16 @@ dconf_changeset_deserialise (GVariant *serialised)
     }
 
   return change;
+}
+
+DConfChangeset *
+dconf_changeset_new_write (const gchar *path,
+                           GVariant    *value)
+{
+  DConfChangeset *changeset;
+
+  changeset = dconf_changeset_new ();
+  dconf_changeset_set (changeset, path, value);
+
+  return changeset;
 }

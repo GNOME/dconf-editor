@@ -47,48 +47,21 @@ KeyFile keyfile_from_stdin () throws Error {
 	return kf;
 }
 
-class DConfLoadState {
-	public string[] keys;
-	public Variant?[] vals;
-	int n_keys;
-	int i;
-
-	public DConfLoadState (int n) {
-		keys = new string[n + 1];
-		vals = new Variant?[n];
-		n_keys = n;
-		i = 0;
-	}
-
-	public int add (void *key, void *value) {
-		assert (i < n_keys);
-
-		keys[i] = (string) key;
-		vals[i] = (Variant) value;
-		i++;
-
-		return (int) false;
-	}
-}
-
 void dconf_load (string[] args) throws Error {
 	var dir = args[2];
 	DConf.verify_dir (dir);
 
-	var tree = new Tree<string, Variant> (strcmp);
+	var changeset = new DConf.Changeset ();
 	var kf = keyfile_from_stdin ();
 
 	foreach (var group in kf.get_groups ()) {
 		foreach (var key in kf.get_keys (group)) {
-			var rel = (group == "/" ? "" : group + "/") + key;
-			DConf.verify_rel_key (rel);
-			tree.insert (rel, Variant.parse (null, kf.get_value (group, key)));
+			var path = dir + (group == "/" ? "" : group + "/") + key;
+			DConf.verify_key (path);
+			changeset.set (path, Variant.parse (null, kf.get_value (group, key)));
 		}
 	}
 
-	DConfLoadState list = new DConfLoadState (tree.nnodes ());
-	tree.foreach (list.add);
-
 	var client = new DConf.Client ();
-	client.write_many (dir, list.keys, list.vals);
+	client.change_sync (changeset);
 }

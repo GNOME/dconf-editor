@@ -13,7 +13,8 @@ shlib_PROGRAMS = libdconf-dbus-1.so.0.0.0
 libdconf_dbus_1_so_0_0_0_LDADD = $(glib_LIBS) $(dbus_LIBS) ../common/libdconf-common-shared.a
 libdconf_dbus_1_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf-dbus-1.so.0
 libdconf_dbus_1_so_0_0_0_SOURCES = \
-	../engine/dconf-engine.c	\
+	dconf-engine.h			\
+	dconf-engine.c			\
 	../gvdb/gvdb-reader.c		\
 	dconf-dbus-1.c
 

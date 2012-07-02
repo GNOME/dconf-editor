@@ -23,10 +23,11 @@
 #include "dconf-client.h"
 
 #include "dconf-engine.h"
+#include <glib-object.h>
 
 struct _DConfClient
 {
-  GObject parent_class;
+  GObject parent_instance;
 
   DConfEngine  *engine;
   GMainContext *context;
@@ -39,7 +40,6 @@ enum
   SIGNAL_CHANGED,
   N_SIGNALS
 };
-
 static guint dconf_client_signals[N_SIGNALS];
 
 static void
@@ -64,11 +64,11 @@ dconf_client_class_init (DConfClientClass *class)
 {
   class->finalize = dconf_client_finalize;
 
-  dconf_client_signals[SIGNAL_CHANGED] =
-    g_signal_new ("changed", DCONF_TYPE_CLIENT, G_SIGNAL_RUN_FIRST,
-                  0, NULL, NULL, NULL, G_TYPE_NONE, 2,
-                  G_TYPE_STRING | G_SIGNAL_TYPE_STATIC_SCOPE,
-                  G_TYPE_STRV | G_SIGNAL_TYPE_STATIC_SCOPE);
+  dconf_client_signals[SIGNAL_CHANGED] = g_signal_new ("changed", DCONF_TYPE_CLIENT, G_SIGNAL_RUN_LAST,
+                                                       0, NULL, NULL, NULL, G_TYPE_NONE, 3,
+                                                       G_TYPE_STRING | G_SIGNAL_TYPE_STATIC_SCOPE,
+                                                       G_TYPE_STRV | G_SIGNAL_TYPE_STATIC_SCOPE,
+                                                       G_TYPE_STRING | G_SIGNAL_TYPE_STATIC_SCOPE);
 }
 
 typedef struct
@@ -76,18 +76,21 @@ typedef struct
   DConfClient  *client;
   gchar        *prefix;
   gchar       **changes;
+  gchar        *tag;
 } DConfClientChange;
 
 static gboolean
-dconf_engine_emit_changed (gpointer user_data)
+dconf_client_dispatch_change_signal (gpointer user_data)
 {
   DConfClientChange *change = user_data;
 
-  g_signal_emit (change->client, dconf_client_signals[SIGNAL_CHANGED], 0, change->prefix, change->changes);
+  g_signal_emit (change->client, dconf_client_signals[SIGNAL_CHANGED], 0,
+                 change->prefix, change->changes, change->tag);
 
+  g_object_unref (change->client);
   g_free (change->prefix);
   g_strfreev (change->changes);
-  g_object_unref (change->client);
+  g_free (change->tag);
   g_slice_free (DConfClientChange, change);
 
   return G_SOURCE_REMOVE;
@@ -97,6 +100,7 @@ void
 dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar         *prefix,
                             const gchar * const *changes,
+                            const gchar *        tag,
                             gpointer             user_data)
 {
   DConfClient *client = user_data;
@@ -105,13 +109,24 @@ dconf_engine_change_notify (DConfEngine         *engine,
   g_return_if_fail (DCONF_IS_CLIENT (client));
 
   change = g_slice_new (DConfClientChange);
+  change->client = g_object_ref (client);
   change->prefix = g_strdup (prefix);
   change->changes = g_strdupv ((gchar **) changes);
-  change->client = g_object_ref (client);
+  change->tag = g_strdup (tag);
 
-  g_main_context_invoke (client->context,
-                         dconf_engine_emit_changed,
-                         change);
+  g_main_context_invoke (client->context, dconf_client_dispatch_change_signal, change);
+}
+
+DConfClient *
+dconf_client_new (void)
+{
+  DConfClient *client;
+
+  client = g_object_new (DCONF_TYPE_CLIENT, NULL);
+  client->engine = dconf_engine_new (client);
+  client->context = g_main_context_ref_thread_default ();
+
+  return client;
 }
 
 GVariant *
@@ -125,13 +140,12 @@ dconf_client_read (DConfClient *client,
 
 gchar **
 dconf_client_list (DConfClient *client,
-                   const gchar *dir)
+                   const gchar *dir,
+                   gint        *length)
 {
   g_return_val_if_fail (DCONF_IS_CLIENT (client), NULL);
 
-  return NULL;
-
-  /*: return dconf_engine_list (client->engine, NULL, dir); */
+  return dconf_engine_list (client->engine, dir, length);
 }
 
 gboolean
@@ -141,18 +155,6 @@ dconf_client_is_writable (DConfClient *client,
   g_return_val_if_fail (DCONF_IS_CLIENT (client), FALSE);
 
   return dconf_engine_is_writable (client->engine, key);
-}
-
-static DConfChangeset *
-dconf_client_make_simple_change (const gchar *key,
-                                 GVariant    *value)
-{
-  DConfChangeset *changeset;
-
-  changeset = dconf_changeset_new ();
-  dconf_changeset_set (changeset, key, value);
-
-  return changeset;
 }
 
 gboolean
@@ -166,7 +168,7 @@ dconf_client_write_fast (DConfClient  *client,
 
   g_return_val_if_fail (DCONF_IS_CLIENT (client), FALSE);
 
-  changeset = dconf_client_make_simple_change (key, value);
+  changeset = dconf_changeset_new_write (key, value);
   success = dconf_engine_change_fast (client->engine, changeset, error);
   dconf_changeset_unref (changeset);
 
@@ -186,7 +188,7 @@ dconf_client_write_sync (DConfClient   *client,
 
   g_return_val_if_fail (DCONF_IS_CLIENT (client), FALSE);
 
-  changeset = dconf_client_make_simple_change (key, value);
+  changeset = dconf_changeset_new_write (key, value);
   success = dconf_engine_change_sync (client->engine, changeset, tag, error);
   dconf_changeset_unref (changeset);
 
@@ -225,8 +227,8 @@ dconf_client_watch_fast (DConfClient *client,
 }
 
 void
-dconf_client_watch_sync (DConfClient   *client,
-                         const gchar   *path)
+dconf_client_watch_sync (DConfClient *client,
+                         const gchar *path)
 {
   g_return_if_fail (DCONF_IS_CLIENT (client));
 
@@ -249,16 +251,4 @@ dconf_client_unwatch_sync (DConfClient *client,
   g_return_if_fail (DCONF_IS_CLIENT (client));
 
   dconf_engine_unwatch_sync (client->engine, path);
-}
-
-DConfClient *
-dconf_client_new (void)
-{
-  DConfClient *client;
-
-  client = g_object_new (DCONF_TYPE_CLIENT, NULL);
-  client->engine = dconf_engine_new (client);
-  client->context = g_main_context_ref_thread_default ();
-
-  return client;
 }

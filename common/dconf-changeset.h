@@ -32,6 +32,9 @@ typedef gboolean     (* DConfChangesetPredicate)                        (const g
 
 DConfChangeset *        dconf_changeset_new                             (void);
 
+DConfChangeset *        dconf_changeset_new_write                       (const gchar             *key,
+                                                                         GVariant                *value);
+
 DConfChangeset *        dconf_changeset_ref                             (DConfChangeset          *changeset);
 void                    dconf_changeset_unref                           (DConfChangeset          *changeset);
 
