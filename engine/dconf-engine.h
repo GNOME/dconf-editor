@@ -100,10 +100,11 @@ void                    dconf_engine_handle_dbus_signal                 (GBusTyp
                                                                          GVariant                *parameters);
 
 G_GNUC_INTERNAL
-DConfEngine *           dconf_engine_new                                (gpointer                 user_data);
+DConfEngine *           dconf_engine_new                                (gpointer                 user_data,
+                                                                         GDestroyNotify           free_func);
 
 G_GNUC_INTERNAL
-void                    dconf_engine_free                               (DConfEngine             *engine);
+void                    dconf_engine_unref                              (DConfEngine             *engine);
 
 /* Read API: always handled immediately */
 G_GNUC_INTERNAL

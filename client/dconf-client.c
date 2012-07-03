@@ -47,7 +47,7 @@ dconf_client_finalize (GObject *object)
 {
   DConfClient *client = DCONF_CLIENT (object);
 
-  dconf_engine_free (client->engine);
+  dconf_engine_unref (client->engine);
   g_main_context_unref (client->context);
 
   G_OBJECT_CLASS (dconf_client_parent_class)
@@ -103,13 +103,19 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar *        tag,
                             gpointer             user_data)
 {
-  DConfClient *client = user_data;
+  GWeakRef *weak_ref = user_data;
   DConfClientChange *change;
+  DConfClient *client;
+
+  client = g_weak_ref_get (weak_ref);
+
+  if (client == NULL)
+    return;
 
   g_return_if_fail (DCONF_IS_CLIENT (client));
 
   change = g_slice_new (DConfClientChange);
-  change->client = g_object_ref (client);
+  change->client = client;
   change->prefix = g_strdup (prefix);
   change->changes = g_strdupv ((gchar **) changes);
   change->tag = g_strdup (tag);
@@ -117,13 +123,25 @@ dconf_engine_change_notify (DConfEngine         *engine,
   g_main_context_invoke (client->context, dconf_client_dispatch_change_signal, change);
 }
 
+static void
+dconf_client_free_weak_ref (gpointer data)
+{
+  GWeakRef *weak_ref = data;
+
+  g_weak_ref_clear (weak_ref);
+  g_slice_free (GWeakRef, weak_ref);
+}
+
 DConfClient *
 dconf_client_new (void)
 {
   DConfClient *client;
+  GWeakRef *weak_ref;
 
   client = g_object_new (DCONF_TYPE_CLIENT, NULL);
-  client->engine = dconf_engine_new (client);
+  weak_ref = g_slice_new (GWeakRef);
+  g_weak_ref_init (weak_ref, client);
+  client->engine = dconf_engine_new (weak_ref, dconf_client_free_weak_ref);
   client->context = g_main_context_ref_thread_default ();
 
   return client;

@@ -141,9 +141,22 @@ dconf_settings_backend_sync (GSettingsBackend *backend)
 }
 
 static void
+dconf_settings_backend_free_weak_ref (gpointer data)
+{
+  GWeakRef *weak_ref = data;
+
+  g_weak_ref_clear (weak_ref);
+  g_slice_free (GWeakRef, weak_ref);
+}
+
+static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
-  dcsb->engine = dconf_engine_new (dcsb);
+  GWeakRef *weak_ref;
+
+  weak_ref = g_slice_new (GWeakRef);
+  g_weak_ref_init (weak_ref, dcsb);
+  dcsb->engine = dconf_engine_new (weak_ref, dconf_settings_backend_free_weak_ref);
 }
 
 static void
@@ -151,7 +164,7 @@ dconf_settings_backend_finalize (GObject *object)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) object;
 
-  dconf_engine_free (dcsb->engine);
+  dconf_engine_unref (dcsb->engine);
 
   G_OBJECT_CLASS (dconf_settings_backend_parent_class)
     ->finalize (object);
@@ -202,4 +215,24 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar         *tag,
                             gpointer             user_data)
 {
+  GWeakRef *weak_ref = user_data;
+  DConfSettingsBackend *dcsb;
+
+  dcsb = g_weak_ref_get (weak_ref);
+
+  if (dcsb == NULL)
+    return;
+
+  if (changes[0] == NULL)
+    return;
+
+  if (changes[1] == NULL)
+    {
+      if (g_str_has_suffix (prefix, "/"))
+        g_settings_backend_path_changed (G_SETTINGS_BACKEND (dcsb), prefix, NULL);
+      else
+        g_settings_backend_changed (G_SETTINGS_BACKEND (dcsb), prefix, NULL);
+    }
+  else
+    g_settings_backend_keys_changed (G_SETTINGS_BACKEND (dcsb), prefix, changes, NULL);
 }
