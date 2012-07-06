@@ -16,6 +16,7 @@ test_paths (void)
 #define relkey  020 | rel
 #define reldir  040 | rel
 
+    { NULL,             invalid },
     { "",               reldir  },
     { "/",              dir     },
 
