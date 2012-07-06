@@ -35,6 +35,13 @@ struct _DConfChangeset
   GVariant **values;
 };
 
+static void
+unref_gvariant0 (gpointer data)
+{
+  if (data)
+    g_variant_unref (data);
+}
+
 /**
  * dconf_changeset_new:
  *
@@ -48,7 +55,7 @@ dconf_changeset_new (void)
   DConfChangeset *change;
 
   change = g_slice_new0 (DConfChangeset);
-  change->table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) g_variant_unref);
+  change->table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, unref_gvariant0);
   change->ref_count = 1;
 
   return change;
@@ -100,6 +107,8 @@ dconf_changeset_set (DConfChangeset *change,
                      GVariant       *value)
 {
   g_return_if_fail (change->root == NULL);
+  g_return_if_fail (key != NULL);
+  g_return_if_fail (key[0] == '/');
 
   g_hash_table_insert (change->table, g_strdup (key), value ? g_variant_ref_sink (value) : NULL);
 }
@@ -149,6 +158,11 @@ dconf_changeset_get (DConfChangeset  *change,
  * This check is used to prevent building up a queue of repeated writes
  * of the same keys.  This is often seen when an application writes to a
  * key on every move of a slider or an application window.
+ *
+ * Strictly speaking, a write resettings all of "/a/" after a write
+ * containing "/a/b" could cause the later to be removed from the queue,
+ * but this situation is difficult to detect and is expected to be
+ * extremely rare.
  *
  * Returns: %TRUE if the changes are similar
  **/
@@ -208,7 +222,7 @@ dconf_changeset_string_ptr_compare (gconstpointer a_p,
                                     gconstpointer b_p)
 {
   const gchar * const *a = a_p;
-  const gchar * const *b = a_p;
+  const gchar * const *b = b_p;
 
   return strcmp (*a, *b);
 }
@@ -261,7 +275,7 @@ dconf_changeset_build_description (DConfChangeset *change)
     first = key;
 
     /* Consider the remaining items to find the common prefix */
-    while (g_hash_table_iter_next (&iter, key, NULL))
+    while (g_hash_table_iter_next (&iter, &key, NULL))
       {
         const gchar *this = key;
         gint i;
