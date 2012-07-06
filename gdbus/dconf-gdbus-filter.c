@@ -217,7 +217,10 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   state = dconf_gdbus_get_connection_state (bus_type, error);
 
   if (state == NULL)
-    return FALSE;
+    {
+      g_variant_unref (g_variant_ref_sink (parameters));
+      return FALSE;
+    }
 
   message = g_dbus_message_new_method_call (bus_name, object_path, interface_name, method_name);
   g_dbus_message_set_body (message, parameters);
@@ -286,7 +289,11 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
   state = dconf_gdbus_get_connection_state (bus_type, error);
 
   if (state == NULL)
-    return NULL;
+    {
+      g_variant_unref (g_variant_ref_sink (parameters));
+
+      return NULL;
+    }
 
   return g_dbus_connection_call_sync (connection_state_get_connection (state),
                                       bus_name, object_path, interface_name, method_name, parameters, reply_type,

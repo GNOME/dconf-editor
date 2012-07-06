@@ -273,7 +273,7 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   call->object_path = object_path;
   call->interface_name = interface_name;
   call->method_name = method_name;
-  call->parameters = g_variant_ref (parameters);
+  call->parameters = g_variant_ref_sink (parameters);
   call->handle = handle;
 
   g_main_context_invoke (dconf_gdbus_get_worker_context (), dconf_gdbus_method_call, call);
@@ -336,6 +336,8 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
 
   if (connection == NULL)
     {
+      g_variant_unref (g_variant_ref_sink (parameters));
+
       if (error)
         *error = g_error_copy (inner_error);
 
