@@ -63,7 +63,7 @@ dconf_gdbus_handle_reply (ConnectionState *state,
     DConfGDBusCall *call;
 
     call = g_queue_pop_head (&state->queue);
-    g_assert_cmpuint (g_dbus_message_get_serial (message), ==, call->serial);
+    g_assert_cmpuint (g_dbus_message_get_reply_serial (message), ==, call->serial);
     handle = call->handle;
 
     g_slice_free (DConfGDBusCall, call);
@@ -223,36 +223,49 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   g_dbus_message_set_body (message, parameters);
 
   g_mutex_lock (&dconf_gdbus_lock);
+  {
+    volatile guint *serial_ptr;
+    guint my_serial;
 
-  /* We need to set the serial in two places: state->waiting_for_serial
-   * and call->serial.
-   *
-   * g_dbus_connection_send_message() only has one out_serial parameter
-   * so we can only set one of them atomically.  We elect to set the
-   * waiting_for_serial because that is the one that is accessed from
-   * the filter function without holding the lock.
-   *
-   * The serial number in the call structure is only accessed after the
-   * lock is acquired which allows us to take our time setting it (for
-   * as long as we're still holding the lock).
-   *
-   * Also: the queue itself isn't accessed until after the lock is
-   * taken, so we can delay adding the call to the queue until we know
-   * that the sending of the message was successful.
-   */
-  success = g_dbus_connection_send_message (connection_state_get_connection (state), message,
-                                            G_DBUS_SEND_MESSAGE_FLAGS_NONE, &state->waiting_for_serial, error);
+    /* We need to set the serial in call->serial.  Sometimes we also
+     * need to set it in state->waiting_for_serial (in the case that no
+     * other items are queued yet).
+     *
+     * g_dbus_connection_send_message() only has one out_serial parameter
+     * so we can only set one of them atomically.  If needed, we elect
+     * to set the waiting_for_serial because that is the one that is
+     * accessed from the filter function without holding the lock.
+     *
+     * The serial number in the call structure is only accessed after the
+     * lock is acquired which allows us to take our time setting it (for
+     * as long as we're still holding the lock).
+     *
+     * In the case that waiting_for_serial should not be set we just use
+     * a local variable and use that to fill call->serial.
+     *
+     * Also: the queue itself isn't accessed until after the lock is
+     * taken, so we can delay adding the call to the queue until we know
+     * that the sending of the message was successful.
+     */
 
-  if (success)
-    {
-      call = g_slice_new (DConfGDBusCall);
+    if (g_queue_is_empty (&state->queue))
+      serial_ptr = &state->waiting_for_serial;
+    else
+      serial_ptr = &my_serial;
 
-      call->handle = handle;
-      call->serial = state->waiting_for_serial;
+    success = g_dbus_connection_send_message (connection_state_get_connection (state), message,
+                                              G_DBUS_SEND_MESSAGE_FLAGS_NONE, serial_ptr, error);
 
-      g_queue_push_tail (&state->queue, call);
-    }
+    if (success)
+      {
+        call = g_slice_new (DConfGDBusCall);
 
+        call->handle = handle;
+        call->serial = *serial_ptr;
+
+        g_queue_push_tail (&state->queue, call);
+      }
+  }
   g_mutex_unlock (&dconf_gdbus_lock);
 
   return success;
