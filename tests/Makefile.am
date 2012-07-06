@@ -38,6 +38,13 @@ gvdb_LDADD = $(glib_LIBS)
 gvdb_SOURCES = \
 	../gvdb/gvdb-reader.c		\
 	gvdb.c
+EXTRA_DIST = \
+	gvdbs/empty_gvdb		\
+	gvdbs/example_gvdb		\
+	gvdbs/example_gvdb.big-endian	\
+	gvdbs/file_empty		\
+	gvdbs/file_too_small		\
+	gvdbs/invalid_header
 
 TEST_PROGS += gdbus-thread
 gdbus_thread_CFLAGS = $(AM_CFLAGS) -DDBUS_BACKEND=\"/gdbus/thread\"
@@ -60,3 +67,5 @@ engine_SOURCES = engine.c
 TEST_PROGS += client
 client_LDADD = $(stub_client_LIBS) $(gio_LIBS)
 client_SOURCES = client.c
+EXTRA_DIST += \
+	profile/will-never-exist
