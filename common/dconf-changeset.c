@@ -326,15 +326,6 @@ dconf_changeset_build_description (DConfChangeset *change)
        */
       change->values[i] = g_hash_table_lookup (change->table, change->paths[i] - prefix_length);
   }
-
-  {
-    gint i;
-
-    g_print ("Changes were described: %s\n", change->root);
-    for (i = 0; i < n_items; i++)
-      g_print ("  %s: %s\n", change->paths[i], change->values[i] ? g_variant_print (change->values[i], FALSE) : "(none)");
-    g_print ("\n");
-  }
 }
 
 guint
