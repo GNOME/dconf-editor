@@ -271,6 +271,8 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   }
   g_mutex_unlock (&dconf_gdbus_lock);
 
+  g_object_unref (message);
+
   return success;
 }
 
