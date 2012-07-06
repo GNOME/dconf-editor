@@ -277,6 +277,45 @@ test_describe (void)
   dconf_changeset_unref (changeset);
 }
 
+static void
+test_reset (void)
+{
+  DConfChangeset *changeset;
+
+  changeset = dconf_changeset_new ();
+  g_assert (!dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* set a value */
+  dconf_changeset_set (changeset, "/value/a", g_variant_new_boolean (TRUE));
+  g_assert (dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* record the reset */
+  dconf_changeset_set (changeset, "/value/", NULL);
+  g_assert (!dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* write it back */
+  dconf_changeset_set (changeset, "/value/a", g_variant_new_boolean (TRUE));
+  g_assert (dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* reset again */
+  dconf_changeset_set (changeset, "/value/", NULL);
+  g_assert (!dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* write again */
+  dconf_changeset_set (changeset, "/value/a", g_variant_new_boolean (TRUE));
+  g_assert (dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* reset a different way */
+  dconf_changeset_set (changeset, "/value/a", g_variant_new_boolean (TRUE));
+  g_assert (dconf_changeset_get (changeset, "/value/a", NULL));
+
+  /* write last time */
+  dconf_changeset_set (changeset, "/value/a", g_variant_new_boolean (TRUE));
+  g_assert (dconf_changeset_get (changeset, "/value/a", NULL));
+
+  dconf_changeset_unref (changeset);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -285,6 +324,7 @@ main (int argc, char **argv)
   g_test_add_func ("/changeset/basic", test_basic);
   g_test_add_func ("/changeset/similarity", test_similarity);
   g_test_add_func ("/changeset/describe", test_describe);
+  g_test_add_func ("/changeset/reset", test_reset);
 
   return g_test_run ();
 }
