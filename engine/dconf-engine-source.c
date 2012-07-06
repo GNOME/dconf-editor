@@ -34,6 +34,8 @@ dconf_engine_source_free (DConfEngineSource *source)
     gvdb_table_unref (source->locks);
 
   source->vtable->finalize (source);
+  g_free (source->bus_name);
+  g_free (source->object_path);
   g_free (source->name);
   g_free (source);
 }
