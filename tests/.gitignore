@@ -1,5 +1,6 @@
 libdconf-dbus-stub.a
 
+changeset
 client
 dbus1
 engine

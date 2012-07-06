@@ -13,6 +13,10 @@ TEST_PROGS += paths
 paths_LDADD = ../common/libdconf-common.a $(gio_LIBS)
 paths_SOURCES = paths.c
 
+TEST_PROGS += changeset
+changeset_LDADD = ../common/libdconf-common.a $(glib_LIBS)
+changeset_SOURCES = changeset.c
+
 engine_LIBS = \
 	../engine/libdconf-engine.a	\
 	../common/libdconf-common.a
