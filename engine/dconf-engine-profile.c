@@ -94,6 +94,8 @@ dconf_engine_read_profile_file (FILE *file,
         }
     }
 
+  *n_sources = n;
+
   return sources;
 }
 
