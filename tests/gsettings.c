@@ -299,7 +299,7 @@ verify_consistency (void)
   else
     g_print ("(%d)", g_hash_table_size (implicit));
 
-  g_assert (g_hash_table_size (explicit) == g_hash_table_size (implicit));
+  g_assert_cmpint (g_hash_table_size (explicit), ==, g_hash_table_size (implicit));
   g_hash_table_iter_init (&iter, explicit);
   while (g_hash_table_iter_next (&iter, &key, &value))
     {
