@@ -1,4 +1,6 @@
 dbus1
+gdbus-filter
+gdbus-thread
 gsettings
 gvdb
 paths

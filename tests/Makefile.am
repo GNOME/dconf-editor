@@ -17,3 +17,17 @@ gvdb_LDADD = $(glib_LIBS)
 gvdb_SOURCES = \
 	../gvdb/gvdb-reader.c		\
 	gvdb.c
+
+TEST_PROGS += gdbus-thread
+gdbus_thread_CFLAGS = $(AM_CFLAGS) -DDBUS_BACKEND=\"/gdbus/thread\"
+gdbus_thread_LDADD = $(gio_LIBS)
+gdbus_thread_SOURCES = \
+	../gdbus/dconf-gdbus-thread.c	\
+	dbus.c
+
+TEST_PROGS += gdbus-filter
+gdbus_filter_CFLAGS = $(AM_CFLAGS) -DDBUS_BACKEND=\"/gdbus/filter\"
+gdbus_filter_LDADD = $(gio_LIBS)
+gdbus_filter_SOURCES = \
+	../gdbus/dconf-gdbus-filter.c	\
+	dbus.c
