@@ -141,7 +141,9 @@ dconf_changeset_get (DConfChangeset  *change,
   if (!g_hash_table_lookup_extended (change->table, key, NULL, &tmp))
     return FALSE;
 
-  *value = tmp ? g_variant_ref (tmp) : NULL;
+  if (value)
+    *value = tmp ? g_variant_ref (tmp) : NULL;
+
   return TRUE;
 }
 
