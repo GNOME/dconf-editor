@@ -537,7 +537,7 @@ dconf_engine_read (DConfEngine        *engine,
         }
 
       /* Step 4.  Check the first source. */
-      if (!found_key)
+      if (!found_key && engine->sources[0]->values)
         value = gvdb_table_get_value (engine->sources[0]->values, key);
 
       /* We already checked source #0 (or ignored it, as appropriate).
@@ -549,8 +549,13 @@ dconf_engine_read (DConfEngine        *engine,
 
   /* Step 5.  Check the remaining sources, until value != NULL. */
   for (i = lock_level; value == NULL && i < engine->n_sources; i++)
-    if ((value = gvdb_table_get_value (engine->sources[i]->values, key)))
-      break;
+    {
+      if (engine->sources[i]->values == NULL)
+        continue;
+
+      if ((value = gvdb_table_get_value (engine->sources[i]->values, key)))
+        break;
+    }
 
   dconf_engine_release_sources (engine);
 
