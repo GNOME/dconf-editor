@@ -530,7 +530,7 @@ dconf_engine_read (DConfEngine        *engine,
           /* Check the pending queue first because those were submitted
            * more recently.
            */
-          found_key = dconf_engine_find_key_in_queue (&engine->pending, key, &value) &&
+          found_key = dconf_engine_find_key_in_queue (&engine->pending, key, &value) ||
                       dconf_engine_find_key_in_queue (&engine->in_flight, key, &value);
 
           dconf_engine_unlock_queues (engine);
