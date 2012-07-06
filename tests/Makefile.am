@@ -52,3 +52,7 @@ gdbus_filter_LDADD = $(gio_LIBS)
 gdbus_filter_SOURCES = \
 	../gdbus/dconf-gdbus-filter.c	\
 	dbus.c
+
+TEST_PROGS += engine
+engine_LDADD = $(engine_with_stub_LIBS) $(glib_LIBS)
+engine_SOURCES = engine.c
