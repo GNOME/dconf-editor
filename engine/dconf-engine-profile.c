@@ -61,7 +61,7 @@ dconf_engine_read_profile_file (FILE *file,
   while (fgets (line, sizeof line, file))
     {
       DConfEngineSource *source;
-      const gchar *end;
+      gchar *end;
 
       end = strchr (line, '\n');
 
@@ -80,6 +80,8 @@ dconf_engine_read_profile_file (FILE *file,
 
       if (line[0] == '#')
         continue;
+
+      *end = '\0';
 
       source = dconf_engine_source_new (line);
 
