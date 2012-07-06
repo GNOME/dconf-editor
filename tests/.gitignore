@@ -1,3 +1,5 @@
+libdconf-dbus-stub.a
+
 dbus1
 gdbus-filter
 gdbus-thread
