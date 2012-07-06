@@ -7,6 +7,10 @@ Makefile
 *.gir
 *.typelib
 
+# gcov
+*.gcda
+*.gcno
+
 # autofoo stuff here
 /m4/
 /aux/
