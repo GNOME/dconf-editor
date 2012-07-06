@@ -27,6 +27,12 @@
 void
 dconf_engine_source_free (DConfEngineSource *source)
 {
+  if (source->values)
+    gvdb_table_unref (source->values);
+
+  if (source->locks)
+    gvdb_table_unref (source->locks);
+
   source->vtable->finalize (source);
   g_free (source->name);
   g_free (source);
