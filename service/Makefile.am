@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common -Wall -Wmissing-prototypes -Wwrite-strings
 
 libexec_PROGRAMS = dconf-service

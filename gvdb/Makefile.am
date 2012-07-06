@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 EXTRA_DIST = \
 	gvdb-format.h	\
 	gvdb-reader.h	\

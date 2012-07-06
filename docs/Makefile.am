@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 include gtk-doc.make
 
 DOC_MODULE = dconf

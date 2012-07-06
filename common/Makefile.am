@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 dconfinclude_HEADERS = \
 	dconf-paths.h
 

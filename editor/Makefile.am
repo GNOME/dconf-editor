@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 bin_PROGRAMS = dconf-editor
 
 AM_CFLAGS = $(gtk_CFLAGS) $(gmodule_CFLAGS) $(libxml_CFLAGS) -I$(top_srcdir)/common -I$(top_srcdir)/client -DPKGDATADIR=\"@datadir@/dconf-editor\"

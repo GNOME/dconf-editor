@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 AM_CFLAGS = -Wall -Wmissing-prototypes -Wwrite-strings
 CFLAGS += -Wno-error -Wno-unused-but-set-variable -Wno-unused-variable
 INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client -I$(top_srcdir)/gvdb $(gio_CFLAGS)

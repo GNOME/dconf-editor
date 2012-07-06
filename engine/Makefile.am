@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.gtester
+
 noinst_LIBRARIES = libdconf-engine.a
 
 libdconf_engine_a_CFLAGS = -fPIC -DPIC -Wall
