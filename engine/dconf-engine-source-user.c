@@ -41,8 +41,8 @@ dconf_engine_source_user_open_shm (const gchar *name)
   void *memory;
   gint fd;
 
-  if (shmdir == NULL)
-    shmdir = g_build_filename (g_get_user_runtime_dir (), "dconf", NULL);
+  if (g_once_init_enter (&shmdir))
+    g_once_init_leave (&shmdir, g_build_filename (g_get_user_runtime_dir (), "dconf", NULL));
 
   filename = g_build_filename (shmdir, name, NULL);
   memory = NULL;
