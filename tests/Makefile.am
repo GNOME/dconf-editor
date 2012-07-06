@@ -56,3 +56,7 @@ gdbus_filter_SOURCES = \
 TEST_PROGS += engine
 engine_LDADD = $(engine_with_stub_LIBS) $(glib_LIBS)
 engine_SOURCES = engine.c
+
+TEST_PROGS += client
+client_LDADD = $(stub_client_LIBS) $(gio_LIBS)
+client_SOURCES = client.c

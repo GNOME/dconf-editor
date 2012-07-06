@@ -1,5 +1,6 @@
 libdconf-dbus-stub.a
 
+client
 dbus1
 engine
 gdbus-filter
