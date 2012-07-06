@@ -93,24 +93,48 @@ dconf_changeset_ref (DConfChangeset *change)
 /**
  * dconf_changeset_set:
  * @change: a #DConfChangeset
- * @key: a key to modify
+ * @path: a path to modify
  * @value: the value for the key, or %NULL to reset
  *
- * Adds an operation to modify @key to a #DConfChangeset.
+ * Adds an operation to modify @path to a #DConfChangeset.
  *
- * @value, if non-%NULL specifies the new requested value of @key.  If
- * @value is %NULL, the key is reset.
+ * @path may either be a key or a dir.  If it is a key then @value may
+ * be a #GVariant, or %NULL (to set or reset the key).
+ *
+ * If @path is a dir then this must be a reset operation: @value must be
+ * %NULL.  It is not permitted to assign a #GVariant value to a dir.
  **/
 void
 dconf_changeset_set (DConfChangeset *change,
-                     const gchar    *key,
+                     const gchar    *path,
                      GVariant       *value)
 {
   g_return_if_fail (change->root == NULL);
-  g_return_if_fail (key != NULL);
-  g_return_if_fail (key[0] == '/');
+  g_return_if_fail (dconf_is_path (path, NULL));
 
-  g_hash_table_insert (change->table, g_strdup (key), value ? g_variant_ref_sink (value) : NULL);
+  /* Check if we are performing a path reset */
+  if (g_str_has_suffix (path, "/"))
+    {
+      GHashTableIter iter;
+      gpointer key;
+
+      g_return_if_fail (value == NULL);
+
+      /* When we reset a path we must also reset all keys within that
+       * path.
+       */
+      g_hash_table_iter_init (&iter, change->table);
+      while (g_hash_table_iter_next (&iter, &key, NULL))
+        if (g_str_has_prefix (key, path))
+          g_hash_table_iter_remove (&iter);
+
+      /* Record the reset itself. */
+      g_hash_table_insert (change->table, g_strdup (path), NULL);
+    }
+
+  /* else, just a normal value write or reset */
+  else
+    g_hash_table_insert (change->table, g_strdup (path), value ? g_variant_ref_sink (value) : NULL);
 }
 
 /**
