@@ -7,6 +7,7 @@ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(
 shlibdir=$(libdir)
 shlib_PROGRAMS = libdconf.so.0.0.0
 nodist_noinst_DATA = libdconf.so.0 libdconf.so
+noinst_LIBRARIES = libdconf-client.a
 
 libdconf.so.0 libdconf.so: libdconf.so.0.0.0
 	$(AM_V_GEN) ln -fs libdconf.so.0.0.0 $@
@@ -27,6 +28,8 @@ libdconf_so_0_0_0_LDADD = $(gio_LIBS) ../common/libdconf-common-shared.a ../engi
 libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0
 libdconf_so_0_0_0_SOURCES = \
 	dconf-client.c
+
+libdconf_client_a_SOURCES = dconf-client.c
 
 EXTRA_DIST = dconf.vapi
 
