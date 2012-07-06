@@ -34,6 +34,8 @@ connection_state_ensure_success (ConnectionState  *state,
     {
       if (error)
         *error = g_error_copy (state->data);
+
+      return FALSE;
     }
 
   return TRUE;
