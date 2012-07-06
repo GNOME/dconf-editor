@@ -872,7 +872,7 @@ dconf_engine_emit_changes (DConfEngine    *engine,
   const gchar * const *changes;
 
   if (dconf_changeset_describe (changeset, &prefix, &changes, NULL))
-    dconf_engine_change_notify (engine, prefix, changes, engine->user_data, NULL);
+    dconf_engine_change_notify (engine, prefix, changes, NULL, engine->user_data);
 }
 
 static void
