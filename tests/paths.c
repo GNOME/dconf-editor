@@ -82,19 +82,16 @@ test_paths (void)
               (dconf_is_rel_key (string, NULL) ? 020 : 000) |
               (dconf_is_rel_dir (string, NULL) ? 040 : 000);
 
-      if (flags != cases[i].flags)
-        {
-          g_print ("case %i: string '%s' should be %o but is %o",
-                   i, string, cases[i].flags, flags);
-          g_assert_not_reached ();
-        }
+      g_assert_cmphex (flags, ==, cases[i].flags);
     }
 }
 
 int
-main (void)
+main (int argc, char **argv)
 {
-  test_paths ();
+  g_test_init (&argc, &argv, NULL);
 
-  return 0;
+  g_test_add_func ("/paths", test_paths);
+
+  return g_test_run ();
 }
