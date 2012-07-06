@@ -157,7 +157,8 @@ dconf_gdbus_get_bus_common (GBusType       bus_type,
 {
   if (dconf_gdbus_get_bus_is_error[bus_type])
     {
-      *error = dconf_gdbus_get_bus_data[bus_type];
+      if (error)
+        *error = dconf_gdbus_get_bus_data[bus_type];
 
       return NULL;
     }
