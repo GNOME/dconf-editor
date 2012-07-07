@@ -195,7 +195,7 @@ walk_open (const gchar *name,
 {
   GString *log = user_data;
 
-  g_string_append_c (log, '\'');
+  g_string_append (log, "'");
   g_string_append_len (log, name, name_len);
   g_string_append_printf (log, "\'(%zd): {", name_len);
 
@@ -221,7 +221,7 @@ walk_value (const gchar *name,
 
   printed = g_variant_print (value, FALSE);
 
-  g_string_append_c (log, '\'');
+  g_string_append (log, "'");
   g_string_append_len (log, name, name_len);
   g_string_append_printf (log, "\'(%zd): %s", name_len, printed);
   g_free (printed);
