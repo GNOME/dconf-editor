@@ -316,6 +316,73 @@ test_reset (void)
   dconf_changeset_unref (changeset);
 }
 
+static gboolean
+has_same_value (const gchar *key,
+                GVariant    *value,
+                gpointer     user_data)
+{
+  DConfChangeset *other = user_data;
+  GVariant *other_value;
+  gboolean success;
+
+  success = dconf_changeset_get (other, key, &other_value);
+  g_assert (success);
+
+  if (value == NULL)
+    g_assert (other_value == NULL);
+  else
+    {
+      g_assert (g_variant_equal (value, other_value));
+      g_variant_unref (other_value);
+    }
+
+  return TRUE;
+}
+
+static void
+test_serialisation (DConfChangeset *changes)
+{
+  GVariant *serialised;
+  DConfChangeset *copy;
+
+  serialised = dconf_changeset_serialise (changes);
+  copy = dconf_changeset_deserialise (serialised);
+  g_variant_unref (serialised);
+
+  g_assert (dconf_changeset_is_similar_to (copy, changes));
+  g_assert (dconf_changeset_is_similar_to (changes, copy));
+  g_assert (dconf_changeset_all (copy, has_same_value, changes));
+  g_assert (dconf_changeset_all (changes, has_same_value, copy));
+
+  dconf_changeset_unref (copy);
+}
+
+static void
+test_serialiser (void)
+{
+  DConfChangeset *changeset;
+
+  changeset = dconf_changeset_new ();
+  test_serialisation (changeset);
+
+  dconf_changeset_set (changeset, "/some/value", g_variant_new_int32 (333));
+  test_serialisation (changeset);
+
+  dconf_changeset_set (changeset, "/other/value", NULL);
+  test_serialisation (changeset);
+
+  dconf_changeset_set (changeset, "/other/value", g_variant_new_int32 (55));
+  test_serialisation (changeset);
+
+  dconf_changeset_set (changeset, "/other/", NULL);
+  test_serialisation (changeset);
+
+  dconf_changeset_set (changeset, "/", NULL);
+  test_serialisation (changeset);
+
+  dconf_changeset_unref (changeset);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -325,6 +392,7 @@ main (int argc, char **argv)
   g_test_add_func ("/changeset/similarity", test_similarity);
   g_test_add_func ("/changeset/describe", test_describe);
   g_test_add_func ("/changeset/reset", test_reset);
+  g_test_add_func ("/changeset/serialiser", test_serialiser);
 
   return g_test_run ();
 }
