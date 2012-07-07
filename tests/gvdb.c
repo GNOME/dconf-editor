@@ -40,6 +40,9 @@ test_reader_empty (void)
   g_assert_no_error (error);
   g_assert (table != NULL);
 
+  table = gvdb_table_ref (table);
+  gvdb_table_unref (table);
+
   g_assert (gvdb_table_is_valid (table));
 
   for (i = 0; strings[i]; i++)
@@ -296,9 +299,181 @@ test_reader_walk_bigendian (void)
   gvdb_table_unref (table);
 }
 
+static void
+test_nested (void)
+{
+  GError *error = NULL;
+  GvdbTable *table;
+  GvdbTable *locks;
+  gboolean has;
+
+  table = gvdb_table_new (SRCDIR "/gvdbs/nested_gvdb", TRUE, &error);
+  g_assert_no_error (error);
+
+  verify_walk (table);
+
+  locks = gvdb_table_get_table (table, "/");
+  g_assert (locks == NULL);
+  locks = gvdb_table_get_table (table, "/values/");
+  g_assert (locks == NULL);
+  locks = gvdb_table_get_table (table, "/values/int32");
+  g_assert (locks == NULL);
+
+  locks = gvdb_table_get_table (table, ".locks");
+  g_assert (locks != NULL);
+
+  has = gvdb_table_has_value (locks, "/first/lck");
+  g_assert (!has);
+
+  has = gvdb_table_has_value (locks, "/first/lock");
+  g_assert (has);
+
+  has = gvdb_table_has_value (locks, "/second");
+  g_assert (has);
+
+  gvdb_table_unref (table);
+}
+
+/* This function exercises the API against @table but does not do any
+ * asserts on unexpected values (although it will assert on inconsistent
+ * values returned by the API).
+ */
+static void
+inspect_carefully (GvdbTable *table)
+{
+  const gchar * key_names[] = {
+    "/", "/values/", "/int32", "values/int32",
+    "/values/int32", "/values/boolean", "/values/string",
+    ".locks", "/first/lock", "/second", NULL
+  };
+  GString *log;
+  gint i;
+
+  for (i = 0; key_names[i]; i++)
+    {
+      const gchar *key = key_names[i];
+      GvdbTable *subtable;
+      GVariant *value;
+      gchar **list;
+      gboolean has;
+
+      has = gvdb_table_has_value (table, key);
+
+      list = gvdb_table_list (table, key);
+      g_assert (!has || list == NULL);
+      if (list)
+        {
+          gchar *joined = g_strjoinv (",", list);
+          g_strfreev (list);
+          g_free (joined);
+        }
+
+      value = gvdb_table_get_value (table, key);
+      g_assert_cmpint (value != NULL, ==, has);
+      if (value)
+        {
+          gchar *printed = g_variant_print (value, FALSE);
+          g_variant_unref (value);
+          g_free (printed);
+        }
+
+      value = gvdb_table_get_raw_value (table, key);
+      g_assert_cmpint (value != NULL, ==, has);
+      if (value)
+        {
+          gchar *printed = g_variant_print (value, FALSE);
+          g_variant_unref (value);
+          g_free (printed);
+        }
+
+      subtable = gvdb_table_get_table (table, key);
+      g_assert (!has || subtable == NULL);
+      if (subtable)
+        {
+          inspect_carefully (subtable);
+          gvdb_table_unref (subtable);
+        }
+    }
+
+  log = g_string_new (NULL);
+  accept_this_many_opens = -1;
+  gvdb_table_walk (table, "/", walk_open, walk_value, walk_close, log);
+  g_string_free (log, TRUE);
+}
+
+static void
+test_corrupted (gconstpointer user_data)
+{
+  gint percentage = GPOINTER_TO_INT (user_data);
+  GError *error = NULL;
+  GMappedFile *mapped;
+
+  mapped = g_mapped_file_new (SRCDIR "/gvdbs/nested_gvdb", FALSE, &error);
+  g_assert_no_error (error);
+  g_assert (mapped);
+
+  if (percentage)
+    {
+      GvdbTable *table;
+      const gchar *orig;
+      gsize length;
+      gchar *copy;
+      gint i;
+
+      orig = g_mapped_file_get_contents (mapped);
+      length = g_mapped_file_get_length (mapped);
+      copy = g_memdup (orig, length);
+
+      for (i = 0; i < 10000; i++)
+        {
+          gint j;
+
+          /* Make a broken copy, but leave the signature intact so that
+           * we don't get too many boring trivial failures.
+           */
+          for (j = 8; j < length; j++)
+            if (g_test_rand_int_range (0, 100) < percentage)
+              copy[j] = g_test_rand_int_range (0, 256);
+            else
+              copy[j] = orig[j];
+
+          table = gvdb_table_new_from_data (copy, length, FALSE, NULL, NULL, NULL, &error);
+
+          /* If we damaged the header, it may not open */
+          if (table)
+            {
+              inspect_carefully (table);
+              gvdb_table_unref (table);
+            }
+          else
+            {
+              g_assert_error (error, G_FILE_ERROR, G_FILE_ERROR_INVAL);
+              g_clear_error (&error);
+            }
+        }
+    }
+  else
+    {
+      GvdbTable *table;
+
+      table = gvdb_table_new_from_data (g_mapped_file_get_contents (mapped),
+                                        g_mapped_file_get_length (mapped),
+                                        FALSE, NULL, NULL, NULL, &error);
+      g_assert_no_error (error);
+      g_assert (table);
+
+      inspect_carefully (table);
+      gvdb_table_unref (table);
+    }
+
+  g_mapped_file_unref (mapped);
+}
+
 int
 main (int argc, char **argv)
 {
+  gint i;
+
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/gvdb/reader/open-error", test_reader_open_error);
@@ -307,6 +482,13 @@ main (int argc, char **argv)
   g_test_add_func ("/gvdb/reader/values/big-endian", test_reader_values_bigendian);
   g_test_add_func ("/gvdb/reader/walk", test_reader_walk);
   g_test_add_func ("/gvdb/reader/walk/big-endian", test_reader_walk_bigendian);
+  g_test_add_func ("/gvdb/reader/nested", test_nested);
+  for (i = 0; i < 20; i++)
+    {
+      gchar test_name[80];
+      g_snprintf (test_name, sizeof test_name, "/gvdb/reader/corrupted/%d%%", i);
+      g_test_add_data_func (test_name, GINT_TO_POINTER (i), test_corrupted);
+    }
 
   return g_test_run ();
 }
