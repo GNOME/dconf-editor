@@ -9,3 +9,4 @@ gdbus-thread
 gsettings
 gvdb
 paths
+shm

@@ -1,7 +1,7 @@
 include $(top_srcdir)/Makefile.gtester
 
 AM_CFLAGS = -Wall -Wmissing-prototypes -Wwrite-strings -DSRCDIR=\"$(abs_srcdir)\"
-INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client $(gio_CFLAGS) -I$(top_srcdir)/dbus-1 $(dbus_CFLAGS) -I$(top_srcdir)/gvdb
+INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client $(gio_CFLAGS) -I$(top_srcdir)/dbus-1 $(dbus_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/shm
 
 noinst_LIBRARIES = libdconf-dbus-stub.a
 noinst_PROGRAMS = $(TEST_PROGS) gsettings dbus1
@@ -16,6 +16,10 @@ paths_SOURCES = paths.c
 TEST_PROGS += changeset
 changeset_LDADD = ../common/libdconf-common.a $(glib_LIBS)
 changeset_SOURCES = changeset.c
+
+TEST_PROGS += shm
+shm_LDADD = ../shm/libdconf-shm.a $(glib_LIBS) -ldl
+shm_SOURCES = shm.c tmpdir.h tmpdir.c
 
 engine_LIBS = \
 	../engine/libdconf-engine.a	\
