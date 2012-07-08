@@ -71,21 +71,26 @@ dconf_shm_open (const gchar *name)
       goto out;
     }
 
-  if (ftruncate (fd, 1) != 0)
+  /* fruncate(fd, 1) is not sufficient because it does not actually
+   * ensure that the space is available (which could give a SIGBUS
+   * later).
+   *
+   * posix_fallocate() is also problematic because it is implemented in
+   * a racy way in the libc if unavailable for a particular filesystem
+   * (as is the case for tmpfs, which is where we probably are).
+   *
+   * By writing to the second byte in the file we ensure we don't
+   * overwrite the first byte (which is the one we care about).
+   */
+  if (pwrite (fd, "", 1, 1) != 1)
     {
       g_critical ("failed to allocate file '%s': %s.  dconf will not work properly.", filename, g_strerror (errno));
       goto out;
     }
 
   memory = mmap (NULL, 1, PROT_READ, MAP_SHARED, fd, 0);
+  g_assert (memory != MAP_FAILED);
   g_assert (memory != NULL);
-
-  if (memory == MAP_FAILED)
-    {
-      g_critical ("failed to mmap file '%s': %s.  dconf will not work properly.", filename, g_strerror (errno));
-      memory = NULL;
-      goto out;
-    }
 
  out:
   g_free (filename);
@@ -104,35 +109,43 @@ dconf_shm_flag (const gchar *name)
   shmdir = dconf_shm_get_shmdir ();
   filename = g_build_filename (shmdir, name, NULL);
 
-  fd = open (filename, O_WRONLY);
+  /* We need O_RDWR for PROT_WRITE.
+   *
+   * This is probably due to the fact that some architectures can't make
+   * write-only mappings (so they end up being readable as well).
+   */
+  fd = open (filename, O_RDWR);
   if (fd >= 0)
     {
-      guint8 *shm;
-
-      /* Easiest thing to do here would be write(fd, "\1", 1); but this
-       * causes problems on kernels (ie: OpenBSD) that don't sync up
-       * their filesystem cache with mmap()ed regions.
+      /* In theory we could have opened the file after a client created
+       * it but before they called pwrite().  Do the pwrite() ourselves
+       * to make sure (so we don't get SIGBUS in a moment).
        *
-       * Using mmap() works everywhere.
+       * If this fails then it will probably fail for the client too.
+       * If it doesn't then there's not really much we can do...
        */
-      shm = mmap (NULL, 1, PROT_WRITE, MAP_SHARED, fd, 0);
-
-      if (shm != MAP_FAILED)
+      if (pwrite (fd, "", 1, 1) == 1)
         {
+          guint8 *shm;
+
+          /* It would ahve been easier for us to do write(fd, "\1", 1);
+           * but this causes problems on kernels (ie: OpenBSD) that
+           * don't sync up their filesystem cache with mmap()ed regions.
+           *
+           * Using mmap() works everywhere.
+           */
+          shm = mmap (NULL, 1, PROT_WRITE, MAP_SHARED, fd, 0);
+          g_assert (shm != MAP_FAILED);
+
           *shm = 1;
 
           munmap (shm, 1);
         }
-      else
-        g_warning ("failed to invalidate mmap file '%s': %s.", filename, g_strerror (errno));
 
       close (fd);
 
       unlink (filename);
     }
-
-  else if (errno != ENOENT)
-    unlink (filename);
 
   g_free (filename);
 }
