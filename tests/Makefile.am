@@ -1,6 +1,6 @@
 include $(top_srcdir)/Makefile.gtester
 
-AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -DSRCDIR=\"$(abs_srcdir)\"
+AM_CFLAGS = -Wall -Wmissing-prototypes -Wwrite-strings -DSRCDIR=\"$(abs_srcdir)\"
 INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/engine -I$(top_srcdir)/client $(gio_CFLAGS) -I$(top_srcdir)/dbus-1 $(dbus_CFLAGS) -I$(top_srcdir)/gvdb
 
 noinst_LIBRARIES = libdconf-dbus-stub.a
@@ -65,7 +65,7 @@ gdbus_filter_SOURCES = \
 	dbus.c
 
 TEST_PROGS += engine
-engine_LDADD = $(engine_with_stub_LIBS) $(glib_LIBS)
+engine_LDADD = $(engine_with_stub_LIBS) $(glib_LIBS) -ldl
 engine_SOURCES = engine.c
 
 TEST_PROGS += client
