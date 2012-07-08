@@ -26,6 +26,7 @@
 #include "dconf-engine-source.h"
 
 G_GNUC_INTERNAL
-DConfEngineSource **    dconf_engine_profile_get_default                (gint *n_sources);
+DConfEngineSource **    dconf_engine_profile_open                       (const gchar *profile,
+                                                                         gint        *n_sources);
 
 #endif

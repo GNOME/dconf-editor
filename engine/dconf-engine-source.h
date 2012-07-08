@@ -62,6 +62,9 @@ G_GNUC_INTERNAL
 DConfEngineSource *     dconf_engine_source_new                         (const gchar        *name);
 
 G_GNUC_INTERNAL
+DConfEngineSource *     dconf_engine_source_new_default                 (void);
+
+G_GNUC_INTERNAL
 gboolean                dconf_engine_source_init                        (DConfEngineSource  *source);
 
 #endif /* __dconf_engine_source_h__ */

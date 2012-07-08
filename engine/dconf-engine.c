@@ -234,7 +234,7 @@ dconf_engine_new (gpointer       user_data,
   g_mutex_init (&engine->sources_lock);
   g_mutex_init (&engine->queue_lock);
 
-  engine->sources = dconf_engine_profile_get_default (&engine->n_sources);
+  engine->sources = dconf_engine_profile_open (NULL, &engine->n_sources);
 
   for (i = 0; i < engine->n_sources; i++)
     if (!dconf_engine_source_init (engine->sources[i]))

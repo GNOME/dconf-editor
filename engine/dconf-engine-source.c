@@ -86,7 +86,7 @@ dconf_engine_source_new (const gchar *description)
       break;
 
     default:
-      g_critical ("unknown dconf database description: %s", description);
+      g_warning ("unknown dconf database description: %s", description);
       return NULL;
     }
 
@@ -95,6 +95,18 @@ dconf_engine_source_new (const gchar *description)
   source->name = strchr (description, ':');
   if (source->name)
     source->name = g_strdup (source->name + 1);
+
+  return source;
+}
+
+DConfEngineSource *
+dconf_engine_source_new_default (void)
+{
+  DConfEngineSource *source;
+
+  source = g_malloc0 (dconf_engine_source_user_vtable.instance_size);
+  source->vtable = &dconf_engine_source_user_vtable;
+  source->name = g_strdup ("user");
 
   return source;
 }
