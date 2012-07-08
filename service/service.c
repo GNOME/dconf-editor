@@ -447,24 +447,6 @@ writer_info_method (GDBusConnection       *connection,
     g_assert_not_reached ();
 }
 
-static GVariant *
-writer_info_get_property (GDBusConnection  *connection,
-                          const gchar      *sender,
-                          const gchar      *object_path,
-                          const gchar      *interface_name,
-                          const gchar      *property_name,
-                          GError          **error,
-                          gpointer          user_data)
-{
-  DConfState *state = user_data;
-
-  /* debugging... */
-  if G_UNLIKELY (state->blame_mode)
-    gather_blame_info (state, connection, sender, object_path, "GetProperty", NULL);
-
-  return g_variant_new_string (state->shm_dir);
-}
-
 static const GDBusInterfaceVTable *
 subtree_dispatch (GDBusConnection *connection,
                   const gchar     *sender,
@@ -506,7 +488,7 @@ subtree_dispatch (GDBusConnection *connection,
   else if (strcmp (interface_name, "ca.desrt.dconf.WriterInfo") == 0)
     {
       static const GDBusInterfaceVTable vtable = {
-        writer_info_method, writer_info_get_property, NULL
+        writer_info_method, NULL
       };
 
       *out_user_data = state;

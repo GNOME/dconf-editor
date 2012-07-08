@@ -5,7 +5,7 @@ INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(
 
 giomodules_PROGRAMS = libdconfsettings.so
 
-libdconfsettings_so_LDADD = $(gio_LIBS) ../engine/libdconf-engine.a ../gdbus/libdconf-gdbus.a ../common/libdconf-common-shared.a
+libdconfsettings_so_LDADD = $(gio_LIBS) ../engine/libdconf-engine.a ../gdbus/libdconf-gdbus.a ../common/libdconf-common-shared.a ../shm/libdconf-shm-shared.a
 libdconfsettings_so_LDFLAGS = -shared
 libdconfsettings_so_SOURCES = \
 	../gvdb/gvdb-reader.c		\

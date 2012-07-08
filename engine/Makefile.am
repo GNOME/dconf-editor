@@ -3,7 +3,7 @@ include $(top_srcdir)/Makefile.gtester
 noinst_LIBRARIES = libdconf-engine.a
 
 libdconf_engine_a_CFLAGS = -fPIC -DPIC -Wall
-INCLUDES = $(glib_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common
+INCLUDES = $(glib_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common -I$(top_srcdir)/shm
 
 libdconf_engine_a_SOURCES = \
 	../gvdb/gvdb-reader.c		\

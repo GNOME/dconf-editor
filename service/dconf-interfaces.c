@@ -67,10 +67,6 @@ static const GDBusMethodInfo blame_method = {
   (GDBusArgInfo **) blame_out
 };
 
-static const GDBusPropertyInfo shmdir_property = {
-  -1, (gchar *) "ShmDirectory", (gchar *) "s", G_DBUS_PROPERTY_INFO_FLAGS_READABLE
-};
-
 static const GDBusMethodInfo *writer_methods[] = {
   &change_method, &write_method, &writemany_method, NULL
 };
@@ -81,10 +77,6 @@ static const GDBusSignalInfo *writer_signals[] = {
 
 static const GDBusMethodInfo *writer_info_methods[] = {
   &blame_method, NULL
-};
-
-static const GDBusPropertyInfo *writer_info_properties[] = {
-  &shmdir_property, NULL
 };
 
 const GDBusInterfaceInfo ca_desrt_dconf_Writer = {
@@ -98,5 +90,5 @@ const GDBusInterfaceInfo ca_desrt_dconf_WriterInfo = {
   -1, (gchar *) "ca.desrt.dconf.WriterInfo",
   (GDBusMethodInfo **) writer_info_methods,
   (GDBusSignalInfo **) NULL,
-  (GDBusPropertyInfo **) writer_info_properties
+  (GDBusPropertyInfo **) NULL
 };

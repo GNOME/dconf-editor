@@ -1,7 +1,5 @@
 #include "dconf-state.h"
 
-#include "dconf-shmdir.h"
-
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -50,19 +48,6 @@ dconf_state_init_session (DConfState *state)
       else
         g_error ("Can not create directory '%s': %s",
                  state->db_dir, g_strerror (errno));
-    }
-
-  state->shm_dir = dconf_shmdir_from_environment ();
-
-  if (state->shm_dir == NULL)
-    {
-      const gchar *tmpdir = g_get_tmp_dir ();
-      gchar *shmdir;
-
-      shmdir = g_build_filename (tmpdir, "dconf.XXXXXX", NULL);
-
-      if ((state->shm_dir = mkdtemp (shmdir)) == NULL)
-        g_error ("Can not create reasonable shm directory");
     }
 }
 

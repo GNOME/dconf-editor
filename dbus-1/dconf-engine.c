@@ -20,7 +20,6 @@
  */
 
 #define _XOPEN_SOURCE 600
-#include "dconf-shmdir.h"
 #include "dconf-engine.h"
 #include <gvdb-reader.h>
 #include <string.h>
@@ -54,6 +53,19 @@ dconf_engine_message_copy (DConfEngineMessage *orig,
   for (i = 0; i < n; i++)
     copy->parameters[i] = g_variant_ref (orig->parameters[i]);
   copy->parameters[i] = NULL;
+}
+
+static gchar *
+dconf_shmdir_from_environment (void)
+{
+  gchar *result;
+
+  result = g_build_filename (g_get_user_runtime_dir (), "dconf", NULL);
+
+  if (g_mkdir_with_parents (result, 0700) != 0)
+    g_critical ("unable to create '%s'; dconf will not work properly.", result);
+
+  return result;
 }
 
 static const gchar *

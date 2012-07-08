@@ -62,6 +62,7 @@ fi
 
 AC_CONFIG_FILES([
   common/Makefile
+  shm/Makefile
   gvdb/Makefile
   engine/Makefile
   gdbus/Makefile

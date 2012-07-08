@@ -23,6 +23,7 @@
 
 #include "dconf-rebuilder.h"
 #include "dconf-state.h"
+#include "dconf-shm.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -35,7 +36,6 @@ struct OPAQUE_TYPE__DConfWriter
   DConfState *state;
   gchar *name;
   gchar *path;
-  gchar *shm;
 };
 
 /* Each element must only contain the ASCII characters "[A-Z][a-z][0-9]_"
@@ -77,26 +77,6 @@ dconf_writer_list_existing (void)
   return (gchar **) g_ptr_array_free (array, FALSE);
 }
 
-static void
-dconf_writer_touch_shm (DConfWriter *writer)
-{
-  gchar one = 1;
-  gint fd;
-
-  fd = open (writer->shm, O_WRONLY);
-
-  if (fd >= 0)
-    {
-      write (fd, &one, sizeof one);
-      close (fd);
-
-      unlink (writer->shm);
-    }
-
-  else if (errno != ENOENT)
-    unlink (writer->shm);
-}
-
 gboolean
 dconf_writer_write (DConfWriter  *writer,
                     const gchar  *name,
@@ -106,7 +86,7 @@ dconf_writer_write (DConfWriter  *writer,
   if (!dconf_rebuilder_rebuild (writer->path, "", &name, &value, 1, error))
     return FALSE;
 
-  dconf_writer_touch_shm (writer);
+  dconf_shm_flag (writer->name);
 
   return TRUE;
 }
@@ -123,7 +103,7 @@ dconf_writer_write_many (DConfWriter          *writer,
                                 values, n_items, error))
     return FALSE;
 
-  dconf_writer_touch_shm (writer);
+  dconf_shm_flag (writer->name);
 
   return TRUE;
 }
@@ -146,7 +126,7 @@ dconf_writer_change (DConfWriter     *writer,
   if (!dconf_rebuilder_rebuild (writer->path, prefix, keys, values, n_items, error))
     return FALSE;
 
-  dconf_writer_touch_shm (writer);
+  dconf_shm_flag (writer->name);
 
   return TRUE;
 }
@@ -172,7 +152,6 @@ dconf_writer_new (DConfState  *state,
   writer = g_slice_new (DConfWriter);
   writer->state = state;
   writer->path = g_build_filename (state->db_dir, name, NULL);
-  writer->shm = g_build_filename (state->shm_dir, name, NULL);
   writer->name = g_strdup (name);
 
   return writer;

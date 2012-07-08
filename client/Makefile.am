@@ -24,7 +24,7 @@ dconfinclude_HEADERS = \
 	dconf-client.h	\
 	dconf.h
 
-libdconf_so_0_0_0_LDADD = ../common/libdconf-common-shared.a ../engine/libdconf-engine.a ../gdbus/libdconf-gdbus.a $(gio_LIBS)
+libdconf_so_0_0_0_LDADD = ../common/libdconf-common-shared.a ../engine/libdconf-engine.a ../gdbus/libdconf-gdbus.a ../shm/libdconf-shm-shared.a $(gio_LIBS)
 libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0
 libdconf_so_0_0_0_SOURCES = \
 	dconf-client.c

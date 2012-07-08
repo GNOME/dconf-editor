@@ -19,6 +19,7 @@ changeset_SOURCES = changeset.c
 
 engine_LIBS = \
 	../engine/libdconf-engine.a	\
+	../shm/libdconf-shm.a		\
 	../common/libdconf-common.a
 
 engine_with_stub_LIBS = \

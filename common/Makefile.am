@@ -10,9 +10,7 @@ INCLUDES = $(glib_CFLAGS)
 libdconf_common_a_SOURCES = \
 	dconf-changeset.h	\
 	dconf-changeset.c	\
-	dconf-paths.c		\
-	dconf-shmdir.h		\
-	dconf-shmdir.c
+	dconf-paths.c
 
 libdconf_common_shared_a_CFLAGS = -fPIC -DPIC $(libdconf_common_a_CFLAGS)
 libdconf_common_shared_a_SOURCES = $(libdconf_common_a_SOURCES)

@@ -19,12 +19,16 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_shmdir_h__
-#define __dconf_shmdir_h__
+#ifndef __dconf_shm_h__
+#define __dconf_shm_h__
 
 #include <glib.h>
 
 G_GNUC_INTERNAL
-gchar *dconf_shmdir_from_environment (void);
+guint8 *                dconf_shm_open                                  (const gchar *name);
+G_GNUC_INTERNAL
+void                    dconf_shm_close                                 (guint8      *shm);
+G_GNUC_INTERNAL
+void                    dconf_shm_flag                                  (const gchar *name);
 
-#endif /* __dconf_shmdir_h__ */
+#endif /* __dconf_shm_h__ */

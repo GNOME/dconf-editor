@@ -1,12 +1,12 @@
 include $(top_srcdir)/Makefile.gtester
 
-AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common -Wall -Wmissing-prototypes -Wwrite-strings
+AM_CFLAGS = $(gio_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common -I$(top_srcdir)/shm -Wall -Wmissing-prototypes -Wwrite-strings
 
 libexec_PROGRAMS = dconf-service
 
 dbusservice_DATA = ca.desrt.dconf.service
 
-dconf_service_LDADD = $(gio_LIBS) ../common/libdconf-common.a
+dconf_service_LDADD = $(gio_LIBS) ../common/libdconf-common.a ../shm/libdconf-shm.a
 dconf_service_SOURCES = \
 	../gvdb/gvdb-builder.c		\
 	../gvdb/gvdb-reader.c		\
