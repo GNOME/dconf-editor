@@ -48,7 +48,8 @@ EXTRA_DIST = \
 	gvdbs/example_gvdb.big-endian	\
 	gvdbs/file_empty		\
 	gvdbs/file_too_small		\
-	gvdbs/invalid_header
+	gvdbs/invalid_header		\
+	gvdbs/nested_gvdb
 
 TEST_PROGS += gdbus-thread
 gdbus_thread_CFLAGS = $(AM_CFLAGS) -DDBUS_BACKEND=\"/gdbus/thread\"
@@ -72,4 +73,11 @@ TEST_PROGS += client
 client_LDADD = $(stub_client_LIBS) $(gio_LIBS)
 client_SOURCES = client.c
 EXTRA_DIST += \
+	profile/broken-profile		\
+	profile/colourful		\
+	profile/dos			\
+	profile/empty-profile		\
+	profile/many-sources		\
+	profile/no-newline-longline	\
+	profile/test-profile		\
 	profile/will-never-exist

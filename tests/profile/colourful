@@ -1,0 +1,13 @@
+# this is an interesting dconf profile file
+  # it shows some of the possible weird things you can do
+
+  user-db:user    # comments can be like this
+
+# we can have comments that are extremely long.  we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.
+
+  system-db:other    # we can have comments that are extremely long.  we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.we can have comments that are extremely long.
+
+system-db:verylongnameverylongnameverylongnameverylongnameverylongnameverylongnameverylongnameverylongnameverylongnameverylongnameverylongnameverylongname
+
+# there is no newline after this last line
+system-db:nonewline
