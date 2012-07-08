@@ -204,7 +204,8 @@ walk_open (const gchar *name,
 
   if (accept_this_many_opens)
     {
-      accept_this_many_opens--;
+      if (accept_this_many_opens > 0)
+        accept_this_many_opens--;
       return TRUE;
     }
 
