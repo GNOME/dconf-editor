@@ -54,18 +54,12 @@ static gboolean
 dconf_engine_source_user_init (DConfEngineSource *source)
 {
   DConfEngineSourceUser *user_source = (DConfEngineSourceUser *) source;
-  guint8 *shm;
-
-  shm = dconf_shm_open (source->name);
-
-  if (shm == NULL)
-    return FALSE;
 
   source->bus_type = G_BUS_TYPE_SESSION;
   source->bus_name = g_strdup ("ca.desrt.dconf");
   source->object_path = g_strdup_printf ("/ca/desrt/dconf/Writer/%s", source->name);
   source->writable = TRUE;
-  user_source->shm = shm;
+  user_source->shm = dconf_shm_open (source->name);
 
   source->values = dconf_engine_source_user_open_gvdb (source->name);
 
@@ -77,7 +71,7 @@ dconf_engine_source_user_needs_reopen (DConfEngineSource *source)
 {
   DConfEngineSourceUser *user_source = (DConfEngineSourceUser *) source;
 
-  return user_source->shm && *user_source->shm;
+  return dconf_shm_is_flagged (user_source->shm);
 }
 
 static GvdbTable *
@@ -88,10 +82,7 @@ dconf_engine_source_user_reopen (DConfEngineSource *source)
   dconf_shm_close (user_source->shm);
   user_source->shm = dconf_shm_open (source->name);
 
-  if (user_source->shm)
-    return dconf_engine_source_user_open_gvdb (source->name);
-
-  return NULL;
+  return dconf_engine_source_user_open_gvdb (source->name);
 }
 
 static void
