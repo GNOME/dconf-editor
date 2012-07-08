@@ -31,4 +31,10 @@ void                    dconf_shm_close                                 (guint8 
 G_GNUC_INTERNAL
 void                    dconf_shm_flag                                  (const gchar *name);
 
+static inline gboolean
+dconf_shm_is_flagged (const guint8 *shm)
+{
+  return shm == NULL || *shm != 0;
+}
+
 #endif /* __dconf_shm_h__ */
