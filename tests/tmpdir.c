@@ -1,7 +1,7 @@
 #include "tmpdir.h"
 
 #include <glib/gstdio.h>
-#include <dconf-paths.h>
+#include "../common/dconf-paths.h"
 #include <string.h>
 
 gchar *

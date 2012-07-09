@@ -1,7 +1,7 @@
 #define _GNU_SOURCE
 
-#include <dconf-engine.h>
-#include <dconf-engine-profile.h>
+#include "../engine/dconf-engine.h"
+#include "../engine/dconf-engine-profile.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>

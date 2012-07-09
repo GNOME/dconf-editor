@@ -5,7 +5,7 @@
 /* Test the DBus communicaton code.
  */
 
-#include "dconf-engine.h"
+#include "../engine/dconf-engine.h"
 
 static gboolean okay_in_main;
 static GThread *main_thread;

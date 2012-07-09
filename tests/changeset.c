@@ -1,4 +1,4 @@
-#include <dconf-changeset.h>
+#include "../common/dconf-changeset.h"
 
 static gboolean
 should_not_run (const gchar *key,

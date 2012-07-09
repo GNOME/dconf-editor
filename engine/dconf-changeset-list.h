@@ -22,7 +22,7 @@
 #ifndef __dconf_changeset_list_h__
 #define __dconf_changeset_list_h__
 
-#include "dconf-changeset.h"
+#include "../common/dconf-changeset.h"
 
 typedef struct _DConfChangesetList                          DConfChangesetList;
 

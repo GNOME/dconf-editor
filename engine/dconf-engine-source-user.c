@@ -22,7 +22,7 @@
 
 #include "dconf-engine-source-private.h"
 
-#include "dconf-shm.h"
+#include "../shm/dconf-shm.h"
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <errno.h>

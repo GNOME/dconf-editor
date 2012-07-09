@@ -17,7 +17,7 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  **/
 
-#include <dconf-dbus-1.h>
+#include "../dbus-1/dconf-dbus-1.h"
 
 #include <stdbool.h>
 #include <unistd.h>

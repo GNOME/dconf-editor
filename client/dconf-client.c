@@ -22,7 +22,7 @@
 
 #include "dconf-client.h"
 
-#include "dconf-engine.h"
+#include "../engine/dconf-engine.h"
 #include <glib-object.h>
 
 struct _DConfClient

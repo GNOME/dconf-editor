@@ -22,7 +22,7 @@
 #define _XOPEN_SOURCE 600
 #include "dconf-engine.h"
 
-#include <gvdb-reader.h>
+#include "../gvdb/gvdb-reader.h"
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>

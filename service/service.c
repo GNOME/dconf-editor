@@ -26,7 +26,7 @@
 #include <stdio.h>
 
 #include "dconf-interfaces.h"
-#include "dconf-changeset.h"
+#include "../common/dconf-changeset.h"
 #include "dconf-writer.h"
 #include "dconf-state.h"
 

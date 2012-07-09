@@ -1,4 +1,4 @@
-libdconf-dbus-stub.a
+libdconf-mock.a
 
 changeset
 client

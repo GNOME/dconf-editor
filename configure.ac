@@ -11,6 +11,11 @@ AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.11 -Wno-portability no-dist-gzip dist-xz])
 AM_SILENT_RULES([yes])
 
+# Set default CFLAGS before AC_PROG_CC does
+if test "${CFLAGS+yes}" != "yes"; then
+  CFLAGS='-O2 -g -Wall -Wwrite-strings -Wmissing-prototypes -fno-common'
+fi
+
 # Check for programs
 AC_PROG_CC
 AC_PROG_RANLIB

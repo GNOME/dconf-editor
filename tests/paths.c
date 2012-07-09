@@ -1,4 +1,4 @@
-#include <dconf-paths.h>
+#include "../common/dconf-paths.h"
 
 static void
 test_paths (void)

@@ -1,9 +1,5 @@
 include $(top_srcdir)/Makefile.gtester
 
-AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -fPIC -DPIC
-CFLAGS += -Wno-error -Wno-unused-but-set-variable -Wno-unused-variable
-INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
-
 shlibdir=$(libdir)
 shlib_PROGRAMS = libdconf.so.0.0.0
 nodist_noinst_DATA = libdconf.so.0 libdconf.so
@@ -24,12 +20,20 @@ dconfinclude_HEADERS = \
 	dconf-client.h	\
 	dconf.h
 
-libdconf_so_0_0_0_LDADD = ../common/libdconf-common-shared.a ../engine/libdconf-engine.a ../gdbus/libdconf-gdbus.a ../shm/libdconf-shm-shared.a $(gio_LIBS)
-libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0
-libdconf_so_0_0_0_SOURCES = \
+libdconf_client_a_CFLAGS = $(gio_CFLAGS)
+libdconf_client_a_SOURCES = \
 	dconf-client.c
 
-libdconf_client_a_SOURCES = dconf-client.c
+libdconf_so_0_0_0_CFLAGS = $(libdconf_client_a_CFLAGS) -fPIC -DPIC
+libdconf_so_0_0_0_LDADD = \
+	../engine/libdconf-engine-shared.a		\
+	../common/libdconf-common-shared.a		\
+	../gdbus/libdconf-gdbus-thread-shared.a		\
+	../gvdb/libgvdb-shared.a			\
+	../shm/libdconf-shm-shared.a			\
+	$(gio_LIBS)
+libdconf_so_0_0_0_LDFLAGS = -shared -Wl,-soname=libdconf.so.0
+libdconf_so_0_0_0_SOURCES = $(libdconf_client_a_SOURCES)
 
 EXTRA_DIST = dconf.vapi dconf.deps
 

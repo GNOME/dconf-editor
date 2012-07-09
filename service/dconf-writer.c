@@ -23,7 +23,7 @@
 
 #include "dconf-rebuilder.h"
 #include "dconf-state.h"
-#include "dconf-shm.h"
+#include "../shm/dconf-shm.h"
 
 #include <stdlib.h>
 #include <unistd.h>

@@ -23,6 +23,7 @@
 #define __dconf_h__
 
 #include <dconf-paths.h>
+#include <dconf-changeset.h>
 #include <dconf-client.h>
 
 #endif /* __dconf_h__ */

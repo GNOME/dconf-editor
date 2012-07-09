@@ -1,12 +1,9 @@
 include $(top_srcdir)/Makefile.gtester
 
-noinst_LIBRARIES = libdconf-engine.a
+noinst_LIBRARIES = libdconf-engine.a libdconf-engine-shared.a
 
-libdconf_engine_a_CFLAGS = -fPIC -DPIC -Wall
-INCLUDES = $(glib_CFLAGS) -I$(top_srcdir)/gvdb -I$(top_srcdir)/common -I$(top_srcdir)/shm
-
+libdconf_engine_a_CFLAGS = $(glib_CFLAGS)
 libdconf_engine_a_SOURCES = \
-	../gvdb/gvdb-reader.c		\
 	dconf-changeset-list.h		\
 	dconf-engine-profile.h		\
 	dconf-engine-profile.c		\
@@ -17,3 +14,6 @@ libdconf_engine_a_SOURCES = \
 	dconf-engine-source.c		\
 	dconf-engine.h			\
 	dconf-engine.c
+
+libdconf_engine_shared_a_CFLAGS = $(libdconf_engine_a_CFLAGS) -fPIC -DPIC
+libdconf_engine_shared_a_SOURCES = $(libdconf_engine_a_SOURCES)

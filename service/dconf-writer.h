@@ -22,7 +22,7 @@
 #ifndef __dconf_writer_h__
 #define __dconf_writer_h__
 
-#include "dconf-changeset.h"
+#include "../common/dconf-changeset.h"
 #include "dconf-state.h"
 
 typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;

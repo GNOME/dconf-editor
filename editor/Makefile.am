@@ -1,12 +1,30 @@
 include $(top_srcdir)/Makefile.gtester
 
+INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/client
+
 bin_PROGRAMS = dconf-editor
 
-AM_CFLAGS = $(gtk_CFLAGS) $(gmodule_CFLAGS) $(libxml_CFLAGS) -I$(top_srcdir)/common -I$(top_srcdir)/client -DPKGDATADIR=\"@datadir@/dconf-editor\"
-AM_VALAFLAGS = --vapidir ../client --pkg gtk+-3.0 --pkg gmodule-2.0 --pkg libxml-2.0 --pkg dconf
-CFLAGS += -Wno-error -Wno-unused-but-set-variable -Wno-unused-variable
-dconf_editor_LDADD = ../client/libdconf.so.0 $(gtk_LIBS) $(gmodule_LIBS) $(gee_LIBS) $(libxml_LIBS)
-dconf_editor_SOURCES = config.vapi dconf-editor.vala dconf-model.vala dconf-schema.vala dconf-view.vala
+dconf_editor_VALAFLAGS = --vapidir ../client --pkg gtk+-3.0 --pkg gmodule-2.0 --pkg libxml-2.0 --pkg dconf
+
+dconf_editor_LDADD = \
+	../client/libdconf.so.0		\
+	$(gtk_LIBS)			\
+	$(gee_LIBS)			\
+	$(gmodule_LIBS)			\
+	$(libxml_LIBS)
+
+dconf_editor_CFLAGS = \
+	$(gtk_CFLAGS)			\
+	$(gee_CFLAGS)			\
+	$(libxml_CFLAGS)		\
+	-DPKGDATADIR=\"$(pkgdatadir)\"
+
+dconf_editor_SOURCES = \
+	config.vapi		\
+	dconf-editor.vala	\
+	dconf-model.vala	\
+	dconf-schema.vala	\
+	dconf-view.vala
 
 desktopdir = $(datadir)/applications
 desktop_in_files = dconf-editor.desktop.in.in
@@ -30,7 +48,7 @@ update-icon-cache:
 		gtk-update-icon-cache -f -t $(datadir)/icons/hicolor; \
 	fi
 
-uidir = $(datadir)/dconf-editor
-dist_ui_DATA = dconf-editor.ui
+pkgdatadir = $(datadir)/dconf-editor
+dist_pkgdata_DATA = dconf-editor.ui
 
 EXTRA_DIST = $(gsettings_SCHEMAS) $(icons)

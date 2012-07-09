@@ -23,7 +23,7 @@
 #define __dconf_client_h__
 
 #include <gio/gio.h>
-#include "dconf-changeset.h"
+#include "../common/dconf-changeset.h"
 
 G_BEGIN_DECLS
 

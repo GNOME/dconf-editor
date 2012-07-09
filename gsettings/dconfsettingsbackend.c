@@ -21,7 +21,7 @@
 
 #define G_SETTINGS_ENABLE_BACKEND
 #include <gio/gsettingsbackend.h>
-#include <dconf-engine.h>
+#include "../engine/dconf-engine.h"
 #include <gio/gio.h>
 
 #include <string.h>

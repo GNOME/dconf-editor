@@ -1,14 +1,18 @@
 include $(top_srcdir)/Makefile.gtester
 
-AM_CFLAGS = -std=c89 -Wall -Wmissing-prototypes -Wwrite-strings -fPIC -DPIC
-INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/gvdb -I$(top_srcdir)/engine $(gio_CFLAGS)
-
 giomodules_PROGRAMS = libdconfsettings.so
 
-libdconfsettings_so_LDADD = $(gio_LIBS) ../engine/libdconf-engine.a ../gdbus/libdconf-gdbus.a ../common/libdconf-common-shared.a ../shm/libdconf-shm-shared.a
+libdconfsettings_so_LDADD = \
+	../engine/libdconf-engine-shared.a		\
+	../gvdb/libgvdb-shared.a			\
+	../gdbus/libdconf-gdbus-thread-shared.a		\
+	../common/libdconf-common-shared.a		\
+	../shm/libdconf-shm-shared.a			\
+	$(gio_LIBS)
+
+libdconfsettings_so_CFLAGS = $(gio_CFLAGS) -fPIC -DPIC
 libdconfsettings_so_LDFLAGS = -shared
 libdconfsettings_so_SOURCES = \
-	../gvdb/gvdb-reader.c		\
 	dconfcontext.h			\
 	dconfcontext.c			\
 	dconfsettingsbackend.c

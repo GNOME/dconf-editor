@@ -1,5 +1,5 @@
 #include <glib.h>
-#include "gvdb-reader.h"
+#include "../gvdb/gvdb-reader.h"
 
 static void
 test_reader_open_error (void)

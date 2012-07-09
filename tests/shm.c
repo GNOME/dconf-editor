@@ -1,5 +1,5 @@
 #define _GNU_SOURCE
-#include <dconf-paths.h>
+#include "../common/dconf-paths.h"
 #include <glib/gstdio.h>
 #include <sys/stat.h>
 #include <stdlib.h>
@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <dlfcn.h>
 
-#include "dconf-shm.h"
+#include "../shm/dconf-shm.h"
 #include "tmpdir.h"
 
 static void

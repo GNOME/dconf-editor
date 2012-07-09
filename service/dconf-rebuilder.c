@@ -23,8 +23,8 @@
 
 #include <string.h>
 
-#include "gvdb-reader.h"
-#include "gvdb-builder.h"
+#include "../gvdb/gvdb-reader.h"
+#include "../gvdb/gvdb-builder.h"
 
 typedef struct
 {

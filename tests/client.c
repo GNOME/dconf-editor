@@ -1,6 +1,6 @@
 #define _BSD_SOURCE
-#include <dconf-client.h>
-#include <dconf-engine.h>
+#include "../client/dconf-client.h"
+#include "../engine/dconf-engine.h"
 #include <string.h>
 #include <stdlib.h>
 
