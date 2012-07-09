@@ -333,6 +333,7 @@ test_nested (void)
   g_assert (has);
 
   gvdb_table_unref (table);
+  gvdb_table_unref (locks);
 }
 
 /* This function exercises the API against @table but does not do any
@@ -452,6 +453,8 @@ test_corrupted (gconstpointer user_data)
               g_clear_error (&error);
             }
         }
+
+      g_free (copy);
     }
   else
     {

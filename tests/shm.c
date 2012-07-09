@@ -164,6 +164,7 @@ main (int argc, char **argv)
   status = g_test_run ();
 
   dconf_test_remove_tmpdir (temp);
+  g_free (temp);
 
   return status;
 }

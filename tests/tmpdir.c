@@ -36,6 +36,7 @@ rm_rf (const gchar *file)
           g_free (fullname);
         }
 
+      g_dir_close (dir);
       g_rmdir (file);
     }
 
