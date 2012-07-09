@@ -20,7 +20,7 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#include "dconf-engine.h"
+#include "dconf-engine-profile.h"
 
 #include <string.h>
 #include <stdio.h>

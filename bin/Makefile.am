@@ -6,7 +6,9 @@ bin_PROGRAMS = dconf
 
 dconf_VALAFLAGS = --vapidir ../client --pkg=gio-2.0 --pkg=posix --pkg=dconf
 
-dconf_CFLAGS = $(gio_CFLAGS)
+dconf_CFLAGS = \
+	$(gio_CFLAGS)		\
+	-w
 
 dconf_LDADD = \
 	../client/libdconf.so.0		\

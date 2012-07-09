@@ -48,7 +48,7 @@ emit_notify_signal (GDBusConnection  *connection,
   if (n_keys > 1)
     {
       const gchar *last_reset = NULL;
-      gint last_reset_len;
+      gint last_reset_len = 0;
       gint i;
 
       for (i = 0; i < n_keys; i++)

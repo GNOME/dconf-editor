@@ -17,7 +17,8 @@ dconf_editor_CFLAGS = \
 	$(gtk_CFLAGS)			\
 	$(gee_CFLAGS)			\
 	$(libxml_CFLAGS)		\
-	-DPKGDATADIR=\"$(pkgdatadir)\"
+	-DPKGDATADIR=\"$(pkgdatadir)\"	\
+	-w
 
 dconf_editor_SOURCES = \
 	config.vapi		\

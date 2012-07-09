@@ -342,6 +342,7 @@ test_signal_receipt (void)
 {
   GError *error = NULL;
   GVariant *reply;
+  gint status;
   gint i;
 
   reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
@@ -352,10 +353,11 @@ test_signal_receipt (void)
   g_assert (reply != NULL);
   g_variant_unref (reply);
 
-  system ("gdbus emit --session "
-          "--object-path /ca/desrt/dconf/Writer/testcase "
-          "--signal ca.desrt.dconf.Writer.TestSignal "
-          "1 2 3");
+  status = system ("gdbus emit --session "
+                   "--object-path /ca/desrt/dconf/Writer/testcase "
+                   "--signal ca.desrt.dconf.Writer.TestSignal "
+                   "1 2 3");
+  g_assert_cmpint (status, ==, 0);
 
   /* total time: 30 seconds */
   for (i = 0; i < 300; i++)
