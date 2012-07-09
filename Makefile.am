@@ -12,8 +12,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
 .PHONY: lcov lcov-clean
 # use recursive makes in order to ignore errors during check
-lcov:
-	-$(MAKE) $(AM_MAKEFLAGS) lcov-clean
+lcov: lcov-clean
 	-$(MAKE) $(AM_MAKEFLAGS) -k check
 	lcov --directory $(top_builddir) --capture --output-file dconf-lcov.info --test-name dconf --no-checksum --compat-libtool
 	LANG=C genhtml --prefix $(top_builddir) --output-directory lcov-html --legend --show-details dconf-lcov.info
@@ -24,9 +23,9 @@ lcov:
 clean-am: lcov-clean gcno-clean
 
 gcno-clean:
-	-find -name '*.gcno' -exec rm -f '{}' ';'
+	-find -name '*.gcno' -delete
 
 lcov-clean:
 	-lcov --directory $(top_builddir) -z
-	-find -name '*.gcda' -exec rm -f '{}' ';'
+	find -name '*.gcda' -delete
 	rm -rf lcov-html dconf-lcov.info
