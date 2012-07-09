@@ -26,3 +26,6 @@ install-data-hook:
 	if test -z "$(DESTDIR)" -a "$(gio_QUERYMODULES)" != "no" ; then \
 	  $(gio_QUERYMODULES) $(giomodulesdir) ;  \
 	fi
+
+TESTS = abicheck.sh
+EXTRA_DIST = abicheck.sh
