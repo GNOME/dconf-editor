@@ -6,7 +6,7 @@ libdconfsettings_so_LDADD = \
 	../engine/libdconf-engine-shared.a		\
 	../gvdb/libgvdb-shared.a			\
 	../gdbus/libdconf-gdbus-thread-shared.a		\
-	../common/libdconf-common-shared.a		\
+	../common/libdconf-common-hidden.a		\
 	../shm/libdconf-shm-shared.a			\
 	$(gio_LIBS)
 
