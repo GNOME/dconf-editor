@@ -34,6 +34,8 @@ test_reader_empty (void)
   const gchar * strings[] = { "", "value", "/value", ".", NULL};
   GError *error = NULL;
   GvdbTable *table;
+  gchar **names;
+  gint n_names;
   gint i;
 
   table = gvdb_table_new (SRCDIR "/gvdbs/empty_gvdb", TRUE, &error);
@@ -44,6 +46,15 @@ test_reader_empty (void)
   gvdb_table_unref (table);
 
   g_assert (gvdb_table_is_valid (table));
+
+  names = gvdb_table_get_names (table, &n_names);
+  g_assert_cmpint (n_names, ==, 0);
+  g_assert_cmpint (g_strv_length (names), ==, 0);
+  g_strfreev (names);
+
+  names = gvdb_table_get_names (table, NULL);
+  g_assert_cmpint (g_strv_length (names), ==, 0);
+  g_strfreev (names);
 
   for (i = 0; strings[i]; i++)
     {
@@ -77,7 +88,24 @@ verify_table (GvdbTable *table)
 {
   GVariant *value;
   gchar **list;
+  gint n_names;
   gboolean has;
+
+  /* We could not normally expect these to be in a particular order but
+   * we are using a specific test file that we know to be layed out this
+   * way...
+   *
+   * It's pure luck that they happened to be layed out in this nice way.
+   */
+  list = gvdb_table_get_names (table, &n_names);
+  g_assert_cmpint (n_names, ==, g_strv_length (list));
+  g_assert_cmpint (n_names, ==, 5);
+  g_assert_cmpstr (list[0], ==, "/");
+  g_assert_cmpstr (list[1], ==, "/values/");
+  g_assert_cmpstr (list[2], ==, "/values/boolean");
+  g_assert_cmpstr (list[3], ==, "/values/string");
+  g_assert_cmpstr (list[4], ==, "/values/int32");
+  g_strfreev (list);
 
   list = gvdb_table_list (table, "/");
   g_assert (list != NULL);
@@ -189,129 +217,30 @@ test_reader_values_bigendian (void)
   gvdb_table_unref (table);
 }
 
-static gint accept_this_many_opens;
-
-static gboolean
-walk_open (const gchar *name,
-           gsize        name_len,
-           gpointer     user_data)
-{
-  GString *log = user_data;
-
-  g_string_append (log, "'");
-  g_string_append_len (log, name, name_len);
-  g_string_append_printf (log, "\'(%zd): {", name_len);
-
-  if (accept_this_many_opens)
-    {
-      if (accept_this_many_opens > 0)
-        accept_this_many_opens--;
-      return TRUE;
-    }
-
-  g_string_append (log, "rejected}");
-
-  return FALSE;
-}
-
-static void
-walk_value (const gchar *name,
-            gsize        name_len,
-            GVariant    *value,
-            gpointer     user_data)
-{
-  GString *log = user_data;
-  gchar *printed;
-
-  printed = g_variant_print (value, FALSE);
-
-  g_string_append (log, "'");
-  g_string_append_len (log, name, name_len);
-  g_string_append_printf (log, "\'(%zd): %s", name_len, printed);
-  g_free (printed);
-}
-
-static void
-walk_close (gsize    name_len,
-            gpointer user_data)
-{
-  GString *log = user_data;
-
-  g_string_append_printf (log, "(%zd)}", name_len);
-}
-
-static void
-verify_walk (GvdbTable *table)
-{
-  GString *log;
-
-  log = g_string_new (NULL);
-  accept_this_many_opens = 2;
-  gvdb_table_walk (table, "/", walk_open, walk_value, walk_close, log);
-  g_assert_cmpstr (log->str, ==,
-                   "'/'(1): {"
-                     "'values/'(7): {"
-                       "'boolean'(7): true"
-                       "'int32'(5): 1144201745"
-                       "'string'(6): 'a string'"
-                     "(7)}"
-                   "(1)}");
-  g_string_truncate (log, 0);
-
-  accept_this_many_opens = 1;
-  gvdb_table_walk (table, "/", walk_open, walk_value, walk_close, log);
-  g_assert_cmpstr (log->str, ==,
-                   "'/'(1): {"
-                     "'values/'(7): {rejected}"
-                   "(1)}");
-  g_string_truncate (log, 0);
-
-  accept_this_many_opens = 0;
-  gvdb_table_walk (table, "/", walk_open, walk_value, walk_close, log);
-  g_assert_cmpstr (log->str, ==, "'/'(1): {rejected}");
-  g_string_free (log, TRUE);
-}
-
-static void
-test_reader_walk (void)
-{
-  GError *error = NULL;
-  GvdbTable *table;
-
-  table = gvdb_table_new (SRCDIR "/gvdbs/example_gvdb", TRUE, &error);
-  g_assert_no_error (error);
-
-  verify_walk (table);
-
-  gvdb_table_unref (table);
-}
-
-static void
-test_reader_walk_bigendian (void)
-{
-  GError *error = NULL;
-  GvdbTable *table;
-
-  table = gvdb_table_new (SRCDIR "/gvdbs/example_gvdb.big-endian", TRUE, &error);
-  g_assert_no_error (error);
-
-  verify_walk (table);
-
-  gvdb_table_unref (table);
-}
-
 static void
 test_nested (void)
 {
   GError *error = NULL;
   GvdbTable *table;
   GvdbTable *locks;
+  gchar **names;
+  gint n_names;
   gboolean has;
 
   table = gvdb_table_new (SRCDIR "/gvdbs/nested_gvdb", TRUE, &error);
   g_assert_no_error (error);
 
-  verify_walk (table);
+  /* Note the more-random ordering here compared with above. */
+  names = gvdb_table_get_names (table, &n_names);
+  g_assert_cmpint (n_names, ==, g_strv_length (names));
+  g_assert_cmpint (n_names, ==, 6);
+  g_assert_cmpstr (names[0], ==, "/values/boolean");
+  g_assert_cmpstr (names[1], ==, "/");
+  g_assert_cmpstr (names[2], ==, "/values/int32");
+  g_assert_cmpstr (names[3], ==, ".locks");
+  g_assert_cmpstr (names[4], ==, "/values/");
+  g_assert_cmpstr (names[5], ==, "/values/string");
+  g_strfreev (names);
 
   locks = gvdb_table_get_table (table, "/");
   g_assert (locks == NULL);
@@ -348,9 +277,12 @@ inspect_carefully (GvdbTable *table)
     "/values/int32", "/values/boolean", "/values/string",
     ".locks", "/first/lock", "/second", NULL
   };
-  GString *log;
+  gint found_items;
+  gchar **names;
+  gint n_names;
   gint i;
 
+  found_items = 0;
   for (i = 0; key_names[i]; i++)
     {
       const gchar *key = key_names[i];
@@ -368,6 +300,7 @@ inspect_carefully (GvdbTable *table)
           gchar *joined = g_strjoinv (",", list);
           g_strfreev (list);
           g_free (joined);
+          found_items++;
         }
 
       value = gvdb_table_get_value (table, key);
@@ -377,6 +310,7 @@ inspect_carefully (GvdbTable *table)
           gchar *printed = g_variant_print (value, FALSE);
           g_variant_unref (value);
           g_free (printed);
+          found_items++;
         }
 
       value = gvdb_table_get_raw_value (table, key);
@@ -394,13 +328,15 @@ inspect_carefully (GvdbTable *table)
         {
           inspect_carefully (subtable);
           gvdb_table_unref (subtable);
+          found_items++;
         }
     }
 
-  log = g_string_new (NULL);
-  accept_this_many_opens = -1;
-  gvdb_table_walk (table, "/", walk_open, walk_value, walk_close, log);
-  g_string_free (log, TRUE);
+  names = gvdb_table_get_names (table, &n_names);
+  g_assert_cmpint (n_names, ==, g_strv_length (names));
+  g_assert_cmpint (found_items, <=, n_names);
+  g_free (g_strjoinv ("  ", names));
+  g_strfreev (names);
 }
 
 static void
@@ -484,8 +420,6 @@ main (int argc, char **argv)
   g_test_add_func ("/gvdb/reader/empty", test_reader_empty);
   g_test_add_func ("/gvdb/reader/values", test_reader_values);
   g_test_add_func ("/gvdb/reader/values/big-endian", test_reader_values_bigendian);
-  g_test_add_func ("/gvdb/reader/walk", test_reader_walk);
-  g_test_add_func ("/gvdb/reader/walk/big-endian", test_reader_walk_bigendian);
   g_test_add_func ("/gvdb/reader/nested", test_nested);
   for (i = 0; i < 20; i++)
     {
