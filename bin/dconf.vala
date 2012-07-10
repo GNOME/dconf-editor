@@ -205,29 +205,24 @@ void show_path (DConf.Client client, string path) {
 	}
 }
 
-void watch_function (DConf.Client client, string path, string[] items, string tag) {
-	if (items.length == 0) {
-		print ("%s\n", path);
-		show_path (client, path);
-		print ("\n");
-	} else {
-		foreach (var item in items) {
-			var full = path + item;
-			print ("%s\n", full);
-			show_path (client, full);
-		}
-		print ("\n");
+void watch_function (DConf.Client client, string path, string[] items, string? tag) {
+	foreach (var item in items) {
+		var full = path + item;
+		print ("%s\n", full);
+		show_path (client, full);
 	}
+	print ("\n");
 }
 
 void dconf_watch (string?[] args) throws Error {
 	var client = new DConf.Client ();
-	client.changed.connect (watch_function);
 	var path = args[2];
 
 	DConf.verify_path (path);
 
+	client.changed.connect (watch_function);
 	client.watch_sync (path);
+
 	new MainLoop (null, false).run ();
 }
 

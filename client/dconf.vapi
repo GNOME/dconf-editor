@@ -3,7 +3,7 @@
 namespace DConf {
 	[CCode (cheader_filename = "dconf.h")]
 	public class Client : GLib.Object {
-		public signal void changed (string prefix, string[] changes, string tag);
+		public signal void changed (string prefix, [CCode (array_length = false, array_null_terminated = true)] string[] changes, string? tag);
 
 		public Client ();
 		public GLib.Variant? read (string key);

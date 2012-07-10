@@ -570,13 +570,9 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
 	public signal void item_changed (string key);
 
-	void watch_func (DConf.Client client, string path, string[] items, string tag) {
-		if (items.length == 0) {
-			item_changed (path);
-		} else {
-			foreach (var item in items) {
-				item_changed (path + item);
-			}
+	void watch_func (DConf.Client client, string path, string[] items, string? tag) {
+		foreach (var item in items) {
+			item_changed (path + item);
 		}
 	}
 
