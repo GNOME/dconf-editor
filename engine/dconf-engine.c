@@ -250,47 +250,30 @@ dconf_engine_new (gpointer       user_data,
 void
 dconf_engine_unref (DConfEngine *engine)
 {
-  if (g_atomic_int_dec_and_test (&engine->ref_count))
+  gint ref_count;
+
+ again:
+  ref_count = engine->ref_count;
+
+  if (ref_count == 1)
     {
       gint i;
 
-      /* We just dropped our refcount to zero, but we're still in the
-       * dconf_engine_global_list.
+      /* We are about to drop the last reference, but there is a chance
+       * that a signal may be happening at this very moment, causing the
+       * engine to gain another reference (due to its position in the
+       * global engine list).
        *
-       * If a signal arrives at this exact instant and the signal
-       * handler beats us to the lock then the refcount will be
-       * increased again.
-       *
-       * Acquire the lock and then double-check that the refcount is
-       * still zero before actually doing the remove.  If it's non-zero
-       * then the signal handler grabbed a ref and will call unref()
-       * later.
+       * Acquiring the lock here means that either we will remove this
+       * engine from the list first or we will notice the reference
+       * count has increased (and skip the free).
        */
       g_mutex_lock (&dconf_engine_global_lock);
-      if (g_atomic_int_get (&engine->ref_count) != 0)
+      if (engine->ref_count != 1)
         {
           g_mutex_unlock (&dconf_engine_global_lock);
           return;
         }
-
-      /* It's possible that another thread grabbed a reference at the
-       * last minute and dropped it back to zero again (thus causing the
-       * above check to pass).  In that case, however, the other thread
-       * will have also dropped the refcount from 1 to 0 and be inside
-       * of the dec-and-test above.
-       *
-       * We can only have one of the two threads doing the freeing of
-       * the data, so we have a simple rule: the thread that removes the
-       * engine from the global list is the one that does the free.
-       * Since this operation is performed under mutex we can be sure
-       * that only one thread will win.
-       */
-      if (!g_slist_find (dconf_engine_global_list, engine))
-        {
-          g_mutex_unlock (&dconf_engine_global_lock);
-          return;
-        }
-
       dconf_engine_global_list = g_slist_remove (dconf_engine_global_list, engine);
       g_mutex_unlock (&dconf_engine_global_lock);
 
@@ -309,6 +292,9 @@ dconf_engine_unref (DConfEngine *engine)
 
       g_slice_free (DConfEngine, engine);
     }
+
+  else if (!g_atomic_int_compare_and_exchange (&engine->ref_count, ref_count, ref_count - 1))
+    goto again;
 }
 
 static DConfEngine *
