@@ -11,7 +11,7 @@ dconf_CFLAGS = \
 	-w
 
 dconf_LDADD = \
-	../client/libdconf.so.0		\
+	../client/libdconf.so.1		\
 	$(gio_LIBS)
 
 dconf_SOURCES = \

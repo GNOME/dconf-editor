@@ -7,7 +7,7 @@ bin_PROGRAMS = dconf-editor
 dconf_editor_VALAFLAGS = --vapidir ../client --pkg gtk+-3.0 --pkg gmodule-2.0 --pkg libxml-2.0 --pkg dconf
 
 dconf_editor_LDADD = \
-	../client/libdconf.so.0		\
+	../client/libdconf.so.1		\
 	$(gtk_LIBS)			\
 	$(gee_LIBS)			\
 	$(gmodule_LIBS)			\
