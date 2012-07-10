@@ -337,13 +337,14 @@ dconf_changeset_build_description (DConfChangeset *changeset)
   {
     GHashTableIter iter;
     const gchar *first;
+    gboolean have_one;
     gpointer key;
 
     g_hash_table_iter_init (&iter, changeset->table);
 
     /* We checked above that we have at least one item. */
-    if (!g_hash_table_iter_next (&iter, &key, NULL))
-      g_assert_not_reached ();
+    have_one = g_hash_table_iter_next (&iter, &key, NULL);
+    g_assert (have_one);
 
     prefix_length = strlen (key);
     first = key;
