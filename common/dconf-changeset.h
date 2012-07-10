@@ -26,39 +26,39 @@
 
 typedef struct _DConfChangeset                              DConfChangeset;
 
-typedef gboolean     (* DConfChangesetPredicate)                        (const gchar             *key,
-                                                                         GVariant                *value,
-                                                                         gpointer                 user_data);
+typedef gboolean     (* DConfChangesetPredicate)                        (const gchar              *path,
+                                                                         GVariant                 *value,
+                                                                         gpointer                  user_data);
 
 DConfChangeset *        dconf_changeset_new                             (void);
 
-DConfChangeset *        dconf_changeset_new_write                       (const gchar             *key,
-                                                                         GVariant                *value);
+DConfChangeset *        dconf_changeset_new_write                       (const gchar              *path,
+                                                                         GVariant                 *value);
 
-DConfChangeset *        dconf_changeset_ref                             (DConfChangeset          *changeset);
-void                    dconf_changeset_unref                           (DConfChangeset          *changeset);
+DConfChangeset *        dconf_changeset_ref                             (DConfChangeset           *changeset);
+void                    dconf_changeset_unref                           (DConfChangeset           *changeset);
 
-void                    dconf_changeset_set                             (DConfChangeset          *changeset,
-                                                                         const gchar             *key,
-                                                                         GVariant                *value);
+void                    dconf_changeset_set                             (DConfChangeset           *changeset,
+                                                                         const gchar              *path,
+                                                                         GVariant                 *value);
 
-gboolean                dconf_changeset_get                             (DConfChangeset          *changeset,
-                                                                         const gchar             *key,
-                                                                         GVariant               **value);
+gboolean                dconf_changeset_get                             (DConfChangeset           *changeset,
+                                                                         const gchar              *key,
+                                                                         GVariant                **value);
 
-gboolean                dconf_changeset_is_similar_to                   (DConfChangeset          *changeset,
-                                                                         DConfChangeset          *other);
+gboolean                dconf_changeset_is_similar_to                   (DConfChangeset           *changeset,
+                                                                         DConfChangeset           *other);
 
-gboolean                dconf_changeset_all                             (DConfChangeset          *changeset,
-                                                                         DConfChangesetPredicate  predicate,
-                                                                         gpointer                 user_data);
+gboolean                dconf_changeset_all                             (DConfChangeset           *changeset,
+                                                                         DConfChangesetPredicate   predicate,
+                                                                         gpointer                  user_data);
 
-guint                   dconf_changeset_describe                        (DConfChangeset       *changeset,
-                                                                         const gchar         **change_root,
-                                                                         const gchar * const **changes,
-                                                                         GVariant * const    **values);
+guint                   dconf_changeset_describe                        (DConfChangeset           *changeset,
+                                                                         const gchar             **prefix,
+                                                                         const gchar * const     **paths,
+                                                                         GVariant * const        **values);
 
-GVariant *              dconf_changeset_serialise                       (DConfChangeset          *changeset);
-DConfChangeset *        dconf_changeset_deserialise                     (GVariant                *serialised);
+GVariant *              dconf_changeset_serialise                       (DConfChangeset           *changeset);
+DConfChangeset *        dconf_changeset_deserialise                     (GVariant                 *serialised);
 
 #endif /* __dconf_changeset_h__ */

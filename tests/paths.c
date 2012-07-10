@@ -76,12 +76,12 @@ test_paths (void)
       const gchar *string = cases[i].string;
       guint flags;
 
-      flags = (dconf_is_path    (string, NULL) ? 001 : 000) |
-              (dconf_is_key     (string, NULL) ? 002 : 000) |
-              (dconf_is_dir     (string, NULL) ? 004 : 000) |
-              (dconf_is_rel     (string, NULL) ? 010 : 000) |
-              (dconf_is_rel_key (string, NULL) ? 020 : 000) |
-              (dconf_is_rel_dir (string, NULL) ? 040 : 000);
+      flags = (dconf_is_path     (string, NULL) ? 001 : 000) |
+              (dconf_is_key      (string, NULL) ? 002 : 000) |
+              (dconf_is_dir      (string, NULL) ? 004 : 000) |
+              (dconf_is_rel_path (string, NULL) ? 010 : 000) |
+              (dconf_is_rel_key  (string, NULL) ? 020 : 000) |
+              (dconf_is_rel_dir  (string, NULL) ? 040 : 000);
 
       g_assert_cmphex (flags, ==, cases[i].flags);
     }

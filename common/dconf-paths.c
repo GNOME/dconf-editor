@@ -106,13 +106,14 @@
  * dconf_is_path:
  * @string: a string
  * @error: a pointer to a #GError, or %NULL, set when %FALSE is returned
- * Returns: %TRUE if @string is a path
  *
  * Checks if @string is a valid dconf path.  dconf keys must start with
  * '/' and not contain '//'.
  *
  * A dconf path may be either a key or a dir.  See dconf_is_key() and
  * dconf_is_dir() for examples of each.
+ *
+ * Returns: %TRUE if @string is a path
  **/
 gboolean
 dconf_is_path (const gchar  *string,
@@ -127,7 +128,6 @@ dconf_is_path (const gchar  *string,
  * dconf_is_key:
  * @string: a string
  * @error: a pointer to a #GError, or %NULL, set when %FALSE is returned
- * Returns: %TRUE if @string is a key
  *
  * Checks if @string is a valid dconf key.  dconf keys must start with
  * '/', not contain '//' and not end with '/'.
@@ -138,6 +138,8 @@ dconf_is_path (const gchar  *string,
  * "/a", "/a/b" and "/a/b/c" are examples of keys.  "", "/", "a", "a/b",
  * "//a/b", "/a//b", and "/a/" are examples of strings that are not
  * keys.
+ *
+ * Returns: %TRUE if @string is a key
  **/
 gboolean
 dconf_is_key (const gchar *string,
@@ -152,7 +154,6 @@ dconf_is_key (const gchar *string,
  * dconf_is_dir:
  * @string: a string
  * @error: a pointer to a #GError, or %NULL, set when %FALSE is returned
- * Returns: %TRUE if @string is a dir
  *
  * Checks if @string is a valid dconf dir.  dconf dirs must start and
  * end with '/' and not contain '//'.
@@ -164,6 +165,8 @@ dconf_is_key (const gchar *string,
  * "/", "/a/" and "/a/b/" are examples of dirs.  "", "a/", "a/b/",
  * "//a/b/", "/a//b/" and "/a" are examples of strings that are not
  * dirs.
+ *
+ * Returns: %TRUE if @string is a dir
  **/
 gboolean
 dconf_is_dir (const gchar  *string,
@@ -175,10 +178,9 @@ dconf_is_dir (const gchar  *string,
 }
 
 /**
- * dconf_is_rel:
+ * dconf_is_rel_path:
  * @string: a string
  * @error: a pointer to a #GError, or %NULL, set when %FALSE is returned
- * Returns: %TRUE if @string is a relative path
  *
  * Checks if @string is a valid dconf relative path.  A relative path is
  * a string that, when concatenated to a dir, forms a valid dconf path.
@@ -186,10 +188,12 @@ dconf_is_dir (const gchar  *string,
  *
  * A dconf rel may be either a relative key or a relative dir.  See
  * dconf_is_rel_key() and dconf_is_rel_dir() for examples of each.
+ *
+ * Returns: %TRUE if @string is a relative path
  **/
 gboolean
-dconf_is_rel (const gchar  *string,
-              GError      **error)
+dconf_is_rel_path (const gchar  *string,
+                   GError      **error)
 {
 #define type "relative path"
   vars; nonnull; relative; no_double_slash; path;
@@ -201,7 +205,6 @@ dconf_is_rel (const gchar  *string,
  * dconf_is_rel_key:
  * @string: a string
  * @error: a pointer to a #GError, or %NULL, set when %FALSE is returned
- * Returns: %TRUE if @string is a relative key
  *
  * Checks if @string is a valid dconf relative key.  A relative key is a
  * string that, when concatenated to a dir, forms a valid dconf key.
@@ -211,6 +214,8 @@ dconf_is_rel (const gchar  *string,
  * "a", "a/b" and "a/b/c" are examples of relative keys.  "", "/", "/a",
  * "/a/b", "//a/b", "/a//b", and "a/" are examples of strings that are
  * not relative keys.
+ *
+ * Returns: %TRUE if @string is a relative key
  **/
 gboolean
 dconf_is_rel_key (const gchar  *string,
@@ -225,7 +230,6 @@ dconf_is_rel_key (const gchar  *string,
  * dconf_is_rel_dir:
  * @string: a string
  * @error: a pointer to a #GError, or %NULL, set when %FALSE is returned
- * Returns: %TRUE if @string is a relative dir
  *
  * Checks if @string is a valid dconf relative dir.  A relative dir is a
  * string that, when appended to a dir, forms a valid dconf dir.  This
@@ -237,6 +241,8 @@ dconf_is_rel_key (const gchar  *string,
  * "", "a/" and "a/b/" are examples of relative dirs.  "/", "/a/",
  * "/a/b/", "//a/b/", "a//b/" and "a" are examples of strings that are
  * not relative dirs.
+ *
+ * Returns: %TRUE if @string is a relative dir
  **/
 gboolean
 dconf_is_rel_dir (const gchar  *string,
