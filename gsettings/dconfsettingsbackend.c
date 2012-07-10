@@ -26,8 +26,6 @@
 
 #include <string.h>
 
-#include "dconfcontext.h"
-
 typedef GSettingsBackendClass DConfSettingsBackendClass;
 
 typedef struct

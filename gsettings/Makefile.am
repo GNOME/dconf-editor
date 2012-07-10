@@ -13,8 +13,6 @@ libdconfsettings_so_LDADD = \
 libdconfsettings_so_CFLAGS = $(gio_CFLAGS) -fPIC -DPIC
 libdconfsettings_so_LDFLAGS = -shared
 libdconfsettings_so_SOURCES = \
-	dconfcontext.h			\
-	dconfcontext.c			\
 	dconfsettingsbackend.c
 
 uninstall-hook:
