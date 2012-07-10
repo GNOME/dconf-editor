@@ -20,3 +20,5 @@ Makefile
 /autom4te.cache
 /aclocal.m4
 /stamp-h1
+/dconf-lcov.info
+/lcov-html

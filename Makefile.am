@@ -14,7 +14,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 # use recursive makes in order to ignore errors during check
 lcov: lcov-clean
 	-$(MAKE) $(AM_MAKEFLAGS) -k check
-	lcov --directory $(top_builddir) --capture --output-file dconf-lcov.info --test-name dconf --no-checksum --compat-libtool
+	lcov --directory $(top_builddir) --capture --test-name dconf | $(top_srcdir)/trim-lcov.py > dconf-lcov.info
 	LANG=C genhtml --prefix $(top_builddir) --output-directory lcov-html --legend --show-details dconf-lcov.info
 	@echo
 	@echo "     file://$(abs_top_builddir)/lcov-html/index.html"
