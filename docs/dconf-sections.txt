@@ -13,6 +13,7 @@ dconf_client_watch_fast
 dconf_client_watch_sync
 dconf_client_unwatch_fast
 dconf_client_unwatch_sync
+dconf_client_sync
 <SUBSECTION Standard>
 DConfClientClass
 DCONF_CLIENT

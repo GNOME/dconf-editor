@@ -305,7 +305,9 @@ dconf_client_is_writable (DConfClient *client,
  *
  * This call merely queues up the write and returns immediately, without
  * blocking.  The only errors that can be detected or reported at this
- * point are attempts to write to read-only keys.
+ * point are attempts to write to read-only keys.  If the application
+ * exits immediately after this function returns then the queued call
+ * may never be sent; see dconf_client_sync().
  *
  * A local copy of the written value is kept so that calls to
  * dconf_client_read() that occur before the service actually makes the
@@ -393,7 +395,9 @@ dconf_client_write_sync (DConfClient   *client,
  *
  * This call merely queues up the write and returns immediately, without
  * blocking.  The only errors that can be detected or reported at this
- * point are attempts to write to read-only keys.
+ * point are attempts to write to read-only keys.  If the application
+ * exits immediately after this function returns then the queued call
+ * may never be sent; see dconf_client_sync().
  *
  * A local copy of the written value is kept so that calls to
  * dconf_client_read() that occur before the service actually makes the
@@ -545,4 +549,22 @@ dconf_client_unwatch_sync (DConfClient *client,
   g_return_if_fail (DCONF_IS_CLIENT (client));
 
   dconf_engine_unwatch_sync (client->engine, path);
+}
+
+/**
+ * dconf_client_sync:
+ * @client: a #DConfClient
+ *
+ * Blocks until all outstanding "fast" change or write operations have
+ * been submitted to the service.
+ *
+ * Applications should generally call this before exiting on any
+ * #DConfClient that they wrote to.
+ **/
+void
+dconf_client_sync (DConfClient *client)
+{
+  g_return_if_fail (DCONF_IS_CLIENT (client));
+
+  dconf_engine_sync (client->engine);
 }

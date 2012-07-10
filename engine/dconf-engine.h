@@ -152,6 +152,10 @@ gboolean                dconf_engine_change_sync                        (DConfEn
                                                                          DConfChangeset          *changeset,
                                                                          gchar                  **tag,
                                                                          GError                 **error);
+G_GNUC_INTERNAL
+gboolean                dconf_engine_has_outstanding                    (DConfEngine             *engine);
+G_GNUC_INTERNAL
+void                    dconf_engine_sync                               (DConfEngine             *engine);
 
 /* Asynchronous API: not implemented yet (and maybe never?) */
 

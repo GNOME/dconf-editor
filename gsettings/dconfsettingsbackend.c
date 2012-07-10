@@ -135,7 +135,9 @@ dconf_settings_backend_unsubscribe (GSettingsBackend *backend,
 static void
 dconf_settings_backend_sync (GSettingsBackend *backend)
 {
-  /* XXX implement sync */
+  DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
+
+  dconf_engine_sync (dcsb->engine);
 }
 
 static void

@@ -161,7 +161,8 @@ struct _DConfEngine
   DConfEngineSource **sources;      /* Array never changes, but each source changes internally. */
   gint                n_sources;
 
-  GMutex              queue_lock;   /* This lock is for pending, in_flight */
+  GMutex              queue_lock;   /* This lock is for pending, in_flight, queue_cond */
+  GCond               queue_cond;   /* Signalled when the queues empty */
   GQueue              pending;      /* DConfChangeset */
   GQueue              in_flight;    /* DConfChangeset */
 
@@ -233,6 +234,7 @@ dconf_engine_new (gpointer       user_data,
 
   g_mutex_init (&engine->sources_lock);
   g_mutex_init (&engine->queue_lock);
+  g_cond_init (&engine->queue_cond);
 
   engine->sources = dconf_engine_profile_open (NULL, &engine->n_sources);
 
@@ -279,6 +281,7 @@ dconf_engine_unref (DConfEngine *engine)
 
       g_mutex_clear (&engine->sources_lock);
       g_mutex_clear (&engine->queue_lock);
+      g_cond_clear (&engine->queue_cond);
 
       g_free (engine->last_handled);
 
@@ -948,6 +951,16 @@ dconf_engine_manage_queue (DConfEngine *engine)
 
       g_queue_push_tail (&engine->in_flight, oc->change);
     }
+
+  if (g_queue_is_empty (&engine->in_flight))
+    {
+      /* The in-flight queue should not be empty if we have changes
+       * pending...
+       */
+      g_assert (g_queue_is_empty (&engine->pending));
+
+      g_cond_broadcast (&engine->queue_cond);
+    }
 }
 
 static gboolean
@@ -1122,4 +1135,28 @@ dconf_engine_handle_dbus_signal (GBusType     type,
 
       g_warning ("Need to handle writability changes"); /* XXX */
     }
+}
+
+gboolean
+dconf_engine_has_outstanding (DConfEngine *engine)
+{
+  gboolean has;
+
+  /* The in-flight queue will never be empty unless the pending queue is
+   * also empty, so we only really need to check one of them...
+   */
+  dconf_engine_lock_queues (engine);
+  has = !g_queue_is_empty (&engine->in_flight);
+  dconf_engine_unlock_queues (engine);
+
+  return has;
+}
+
+void
+dconf_engine_sync (DConfEngine *engine)
+{
+  dconf_engine_lock_queues (engine);
+  while (!g_queue_is_empty (&engine->in_flight))
+    g_cond_wait (&engine->queue_cond, &engine->queue_lock);
+  dconf_engine_unlock_queues (engine);
 }

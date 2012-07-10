@@ -78,6 +78,8 @@ void                    dconf_client_unwatch_fast                       (DConfCl
 void                    dconf_client_unwatch_sync                       (DConfClient          *client,
                                                                          const gchar          *path);
 
+void                    dconf_client_sync                               (DConfClient          *client);
+
 G_END_DECLS
 
 #endif /* __dconf_client_h__ */
