@@ -9,6 +9,7 @@ SUBDIRS += editor
 endif
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+EXTRA_DIST = trim-lcov.py
 
 .PHONY: lcov lcov-clean
 # use recursive makes in order to ignore errors during check
