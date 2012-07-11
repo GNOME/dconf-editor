@@ -39,6 +39,8 @@ typedef enum
 #define DCONF_ERROR (g_quark_from_static_string ("dconf error quark"))
 
 /* These functions need to be implemented by the client library */
+G_GNUC_INTERNAL
+void                    dconf_engine_dbus_init_for_testing              (void);
 
 /* Sends a D-Bus message.
  *

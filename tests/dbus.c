@@ -403,10 +403,9 @@ main (int argc, char **argv)
 {
   g_test_init (&argc, &argv, NULL);
 
-  /* XXX should not need to do this here! */
-  g_type_init ();
-
   main_thread = g_thread_self ();
+
+  dconf_engine_dbus_init_for_testing ();
 
   /* test_creation_error absolutely must come first */
   g_test_add_func (DBUS_BACKEND "/creation/error", test_creation_error);

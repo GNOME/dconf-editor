@@ -301,3 +301,11 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
                                       bus_name, object_path, interface_name, method_name, parameters, reply_type,
                                       G_DBUS_CALL_FLAGS_NONE, -1, NULL, error);
 }
+
+#ifndef PIC
+void
+dconf_engine_dbus_init_for_testing (void)
+{
+  g_type_init ();
+}
+#endif
