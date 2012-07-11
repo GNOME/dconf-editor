@@ -135,7 +135,7 @@ dconf_engine_handle_dbus_signal (GBusType     bus_type,
     {
       GVariant *expected;
 
-      expected = g_variant_parse (NULL, "(1, 2, 3)", NULL, NULL, NULL);
+      expected = g_variant_parse (NULL, "('1', ['2', '3'])", NULL, NULL, NULL);
       g_assert (g_variant_equal (parameters, expected));
       g_variant_unref (expected);
 
@@ -390,7 +390,7 @@ test_signal_receipt (void)
   status = system ("gdbus emit --session "
                    "--object-path /ca/desrt/dconf/Writer/testcase "
                    "--signal ca.desrt.dconf.Writer.TestSignal "
-                   "1 2 3");
+                   "\"'1'\" \"['2', '3']\"");
   g_assert_cmpint (status, ==, 0);
 
   id = g_timeout_add (30000, did_not_receive_signal, NULL);
