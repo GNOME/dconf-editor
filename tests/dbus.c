@@ -56,6 +56,12 @@ signal_if_queue_is_empty (GQueue *queue)
     g_idle_add (just_wake, NULL);
 }
 
+const GVariantType *
+dconf_engine_call_handle_get_expected_type (DConfEngineCallHandle *handle)
+{
+  return (GVariantType *) handle;
+}
+
 void
 dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
                                 GVariant              *parameters,
@@ -91,7 +97,7 @@ dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
       g_assert (g_variant_is_of_type (parameters, G_VARIANT_TYPE ("(s)")));
 
       g_assert (expected_handle == handle);
-      g_free (handle);
+      g_variant_type_free ((GVariantType *) handle);
 
       signal_if_queue_is_empty (&async_call_success_queue);
     }
@@ -106,7 +112,7 @@ dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
       g_assert (error != NULL);
 
       g_assert (expected_handle == handle);
-      g_free (handle);
+      g_variant_type_free ((GVariantType *) handle);
 
       signal_if_queue_is_empty (&async_call_error_queue);
     }
@@ -186,8 +192,7 @@ test_creation_error (void)
 
       g_setenv ("DBUS_SESSION_BUS_ADDRESS", "some nonsense", 1);
 
-      handle = g_malloc (1);
-
+      handle = (gpointer) g_variant_type_new ("(s)");
       g_mutex_lock (&async_call_queue_lock);
       g_queue_push_tail (&async_call_error_queue, handle);
       g_mutex_unlock (&async_call_queue_lock);
@@ -266,7 +271,7 @@ test_sync_call_error (void)
   /* Test receiving errors from the other side */
   reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
                                             "org.freedesktop.DBus", "/", "org.freedesktop.DBus", "GetId",
-                                            g_variant_new ("(u)", 1), G_VARIANT_TYPE_UNIT, &error);
+                                            g_variant_new ("(s)", ""), G_VARIANT_TYPE_UNIT, &error);
   g_assert (reply == NULL);
   g_assert (error != NULL);
   g_assert (strstr (error->message, "org.freedesktop.DBus.Error.InvalidArgs"));
@@ -293,7 +298,7 @@ test_async_call_success (void)
       GError *error = NULL;
       gboolean success;
 
-      handle = g_malloc (1);
+      handle = (gpointer) g_variant_type_new ("(s)");
       g_mutex_lock (&async_call_queue_lock);
       g_queue_push_tail (&async_call_success_queue, handle);
       g_mutex_unlock (&async_call_queue_lock);
@@ -315,7 +320,7 @@ test_async_call_error (void)
   GError *error = NULL;
   gboolean success;
 
-  handle = g_malloc (1);
+  handle = (gpointer) g_variant_type_new ("(s)");
 
   g_mutex_lock (&async_call_queue_lock);
   g_queue_push_tail (&async_call_error_queue, handle);
@@ -338,7 +343,7 @@ test_sync_during_async (void)
   gboolean success;
   GVariant *reply;
 
-  handle = g_malloc (1);
+  handle = (gpointer) g_variant_type_new ("(s)");
   g_mutex_lock (&async_call_queue_lock);
   g_queue_push_tail (&async_call_success_queue, handle);
   g_mutex_unlock (&async_call_queue_lock);
