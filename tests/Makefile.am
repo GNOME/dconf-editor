@@ -68,6 +68,14 @@ gdbus_filter_LDADD = \
 	$(gio_LIBS)
 gdbus_filter_SOURCES = dbus.c
 
+TEST_PROGS += libdbus-1
+libdbus_1_CFLAGS = $(gio_CFLAGS) -DDBUS_BACKEND=\"/libdbus-1\"
+libdbus_1_LDADD = \
+	../dbus-1/libdconf-libdbus-1.a		\
+	$(glib_LIBS)				\
+	$(dbus_LIBS)
+libdbus_1_SOURCES = dbus.c
+
 TEST_PROGS += engine
 engine_CFLAGS = $(glib_CFLAGS) -DSRCDIR=\"$(abs_srcdir)\"
 engine_LDADD = \

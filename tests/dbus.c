@@ -409,7 +409,9 @@ main (int argc, char **argv)
   dconf_engine_dbus_init_for_testing ();
 
   /* test_creation_error absolutely must come first */
-  g_test_add_func (DBUS_BACKEND "/creation/error", test_creation_error);
+  if (!g_str_equal (DBUS_BACKEND, "/libdbus-1"))
+    g_test_add_func (DBUS_BACKEND "/creation/error", test_creation_error);
+
   g_test_add_func (DBUS_BACKEND "/sync-call/success", test_sync_call_success);
   g_test_add_func (DBUS_BACKEND "/sync-call/error", test_sync_call_error);
   g_test_add_func (DBUS_BACKEND "/async-call/success", test_async_call_success);

@@ -8,5 +8,6 @@ gdbus-filter
 gdbus-thread
 gsettings
 gvdb
+libdbus-1
 paths
 shm
