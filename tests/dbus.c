@@ -140,6 +140,7 @@ dconf_engine_handle_dbus_signal (GBusType     bus_type,
       g_variant_unref (expected);
 
       signal_was_received = TRUE;
+      g_idle_add (just_wake, NULL);
     }
 }
 
@@ -364,13 +365,19 @@ test_sync_during_async (void)
   wait_for_queue_to_empty (&async_call_success_queue);
 }
 
+static gboolean
+did_not_receive_signal (gpointer user_data)
+{
+  g_assert_not_reached ();
+}
+
 static void
 test_signal_receipt (void)
 {
   GError *error = NULL;
   GVariant *reply;
   gint status;
-  gint i;
+  guint id;
 
   reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
                                             "org.freedesktop.DBus", "/", "org.freedesktop.DBus", "AddMatch",
@@ -386,16 +393,10 @@ test_signal_receipt (void)
                    "1 2 3");
   g_assert_cmpint (status, ==, 0);
 
-  /* total time: 30 seconds */
-  for (i = 0; i < 300; i++)
-    {
-      if (signal_was_received)
-        return;
-
-      g_usleep (100 * G_TIME_SPAN_MILLISECOND);
-    }
-
-  g_assert_not_reached ();
+  id = g_timeout_add (30000, did_not_receive_signal, NULL);
+  while (!signal_was_received)
+    g_main_context_iteration (NULL, FALSE);
+  g_source_remove (id);
 }
 
 int
