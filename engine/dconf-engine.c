@@ -656,6 +656,12 @@ dconf_engine_call_handle_new (DConfEngine                   *engine,
   return handle;
 }
 
+const GVariantType *
+dconf_engine_call_handle_get_expected_type (DConfEngineCallHandle *handle)
+{
+  return handle->expected_reply;
+}
+
 void
 dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
                                 GVariant              *parameter,

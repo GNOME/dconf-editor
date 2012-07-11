@@ -88,6 +88,8 @@ void                    dconf_engine_change_notify                      (DConfEn
 
 /* These functions are implemented by the engine */
 G_GNUC_INTERNAL
+const GVariantType *    dconf_engine_call_handle_get_expected_type      (DConfEngineCallHandle   *handle);
+G_GNUC_INTERNAL
 void                    dconf_engine_call_handle_reply                  (DConfEngineCallHandle   *handle,
                                                                          GVariant                *parameters,
                                                                          const GError            *error);
