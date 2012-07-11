@@ -13,8 +13,48 @@ static GThread *dbus_thread;
 static GQueue   async_call_success_queue;
 static GQueue   async_call_error_queue;
 static GMutex   async_call_queue_lock;
-static GCond    async_call_queue_cond;
 static gboolean signal_was_received;
+
+static void
+wait_for_queue_to_empty (GQueue *queue)
+{
+  okay_in_main = TRUE;
+
+  while (TRUE)
+    {
+      gboolean is_empty;
+
+      g_mutex_lock (&async_call_queue_lock);
+      is_empty = g_queue_is_empty (queue);
+      g_mutex_unlock (&async_call_queue_lock);
+
+      if (is_empty)
+        return;
+
+      g_main_context_iteration (NULL, TRUE);
+    }
+
+  okay_in_main = FALSE;
+}
+
+static gboolean
+just_wake (gpointer user_data)
+{
+  return G_SOURCE_REMOVE;
+}
+
+static void
+signal_if_queue_is_empty (GQueue *queue)
+{
+  gboolean is_empty;
+
+  g_mutex_lock (&async_call_queue_lock);
+  is_empty = g_queue_is_empty (queue);
+  g_mutex_unlock (&async_call_queue_lock);
+
+  if (is_empty)
+    g_idle_add (just_wake, NULL);
+}
 
 void
 dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
@@ -53,10 +93,7 @@ dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
       g_assert (expected_handle == handle);
       g_free (handle);
 
-      g_mutex_lock (&async_call_queue_lock);
-      if (g_queue_is_empty (&async_call_success_queue))
-        g_cond_broadcast (&async_call_queue_cond);
-      g_mutex_unlock (&async_call_queue_lock);
+      signal_if_queue_is_empty (&async_call_success_queue);
     }
   else
     {
@@ -71,10 +108,7 @@ dconf_engine_call_handle_reply (DConfEngineCallHandle *handle,
       g_assert (expected_handle == handle);
       g_free (handle);
 
-      g_mutex_lock (&async_call_queue_lock);
-      if (g_queue_is_empty (&async_call_error_queue))
-        g_cond_broadcast (&async_call_queue_cond);
-      g_mutex_unlock (&async_call_queue_lock);
+      signal_if_queue_is_empty (&async_call_error_queue);
     }
 }
 
@@ -169,10 +203,7 @@ test_creation_error (void)
         {
           g_assert_no_error (error);
 
-          g_mutex_lock (&async_call_queue_lock);
-          while (!g_queue_is_empty (&async_call_error_queue))
-            g_cond_wait (&async_call_queue_cond, &async_call_queue_lock);
-          g_mutex_unlock (&async_call_queue_lock);
+          wait_for_queue_to_empty (&async_call_error_queue);
         }
       else
         g_assert (error != NULL);
@@ -274,10 +305,7 @@ test_async_call_success (void)
       g_assert (success);
     }
 
-  g_mutex_lock (&async_call_queue_lock);
-  while (!g_queue_is_empty (&async_call_success_queue))
-    g_cond_wait (&async_call_queue_cond, &async_call_queue_lock);
-  g_mutex_unlock (&async_call_queue_lock);
+  wait_for_queue_to_empty (&async_call_success_queue);
 }
 
 static void
@@ -295,14 +323,11 @@ test_async_call_error (void)
 
   success = dconf_engine_dbus_call_async_func (G_BUS_TYPE_SESSION,
                                                "org.freedesktop.DBus", "/", "org.freedesktop.DBus", "GetId",
-                                               g_variant_new ("(u)", 4), handle, &error);
+                                               g_variant_new ("(s)", ""), handle, &error);
   g_assert_no_error (error);
   g_assert (success);
 
-  g_mutex_lock (&async_call_queue_lock);
-  while (!g_queue_is_empty (&async_call_error_queue))
-    g_cond_wait (&async_call_queue_cond, &async_call_queue_lock);
-  g_mutex_unlock (&async_call_queue_lock);
+  wait_for_queue_to_empty (&async_call_error_queue);
 }
 
 static void
@@ -331,10 +356,7 @@ test_sync_during_async (void)
   g_assert (reply != NULL);
   g_variant_unref (reply);
 
-  g_mutex_lock (&async_call_queue_lock);
-  while (!g_queue_is_empty (&async_call_success_queue))
-    g_cond_wait (&async_call_queue_cond, &async_call_queue_lock);
-  g_mutex_unlock (&async_call_queue_lock);
+  wait_for_queue_to_empty (&async_call_success_queue);
 }
 
 static void
