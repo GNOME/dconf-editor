@@ -28,7 +28,7 @@ GLIB_GSETTINGS
 GTK_DOC_CHECK([1.15])
 
 # Dependencies
-PKG_CHECK_MODULES(glib, glib-2.0 >= 2.31.18)
+PKG_CHECK_MODULES(glib, glib-2.0 >= 2.33.3)
 PKG_CHECK_MODULES(gio, gio-2.0)
 PKG_CHECK_MODULES(dbus, dbus-1)
 
