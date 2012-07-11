@@ -40,18 +40,13 @@ dconf_engine_source_free (DConfEngineSource *source)
   g_free (source);
 }
 
-/* warning: function called through a non-compatible type [enabled by default]
- * note: if this code is reached, the program will abort
- */
-static void i_hate_gcc (gpointer x) { gvdb_table_unref (x); }
-
 gboolean
 dconf_engine_source_refresh (DConfEngineSource *source)
 {
   if (source->vtable->needs_reopen (source))
     {
-      g_clear_pointer (&source->values, i_hate_gcc);
-      g_clear_pointer (&source->locks, i_hate_gcc);
+      g_clear_pointer (&source->values, gvdb_table_unref);
+      g_clear_pointer (&source->locks, gvdb_table_unref);
 
       source->values = source->vtable->reopen (source);
       if (source->values)
