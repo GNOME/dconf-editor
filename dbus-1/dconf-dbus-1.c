@@ -20,6 +20,7 @@
 #include "dconf-dbus-1.h"
 
 #include "../engine/dconf-engine.h"
+#include "dconf-libdbus-1.h"
 
 #include <string.h>
 
