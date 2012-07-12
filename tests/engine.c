@@ -224,9 +224,105 @@ test_signal_threadsafety (void)
   dconf_mock_shm_reset ();
 }
 
+static void
+test_user_source (void)
+{
+  DConfEngineSource *source;
+  DConfMockGvdbTable *table;
+  DConfMockGvdbTable *locks;
+  gboolean reopened;
+
+  source = dconf_engine_source_new ("user-db:user");
+  g_assert (source != NULL);
+
+  /* Create the source from a clean slate */
+  dconf_engine_source_init (source);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+  dconf_mock_shm_assert_log ("open user;");
+
+  /* Try to refresh it.  There must be no IO at this point. */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+  dconf_mock_shm_assert_log ("");
+
+  /* Add a real database. */
+  table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_table_insert (table, "/values/int32", g_variant_new_int32 (123456), NULL);
+  dconf_mock_gvdb_install ("/HOME/.config/dconf/user", table);
+
+  /* Try to refresh it again.
+   * Because we didn't flag the change there must still be no IO.
+   */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+  dconf_mock_shm_assert_log ("");
+
+  /* Now flag it and reopen. */
+  dconf_mock_shm_flag ("user");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values != NULL);
+  g_assert (source->locks == NULL);
+  g_assert (gvdb_table_has_value (source->values, "/values/int32"));
+  dconf_mock_shm_assert_log ("close;open user;");
+
+  /* Do it again -- should get the same result, after some IO */
+  dconf_mock_shm_flag ("user");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values != NULL);
+  g_assert (source->locks == NULL);
+  dconf_mock_shm_assert_log ("close;open user;");
+
+  /* "Delete" the gvdb and make sure dconf notices after a flag */
+  dconf_mock_gvdb_install ("/HOME/.config/dconf/user", NULL);
+  dconf_mock_shm_flag ("user");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+  dconf_mock_shm_assert_log ("close;open user;");
+
+  /* Add a gvdb with a lock */
+  table = dconf_mock_gvdb_table_new ();
+  locks = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_table_insert (table, "/values/int32", g_variant_new_int32 (123456), NULL);
+  dconf_mock_gvdb_table_insert (locks, "/values/int32", g_variant_new_boolean (TRUE), NULL);
+  dconf_mock_gvdb_table_insert (table, ".locks", NULL, locks);
+  dconf_mock_gvdb_install ("/HOME/.config/dconf/user", table);
+
+  /* Reopen and check if we have the lock */
+  dconf_mock_shm_flag ("user");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values != NULL);
+  g_assert (source->locks != NULL);
+  g_assert (gvdb_table_has_value (source->values, "/values/int32"));
+  g_assert (gvdb_table_has_value (source->locks, "/values/int32"));
+  dconf_mock_shm_assert_log ("close;open user;");
+
+  /* Reopen one last time */
+  dconf_mock_shm_flag ("user");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values != NULL);
+  g_assert (source->locks != NULL);
+  dconf_mock_shm_assert_log ("close;open user;");
+
+  dconf_engine_source_free (source);
+  dconf_mock_shm_assert_log ("close;");
+
+  dconf_mock_gvdb_install ("/HOME/.config/dconf/user", NULL);
+  dconf_mock_shm_reset ();
+}
+
 int
 main (int argc, char **argv)
 {
+  g_setenv ("XDG_CONFIG_HOME", "/HOME/.config", TRUE);
   g_unsetenv ("DCONF_PROFILE");
 
   main_thread = g_thread_self ();
@@ -235,6 +331,7 @@ main (int argc, char **argv)
 
   g_test_add_func ("/engine/profile-parser", test_profile_parser);
   g_test_add_func ("/engine/signal-threadsafety", test_signal_threadsafety);
+  g_test_add_func ("/engine/sources/user", test_user_source);
 
   return g_test_run ();
 }
