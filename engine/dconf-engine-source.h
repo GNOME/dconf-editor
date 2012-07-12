@@ -33,7 +33,7 @@ struct _DConfEngineSourceVTable
 {
   gsize instance_size;
 
-  gboolean      (* init)             (DConfEngineSource *source);
+  void          (* init)             (DConfEngineSource *source);
   void          (* finalize)         (DConfEngineSource *source);
   gboolean      (* needs_reopen)     (DConfEngineSource *source);
   GvdbTable *   (* reopen)           (DConfEngineSource *source);
@@ -65,6 +65,6 @@ G_GNUC_INTERNAL
 DConfEngineSource *     dconf_engine_source_new_default                 (void);
 
 G_GNUC_INTERNAL
-gboolean                dconf_engine_source_init                        (DConfEngineSource  *source);
+void                    dconf_engine_source_init                        (DConfEngineSource  *source);
 
 #endif /* __dconf_engine_source_h__ */

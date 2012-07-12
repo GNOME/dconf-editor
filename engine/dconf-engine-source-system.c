@@ -26,14 +26,12 @@
 #include <fcntl.h>
 #include <errno.h>
 
-static gboolean
+static void
 dconf_engine_source_system_init (DConfEngineSource *source)
 {
   source->bus_type = G_BUS_TYPE_SYSTEM;
   source->bus_name = g_strdup ("ca.desrt.dconf");
   source->object_path = g_strdup_printf ("/ca/desrt/dconf/Writer/%s", source->name);
-
-  return TRUE;
 }
 
 static gboolean

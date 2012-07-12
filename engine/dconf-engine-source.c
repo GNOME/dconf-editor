@@ -58,10 +58,10 @@ dconf_engine_source_refresh (DConfEngineSource *source)
   return FALSE;
 }
 
-gboolean
+void
 dconf_engine_source_init (DConfEngineSource *source)
 {
-  return source->vtable->init (source);
+  source->vtable->init (source);
 }
 
 DConfEngineSource *

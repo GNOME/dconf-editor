@@ -50,7 +50,7 @@ dconf_engine_source_user_open_gvdb (const gchar *name)
   return table;
 }
 
-static gboolean
+static void
 dconf_engine_source_user_init (DConfEngineSource *source)
 {
   DConfEngineSourceUser *user_source = (DConfEngineSourceUser *) source;
@@ -62,8 +62,6 @@ dconf_engine_source_user_init (DConfEngineSource *source)
   user_source->shm = dconf_shm_open (source->name);
 
   source->values = dconf_engine_source_user_open_gvdb (source->name);
-
-  return TRUE;
 }
 
 static gboolean

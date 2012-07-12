@@ -239,8 +239,7 @@ dconf_engine_new (gpointer       user_data,
   engine->sources = dconf_engine_profile_open (NULL, &engine->n_sources);
 
   for (i = 0; i < engine->n_sources; i++)
-    if (!dconf_engine_source_init (engine->sources[i]))
-      g_assert_not_reached ();
+    dconf_engine_source_init (engine->sources[i]);
 
   g_mutex_lock (&dconf_engine_global_lock);
   dconf_engine_global_list = g_slist_prepend (dconf_engine_global_list, engine);
