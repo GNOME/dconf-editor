@@ -2,6 +2,7 @@
 
 #include "../engine/dconf-engine.h"
 #include "../engine/dconf-engine-profile.h"
+#include "dconf-mock.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>
@@ -176,6 +177,8 @@ test_profile_parser (void)
   g_assert_cmpstr (sources[0]->name, ==, "user");
   dconf_engine_source_free (sources[0]);
   g_free (sources);
+
+  dconf_mock_shm_reset ();
 }
 
 static gpointer
@@ -217,6 +220,8 @@ test_signal_threadsafety (void)
                                      "/ca/desrt/dconf/Writer/user",
                                      "Notify", parameters);
   g_variant_unref (parameters);
+
+  dconf_mock_shm_reset ();
 }
 
 int
