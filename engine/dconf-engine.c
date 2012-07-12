@@ -274,7 +274,7 @@ dconf_engine_unref (DConfEngine *engine)
       if (engine->ref_count != 1)
         {
           g_mutex_unlock (&dconf_engine_global_lock);
-          return;
+          goto again;
         }
       dconf_engine_global_list = g_slist_remove (dconf_engine_global_list, engine);
       g_mutex_unlock (&dconf_engine_global_lock);
