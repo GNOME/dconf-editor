@@ -53,15 +53,10 @@ dconf_engine_source_user_open_gvdb (const gchar *name)
 static void
 dconf_engine_source_user_init (DConfEngineSource *source)
 {
-  DConfEngineSourceUser *user_source = (DConfEngineSourceUser *) source;
-
   source->bus_type = G_BUS_TYPE_SESSION;
   source->bus_name = g_strdup ("ca.desrt.dconf");
   source->object_path = g_strdup_printf ("/ca/desrt/dconf/Writer/%s", source->name);
   source->writable = TRUE;
-  user_source->shm = dconf_shm_open (source->name);
-
-  source->values = dconf_engine_source_user_open_gvdb (source->name);
 }
 
 static gboolean
