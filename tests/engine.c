@@ -232,11 +232,9 @@ test_user_source (void)
   DConfMockGvdbTable *locks;
   gboolean reopened;
 
+  /* Create the source from a clean slate */
   source = dconf_engine_source_new ("user-db:user");
   g_assert (source != NULL);
-
-  /* Create the source from a clean slate */
-  dconf_engine_source_init (source);
   g_assert (source->values == NULL);
   g_assert (source->locks == NULL);
   dconf_mock_shm_assert_log ("open user;");

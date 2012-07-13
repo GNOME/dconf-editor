@@ -225,7 +225,6 @@ dconf_engine_new (gpointer       user_data,
                   GDestroyNotify free_func)
 {
   DConfEngine *engine;
-  gint i;
 
   engine = g_slice_new0 (DConfEngine);
   engine->user_data = user_data;
@@ -237,9 +236,6 @@ dconf_engine_new (gpointer       user_data,
   g_cond_init (&engine->queue_cond);
 
   engine->sources = dconf_engine_profile_open (NULL, &engine->n_sources);
-
-  for (i = 0; i < engine->n_sources; i++)
-    dconf_engine_source_init (engine->sources[i]);
 
   g_mutex_lock (&dconf_engine_global_lock);
   dconf_engine_global_list = g_slist_prepend (dconf_engine_global_list, engine);

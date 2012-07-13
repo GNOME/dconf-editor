@@ -64,7 +64,4 @@ DConfEngineSource *     dconf_engine_source_new                         (const g
 G_GNUC_INTERNAL
 DConfEngineSource *     dconf_engine_source_new_default                 (void);
 
-G_GNUC_INTERNAL
-void                    dconf_engine_source_init                        (DConfEngineSource  *source);
-
 #endif /* __dconf_engine_source_h__ */

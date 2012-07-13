@@ -58,12 +58,6 @@ dconf_engine_source_refresh (DConfEngineSource *source)
   return FALSE;
 }
 
-void
-dconf_engine_source_init (DConfEngineSource *source)
-{
-  source->vtable->init (source);
-}
-
 DConfEngineSource *
 dconf_engine_source_new (const gchar *description)
 {
@@ -90,6 +84,7 @@ dconf_engine_source_new (const gchar *description)
   source->name = strchr (description, ':');
   if (source->name)
     source->name = g_strdup (source->name + 1);
+  source->vtable->init (source);
 
   return source;
 }
@@ -102,6 +97,7 @@ dconf_engine_source_new_default (void)
   source = g_malloc0 (dconf_engine_source_user_vtable.instance_size);
   source->vtable = &dconf_engine_source_user_vtable;
   source->name = g_strdup ("user");
+  source->vtable->init (source);
 
   return source;
 }
