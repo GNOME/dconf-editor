@@ -23,44 +23,36 @@
 
 #include <string.h>
 
-#include "gvdb-reader.h"
-#include "gvdb-builder.h"
-
-typedef struct
-{
-  const gchar *prefix;
-  gint prefix_len;
-
-  GHashTable *table;
-  const gchar *const*keys;
-  GVariant *const*values;
-  gint n_items;
-  gint index;
-
-  gchar name[4096];
-  gint name_len;
-} DConfRebuilderState;
+#include "../gvdb/gvdb-reader.h"
+#include "../gvdb/gvdb-builder.h"
+#include "../common/dconf-paths.h"
 
 static GvdbItem *
-dconf_rebuilder_get_parent (GHashTable *table,
-                            gchar      *key,
-                            gint        length)
+dconf_rebuilder_get_parent (GHashTable  *table,
+                            const gchar *key)
 {
   GvdbItem *grandparent, *parent;
+  gchar *parent_name;
+  gint len;
 
-  if (length == 1)
+  if (g_str_equal (key, "/"))
     return NULL;
 
-  while (key[--length - 1] != '/');
-  key[length] = '\0';
+  len = strlen (key);
+  if (key[len - 1] == '/')
+    len--;
 
-  parent = g_hash_table_lookup (table, key);
+  while (key[len - 1] != '/')
+    len--;
+
+  parent_name = g_strndup (key, len);
+  parent = g_hash_table_lookup (table, parent_name);
 
   if (parent == NULL)
     {
-      parent = gvdb_hash_table_insert (table, key);
+      parent = gvdb_hash_table_insert (table, parent_name);
 
-      grandparent = dconf_rebuilder_get_parent (table, key, length);
+      grandparent = dconf_rebuilder_get_parent (table, parent_name);
 
       if (grandparent != NULL)
         gvdb_item_set_parent (parent, grandparent);
@@ -69,146 +61,107 @@ dconf_rebuilder_get_parent (GHashTable *table,
   return parent;
 }
 
-static void
-dconf_rebuilder_insert (GHashTable  *table,
-                        const gchar *key,
-                        GVariant    *value)
-{
-  GvdbItem *item;
-  gchar *mykey;
-  gint length;
-
-  length = strlen (key);
-  mykey = g_alloca (length);
-  memcpy (mykey, key, length);
-
-  g_assert (g_hash_table_lookup (table, key) == NULL);
-  item = gvdb_hash_table_insert (table, key);
-
-  gvdb_item_set_parent (item,
-                        dconf_rebuilder_get_parent (table, mykey, length));
-
-  gvdb_item_set_value (item, value);
-}
-
-static void
-dconf_rebuilder_put_item (DConfRebuilderState *state)
-{
-  if (state->values[state->index] != NULL)
-    {
-      gchar *fullname;
-      GVariant *ouch;
-
-      fullname = g_strconcat (state->prefix, state->keys[state->index], NULL);
-      ouch = g_variant_get_variant (state->values[state->index]);
-      dconf_rebuilder_insert (state->table, fullname, ouch);
-      g_variant_unref (ouch);
-      g_free (fullname);
-    }
-
-  state->index++;
-}
-
-static gboolean
-dconf_rebuilder_walk_name (DConfRebuilderState *state,
-                           const gchar         *name,
-                           gsize                name_len)
-{
-  gint cmp;
-
-  g_assert (state->name_len + name_len < sizeof state->name - 1);
-  memcpy (state->name + state->name_len, name, name_len);
-  state->name[state->name_len + name_len] = '\0';
-
-  if (state->index == state->n_items)
-    return TRUE;
-
-  if (state->name_len + name_len < state->prefix_len ||
-      memcmp (state->name, state->prefix, state->prefix_len) != 0)
-    return TRUE;
-
-  while ((cmp = strcmp (state->name + state->prefix_len,
-                        state->keys[state->index])) > 0)
-    {
-      dconf_rebuilder_put_item (state);
-
-      if (state->index == state->n_items)
-        return TRUE;
-    }
-
-  return cmp != 0;
-}
-
-static void
-dconf_rebuilder_walk_value (const gchar *name,
-                            gsize        name_len,
-                            GVariant    *value,
-                            gpointer     user_data)
-{
-  DConfRebuilderState *state = user_data;
-
-  if (dconf_rebuilder_walk_name (state, name, name_len))
-    dconf_rebuilder_insert (state->table, state->name, value);
-
-  else
-    dconf_rebuilder_put_item (state);
-}
-
-static gboolean
-dconf_rebuilder_walk_open (const gchar *name,
-                           gsize        name_len,
-                           gpointer     user_data)
-{
-  DConfRebuilderState *state = user_data;
-
-  if (dconf_rebuilder_walk_name (state, name, name_len))
-    {
-      state->name_len += name_len;
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static void
-dconf_rebuilder_walk_close (gsize    name_len,
-                            gpointer user_data)
-{
-  DConfRebuilderState *state = user_data;
-
-  state->name_len -= name_len;
-}
-
 gboolean
-dconf_rebuilder_rebuild (const gchar  *filename,
-                         const gchar  *prefix,
-                         const gchar *const*keys,
-                         GVariant    *const*values,
-                         int           n_items,
-                         GError      **error)
+dconf_rebuilder_rebuild (const gchar          *filename,
+                         const gchar          *prefix,
+                         const gchar * const  *keys,
+                         GVariant * const     *values,
+                         int                   n_items,
+                         GError              **error)
 {
-  DConfRebuilderState state = { prefix, strlen (prefix),
-                                0, keys, values, n_items };
+  GHashTable *table;
   gboolean success;
+  GHashTable *new;
   GvdbTable *old;
+  gint i;
 
-  state.table = gvdb_hash_table_new (NULL, NULL);
+  table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) g_variant_unref);
 
+  /* read in the old values */
   if ((old = gvdb_table_new (filename, FALSE, NULL)))
     {
-      gvdb_table_walk (old, "/",
-                       dconf_rebuilder_walk_open,
-                       dconf_rebuilder_walk_value,
-                       dconf_rebuilder_walk_close,
-                       &state);
+      gchar **names;
+      gint n_names;
+      gint i;
+
+      names = gvdb_table_get_names (old, &n_names);
+      for (i = 0; i < n_names; i++)
+        {
+          if (dconf_is_key (names[i], NULL))
+            {
+              GVariant *value;
+
+              value = gvdb_table_get_value (old, names[i]);
+
+              if (value != NULL)
+                {
+                  g_hash_table_insert (table, names[i], value);
+                  names[i] = NULL;
+                }
+            }
+
+          g_free (names[i]);
+        }
+
       gvdb_table_unref (old);
+      g_free (names);
     }
 
-  while (state.index != state.n_items)
-    dconf_rebuilder_put_item (&state);
+  /* apply the requested changes */
+  for (i = 0; i < n_items; i++)
+    {
+      gchar *path = g_strconcat (prefix, keys[i], NULL);
 
-  success = gvdb_table_write_contents (state.table, filename, FALSE, error);
-  g_hash_table_unref (state.table);
+      /* Check if we are performing a path reset */
+      if (g_str_has_suffix (path, "/"))
+        {
+          GHashTableIter iter;
+          gpointer key;
+
+          g_assert (values[i] == NULL);
+
+          /* A path reset is really a request to delete all keys that
+           * has a name starting with the reset path.
+           */
+          g_hash_table_iter_init (&iter, table);
+          while (g_hash_table_iter_next (&iter, &key, NULL))
+            if (g_str_has_prefix (key, path))
+              g_hash_table_iter_remove (&iter);
+        }
+
+      if (values[i] != NULL)
+        g_hash_table_insert (table, g_strdup (path), g_variant_ref (values[i]));
+      else
+        g_hash_table_remove (table, path);
+
+      g_free (path);
+    }
+
+  /* convert back to GVDB format */
+  {
+    GHashTableIter iter;
+    gpointer key, value;
+
+    new = gvdb_hash_table_new (NULL, NULL);
+
+    g_hash_table_iter_init (&iter, table);
+    while (g_hash_table_iter_next (&iter, &key, &value))
+      {
+        GvdbItem *item;
+
+        g_assert (g_hash_table_lookup (new, key) == NULL);
+        item = gvdb_hash_table_insert (new, key);
+        gvdb_item_set_parent (item, dconf_rebuilder_get_parent (new, key));
+        gvdb_item_set_value (item, value);
+      }
+  }
+
+  /* write the new file */
+  success = gvdb_table_write_contents (new, filename, FALSE, error);
+
+  /* clean up */
+  g_hash_table_unref (table);
+  g_hash_table_unref (new);
 
   return success;
 }

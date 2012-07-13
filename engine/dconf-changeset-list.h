@@ -19,12 +19,20 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_shmdir_h__
-#define __dconf_shmdir_h__
+#ifndef __dconf_changeset_list_h__
+#define __dconf_changeset_list_h__
 
-#include <glib.h>
+#include "../common/dconf-changeset.h"
 
-G_GNUC_INTERNAL
-gchar *dconf_shmdir_from_environment (void);
+typedef struct _DConfChangesetList                          DConfChangesetList;
 
-#endif /* __dconf_shmdir_h__ */
+struct _DConfChangesetList
+{
+  GQueue queue;
+};
+
+DConfChangeset *        dconf_changeset_list_new                        (void);
+
+void                    dconf_changeset_list_free                       (DConfChangesetList *changeset_list);
+
+#endif /* __dconf_changeset_list_h__ */

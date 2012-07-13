@@ -52,7 +52,7 @@ public class Key : GLib.Object
             _value = value;
             try
             {
-                model.client.write(full_name, value);
+                model.client.write_sync(full_name, value);
             }
             catch (GLib.Error e)
             {
@@ -143,7 +143,7 @@ public class Key : GLib.Object
         _value = null;
         try
         {
-            model.client.write(full_name, null);
+            model.client.write_sync(full_name, null);
         }
         catch (GLib.Error e)
         {
@@ -570,28 +570,18 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
 	public signal void item_changed (string key);
 
-	void watch_func (DConf.Client client, string path, string[] items, string tag) {
-		if (items.length == 0) {
-			item_changed (path);
-		} else {
-			foreach (var item in items) {
-				item_changed (path + item);
-			}
+	void watch_func (DConf.Client client, string path, string[] items, string? tag) {
+		foreach (var item in items) {
+			item_changed (path + item);
 		}
 	}
 
     public SettingsModel()
     {
-        client = new DConf.Client (null, watch_func);
+        client = new DConf.Client ();
+        client.changed.connect (watch_func);
         root = new Directory(this, null, "/", "/");
-        try
-        {
-            client.watch ("/");
-        }
-        catch (Error e)
-        {
-            warning ("Failed to watch all keys: %s", e.message);
-        }
+        client.watch_sync ("/");
 
         schemas = new SchemaList();
         try

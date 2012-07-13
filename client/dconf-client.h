@@ -23,6 +23,7 @@
 #define __dconf_client_h__
 
 #include <gio/gio.h>
+#include "../common/dconf-changeset.h"
 
 G_BEGIN_DECLS
 
@@ -33,25 +34,11 @@ G_BEGIN_DECLS
 typedef GObjectClass DConfClientClass;
 typedef struct _DConfClient DConfClient;
 
-typedef void          (*DConfWatchFunc)                                 (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         const gchar * const  *items,
-                                                                         gint                  n_items,
-                                                                         const gchar          *tag,
-                                                                         gpointer              user_data);
-
 GType                   dconf_client_get_type                           (void);
 
-DConfClient *           dconf_client_new                                (const gchar          *profile,
-                                                                         DConfWatchFunc        watch_func,
-                                                                         gpointer              user_data,
-                                                                         GDestroyNotify        notify);
+DConfClient *           dconf_client_new                                (void);
 
 GVariant *              dconf_client_read                               (DConfClient          *client,
-                                                                         const gchar          *key);
-GVariant *              dconf_client_read_default                       (DConfClient          *client,
-                                                                         const gchar          *key);
-GVariant *              dconf_client_read_no_default                    (DConfClient          *client,
                                                                          const gchar          *key);
 
 gchar **                dconf_client_list                               (DConfClient          *client,
@@ -61,70 +48,38 @@ gchar **                dconf_client_list                               (DConfCl
 gboolean                dconf_client_is_writable                        (DConfClient          *client,
                                                                          const gchar          *key);
 
-gboolean                dconf_client_write                              (DConfClient          *client,
+gboolean                dconf_client_write_fast                         (DConfClient          *client,
+                                                                         const gchar          *key,
+                                                                         GVariant             *value,
+                                                                         GError              **error);
+gboolean                dconf_client_write_sync                         (DConfClient          *client,
                                                                          const gchar          *key,
                                                                          GVariant             *value,
                                                                          gchar               **tag,
                                                                          GCancellable         *cancellable,
                                                                          GError              **error);
-void                    dconf_client_write_async                        (DConfClient          *client,
-                                                                         const gchar          *key,
-                                                                         GVariant             *value,
-                                                                         GCancellable         *cancellable,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_write_finish                       (DConfClient          *client,
-                                                                         GAsyncResult         *result,
-                                                                         gchar               **tag,
-                                                                         GError              **error);
 
-gboolean                dconf_client_write_many                         (DConfClient          *client,
-                                                                         const gchar          *dir,
-                                                                         const gchar * const  *rels,
-                                                                         GVariant            **values,
-                                                                         gint                  n_values,
+gboolean                dconf_client_change_fast                        (DConfClient          *client,
+                                                                         DConfChangeset       *changeset,
+                                                                         GError              **error);
+gboolean                dconf_client_change_sync                        (DConfClient          *client,
+                                                                         DConfChangeset       *changeset,
                                                                          gchar               **tag,
                                                                          GCancellable         *cancellable,
                                                                          GError              **error);
 
-/* write_many_async currently disabled due to missing Vala functionality
-void                    dconf_client_write_many_async                   (DConfClient          *client,
-                                                                         const gchar          *dir,
-                                                                         const gchar * const  *rels,
-                                                                         GVariant            **values,
-                                                                         gint                  n_values,
-                                                                         GCancellable         *cancellable,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_write_many_finish                  (DConfClient          *client,
-                                                                         GAsyncResult         *result,
-                                                                         gchar               **tag,
-                                                                         GError              **error);*/
+void                    dconf_client_watch_fast                         (DConfClient          *client,
+                                                                         const gchar          *path);
+void                    dconf_client_watch_sync                         (DConfClient          *client,
+                                                                         const gchar          *path);
 
-gboolean                dconf_client_watch                              (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         GCancellable         *cancellable,
-                                                                         GError              **error);
-void                    dconf_client_watch_async                        (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         GCancellable         *cancellable,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_watch_finish                       (DConfClient          *client,
-                                                                         GAsyncResult         *result,
-                                                                         GError              **error);
-gboolean                dconf_client_unwatch                            (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         GCancellable         *cancellable,
-                                                                         GError              **error);
-void                    dconf_client_unwatch_async                      (DConfClient          *client,
-                                                                         const gchar          *path,
-                                                                         GCancellable         *cancellable,
-                                                                         GAsyncReadyCallback   callback,
-                                                                         gpointer              user_data);
-gboolean                dconf_client_unwatch_finish                     (DConfClient          *client,
-                                                                         GAsyncResult         *result,
-                                                                         GError              **error);
+void                    dconf_client_unwatch_fast                       (DConfClient          *client,
+                                                                         const gchar          *path);
+void                    dconf_client_unwatch_sync                       (DConfClient          *client,
+                                                                         const gchar          *path);
+
+void                    dconf_client_sync                               (DConfClient          *client);
+
 G_END_DECLS
 
 #endif /* __dconf_client_h__ */

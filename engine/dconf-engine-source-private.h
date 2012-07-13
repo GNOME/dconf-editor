@@ -1,5 +1,6 @@
 /*
  * Copyright © 2010 Codethink Limited
+ * Copyright © 2012 Canonical Limited
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,17 +20,12 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#include "dconf-shmdir.h"
+#ifndef __dconf_engine_source_private_h__
+#define __dconf_engine_source_private_h__
 
-gchar *
-dconf_shmdir_from_environment (void)
-{
-  gchar *result;
+#include "dconf-engine-source.h"
 
-  result = g_build_filename (g_get_user_runtime_dir (), "dconf", NULL);
+G_GNUC_INTERNAL extern const DConfEngineSourceVTable dconf_engine_source_user_vtable;
+G_GNUC_INTERNAL extern const DConfEngineSourceVTable dconf_engine_source_system_vtable;
 
-  if (g_mkdir_with_parents (result, 0700) != 0)
-    g_critical ("unable to create '%s'; dconf will not work properly.", result);
-
-  return result;
-}
+#endif /* __dconf_engine_source_private_h__ */

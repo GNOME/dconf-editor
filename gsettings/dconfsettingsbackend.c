@@ -21,419 +21,21 @@
 
 #define G_SETTINGS_ENABLE_BACKEND
 #include <gio/gsettingsbackend.h>
-#include <dconf-engine.h>
+#include "../engine/dconf-engine.h"
 #include <gio/gio.h>
 
 #include <string.h>
 
-#include "dconfcontext.h"
-
 typedef GSettingsBackendClass DConfSettingsBackendClass;
-typedef struct _Outstanding Outstanding;
 
 typedef struct
 {
   GSettingsBackend backend;
-
-  GDBusConnection *session_bus;
-  GDBusConnection *system_bus;
-  guint session_subscription;
-  guint system_subscription;
-
-  Outstanding *outstanding;
-  gchar *anti_expose_tag;
-
-  DConfEngine *engine;
-  GMutex lock;
-  GCond sync_cond;
-  gint sync_waiters;
+  DConfEngine     *engine;
 } DConfSettingsBackend;
 
 static GType dconf_settings_backend_get_type (void);
-G_DEFINE_TYPE (DConfSettingsBackend,
-               dconf_settings_backend,
-               G_TYPE_SETTINGS_BACKEND)
-
-static void
-dconf_settings_backend_signal (GDBusConnection *connection,
-                               const gchar     *sender_name,
-                               const gchar     *object_path,
-                               const gchar     *interface_name,
-                               const gchar     *signal_name,
-                               GVariant        *parameters,
-                               gpointer         user_data)
-{
-  DConfSettingsBackend *dcsb = user_data;
-  const gchar *anti_expose;
-  const gchar **rels;
-  const gchar *path;
-  gchar bus_type;
-
-  if (connection == dcsb->session_bus)
-    {
-      anti_expose = dcsb->anti_expose_tag;
-      bus_type = 'e';
-    }
-
-  else if (connection == dcsb->system_bus)
-    {
-      anti_expose = NULL;
-      bus_type = 'y';
-    }
-
-  else
-    g_assert_not_reached ();
-
-  if (dconf_engine_decode_notify (dcsb->engine, anti_expose,
-                                  &path, &rels, bus_type,
-                                  sender_name, interface_name,
-                                  signal_name, parameters))
-    {
-      GSettingsBackend *backend = G_SETTINGS_BACKEND (dcsb);
-
-      if (!g_str_has_suffix (path, "/"))
-        g_settings_backend_changed (backend, path, NULL);
-
-      else if (rels[0] == NULL)
-        g_settings_backend_path_changed (backend, path, NULL);
-
-      else
-        g_settings_backend_keys_changed (backend, path, rels, NULL);
-
-      g_free (rels);
-    }
-
-  if (dconf_engine_decode_writability_notify (&path, interface_name,
-                                              signal_name, parameters))
-    {
-      GSettingsBackend *backend = G_SETTINGS_BACKEND (dcsb);
-
-      if (g_str_has_suffix (path, "/"))
-        {
-          g_settings_backend_path_writable_changed (backend, path);
-          g_settings_backend_path_changed (backend, path, NULL);
-        }
-
-      else
-        {
-          g_settings_backend_writable_changed (backend, path);
-          g_settings_backend_changed (backend, path, NULL);
-        }
-    }
-}
-
-static void
-dconf_settings_backend_send (DConfSettingsBackend *dcsb,
-                             DConfEngineMessage   *dcem,
-                             GAsyncReadyCallback   callback,
-                             gpointer              user_data)
-{
-  GDBusConnection *connection;
-  gint i;
-
-  for (i = 0; i < dcem->n_messages; i++)
-    {
-      GError *error = NULL;
-
-      switch (dcem->bus_types[i])
-        {
-        case 'e':
-          if (dcsb->session_bus == NULL && callback)
-            {
-              dcsb->session_bus =
-                g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
-
-              if (dcsb->session_bus != NULL)
-                dcsb->session_subscription =
-                  g_dbus_connection_signal_subscribe (dcsb->session_bus, NULL,
-                                                      "ca.desrt.dconf.Writer",
-                                                      NULL, NULL, NULL,
-                                                      G_DBUS_SIGNAL_FLAGS_NO_MATCH_RULE,
-                                                      dconf_settings_backend_signal,
-                                                      dcsb, NULL);
-            }
-          connection = dcsb->session_bus;
-          break;
-
-        case 'y':
-          if (dcsb->system_bus == NULL && callback)
-            {
-              dcsb->system_bus =
-                g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
-
-              if (dcsb->system_bus != NULL)
-                dcsb->system_subscription =
-                  g_dbus_connection_signal_subscribe (dcsb->system_bus, NULL,
-                                                      "ca.desrt.dconf.Writer",
-                                                      NULL, NULL, NULL,
-                                                      G_DBUS_SIGNAL_FLAGS_NO_MATCH_RULE,
-                                                      dconf_settings_backend_signal,
-                                                      dcsb, NULL);
-            }
-          connection = dcsb->system_bus;
-          break;
-
-        default:
-          g_assert_not_reached ();
-        }
-
-      if (connection == NULL && callback != NULL)
-        {
-          g_assert (error != NULL);
-
-          g_warning ("%s", error->message);
-          g_error_free (error);
-
-          callback (NULL, NULL, user_data);
-        }
-
-      if (connection != NULL)
-        g_dbus_connection_call (connection,
-                                dcem->bus_name,
-                                dcem->object_path,
-                                dcem->interface_name,
-                                dcem->method_name,
-                                dcem->parameters[i],
-                                dcem->reply_type,
-                                0, 120000, NULL, callback, user_data);
-    }
-}
-
-static GVariant *
-dconf_settings_backend_send_finish (GObject      *source,
-                                    GAsyncResult *result)
-{
-  GError *error = NULL;
-  GVariant *reply;
-
-  if (source == NULL)
-    return NULL;
-
-  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
-                                         result, &error);
-
-  if (reply == NULL)
-    {
-      /* This should only be hit in the case that something is seriously
-       * wrong with the installation (ie: the service can't be started,
-       * etc).  Bug #641768 requests some notification of these kinds of
-       * situations in the context of the gsettings(1) commandline tool,
-       * so a g_warning() is appropriate here.
-       */
-
-      g_warning ("%s", error->message);
-      g_error_free (error);
-    }
-
-  return reply;
-}
-
-struct _Outstanding
-{
-  Outstanding *next;
-
-  DConfSettingsBackend *dcsb;
-  DConfEngineMessage    dcem;
-
-  gchar    *set_key;
-  GVariant *set_value;
-  GTree    *tree;
-};
-
-static void
-dconf_settings_backend_outstanding_returned (GObject      *source,
-                                             GAsyncResult *result,
-                                             gpointer      user_data)
-{
-  Outstanding *outstanding = user_data;
-  DConfSettingsBackend *dcsb;
-  GVariant *reply;
-
-  dcsb = outstanding->dcsb;
-
-  /* One way or another we no longer need this hooked into the list.
-   */
-  g_mutex_lock (&dcsb->lock);
-  {
-    Outstanding **tmp;
-
-    for (tmp = &dcsb->outstanding; tmp; tmp = &(*tmp)->next)
-      if (*tmp == outstanding)
-        {
-          *tmp = outstanding->next;
-          break;
-        }
-
-    if (dcsb->outstanding == NULL && dcsb->sync_waiters)
-      g_cond_broadcast (&dcsb->sync_cond);
-  }
-  g_mutex_unlock (&dcsb->lock);
-
-  reply = dconf_settings_backend_send_finish (source, result);
-
-  if (reply)
-    {
-      /* Success.
-       *
-       * We want to ensure that we don't emit an extra change
-       * notification signal when we see the signal that the service is
-       * about to send, so store the tag so we know to ignore it when
-       * the signal comes.
-       *
-       * No thread safety issue here since this variable is only
-       * accessed from the worker thread.
-       */
-      g_free (dcsb->anti_expose_tag);
-      g_variant_get_child (reply, 0, "s", &dcsb->anti_expose_tag);
-      g_variant_unref (reply);
-    }
-  else
-    {
-      /* An error of some kind.
-       *
-       * We already removed the outstanding entry from the list, so the
-       * unmodified database is now visible to the client.  Change
-       * notify so that they see it.
-       */
-      if (outstanding->set_key)
-        g_settings_backend_changed (G_SETTINGS_BACKEND (dcsb),
-                                    outstanding->set_key, NULL);
-
-      else
-        g_settings_backend_changed_tree (G_SETTINGS_BACKEND (dcsb),
-                                         outstanding->tree, NULL);
-    }
-
-  dconf_engine_message_destroy (&outstanding->dcem);
-  g_object_unref (outstanding->dcsb);
-  g_free (outstanding->set_key);
-
-  if (outstanding->set_value)
-    g_variant_unref (outstanding->set_value);
-
-  if (outstanding->tree)
-    g_tree_unref (outstanding->tree);
-
-  g_slice_free (Outstanding, outstanding);
-}
-
-static gboolean
-dconf_settings_backend_send_outstanding (gpointer data)
-{
-  Outstanding *outstanding = data;
-
-  dconf_settings_backend_send (outstanding->dcsb,
-                               &outstanding->dcem,
-                               dconf_settings_backend_outstanding_returned,
-                               outstanding);
-
-  return FALSE;
-}
-
-static void
-dconf_settings_backend_queue (DConfSettingsBackend *dcsb,
-                              DConfEngineMessage   *dcem,
-                              const gchar          *set_key,
-                              GVariant             *set_value,
-                              GTree                *tree)
-{
-  Outstanding *outstanding;
-
-  outstanding = g_slice_new (Outstanding);
-  outstanding->dcsb = g_object_ref (dcsb);
-  outstanding->dcem = *dcem;
-
-  outstanding->set_key = g_strdup (set_key);
-  outstanding->set_value = set_value ? g_variant_ref_sink (set_value) : NULL;
-  outstanding->tree = tree ? g_tree_ref (tree) : NULL;
-
-  g_mutex_lock (&dcsb->lock);
-  outstanding->next = dcsb->outstanding;
-  dcsb->outstanding = outstanding;
-  g_mutex_unlock (&dcsb->lock);
-
-  g_main_context_invoke (dconf_context_get (),
-                         dconf_settings_backend_send_outstanding,
-                         outstanding);
-}
-
-static gboolean
-dconf_settings_backend_scan_outstanding_tree (GTree       *tree,
-                                              const gchar *key,
-                                              gsize        key_length,
-                                              gpointer    *value)
-{
-  gchar *mykey;
-
-  mykey = g_alloca (key_length + 1);
-  memcpy (mykey, key, key_length + 1);
-
-  while (!g_tree_lookup_extended (tree, mykey, NULL, value) &&
-         --key_length)
-    {
-      while (mykey[key_length - 1] != '/')
-        key_length--;
-
-      mykey[key_length] = '\0';
-    }
-
-  return key_length != 0;
-}
-
-static gboolean
-dconf_settings_backend_scan_outstanding (DConfSettingsBackend  *backend,
-                                         const gchar           *key,
-                                         GVariant             **value)
-{
-  gboolean found = FALSE;
-  Outstanding *node;
-  gsize length;
-
-  length = strlen (key);
-
-  if G_LIKELY (backend->outstanding == NULL)
-    return FALSE;
-
-  g_mutex_lock (&backend->lock);
-
-  for (node = backend->outstanding; node; node = node->next)
-    {
-      if (node->set_key)
-        {
-          if (strcmp (key, node->set_key) == 0)
-            {
-              if (node->set_value != NULL)
-                *value = g_variant_ref (node->set_value);
-              else
-                *value = NULL;
-
-              found = TRUE;
-              break;
-            }
-        }
-
-      else
-        {
-          gpointer result;
-
-          if (dconf_settings_backend_scan_outstanding_tree (node->tree, key,
-                                                            length, &result))
-            {
-              if (result)
-                *value = g_variant_ref (result);
-              else
-                *value = NULL;
-
-              found = TRUE;
-              break;
-            }
-        }
-    }
-
-  g_mutex_unlock (&backend->lock);
-
-  return found;
-}
+G_DEFINE_TYPE (DConfSettingsBackend, dconf_settings_backend, G_TYPE_SETTINGS_BACKEND)
 
 static GVariant *
 dconf_settings_backend_read (GSettingsBackend   *backend,
@@ -443,17 +45,9 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
 
-  if (!default_value)
-    {
-      GVariant *value;
+  /* XXX default value */
 
-      if (dconf_settings_backend_scan_outstanding (dcsb, key, &value))
-        return value;
-
-      return dconf_engine_read (dcsb->engine, key);
-    }
-  else
-    return dconf_engine_read_default (dcsb->engine, key);
+  return dconf_engine_read (dcsb->engine, NULL, key);
 }
 
 static gboolean
@@ -463,15 +57,26 @@ dconf_settings_backend_write (GSettingsBackend *backend,
                               gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfEngineMessage dcem;
+  DConfChangeset *change;
+  gboolean success;
 
-  if (!dconf_engine_write (dcsb->engine, key, value, &dcem, NULL))
-    return FALSE;
+  change = dconf_changeset_new ();
+  dconf_changeset_set (change, key, value);
 
-  dconf_settings_backend_queue (dcsb, &dcem, key, value, NULL);
-  g_settings_backend_changed (backend, key, origin_tag);
+  success = dconf_engine_change_fast (dcsb->engine, change, NULL);
+  dconf_changeset_unref (change);
 
-  return TRUE;
+  return success;
+}
+
+static gboolean
+dconf_settings_backend_add_to_changeset (gpointer key,
+                                         gpointer value,
+                                         gpointer data)
+{
+  dconf_changeset_set (data, key, value);
+
+  return FALSE;
 }
 
 static gboolean
@@ -480,24 +85,14 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
                                    gpointer          origin_tag)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfEngineMessage dcem;
-  const gchar **keys;
-  GVariant **values;
+  DConfChangeset *change;
   gboolean success;
-  gchar *prefix;
 
-  g_settings_backend_flatten_tree (tree, &prefix, &keys, &values);
+  change= dconf_changeset_new ();
+  g_tree_foreach (tree, dconf_settings_backend_add_to_changeset, change);
 
-  if ((success = dconf_engine_write_many (dcsb->engine, prefix,
-                                          keys, values, &dcem, NULL)))
-    {
-      dconf_settings_backend_queue (dcsb, &dcem, NULL, NULL, tree);
-      g_settings_backend_keys_changed (backend, prefix, keys, origin_tag);
-    }
-
-  g_free (prefix);
-  g_free (values);
-  g_free (keys);
+  success = dconf_engine_change_fast (dcsb->engine, change, NULL);
+  dconf_changeset_unref (change);
 
   return success;
 }
@@ -519,111 +114,13 @@ dconf_settings_backend_get_writable (GSettingsBackend *backend,
   return dconf_engine_is_writable (dcsb->engine, name);
 }
 
-typedef struct
-{
-  DConfSettingsBackend *dcsb;
-  guint64 state;
-  gchar *name;
-  gint outstanding;
-} OutstandingWatch;
-
-static OutstandingWatch *
-outstanding_watch_new (DConfSettingsBackend *dcsb,
-                       const gchar          *name)
-{
-  OutstandingWatch *watch;
-
-  watch = g_slice_new (OutstandingWatch);
-  watch->dcsb = g_object_ref (dcsb);
-  watch->state = dconf_engine_get_state (dcsb->engine);
-  watch->outstanding = 0;
-  watch->name = g_strdup (name);
-
-  return watch;
-}
-
-static void
-outstanding_watch_free (OutstandingWatch *watch)
-{
-  if (--watch->outstanding == 0)
-    {
-      g_object_unref (watch->dcsb);
-      g_free (watch->name);
-
-      g_slice_free (OutstandingWatch, watch);
-    }
-}
-
-static void
-add_match_done (GObject      *source,
-                GAsyncResult *result,
-                gpointer      user_data)
-{
-  OutstandingWatch *watch = user_data;
-  GError *error = NULL;
-  GVariant *reply;
-
-  /* couldn't connect to DBus */
-  if (source == NULL)
-    {
-      outstanding_watch_free (watch);
-      return;
-    }
-
-  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
-                                         result, &error);
-
-  if (reply == NULL)
-    {
-      g_critical ("DBus AddMatch for dconf path '%s': %s",
-                  watch->name, error->message);
-      outstanding_watch_free (watch);
-      g_error_free (error);
-
-      return;
-    }
-
-  else
-    g_variant_unref (reply); /* it is just an empty tuple */
-
-  /* In the normal case we can just free everything and be done.
-   *
-   * There is a fleeting chance, however, that the database has changed
-   * in the meantime.  In that case we can only assume that the subject
-   * of this watch changed in that time period and emit a signal to that
-   * effect.
-   */
-  if (dconf_engine_get_state (watch->dcsb->engine) != watch->state)
-    g_settings_backend_path_changed (G_SETTINGS_BACKEND (watch->dcsb),
-                                     watch->name, NULL);
-
-  outstanding_watch_free (watch);
-}
-
-static gboolean
-dconf_settings_backend_subscribe_context_func (gpointer data)
-{
-  OutstandingWatch *watch = data;
-  DConfEngineMessage dcem;
-
-  dconf_engine_watch (watch->dcsb->engine, watch->name, &dcem);
-  watch->outstanding = dcem.n_messages;
-
-  dconf_settings_backend_send (watch->dcsb, &dcem, add_match_done, watch);
-  dconf_engine_message_destroy (&dcem);
-
-  return FALSE;
-}
-
 static void
 dconf_settings_backend_subscribe (GSettingsBackend *backend,
                                   const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
 
-  g_main_context_invoke (dconf_context_get (),
-                         dconf_settings_backend_subscribe_context_func,
-                         outstanding_watch_new (dcsb, name));
+  dconf_engine_watch_fast (dcsb->engine, name);
 }
 
 static void
@@ -631,11 +128,8 @@ dconf_settings_backend_unsubscribe (GSettingsBackend *backend,
                                     const gchar      *name)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
-  DConfEngineMessage dcem;
 
-  dconf_engine_unwatch (dcsb->engine, name, &dcem);
-  dconf_settings_backend_send (dcsb, &dcem, NULL, NULL);
-  dconf_engine_message_destroy (&dcem);
+  dconf_engine_unwatch_fast (dcsb->engine, name);
 }
 
 static void
@@ -643,30 +137,46 @@ dconf_settings_backend_sync (GSettingsBackend *backend)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
 
-  if (!dcsb->outstanding)
-    return;
+  dconf_engine_sync (dcsb->engine);
+}
 
-  g_mutex_lock (&dcsb->lock);
+static void
+dconf_settings_backend_free_weak_ref (gpointer data)
+{
+  GWeakRef *weak_ref = data;
 
-  dcsb->sync_waiters++;
-  while (dcsb->outstanding)
-    g_cond_wait (&dcsb->sync_cond, &dcsb->lock);
-  dcsb->sync_waiters--;
-
-  g_mutex_unlock (&dcsb->lock);
+  g_weak_ref_clear (weak_ref);
+  g_slice_free (GWeakRef, weak_ref);
 }
 
 static void
 dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 {
-  dcsb->engine = dconf_engine_new (NULL);
-  g_mutex_init (&dcsb->lock);
-  g_cond_init (&dcsb->sync_cond);
+  GWeakRef *weak_ref;
+
+  weak_ref = g_slice_new (GWeakRef);
+  g_weak_ref_init (weak_ref, dcsb);
+  dcsb->engine = dconf_engine_new (weak_ref, dconf_settings_backend_free_weak_ref);
+}
+
+static void
+dconf_settings_backend_finalize (GObject *object)
+{
+  DConfSettingsBackend *dcsb = (DConfSettingsBackend *) object;
+
+  dconf_engine_unref (dcsb->engine);
+
+  G_OBJECT_CLASS (dconf_settings_backend_parent_class)
+    ->finalize (object);
 }
 
 static void
 dconf_settings_backend_class_init (GSettingsBackendClass *class)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (class);
+
+  object_class->finalize = dconf_settings_backend_finalize;
+
   class->read = dconf_settings_backend_read;
   class->write = dconf_settings_backend_write;
   class->write_tree = dconf_settings_backend_write_tree;
@@ -696,4 +206,33 @@ gchar **
 g_io_module_query (void)
 {
   return g_strsplit (G_SETTINGS_BACKEND_EXTENSION_POINT_NAME, "!", 0);
+}
+
+void
+dconf_engine_change_notify (DConfEngine         *engine,
+                            const gchar         *prefix,
+                            const gchar * const *changes,
+                            const gchar         *tag,
+                            gpointer             user_data)
+{
+  GWeakRef *weak_ref = user_data;
+  DConfSettingsBackend *dcsb;
+
+  dcsb = g_weak_ref_get (weak_ref);
+
+  if (dcsb == NULL)
+    return;
+
+  if (changes[0] == NULL)
+    return;
+
+  if (changes[1] == NULL)
+    {
+      if (g_str_has_suffix (prefix, "/"))
+        g_settings_backend_path_changed (G_SETTINGS_BACKEND (dcsb), prefix, NULL);
+      else
+        g_settings_backend_changed (G_SETTINGS_BACKEND (dcsb), prefix, NULL);
+    }
+  else
+    g_settings_backend_keys_changed (G_SETTINGS_BACKEND (dcsb), prefix, changes, NULL);
 }

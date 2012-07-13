@@ -1,4 +1,4 @@
-#include <dconf-paths.h>
+#include "../common/dconf-paths.h"
 
 static void
 test_paths (void)
@@ -16,6 +16,7 @@ test_paths (void)
 #define relkey  020 | rel
 #define reldir  040 | rel
 
+    { NULL,             invalid },
     { "",               reldir  },
     { "/",              dir     },
 
@@ -75,26 +76,23 @@ test_paths (void)
       const gchar *string = cases[i].string;
       guint flags;
 
-      flags = (dconf_is_path    (string, NULL) ? 001 : 000) |
-              (dconf_is_key     (string, NULL) ? 002 : 000) |
-              (dconf_is_dir     (string, NULL) ? 004 : 000) |
-              (dconf_is_rel     (string, NULL) ? 010 : 000) |
-              (dconf_is_rel_key (string, NULL) ? 020 : 000) |
-              (dconf_is_rel_dir (string, NULL) ? 040 : 000);
+      flags = (dconf_is_path     (string, NULL) ? 001 : 000) |
+              (dconf_is_key      (string, NULL) ? 002 : 000) |
+              (dconf_is_dir      (string, NULL) ? 004 : 000) |
+              (dconf_is_rel_path (string, NULL) ? 010 : 000) |
+              (dconf_is_rel_key  (string, NULL) ? 020 : 000) |
+              (dconf_is_rel_dir  (string, NULL) ? 040 : 000);
 
-      if (flags != cases[i].flags)
-        {
-          g_print ("case %i: string '%s' should be %o but is %o",
-                   i, string, cases[i].flags, flags);
-          g_assert_not_reached ();
-        }
+      g_assert_cmphex (flags, ==, cases[i].flags);
     }
 }
 
 int
-main (void)
+main (int argc, char **argv)
 {
-  test_paths ();
+  g_test_init (&argc, &argv, NULL);
 
-  return 0;
+  g_test_add_func ("/paths", test_paths);
+
+  return g_test_run ();
 }

@@ -1,3 +1,13 @@
-paths
-gsettings
+libdconf-mock.a
+
+changeset
+client
 dbus1
+engine
+gdbus-filter
+gdbus-thread
+gsettings
+gvdb
+libdbus-1
+paths
+shm

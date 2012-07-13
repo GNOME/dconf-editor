@@ -26,6 +26,7 @@
 #include <stdio.h>
 
 #include "dconf-interfaces.h"
+#include "../common/dconf-changeset.h"
 #include "dconf-writer.h"
 #include "dconf-state.h"
 
@@ -47,7 +48,7 @@ emit_notify_signal (GDBusConnection  *connection,
   if (n_keys > 1)
     {
       const gchar *last_reset = NULL;
-      gint last_reset_len;
+      gint last_reset_len = 0;
       gint i;
 
       for (i = 0; i < n_keys; i++)
@@ -95,7 +96,29 @@ emit_notify_signal (GDBusConnection  *connection,
 }
 
 static void
-unwrap_maybe (GVariant **ptr)
+emit_notify_signal_change (GDBusConnection *connection,
+                           DConfWriter     *writer,
+                           gchar           *tag,
+                           DConfChangeset  *change)
+{
+  const gchar *path;
+  const gchar * const *names;
+
+  if (dconf_changeset_describe (change, &path, &names, NULL))
+    {
+      gchar *obj;
+
+      obj = g_strjoin (NULL, "/ca/desrt/dconf/Writer/", dconf_writer_get_name (writer), NULL);
+      g_dbus_connection_emit_signal (connection, NULL, obj,
+                                     "ca.desrt.dconf.Writer", "Notify",
+                                     g_variant_new ("(s^ass)", path, names, tag),
+                                     NULL);
+      g_free (obj);
+    }
+}
+
+static void
+unwrap_maybe_and_variant (GVariant **ptr)
 {
   GVariant *array, *child;
   gsize n_children;
@@ -109,11 +132,12 @@ unwrap_maybe (GVariant **ptr)
       child = NULL;
       break;
     case 1: default:
-      child = g_variant_get_child_value (array, 0);
+      g_variant_get_child (array, 0, "v", &child);
       break;
     case 2:
       {
         GVariant *untrusted;
+        GVariant *trusted;
         GVariant *ay;
 
         g_variant_get_child (array, 0, "v", &ay);
@@ -130,8 +154,10 @@ unwrap_maybe (GVariant **ptr)
                                              FALSE,
                                              (GDestroyNotify) g_variant_unref, ay);
         g_variant_ref_sink (untrusted);
-        child = g_variant_get_normal_form (untrusted);
+        trusted = g_variant_get_normal_form (untrusted);
         g_variant_unref (untrusted);
+
+        g_variant_get (trusted, "v", &child);
       }
     }
 
@@ -230,7 +256,39 @@ method_call (GDBusConnection       *connection,
   if G_UNLIKELY (state->blame_mode)
     gather_blame_info (state, connection, sender, object_path, method_name, parameters);
 
-  if (strcmp (method_name, "Write") == 0)
+  if (strcmp (method_name, "Change") == 0)
+    {
+      DConfChangeset *change;
+      GError *error = NULL;
+      GVariant *args;
+      GVariant *tmp;
+      gchar *tag;
+
+      tmp = g_variant_new_from_data (G_VARIANT_TYPE ("a{smv}"),
+                                     g_variant_get_data (parameters), g_variant_get_size (parameters), FALSE,
+                                     (GDestroyNotify) g_variant_unref, g_variant_ref (parameters));
+      g_variant_ref_sink (tmp);
+      args = g_variant_get_normal_form (tmp);
+      g_variant_unref (tmp);
+
+      change = dconf_changeset_deserialise (args);
+      g_variant_unref (args);
+
+      if (!dconf_writer_change (writer, change, &error))
+        {
+          g_dbus_method_invocation_return_gerror (invocation, error);
+          g_error_free (error);
+          return;
+        }
+
+      tag = dconf_state_get_tag (state);
+      g_dbus_method_invocation_return_value (invocation, g_variant_new ("(s)", tag));
+      emit_notify_signal_change (connection, writer, tag, change);
+      dconf_changeset_unref (change);
+      g_free (tag);
+    }
+
+  else if (strcmp (method_name, "Write") == 0)
     {
       GError *error = NULL;
       GVariant *keyvalue;
@@ -244,7 +302,7 @@ method_call (GDBusConnection       *connection,
       g_variant_get (parameters, "(@s@av)", &keyvalue, &value);
       key = g_variant_get_string (keyvalue, &key_length);
       g_variant_unref (keyvalue);
-      unwrap_maybe (&value);
+      unwrap_maybe_and_variant (&value);
 
       if (key[0] != '/' || strstr (key, "//"))
         {
@@ -312,7 +370,7 @@ method_call (GDBusConnection       *connection,
       values = g_new (GVariant *, length);
       while (g_variant_iter_next (iter, "(&s@av)", &keys[i], &values[i]))
         {
-          unwrap_maybe (&values[i]);
+          unwrap_maybe_and_variant (&values[i]);
 
           if (keys[i][0] == '/' || strstr (keys[i], "//") ||
               (i > 0 && !(strcmp (keys[i - 1], keys[i]) < 0)))
@@ -389,24 +447,6 @@ writer_info_method (GDBusConnection       *connection,
     g_assert_not_reached ();
 }
 
-static GVariant *
-writer_info_get_property (GDBusConnection  *connection,
-                          const gchar      *sender,
-                          const gchar      *object_path,
-                          const gchar      *interface_name,
-                          const gchar      *property_name,
-                          GError          **error,
-                          gpointer          user_data)
-{
-  DConfState *state = user_data;
-
-  /* debugging... */
-  if G_UNLIKELY (state->blame_mode)
-    gather_blame_info (state, connection, sender, object_path, "GetProperty", NULL);
-
-  return g_variant_new_string (state->shm_dir);
-}
-
 static const GDBusInterfaceVTable *
 subtree_dispatch (GDBusConnection *connection,
                   const gchar     *sender,
@@ -448,7 +488,7 @@ subtree_dispatch (GDBusConnection *connection,
   else if (strcmp (interface_name, "ca.desrt.dconf.WriterInfo") == 0)
     {
       static const GDBusInterfaceVTable vtable = {
-        writer_info_method, writer_info_get_property, NULL
+        writer_info_method, NULL
       };
 
       *out_user_data = state;

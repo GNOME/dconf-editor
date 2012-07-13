@@ -7,6 +7,10 @@ Makefile
 *.gir
 *.typelib
 
+# gcov
+*.gcda
+*.gcno
+
 # autofoo stuff here
 /m4/
 /aux/
@@ -16,3 +20,5 @@ Makefile
 /autom4te.cache
 /aclocal.m4
 /stamp-h1
+/dconf-lcov.info
+/lcov-html

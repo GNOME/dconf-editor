@@ -11,7 +11,6 @@ typedef struct
   GMainLoop *main_loop;
   guint64 serial;
   gchar *db_dir;
-  gchar *shm_dir;
   gchar *id;
 } DConfState;
 

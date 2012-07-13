@@ -240,7 +240,7 @@ void update_all (string dirname) {
 	}
 }
 
-void dconf_update (string[] args) {
+void dconf_update (string[] args) throws GLib.Error {
 	update_all ("/etc/dconf/db");
 }
 

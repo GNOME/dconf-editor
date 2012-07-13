@@ -1,4 +1,4 @@
-[CCode (cheader_filename = "gvdb-builder.h")]
+[CCode (cheader_filename = "../gvdb/gvdb-builder.h")]
 namespace Gvdb {
 	[Compact]
 	[CCode (cname = "GHashTable")]

@@ -11,9 +11,15 @@ AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.11 -Wno-portability no-dist-gzip dist-xz])
 AM_SILENT_RULES([yes])
 
+# Set default CFLAGS before AC_PROG_CC does
+if test "${CFLAGS+yes}" != "yes"; then
+  CFLAGS='-O2 -g -Wall -Wwrite-strings -Wmissing-prototypes -fno-common'
+fi
+
 # Check for programs
 AC_PROG_CC
 AM_PROG_VALAC([0.17.0])
+AC_PROG_RANLIB
 
 # Use GSettings
 GLIB_GSETTINGS
@@ -22,7 +28,7 @@ GLIB_GSETTINGS
 GTK_DOC_CHECK([1.15])
 
 # Dependencies
-PKG_CHECK_MODULES(glib, glib-2.0 >= 2.31.18)
+PKG_CHECK_MODULES(glib, glib-2.0 >= 2.33.3)
 PKG_CHECK_MODULES(gio, gio-2.0)
 PKG_CHECK_MODULES(dbus, dbus-1)
 
@@ -50,10 +56,21 @@ AC_SUBST(dconfincludedir, ${includedir}/dconf)
 
 AC_PATH_PROG(gio_QUERYMODULES, gio-querymodules, no)
 
+AC_ARG_ENABLE(gcov,
+              AC_HELP_STRING([--enable-gcov],
+                             [enable generation of code coverage information]))
+
+if test "x$enable_gcov" == "xyes"; then
+  CFLAGS="$CFLAGS -O0 -fprofile-arcs -ftest-coverage"
+  LDFLAGS="$LDFLAGS -lgcov"
+fi
+
 AC_CONFIG_FILES([
   common/Makefile
+  shm/Makefile
   gvdb/Makefile
   engine/Makefile
+  gdbus/Makefile
   gsettings/Makefile
   dbus-1/dconf-dbus-1.pc
   client/dconf.pc

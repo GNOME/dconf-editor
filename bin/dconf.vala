@@ -173,7 +173,7 @@ void dconf_write (string?[] args) throws Error {
 
 	DConf.verify_key (key);
 
-	client.write (key, Variant.parse (null, val));
+	client.write_sync (key, Variant.parse (null, val));
 }
 
 void dconf_reset (string?[] args) throws Error {
@@ -194,7 +194,7 @@ void dconf_reset (string?[] args) throws Error {
 		throw new OptionError.FAILED ("-f must be given to (recursively) reset entire dirs");
 	}
 
-	client.write (path, null);
+	client.write_sync (path, null);
 }
 
 void show_path (DConf.Client client, string path) {
@@ -205,28 +205,24 @@ void show_path (DConf.Client client, string path) {
 	}
 }
 
-void watch_function (DConf.Client client, string path, string[] items, string tag) {
-	if (items.length == 0) {
-		print ("%s\n", path);
-		show_path (client, path);
-		print ("\n");
-	} else {
-		foreach (var item in items) {
-			var full = path + item;
-			print ("%s\n", full);
-			show_path (client, full);
-		}
-		print ("\n");
+void watch_function (DConf.Client client, string path, string[] items, string? tag) {
+	foreach (var item in items) {
+		var full = path + item;
+		print ("%s\n", full);
+		show_path (client, full);
 	}
+	print ("\n");
 }
 
 void dconf_watch (string?[] args) throws Error {
-	var client = new DConf.Client (null, watch_function);
+	var client = new DConf.Client ();
 	var path = args[2];
 
 	DConf.verify_path (path);
 
-	client.watch (path);
+	client.changed.connect (watch_function);
+	client.watch_sync (path);
+
 	new MainLoop (null, false).run ();
 }
 

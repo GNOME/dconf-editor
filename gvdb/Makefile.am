@@ -1,6 +1,14 @@
-EXTRA_DIST = \
+include $(top_srcdir)/Makefile.gtester
+
+noinst_LIBRARIES = libgvdb.a libgvdb-shared.a
+
+libgvdb_a_CFLAGS = $(glib_CFLAGS)
+libgvdb_a_SOURCES = \
 	gvdb-format.h	\
-	gvdb-reader.h	\
-	gvdb-reader.c	\
 	gvdb-builder.h	\
-	gvdb-builder.c
+	gvdb-builder.c	\
+	gvdb-reader.h	\
+	gvdb-reader.c
+
+libgvdb_shared_a_CFLAGS = $(libgvdb_a_CFLAGS) -fPIC -DPIC
+libgvdb_shared_a_SOURCES = $(libgvdb_a_SOURCES)
