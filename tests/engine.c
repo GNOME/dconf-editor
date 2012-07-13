@@ -237,6 +237,13 @@ test_user_source (void)
   g_assert (source != NULL);
   g_assert (source->values == NULL);
   g_assert (source->locks == NULL);
+
+  /* Refresh it the first time.
+   * This should cause it to open the shm.
+   * FALSE should be returned because there is no database file.
+   */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
   dconf_mock_shm_assert_log ("open user;");
 
   /* Try to refresh it.  There must be no IO at this point. */

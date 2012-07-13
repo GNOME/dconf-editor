@@ -45,6 +45,12 @@ dconf_engine_source_refresh (DConfEngineSource *source)
 {
   if (source->vtable->needs_reopen (source))
     {
+      gboolean was_open;
+      gboolean is_open;
+
+      /* Record if we had a gvdb before or not. */
+      was_open = source->values != NULL;
+
       g_clear_pointer (&source->values, gvdb_table_unref);
       g_clear_pointer (&source->locks, gvdb_table_unref);
 
@@ -52,7 +58,14 @@ dconf_engine_source_refresh (DConfEngineSource *source)
       if (source->values)
         source->locks = gvdb_table_get_table (source->values, ".locks");
 
-      return TRUE;
+      /* Check if we ended up with a gvdb. */
+      is_open = source->values != NULL;
+
+      /* Only return TRUE in the case that we either had a database
+       * before or ended up with one after.  In the case that we just go
+       * from NULL to NULL, return FALSE.
+       */
+      return was_open || is_open;
     }
 
   return FALSE;
