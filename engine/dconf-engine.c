@@ -971,7 +971,10 @@ dconf_engine_is_writable_changeset_predicate (const gchar *key,
 {
   DConfEngine *engine = user_data;
 
-  return dconf_engine_is_writable_internal (engine, key);
+  /* Resets absolutely always succeed -- even in the case that there is
+   * not even a writable database.
+   */
+  return value == NULL || dconf_engine_is_writable_internal (engine, key);
 }
 
 static gboolean
