@@ -11,17 +11,17 @@ endif
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 EXTRA_DIST = trim-lcov.py
 
-.PHONY: lcov lcov-clean
-# use recursive makes in order to ignore errors during check
+clean-am: lcov-clean gcno-clean
+
+.PHONY: lcov lcov-clean gcno-clean
+
 lcov: lcov-clean
-	-$(MAKE) $(AM_MAKEFLAGS) -k check
+	$(MAKE) $(AM_MAKEFLAGS) check
 	lcov --directory $(top_builddir) --capture --test-name dconf | $(top_srcdir)/trim-lcov.py > dconf-lcov.info
 	LANG=C genhtml --prefix $(top_builddir) --output-directory lcov-html --legend --show-details dconf-lcov.info
 	@echo
 	@echo "     file://$(abs_top_builddir)/lcov-html/index.html"
 	@echo
-
-clean-am: lcov-clean gcno-clean
 
 gcno-clean:
 	-find -name '*.gcno' -delete
