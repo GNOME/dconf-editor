@@ -328,7 +328,8 @@ static void
 test_system_source (void)
 {
   DConfEngineSource *source;
-  GvdbTable *table;
+  GvdbTable *first_table;
+  GvdbTable *next_table;
   gboolean reopened;
 
   source = dconf_engine_source_new ("system-db:site");
@@ -351,8 +352,8 @@ test_system_source (void)
       g_assert (!reopened);
 
       /* Create the file after the fact and make sure it opens properly */
-      table = dconf_mock_gvdb_table_new ();
-      dconf_mock_gvdb_install ("/etc/dconf/db/site", table);
+      first_table = dconf_mock_gvdb_table_new ();
+      dconf_mock_gvdb_install ("/etc/dconf/db/site", first_table);
 
       reopened = dconf_engine_source_refresh (source);
       g_assert (reopened);
@@ -368,15 +369,39 @@ test_system_source (void)
   g_test_trap_assert_stderr_unmatched ("*degraded*degraded*");
 
   /* Create the file before the first refresh attempt */
-  table = dconf_mock_gvdb_table_new ();
-  dconf_mock_gvdb_install ("/etc/dconf/db/site", table);
+  first_table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", first_table);
+  /* Hang on to a copy for ourselves for below... */
+  gvdb_table_ref (first_table);
 
   /* See that we get the database. */
   reopened = dconf_engine_source_refresh (source);
   g_assert (reopened);
-  g_assert (source->values != NULL);
+  g_assert (source->values == first_table);
 
   /* Do a refresh, make sure there is no change. */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+  g_assert (source->values == first_table);
+
+  /* Replace the table on "disk" but don't invalidate the old one */
+  next_table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", next_table);
+
+  /* Make sure the old table remains open (ie: no IO performed) */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+  g_assert (source->values == first_table);
+
+  /* Now mark the first table invalid and reopen */
+  dconf_mock_gvdb_table_invalidate (first_table);
+  gvdb_table_unref (first_table);
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values == next_table);
+
+  /* Remove the file entirely and do the same thing */
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", NULL);
   reopened = dconf_engine_source_refresh (source);
   g_assert (!reopened);
 
