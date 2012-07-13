@@ -228,8 +228,8 @@ static void
 test_user_source (void)
 {
   DConfEngineSource *source;
-  DConfMockGvdbTable *table;
-  DConfMockGvdbTable *locks;
+  GvdbTable *table;
+  GvdbTable *locks;
   gboolean reopened;
 
   /* Create the source from a clean slate */
@@ -328,7 +328,7 @@ static void
 test_system_source (void)
 {
   DConfEngineSource *source;
-  DConfMockGvdbTable *table;
+  GvdbTable *table;
   gboolean reopened;
 
   source = dconf_engine_source_new ("system-db:site");

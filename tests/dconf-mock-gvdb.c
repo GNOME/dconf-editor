@@ -13,9 +13,17 @@ static GMutex      dconf_mock_gvdb_lock;
 
 typedef struct
 {
-  GVariant   *value;
-  GHashTable *table;
+  GVariant  *value;
+  GvdbTable *table;
 } DConfMockGvdbItem;
+
+struct _GvdbTable
+{
+  GHashTable *table;
+  gboolean    is_valid;
+  gboolean    top_level;
+  gint        ref_count;
+};
 
 static void
 dconf_mock_gvdb_item_free (gpointer data)
@@ -26,7 +34,7 @@ dconf_mock_gvdb_item_free (gpointer data)
     g_variant_unref (item->value);
 
   if (item->table)
-    g_hash_table_unref (item->table);
+    gvdb_table_unref (item->table);
 
   g_slice_free (DConfMockGvdbItem, item);
 }
@@ -35,47 +43,54 @@ static void
 dconf_mock_gvdb_init (void)
 {
   if (dconf_mock_gvdb_tables == NULL)
-    dconf_mock_gvdb_tables = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
-                                                    (GDestroyNotify) g_hash_table_unref);
+    dconf_mock_gvdb_tables = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) gvdb_table_unref);
 }
 
-DConfMockGvdbTable *
+GvdbTable *
 dconf_mock_gvdb_table_new (void)
 {
-  GHashTable *hash_table;
+  GvdbTable *table;
 
-  hash_table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, dconf_mock_gvdb_item_free);
+  table = g_slice_new (GvdbTable);
+  table->table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, dconf_mock_gvdb_item_free);
+  table->ref_count = 1;
+  table->is_valid = TRUE;
 
-  return (DConfMockGvdbTable *) hash_table;
+  return table;
 }
 
 void
-dconf_mock_gvdb_table_insert (DConfMockGvdbTable *table,
-                              const gchar        *name,
-                              GVariant           *value,
-                              DConfMockGvdbTable *subtable)
+dconf_mock_gvdb_table_insert (GvdbTable   *table,
+                              const gchar *name,
+                              GVariant    *value,
+                              GvdbTable   *subtable)
 {
-  GHashTable *hash_table = (GHashTable *) table;
   DConfMockGvdbItem *item;
 
   g_assert (value == NULL || subtable == NULL);
 
+  if (subtable)
+    subtable->top_level = FALSE;
+
   item = g_slice_new (DConfMockGvdbItem);
   item->value = value ? g_variant_ref_sink (value) : NULL;
-  item->table = (GHashTable *) subtable;
+  item->table = subtable;
 
-  g_hash_table_insert (hash_table, g_strdup (name), item);
+  g_hash_table_insert (table->table, g_strdup (name), item);
 }
 
 void
-dconf_mock_gvdb_install (const gchar        *filename,
-                         DConfMockGvdbTable *table)
+dconf_mock_gvdb_install (const gchar *filename,
+                         GvdbTable   *table)
 {
   g_mutex_lock (&dconf_mock_gvdb_lock);
   dconf_mock_gvdb_init ();
 
   if (table)
-    g_hash_table_insert (dconf_mock_gvdb_tables, g_strdup (filename), table);
+    {
+      table->top_level = TRUE;
+      g_hash_table_insert (dconf_mock_gvdb_tables, g_strdup (filename), table);
+    }
   else
     g_hash_table_remove (dconf_mock_gvdb_tables, filename);
 
@@ -85,31 +100,45 @@ dconf_mock_gvdb_install (const gchar        *filename,
 void
 gvdb_table_unref (GvdbTable *table)
 {
-  GHashTable *hash_table = (GHashTable *) table;
+  if (g_atomic_int_dec_and_test (&table->ref_count))
+    {
+      g_hash_table_unref (table->table);
+      g_slice_free (GvdbTable, table);
+    }
+}
 
-  g_hash_table_unref (hash_table);
+GvdbTable *
+gvdb_table_ref (GvdbTable *table)
+{
+  g_atomic_int_inc (&table->ref_count);
+
+  return table;
 }
 
 GvdbTable *
 gvdb_table_get_table (GvdbTable   *table,
                       const gchar *key)
 {
-  GHashTable *hash_table = (GHashTable *) table;
   DConfMockGvdbItem *item;
+  GvdbTable *subtable;
 
-  item = g_hash_table_lookup (hash_table, key);
+  item = g_hash_table_lookup (table->table, key);
 
-  return (GvdbTable *) (item ? g_hash_table_ref (item->table) : NULL);
+  if (item && item->table)
+    subtable = gvdb_table_ref (item->table);
+  else
+    subtable = NULL;
+
+  return subtable;
 }
 
 gboolean
 gvdb_table_has_value (GvdbTable   *table,
                       const gchar *key)
 {
-  GHashTable *hash_table = (GHashTable *) table;
   DConfMockGvdbItem *item;
 
-  item = g_hash_table_lookup (hash_table, key);
+  item = g_hash_table_lookup (table->table, key);
 
   return item && item->value;
 }
@@ -138,23 +167,29 @@ gvdb_table_new (const gchar  *filename,
                 gboolean      trusted,
                 GError      **error)
 {
-  GHashTable *hash_table;
+  GvdbTable *table;
 
   g_mutex_lock (&dconf_mock_gvdb_lock);
   dconf_mock_gvdb_init ();
-  hash_table = g_hash_table_lookup (dconf_mock_gvdb_tables, filename);
-  if (hash_table)
-      g_hash_table_ref (hash_table);
+  table = g_hash_table_lookup (dconf_mock_gvdb_tables, filename);
+  if (table)
+    gvdb_table_ref (table);
   g_mutex_unlock (&dconf_mock_gvdb_lock);
 
-  if (hash_table == NULL)
+  if (table == NULL)
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT, "this gvdb does not exist");
 
-  return (GvdbTable *) hash_table;
+  return table;
 }
 
 gboolean
 gvdb_table_is_valid (GvdbTable *table)
 {
-  return TRUE;
+  return table->is_valid;
+}
+
+void
+dconf_mock_gvdb_table_invalidate (GvdbTable *table)
+{
+  table->is_valid = FALSE;
 }
