@@ -147,19 +147,25 @@ GVariant *
 gvdb_table_get_value (GvdbTable   *table,
                       const gchar *key)
 {
-  GHashTable *hash_table = (GHashTable *) table;
   DConfMockGvdbItem *item;
 
-  item = g_hash_table_lookup (hash_table, key);
+  item = g_hash_table_lookup (table->table, key);
 
-  return item ? g_variant_ref (item->value) : NULL;
+  return (item && item->value) ? g_variant_ref (item->value) : NULL;
 }
 
 gchar **
-gvdb_table_list (GvdbTable *table,
+gvdb_table_list (GvdbTable   *table,
                  const gchar *key)
 {
-  g_assert_not_reached ();
+  const gchar * const result[] = { "value", NULL };
+
+  g_assert_cmpstr (key, ==, "/");
+
+  if (!gvdb_table_has_value (table, "/value"))
+    return NULL;
+
+  return g_strdupv ((gchar **) result);
 }
 
 GvdbTable *

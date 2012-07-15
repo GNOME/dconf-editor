@@ -2,10 +2,12 @@
 
 #include "../engine/dconf-engine.h"
 #include "../engine/dconf-engine-profile.h"
+#include <glib/gstdio.h>
 #include "dconf-mock.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>
+#include <math.h>
 
 /* Interpose to catch fopen("/etc/dconf/profile/user") */
 static const gchar *filename_to_replace;
@@ -409,6 +411,321 @@ test_system_source (void)
   dconf_engine_source_free (source);
 }
 
+static void
+invalidate_state (guint     n_sources,
+                  guint     source_types,
+                  gpointer *state)
+{
+  gint i;
+
+  for (i = 0; i < n_sources; i++)
+    if (source_types & (1u << i))
+      {
+        if (state[i])
+          {
+            dconf_mock_gvdb_table_invalidate (state[i]);
+            gvdb_table_unref (state[i]);
+          }
+      }
+    else
+      {
+        dconf_mock_shm_flag (state[i]);
+        g_free (state[i]);
+      }
+}
+
+static void
+setup_state (guint     n_sources,
+             guint     source_types,
+             guint     database_state,
+             gpointer *state)
+{
+  gint i;
+
+  for (i = 0; i < n_sources; i++)
+    {
+      guint contents = database_state % 7;
+      GvdbTable *table = NULL;
+      gchar *filename;
+
+      if (contents)
+        {
+          table = dconf_mock_gvdb_table_new ();
+
+          /* Even numbers get the value setup */
+          if ((contents & 1) == 0)
+            dconf_mock_gvdb_table_insert (table, "/value", g_variant_new_uint32 (i), NULL);
+
+          /* Numbers above 2 get the locks table */
+          if (contents > 2)
+            {
+              GvdbTable *locks;
+
+              locks = dconf_mock_gvdb_table_new ();
+
+              /* Numbers above 4 get the lock set */
+              if (contents > 4)
+                dconf_mock_gvdb_table_insert (locks, "/value", g_variant_new_boolean (TRUE), NULL);
+
+              dconf_mock_gvdb_table_insert (table, ".locks", NULL, locks);
+            }
+        }
+
+      if (source_types & (1u << i))
+        {
+          if (state)
+            {
+              if (table)
+                state[i] = gvdb_table_ref (table);
+              else
+                state[i] = NULL;
+            }
+
+          filename = g_strdup_printf ("/etc/dconf/db/db%d", i);
+        }
+      else
+        {
+          if (state)
+            state[i] = g_strdup_printf ("db%d", i);
+
+          filename = g_strdup_printf ("/HOME/.config/dconf/db%d", i);
+        }
+
+      dconf_mock_gvdb_install (filename, table);
+      g_free (filename);
+
+      database_state /= 7;
+    }
+}
+
+static void
+create_profile (const gchar *filename,
+                guint        n_sources,
+                guint        source_types)
+{
+  GError *error = NULL;
+  GString *profile;
+  gint i;
+
+  profile = g_string_new (NULL);
+  for (i = 0; i < n_sources; i++)
+    if (source_types & (1u << i))
+      g_string_append_printf (profile, "system-db:db%d\n", i);
+    else
+      g_string_append_printf (profile, "user-db:db%d\n", i);
+  g_file_set_contents (filename, profile->str, profile->len, &error);
+  g_assert_no_error (error);
+  g_string_free (profile, TRUE);
+}
+
+static void
+check_read (DConfEngine *engine,
+            guint        n_sources,
+            guint        source_types,
+            guint        database_state)
+{
+  gboolean any_values = FALSE;
+  gboolean any_locks = FALSE;
+  gint expected = -1;
+  gboolean writable;
+  GVariant *value;
+  gchar **list;
+  guint i;
+
+  /* The value we expect to read is number of the first source that has
+   * the value set (ie: odd digit in database_state) up to the lowest
+   * level lock.
+   *
+   * We go over each database.  If 'expected' has not yet been set and
+   * we find that we should have a value in this database, we set it.
+   * If we find that we should have a lock in this database, we unset
+   * any previous values (since they should not have been written).
+   *
+   * We initially code this loop in a different way than the one in
+   * dconf itself is currently implemented...
+   *
+   * We also take note of if we saw any locks and cross-check that with
+   * dconf_engine_is_writable().  We check if we saw and values at all
+   * and cross-check that with dconf_engine_list() (which ignores
+   * locks).
+   */
+  for (i = 0; i < n_sources; i++)
+    {
+      guint contents = database_state % 7;
+
+      /* A lock here should prevent higher reads */
+      if (contents > 4)
+        {
+          /* Locks in the first database don't count... */
+          if (i != 0)
+            any_locks = TRUE;
+          expected = -1;
+        }
+
+      /* A value here should be read */
+      if (contents && !(contents & 1) && expected == -1)
+        {
+          any_values = TRUE;
+          expected = i;
+        }
+
+      database_state /= 7;
+    }
+
+  value = dconf_engine_read (engine, NULL, "/value");
+
+  if (expected != -1)
+    {
+      g_assert (g_variant_is_of_type (value, G_VARIANT_TYPE_UINT32));
+      g_assert_cmpint (g_variant_get_uint32 (value), ==, expected);
+      g_variant_unref (value);
+    }
+  else
+    g_assert (value == NULL);
+
+  /* We are writable if the first database is a user database and we
+   * didn't encounter any locks...
+   */
+  writable = dconf_engine_is_writable (engine, "/value");
+  g_assert_cmpint (writable, ==, n_sources && !(source_types & 1) && !any_locks);
+
+  list = dconf_engine_list (engine, "/", NULL);
+  if (any_values)
+    {
+      g_assert_cmpstr (list[0], ==, "value");
+      g_assert (list[1] == NULL);
+    }
+  else
+    g_assert (list[0] == NULL);
+  g_strfreev (list);
+}
+
+static void
+test_read (void)
+{
+#define MAX_N_SOURCES 3
+  gpointer state[MAX_N_SOURCES];
+  gchar *profile_filename;
+  GError *error = NULL;
+  DConfEngine *engine;
+  guint i, j, k;
+  guint n;
+
+  /* Hack to silence warning */
+  if (!g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDERR))
+    {
+      g_test_trap_assert_passed ();
+      g_test_trap_assert_stderr ("*this gvdb does not exist; expect degraded performance*");
+      return;
+    }
+  g_log_set_always_fatal (G_LOG_LEVEL_ERROR);
+
+  /* Our test strategy is as follows:
+   *
+   * We only test a single key name.  It is assumed that gvdb is working
+   * properly already so we are only interested in interactions between
+   * multiple databases for a given key name.
+   *
+   * The outermost loop is over 'n'.  This is how many sources are in
+   * our test.  We test 0 to 3 (which should be enough to cover all
+   * 'interesting' possibilities).  4 takes too long to run (2*7*7 ~=
+   * 100 times as long as 3).
+   *
+   * The next loop is over 'i'.  This goes from 0 to 2^n - 1, with each
+   * bit deciding the type of source of the i-th element
+   *
+   *   0: user
+   *
+   *   1: system
+   *
+   * The next loop is over 'j'.  This goes from 0 to 7^n - 1, with each
+   * base-7 digit deciding the state of the database file associated
+   * with the i-th source:
+   *
+   *   j      file    has value   has ".locks"   has lock
+   *  ----------------------------------------------------
+   *   0      0       -           -              -
+   *   1      1       0           0              -
+   *   2      1       1           0              -
+   *   3      1       0           1              0
+   *   4      1       1           1              0
+   *   5      1       0           1              1
+   *   6      1       1           1              1
+   *
+   * Where 'file' is if the database file exists, 'has value' is if a
+   * value exists at '/value' within the file, 'has ".locks"' is if
+   * there is a ".locks" subtable and 'has lock' is if there is a lock
+   * for '/value' within that table.
+   *
+   * Finally, we loop over 'k' as a state to transition to ('k' works
+   * the same way as 'j').
+   *
+   * Once we know 'n' and 'i', we can write a profile file.
+   *
+   * Once we know 'j' we can setup the initial state, create the engine
+   * and check that we got the expected value.  Then we transition to
+   * state 'k' and make sure everything still works as expected.
+   *
+   * Since we want to test all j->k transitions, we do the initial setup
+   * of the engine (according to j) inside of the 'k' loop, since we
+   * need to test all possible transitions from 'j'.
+   */
+
+  /* We need a place to put the profile files we use for this test */
+  close (g_file_open_tmp ("dconf-testcase.XXXXXX", &profile_filename, &error));
+  g_assert_no_error (error);
+
+  g_setenv ("DCONF_PROFILE", profile_filename, TRUE);
+
+  for (n = 0; n < MAX_N_SOURCES; n++)
+    for (i = 0; i < pow (2, n); i++)
+      {
+        gint n_possible_states = pow (7, n);
+
+        /* Step 1: write out the profile file */
+        create_profile (profile_filename, n, i);
+
+        for (j = 0; j < n_possible_states; j++)
+          for (k = 0; k < n_possible_states; k++)
+            {
+              guint64 old_state, new_state;
+
+              /* Step 2: setup the state */
+              setup_state (n, i, j, state);
+
+              /* Step 3: create the engine */
+              engine = dconf_engine_new (NULL, NULL);
+
+              /* Step 4: read, and check result */
+              check_read (engine, n, i, j);
+              old_state = dconf_engine_get_state (engine);
+
+              /* Step 5: change to the new state */
+              if (j != k)
+                {
+                  setup_state (n, i, k, NULL);
+                  invalidate_state (n, i, state);
+                }
+
+              /* Step 6: read, and check result */
+              check_read (engine, n, i, k);
+              new_state = dconf_engine_get_state (engine);
+
+              g_assert ((j == k) == (new_state == old_state));
+
+              /* Clean up */
+              setup_state (n, i, 0, NULL);
+              dconf_engine_unref (engine);
+            }
+      }
+
+  /* Clean up the tempfile we were using... */
+  g_unsetenv ("DCONF_PROFILE");
+  g_unlink (profile_filename);
+  g_free (profile_filename);
+  exit (0);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -423,6 +740,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/signal-threadsafety", test_signal_threadsafety);
   g_test_add_func ("/engine/sources/user", test_user_source);
   g_test_add_func ("/engine/sources/system", test_system_source);
+  g_test_add_func ("/engine/read", test_read);
 
   return g_test_run ();
 }
