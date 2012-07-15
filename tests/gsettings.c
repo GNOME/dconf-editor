@@ -58,7 +58,7 @@ do_write_tree (GTree *tree)
 static void
 do_sync (void)
 {
-  return G_SETTINGS_BACKEND_GET_CLASS (backend)
+  G_SETTINGS_BACKEND_GET_CLASS (backend)
     ->sync (backend);
 }
 
