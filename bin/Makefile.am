@@ -1,6 +1,6 @@
 include $(top_srcdir)/Makefile.gtester
 
-INCLUDES = -I$(top_srcdir)/common -I$(top_srcdir)/client
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/client
 
 bin_PROGRAMS = dconf
 
