@@ -21,6 +21,6 @@ dconf_SOURCES = \
 	dconf-dump.vala		\
 	dconf.vala
 
-completiondir = $(sysconfdir)/bash_completion.d
-completion_DATA = dconf-bash-completion.sh
+completiondir = $(datadir)/bash-completion/completions
+completion_DATA = completion/dconf
 EXTRA_DIST = $(completion_DATA)
