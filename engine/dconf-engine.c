@@ -721,13 +721,15 @@ dconf_engine_watch_established (DConfEngine  *engine,
 
   if (ow->state != dconf_engine_get_state (engine))
     {
+      const gchar * const changes[] = { "", NULL };
+
       /* Our recorded state does not match the current state.  Something
        * must have changed while our watch requests were on the wire.
        *
        * We don't know what changed, so we can just say that potentially
        * everything changed.  This case is very rare, anyway...
        */
-      dconf_engine_change_notify (engine, "/", NULL, engine->user_data, NULL);
+      dconf_engine_change_notify (engine, "/", changes, NULL, engine->user_data);
     }
 
   dconf_engine_call_handle_free (handle);
