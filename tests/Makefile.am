@@ -2,6 +2,7 @@ include $(top_srcdir)/Makefile.gtester
 
 noinst_LIBRARIES = libdconf-mock.a
 noinst_PROGRAMS = $(TEST_PROGS) gsettings dbus1
+noinst_HEADERS = dconf-mock.h
 
 libdconf_mock_a_CFLAGS = $(glib_CFLAGS)
 libdconf_mock_a_SOURCES = \
