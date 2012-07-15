@@ -583,6 +583,9 @@ dconf_engine_list (DConfEngine *engine,
       gchar **partial_list;
       gint j;
 
+      if (engine->sources[i]->values == NULL)
+        continue;
+
       partial_list = gvdb_table_list (engine->sources[i]->values, dir);
 
       if (partial_list != NULL)
