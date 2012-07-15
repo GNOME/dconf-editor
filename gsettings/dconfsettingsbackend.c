@@ -63,7 +63,7 @@ dconf_settings_backend_write (GSettingsBackend *backend,
   change = dconf_changeset_new ();
   dconf_changeset_set (change, key, value);
 
-  success = dconf_engine_change_fast (dcsb->engine, change, NULL);
+  success = dconf_engine_change_fast (dcsb->engine, change, origin_tag, NULL);
   dconf_changeset_unref (change);
 
   return success;
@@ -91,7 +91,7 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
   change= dconf_changeset_new ();
   g_tree_foreach (tree, dconf_settings_backend_add_to_changeset, change);
 
-  success = dconf_engine_change_fast (dcsb->engine, change, NULL);
+  success = dconf_engine_change_fast (dcsb->engine, change, origin_tag, NULL);
   dconf_changeset_unref (change);
 
   return success;
@@ -213,6 +213,7 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar         *prefix,
                             const gchar * const *changes,
                             const gchar         *tag,
+                            gpointer             origin_tag,
                             gpointer             user_data)
 {
   GWeakRef *weak_ref = user_data;
@@ -229,10 +230,10 @@ dconf_engine_change_notify (DConfEngine         *engine,
   if (changes[1] == NULL)
     {
       if (g_str_has_suffix (prefix, "/"))
-        g_settings_backend_path_changed (G_SETTINGS_BACKEND (dcsb), prefix, NULL);
+        g_settings_backend_path_changed (G_SETTINGS_BACKEND (dcsb), prefix, origin_tag);
       else
-        g_settings_backend_changed (G_SETTINGS_BACKEND (dcsb), prefix, NULL);
+        g_settings_backend_changed (G_SETTINGS_BACKEND (dcsb), prefix, origin_tag);
     }
   else
-    g_settings_backend_keys_changed (G_SETTINGS_BACKEND (dcsb), prefix, changes, NULL);
+    g_settings_backend_keys_changed (G_SETTINGS_BACKEND (dcsb), prefix, changes, origin_tag);
 }

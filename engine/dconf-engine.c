@@ -729,7 +729,7 @@ dconf_engine_watch_established (DConfEngine  *engine,
        * We don't know what changed, so we can just say that potentially
        * everything changed.  This case is very rare, anyway...
        */
-      dconf_engine_change_notify (engine, "/", changes, NULL, engine->user_data);
+      dconf_engine_change_notify (engine, "/", changes, NULL, NULL, engine->user_data);
     }
 
   dconf_engine_call_handle_free (handle);
@@ -858,13 +858,14 @@ static void dconf_engine_manage_queue (DConfEngine *engine);
 
 static void
 dconf_engine_emit_changes (DConfEngine    *engine,
-                           DConfChangeset *changeset)
+                           DConfChangeset *changeset,
+                           gpointer        origin_tag)
 {
   const gchar *prefix;
   const gchar * const *changes;
 
   if (dconf_changeset_describe (changeset, &prefix, &changes, NULL))
-    dconf_engine_change_notify (engine, prefix, changes, NULL, engine->user_data);
+    dconf_engine_change_notify (engine, prefix, changes, NULL, origin_tag, engine->user_data);
 }
 
 static void
@@ -924,7 +925,7 @@ dconf_engine_change_completed (DConfEngine  *engine,
        * message as a warning.
        */
       g_warning ("failed to commit changes to dconf: %s", error->message);
-      dconf_engine_emit_changes (engine, oc->change);
+      dconf_engine_emit_changes (engine, oc->change, NULL);
     }
 
   dconf_changeset_unref (oc->change);
@@ -1003,6 +1004,7 @@ dconf_engine_changeset_changes_only_writable_keys (DConfEngine    *engine,
 gboolean
 dconf_engine_change_fast (DConfEngine     *engine,
                           DConfChangeset  *changeset,
+                          gpointer         origin_tag,
                           GError         **error)
 {
   GList *node;
@@ -1056,7 +1058,7 @@ dconf_engine_change_fast (DConfEngine     *engine,
   dconf_engine_unlock_queues (engine);
 
   /* Emit the signal after dropping the lock to avoid deadlock on re-entry. */
-  dconf_engine_emit_changes (engine, changeset);
+  dconf_engine_emit_changes (engine, changeset, origin_tag);
 
   return TRUE;
 }
@@ -1124,7 +1126,7 @@ dconf_engine_handle_dbus_signal (GBusType     type,
            * Check last_handled to determine if we should ignore it.
            */
           if (!engine->last_handled || !g_str_equal (engine->last_handled, tag))
-            dconf_engine_change_notify (engine, prefix, changes, tag, engine->user_data);
+            dconf_engine_change_notify (engine, prefix, changes, tag, NULL, engine->user_data);
 
           engines = g_slist_delete_link (engines, engines);
 

@@ -37,6 +37,7 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar         *prefix,
                             const gchar * const *changes,
                             const gchar         *tag,
+                            gpointer             origin_tag,
                             gpointer             user_data)
 {
   /* ignore */

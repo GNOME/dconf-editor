@@ -86,6 +86,7 @@ void                    dconf_engine_change_notify                      (DConfEn
                                                                          const gchar             *prefix,
                                                                          const gchar * const     *changes,
                                                                          const gchar             *tag,
+                                                                         gpointer                 origin_tag,
                                                                          gpointer                 user_data);
 
 /* These functions are implemented by the engine */
@@ -140,6 +141,7 @@ void                    dconf_engine_unwatch_fast                       (DConfEn
 G_GNUC_INTERNAL
 gboolean                dconf_engine_change_fast                        (DConfEngine             *engine,
                                                                          DConfChangeset          *changeset,
+                                                                         gpointer                 origin_tag,
                                                                          GError                 **error);
 
 /* Synchronous API: all calls block until completed */

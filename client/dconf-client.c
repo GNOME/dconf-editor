@@ -164,6 +164,7 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar         *prefix,
                             const gchar * const *changes,
                             const gchar *        tag,
+                            gpointer             origin_tag,
                             gpointer             user_data)
 {
   GWeakRef *weak_ref = user_data;
@@ -332,7 +333,7 @@ dconf_client_write_fast (DConfClient  *client,
   g_return_val_if_fail (DCONF_IS_CLIENT (client), FALSE);
 
   changeset = dconf_changeset_new_write (key, value);
-  success = dconf_engine_change_fast (client->engine, changeset, error);
+  success = dconf_engine_change_fast (client->engine, changeset, NULL, error);
   dconf_changeset_unref (changeset);
 
   return success;
@@ -417,7 +418,7 @@ dconf_client_change_fast (DConfClient     *client,
 {
   g_return_val_if_fail (DCONF_IS_CLIENT (client), FALSE);
 
-  return dconf_engine_change_fast (client->engine, changeset, error);
+  return dconf_engine_change_fast (client->engine, changeset, NULL, error);
 }
 
 /**

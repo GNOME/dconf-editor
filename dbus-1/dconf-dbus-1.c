@@ -43,6 +43,7 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             const gchar         *prefix,
                             const gchar * const *changes,
                             const gchar         *tag,
+                            gpointer             origin_tag,
                             gpointer             user_data)
 {
   DConfDBusClient *dcdbc = user_data;
@@ -86,7 +87,7 @@ dconf_dbus_client_write (DConfDBusClient *dcdbc,
   gboolean success;
 
   changeset = dconf_changeset_new_write (key, value);
-  success = dconf_engine_change_fast (dcdbc->engine, changeset, NULL);
+  success = dconf_engine_change_fast (dcdbc->engine, changeset, NULL, NULL);
   dconf_changeset_unref (changeset);
 
   return success;
