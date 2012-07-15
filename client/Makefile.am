@@ -16,9 +16,9 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(shlibdir)/libdconf.so.1
 	rm -f $(DESTDIR)$(shlibdir)/libdconf.so
 
-dconfinclude_HEADERS = \
-	dconf-client.h	\
-	dconf.h
+dconfinclude_HEADERS = dconf.h
+dconfclientinclude_HEADERS = dconf-client.h
+dconfclientincludedir = $(dconfincludedir)/client
 
 libdconf_client_a_CFLAGS = $(gio_CFLAGS)
 libdconf_client_a_SOURCES = \

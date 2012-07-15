@@ -22,8 +22,8 @@
 #ifndef __dconf_h__
 #define __dconf_h__
 
-#include <dconf-paths.h>
-#include <dconf-changeset.h>
-#include <dconf-client.h>
+#include <common/dconf-paths.h>
+#include <common/dconf-changeset.h>
+#include <client/dconf-client.h>
 
 #endif /* __dconf_h__ */

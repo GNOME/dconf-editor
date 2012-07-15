@@ -20,8 +20,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_common_h__
-#define __dconf_common_h__
+#ifndef __dconf_paths_h__
+#define __dconf_paths_h__
 
 #include <glib.h>
 
@@ -39,4 +39,4 @@ gboolean                dconf_is_rel_key                                (const g
 gboolean                dconf_is_rel_dir                                (const gchar         *string,
                                                                          GError             **error);
 
-#endif /* __dconf_common_h__ */
+#endif /* __dconf_paths_h__ */

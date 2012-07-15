@@ -1,13 +1,14 @@
 include $(top_srcdir)/Makefile.gtester
 
-dconfinclude_HEADERS = \
+dconfcommonincludedir = $(dconfincludedir)/common
+dconfcommoninclude_HEADERS = \
+	dconf-changeset.h	\
 	dconf-paths.h
 
 noinst_LIBRARIES = libdconf-common.a libdconf-common-shared.a libdconf-common-hidden.a
 
 libdconf_common_a_CFLAGS = $(glib_CFLAGS)
 libdconf_common_a_SOURCES = \
-	dconf-changeset.h	\
 	dconf-changeset.c	\
 	dconf-paths.c
 
