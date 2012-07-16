@@ -14,41 +14,8 @@ dconf_state_init_session (DConfState *state)
 
   state->db_dir = g_build_filename (config_dir, "dconf", NULL);
 
-  if (g_mkdir_with_parents (state->db_dir, 0700))
-    {
-      /* XXX remove this after a while... */
-      if (errno == ENOTDIR)
-        {
-          gchar *tmp, *final;
-
-          g_message ("Attempting to migrate ~/.config/dconf "
-                     "to ~/.config/dconf/user");
-
-          tmp = g_build_filename (config_dir, "dconf-user.db", NULL);
-
-          if (rename (state->db_dir, tmp))
-            g_error ("Can not rename '%s' to '%s': %s",
-                     state->db_dir, tmp, g_strerror (errno));
-
-          if (g_mkdir_with_parents (state->db_dir, 0700))
-            g_error ("Can not create directory '%s': %s",
-                     state->db_dir, g_strerror (errno));
-
-          final = g_build_filename (state->db_dir, "user", NULL);
-
-          if (rename (tmp, final))
-            g_error ("Can not rename '%s' to '%s': %s",
-                     tmp, final, g_strerror (errno));
-
-          g_message ("Successful.");
-
-          g_free (final);
-          g_free (tmp);
-        }
-      else
-        g_error ("Can not create directory '%s': %s",
-                 state->db_dir, g_strerror (errno));
-    }
+  if (g_mkdir_with_parents (state->db_dir, 0700) != 0)
+    g_error ("Can not create directory '%s': %s", state->db_dir, g_strerror (errno));
 }
 
 static gboolean
