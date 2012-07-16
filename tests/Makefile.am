@@ -1,7 +1,7 @@
 include $(top_srcdir)/Makefile.gtester
 
 noinst_LIBRARIES = libdconf-mock.a
-noinst_PROGRAMS = $(TEST_PROGS) gsettings dbus1
+noinst_PROGRAMS = $(TEST_PROGS)
 noinst_HEADERS = dconf-mock.h
 
 libdconf_mock_a_CFLAGS = $(glib_CFLAGS)
@@ -9,11 +9,6 @@ libdconf_mock_a_SOURCES = \
 	dconf-mock-dbus.c	\
 	dconf-mock-gvdb.c	\
 	dconf-mock-shm.c
-
-gsettings_CFLAGS = $(gio_CFLAGS)
-gsettings_LDADD = $(gio_LIBS)
-dbus1_CFLAGS = $(glib_CFLAGS) $(dbus_CFLAGS)
-dbus1_LDADD = -L../dbus-1 -ldconf-dbus-1 $(glib_LIBS)
 
 TEST_PROGS += paths
 paths_CFLAGS = $(glib_CFLAGS)
