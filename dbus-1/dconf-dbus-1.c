@@ -53,7 +53,7 @@ dconf_engine_change_notify (DConfEngine         *engine,
   gint i;
 
   n_changes = g_strv_length ((gchar **) changes);
-  my_changes = g_new (gchar *, n_changes);
+  my_changes = g_new (gchar *, n_changes + 1);
 
   for (i = 0; i < n_changes; i++)
     my_changes[i] = g_strconcat (prefix, changes[i], NULL);
