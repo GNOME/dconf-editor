@@ -697,7 +697,7 @@ test_read (void)
               guint64 old_state, new_state;
 
               /* Step 2: setup the state */
-              setup_state (n, i, j, state);
+              setup_state (n, i, j, (j != k) ? state : NULL);
 
               /* Step 3: create the engine */
               engine = dconf_engine_new (NULL, NULL);
@@ -744,6 +744,7 @@ test_watch_fast (void)
 
   table = dconf_mock_gvdb_table_new ();
   dconf_mock_gvdb_install ("/HOME/.config/dconf/user", table);
+  table = dconf_mock_gvdb_table_new ();
   dconf_mock_gvdb_install ("/etc/dconf/db/site", table);
 
   triv = g_variant_ref_sink (g_variant_new ("()"));

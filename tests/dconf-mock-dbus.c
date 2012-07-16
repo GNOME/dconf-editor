@@ -34,6 +34,9 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
                                    DConfEngineCallHandle  *handle,
                                    GError                **error)
 {
+  g_variant_ref_sink (parameters);
+  g_variant_unref (parameters);
+
   g_queue_push_tail (&dconf_mock_dbus_outstanding_call_handles, handle);
 
   return TRUE;
