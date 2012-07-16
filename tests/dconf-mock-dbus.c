@@ -20,8 +20,9 @@
  */
 
 #include "../engine/dconf-engine.h"
+#include "dconf-mock.h"
 
-GQueue outstanding_call_handles;
+GQueue dconf_mock_dbus_outstanding_call_handles;
 
 gboolean
 dconf_engine_dbus_call_async_func (GBusType                bus_type,
@@ -33,10 +34,12 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
                                    DConfEngineCallHandle  *handle,
                                    GError                **error)
 {
-  g_queue_push_tail (&outstanding_call_handles, handle);
+  g_queue_push_tail (&dconf_mock_dbus_outstanding_call_handles, handle);
 
   return TRUE;
 }
+
+DConfMockDBusSyncCallHandler dconf_mock_dbus_sync_call_handler;
 
 GVariant *
 dconf_engine_dbus_call_sync_func (GBusType             bus_type,
@@ -48,5 +51,8 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
                                   const GVariantType  *reply_type,
                                   GError             **error)
 {
-  g_assert_not_reached ();
+  g_assert (dconf_mock_dbus_sync_call_handler != NULL);
+
+  return (* dconf_mock_dbus_sync_call_handler) (bus_type, bus_name, object_path, interface_name,
+                                                method_name, parameters, reply_type, error);
 }

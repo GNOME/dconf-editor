@@ -1,10 +1,10 @@
 #define _BSD_SOURCE
 #include "../client/dconf-client.h"
 #include "../engine/dconf-engine.h"
+#include "dconf-mock.h"
 #include <string.h>
 #include <stdlib.h>
 
-extern GQueue outstanding_call_handles;
 static GThread *main_thread;
 
 static void
@@ -70,7 +70,7 @@ queue_up_100_writes (DConfClient *client)
       check_and_free (dconf_client_read (client, "/test/value"), g_variant_new_int32 (i));
     }
 
-  g_assert_cmpint (g_queue_get_length (&outstanding_call_handles), ==, 2);
+  g_assert_cmpint (g_queue_get_length (&dconf_mock_dbus_outstanding_call_handles), ==, 2);
 }
 
 static void
@@ -80,7 +80,7 @@ fail_one_call (void)
   GError *error;
 
   error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "--expected error from testcase--");
-  handle = g_queue_pop_head (&outstanding_call_handles);
+  handle = g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles);
   dconf_engine_call_handle_reply (handle, NULL, error);
   g_error_free (error);
 }
@@ -133,7 +133,7 @@ test_fast (void)
    * Each time, we should see a change notify.
    */
 
-  for (i = 0; g_queue_get_length (&outstanding_call_handles) > 1; i++)
+  for (i = 0; g_queue_get_length (&dconf_mock_dbus_outstanding_call_handles) > 1; i++)
     {
       changed_was_called = FALSE;
       fail_one_call ();
