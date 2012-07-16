@@ -33,6 +33,7 @@ fopen (const char *filename,
 }
 
 static GThread *main_thread;
+static GString *change_log;
 
 void
 dconf_engine_change_notify (DConfEngine         *engine,
@@ -42,7 +43,10 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             gpointer             origin_tag,
                             gpointer             user_data)
 {
-  /* ignore */
+  if (change_log)
+    g_string_append_printf (change_log, "%s:%d:%s:%s;",
+                            prefix, g_strv_length ((gchar **) changes), changes[0],
+                            tag ? tag : "nil");
 }
 
 static void
@@ -726,6 +730,76 @@ test_read (void)
   exit (0);
 }
 
+static void
+test_watch_fast (void)
+{
+  DConfEngine *engine;
+  GvdbTable *table;
+  GVariant *triv;
+  guint64 a, b;
+
+  change_log = g_string_new (NULL);
+
+  table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_install ("/HOME/.config/dconf/user", table);
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", table);
+
+  triv = g_variant_ref_sink (g_variant_new ("()"));
+
+  g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
+  engine = dconf_engine_new (NULL, NULL);
+  g_unsetenv ("DCONF_PROFILE");
+
+  /* Check that establishing a watch works properly in the normal case.
+   */
+  a = dconf_engine_get_state (engine);
+  dconf_engine_watch_fast (engine, "/a/b/c");
+  /* watches do not count as outstanding changes */
+  g_assert (!dconf_engine_has_outstanding (engine));
+  dconf_engine_sync (engine);
+  b = dconf_engine_get_state (engine);
+  g_assert_cmpuint (a, ==, b);
+  /* both AddMatch results come back before shm is flagged */
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  g_assert (g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
+  dconf_mock_shm_flag ("user");
+  b = dconf_engine_get_state (engine);
+  g_assert_cmpuint (a, !=, b);
+  g_assert_cmpstr (change_log->str, ==, "");
+  dconf_engine_unwatch_fast (engine, "/a/b/c");
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  g_assert (g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
+
+  /* Establish a watch and fail the race. */
+  a = dconf_engine_get_state (engine);
+  dconf_engine_watch_fast (engine, "/a/b/c");
+  g_assert (!dconf_engine_has_outstanding (engine));
+  dconf_engine_sync (engine);
+  b = dconf_engine_get_state (engine);
+  g_assert_cmpuint (a, ==, b);
+  /* one AddMatch result comes back -after- shm is flagged */
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  dconf_mock_shm_flag ("user");
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  g_assert (g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
+  b = dconf_engine_get_state (engine);
+  g_assert_cmpuint (a, !=, b);
+  g_assert_cmpstr (change_log->str, ==, "/:1::nil;");
+  dconf_engine_unwatch_fast (engine, "/a/b/c");
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  dconf_engine_call_handle_reply (g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles), triv, NULL);
+  g_assert (g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
+
+  dconf_mock_gvdb_install ("/HOME/.config/dconf/user", NULL);
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", NULL);
+  dconf_engine_unref (engine);
+  g_string_free (change_log, TRUE);
+  change_log = NULL;
+  g_variant_unref (triv);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -741,6 +815,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/sources/user", test_user_source);
   g_test_add_func ("/engine/sources/system", test_system_source);
   g_test_add_func ("/engine/read", test_read);
+  g_test_add_func ("/engine/watch/fast", test_watch_fast);
 
   return g_test_run ();
 }
