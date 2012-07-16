@@ -278,6 +278,15 @@ test_sync_call_error (void)
   g_assert (strstr (error->message, "org.freedesktop.DBus.Error.InvalidArgs"));
   g_clear_error (&error);
 
+  /* Test with 'ay' to make sure transmitting that works as well */
+  reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
+                                            "org.freedesktop.DBus", "/", "org.freedesktop.DBus", "GetId",
+                                            g_variant_new ("(ay)", NULL), G_VARIANT_TYPE_UNIT, &error);
+  g_assert (reply == NULL);
+  g_assert (error != NULL);
+  g_assert (strstr (error->message, "org.freedesktop.DBus.Error.InvalidArgs"));
+  g_clear_error (&error);
+
   /* Test reply type errors */
   reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
                                             "org.freedesktop.DBus", "/", "org.freedesktop.DBus", "GetId",

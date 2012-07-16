@@ -65,13 +65,16 @@ dconf_libdbus_1_new_method_call (const gchar *bus_name,
 
       else
         {
+          DBusMessageIter subiter;
           const guint8 *bytes;
           gsize n_elements;
 
           g_assert (g_variant_is_of_type (child, G_VARIANT_TYPE_BYTESTRING));
 
           bytes = g_variant_get_fixed_array (child, &n_elements, sizeof (guint8));
-          dbus_message_iter_append_fixed_array (&dbus_iter, DBUS_TYPE_BYTE, &bytes, n_elements);
+          dbus_message_iter_open_container (&dbus_iter, DBUS_TYPE_ARRAY, "y", &subiter);
+          dbus_message_iter_append_fixed_array (&subiter, DBUS_TYPE_BYTE, &bytes, n_elements);
+          dbus_message_iter_close_container (&dbus_iter, &subiter);
         }
 
       g_variant_unref (child);
