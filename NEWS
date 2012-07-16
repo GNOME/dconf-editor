@@ -1,3 +1,24 @@
+Changes in dconf 0.13.4 (since 0.13.0)
+=======================================
+
+ - extensively refactored -- watch for bugs
+
+ - now depends on GLib 2.33.3 for g_slist_copy_deep() and
+   g_clear_pointer() with workaround for GCC
+
+ - API of libdconf has changed; soname bumped to libdconf.so.1
+
+ - installed header layout has changed
+
+ - there are changes to the API used between the client and the service.
+   New clients will only talk with the new service (so make sure to
+   restart it).  Old clients (ie: already-running programs) will
+   continue to be able to talk to the new service version.
+
+ - there is a now a fairly decent test suite but it requires a full
+   D-Bus environment to run in, so it may make sense to avoid 'make
+   check' on builders for the time being
+
 Changes in dconf 0.13.0
 =======================
 
