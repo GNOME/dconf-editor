@@ -51,8 +51,16 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
                                   const GVariantType  *reply_type,
                                   GError             **error)
 {
+  GVariant *reply;
+
   g_assert (dconf_mock_dbus_sync_call_handler != NULL);
 
-  return (* dconf_mock_dbus_sync_call_handler) (bus_type, bus_name, object_path, interface_name,
-                                                method_name, parameters, reply_type, error);
+  g_variant_ref_sink (parameters);
+
+  reply = (* dconf_mock_dbus_sync_call_handler) (bus_type, bus_name, object_path, interface_name,
+                                                 method_name, parameters, reply_type, error);
+
+  g_variant_unref (parameters);
+
+  return g_variant_take_ref (reply);
 }

@@ -2,9 +2,11 @@
 
 #include "../engine/dconf-engine.h"
 #include "../engine/dconf-engine-profile.h"
-#include <glib/gstdio.h>
 #include "dconf-mock.h"
+
+#include <glib/gstdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <dlfcn.h>
 #include <math.h>
@@ -800,6 +802,65 @@ test_watch_fast (void)
   g_variant_unref (triv);
 }
 
+static const gchar *match_request_type;
+static gboolean got_match_request[5];
+
+static GVariant *
+handle_match_request (GBusType             bus_type,
+                      const gchar         *bus_name,
+                      const gchar         *object_path,
+                      const gchar         *interface_name,
+                      const gchar         *method_name,
+                      GVariant            *parameters,
+                      const GVariantType  *expected_type,
+                      GError             **error)
+{
+  const gchar *match_rule;
+
+  g_assert_cmpstr (bus_name, ==, "org.freedesktop.DBus");
+  /* any object path works... */
+  g_assert_cmpstr (bus_name, ==, "org.freedesktop.DBus");
+  g_assert_cmpstr (method_name, ==, match_request_type);
+  g_assert_cmpstr (g_variant_get_type_string (parameters), ==, "(s)");
+  g_variant_get (parameters, "(&s)", &match_rule);
+  g_assert (strstr (match_rule, "arg0path='/a/b/c'"));
+  g_assert (!got_match_request[bus_type]);
+  got_match_request[bus_type] = TRUE;
+
+  return g_variant_new ("()");
+}
+
+static void
+test_watch_sync (void)
+{
+  DConfEngine *engine;
+
+  dconf_mock_dbus_sync_call_handler = handle_match_request;
+
+  g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
+  engine = dconf_engine_new (NULL, NULL);
+  g_unsetenv ("DCONF_PROFILE");
+
+  match_request_type = "AddMatch";
+  dconf_engine_watch_sync (engine, "/a/b/c");
+  g_assert (got_match_request[G_BUS_TYPE_SESSION]);
+  g_assert (got_match_request[G_BUS_TYPE_SYSTEM]);
+  got_match_request[G_BUS_TYPE_SESSION] = FALSE;
+  got_match_request[G_BUS_TYPE_SYSTEM] = FALSE;
+
+  match_request_type = "RemoveMatch";
+  dconf_engine_unwatch_sync (engine, "/a/b/c");
+  g_assert (got_match_request[G_BUS_TYPE_SESSION]);
+  g_assert (got_match_request[G_BUS_TYPE_SYSTEM]);
+  got_match_request[G_BUS_TYPE_SESSION] = FALSE;
+  got_match_request[G_BUS_TYPE_SYSTEM] = FALSE;
+
+  dconf_engine_unref (engine);
+
+  dconf_mock_dbus_sync_call_handler = NULL;
+  match_request_type = NULL;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -816,6 +877,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/sources/system", test_system_source);
   g_test_add_func ("/engine/read", test_read);
   g_test_add_func ("/engine/watch/fast", test_watch_fast);
+  g_test_add_func ("/engine/watch/sync", test_watch_sync);
 
   return g_test_run ();
 }
