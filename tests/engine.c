@@ -161,6 +161,18 @@ test_profile_parser (void)
   g_test_trap_assert_passed ();
   g_test_trap_assert_stderr ("*WARNING*: unknown dconf database*unknown dconf database*");
 
+  if (g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDERR))
+    {
+      g_log_set_always_fatal (G_LOG_LEVEL_ERROR);
+
+      sources = dconf_engine_profile_open (SRCDIR "/profile/gdm", &n_sources);
+      g_assert_cmpint (n_sources, ==, 0);
+      g_assert (sources == NULL);
+      exit (0);
+    }
+  g_test_trap_assert_passed ();
+  g_test_trap_assert_stderr ("*WARNING*: unknown dconf database*unknown dconf database*");
+
   test_five_times (SRCDIR "/profile/empty-profile", 0);
   test_five_times (SRCDIR "/profile/test-profile", 1, "test");
   test_five_times (SRCDIR "/profile/colourful", 4,

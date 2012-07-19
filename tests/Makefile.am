@@ -86,6 +86,7 @@ EXTRA_DIST += \
 	profile/colourful			\
 	profile/dos				\
 	profile/empty-profile			\
+	profile/gdm				\
 	profile/many-sources			\
 	profile/no-newline-longline		\
 	profile/test-profile			\

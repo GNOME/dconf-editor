@@ -100,6 +100,7 @@ dconf_engine_default_profile (gint *n_sources)
 static DConfEngineSource *
 dconf_engine_profile_handle_line (gchar *line)
 {
+  DConfEngineSource *source;
   gchar *end;
 
   /* remove whitespace at the front */
@@ -119,7 +120,12 @@ dconf_engine_profile_handle_line (gchar *line)
 
   *end = '\0';
 
-  return dconf_engine_source_new (line);
+  source = dconf_engine_source_new (line);
+
+  if (source == NULL)
+    g_warning ("unknown dconf database description: %s", line);
+
+  return source;
 }
 
 static DConfEngineSource **

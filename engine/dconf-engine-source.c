@@ -76,27 +76,44 @@ dconf_engine_source_new (const gchar *description)
 {
   const DConfEngineSourceVTable *vtable;
   DConfEngineSource *source;
+  const gchar *colon;
 
-  switch (description[0])
-    {
-    case 's':
-      vtable = &dconf_engine_source_system_vtable;
-      break;
+  /* Source descriptions are of the form
+   *
+   *   type:name
+   *
+   * Where type must currently be one of "user-db" or "system-db".
+   *
+   * We first find the colon.
+   */
+  colon = strchr (description, ':');
 
-    case 'u':
-      vtable = &dconf_engine_source_user_vtable;
-      break;
+  /* Ensure that we have a colon and that a database name follows it. */
+  if (colon == NULL || colon[1] == '\0')
+    return NULL;
 
-    default:
-      g_warning ("unknown dconf database description: %s", description);
-      return NULL;
-    }
+  /* Check if the part before the colon is "user-db"... */
+  if ((colon == description + 7) && memcmp (description, "user-db", 7) == 0)
+    vtable = &dconf_engine_source_user_vtable;
 
+  /* ...or "system-db" */
+  else if ((colon == description + 9) && memcmp (description, "system-db", 9) == 0)
+    vtable = &dconf_engine_source_system_vtable;
+
+  /* If it's not either of those, we have failed. */
+  else
+    return NULL;
+
+  /* We have had a successful parse.
+   *
+   *  - either user-db: or system-db:
+   *  - non-NULL and non-empty database name
+   *
+   * Create the source.
+   */
   source = g_malloc0 (vtable->instance_size);
   source->vtable = vtable;
-  source->name = strchr (description, ':');
-  if (source->name)
-    source->name = g_strdup (source->name + 1);
+  source->name = g_strdup (colon + 1);
   source->vtable->init (source);
 
   return source;
