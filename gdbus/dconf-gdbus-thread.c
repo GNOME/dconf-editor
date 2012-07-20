@@ -266,6 +266,7 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
                                    GError                **error)
 {
   DConfGDBusCall *call;
+  GSource *source;
 
   call = g_slice_new (DConfGDBusCall);
   call->bus_type = bus_type;
@@ -276,7 +277,10 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   call->parameters = g_variant_ref_sink (parameters);
   call->handle = handle;
 
-  g_main_context_invoke (dconf_gdbus_get_worker_context (), dconf_gdbus_method_call, call);
+  source = g_idle_source_new ();
+  g_source_set_callback (source, dconf_gdbus_method_call, call, NULL);
+  g_source_attach (source, dconf_gdbus_get_worker_context ());
+  g_source_unref (source);
 
   return TRUE;
 }
