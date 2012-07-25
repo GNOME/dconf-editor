@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<refentry id="dconf-overview">
+
+  <refentryinfo>
+    <title>dconf Overview</title>
+    <productname>dconf</productname>
+
+    <authorgroup>
+      <author>
+        <contrib>Developer</contrib>
+        <firstname>Ryan</firstname>
+        <surname>Lortie</surname>
+        <email>desrt@desrt.ca</email>
+      </author>
+    </authorgroup>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>dconf</refentrytitle>
+    <manvolnum>7</manvolnum>
+    <refmiscinfo class="manual">Conventions and miscellaneous</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>dconf</refname>
+    <refpurpose>A configuration systen</refpurpose>
+  </refnamediv>
+
+  <refsect1>
+    <title>Description</title>
+
+    <para>
+      dconf is a simple key/value storage system that is heavily optimised for reading.  This makes it an ideal
+      system for storing user preferences (which are read 1000s of times for each time the user changes one).
+      It was created with this usecase in mind.
+    </para>
+    <para>
+      All preferences are stored in a single large binary file.  Layering of preferences is possible using
+      multiple files (ie: for site defaults).  Lock-down is also supported.  The binary file for the defaults
+      can optionally be compiled from a set of plain text keyfiles.
+    </para>
+    <para>
+      dconf has a partial client/server architecture.  It uses D-Bus.  The server is only involved in writes
+      (and is not activated in the user session until the user modifies a preference).  The service is stateless
+      and can exit freely at any time (and is therefore robust against crashes).  The list of paths that each
+      process is watching is stored within the D-Bus daemon itself (as D-Bus signal match rules).
+    </para>
+    <para>
+      Reads are performed by direct access (via mmap) to the on-disk database which is essentially a hashtable.
+      For this reason, dconf reads typically involve zero system calls and are comparable to a hashtable lookup
+      in terms of speed.  Practically speaking, in simple non-layered setups, dconf is less than 10 times slower
+      than GHashTable.
+    </para>
+    <para>
+      Writes are assumed only to happen in response to explicit user interaction (like clicking on a checkbox in
+      a preferences dialog) and are therefore not optimised at all.  On some file systems, dconf-service will
+      call fsync() for every write, which can introduce a latency of up to 100ms.  This latency is hidden by the
+      client libraries through a clever "fast" mechanism that records the outstanding changes locally (so they
+      can be read back immediately) until the service signals that a write has completed.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Portability</title>
+
+    <para>
+      dconf mostly targets Free Software operating systems.  It will theoretically run on Mac OS but there isn't
+      much point to that (since Mac OS applications want to store preferences in plist files).  It is not
+      possible to use dconf on Windows because of the inability to rename over a file that's still in use (which
+      is what the dconf-service does on every write).
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>API stability</title>
+
+    <para>
+      The dconf API is not particularly friendly, and is not guaranteed to be stable.  Because of this and the
+      lack of portability, you almost certainly want to use some sort of wrapper API around it.  The wrapper API
+      used by GTK+ and GNOME applications is
+      <ulink url="http://developer.gnome.org/gio/stable/GSettings.html">GSettings</ulink>, which is included as
+      part of GLib. GSettings has backends for Windows (using the registry) and Mac OS (using property lists) as
+      well as its dconf backend and is the proper API to use for graphical applications.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>See Also</title>
+    <para>
+      <citerefentry><refentrytitle>dconf-service</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>dconf-editor</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
+      <ulink url="http://developer.gnome.org/gio/stable/GSettings.html">GSettings</ulink>
+    </para>
+  </refsect1>
+</refentry>

@@ -1,0 +1,174 @@
+<?xml version='1.0'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<refentry id="dconf-tool">
+  <refentryinfo>
+    <title>dconf</title>
+    <productname>dconf</productname>
+
+    <authorgroup>
+      <author>
+        <contrib>Developer</contrib>
+        <firstname>Ryan</firstname>
+        <surname>Lortie</surname>
+        <email>desrt@desrt.ca</email>
+      </author>
+    </authorgroup>
+
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>dconf</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo class="manual">User Commands</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>dconf</refname>
+    <refpurpose>Simple tool for manipulating a dconf database</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">read</arg>
+      <arg choice="plain"><replaceable>KEY</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">list</arg>
+      <arg choice="plain"><replaceable>DIR</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">write</arg>
+      <arg choice="plain"><replaceable>KEY</replaceable></arg>
+      <arg choice="plain"><replaceable>VALUE</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">reset</arg>
+      <arg choice="opt">-f</arg>
+      <arg choice="plain"><replaceable>PATH</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">update</arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">watch</arg>
+      <arg choice="plain"><replaceable>PATH</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">dump</arg>
+      <arg choice="plain"><replaceable>DIR</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">load</arg>
+      <arg choice="plain"><replaceable>DIR</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
+      <arg choice="plain">help</arg>
+      <arg choice="opt"><replaceable>COMMAND</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>Description</title>
+
+    <para>
+      The <command>dconf</command> program can perform various operations on a dconf database, such as reading
+      or writing individual values or entire directories. This tool operates directly on the dconf database and
+      does not read gsettings schema information. Therefore, it cannot perform type and consistency checks on
+      values. The <citerefentry><refentrytitle>gsettings</refentrytitle><manvolnum>1</manvolnum></citerefentry>
+      utility is an alternative if such checks are needed.
+    </para>
+
+    <para>
+      The <replaceable>DIR</replaceable> arguments must be directory paths (starting and ending with '/'), the
+      <replaceable>KEY</replaceable> arguments must be key paths (starting, but not ending with '/') and the
+      <replaceable>PATH</replaceable> arguments can be either directory or key paths.
+    </para>
+
+    <para>
+      <replaceable>VALUE</replaceable> arguments must be in GVariant format, so e.g. a string must include
+      explicit quotes: "'foo'". This format is also used when printing out values.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Commands</title>
+
+    <variablelist>
+
+      <varlistentry>
+        <term><option>read</option></term>
+
+        <listitem><para>Read the value of a key.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>list</option></term>
+
+        <listitem><para>List the sub-keys and sub-directories of a directory.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>write</option></term>
+
+        <listitem><para>Write a new value to a key.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>reset</option></term>
+
+        <listitem><para>Reset a key or an entire directory. For directories, <option>-f</option> must be specified.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>update</option></term>
+
+        <listitem><para>Update the system dconf databases.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>watch</option></term>
+
+        <listitem><para>Watch a key or directory for changes.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>dump</option></term>
+
+        <listitem><para>Dump an entire subpath to stdout. The output is in a keyfile-like format, with values in GVariant syntax.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>load</option></term>
+
+        <listitem><para>Populate a subpath from stdin. The expected format is the same as produced by <option>dump</option>.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>help</option></term>
+
+        <listitem><para>Display help and exit.  If <replaceable>COMMAND</replaceable> is given, display help for this command.</para></listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>See Also</title>
+    <para>
+      <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>gsettings</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>dconf-editor</refentrytitle><manvolnum>1</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+</refentry>

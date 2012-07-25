@@ -1,0 +1,63 @@
+<?xml version='1.0'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<refentry id="dconf-service">
+  <refentryinfo>
+    <title>dconf-service</title>
+    <productname>dconf</productname>
+
+    <authorgroup>
+      <author>
+        <contrib>Developer</contrib>
+        <firstname>Ryan</firstname>
+        <surname>Lortie</surname>
+        <email>desrt@desrt.ca</email>
+      </author>
+    </authorgroup>
+
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>dconf-service</refentrytitle>
+    <manvolnum>1</manvolnum>
+    <refmiscinfo class="manual">User Commands</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>dconf-service</refname>
+    <refpurpose>D-Bus service for writes to the dconf database</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>dconf-service</command>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>Description</title>
+
+    <para>
+      The <command>dconf-service</command> program provides the <emphasis>ca.desrt.dconf</emphasis> name on the
+      session or system bus. Users or administrators should never need to start the service, as it will be
+      automatically started by
+      <citerefentry><refentrytitle>dbus-daemon</refentrytitle><manvolnum>1</manvolnum></citerefentry>
+      whenever an application tries to write settings.
+    </para>
+
+    <para>
+      Reading values from the dconf database does not involve the service; it is only needed for writes. The
+      service is stateless and can exit freely at any time (and is therefore robust against crashes).
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>See Also</title>
+    <para>
+      <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>dbus-daemon</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>systemd</refentrytitle><manvolnum>1</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+</refentry>

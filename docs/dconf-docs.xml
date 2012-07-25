@@ -9,6 +9,8 @@
     </releaseinfo>
   </bookinfo>
 
+  <xi:include href="dconf-overview.xml"/>
+
   <chapter>
     <title>DConf Client API</title>
     <xi:include href='xml/paths.xml'/>
@@ -20,6 +22,13 @@
     <title>Object Hierarchy</title>
      <xi:include href='xml/tree_index.sgml'/>
      <xi:include href='xml/object_index.sgml'/>
+  </chapter>
+
+  <chapter id='programs'>
+    <title>Programs</title>
+    <xi:include href='dconf-service.xml'/>
+    <xi:include href='dconf-editor.xml'/>
+    <xi:include href='dconf-tool.xml'/>
   </chapter>
 
   <index id='api-index-full'>
