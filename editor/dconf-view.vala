@@ -261,7 +261,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
             }
             catch (VariantParseError e)
             {
-                var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK, "Error setting value: %s", e.message);
+                var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK, _("Error setting value: %s"), e.message);
                 dialog.run();
                 dialog.destroy();
             }
@@ -314,9 +314,11 @@ public class DConfKeyView : Gtk.TreeView
 {
     public DConfKeyView()
     {
-        var column = new Gtk.TreeViewColumn.with_attributes("Name", new Gtk.CellRendererText(), "text", 1, "weight", 4, null);
+		/* Translators: this is the column header label in the main view */
+        var column = new Gtk.TreeViewColumn.with_attributes(_("Name"), new Gtk.CellRendererText(), "text", 1, "weight", 4, null);
         /*column.set_sort_column_id(1);*/
         append_column(column);
-        insert_column_with_attributes(-1, "Value", new KeyValueRenderer(this), "key", 0, null);
+		/* Translators: this is the column header label in the main view */
+        insert_column_with_attributes(-1, _("Value"), new KeyValueRenderer(this), "key", 0, null);
     }
 }

@@ -162,13 +162,13 @@ class ConfigurationEditor : Gtk.Application
                 min = key.get_min();
                 max = key.get_max();
             }
-            return "Integer [%s..%s]".printf(min.print(false), max.print(false));
+            return _("Integer [%s..%s]").printf(min.print(false), max.print(false));
         case "b":
-            return "Boolean";
+            return _("Boolean");
         case "s":
-            return "String";
+            return _("String");
         case "<enum>":
-            return "Enumeration";
+            return _("Enumeration");
         default:
             return key.schema.type;
         }
@@ -211,7 +211,7 @@ class ConfigurationEditor : Gtk.Application
             }
             else
             {
-                schema_name = "No schema";
+                schema_name = _("No schema");
             }
         }
 
@@ -339,7 +339,7 @@ class ConfigurationEditor : Gtk.Application
                                "version", Config.VERSION,
                                "comments",
                                _("Directly edit your entire configuration database"),
-                               "copyright", "Copyright \xc2\xa9 Canonical Ltd",
+                               "copyright", _("Copyright \xc2\xa9 Canonical Ltd"),
                                "license", license,
                                "wrap-license", true,
                                "authors", authors,
