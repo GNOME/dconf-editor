@@ -52,7 +52,7 @@ class ConfigurationEditor : Gtk.Application
         }
         catch (Error e)
         {
-            critical("Failed to load UI: %s", e.message);
+            error("Failed to load UI: %s", e.message);
         }
         window = new Gtk.ApplicationWindow(this);
         window.set_default_size(600, 300);
@@ -68,7 +68,7 @@ class ConfigurationEditor : Gtk.Application
         }
         catch (Error e)
         {
-            critical("Failed to load menu UI: %s", e.message);
+            error("Failed to load menu UI: %s", e.message);
         }
         set_app_menu((MenuModel)menu_ui.get_object("menu"));
 
