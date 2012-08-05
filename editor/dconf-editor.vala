@@ -36,7 +36,7 @@ class ConfigurationEditor : Gtk.Application
     {
         base.startup();
         
-        Environment.set_application_name (_("DConf Editor"));
+        Environment.set_application_name (_("dconf Editor"));
 
         add_action_entries (action_entries, this);
 
@@ -56,7 +56,7 @@ class ConfigurationEditor : Gtk.Application
         }
         window = new Gtk.ApplicationWindow(this);
         window.set_default_size(600, 300);
-        window.title = _("Configuration Editor");
+        window.title = _("dconf Editor");
         window.window_state_event.connect(main_window_window_state_event_cb);
         window.configure_event.connect(main_window_configure_event_cb);
         window.add((Gtk.Box)ui.get_object("box1"));
@@ -335,7 +335,7 @@ class ConfigurationEditor : Gtk.Application
         string[] authors = { "Robert Ancell", null };
         string license = _("This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA");
         Gtk.show_about_dialog (window,
-                               "program-name", _("DConf Editor"),
+                               "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
                                "comments",
                                _("Directly edit your entire configuration database"),
