@@ -1,0 +1,3 @@
+editor/dconf-editor.c
+editor/dconf-editor.desktop.in.in
+editor/dconf-view.c

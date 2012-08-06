@@ -19,7 +19,8 @@ dconf_editor_CFLAGS = \
 	$(libxml_CFLAGS)			\
 	-DPKGDATADIR=\"$(pkgdatadir)\"		\
 	-DVERSION=\"$(VERSION)\"		\
-	-DGETTEXT_PACKAGE=\"dconf-editor\"	\
+	-DLOCALEDIR=\"$(localedir)\"		\
+	-DGETTEXT_PACKAGE=\"$(GETTEXT_PACKAGE)\"\
 	-w
 
 dconf_editor_SOURCES = \
@@ -32,6 +33,7 @@ dconf_editor_SOURCES = \
 desktopdir = $(datadir)/applications
 desktop_in_files = dconf-editor.desktop.in.in
 desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
 
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@

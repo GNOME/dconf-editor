@@ -65,6 +65,14 @@ if test "x$enable_gcov" == "xyes"; then
   LDFLAGS="$LDFLAGS -lgcov"
 fi
 
+dnl Gettext support
+GETTEXT_PACKAGE=dconf
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define the gettext package to be used])
+
+AM_GLIB_GNU_GETTEXT
+IT_PROG_INTLTOOL([0.50.0])
+
 AC_CONFIG_FILES([
   common/Makefile
   shm/Makefile
@@ -79,9 +87,10 @@ AC_CONFIG_FILES([
   dbus-1/Makefile
   bin/Makefile
   editor/Makefile
-  editor/dconf-editor.desktop
+  editor/dconf-editor.desktop.in
   tests/Makefile
   docs/Makefile
+  po/Makefile.in
   Makefile
 ])
 AC_OUTPUT

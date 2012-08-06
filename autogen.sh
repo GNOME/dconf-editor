@@ -21,6 +21,7 @@ else
 fi
 
 mkdir -p m4 aux
+intltoolize --force
 gtkdocize --docdir docs --flavour no-tmpl
 aclocal${automake_suffix} ${ACLOCAL_FLAGS}
 autoheader

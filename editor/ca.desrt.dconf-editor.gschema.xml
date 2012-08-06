@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist>
+<schemalist gettext-domain='dconf'>
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <key name="width" type="i">
       <default>800</default>

@@ -2,4 +2,5 @@
 *.stamp
 dconf-editor
 dconf-editor.desktop
+dconf-editor.desktop.in
 ca.desrt.dconf-editor.gschema.valid
