@@ -33,6 +33,7 @@ dconf_editor_SOURCES = \
 desktopdir = $(datadir)/applications
 desktop_in_files = dconf-editor.desktop.in.in
 desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
+CLEANFILES = $(desktop_DATA)
 @INTLTOOL_DESKTOP_RULE@
 
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
