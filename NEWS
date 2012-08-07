@@ -1,3 +1,21 @@
+Changes in dconf 0.13.5
+========================
+
+ - the service no longer attempts to migrate the primary dconf database from
+   its (years) old path ~/.config/dconf to the new ~/.config/dconf/user
+
+ - fixes for profile file parsing problems
+
+ - fix obscure race in GDBus handling code that could result in
+   out-of-order message delivery
+
+ - editor:
+  - clean up some messages and mark strings for translations
+  - enable NLS
+  - add Esperanto translation
+
+ - add manpages for dconf(7), dconf(1), dconf-service and dconf-editor
+
 Changes in dconf 0.13.4 (since 0.13.0)
 =======================================
 
