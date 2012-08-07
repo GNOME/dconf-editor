@@ -1,0 +1,165 @@
+# Esperanto translation for dconf.
+# Copyright (C) Ryan Lortie <desrt@desrt.ca>
+# This file is distributed under the same license as the dconf package.
+# Ryan Lortie <desrt@desrt.ca< 2012
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-07 10:10-0400\n"
+"PO-Revision-Date: 2012-08-06 13:21-0400\n"
+"Last-Translator: Ryan Lortie <desrt@desrt.ca>\n"
+"Language-Team: Ryan Lortie <desrt@desrt.ca>\n"
+"Language: Esperanto\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "dconf Redaktilo"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "Rekte redakti vian totan agordan datumbazon"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Entjera [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "Bulea"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "Ĉena"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "Listigita"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "Nenion skemon"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "Ne trovita"
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Ĉi tiu verko estas libera programo; vi povas ĝin pludistribui kaj/aŭ modifi "
+"je la kondiĉoj de la GNUa Ĝenerala Publika Permesilo, eldonita de «Free "
+"Software Foundation», laŭ la versio 2 de tiu Permesilo aŭ, se vi preferas, "
+"ajna posta versio.\n"
+"\n"
+"Ni distribuas ĉi tiun programon esperante ke ĝi estos utila, tamen SEN IA "
+"AJN GARANTIO, i.a. sen la implica garantio pri SURMERKATIGEBLO aŭ TAŬGECO "
+"POR IU KONKRETA CELO.  Pliajn detalojn vidu en la GNUa Ĝenerala Publika "
+"Permesilo.\n"
+"\n"
+"Ekzemplero de la GNUa Ĝenerala Publika Permesilo devas esti liverita al vi "
+"kun ĉi tiu programo; icevis, turnu vin al Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "Kopirajto © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr "Ryan Lortie"
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Eraro dum agordo de la valoro: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Nomo"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Valoro"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Agordi defaŭlte"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Skemo:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Resumo:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Priskribo:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Tipo:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Defaulto:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Sekvanta"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_Trovi"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Pri"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Ĉesi"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "La larĝo de la fenestro"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "La larĝo de la fenestro en bilderoj."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "La alto de la fenestro"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "La alto de la fenestro en bilderoj."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Flago por ŝalti maksimuman reĝimon"
