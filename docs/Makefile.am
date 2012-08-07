@@ -38,8 +38,6 @@ man_MANS = \
 	dconf.1 \
 	dconf.7
 
-xml_files = ${patsubst %.1,%.xml,${patsubst %.7,%.xml,$(man_MANS)}}
-
-EXTRA_DIST += $(xml_files)
+EXTRA_DIST += dconf-service.xml dconf-editor.xml dconf-tool.xml dconf-overview.xml
 
 DISTCLEANFILES = $(man_MANS)
