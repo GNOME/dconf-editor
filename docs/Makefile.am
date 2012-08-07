@@ -32,11 +32,15 @@ dconf.1: dconf-tool.xml
 dconf.7: dconf-overview.xml
 	$(AM_V_GEN) $(XSLTPROC) $(XSLTPROC_MAN_FLAGS) http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
 
-man_MANS = \
+man_MANS =
+
+if ENABLE_MAN
+man_MANS += \
         dconf-service.1 \
 	dconf-editor.1 \
 	dconf.1 \
 	dconf.7
+endif
 
 EXTRA_DIST += dconf-service.xml dconf-editor.xml dconf-tool.xml dconf-overview.xml
 

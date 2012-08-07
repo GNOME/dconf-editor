@@ -20,7 +20,18 @@ fi
 AC_PROG_CC
 AM_PROG_VALAC([0.17.0])
 AC_PROG_RANLIB
-AC_PATH_PROG([XSLTPROC], [xsltproc])
+AC_ARG_ENABLE(man,
+              [AS_HELP_STRING([--enable-man],
+                              [generate man pages [default=yes]])],,
+              enable_man=yes)
+
+AS_IF([test "$enable_man" != no], [
+  AC_PATH_PROG([XSLTPROC], [xsltproc])
+  AS_IF([test -z "$XSLTPROC"], [
+    AC_MSG_ERROR([xsltproc is required for --enable-man])
+  ])
+])
+AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
 
 # Use GSettings
 GLIB_GSETTINGS
