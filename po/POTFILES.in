@@ -1,4 +1,4 @@
-editor/dconf-editor.desktop.in
+editor/dconf-editor.desktop.in.in
 editor/dconf-editor.vala
 editor/dconf-model.vala
 editor/dconf-schema.vala
