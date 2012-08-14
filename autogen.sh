@@ -8,12 +8,6 @@ test -n "$srcdir" || srcdir=.
 olddir=`pwd`
 cd "$srcdir"
 
-if [ "$1" = "clean" ]; then
-  rm -f aclocal.m4 configure config.* `find . -name Makefile.in` libtool
-  rm -rf autom4te.cache m4 aux
-  exit
-fi
-
 if automake-1.11 --version &> /dev/null; then
   automake_suffix='-1.11'
 else
@@ -37,4 +31,3 @@ cd "$olddir"
 if test -z "$NOCONFIGURE"; then
   "$srcdir"/configure "$@"
 fi
-
