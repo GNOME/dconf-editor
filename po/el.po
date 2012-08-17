@@ -1,0 +1,174 @@
+# Greek translation for dconf.
+# Copyright (C) 2012 dconf's COPYRIGHT HOLDER
+# This file is distributed under the same license as the dconf package.
+# Tom Tryfonidis <tomtryf@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=dconf&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-08-16 21:37+0000\n"
+"PO-Revision-Date: 2012-08-17 04:15+0200\n"
+"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
+"Language-Team: Greek <team@lists.gnome.gr>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "Επεξεργαστής dconf"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "Απευθείας επεξεργασία ολόκληρης της βάσης δεδομένων ρυθμίσεων"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Ακέραιος [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "Λογική τιμή"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "Συμβολοσειρά"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "Απαρίθμηση"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "Χωρίς σχήμα"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "Δε βρέθηκε"
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Αυτή η εφαρμογή είναι ελεύθερο λογισμικό: Μπορείτε να το διανείμετε εκ νέου "
+"και/ή να το τροποποιήσετε κάτω από τους όρους της GNU Γενικής Δημόσιας "
+"Άδειας Χρήσης (GPL) όπως είναι δημοσιευμένη από το Free Software Foundation· "
+"είτε με την έκδοση 2 της Άδειας, είτε (κατά την επιλογή σας) με οποιαδήποτε "
+"νεότερη έκδοση.\n"
+"\n"
+"Η εφαρμογή διανέμεται με την ελπίδα οτι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΜΙΑ "
+"ΑΠΟΛΥΤΩΣ ΕΓΓΥΗΣΗ, χωρίς ακόμη και την έμμεση εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή "
+"ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την Γενική Άδεια Δημόσιας "
+"Χρήσης GNU (GNU General Public License) για περισσότερες λεπτομέρειες.\n"
+"\n"
+"Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Άδειας Δημόσιας Χρήσης "
+"GNU  (GNU General Public License) μαζί με αυτό το πρόγραμμα. Αν όχι, "
+"επικοινωνήστε γραπτώς με το Ίδρυμα Ελεύθερου λογισμικού (Free Software "
+"Foundation, Inc.), 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, "
+"USA."
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "Πνευματικά δικαιώματα © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr ""
+"Ελληνική μεταφραστική ομάδα GNOME\n"
+" Θάνος Τρυφωνίδης <tomtryf@gmail.com>, 2012\n"
+"\n"
+"Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα http://www.gnome.gr/"
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Σφάλμα κατά την ανάθεση τιμής: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Όνομα"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Τιμή"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Ορισμός στην προεπιλογή"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Σχήμα:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Περίληψη:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Τύπος:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Προεπιλογή:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Επόμενο"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "Εύ_ρεση"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Περί"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "Έ_ξοδος"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Το πλάτος του παραθύρου"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Το πλάτος του κυρίως παραθύρου σε εικονοστοιχεία."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Το ύψος του παραθύρου"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Το ύψος του κυρίως παραθύρου σε εικονοστοιχεία."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Σημαία για την ενεργοποίηση της λειτουργίας μεγιστοποίησης"
