@@ -1,3 +1,20 @@
+Changes in dconf 0.13.90
+=========================
+
+The only change in this release is the addition of many translations for
+dconf-editor:
+
+ - Traditional Chinese
+ - Serbian
+ - Ukrainian
+ - Punjabi
+ - Greek
+ - Galician
+ - Spanish
+ - Assamese
+ - Polish
+ - Hungarian
+
 Changes in dconf 0.13.5
 ========================
 
