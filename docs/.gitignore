@@ -15,3 +15,7 @@ xml
 *.bak
 version.xml
 gtk-doc.make
+dconf-editor.1
+dconf-service.1
+dconf.1
+dconf.7
