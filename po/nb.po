@@ -1,14 +1,14 @@
-# Norwegian bokmål translation of GConf.
+# Norwegian bokmål translation of dconf.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
 #
 # Kjartan Maraas <kmaraas@gnome.org>, 1999-2012.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: GConf 3.2.x\n"
+"Project-Id-Version: dconf 3.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-22 10:32+0200\n"
-"PO-Revision-Date: 2012-08-22 10:35+0200\n"
+"POT-Creation-Date: 2012-08-28 07:20+0200\n"
+"PO-Revision-Date: 2012-08-28 07:21+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -33,7 +33,7 @@ msgstr "Heltall [%s..%s]"
 
 #: ../editor/dconf-editor.vala:167
 msgid "Boolean"
-msgstr ""
+msgstr "Boolean"
 
 #: ../editor/dconf-editor.vala:169
 msgid "String"
@@ -45,7 +45,7 @@ msgstr ""
 
 #: ../editor/dconf-editor.vala:214
 msgid "No schema"
-msgstr ""
+msgstr "Ingen skjema"
 
 #: ../editor/dconf-editor.vala:310
 msgid "Not found"
@@ -150,4 +150,4 @@ msgstr "Høyde på hovedvinduet i piksler."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
-msgstr ""
+msgstr "Et flagg som slår på maksimert modus"
