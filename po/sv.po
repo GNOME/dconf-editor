@@ -1,0 +1,157 @@
+# Swedish translation for dconf-editor.
+# Copyright (C) 2012 Free Software Foundation, Inc.
+# This file is distributed under the same license as the dconf-editor package.
+# Daniel Nylander <po@danielnylander.se>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf-editor\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-02 11:48+0200\n"
+"PO-Revision-Date: 2012-09-02 11:55+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59
+#: ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "dconf-redigerare"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "Redigera hela din konfigurationsdatabas direkt"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Heltal [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "Boolesk"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "Sträng"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "Uppräkning"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "Inget schema"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "Hittades inte"
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Detta program är fri programvara. Du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation, antingen version 2 eller (om du så vill) någon senare version.\n"
+"\n"
+"Detta program distribueras i hopp om att det ska vara användbart, men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public License för ytterligare information.\n"
+"\n"
+"Du bör ha fått en kopia av GNU General Public License tillsammans med detta program. Om inte, skriv till Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr ""
+"Daniel Nylander <po@danielnylander.se>\n"
+"\n"
+"Skicka synpunkter på översättningen\n"
+"till <tp-sv@listor.tp-sv.se>."
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Fel vid inställning av värde: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Namn"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Värde"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Ställ in till standard"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Schema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Sammandrag:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Beskrivning:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Typ:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Standard:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Nästa"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_Sök"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Om"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "A_vsluta"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Bredd på fönstret"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Bredd för huvudfönstret i bildpunkter."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Höjd på fönstret"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Höjd för huvudfönstret i bildpunkter."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "En flagga för att aktivera maximerat läge"
+
