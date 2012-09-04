@@ -1,0 +1,166 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Dirgita <dirgitadevina@yahoo.co.id>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=dconf&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-09-04 08:17+0000\n"
+"PO-Revision-Date: 2012-09-04 17:28+0700\n"
+"Last-Translator: Dirgita <dirgitadevina@yahoo.co.id>\n"
+"Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.2\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "Penyunting dconf"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "Menyunting langsung seluruh basis data konfigurasi Anda"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Integer [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "Boolean"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "String"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "Enumerasi"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "Tidak ada skema"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "Tak ditemukan"
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Program ini adalah perangkat lunak bebas; Anda dapat menyebarluaskannya dan/"
+"atau mengubahnya di bawah syarat GNU General Public License sebagaimana "
+"dipublikasikan oleh Free Software Foundation; baik versi 2 dari Lisensi, "
+"atau (terserah pilihan Anda) versi setelahnya.\n"
+"\n"
+"Program ini didistribusikan dengan harapan akan berguna, tetapi TANPA ADANYA "
+"JAMINAN; termasuk tanpa jaminan KETERDAGANGAN atau KECOCOKAN UNTUK TUJUAN "
+"TERTENTU. Lihat GNU General Public License untuk rincian lebih lanjut.\n"
+"\n"
+"Anda seharusnya menerima salinan dari GNU General Public License bersama "
+"dengan program ini; jika tidak, kirimkan surat Anda ke Free Software "
+"Foundation, Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "Hak Cipta © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr "Dirgita <dirgitadevina@yahoo.co.id>, 2012."
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Galat saat menata nilai: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Nama"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Nilai"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Jadikan Baku"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Skema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Ringkasan:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Keterangan:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Jenis:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Baku:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Selanjutnya"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_Cari"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "Tent_ang"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Keluar"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Lebar jendela"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Lebar jendela utama dalam piksel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Tinggi jendela"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Tinggi dari jendela utama dalam piksel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Tanda untuk mengaktifkan mode pemaksimalan"
