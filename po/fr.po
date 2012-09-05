@@ -1,0 +1,167 @@
+# French translation of dconf.
+# Copyright (C) 2012 dconf copyright holder
+# This file is distributed under the same license as the dconf package.
+# Frederic Peters <fpeters@0d.be>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=dconf&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-09-04 14:42+0000\n"
+"PO-Revision-Date: 2012-09-05 17:27+0200\n"
+"Last-Translator: Frederic Peters <fpeters@0d.be>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "Éditeur dconf"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "Modifier directement toute votre base de données de configuration"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Entier [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "Booléen"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "Chaîne"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "Énumération"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "Aucun schéma"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "Non trouvé"
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le "
+"modifier selon les termes de la Licence Publique Générale GNU publiée par la "
+"Free Software Foundation ; soit la version 2 ou, (à votre discrétion) toute "
+"autre version ultérieure.\n"
+"\n"
+"Ce programme est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE "
+"GARANTIE ; sans même une garantie implicite de COMMERCIABILITÉ ou DE "
+"CONFORMITÉ À UNE UTILISATION PARTICULIÈRE. Voir la Licence Publique Générale "
+"GNU pour plus de détails.\n"
+"\n"
+"Vous devez avoir reçu une copie de la Licence Publique Générale GNU en même "
+"temps que ce programme ; si ce n'est pas le cas, écrivez à la Free Software "
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, "
+"États-Unis."
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr "Frédéric Péters <fpeters@0d.be>"
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Erreur lors de la définition de la valeur : %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Nom"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Valeur"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Positionner à la valeur par défaut"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Schéma :"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Résumé :"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Description :"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Type :"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Valeur par défaut :"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Suivant"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_Rechercher"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "À _propos"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Quitter"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "La largeur de la fenêtre"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "La largeur de la fenêtre principale, en pixels."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "La hauteur de la fenêtre"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "La hauteur de la fenêtre principale, en pixels."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Un drapeau pour activer le mode maximisé"
