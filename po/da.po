@@ -1,0 +1,170 @@
+# Danish translation for dconf.
+# Copyright (C) 2012 The Free Software Foundation
+# This file is distributed under the same license as the dconf package.
+# Kenneth Nielsen <k.nielsen81@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-16 14:49+0200\n"
+"PO-Revision-Date: 2012-09-16 14:09+0200\n"
+"Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "dconf-redigering"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "Redigér direkte i hele din konfigurationsdatabase"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Heltal [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "Boolesk"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "Streng"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "Nummerering"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "Intet skema"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "Ikke fundet"
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Dette program er fri software. Du kan redistribuere og/eller modificere det "
+"under de betingelserne som er angivet i GNU General Public License, som er "
+"udgivet af Free Software Foundation. Enten version 2 af licensen eller "
+"(efter eget valg) enhver senere version.\n"
+"\n"
+"Dette program distribueres i håb om at det vil vise sig nyttigt, men UDEN "
+"NOGEN FORM FOR GARANTI, uden selv de underforståede garantier omkring "
+"SALGBARHED eller EGNETHED TIL ET BESTEMT FORMÅL. Yderligere detaljer kan "
+"læses i GNU General Public License.\n"
+"\n"
+"Du bør have modtaget en kopi af GNU General Public License sammen med dette "
+"program. Hvis ikke, så skriv til Free software Foundation, Inc., 51 Franklin "
+"Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "Ophavsret © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr ""
+"Kenneth Nielsen\n"
+"\n"
+"Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
+"Mere info: http://www.dansk-gruppen.dk"
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Fejl ved ændring af værdi: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Navn"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Værdi"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Set til standardværdi"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Skema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Sammendrag:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Beskrivelse:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Type:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Standardværdi:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Næste"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_Find"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Om"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Afslut"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Bredden af vinduet"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Bredden af hovedvinduet i pixel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Højden af vinduet"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Højden af hovedvinduet i pixel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Et flag til at aktivere maksimeret tilstand"
