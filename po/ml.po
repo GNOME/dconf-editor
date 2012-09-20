@@ -1,0 +1,162 @@
+# Malayalam translation for dconf.
+# Copyright (C) 2012 dconf's COPYRIGHT HOLDER
+# This file is distributed under the same license as the dconf package.
+# Anish A <aneesh.nl@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=dconf&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-09-20 09:21+0000\n"
+"PO-Revision-Date: 2012-09-20 15:10+0530\n"
+"Last-Translator: Anish A <aneesh.nl@gmail.com>\n"
+"Language-Team: Swatantra Malayalam Computing\n"
+"Language: ml\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.6.1\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
+#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+msgid "dconf Editor"
+msgstr "dconf എഡിറ്റര്‍"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+msgid "Directly edit your entire configuration database"
+msgstr "മൊത്തം ക്രമീകരണ ഡാറ്റാബൈസും നേരിട്ട് തിരുത്തുക"
+
+#: ../editor/dconf-editor.vala:165
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "ഇന്റിജെര്‍ [%s..%s]"
+
+#: ../editor/dconf-editor.vala:167
+msgid "Boolean"
+msgstr "ബൂളിയന്‍"
+
+#: ../editor/dconf-editor.vala:169
+msgid "String"
+msgstr "വാക്യം"
+
+#: ../editor/dconf-editor.vala:171
+msgid "Enumeration"
+msgstr "പട്ടിക"
+
+#: ../editor/dconf-editor.vala:214
+msgid "No schema"
+msgstr "സ്കീമ ഇല്ല"
+
+#: ../editor/dconf-editor.vala:310
+msgid "Not found"
+msgstr "കാണാനില്ല."
+
+#: ../editor/dconf-editor.vala:336
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"ഇത് ഒരു സ്വതന്ത്ര സോഫ്റ്റ്‌വെയര്‍ ആണ്; നിങ്ങള്‍ക്ക് ഇത് ഫ്റീ സോഫ്റ്റ്‌വെയര്‍ഫൌണ്ടേഷന്‍ പ്രസിദ്ധീകണത്തിന്റെ "
+"GNU ജനറല്‍ പബ്ലിക് ലൈസന്‍സ് ലക്കം-2 അല്ലെങ്കില്‍ അത് കഴിഞ്ഞുള്ളവയുടെ നിബന്ധനകള്‍ അനുസരിച്ച് വീണ്ടും "
+"വിതരണം ചെയ്യുകയോ മാറ്റം വരുത്തുകയോ ചെയ്യാവുന്നതാണ്. \n"
+"\n"
+"ഈ പ്രോഗ്രാമിന് വാറണ്ടി ലഭ്യ‌ല്ല. കൂടുതല്‍ വിവരങ്ങള്‍ക്കായി GNU ജനറല്‍ പബ്ലിക് ലൈസന്‍സ് കാണുക.\n"
+"\n"
+"ഈ പ്രോഗ്രാമിനൊപ്പം നിങ്ങള്‍ക്ക് GNU ജനറല്‍ പബ്ലിക് ലൈസന്‍സിന്റെ ഒരു പകര്‍പ്പും ലഭിച്ചിരിക്കണം.  "
+"ഇല്ലായെങ്കില്‍, <http://www.gnu.org/licenses/> കാണുക.‌"
+
+#: ../editor/dconf-editor.vala:342
+msgid "Copyright © Canonical Ltd"
+msgstr "പകര്‍പ്പവകാശം © കാനോനിക്കല്‍ ലിമിറ്റഡ്"
+
+#: ../editor/dconf-editor.vala:346
+msgid "translator-credits"
+msgstr "അനീഷ് എ | Anish A <aneesh.nl@gmail.com>"
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "മൂല്ല്യം ക്രമീകരിക്കുന്നതില്‍ പിശക്: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "പേരു്"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "മൂല്യം"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "സാധാരണയായി ക്രമീകരിക്കുക"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "സ്കീമ:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "ചുരുക്കം:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "വിവരണം:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "തരം:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "സഹജമായ:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "അടുത്തത്"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_കണ്ടെത്തുക"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_സംബന്ധിച്ചു്"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_‌പുറത്ത് കടക്കുക"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "ജാലകത്തിന്റെ വീതി"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "പ്രധാന ജാലകത്തിന്റെ വീതി പിക്സലില്‍."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "ജാലകത്തിന്റെ നീളം"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "പ്രധാന ജാലകത്തിന്റെ നീളം പിക്സലില്‍."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "വലുതാക്കുന്ന മോഡ് സജ്ജമാക്കുന്നതിനുള്ള ഫ്ളാഗ്"
