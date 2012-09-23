@@ -90,7 +90,7 @@ msgstr "Copyright © Canonical Ltd"
 
 #: ../editor/dconf-editor.vala:346
 msgid "translator-credits"
-msgstr "Abhay Kadam <abhaykadam@fedoraproject.org>, 2012;"
+msgstr "Abhay Kadam <abhaykadam@fedoraproject.org>, 2012; Sandeep Shedmake <sshedmak@redhat.com>, 2012"
 
 #: ../editor/dconf-view.vala:264
 #, c-format
