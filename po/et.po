@@ -1,0 +1,138 @@
+# Estonian translation for dconf.
+# Copyright (C) 2012 dconf's COPYRIGHT HOLDER
+# This file is distributed under the same license as the dconf package.
+# Mattias Põldaru <mahfiaz@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dconf master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=dconf&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-09-23 05:38+0000\n"
+"PO-Revision-Date: 2012-09-23 18:22+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
+"Language-Team: Estonian <gnome-et-list@gnome.org>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "dconf Editor"
+msgstr "dconf redaktor"
+
+msgid "Directly edit your entire configuration database"
+msgstr "Seadistuste andmebaasi vahetu muutmine"
+
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Täisarv [%s..%s]"
+
+msgid "Boolean"
+msgstr "Tõeväärtus"
+
+msgid "String"
+msgstr "Sõne"
+
+msgid "Enumeration"
+msgstr "Loetelu"
+
+msgid "No schema"
+msgstr "Skeem puudub"
+
+msgid "Not found"
+msgstr "Ei leitud"
+
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Käesolev programm on vaba tarkvara; Te võite seda levitada ja/või muuta "
+"vastavalt GNU Üldise Avaliku Litsentsi tingimustele, nagu need on sõnastanud "
+"Vaba Tarkvara Fond; kas litsentsi versioonis number 2 või (vastavalt Teie "
+"valikule) ükskõik millises hilisemas versioonis.\n"
+"\n"
+"Seda programmi levitatakse lootuses, et see on kasulik, kuid ILMA IGASUGUSE "
+"GARANTIITA; isegi KESKMISE/TAVALISE KVALITEEDI GARANTIITA või SOBIVUSELE "
+"TEATUD KINDLAKS EESMÄRGIKS. Üksikasjade suhtes vaata GNU Üldist Avalikku "
+"Litsentsi.\n"
+"\n"
+"Te peaksite olema saanud GNU Üldise Avaliku Litsentsi koopia koos selle "
+"programmiga, kui ei, siis võtke ühendust Vaba Tarkvara Fondiga, Free "
+"Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
+"02110-1301, USA."
+
+msgid "Copyright © Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+msgid "translator-credits"
+msgstr "Mattias Põldaru <mahfiaz@gmail.com>, 2012."
+
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Viga väärtuse määramisel: %s"
+
+#. Translators: this is the column header label in the main view
+msgid "Name"
+msgstr "Nimi"
+
+#. Translators: this is the column header label in the main view
+msgid "Value"
+msgstr "Väärtus"
+
+msgid "Set to Default"
+msgstr "Taasta vaikeväärtus"
+
+msgid "Schema:"
+msgstr "Skeem:"
+
+msgid "Summary:"
+msgstr "Kokkuvõte:"
+
+msgid "Description:"
+msgstr "Kirjeldus:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+msgid "Type:"
+msgstr "Liik:"
+
+msgid "Default:"
+msgstr "Vaikimisi:"
+
+msgid "Next"
+msgstr "Järgmine"
+
+msgid "_Find"
+msgstr "_Otsi"
+
+msgid "_About"
+msgstr "_Lähemalt"
+
+msgid "_Quit"
+msgstr "_Lõpeta"
+
+msgid "The width of the window"
+msgstr "Akna laius"
+
+msgid "The width of the main window in pixels."
+msgstr "Peaakna laius pikslites."
+
+msgid "The height of the window"
+msgstr "Akna kõrgus"
+
+msgid "The height of the main window in pixels."
+msgstr "Peaakna kõrgus pikslites."
+
+msgid "A flag to enable maximized mode"
+msgstr "Maksimeeritud oleku lipp"
