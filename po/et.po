@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-09-23 05:38+0000\n"
-"PO-Revision-Date: 2012-09-23 18:22+0300\n"
+"PO-Revision-Date: 2012-09-24 11:24+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et-list@gnome.org>\n"
 "Language: et\n"
@@ -105,7 +105,7 @@ msgstr "Kirjeldus:"
 
 #. Translators: as in datatype (integer, boolean, string, etc)
 msgid "Type:"
-msgstr "Liik:"
+msgstr "Andmetüüp:"
 
 msgid "Default:"
 msgstr "Vaikimisi:"
