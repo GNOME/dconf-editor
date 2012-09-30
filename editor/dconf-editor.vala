@@ -322,7 +322,7 @@ class ConfigurationEditor : Gtk.Application
                 do
                 {
                     var key = dir.key_model.get_key(key_iter);
-                    if (key.name.index_of(search_entry.text) >= 0)
+                    if (key_matches(key, search_entry.text))
                     {
                         dir_tree_view.expand_to_path(model.get_path(iter));
                         dir_tree_view.get_selection().select_iter(iter);
@@ -337,6 +337,28 @@ class ConfigurationEditor : Gtk.Application
         } while(get_next_iter(ref iter));
 
         search_label.set_text(_("Not found"));
+    }
+
+    private bool key_matches (Key key, string text)
+    {
+        /* Check key name */
+        if (key.name.index_of(text) >= 0)
+            return true;
+
+        /* Check key schema (description) */
+        if (key.schema != null)
+        {
+            if (key.schema.summary != null && key.schema.summary.index_of(text) >= 0)
+                return true;
+            if (key.schema.description != null && key.schema.description.index_of(text) >= 0)
+                return true;
+        }
+
+        /* Check key value */
+        if (key.value.is_of_type(VariantType.STRING) && key.value.get_string().index_of(text) >= 0)
+            return true;
+
+        return false;
     }
 
     private bool get_next_iter(ref Gtk.TreeIter iter)
