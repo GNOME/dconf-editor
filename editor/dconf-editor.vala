@@ -280,6 +280,7 @@ class ConfigurationEditor : Gtk.Application
     {
         search_label.set_text("");
 
+        /* Get the current position in the tree */
         Gtk.TreeIter iter;
         var key_iter = Gtk.TreeIter();
         var have_key_iter = false;
@@ -297,17 +298,31 @@ class ConfigurationEditor : Gtk.Application
         else if (!model.get_iter_first(out iter))
             return;
 
+        var on_first_directory = true;
         do
         {
+            /* Select next directory that matches */
             var dir = model.get_directory(iter);
             if (!have_key_iter)
+            {
                 have_key_iter = dir.key_model.get_iter_first(out key_iter);
+                if (!on_first_directory && dir.name.index_of(search_entry.text) >= 0)
+                {
+                    dir_tree_view.expand_to_path(model.get_path(iter));
+                    dir_tree_view.get_selection().select_iter(iter);
+                    dir_tree_view.scroll_to_cell(model.get_path(iter), null, false, 0, 0);
+                    return;
+                }
+            }
+            on_first_directory = false;
+
+            /* Select next key that matches */
             if (have_key_iter)
             {
                 do
                 {
                     var key = dir.key_model.get_key(key_iter);
-                    if (key.name.index_of (search_entry.text) >= 0)
+                    if (key.name.index_of(search_entry.text) >= 0)
                     {
                         dir_tree_view.expand_to_path(model.get_path(iter));
                         dir_tree_view.get_selection().select_iter(iter);
