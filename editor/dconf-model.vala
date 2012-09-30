@@ -601,7 +601,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         }
 
         /* Add keys for the values in the schemas */
-        foreach (var schema in schemas.schemas)
+        foreach (var schema in schemas.schemas.get_values())
             root.load_schema(schema, schema.path[1:schema.path.length]);
     }
 
