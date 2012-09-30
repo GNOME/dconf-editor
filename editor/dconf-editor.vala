@@ -5,6 +5,10 @@ class ConfigurationEditor : Gtk.Application
     private Settings settings;
     private Gtk.Builder ui;
     private Gtk.ApplicationWindow window;
+    private int window_width = 0;
+    private int window_height = 0;
+    private bool window_is_maximized = false;
+    private bool window_is_fullscreen = false;
     private Gtk.TreeView dir_tree_view;
     private Gtk.TreeView key_tree_view;
     private Gtk.Grid key_info_grid;
@@ -72,8 +76,10 @@ class ConfigurationEditor : Gtk.Application
         }
         set_app_menu((MenuModel)menu_ui.get_object("menu"));
 
-        window.set_default_size (settings.get_int ("width"), settings.get_int ("height"));
-        if (settings.get_boolean ("maximized"))
+        window.set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
+        if (settings.get_boolean ("window-is-fullscreen"))
+            window.fullscreen ();
+        else if (settings.get_boolean ("window-is-maximized"))
             window.maximize ();
 
         dir_tree_view = new DConfDirView();
@@ -122,6 +128,15 @@ class ConfigurationEditor : Gtk.Application
     protected override void activate()
     {
         window.present();
+    }
+
+    protected override void shutdown ()
+    {
+        base.shutdown();
+        settings.set_int ("window-width", window_width);
+        settings.set_int ("window-height", window_height);
+        settings.set_boolean ("window-is-maximized", window_is_maximized);
+        settings.set_boolean ("window-is-fullscreen", window_is_fullscreen);
     }
 
     private void dir_selected_cb()
@@ -236,10 +251,10 @@ class ConfigurationEditor : Gtk.Application
 
     private bool main_window_configure_event_cb (Gtk.Widget widget, Gdk.EventConfigure event)
     {
-        if (!settings.get_boolean ("maximized"))
+        if (!window_is_maximized && !window_is_fullscreen)
         {
-            settings.set_int ("width", event.width);
-            settings.set_int ("height", event.height);
+            window_width = event.width;
+            window_height = event.height;
         }
 
         return false;
@@ -248,10 +263,9 @@ class ConfigurationEditor : Gtk.Application
     private bool main_window_window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
-        {
-            var is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
-            settings.set_boolean ("maximized", is_maximized);
-        }
+            window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
+        if ((event.changed_mask & Gdk.WindowState.FULLSCREEN) != 0)
+            window_is_fullscreen = (event.new_window_state & Gdk.WindowState.FULLSCREEN) != 0;
 
         return false;
     }
