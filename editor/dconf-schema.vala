@@ -44,7 +44,7 @@ public class SchemaKey
             {
                 try
                 {
-                    default_value = Variant.parse(new VariantType(type), child->children->content);
+                    default_value = Variant.parse(new VariantType(type), child->get_content());
                 }
                 catch (VariantParseError e)
                 {
@@ -52,9 +52,9 @@ public class SchemaKey
                 }
             }
             else if (child->name == "summary")
-                summary = child->children == null ? "" : child->children->content;
+                summary = child->get_content();
             else if (child->name == "description")
-                description = child->children == null ? "" : child->children->content;
+                description = child->get_content();
             else if (child->name == "range")
                 range = new SchemaValueRange.from_xml(type, child);
             else if (child->name == "choices")
