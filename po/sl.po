@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-06 09:03+0000\n"
-"PO-Revision-Date: 2012-09-06 19:44+0100\n"
+"POT-Creation-Date: 2012-09-30 20:15+0000\n"
+"PO-Revision-Date: 2012-09-30 22:25+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -22,43 +22,43 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59
-#: ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63
+#: ../editor/dconf-editor.vala:352
 msgid "dconf Editor"
-msgstr "Urejevalnik DConf"
+msgstr "Urejevalnik dConf"
 
 #: ../editor/dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.vala:355
 msgid "Directly edit your entire configuration database"
 msgstr "Neposredno urejanje celotne podatkovne zbirke nastavitev"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Celo število [%s ... %s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Boolova vrednost"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Niz"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "Oštevilčenje"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:229
 msgid "No schema"
 msgstr "Ni sheme"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:324
 msgid "Not found"
 msgstr "Ni zadetkov"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:350
 msgid ""
 "This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
 "\n"
@@ -72,11 +72,11 @@ msgstr ""
 "\n"
 "Skupaj s programom bi morali prejeti izvod splošne javne licence GNU (GNU General Public License); če ga niste pišite na Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:356
 msgid "Copyright © Canonical Ltd"
 msgstr "Avtorske pravice © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:360
 msgid "translator-credits"
 msgstr "Matej Urbančič <mateju@svn@gnome.org>"
 
@@ -155,4 +155,8 @@ msgstr "Višina glavnega okna v točkah"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Zastavica za omogočanje prikaza v razpetem načinu"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Zastavica za omogočanje celozaslonskega načina"
 
