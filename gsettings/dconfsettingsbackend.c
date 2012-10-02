@@ -44,10 +44,23 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
                              gboolean            default_value)
 {
   DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
+  GVariant *value;
 
-  /* XXX default value */
+  if (default_value)
+    {
+      GQueue *read_through;
 
-  return dconf_engine_read (dcsb->engine, NULL, key);
+      /* Mark the key as having been reset when trying to do the read... */
+      read_through = g_queue_new ();
+      g_queue_push_tail (read_through, dconf_changeset_new_write (key, NULL));
+      value = dconf_engine_read (dcsb->engine, read_through, key);
+      g_queue_free_full (read_through, (GDestroyNotify) dconf_changeset_unref);
+    }
+
+  else
+    value = dconf_engine_read (dcsb->engine, NULL, key);
+
+  return value;
 }
 
 static gboolean
