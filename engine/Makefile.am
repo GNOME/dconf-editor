@@ -4,7 +4,6 @@ noinst_LIBRARIES = libdconf-engine.a libdconf-engine-shared.a
 
 libdconf_engine_a_CFLAGS = $(glib_CFLAGS)
 libdconf_engine_a_SOURCES = \
-	dconf-changeset-list.h		\
 	dconf-engine-profile.h		\
 	dconf-engine-profile.c		\
 	dconf-engine-source-private.h	\

@@ -376,9 +376,9 @@ dconf_engine_find_key_in_queue (GQueue       *queue,
 }
 
 GVariant *
-dconf_engine_read (DConfEngine        *engine,
-                   DConfChangesetList *read_through,
-                   const gchar        *key)
+dconf_engine_read (DConfEngine *engine,
+                   GQueue      *read_through,
+                   const gchar *key)
 {
   GVariant *value = NULL;
   gint lock_level = 0;
@@ -500,7 +500,7 @@ dconf_engine_read (DConfEngine        *engine,
 
       /* Step 2.  Check read_through. */
       if (read_through)
-        found_key = dconf_engine_find_key_in_queue (&read_through->queue, key, &value);
+        found_key = dconf_engine_find_key_in_queue (read_through, key, &value);
 
       /* Step 3.  Check queued changes if we didn't find it in read_through.
        *

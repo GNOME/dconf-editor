@@ -22,7 +22,7 @@
 #ifndef __dconf_engine_h__
 #define __dconf_engine_h__
 
-#include "dconf-changeset-list.h"
+#include "../common/dconf-changeset.h"
 
 #include <gio/gio.h>
 
@@ -121,7 +121,7 @@ gboolean                dconf_engine_is_writable                        (DConfEn
 
 G_GNUC_INTERNAL
 GVariant *              dconf_engine_read                               (DConfEngine             *engine,
-                                                                         DConfChangesetList      *read_through,
+                                                                         GQueue                  *read_through,
                                                                          const gchar             *key);
 
 G_GNUC_INTERNAL
