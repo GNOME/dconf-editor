@@ -586,9 +586,14 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         schemas = new SchemaList();
         try
         {
-            foreach (var dir in GLib.Environment.get_system_data_dirs())
+            var dirs = GLib.Environment.get_system_data_dirs();
+
+            /* Walk directories in reverse so the schemas in the
+             * directory which appears first in the XDG_DATA_DIRS are
+             * not overridden. */
+            for (int i = dirs.length - 1; i >= 0; i--)
             {
-                var path = Path.build_filename (dir, "glib-2.0", "schemas", null);
+                var path = Path.build_filename (dirs[i], "glib-2.0", "schemas");
                 if (File.new_for_path (path).query_exists ())
                     schemas.load_directory (path);
             }
