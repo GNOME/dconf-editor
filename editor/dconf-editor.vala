@@ -216,11 +216,16 @@ class ConfigurationEditor : Gtk.Application
         {
             if (selected_key.schema != null)
             {
+                var gettext_domain = selected_key.schema.gettext_domain;
                 schema_name = selected_key.schema.schema.id;
                 if (selected_key.schema.summary != null)
                     summary = selected_key.schema.summary;
+                if (gettext_domain != null && summary != "")
+                    summary = dgettext(gettext_domain, summary);
                 if (selected_key.schema.description != null)
                     description = selected_key.schema.description;
+                if (gettext_domain != null && description != "")
+                    description = dgettext(gettext_domain, description);
                 type = key_to_description(selected_key);
                 default_value = selected_key.schema.default_value.print(false);
             }
