@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-16 08:28+0000\n"
-"PO-Revision-Date: 2012-08-16 15:43+0200\n"
+"POT-Creation-Date: 2012-09-30 20:15+0000\n"
+"PO-Revision-Date: 2012-10-17 18:17+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -18,41 +18,41 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:352
 msgid "dconf Editor"
 msgstr "Editor de dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:355
 msgid "Directly edit your entire configuration database"
 msgstr "Edite toda la configuración de la base de datos directamente"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Entero [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Booleano"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Cadena"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "Enumeración"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:229
 msgid "No schema"
 msgstr "No existe el esquema"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:324
 msgid "Not found"
 msgstr "No encontrado"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:350
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -82,11 +82,11 @@ msgstr ""
 "con este programa, si no es así, escriba a la Free Software Foundation, Inc, "
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 EE.UU."
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:356
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:360
 msgid "translator-credits"
 msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2012"
 
@@ -165,3 +165,8 @@ msgstr "La altura de la ventana principal en píxeles."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Un indicador para activar el modo maximizado"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+#| msgid "A flag to enable maximized mode"
+msgid "A flag to enable fullscreen mode"
+msgstr "Un indicador para activar el modo a pantalla completa"
