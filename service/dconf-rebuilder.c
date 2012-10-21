@@ -57,6 +57,7 @@ dconf_rebuilder_get_parent (GHashTable  *table,
       if (grandparent != NULL)
         gvdb_item_set_parent (parent, grandparent);
     }
+  g_free (parent_name);
 
   return parent;
 }
