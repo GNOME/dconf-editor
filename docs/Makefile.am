@@ -15,6 +15,12 @@ MKDB_OPTIONS = --output-format=xml
 INCLUDES = $(gio_CFLAGS)
 GTKDOC_LIBS = $(gio_LIBS) -L../client -ldconf -Wl,-rpath=../client
 
+content_files = \
+	dconf-overview.xml		\
+	dconf-service.xml		\
+	dconf-editor.xml		\
+	dconf-tool.xml
+
 XSLTPROC_MAN_FLAGS = \
         --nonet \
         --stringparam man.output.quietly 1 \
