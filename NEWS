@@ -1,3 +1,59 @@
+Changes in dconf 0.15.1
+========================
+
+ - add --disable-man
+
+ - fix reading default values in GSettings backend
+
+ - editor:
+   - support schema overrides
+   - search improvements (search directories, values, descriptions)
+   - correctly get text from schema descriptions
+   - only write window state settings on exit and support fullscreen state
+
+ - dconf_rebuilder_get_parent: don't leak parent_name
+
+Translations:
+
+ - Arabic
+ - Belarusian
+ - Bengali 
+ - Brazilian Portuguese
+ - British English
+ - Bulgarian
+ - Catalan
+ - Catalan (Valencian) 
+ - Czech
+ - Danish
+ - Estonian
+ - Finnish
+ - French
+ - German
+ - Hebrew
+ - Hindi
+ - Hungarian
+ - Indonesian
+ - Italian
+ - Japanese
+ - Korean
+ - Latvian
+ - Lithuanian
+ - Malayalam
+ - Marathi
+ - Norwegian bokmål
+ - Persian
+ - Polish
+ - Portuguese
+ - Russian
+ - Simplified Chinese
+ - Slovenian
+ - Spanish
+ - Swedish
+ - Tamil
+ - Telugu
+ - Thai
+ - Vietnamese
+
 Changes in dconf 0.13.90
 =========================
 
