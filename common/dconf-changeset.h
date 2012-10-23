@@ -38,6 +38,8 @@ DConfChangeset *        dconf_changeset_new_write                       (const g
 DConfChangeset *        dconf_changeset_ref                             (DConfChangeset           *changeset);
 void                    dconf_changeset_unref                           (DConfChangeset           *changeset);
 
+gboolean                dconf_changeset_is_empty                        (DConfChangeset           *changeset);
+
 void                    dconf_changeset_set                             (DConfChangeset           *changeset,
                                                                          const gchar              *path,
                                                                          GVariant                 *value);

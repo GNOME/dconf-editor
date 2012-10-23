@@ -560,3 +560,17 @@ dconf_changeset_new_write (const gchar *path,
 
   return changeset;
 }
+
+/**
+ * dconf_changeset_is_empty:
+ * @changeset: a #DConfChangeset
+ *
+ * Checks if @changeset is empty (ie: contains no changes).
+ *
+ * Returns: %TRUE if @changeset is empty
+ **/
+gboolean
+dconf_changeset_is_empty (DConfChangeset *changeset)
+{
+  return !g_hash_table_size (changeset->table);
+}
