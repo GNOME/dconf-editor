@@ -22,29 +22,16 @@
 #ifndef __dconf_writer_h__
 #define __dconf_writer_h__
 
-#include "../common/dconf-changeset.h"
-#include "dconf-state.h"
+#include <gio/gio.h>
 
-typedef struct OPAQUE_TYPE__DConfWriter DConfWriter;
+#define DCONF_TYPE_WRITER                                   (dconf_writer_get_type ())
+#define DCONF_WRITER(inst)                                  (G_TYPE_CHECK_INSTANCE_CAST ((inst),                     \
+                                                             DCONF_TYPE_WRITER, DConfWriter))
+#define DCONF_IS_WRITER(inst)                               (G_TYPE_CHECK_INSTANCE_TYPE ((inst),                     \
+                                                             DCONF_TYPE_WRITER))
+#define DCONF_WRITER_GET_CLASS(inst)                        (G_TYPE_INSTANCE_GET_CLASS ((inst),                      \
+                                                             DCONF_TYPE_WRITER, DConfWriterClass))
 
-gchar **                dconf_writer_list_existing                      (void);
-DConfWriter *           dconf_writer_new                                (DConfState           *state,
-                                                                         const gchar          *name);
-DConfState *            dconf_writer_get_state                          (DConfWriter          *writer);
-const gchar *           dconf_writer_get_name                           (DConfWriter          *writer);
-gboolean                dconf_writer_write                              (DConfWriter          *writer,
-                                                                         const gchar          *name,
-                                                                         GVariant             *value,
-                                                                         GError              **error);
-gboolean                dconf_writer_write_many                         (DConfWriter          *writer,
-                                                                         const gchar          *prefix,
-                                                                         const gchar * const  *keys,
-                                                                         GVariant * const     *values,
-                                                                         gsize n_items,
-                                                                         GError              **error);
-
-gboolean                dconf_writer_change                             (DConfWriter          *writer,
-                                                                         DConfChangeset       *change,
-                                                                         GError              **error);
+GDBusInterfaceSkeleton *dconf_writer_new                                (const gchar *filename);
 
 #endif /* __dconf_writer_h__ */

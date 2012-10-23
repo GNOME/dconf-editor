@@ -228,7 +228,7 @@ void dconf_watch (string?[] args) throws Error {
 
 void dconf_blame (string?[] args) throws Error {
 	var connection = Bus.get_sync (BusType.SESSION, null);
-	var reply = connection.call_sync ("ca.desrt.dconf", "/ca/desrt/dconf/Writer", "ca.desrt.dconf.WriterInfo", "Blame",
+	var reply = connection.call_sync ("ca.desrt.dconf", "/ca/desrt/dconf", "ca.desrt.dconf.ServiceInfo", "Blame",
 	                                  null, new VariantType ("(s)"), DBusCallFlags.NONE, -1, null);
 	print ("%s", reply.get_child_value (0).get_string (null));
 }

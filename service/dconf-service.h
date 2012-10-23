@@ -1,5 +1,5 @@
 /*
- * Copyright © 2010 Codethink Limited
+ * Copyright © 2012 Canonical Limited
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,18 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_interfaces_h__
-#define __dconf_interfaces_h__
+#ifndef __dconf_service_h__
+#define __dconf_service_h__
 
 #include <gio/gio.h>
 
-extern const GDBusInterfaceInfo ca_desrt_dconf_Writer;
-extern const GDBusInterfaceInfo ca_desrt_dconf_WriterInfo;
+#define DCONF_TYPE_SERVICE                                  (dconf_service_get_type ())
+#define DCONF_SERVICE(inst)                                 (G_TYPE_CHECK_INSTANCE_CAST ((inst),                     \
+                                                             DCONF_TYPE_SERVICE, DConfService))
+#define DCONF_IS_SERVICE(inst)                              (G_TYPE_CHECK_INSTANCE_TYPE ((inst),                     \
+                                                             DCONF_TYPE_SERVICE))
 
-#endif /* __dconf_interfaces_h__ */
+GType                   dconf_service_get_type                          (void);
+GApplication *          dconf_service_new                               (void);
+
+#endif /* __dconf_service_h__ */

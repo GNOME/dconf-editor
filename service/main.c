@@ -19,16 +19,17 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_rebuilder_h__
-#define __dconf_rebuilder_h__
+#include "dconf-service.h"
 
-#include <glib.h>
+int
+main (int argc, char **argv)
+{
+  GApplication *app;
+  gint status;
 
-gboolean dconf_rebuilder_rebuild (const gchar  *filename,
-                                  const gchar  *prefix,
-                                  const gchar *const*keys,
-                                  GVariant    *const*values,
-                                  gint          n_items,
-                                  GError      **error);
+  app = dconf_service_new ();
+  status = g_application_run (app, argc, argv);
+  g_object_unref (app);
 
-#endif /* __dconf_rebuilder_h__ */
+  return status;
+}

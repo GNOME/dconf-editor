@@ -1,0 +1,23 @@
+<node>
+  <interface name='ca.desrt.dconf.Writer'>
+    <method name='Init'/>
+    <method name='Change'>
+      <arg name='blob' direction='in' type='ay'>
+        <annotation name='org.gtk.GDBus.C.ForceGVariant' value='1'/>
+      </arg>
+      <arg name='tag' direction='out' type='s'/>
+    </method>
+    <signal name='Notify'>
+      <annotation name='org.gtk.GDBus.C.Name' value='NotifySignal'/>
+      <arg name='prefix' direction='out' type='s'/>
+      <arg name='changes' direction='out' type='as'/>
+      <arg name='tag' direction='out' type='s'/>
+    </signal>
+  </interface>
+
+  <interface name='ca.desrt.dconf.ServiceInfo'>
+    <method name='Blame'>
+      <arg name='blame' direction='out' type='s'/>
+    </method>
+  </interface>
+</node>

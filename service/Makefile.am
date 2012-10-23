@@ -12,17 +12,21 @@ dconf_service_LDADD = \
 	$(gio_LIBS)
 
 dconf_service_SOURCES = \
-	dconf-interfaces.h		\
-	dconf-interfaces.c		\
-	dconf-rebuilder.h		\
-	dconf-rebuilder.c		\
+	$(BUILT_SOURCES)		\
+	dconf-blame.c			\
+	dconf-blame.h			\
+	dconf-service.c			\
+	dconf-service.h			\
 	dconf-writer.h			\
 	dconf-writer.c			\
-	dconf-state.h			\
-	dconf-state.c			\
-	service.c
+	main.c
+
+dconf-generated.h dconf-generated.c: ca.desrt.dconf.xml Makefile
+	gdbus-codegen --generate-c-code dconf-generated --c-namespace DConfDBus --interface-prefix=ca.desrt.dconf. $(srcdir)/ca.desrt.dconf.xml
 
 DISTCLEANFILES = ca.desrt.dconf.service
+
+BUILT_SOURCES = dconf-generated.c dconf-generated.h
 
 ca.desrt.dconf.service: Makefile
 	$(AM_V_GEN) (echo '[D-BUS Service]'; \
