@@ -21,7 +21,9 @@ dconf_service_SOURCES = \
 	dconf-writer.c			\
 	main.c
 
-dconf-generated.h dconf-generated.c: ca.desrt.dconf.xml Makefile
+dconf-generated.c: dconf-generated.h
+
+dconf-generated.h: ca.desrt.dconf.xml Makefile
 	gdbus-codegen --generate-c-code dconf-generated --c-namespace DConfDBus --interface-prefix=ca.desrt.dconf. $(srcdir)/ca.desrt.dconf.xml
 
 DISTCLEANFILES = ca.desrt.dconf.service
