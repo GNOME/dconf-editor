@@ -134,7 +134,7 @@ dconf_shm_flag (const gchar *name)
            *
            * Using mmap() works everywhere.
            */
-          shm = mmap (NULL, 1, PROT_WRITE, MAP_SHARED, fd, 0);
+          shm = mmap (NULL, 1, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
           g_assert (shm != MAP_FAILED);
 
           *shm = 1;
