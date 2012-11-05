@@ -133,6 +133,9 @@ dconf_shm_flag (const gchar *name)
            * don't sync up their filesystem cache with mmap()ed regions.
            *
            * Using mmap() works everywhere.
+           *
+           * See https://bugzilla.gnome.org/show_bug.cgi?id=687334 about
+           * why we need to have PROT_READ even though we only write.
            */
           shm = mmap (NULL, 1, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
           g_assert (shm != MAP_FAILED);
