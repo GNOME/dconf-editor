@@ -31,6 +31,7 @@ typedef gboolean     (* DConfChangesetPredicate)                        (const g
                                                                          gpointer                  user_data);
 
 DConfChangeset *        dconf_changeset_new                             (void);
+DConfChangeset *        dconf_changeset_new_database                    (DConfChangeset           *copy_of);
 
 DConfChangeset *        dconf_changeset_new_write                       (const gchar              *path,
                                                                          GVariant                 *value);
@@ -62,5 +63,8 @@ guint                   dconf_changeset_describe                        (DConfCh
 
 GVariant *              dconf_changeset_serialise                       (DConfChangeset           *changeset);
 DConfChangeset *        dconf_changeset_deserialise                     (GVariant                 *serialised);
+
+void                    dconf_changeset_change                          (DConfChangeset           *changeset,
+                                                                         DConfChangeset           *changes);
 
 #endif /* __dconf_changeset_h__ */

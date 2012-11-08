@@ -54,6 +54,7 @@
 struct _DConfChangeset
 {
   GHashTable *table;
+  gboolean is_database;
   gint ref_count;
 
   gchar *prefix;
@@ -83,6 +84,57 @@ dconf_changeset_new (void)
   changeset = g_slice_new0 (DConfChangeset);
   changeset->table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, unref_gvariant0);
   changeset->ref_count = 1;
+
+  return changeset;
+}
+
+/**
+ * dconf_changeset_new_database:
+ * @copy_of: (allow none): a #DConfChangeset to copy
+ *
+ * Creates a new #DConfChangeset in "database" mode, possibly
+ * initialising it with the values of another changeset.
+ *
+ * In a certain sense it's possible to imagine that a #DConfChangeset
+ * could express the contents of an entire dconf database -- the
+ * contents are the database are what you would have if you applied the
+ * changeset to an empty database.  One thing that fails to map in this
+ * analogy are reset operations -- if we start with an empty database
+ * then reset operations are meaningless.
+ *
+ * A "database" mode changeset is therefore a changeset which is
+ * incapable of containing reset operations.
+ *
+ * It is not permitted to use a database-mode changeset for most
+ * operations (such as the @change argument to dconf_changeset_change()
+ * or the @changeset argument to #DConfClient APIs).
+ *
+ * If @copy_of is non-%NULL then its contents will be copied into the
+ * created changeset.  @copy_of must be a database-mode changeset.
+ *
+ * Returns: a new #DConfChangeset in "database" mode
+ *
+ * Since: 0.16
+ */
+DConfChangeset *
+dconf_changeset_new_database (DConfChangeset *copy_of)
+{
+  DConfChangeset *changeset;
+
+  g_return_val_if_fail (copy_of == NULL || copy_of->is_database, NULL);
+
+  changeset = dconf_changeset_new ();
+  changeset->is_database = TRUE;
+
+  if (copy_of)
+    {
+      GHashTableIter iter;
+      gpointer key, value;
+
+      g_hash_table_iter_init (&iter, copy_of->table);
+      while (g_hash_table_iter_next (&iter, &key, &value))
+        g_hash_table_insert (changeset->table, g_strdup (key), g_variant_ref (value));
+    }
 
   return changeset;
 }
@@ -162,13 +214,26 @@ dconf_changeset_set (DConfChangeset *changeset,
         if (g_str_has_prefix (key, path))
           g_hash_table_iter_remove (&iter);
 
-      /* Record the reset itself. */
-      g_hash_table_insert (changeset->table, g_strdup (path), NULL);
+      /* If this is a non-database then record the reset itself. */
+      if (!changeset->is_database)
+        g_hash_table_insert (changeset->table, g_strdup (path), NULL);
     }
 
-  /* else, just a normal value write or reset */
+  /* ...or a value reset */
+  else if (value == NULL)
+    {
+      /* If we're a non-database, record the reset explicitly.
+       * Otherwise, just reset whatever may be there already.
+       */
+      if (!changeset->is_database)
+        g_hash_table_insert (changeset->table, g_strdup (path), NULL);
+      else
+        g_hash_table_remove (changeset->table, path);
+    }
+
+  /* ...or a normal write. */
   else
-    g_hash_table_insert (changeset->table, g_strdup (path), value ? g_variant_ref_sink (value) : NULL);
+    g_hash_table_insert (changeset->table, g_strdup (path), g_variant_ref_sink (value));
 }
 
 /**
@@ -573,4 +638,62 @@ gboolean
 dconf_changeset_is_empty (DConfChangeset *changeset)
 {
   return !g_hash_table_size (changeset->table);
+}
+
+/**
+ * dconf_changeset_change:
+ * @changeset: a #DConfChangeset (to be changed)
+ * @changes: the changes to make to @changeset
+ *
+ * Applies @changes to @changeset.
+ *
+ * If @changeset is a normal changeset then reset requests in @changes
+ * will be allied to @changeset and then copied down into it.  In this
+ * case the two changesets are effectively being merged.
+ *
+ * If @changeset is in database mode then the reset operations in
+ * @changes will simply be applied to @changeset.
+ *
+ * Since: 0.16
+ **/
+void
+dconf_changeset_change (DConfChangeset *changeset,
+                        DConfChangeset *changes)
+{
+  gsize prefix_len;
+  gint i;
+
+  /* Handling resets is a little bit tricky...
+   *
+   * Consider the case that we have @changeset containing a key /a/b and
+   * @changes containing a reset request for /a/ and a set request for
+   * /a/c.
+   *
+   * It's clear that at the end of this all, we should have only /a/c
+   * but in order for that to be the case, we need to make sure that we
+   * process the reset of /a/ before we process the set of /a/c.
+   *
+   * The easiest way to do this is to visit the strings in sorted order.
+   * That removes the possibility of iterating over the hash table, but
+   * dconf_changeset_build_description() makes the list in the order we
+   * need so just call it and then iterate over the result.
+   */
+
+  if (!dconf_changeset_describe (changes, NULL, NULL, NULL))
+    return;
+
+  prefix_len = strlen (changes->prefix);
+  for (i = 0; changes->paths[i]; i++)
+    {
+      const gchar *path;
+      GVariant *value;
+
+      /* The changes->paths are just pointers into the keys of the
+       * hashtable, fast-forwarded past the prefix.  Rewind a bit.
+       */
+      path = changes->paths[i] - prefix_len;
+      value = changes->values[i];
+
+      dconf_changeset_set (changeset, path, value);
+    }
 }
