@@ -43,8 +43,8 @@ typedef struct
   gchar *name;
   guint64 tag;
 
-  GHashTable *uncommited_values;
-  GHashTable *commited_values;
+  DConfChangeset *uncommited_values;
+  DConfChangeset *commited_values;
 
   GQueue uncommited_changes;
   GQueue commited_changes;
@@ -155,9 +155,6 @@ dconf_writer_real_begin (DConfWriter  *writer,
     {
       GError *my_error = NULL;
       GvdbTable *table;
-      gchar **names;
-      gint n_names;
-      gint i;
 
       table = gvdb_table_new (writer->filename, FALSE, &my_error);
 
@@ -177,33 +174,40 @@ dconf_writer_real_begin (DConfWriter  *writer,
         }
 
       /* Only initialise once we know we are in a non-error situation */
-      writer->commited_values = dconf_writer_new_value_table (NULL);
+      writer->commited_values = dconf_changeset_new_database (NULL);
 
       /* Fill the table up with the initial state */
-      names = gvdb_table_get_names (table, &n_names);
-      for (i = 0; i < n_names; i++)
+      if (table != NULL)
         {
-          if (dconf_is_key (names[i], NULL))
+          gchar **names;
+          gint n_names;
+          gint i;
+
+          names = gvdb_table_get_names (table, &n_names);
+          for (i = 0; i < n_names; i++)
             {
-              GVariant *value;
-
-              value = gvdb_table_get_value (table, names[i]);
-
-              if (value != NULL)
+              if (dconf_is_key (names[i], NULL))
                 {
-                  g_hash_table_insert (writer->commited_values, names[i], value);
-                  names[i] = NULL;
+                  GVariant *value;
+
+                  value = gvdb_table_get_value (table, names[i]);
+
+                  if (value != NULL)
+                    {
+                      dconf_changeset_set (writer->commited_values, names[i], value);
+                      names[i] = NULL;
+                    }
                 }
+
+              g_free (names[i]);
             }
 
-          g_free (names[i]);
+          gvdb_table_unref (table);
+          g_free (names);
         }
-
-      gvdb_table_unref (table);
-      g_free (names);
     }
 
-  writer->uncommited_values = dconf_writer_new_value_table (writer->commited_values);
+  writer->uncommited_values = dconf_changeset_new_database (writer->commited_values);
 
   return TRUE;
 }
@@ -213,42 +217,7 @@ dconf_writer_real_change (DConfWriter    *writer,
                           DConfChangeset *changeset,
                           const gchar    *tag)
 {
-  const gchar *prefix;
-  const gchar * const *keys;
-  GVariant * const *values;
-  int n_items;
-  gint i;
-
-  n_items = dconf_changeset_describe (changeset, &prefix, &keys, &values);
-
-  for (i = 0; i < n_items; i++)
-    {
-      gchar *path = g_strconcat (prefix, keys[i], NULL);
-
-      /* Check if we are performing a path reset */
-      if (g_str_has_suffix (path, "/"))
-        {
-          GHashTableIter iter;
-          gpointer key;
-
-          g_assert (values[i] == NULL);
-
-          /* A path reset is really a request to delete all keys that
-           * have a name starting with the reset path.
-           */
-          g_hash_table_iter_init (&iter, writer->uncommited_values);
-          while (g_hash_table_iter_next (&iter, &key, NULL))
-            if (g_str_has_prefix (key, path))
-              g_hash_table_iter_remove (&iter);
-        }
-
-      if (values[i] != NULL)
-        g_hash_table_insert (writer->uncommited_values, g_strdup (path), g_variant_ref (values[i]));
-      else
-        g_hash_table_remove (writer->uncommited_values, path);
-
-      g_free (path);
-    }
+  dconf_changeset_change (writer->uncommited_values, changeset);
 
   if (tag)
     {
@@ -263,26 +232,31 @@ dconf_writer_real_change (DConfWriter    *writer,
 }
 
 static gboolean
+dconf_writer_add_to_gvdb (const gchar *path,
+                          GVariant    *value,
+                          gpointer     user_data)
+{
+  GHashTable *gvdb = user_data;
+  GvdbItem *item;
+
+  g_assert (g_hash_table_lookup (gvdb, path) == NULL);
+  item = gvdb_hash_table_insert (gvdb, path);
+  gvdb_item_set_parent (item, dconf_writer_get_parent (gvdb, path));
+  gvdb_item_set_value (item, value);
+
+  return TRUE;
+}
+
+static gboolean
 dconf_writer_real_commit (DConfWriter  *writer,
                           GError      **error)
 {
-  GHashTableIter iter;
-  gpointer key, value;
   GHashTable *gvdb;
   gboolean success;
 
   gvdb = gvdb_hash_table_new (NULL, NULL);
 
-  g_hash_table_iter_init (&iter, writer->uncommited_values);
-  while (g_hash_table_iter_next (&iter, &key, &value))
-    {
-      GvdbItem *item;
-
-      g_assert (g_hash_table_lookup (gvdb, key) == NULL);
-      item = gvdb_hash_table_insert (gvdb, key);
-      gvdb_item_set_parent (item, dconf_writer_get_parent (gvdb, key));
-      gvdb_item_set_value (item, value);
-    }
+  dconf_changeset_all (writer->uncommited_values, dconf_writer_add_to_gvdb, gvdb);
 
   success = gvdb_table_write_contents (gvdb, writer->filename, FALSE, error);
 
@@ -290,8 +264,8 @@ dconf_writer_real_commit (DConfWriter  *writer,
     dconf_shm_flag (writer->name);
 
   if (writer->commited_values)
-    g_hash_table_unref (writer->commited_values);
-  writer->commited_values = g_hash_table_ref (writer->uncommited_values);
+    dconf_changeset_unref (writer->commited_values);
+  writer->commited_values = dconf_changeset_ref (writer->uncommited_values);
 
   {
     GQueue empty_queue = G_QUEUE_INIT;
