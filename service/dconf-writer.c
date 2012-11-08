@@ -195,7 +195,7 @@ dconf_writer_real_begin (DConfWriter  *writer,
                   if (value != NULL)
                     {
                       dconf_changeset_set (writer->commited_values, names[i], value);
-                      names[i] = NULL;
+                      g_variant_unref (value);
                     }
                 }
 
@@ -217,6 +217,8 @@ dconf_writer_real_change (DConfWriter    *writer,
                           DConfChangeset *changeset,
                           const gchar    *tag)
 {
+  g_return_if_fail (writer->uncommited_values != NULL);
+
   dconf_changeset_change (writer->uncommited_values, changeset);
 
   if (tag)
@@ -251,21 +253,24 @@ static gboolean
 dconf_writer_real_commit (DConfWriter  *writer,
                           GError      **error)
 {
-  GHashTable *gvdb;
   gboolean success;
 
-  gvdb = gvdb_hash_table_new (NULL, NULL);
+  {
+    GHashTable *gvdb;
 
-  dconf_changeset_all (writer->uncommited_values, dconf_writer_add_to_gvdb, gvdb);
-
-  success = gvdb_table_write_contents (gvdb, writer->filename, FALSE, error);
+    gvdb = gvdb_hash_table_new (NULL, NULL);
+    dconf_changeset_all (writer->uncommited_values, dconf_writer_add_to_gvdb, gvdb);
+    success = gvdb_table_write_contents (gvdb, writer->filename, FALSE, error);
+    g_hash_table_unref (gvdb);
+  }
 
   if (success && writer->native)
     dconf_shm_flag (writer->name);
 
   if (writer->commited_values)
     dconf_changeset_unref (writer->commited_values);
-  writer->commited_values = dconf_changeset_ref (writer->uncommited_values);
+  writer->commited_values = writer->uncommited_values;
+  writer->uncommited_values = NULL;
 
   {
     GQueue empty_queue = G_QUEUE_INIT;
@@ -386,6 +391,7 @@ dconf_writer_handle_change (DConfDBusWriter       *dbus_writer,
     goto out;
 
   dconf_writer_change (writer, changeset, tag);
+  dconf_changeset_unref (changeset);
 
   if (!dconf_writer_commit (writer, &error))
     goto out;
