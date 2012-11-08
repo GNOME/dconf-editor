@@ -383,6 +383,60 @@ test_serialiser (void)
   dconf_changeset_unref (changeset);
 }
 
+static void
+test_change (void)
+{
+  DConfChangeset *deltaa, *deltab;
+  DConfChangeset *dba, *dbb;
+
+  dba = dconf_changeset_new_database (NULL);
+  dbb = dconf_changeset_new_database (dba);
+  g_assert (dconf_changeset_is_empty (dbb));
+  dconf_changeset_unref (dbb);
+
+  deltaa = dconf_changeset_new_write ("/some/value", NULL);
+  dconf_changeset_change (dba, deltaa);
+  g_assert (dconf_changeset_is_empty (dba));
+  dconf_changeset_unref (deltaa);
+
+  deltaa = dconf_changeset_new ();
+  deltab = dconf_changeset_new_write ("/some/value", g_variant_new_int32 (123));
+  dconf_changeset_change (deltaa, deltab);
+  g_assert (!dconf_changeset_is_empty (deltaa));
+  dconf_changeset_change (dba, deltab);
+  g_assert (!dconf_changeset_is_empty (dba));
+  dconf_changeset_unref (deltaa);
+  dconf_changeset_unref (deltab);
+
+  deltaa = dconf_changeset_new ();
+  deltab = dconf_changeset_new_write ("/other/value", g_variant_new_int32 (123));
+  dconf_changeset_change (deltaa, deltab);
+  g_assert (!dconf_changeset_is_empty (deltaa));
+  dconf_changeset_unref (deltab);
+  deltab = dconf_changeset_new_write ("/other/", NULL);
+  dconf_changeset_change (deltaa, deltab);
+  g_assert (!dconf_changeset_is_empty (deltaa));
+  dconf_changeset_change (dba, deltaa);
+  g_assert (!dconf_changeset_is_empty (dba));
+
+  dbb = dconf_changeset_new_database (dba);
+  g_assert (!dconf_changeset_is_empty (dbb));
+
+  dconf_changeset_set (dba, "/some/", NULL);
+
+  dconf_changeset_set (dba, "/other/value", g_variant_new_int32 (123));
+  g_assert (!dconf_changeset_is_empty (dba));
+  dconf_changeset_change (dba, deltaa);
+  g_assert (dconf_changeset_is_empty (dba));
+  g_assert (!dconf_changeset_is_empty (dbb));
+
+  dconf_changeset_unref (deltaa);
+  dconf_changeset_unref (deltab);
+  dconf_changeset_unref (dbb);
+  dconf_changeset_unref (dba);
+}
+
+
 int
 main (int argc, char **argv)
 {
@@ -393,6 +447,7 @@ main (int argc, char **argv)
   g_test_add_func ("/changeset/describe", test_describe);
   g_test_add_func ("/changeset/reset", test_reset);
   g_test_add_func ("/changeset/serialiser", test_serialiser);
+  g_test_add_func ("/changeset/change", test_change);
 
   return g_test_run ();
 }
