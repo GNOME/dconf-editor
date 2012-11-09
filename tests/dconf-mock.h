@@ -28,5 +28,6 @@ void                    dconf_mock_gvdb_table_insert                    (GvdbTab
 void                    dconf_mock_gvdb_table_invalidate                (GvdbTable   *table);
 void                    dconf_mock_gvdb_install                         (const gchar *filename,
                                                                          GvdbTable   *table);
+GvdbTable *             dconf_mock_gvdb_table_ref                       (GvdbTable   *table);
 
 #endif

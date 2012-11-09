@@ -81,7 +81,7 @@ dconf_gvdb_utils_read_file (const gchar  *filename,
           g_free (names[i]);
         }
 
-      gvdb_table_unref (table);
+      gvdb_table_free (table);
       g_free (names);
     }
 

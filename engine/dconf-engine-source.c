@@ -28,10 +28,10 @@ void
 dconf_engine_source_free (DConfEngineSource *source)
 {
   if (source->values)
-    gvdb_table_unref (source->values);
+    gvdb_table_free (source->values);
 
   if (source->locks)
-    gvdb_table_unref (source->locks);
+    gvdb_table_free (source->locks);
 
   source->vtable->finalize (source);
   g_free (source->bus_name);
@@ -51,8 +51,8 @@ dconf_engine_source_refresh (DConfEngineSource *source)
       /* Record if we had a gvdb before or not. */
       was_open = source->values != NULL;
 
-      g_clear_pointer (&source->values, gvdb_table_unref);
-      g_clear_pointer (&source->locks, gvdb_table_unref);
+      g_clear_pointer (&source->values, gvdb_table_free);
+      g_clear_pointer (&source->locks, gvdb_table_free);
 
       source->values = source->vtable->reopen (source);
       if (source->values)

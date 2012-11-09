@@ -34,7 +34,7 @@ dconf_mock_gvdb_item_free (gpointer data)
     g_variant_unref (item->value);
 
   if (item->table)
-    gvdb_table_unref (item->table);
+    gvdb_table_free (item->table);
 
   g_slice_free (DConfMockGvdbItem, item);
 }
@@ -43,7 +43,7 @@ static void
 dconf_mock_gvdb_init (void)
 {
   if (dconf_mock_gvdb_tables == NULL)
-    dconf_mock_gvdb_tables = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) gvdb_table_unref);
+    dconf_mock_gvdb_tables = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) gvdb_table_free);
 }
 
 GvdbTable *
@@ -98,7 +98,7 @@ dconf_mock_gvdb_install (const gchar *filename,
 }
 
 void
-gvdb_table_unref (GvdbTable *table)
+gvdb_table_free (GvdbTable *table)
 {
   if (g_atomic_int_dec_and_test (&table->ref_count))
     {
@@ -108,7 +108,7 @@ gvdb_table_unref (GvdbTable *table)
 }
 
 GvdbTable *
-gvdb_table_ref (GvdbTable *table)
+dconf_mock_gvdb_table_ref (GvdbTable *table)
 {
   g_atomic_int_inc (&table->ref_count);
 
@@ -125,7 +125,7 @@ gvdb_table_get_table (GvdbTable   *table,
   item = g_hash_table_lookup (table->table, key);
 
   if (item && item->table)
-    subtable = gvdb_table_ref (item->table);
+    subtable = dconf_mock_gvdb_table_ref (item->table);
   else
     subtable = NULL;
 
@@ -179,7 +179,7 @@ gvdb_table_new (const gchar  *filename,
   dconf_mock_gvdb_init ();
   table = g_hash_table_lookup (dconf_mock_gvdb_tables, filename);
   if (table)
-    gvdb_table_ref (table);
+    dconf_mock_gvdb_table_ref (table);
   g_mutex_unlock (&dconf_mock_gvdb_lock);
 
   if (table == NULL)

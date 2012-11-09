@@ -42,9 +42,6 @@ test_reader_empty (void)
   g_assert_no_error (error);
   g_assert (table != NULL);
 
-  table = gvdb_table_ref (table);
-  gvdb_table_unref (table);
-
   g_assert (gvdb_table_is_valid (table));
 
   names = gvdb_table_get_names (table, &n_names);
@@ -80,7 +77,7 @@ test_reader_empty (void)
       g_assert (list == NULL);
     }
 
-  gvdb_table_unref (table);
+  gvdb_table_free (table);
 }
 
 static void
@@ -190,7 +187,7 @@ test_reader_values (void)
   }
 #endif
 
-  gvdb_table_unref (table);
+  gvdb_table_free (table);
 }
 
 static void
@@ -214,7 +211,7 @@ test_reader_values_bigendian (void)
   }
 #endif
 
-  gvdb_table_unref (table);
+  gvdb_table_free (table);
 }
 
 static void
@@ -261,8 +258,8 @@ test_nested (void)
   has = gvdb_table_has_value (locks, "/second");
   g_assert (has);
 
-  gvdb_table_unref (table);
-  gvdb_table_unref (locks);
+  gvdb_table_free (table);
+  gvdb_table_free (locks);
 }
 
 /* This function exercises the API against @table but does not do any
@@ -327,7 +324,7 @@ inspect_carefully (GvdbTable *table)
       if (subtable)
         {
           inspect_carefully (subtable);
-          gvdb_table_unref (subtable);
+          gvdb_table_free (subtable);
           found_items++;
         }
     }
@@ -364,6 +361,7 @@ test_corrupted (gconstpointer user_data)
 
       for (i = 0; i < 10000; i++)
         {
+          GBytes *bytes;
           gint j;
 
           /* Make a broken copy, but leave the signature intact so that
@@ -375,13 +373,15 @@ test_corrupted (gconstpointer user_data)
             else
               copy[j] = orig[j];
 
-          table = gvdb_table_new_from_data (copy, length, FALSE, NULL, NULL, NULL, &error);
+          bytes = g_bytes_new_static (copy, length);
+          table = gvdb_table_new_from_bytes (bytes, FALSE, &error);
+          g_bytes_unref (bytes);
 
           /* If we damaged the header, it may not open */
           if (table)
             {
               inspect_carefully (table);
-              gvdb_table_unref (table);
+              gvdb_table_free (table);
             }
           else
             {
@@ -395,15 +395,17 @@ test_corrupted (gconstpointer user_data)
   else
     {
       GvdbTable *table;
+      GBytes *bytes;
 
-      table = gvdb_table_new_from_data (g_mapped_file_get_contents (mapped),
-                                        g_mapped_file_get_length (mapped),
-                                        FALSE, NULL, NULL, NULL, &error);
+      bytes = g_mapped_file_get_bytes (mapped);
+      table = gvdb_table_new_from_bytes (bytes, FALSE, &error);
+      g_bytes_unref (bytes);
+
       g_assert_no_error (error);
       g_assert (table);
 
       inspect_carefully (table);
-      gvdb_table_unref (table);
+      gvdb_table_free (table);
     }
 
   g_mapped_file_unref (mapped);

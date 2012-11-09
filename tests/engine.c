@@ -393,7 +393,7 @@ test_system_source (void)
   first_table = dconf_mock_gvdb_table_new ();
   dconf_mock_gvdb_install ("/etc/dconf/db/site", first_table);
   /* Hang on to a copy for ourselves for below... */
-  gvdb_table_ref (first_table);
+  dconf_mock_gvdb_table_ref (first_table);
 
   /* See that we get the database. */
   reopened = dconf_engine_source_refresh (source);
@@ -416,7 +416,7 @@ test_system_source (void)
 
   /* Now mark the first table invalid and reopen */
   dconf_mock_gvdb_table_invalidate (first_table);
-  gvdb_table_unref (first_table);
+  gvdb_table_free (first_table);
   reopened = dconf_engine_source_refresh (source);
   g_assert (reopened);
   g_assert (source->values == next_table);
@@ -442,7 +442,7 @@ invalidate_state (guint     n_sources,
         if (state[i])
           {
             dconf_mock_gvdb_table_invalidate (state[i]);
-            gvdb_table_unref (state[i]);
+            gvdb_table_free (state[i]);
           }
       }
     else
@@ -494,7 +494,7 @@ setup_state (guint     n_sources,
           if (state)
             {
               if (table)
-                state[i] = gvdb_table_ref (table);
+                state[i] = dconf_mock_gvdb_table_ref (table);
               else
                 state[i] = NULL;
             }
