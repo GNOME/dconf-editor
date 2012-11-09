@@ -33,9 +33,18 @@ dconf_gvdb_utils_read_file (const gchar  *filename,
 {
   DConfChangeset *database;
   GError *my_error = NULL;
-  GvdbTable *table;
+  GvdbTable *table = NULL;
+  gchar *contents;
+  gsize size;
 
-  table = gvdb_table_new (filename, FALSE, &my_error);
+  if (g_file_get_contents (filename, &contents, &size, &my_error))
+    {
+      GBytes *bytes;
+
+      bytes = g_bytes_new_take (contents, size);
+      table = gvdb_table_new_from_bytes (bytes, FALSE, &my_error);
+      g_bytes_unref (bytes);
+    }
 
   /* It is perfectly fine if the file does not exist -- then it's
    * just empty.
