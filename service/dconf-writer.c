@@ -1,5 +1,6 @@
 /*
  * Copyright © 2010 Codethink Limited
+ * Copyright © 2012 Canonical Limited
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,6 +23,8 @@
 #include "dconf-writer.h"
 
 #include "../shm/dconf-shm.h"
+#include "dconf-gvdb-utils.h"
+#include "dconf-generated.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -29,11 +32,6 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
-
-#include "dconf-generated.h"
-#include "../common/dconf-changeset.h"
-#include "../gvdb/gvdb-builder.h"
-#include "../gvdb/gvdb-reader.h"
 
 typedef struct
 {
@@ -76,62 +74,6 @@ static void dconf_writer_iface_init (DConfDBusWriterIface *iface);
 G_DEFINE_TYPE_WITH_CODE (DConfWriter, dconf_writer, DCONF_DBUS_TYPE_WRITER_SKELETON,
                          G_IMPLEMENT_INTERFACE (DCONF_DBUS_TYPE_WRITER, dconf_writer_iface_init))
 
-static GvdbItem *
-dconf_writer_get_parent (GHashTable  *table,
-                         const gchar *key)
-{
-  GvdbItem *grandparent, *parent;
-  gchar *parent_name;
-  gint len;
-
-  if (g_str_equal (key, "/"))
-    return NULL;
-
-  len = strlen (key);
-  if (key[len - 1] == '/')
-    len--;
-
-  while (key[len - 1] != '/')
-    len--;
-
-  parent_name = g_strndup (key, len);
-  parent = g_hash_table_lookup (table, parent_name);
-
-  if (parent == NULL)
-    {
-      parent = gvdb_hash_table_insert (table, parent_name);
-
-      grandparent = dconf_writer_get_parent (table, parent_name);
-
-      if (grandparent != NULL)
-        gvdb_item_set_parent (parent, grandparent);
-    }
-
-  g_free (parent_name);
-
-  return parent;
-}
-
-static GHashTable *
-dconf_writer_new_value_table (GHashTable *copy_from)
-{
-  GHashTable *table;
-
-  table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) g_variant_unref);
-
-  if (copy_from)
-    {
-      GHashTableIter iter;
-      gpointer key, value;
-
-      g_hash_table_iter_init (&iter, copy_from);
-      while (g_hash_table_iter_next (&iter, &key, &value))
-        g_hash_table_insert (table, g_strdup (key), g_variant_ref (value));
-    }
-
-  return table;
-}
-
 static gchar *
 dconf_writer_get_tag (DConfWriter *writer)
 {
@@ -153,58 +95,10 @@ dconf_writer_real_begin (DConfWriter  *writer,
    */
   if (writer->commited_values == NULL)
     {
-      GError *my_error = NULL;
-      GvdbTable *table;
+      writer->commited_values = dconf_gvdb_utils_read_file (writer->filename, error);
 
-      table = gvdb_table_new (writer->filename, FALSE, &my_error);
-
-      /* It is perfectly fine if the file does not exist -- then it's
-       * just empty.
-       */
-      if (g_error_matches (my_error, G_FILE_ERROR, G_FILE_ERROR_NOENT))
-        g_clear_error (&my_error);
-
-      /* Otherwise, we should report errors to prevent ourselves from
-       * overwriting the database in other situations...
-       */
-      if (my_error)
-        {
-          g_propagate_prefixed_error (error, my_error, "Cannot open dconf database: ");
-          return FALSE;
-        }
-
-      /* Only initialise once we know we are in a non-error situation */
-      writer->commited_values = dconf_changeset_new_database (NULL);
-
-      /* Fill the table up with the initial state */
-      if (table != NULL)
-        {
-          gchar **names;
-          gint n_names;
-          gint i;
-
-          names = gvdb_table_get_names (table, &n_names);
-          for (i = 0; i < n_names; i++)
-            {
-              if (dconf_is_key (names[i], NULL))
-                {
-                  GVariant *value;
-
-                  value = gvdb_table_get_value (table, names[i]);
-
-                  if (value != NULL)
-                    {
-                      dconf_changeset_set (writer->commited_values, names[i], value);
-                      g_variant_unref (value);
-                    }
-                }
-
-              g_free (names[i]);
-            }
-
-          gvdb_table_unref (table);
-          g_free (names);
-        }
+      if (!writer->commited_values)
+        return FALSE;
     }
 
   writer->uncommited_values = dconf_changeset_new_database (writer->commited_values);
@@ -234,37 +128,13 @@ dconf_writer_real_change (DConfWriter    *writer,
 }
 
 static gboolean
-dconf_writer_add_to_gvdb (const gchar *path,
-                          GVariant    *value,
-                          gpointer     user_data)
-{
-  GHashTable *gvdb = user_data;
-  GvdbItem *item;
-
-  g_assert (g_hash_table_lookup (gvdb, path) == NULL);
-  item = gvdb_hash_table_insert (gvdb, path);
-  gvdb_item_set_parent (item, dconf_writer_get_parent (gvdb, path));
-  gvdb_item_set_value (item, value);
-
-  return TRUE;
-}
-
-static gboolean
 dconf_writer_real_commit (DConfWriter  *writer,
                           GError      **error)
 {
-  gboolean success;
+  if (!dconf_gvdb_utils_write_file (writer->filename, writer->uncommited_values, error))
+    return FALSE;
 
-  {
-    GHashTable *gvdb;
-
-    gvdb = gvdb_hash_table_new (NULL, NULL);
-    dconf_changeset_all (writer->uncommited_values, dconf_writer_add_to_gvdb, gvdb);
-    success = gvdb_table_write_contents (gvdb, writer->filename, FALSE, error);
-    g_hash_table_unref (gvdb);
-  }
-
-  if (success && writer->native)
+  if (writer->native)
     dconf_shm_flag (writer->name);
 
   if (writer->commited_values)
@@ -280,7 +150,7 @@ dconf_writer_real_commit (DConfWriter  *writer,
     writer->uncommited_changes = empty_queue;
   }
 
-  return success;
+  return TRUE;
 }
 
 static void

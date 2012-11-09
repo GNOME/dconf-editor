@@ -15,6 +15,8 @@ dconf_service_SOURCES = \
 	$(BUILT_SOURCES)		\
 	dconf-blame.c			\
 	dconf-blame.h			\
+	dconf-gvdb-utils.c		\
+	dconf-gvdb-utils.h		\
 	dconf-service.c			\
 	dconf-service.h			\
 	dconf-writer.h			\
