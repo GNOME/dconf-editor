@@ -1,3 +1,26 @@
+Changes in dconf 0.15.2
+========================
+
+ - update to the new GVDB API (GBytes based) and refactor a bit
+
+ - add a new type of "database mode" DConfChangeset and use it
+
+ - the service has been substantially rewritten
+  - using gdbus-codegen
+  - cache the file contents instead of read/modify/write each time
+  - new DConfWriter abstraction allows considering support for backends
+  - uses only POSIX IO (read and write syscalls) for database access
+  - workaround mmap() bug on OpenBSD
+
+ - editor:
+  - Fix search order of schema dirs
+  - Translate summary and description
+
+Translations:
+
+ - Indonesian
+ - Slovak
+
 Changes in dconf 0.15.1
 ========================
 
