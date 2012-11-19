@@ -306,6 +306,5 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
 void
 dconf_engine_dbus_init_for_testing (void)
 {
-  g_type_init ();
 }
 #endif

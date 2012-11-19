@@ -228,8 +228,6 @@ dconf_service_class_init (GApplicationClass *class)
 GApplication *
 dconf_service_new (void)
 {
-  g_type_init ();
-
   return g_object_new (DCONF_TYPE_SERVICE,
                        "application-id", "ca.desrt.dconf",
                        "flags", G_APPLICATION_IS_SERVICE,

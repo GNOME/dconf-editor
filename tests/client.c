@@ -167,10 +167,7 @@ main (int argc, char **argv)
 
   main_thread = g_thread_self ();
 
-
   g_test_init (&argc, &argv, NULL);
-
-  g_type_init ();
 
   g_test_add_func ("/client/lifecycle", test_lifecycle);
   g_test_add_func ("/client/basic-fast", test_fast);
