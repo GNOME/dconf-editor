@@ -158,7 +158,7 @@ dconf_writer_real_end (DConfWriter *writer)
 {
   while (!g_queue_is_empty (&writer->uncommited_changes))
     {
-      TaggedChange *change = g_queue_pop_head (&writer->commited_changes);
+      TaggedChange *change = g_queue_pop_head (&writer->uncommited_changes);
       g_free (change->tag);
       g_slice_free (TaggedChange, change);
     }
