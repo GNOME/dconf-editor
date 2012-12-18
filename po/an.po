@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-11-11 10:35+0000\n"
-"PO-Revision-Date: 2012-12-11 00:16+0100\n"
+"POT-Creation-Date: 2012-12-12 23:22+0000\n"
+"PO-Revision-Date: 2012-12-16 21:27+0100\n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Aragonese <softaragones@googlegroups.com>\n"
 "Language: an\n"
@@ -18,41 +18,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "Editor de dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "Edita toda la configuración d'a base de datos dreitament"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "opcions;configuración;"
+
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Entero [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Booleano"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Cadena"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "Enumeración"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "No existe lo esquema"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "No trobau"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -82,11 +86,11 @@ msgstr ""
 "con iste programa, si no ye asinas, escriba a la Free Software Foundation, "
 "Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 EE.UU."
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "Dreitos d'autor  © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr "Jorge Pérez Pérez zjorgtum2gmail.com>, 2012"
 
@@ -114,8 +118,6 @@ msgid "Schema:"
 msgstr "Esquema:"
 
 #: ../editor/dconf-editor.ui.h:3
-#, fuzzy
-#| msgid "Summary"
 msgid "Summary:"
 msgstr "Resumen:"
 
@@ -167,3 +169,7 @@ msgstr "l'altaria d'a finestra prencipal en pixels."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Un indicador ta activar o modo maximizau"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Un indicador ta activar o modo pantalla completa"
