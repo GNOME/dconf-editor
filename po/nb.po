@@ -1,14 +1,14 @@
 # Norwegian bokmål translation of dconf.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
-#
 # Kjartan Maraas <kmaraas@gnome.org>, 1999-2012.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: dconf 3.5.x\n"
+"Project-Id-Version: dconf 3.7.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-28 07:20+0200\n"
-"PO-Revision-Date: 2012-08-28 07:21+0200\n"
+"POT-Creation-Date: 2012-12-23 12:13+0100\n"
+"PO-Revision-Date: 2012-12-23 12:14+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -17,41 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "dconf redigering"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "Rediger konfigurasjonsdatabasen direkte"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "innstillinger;konfigurasjon;"
+
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Heltall [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Boolean"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Streng"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr ""
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "Ingen skjema"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "Ikke funnet"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -67,12 +71,17 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 msgstr ""
+"Dette programmet er fri programvare. Du kan redistribuere og/eller endre programmet under betingelsene gitt i GNU General Public License som utgitt av Free Software Foundation; enten versjon 2 av lisensen, eller (hvis du ønsker det) enhver senere versjon.\n"
+"\n"
+"Programmet distribueres i håp om at programmet er nyttig, men uten NOEN GARANTI, ikke engang implisitt garanti om at det er SALGBART eller PASSER ET BESTEMT FORMÅL. Se GNU General Public License for detaljer.\n"
+"\n"
+"Du skal ha mottatt en kopi av GNU General Public License sammen med dette programmet. Hvis dette ikke er tilfelle, kan du skrive til Free Software Foundation, Inc. 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "Opphavsrett © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
@@ -151,3 +160,7 @@ msgstr "Høyde på hovedvinduet i piksler."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Et flagg som slår på maksimert modus"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Et flagg som slår på fullskjerm modus"
