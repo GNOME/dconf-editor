@@ -160,6 +160,22 @@ dconf_gvdb_utils_write_file (const gchar     *filename,
   gvdb = gvdb_hash_table_new (NULL, NULL);
   dconf_changeset_all (database, dconf_gvdb_utils_add_key, gvdb);
   success = gvdb_table_write_contents (gvdb, filename, FALSE, error);
+
+  if (!success)
+    {
+      gchar *dirname;
+
+      /* Maybe it failed because the directory doesn't exist.  Try
+       * again, after mkdir().
+       */
+      dirname = g_path_get_dirname (filename);
+      g_mkdir_with_parents (dirname, 0777);
+      g_free (dirname);
+
+      g_clear_error (error);
+      success = gvdb_table_write_contents (gvdb, filename, FALSE, error);
+    }
+
   g_hash_table_unref (gvdb);
 
   return success;
