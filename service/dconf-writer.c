@@ -176,7 +176,7 @@ dconf_writer_real_end (DConfWriter *writer)
       g_slice_free (TaggedChange, change);
     }
 
-  g_clear_pointer (&writer->uncommited_values, g_hash_table_unref);
+  g_clear_pointer (&writer->uncommited_values, dconf_changeset_unref);
 }
 
 gboolean
