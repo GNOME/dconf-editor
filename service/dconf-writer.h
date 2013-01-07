@@ -24,13 +24,45 @@
 
 #include <gio/gio.h>
 
+#include "../common/dconf-changeset.h"
+#include "dconf-generated.h"
+
 #define DCONF_TYPE_WRITER                                   (dconf_writer_get_type ())
 #define DCONF_WRITER(inst)                                  (G_TYPE_CHECK_INSTANCE_CAST ((inst),                     \
                                                              DCONF_TYPE_WRITER, DConfWriter))
+#define DCONF_WRITER_CLASS(class)                           (G_TYPE_CHECK_CLASS_CAST ((class),                       \
+                                                             DCONF_TYPE_WRITER, DConfWriterClass)
 #define DCONF_IS_WRITER(inst)                               (G_TYPE_CHECK_INSTANCE_TYPE ((inst),                     \
+                                                             DCONF_TYPE_WRITER))
+#define DCONF_IS_WRITER_CLASS(class)                        (G_TYPE_CHECK_CLASS_TYPE ((class),                       \
                                                              DCONF_TYPE_WRITER))
 #define DCONF_WRITER_GET_CLASS(inst)                        (G_TYPE_INSTANCE_GET_CLASS ((inst),                      \
                                                              DCONF_TYPE_WRITER, DConfWriterClass))
+
+typedef struct _DConfWriterPrivate                          DConfWriterPrivate;
+typedef struct _DConfWriterClass                            DConfWriterClass;
+typedef struct _DConfWriter                                 DConfWriter;
+
+struct _DConfWriterClass
+{
+  DConfDBusWriterSkeletonClass parent_instance;
+
+  /* instance methods */
+  gboolean (* begin)  (DConfWriter     *writer,
+                       GError         **error);
+  void     (* change) (DConfWriter     *writer,
+                       DConfChangeset  *changeset,
+                       const gchar     *tag);
+  gboolean (* commit) (DConfWriter     *writer,
+                       GError         **error);
+  void     (* end)    (DConfWriter     *writer);
+};
+
+struct _DConfWriter
+{
+  DConfDBusWriterSkeleton parent_instance;
+  DConfWriterPrivate *priv;
+};
 
 GDBusInterfaceSkeleton *dconf_writer_new                                (const gchar *filename);
 

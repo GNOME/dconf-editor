@@ -33,9 +33,8 @@
 #include <errno.h>
 #include <stdio.h>
 
-typedef struct
+struct _DConfWriterPrivate
 {
-  DConfDBusWriterSkeleton parent_instance;
   gchar *filename;
   gboolean native;
   gchar *name;
@@ -46,28 +45,13 @@ typedef struct
 
   GQueue uncommited_changes;
   GQueue commited_changes;
-} DConfWriter;
+};
 
 typedef struct
 {
   DConfChangeset *changeset;
   gchar          *tag;
 } TaggedChange;
-
-typedef struct
-{
-  DConfDBusWriterSkeletonClass parent_instance;
-
-  gboolean (* begin)  (DConfWriter     *writer,
-                       GError         **error);
-  void     (* change) (DConfWriter     *writer,
-                       DConfChangeset  *changeset,
-                       const gchar     *tag);
-  gboolean (* commit) (DConfWriter     *writer,
-                       GError         **error);
-  void     (* end)    (DConfWriter     *writer);
-} DConfWriterClass;
-
 
 static void dconf_writer_iface_init (DConfDBusWriterIface *iface);
 
@@ -83,7 +67,7 @@ dconf_writer_get_tag (DConfWriter *writer)
 
   return g_strdup_printf ("%s:%s:%" G_GUINT64_FORMAT,
                           g_dbus_connection_get_unique_name (connection),
-                          writer->name, writer->tag++);
+                          writer->priv->name, writer->priv->tag++);
 }
 
 static gboolean
@@ -93,15 +77,15 @@ dconf_writer_real_begin (DConfWriter  *writer,
   /* If this is the first time, populate the value table with the
    * existing values.
    */
-  if (writer->commited_values == NULL)
+  if (writer->priv->commited_values == NULL)
     {
-      writer->commited_values = dconf_gvdb_utils_read_file (writer->filename, error);
+      writer->priv->commited_values = dconf_gvdb_utils_read_file (writer->priv->filename, error);
 
-      if (!writer->commited_values)
+      if (!writer->priv->commited_values)
         return FALSE;
     }
 
-  writer->uncommited_values = dconf_changeset_new_database (writer->commited_values);
+  writer->priv->uncommited_values = dconf_changeset_new_database (writer->priv->commited_values);
 
   return TRUE;
 }
@@ -111,9 +95,9 @@ dconf_writer_real_change (DConfWriter    *writer,
                           DConfChangeset *changeset,
                           const gchar    *tag)
 {
-  g_return_if_fail (writer->uncommited_values != NULL);
+  g_return_if_fail (writer->priv->uncommited_values != NULL);
 
-  dconf_changeset_change (writer->uncommited_values, changeset);
+  dconf_changeset_change (writer->priv->uncommited_values, changeset);
 
   if (tag)
     {
@@ -123,7 +107,7 @@ dconf_writer_real_change (DConfWriter    *writer,
       change->changeset = dconf_changeset_ref (changeset);
       change->tag = g_strdup (tag);
 
-      g_queue_push_tail (&writer->uncommited_changes, change);
+      g_queue_push_tail (&writer->priv->uncommited_changes, change);
     }
 }
 
@@ -131,23 +115,23 @@ static gboolean
 dconf_writer_real_commit (DConfWriter  *writer,
                           GError      **error)
 {
-  if (!dconf_gvdb_utils_write_file (writer->filename, writer->uncommited_values, error))
+  if (!dconf_gvdb_utils_write_file (writer->priv->filename, writer->priv->uncommited_values, error))
     return FALSE;
 
-  if (writer->native)
-    dconf_shm_flag (writer->name);
+  if (writer->priv->native)
+    dconf_shm_flag (writer->priv->name);
 
-  if (writer->commited_values)
-    dconf_changeset_unref (writer->commited_values);
-  writer->commited_values = writer->uncommited_values;
-  writer->uncommited_values = NULL;
+  if (writer->priv->commited_values)
+    dconf_changeset_unref (writer->priv->commited_values);
+  writer->priv->commited_values = writer->priv->uncommited_values;
+  writer->priv->uncommited_values = NULL;
 
   {
     GQueue empty_queue = G_QUEUE_INIT;
 
-    g_assert (g_queue_is_empty (&writer->commited_changes));
-    writer->commited_changes = writer->uncommited_changes;
-    writer->uncommited_changes = empty_queue;
+    g_assert (g_queue_is_empty (&writer->priv->commited_changes));
+    writer->priv->commited_changes = writer->priv->uncommited_changes;
+    writer->priv->uncommited_changes = empty_queue;
   }
 
   return TRUE;
@@ -156,16 +140,16 @@ dconf_writer_real_commit (DConfWriter  *writer,
 static void
 dconf_writer_real_end (DConfWriter *writer)
 {
-  while (!g_queue_is_empty (&writer->uncommited_changes))
+  while (!g_queue_is_empty (&writer->priv->uncommited_changes))
     {
-      TaggedChange *change = g_queue_pop_head (&writer->uncommited_changes);
+      TaggedChange *change = g_queue_pop_head (&writer->priv->uncommited_changes);
       g_free (change->tag);
       g_slice_free (TaggedChange, change);
     }
 
-  while (!g_queue_is_empty (&writer->commited_changes))
+  while (!g_queue_is_empty (&writer->priv->commited_changes))
     {
-      TaggedChange *change = g_queue_pop_head (&writer->commited_changes);
+      TaggedChange *change = g_queue_pop_head (&writer->priv->commited_changes);
       const gchar *prefix;
       const gchar * const *paths;
 
@@ -176,7 +160,7 @@ dconf_writer_real_end (DConfWriter *writer)
       g_slice_free (TaggedChange, change);
     }
 
-  g_clear_pointer (&writer->uncommited_values, dconf_changeset_unref);
+  g_clear_pointer (&writer->priv->uncommited_values, dconf_changeset_unref);
 }
 
 gboolean
@@ -293,7 +277,8 @@ dconf_writer_iface_init (DConfDBusWriterIface *iface)
 static void
 dconf_writer_init (DConfWriter *writer)
 {
-  writer->native = TRUE;
+  writer->priv = G_TYPE_INSTANCE_GET_PRIVATE (writer, DCONF_TYPE_WRITER, DConfWriterPrivate);
+  writer->priv->native = TRUE;
 }
 
 static void
@@ -304,13 +289,13 @@ dconf_writer_set_property (GObject *object, guint prop_id,
 
   g_assert_cmpint (prop_id, ==, 1);
 
-  g_assert (!writer->name);
-  writer->name = g_value_dup_string (value);
+  g_assert (!writer->priv->name);
+  writer->priv->name = g_value_dup_string (value);
 
-  if (writer->native)
-    writer->filename = g_build_filename (g_get_user_config_dir (), "dconf", writer->name, NULL);
+  if (writer->priv->native)
+    writer->priv->filename = g_build_filename (g_get_user_config_dir (), "dconf", writer->priv->name, NULL);
   else
-    writer->filename = g_build_filename (g_get_user_runtime_dir (), "dconf", writer->name, NULL);
+    writer->priv->filename = g_build_filename (g_get_user_runtime_dir (), "dconf", writer->priv->name, NULL);
 }
 
 static void
@@ -329,12 +314,14 @@ dconf_writer_class_init (DConfWriterClass *class)
                                    g_param_spec_string ("name", "name", "name", NULL,
                                                         G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY |
                                                         G_PARAM_WRITABLE));
+
+  g_type_class_add_private (class, sizeof (DConfWriterPrivate));
 }
 
 const gchar *
 dconf_writer_get_name (DConfWriter *writer)
 {
-  return writer->name;
+  return writer->priv->name;
 }
 
 GDBusInterfaceSkeleton *
