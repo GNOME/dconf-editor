@@ -325,7 +325,10 @@ dconf_writer_get_name (DConfWriter *writer)
 }
 
 GDBusInterfaceSkeleton *
-dconf_writer_new (const gchar *name)
+dconf_writer_new (GType        type,
+                  const gchar *name)
 {
-  return g_object_new (DCONF_TYPE_WRITER, "name", name, NULL);
+  g_return_val_if_fail (g_type_is_a (type, DCONF_TYPE_WRITER), NULL);
+
+  return g_object_new (type, "name", name, NULL);
 }

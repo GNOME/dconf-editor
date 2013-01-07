@@ -110,7 +110,7 @@ dconf_service_get_writer (DConfService    *service,
       GError *error = NULL;
       gchar *object_path;
 
-      writer = dconf_writer_new (name);
+      writer = dconf_writer_new (DCONF_TYPE_WRITER, name);
       g_hash_table_insert (service->writers, g_strdup (name), writer);
       object_path = g_strjoin ("/", base_path, name, NULL);
       g_dbus_interface_skeleton_export (writer, connection, object_path, &error);

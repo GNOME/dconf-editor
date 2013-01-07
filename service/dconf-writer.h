@@ -64,6 +64,7 @@ struct _DConfWriter
   DConfWriterPrivate *priv;
 };
 
-GDBusInterfaceSkeleton *dconf_writer_new                                (const gchar *filename);
+GDBusInterfaceSkeleton *dconf_writer_new                                (GType        type,
+                                                                         const gchar *name);
 
 #endif /* __dconf_writer_h__ */
