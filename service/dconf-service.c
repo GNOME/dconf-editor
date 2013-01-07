@@ -51,6 +51,45 @@ dconf_service_signalled (gpointer user_data)
 }
 
 static gchar **
+string_set_free (GHashTable *set)
+{
+  GHashTableIter iter;
+  gchar **result;
+  gint n_items;
+  gpointer key;
+  gint i = 0;
+
+  n_items = g_hash_table_size (set);
+  result = g_new (gchar *, n_items + 1);
+
+  g_hash_table_iter_init (&iter, set);
+  while (g_hash_table_iter_next (&iter, &key, NULL))
+    {
+      result[i++] = key;
+      g_hash_table_iter_steal (&iter);
+    }
+  result[i] = NULL;
+
+  g_assert_cmpint (n_items, ==, i);
+  g_hash_table_unref (set);
+
+  return result;
+}
+
+static GHashTable *
+string_set_new (void)
+{
+  return g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+}
+
+static void
+string_set_add (GHashTable  *set,
+                const gchar *string)
+{
+  g_hash_table_add (set, g_strdup (string));
+}
+
+static gchar **
 dconf_service_subtree_enumerate (GDBusConnection *connection,
                                  const gchar     *sender,
                                  const gchar     *object_path,
@@ -58,22 +97,15 @@ dconf_service_subtree_enumerate (GDBusConnection *connection,
 {
   DConfService *service = user_data;
   GHashTableIter iter;
-  gchar **result;
+  GHashTable *set;
   gpointer key;
-  gint n_items;
-  gint i = 0;
 
-  n_items = g_hash_table_size (service->writers);
-  result = g_new (gchar *, n_items + 1);
-
+  set = string_set_new ();
   g_hash_table_iter_init (&iter, service->writers);
   while (g_hash_table_iter_next (&iter, &key, NULL))
-    result[i++] = g_strdup (key);
-  result[i] = NULL;
+    string_set_add (set, key);
 
-  g_assert_cmpint (n_items, ==, i);
-
-  return result;
+  return string_set_free (set);
 }
 
 GDBusInterfaceInfo **
