@@ -47,6 +47,9 @@ struct _DConfWriterClass
 {
   DConfDBusWriterSkeletonClass parent_instance;
 
+  /* static methods */
+  void     (* list)   (GHashTable      *set);
+
   /* instance methods */
   gboolean (* begin)  (DConfWriter     *writer,
                        GError         **error);
@@ -64,6 +67,9 @@ struct _DConfWriter
   DConfWriterPrivate *priv;
 };
 
+
+void                    dconf_writer_list                               (GType        type,
+                                                                         GHashTable  *set);
 GDBusInterfaceSkeleton *dconf_writer_new                                (GType        type,
                                                                          const gchar *name);
 

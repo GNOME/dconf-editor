@@ -58,6 +58,25 @@ static void dconf_writer_iface_init (DConfDBusWriterIface *iface);
 G_DEFINE_TYPE_WITH_CODE (DConfWriter, dconf_writer, DCONF_DBUS_TYPE_WRITER_SKELETON,
                          G_IMPLEMENT_INTERFACE (DCONF_DBUS_TYPE_WRITER, dconf_writer_iface_init))
 
+static void
+dconf_writer_real_list (GHashTable *set)
+{
+  const gchar *name;
+  gchar *dirname;
+  GDir *dir;
+
+  dirname = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
+  dir = g_dir_open (dirname, 0, NULL);
+
+  if (!dir)
+    return;
+
+  while (name = g_dir_read_name (dir))
+    g_hash_table_add (set, g_strdup (name));
+
+  g_dir_close (dir);
+}
+
 static gchar *
 dconf_writer_get_tag (DConfWriter *writer)
 {
@@ -309,6 +328,7 @@ dconf_writer_class_init (DConfWriterClass *class)
   class->change = dconf_writer_real_change;
   class->commit = dconf_writer_real_commit;
   class->end = dconf_writer_real_end;
+  class->list = dconf_writer_real_list;
 
   g_object_class_install_property (object_class, 1,
                                    g_param_spec_string ("name", "name", "name", NULL,
@@ -322,6 +342,19 @@ const gchar *
 dconf_writer_get_name (DConfWriter *writer)
 {
   return writer->priv->name;
+}
+
+void
+dconf_writer_list (GType       type,
+                   GHashTable *set)
+{
+  DConfWriterClass *class;
+
+  g_return_if_fail (g_type_is_a (type, DCONF_TYPE_WRITER));
+
+  class = g_type_class_ref (type);
+  class->list (set);
+  g_type_class_unref (class);
 }
 
 GDBusInterfaceSkeleton *
