@@ -105,6 +105,8 @@ dconf_service_subtree_enumerate (GDBusConnection *connection,
   while (g_hash_table_iter_next (&iter, &key, NULL))
     string_set_add (set, key);
 
+  dconf_writer_list (DCONF_TYPE_WRITER, set);
+
   return string_set_free (set);
 }
 
