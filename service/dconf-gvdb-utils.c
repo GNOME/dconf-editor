@@ -22,6 +22,7 @@
 
 #include "dconf-gvdb-utils.h"
 
+#include "../common/dconf-paths.h"
 #include "../gvdb/gvdb-builder.h"
 #include "../gvdb/gvdb-reader.h"
 

@@ -25,6 +25,7 @@
 #include "../shm/dconf-shm.h"
 #include "dconf-gvdb-utils.h"
 #include "dconf-generated.h"
+#include "dconf-blame.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -71,7 +72,7 @@ dconf_writer_real_list (GHashTable *set)
   if (!dir)
     return;
 
-  while (name = g_dir_read_name (dir))
+  while ((name = g_dir_read_name (dir)))
     g_hash_table_add (set, g_strdup (name));
 
   g_dir_close (dir);

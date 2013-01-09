@@ -25,6 +25,7 @@
 #include "dconf-writer.h"
 #include "dconf-blame.h"
 
+#include <glib-unix.h>
 #include <string.h>
 #include <fcntl.h>
 
