@@ -21,6 +21,7 @@ dconf_service_SOURCES = \
 	dconf-service.h			\
 	dconf-writer.h			\
 	dconf-writer.c			\
+	dconf-shm-writer.c		\
 	main.c
 
 dconf-generated.c: dconf-generated.h
