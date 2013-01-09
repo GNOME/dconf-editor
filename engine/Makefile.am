@@ -9,6 +9,7 @@ libdconf_engine_a_SOURCES = \
 	dconf-engine-source-private.h	\
 	dconf-engine-source.h		\
 	dconf-engine-source-user.c	\
+	dconf-engine-source-service.c	\
 	dconf-engine-source-system.c	\
 	dconf-engine-source.c		\
 	dconf-engine.h			\
