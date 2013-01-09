@@ -1,14 +1,14 @@
 # Bulgarian translation of dconf po-file.
-# Copyright (C) 2012 Free Software Foundation, Inc.
+# Copyright (C) 2012, 2013 Free Software Foundation, Inc.
 # This file is distributed under the same license as the dconf package.
-# Alexander Shopov <ash@kambanaria.org>, 2012.
+# Alexander Shopov <ash@kambanaria.org>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-02 06:38+0300\n"
-"PO-Revision-Date: 2012-10-02 06:38+0300\n"
+"POT-Creation-Date: 2013-01-09 07:02+0200\n"
+"PO-Revision-Date: 2013-01-09 07:02+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -18,13 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:389
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "Редактор за dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:392
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "Редактиране на цялата база от данни с настройки"
+
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "настройки;конфигурации;settings;configuration;"
 
 #: ../editor/dconf-editor.vala:180
 #, c-format
@@ -43,15 +47,15 @@ msgstr "Низ"
 msgid "Enumeration"
 msgstr "Изброяване"
 
-#: ../editor/dconf-editor.vala:229
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "Без схема"
 
-#: ../editor/dconf-editor.vala:339
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "Няма"
 
-#: ../editor/dconf-editor.vala:387
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -82,11 +86,11 @@ msgstr ""
 "заедно с тази програма. Ако не сте, пишете до Free Software Foundation, "
 "Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/dconf-editor.vala:393
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "Авторски права © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:397
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr ""
 "Александър Шопов <ash@kambanaria.org>\n"
