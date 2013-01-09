@@ -34,9 +34,11 @@ typedef struct
 {
   GApplication parent_instance;
 
+  GIOExtensionPoint *extension_point;
+
   DConfBlame  *blame;
   GHashTable  *writers;
-  guint        subtree_id;
+  GArray      *subtree_ids;
 } DConfService;
 
 G_DEFINE_TYPE (DConfService, dconf_service, G_TYPE_APPLICATION)
@@ -90,6 +92,34 @@ string_set_add (GHashTable  *set,
   g_hash_table_add (set, g_strdup (string));
 }
 
+static GType
+dconf_service_find_writer_type (DConfService  *service,
+                                const gchar   *object_path,
+                                GHashTable   **writers)
+{
+  GIOExtension *extension;
+  const gchar *path;
+  GHashTable *table;
+
+  path = object_path + strlen ("/ca/desrt/dconf");
+  g_assert (*path == '/');
+  path++;
+
+  extension = g_io_extension_point_get_extension_by_name (service->extension_point, path);
+  g_assert (extension != NULL);
+
+  table = g_hash_table_lookup (service->writers, path);
+  if (table == NULL)
+    {
+      table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+      g_hash_table_insert (service->writers, g_strdup (path), table);
+    }
+
+  *writers = table;
+
+  return g_io_extension_get_type (extension);
+}
+
 static gchar **
 dconf_service_subtree_enumerate (GDBusConnection *connection,
                                  const gchar     *sender,
@@ -98,15 +128,18 @@ dconf_service_subtree_enumerate (GDBusConnection *connection,
 {
   DConfService *service = user_data;
   GHashTableIter iter;
+  GHashTable *writers;
+  GType writer_type;
   GHashTable *set;
   gpointer key;
 
   set = string_set_new ();
-  g_hash_table_iter_init (&iter, service->writers);
+  writer_type = dconf_service_find_writer_type (service, object_path, &writers);
+  g_hash_table_iter_init (&iter, writers);
   while (g_hash_table_iter_next (&iter, &key, NULL))
     string_set_add (set, key);
 
-  dconf_writer_list (DCONF_TYPE_WRITER, set);
+  dconf_writer_list (writer_type, set);
 
   return string_set_free (set);
 }
@@ -137,16 +170,20 @@ dconf_service_get_writer (DConfService    *service,
                           const gchar     *name)
 {
   GDBusInterfaceSkeleton *writer;
+  GHashTable *writers;
+  GType writer_type;
 
-  writer = g_hash_table_lookup (service->writers, name);
+  writer_type = dconf_service_find_writer_type (service, base_path, &writers);
+
+  writer = g_hash_table_lookup (writers, name);
 
   if (writer == NULL)
     {
       GError *error = NULL;
       gchar *object_path;
 
-      writer = dconf_writer_new (DCONF_TYPE_WRITER, name);
-      g_hash_table_insert (service->writers, g_strdup (name), writer);
+      writer = dconf_writer_new (writer_type, name);
+      g_hash_table_insert (writers, g_strdup (name), writer);
       object_path = g_strjoin ("/", base_path, name, NULL);
       g_dbus_interface_skeleton_export (writer, connection, object_path, &error);
       g_assert_no_error (error);
@@ -188,6 +225,12 @@ dconf_service_dbus_register (GApplication     *application,
   };
   DConfService *service = DCONF_SERVICE (application);
   GError *local_error = NULL;
+  GList *node;
+  guint id;
+
+  service->extension_point = g_io_extension_point_register ("dconf-backend");
+  g_io_extension_point_set_required_type (service->extension_point, DCONF_TYPE_WRITER);
+  g_io_extension_point_implement ("dconf-backend", DCONF_TYPE_WRITER, "Writer", 0);
 
   service->blame = dconf_blame_get ();
   if (service->blame)
@@ -197,10 +240,18 @@ dconf_service_dbus_register (GApplication     *application,
       g_assert_no_error (local_error);
     }
 
-  service->subtree_id = g_dbus_connection_register_subtree (connection, "/ca/desrt/dconf/Writer", &subtree_vtable,
-                                                            G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES,
-                                                            g_object_ref (service), g_object_unref, &local_error);
-  g_assert_no_error (local_error);
+  for (node = g_io_extension_point_get_extensions (service->extension_point); node; node = node->next)
+    {
+      gchar *path;
+
+      path = g_strconcat ("/ca/desrt/dconf/", g_io_extension_get_name (node->data), NULL);
+      g_print ("register %s\n", path);
+      id = g_dbus_connection_register_subtree (connection, path, &subtree_vtable,
+                                               G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES,
+                                               g_object_ref (service), g_object_unref, &local_error);
+      g_assert_no_error (local_error);
+      g_array_append_vals (service->subtree_ids, &id, 1);
+    }
 
   return TRUE;
 }
@@ -211,6 +262,7 @@ dconf_service_dbus_unregister (GApplication    *application,
                                const gchar     *object_path)
 {
   DConfService *service = DCONF_SERVICE (application);
+  gint i;
 
   if (service->blame)
     {
@@ -219,8 +271,9 @@ dconf_service_dbus_unregister (GApplication    *application,
       service->blame = NULL;
     }
 
-  g_dbus_connection_unregister_subtree (connection, service->subtree_id);
-  service->subtree_id = 0;
+  for (i = 0; i < service->subtree_ids->len; i++)
+    g_dbus_connection_unregister_subtree (connection, g_array_index (service->subtree_ids, guint, i));
+  g_array_set_size (service->subtree_ids, 0);
 }
 
 static void
@@ -249,11 +302,27 @@ static void
 dconf_service_init (DConfService *service)
 {
   service->writers = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  service->subtree_ids = g_array_new (FALSE, TRUE, sizeof (guint));
+}
+
+static void
+dconf_service_finalize (GObject *object)
+{
+  DConfService *service = (DConfService *) object;
+
+  g_assert_cmpint (service->subtree_ids->len, ==, 0);
+  g_array_free (service->subtree_ids, TRUE);
+
+  G_OBJECT_CLASS (dconf_service_parent_class)->finalize (object);
 }
 
 static void
 dconf_service_class_init (GApplicationClass *class)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (class);
+
+  object_class->finalize = dconf_service_finalize;
+
   class->dbus_register = dconf_service_dbus_register;
   class->dbus_unregister = dconf_service_dbus_unregister;
   class->startup = dconf_service_startup;

@@ -68,6 +68,11 @@ struct _DConfWriter
 };
 
 
+GType                   dconf_writer_get_type                           (void);
+
+void                    dconf_writer_set_basepath                       (DConfWriter *writer,
+                                                                         const gchar *name);
+
 void                    dconf_writer_list                               (GType        type,
                                                                          GHashTable  *set);
 GDBusInterfaceSkeleton *dconf_writer_new                                (GType        type,

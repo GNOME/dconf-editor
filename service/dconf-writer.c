@@ -38,6 +38,7 @@ struct _DConfWriterPrivate
 {
   gchar *filename;
   gboolean native;
+  gchar *basepath;
   gchar *name;
   guint64 tag;
 
@@ -135,11 +136,23 @@ static gboolean
 dconf_writer_real_commit (DConfWriter  *writer,
                           GError      **error)
 {
+  gint invalidate_fd = -1;
+
+  if (!writer->priv->native)
+    /* If it fails, it doesn't matter... */
+    invalidate_fd = open (writer->priv->filename, O_WRONLY);
+
   if (!dconf_gvdb_utils_write_file (writer->priv->filename, writer->priv->uncommited_values, error))
     return FALSE;
 
   if (writer->priv->native)
     dconf_shm_flag (writer->priv->name);
+
+  if (invalidate_fd != -1)
+    {
+      write (invalidate_fd, "\0\0\0\0\0\0\0\0", 8);
+      close (invalidate_fd);
+    }
 
   if (writer->priv->commited_values)
     dconf_changeset_unref (writer->priv->commited_values);
@@ -298,6 +311,7 @@ static void
 dconf_writer_init (DConfWriter *writer)
 {
   writer->priv = G_TYPE_INSTANCE_GET_PRIVATE (writer, DCONF_TYPE_WRITER, DConfWriterPrivate);
+  writer->priv->basepath = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
   writer->priv->native = TRUE;
 }
 
@@ -312,10 +326,7 @@ dconf_writer_set_property (GObject *object, guint prop_id,
   g_assert (!writer->priv->name);
   writer->priv->name = g_value_dup_string (value);
 
-  if (writer->priv->native)
-    writer->priv->filename = g_build_filename (g_get_user_config_dir (), "dconf", writer->priv->name, NULL);
-  else
-    writer->priv->filename = g_build_filename (g_get_user_runtime_dir (), "dconf", writer->priv->name, NULL);
+  writer->priv->filename = g_build_filename (writer->priv->basepath, writer->priv->name, NULL);
 }
 
 static void
@@ -337,6 +348,15 @@ dconf_writer_class_init (DConfWriterClass *class)
                                                         G_PARAM_WRITABLE));
 
   g_type_class_add_private (class, sizeof (DConfWriterPrivate));
+}
+
+void
+dconf_writer_set_basepath (DConfWriter *writer,
+                           const gchar *name)
+{
+  g_free (writer->priv->basepath);
+  writer->priv->basepath = g_build_filename (g_get_user_runtime_dir (), "dconf-service", name, NULL);
+  writer->priv->native = FALSE;
 }
 
 const gchar *
