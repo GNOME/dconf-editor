@@ -75,7 +75,10 @@ dconf_writer_real_list (GHashTable *set)
     return;
 
   while ((name = g_dir_read_name (dir)))
-    g_hash_table_add (set, g_strdup (name));
+    {
+      if (!strchr (name, '.'))
+        g_hash_table_add (set, g_strdup (name));
+    }
 
   g_dir_close (dir);
 }

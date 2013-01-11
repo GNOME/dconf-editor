@@ -28,10 +28,12 @@ typedef DConfWriterClass DConfKeyfileWriterClass;
 
 typedef struct
 {
-  DConfWriter  parent_instance;
-  gchar       *filename;
-  gchar       *contents;
-  GKeyFile    *keyfile;
+  DConfWriter   parent_instance;
+  gchar        *filename;
+  GFileMonitor *monitor;
+  guint         scheduled_update;
+  gchar        *contents;
+  GKeyFile     *keyfile;
 } DConfKeyfileWriter;
 
 G_DEFINE_TYPE (DConfKeyfileWriter, dconf_keyfile_writer, DCONF_TYPE_WRITER)
@@ -122,6 +124,25 @@ dconf_keyfile_writer_list (GHashTable *set)
 {
 }
 
+static gboolean dconf_keyfile_update (gpointer user_data);
+
+static void
+dconf_keyfile_changed (GFileMonitor      *monitor,
+                       GFile             *file,
+                       GFile             *other_file,
+                       GFileMonitorEvent  event_type,
+                       gpointer           user_data)
+{
+  DConfKeyfileWriter *kfw = user_data;
+
+  if (event_type == G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT ||
+      event_type == G_FILE_MONITOR_EVENT_CREATED)
+    {
+      if (!kfw->scheduled_update)
+        kfw->scheduled_update = g_idle_add (dconf_keyfile_update, kfw);
+    }
+}
+
 static gboolean
 dconf_keyfile_writer_begin (DConfWriter  *writer,
                             GError      **error)
@@ -132,8 +153,20 @@ dconf_keyfile_writer_begin (DConfWriter  *writer,
   DConfChangeset *changes;
 
   if (kfw->filename == NULL)
-    kfw->filename = g_build_filename (g_get_user_config_dir (), "dconf-keyfile",
-                                      dconf_writer_get_name (writer), NULL);
+    {
+      gchar *filename_base;
+      GFile *file;
+
+      filename_base = g_build_filename (g_get_user_config_dir (), "dconf", dconf_writer_get_name (writer), NULL);
+      kfw->filename = g_strconcat (filename_base, ".txt", NULL);
+      g_free (filename_base);
+
+      file = g_file_new_for_path (kfw->filename);
+      kfw->monitor = g_file_monitor_file (file, G_FILE_MONITOR_NONE, NULL, NULL);
+      g_object_unref (file);
+
+      g_signal_connect (kfw->monitor, "changed", G_CALLBACK (dconf_keyfile_changed), kfw);
+    }
 
   g_clear_pointer (&kfw->contents, g_free);
 
@@ -150,12 +183,15 @@ dconf_keyfile_writer_begin (DConfWriter  *writer,
 
   kfw->keyfile = g_key_file_new ();
 
-  if (!g_key_file_load_from_data (kfw->keyfile, kfw->contents, -1, G_KEY_FILE_KEEP_COMMENTS, &local_error))
+  if (kfw->contents)
     {
-      g_clear_pointer (&kfw->keyfile, g_key_file_free);
-      g_clear_pointer (&kfw->contents, g_free);
-      g_propagate_error (error, local_error);
-      return FALSE;
+      if (!g_key_file_load_from_data (kfw->keyfile, kfw->contents, -1, G_KEY_FILE_KEEP_COMMENTS, &local_error))
+        {
+          g_clear_pointer (&kfw->keyfile, g_key_file_free);
+          g_clear_pointer (&kfw->contents, g_free);
+          g_propagate_error (error, local_error);
+          return FALSE;
+        }
     }
 
   if (!DCONF_WRITER_CLASS (dconf_keyfile_writer_parent_class)->begin (writer, error))
@@ -307,7 +343,7 @@ dconf_keyfile_writer_commit (DConfWriter  *writer,
     data = g_key_file_to_data (kfw->keyfile, &size, NULL);
 
     /* don't write it again if nothing changed */
-    if (!g_str_equal (kfw->contents, data))
+    if (!kfw->contents || !g_str_equal (kfw->contents, data))
       {
         if (!g_file_set_contents (kfw->filename, data, size, error))
           {
@@ -360,6 +396,36 @@ dconf_keyfile_writer_end (DConfWriter *writer)
   g_clear_pointer (&kfw->contents, g_free);
 }
 
+static gboolean
+dconf_keyfile_update (gpointer user_data)
+{
+  DConfKeyfileWriter *kfw = user_data;
+
+  if (dconf_keyfile_writer_begin (DCONF_WRITER (kfw), NULL))
+    {
+      dconf_keyfile_writer_commit (DCONF_WRITER (kfw), NULL);
+      dconf_keyfile_writer_end (DCONF_WRITER (kfw));
+    }
+
+  kfw->scheduled_update = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+dconf_keyfile_writer_finalize (GObject *object)
+{
+  DConfKeyfileWriter *kfw = (DConfKeyfileWriter *) object;
+
+  if (kfw->scheduled_update)
+    g_source_remove (kfw->scheduled_update);
+
+  g_clear_object (&kfw->monitor);
+  g_free (kfw->filename);
+
+  G_OBJECT_CLASS (dconf_keyfile_writer_parent_class)->finalize (object);
+}
+
 static void
 dconf_keyfile_writer_init (DConfKeyfileWriter *writer)
 {
@@ -369,6 +435,10 @@ dconf_keyfile_writer_init (DConfKeyfileWriter *writer)
 static void
 dconf_keyfile_writer_class_init (DConfWriterClass *class)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (class);
+
+  object_class->finalize = dconf_keyfile_writer_finalize;
+
   class->list = dconf_keyfile_writer_list;
   class->begin = dconf_keyfile_writer_begin;
   class->change = dconf_keyfile_writer_change;
