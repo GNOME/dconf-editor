@@ -231,6 +231,7 @@ dconf_service_dbus_register (GApplication     *application,
   service->extension_point = g_io_extension_point_register ("dconf-backend");
   g_io_extension_point_set_required_type (service->extension_point, DCONF_TYPE_WRITER);
   g_io_extension_point_implement ("dconf-backend", DCONF_TYPE_WRITER, "Writer", 0);
+  g_io_extension_point_implement ("dconf-backend", DCONF_TYPE_KEYFILE_WRITER, "keyfile", 0);
   g_io_extension_point_implement ("dconf-backend", DCONF_TYPE_SHM_WRITER, "shm", 0);
 
   service->blame = dconf_blame_get ();

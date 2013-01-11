@@ -28,7 +28,6 @@
 #include "dconf-generated.h"
 
 #define DCONF_TYPE_WRITER                                   (dconf_writer_get_type ())
-#define DCONF_TYPE_SHM_WRITER                               (dconf_shm_writer_get_type ())
 #define DCONF_WRITER(inst)                                  (G_TYPE_CHECK_INSTANCE_CAST ((inst),                     \
                                                              DCONF_TYPE_WRITER, DConfWriter))
 #define DCONF_WRITER_CLASS(class)                           (G_TYPE_CHECK_CLASS_CAST ((class),                       \
@@ -70,7 +69,6 @@ struct _DConfWriter
 
 
 GType                   dconf_writer_get_type                           (void);
-GType                   dconf_shm_writer_get_type                       (void);
 
 void                    dconf_writer_set_basepath                       (DConfWriter *writer,
                                                                          const gchar *name);
@@ -82,5 +80,10 @@ void                    dconf_writer_list                               (GType  
                                                                          GHashTable  *set);
 GDBusInterfaceSkeleton *dconf_writer_new                                (GType        type,
                                                                          const gchar *name);
+
+#define DCONF_TYPE_SHM_WRITER                               (dconf_shm_writer_get_type ())
+GType                   dconf_shm_writer_get_type                       (void);
+#define DCONF_TYPE_KEYFILE_WRITER                           (dconf_keyfile_writer_get_type ())
+GType                   dconf_keyfile_writer_get_type                   (void);
 
 #endif /* __dconf_writer_h__ */
