@@ -74,6 +74,8 @@ GType                   dconf_shm_writer_get_type                       (void);
 
 void                    dconf_writer_set_basepath                       (DConfWriter *writer,
                                                                          const gchar *name);
+DConfChangeset *        dconf_writer_diff                               (DConfWriter *writer,
+                                                                         DConfChangeset *changeset);
 
 void                    dconf_writer_list                               (GType        type,
                                                                          GHashTable  *set);

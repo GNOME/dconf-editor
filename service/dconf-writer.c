@@ -359,6 +359,13 @@ dconf_writer_set_basepath (DConfWriter *writer,
   writer->priv->native = FALSE;
 }
 
+DConfChangeset *
+dconf_writer_diff (DConfWriter    *writer,
+                   DConfChangeset *changeset)
+{
+  return dconf_changeset_diff (writer->priv->uncommited_values, changeset);
+}
+
 const gchar *
 dconf_writer_get_name (DConfWriter *writer)
 {
