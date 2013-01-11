@@ -24,6 +24,7 @@
 
 #include "dconf-engine.h"
 #include <sys/mman.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 
@@ -34,9 +35,6 @@ dconf_engine_source_service_init (DConfEngineSource *source)
   source->bus_name = g_strdup ("ca.desrt.dconf");
   source->object_path = g_strdup_printf ("/ca/desrt/dconf/%s", source->name);
   source->writable = TRUE;
-
-  dconf_engine_dbus_call_sync_func (source->bus_type, source->bus_name, source->object_path,
-                                    "ca.desrt.dconf.Writer", "Init", NULL, NULL, NULL);
 }
 
 static gboolean
@@ -54,6 +52,12 @@ dconf_engine_source_service_reopen (DConfEngineSource *source)
   gchar *filename;
 
   filename = g_build_filename (g_get_user_runtime_dir (), "dconf-service", source->name, NULL);
+
+  /* If the file does not exist, kick the service to have it created. */
+  if (access (filename, R_OK) != 0)
+    dconf_engine_dbus_call_sync_func (source->bus_type, source->bus_name, source->object_path,
+                                      "ca.desrt.dconf.Writer", "Init", NULL, NULL, NULL);
+
   table = gvdb_table_new (filename, FALSE, &error);
 
   if (table == NULL)
