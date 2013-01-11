@@ -32,7 +32,7 @@
 #define DCONF_WRITER(inst)                                  (G_TYPE_CHECK_INSTANCE_CAST ((inst),                     \
                                                              DCONF_TYPE_WRITER, DConfWriter))
 #define DCONF_WRITER_CLASS(class)                           (G_TYPE_CHECK_CLASS_CAST ((class),                       \
-                                                             DCONF_TYPE_WRITER, DConfWriterClass)
+                                                             DCONF_TYPE_WRITER, DConfWriterClass))
 #define DCONF_IS_WRITER(inst)                               (G_TYPE_CHECK_INSTANCE_TYPE ((inst),                     \
                                                              DCONF_TYPE_WRITER))
 #define DCONF_IS_WRITER_CLASS(class)                        (G_TYPE_CHECK_CLASS_TYPE ((class),                       \
@@ -76,6 +76,7 @@ void                    dconf_writer_set_basepath                       (DConfWr
                                                                          const gchar *name);
 DConfChangeset *        dconf_writer_diff                               (DConfWriter *writer,
                                                                          DConfChangeset *changeset);
+const gchar *           dconf_writer_get_name                           (DConfWriter *writer);
 
 void                    dconf_writer_list                               (GType        type,
                                                                          GHashTable  *set);
