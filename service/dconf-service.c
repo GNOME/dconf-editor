@@ -247,7 +247,6 @@ dconf_service_dbus_register (GApplication     *application,
       gchar *path;
 
       path = g_strconcat ("/ca/desrt/dconf/", g_io_extension_get_name (node->data), NULL);
-      g_print ("register %s\n", path);
       id = g_dbus_connection_register_subtree (connection, path, &subtree_vtable,
                                                G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES,
                                                g_object_ref (service), g_object_unref, &local_error);
