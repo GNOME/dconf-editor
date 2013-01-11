@@ -697,3 +697,76 @@ dconf_changeset_change (DConfChangeset *changeset,
       dconf_changeset_set (changeset, path, value);
     }
 }
+
+/**
+ * dconf_changeset_diff:
+ * @from: a database mode changeset
+ * @to: a database mode changeset
+ *
+ * Compares to database-mode changesets and produces a changeset that
+ * describes their differences.
+ *
+ * If there is no difference, %NULL is returned.
+ *
+ * Applying the returned changeset to @from using
+ * dconf_changeset_change() will result in the two changesets being
+ * equal.
+ *
+ * Returns: (transfer full): the changes, or %NULL
+ *
+ * Since: 0.16
+ */
+DConfChangeset *
+dconf_changeset_diff (DConfChangeset *from,
+                      DConfChangeset *to)
+{
+  DConfChangeset *changeset = NULL;
+  GHashTableIter iter;
+  gpointer key, val;
+
+  g_return_val_if_fail (from->is_database, NULL);
+  g_return_val_if_fail (to->is_database, NULL);
+
+  /* We make no attempt to do dir resets, but we could...
+   *
+   * For now, we just reset each key individually.
+   *
+   * We create our list of changes in two steps:
+   *
+   *   - iterate the 'to' changeset and note any keys that do not have
+   *     the same value in the 'from' changeset
+   *
+   *   - iterate the 'from' changeset and note any keys not present in
+   *     the 'to' changeset, recording resets for them
+   *
+   * This will cover all changes.
+   *
+   * Note: because 'from' and 'to' are database changesets we don't have
+   * to worry about seeing NULL values or dirs.
+   */
+  g_hash_table_iter_init (&iter, to->table);
+  while (g_hash_table_iter_next (&iter, &key, &val))
+    {
+      GVariant *from_val = g_hash_table_lookup (from->table, key);
+
+      if (from_val == NULL || !g_variant_equal (val, from_val))
+        {
+          if (!changeset)
+            changeset = dconf_changeset_new ();
+
+          dconf_changeset_set (changeset, key, val);
+        }
+    }
+
+  g_hash_table_iter_init (&iter, from->table);
+  while (g_hash_table_iter_next (&iter, &key, &val))
+    if (!g_hash_table_lookup (to->table, key))
+      {
+        if (!changeset)
+          changeset = dconf_changeset_new ();
+
+        dconf_changeset_set (changeset, key, NULL);
+      }
+
+  return changeset;
+}
