@@ -30,6 +30,7 @@ typedef struct
 {
   DConfWriter  parent_instance;
   gchar       *filename;
+  gchar       *contents;
   GKeyFile    *keyfile;
 } DConfKeyfileWriter;
 
@@ -134,18 +135,27 @@ dconf_keyfile_writer_begin (DConfWriter  *writer,
     kfw->filename = g_build_filename (g_get_user_config_dir (), "dconf-keyfile",
                                       dconf_writer_get_name (writer), NULL);
 
-  kfw->keyfile = g_key_file_new ();
+  g_clear_pointer (&kfw->contents, g_free);
 
-  if (!g_key_file_load_from_file (kfw->keyfile, kfw->filename, G_KEY_FILE_KEEP_COMMENTS, &local_error))
+  if (!g_file_get_contents (kfw->filename, &kfw->contents, NULL, &local_error))
     {
       if (!g_error_matches (local_error, G_FILE_ERROR, G_FILE_ERROR_NOENT))
         {
-          g_clear_pointer (&kfw->keyfile, g_key_file_free);
           g_propagate_error (error, local_error);
           return FALSE;
         }
 
       g_clear_error (&local_error);
+    }
+
+  kfw->keyfile = g_key_file_new ();
+
+  if (!g_key_file_load_from_data (kfw->keyfile, kfw->contents, -1, G_KEY_FILE_KEEP_COMMENTS, &local_error))
+    {
+      g_clear_pointer (&kfw->keyfile, g_key_file_free);
+      g_clear_pointer (&kfw->contents, g_free);
+      g_propagate_error (error, local_error);
+      return FALSE;
     }
 
   if (!DCONF_WRITER_CLASS (dconf_keyfile_writer_parent_class)->begin (writer, error))
@@ -295,22 +305,27 @@ dconf_keyfile_writer_commit (DConfWriter  *writer,
 
     /* docs say: "Note that this function never reports an error" */
     data = g_key_file_to_data (kfw->keyfile, &size, NULL);
-    if (!g_file_set_contents (kfw->filename, data, size, error))
+
+    /* don't write it again if nothing changed */
+    if (!g_str_equal (kfw->contents, data))
       {
-        gchar *dirname;
-
-        /* Maybe it failed because the directory doesn't exist.  Try
-         * again, after mkdir().
-         */
-        dirname = g_path_get_dirname (kfw->filename);
-        g_mkdir_with_parents (dirname, 0777);
-        g_free (dirname);
-
-        g_clear_error (error);
         if (!g_file_set_contents (kfw->filename, data, size, error))
           {
-            g_free (data);
-            return FALSE;
+            gchar *dirname;
+
+            /* Maybe it failed because the directory doesn't exist.  Try
+             * again, after mkdir().
+             */
+            dirname = g_path_get_dirname (kfw->filename);
+            g_mkdir_with_parents (dirname, 0777);
+            g_free (dirname);
+
+            g_clear_error (error);
+            if (!g_file_set_contents (kfw->filename, data, size, error))
+              {
+                g_free (data);
+                return FALSE;
+              }
           }
       }
 
@@ -342,6 +357,7 @@ dconf_keyfile_writer_end (DConfWriter *writer)
   DCONF_WRITER_CLASS (dconf_keyfile_writer_parent_class)->end (writer);
 
   g_clear_pointer (&kfw->keyfile, g_key_file_free);
+  g_clear_pointer (&kfw->contents, g_free);
 }
 
 static void
