@@ -30,6 +30,7 @@
 
 DConfChangeset *
 dconf_gvdb_utils_read_file (const gchar  *filename,
+                            gboolean     *file_missing,
                             GError      **error)
 {
   DConfChangeset *database;
@@ -94,6 +95,9 @@ dconf_gvdb_utils_read_file (const gchar  *filename,
       gvdb_table_free (table);
       g_free (names);
     }
+
+  if (file_missing)
+    *file_missing = (table == NULL);
 
   return database;
 }

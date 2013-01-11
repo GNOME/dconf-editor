@@ -41,6 +41,7 @@ struct _DConfWriterPrivate
   gchar *basepath;
   gchar *name;
   guint64 tag;
+  gboolean need_write;
 
   DConfChangeset *uncommited_values;
   DConfChangeset *commited_values;
@@ -100,10 +101,18 @@ dconf_writer_real_begin (DConfWriter  *writer,
    */
   if (writer->priv->commited_values == NULL)
     {
-      writer->priv->commited_values = dconf_gvdb_utils_read_file (writer->priv->filename, error);
+      gboolean missing;
+
+      writer->priv->commited_values = dconf_gvdb_utils_read_file (writer->priv->filename, &missing, error);
 
       if (!writer->priv->commited_values)
         return FALSE;
+
+      /* If this is a non-native writer and the file doesn't exist, we
+       * will need to write it on commit so that the client can open it.
+       */
+      if (missing && !writer->priv->native)
+        writer->priv->need_write = TRUE;
     }
 
   writer->priv->uncommited_values = dconf_changeset_new_database (writer->priv->commited_values);
@@ -130,6 +139,8 @@ dconf_writer_real_change (DConfWriter    *writer,
 
       g_queue_push_tail (&writer->priv->uncommited_changes, change);
     }
+
+  writer->priv->need_write = TRUE;
 }
 
 static gboolean
@@ -137,6 +148,16 @@ dconf_writer_real_commit (DConfWriter  *writer,
                           GError      **error)
 {
   gint invalidate_fd = -1;
+
+  if (!writer->priv->need_write)
+    {
+      g_assert (g_queue_is_empty (&writer->priv->uncommited_changes));
+      g_assert (g_queue_is_empty (&writer->priv->commited_changes));
+      dconf_changeset_unref (writer->priv->uncommited_values);
+      writer->priv->uncommited_values = NULL;
+
+      return TRUE;
+    }
 
   if (!writer->priv->native)
     /* If it fails, it doesn't matter... */
