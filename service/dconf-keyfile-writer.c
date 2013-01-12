@@ -188,7 +188,8 @@ dconf_keyfile_writer_begin (DConfWriter  *writer,
       kfw->lock_filename = g_strconcat (kfw->filename, "-lock", NULL);
       g_free (filename_base);
 
-      file = g_file_new_for_path (kfw->filename);
+      /* See https://bugzilla.gnome.org/show_bug.cgi?id=691618 */
+      file = g_vfs_get_file_for_path (g_vfs_get_local (), kfw->filename);
       kfw->monitor = g_file_monitor_file (file, G_FILE_MONITOR_NONE, NULL, NULL);
       g_object_unref (file);
 
