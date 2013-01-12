@@ -23,6 +23,9 @@
 #include "dconf-writer.h"
 
 #include <string.h>
+#include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
 
 typedef DConfWriterClass DConfKeyfileWriterClass;
 
@@ -30,6 +33,8 @@ typedef struct
 {
   DConfWriter   parent_instance;
   gchar        *filename;
+  gchar        *lock_filename;
+  gint          lock_fd;
   GFileMonitor *monitor;
   guint         scheduled_update;
   gchar        *contents;
@@ -159,6 +164,7 @@ dconf_keyfile_writer_begin (DConfWriter  *writer,
 
       filename_base = g_build_filename (g_get_user_config_dir (), "dconf", dconf_writer_get_name (writer), NULL);
       kfw->filename = g_strconcat (filename_base, ".txt", NULL);
+      kfw->lock_filename = g_strconcat (kfw->filename, "-lock", NULL);
       g_free (filename_base);
 
       file = g_file_new_for_path (kfw->filename);
@@ -169,6 +175,55 @@ dconf_keyfile_writer_begin (DConfWriter  *writer,
     }
 
   g_clear_pointer (&kfw->contents, g_free);
+
+  kfw->lock_fd = open (kfw->lock_filename, O_RDWR | O_CREAT, 0666);
+  if (kfw->lock_fd == -1)
+    {
+      gchar *dirname;
+
+      /* Maybe it failed because the directory doesn't exist.  Try
+       * again, after mkdir().
+       */
+      dirname = g_path_get_dirname (kfw->lock_filename);
+      g_mkdir_with_parents (dirname, 0777);
+      g_free (dirname);
+
+      kfw->lock_fd = open (kfw->lock_filename, O_RDWR | O_CREAT, 0666);
+      if (kfw->lock_fd == -1)
+        {
+          gint saved_errno = errno;
+
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (saved_errno),
+                       "%s: %s", kfw->lock_filename, g_strerror (saved_errno));
+          return FALSE;
+        }
+    }
+
+  while (TRUE)
+    {
+      struct flock lock;
+
+      lock.l_type = F_WRLCK;
+      lock.l_whence = 0;
+      lock.l_start = 0;
+      lock.l_len = 0; /* lock all bytes */
+
+      if (fcntl (kfw->lock_fd, F_SETLKW, &lock) == 0)
+        break;
+
+      if (errno != EINTR)
+        {
+          gint saved_errno = errno;
+
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (saved_errno),
+                       "%s: unable to fcntl(F_SETLKW): %s", kfw->lock_filename, g_strerror (saved_errno));
+          close (kfw->lock_fd);
+          kfw->lock_fd = -1;
+          return FALSE;
+        }
+
+      /* it was EINTR.  loop again. */
+    }
 
   if (!g_file_get_contents (kfw->filename, &kfw->contents, NULL, &local_error))
     {
@@ -394,6 +449,8 @@ dconf_keyfile_writer_end (DConfWriter *writer)
 
   g_clear_pointer (&kfw->keyfile, g_key_file_free);
   g_clear_pointer (&kfw->contents, g_free);
+  close (kfw->lock_fd);
+  kfw->lock_fd = -1;
 }
 
 static gboolean
@@ -421,15 +478,18 @@ dconf_keyfile_writer_finalize (GObject *object)
     g_source_remove (kfw->scheduled_update);
 
   g_clear_object (&kfw->monitor);
+  g_free (kfw->lock_filename);
   g_free (kfw->filename);
 
   G_OBJECT_CLASS (dconf_keyfile_writer_parent_class)->finalize (object);
 }
 
 static void
-dconf_keyfile_writer_init (DConfKeyfileWriter *writer)
+dconf_keyfile_writer_init (DConfKeyfileWriter *kfw)
 {
-  dconf_writer_set_basepath (DCONF_WRITER (writer), "keyfile");
+  dconf_writer_set_basepath (DCONF_WRITER (kfw), "keyfile");
+
+  kfw->lock_fd = -1;
 }
 
 static void
