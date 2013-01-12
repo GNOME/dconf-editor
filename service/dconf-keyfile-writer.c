@@ -127,6 +127,27 @@ dconf_keyfile_to_changeset (GKeyFile    *keyfile,
 static void
 dconf_keyfile_writer_list (GHashTable *set)
 {
+  const gchar *name;
+  gchar *dirname;
+  GDir *dir;
+
+  dirname = g_build_filename (g_get_user_config_dir (), "dconf", NULL);
+  dir = g_dir_open (dirname, 0, NULL);
+
+  if (!dir)
+    return;
+
+  while ((name = g_dir_read_name (dir)))
+    {
+      const gchar *dottxt;
+
+      dottxt = strstr (name, ".txt");
+
+      if (dottxt && dottxt[4] == '\0')
+        g_hash_table_add (set, g_strndup (name, dottxt - name));
+    }
+
+  g_dir_close (dir);
 }
 
 static gboolean dconf_keyfile_update (gpointer user_data);
