@@ -8,7 +8,7 @@ test -n "$srcdir" || srcdir=.
 olddir=`pwd`
 cd "$srcdir"
 
-if automake-1.11 --version &> /dev/null; then
+if automake-1.11 --version > /dev/null 2>&1; then
   automake_suffix='-1.11'
 else
   automake_suffix=''
