@@ -1,14 +1,14 @@
 # Norwegian bokmål translation of dconf.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999-2012.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2013.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf 3.7.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-23 12:13+0100\n"
-"PO-Revision-Date: 2012-12-23 12:14+0100\n"
+"POT-Creation-Date: 2013-01-21 11:50+0100\n"
+"PO-Revision-Date: 2013-01-21 11:50+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -45,7 +45,7 @@ msgstr "Streng"
 
 #: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
-msgstr ""
+msgstr "Oppregning"
 
 #: ../editor/dconf-editor.vala:234
 msgid "No schema"
@@ -71,11 +71,18 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 msgstr ""
-"Dette programmet er fri programvare. Du kan redistribuere og/eller endre programmet under betingelsene gitt i GNU General Public License som utgitt av Free Software Foundation; enten versjon 2 av lisensen, eller (hvis du ønsker det) enhver senere versjon.\n"
+"Dette programmet er fri programvare. Du kan redistribuere og/eller endre "
+"programmet under betingelsene gitt i GNU General Public License som utgitt "
+"av Free Software Foundation; enten versjon 2 av lisensen, eller (hvis du "
+"ønsker det) enhver senere versjon.\n"
 "\n"
-"Programmet distribueres i håp om at programmet er nyttig, men uten NOEN GARANTI, ikke engang implisitt garanti om at det er SALGBART eller PASSER ET BESTEMT FORMÅL. Se GNU General Public License for detaljer.\n"
+"Programmet distribueres i håp om at programmet er nyttig, men uten NOEN "
+"GARANTI, ikke engang implisitt garanti om at det er SALGBART eller PASSER ET "
+"BESTEMT FORMÅL. Se GNU General Public License for detaljer.\n"
 "\n"
-"Du skal ha mottatt en kopi av GNU General Public License sammen med dette programmet. Hvis dette ikke er tilfelle, kan du skrive til Free Software Foundation, Inc. 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+"Du skal ha mottatt en kopi av GNU General Public License sammen med dette "
+"programmet. Hvis dette ikke er tilfelle, kan du skrive til Free Software "
+"Foundation, Inc. 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
 #: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
