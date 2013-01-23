@@ -878,7 +878,6 @@ dconf_engine_change_completed (DConfEngine  *engine,
                                const GError *error)
 {
   OutstandingChange *oc = handle;
-  DConfChangeset *expected;
 
   dconf_engine_lock_queues (engine);
 
@@ -888,9 +887,27 @@ dconf_engine_change_completed (DConfEngine  *engine,
    *
    * The reply we just received should therefore be at the head of
    * our 'in flight' queue.
+   *
+   * Due to https://bugs.freedesktop.org/show_bug.cgi?id=59780 it is
+   * possible that we receive an out-of-sequence error message, however,
+   * so only assume that messages are in-order for positive replies.
    */
-  expected = g_queue_pop_head (&engine->in_flight);
-  g_assert (expected && oc->change == expected);
+  if (reply)
+    {
+      DConfChangeset *expected;
+
+      expected = g_queue_pop_head (&engine->in_flight);
+      g_assert (expected && oc->change == expected);
+    }
+  else
+    {
+      gboolean found;
+
+      g_assert (error != NULL);
+
+      found = g_queue_remove (&engine->in_flight, oc->change);
+      g_assert (found);
+    }
 
   /* We just popped a change from the in-flight queue, possibly
    * making room for another to be added.  Check that.
