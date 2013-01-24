@@ -19,7 +19,7 @@ intltoolize --force
 gtkdocize --docdir docs --flavour no-tmpl
 aclocal${automake_suffix} ${ACLOCAL_FLAGS}
 autoheader
-automake${automake_suffix} --add-missing --foreign
+automake${automake_suffix} --add-missing
 autoconf
 
 CFLAGS=${CFLAGS=-ggdb}

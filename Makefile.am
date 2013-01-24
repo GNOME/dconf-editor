@@ -9,7 +9,7 @@ SUBDIRS += editor
 endif
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
-EXTRA_DIST = trim-lcov.py
+EXTRA_DIST = trim-lcov.py m4
 
 clean-am: lcov-clean gcno-clean
 
