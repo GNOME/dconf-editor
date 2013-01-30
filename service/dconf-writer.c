@@ -209,8 +209,10 @@ dconf_writer_real_end (DConfWriter *writer)
       TaggedChange *change = g_queue_pop_head (&writer->priv->commited_changes);
       const gchar *prefix;
       const gchar * const *paths;
+      guint n;
 
-      dconf_changeset_describe (change->changeset, &prefix, &paths, NULL);
+      n = dconf_changeset_describe (change->changeset, &prefix, &paths, NULL);
+      g_assert (n != 0);
       dconf_dbus_writer_emit_notify_signal (DCONF_DBUS_WRITER (writer), prefix, paths, change->tag);
       dconf_changeset_unref (change->changeset);
       g_free (change->tag);
@@ -298,16 +300,21 @@ dconf_writer_handle_change (DConfDBusWriter       *dbus_writer,
 
   tag = dconf_writer_get_tag (writer);
 
-  if (!dconf_writer_begin (writer, &error))
-    goto out;
+  /* Don't bother with empty changesets... */
+  if (dconf_changeset_describe (changeset, NULL, NULL, NULL))
+    {
+      if (!dconf_writer_begin (writer, &error))
+        goto out;
 
-  dconf_writer_change (writer, changeset, tag);
-  dconf_changeset_unref (changeset);
+      dconf_writer_change (writer, changeset, tag);
 
-  if (!dconf_writer_commit (writer, &error))
-    goto out;
+      if (!dconf_writer_commit (writer, &error))
+        goto out;
+    }
 
 out:
+  dconf_changeset_unref (changeset);
+
   if (error)
     {
       g_dbus_method_invocation_return_gerror (invocation, error);
