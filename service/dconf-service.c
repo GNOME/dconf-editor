@@ -252,6 +252,7 @@ dconf_service_dbus_register (GApplication     *application,
                                                g_object_ref (service), g_object_unref, &local_error);
       g_assert_no_error (local_error);
       g_array_append_vals (service->subtree_ids, &id, 1);
+      g_free (path);
     }
 
   return TRUE;
