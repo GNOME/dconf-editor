@@ -71,7 +71,7 @@ dconf_shm_open (const gchar *name)
       goto out;
     }
 
-  /* fruncate(fd, 1) is not sufficient because it does not actually
+  /* ftruncate(fd, 1) is not sufficient because it does not actually
    * ensure that the space is available (which could give a SIGBUS
    * later).
    *
@@ -128,7 +128,7 @@ dconf_shm_flag (const gchar *name)
         {
           guint8 *shm;
 
-          /* It would ahve been easier for us to do write(fd, "\1", 1);
+          /* It would have been easier for us to do write(fd, "\1", 1);
            * but this causes problems on kernels (ie: OpenBSD) that
            * don't sync up their filesystem cache with mmap()ed regions.
            *

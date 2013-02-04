@@ -13,9 +13,9 @@ gvdb/:
 
   The code is split into a reader and a writer (builder).
 
-  This directory doesn't produce any libraries.  The source files are
-  included into other libraries and executables by direct inclusion of
-  these source files into the Makefiles of other directories.
+  This directory produces two libraries: libgvdb.a and libgvdb-shared.a.
+  They are exactly the same, except that libgvdb-shared.a was compiled
+  with -fPIC.
 
 common/:
 
@@ -35,21 +35,29 @@ engine/:
   to D-Bus.  All users of the engine must therefore include a module
   that implements this glue.
 
-  This directory produces one library: libdconf-engine.a.  This library
-  includes the gvdb-reader.
+  The engine also requires gvdb.
+
+  This directory produces libdconf-engine.a and its -shared variant.
 
 gdbus/:
 
   This directory contains the glue code for dconf over GDBus.
 
-  This directory produces one library: libdconf-gdbus.a.
+  There are two implementations of this code: a threaded approach and an
+  approach based on GDBus filter functions.  The threaded one is in use
+  by default, but both are built for testing purposes.
+
+  This directory produces a library for each backend:
+  libdconf-gdbus-thread.a and libdconf-gdbus-filter.a, plus their
+  -shared variants.
 
 client/:
 
   This is the standard GObject client-side library used for direct access to
   dconf.  It uses the GDBus glue from the gdbus/ directory above.
 
-  This directory produces the libdconf.so shared library.
+  This directory produces the libdconf.so shared library as well as
+  libdconf-client.a which is used for testing.
 
 gsettings/:
 
@@ -64,6 +72,9 @@ dbus-1/:
   client-side library that is using it).
 
   This directory produces the libdconf-dbus-1.so shared library.
+
+  It also produces libdconf-libdbus-1.a (containing the D-Bus glue) for
+  testing purposes, and its -shared variant.
 
 bin/:
 

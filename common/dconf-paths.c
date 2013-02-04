@@ -24,7 +24,7 @@
 
 /**
  * SECTION:paths
- * @title: DConf Paths
+ * @title: dconf Paths
  * @short_description: utility functions to validate dconf paths
  *
  * Various places in the dconf API speak of "paths", "keys", "dirs" and

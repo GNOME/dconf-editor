@@ -28,7 +28,7 @@
 /**
  * SECTION:client
  * @title: DConfClient
- * @short_description: Direct read and write access to DConf, based on GDBus
+ * @short_description: Direct read and write access to dconf, based on GDBus
  *
  * This is the primary client interface to dconf.
  *
@@ -97,7 +97,7 @@ dconf_client_class_init (DConfClientClass *class)
    *
    * This signal is emitted when the #DConfClient has a possible change
    * to report.  The signal is an indication that a change may have
-   * occured; it's possible that the keys will still have the same value
+   * occurred; it's possible that the keys will still have the same value
    * as before.
    *
    * To ensure that you receive notification about changes to paths that
@@ -493,7 +493,7 @@ dconf_client_watch_fast (DConfClient *client,
  * If @path is a key then the single key is monitored.  If @path is a
  * dir then all keys under the dir are monitored.
  *
- * This function submits each of the the various watch requests that are
+ * This function submits each of the various watch requests that are
  * required to monitor a key and waits until each of them returns.  By
  * the time this function returns, the watch has been established.
  *

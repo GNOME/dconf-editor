@@ -141,7 +141,7 @@
  * The second lock (queue_lock) protects the various queues that are
  * used to implement the "fast" writes described above.
  *
- * If both locks are held at the same time thne the sources lock must
+ * If both locks are held at the same time then the sources lock must
  * have been acquired first.
  */
 
@@ -451,7 +451,7 @@ dconf_engine_read (DConfEngine *engine,
    *     means that no locks were found.  Non-zero means that a lock was
    *     found in the source with the index given by the variable.
    *
-   *  2. check the uncommited changes in the read_through list as the
+   *  2. check the uncommitted changes in the read_through list as the
    *     highest priority.  This is only done if we have a writable
    *     source and no locks were found.
    *
@@ -937,7 +937,7 @@ dconf_engine_change_completed (DConfEngine  *engine,
 
   if (error)
     {
-      /* Some kind of unexpected failure occured while attempting to
+      /* Some kind of unexpected failure occurred while attempting to
        * commit the change.
        *
        * There's not much we can do here except to drop our local copy

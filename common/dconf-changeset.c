@@ -47,7 +47,7 @@
  * This is a reference counted opaque structure type.  It is not a
  * #GObject.
  *
- * Use dconf_changeset_ref() and dconf_changeset_unref() to manipuate
+ * Use dconf_changeset_ref() and dconf_changeset_unref() to manipulate
  * references.
  **/
 
@@ -334,7 +334,7 @@ dconf_changeset_is_similar_to (DConfChangeset *changeset,
  * @predicate is called on each item in the changeset, in turn, until it
  * returns %FALSE.
  *
- * If @preciate returns %FALSE for any item, this function returns
+ * If @predicate returns %FALSE for any item, this function returns
  * %FALSE.  If not (including the case of no items) then this function
  * returns %TRUE.
  *
@@ -387,8 +387,9 @@ dconf_changeset_build_description (DConfChangeset *changeset)
    * Next, we iterate the table again to pull the strings out excluding
    * the leading prefix.
    *
-   * We sort the list of paths at this point because the rebuilder
-   * requires a sorted list.
+   * We sort the list of paths at this point because the writer
+   * requires a sorted list in order to ensure that dir resets come
+   * before writes to keys in that dir.
    *
    * Finally, we iterate over the sorted list and use the normal
    * hashtable lookup in order to populate the values array in the same
@@ -562,7 +563,7 @@ dconf_changeset_serialise (DConfChangeset *changeset)
  * returned from an earlier call to dconf_changeset_serialise().
  *
  * @serialised has no particular format -- you should only pass a value
- * that reasulted from an earlier serialise operation.
+ * that resulted from an earlier serialise operation.
  *
  * This call never fails, even if @serialised is not in the correct
  * format.  Improperly-formatted parts are simply ignored.
