@@ -48,10 +48,13 @@ icons = \
 	icons/HighContrast/32x32/apps/dconf-editor.png		\
 	icons/HighContrast/48x48/apps/dconf-editor.png		\
 	icons/HighContrast/256x256/apps/dconf-editor.png	\
+	icons/hicolor/16x16/apps/dconf-editor.png		\
+	icons/hicolor/22x22/apps/dconf-editor.png		\
+	icons/hicolor/24x24/apps/dconf-editor.png		\
 	icons/hicolor/32x32/apps/dconf-editor.png		\
 	icons/hicolor/48x48/apps/dconf-editor.png		\
 	icons/hicolor/64x64/apps/dconf-editor.png		\
-	icons/hicolor/128x128/apps/dconf-editor.png
+	icons/hicolor/256x256/apps/dconf-editor.png
 
 install-data-hook: update-icon-cache
 uninstall-hook: update-icon-cache
