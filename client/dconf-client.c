@@ -441,7 +441,8 @@ dconf_client_change_fast (DConfClient     *client,
  *
  * If @tag is non-%NULL then it is set to the unique tag associated with
  * this change.  This is the same tag that will appear in the following
- * change signal.
+ * change signal.  If @changeset makes no changes then @tag may be
+ * non-unique (eg: the empty string may be used for empty changesets).
  *
  * Returns: %TRUE on success, else %FALSE with @error set
  **/

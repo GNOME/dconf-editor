@@ -101,9 +101,11 @@ dconf_settings_backend_write_tree (GSettingsBackend *backend,
   DConfChangeset *change;
   gboolean success;
 
-  change= dconf_changeset_new ();
-  g_tree_foreach (tree, dconf_settings_backend_add_to_changeset, change);
+  if (g_tree_nnodes (tree) == 0)
+    return TRUE;
 
+  change = dconf_changeset_new ();
+  g_tree_foreach (tree, dconf_settings_backend_add_to_changeset, change);
   success = dconf_engine_change_fast (dcsb->engine, change, origin_tag, NULL);
   dconf_changeset_unref (change);
 

@@ -1029,6 +1029,9 @@ dconf_engine_change_fast (DConfEngine     *engine,
 {
   GList *node;
 
+  if (dconf_changeset_is_empty (changeset))
+    return TRUE;
+
   if (!dconf_engine_changeset_changes_only_writable_keys (engine, changeset, error))
     return FALSE;
 
@@ -1090,6 +1093,14 @@ dconf_engine_change_sync (DConfEngine     *engine,
                           GError         **error)
 {
   GVariant *reply;
+
+  if (dconf_changeset_is_empty (changeset))
+    {
+      if (tag)
+        *tag = g_strdup ("");
+
+      return TRUE;
+    }
 
   if (!dconf_engine_changeset_changes_only_writable_keys (engine, changeset, error))
     return FALSE;
