@@ -1,3 +1,75 @@
+Changes in dconf 0.15.3
+========================
+
+This release more or less completes the rewriting of dconf-service.
+Support for backends are now fully-realised (and we have a couple of
+them as proof).  Many small bugs (some with serious symptoms) have been
+fixed vs. the last release.
+
+ - fix problem related to empty changesets (caused by empty 'dconf
+   load', for example).  These are now handled properly on the server
+   side but also forbidden in the client libraries.
+
+ - new icons: hicolor icons have been updated and a HighContrast set
+   added
+
+ - loosen some assertions on the order of messages being returned from
+   the service.  D-Bus violates this order in the case that the service
+   crashes and that's no reason to take the client with it as well.
+
+ - improve autogen.sh non-bash compatibility
+
+ - add some backends to the dconf-service (that were 'considered' as per
+   the last NEWS).  The first backend is a null backend that allows for
+   a temporary database tied to the lifetime of the session, possibly
+   useful for testing.
+
+ - also add a new 'keyfile' backend for the service.  This is primarily
+   intended to be used with NFS (where use of mmap is not safe)
+
+ - add a mkdir() in the case of an empty home directory where
+   ~/.config/dconf does not already exist
+
+ - fix crashes in the service caused by failures to write (including
+   failures caused by the above issue being overlooked)
+
+ - work around an issue with a testcase hanging and failing due to a
+   GLib change to the order in which testcases are run
+
+ - running autoreconf on tarballs should now work
+
+Translations updated:
+ Aragonese
+ Friulian
+ Galician
+ Greek
+ Hebrew
+ Hungarian
+ Italian
+ Lithuanian
+ Norwegian bokmål
+ Polish
+ Serbian
+ Slovak
+ Slovenian
+ Spanish
+ Thai
+ Uyghur
+
+Bugs closed:
+ 595579  support NFS
+ 663961  Cannot build without a git checkout
+ 673834  dconf commandline tool doesn't initialise the locale
+ 686998  add keywords to the desktop file
+ 687120  gnome-ostree-3.8 triggers expected && oc->change == expected assertion
+ 687310  dconf-editor should install a highcontrast app icon
+ 689136  Crash in dconf_writer_real_end(): change is NULL (when $XDG_CONFIG_HOME/dconf does not exist)
+ 690316  writer: Fix typo causing segfaults on service shutdown
+ 690477  Can't build with gnome-apps-3.6 module set
+ 691013  Crash on missing ~/.config/dconf and clear pointer
+ 692144  needs a nicer icon
+ 692186  build: autogen.sh uses /bin/sh but depends on advanced shell redirection shorthands
+
 Changes in dconf 0.15.2
 ========================
 
