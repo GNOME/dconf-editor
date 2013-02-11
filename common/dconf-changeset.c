@@ -90,7 +90,7 @@ dconf_changeset_new (void)
 
 /**
  * dconf_changeset_new_database:
- * @copy_of: (allow none): a #DConfChangeset to copy
+ * @copy_of: (allow-none): a #DConfChangeset to copy
  *
  * Creates a new #DConfChangeset in "database" mode, possibly
  * initialising it with the values of another changeset.

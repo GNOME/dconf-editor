@@ -37,11 +37,15 @@ dconf_is_rel_key
 DConfChangeset
 DConfChangesetPredicate
 dconf_changeset_all
+dconf_changeset_change
 dconf_changeset_describe
 dconf_changeset_deserialise
+dconf_changeset_diff
 dconf_changeset_get
+dconf_changeset_is_empty
 dconf_changeset_is_similar_to
 dconf_changeset_new
+dconf_changeset_new_database
 dconf_changeset_new_write
 dconf_changeset_ref
 dconf_changeset_serialise
