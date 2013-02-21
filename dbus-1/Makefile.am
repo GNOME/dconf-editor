@@ -2,7 +2,7 @@ include $(top_srcdir)/Makefile.gtester
 
 noinst_LIBRARIES = libdconf-libdbus-1.a libdconf-libdbus-1-shared.a
 
-libdconf_libdbus_1_a_CFLAGS = $(dbus_CFLAGS) $(glib_CFLAGS)
+libdconf_libdbus_1_a_CFLAGS = $(dbus_CFLAGS) $(glib_CFLAGS) -DG_LOG_DOMAIN=\"dconf\"
 libdconf_libdbus_1_a_SOURCES = \
 	dconf-libdbus-1.h		\
 	dconf-libdbus-1.c

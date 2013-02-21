@@ -7,7 +7,7 @@ dconfcommoninclude_HEADERS = \
 
 noinst_LIBRARIES = libdconf-common.a libdconf-common-shared.a libdconf-common-hidden.a
 
-libdconf_common_a_CFLAGS = $(glib_CFLAGS)
+libdconf_common_a_CFLAGS = $(glib_CFLAGS) -DG_LOG_DOMAIN=\"dconf\"
 libdconf_common_a_SOURCES = \
 	dconf-changeset.c	\
 	dconf-paths.c

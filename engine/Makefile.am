@@ -2,7 +2,7 @@ include $(top_srcdir)/Makefile.gtester
 
 noinst_LIBRARIES = libdconf-engine.a libdconf-engine-shared.a
 
-libdconf_engine_a_CFLAGS = $(glib_CFLAGS)
+libdconf_engine_a_CFLAGS = $(glib_CFLAGS) -DG_LOG_DOMAIN=\"dconf\"
 libdconf_engine_a_SOURCES = \
 	dconf-engine-profile.h		\
 	dconf-engine-profile.c		\

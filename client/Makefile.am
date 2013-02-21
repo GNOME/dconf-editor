@@ -20,7 +20,7 @@ dconfinclude_HEADERS = dconf.h
 dconfclientinclude_HEADERS = dconf-client.h
 dconfclientincludedir = $(dconfincludedir)/client
 
-libdconf_client_a_CFLAGS = $(gio_CFLAGS)
+libdconf_client_a_CFLAGS = $(gio_CFLAGS) -DG_LOG_DOMAIN=\"dconf\"
 libdconf_client_a_SOURCES = \
 	dconf-client.c
 

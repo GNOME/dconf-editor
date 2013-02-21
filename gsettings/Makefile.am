@@ -10,7 +10,7 @@ libdconfsettings_so_LDADD = \
 	../shm/libdconf-shm-shared.a			\
 	$(gio_LIBS)
 
-libdconfsettings_so_CFLAGS = $(gio_CFLAGS) -fPIC -DPIC
+libdconfsettings_so_CFLAGS = $(gio_CFLAGS) -fPIC -DPIC -DG_LOG_DOMAIN=\"dconf\"
 libdconfsettings_so_LDFLAGS = -shared
 libdconfsettings_so_SOURCES = \
 	dconfsettingsbackend.c
