@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-04 14:42+0000\n"
-"PO-Revision-Date: 2012-09-05 17:27+0200\n"
+"POT-Creation-Date: 2013-02-21 18:13+0000\n"
+"PO-Revision-Date: 2013-02-25 20:15+0100\n"
 "Last-Translator: Frederic Peters <fpeters@0d.be>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: \n"
@@ -17,41 +17,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "Éditeur dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "Modifier directement toute votre base de données de configuration"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "paramètres;configuration;"
+
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Entier [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Booléen"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Chaîne"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "Énumération"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "Aucun schéma"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "Non trouvé"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -82,11 +86,11 @@ msgstr ""
 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, "
 "États-Unis."
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr "Frédéric Péters <fpeters@0d.be>"
 
@@ -165,3 +169,7 @@ msgstr "La hauteur de la fenêtre principale, en pixels."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Un drapeau pour activer le mode maximisé"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Un drapeau pour activer le mode plein écran"
