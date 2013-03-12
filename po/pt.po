@@ -1,15 +1,14 @@
 # dconf's Portuguese translation.
-# Copyright © 2012 dconf
+# Copyright © 2012, 2013 dconf
 # This file is distributed under the same license as the dconf package.
-# Duarte Loreto <happyguy_pt@hotmail.com>, 2012.
-#
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2012, 2013.
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: 3.6\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-08 02:37+0000\n"
-"PO-Revision-Date: 2012-09-09 01:40+0100\n"
+"Project-Id-Version: 3.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-12 23:39+0000\n"
+"PO-Revision-Date: 2013-03-12 23:40+0100\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "Language: pt\n"
@@ -17,41 +16,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
-msgstr "Edite directamente toda a sua base de dados de configuração"
+msgstr "Edite diretamente toda a sua base de dados de configuração"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "definições;configuração;"
+
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Inteiro [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Boleano"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Expressão"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "Enumeração"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "Nenhum esquema"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "Não encontrado"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -67,25 +70,25 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 msgstr ""
-"Esta é uma aplicação livre; pode redistribuí-la e/ou alterá-la de acordo "
-"com os termos da Licença Pública Genérica GNU tal como publicada pela Free "
+"Esta é uma aplicação livre; pode redistribuí-la e/ou alterá-la de acordo com "
+"os termos da Licença Pública Genérica GNU tal como publicada pela Free "
 "Software Foundation; ou a versão 2 da Licença ou (à sua discrição) qualquer "
 "versão posterior.\n"
 "\n"
-"Esta aplicação é distribuído na expectativa de poder ser útil, mas SEM QUALQUER "
-"GARANTIA; sem sequer a garantia implícita de COMERCIABILIDADE ou ADEQUAÇÃO A "
-"UM FIM EM ESPECÍFICO.  Consulte a Licença Pública Genérica GNU para mais "
-"detalhes.\n"
+"Esta aplicação é distribuído na expectativa de poder ser útil, mas SEM "
+"QUALQUER GARANTIA; sem sequer a garantia implícita de COMERCIABILIDADE ou "
+"ADEQUAÇÃO A UM FIM EM ESPECÍFICO.  Consulte a Licença Pública Genérica GNU "
+"para mais detalhes.\n"
 "\n"
 "Deverá ter recebido uma cópia da Licença Pública Genérica GNU juntamente com "
 "o Glade; caso contrário, escreva para a Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA (em inglês)"
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr "Duarte Loreto <happyguy_pt@hotmail.com>"
 
@@ -163,4 +166,8 @@ msgstr "A altura da janela principal em pixels."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
-msgstr "Um parâmetro para activar o modo maximizado"
+msgstr "Um parâmetro para ativar o modo maximizado"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Um parâmetro para ativar o modo de ecrã completo"
