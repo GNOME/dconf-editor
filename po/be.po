@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-09 00:32+0000\n"
+"POT-Creation-Date: 2012-11-24 15:52+0000\n"
 "PO-Revision-Date: 2012-09-09 13:51+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
@@ -17,41 +17,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "Рэдактар dconf-настроек"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "Непасрэднае рэдагаванне ўсёй канфігурацыйнай базы"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "настройкі;канфігурацыя;"
+
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Цэлы лік [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "Булева значэнне"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "Тэкставы ланцужок"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "Пералік"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "Без схемы"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "Не знойдзена"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -67,24 +71,25 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 msgstr ""
-"Гэта праграма з'яўляецца свабодным апраграмаваннем. Вы можаце распаўсюджваць яе "
-"згодна з умовамі Агульнай Грамадскай Ліцэнзіі GNU (GPL), апублікаванай Фондам "
-"свабоднага апраграмавання, версіі 2 ці любой пазнейшай.\n"
+"Гэта праграма з'яўляецца свабодным апраграмаваннем. Вы можаце распаўсюджваць "
+"яе згодна з умовамі Агульнай Грамадскай Ліцэнзіі GNU (GPL), апублікаванай "
+"Фондам свабоднага апраграмавання, версіі 2 ці любой пазнейшай.\n"
 "\n"
-"Гэта праграма распаўсюджваецца з надзеяй, што яна будзе карыснай, але без ніякіх "
-"гарантый, у тым ліку камерцыйнай вартасці праграмы і наогул яе карысці. Падрабязней "
-"глядзіце ў тэксце Агульнай Грамадскай Ліцэнзіі GNU (GPL).\n"
+"Гэта праграма распаўсюджваецца з надзеяй, што яна будзе карыснай, але без "
+"ніякіх гарантый, у тым ліку камерцыйнай вартасці праграмы і наогул яе "
+"карысці. Падрабязней глядзіце ў тэксце Агульнай Грамадскай Ліцэнзіі GNU "
+"(GPL).\n"
 "\n"
-"Вы павінны былі атрымаць копію Агульнай Грамадскай Ліцэнзіі GNU (GPL) разам з гэтай "
-"праграмай. Калі вы не атрымалі яе, паведаміце пра гэта Фонду свабоднага апраграмавання "
-"на адрас: the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, "
-"MA 02110-1301, USA"
+"Вы павінны былі атрымаць копію Агульнай Грамадскай Ліцэнзіі GNU (GPL) разам "
+"з гэтай праграмай. Калі вы не атрымалі яе, паведаміце пра гэта Фонду "
+"свабоднага апраграмавання на адрас: the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "Аўтарскія правы © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr "Ігар Грачышка <ihar.hrachyshka@gmail.com>"
 
@@ -163,3 +168,7 @@ msgstr "Вышыня галоўнага акна ў пікселах."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Максімалізацыя акна"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Поўнаэкранны рэжым"
