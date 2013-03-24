@@ -31,7 +31,7 @@ msgstr "Απευθείας επεξεργασία ολόκληρης της βά
 
 #: ../editor/dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
-msgstr "ρυθμίσεις·διαμόρφωση·"
+msgstr "ρυθμίσεις;διαμόρφωση;"
 
 #: ../editor/dconf-editor.vala:180
 #, c-format
