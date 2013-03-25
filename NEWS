@@ -1,3 +1,35 @@
+Changes in dconf 0.16.0
+========================
+
+This release one small fix and many translation updates.
+
+ - Set G_LOG_DOMAIN so that 'dconf' shows in GLib log messages
+
+Translation updates:
+ Assamese
+ Basque
+ Belarusian
+ Brazilian Portuguese
+ Catalan
+ Czech
+ Danish
+ Estonian
+ Finnish
+ French
+ German
+ Greek
+ Hindi
+ Korean
+ Latvian
+ Persian
+ Portuguese
+ Punjabi
+ Russian
+ Tadjik
+ Tamil
+ Uyghur
+ Valencian
+
 Changes in dconf 0.15.3
 ========================
 
