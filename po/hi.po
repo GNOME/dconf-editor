@@ -4,57 +4,62 @@
 #
 # Rajesh Ranjan <rajeshkajha@yahoo.com>, 2012.
 # rajesh <rajeshkajha@yahoo.com>, 2012.
+# chandankumar <chandankumar.093047@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-21 18:41+0000\n"
-"PO-Revision-Date: 2012-09-22 15:30+0530\n"
-"Last-Translator: rajesh <rajeshkajha@yahoo.com>\n"
-"Language-Team: Hindi <hi@li.org>\n"
+"POT-Creation-Date: 2012-11-24 15:52+0000\n"
+"PO-Revision-Date: 2013-03-25 13:00+0000\n"
+"Last-Translator: chandankumar <chandankumar.093047@gmail.com>\n"
+"Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "dconf संपादक"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "अपने सम्पूर्ण विन्यास डाटाबेस को सीधे संपादित करें"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "सेटिंग्स; विन्यास;"
+
+#: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "पूर्णांक [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:182
 msgid "Boolean"
 msgstr "बूलियन"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:184
 msgid "String"
 msgstr "स्ट्रिंग"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
 msgstr "एनुमरेशन"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:234
 msgid "No schema"
 msgstr "कोई योजना नहीं   "
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:344
 msgid "Not found"
 msgstr "नहीं मिला"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:392
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -71,21 +76,28 @@ msgid ""
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 msgstr ""
 "यह प्रोग्राम मुफ्त सॉफ्टवेयर का है: आप इसे फ्री सॉफ्टवेयर फाउंडेशन के द्वारा "
-"प्रकाशित जीएनयू जनरल पब्लिक लाइसेंस; या तो लाइसेंस का संस्करण 2, या (आपके "
-"विकल्प के अनुसार) बाद के किसी संस्करण की शर्तों के तहत  पुनर्वितरित और / "
-"संशोधित कर सकते हैं .\n\nइस कार्यक्रम को इस उम्मीद से वितरित किया गया है कि "
-"यह बिना किसी वारंटी;व्यापारिकता की अप्रत्यक्ष वारंटी या किसी खास उद्देश्य के "
-"लिए उपयुक्तता के बिना उपयोगी होगा.    अधिक जानकारी के लिए जीएनयू जनरल पब्लिक "
-"लाइसेंस देखें.\n\nआप इस प्रोग्राम के साथ जीएनयू जनरल पब्लिक लाइसेंस की एक "
-"प्रतिलिपि प्राप्त करेगे; अगर नहीं, फ्री सॉफ्टवेयर फाउंडेशन को लिखे, Inc. 51 "
-"फ्रेंकलिन स्ट्रीट, पांचवीं मंजिल, बोस्टन, एमए    02110-1301, संयुक्त राज्य "
-"अमेरिका."
+"प्रकाशित जीएनयू "
+"जनरल पब्लिक लाइसेंस; या तो लाइसेंस का संस्करण 2, या (आपके विकल्प के अनुसार) "
+"बाद के किसी "
+"संस्करण की शर्तों के तहत  पुनर्वितरित और / संशोधित कर सकते हैं .\n"
+"\n"
+"इस कार्यक्रम को इस उम्मीद से वितरित किया गया है कि यह बिना किसी "
+"वारंटी;व्यापारिकता "
+"की अप्रत्यक्ष वारंटी या किसी खास उद्देश्य के लिए उपयुक्तता के बिना उपयोगी "
+"होगा.    अधिक "
+"जानकारी के लिए जीएनयू जनरल पब्लिक लाइसेंस देखें.\n"
+"\n"
+"आप इस प्रोग्राम के साथ जीएनयू जनरल पब्लिक लाइसेंस की एक प्रतिलिपि प्राप्त "
+"करेगे; अगर "
+"नहीं, फ्री सॉफ्टवेयर फाउंडेशन को लिखे, Inc. 51 फ्रेंकलिन स्ट्रीट, पांचवीं "
+"मंजिल, बोस्टन, "
+"एमए    02110-1301, संयुक्त राज्य अमेरिका."
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
 msgstr "कॉपीराइट © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
 msgstr "राजेश रंजन (rranjan@redhat.com, rajeshkajha@yahoo.com)"
 
@@ -164,4 +176,9 @@ msgstr "पिक्सेल में विंडो की ऊंचाई."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "अधिकतम अवस्था समर्थ करने के लिए फ्लैग"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+#| msgid "A flag to enable maximized mode"
+msgid "A flag to enable fullscreen mode"
+msgstr "पूर्णस्क्रीन मोड समर्थ करने के लिए फ्लैग"
 
