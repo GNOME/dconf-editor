@@ -412,8 +412,10 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
             return 0;
     }
 
-    public bool iter_nth_child(ref Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
+        iter = Gtk.TreeIter ();
+
         if (parent != null)
             return false;
 
@@ -423,8 +425,9 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-    public bool iter_parent(ref Gtk.TreeIter iter, Gtk.TreeIter child)
+    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
     {
+        iter = Gtk.TreeIter ();
         return false;
     }
 
@@ -534,8 +537,10 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
             return 0;
     }
 
-    public bool iter_nth_child(ref Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
+        iter = Gtk.TreeIter ();
+
         if (parent != null)
             return false;
 
@@ -703,8 +708,10 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         return (int) get_directory(iter).children.length();
     }
 
-    public bool iter_nth_child(ref Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
+    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
+        iter = Gtk.TreeIter ();
+
         Directory directory = get_directory(parent);
         if (n >= directory.children.length())
             return false;
