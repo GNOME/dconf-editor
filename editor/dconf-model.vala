@@ -254,7 +254,7 @@ public class Directory : GLib.Object
             string[] tokens = path.split("/", 2);
             string name = tokens[0];
 
-            Directory directory = get_child(name);
+            var directory = get_child(name);
             directory.load_schema(schema, tokens[1]);
         }
     }
@@ -696,10 +696,11 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public bool iter_next(ref Gtk.TreeIter iter)
     {
-        Directory directory = get_directory(iter);
+        var directory = get_directory(iter);
         if (directory.index >= directory.parent.children.length() - 1)
             return false;
         set_iter(ref iter, directory.parent.children.nth_data(directory.index+1));
+
         return true;
     }
 
@@ -707,7 +708,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     {
         iter = Gtk.TreeIter();
 
-        Directory directory = get_directory(parent);
+        var directory = get_directory(parent);
         if (directory.children.length() == 0)
             return false;
         set_iter(ref iter, directory.children.nth_data(0));
@@ -729,10 +730,11 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     {
         iter = Gtk.TreeIter();
 
-        Directory directory = get_directory(parent);
+        var directory = get_directory(parent);
         if (n >= directory.children.length())
             return false;
         set_iter(ref iter, directory.children.nth_data(n));
+
         return true;
     }
 
@@ -740,7 +742,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     {
         iter = Gtk.TreeIter();
 
-        Directory directory = get_directory(child);
+        var directory = get_directory(child);
         if (directory.parent == root)
             return false;
 

@@ -270,7 +270,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
 
     private void spin_edited_cb(Gtk.CellRendererText renderer, string path, string text)
     {
-        Key key = get_key_from_path(path);
+        var key = get_key_from_path(path);
         switch (key.type_string)
         {
         case "y":
