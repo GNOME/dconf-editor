@@ -341,8 +341,10 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         return (Key)iter.user_data;
     }
 
-    public bool get_iter(ref Gtk.TreeIter iter, Gtk.TreePath path)
+    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
     {
+        iter = Gtk.TreeIter();
+
         if (path.get_depth() != 1)
             return false;
 
@@ -391,11 +393,14 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-    public bool iter_children(ref Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
+        iter = Gtk.TreeIter();
+
         if (parent != null || directory.keys.length() == 0)
             return false;
         set_iter(ref iter, directory.keys.nth_data(0));
+
         return true;
     }
 
@@ -414,7 +419,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
 
     public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
-        iter = Gtk.TreeIter ();
+        iter = Gtk.TreeIter();
 
         if (parent != null)
             return false;
@@ -427,7 +432,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
 
     public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
     {
-        iter = Gtk.TreeIter ();
+        iter = Gtk.TreeIter();
         return false;
     }
 
@@ -482,8 +487,10 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         return (SchemaValue)iter.user_data;
     }
 
-    public bool get_iter(ref Gtk.TreeIter iter, Gtk.TreePath path)
+    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
     {
+        iter = Gtk.TreeIter();
+
         if (path.get_depth() != 1)
             return false;
 
@@ -516,11 +523,15 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-    public bool iter_children(ref Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
+        iter = Gtk.TreeIter();
+
         if (parent != null || schema_enum.values.length() == 0)
             return false;
+
         set_iter(ref iter, schema_enum.values.nth_data(0));
+
         return true;
     }
 
@@ -539,7 +550,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
 
     public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
-        iter = Gtk.TreeIter ();
+        iter = Gtk.TreeIter();
 
         if (parent != null)
             return false;
@@ -550,8 +561,9 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-    public bool iter_parent(ref Gtk.TreeIter iter, Gtk.TreeIter child)
+    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
     {
+        iter = Gtk.TreeIter();
         return false;
     }
 
@@ -649,8 +661,10 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
             return (Directory)iter.user_data;
     }
 
-    public bool get_iter(ref Gtk.TreeIter iter, Gtk.TreePath path)
+    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
     {
+        iter = Gtk.TreeIter();
+
         if (!iter_nth_child(out iter, null, path.get_indices()[0]))
             return false;
 
@@ -689,12 +703,15 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-    public bool iter_children(ref Gtk.TreeIter iter, Gtk.TreeIter? parent)
+    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
     {
+        iter = Gtk.TreeIter();
+
         Directory directory = get_directory(parent);
         if (directory.children.length() == 0)
             return false;
         set_iter(ref iter, directory.children.nth_data(0));
+
         return true;
     }
 
@@ -710,7 +727,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
     {
-        iter = Gtk.TreeIter ();
+        iter = Gtk.TreeIter();
 
         Directory directory = get_directory(parent);
         if (n >= directory.children.length())
@@ -719,12 +736,16 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         return true;
     }
 
-    public bool iter_parent(ref Gtk.TreeIter iter, Gtk.TreeIter child)
+    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
     {
+        iter = Gtk.TreeIter();
+
         Directory directory = get_directory(child);
         if (directory.parent == root)
             return false;
+
         set_iter(ref iter, directory.parent);
+
         return true;
     }
 
