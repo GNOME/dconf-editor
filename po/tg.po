@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-01-18 07:47+0000\n"
-"PO-Revision-Date: 2013-01-19 17:41+0500\n"
+"PO-Revision-Date: 2013-04-19 17:59+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: Tajik\n"
@@ -25,16 +25,16 @@ msgstr "Муҳаррири dconf"
 
 #: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
-msgstr ""
+msgstr "Тамоми пойгоҳи иттилооти танзимоти худро бевосита таҳрир кунед"
 
 #: ../editor/dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
-msgstr ""
+msgstr "танзимот;конфигуратсия;"
 
 #: ../editor/dconf-editor.vala:180
 #, c-format
 msgid "Integer [%s..%s]"
-msgstr ""
+msgstr "Адади бутун [%s..%s]"
 
 #: ../editor/dconf-editor.vala:182
 msgid "Boolean"
@@ -46,11 +46,11 @@ msgstr "Сатр"
 
 #: ../editor/dconf-editor.vala:186
 msgid "Enumeration"
-msgstr ""
+msgstr "Шуморагузорӣ"
 
 #: ../editor/dconf-editor.vala:234
 msgid "No schema"
-msgstr ""
+msgstr "Ягон нақша нест"
 
 #: ../editor/dconf-editor.vala:344
 msgid "Not found"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: ../editor/dconf-editor.vala:398
 msgid "Copyright © Canonical Ltd"
-msgstr ""
+msgstr "Ҳуқуқи муаллиф © Canonical Ltd"
 
 #: ../editor/dconf-editor.vala:402
 msgid "translator-credits"
@@ -84,7 +84,7 @@ msgstr ""
 #: ../editor/dconf-view.vala:264
 #, c-format
 msgid "Error setting value: %s"
-msgstr ""
+msgstr "Қимати танзими хатогӣ: %s"
 
 #. Translators: this is the column header label in the main view
 #: ../editor/dconf-view.vala:318
@@ -98,7 +98,7 @@ msgstr "Қимат"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
-msgstr ""
+msgstr "Насб кардан ба пешфарз"
 
 #: ../editor/dconf-editor.ui.h:2
 msgid "Schema:"
@@ -143,7 +143,7 @@ msgstr "Бари равзана"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
 msgid "The width of the main window in pixels."
-msgstr ""
+msgstr "Бари равзанаи асосӣ дар пикселҳо."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
 msgid "The height of the window"
@@ -151,12 +151,12 @@ msgstr "Баландии равзана"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
 msgid "The height of the main window in pixels."
-msgstr ""
+msgstr "Баландии равзанаи асосӣ дар пикселҳо."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
-msgstr ""
+msgstr "Байрақча барои фаъол кардани ҳотали васеъ"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
 msgid "A flag to enable fullscreen mode"
-msgstr ""
+msgstr "Байрақча барои фаъол кардани ҳотали экрани васеъ"
