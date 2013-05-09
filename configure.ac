@@ -33,6 +33,9 @@ AS_IF([test "$enable_man" != no], [
 ])
 AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
 
+# Use GLib resources
+AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
+
 # Use GSettings
 GLIB_GSETTINGS
 

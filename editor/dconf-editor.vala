@@ -51,8 +51,7 @@ class ConfigurationEditor : Gtk.Application
         ui = new Gtk.Builder();
         try
         {
-            string[] objects = { "set_default_action", "box1", "menu" };
-            ui.add_objects_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor.ui"), objects);
+            ui.add_from_resource("/ca/desrt/dconf-editor/dconf-editor.ui");
         }
         catch (Error e)
         {
@@ -68,7 +67,7 @@ class ConfigurationEditor : Gtk.Application
         var menu_ui = new Gtk.Builder();
         try
         {
-            menu_ui.add_from_file(Path.build_filename(Config.PKGDATADIR, "dconf-editor-menu.ui"));
+            menu_ui.add_from_resource("/ca/desrt/dconf-editor/dconf-editor-menu.ui");
         }
         catch (Error e)
         {

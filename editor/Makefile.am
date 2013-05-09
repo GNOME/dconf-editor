@@ -23,12 +23,16 @@ dconf_editor_CFLAGS = \
 	-DGETTEXT_PACKAGE=\"$(GETTEXT_PACKAGE)\"\
 	-w
 
+resources.c: dconf-editor.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies dconf-editor.gresource.xml)
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --generate-source $<
+
 dconf_editor_SOURCES = \
 	config.vapi		\
 	dconf-editor.vala	\
 	dconf-model.vala	\
 	dconf-schema.vala	\
-	dconf-view.vala
+	dconf-view.vala \
+	resources.c
 
 desktopdir = $(datadir)/applications
 desktop_in_files = dconf-editor.desktop.in.in
@@ -63,8 +67,5 @@ update-icon-cache:
 		gtk-update-icon-cache -f -t $(datadir)/icons/HighContrast; \
 		gtk-update-icon-cache -f -t $(datadir)/icons/hicolor; \
 	fi
-
-pkgdatadir = $(datadir)/dconf-editor
-dist_pkgdata_DATA = dconf-editor.ui dconf-editor-menu.ui
 
 EXTRA_DIST = $(gsettings_SCHEMAS) $(icons)
