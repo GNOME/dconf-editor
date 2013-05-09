@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-03 20:40+0000\n"
-"PO-Revision-Date: 2013-02-28 09:25-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"POT-Creation-Date: 2013-05-09 14:24+0000\n"
+"PO-Revision-Date: 2013-05-09 11:28-0300\n"
+"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
 #: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
@@ -140,8 +140,9 @@ msgid "Next"
 msgstr "Próximo"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Pesquisar"
+#| msgid "_Find"
+msgid "_Find…"
+msgstr "_Pesquisar…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
