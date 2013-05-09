@@ -104,6 +104,15 @@ class ConfigurationEditor : Gtk.Application
         set_default_action.activate.connect(set_default_cb);
 
         search_box = ui.get_object("search_box") as Gtk.Box;
+        search_box.key_press_event.connect ((event) =>
+        {
+            if (event.keyval == Gdk.Key.Escape)
+            {
+                search_box.hide();
+                return true;
+            }
+            return false;
+        });
         search_entry = ui.get_object("search_entry") as Gtk.Entry;
         search_label = ui.get_object("search_label") as Gtk.Label;
         search_entry.activate.connect(find_next_cb);
