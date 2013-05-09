@@ -117,7 +117,10 @@ class ConfigurationEditor : Gtk.Application
         search_label = ui.get_object("search_label") as Gtk.Label;
         search_entry.activate.connect(find_next_cb);
         var search_box_close_button = ui.get_object("search_box_close_button") as Gtk.Button;
-        search_box_close_button.clicked.connect(close_search_cb);
+        search_box_close_button.clicked.connect(() =>
+        {
+            search_box.hide();
+        });
 
         var search_next_button = ui.get_object("search_next_button") as Gtk.Button;
         search_next_button.clicked.connect(find_next_cb);
@@ -126,11 +129,6 @@ class ConfigurationEditor : Gtk.Application
         Gtk.TreeIter iter;
         if (model.get_iter_first(out iter))
             dir_tree_view.get_selection().select_iter(iter);
-    }
-    
-    private void close_search_cb ()
-    {
-        search_box.hide();
     }
 
     protected override void activate()
