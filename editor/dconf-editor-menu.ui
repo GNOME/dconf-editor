@@ -2,7 +2,7 @@
   <menu id="menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Find</attribute>
+        <attribute name="label" translatable="yes">_Find…</attribute>
         <attribute name="action">app.find</attribute>
         <attribute name="accel">&lt;Primary&gt;f</attribute>
       </item>
