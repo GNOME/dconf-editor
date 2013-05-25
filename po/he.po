@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf Editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-27 01:01+0200\n"
-"PO-Revision-Date: 2012-12-27 01:01+0200\n"
+"POT-Creation-Date: 2013-05-25 11:28+0300\n"
+"PO-Revision-Date: 2013-05-25 11:28+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <sh.yaron@gmail.com>\n"
 "Language: he\n"
@@ -22,13 +22,13 @@ msgstr ""
 
 #: ../editor/dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63
-#: ../editor/dconf-editor.vala:394
+#: ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "עורך dconf"
 
 #: ../editor/dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:397
+#: ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "עריכה ישירה של כל מסד נתוני התצורה שלך"
 
@@ -36,32 +36,32 @@ msgstr "עריכה ישירה של כל מסד נתוני התצורה שלך"
 msgid "settings;configuration;"
 msgstr "הגדרות;תצורה;קונפיגורציה;"
 
-#: ../editor/dconf-editor.vala:180
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "מספר חיובי שלם [%s..%s]"
 
-#: ../editor/dconf-editor.vala:182
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "בוליאני"
 
-#: ../editor/dconf-editor.vala:184
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "מחרוזת"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "מנייה"
 
-#: ../editor/dconf-editor.vala:234
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "אין ערכה"
 
-#: ../editor/dconf-editor.vala:344
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "לא נמצא"
 
-#: ../editor/dconf-editor.vala:392
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
 "\n"
@@ -75,11 +75,11 @@ msgstr ""
 "\n"
 "לתכנית זו אמור היה להיות מצורף עותק של הרישיון הציבורי הכללי של GNU; אם לא כך הדבר, נא לכתוב ל־Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "כל הזכויות שמורות © Canonical בע״מ"
 
-#: ../editor/dconf-editor.vala:402
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "ירון שהרבני <sh.yaron@gmail.com>"
 
@@ -128,8 +128,8 @@ msgid "Next"
 msgstr "הבא"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_חיפוש"
+msgid "_Find…"
+msgstr "_חיפוש…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
