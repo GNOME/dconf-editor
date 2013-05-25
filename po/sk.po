@@ -1,15 +1,15 @@
 # Slovak translation for dconf.
-# Copyright (C) 2012 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2012-2013 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Pavol Klačanský <pavol@klacansky.com>, 2012.
+# Pavol Klačanský <pavol@klacansky.com>, 2012-2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-05 19:06+0000\n"
-"PO-Revision-Date: 2012-11-25 19:41+0000\n"
+"POT-Creation-Date: 2013-05-09 22:39+0000\n"
+"PO-Revision-Date: 2013-05-18 12:47+0100\n"
 "Last-Translator: Pavol Klačanský <pavol@klacansky.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -20,12 +20,12 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "Editor pre systém dconf"
 
 # about dialog desc
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "Priama úprava celej vašej databázy nastavení"
 
@@ -34,34 +34,34 @@ msgid "settings;configuration;"
 msgstr "nastavenia;konfigurácia;"
 
 # %s %s range
-#: ../editor/dconf-editor.vala:180
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Celé číslo [%s..%s]"
 
-#: ../editor/dconf-editor.vala:182
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "Logická hodnota"
 
-#: ../editor/dconf-editor.vala:184
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "Reťazec"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "Vymenovanie hodnôt"
 
 # Schema:
-#: ../editor/dconf-editor.vala:234
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "Žiadna"
 
 # vyskyt
-#: ../editor/dconf-editor.vala:344
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "Nenajdený"
 
-#: ../editor/dconf-editor.vala:392
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -91,11 +91,11 @@ msgstr ""
 "programom Ak sa tak nestalo, napíšte na adresu Free Software Foundation, "
 "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "Autorské práva © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:402
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "Pavol Klačanský <pavol@klacansky.com>"
 
@@ -147,8 +147,8 @@ msgid "Next"
 msgstr "Ďalší"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Nájsť"
+msgid "_Find…"
+msgstr "_Nájsť…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
