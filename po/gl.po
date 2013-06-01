@@ -4,13 +4,13 @@
 # Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas
 # colaborar connosco, podes atopar máis información en http://www.trasno.net
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
-# Fran Dieguez <frandieguez@gnome.org>, 2012.
+# Fran Dieguez <frandieguez@gnome.org>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-11 02:01+0100\n"
-"PO-Revision-Date: 2012-12-11 02:01+0200\n"
+"POT-Creation-Date: 2013-06-01 23:19+0200\n"
+"PO-Revision-Date: 2013-06-01 23:19+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
 "Language: gl\n"
@@ -22,11 +22,11 @@ msgstr ""
 "X-Project-Style: gnome\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "Edite directamente toda a súa base de datos de configuración"
 
@@ -34,32 +34,32 @@ msgstr "Edite directamente toda a súa base de datos de configuración"
 msgid "settings;configuration;"
 msgstr "preferencias;configuración;"
 
-#: ../editor/dconf-editor.vala:180
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Enteiro [%s..%s]"
 
-#: ../editor/dconf-editor.vala:182
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "Booleano"
 
-#: ../editor/dconf-editor.vala:184
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "Cadea"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "Enumeración"
 
-#: ../editor/dconf-editor.vala:234
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "Sen esquema"
 
-#: ../editor/dconf-editor.vala:344
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "Non atopado"
 
-#: ../editor/dconf-editor.vala:392
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -93,11 +93,11 @@ msgstr ""
 "enderezo seguinte: 51 Franklin Street, Fifth Floor, Boston, MA\n"
 "02110-1301 USA."
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:402
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr ""
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
@@ -150,8 +150,8 @@ msgid "Next"
 msgstr "Seguinte"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Buscar"
+msgid "_Find…"
+msgstr "_Buscar…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
