@@ -1035,6 +1035,8 @@ dconf_engine_change_fast (DConfEngine     *engine,
   if (!dconf_engine_changeset_changes_only_writable_keys (engine, changeset, error))
     return FALSE;
 
+  dconf_changeset_seal (changeset);
+
   /* Check for duplicates in the pending queue.
    *
    * Note: order doesn't really matter here since "similarity" is an
@@ -1104,6 +1106,8 @@ dconf_engine_change_sync (DConfEngine     *engine,
 
   if (!dconf_engine_changeset_changes_only_writable_keys (engine, changeset, error))
     return FALSE;
+
+  dconf_changeset_seal (changeset);
 
   /* we know that we have at least one source because we checked writability */
   reply = dconf_engine_dbus_call_sync_func (engine->sources[0]->bus_type,
