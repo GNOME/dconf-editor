@@ -54,7 +54,8 @@
 struct _DConfChangeset
 {
   GHashTable *table;
-  gboolean is_database;
+  guint is_database : 1;
+  guint is_sealed : 1;
   gint ref_count;
 
   gchar *prefix;
@@ -195,7 +196,7 @@ dconf_changeset_set (DConfChangeset *changeset,
                      const gchar    *path,
                      GVariant       *value)
 {
-  g_return_if_fail (changeset->prefix == NULL);
+  g_return_if_fail (!changeset->is_sealed);
   g_return_if_fail (dconf_is_path (path, NULL));
 
   /* Check if we are performing a path reset */
@@ -366,11 +367,43 @@ dconf_changeset_string_ptr_compare (gconstpointer a_p,
   return strcmp (*a, *b);
 }
 
-static void
-dconf_changeset_build_description (DConfChangeset *changeset)
+/**
+ * dconf_changeset_seal:
+ * @changeset: a #DConfChangeset
+ *
+ * Seals @changeset.
+ *
+ * When a #DConfChangeset is first created, it is mutable and
+ * non-threadsafe.  Once the changeset is populated with the required
+ * changes, it can be shared between multiple threads, but only by
+ * making it immutable by "sealing" it.
+ *
+ * After the changeset is sealed, you cannot call dconf_changeset_set()
+ * or any other functions that would modify it.  It is safe, however, to
+ * share it between multiple threads.
+ *
+ * All changesets are unsealed on creation, including those that are
+ * made by copying changesets that are sealed.
+ * dconf_changeset_describe() will implicitly seal a changeset.
+ *
+ * This function is idempotent.
+ *
+ * Since: 0.18
+ **/
+void
+dconf_changeset_seal (DConfChangeset *changeset)
 {
   gsize prefix_length;
   gint n_items;
+
+  if (changeset->is_sealed)
+    return;
+
+  changeset->is_sealed = TRUE;
+
+  /* This function used to be called dconf_changeset_build_description()
+   * because that's basically what sealing is...
+   */
 
   n_items = g_hash_table_size (changeset->table);
 
@@ -501,6 +534,9 @@ dconf_changeset_build_description (DConfChangeset *changeset)
  * The @paths array is returned in an order such that dir will always
  * come before keys contained within those dirs.
  *
+ * If @changeset is not already sealed then this call will implicitly
+ * seal it.  See dconf_changeset_seal().
+ *
  * Returns: the number of changes (the length of @changes and @values).
  **/
 guint
@@ -513,8 +549,7 @@ dconf_changeset_describe (DConfChangeset       *changeset,
 
   n_items = g_hash_table_size (changeset->table);
 
-  if (n_items && !changeset->prefix)
-    dconf_changeset_build_description (changeset);
+  dconf_changeset_seal (changeset);
 
   if (prefix)
     *prefix = changeset->prefix;
@@ -663,6 +698,8 @@ dconf_changeset_change (DConfChangeset *changeset,
 {
   gsize prefix_len;
   gint i;
+
+  g_return_if_fail (!changeset->is_sealed);
 
   /* Handling resets is a little bit tricky...
    *

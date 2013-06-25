@@ -70,4 +70,6 @@ void                    dconf_changeset_change                          (DConfCh
 DConfChangeset *        dconf_changeset_diff                            (DConfChangeset           *from,
                                                                          DConfChangeset           *to);
 
+void                    dconf_changeset_seal                            (DConfChangeset           *changeset);
+
 #endif /* __dconf_changeset_h__ */
