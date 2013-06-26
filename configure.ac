@@ -53,7 +53,7 @@ AC_ARG_ENABLE(editor,
 AM_CONDITIONAL(ENABLE_EDITOR, test "x$enable_editor" != "xno")
 
 if test "x$enable_editor" != "xno"; then
-  PKG_CHECK_MODULES(gtk, gtk+-3.0)
+  PKG_CHECK_MODULES(gtk, gtk+-3.0 >= 3.4)
   PKG_CHECK_MODULES(gmodule, gmodule-2.0)
   PKG_CHECK_MODULES(libxml, libxml-2.0)
 fi
