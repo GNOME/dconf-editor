@@ -51,4 +51,5 @@ dconf_changeset_ref
 dconf_changeset_serialise
 dconf_changeset_set
 dconf_changeset_unref
+dconf_changeset_seal
 </SECTION>
