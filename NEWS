@@ -1,3 +1,33 @@
+Changes in dconf 0.17.0
+========================
+
+Fix a semi-serious thread safety issue:
+
+  https://bugzilla.gnome.org/show_bug.cgi?id=703073
+
+Some improvements to the editor:
+
+ - fix some compile warnings
+ - use gresource
+ - cancel searches on escape
+
+Translation updates:
+ Brazilian Portuguese
+ Czech
+ Esperanto
+ Friulian
+ Galician
+ German
+ Hebrew
+ Indonesian
+ Lithuanian
+ Malayalam
+ Norwegian bokmål
+ Slovak
+ Slovenian
+ Spanish
+ Tajik
+
 Changes in dconf 0.16.0
 ========================
 
