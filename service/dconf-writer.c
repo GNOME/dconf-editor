@@ -260,7 +260,8 @@ dconf_writer_handle_init (DConfDBusWriter       *dbus_writer,
 
   dconf_blame_record (invocation);
 
-  dconf_writer_begin (writer, &error) && dconf_writer_commit (writer, &error);
+  if (dconf_writer_begin (writer, &error))
+    dconf_writer_commit (writer, &error);
 
   if (error)
     {
