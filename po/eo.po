@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-07 10:10-0400\n"
+"POT-Creation-Date: 2013-07-12 10:02-0400\n"
 "PO-Revision-Date: 2012-08-06 13:21-0400\n"
 "Last-Translator: Ryan Lortie <desrt@desrt.ca>\n"
 "Language-Team: Ryan Lortie <desrt@desrt.ca>\n"
@@ -16,41 +16,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "dconf Redaktilo"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "Rekte redakti vian totan agordan datumbazon"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "agordoj;"
+
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Entjera [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "Bulea"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "Ĉena"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "Listigita"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "Nenion skemon"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "Ne trovita"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -80,11 +84,11 @@ msgstr ""
 "kun ĉi tiu programo; icevis, turnu vin al Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "Kopirajto © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "Ryan Lortie"
 
@@ -133,8 +137,8 @@ msgid "Next"
 msgstr "Sekvanta"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Trovi"
+msgid "_Find…"
+msgstr "_Trovi…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -163,3 +167,7 @@ msgstr "La alto de la fenestro en bilderoj."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Flago por ŝalti maksimuman reĝimon"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Flago por ŝalti plenekranan reĝimon"
