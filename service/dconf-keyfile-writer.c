@@ -43,7 +43,7 @@ typedef struct
 
 G_DEFINE_TYPE (DConfKeyfileWriter, dconf_keyfile_writer, DCONF_TYPE_WRITER)
 
-DConfChangeset *
+static DConfChangeset *
 dconf_keyfile_to_changeset (GKeyFile    *keyfile,
                             const gchar *filename_fyi)
 {

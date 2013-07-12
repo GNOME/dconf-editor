@@ -144,7 +144,7 @@ dconf_service_subtree_enumerate (GDBusConnection *connection,
   return string_set_free (set);
 }
 
-GDBusInterfaceInfo **
+static GDBusInterfaceInfo **
 dconf_service_subtree_introspect (GDBusConnection *connection,
                                   const gchar     *sender,
                                   const gchar     *object_path,
@@ -193,7 +193,7 @@ dconf_service_get_writer (DConfService    *service,
   return writer;
 }
 
-const GDBusInterfaceVTable *
+static const GDBusInterfaceVTable *
 dconf_service_subtree_dispatch (GDBusConnection *connection,
                                 const gchar     *sender,
                                 const gchar     *object_path,

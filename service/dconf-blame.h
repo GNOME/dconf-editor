@@ -34,6 +34,7 @@ typedef struct _DConfBlame DConfBlame;
 #define DCONF_BLAME_GET_CLASS(inst)                         (G_TYPE_INSTANCE_GET_CLASS ((inst),                      \
                                                              DCONF_TYPE_BLAME, DConfBlameClass))
 
+GType                   dconf_blame_get_type                            (void);
 DConfBlame             *dconf_blame_get                                 (void);
 void                    dconf_blame_record                              (GDBusMethodInvocation *invocation);
 
