@@ -12,7 +12,7 @@ CFILE_GLOB = $(top_srcdir)/client/*.c $(top_srcdir)/common/*.c
 
 MKDB_OPTIONS = --output-format=xml
 
-INCLUDES = $(gio_CFLAGS)
+AM_CPPFLAGS = $(gio_CFLAGS)
 GTKDOC_LIBS = $(gio_LIBS) -L../client -ldconf -Wl,-rpath=../client
 
 content_files = \
