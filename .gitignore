@@ -6,6 +6,8 @@ Makefile
 *.pc
 *.gir
 *.typelib
+*.trs
+*.log
 
 # gcov
 *.gcda
