@@ -3,3 +3,4 @@
 /stamp-it
 /dconf.pot
 /*.gmo
+/.intltool-merge-cache
