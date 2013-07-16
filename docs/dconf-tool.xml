@@ -164,6 +164,20 @@
   </refsect1>
 
   <refsect1>
+    <title>Environment</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><envar>DCONF_PROFILE</envar></term>
+        <listitem><para>
+          This environment variable determines which <firstterm>profile</firstterm> to use. Profiles are defined
+          in <filename>/etc/dconf/profile</filename>. The default profile is called <literal>user</literal>.
+        </para></listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
     <title>See Also</title>
     <para>
       <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
