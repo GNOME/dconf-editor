@@ -64,6 +64,21 @@
   </refsect1>
 
   <refsect1>
+    <title>NFS</title>
+
+    <para>
+      The binary database format that dconf uses by default is not suitable for use on NFS, where mmap does not
+      work well. To handle this common use case, dconf can be configured to use a plain text keyfile instead of
+      a binary database. The keyfile is put in the <filename><envar>$XDG_CONFIG_HOME</envar>/dconf</filename>
+      directory.
+    </para>
+    <para>
+      To enable keyfile storage, add a line containing <literal>service-db:keyfile/user</literal> to the file
+      <filename>/etc/dconf/profile/user</filename>.
+    </para>
+  </refsect1>
+
+  <refsect1>
     <title>Portability</title>
 
     <para>
