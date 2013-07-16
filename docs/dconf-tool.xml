@@ -99,6 +99,10 @@
       <replaceable>VALUE</replaceable> arguments must be in GVariant format, so e.g. a string must include
       explicit quotes: "'foo'". This format is also used when printing out values.
     </para>
+
+    <para>
+      Note that dconf needs a D-Bus session bus connection to write changes to the dconf database.
+    </para>
   </refsect1>
 
   <refsect1>
