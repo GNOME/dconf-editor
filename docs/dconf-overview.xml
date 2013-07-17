@@ -61,20 +61,120 @@
       client libraries through a clever "fast" mechanism that records the outstanding changes locally (so they
       can be read back immediately) until the service signals that a write has completed.
     </para>
+    <para>
+      The binary database format that dconf uses by default is not suitable for use on NFS, where mmap does not
+      work well. To handle this common use case, dconf can be configured to place its binary database in
+      <envar>XDG_RUNTIME_DIR</envar> (which is guaranteed to be local, but non-persistent) and synchronize it
+      with a plain text keyfile in the users home directory.
+    </para>
   </refsect1>
 
   <refsect1>
-    <title>NFS</title>
+    <title>Profiles</title>
 
     <para>
-      The binary database format that dconf uses by default is not suitable for use on NFS, where mmap does not
-      work well. To handle this common use case, dconf can be configured to use a plain text keyfile instead of
-      a binary database. The keyfile is put in the <filename><envar>$XDG_CONFIG_HOME</envar>/dconf</filename>
-      directory.
+      A profile is a list of configuration databases that dconf consults to find the value for a key. The user's personal
+      database always takes the highest priority, followed by the system databases in the order prescribed by the profile.
     </para>
+
     <para>
-      To enable keyfile storage, add a line containing <literal>service-db:keyfile/user</literal> to the file
-      <filename>/etc/dconf/profile/user</filename>.
+      On startup, dconf consults the <envar>DCONF_PROFILE</envar> environment variable. If set, dconf will attempt to open
+      the named profile, aborting if that fails. If the environment variable is not set, it will attempt to open the profile
+      named "user" and if that fails, it will fall back to an internal hard-wired configuration. dconf stores its profiles
+      in text files. <envar>DCONF_PROFILE</envar> can specify a relative path to a file in <filename>/etc/dconf/profile/</filename>,
+      or an absolute path (such as in a user's home directory). The profile name can only use alphanumeric characters or '_'.
+    </para>
+
+    <para>
+      A profile file might look like the following:
+      <screen>
+user-db:user
+system-db:local
+system-db:site
+      </screen>
+    </para>
+
+    <para>
+      Each line in a profile specifies one dconf database. The first line indicates the database used to write changes, and the
+      remaining lines indicate read-only databases. (The first line should specify a user-db or service-db, so that users can actually
+      make configuration changes.)
+    </para>
+
+    <para>
+      A "user-db" line specifies a user database. These databases are found in <filename><envar>$XDG_CONFIG_HOME</envar>/dconf/</filename>.
+      The name of the file to open in that directory is exactly as it is written in the profile. This file is expected to be in the binary
+      dconf database format. Note that <envar>XDG_CONFIG_HOME</envar> cannot be set/modified per terminal or session, because then the writer
+      and reader would be working on different DBs (the writer is started by DBus and cannot see that variable).
+    </para>
+
+    <para>
+      A "service-db" line instructs dconf to place the binary database file for the user database in <envar>XDG_RUNTIME_DIR</envar>.
+      Since this location is not persistent, the rest of the line instructs dconf how to store the database persistently. A typical
+      line is <literal>service-db:keyfile/user</literal>, which tells dconf to synchronize the binary database with a plain text
+      keyfile in <filename><envar>$XDG_CONFIG_HOME</envar>/dconf/user.txt</filename>. The synchronization is bi-directional.
+    </para>
+
+    <para>
+      A "system-db" line specifies a system database. These databases are found in <filename>/etc/dconf/db/</filename>. Again, the name of
+      the file to open in that directory is exactly as it is written in the profile and the file is expected to be in the dconf database
+      format.
+    </para>
+
+    <para>
+      If the <envar>DCONF_PROFILE</envar> environment variable is unset and the "user" profile can not be opened, then the effect is as if
+      the profile was specified by this file:
+      <screen>
+user-db:user
+      </screen>
+      That is, the user's personal database is consulted and there are no system settings.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Key Files</title>
+
+    <para>
+      To facilitate system configuration with a text editor, dconf can populate databases from plain text keyfiles. For any given system
+      database, keyfiles can be placed into the <filename>/etc/dconf/db/<replaceable>database</replaceable>.d/</filename> directory. The
+      keyfiles contain groups of settings as follows:
+     </para>
+     <screen>
+# Some useful default settings for our site
+
+[system/proxy/http]
+host='172.16.0.1'
+enabled=true
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/local/rupert-corp/company-wallpaper.jpeg'
+     </screen>
+     <para>
+      After changing keyfiles, the database needs to be updated with the
+      <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>1</manvolnum></citerefentry> tool.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>Locks</title>
+
+    <para>
+      System databases can contain 'locks' for keys. If a lock for a particular key or subpath is installed into a database
+      then no database listed above that one in the profile will be able to modify any of the affected settings. This can be
+      used to enforce mandatory settings.
+    </para>
+
+    <para>
+      To add locks to a database, place text files in the <filename>/etc/dconf/db/<replaceable>database</replaceable>.d/locks</filename>
+      directory, where <replaceable>database</replaceable> is the name of a system database, as specified in the profile. The files
+      contain list of keys to lock, on per line. Lines starting with a # are ignored. Here is an example:
+    </para>
+    <screen>
+# prevent changes to the company wallpaper
+/org/gnome/desktop/background/picture-uri
+    </screen>
+    <para>
+      After changing locks, the database needs to be updated with the
+      <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>1</manvolnum></citerefentry> tool.
     </para>
   </refsect1>
 
