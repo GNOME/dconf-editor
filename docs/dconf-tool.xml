@@ -174,8 +174,8 @@
       <varlistentry>
         <term><envar>DCONF_PROFILE</envar></term>
         <listitem><para>
-          This environment variable determines which <firstterm>profile</firstterm> to use. Profiles are defined
-          in <filename>/etc/dconf/profile</filename>. The default profile is called <literal>user</literal>.
+          This environment variable determines which dconf <firstterm>profile</firstterm> to use. See
+          <citerefentry><refentrytitle>dconf</refentrytitle><manvolnum>7</manvolnum></citerefentry>.
         </para></listitem>
       </varlistentry>
     </variablelist>
