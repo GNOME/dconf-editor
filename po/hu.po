@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the dconf package.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
-# Balázs Úr <urbalazs at gmail dot com>, 2012.
+# Balázs Úr <urbalazs at gmail dot com>, 2012, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-11-24 15:52+0000\n"
-"PO-Revision-Date: 2012-12-31 18:29+0100\n"
+"POT-Creation-Date: 2013-08-06 16:14+0000\n"
+"PO-Revision-Date: 2013-08-21 18:35+0200\n"
 "Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -21,11 +21,11 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "dconf szerkesztő"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "A konfigurációs adatbázis közvetlen szerkesztése"
 
@@ -33,32 +33,32 @@ msgstr "A konfigurációs adatbázis közvetlen szerkesztése"
 msgid "settings;configuration;"
 msgstr "beállítások;konfiguráció;"
 
-#: ../editor/dconf-editor.vala:180
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Egész [%s..%s]"
 
-#: ../editor/dconf-editor.vala:182
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "Logikai"
 
-#: ../editor/dconf-editor.vala:184
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "Karakterlánc"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "Felsorolás"
 
-#: ../editor/dconf-editor.vala:234
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "Nincs séma"
 
-#: ../editor/dconf-editor.vala:344
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "Nem található"
 
-#: ../editor/dconf-editor.vala:392
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -87,11 +87,11 @@ msgstr ""
 "meg, írjon a Free Software Foundation Inc.-nek. Levélcímük: 51 Franklin "
 "Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:402
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "Kelemen Gábor <kelemeng at gnome dot hu>"
 
@@ -140,8 +140,9 @@ msgid "Next"
 msgstr "Következő"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Keresés"
+#| msgid "_Find"
+msgid "_Find…"
+msgstr "_Keresés…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -172,7 +173,6 @@ msgid "A flag to enable maximized mode"
 msgstr "A teljes méretű mód engedélyezése"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-#| msgid "A flag to enable maximized mode"
 msgid "A flag to enable fullscreen mode"
 msgstr "Teljes képernyős mód engedélyezése"
 
