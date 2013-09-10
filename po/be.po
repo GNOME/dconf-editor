@@ -1,14 +1,14 @@
 # Belarusian translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Ihar Hrachyshka <ihar.hrachyshka@gmail.com>, 2012.
+# Ihar Hrachyshka <ihar.hrachyshka@gmail.com>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-11-24 15:52+0000\n"
+"POT-Creation-Date: 2013-08-06 16:14+0000\n"
 "PO-Revision-Date: 2012-09-09 13:51+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "Рэдактар dconf-настроек"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "Непасрэднае рэдагаванне ўсёй канфігурацыйнай базы"
 
@@ -30,32 +30,32 @@ msgstr "Непасрэднае рэдагаванне ўсёй канфігур�
 msgid "settings;configuration;"
 msgstr "настройкі;канфігурацыя;"
 
-#: ../editor/dconf-editor.vala:180
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Цэлы лік [%s..%s]"
 
-#: ../editor/dconf-editor.vala:182
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "Булева значэнне"
 
-#: ../editor/dconf-editor.vala:184
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "Тэкставы ланцужок"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "Пералік"
 
-#: ../editor/dconf-editor.vala:234
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "Без схемы"
 
-#: ../editor/dconf-editor.vala:344
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "Не знойдзена"
 
-#: ../editor/dconf-editor.vala:392
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -85,11 +85,11 @@ msgstr ""
 "свабоднага апраграмавання на адрас: the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "Аўтарскія правы © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:402
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "Ігар Грачышка <ihar.hrachyshka@gmail.com>"
 
@@ -138,8 +138,8 @@ msgid "Next"
 msgstr "Далей"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Шукаць"
+msgid "_Find…"
+msgstr "_Шукаць..."
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
