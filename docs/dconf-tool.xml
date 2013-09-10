@@ -83,10 +83,10 @@
 
     <para>
       The <command>dconf</command> program can perform various operations on a dconf database, such as reading
-      or writing individual values or entire directories. This tool operates directly on the dconf database and
-      does not read gsettings schema information. Therefore, it cannot perform type and consistency checks on
-      values. The <citerefentry><refentrytitle>gsettings</refentrytitle><manvolnum>1</manvolnum></citerefentry>
-      utility is an alternative if such checks are needed.
+      or writing individual values or entire directories. This tool operates on dconf directly, without using
+      gsettings schema information. Therefore, it cannot perform type and consistency checks on values.  The
+      <citerefentry><refentrytitle>gsettings</refentrytitle><manvolnum>1</manvolnum></citerefentry> utility is
+      an alternative if such checks are needed.
     </para>
 
     <para>
