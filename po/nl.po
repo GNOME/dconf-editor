@@ -1,0 +1,179 @@
+# Dutch translation for d-conf
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the d-conf package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# Reinout van Schouwen <reinouts@gnome.org>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: d-conf\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-05-31 19:53+0000\n"
+"PO-Revision-Date: 2013-09-15 23:12+0200\n"
+"Last-Translator: Reinout van Schouwen <reinouts@gnome.org>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+"X-Launchpad-Export-Date: 2013-09-15 20:52+0000\n"
+
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+msgid "dconf Editor"
+msgstr "dconf-editor"
+
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+msgid "Directly edit your entire configuration database"
+msgstr "De gehele configuratie-database rechtstreeks bewerken"
+
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "instellingen;configuratie;settings;configuration;"
+
+#: ../editor/dconf-editor.vala:180
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Geheel getal [%s..%s]"
+
+#: ../editor/dconf-editor.vala:182
+msgid "Boolean"
+msgstr "Booleaanse waarde"
+
+#: ../editor/dconf-editor.vala:184
+msgid "String"
+msgstr "Tekenreeks"
+
+#: ../editor/dconf-editor.vala:186
+msgid "Enumeration"
+msgstr "Enumeratie"
+
+#: ../editor/dconf-editor.vala:234
+msgid "No schema"
+msgstr "Geen schema"
+
+#: ../editor/dconf-editor.vala:344
+msgid "Not found"
+msgstr "Niet gevonden"
+
+#: ../editor/dconf-editor.vala:392
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../editor/dconf-editor.vala:398
+msgid "Copyright © Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:402
+msgid "translator-credits"
+msgstr ""
+"Reinout van Schouwen <reinouts@gnome.org>\n"
+"Launchpad Contributions:\n"
+"  Tico https://launchpad.net/~co-ti"
+
+#: ../editor/dconf-view.vala:264
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Fout bij instellen waarde: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:318
+msgid "Name"
+msgstr "Naam"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Value"
+msgstr "Waarde"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Naar standaardinstellingen"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Schema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Samenvatting:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Beschrijving:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Soort:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Standaard:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Volgende"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find"
+msgstr "_Zoeken"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "I_nfo"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "A_fsluiten"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "De breedte van het venster"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "De breedte van het hoofdvenster in beeldpunten."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "De hoogte van het venster"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "De hoogte van het hoofdvenster in beeldpunten."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Een markering om gemaximaliseerde modus in te schakelen"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Een markering om volledig-schermmodus in te schakelen"
