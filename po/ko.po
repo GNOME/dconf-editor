@@ -2,15 +2,15 @@
 # Copyright (C) 2012, 2013 Seong-ho Cho et al.
 # This file is distributed under the same license as the dconf package.
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012, 2013
+# Changwoo Ryu <cwryu@debian.org>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-08-06 16:14+0000\n"
-"PO-Revision-Date: 2013-09-14 22:41+0900\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"PO-Revision-Date: 2013-09-17 19:29+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "정수형 [%s..%s]"
 
 #: ../editor/dconf-editor.vala:188
 msgid "Boolean"
-msgstr "부울린"
+msgstr "불리언"
 
 #: ../editor/dconf-editor.vala:190
 msgid "String"
@@ -155,7 +155,7 @@ msgstr "창 너비"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
 msgid "The width of the main window in pixels."
-msgstr "픽셀 단위의 메인 창 너비입니다."
+msgstr "메인창 너비, 픽셀 단위."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
 msgid "The height of the window"
@@ -163,7 +163,7 @@ msgstr "창 높이"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
 msgid "The height of the main window in pixels."
-msgstr "픽셀 단위의 메인 창 높이입니다."
+msgstr "메인창 높이, 픽셀 단위."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
