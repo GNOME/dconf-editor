@@ -8,50 +8,55 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-20 21:38+0000\n"
-"PO-Revision-Date: 2012-08-22 15:38+0800\n"
-"Last-Translator: Tao Zhu <bill_zt@sina.com>\n"
+"POT-Creation-Date: 2013-08-24 01:11+0000\n"
+"PO-Revision-Date: 2013-08-31 23:45+0700\n"
+"Last-Translator: 甘露(Gan Lu) <rhythm.gan@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "dconf 系统配置编辑器"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "便捷地编辑您的系统设置"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "settings;configuration;设定;配置;设置"
+
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "整数[%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "布尔值"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "字符串"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "枚举"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "无"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "未发现"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -77,11 +82,11 @@ msgstr ""
 "您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请写信至自由软件基金"
 "会：59 Temple Place - Suite 330, Boston, Ma 02111-1307, USA。"
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "版权所有 © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "Tao Zhu <bill_zt@sina.com>, 2012."
 
@@ -130,8 +135,8 @@ msgid "Next"
 msgstr "下一项"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "查找(_F)"
+msgid "_Find…"
+msgstr "查找(_F)…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -160,3 +165,7 @@ msgstr "窗口高度，以像素为单位"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "启用最大化模式的标记"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "启用全屏模式的标记"
