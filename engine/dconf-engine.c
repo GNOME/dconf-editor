@@ -546,6 +546,51 @@ dconf_engine_read (DConfEngine *engine,
   return value;
 }
 
+GVariant *
+dconf_engine_read_user_value (DConfEngine *engine,
+                              GQueue      *read_through,
+                              const gchar *key)
+{
+  gboolean found_key = FALSE;
+  GVariant *value = NULL;
+
+  /* This is a simplified version of the above.  We get to ignore locks
+   * and system-level settings.
+   *
+   * NB: we may find "NULL", which is why we have a separate variable.
+   */
+
+  /* Ignore the queues if we don't have a writable database */
+  if (engine->n_sources == 0 || !engine->sources[0]->writable)
+    return NULL;
+
+  /* First check read-through */
+  if (read_through)
+    found_key = dconf_engine_find_key_in_queue (read_through, key, &value);
+
+  /* Next pending/in-flight */
+  if (!found_key)
+    {
+      dconf_engine_lock_queues (engine);
+
+      /* Check the pending queue first because those were submitted
+       * more recently.
+       */
+      found_key = dconf_engine_find_key_in_queue (&engine->pending, key, &value) ||
+                  dconf_engine_find_key_in_queue (&engine->in_flight, key, &value);
+
+      dconf_engine_unlock_queues (engine);
+    }
+
+  /* Finally, check the user database */
+  if (!found_key && engine->sources[0]->values)
+    value = gvdb_table_get_value (engine->sources[0]->values, key);
+
+  dconf_engine_release_sources (engine);
+
+  return value;
+}
+
 gchar **
 dconf_engine_list (DConfEngine *engine,
                    const gchar *dir,

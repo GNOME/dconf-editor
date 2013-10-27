@@ -63,6 +63,16 @@ dconf_settings_backend_read (GSettingsBackend   *backend,
   return value;
 }
 
+static GVariant *
+dconf_settings_backend_read_user_value (GSettingsBackend   *backend,
+                                        const gchar        *key,
+                                        const GVariantType *expected_type)
+{
+  DConfSettingsBackend *dcsb = (DConfSettingsBackend *) backend;
+
+  return dconf_engine_read_user_value (dcsb->engine, NULL, key);
+}
+
 static gboolean
 dconf_settings_backend_write (GSettingsBackend *backend,
                               const gchar      *key,
@@ -193,6 +203,7 @@ dconf_settings_backend_class_init (GSettingsBackendClass *class)
   object_class->finalize = dconf_settings_backend_finalize;
 
   class->read = dconf_settings_backend_read;
+  class->read_user_value = dconf_settings_backend_read_user_value;
   class->write = dconf_settings_backend_write;
   class->write_tree = dconf_settings_backend_write_tree;
   class->reset = dconf_settings_backend_reset;
