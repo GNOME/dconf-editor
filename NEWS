@@ -1,3 +1,16 @@
+Changes in dconf 0.19.2
+========================
+
+ - Add support for the new GSettingsBackend.read_user_value() API
+
+ - bump GLib version depend accordingly (2.39.1)
+
+Translations updates:
+ Greek
+ Catalan (Valencian)
+ Simplified Chinese
+ Persian
+
 Changes in dconf 0.18.0
 ========================
 
