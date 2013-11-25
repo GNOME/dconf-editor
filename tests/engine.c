@@ -48,10 +48,16 @@ dconf_engine_change_notify (DConfEngine         *engine,
                             gpointer             origin_tag,
                             gpointer             user_data)
 {
-  if (change_log)
-    g_string_append_printf (change_log, "%s:%d:%s:%s;",
-                            prefix, g_strv_length ((gchar **) changes), changes[0],
-                            tag ? tag : "nil");
+  gchar *joined;
+
+  if (!change_log)
+    return;
+
+  joined = g_strjoinv (",", (gchar **) changes);
+  g_string_append_printf (change_log, "%s:%d:%s:%s;",
+                          prefix, g_strv_length ((gchar **) changes), joined,
+                          tag ? tag : "nil");
+  g_free (joined);
 }
 
 static void
@@ -1213,6 +1219,163 @@ test_watch_sync (void)
   match_request_type = NULL;
 }
 
+static void
+test_change_fast (void)
+{
+  DConfChangeset *empty, *good_write, *bad_write, *very_good_write, *slightly_bad_write;
+  GvdbTable *table, *locks;
+  DConfEngine *engine;
+  gboolean success;
+  GError *error = NULL;
+  GVariant *value;
+
+  change_log = g_string_new (NULL);
+
+  table = dconf_mock_gvdb_table_new ();
+  locks = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_table_insert (locks, "/locked", g_variant_new_boolean (TRUE), NULL);
+  dconf_mock_gvdb_table_insert (table, ".locks", NULL, locks);
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", table);
+
+  empty = dconf_changeset_new ();
+  good_write = dconf_changeset_new_write ("/value", g_variant_new_string ("value"));
+  bad_write = dconf_changeset_new_write ("/locked", g_variant_new_string ("value"));
+  very_good_write = dconf_changeset_new_write ("/value", g_variant_new_string ("value"));
+  dconf_changeset_set (very_good_write, "/to-reset", NULL);
+  slightly_bad_write = dconf_changeset_new_write ("/locked", g_variant_new_string ("value"));
+  dconf_changeset_set (slightly_bad_write, "/to-reset", NULL);
+
+  g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
+  engine = dconf_engine_new (NULL, NULL);
+  g_unsetenv ("DCONF_PROFILE");
+
+  success = dconf_engine_change_fast (engine, empty, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+
+  success = dconf_engine_change_fast (engine, empty, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+
+  success = dconf_engine_change_fast (engine, bad_write, NULL, &error);
+  g_assert_error (error, DCONF_ERROR, DCONF_ERROR_NOT_WRITABLE);
+  g_clear_error (&error);
+  g_assert (!success);
+
+  success = dconf_engine_change_fast (engine, slightly_bad_write, NULL, &error);
+  g_assert_error (error, DCONF_ERROR, DCONF_ERROR_NOT_WRITABLE);
+  g_clear_error (&error);
+  g_assert (!success);
+
+  /* Up to now, no D-Bus traffic should have been sent at all because we
+   * only had trivial and non-writable attempts.
+   *
+   * Now try some working cases
+   */
+  dconf_mock_dbus_assert_no_async ();
+  g_assert_cmpstr (change_log->str, ==, "");
+
+  success = dconf_engine_change_fast (engine, good_write, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+
+  /* That should have emitted a synthetic change event */
+  g_assert_cmpstr (change_log->str, ==, "/value:1::nil;");
+  g_string_set_size (change_log, 0);
+
+  /* Verify that the value is set */
+  value = dconf_engine_read (engine, NULL, "/value");
+  g_assert_cmpstr (g_variant_get_string (value, NULL), ==, "value");
+  g_variant_unref (value);
+
+  /* Fail the attempted write.  This should cause a warning and a change. */
+  g_test_expect_message ("dconf", G_LOG_LEVEL_WARNING, "failed to commit changes to dconf: something failed");
+  error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "something failed");
+  dconf_mock_dbus_async_reply (NULL, error);
+  g_clear_error (&error);
+  g_assert_cmpstr (change_log->str, ==, "/value:1::nil;");
+  g_string_set_size (change_log, 0);
+
+  /* Verify that the value became unset due to the failure */
+  value = dconf_engine_read (engine, NULL, "value");
+  g_assert (value == NULL);
+
+  /* Now try a successful write */
+  dconf_mock_dbus_assert_no_async ();
+  g_assert_cmpstr (change_log->str, ==, "");
+
+  success = dconf_engine_change_fast (engine, good_write, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+
+  /* That should have emitted a synthetic change event */
+  g_assert_cmpstr (change_log->str, ==, "/value:1::nil;");
+  g_string_set_size (change_log, 0);
+
+  /* Verify that the value is set */
+  value = dconf_engine_read (engine, NULL, "/value");
+  g_assert_cmpstr (g_variant_get_string (value, NULL), ==, "value");
+  g_variant_unref (value);
+
+  /* ACK the write. */
+  error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "something failed");
+  dconf_mock_dbus_async_reply (g_variant_new ("(s)", "tag"), NULL);
+  g_clear_error (&error);
+  /* No change this time, since we already did it. */
+  g_assert_cmpstr (change_log->str, ==, "");
+
+  /* Verify that the value became unset due to the in-flight queue
+   * clearing... */
+  value = dconf_engine_read (engine, NULL, "value");
+  g_assert (value == NULL);
+
+  /* Do that all again for a changeset with more than one item */
+  dconf_mock_dbus_assert_no_async ();
+  g_assert_cmpstr (change_log->str, ==, "");
+  success = dconf_engine_change_fast (engine, very_good_write, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  g_assert_cmpstr (change_log->str, ==, "/:2:to-reset,value:nil;");
+  g_string_set_size (change_log, 0);
+  value = dconf_engine_read (engine, NULL, "/value");
+  g_assert_cmpstr (g_variant_get_string (value, NULL), ==, "value");
+  g_variant_unref (value);
+  g_test_expect_message ("dconf", G_LOG_LEVEL_WARNING, "failed to commit changes to dconf: something failed");
+  error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "something failed");
+  dconf_mock_dbus_async_reply (NULL, error);
+  g_clear_error (&error);
+  g_assert_cmpstr (change_log->str, ==, "/:2:to-reset,value:nil;");
+  g_string_set_size (change_log, 0);
+  value = dconf_engine_read (engine, NULL, "value");
+  g_assert (value == NULL);
+  dconf_mock_dbus_assert_no_async ();
+  g_assert_cmpstr (change_log->str, ==, "");
+  success = dconf_engine_change_fast (engine, very_good_write, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  g_assert_cmpstr (change_log->str, ==, "/:2:to-reset,value:nil;");
+  g_string_set_size (change_log, 0);
+  value = dconf_engine_read (engine, NULL, "/value");
+  g_assert_cmpstr (g_variant_get_string (value, NULL), ==, "value");
+  g_variant_unref (value);
+  error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "something failed");
+  dconf_mock_dbus_async_reply (g_variant_new ("(s)", "tag"), NULL);
+  g_clear_error (&error);
+  g_assert_cmpstr (change_log->str, ==, "");
+  value = dconf_engine_read (engine, NULL, "value");
+  g_assert (value == NULL);
+
+  dconf_engine_unref (engine);
+
+  dconf_changeset_unref (empty);
+  dconf_changeset_unref (good_write);
+  dconf_changeset_unref (very_good_write);
+  dconf_changeset_unref (bad_write);
+  dconf_changeset_unref (slightly_bad_write);
+  g_string_free (change_log, TRUE);
+  change_log = NULL;
+}
+
 static GError *change_sync_error;
 static GVariant *change_sync_result;
 
@@ -1306,6 +1469,13 @@ test_change_sync (void)
   g_assert (!success);
   g_clear_error (&error);
   change_sync_error = NULL;
+
+  dconf_changeset_unref (empty);
+  dconf_changeset_unref (good_write);
+  dconf_changeset_unref (very_good_write);
+  dconf_changeset_unref (bad_write);
+  dconf_changeset_unref (slightly_bad_write);
+  dconf_engine_unref (engine);
 }
 
 int
@@ -1327,7 +1497,8 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/read", test_read);
   g_test_add_func ("/engine/watch/fast", test_watch_fast);
   g_test_add_func ("/engine/watch/sync", test_watch_sync);
-  g_test_add_func ("/engine/write/sync", test_change_sync);
+  g_test_add_func ("/engine/change/fast", test_change_fast);
+  g_test_add_func ("/engine/change/sync", test_change_sync);
 
   return g_test_run ();
 }
