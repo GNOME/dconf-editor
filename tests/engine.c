@@ -345,6 +345,125 @@ test_user_source (void)
   dconf_mock_shm_reset ();
 }
 
+static gboolean service_db_created;
+static GvdbTable *service_db_table;
+
+static GVariant *
+handle_service_request (GBusType             bus_type,
+                        const gchar         *bus_name,
+                        const gchar         *object_path,
+                        const gchar         *interface_name,
+                        const gchar         *method_name,
+                        GVariant            *parameters,
+                        const GVariantType  *expected_type,
+                        GError             **error)
+{
+  g_assert_cmpstr (bus_name, ==, "ca.desrt.dconf");
+  g_assert_cmpstr (interface_name, ==, "ca.desrt.dconf.Writer");
+  g_assert_cmpstr (method_name, ==, "Init");
+  g_assert_cmpstr (g_variant_get_type_string (parameters), ==, "()");
+
+  if (g_str_equal (object_path, "/ca/desrt/dconf/shm/nil"))
+    {
+      service_db_table = dconf_mock_gvdb_table_new ();
+      dconf_mock_gvdb_table_insert (service_db_table, "/values/int32", g_variant_new_int32 (123456), NULL);
+      dconf_mock_gvdb_install ("/RUNTIME/dconf-service/shm/nil", service_db_table);
+
+      /* Make sure this only happens the first time... */
+      g_assert (!service_db_created);
+      service_db_created = TRUE;
+
+      return g_variant_new ("()");
+    }
+  else
+    {
+      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_NOENT, "Unknown DB type");
+      return NULL;
+    }
+}
+
+
+static void
+test_service_source (void)
+{
+  DConfEngineSource *source;
+  gboolean reopened;
+
+  /* Make sure we deal with errors from the service sensibly */
+  if (g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDERR))
+    {
+      g_log_set_always_fatal (G_LOG_LEVEL_ERROR);
+
+      source = dconf_engine_source_new ("service-db:unknown/nil");
+      dconf_mock_dbus_sync_call_handler = handle_service_request;
+      g_assert (source != NULL);
+      g_assert (source->values == NULL);
+      g_assert (source->locks == NULL);
+      reopened = dconf_engine_source_refresh (source);
+
+      exit (0);
+    }
+  g_test_trap_assert_passed ();
+  g_test_trap_assert_stderr ("*WARNING*: unable to open file*unknown/nil*expect degraded performance*");
+
+  /* Set up one that will work */
+  source = dconf_engine_source_new ("service-db:shm/nil");
+  g_assert (source != NULL);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+
+  /* Refresh it the first time.
+   *
+   * This should cause the service to be asked to create it.
+   *
+   * This should return TRUE because we just opened it.
+   */
+  dconf_mock_dbus_sync_call_handler = handle_service_request;
+  reopened = dconf_engine_source_refresh (source);
+  dconf_mock_dbus_sync_call_handler = NULL;
+  g_assert (service_db_created);
+  g_assert (reopened);
+
+  /* After that, a refresh should be a no-op. */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+
+  /* Close it and reopen it, ensuring that we don't hit the service
+   * again (because the file already exists).
+   *
+   * Note: dconf_mock_dbus_sync_call_handler = NULL, so D-Bus calls will
+   * assert.
+   */
+  dconf_engine_source_free (source);
+  source = dconf_engine_source_new ("service-db:shm/nil");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+
+  /* Make sure it has the content we expect to see */
+  g_assert (gvdb_table_has_value (source->values, "/values/int32"));
+
+  /* Now invalidate it and replace it with an empty one */
+  dconf_mock_gvdb_table_invalidate (service_db_table);
+  service_db_table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_install ("/RUNTIME/dconf-service/shm/nil", service_db_table);
+
+  /* Now reopening should get the new one */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+
+  /* ...and we should find it to be empty */
+  g_assert (!gvdb_table_has_value (source->values, "/values/int32"));
+
+  /* We're done. */
+  dconf_engine_source_free (source);
+
+  /* This should not have done any shm... */
+  dconf_mock_shm_assert_log ("");
+
+  dconf_mock_gvdb_install ("/RUNTIME/dconf-service/shm/nil", NULL);
+  service_db_table = NULL;
+}
+
 static void
 test_system_source (void)
 {
@@ -877,6 +996,7 @@ test_watch_sync (void)
 int
 main (int argc, char **argv)
 {
+  g_setenv ("XDG_RUNTIME_DIR", "/RUNTIME/", TRUE);
   g_setenv ("XDG_CONFIG_HOME", "/HOME/.config", TRUE);
   g_unsetenv ("DCONF_PROFILE");
 
@@ -888,6 +1008,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/signal-threadsafety", test_signal_threadsafety);
   g_test_add_func ("/engine/sources/user", test_user_source);
   g_test_add_func ("/engine/sources/system", test_system_source);
+  g_test_add_func ("/engine/sources/service", test_service_source);
   g_test_add_func ("/engine/read", test_read);
   g_test_add_func ("/engine/watch/fast", test_watch_fast);
   g_test_add_func ("/engine/watch/sync", test_watch_sync);
