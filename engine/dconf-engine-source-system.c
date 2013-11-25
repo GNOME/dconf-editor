@@ -57,7 +57,7 @@ dconf_engine_source_system_reopen (DConfEngineSource *source)
     {
       if (!did_warn)
         {
-          g_critical ("unable to open file '%s': %s; expect degraded performance", filename, error->message);
+          g_warning ("unable to open file '%s': %s; expect degraded performance", filename, error->message);
           did_warn = TRUE;
         }
 
