@@ -16,6 +16,10 @@ typedef GVariant *   (* DConfMockDBusSyncCallHandler)                   (GBusTyp
 extern DConfMockDBusSyncCallHandler                         dconf_mock_dbus_sync_call_handler;
 extern GQueue                                               dconf_mock_dbus_outstanding_call_handles;
 
+void                    dconf_mock_dbus_async_reply                     (GVariant    *reply,
+                                                                         GError      *error);
+void                    dconf_mock_dbus_assert_no_aync                  (void);
+
 void                    dconf_mock_shm_reset                            (void);
 gint                    dconf_mock_shm_flag                             (const gchar *name);
 void                    dconf_mock_shm_assert_log                       (const gchar *expected_log);

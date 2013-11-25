@@ -42,6 +42,27 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   return TRUE;
 }
 
+void
+dconf_mock_dbus_async_reply (GVariant *reply,
+                             GError   *error)
+{
+  DConfEngineCallHandle *handle;
+
+  g_assert (!g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
+  handle = g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles);
+
+  if (reply && handle)
+    g_assert (g_variant_is_of_type (reply, dconf_engine_call_handle_get_expected_type (handle)));
+
+  dconf_engine_call_handle_reply (handle, reply, error);
+}
+
+void
+dconf_mock_dbus_assert_no_aync (void)
+{
+  g_assert (g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
+}
+
 DConfMockDBusSyncCallHandler dconf_mock_dbus_sync_call_handler;
 
 GVariant *
