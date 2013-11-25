@@ -707,7 +707,10 @@ dconf_engine_call_handle_new (DConfEngine                   *engine,
 const GVariantType *
 dconf_engine_call_handle_get_expected_type (DConfEngineCallHandle *handle)
 {
-  return handle->expected_reply;
+  if (handle)
+    return handle->expected_reply;
+  else
+    return NULL;
 }
 
 void
