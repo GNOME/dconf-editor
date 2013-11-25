@@ -18,7 +18,7 @@ extern GQueue                                               dconf_mock_dbus_outs
 
 void                    dconf_mock_dbus_async_reply                     (GVariant    *reply,
                                                                          GError      *error);
-void                    dconf_mock_dbus_assert_no_aync                  (void);
+void                    dconf_mock_dbus_assert_no_async                 (void);
 
 void                    dconf_mock_shm_reset                            (void);
 gint                    dconf_mock_shm_flag                             (const gchar *name);

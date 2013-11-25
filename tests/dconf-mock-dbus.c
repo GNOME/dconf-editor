@@ -58,7 +58,7 @@ dconf_mock_dbus_async_reply (GVariant *reply,
 }
 
 void
-dconf_mock_dbus_assert_no_aync (void)
+dconf_mock_dbus_assert_no_async (void)
 {
   g_assert (g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
 }

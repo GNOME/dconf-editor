@@ -1116,7 +1116,7 @@ test_watch_fast (void)
   /* both AddMatch results come back before shm is flagged */
   dconf_mock_dbus_async_reply (triv, NULL);
   dconf_mock_dbus_async_reply (triv, NULL);
-  dconf_mock_dbus_assert_no_aync ();
+  dconf_mock_dbus_assert_no_async ();
   dconf_mock_shm_flag ("user");
   b = dconf_engine_get_state (engine);
   g_assert_cmpuint (a, !=, b);
@@ -1124,7 +1124,7 @@ test_watch_fast (void)
   dconf_engine_unwatch_fast (engine, "/a/b/c");
   dconf_mock_dbus_async_reply (triv, NULL);
   dconf_mock_dbus_async_reply (triv, NULL);
-  dconf_mock_dbus_assert_no_aync ();
+  dconf_mock_dbus_assert_no_async ();
 
   /* Establish a watch and fail the race. */
   a = dconf_engine_get_state (engine);
@@ -1137,14 +1137,14 @@ test_watch_fast (void)
   dconf_mock_dbus_async_reply (triv, NULL);
   dconf_mock_shm_flag ("user");
   dconf_mock_dbus_async_reply (triv, NULL);
-  dconf_mock_dbus_assert_no_aync ();
+  dconf_mock_dbus_assert_no_async ();
   b = dconf_engine_get_state (engine);
   g_assert_cmpuint (a, !=, b);
   g_assert_cmpstr (change_log->str, ==, "/:1::nil;");
   dconf_engine_unwatch_fast (engine, "/a/b/c");
   dconf_mock_dbus_async_reply (triv, NULL);
   dconf_mock_dbus_async_reply (triv, NULL);
-  dconf_mock_dbus_assert_no_aync ();
+  dconf_mock_dbus_assert_no_async ();
 
   dconf_mock_gvdb_install ("/HOME/.config/dconf/user", NULL);
   dconf_mock_gvdb_install ("/etc/dconf/db/site", NULL);
