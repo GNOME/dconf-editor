@@ -48,7 +48,6 @@ dconf_engine_source_service_needs_reopen (DConfEngineSource *source)
 static GvdbTable *
 dconf_engine_source_service_reopen (DConfEngineSource *source)
 {
-  static gboolean did_warn;
   GError *error = NULL;
   GvdbTable *table;
   gchar *filename;
@@ -68,10 +67,10 @@ dconf_engine_source_service_reopen (DConfEngineSource *source)
 
       if (table == NULL)
         {
-          if (!did_warn)
+          if (!source->did_warn)
             {
               g_warning ("unable to open file '%s': %s; expect degraded performance", filename, error->message);
-              did_warn = TRUE;
+              source->did_warn = TRUE;
             }
 
           g_error_free (error);

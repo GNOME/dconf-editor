@@ -47,6 +47,7 @@ struct _DConfEngineSource
   GvdbTable *locks;
   GBusType   bus_type;
   gboolean   writable;
+  gboolean   did_warn;
   gchar     *bus_name;
   gchar     *object_path;
   gchar     *name;

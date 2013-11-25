@@ -858,6 +858,35 @@ check_read (DConfEngine *engine,
     }
 }
 
+static gboolean
+is_expected (const gchar    *log_domain,
+             GLogLevelFlags  log_level,
+             const gchar    *message)
+{
+  return g_str_equal (log_domain, "dconf") &&
+         log_level == (G_LOG_LEVEL_WARNING | G_LOG_FLAG_FATAL) &&
+         strstr (message, "unable to open file '/etc/dconf/db");
+}
+
+static gboolean
+fatal_handler (const gchar    *log_domain,
+               GLogLevelFlags  log_level,
+               const gchar    *message,
+               gpointer        user_data)
+{
+  return !is_expected (log_domain, log_level, message);
+}
+
+static void
+normal_handler (const gchar    *log_domain,
+                GLogLevelFlags  log_level,
+                const gchar    *message,
+                gpointer        user_data)
+{
+  if (!is_expected (log_domain, log_level, message))
+    g_error ("unexpected error: %s\n", message);
+}
+
 static void
 test_read (void)
 {
@@ -868,15 +897,13 @@ test_read (void)
   DConfEngine *engine;
   guint i, j, k;
   guint n;
+  guint handler_id;
 
-  /* Hack to silence warning */
-  if (!g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDERR))
-    {
-      g_test_trap_assert_passed ();
-      g_test_trap_assert_stderr ("*this gvdb does not exist; expect degraded performance*");
-      return;
-    }
-  g_log_set_always_fatal (G_LOG_LEVEL_ERROR);
+  /* This test throws a lot of messages about missing databases.
+   * Capture and ignore them.
+   */
+  g_test_log_set_fatal_handler (fatal_handler, NULL);
+  handler_id = g_log_set_handler ("dconf", G_LOG_LEVEL_WARNING | G_LOG_FLAG_FATAL, normal_handler, NULL);
 
   /* Our test strategy is as follows:
    *
@@ -1050,7 +1077,9 @@ test_read (void)
   g_unsetenv ("DCONF_PROFILE");
   g_unlink (profile_filename);
   g_free (profile_filename);
-  exit (0);
+  dconf_mock_shm_reset ();
+
+  g_log_remove_handler ("dconf", handler_id);
 }
 
 static void
