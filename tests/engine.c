@@ -891,7 +891,7 @@ normal_handler (const gchar    *log_domain,
 static void
 test_read (void)
 {
-#define MAX_N_SOURCES 3
+#define MAX_N_SOURCES 2
   gpointer state[MAX_N_SOURCES];
   gchar *profile_filename;
   GError *error = NULL;
@@ -1032,7 +1032,7 @@ test_read (void)
 
   g_setenv ("DCONF_PROFILE", profile_filename, TRUE);
 
-  for (n = 0; n < MAX_N_SOURCES; n++)
+  for (n = 0; n <= MAX_N_SOURCES; n++)
     for (i = 0; i < pow (2, n); i++)
       {
         gint n_possible_states = pow (7, n);
