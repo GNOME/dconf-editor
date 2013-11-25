@@ -1,5 +1,7 @@
 #define _GNU_SOURCE
 
+#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_36 /* Suppress deprecation warnings */
+
 #include "../engine/dconf-engine.h"
 #include "../engine/dconf-engine-profile.h"
 #include "dconf-mock.h"

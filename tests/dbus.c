@@ -1,3 +1,5 @@
+#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_36 /* Suppress deprecation warnings */
+
 #include <string.h>
 #include <glib.h>
 #include <stdlib.h>

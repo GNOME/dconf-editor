@@ -1,4 +1,7 @@
 #define _GNU_SOURCE
+
+#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_36 /* Suppress deprecation warnings */
+
 #include "../common/dconf-paths.h"
 #include <glib/gstdio.h>
 #include <sys/stat.h>
