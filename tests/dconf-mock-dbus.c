@@ -65,5 +65,7 @@ dconf_engine_dbus_call_sync_func (GBusType             bus_type,
 
   g_variant_unref (parameters);
 
-  return g_variant_take_ref (reply);
+  g_assert (reply != NULL || (error == NULL || *error != NULL));
+
+  return reply ? g_variant_take_ref (reply) : NULL;
 }
