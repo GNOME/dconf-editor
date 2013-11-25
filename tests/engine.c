@@ -832,7 +832,7 @@ handle_match_request (GBusType             bus_type,
 
   g_assert_cmpstr (bus_name, ==, "org.freedesktop.DBus");
   /* any object path works... */
-  g_assert_cmpstr (bus_name, ==, "org.freedesktop.DBus");
+  g_assert_cmpstr (interface_name, ==, "org.freedesktop.DBus");
   g_assert_cmpstr (method_name, ==, match_request_type);
   g_assert_cmpstr (g_variant_get_type_string (parameters), ==, "(s)");
   g_variant_get (parameters, "(&s)", &match_rule);
