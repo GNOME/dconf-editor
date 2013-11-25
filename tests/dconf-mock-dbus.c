@@ -51,10 +51,19 @@ dconf_mock_dbus_async_reply (GVariant *reply,
   g_assert (!g_queue_is_empty (&dconf_mock_dbus_outstanding_call_handles));
   handle = g_queue_pop_head (&dconf_mock_dbus_outstanding_call_handles);
 
-  if (reply && handle)
-    g_assert (g_variant_is_of_type (reply, dconf_engine_call_handle_get_expected_type (handle)));
+  if (reply)
+    {
+      const GVariantType *expected_type;
+
+      expected_type = dconf_engine_call_handle_get_expected_type (handle);
+      g_assert (expected_type == NULL || g_variant_is_of_type (reply, expected_type));
+      g_variant_ref_sink (reply);
+    }
 
   dconf_engine_call_handle_reply (handle, reply, error);
+
+  if (reply)
+    g_variant_unref (reply);
 }
 
 void
