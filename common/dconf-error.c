@@ -1,5 +1,5 @@
 /*
- * Copyright © 2010 Codethink Limited
+ * Copyright © 2013 Canonical Limited
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,36 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_h__
-#define __dconf_h__
+#include "config.h"
 
-#include <common/dconf-error.h>
-#include <common/dconf-paths.h>
-#include <common/dconf-changeset.h>
-#include <client/dconf-client.h>
+#include "dconf-error.h"
 
-#endif /* __dconf_h__ */
+/**
+ * SECTION:error
+ * @title: DConfError
+ * @short_description: GError error codes
+ *
+ * These are the error codes that can be returned from dconf APIs.
+ **/
+
+/**
+ * DCONF_ERROR:
+ *
+ * The error domain of DConf.
+ *
+ * Since: 0.20
+ **/
+
+/**
+ * DConfError:
+ * @DCONF_ERROR_FAILED: generic error
+ * @DCONF_ERROR_PATH: the path given for the operation was a valid path
+ *   or was not of the expected type (dir vs. key)
+ * @DCONF_ERROR_NOT_WRITABLE: the given key was not writable
+ *
+ * Possible errors from DConf functions.
+ *
+ * Since: 0.20
+ **/
+
+G_DEFINE_QUARK (dconf_error, dconf_error)

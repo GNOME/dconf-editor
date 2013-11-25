@@ -30,14 +30,6 @@ typedef struct _DConfEngine DConfEngine;
 
 typedef struct _DConfEngineCallHandle DConfEngineCallHandle;
 
-typedef enum
-{
-  DCONF_ERROR_FAILED,
-  DCONF_ERROR_NOT_WRITABLE
-} DConfEngineError;
-
-#define DCONF_ERROR (g_quark_from_static_string ("dconf error quark"))
-
 /* These functions need to be implemented by the client library */
 G_GNUC_INTERNAL
 void                    dconf_engine_dbus_init_for_testing              (void);

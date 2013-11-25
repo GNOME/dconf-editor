@@ -1,4 +1,12 @@
 <SECTION>
+<FILE>error</FILE>
+DConfError
+DCONF_ERROR
+<SUBSECTION Standard>
+dconf_error_quark
+</SECTION>
+
+<SECTION>
 <FILE>client</FILE>
 DConfClient
 dconf_client_new

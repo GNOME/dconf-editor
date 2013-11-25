@@ -24,6 +24,8 @@
 
 #include "dconf-paths.h"
 
+#include "dconf-error.h"
+
 /**
  * SECTION:paths
  * @title: dconf Paths
@@ -39,9 +41,6 @@
  **/
 
 #define vars gchar c, l
-
-#define DCONF_ERROR 0
-#define DCONF_ERROR_PATH 0
 
 #define nonnull \
   if (string == NULL) {                                                 \

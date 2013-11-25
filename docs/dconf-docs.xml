@@ -13,6 +13,7 @@
 
   <chapter>
     <title>DConf Client API</title>
+    <xi:include href='xml/error.xml'/>
     <xi:include href='xml/paths.xml'/>
     <xi:include href='xml/changeset.xml'/>
     <xi:include href='xml/client.xml'/>

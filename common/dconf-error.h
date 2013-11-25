@@ -1,5 +1,5 @@
 /*
- * Copyright © 2010 Codethink Limited
+ * Copyright © 2013 Canonical Limited
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,19 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
-#ifndef __dconf_h__
-#define __dconf_h__
+#ifndef __dconf_error_h__
+#define __dconf_error_h__
 
-#include <common/dconf-error.h>
-#include <common/dconf-paths.h>
-#include <common/dconf-changeset.h>
-#include <client/dconf-client.h>
+#include <glib.h>
 
-#endif /* __dconf_h__ */
+#define DCONF_ERROR (dconf_error_quark ())
+GQuark dconf_error_quark (void);
+
+typedef enum
+{
+  DCONF_ERROR_FAILED,
+  DCONF_ERROR_PATH,
+  DCONF_ERROR_NOT_WRITABLE
+} DConfError;
+
+#endif /* __dconf_error_h__ */
