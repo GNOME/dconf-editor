@@ -671,6 +671,7 @@ check_read (DConfEngine *engine,
   GVariant *value;
   gchar **list;
   guint i;
+  gint n;
 
   /* The value we expect to read is number of the first source that has
    * the value set (ie: odd digit in database_state) up to the lowest
@@ -730,7 +731,9 @@ check_read (DConfEngine *engine,
   writable = dconf_engine_is_writable (engine, "/value");
   g_assert_cmpint (writable, ==, n_sources && !(source_types & 1) && !any_locks);
 
+  g_strfreev (dconf_engine_list (engine, "/", &n));
   list = dconf_engine_list (engine, "/", NULL);
+  g_assert_cmpint (g_strv_length (list), ==, n);
   if (any_values)
     {
       g_assert_cmpstr (list[0], ==, "value");
