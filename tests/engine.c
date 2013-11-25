@@ -665,6 +665,7 @@ check_read (DConfEngine *engine,
 {
   gboolean any_values = FALSE;
   gboolean any_locks = FALSE;
+  guint first_contents;
   gint expected = -1;
   gboolean writable;
   GVariant *value;
@@ -680,7 +681,7 @@ check_read (DConfEngine *engine,
    * If we find that we should have a lock in this database, we unset
    * any previous values (since they should not have been written).
    *
-   * We initially code this loop in a different way than the one in
+   * We intentionally code this loop in a different way than the one in
    * dconf itself is currently implemented...
    *
    * We also take note of if we saw any locks and cross-check that with
@@ -688,6 +689,7 @@ check_read (DConfEngine *engine,
    * and cross-check that with dconf_engine_list() (which ignores
    * locks).
    */
+  first_contents = database_state % 7;
   for (i = 0; i < n_sources; i++)
     {
       guint contents = database_state % 7;
@@ -737,6 +739,30 @@ check_read (DConfEngine *engine,
   else
     g_assert (list[0] == NULL);
   g_strfreev (list);
+
+  /* Finally, check the user value.
+   *
+   * This should be set only in the case that the first database is a
+   * user database (ie: writable) and the contents of that database are
+   * set (ie: 2, 4 or 6).  See the table in the comment below.
+   */
+  value = dconf_engine_read_user_value (engine, NULL, "/value");
+  if (value)
+    {
+      g_assert (first_contents && !(first_contents & 1) && !(source_types & 1));
+      g_assert (g_variant_is_of_type (value, G_VARIANT_TYPE_UINT32));
+      g_assert_cmpint (g_variant_get_uint32 (value), ==, 0);
+      g_variant_unref (value);
+    }
+  else
+    {
+      /* Three possibilities for failure:
+       *  - first db did not exist
+       *  - value was missing from first db
+       *  - first DB was system-db
+       */
+      g_assert (!first_contents || (first_contents & 1) || (source_types & 1));
+    }
 }
 
 static void
