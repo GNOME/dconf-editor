@@ -17,6 +17,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  **/
 
+#include "config.h"
+
 #include "dconf-libdbus-1.h"
 
 #include "../engine/dconf-engine.h"

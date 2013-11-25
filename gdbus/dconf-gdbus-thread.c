@@ -20,6 +20,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#include "config.h"
+
 #include "../engine/dconf-engine.h"
 
 /* We interact with GDBus using a worker thread just for dconf.

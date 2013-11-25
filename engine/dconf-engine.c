@@ -19,6 +19,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#include "config.h"
+
 #define _XOPEN_SOURCE 600
 #include "dconf-engine.h"
 

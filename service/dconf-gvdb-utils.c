@@ -20,6 +20,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#include "config.h"
+
 #include "dconf-gvdb-utils.h"
 
 #include "../common/dconf-paths.h"

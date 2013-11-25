@@ -20,6 +20,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#include "config.h"
+
 #include "dconf-writer.h"
 
 typedef DConfWriterClass DConfShmWriterClass;

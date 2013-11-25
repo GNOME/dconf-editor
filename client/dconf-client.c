@@ -20,6 +20,8 @@
  * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
+#include "config.h"
+
 #include "dconf-client.h"
 
 #include "../engine/dconf-engine.h"
