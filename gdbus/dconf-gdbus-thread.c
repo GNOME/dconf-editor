@@ -69,6 +69,7 @@ typedef struct
   const gchar           *interface_name;
   const gchar           *method_name;
   GVariant              *parameters;
+  const GVariantType    *expected_type;
   DConfEngineCallHandle *handle;
 } DConfGDBusCall;
 
@@ -245,7 +246,7 @@ dconf_gdbus_method_call (gpointer user_data)
 
   if (connection)
     g_dbus_connection_call (connection, call->bus_name, call->object_path, call->interface_name,
-                            call->method_name, call->parameters, NULL, G_DBUS_CALL_FLAGS_NONE,
+                            call->method_name, call->parameters, call->expected_type, G_DBUS_CALL_FLAGS_NONE,
                             -1, NULL, dconf_gdbus_method_call_done, call->handle);
 
   else
@@ -277,6 +278,7 @@ dconf_engine_dbus_call_async_func (GBusType                bus_type,
   call->interface_name = interface_name;
   call->method_name = method_name;
   call->parameters = g_variant_ref_sink (parameters);
+  call->expected_type = dconf_engine_call_handle_get_expected_type (handle);
   call->handle = handle;
 
   source = g_idle_source_new ();
