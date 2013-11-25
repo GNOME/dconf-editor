@@ -4,6 +4,7 @@
 
 #include "../engine/dconf-engine.h"
 #include "../engine/dconf-engine-profile.h"
+#include "../common/dconf-error.h"
 #include "dconf-mock.h"
 
 #include <glib/gstdio.h>
@@ -1212,6 +1213,101 @@ test_watch_sync (void)
   match_request_type = NULL;
 }
 
+static GError *change_sync_error;
+static GVariant *change_sync_result;
+
+static GVariant *
+handle_write_request (GBusType             bus_type,
+                      const gchar         *bus_name,
+                      const gchar         *object_path,
+                      const gchar         *interface_name,
+                      const gchar         *method_name,
+                      GVariant            *parameters,
+                      const GVariantType  *expected_type,
+                      GError             **error)
+{
+  g_assert_cmpstr (bus_name, ==, "ca.desrt.dconf");
+  g_assert_cmpstr (interface_name, ==, "ca.desrt.dconf.Writer");
+
+  /* Assume that the engine can format the method call properly, but
+   * test that it can properly handle weird replies.
+   */
+
+  *error = change_sync_error;
+  return change_sync_result;
+}
+
+
+static void
+test_change_sync (void)
+{
+  DConfChangeset *empty, *good_write, *bad_write, *very_good_write, *slightly_bad_write;
+  GvdbTable *table, *locks;
+  DConfEngine *engine;
+  gboolean success;
+  GError *error = NULL;
+  gchar *tag;
+
+  table = dconf_mock_gvdb_table_new ();
+  locks = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_table_insert (locks, "/locked", g_variant_new_boolean (TRUE), NULL);
+  dconf_mock_gvdb_table_insert (table, ".locks", NULL, locks);
+  dconf_mock_gvdb_install ("/etc/dconf/db/site", table);
+
+  empty = dconf_changeset_new ();
+  good_write = dconf_changeset_new_write ("/value", g_variant_new_string ("value"));
+  bad_write = dconf_changeset_new_write ("/locked", g_variant_new_string ("value"));
+  very_good_write = dconf_changeset_new_write ("/value", g_variant_new_string ("value"));
+  dconf_changeset_set (very_good_write, "/to-reset", NULL);
+  slightly_bad_write = dconf_changeset_new_write ("/locked", g_variant_new_string ("value"));
+  dconf_changeset_set (slightly_bad_write, "/to-reset", NULL);
+
+  g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
+  engine = dconf_engine_new (NULL, NULL);
+  g_unsetenv ("DCONF_PROFILE");
+
+  success = dconf_engine_change_sync (engine, empty, &tag, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  g_free (tag);
+
+  success = dconf_engine_change_sync (engine, empty, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+
+  success = dconf_engine_change_sync (engine, bad_write, &tag, &error);
+  g_assert_error (error, DCONF_ERROR, DCONF_ERROR_NOT_WRITABLE);
+  g_clear_error (&error);
+  g_assert (!success);
+
+  success = dconf_engine_change_sync (engine, slightly_bad_write, NULL, &error);
+  g_assert_error (error, DCONF_ERROR, DCONF_ERROR_NOT_WRITABLE);
+  g_clear_error (&error);
+  g_assert (!success);
+
+  /* Up to now, no D-Bus traffic should have been sent at all because we
+   * only had trivial and non-writable attempts.
+   *
+   * Now try some working cases
+   */
+  dconf_mock_dbus_sync_call_handler = handle_write_request;
+  change_sync_result = g_variant_new ("(s)", "mytag");
+
+  success = dconf_engine_change_sync (engine, good_write, &tag, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  g_assert_cmpstr (tag, ==, "mytag");
+  g_free (tag);
+  change_sync_result = NULL;
+
+  change_sync_error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "something failed");
+  success = dconf_engine_change_sync (engine, very_good_write, &tag, &error);
+  g_assert_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT);
+  g_assert (!success);
+  g_clear_error (&error);
+  change_sync_error = NULL;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -1231,6 +1327,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/read", test_read);
   g_test_add_func ("/engine/watch/fast", test_watch_fast);
   g_test_add_func ("/engine/watch/sync", test_watch_sync);
+  g_test_add_func ("/engine/write/sync", test_change_sync);
 
   return g_test_run ();
 }
