@@ -567,6 +567,8 @@ dconf_engine_read_user_value (DConfEngine *engine,
   if (engine->n_sources == 0 || !engine->sources[0]->writable)
     return NULL;
 
+  dconf_engine_acquire_sources (engine);
+
   /* First check read-through */
   if (read_through)
     found_key = dconf_engine_find_key_in_queue (read_through, key, &value);
