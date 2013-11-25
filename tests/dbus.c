@@ -295,6 +295,49 @@ test_sync_call_error (void)
   g_assert (error != NULL);
   g_assert (strstr (error->message, " type "));
   g_clear_error (&error);
+
+  /* Test two oddities:
+   *
+   *  - first, the dbus-1 backend can't handle return types other than
+   *    's' and 'as', so we do a method call that will get something
+   *    else in order that we can check that the failure is treated
+   *    properly
+   *
+   *  - next, we want to make sure that the filter function for
+   *    gdbus-filter doesn't block incoming method calls
+   */
+  reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
+                                            "org.freedesktop.DBus", "/", "org.freedesktop.DBus", "RequestName",
+                                            g_variant_new_parsed ("('ca.desrt.dconf.testsuite', uint32 0)"),
+                                            G_VARIANT_TYPE ("(u)"), &error);
+  if (reply != NULL)
+    {
+      guint s;
+
+      /* It worked, so we must be on gdbus... */
+      g_assert_no_error (error);
+
+      g_variant_get (reply, "(u)", &s);
+      g_assert_cmpuint (s, ==, 1);
+      g_variant_unref (reply);
+
+      /* Ping ourselves... */
+      reply = dconf_engine_dbus_call_sync_func (G_BUS_TYPE_SESSION,
+                                                "ca.desrt.dconf.testsuite", "/", "org.freedesktop.DBus.Peer",
+                                                "Ping", g_variant_new ("()"), G_VARIANT_TYPE_UNIT, &error);
+      g_assert (reply != NULL);
+      g_assert_no_error (error);
+      g_variant_unref (reply);
+    }
+  else
+    {
+      /* Else, we're on dbus1...
+       *
+       * Check that the error was emitted correctly.
+       */
+      g_assert_cmpstr (error->message, ==, "unable to handle message type '(u)'");
+      g_clear_error (&error);
+    }
 }
 
 static void

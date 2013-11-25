@@ -65,6 +65,14 @@ dconf_libdbus_1_new_method_call (const gchar *bus_name,
           dbus_message_iter_append_basic (&dbus_iter, DBUS_TYPE_STRING, &str);
         }
 
+      else if (g_variant_is_of_type (child, G_VARIANT_TYPE_UINT32))
+        {
+          guint32 uint;
+
+          uint = g_variant_get_uint32 (child);
+          dbus_message_iter_append_basic (&dbus_iter, DBUS_TYPE_UINT32, &uint);
+        }
+
       else
         {
           DBusMessageIter subiter;
