@@ -394,6 +394,11 @@ test_change (void)
   g_assert (dconf_changeset_is_empty (dbb));
   dconf_changeset_unref (dbb);
 
+  deltaa = dconf_changeset_new ();
+  dconf_changeset_change (dba, deltaa);
+  g_assert (dconf_changeset_is_empty (dba));
+  dconf_changeset_unref (deltaa);
+
   deltaa = dconf_changeset_new_write ("/some/value", NULL);
   dconf_changeset_change (dba, deltaa);
   g_assert (dconf_changeset_is_empty (dba));
@@ -436,6 +441,115 @@ test_change (void)
   dconf_changeset_unref (dba);
 }
 
+static void
+assert_diff_change_invariant (DConfChangeset *from,
+                              DConfChangeset *to)
+{
+  DConfChangeset *copy;
+  DConfChangeset *diff;
+
+  /* Verify this promise from the docs:
+   *
+   * Applying the returned changeset to @from using
+   * dconf_changeset_change() will result in the two changesets being
+   * equal.
+   */
+
+  copy = dconf_changeset_new_database (from);
+  diff = dconf_changeset_diff (from, to);
+  if (diff)
+    {
+      dconf_changeset_change (copy, diff);
+      dconf_changeset_unref (diff);
+    }
+
+  /* Make sure they are now equal */
+  diff = dconf_changeset_diff (copy, to);
+  g_assert (diff == NULL);
+
+  /* Why not try it the other way too? */
+  diff = dconf_changeset_diff (to, copy);
+  g_assert (diff == NULL);
+
+  dconf_changeset_unref (copy);
+}
+
+static gchar *
+create_random_key (void)
+{
+  GString *key;
+  gint i, n;
+
+  key = g_string_new (NULL);
+  n = g_test_rand_int_range (1, 5);
+  for (i = 0; i < n; i++)
+    {
+      gint j;
+
+      g_string_append_c (key, '/');
+      for (j = 0; j < 5; j++)
+        g_string_append_c (key, g_test_rand_int_range ('a', 'z' + 1));
+    }
+
+  return g_string_free (key, FALSE);
+}
+
+static GVariant *
+create_random_value (void)
+{
+  return g_variant_new_take_string (create_random_key ());
+}
+
+static DConfChangeset *
+create_random_db (void)
+{
+  DConfChangeset *set;
+  gint i, n;
+
+  set = dconf_changeset_new_database (NULL);
+  n = g_test_rand_int_range (0, 20);
+  for (i = 0; i < n; i++)
+    {
+      GVariant *value = create_random_value ();
+      gchar *key = create_random_key ();
+
+      dconf_changeset_set (set, key, value);
+      g_free (key);
+    }
+
+  return set;
+}
+
+static void
+test_diff (void)
+{
+  DConfChangeset *a, *b;
+  gint i;
+
+  /* Check diff between two empties */
+  a = dconf_changeset_new_database (NULL);
+  b = dconf_changeset_new_database (NULL);
+  assert_diff_change_invariant (a, b);
+  dconf_changeset_unref (a);
+  dconf_changeset_unref (b);
+
+  /* Check diff between two non-empties that are equal */
+  a = create_random_db ();
+  b = dconf_changeset_new_database (a);
+  assert_diff_change_invariant (a, b);
+  dconf_changeset_unref (a);
+  dconf_changeset_unref (b);
+
+  /* Check diff between two random databases that are probably unequal */
+  for (i = 0; i < 1000; i++)
+    {
+      a = create_random_db ();
+      b = create_random_db ();
+      assert_diff_change_invariant (a, b);
+      dconf_changeset_unref (a);
+      dconf_changeset_unref (b);
+    }
+}
 
 int
 main (int argc, char **argv)
@@ -448,6 +562,7 @@ main (int argc, char **argv)
   g_test_add_func ("/changeset/reset", test_reset);
   g_test_add_func ("/changeset/serialiser", test_serialiser);
   g_test_add_func ("/changeset/change", test_change);
+  g_test_add_func ("/changeset/diff", test_diff);
 
   return g_test_run ();
 }
