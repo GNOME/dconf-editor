@@ -657,6 +657,8 @@ create_profile (const gchar *filename,
   g_string_free (profile, TRUE);
 }
 
+static GQueue read_through_queues[12];
+
 static void
 check_read (DConfEngine *engine,
             guint        n_sources,
@@ -666,6 +668,7 @@ check_read (DConfEngine *engine,
   gboolean any_values = FALSE;
   gboolean any_locks = FALSE;
   guint first_contents;
+  gint underlying = -1;
   gint expected = -1;
   gboolean writable;
   GVariant *value;
@@ -705,10 +708,16 @@ check_read (DConfEngine *engine,
         }
 
       /* A value here should be read */
-      if (contents && !(contents & 1) && expected == -1)
+      if (contents && !(contents & 1))
         {
-          any_values = TRUE;
-          expected = i;
+          if (i != 0 && underlying == -1)
+            underlying = i;
+
+          if (expected == -1)
+            {
+              any_values = TRUE;
+              expected = i;
+            }
         }
 
       database_state /= 7;
@@ -731,6 +740,40 @@ check_read (DConfEngine *engine,
   writable = dconf_engine_is_writable (engine, "/value");
   g_assert_cmpint (writable, ==, n_sources && !(source_types & 1) && !any_locks);
 
+  /* Check various read-through scenarios.  Read-through should only be
+   * effective if the database is writable.
+   */
+  for (i = 0; i < G_N_ELEMENTS (read_through_queues); i++)
+    {
+      gint our_expected = expected;
+
+      if (writable)
+        {
+          /* If writable, see what our changeset did.
+           *
+           *   0: nothing
+           *   1: reset value (should see underlying value)
+           *   2: set value to 123
+           */
+          if ((i % 3) == 1)
+            our_expected = underlying;
+          else if ((i % 3) == 2)
+            our_expected = 123;
+        }
+
+      value = dconf_engine_read (engine, &read_through_queues[i], "/value");
+
+      if (our_expected != -1)
+        {
+          g_assert (g_variant_is_of_type (value, G_VARIANT_TYPE_UINT32));
+          g_assert_cmpint (g_variant_get_uint32 (value), ==, our_expected);
+          g_variant_unref (value);
+        }
+      else
+        g_assert (value == NULL);
+    }
+
+  /* Check listing */
   g_strfreev (dconf_engine_list (engine, "/", &n));
   list = dconf_engine_list (engine, "/", NULL);
   g_assert_cmpint (g_strv_length (list), ==, n);
@@ -743,11 +786,13 @@ check_read (DConfEngine *engine,
     g_assert (list[0] == NULL);
   g_strfreev (list);
 
-  /* Finally, check the user value.
+  /* Check the user value.
    *
    * This should be set only in the case that the first database is a
    * user database (ie: writable) and the contents of that database are
    * set (ie: 2, 4 or 6).  See the table in the comment below.
+   *
+   * Note: we do not consider locks.
    */
   value = dconf_engine_read_user_value (engine, NULL, "/value");
   if (value)
@@ -765,6 +810,51 @@ check_read (DConfEngine *engine,
        *  - first DB was system-db
        */
       g_assert (!first_contents || (first_contents & 1) || (source_types & 1));
+    }
+
+  /* Check read_through vs. user-value */
+  for (i = 0; i < G_N_ELEMENTS (read_through_queues); i++)
+    {
+      /* It is only possible here to see one of three possibilities:
+       *
+       *   - NULL
+       *   - 0 (value from user's DB)
+       *   - 123 (value from queue)
+       *
+       * We see these values regardless of writability.  We do however
+       * ensure that we have a writable database as the first one.
+       */
+      value = dconf_engine_read_user_value (engine, &read_through_queues[i], "/value");
+
+      /* If we have no first source, or the first source is non-user
+       * than we should always do nothing (since we can't queue changes
+       * against a system db or one that doesn't exist).
+       */
+      if (n_sources == 0 || (source_types & 1) || (i % 3) == 0)
+        {
+          /* Changeset did nothing, so it should be same as above. */
+          if (value)
+            {
+              g_assert (first_contents && !(first_contents & 1) && !(source_types & 1));
+              g_assert (g_variant_is_of_type (value, G_VARIANT_TYPE_UINT32));
+              g_assert_cmpint (g_variant_get_uint32 (value), ==, 0);
+            }
+          else
+            g_assert (!first_contents || (first_contents & 1) || (source_types & 1));
+        }
+      else if ((i % 3) == 1)
+        {
+          /* Changeset did a reset, so we should always see NULL */
+          g_assert (value == NULL);
+        }
+      else if ((i % 3) == 2)
+        {
+          /* Changeset set a value, so we should see it */
+          g_assert_cmpint (g_variant_get_uint32 (value), ==, 123);
+        }
+
+      if (value)
+        g_variant_unref (value);
     }
 }
 
@@ -837,7 +927,76 @@ test_read (void)
    * Since we want to test all j->k transitions, we do the initial setup
    * of the engine (according to j) inside of the 'k' loop, since we
    * need to test all possible transitions from 'j'.
+   *
+   * We additionally test the effect of read-through queues in 4
+   * situations:
+   *
+   *   - NULL: no queue
+   *   - 0: queue with no effect
+   *   - 1: queue that resets the value
+   *   - 2: queue that sets the value to 123
+   *
+   * For the cases (0, 1, 2) we can have multiple types of queue that
+   * achieve the desired effect.  We can put more than 3 items in
+   * read_through_queues -- the expected behaviour is dictated by the
+   * value of (i % 3) where i is the array index.
    */
+  {
+    /* We use a scheme to set up each queue.  Again, we assume that
+     * GHashTable is working OK, so we only bother having "/value" as a
+     * changeset item (or not).
+     *
+     * We have an array of strings, each string defining the
+     * configuration of one queue.  In each string, each character
+     * represents the contents of a changeset within the queue, in
+     * order.
+     *
+     *  ' ' - empty changeset
+     *  's' - set value to 123
+     *  'r' - reset value
+     *  'x' - set value to 321
+     */
+    const gchar *queue_configs[] = {
+      "", "r", "s",
+      " ", "rr", "ss",
+      "  ", "rs", "sr",
+      "  ", "rx", "sx"
+    };
+    gint i;
+
+    G_STATIC_ASSERT (G_N_ELEMENTS (queue_configs) == G_N_ELEMENTS (read_through_queues));
+    for (i = 0; i < G_N_ELEMENTS (read_through_queues); i++)
+      {
+        const gchar *conf = queue_configs[i];
+        gint j;
+
+        for (j = 0; conf[j]; j++)
+          {
+            DConfChangeset *changeset;
+
+            changeset = dconf_changeset_new ();
+
+            switch (conf[j])
+              {
+              case ' ':
+                break;
+              case 'r':
+                dconf_changeset_set (changeset, "/value", NULL);
+                break;
+              case 's':
+                dconf_changeset_set (changeset, "/value", g_variant_new_uint32 (123));
+                break;
+              case 'x':
+                dconf_changeset_set (changeset, "/value", g_variant_new_uint32 (321));
+                break;
+              default:
+                g_assert_not_reached ();
+              }
+
+            g_queue_push_head (&read_through_queues[i], changeset);
+          }
+      }
+  }
 
   /* We need a place to put the profile files we use for this test */
   close (g_file_open_tmp ("dconf-testcase.XXXXXX", &profile_filename, &error));
