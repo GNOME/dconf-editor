@@ -183,7 +183,7 @@ dconf_settings_backend_init (DConfSettingsBackend *dcsb)
 
   weak_ref = g_slice_new (GWeakRef);
   g_weak_ref_init (weak_ref, dcsb);
-  dcsb->engine = dconf_engine_new (weak_ref, dconf_settings_backend_free_weak_ref);
+  dcsb->engine = dconf_engine_new (NULL, weak_ref, dconf_settings_backend_free_weak_ref);
 }
 
 static void

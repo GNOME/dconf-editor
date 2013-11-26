@@ -221,7 +221,7 @@ test_signal_threadsafety_worker (gpointer user_data)
     {
       DConfEngine *engine;
 
-      engine = dconf_engine_new (NULL, NULL);
+      engine = dconf_engine_new (NULL, NULL, NULL);
       dconf_engine_unref (engine);
     }
 
@@ -1055,7 +1055,7 @@ test_read (void)
               setup_state (n, i, j, (j != k) ? state : NULL);
 
               /* Step 3: create the engine */
-              engine = dconf_engine_new (NULL, NULL);
+              engine = dconf_engine_new (NULL, NULL, NULL);
 
               /* Step 4: read, and check result */
               check_read (engine, n, i, j);
@@ -1107,7 +1107,7 @@ test_watch_fast (void)
   triv = g_variant_ref_sink (g_variant_new ("()"));
 
   g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
-  engine = dconf_engine_new (NULL, NULL);
+  engine = dconf_engine_new (NULL, NULL, NULL);
   g_unsetenv ("DCONF_PROFILE");
 
   /* Check that establishing a watch works properly in the normal case.
@@ -1196,7 +1196,7 @@ test_watch_sync (void)
   dconf_mock_dbus_sync_call_handler = handle_match_request;
 
   g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
-  engine = dconf_engine_new (NULL, NULL);
+  engine = dconf_engine_new (NULL, NULL, NULL);
   g_unsetenv ("DCONF_PROFILE");
 
   match_request_type = "AddMatch";
@@ -1246,7 +1246,7 @@ test_change_fast (void)
   dconf_changeset_set (slightly_bad_write, "/to-reset", NULL);
 
   g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
-  engine = dconf_engine_new (NULL, NULL);
+  engine = dconf_engine_new (NULL, NULL, NULL);
   g_unsetenv ("DCONF_PROFILE");
 
   success = dconf_engine_change_fast (engine, empty, NULL, &error);
@@ -1426,7 +1426,7 @@ test_change_sync (void)
   dconf_changeset_set (slightly_bad_write, "/to-reset", NULL);
 
   g_setenv ("DCONF_PROFILE", SRCDIR "/profile/dos", TRUE);
-  engine = dconf_engine_new (NULL, NULL);
+  engine = dconf_engine_new (NULL, NULL, NULL);
   g_unsetenv ("DCONF_PROFILE");
 
   success = dconf_engine_change_sync (engine, empty, &tag, &error);

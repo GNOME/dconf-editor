@@ -160,7 +160,7 @@ dconf_dbus_client_new (const gchar    *profile,
   dconf_libdbus_1_provide_bus (G_BUS_TYPE_SYSTEM, system);
 
   dcdbc = g_slice_new (DConfDBusClient);
-  dcdbc->engine = dconf_engine_new (dcdbc, NULL);
+  dcdbc->engine = dconf_engine_new (NULL, dcdbc, NULL);
   dcdbc->watches = NULL;
   dcdbc->ref_count = 1;
 

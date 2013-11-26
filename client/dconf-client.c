@@ -214,7 +214,7 @@ dconf_client_new (void)
   client = g_object_new (DCONF_TYPE_CLIENT, NULL);
   weak_ref = g_slice_new (GWeakRef);
   g_weak_ref_init (weak_ref, client);
-  client->engine = dconf_engine_new (weak_ref, dconf_client_free_weak_ref);
+  client->engine = dconf_engine_new (NULL, weak_ref, dconf_client_free_weak_ref);
   client->context = g_main_context_ref_thread_default ();
 
   return client;

@@ -224,8 +224,9 @@ dconf_engine_unlock_queues (DConfEngine *engine)
 }
 
 DConfEngine *
-dconf_engine_new (gpointer       user_data,
-                  GDestroyNotify free_func)
+dconf_engine_new (const gchar    *profile,
+                  gpointer        user_data,
+                  GDestroyNotify  free_func)
 {
   DConfEngine *engine;
 
@@ -238,7 +239,7 @@ dconf_engine_new (gpointer       user_data,
   g_mutex_init (&engine->queue_lock);
   g_cond_init (&engine->queue_cond);
 
-  engine->sources = dconf_engine_profile_open (NULL, &engine->n_sources);
+  engine->sources = dconf_engine_profile_open (profile, &engine->n_sources);
 
   g_mutex_lock (&dconf_engine_global_lock);
   dconf_engine_global_list = g_slist_prepend (dconf_engine_global_list, engine);
