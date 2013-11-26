@@ -78,6 +78,7 @@ void                    dconf_engine_change_notify                      (DConfEn
                                                                          const gchar             *prefix,
                                                                          const gchar * const     *changes,
                                                                          const gchar             *tag,
+                                                                         gboolean                 is_writability,
                                                                          gpointer                 origin_tag,
                                                                          gpointer                 user_data);
 

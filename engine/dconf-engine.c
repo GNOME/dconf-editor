@@ -786,7 +786,7 @@ dconf_engine_watch_established (DConfEngine  *engine,
        * We don't know what changed, so we can just say that potentially
        * everything changed.  This case is very rare, anyway...
        */
-      dconf_engine_change_notify (engine, "/", changes, NULL, NULL, engine->user_data);
+      dconf_engine_change_notify (engine, "/", changes, NULL, FALSE, NULL, engine->user_data);
     }
 
   dconf_engine_call_handle_free (handle);
@@ -922,7 +922,7 @@ dconf_engine_emit_changes (DConfEngine    *engine,
   const gchar * const *changes;
 
   if (dconf_changeset_describe (changeset, &prefix, &changes, NULL))
-    dconf_engine_change_notify (engine, prefix, changes, NULL, origin_tag, engine->user_data);
+    dconf_engine_change_notify (engine, prefix, changes, NULL, FALSE, origin_tag, engine->user_data);
 }
 
 static void
@@ -1215,7 +1215,7 @@ dconf_engine_handle_dbus_signal (GBusType     type,
            * Check last_handled to determine if we should ignore it.
            */
           if (!engine->last_handled || !g_str_equal (engine->last_handled, tag))
-            dconf_engine_change_notify (engine, prefix, changes, tag, NULL, engine->user_data);
+            dconf_engine_change_notify (engine, prefix, changes, tag, FALSE, NULL, engine->user_data);
 
           engines = g_slist_delete_link (engines, engines);
 
@@ -1227,10 +1227,29 @@ dconf_engine_handle_dbus_signal (GBusType     type,
 
   else if (g_str_equal (member, "WritabilityNotify"))
     {
+      const gchar *empty_str_list[] = { "", NULL };
+      const gchar *path;
+      GSList *engines;
+
       if (!g_variant_is_of_type (body, G_VARIANT_TYPE ("(s)")))
         return;
 
-      g_warning ("Need to handle writability changes"); /* XXX */
+      g_variant_get (body, "(&s)", &path);
+
+      g_mutex_lock (&dconf_engine_global_lock);
+      engines = g_slist_copy_deep (dconf_engine_global_list, (GCopyFunc) dconf_engine_ref, NULL);
+      g_mutex_unlock (&dconf_engine_global_lock);
+
+      while (engines)
+        {
+          DConfEngine *engine = engines->data;
+
+          dconf_engine_change_notify (engine, path, empty_str_list, "", TRUE, NULL, engine->user_data);
+
+          engines = g_slist_delete_link (engines, engines);
+
+          dconf_engine_unref (engine);
+        }
     }
 }
 
