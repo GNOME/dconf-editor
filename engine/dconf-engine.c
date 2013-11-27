@@ -25,6 +25,7 @@
 #include "dconf-engine.h"
 
 #include "../common/dconf-error.h"
+#include "../common/dconf-paths.h"
 #include "../gvdb/gvdb-reader.h"
 #include <string.h>
 #include <stdlib.h>
@@ -1219,6 +1220,36 @@ dconf_engine_handle_dbus_signal (GBusType     type,
 
       g_variant_get (body, "(&s^a&s&s)", &prefix, &changes, &tag);
 
+      /* Reject junk */
+      if (changes[0] == NULL)
+        /* No changes?  Do nothing. */
+        goto junk;
+
+      if (dconf_is_key (prefix, NULL))
+        {
+          /* If the prefix is a key then the changes must be ['']. */
+          if (changes[0][0] || changes[1])
+            goto junk;
+        }
+      else if (dconf_is_dir (prefix, NULL))
+        {
+          /* If the prefix is a dir then we can have changes within that
+           * dir, but they must be rel paths.
+           *
+           *   ie:
+           *
+           *  ('/a/', ['b', 'c/']) == ['/a/b', '/a/c/']
+           */
+          gint i;
+
+          for (i = 0; changes[i]; i++)
+            if (!dconf_is_rel_path (changes[i], NULL))
+              goto junk;
+        }
+      else
+        /* Not a key or a dir? */
+        goto junk;
+
       g_mutex_lock (&dconf_engine_global_lock);
       engines = g_slist_copy_deep (dconf_engine_global_list, (GCopyFunc) dconf_engine_ref, NULL);
       g_mutex_unlock (&dconf_engine_global_lock);
@@ -1242,6 +1273,7 @@ dconf_engine_handle_dbus_signal (GBusType     type,
           dconf_engine_unref (engine);
         }
 
+junk:
       g_free (changes);
     }
 
@@ -1255,6 +1287,10 @@ dconf_engine_handle_dbus_signal (GBusType     type,
         return;
 
       g_variant_get (body, "(&s)", &path);
+
+      /* Rejecting junk here is relatively straightforward */
+      if (!dconf_is_path (path, NULL))
+        return;
 
       g_mutex_lock (&dconf_engine_global_lock);
       engines = g_slist_copy_deep (dconf_engine_global_list, (GCopyFunc) dconf_engine_ref, NULL);
