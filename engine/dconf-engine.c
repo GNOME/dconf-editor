@@ -1203,7 +1203,7 @@ dconf_engine_is_interested_in_signal (DConfEngine *engine,
 void
 dconf_engine_handle_dbus_signal (GBusType     type,
                                  const gchar *sender,
-                                 const gchar *path,
+                                 const gchar *object_path,
                                  const gchar *member,
                                  GVariant    *body)
 {
@@ -1234,7 +1234,7 @@ dconf_engine_handle_dbus_signal (GBusType     type,
            * Check last_handled to determine if we should ignore it.
            */
           if (!engine->last_handled || !g_str_equal (engine->last_handled, tag))
-            if (dconf_engine_is_interested_in_signal (engine, type, sender, path))
+            if (dconf_engine_is_interested_in_signal (engine, type, sender, object_path))
               dconf_engine_change_notify (engine, prefix, changes, tag, FALSE, NULL, engine->user_data);
 
           engines = g_slist_delete_link (engines, engines);
@@ -1264,7 +1264,7 @@ dconf_engine_handle_dbus_signal (GBusType     type,
         {
           DConfEngine *engine = engines->data;
 
-          if (dconf_engine_is_interested_in_signal (engine, type, sender, path))
+          if (dconf_engine_is_interested_in_signal (engine, type, sender, object_path))
             dconf_engine_change_notify (engine, path, empty_str_list, "", TRUE, NULL, engine->user_data);
 
           engines = g_slist_delete_link (engines, engines);
