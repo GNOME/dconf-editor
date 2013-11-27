@@ -54,6 +54,9 @@ dconf_engine_change_notify (DConfEngine         *engine,
   if (!change_log)
     return;
 
+  if (is_writability)
+    g_string_append (change_log, "w:");
+
   joined = g_strjoinv (",", (gchar **) changes);
   g_string_append_printf (change_log, "%s:%d:%s:%s;",
                           prefix, g_strv_length ((gchar **) changes), joined,
@@ -1468,6 +1471,114 @@ test_change_sync (void)
   dconf_engine_unref (engine);
 }
 
+static void
+send_signal (GBusType     type,
+             const gchar *name,
+             const gchar *path,
+             const gchar *signame,
+             const gchar *args)
+{
+  GVariant *value;
+
+  value = g_variant_ref_sink (g_variant_new_parsed (args));
+  dconf_engine_handle_dbus_signal (type, name, path, signame, value);
+  g_variant_unref (value);
+}
+
+static void
+test_signals (void)
+{
+  DConfEngine *engine;
+
+  change_log = g_string_new (NULL);
+
+  engine = dconf_engine_new (SRCDIR "/profile/dos", NULL, NULL);
+
+  /* Throw some non-sense at it to make sure it gets rejected */
+
+  /* Invalid signal name */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "UnNotify", "('/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/site", "UnNotify", "('/', [''], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Bad path */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/use", "Notify", "('/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/use", "WritabilityNotify", "('/',)");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/sit", "Notify", "('/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/sit", "WritabilityNotify", "('/',)");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Wrong signature for signal */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/',)");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('/', [''], '')");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/site", "Notify", "('/',)");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/site", "WritabilityNotify", "('/', [''], '')");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Signal delivered on wrong bus type */
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/site", "Notify", "('/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('/',)");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/site", "WritabilityNotify", "('/',)");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Empty changeset */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/a', @as [], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/a/', @as [], 'tag')");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/site", "Notify", "('/a', @as [], 'tag')");
+  send_signal (G_BUS_TYPE_SYSTEM, ":1.123", "/ca/desrt/dconf/Writer/site", "Notify", "('/a/', @as [], 'tag')");
+  /* Try to notify on some invalid paths to make sure they get properly
+   * rejected by the engine and not passed onto the user...
+   */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('a', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('a/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/b//a/', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/b//a', [''], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('',)");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('a',)");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('a/',)");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('/b//a/',)");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('/b//a',)");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Invalid gluing of segments: '/a' + 'b' != '/ab' */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/a', ['b'], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/a', ['b', 'c'], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Also: '/a' + '/b' != '/a/b' */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/a', ['/b'], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/a', ['', '/b'], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "");
+  /* Invalid (non-relative) changes */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/', ['/'], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/', ['/a'], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/', ['a', '/a'], 'tag')");
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify", "('/', ['a', 'a//b'], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "");
+
+  /* Now try some real cases */
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify",
+               "('/', [''], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "/:1::tag;");
+  g_string_set_size (change_log, 0);
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify",
+               "('/one/key', [''], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "/one/key:1::tag;");
+  g_string_set_size (change_log, 0);
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify",
+               "('/two/', ['keys', 'here'], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "/two/:2:keys,here:tag;");
+  g_string_set_size (change_log, 0);
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "Notify",
+               "('/some/path/', ['a', 'b/', 'c/d'], 'tag')");
+  g_assert_cmpstr (change_log->str, ==, "/some/path/:3:a,b/,c/d:tag;");
+  g_string_set_size (change_log, 0);
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('/other/key',)");
+  g_assert_cmpstr (change_log->str, ==, "w:/other/key:1::;");
+  g_string_set_size (change_log, 0);
+  send_signal (G_BUS_TYPE_SESSION, ":1.123", "/ca/desrt/dconf/Writer/user", "WritabilityNotify", "('/other/dir/',)");
+  g_assert_cmpstr (change_log->str, ==, "w:/other/dir/:1::;");
+  g_string_set_size (change_log, 0);
+
+  dconf_engine_unref (engine);
+}
+
 int
 main (int argc, char **argv)
 {
@@ -1489,6 +1600,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/watch/sync", test_watch_sync);
   g_test_add_func ("/engine/change/fast", test_change_fast);
   g_test_add_func ("/engine/change/sync", test_change_sync);
+  g_test_add_func ("/engine/signals", test_signals);
 
   return g_test_run ();
 }
