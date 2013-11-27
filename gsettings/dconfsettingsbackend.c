@@ -256,6 +256,21 @@ dconf_engine_change_notify (DConfEngine         *engine,
   if (changes[0] == NULL)
     return;
 
+  if (is_writability)
+    {
+      /* We know that the engine does it this way... */
+      g_assert (changes[0][0] == '\0' && changes[1] == NULL);
+
+      if (g_str_has_suffix (prefix, "/"))
+        g_settings_backend_path_writable_changed (G_SETTINGS_BACKEND (dcsb), prefix);
+      else
+        g_settings_backend_writable_changed (G_SETTINGS_BACKEND (dcsb), prefix);
+    }
+
+  /* We send the normal change notification even in the event that this
+   * was a writability notification because adding/removing a lock could
+   * impact the value that gets read.
+   */
   if (changes[1] == NULL)
     {
       if (g_str_has_suffix (prefix, "/"))
