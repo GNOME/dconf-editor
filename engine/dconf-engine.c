@@ -1181,6 +1181,25 @@ dconf_engine_change_sync (DConfEngine     *engine,
   return TRUE;
 }
 
+static gboolean
+dconf_engine_is_interested_in_signal (DConfEngine *engine,
+                                      GBusType     bus_type,
+                                      const gchar *sender,
+                                      const gchar *path)
+{
+  gint i;
+
+  for (i = 0; i < engine->n_sources; i++)
+    {
+      DConfEngineSource *source = engine->sources[i];
+
+      if (source->bus_type == bus_type && g_str_equal (source->object_path, path))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 void
 dconf_engine_handle_dbus_signal (GBusType     type,
                                  const gchar *sender,
@@ -1215,7 +1234,8 @@ dconf_engine_handle_dbus_signal (GBusType     type,
            * Check last_handled to determine if we should ignore it.
            */
           if (!engine->last_handled || !g_str_equal (engine->last_handled, tag))
-            dconf_engine_change_notify (engine, prefix, changes, tag, FALSE, NULL, engine->user_data);
+            if (dconf_engine_is_interested_in_signal (engine, type, sender, path))
+              dconf_engine_change_notify (engine, prefix, changes, tag, FALSE, NULL, engine->user_data);
 
           engines = g_slist_delete_link (engines, engines);
 
@@ -1244,7 +1264,8 @@ dconf_engine_handle_dbus_signal (GBusType     type,
         {
           DConfEngine *engine = engines->data;
 
-          dconf_engine_change_notify (engine, path, empty_str_list, "", TRUE, NULL, engine->user_data);
+          if (dconf_engine_is_interested_in_signal (engine, type, sender, path))
+            dconf_engine_change_notify (engine, path, empty_str_list, "", TRUE, NULL, engine->user_data);
 
           engines = g_slist_delete_link (engines, engines);
 
