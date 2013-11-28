@@ -1579,6 +1579,108 @@ test_signals (void)
   dconf_engine_unref (engine);
 }
 
+static gboolean it_is_good_to_be_done;
+
+static gpointer
+waiter_thread (gpointer user_data)
+{
+  DConfEngine *engine = user_data;
+
+  dconf_engine_sync (engine);
+
+  g_assert (g_atomic_int_get (&it_is_good_to_be_done));
+
+  return NULL;
+}
+
+static void
+test_sync (void)
+{
+  GThread *waiter_threads[5];
+  DConfChangeset *change;
+  DConfEngine *engine;
+  GError *error = NULL;
+  gboolean success;
+  gint i;
+
+  engine = dconf_engine_new (SRCDIR "/profile/dos", NULL, NULL);
+
+  /* Make sure a waiter thread returns straight away if nothing is
+   * outstanding.
+   */
+  g_atomic_int_set (&it_is_good_to_be_done, TRUE);
+  g_thread_join (g_thread_new ("waiter", waiter_thread, engine));
+  g_atomic_int_set (&it_is_good_to_be_done, FALSE);
+
+  /* The write will try to check the system-db for a lock.  That will
+   * fail because it doesn't exist...
+   */
+  g_test_expect_message ("dconf", G_LOG_LEVEL_WARNING, "*unable to open file*");
+  change = dconf_changeset_new_write ("/value", g_variant_new_boolean (TRUE));
+  success = dconf_engine_change_fast (engine, change, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+
+  /* Spin up some waiters */
+  for (i = 0; i < G_N_ELEMENTS (waiter_threads); i++)
+    waiter_threads[i] = g_thread_new ("test waiter", waiter_thread, engine);
+  g_usleep(100 * G_TIME_SPAN_MILLISECOND);
+  /* Release them by completing the pending async call */
+  g_atomic_int_set (&it_is_good_to_be_done, TRUE);
+  dconf_mock_dbus_async_reply (g_variant_new ("(s)", "tag"), NULL);
+  /* Make sure they all quit by joining them */
+  for (i = 0; i < G_N_ELEMENTS (waiter_threads); i++)
+    g_thread_join (waiter_threads[i]);
+  g_atomic_int_set (&it_is_good_to_be_done, FALSE);
+
+  /* Do the same again, but with a failure as a result */
+  success = dconf_engine_change_fast (engine, change, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  for (i = 0; i < G_N_ELEMENTS (waiter_threads); i++)
+    waiter_threads[i] = g_thread_new ("test waiter", waiter_thread, engine);
+  g_usleep(100 * G_TIME_SPAN_MILLISECOND);
+  error = g_error_new_literal (G_FILE_ERROR, G_FILE_ERROR_NOENT, "some error");
+  g_test_expect_message ("dconf", G_LOG_LEVEL_WARNING, "failed to commit changes to dconf: some error");
+  g_atomic_int_set (&it_is_good_to_be_done, TRUE);
+  dconf_mock_dbus_async_reply (NULL, error);
+  g_clear_error (&error);
+  /* Make sure they all quit by joining them */
+  for (i = 0; i < G_N_ELEMENTS (waiter_threads); i++)
+    g_thread_join (waiter_threads[i]);
+  g_atomic_int_set (&it_is_good_to_be_done, FALSE);
+
+  /* Now put two changes in the queue and make sure we have to reply to
+   * both of them before the waiters finish.
+   */
+  success = dconf_engine_change_fast (engine, change, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  success = dconf_engine_change_fast (engine, change, NULL, &error);
+  g_assert_no_error (error);
+  g_assert (success);
+  for (i = 0; i < G_N_ELEMENTS (waiter_threads); i++)
+    waiter_threads[i] = g_thread_new ("test waiter", waiter_thread, engine);
+  g_usleep(100 * G_TIME_SPAN_MILLISECOND);
+  dconf_mock_dbus_async_reply (g_variant_new ("(s)", "tag1"), NULL);
+  /* Still should not have quit yet... wait a bit to let the waiters try
+   * to shoot themselves in their collective feet...
+   */
+  g_usleep(100 * G_TIME_SPAN_MILLISECOND);
+  /* Will be OK after the second reply */
+  g_atomic_int_set (&it_is_good_to_be_done, TRUE);
+  dconf_mock_dbus_async_reply (g_variant_new ("(s)", "tag2"), NULL);
+  /* Make sure they all quit by joining them */
+  for (i = 0; i < G_N_ELEMENTS (waiter_threads); i++)
+    g_thread_join (waiter_threads[i]);
+  g_atomic_int_set (&it_is_good_to_be_done, FALSE);
+
+  dconf_changeset_unref (change);
+  dconf_engine_unref (engine);
+  dconf_mock_shm_reset ();
+}
+
+
 int
 main (int argc, char **argv)
 {
@@ -1601,6 +1703,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/change/fast", test_change_fast);
   g_test_add_func ("/engine/change/sync", test_change_sync);
   g_test_add_func ("/engine/signals", test_signals);
+  g_test_add_func ("/engine/sync", test_sync);
 
   return g_test_run ();
 }
