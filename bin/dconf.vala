@@ -31,27 +31,27 @@ void show_help (bool requested, string? command) {
 
 		case "help":
 			description = "Print help";
-			synopsis = "COMMAND";
+			synopsis = " COMMAND ";
 			break;
 
 		case "read":
 			description = "Read the value of a key";
-			synopsis = "KEY";
+			synopsis = " KEY ";
 			break;
 
 		case "list":
 			description = "List the sub-keys and sub-dirs of a dir";
-			synopsis = "DIR";
+			synopsis = " DIR ";
 			break;
 
 		case "write":
 			description = "Write a new value to a key";
-			synopsis = "KEY VALUE";
+			synopsis = " KEY VALUE ";
 			break;
 
 		case "reset":
 			description = "Reset a key or dir.  -f is required for dirs.";
-			synopsis = "[-f] PATH";
+			synopsis = " [-f] PATH ";
 			break;
 
 		case "update":
@@ -101,30 +101,30 @@ Use 'dconf help COMMAND' to get detailed help.
 """);
 	} else {
 		str.append ("Usage:\n");
-		str.append_printf ("  dconf %s %s\n\n", command, synopsis);
+		str.append_printf ("  dconf %s%s\n\n", command, synopsis);
 		str.append_printf ("%s\n\n", description);
 
 		if (synopsis != "") {
 			str.append ("Arguments:\n");
 
-			if ("COMMAND" in synopsis) {
-				str.append ("  COMMAND   The (optional) command to explain\n");
+			if (" COMMAND " in synopsis) {
+				str.append ("  COMMAND     The (optional) command to explain\n");
 			}
 
-			if ("PATH" in synopsis) {
-				str.append ("  PATH      Either a KEY or DIR\n");
+			if (" PATH " in synopsis) {
+				str.append ("  PATH        Either a KEY or DIR\n");
 			}
 
-			if ("PATH" in synopsis || "KEY" in synopsis) {
-				str.append ("  KEY       A key path (starting, but not ending with '/')\n");
+			if (" PATH " in synopsis || " KEY " in synopsis) {
+				str.append ("  KEY         A key path (starting, but not ending with '/')\n");
 			}
 
-			if ("PATH" in synopsis || "DIR" in synopsis) {
-				str.append ("  DIR       A directory path (starting and ending with '/')\n");
+			if (" PATH " in synopsis || " DIR " in synopsis) {
+				str.append ("  DIR         A directory path (starting and ending with '/')\n");
 			}
 
-			if ("VALUE" in synopsis) {
-				str.append ("  VALUE     The value to write (in GVariant format)\n");
+			if (" VALUE " in synopsis) {
+				str.append ("  VALUE       The value to write (in GVariant format)\n");
 			}
 		}
 
