@@ -43,70 +43,57 @@ unowned Gvdb.Item get_parent (Gvdb.HashTable table, string name) {
 	return parent;
 }
 
-SList<string>? list_directory (string dirname, Posix.mode_t mode) {
-	try {
-		var list = new SList<string> ();
-		var dir = Dir.open (dirname);
-		unowned string? name;
+SList<string>? list_directory (string dirname, Posix.mode_t mode) throws GLib.Error {
+	var list = new SList<string> ();
+	var dir = Dir.open (dirname);
+	unowned string? name;
 
-		while ((name = dir.read_name ()) != null) {
-			if (name.has_prefix (".")) {
-				continue;
-			}
-
-			var filename = Path.build_filename (dirname, name);
-			Posix.Stat buf;
-
-			// only files of the requested type
-			if (Posix.stat (filename, out buf) < 0 || (buf.st_mode & Posix.S_IFMT) != mode) {
-				continue;
-			}
-
-			list.prepend (filename);
+	while ((name = dir.read_name ()) != null) {
+		if (name.has_prefix (".")) {
+			continue;
 		}
 
-		return list;
-	} catch (FileError.NOENT e) {
-		/* This is expected if the directory does not exist.
-		 * Just return the empty list in that case...
-		 */
-		return null;
-	} catch (Error e) {
-		/* Unexpected error.  Report it and return null. */
-		printerr ("warning: %s\n", e.message);
-		return null;
+		var filename = Path.build_filename (dirname, name);
+		Posix.Stat buf;
+
+		// only files of the requested type
+		if (Posix.stat (filename, out buf) < 0 || (buf.st_mode & Posix.S_IFMT) != mode) {
+			continue;
+		}
+
+		list.prepend (filename);
 	}
+
+	return list;
 }
 
-Gvdb.HashTable? read_locks_directory (string dirname) {
-	var files = list_directory (dirname, Posix.S_IFREG);
+Gvdb.HashTable? read_locks_directory (string dirname) throws GLib.Error {
+	SList<string>? files;
 
-	if (files == null) {
-		/* No locks directory or directory is empty? */
+	try {
+		files = list_directory (dirname, Posix.S_IFREG);
+	} catch (FileError.NOENT e) {
+		/* If locks directory is missing, there are just no locks... */
 		return null;
 	}
 
 	var table = new Gvdb.HashTable ();
 
 	foreach (var filename in files) {
-		try {
-			string contents;
-			FileUtils.get_contents (filename, out contents, null);
+		string contents;
+		FileUtils.get_contents (filename, out contents, null);
 
-			foreach (var line in contents.split ("\n")) {
-				if (line.has_prefix ("/")) {
-					table.insert_string (line, "");
-				}
+		foreach (var line in contents.split ("\n")) {
+			if (line.has_prefix ("/")) {
+				table.insert_string (line, "");
 			}
-		} catch (Error e) {
-			printerr ("warning: %s\n", e.message);
 		}
 	}
 
 	return table;
 }
 
-Gvdb.HashTable read_directory (string dirname) {
+Gvdb.HashTable read_directory (string dirname) throws GLib.Error {
 	var table = new Gvdb.HashTable ();
 	table.insert ("/");
 
@@ -120,8 +107,8 @@ Gvdb.HashTable read_directory (string dirname) {
 		try {
 			kf.load_from_file (filename, KeyFileFlags.NONE);
 		} catch (GLib.Error e) {
-			stderr.printf ("warning: Failed to read keyfile '%s': %s\n", filename, e.message);
-			continue;
+			e.message = "warning: Failed to read keyfile '%s': %s".printf (filename, e.message);
+			throw e;
 		}
 
 		try {
@@ -133,8 +120,8 @@ Gvdb.HashTable read_directory (string dirname) {
 
 				foreach (var key in kf.get_keys (group)) {
 					if ("/" in key) {
-						stderr.printf ("%s: [%s]: ignoring invalid key name: %s\n", filename, group, key);
-						continue;
+						throw new KeyFileError.INVALID_VALUE ("%s: [%s]: invalid key name: %s",
+						                                      filename, group, key);
 					}
 
 					var path = "/" + group + "/" + key;
@@ -155,14 +142,15 @@ Gvdb.HashTable read_directory (string dirname) {
 						item.set_parent (get_parent (table, path));
 						item.set_value (value);
 					} catch (VariantParseError e) {
-						stderr.printf ("%s: [%s]: %s: skipping invalid value: %s (%s)\n",
-									   filename, group, key, text, e.message);
+						e.message = "%s: [%s]: %s: invalid value: %s (%s)".printf (filename, group, key, text, e.message);
+						throw e;
 					}
 				}
 			}
 		} catch (KeyFileError e) {
 			/* This should never happen... */
 			warning ("unexpected keyfile error: %s.  Please file a bug.", e.message);
+			assert_not_reached ();
 		}
 	}
 
@@ -176,7 +164,7 @@ Gvdb.HashTable read_directory (string dirname) {
 	return table;
 }
 
-void maybe_update_from_directory (string dirname) {
+void maybe_update_from_directory (string dirname) throws GLib.Error {
 	Posix.Stat dir_buf;
 
 	if (Posix.stat (dirname, out dir_buf) == 0 && Posix.S_ISDIR (dir_buf.st_mode)) {
@@ -223,8 +211,8 @@ void maybe_update_from_directory (string dirname) {
 
 		try {
 			var system_bus = Bus.get_sync (BusType.SYSTEM);
-			system_bus.emit_signal (null, "/ca/desrt/dconf/Writer/" + Path.get_basename (filename), "ca.desrt.dconf.Writer",
-			                        "WritabilityNotify", new Variant ("(s)", "/"));
+			system_bus.emit_signal (null, "/ca/desrt/dconf/Writer/" + Path.get_basename (filename),
+			                        "ca.desrt.dconf.Writer", "WritabilityNotify", new Variant ("(s)", "/"));
 			system_bus.flush_sync ();
 		} catch {
 			/* if we can't, ... don't. */
@@ -232,10 +220,14 @@ void maybe_update_from_directory (string dirname) {
 	}
 }
 
-void update_all (string dirname) {
+void update_all (string dirname) throws GLib.Error {
 	foreach (var name in list_directory (dirname, Posix.S_IFDIR)) {
 		if (name.has_suffix (".d")) {
-			maybe_update_from_directory (name);
+			try {
+				maybe_update_from_directory (name);
+			} catch (Error e) {
+				printerr ("unable compile %s: %s\n", name, e.message);
+			}
 		}
 	}
 }
