@@ -232,6 +232,20 @@ void update_all (string dirname) throws GLib.Error {
 	}
 }
 
+void dconf_compile (string[] args) throws GLib.Error {
+	if (args[2] == null || args[3] == null || args[4] != null) {
+			throw new OptionError.FAILED ("must give output file and .d dir");
+	}
+
+	try {
+		var table = read_directory (args[3]);
+		table.write_contents (args[2]);
+	} catch (Error e) {
+		printerr ("%s\n", e.message);
+		Process.exit (1);
+	}
+}
+
 void dconf_update (string[] args) throws GLib.Error {
 	update_all ("/etc/dconf/db");
 }

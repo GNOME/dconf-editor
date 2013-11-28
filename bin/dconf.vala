@@ -54,6 +54,11 @@ void show_help (bool requested, string? command) {
 			synopsis = " [-f] PATH ";
 			break;
 
+		case "compile":
+			description = "Compile a binary database from keyfiles";
+			synopsis = " OUTPUT KEYFILEDIR ";
+			break;
+
 		case "update":
 			description = "Update the system dconf databases";
 			synopsis = "";
@@ -91,6 +96,7 @@ Commands:
   list              List the contents of a dir
   write             Change the value of a key
   reset             Reset the value of a key or dir
+  compile           Compile a binary database from keyfiles
   update            Update the system databases
   watch             Watch a path for changes
   dump              Dump an entire subpath to stdout
@@ -125,6 +131,14 @@ Use 'dconf help COMMAND' to get detailed help.
 
 			if (" VALUE " in synopsis) {
 				str.append ("  VALUE       The value to write (in GVariant format)\n");
+			}
+
+			if (" OUTPUT " in synopsis) {
+				str.append ("  OUTPUT      The filename of the (binary) output\n");
+			}
+
+			if (" KEYFILEDIR " in synopsis) {
+				str.append ("  KEYFILEDIR  The path to the .d directory containing keyfiles\n");
 			}
 		}
 
@@ -287,6 +301,7 @@ int main (string[] args) {
 		CommandMapping ("list",      dconf_list),
 		CommandMapping ("write",     dconf_write),
 		CommandMapping ("reset",     dconf_reset),
+		CommandMapping ("compile",   dconf_compile),
 		CommandMapping ("update",    dconf_update),
 		CommandMapping ("watch",     dconf_watch),
 		CommandMapping ("dump",      dconf_dump),
