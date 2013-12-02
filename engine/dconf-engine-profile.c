@@ -26,6 +26,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <errno.h>
 
 #include "dconf-engine-source.h"
 
@@ -44,8 +45,12 @@
  * In both of those cases, if the named profile starts with a slash
  * character then it is taken to be an absolute pathname.  If it does
  * not start with a slash then it is assumed to specify a profile file
- * relative to /etc/dconf/profile/ (ie: DCONF_PROFILE=test for profile
- * file /etc/dconf/profile/test).
+ * relative to /etc/dconf/profile/ or
+ * <ulink url='http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html'>XDG_DATA_DIRS</ulink>/dconf/profile/,
+ * taking the file in /etc in preference (ie: DCONF_PROFILE=test looks
+ * first for profile file /etc/dconf/profile/test, falling back to
+ * /usr/local/share/dconf/profile/test, then to
+ * /usr/share/dconf/profile/test).
  *
  * If opening the profile file fails then the null profile is used.
  * This is a profile that contains zero sources.  All keys will be
@@ -53,9 +58,9 @@
  *
  * In the case that no explicit profile was given and DCONF_PROFILE is
  * unset, dconf attempts to open and use a profile called "user" (ie:
- * profile file /etc/dconf/profile/user).  If that fails then the
- * fallback is to act as if the profile file existed and contained a
- * single line: "user-db:user".
+ * /etc/dconf/profile/user or XDG_DATA_DIRS/dconf/profile/user).  If
+ * that fails then the fallback is to act as if the profile file existed
+ * and contained a single line: "user-db:user".
  *
  * Note that the fallback case for a missing profile file is different
  * in the case where a profile was explicitly specified (either by the
@@ -178,6 +183,49 @@ dconf_engine_read_profile_file (FILE *file,
   return g_realloc_n (sources, n, sizeof (DConfEngineSource *));
 }
 
+/* Find a profile file with the name given in 'profile' and open it. */
+static FILE *
+dconf_engine_open_profile_file (const gchar *profile)
+{
+  const gchar * const *xdg_data_dirs;
+  const gchar *prefix = "/etc";
+  FILE *fp;
+
+  xdg_data_dirs = g_get_system_data_dirs ();
+
+  /* First time through, we check "/etc", then we check XDG_DATA_DIRS,
+   * in order.  We stop looking as soon as we successfully open a file
+   * or in the case that we run out of XDG_DATA_DIRS.
+   *
+   * If we hit an error other than ENOENT then we warn about that and
+   * exit immediately.  We should only attempt fallback in the case that
+   * the file in the higher-precedence directory is non-existent.
+   */
+  do
+    {
+      gchar *filename;
+
+      filename = g_build_filename (prefix, "dconf/profile", profile, NULL);
+      fp = fopen (filename, "r");
+
+      /* If it wasn't ENOENT then we don't want to continue on to check
+       * other paths.  Fail immediately.
+       */
+      if (fp == NULL && errno != ENOENT)
+        {
+          g_warning ("Unable to open %s: %s", filename, g_strerror (errno));
+          g_free (filename);
+          return NULL;
+        }
+
+      g_free (filename);
+    }
+  while (fp == NULL && (prefix = *xdg_data_dirs++));
+
+  /* If we didn't find it, this could be NULL.  That's OK. */
+  return fp;
+}
+
 DConfEngineSource **
 dconf_engine_profile_open (const gchar *profile,
                            gint        *n_sources)
@@ -190,7 +238,7 @@ dconf_engine_profile_open (const gchar *profile,
 
   if (profile == NULL)
     {
-      file = fopen ("/etc/dconf/profile/user", "r");
+      file = dconf_engine_open_profile_file ("user");
 
       /* Only in the case that no profile was specified do we use this
        * fallback.
@@ -199,11 +247,7 @@ dconf_engine_profile_open (const gchar *profile,
         return dconf_engine_default_profile (n_sources);
     }
   else if (profile[0] != '/')
-    {
-      gchar *filename = g_build_filename ("/etc/dconf/profile", profile, NULL);
-      file = fopen (filename, "r");
-      g_free (filename);
-    }
+    file = dconf_engine_open_profile_file (profile);
   else
     file = fopen (profile, "r");
 
