@@ -69,14 +69,14 @@
  * Once a profile file is opened, each line is treated as a possible
  * source.  Comments and empty lines are ignored.
  *
- * All valid source specification lines need to start with 'user-db:' or
- * 'system-db:'.  If a line doesn't start with one of these then it gets
- * ignored.  If all the lines in the file get ignored then the result is
- * effectively the null profile.
+ * All valid source specification lines need to start with 'user-db:',
+ * 'system-db:', 'service-db:' or 'file-db:'.  If a line doesn't start
+ * with one of these then it gets ignored.  If all the lines in the file
+ * get ignored then the result is effectively the null profile.
  *
- * If the first source is a "user-db:" then the resulting profile will
- * be writable.  No profile starting with a "system-db:" source can ever
- * be writable.
+ * If the first source is a "user-db:" or "service-db:" then the
+ * resulting profile will be writable.  No profile starting with a
+ * "system-db:" or "file-db:" source can ever be writable.
  *
  * Note: even if the source fails to initialise (due to a missing file,
  * for example) it will remain in the source list.  This could have a

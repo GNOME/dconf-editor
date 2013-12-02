@@ -106,6 +106,10 @@ dconf_engine_source_new (const gchar *description)
   else if ((colon == description + 9) && memcmp (description, "system-db", 9) == 0)
     vtable = &dconf_engine_source_system_vtable;
 
+  /* ...or "file-db" */
+  else if ((colon == description + 7) && memcmp (description, "file-db", 7) == 0)
+    vtable = &dconf_engine_source_file_vtable;
+
   /* If it's not any of those, we have failed. */
   else
     return NULL;

@@ -25,6 +25,7 @@
 
 #include "dconf-engine-source.h"
 
+G_GNUC_INTERNAL extern const DConfEngineSourceVTable dconf_engine_source_file_vtable;
 G_GNUC_INTERNAL extern const DConfEngineSourceVTable dconf_engine_source_user_vtable;
 G_GNUC_INTERNAL extern const DConfEngineSourceVTable dconf_engine_source_service_vtable;
 G_GNUC_INTERNAL extern const DConfEngineSourceVTable dconf_engine_source_system_vtable;
