@@ -358,6 +358,63 @@ test_user_source (void)
   dconf_mock_shm_reset ();
 }
 
+static void
+test_file_source (void)
+{
+  DConfEngineSource *source;
+  gboolean reopened;
+  GvdbTable *table;
+  GVariant *value;
+
+  source = dconf_engine_source_new ("file-db:/path/to/db");
+  g_assert (source != NULL);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+  g_test_expect_message ("dconf", G_LOG_LEVEL_WARNING, "*unable to open file '/path/to/db'*");
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+  dconf_engine_source_free (source);
+
+  source = dconf_engine_source_new ("file-db:/path/to/db");
+  g_assert (source != NULL);
+  g_assert (source->values == NULL);
+  g_assert (source->locks == NULL);
+
+  table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_table_insert (table, "/value", g_variant_new_string ("first file"), NULL);
+  dconf_mock_gvdb_install ("/path/to/db", table);
+
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (reopened);
+  g_assert (source->values);
+  g_assert (source->locks == NULL);
+  value = gvdb_table_get_value (source->values, "/value");
+  g_assert_cmpstr (g_variant_get_string (value, NULL), ==, "first file");
+  g_variant_unref (value);
+
+  /* Of course this should do nothing... */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+
+  /* Invalidate and replace */
+  dconf_mock_gvdb_table_invalidate (table);
+  table = dconf_mock_gvdb_table_new ();
+  dconf_mock_gvdb_table_insert (table, "/value", g_variant_new_string ("second file"), NULL);
+  dconf_mock_gvdb_install ("/path/to/db", table);
+
+  /* Even when invalidated, this should still do nothing... */
+  reopened = dconf_engine_source_refresh (source);
+  g_assert (!reopened);
+  value = gvdb_table_get_value (source->values, "/value");
+  g_assert_cmpstr (g_variant_get_string (value, NULL), ==, "first file");
+  g_variant_unref (value);
+
+  dconf_mock_gvdb_install ("/path/to/db", NULL);
+  dconf_engine_source_free (source);
+}
+
+
 static gboolean service_db_created;
 static GvdbTable *service_db_table;
 
@@ -394,7 +451,6 @@ handle_service_request (GBusType             bus_type,
       return NULL;
     }
 }
-
 
 static void
 test_service_source (void)
@@ -1696,6 +1752,7 @@ main (int argc, char **argv)
   g_test_add_func ("/engine/signal-threadsafety", test_signal_threadsafety);
   g_test_add_func ("/engine/sources/user", test_user_source);
   g_test_add_func ("/engine/sources/system", test_system_source);
+  g_test_add_func ("/engine/sources/file", test_file_source);
   g_test_add_func ("/engine/sources/service", test_service_source);
   g_test_add_func ("/engine/read", test_read);
   g_test_add_func ("/engine/watch/fast", test_watch_fast);
