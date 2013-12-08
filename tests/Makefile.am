@@ -29,7 +29,7 @@ shm_CFLAGS = $(glib_CFLAGS)
 shm_LDADD = \
 	../shm/libdconf-shm.a			\
 	$(glib_LIBS)				\
-	-ldl
+	$(LIBDL)
 shm_SOURCES = \
 	shm.c					\
 	tmpdir.h				\
@@ -79,7 +79,8 @@ engine_LDADD = \
 	../common/libdconf-common.a		\
 	libdconf-mock.a				\
 	$(glib_LIBS)				\
-	-ldl -lm
+	$(LIBDL)				\
+	-lm
 engine_SOURCES = engine.c
 EXTRA_DIST += \
 	profile/broken-profile			\

@@ -18,6 +18,8 @@ fi
 
 # Check for programs
 AC_PROG_CC
+AC_CHECK_LIB(c, dlsym, LIBDL="", [AC_CHECK_LIB(dl, dlsym, LIBDL="-ldl")])
+AC_SUBST(LIBDL)
 AM_PROG_VALAC([0.17.0])
 AC_PROG_RANLIB
 AC_ARG_ENABLE(man,
