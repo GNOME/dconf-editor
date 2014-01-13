@@ -1,3 +1,34 @@
+Changes in dconf 0.19.3
+========================
+
+ - quite a lot of test coverage improvements
+
+ - Add a proper DCONF_ERROR error domain
+
+ - suppress GLib deprecation warnings during build
+
+ - engine: issue warnings about missing files only once per source
+
+ - engine: grok the WritabilityNotify signal from D-Bus
+
+ - gsettings: handle writability changes correctly
+
+ - engine: assorted fixes for issues found during testing
+
+ - portability: only link to -ldl if it is required
+
+ - add support for 'file-db' to profiles: this is an absolute path to a
+   immutable dconf database file
+
+ - add support for finding profiles in XDG_DATA_DIRS if they are not in
+   /etc
+
+ - add 'dconf compile' command for building dconf databases from
+   keyfiles in arbitrary locations (like from the build system of a
+   project that may want to install a file-db)
+
+ - editor: add a section separator to the app menu for consistency
+
 Changes in dconf 0.19.2
 ========================
 
