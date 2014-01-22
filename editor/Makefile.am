@@ -46,6 +46,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
 CLEANFILES = $(desktop_DATA) resources.c
 @INTLTOOL_DESKTOP_RULE@
 
+appdatadir = $(datadir)/appdata
+dist_appdata_DATA = dconf-editor.appdata.xml
+
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@
 
