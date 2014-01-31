@@ -54,6 +54,12 @@
     </cmdsynopsis>
     <cmdsynopsis>
       <command>dconf</command>
+      <arg choice="plain">compile</arg>
+      <arg choice="plain"><replaceable>OUTPUT</replaceable></arg>
+      <arg choice="plain"><replaceable>KEYFILEDIR</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>dconf</command>
       <arg choice="plain">update</arg>
     </cmdsynopsis>
     <cmdsynopsis>
@@ -96,6 +102,11 @@
     </para>
 
     <para>
+      The <replaceable>OUTPUT</replaceable> argument must the location to write a (binary) dconf database to and the
+      <replaceable>KEYFILEDIR</replaceable> argument must be a .d directory containing keyfiles.
+    </para>
+
+    <para>
       <replaceable>VALUE</replaceable> arguments must be in GVariant format, so e.g. a string must include
       explicit quotes: "'foo'". This format is also used when printing out values.
     </para>
@@ -132,6 +143,12 @@
         <term><option>reset</option></term>
 
         <listitem><para>Reset a key or an entire directory. For directories, <option>-f</option> must be specified.</para></listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>compile</option></term>
+
+        <listitem><para>Compile a binary database from keyfiles.</para></listitem>
       </varlistentry>
 
       <varlistentry>
