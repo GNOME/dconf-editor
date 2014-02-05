@@ -148,7 +148,13 @@
       <varlistentry>
         <term><option>compile</option></term>
 
-        <listitem><para>Compile a binary database from keyfiles.</para></listitem>
+        <listitem>
+          <para>Compile a binary database from keyfiles.</para>
+          <para>
+            The result is always in little-endian byte order, so it can be safely installed in 'share'.  If it
+            is used on a big endian machine, dconf will automatically byteswap the contents on read.
+          </para>
+        </listitem>
       </varlistentry>
 
       <varlistentry>

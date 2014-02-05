@@ -236,8 +236,11 @@ void dconf_compile (string[] args) throws GLib.Error {
 	}
 
 	try {
+		// We always write the result of "dconf compile" as little endian
+		// so that it can be installed in /usr/share
 		var table = read_directory (args[3]);
-		table.write_contents (args[2]);
+		var should_byteswap = (BYTE_ORDER == ByteOrder.BIG_ENDIAN);
+		table.write_contents (args[2], should_byteswap);
 	} catch (Error e) {
 		printerr ("%s\n", e.message);
 		Process.exit (1);
