@@ -2,59 +2,64 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Daniel <ted.korostiled@gmail.com>, 2012.
+# Daniel Korostil <ted.korostiled@gmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf&"
 "keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-15 09:22+0000\n"
-"PO-Revision-Date: 2012-08-16 01:06-0700\n"
-"Last-Translator: Daniel <ted.korostiled@gmail.com>\n"
-"Language-Team: translation@linux.org.ua\n"
+"POT-Creation-Date: 2013-12-18 14:45+0000\n"
+"PO-Revision-Date: 2014-02-10 10:40+0300\n"
+"Last-Translator: Daniel Korostil <ted.korostiled@gmail.com>\n"
+"Language-Team: linux.org.ua\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
+#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "Редактор dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "Безпосереднє редагування бази даних налаштувань"
 
-#: ../editor/dconf-editor.vala:165
+#: ../editor/dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "параметри;налаштування;"
+
+#: ../editor/dconf-editor.vala:186
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Число [%s..%s]"
 
-#: ../editor/dconf-editor.vala:167
+#: ../editor/dconf-editor.vala:188
 msgid "Boolean"
 msgstr "Двійковий"
 
-#: ../editor/dconf-editor.vala:169
+#: ../editor/dconf-editor.vala:190
 msgid "String"
 msgstr "Рядок"
 
-#: ../editor/dconf-editor.vala:171
+#: ../editor/dconf-editor.vala:192
 msgid "Enumeration"
 msgstr "Перелік"
 
-#: ../editor/dconf-editor.vala:214
+#: ../editor/dconf-editor.vala:240
 msgid "No schema"
 msgstr "Немає схеми"
 
-#: ../editor/dconf-editor.vala:310
+#: ../editor/dconf-editor.vala:350
 msgid "Not found"
 msgstr "Не знайдено"
 
-#: ../editor/dconf-editor.vala:336
+#: ../editor/dconf-editor.vala:398
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -72,24 +77,23 @@ msgid ""
 msgstr ""
 "Ця програма є вільним програмним засобом; ви можете поширювати його й/або "
 "змінювати його за умов дотримання GNU General Public License у тому вигляді, "
-"у якому її оприлюднили Free Software Foundation; версії 2 цієї ліцензії, "
-"або (за потреби) будь-якої пізнішої версії.\n"
+"у якому її оприлюднили Free Software Foundation; версії 2 цієї ліцензії, або "
+"(за потреби) будь-якої пізнішої версії.\n"
 "\n"
-"Ця програма поширюється у сподіванні, що вона буде корисною, але БЕЗ "
-"БУДЬ-ЯКИХ ГАРАНТІЙ; навіть без очевидної гарантії КОМЕРЦІЙНОЇ ЦІННОСТІ або "
+"Ця програма поширюється у сподіванні, що вона буде корисною, але БЕЗ БУДЬ-"
+"ЯКИХ ГАРАНТІЙ; навіть без очевидної гарантії КОМЕРЦІЙНОЇ ЦІННОСТІ або "
 "ПРИДАТНОСТІ ДЛЯ ЯКОЇСЬ МЕТИ.  Докладніше про це ви можете дізнатися з GNU "
 "General Public License.\n"
 "\n"
 "Разом з цією програмою ви маєте отримати копію GNU General Public License; "
 "якщо ви її не отримали, повідомте про це за адресою Free Software "
-"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  "
-"USA"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA"
 
-#: ../editor/dconf-editor.vala:342
+#: ../editor/dconf-editor.vala:404
 msgid "Copyright © Canonical Ltd"
 msgstr "© Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:346
+#: ../editor/dconf-editor.vala:408
 msgid "translator-credits"
 msgstr "Daniel Korostil <ted.korostiled@gmail.com>"
 
@@ -138,8 +142,9 @@ msgid "Next"
 msgstr "Далі"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "З_найти"
+#| msgid "_Find"
+msgid "_Find…"
+msgstr "З_найти…"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -168,3 +173,8 @@ msgstr "Висота вікна у точках."
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
 msgid "A flag to enable maximized mode"
 msgstr "Увімкнути режим розгорнутого вікна"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+#| msgid "A flag to enable maximized mode"
+msgid "A flag to enable fullscreen mode"
+msgstr "Це дозволяє вмикати режим розгорнутого вікна"
