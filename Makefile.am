@@ -24,9 +24,9 @@ lcov: lcov-clean
 	@echo
 
 gcno-clean:
-	-find -name '*.gcno' -delete
+	-find . -name '*.gcno' -delete
 
 lcov-clean:
 	-lcov --directory $(top_builddir) -z
-	find -name '*.gcda' -delete
+	find . -name '*.gcda' -delete
 	rm -rf lcov-html dconf-lcov.info
