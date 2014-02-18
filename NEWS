@@ -1,3 +1,21 @@
+Changes in dconf 0.19.90
+=========================
+
+ - dconf compile: always write little endian
+
+ - file-db: don't install match rules on no bus (fixes gdbus assertion)
+
+ - update dconf(1) manpage for 'dconf compile'
+
+ - fix 'make clean' on FreeBSD
+
+ - editor: provide appdata
+
+Translations updates:
+  Ukrainian translation
+  Aragonese translation
+  Chinese
+
 Changes in dconf 0.19.3
 ========================
 
