@@ -267,7 +267,8 @@ test_nested (void)
  * values returned by the API).
  */
 static void
-inspect_carefully (GvdbTable *table)
+inspect_carefully (GvdbTable *table,
+                   gint       level)
 {
   const gchar * key_names[] = {
     "/", "/values/", "/int32", "values/int32",
@@ -278,6 +279,9 @@ inspect_carefully (GvdbTable *table)
   gchar **names;
   gint n_names;
   gint i;
+
+  if (level > 100)
+    return;
 
   found_items = 0;
   for (i = 0; key_names[i]; i++)
@@ -323,7 +327,7 @@ inspect_carefully (GvdbTable *table)
       g_assert (!has || subtable == NULL);
       if (subtable)
         {
-          inspect_carefully (subtable);
+          inspect_carefully (subtable, level + 1);
           gvdb_table_free (subtable);
           found_items++;
         }
@@ -380,7 +384,7 @@ test_corrupted (gconstpointer user_data)
           /* If we damaged the header, it may not open */
           if (table)
             {
-              inspect_carefully (table);
+              inspect_carefully (table, 0);
               gvdb_table_free (table);
             }
           else
@@ -404,7 +408,7 @@ test_corrupted (gconstpointer user_data)
       g_assert_no_error (error);
       g_assert (table);
 
-      inspect_carefully (table);
+      inspect_carefully (table, 0);
       gvdb_table_free (table);
     }
 
