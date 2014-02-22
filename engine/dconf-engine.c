@@ -814,15 +814,19 @@ dconf_engine_watch_fast (DConfEngine *engine,
                                      G_VARIANT_TYPE_UNIT, sizeof (OutstandingWatch));
   ow->state = dconf_engine_get_state (engine);
 
+  /* We start getting async calls returned as soon as we start dispatching them,
+   * so we must not touch the 'ow' struct after we send the first one.
+   */
   for (i = 0; i < engine->n_sources; i++)
     if (engine->sources[i]->bus_type)
-      {
-        dconf_engine_dbus_call_async_func (engine->sources[i]->bus_type, "org.freedesktop.DBus",
-                                           "/org/freedesktop/DBus", "org.freedesktop.DBus", "AddMatch",
-                                           dconf_engine_make_match_rule (engine->sources[i], path),
-                                           &ow->handle, NULL);
-        ow->pending++;
-      }
+      ow->pending++;
+
+  for (i = 0; i < engine->n_sources; i++)
+    if (engine->sources[i]->bus_type)
+      dconf_engine_dbus_call_async_func (engine->sources[i]->bus_type, "org.freedesktop.DBus",
+                                         "/org/freedesktop/DBus", "org.freedesktop.DBus", "AddMatch",
+                                         dconf_engine_make_match_rule (engine->sources[i], path),
+                                         &ow->handle, NULL);
 }
 
 void
