@@ -1,3 +1,10 @@
+Changes in dconf 0.19.91
+=========================
+
+ - fix an unlikely failure in the fuzz testing of gvdb
+
+ - fix a thread safety issue with file-db
+
 Changes in dconf 0.19.90
 =========================
 
