@@ -1,5 +1,7 @@
 include Makefile.gtester
 
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = shm gvdb common engine service gdbus gsettings dbus-1 client bin docs tests po
 
 if ENABLE_EDITOR
