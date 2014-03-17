@@ -1,3 +1,12 @@
+Changes in dconf 0.19.92
+=========================
+
+ - depend on automake 1.11.2
+
+ - stop using ACLOCAL_FLAGS
+
+ - depend on released version of Vala (0.18.0)
+
 Changes in dconf 0.19.91
 =========================
 
