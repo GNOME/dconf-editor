@@ -27,7 +27,7 @@ msgstr "Editor dconf"
 
 #: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
-msgstr "Přímo upravovat celou svoji databázi nastavení"
+msgstr "Přímo upravujte celou svoji databázi nastavení"
 
 #: ../editor/dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
