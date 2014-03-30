@@ -1,17 +1,20 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<Project xmlns='http://usefulinc.com/ns/doap#'
-         xmlns:foaf='http://xmlns.com/foaf/0.1/'
-         xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
-         xmlns:gnome='http://api.gnome.org/doap-extensions#'>
+<Project xmlns="http://usefulinc.com/ns/doap#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#">
 
-  <name xml:lang='en'>dconf</name>
-  <shortdesc xml:lang='en'>Configuation database system</shortdesc>
+  <name xml:lang="en">dconf</name>
+  <shortdesc xml:lang="en">Configuration database system</shortdesc>
+  <homepage rdf:resource="https://wiki.gnome.org/Projects/dconf"/>
+  <download-page rdf:resource="http://download.gnome.org/sources/dconf/"/>
+  <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=dconf"/>
 
   <maintainer>
     <foaf:Person>
       <foaf:name>Ryan Lortie</foaf:name>
-      <foaf:mbox rdf:resource='mailto:desrt@desrt.ca'/>
+      <foaf:mbox rdf:resource="mailto:desrt@desrt.ca"/>
       <gnome:userid>ryanl</gnome:userid>
     </foaf:Person>
   </maintainer>
