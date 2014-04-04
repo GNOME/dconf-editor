@@ -39,6 +39,8 @@ typedef struct
   DConfBlame  *blame;
   GHashTable  *writers;
   GArray      *subtree_ids;
+
+  gboolean     released;
 } DConfService;
 
 G_DEFINE_TYPE (DConfService, dconf_service, G_TYPE_APPLICATION)
@@ -48,7 +50,10 @@ dconf_service_signalled (gpointer user_data)
 {
   DConfService *service = user_data;
 
-  g_application_release (G_APPLICATION (service));
+  if (!service->released)
+    g_application_release (G_APPLICATION (service));
+
+  service->released = TRUE;
 
   return G_SOURCE_REMOVE;
 }
