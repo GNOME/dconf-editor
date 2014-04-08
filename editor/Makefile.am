@@ -41,10 +41,20 @@ dconf_editor_SOURCES = \
 	dconf-view.vala
 
 desktopdir = $(datadir)/applications
-desktop_in_files = dconf-editor.desktop.in.in
+desktop_in_files = ca.desrt.dconf-editor.desktop.in.in
 desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
-CLEANFILES = $(desktop_DATA) resources.c
 @INTLTOOL_DESKTOP_RULE@
+
+dbusservicedir = $(datadir)/dbus-1/services
+dbusservice_DATA = ca.desrt.dconf-editor.service
+
+ca.desrt.dconf-editor.service: Makefile
+	$(AM_V_GEN) (echo '[D-BUS Service]'; \
+		     echo 'Name=ca.desrt.dconf-editor'; \
+		     echo 'Exec=${bindir}/dconf-editor --gapplication-service') > $@.tmp && \
+		     mv $@.tmp $@
+
+CLEANFILES = $(desktop_DATA) $(dbusservice_DATA) resources.c
 
 appdatadir = $(datadir)/appdata
 dist_appdata_DATA = dconf-editor.appdata.xml

@@ -12,3 +12,4 @@ X-GNOME-Bugzilla-Bugzilla=GNOME
 X-GNOME-Bugzilla-Product=dconf
 X-GNOME-Bugzilla-Component=editor
 X-GNOME-Bugzilla-Version=@VERSION@
+DBusActivatable=true

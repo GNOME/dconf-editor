@@ -104,7 +104,7 @@ AC_CONFIG_FILES([
   dbus-1/Makefile
   bin/Makefile
   editor/Makefile
-  editor/dconf-editor.desktop.in
+  editor/ca.desrt.dconf-editor.desktop.in
   tests/Makefile
   docs/Makefile
   po/Makefile.in
