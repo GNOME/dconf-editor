@@ -171,7 +171,6 @@ class ConfigurationEditor : Gtk.Application
         case "u":
         case "x":
         case "t":
-        case "d":
             Variant min, max;
             if (key.schema.range != null)
             {
@@ -184,6 +183,19 @@ class ConfigurationEditor : Gtk.Application
                 max = key.get_max();
             }
             return _("Integer [%s..%s]").printf(min.print(false), max.print(false));
+        case "d":
+            Variant min, max;
+            if (key.schema.range != null)
+            {
+                min = key.schema.range.min;
+                max = key.schema.range.max;
+            }
+            else
+            {
+                min = key.get_min();
+                max = key.get_max();
+            }
+            return _("Double [%s..%s]").printf(min.print(false), max.print(false));
         case "b":
             return _("Boolean");
         case "s":

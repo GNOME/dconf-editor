@@ -67,6 +67,10 @@ private class KeyValueRenderer: Gtk.CellRenderer
                 }
                 spin_renderer.adjustment = new Gtk.Adjustment(v, min, max, 1, 0, 0);
                 spin_renderer.digits = 0;
+                if (key.type_string == "d")
+                {
+                    spin_renderer.digits = 20;
+                }
                 mode = Gtk.CellRendererMode.EDITABLE;
                 break;
             default:
