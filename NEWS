@@ -1,4 +1,18 @@
-Changes ind conf 0.20.0
+Changes in dconf 0.21.0
+========================
+
+ - editor desktop file renamed to ca.desrt.dconf-editor to take advantage of
+   D-Bus activation
+
+ - prevent the service from being released more than once if we receive
+   multiple signals (which caused a hang)
+
+Translations:
+  Indonesian
+  Greek
+  Swedish
+
+Changes in dconf 0.20.0
 ========================
 
 Czech translation updated.
