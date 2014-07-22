@@ -1,6 +1,7 @@
 *.c
 *.stamp
 dconf-editor
-dconf-editor.desktop
-dconf-editor.desktop.in
+ca.desrt.dconf-editor.desktop.in
+ca.desrt.dconf-editor.desktop
+ca.desrt.dconf-editor.service
 ca.desrt.dconf-editor.gschema.valid
