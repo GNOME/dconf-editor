@@ -1,14 +1,14 @@
 # Norwegian bokmål translation of dconf.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999-2013.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2014.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dconf 3.9.x\n"
+"Project-Id-Version: dconf 3.13.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-20 14:37+0200\n"
-"PO-Revision-Date: 2013-05-20 14:38+0200\n"
+"POT-Creation-Date: 2014-07-23 14:35+0200\n"
+"PO-Revision-Date: 2014-07-23 14:36+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -17,95 +17,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf redigering"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Rediger konfigurasjonsdatabasen direkte"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "innstillinger;konfigurasjon;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Heltall [%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Bredde på vinduet"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "Boolean"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Bredde på hovedvinduet i piksler."
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "Streng"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Høyde på vinduet"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "Oppregning"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Høyde på hovedvinduet i piksler."
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "Ingen skjema"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Et flagg som slår på maksimert modus"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "Ikke funnet"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Et flagg som slår på fullskjerm modus"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Dette programmet er fri programvare. Du kan redistribuere og/eller endre "
-"programmet under betingelsene gitt i GNU General Public License som utgitt "
-"av Free Software Foundation; enten versjon 2 av lisensen, eller (hvis du "
-"ønsker det) enhver senere versjon.\n"
-"\n"
-"Programmet distribueres i håp om at programmet er nyttig, men uten NOEN "
-"GARANTI, ikke engang implisitt garanti om at det er SALGBART eller PASSER ET "
-"BESTEMT FORMÅL. Se GNU General Public License for detaljer.\n"
-"\n"
-"Du skal ha mottatt en kopi av GNU General Public License sammen med dette "
-"programmet. Hvis dette ikke er tilfelle, kan du skrive til Free Software "
-"Foundation, Inc. 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Finn …"
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "Opphavsrett © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Om"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "Kjartan Maraas <kmaraas@gnome.org>"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "Feil under setting av verdi: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Navn"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Verdi"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "A_vslutt"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -136,38 +97,84 @@ msgstr "Standardverdi:"
 msgid "Next"
 msgstr "Neste"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Finn …"
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Heltall [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Om"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Double [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "A_vslutt"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "Boolean"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Bredde på vinduet"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "Streng"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Bredde på hovedvinduet i piksler."
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "Oppregning"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Høyde på vinduet"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "Ingen skjema"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Høyde på hovedvinduet i piksler."
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "Ikke funnet"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Et flagg som slår på maksimert modus"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Dette programmet er fri programvare. Du kan redistribuere og/eller endre "
+"programmet under betingelsene gitt i GNU General Public License som utgitt "
+"av Free Software Foundation; enten versjon 2 av lisensen, eller (hvis du "
+"ønsker det) enhver senere versjon.\n"
+"\n"
+"Programmet distribueres i håp om at programmet er nyttig, men uten NOEN "
+"GARANTI, ikke engang implisitt garanti om at det er SALGBART eller PASSER ET "
+"BESTEMT FORMÅL. Se GNU General Public License for detaljer.\n"
+"\n"
+"Du skal ha mottatt en kopi av GNU General Public License sammen med dette "
+"programmet. Hvis dette ikke er tilfelle, kan du skrive til Free Software "
+"Foundation, Inc. 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Et flagg som slår på fullskjerm modus"
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "Opphavsrett © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "Kjartan Maraas <kmaraas@gnome.org>"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Feil under setting av verdi: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Navn"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Verdi"
