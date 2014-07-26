@@ -57,7 +57,7 @@ ca.desrt.dconf-editor.service: Makefile
 CLEANFILES = $(desktop_DATA) $(dbusservice_DATA) resources.c
 
 appdatadir = $(datadir)/appdata
-dist_appdata_DATA = dconf-editor.appdata.xml
+dist_appdata_DATA = ca.desrt.dconf-editor.appdata.xml
 
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@

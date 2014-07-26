@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application>
-  <id type="desktop">dconf-editor.desktop</id>
+  <id type="desktop">ca.desrt.dconf-editor.desktop</id>
   <licence>CC0</licence>
   <description>
     <p>
