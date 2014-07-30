@@ -10,6 +10,7 @@
   <homepage rdf:resource="https://wiki.gnome.org/Projects/dconf"/>
   <download-page rdf:resource="http://download.gnome.org/sources/dconf/"/>
   <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=dconf"/>
+  <category rdf:resource="http://api.gnome.org/doap-extensions#core" />
 
   <maintainer>
     <foaf:Person>
