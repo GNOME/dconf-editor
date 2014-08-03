@@ -10,57 +10,130 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-03-09 16:13+0000\n"
-"PO-Revision-Date: 2014-07-09 12:31+0200\n"
-"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
+"POT-Creation-Date: 2014-08-03 03:09+0000\n"
+"PO-Revision-Date: 2014-08-03 20:31+0200\n"
+"Last-Translator: Maria Mavridou <mavridou@gmail.com>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "Επεξεργαστής dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Άμεση επεξεργασία όλης της βάσης με τα δεδομένα των ρυθμίσεων"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "ρυθμίσεις;διαμόρφωση;settings;configuration;"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Το πλάτος του παραθύρου"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Το πλάτος του κυρίως παραθύρου σε εικονοστοιχεία."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Το ύψος του παραθύρου"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Το ύψος του κυρίως παραθύρου σε εικονοστοιχεία."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Σημαία για την ενεργοποίηση της λειτουργίας μεγιστοποίησης"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Μια σημαία για την ενεργοποίηση της λειτουργίας πλήρους οθόνης"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "Εύ_ρεση…"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Περί"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "Έ_ξοδος"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Ορισμός ως προεπιλογή"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Σχήμα:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Περίληψη:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Τύπος:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Προεπιλογή:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Επόμενο"
+
+#: ../editor/dconf-editor.vala:185
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Ακέραιος [%s..%s]"
 
-#: ../editor/dconf-editor.vala:188
+#: ../editor/dconf-editor.vala:198
+#, c-format
+#| msgid "Integer [%s..%s]"
+msgid "Double [%s..%s]"
+msgstr "Πραγματικός διπλής ακρίβειας [%s..%s]"
+
+#: ../editor/dconf-editor.vala:200
 msgid "Boolean"
 msgstr "Λογική τιμή"
 
-#: ../editor/dconf-editor.vala:190
+#: ../editor/dconf-editor.vala:202
 msgid "String"
 msgstr "Συμβολοσειρά"
 
-#: ../editor/dconf-editor.vala:192
+#: ../editor/dconf-editor.vala:204
 msgid "Enumeration"
 msgstr "Απαρίθμηση"
 
-#: ../editor/dconf-editor.vala:240
+#: ../editor/dconf-editor.vala:252
 msgid "No schema"
 msgstr "Χωρίς σχήμα"
 
-#: ../editor/dconf-editor.vala:350
+#: ../editor/dconf-editor.vala:362
 msgid "Not found"
 msgstr "Δε βρέθηκε"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:410
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -93,11 +166,11 @@ msgstr ""
 "Foundation, Inc.), 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, "
 "USA."
 
-#: ../editor/dconf-editor.vala:404
+#: ../editor/dconf-editor.vala:416
 msgid "Copyright © Canonical Ltd"
 msgstr "Πνευματικά δικαιώματα © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:408
+#: ../editor/dconf-editor.vala:420
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
@@ -105,84 +178,22 @@ msgstr ""
 " Θάνος Τρυφωνίδης <tomtryf@gmail.com>\n"
 " Ευστάθιος Ιωσηφίδης <iosifidis@opensuse.org>\n"
 " Μαρία Θουκυδίδου <marablack3@gmail.com>\n"
-" Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα http://gnome.gr/"
+" Μαρία Μαυρίδου <mavridou@gmail.com>\n"
+"\n"
+"Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα\n"
+"http://gnome.gr/"
 
-#: ../editor/dconf-view.vala:264
+#: ../editor/dconf-view.vala:268
 #, c-format
 msgid "Error setting value: %s"
 msgstr "Σφάλμα κατά την ανάθεση τιμής: %s"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
+#: ../editor/dconf-view.vala:322
 msgid "Name"
 msgstr "Όνομα"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
+#: ../editor/dconf-view.vala:326
 msgid "Value"
 msgstr "Τιμή"
-
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Ορισμός ως προεπιλογή"
-
-#: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Σχήμα:"
-
-#: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Περίληψη:"
-
-#: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Περιγραφή:"
-
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Τύπος:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Προεπιλογή:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Επόμενο"
-
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "Εύ_ρεση…"
-
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Περί"
-
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "Έ_ξοδος"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Το πλάτος του παραθύρου"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Το πλάτος του κυρίως παραθύρου σε εικονοστοιχεία."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Το ύψος του παραθύρου"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Το ύψος του κυρίως παραθύρου σε εικονοστοιχεία."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Σημαία για την ενεργοποίηση της λειτουργίας μεγιστοποίησης"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Μια σημαία για την ενεργοποίηση της λειτουργίας πλήρους οθόνης"
