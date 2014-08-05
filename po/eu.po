@@ -2,16 +2,17 @@
 # Copyright (C) 2013 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 #
+#
 # Asier Sarasua Garmendia <asiersar@yahoo.com>, 2013.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2013.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-22 11:29+0200\n"
-"PO-Revision-Date: 2013-09-21 21:57+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2014-08-05 12:34+0200\n"
+"PO-Revision-Date: 2014-07-28 19:09+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
@@ -20,97 +21,56 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 1.4\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf editorea"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Editatu zuzenean zure konfigurazioaren datu-base osoa"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "ezarpenak;konfigurazioa;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Osokoa [%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Leihoaren zabalera"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "Boolearra"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Leiho nagusiaren zabalera pixeletan."
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "Katea"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Leihoaren altuera"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "Zerrendatzea"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Leiho nagusiaren altuera pixeletan."
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "Eskemarik ez"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Modu maximizatua gaitzeko bandera"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "Ez da aurkitu"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Pantaila osoko modua gaitzeko bandera"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Programa hau librea da; birbana eta/edo alda dezakezu Software Foundation-ek "
-"argitaratutako GNU Lizentzia Publiko Orokorraren 2. bertsioan, edo (nahiago "
-"baduzu) beste berriago batean, jasotako baldintzak betez gero.\n"
-"\n"
-"Programa hau erabilgarria izango delakoan banatzen da, baina, INOLAKO "
-"BERMERIK GABE; era berean, ez da bermatzen beraren EGOKITASUNA "
-"MERKATURATZEKO edo HELBURU PARTIKULARRETARAKO ERABILTZEKO.  Argibide gehiago "
-"nahi izanez gero, ikus GNU Lizentzia Publiko Orokorra.\n"
-"\n"
-"Programa honekin batera GNU Lizentzia Publiko Orokorraren kopia bat jasoko "
-"zenuen; hala ez bada, idatzi hona: Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Bilatu…"
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "Honi _buruz"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr ""
-"Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
-"Iñaki Larrañaga Murgoitio <dooteo@zundan.com>"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "Errorea balioa ezartzean: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Izena"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Balioa"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "I_rten"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -141,38 +101,86 @@ msgstr "Lehenetsia:"
 msgid "Next"
 msgstr "Hurrengoa"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Bilatu…"
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Osokoa [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "Honi _buruz"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Bikoitza [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "I_rten"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "Boolearra"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Leihoaren zabalera"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "Katea"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Leiho nagusiaren zabalera pixeletan."
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "Zerrendatzea"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Leihoaren altuera"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "Eskemarik ez"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Leiho nagusiaren altuera pixeletan."
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "Ez da aurkitu"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Modu maximizatua gaitzeko bandera"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Programa hau librea da; birbana eta/edo alda dezakezu Software Foundation-ek "
+"argitaratutako GNU Lizentzia Publiko Orokorraren 2. bertsioan, edo (nahiago "
+"baduzu) beste berriago batean, jasotako baldintzak betez gero.\n"
+"\n"
+"Programa hau erabilgarria izango delakoan banatzen da, baina, INOLAKO "
+"BERMERIK GABE; era berean, ez da bermatzen beraren EGOKITASUNA "
+"MERKATURATZEKO edo HELBURU PARTIKULARRETARAKO ERABILTZEKO.  Argibide gehiago "
+"nahi izanez gero, ikus GNU Lizentzia Publiko Orokorra.\n"
+"\n"
+"Programa honekin batera GNU Lizentzia Publiko Orokorraren kopia bat jasoko "
+"zenuen; hala ez bada, idatzi hona: Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Pantaila osoko modua gaitzeko bandera"
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr ""
+"Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"Iñaki Larrañaga Murgoitio <dooteo@zundan.com>"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Errorea balioa ezartzean: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Izena"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Balioa"
