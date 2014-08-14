@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-12 04:02+0000\n"
+"POT-Creation-Date: 2014-08-08 03:10+0000\n"
 "PO-Revision-Date: 2013-09-16 18:46+0100\n"
 "Last-Translator: Benjamin Steinwender <b@stbe.at>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
@@ -20,45 +20,117 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.7\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf-Editor"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Direkter Zugriff auf Ihre gesamte Konfigurationsdatenbank"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "Einstellungen;Konfiguration;"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Die Breite des Fensters"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Die Breite des Hauptfensters in Pixel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Die Höhe des Fensters"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Die Höhe des Hauptfensters in Pixel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Aktiviert den maximierten Modus"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Aktiviert den Vollbildmodus"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Suchen …"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Info"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Beenden"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Auf Standardwert setzen"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Schema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Zusammenfassung:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Typ:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Standardwert:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Weiter"
+
+#: ../editor/dconf-editor.vala:185
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Ganzzahl [%s..%s]"
 
-#: ../editor/dconf-editor.vala:188
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Gleitkommazahl doppelter Genauigkeit [%s..%s]"
+
+#: ../editor/dconf-editor.vala:200
 msgid "Boolean"
 msgstr "Wahrheitswert"
 
-#: ../editor/dconf-editor.vala:190
+#: ../editor/dconf-editor.vala:202
 msgid "String"
 msgstr "Zeichenkette"
 
-#: ../editor/dconf-editor.vala:192
+#: ../editor/dconf-editor.vala:204
 msgid "Enumeration"
 msgstr "Aufzählung"
 
-#: ../editor/dconf-editor.vala:240
+#: ../editor/dconf-editor.vala:252
 msgid "No schema"
 msgstr "Kein Schema"
 
-#: ../editor/dconf-editor.vala:350
+#: ../editor/dconf-editor.vala:362
 msgid "Not found"
 msgstr "Nicht gefunden"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:410
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -91,93 +163,27 @@ msgstr ""
 "Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  "
 "02110-1301, USA."
 
-#: ../editor/dconf-editor.vala:404
+#: ../editor/dconf-editor.vala:416
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:408
+#: ../editor/dconf-editor.vala:420
 msgid "translator-credits"
 msgstr ""
 "Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Christian Kirbach <Christian.Kirbach@gmail.com>"
 
-#: ../editor/dconf-view.vala:264
+#: ../editor/dconf-view.vala:268
 #, c-format
 msgid "Error setting value: %s"
 msgstr "Fehler beim Zuweisen des Wertes: %s"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
+#: ../editor/dconf-view.vala:322
 msgid "Name"
 msgstr "Name"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
+#: ../editor/dconf-view.vala:326
 msgid "Value"
 msgstr "Wert"
-
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Auf Standardwert setzen"
-
-#: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Schema:"
-
-#: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Zusammenfassung:"
-
-#: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Beschreibung:"
-
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Typ:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Standardwert:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Weiter"
-
-#: ../editor/dconf-editor-menu.ui.h:1
-#| msgid "_Find"
-msgid "_Find…"
-msgstr "_Suchen …"
-
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Info"
-
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "_Beenden"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Die Breite des Fensters"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Die Breite des Hauptfensters in Pixel."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Die Höhe des Fensters"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Die Höhe des Hauptfensters in Pixel."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Aktiviert den maximierten Modus"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Aktiviert den Vollbildmodus"
