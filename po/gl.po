@@ -4,13 +4,13 @@
 # Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas
 # colaborar connosco, podes atopar máis información en http://www.trasno.net
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
-# Fran Dieguez <frandieguez@gnome.org>, 2012, 2013.
+# Fran Dieguez <frandieguez@gnome.org>, 2012, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-01 23:19+0200\n"
-"PO-Revision-Date: 2013-06-01 23:19+0200\n"
+"POT-Creation-Date: 2014-08-25 13:28+0200\n"
+"PO-Revision-Date: 2014-08-25 13:28+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
 "Language: gl\n"
@@ -21,45 +21,117 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Edite directamente toda a súa base de datos de configuración"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "preferencias;configuración;"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "A largura da xanela"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "A largura da xanela principal en píxeles."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "A altura da xanela"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "A altura da xanela principal en píxeles."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Un parámetro para activar o modo maximizado"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Un parámetro para activar o modo de pantalla completa"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Buscar…"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Sobre"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Saír"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Volver ao predeterminado"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Esquema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Resumo:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Descrición:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Tipo:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Predeterminado:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Seguinte"
+
+#: ../editor/dconf-editor.vala:185
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Enteiro [%s..%s]"
 
-#: ../editor/dconf-editor.vala:188
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Dobre [%s..%s]"
+
+#: ../editor/dconf-editor.vala:200
 msgid "Boolean"
 msgstr "Booleano"
 
-#: ../editor/dconf-editor.vala:190
+#: ../editor/dconf-editor.vala:202
 msgid "String"
 msgstr "Cadea"
 
-#: ../editor/dconf-editor.vala:192
+#: ../editor/dconf-editor.vala:204
 msgid "Enumeration"
 msgstr "Enumeración"
 
-#: ../editor/dconf-editor.vala:240
+#: ../editor/dconf-editor.vala:252
 msgid "No schema"
 msgstr "Sen esquema"
 
-#: ../editor/dconf-editor.vala:350
+#: ../editor/dconf-editor.vala:362
 msgid "Not found"
 msgstr "Non atopado"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:410
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -93,11 +165,11 @@ msgstr ""
 "enderezo seguinte: 51 Franklin Street, Fifth Floor, Boston, MA\n"
 "02110-1301 USA."
 
-#: ../editor/dconf-editor.vala:404
+#: ../editor/dconf-editor.vala:416
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:408
+#: ../editor/dconf-editor.vala:420
 msgid "translator-credits"
 msgstr ""
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
@@ -105,82 +177,17 @@ msgstr ""
 "Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas\n"
 "colaborar connosco, podes atopar máis información en <http://www.trasno.net>"
 
-#: ../editor/dconf-view.vala:264
+#: ../editor/dconf-view.vala:268
 #, c-format
 msgid "Error setting value: %s"
 msgstr "Produciuse un erro ao definir o valor: %s"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
+#: ../editor/dconf-view.vala:322
 msgid "Name"
 msgstr "Nome"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
+#: ../editor/dconf-view.vala:326
 msgid "Value"
 msgstr "Valor"
-
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Volver ao predeterminado"
-
-#: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Esquema:"
-
-#: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Resumo:"
-
-#: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Descrición:"
-
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Tipo:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Predeterminado:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Seguinte"
-
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Buscar…"
-
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Sobre"
-
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "_Saír"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "A largura da xanela"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "A largura da xanela principal en píxeles."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "A altura da xanela"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "A altura da xanela principal en píxeles."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Un parámetro para activar o modo maximizado"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Un parámetro para activar o modo de pantalla completa"
