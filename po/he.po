@@ -2,15 +2,16 @@
 # Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2012.
+# Yosef Or Boczko <yoseforb@gnome.org>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf Editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-25 11:28+0300\n"
-"PO-Revision-Date: 2013-05-25 11:28+0200\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <sh.yaron@gmail.com>\n"
+"POT-Creation-Date: 2014-08-28 17:48+0300\n"
+"PO-Revision-Date: 2014-08-28 17:50+0300\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gnome.org>\n"
+"Language-Team: עברית <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,84 +20,58 @@ msgstr ""
 "X-Poedit-Language: Hebrew\n"
 "X-Poedit-Country: ISRAEL\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "עורך dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "עריכה ישירה של כל מסד נתוני התצורה שלך"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "הגדרות;תצורה;קונפיגורציה;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "מספר חיובי שלם [%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "The width of the window"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "בוליאני"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "The width of the main window in pixels."
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "מחרוזת"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "The height of the window"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "מנייה"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "The height of the main window in pixels."
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "אין ערכה"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "A flag to enable maximized mode"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "לא נמצא"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "A flag to enable fullscreen mode"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"תכנית זו הנה תכנה חופשית; ניתן להפיץ ו/או לשנות אותה תחת תנאי הרישיון הציבורי הכללי של GNU כפי שפורסם על ידי מוסד התכנה החופשית; או גרסה 2, או (לבחירתך) כל גרסהעדכנית יותר.\n"
-"\n"
-"תכנית זו מופצת בתקווה שתביא תועלת, אך ללא שום אחריות אפילו לא מרומזת למטרות מסחר או התאמה לצרכים מסוימים ניתן לעיין ברישיון הציבורי הכללי של GNU לקבלת פרטים נוספים.\n"
-"\n"
-"לתכנית זו אמור היה להיות מצורף עותק של הרישיון הציבורי הכללי של GNU; אם לא כך הדבר, נא לכתוב ל־Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_חיפוש…"
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "כל הזכויות שמורות © Canonical בע״מ"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "על _אודות"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "ירון שהרבני <sh.yaron@gmail.com>"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "שגיאה בהגדרת הערך: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "שם"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "ערך"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "י_ציאה"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -127,39 +102,83 @@ msgstr "בררת מחדל:"
 msgid "Next"
 msgstr "הבא"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_חיפוש…"
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "מספר חיובי שלם [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "על _אודות"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "מספר נקודה צפה [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "י_ציאה"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "בוליאני"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "The width of the window"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "מחרוזת"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "The width of the main window in pixels."
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "מנייה"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "The height of the window"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "אין ערכה"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "The height of the main window in pixels."
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "לא נמצא"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "A flag to enable maximized mode"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"תכנית זו הנה תכנה חופשית; ניתן להפיץ ו/או לשנות אותה תחת תנאי הרישיון "
+"הציבורי הכללי של GNU כפי שפורסם על ידי מוסד התכנה החופשית; או גרסה 2, או "
+"(לבחירתך) כל גרסהעדכנית יותר.\n"
+"\n"
+"תכנית זו מופצת בתקווה שתביא תועלת, אך ללא שום אחריות אפילו לא מרומזת למטרות "
+"מסחר או התאמה לצרכים מסוימים ניתן לעיין ברישיון הציבורי הכללי של GNU לקבלת "
+"פרטים נוספים.\n"
+"\n"
+"לתכנית זו אמור היה להיות מצורף עותק של הרישיון הציבורי הכללי של GNU; אם לא "
+"כך הדבר, נא לכתוב ל־Free Software Foundation, Inc., 51 Franklin Street, "
+"Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "A flag to enable fullscreen mode"
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "כל הזכויות שמורות © Canonical בע״מ"
 
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "ירון שהרבני <sh.yaron@gmail.com>"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "שגיאה בהגדרת הערך: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "שם"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "ערך"
