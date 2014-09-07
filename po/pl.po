@@ -4,14 +4,14 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Piotr Drąg <piotrdrag@gmail.com>, 2012-2013.
-# Aviary.pl <gnomepl@aviary.pl>, 2012-2013.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012-2014.
+# Aviary.pl <gnomepl@aviary.pl>, 2012-2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 03:10+0200\n"
-"PO-Revision-Date: 2013-08-24 03:11+0200\n"
+"POT-Creation-Date: 2014-09-07 03:09+0200\n"
+"PO-Revision-Date: 2014-09-07 03:10+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -23,45 +23,117 @@ msgstr ""
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: Poland\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "Edytor dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Bezpośrednia modyfikacja bazy danych konfiguracji"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "ustawienia;konfiguracja;preferencje;opcje;rejestr;"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Szerokość okna"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Szerokość głównego okna w pikselach."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Wysokość okna"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Wysokość głównego okna w pikselach."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Flaga włączająca tryb zmaksymalizowany"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Flaga włączająca tryb pełnoekranowy"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Znajdź…"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_O programie"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "Za_kończ"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Ustaw na wartość domyślną"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Schemat:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Podsumowanie:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Opis:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Typ:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Domyślnie:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Następny"
+
+#: ../editor/dconf-editor.vala:185
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Wartość całkowita [%s..%s]"
 
-#: ../editor/dconf-editor.vala:188
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Wartość double [%s..%s]"
+
+#: ../editor/dconf-editor.vala:200
 msgid "Boolean"
 msgstr "Zmienna logiczna"
 
-#: ../editor/dconf-editor.vala:190
+#: ../editor/dconf-editor.vala:202
 msgid "String"
 msgstr "Tekst"
 
-#: ../editor/dconf-editor.vala:192
+#: ../editor/dconf-editor.vala:204
 msgid "Enumeration"
 msgstr "Wyliczenie"
 
-#: ../editor/dconf-editor.vala:240
+#: ../editor/dconf-editor.vala:252
 msgid "No schema"
 msgstr "Brak schematu"
 
-#: ../editor/dconf-editor.vala:350
+#: ../editor/dconf-editor.vala:362
 msgid "Not found"
 msgstr "Nie odnaleziono"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:410
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -93,92 +165,27 @@ msgstr ""
 "- proszę napisać do Free Software Foundation, Inc., 51 Franklin Street, "
 "Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/dconf-editor.vala:404
+#: ../editor/dconf-editor.vala:416
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:408
+#: ../editor/dconf-editor.vala:420
 msgid "translator-credits"
 msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2012-2013\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2012-2013"
+"Piotr Drąg <piotrdrag@gmail.com>, 2012-2014\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2012-2014"
 
-#: ../editor/dconf-view.vala:264
+#: ../editor/dconf-view.vala:268
 #, c-format
 msgid "Error setting value: %s"
 msgstr "Błąd podczas ustawiania wartości: %s"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
+#: ../editor/dconf-view.vala:322
 msgid "Name"
 msgstr "Nazwa"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
+#: ../editor/dconf-view.vala:326
 msgid "Value"
 msgstr "Wartość"
-
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Ustaw na wartość domyślną"
-
-#: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Schemat:"
-
-#: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Podsumowanie:"
-
-#: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Opis:"
-
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Typ:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Domyślnie:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Następny"
-
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Znajdź…"
-
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_O programie"
-
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "Za_kończ"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Szerokość okna"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Szerokość głównego okna w pikselach."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Wysokość okna"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Wysokość głównego okna w pikselach."
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Flaga włączająca tryb zmaksymalizowany"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Flaga włączająca tryb pełnoekranowy"
