@@ -4,14 +4,15 @@
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
 # Balázs Úr <urbalazs at gmail dot com>, 2012, 2013.
+# Balázs Úr <urbalazs@gmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-06 16:14+0000\n"
-"PO-Revision-Date: 2013-08-21 18:35+0200\n"
-"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
+"POT-Creation-Date: 2014-09-09 15:09+0000\n"
+"PO-Revision-Date: 2014-09-10 00:11+0200\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -20,95 +21,56 @@ msgstr ""
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf szerkesztő"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "A konfigurációs adatbázis közvetlen szerkesztése"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "beállítások;konfiguráció;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Egész [%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Az ablak szélessége"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "Logikai"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "A főablak szélessége képpontokban."
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "Karakterlánc"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Az ablak magassága"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "Felsorolás"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "A főablak magassága képpontokban."
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "Nincs séma"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "A teljes méretű mód engedélyezése"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "Nem található"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Teljes képernyős mód engedélyezése"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Ez a program szabad szoftver, terjesztheti és/vagy módosíthatja a Free "
-"Software Foundation által kiadott GNU General Public License második (vagy "
-"bármely későbbi) változatában foglaltak alapján.\n"
-"\n"
-"Ezt a programot abban a reményben terjesztjük, hogy hasznos lesz, de nem "
-"vállalunk SEMMIFÉLE GARANCIÁT, még olyan értelemben sem, hogy a program "
-"alkalmas-e a KÖZREADÁSRA vagy EGY BIZONYOS FELADAT ELVÉGZÉSÉRE. További "
-"részletekért tanulmányozza a GNU GPL licencet.\n"
-"\n"
-"A programhoz a GNU General Public License egy példánya is jár, ha nem kapta "
-"meg, írjon a Free Software Foundation Inc.-nek. Levélcímük: 51 Franklin "
-"Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Keresés…"
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Névjegy"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "Kelemen Gábor <kelemeng at gnome dot hu>"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "Hiba az érték beállításakor: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Név"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Érték"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Kilépés"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -139,40 +101,86 @@ msgstr "Alapértelmezett:"
 msgid "Next"
 msgstr "Következő"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-#| msgid "_Find"
-msgid "_Find…"
-msgstr "_Keresés…"
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Egész [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Névjegy"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+#| msgid "Integer [%s..%s]"
+msgid "Double [%s..%s]"
+msgstr "Lebegőpontos [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "_Kilépés"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "Logikai"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Az ablak szélessége"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "Karakterlánc"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "A főablak szélessége képpontokban."
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "Felsorolás"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Az ablak magassága"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "Nincs séma"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "A főablak magassága képpontokban."
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "Nem található"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "A teljes méretű mód engedélyezése"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Ez a program szabad szoftver, terjesztheti és/vagy módosíthatja a Free "
+"Software Foundation által kiadott GNU General Public License második (vagy "
+"bármely későbbi) változatában foglaltak alapján.\n"
+"\n"
+"Ezt a programot abban a reményben terjesztjük, hogy hasznos lesz, de nem "
+"vállalunk SEMMIFÉLE GARANCIÁT, még olyan értelemben sem, hogy a program "
+"alkalmas-e a KÖZREADÁSRA vagy EGY BIZONYOS FELADAT ELVÉGZÉSÉRE. További "
+"részletekért tanulmányozza a GNU GPL licencet.\n"
+"\n"
+"A programhoz a GNU General Public License egy példánya is jár, ha nem kapta "
+"meg, írjon a Free Software Foundation Inc.-nek. Levélcímük: 51 Franklin "
+"Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Teljes képernyős mód engedélyezése"
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "Kelemen Gábor <kelemeng at gnome dot hu>"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Hiba az érték beállításakor: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Név"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Érték"
 
