@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-05-25 20:42+0000\n"
-"PO-Revision-Date: 2013-05-28 22:15+0100\n"
+"POT-Creation-Date: 2014-09-14 15:09+0000\n"
+"PO-Revision-Date: 2014-09-14 21:19+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -22,95 +22,56 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "Urejevalnik dConf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Neposredno urejanje celotne podatkovne zbirke nastavitev"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "nastavitve;konfiguracija;sistem;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Celo število [%s ... %s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Širina okna"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "Boolova vrednost"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Širina glavnega okna v točkah"
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "Niz"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Višina okna"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "Oštevilčenje"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Višina glavnega okna v točkah"
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "Ni sheme"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Zastavica za omogočanje prikaza v razpetem načinu"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "Ni zadetkov"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Zastavica za omogočanje celozaslonskega načina"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Program je prosta programska oprema; lahko jo razširjate in/ali spreminjate "
-"pod pogoji Splošnega javnega dovoljenja GNU (GNU General Public License), "
-"kot ga je objavila ustanova Free Software Foundation; bodisi različice 2 ali "
-"(po vaši izbiri) katerekoli poznejše različice.\n"
-"\n"
-"Program se razširja v upanju, da bo uporaben, vendar BREZ VSAKRŠNEGA "
-"JAMSTVA; tudi brez posredne zagotovitve CENOVNE VREDNOSTI ali PRIMERNOSTI ZA "
-"DOLOČEN NAMEN.  Za podrobnosti glejte besedilo Javnega dovoljenja GNU.\n"
-"\n"
-"Skupaj s programom bi morali prejeti izvod splošne javne licence GNU (GNU "
-"General Public License); če ga niste pišite na Free Software Foundation, "
-"Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Najdi ..."
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "Avtorske pravice © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_O programu"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "Matej Urbančič <mateju@svn@gnome.org>"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "Napaka med nastavljanjem vrednosti: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Ime"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Vrednost"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Končaj"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -141,38 +102,84 @@ msgstr "Privzeto:"
 msgid "Next"
 msgstr "Naprej"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Najdi ..."
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Celo število [%s ... %s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_O programu"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Dvojno [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "_Končaj"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "Boolova vrednost"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Širina okna"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "Niz"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Širina glavnega okna v točkah"
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "Oštevilčenje"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Višina okna"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "Ni sheme"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Višina glavnega okna v točkah"
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "Ni zadetkov"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Zastavica za omogočanje prikaza v razpetem načinu"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Program je prosta programska oprema; lahko jo razširjate in/ali spreminjate "
+"pod pogoji Splošnega javnega dovoljenja GNU (GNU General Public License), "
+"kot ga je objavila ustanova Free Software Foundation; bodisi različice 2 ali "
+"(po vaši izbiri) katerekoli poznejše različice.\n"
+"\n"
+"Program se razširja v upanju, da bo uporaben, vendar BREZ VSAKRŠNEGA "
+"JAMSTVA; tudi brez posredne zagotovitve CENOVNE VREDNOSTI ali PRIMERNOSTI ZA "
+"DOLOČEN NAMEN.  Za podrobnosti glejte besedilo Javnega dovoljenja GNU.\n"
+"\n"
+"Skupaj s programom bi morali prejeti izvod splošne javne licence GNU (GNU "
+"General Public License); če ga niste pišite na Free Software Foundation, "
+"Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Zastavica za omogočanje celozaslonskega načina"
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "Avtorske pravice © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "Matej Urbančič <mateju@svn@gnome.org>"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Napaka med nastavljanjem vrednosti: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Ime"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Vrednost"
