@@ -1,3 +1,39 @@
+Changes in dconf 0.22.0
+========================
+
+ - fix handling of floating point keys in editor
+
+ - update appdata for renamed desktop file
+
+ - minor doap changes
+
+Translations:
+   French
+   Indonesian
+   Lithuanian
+   Hungarian
+   Catalan (Valencian)
+   Korean
+   Traditional Chinese
+   Spanish
+   Brazilian Portuguese
+   Galician translations
+   Catalan
+   Basque language
+   Danish
+   Norwegian bokmål
+   Greek
+   Czech
+   Slovenian
+   Swedish
+   Polish
+   Latvian
+   Hebrew
+   Russian
+   German
+   Assamese
+   Serbian
+
 Changes in dconf 0.21.0
 ========================
 
