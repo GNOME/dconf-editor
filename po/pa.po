@@ -2,14 +2,14 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 #
-# A S Alam <aalam@users.sf.net>, 2012, 2013.
+# A S Alam <aalam@users.sf.net>, 2012, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-06 16:14+0000\n"
-"PO-Revision-Date: 2013-09-18 08:34-0500\n"
+"POT-Creation-Date: 2014-09-21 03:08+0000\n"
+"PO-Revision-Date: 2014-09-21 08:27-0500\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
 "Language: pa\n"
@@ -19,45 +19,118 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf ਐਡੀਟਰ"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "ਆਪਣੇ ਪੂਰੇ ਸੰਰਚਨਾ ਡਾਟਾਬੇਸ ਨੂੰ ਸਿੱਧਾ ਸੋਧੋ"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "ਸੈਟਿੰਗ;ਸੰਰਚਨਾ;settings;configuration;"
 
-#: ../editor/dconf-editor.vala:186
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "ਵਿੰਡੋ ਦੀ ਚੌੜਾਈ"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "ਮੁੱਖ ਵਿੰਡੋ ਦੀ ਚੌੜਾਈ ਪਿਕਸਲ 'ਚ ਹੈ।"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "ਵਿੰਡੋ ਦੀ ਉਚਾਈ"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "ਮੁੱਖ ਵਿੰਡੋ ਦੀ ਉਚਾਈ ਪਿਕਸਲ ਵਿੱਚ ਹੈ।"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "ਵੱਧੋ-ਵੱਧ ਮੋਡ ਯੋਗ ਕਰਨ ਲਈ ਇੱਕ ਫਲੈਗ"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "ਪੂਰੀ ਸਕਰੀਨ ਢੰਗ ਚਾਲੂ ਕਰਨ ਲਈ ਨਿਸ਼ਾਨ"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "…ਖੋਜ(_F)"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "ਇਸ ਬਾਰੇ(_A)"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "ਬੰਦ ਕਰੋ(_Q)"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "ਡਿਫਾਲਟ ਸੈੱਟ ਕਰੋ"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "ਸਕੀਮਾ:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "ਸੰਖੇਪ:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "ਵੇਰਵਾ:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "ਕਿਸਮ:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "ਡਿਫਾਲਟ:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "ਅੱਗੇ"
+
+#: ../editor/dconf-editor.vala:185
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "ਪੂਰਨ ਅੰਕ [%s..%s]"
 
-#: ../editor/dconf-editor.vala:188
+#: ../editor/dconf-editor.vala:198
+#, c-format
+#| msgid "Integer [%s..%s]"
+msgid "Double [%s..%s]"
+msgstr "ਡਬਲ [%s..%s]"
+
+#: ../editor/dconf-editor.vala:200
 msgid "Boolean"
 msgstr "ਬੂਲੀਅਨ"
 
-#: ../editor/dconf-editor.vala:190
+#: ../editor/dconf-editor.vala:202
 msgid "String"
 msgstr "ਸਤਰ"
 
-#: ../editor/dconf-editor.vala:192
+#: ../editor/dconf-editor.vala:204
 msgid "Enumeration"
 msgstr "Enumeration"
 
-#: ../editor/dconf-editor.vala:240
+#: ../editor/dconf-editor.vala:252
 msgid "No schema"
 msgstr "ਕੋਈ ਸਕੀਮਾ ਨਹੀਂ"
 
-#: ../editor/dconf-editor.vala:350
+#: ../editor/dconf-editor.vala:362
 msgid "Not found"
 msgstr "ਨਹੀਂ ਲੱਭਿਆ"
 
-#: ../editor/dconf-editor.vala:398
+#: ../editor/dconf-editor.vala:410
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -92,94 +165,28 @@ msgstr ""
 "੦੨੧੧੦-੧੩੦੧, "
 "ਅਮਰੀਕਾ ਨੂੰ ਲਿਖੋ।"
 
-#: ../editor/dconf-editor.vala:404
+#: ../editor/dconf-editor.vala:416
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:408
+#: ../editor/dconf-editor.vala:420
 msgid "translator-credits"
 msgstr ""
 "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ\n"
 "ਪੰਜਾਬੀ ਓਪਨਸੋਰਸ ਟੀਮ (POST)"
 
-#: ../editor/dconf-view.vala:264
+#: ../editor/dconf-view.vala:268
 #, c-format
 msgid "Error setting value: %s"
 msgstr "ਗਲਤੀ ਮੁੱਲ ਸੈੱਟ ਕਰਨ ਵਿੱਚ: %s"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
+#: ../editor/dconf-view.vala:322
 msgid "Name"
 msgstr "ਨਾਂ"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
+#: ../editor/dconf-view.vala:326
 msgid "Value"
 msgstr "ਮੁੱਲ"
-
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "ਡਿਫਾਲਟ ਸੈੱਟ ਕਰੋ"
-
-#: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "ਸਕੀਮਾ:"
-
-#: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "ਸੰਖੇਪ:"
-
-#: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "ਵੇਰਵਾ:"
-
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "ਕਿਸਮ:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "ਡਿਫਾਲਟ:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "ਅੱਗੇ"
-
-#: ../editor/dconf-editor-menu.ui.h:1
-#| msgid "_Find"
-msgid "_Find…"
-msgstr "…ਖੋਜ(_F)"
-
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "ਇਸ ਬਾਰੇ(_A)"
-
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "ਬੰਦ ਕਰੋ(_Q)"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "ਵਿੰਡੋ ਦੀ ਚੌੜਾਈ"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "ਮੁੱਖ ਵਿੰਡੋ ਦੀ ਚੌੜਾਈ ਪਿਕਸਲ 'ਚ ਹੈ।"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "ਵਿੰਡੋ ਦੀ ਉਚਾਈ"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "ਮੁੱਖ ਵਿੰਡੋ ਦੀ ਉਚਾਈ ਪਿਕਸਲ ਵਿੱਚ ਹੈ।"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "ਵੱਧੋ-ਵੱਧ ਮੋਡ ਯੋਗ ਕਰਨ ਲਈ ਇੱਕ ਫਲੈਗ"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "ਪੂਰੀ ਸਕਰੀਨ ਢੰਗ ਚਾਲੂ ਕਰਨ ਲਈ ਨਿਸ਼ਾਨ"
 
