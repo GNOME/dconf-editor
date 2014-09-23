@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-24 01:11+0000\n"
-"PO-Revision-Date: 2014-01-18 10:25+0800\n"
+"POT-Creation-Date: 2014-08-03 03:09+0000\n"
+"PO-Revision-Date: 2014-08-03 18:45+0800\n"
 "Last-Translator: 甘露(Gan Lu) <rhythm.gan@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -18,92 +18,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf 系统配置编辑器"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "便捷地编辑您的系统设置"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "settings;configuration;设定;配置;设置;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "整数[%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "宽度"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "布尔值"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "窗口的宽度，以像素为单位"
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "字符串"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "高度"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "枚举"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "窗口高度，以像素为单位"
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "无"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "启用最大化模式的标记"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "未发现"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "启用全屏模式的标记"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，就本"
-"程序再为发布与／或修改；无论您依据的是本授权的第二版或（您自行选择的）任一日"
-"后发行的版本。\n"
-"\n"
-"本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目的"
-"适用性所为的默示性担保。详情请参照GNU通用公共授权。\n"
-"\n"
-"您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请写信至自由软件基金"
-"会：59 Temple Place - Suite 330, Boston, Ma 02111-1307, USA。"
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "查找(_F)…"
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "版权所有 © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "关于(_A)"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "Tao Zhu <bill_zt@sina.com>, 2012."
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "错误的设定值：%s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "名称"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "值"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "退出(_Q)"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -134,38 +98,81 @@ msgstr "默认值："
 msgid "Next"
 msgstr "下一项"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "查找(_F)…"
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "整数[%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "关于(_A)"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "双精度浮点数[%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "退出(_Q)"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "布尔值"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "宽度"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "字符串"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "窗口的宽度，以像素为单位"
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "枚举"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "高度"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "无"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "窗口高度，以像素为单位"
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "未发现"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "启用最大化模式的标记"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，就本"
+"程序再为发布与／或修改；无论您依据的是本授权的第二版或（您自行选择的）任一日"
+"后发行的版本。\n"
+"\n"
+"本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目的"
+"适用性所为的默示性担保。详情请参照GNU通用公共授权。\n"
+"\n"
+"您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请写信至自由软件基金"
+"会：59 Temple Place - Suite 330, Boston, Ma 02111-1307, USA。"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "启用全屏模式的标记"
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "版权所有 © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "Tao Zhu <bill_zt@sina.com>, 2012."
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "错误的设定值：%s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "名称"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "值"
