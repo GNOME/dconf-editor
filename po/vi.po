@@ -1,104 +1,82 @@
 # Vietnamese translation for dconf.
-# Copyright (C) 2012 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2014 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2012.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-22 17:28+0000\n"
-"PO-Revision-Date: 2012-08-24 20:11+0700\n"
-"Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
-"Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2014-12-03 16:12+0000\n"
+"PO-Revision-Date: 2014-12-04 08:15+0700\n"
+"Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
+"Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:39
-#: ../editor/dconf-editor.vala:59 ../editor/dconf-editor.vala:338
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
-msgstr "Trình soạn thảo dconf"
+msgstr "Bộ soạn thảo dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:341
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "Sửa trực tiếp toàn bộ cơ sở dữ liệu cấu hình của bạn"
 
-#: ../editor/dconf-editor.vala:165
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Số nguyên [%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "settings;cài;đặt;cai;dat;configuration;cấu;hình;cau;hinh;"
 
-#: ../editor/dconf-editor.vala:167
-msgid "Boolean"
-msgstr "Luận lý"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Chiều rộng cửa sổ"
 
-#: ../editor/dconf-editor.vala:169
-msgid "String"
-msgstr "Chuỗi"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Chiều rộng cửa sổ, tính theo điểm ảnh."
 
-#: ../editor/dconf-editor.vala:171
-msgid "Enumeration"
-msgstr "Liệt kê"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Chiều cao cửa sổ"
 
-#: ../editor/dconf-editor.vala:214
-msgid "No schema"
-msgstr "Không schema"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Chiều cao cửa sổ, tính theo điểm ảnh."
 
-#: ../editor/dconf-editor.vala:310
-msgid "Not found"
-msgstr "Không tìm thấy"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Cờ bật chế độ phóng to hết cỡ"
 
-#: ../editor/dconf-editor.vala:336
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Cờ bật chế độ toàn màn hình"
 
-#: ../editor/dconf-editor.vala:342
-msgid "Copyright © Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "Tì_m…"
 
-#: ../editor/dconf-editor.vala:346
-msgid "translator-credits"
-msgstr "Nguyễn Thái Ngọc Duy <pclouds@gmail.com>"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Giới thiệu"
 
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "Lỗi đặt giá trị: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Tên"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Giá trị"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "T_hoát"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
-msgstr "Đặt làm mặc định"
+msgstr "Đặt thành mặc định"
 
 #: ../editor/dconf-editor.ui.h:2
 msgid "Schema:"
-msgstr "Schema:"
+msgstr "Lược đồ:"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Summary:"
@@ -121,34 +99,84 @@ msgstr "Mặc định:"
 msgid "Next"
 msgstr "Tiếp"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find"
-msgstr "_Tìm"
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Số nguyên [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Giới thiệu"
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Số chính đôi [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "T_hoát"
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "Lôgíc"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "Độ rộng cửa sổ"
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "Chuỗi"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "Độ rộng cửa sổ, tính theo điểm."
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "Liệt kê"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "Độ cao cửa sổ"
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "Không có lược đồ"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "Độ cao cửa sổ, tính theo điểm."
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "Không tìm thấy"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Cờ bật chế độ phóng to"
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hoặc sửa "
+"đổi nó với điều kiện của Giấy Phép Công Cộng GNU như được xuất bản bởi Tổ "
+"Chức Phần Mềm Tự Do; hoặc phiên bản 3 của Giấy Phép này, hoặc (tùy chọn) bất "
+"kỳ phiên bản sau nào.\n"
+"\n"
+"Chương trình này được phát hành vì mong muốn nó có ích, nhưng KHÔNG CÓ BẢO "
+"HÀNH GÌ CẢ, THẬM CHÍ KHÔNG CÓ BẢO ĐẢM ĐƯỢC NGỤ Ý KHẢ NĂNG BÁN HAY KHẢ NĂNG "
+"LÀM ĐƯỢC VIỆC DỨT KHOÁT. Xem Giấy Phép Công Cộng GNU để biết thêm chi tiết.\n"
+"\n"
+"Bạn nên lấy một bản Giấy Phép Công Cộng GNU cùng với chương trình này; nếu "
+"không thì hãy viết thư cho Tổ chức Phần mềm Tự do theo địa chỉ: 51 Franklin "
+"Street, Fifth Floor, Boston, MA 02110-1301, USA (Mỹ)"
+
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "Bản quyền © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "Nhóm Việt hóa GNOME (https://l10n.gnome.org/teams/vi/)"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Gặp lỗi khi đặt giá trị: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Tên"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Giá trị"
