@@ -16,7 +16,6 @@ fi
 
 mkdir -p m4 build-aux
 intltoolize --force
-gtkdocize --docdir docs --flavour no-tmpl
 aclocal${automake_suffix}
 autoheader
 automake${automake_suffix} --add-missing

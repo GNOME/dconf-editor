@@ -1,19 +1,16 @@
-include $(top_srcdir)/Makefile.gtester
-
-AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/client
-
 bin_PROGRAMS = dconf-editor
 
-dconf_editor_VALAFLAGS = --vapidir ../client --pkg gtk+-3.0 --pkg gmodule-2.0 --pkg libxml-2.0 --pkg dconf
+dconf_editor_VALAFLAGS = --pkg gtk+-3.0 --pkg gmodule-2.0 --pkg libxml-2.0 --pkg dconf
 
 dconf_editor_LDADD = \
-	../client/libdconf.so.1		\
+	$(dconf_LIBS)			\
 	$(gtk_LIBS)			\
 	$(gee_LIBS)			\
 	$(gmodule_LIBS)			\
 	$(libxml_LIBS)
 
 dconf_editor_CFLAGS = \
+	$(dconf_CFLAGS)				\
 	$(gtk_CFLAGS)				\
 	$(gee_CFLAGS)				\
 	$(libxml_CFLAGS)			\
