@@ -1,0 +1,182 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=dconf&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-01-28 04:12+0000\n"
+"PO-Revision-Date: 2015-02-04 16:51+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:412
+msgid "dconf Editor"
+msgstr "dconf Ritill"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:415
+msgid "Directly edit your entire configuration database"
+msgstr "Breyta beint uppsetningargrunni kerfis"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+msgid "settings;configuration;"
+msgstr "Stillingar;Stilling;Uppsetning;"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "Breidd gluggans"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "Breidd aðalgluggans í mynddílum."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "Hæð gluggans"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "Hæð aðalgluggans í mynddílum."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Flagg til að virkja hámarkaða glugga"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Flagg til að virkja heilsjásham"
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Finna…"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Um"
+
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Hætta"
+
+#: ../editor/dconf-editor.ui.h:1
+msgid "Set to Default"
+msgstr "Setja sem sjálfgefið"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Schema:"
+msgstr "Skema:"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Summary:"
+msgstr "Samantekt:"
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "Description:"
+msgstr "Lýsing:"
+
+#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:6
+msgid "Type:"
+msgstr "Tegund:"
+
+#: ../editor/dconf-editor.ui.h:7
+msgid "Default:"
+msgstr "Sjálfgefið:"
+
+#: ../editor/dconf-editor.ui.h:8
+msgid "Next"
+msgstr "Næsta"
+
+#: ../editor/dconf-editor.vala:185
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Heiltala [%s..%s]"
+
+#: ../editor/dconf-editor.vala:198
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Tvöföld [%s..%s]"
+
+#: ../editor/dconf-editor.vala:200
+msgid "Boolean"
+msgstr "Boolegildi"
+
+#: ../editor/dconf-editor.vala:202
+msgid "String"
+msgstr "Strengur"
+
+#: ../editor/dconf-editor.vala:204
+msgid "Enumeration"
+msgstr "Talning"
+
+#: ../editor/dconf-editor.vala:252
+msgid "No schema"
+msgstr "Ekkert skema"
+
+#: ../editor/dconf-editor.vala:362
+msgid "Not found"
+msgstr "Fannst ekki"
+
+#: ../editor/dconf-editor.vala:410
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Þetta forrit er frjáls hugbúnaður; þú mátt endurrita hann og/eða breyta "
+"samkvæmt skilmálum \"GNU General Public License\" eins og það er útgefið af "
+"\"Free Software Foundation;\"; annað hvort útgáfa 2 af leyfinu, eða (að þínu "
+"vali) einhver síðari útgáfa.\n"
+"\n"
+"Þessu forriti er dreift í þeirri von að það sé gagnlegt, en ÁN NOKKURAR "
+"ÁBYRGÐAR; einnig án óbeinnar SÖLUÁBYRGÐAR eða HÆFNI TIL NOKKURS HLUTAR. Sjá "
+"nánar í \"GNU General Public License\" leyfinu.\n"
+"\n"
+"Þú ættir að hafa fengið afrit af \"GNU General Public License\" með þessu "
+"forriti; ef ekki, skrifaðu til Free Software Foundation, Inc., 51 Franklin "
+"Street, Fifth Floor, Boston, MA 02110-1301, USA"
+
+#: ../editor/dconf-editor.vala:416
+msgid "Copyright © Canonical Ltd"
+msgstr "Höfundarréttur © Canonical Ltd."
+
+#: ../editor/dconf-editor.vala:420
+msgid "translator-credits"
+msgstr "Sveinn í Felli, sv1@fellsnet.is"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "Villa við að setja gildi: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Heiti"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Gildi"
+
