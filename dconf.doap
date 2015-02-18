@@ -7,6 +7,7 @@
 
   <name xml:lang="en">dconf</name>
   <shortdesc xml:lang="en">Configuration database system</shortdesc>
+  <description xml:lang="en">dconf is a simple key/value storage system ideal for storing user preferences</description>
   <homepage rdf:resource="https://wiki.gnome.org/Projects/dconf"/>
   <download-page rdf:resource="http://download.gnome.org/sources/dconf/"/>
   <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=dconf"/>
@@ -18,7 +19,7 @@
     <foaf:Person>
       <foaf:name>Ryan Lortie</foaf:name>
       <foaf:mbox rdf:resource="mailto:desrt@desrt.ca"/>
-      <gnome:userid>ryanl</gnome:userid>
+      <gnome:userid>desrt</gnome:userid>
     </foaf:Person>
   </maintainer>
 
