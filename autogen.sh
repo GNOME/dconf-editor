@@ -14,7 +14,7 @@ else
   automake_suffix=''
 fi
 
-mkdir -p m4 aux
+mkdir -p m4 build-aux
 intltoolize --force
 gtkdocize --docdir docs --flavour no-tmpl
 aclocal${automake_suffix}
