@@ -31,4 +31,12 @@
     </foaf:Person>
   </maintainer>
 
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Arnaud Bonatti</foaf:name>
+      <foaf:mbox rdf:resource="mailto:arnaud.bonatti@gmail.com" />
+      <gnome:userid>arnaudb</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+
 </Project>
