@@ -28,7 +28,7 @@ class ConfigurationEditor : Gtk.Application
     {
         { "find",  find_cb  },
         { "about", about_cb },
-        { "quit",  quit_cb  }
+        { "quit",  quit  }
     };
 
     public ConfigurationEditor()
@@ -420,11 +420,6 @@ class ConfigurationEditor : Gtk.Application
                                "translator-credits", _("translator-credits"),
                                "logo-icon-name", "dconf-editor",
                                null);
-    }
-
-    private void quit_cb()
-    {
-        window.destroy();
     }
 
     public static int main(string[] args)
