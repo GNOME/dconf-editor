@@ -24,6 +24,12 @@ class ConfigurationEditor : Gtk.Application
 
     private Key? selected_key;
 
+    private const OptionEntry[] option_entries =
+    {
+        { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
+        { null }
+    };
+
     private const GLib.ActionEntry[] action_entries =
     {
         { "find",  find_cb  },
@@ -34,6 +40,21 @@ class ConfigurationEditor : Gtk.Application
     public ConfigurationEditor()
     {
         Object(application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.FLAGS_NONE);
+
+        add_main_option_entries (option_entries);
+    }
+
+    protected override int handle_local_options (GLib.VariantDict options)
+    {
+        if (options.contains ("version"))
+        {
+            /* NOTE: Is not translated so can be easily parsed */
+            stderr.printf ("%1$s %2$s\n", "dconf-editor", Config.VERSION);
+            return Posix.EXIT_SUCCESS;
+        }
+
+        /* Activate */
+        return -1;
     }
 
     protected override void startup()
