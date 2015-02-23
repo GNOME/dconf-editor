@@ -8,7 +8,7 @@ public class Key : GLib.Object
     public string full_name;
 
     public SchemaKey? schema;
-    
+
     public bool has_schema
     {
         get { return schema != null; }
@@ -195,7 +195,7 @@ public class Directory : GLib.Object
     }
 
     private bool have_children;
-    
+
     public Directory(SettingsModel model, Directory? parent, string name, string full_name)
     {
         this.model = model;
@@ -203,7 +203,7 @@ public class Directory : GLib.Object
         this.name = name;
         this.full_name = full_name;
     }
-    
+
     public Directory get_child(string name)
     {
         Directory? directory = _child_map.lookup(name);
@@ -327,7 +327,7 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         else
             return typeof(string);
     }
-    
+
     private void set_iter(ref Gtk.TreeIter iter, Key key)
     {
         iter.stamp = 0;
@@ -367,19 +367,9 @@ public class KeyModel: GLib.Object, Gtk.TreeModel
         else if (column == 1)
             value = key.name;
         else if (column == 2)
-        {
-            if (key.value != null)
-                value = key.value.print(false);
-            else
-                value = "";
-        }
+            value = key.value != null ? key.value.print(false) : "";
         else if (column == 4)
-        {
-            if (key.is_default)
-                value = Pango.Weight.NORMAL;            
-            else
-                value = Pango.Weight.BOLD;
-        }
+            value = key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD;
         else
             value = 0;
     }
@@ -473,7 +463,7 @@ public class EnumModel: GLib.Object, Gtk.TreeModel
         else
             return typeof(int);
     }
-    
+
     private void set_iter(ref Gtk.TreeIter iter, SchemaValue value)
     {
         iter.stamp = 0;
@@ -644,7 +634,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         else
             return typeof(string);
     }
-    
+
     private void set_iter(ref Gtk.TreeIter iter, Directory directory)
     {
         iter.stamp = 0;

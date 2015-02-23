@@ -13,7 +13,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
         set
         {
             _key = value;
-            
+
             if (key.has_schema && key.schema.choices != null)
             {
                 combo_renderer.text = key.value.print(false);
@@ -74,7 +74,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
                 mode = Gtk.CellRendererMode.EDITABLE;
                 break;
             default:
-                text_renderer.text = key.value.print(false);            
+                text_renderer.text = key.value.print(false);
                 mode = Gtk.CellRendererMode.EDITABLE;
                 break;
             }
@@ -231,7 +231,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
     {
         return renderer.start_editing(event, widget, path, background_area, cell_area, flags);
     }
-    
+
     private Key get_key_from_path(string path)
     {
         Gtk.TreeIter iter;
@@ -239,7 +239,7 @@ private class KeyValueRenderer: Gtk.CellRenderer
 
         Key key;
         view.model.get(iter, 0, out key, -1);
-        
+
         return key;
     }
 

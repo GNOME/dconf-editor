@@ -39,7 +39,7 @@ class ConfigurationEditor : Gtk.Application
     protected override void startup()
     {
         base.startup();
-        
+
         Environment.set_application_name (_("dconf Editor"));
 
         add_action_entries (action_entries, this);
@@ -211,7 +211,7 @@ class ConfigurationEditor : Gtk.Application
     {
         if(selected_key != null)
             selected_key.value_changed.disconnect(key_changed_cb);
-    
+
         Gtk.TreeIter iter;
         Gtk.TreeModel model;
         if (key_tree_view.get_selection().get_selected(out model, out iter))
@@ -311,7 +311,7 @@ class ConfigurationEditor : Gtk.Application
         {
             if (key_tree_view.get_selection().get_selected(null, out key_iter))
             {
-                var dir = model.get_directory(iter);            
+                var dir = model.get_directory(iter);
                 if (dir.key_model.iter_next(ref key_iter))
                     have_key_iter = true;
                 else

@@ -165,7 +165,7 @@ public class SchemaValueRange
 {
     public Variant min;
     public Variant max;
-   
+
     public SchemaValueRange.from_xml(string type, Xml.Node* node)
     {
         for (var prop = node->properties; prop != null; prop = prop->next)
@@ -195,7 +195,7 @@ public class SchemaValueRange
             else
                 warning ("Unknown property in <range>, %s", prop->name);
         }
-        
+
         //if (min == null || max == null)
         //    ?
     }
@@ -248,7 +248,7 @@ public class SchemaEnum
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
                 warning ("Unknown tag in <enum>, <%s>", child->name);
         }
-        
+
         //if (default_value == null)
         //    ?
     }
@@ -301,7 +301,7 @@ public class SchemaFlags
             else if (child->type != Xml.ElementType.TEXT_NODE && child->type != Xml.ElementType.COMMENT_NODE)
                 warning ("Unknown tag in <flags>, <%s>", child->name);
         }
-        
+
         //if (default_value == null)
         //    ?
     }
