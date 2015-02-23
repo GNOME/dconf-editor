@@ -10,7 +10,7 @@
   <description xml:lang="en">A graphical tool for editing the dconf database</description>
   <homepage rdf:resource="https://wiki.gnome.org/Projects/dconf"/>
   <download-page rdf:resource="http://download.gnome.org/sources/dconf-editor/"/>
-  <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=dconf&amp;component=editor"/>
+  <bug-database rdf:resource="https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor"/>
   <category rdf:resource="http://api.gnome.org/doap-extensions#core" />
   <programming-language>Vala</programming-language>
 

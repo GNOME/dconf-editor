@@ -1,6 +1,6 @@
 AC_INIT([dconf-editor],
         [0.22.0],
-        [https://bugzilla.gnome.org/enter_bug.cgi?product=dconf&component=editor],
+        [https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],
         [dconf-editor])
 
 AC_CONFIG_SRCDIR([configure.ac])
