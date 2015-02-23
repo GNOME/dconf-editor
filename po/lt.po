@@ -1,15 +1,15 @@
 # Lithuanian translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014.
+# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-07-26 15:09+0000\n"
-"PO-Revision-Date: 2014-07-27 00:46+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-23 12:18+0000\n"
+"PO-Revision-Date: 2015-02-23 22:44+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -21,13 +21,13 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.6\n"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:412
+#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
+#: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "dconf Redaktorius"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:415
+#: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Tiesiogiai redaguokite savo visą konfigūracijos duomenų bazę"
 
@@ -100,38 +100,41 @@ msgstr "Numatyta:"
 msgid "Next"
 msgstr "Kitas"
 
-#: ../editor/dconf-editor.vala:185
+#: ../editor/dconf-editor.vala:29
+msgid "Print release version and exit"
+msgstr "Atspausdinti versiją ir išeiti"
+
+#: ../editor/dconf-editor.vala:206
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Sveikas skaičius [%s..%s]"
 
-#: ../editor/dconf-editor.vala:198
+#: ../editor/dconf-editor.vala:219
 #, c-format
-#| msgid "Integer [%s..%s]"
 msgid "Double [%s..%s]"
 msgstr "Slankaus kablelio skaičius [%s..%s]"
 
-#: ../editor/dconf-editor.vala:200
+#: ../editor/dconf-editor.vala:221
 msgid "Boolean"
 msgstr "Loginis"
 
-#: ../editor/dconf-editor.vala:202
+#: ../editor/dconf-editor.vala:223
 msgid "String"
 msgstr "Simbolių eilutė"
 
-#: ../editor/dconf-editor.vala:204
+#: ../editor/dconf-editor.vala:225
 msgid "Enumeration"
 msgstr "Išvardinimas"
 
-#: ../editor/dconf-editor.vala:252
+#: ../editor/dconf-editor.vala:273
 msgid "No schema"
 msgstr "Nėra schemos"
 
-#: ../editor/dconf-editor.vala:362
+#: ../editor/dconf-editor.vala:383
 msgid "Not found"
 msgstr "Nerasta"
 
-#: ../editor/dconf-editor.vala:410
+#: ../editor/dconf-editor.vala:431
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -160,11 +163,11 @@ msgstr ""
 "jei negavote, parašykite į Free Software Foundation, Inc., 51 Franklin "
 "Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:416
+#: ../editor/dconf-editor.vala:437
 msgid "Copyright © Canonical Ltd"
 msgstr "Autorinės teisės © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:420
+#: ../editor/dconf-editor.vala:441
 msgid "translator-credits"
 msgstr "išvertė:Aurimas Černius <aurisc4@gmail.com>"
 
