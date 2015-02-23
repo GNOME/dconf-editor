@@ -28,7 +28,7 @@ GLIB_GSETTINGS
 
 # Dependencies
 PKG_CHECK_MODULES(dconf, dconf)
-PKG_CHECK_MODULES(glib, glib-2.0 >= 2.39.1)
+PKG_CHECK_MODULES(glib, glib-2.0 >= 2.39.3)
 PKG_CHECK_MODULES(gmodule, gmodule-2.0)
 PKG_CHECK_MODULES(gtk, gtk+-3.0 >= 3.4)
 PKG_CHECK_MODULES(libxml, libxml-2.0)
