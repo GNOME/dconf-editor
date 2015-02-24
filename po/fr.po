@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-08-25 03:09+0000\n"
-"PO-Revision-Date: 2013-08-22 12:09+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-23 12:18+0000\n"
+"PO-Revision-Date: 2015-02-24 01:51+0100\n"
 "Last-Translator: Frederic Peters <fpeters@0d.be>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: \n"
@@ -18,13 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:412
+#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
+#: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Éditeur dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:415
+#: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Modifier directement toute votre base de données de configuration"
 
@@ -97,37 +97,41 @@ msgstr "Valeur par défaut :"
 msgid "Next"
 msgstr "Suivant"
 
-#: ../editor/dconf-editor.vala:185
+#: ../editor/dconf-editor.vala:29
+msgid "Print release version and exit"
+msgstr "Afficher la version et sortir"
+
+#: ../editor/dconf-editor.vala:206
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Entier [%s..%s]"
 
-#: ../editor/dconf-editor.vala:198
+#: ../editor/dconf-editor.vala:219
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Réel [%s..%s]"
 
-#: ../editor/dconf-editor.vala:200
+#: ../editor/dconf-editor.vala:221
 msgid "Boolean"
 msgstr "Booléen"
 
-#: ../editor/dconf-editor.vala:202
+#: ../editor/dconf-editor.vala:223
 msgid "String"
 msgstr "Chaîne"
 
-#: ../editor/dconf-editor.vala:204
+#: ../editor/dconf-editor.vala:225
 msgid "Enumeration"
 msgstr "Énumération"
 
-#: ../editor/dconf-editor.vala:252
+#: ../editor/dconf-editor.vala:273
 msgid "No schema"
 msgstr "Aucun schéma"
 
-#: ../editor/dconf-editor.vala:362
+#: ../editor/dconf-editor.vala:383
 msgid "Not found"
 msgstr "Non trouvé"
 
-#: ../editor/dconf-editor.vala:410
+#: ../editor/dconf-editor.vala:431
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -158,11 +162,11 @@ msgstr ""
 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, "
 "États-Unis."
 
-#: ../editor/dconf-editor.vala:416
+#: ../editor/dconf-editor.vala:437
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:420
+#: ../editor/dconf-editor.vala:441
 msgid "translator-credits"
 msgstr "Frédéric Péters <fpeters@0d.be>"
 
