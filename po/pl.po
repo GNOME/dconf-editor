@@ -4,14 +4,14 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Piotr Drąg <piotrdrag@gmail.com>, 2012-2014.
-# Aviary.pl <gnomepl@aviary.pl>, 2012-2014.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012-2015.
+# Aviary.pl <gnomepl@aviary.pl>, 2012-2015.
 msgid ""
 msgstr ""
-"Project-Id-Version: dconf\n"
+"Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 03:09+0200\n"
-"PO-Revision-Date: 2014-09-07 03:10+0200\n"
+"POT-Creation-Date: 2015-03-01 16:41+0100\n"
+"PO-Revision-Date: 2015-03-01 16:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -24,13 +24,13 @@ msgstr ""
 "X-Poedit-Country: Poland\n"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:412
+#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
+#: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Edytor dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:415
+#: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Bezpośrednia modyfikacja bazy danych konfiguracji"
 
@@ -103,37 +103,41 @@ msgstr "Domyślnie:"
 msgid "Next"
 msgstr "Następny"
 
-#: ../editor/dconf-editor.vala:185
+#: ../editor/dconf-editor.vala:29
+msgid "Print release version and exit"
+msgstr "Wyświetla wersję wydania i kończy działanie"
+
+#: ../editor/dconf-editor.vala:206
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Wartość całkowita [%s..%s]"
 
-#: ../editor/dconf-editor.vala:198
+#: ../editor/dconf-editor.vala:219
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Wartość double [%s..%s]"
 
-#: ../editor/dconf-editor.vala:200
+#: ../editor/dconf-editor.vala:221
 msgid "Boolean"
 msgstr "Zmienna logiczna"
 
-#: ../editor/dconf-editor.vala:202
+#: ../editor/dconf-editor.vala:223
 msgid "String"
 msgstr "Tekst"
 
-#: ../editor/dconf-editor.vala:204
+#: ../editor/dconf-editor.vala:225
 msgid "Enumeration"
 msgstr "Wyliczenie"
 
-#: ../editor/dconf-editor.vala:252
+#: ../editor/dconf-editor.vala:273
 msgid "No schema"
 msgstr "Brak schematu"
 
-#: ../editor/dconf-editor.vala:362
+#: ../editor/dconf-editor.vala:383
 msgid "Not found"
 msgstr "Nie odnaleziono"
 
-#: ../editor/dconf-editor.vala:410
+#: ../editor/dconf-editor.vala:431
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -165,15 +169,15 @@ msgstr ""
 "- proszę napisać do Free Software Foundation, Inc., 51 Franklin Street, "
 "Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/dconf-editor.vala:416
+#: ../editor/dconf-editor.vala:437
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:420
+#: ../editor/dconf-editor.vala:441
 msgid "translator-credits"
 msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2012-2014\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2012-2014"
+"Piotr Drąg <piotrdrag@gmail.com>, 2012-2015\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2012-2015"
 
 #: ../editor/dconf-view.vala:268
 #, c-format
