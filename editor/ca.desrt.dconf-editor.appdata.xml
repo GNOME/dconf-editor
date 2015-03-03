@@ -12,7 +12,7 @@
     </p>
   </description>
   <screenshots>
-    <screenshot type="default" width="640" height="360">https://git.gnome.org/browse/dconf/plain/editor/screenshot.png</screenshot>
+    <screenshot type="default" width="640" height="360">https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot.png</screenshot>
   </screenshots>
   <url type="homepage">https://wiki.gnome.org/Projects/dconf</url>
 </application>
