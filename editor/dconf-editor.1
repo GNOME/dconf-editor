@@ -1,0 +1,19 @@
+.TH "DCONF\-EDITOR" "1"
+.SH "NAME"
+dconf-editor \- Graphical editor for dconf
+.SH "SYNOPSIS"
+.B dconf\-editor
+.SH "DESCRIPTION"
+.PP
+The
+.B dconf\-editor
+program provides a graphical interface for editing settings that are stored in the dconf database. The
+.BR gsettings (1)
+utility provides similar functionality on the commandline.
+.PP
+dconf\-editor reads gsettings schemas from
+$XDG_DATA_DIRS/glib\-2.0/schemas
+to obtain descriptions, default values and allowed values for keys.
+.SH "SEE ALSO"
+.BR dconf (7)
+.BR gsettings (1)

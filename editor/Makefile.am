@@ -89,4 +89,6 @@ update-icon-cache:
 		gtk-update-icon-cache -f -t $(datadir)/icons/hicolor; \
 	fi
 
+man_MANS = dconf-editor.1
+
 EXTRA_DIST = $(gsettings_SCHEMAS) $(icons) $(resource_data)
