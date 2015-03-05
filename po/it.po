@@ -1,18 +1,18 @@
 # Italian translation of GConf-Editor.
-# Copyright (C) 2002-2009, 2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2009, 2013, 2014, 2015 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gconf-editor package.
 # Pier Luigi Fiorini <plfiorini@supereva.it>, 2002.
 # Alessio Frusciante <algol@firenze.linux.it>, 2003-2006.
 # Luca Ferretti <elle.uca@libero.it>, 2006-2008.
-# Milo Casagrande <milo@ubuntu.com>, 2009, 2012, 2013.
+# Milo Casagrande <milo@milo.name>, 2009, 2012, 2013, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-10-05 03:13+0000\n"
-"PO-Revision-Date: 2014-10-05 15:22+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-23 12:18+0000\n"
+"PO-Revision-Date: 2015-03-05 09:08+0100\n"
 "Last-Translator: Milo Casagrande <milo@milo.name>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -20,16 +20,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.7.4\n"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:412
+#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
+#: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "dconf Editor"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:415
+#: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Modifica direttamente l'intero database di configurazione"
 
@@ -102,37 +102,41 @@ msgstr "Predefinito:"
 msgid "Next"
 msgstr "Successivo"
 
-#: ../editor/dconf-editor.vala:185
+#: ../editor/dconf-editor.vala:29
+msgid "Print release version and exit"
+msgstr "Stampa la versione ed esce"
+
+#: ../editor/dconf-editor.vala:206
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Intero [%s...%s]"
 
-#: ../editor/dconf-editor.vala:198
+#: ../editor/dconf-editor.vala:219
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Double [%s...%s]"
 
-#: ../editor/dconf-editor.vala:200
+#: ../editor/dconf-editor.vala:221
 msgid "Boolean"
 msgstr "Booleano"
 
-#: ../editor/dconf-editor.vala:202
+#: ../editor/dconf-editor.vala:223
 msgid "String"
 msgstr "Stringa"
 
-#: ../editor/dconf-editor.vala:204
+#: ../editor/dconf-editor.vala:225
 msgid "Enumeration"
 msgstr "Enumerazione"
 
-#: ../editor/dconf-editor.vala:252
+#: ../editor/dconf-editor.vala:273
 msgid "No schema"
 msgstr "Nessuno schema"
 
-#: ../editor/dconf-editor.vala:362
+#: ../editor/dconf-editor.vala:383
 msgid "Not found"
 msgstr "Non trovato"
 
-#: ../editor/dconf-editor.vala:410
+#: ../editor/dconf-editor.vala:431
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -148,7 +152,7 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 51 "
 "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 msgstr ""
-"Questo  programma è software libero; è lecito redistribuirlo o modificarlo "
+"Questo programma è software libero; è lecito redistribuirlo o modificarlo "
 "secondo i termini della GNU General Public License come è pubblicata dalla "
 "Free Software Foundation; o la versione 2 della licenza o (a propria scelta) "
 "una versione successiva.\n"
@@ -163,11 +167,11 @@ msgstr ""
 "alla Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, "
 "Boston, MA 02110-1301 USA"
 
-#: ../editor/dconf-editor.vala:416
+#: ../editor/dconf-editor.vala:437
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:420
+#: ../editor/dconf-editor.vala:441
 msgid "translator-credits"
 msgstr ""
 "Milo Casagrande <milo@milo.name>\n"
