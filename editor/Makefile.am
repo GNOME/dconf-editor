@@ -91,4 +91,4 @@ update-icon-cache:
 
 man_MANS = dconf-editor.1
 
-EXTRA_DIST = $(gsettings_SCHEMAS) $(icons) $(resource_data)
+EXTRA_DIST = $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
