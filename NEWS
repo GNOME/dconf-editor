@@ -1,8 +1,9 @@
 dconf-editor 3.15.92
 =====================
 
-The only correction since 3.15.91 is the add back of the manpage, forgotten
+The main correction since 3.15.91 is the add back of the manpage, forgotten
 during the split. Because of that, dconf 0.23.2 is now explicitely required.
+The AppData file also validates again.
 
 Translations updated:
  Serbian
