@@ -27,7 +27,7 @@ AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 GLIB_GSETTINGS
 
 # Dependencies
-PKG_CHECK_MODULES(dconf, dconf)
+PKG_CHECK_MODULES(dconf, dconf >= 0.23.2)
 PKG_CHECK_MODULES(glib, glib-2.0 >= 2.39.3)
 PKG_CHECK_MODULES(gmodule, gmodule-2.0)
 PKG_CHECK_MODULES(gtk, gtk+-3.0 >= 3.4)
