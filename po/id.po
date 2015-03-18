@@ -7,10 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-02 03:09+0000\n"
-"PO-Revision-Date: 2014-09-04 11:43+0700\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-23 12:18+0000\n"
+"PO-Revision-Date: 2015-03-18 19:23+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -18,16 +18,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.7.5\n"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:412
+#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
+#: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Penyunting dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:415
+#: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Menyunting langsung seluruh basis data konfigurasi Anda"
 
@@ -100,37 +100,41 @@ msgstr "Baku:"
 msgid "Next"
 msgstr "Selanjutnya"
 
-#: ../editor/dconf-editor.vala:185
+#: ../editor/dconf-editor.vala:29
+msgid "Print release version and exit"
+msgstr "Cetak versi rilis dan keluar"
+
+#: ../editor/dconf-editor.vala:206
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Integer [%s..%s]"
 
-#: ../editor/dconf-editor.vala:198
+#: ../editor/dconf-editor.vala:219
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Double [%s..%s]"
 
-#: ../editor/dconf-editor.vala:200
+#: ../editor/dconf-editor.vala:221
 msgid "Boolean"
 msgstr "Boolean"
 
-#: ../editor/dconf-editor.vala:202
+#: ../editor/dconf-editor.vala:223
 msgid "String"
 msgstr "String"
 
-#: ../editor/dconf-editor.vala:204
+#: ../editor/dconf-editor.vala:225
 msgid "Enumeration"
 msgstr "Enumerasi"
 
-#: ../editor/dconf-editor.vala:252
+#: ../editor/dconf-editor.vala:273
 msgid "No schema"
 msgstr "Tak ada skema"
 
-#: ../editor/dconf-editor.vala:362
+#: ../editor/dconf-editor.vala:383
 msgid "Not found"
 msgstr "Tak ditemukan"
 
-#: ../editor/dconf-editor.vala:410
+#: ../editor/dconf-editor.vala:431
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -159,11 +163,11 @@ msgstr ""
 "dengan program ini; jika tidak, kirimkan surat Anda ke Free Software "
 "Foundation, Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#: ../editor/dconf-editor.vala:416
+#: ../editor/dconf-editor.vala:437
 msgid "Copyright © Canonical Ltd"
 msgstr "Hak Cipta © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:420
+#: ../editor/dconf-editor.vala:441
 msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
