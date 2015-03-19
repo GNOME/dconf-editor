@@ -2,112 +2,74 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Daniel Martinez <entaltoaragon@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-01-22 23:18+0000\n"
-"PO-Revision-Date: 2014-01-30 20:34+0100\n"
-"Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
-"Language-Team: Aragonese <softaragones@googlegroups.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-23 12:18+0000\n"
+"PO-Revision-Date: 2015-03-19 20:37+0100\n"
+"Last-Translator: Daniel Martinez <entaltoaragon@gmail.com>\n"
+"Language-Team: Aragonés <softaragones@googlegroups.com>\n"
 "Language: an\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
+#: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Editor de dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Edita toda la configuración d'a base de datos dreitament"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
 msgstr "opcions;configuración;"
 
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Entero [%s..%s]"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+msgid "The width of the window"
+msgstr "l'amplaria d'a finestra"
 
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "Booleano"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+msgid "The width of the main window in pixels."
+msgstr "l'amplaria d'a finestra prencipal en pixels."
 
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "Cadena"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+msgid "The height of the window"
+msgstr "l'altaria d'a finestra"
 
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "Enumeración"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+msgid "The height of the main window in pixels."
+msgstr "l'altaria d'a finestra prencipal en pixels."
 
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "No existe lo esquema"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+msgid "A flag to enable maximized mode"
+msgstr "Un indicador ta activar o modo maximizau"
 
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "No trobau"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+msgid "A flag to enable fullscreen mode"
+msgstr "Un indicador ta activar o modo pantalla completa"
 
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Iste programa ye software libre; puede redistribuir-lo y/u modificar-lo "
-"baixo los termins d'a Licencia Publica Cheneral de GNU tal como se publica "
-"por a Free Software Foundation; ya siga la versión 2 d'a Licencia, u (a la "
-"suya elección) qualsiquier versión posterior.\n"
-"\n"
-"Iste programa se distribuye con a esperanza que le siga util, pero SIN GARRA "
-"GARANTIA; sin mesmo a garantia implicita de MERCANTILIDAT u IDONEIDAT TA UN "
-"PROPOSITO PARTICULAR. Consulte a Licencia Publica Cheneral de GNU ta obtener "
-"mas detalles.\n"
-"\n"
-"Deberia haber recibiu una copia d'a Licencia Publica Cheneral de GNU chunto "
-"con iste programa, si no ye asinas, escriba a la Free Software Foundation, "
-"Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 EE.UU."
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_Find…"
+msgstr "_Mirar…"
 
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "Dreitos d'autor  © Canonical Ltd"
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_About"
+msgstr "_Arredol"
 
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "Jorge Pérez Pérez zjorgtum2gmail.com>, 2012"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "S'ha produciu una error en establir a valor: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Nombre"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Valor"
+#: ../editor/dconf-editor-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Salir"
 
 #: ../editor/dconf-editor.ui.h:1
 msgid "Set to Default"
@@ -138,38 +100,92 @@ msgstr "Predeterminau:"
 msgid "Next"
 msgstr "Siguient"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Mirar…"
+#: ../editor/dconf-editor.vala:29
+msgid "Print release version and exit"
+msgstr "Amostrar información d'a versión y salir"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Arredol"
+#: ../editor/dconf-editor.vala:206
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Entero [%s..%s]"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "_Salir"
+#: ../editor/dconf-editor.vala:219
+#, c-format
+#| msgid "Integer [%s..%s]"
+msgid "Double [%s..%s]"
+msgstr "Dople [%s..%s]"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
-msgid "The width of the window"
-msgstr "l'amplaria d'a finestra"
+#: ../editor/dconf-editor.vala:221
+msgid "Boolean"
+msgstr "Booleano"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
-msgid "The width of the main window in pixels."
-msgstr "l'amplaria d'a finestra prencipal en pixels."
+#: ../editor/dconf-editor.vala:223
+msgid "String"
+msgstr "Cadena"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
-msgid "The height of the window"
-msgstr "l'altaria d'a finestra"
+#: ../editor/dconf-editor.vala:225
+msgid "Enumeration"
+msgstr "Enumeración"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
-msgid "The height of the main window in pixels."
-msgstr "l'altaria d'a finestra prencipal en pixels."
+#: ../editor/dconf-editor.vala:273
+msgid "No schema"
+msgstr "No existe lo esquema"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
-msgid "A flag to enable maximized mode"
-msgstr "Un indicador ta activar o modo maximizau"
+#: ../editor/dconf-editor.vala:383
+msgid "Not found"
+msgstr "No trobau"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Un indicador ta activar o modo pantalla completa"
+#: ../editor/dconf-editor.vala:431
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 51 "
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+msgstr ""
+"Iste programa ye software libre; puede redistribuir-lo y/u modificar-lo "
+"baixo los termins d'a Licencia Publica Cheneral de GNU tal como se publica "
+"por a Free Software Foundation; ya siga la versión 2 d'a Licencia, u (a la "
+"suya elección) qualsiquier versión posterior.\n"
+"\n"
+"Iste programa se distribuye con a esperanza que le siga util, pero SIN GARRA "
+"GARANTIA; sin mesmo a garantia implicita de MERCANTILIDAT u IDONEIDAT TA UN "
+"PROPOSITO PARTICULAR. Consulte a Licencia Publica Cheneral de GNU ta obtener "
+"mas detalles.\n"
+"\n"
+"Deberia haber recibiu una copia d'a Licencia Publica Cheneral de GNU chunto "
+"con iste programa, si no ye asinas, escriba a la Free Software Foundation, "
+"Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 EE.UU."
+
+#: ../editor/dconf-editor.vala:437
+msgid "Copyright © Canonical Ltd"
+msgstr "Dreitos d'autor  © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:441
+msgid "translator-credits"
+msgstr ""
+"Jorge Pérez Pérez <jorgtum@gmail.com>, 2012\n"
+"Daniel Martinez <entaltoaragon@gmail.com>, 2015"
+
+#: ../editor/dconf-view.vala:268
+#, c-format
+msgid "Error setting value: %s"
+msgstr "S'ha produciu una error en establir a valor: %s"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:322
+msgid "Name"
+msgstr "Nombre"
+
+#. Translators: this is the column header label in the main view
+#: ../editor/dconf-view.vala:326
+msgid "Value"
+msgstr "Valor"
