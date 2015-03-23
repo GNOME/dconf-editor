@@ -1,3 +1,19 @@
+dconf-editor 3.16.0
+=====================
+
+First stable release of dconf-editor as a standalone module! Since the Release
+Candidate, there has only been translations updates.
+
+Translations updated:
+ Chinese (Taiwan)
+ Indonesian
+ Aragonese
+ Thai
+ Danish
+ Basque
+ Turkish
+ Japanese
+
 dconf-editor 3.15.92
 =====================
 
