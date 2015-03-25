@@ -67,25 +67,19 @@ gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 nobase_data_DATA = $(icons)
 
 icons = \
-	icons/HighContrast/16x16/apps/dconf-editor.png \
-	icons/HighContrast/22x22/apps/dconf-editor.png \
-	icons/HighContrast/24x24/apps/dconf-editor.png \
-	icons/HighContrast/32x32/apps/dconf-editor.png \
-	icons/HighContrast/48x48/apps/dconf-editor.png \
-	icons/HighContrast/256x256/apps/dconf-editor.png \
 	icons/hicolor/16x16/apps/dconf-editor.png \
 	icons/hicolor/22x22/apps/dconf-editor.png \
 	icons/hicolor/24x24/apps/dconf-editor.png \
 	icons/hicolor/32x32/apps/dconf-editor.png \
 	icons/hicolor/48x48/apps/dconf-editor.png \
 	icons/hicolor/64x64/apps/dconf-editor.png \
-	icons/hicolor/256x256/apps/dconf-editor.png
+	icons/hicolor/256x256/apps/dconf-editor.png \
+	icons/hicolor/scalable/apps/dconf-editor-symbolic.svg
 
 install-data-hook: update-icon-cache
 uninstall-hook: update-icon-cache
 update-icon-cache:
 	if test -z "$(DESTDIR)"; then \
-		gtk-update-icon-cache -f -t $(datadir)/icons/HighContrast; \
 		gtk-update-icon-cache -f -t $(datadir)/icons/hicolor; \
 	fi
 
