@@ -72,18 +72,17 @@ private class KeyValueRenderer: Gtk.CellRenderer
             case "d":
                 spin_renderer.text = key.value.print(false);
                 var v = get_variant_as_double(key.value);
-                double min = 0.0, max = 0.0;
+                Variant min = null, max = null;
                 if (key.has_schema && key.schema.range != null)
                 {
-                    min = get_variant_as_double(key.schema.range.min);
-                    max = get_variant_as_double(key.schema.range.max);
+                    min = key.schema.range.min;
+                    max = key.schema.range.max;
                 }
-                else
-                {
-                    min = get_variant_as_double(key.get_min());
-                    max = get_variant_as_double(key.get_max());
-                }
-                spin_renderer.adjustment = new Gtk.Adjustment(v, min, max, 1, 0, 0);
+                if (min == null)
+                    min = key.get_min ();
+                if (max == null)
+                    max = key.get_max ();
+                spin_renderer.adjustment = new Gtk.Adjustment (v, get_variant_as_double (min), get_variant_as_double (max), 1, 0, 0);
                 spin_renderer.digits = 0;
                 if (key.type_string == "d")
                 {

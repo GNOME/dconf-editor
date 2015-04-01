@@ -115,30 +115,28 @@ class DConfWindow : ApplicationWindow
         case "u":
         case "x":
         case "t":
-            Variant min, max;
+            Variant min = null, max = null;
             if (key.schema.range != null)
             {
                 min = key.schema.range.min;
                 max = key.schema.range.max;
             }
-            else
-            {
+            if (min == null)
                 min = key.get_min ();
+            if (max == null)
                 max = key.get_max ();
-            }
             return _("Integer [%s..%s]").printf (min.print (false), max.print (false));
         case "d":
-            Variant min, max;
+            Variant min = null, max = null;
             if (key.schema.range != null)
             {
                 min = key.schema.range.min;
                 max = key.schema.range.max;
             }
-            else
-            {
+            if (min == null)
                 min = key.get_min ();
+            if (max == null)
                 max = key.get_max ();
-            }
             return _("Double [%s..%s]").printf (min.print (false), max.print (false));
         case "b":
             return _("Boolean");
