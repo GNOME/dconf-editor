@@ -1,3 +1,14 @@
+dconf-editor 3.16.1
+=====================
+
+Little update that adds a symbolic icon, displayed in GNOME Shell's top-bar and
+when using the high contrast theme.
+
+Translations updated:
+ Latvian
+ Icelandic
+ Norwegian (bokmål)
+
 dconf-editor 3.16.0
 =====================
 
