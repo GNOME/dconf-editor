@@ -3,3 +3,5 @@ editor/dconf-editor.c
 editor/dconf-model.c
 editor/dconf-schema.c
 editor/dconf-view.c
+# Autotools failure
+sub/editor/ca.desrt.dconf-editor.desktop.in
