@@ -80,8 +80,8 @@ class ConfigurationEditor : Gtk.Application
         }
         window = (Gtk.ApplicationWindow) ui.get_object ("window");
         window.set_default_size(600, 300);
-        window.window_state_event.connect(main_window_window_state_event_cb);
-        window.configure_event.connect(main_window_configure_event_cb);
+        window.window_state_event.connect (window_state_event_cb);
+        window.size_allocate.connect (size_allocate_cb);
 
         var menu_ui = new Gtk.Builder();
         try
@@ -293,18 +293,15 @@ class ConfigurationEditor : Gtk.Application
         selected_key.set_to_default();
     }
 
-    private bool main_window_configure_event_cb (Gtk.Widget widget, Gdk.EventConfigure event)
+    private void size_allocate_cb (Gtk.Allocation allocation)
     {
-        if (!window_is_maximized && !window_is_fullscreen)
-        {
-            window_width = event.width;
-            window_height = event.height;
-        }
-
-        return false;
+        if (window_is_maximized || window_is_fullscreen)
+            return;
+        window_width = allocation.width;
+        window_height = allocation.height;
     }
 
-    private bool main_window_window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
+    private bool window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
             window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
