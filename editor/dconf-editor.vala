@@ -3,7 +3,6 @@ class ConfigurationEditor : Gtk.Application
     private SettingsModel model;
 
     private Settings settings;
-    private Gtk.Builder ui;
     private Gtk.ApplicationWindow window;
     private int window_width = 0;
     private int window_height = 0;
@@ -69,7 +68,9 @@ class ConfigurationEditor : Gtk.Application
 
         model = new SettingsModel();
 
-        ui = new Gtk.Builder();
+        Gtk.Builder ui = new Gtk.Builder();
+
+        /* window */
         try
         {
             ui.add_from_resource("/ca/desrt/dconf-editor/dconf-editor.ui");
@@ -79,10 +80,19 @@ class ConfigurationEditor : Gtk.Application
             error("Failed to load UI: %s", e.message);
         }
         window = (Gtk.ApplicationWindow) ui.get_object ("window");
-        window.set_default_size(600, 300);
+
+        window.set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
+        if (settings.get_boolean ("window-is-fullscreen"))
+            window.fullscreen ();
+        else if (settings.get_boolean ("window-is-maximized"))
+            window.maximize ();
+
         window.window_state_event.connect (window_state_event_cb);
         window.size_allocate.connect (size_allocate_cb);
 
+        add_window (window);
+
+        /* app-menu */
         var menu_ui = new Gtk.Builder();
         try
         {
@@ -94,35 +104,37 @@ class ConfigurationEditor : Gtk.Application
         }
         set_app_menu((MenuModel)menu_ui.get_object("menu"));
 
-        window.set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
-        if (settings.get_boolean ("window-is-fullscreen"))
-            window.fullscreen ();
-        else if (settings.get_boolean ("window-is-maximized"))
-            window.maximize ();
+        /* named objects apart search box */
+        key_info_grid = (Gtk.Grid) ui.get_object("key_info_grid");
+        schema_label = (Gtk.Label) ui.get_object("schema_label");
+        summary_label = (Gtk.Label) ui.get_object("summary_label");
+        description_label = (Gtk.Label) ui.get_object("description_label");
+        type_label = (Gtk.Label) ui.get_object("type_label");
+        default_label = (Gtk.Label) ui.get_object("default_label");
 
+        set_default_action = (Gtk.Action) ui.get_object("set_default_action");
+        set_default_action.activate.connect(set_default_cb);
+
+        /* trees */
         dir_tree_view = new DConfDirView();
         dir_tree_view.set_model(model);
         dir_tree_view.get_selection().changed.connect(dir_selected_cb); // FIXME: Put in view
         dir_tree_view.show();
-        var scroll = ui.get_object("directory_scrolledwindow") as Gtk.ScrolledWindow;
+        var scroll = (Gtk.ScrolledWindow) ui.get_object("directory_scrolledwindow");
         scroll.add(dir_tree_view);
 
         key_tree_view = new DConfKeyView();
         key_tree_view.show();
         key_tree_view.get_selection().changed.connect(key_selected_cb);
-        scroll = ui.get_object("key_scrolledwindow") as Gtk.ScrolledWindow;
+        scroll = (Gtk.ScrolledWindow) ui.get_object("key_scrolledwindow");
         scroll.add(key_tree_view);
 
-        key_info_grid = ui.get_object("key_info_grid") as Gtk.Grid;
-        schema_label = ui.get_object("schema_label") as Gtk.Label;
-        summary_label = ui.get_object("summary_label") as Gtk.Label;
-        description_label = ui.get_object("description_label") as Gtk.Label;
-        type_label = ui.get_object("type_label") as Gtk.Label;
-        default_label = ui.get_object("default_label") as Gtk.Label;
-        set_default_action = ui.get_object("set_default_action") as Gtk.Action;
-        set_default_action.activate.connect(set_default_cb);
+        Gtk.TreeIter iter;
+        if (model.get_iter_first(out iter))
+            dir_tree_view.get_selection().select_iter(iter);
 
-        search_box = ui.get_object("search_box") as Gtk.Box;
+        /* search box */
+        search_box = (Gtk.Box) ui.get_object("search_box");
         search_box.key_press_event.connect ((event) =>
         {
             if (event.keyval == Gdk.Key.Escape)
@@ -132,24 +144,17 @@ class ConfigurationEditor : Gtk.Application
             }
             return false;
         });
-        search_entry = ui.get_object("search_entry") as Gtk.Entry;
-        search_label = ui.get_object("search_label") as Gtk.Label;
+        search_entry = (Gtk.Entry) ui.get_object("search_entry");
+        search_label = (Gtk.Label) ui.get_object("search_label");
         search_entry.activate.connect(find_next_cb);
-        var search_box_close_button = ui.get_object("search_box_close_button") as Gtk.Button;
+        var search_box_close_button = (Gtk.Button) ui.get_object("search_box_close_button");
         search_box_close_button.clicked.connect(() =>
         {
             search_box.hide();
         });
 
-        var search_next_button = ui.get_object("search_next_button") as Gtk.Button;
+        var search_next_button = (Gtk.Button) ui.get_object("search_next_button");
         search_next_button.clicked.connect(find_next_cb);
-
-        /* Always select something */
-        Gtk.TreeIter iter;
-        if (model.get_iter_first(out iter))
-            dir_tree_view.get_selection().select_iter(iter);
-
-        add_window (window);
     }
 
     protected override void activate()
