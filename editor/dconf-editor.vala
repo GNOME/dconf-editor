@@ -78,12 +78,10 @@ class ConfigurationEditor : Gtk.Application
         {
             error("Failed to load UI: %s", e.message);
         }
-        window = new Gtk.ApplicationWindow(this);
+        window = (Gtk.ApplicationWindow) ui.get_object ("window");
         window.set_default_size(600, 300);
-        window.title = _("dconf Editor");
         window.window_state_event.connect(main_window_window_state_event_cb);
         window.configure_event.connect(main_window_configure_event_cb);
-        window.add(ui.get_object("box1") as Gtk.Box);
 
         var menu_ui = new Gtk.Builder();
         try
@@ -150,6 +148,8 @@ class ConfigurationEditor : Gtk.Application
         Gtk.TreeIter iter;
         if (model.get_iter_first(out iter))
             dir_tree_view.get_selection().select_iter(iter);
+
+        add_window (window);
     }
 
     protected override void activate()
