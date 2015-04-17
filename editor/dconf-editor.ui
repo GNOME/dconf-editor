@@ -25,12 +25,13 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">never</property>
+                <property name="width_request">222</property>
                 <child>
                   <placeholder/>
                 </child>
               </object>
               <packing>
-                <property name="resize">True</property>
+                <property name="resize">False</property>
                 <property name="shrink">False</property>
               </packing>
             </child>
@@ -190,6 +191,7 @@
                     <child>
                       <object class="GtkBox">
                         <property name="orientation">horizontal</property>
+                        <property name="hexpand">True</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
@@ -212,6 +214,7 @@
                           <object class="GtkButton">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="valign">end</property>
                             <property name="receives_default">True</property>
                             <property name="related_action">set_default_action</property>
                           </object>
