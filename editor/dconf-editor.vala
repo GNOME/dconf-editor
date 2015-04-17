@@ -68,17 +68,9 @@ class ConfigurationEditor : Gtk.Application
 
         model = new SettingsModel();
 
-        Gtk.Builder ui = new Gtk.Builder();
+        Gtk.Builder ui = new Gtk.Builder.from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.ui");
 
         /* window */
-        try
-        {
-            ui.add_from_resource("/ca/desrt/dconf-editor/dconf-editor.ui");
-        }
-        catch (Error e)
-        {
-            error("Failed to load UI: %s", e.message);
-        }
         window = (Gtk.ApplicationWindow) ui.get_object ("window");
 
         window.set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
@@ -91,18 +83,6 @@ class ConfigurationEditor : Gtk.Application
         window.size_allocate.connect (size_allocate_cb);
 
         add_window (window);
-
-        /* app-menu */
-        var menu_ui = new Gtk.Builder();
-        try
-        {
-            menu_ui.add_from_resource("/ca/desrt/dconf-editor/dconf-editor-menu.ui");
-        }
-        catch (Error e)
-        {
-            error("Failed to load menu UI: %s", e.message);
-        }
-        set_app_menu((MenuModel)menu_ui.get_object("menu"));
 
         /* named objects apart search box */
         key_info_grid = (Gtk.Grid) ui.get_object("key_info_grid");
