@@ -13,7 +13,6 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
         <child>
           <object class="GtkPaned">
             <property name="orientation">horizontal</property>
@@ -281,7 +280,8 @@
         <child>
           <object class="GtkBox" id="search_box">
             <property name="can_focus">False</property>
-            <property name="spacing">5</property>
+            <property name="border_width">6</property>
+            <property name="spacing">6</property>
             <child>
               <object class="GtkButton" id="search_box_close_button">
                 <property name="visible">True</property>
