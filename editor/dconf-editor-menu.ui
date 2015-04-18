@@ -1,5 +1,6 @@
 <interface>
-  <menu id="menu">
+  <requires lib="gtk+" version="3.12"/>
+  <menu id="app-menu">
     <section>
       <item>
         <attribute name="label" translatable="yes">_Find…</attribute>
