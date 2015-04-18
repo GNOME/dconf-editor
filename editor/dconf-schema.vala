@@ -28,9 +28,9 @@ public class SchemaKey
                 type = "s";
                 enum_name = prop->children->content;
             }
-			else if (prop->name == "flags")
-				/* TODO: support this properly */
-				type = "as";
+            else if (prop->name == "flags")
+                /* TODO: support this properly */
+                type = "as";
             else
                 warning ("Unknown property on <key>, %s", prop->name);
         }

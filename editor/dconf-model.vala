@@ -118,11 +118,11 @@ public class Key : GLib.Object
 
     public signal void value_changed();
 
-	void item_changed (string key)
+    void item_changed (string key)
     {
-		if ((key.has_suffix ("/") && full_name.has_prefix (key)) || key == full_name)
-			value_changed ();
-	}
+        if ((key.has_suffix ("/") && full_name.has_prefix (key)) || key == full_name)
+            value_changed ();
+    }
 
     public Key(SettingsModel model, Directory parent, string name, string full_name)
     {
@@ -132,7 +132,7 @@ public class Key : GLib.Object
         this.full_name = full_name;
         this.schema = model.schemas.keys.lookup(full_name);
 
-		model.item_changed.connect (item_changed);
+        model.item_changed.connect (item_changed);
     }
 
     public void set_to_default()
@@ -575,13 +575,13 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public DConf.Client client;
     private Directory root;
 
-	public signal void item_changed (string key);
+    public signal void item_changed (string key);
 
-	void watch_func (DConf.Client client, string path, string[] items, string? tag) {
-		foreach (var item in items) {
-			item_changed (path + item);
-		}
-	}
+    void watch_func (DConf.Client client, string path, string[] items, string? tag) {
+        foreach (var item in items) {
+            item_changed (path + item);
+        }
+    }
 
     public SettingsModel()
     {
