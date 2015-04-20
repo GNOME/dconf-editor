@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkAction" id="set_default_action">
-    <property name="label" translatable="yes">Set to Default</property>
-    <property name="sensitive">False</property>
-  </object>
-  <object class="GtkApplicationWindow" id="window">
+  <template class="DConfWindow" parent="GtkApplicationWindow">
     <property name="visible">False</property>
     <property name="title" translatable="yes">dconf Editor</property>
     <child>
@@ -227,10 +223,11 @@
                         <child>
                           <object class="GtkButton">
                             <property name="visible">True</property>
+                            <property name="label" translatable="yes">Set to Default</property>
                             <property name="can_focus">True</property>
                             <property name="valign">end</property>
                             <property name="receives_default">True</property>
-                            <property name="related_action">set_default_action</property>
+                            <property name="action_name">win.set-default</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -297,13 +294,15 @@
             <property name="can_focus">False</property>
             <property name="border_width">6</property>
             <property name="spacing">6</property>
+            <signal name="key_press_event" handler="on_key_press_event"/>
             <child>
-              <object class="GtkButton" id="search_box_close_button">
+              <object class="GtkButton">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="relief">none</property>
+                <signal name="clicked" handler="on_close_button_clicked"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
@@ -323,6 +322,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">•</property>
+                <signal name="activate" handler="find_next_cb"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -338,6 +338,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
+                <signal name="clicked" handler="find_next_cb"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -366,5 +367,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>

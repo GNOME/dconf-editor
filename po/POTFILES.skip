@@ -1,5 +1,6 @@
 editor/ca.desrt.dconf-editor.desktop.in
 editor/dconf-editor.c
+editor/dconf-window.c
 editor/dconf-model.c
 editor/dconf-schema.c
 editor/dconf-view.c

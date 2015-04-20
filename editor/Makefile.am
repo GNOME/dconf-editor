@@ -2,28 +2,23 @@ bin_PROGRAMS = dconf-editor
 
 dconf_editor_VALAFLAGS = \
 	--pkg posix \
+	--pkg gio-2.0 \
 	--pkg gtk+-3.0 \
 	--pkg gmodule-2.0 \
 	--pkg libxml-2.0 \
-	--pkg dconf
+	--pkg dconf \
+	--gresources $(builddir)/dconf-editor.gresource.xml \
+	--target-glib $(GLIB_REQUIRED)
 
-dconf_editor_LDADD = \
-	$(dconf_LIBS) \
-	$(gtk_LIBS) \
-	$(gee_LIBS) \
-	$(gmodule_LIBS) \
-	$(libxml_LIBS)
+dconf_editor_LDADD = $(DCONF_EDITOR_LIBS)
 
 dconf_editor_CFLAGS = \
-	$(dconf_CFLAGS) \
-	$(gtk_CFLAGS) \
-	$(gee_CFLAGS) \
-	$(libxml_CFLAGS) \
 	-DPKGDATADIR=\"$(pkgdatadir)\" \
 	-DVERSION=\"$(VERSION)\" \
 	-DLOCALEDIR=\"$(localedir)\" \
 	-DGETTEXT_PACKAGE=\"$(GETTEXT_PACKAGE)\" \
-	-w
+	-w \
+	$(DCONF_EDITOR_CFLAGS)
 
 resource_data = \
 	dconf-editor.gresource.xml \
@@ -38,6 +33,7 @@ nodist_dconf_editor_SOURCES = resources.c
 dconf_editor_SOURCES = \
 	config.vapi \
 	dconf-editor.vala \
+	dconf-window.vala \
 	dconf-model.vala \
 	dconf-schema.vala \
 	dconf-view.vala
