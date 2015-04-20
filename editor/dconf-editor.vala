@@ -66,8 +66,6 @@ class ConfigurationEditor : Gtk.Application
 
         settings = new Settings ("ca.desrt.dconf-editor.Settings");
 
-        model = new SettingsModel();
-
         Gtk.Builder ui = new Gtk.Builder.from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.ui");
 
         /* window */
@@ -95,23 +93,24 @@ class ConfigurationEditor : Gtk.Application
         set_default_action = (Gtk.Action) ui.get_object("set_default_action");
         set_default_action.activate.connect(set_default_cb);
 
-        /* trees */
-        dir_tree_view = new DConfDirView();
-        dir_tree_view.set_model(model);
-        dir_tree_view.get_selection().changed.connect(dir_selected_cb); // FIXME: Put in view
-        dir_tree_view.show();
-        var scroll = (Gtk.ScrolledWindow) ui.get_object("directory_scrolledwindow");
-        scroll.add(dir_tree_view);
+        dir_tree_view = (Gtk.TreeView) ui.get_object("dir_tree_view");
 
-        key_tree_view = new DConfKeyView();
-        key_tree_view.show();
-        key_tree_view.get_selection().changed.connect(key_selected_cb);
-        scroll = (Gtk.ScrolledWindow) ui.get_object("key_scrolledwindow");
-        scroll.add(key_tree_view);
+        /* trees */
+        key_tree_view = new DConfKeyView ();
+        key_tree_view.show ();
+        key_tree_view.get_selection ().changed.connect (key_selected_cb);
+        var scroll = (Gtk.ScrolledWindow) ui.get_object("key_scrolledwindow");
+        scroll.add (key_tree_view);
+
+        model = new SettingsModel ();
+        dir_tree_view.set_model (model);
+
+        Gtk.TreeSelection selection = dir_tree_view.get_selection ();
+        selection.changed.connect (dir_selected_cb);
 
         Gtk.TreeIter iter;
-        if (model.get_iter_first(out iter))
-            dir_tree_view.get_selection().select_iter(iter);
+        if (model.get_iter_first (out iter))
+            selection.select_iter (iter);
 
         /* search box */
         search_box = (Gtk.Box) ui.get_object("search_box");

@@ -20,13 +20,28 @@
             <property name="can_focus">True</property>
             <property name="position">100</property>
             <child>
-              <object class="GtkScrolledWindow" id="directory_scrolledwindow">
+              <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">never</property>
                 <property name="width_request">222</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkTreeView" id="dir_tree_view">
+                    <property name="visible">True</property>
+                    <property name="headers-visible">False</property>
+                    <!-- <property name="activate-on-single-click">True</property> TODO -->
+                    <child>
+                      <object class="GtkTreeViewColumn">
+                        <property name="title">Key</property>
+                        <child>
+                          <object class="GtkCellRendererText"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
                 </child>
               </object>
               <packing>

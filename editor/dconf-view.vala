@@ -305,15 +305,6 @@ private class KeyValueRenderer: Gtk.CellRenderer
     }
 }
 
-public class DConfDirView : Gtk.TreeView
-{
-    public DConfDirView()
-    {
-        set_headers_visible(false);
-        insert_column_with_attributes(-1, "Key", new Gtk.CellRendererText(), "text", 1, null);
-    }
-}
-
 public class DConfKeyView : Gtk.TreeView
 {
     public DConfKeyView()
