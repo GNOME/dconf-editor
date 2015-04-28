@@ -1,3 +1,10 @@
+dconf-editor 3.17.1
+=====================
+
+Beginning of cleaning, both of the code (UI template, GResource…) and of the UI
+(unnecessary shadows removed, widgets' margins, minimum width of the panel…).
+Gtk+ 3.14 is now required, with also a recent Valac.
+
 dconf-editor 3.16.1
 =====================
 
