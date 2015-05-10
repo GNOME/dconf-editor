@@ -37,6 +37,11 @@
                         </child>
                       </object>
                     </child>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="dir_tree_selection">
+                        <signal name="changed" handler="dir_selected_cb"/>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

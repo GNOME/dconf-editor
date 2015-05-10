@@ -24,6 +24,8 @@ class DConfWindow : ApplicationWindow
     private SettingsModel model;
     [GtkChild]
     private TreeView dir_tree_view;
+    [GtkChild]
+    private TreeSelection dir_tree_selection;
 
     private TreeView key_tree_view;
     [GtkChild]
@@ -73,24 +75,22 @@ class DConfWindow : ApplicationWindow
         model = new SettingsModel ();
         dir_tree_view.set_model (model);
 
-        TreeSelection selection = dir_tree_view.get_selection ();
-        selection.changed.connect (dir_selected_cb);
-
         TreeIter iter;
         if (model.get_iter_first (out iter))
-            selection.select_iter (iter);
+            dir_tree_selection.select_iter (iter);
     }
 
     /*\
     * * Dir TreeView
     \*/
 
+    [GtkCallback]
     private void dir_selected_cb ()
     {
         KeyModel? key_model = null;
 
         TreeIter iter;
-        if (dir_tree_view.get_selection ().get_selected (null, out iter))
+        if (dir_tree_selection.get_selected (null, out iter))
             key_model = model.get_directory (iter).key_model;
 
         key_tree_view.set_model (key_model);
@@ -259,7 +259,7 @@ class DConfWindow : ApplicationWindow
         TreeIter iter;
         TreeIter key_iter = TreeIter ();
         var have_key_iter = false;
-        if (dir_tree_view.get_selection ().get_selected (null, out iter))
+        if (dir_tree_selection.get_selected (null, out iter))
         {
             if (key_tree_view.get_selection ().get_selected (null, out key_iter))
             {
@@ -284,7 +284,7 @@ class DConfWindow : ApplicationWindow
                 if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
                 {
                     dir_tree_view.expand_to_path (model.get_path (iter));
-                    dir_tree_view.get_selection ().select_iter (iter);
+                    dir_tree_selection.select_iter (iter);
                     dir_tree_view.scroll_to_cell (model.get_path (iter), null, false, 0, 0);
                     return;
                 }
@@ -300,7 +300,7 @@ class DConfWindow : ApplicationWindow
                     if (key_matches (key, search_entry.text))
                     {
                         dir_tree_view.expand_to_path (model.get_path (iter));
-                        dir_tree_view.get_selection ().select_iter (iter);
+                        dir_tree_selection.select_iter (iter);
                         dir_tree_view.scroll_to_cell (model.get_path (iter), null, false, 0, 0);
                         key_tree_view.get_selection ().select_iter (key_iter);
                         key_tree_view.scroll_to_cell (dir.key_model.get_path (key_iter), null, false, 0, 0);
