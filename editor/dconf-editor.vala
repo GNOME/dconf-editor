@@ -65,7 +65,7 @@ class ConfigurationEditor : Gtk.Application
         if (options.contains ("version"))
         {
             /* NOTE: Is not translated so can be easily parsed */
-            stderr.printf ("%1$s %2$s\n", "dconf-editor", Config.VERSION);
+            stdout.printf ("%1$s %2$s\n", "dconf-editor", Config.VERSION);
             return Posix.EXIT_SUCCESS;
         }
 
