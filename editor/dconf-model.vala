@@ -65,24 +65,15 @@ public class Key : GLib.Object
     {
         switch (value.classify ())
         {
-        case Variant.Class.BYTE:
-            return new Variant.byte(0);
-        case Variant.Class.INT16:
-            return new Variant.int16(int16.MIN);
-        case Variant.Class.UINT16:
-            return new Variant.uint16(uint16.MIN);
-        case Variant.Class.INT32:
-            return new Variant.int32(int32.MIN);
-        case Variant.Class.UINT32:
-            return new Variant.uint32(uint32.MIN);
-        case Variant.Class.INT64:
-            return new Variant.int64(int64.MIN);
-        case Variant.Class.UINT64:
-            return new Variant.uint64(uint64.MIN);
-        case Variant.Class.DOUBLE:
-            return new Variant.double(double.MIN);
-        default:
-            return null;
+            case Variant.Class.BYTE:    return new Variant.byte (0);
+            case Variant.Class.INT16:   return new Variant.int16 (int16.MIN);
+            case Variant.Class.UINT16:  return new Variant.uint16 (uint16.MIN);
+            case Variant.Class.INT32:   return new Variant.int32 (int32.MIN);
+            case Variant.Class.UINT32:  return new Variant.uint32 (uint32.MIN);
+            case Variant.Class.INT64:   return new Variant.int64 (int64.MIN);
+            case Variant.Class.UINT64:  return new Variant.uint64 (uint64.MIN);
+            case Variant.Class.DOUBLE:  return new Variant.double (double.MIN);
+            default:                    return null;
         }
     }
 
@@ -90,24 +81,15 @@ public class Key : GLib.Object
     {
         switch (value.classify ())
         {
-        case Variant.Class.BYTE:
-            return new Variant.byte(255);
-        case Variant.Class.INT16:
-            return new Variant.int16(int16.MAX);
-        case Variant.Class.UINT16:
-            return new Variant.uint16(uint16.MAX);
-        case Variant.Class.INT32:
-            return new Variant.int32(int32.MAX);
-        case Variant.Class.UINT32:
-            return new Variant.uint32(uint32.MAX);
-        case Variant.Class.INT64:
-            return new Variant.int64(int64.MAX);
-        case Variant.Class.UINT64:
-            return new Variant.uint64(uint64.MAX);
-        case Variant.Class.DOUBLE:
-            return new Variant.double(double.MAX);
-        default:
-            return null;
+            case Variant.Class.BYTE:    return new Variant.byte (255);
+            case Variant.Class.INT16:   return new Variant.int16 (int16.MAX);
+            case Variant.Class.UINT16:  return new Variant.uint16 (uint16.MAX);
+            case Variant.Class.INT32:   return new Variant.int32 (int32.MAX);
+            case Variant.Class.UINT32:  return new Variant.uint32 (uint32.MAX);
+            case Variant.Class.INT64:   return new Variant.int64 (int64.MAX);
+            case Variant.Class.UINT64:  return new Variant.uint64 (uint64.MAX);
+            case Variant.Class.DOUBLE:  return new Variant.double (double.MAX);
+            default:                    return null;
         }
     }
 
@@ -169,7 +151,12 @@ public class Directory : GLib.Object
     private KeyModel _key_model;
     public KeyModel key_model
     {
-        get { update_children(); if (_key_model == null) _key_model = new KeyModel(this); return _key_model; }
+        get {
+            update_children ();
+            if (_key_model == null)
+                _key_model = new KeyModel (this);
+            return _key_model;
+        }
         private set {}
     }
 
