@@ -4,6 +4,8 @@
   <template class="DConfWindow" parent="GtkApplicationWindow">
     <property name="visible">False</property>
     <property name="title" translatable="yes">dconf Editor</property>
+    <property name="height_request">525</property>
+    <property name="width_request">700</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
