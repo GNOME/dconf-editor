@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-01 16:41+0100\n"
-"PO-Revision-Date: 2015-03-01 16:42+0100\n"
+"POT-Creation-Date: 2015-08-25 14:45+0200\n"
+"PO-Revision-Date: 2015-08-25 14:47+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -24,13 +24,13 @@ msgstr ""
 "X-Poedit-Country: Poland\n"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
-#: ../editor/dconf-editor.vala:433
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:80
+#: ../editor/dconf-editor.vala:150
 msgid "dconf Editor"
 msgstr "Edytor dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:436
+#: ../editor/dconf-editor.vala:152
 msgid "Directly edit your entire configuration database"
 msgstr "Bezpośrednia modyfikacja bazy danych konfiguracji"
 
@@ -74,10 +74,6 @@ msgstr "_O programie"
 msgid "_Quit"
 msgstr "Za_kończ"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Ustaw na wartość domyślną"
-
 #: ../editor/dconf-editor.ui.h:2
 msgid "Schema:"
 msgstr "Schemat:"
@@ -100,44 +96,18 @@ msgid "Default:"
 msgstr "Domyślnie:"
 
 #: ../editor/dconf-editor.ui.h:8
+msgid "Set to Default"
+msgstr "Ustaw na wartość domyślną"
+
+#: ../editor/dconf-editor.ui.h:9
 msgid "Next"
 msgstr "Następny"
 
-#: ../editor/dconf-editor.vala:29
+#: ../editor/dconf-editor.vala:30
 msgid "Print release version and exit"
 msgstr "Wyświetla wersję wydania i kończy działanie"
 
-#: ../editor/dconf-editor.vala:206
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Wartość całkowita [%s..%s]"
-
-#: ../editor/dconf-editor.vala:219
-#, c-format
-msgid "Double [%s..%s]"
-msgstr "Wartość double [%s..%s]"
-
-#: ../editor/dconf-editor.vala:221
-msgid "Boolean"
-msgstr "Zmienna logiczna"
-
-#: ../editor/dconf-editor.vala:223
-msgid "String"
-msgstr "Tekst"
-
-#: ../editor/dconf-editor.vala:225
-msgid "Enumeration"
-msgstr "Wyliczenie"
-
-#: ../editor/dconf-editor.vala:273
-msgid "No schema"
-msgstr "Brak schematu"
-
-#: ../editor/dconf-editor.vala:383
-msgid "Not found"
-msgstr "Nie odnaleziono"
-
-#: ../editor/dconf-editor.vala:431
+#: ../editor/dconf-editor.vala:148
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -155,10 +125,10 @@ msgid ""
 msgstr ""
 "Niniejszy program jest wolnym oprogramowaniem; można go rozprowadzać dalej i/"
 "lub modyfikować na warunkach Powszechnej Licencji Publicznej GNU, wydanej "
-"przez Fundację Wolnego Oprogramowania (Free Software Foundation) - według "
+"przez Fundację Wolnego Oprogramowania (Free Software Foundation) — według "
 "wersji drugiej tej Licencji lub którejś z późniejszych wersji.\n"
 "\n"
-"Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny - "
+"Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny — "
 "jednak BEZ JAKIEJKOLWIEK GWARANCJI, nawet domyślnej gwarancji PRZYDATNOŚCI "
 "HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ. W celu uzyskania "
 "bliższych informacji należy zapoznać się z Powszechną Licencją Publiczną "
@@ -166,30 +136,60 @@ msgstr ""
 "\n"
 "Z pewnością wraz z niniejszym programem dostarczono także egzemplarz "
 "Powszechnej Licencji Publicznej GNU (GNU General Public License); jeśli nie "
-"- proszę napisać do Free Software Foundation, Inc., 51 Franklin Street, "
+"— proszę napisać do Free Software Foundation, Inc., 51 Franklin Street, "
 "Fifth Floor, Boston, MA 02110-1301, USA."
 
-#: ../editor/dconf-editor.vala:437
+#: ../editor/dconf-editor.vala:153
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:441
+#: ../editor/dconf-editor.vala:157
 msgid "translator-credits"
 msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2012-2015\n"
 "Aviary.pl <gnomepl@aviary.pl>, 2012-2015"
 
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-window.vala:129
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Wartość całkowita [%s..%s]"
+
+#: ../editor/dconf-window.vala:142
+#, c-format
+msgid "Double [%s..%s]"
+msgstr "Wartość double [%s..%s]"
+
+#: ../editor/dconf-window.vala:144
+msgid "Boolean"
+msgstr "Zmienna logiczna"
+
+#: ../editor/dconf-window.vala:146
+msgid "String"
+msgstr "Tekst"
+
+#: ../editor/dconf-window.vala:148
+msgid "Enumeration"
+msgstr "Wyliczenie"
+
+#: ../editor/dconf-window.vala:199
+msgid "No schema"
+msgstr "Brak schematu"
+
+#: ../editor/dconf-window.vala:314
+msgid "Not found"
+msgstr "Nie odnaleziono"
+
+#: ../editor/dconf-view.vala:286
 #, c-format
 msgid "Error setting value: %s"
 msgstr "Błąd podczas ustawiania wartości: %s"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
+#: ../editor/dconf-view.vala:331
 msgid "Name"
 msgstr "Nazwa"
 
 #. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
+#: ../editor/dconf-view.vala:335
 msgid "Value"
 msgstr "Wartość"
