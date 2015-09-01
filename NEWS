@@ -1,3 +1,12 @@
+dconf-editor 3.17.91
+=====================
+
+The output of --version is now printed on stdout, as suggested by GNU. That's the only technical change, all looks good.
+
+Translations updated:
+ Polish
+ Chinese (Taiwan)
+
 dconf-editor 3.17.90
 =====================
 
