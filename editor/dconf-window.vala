@@ -22,10 +22,12 @@ using Gtk;
 class DConfWindow : ApplicationWindow
 {
     private SettingsModel model;
-    [GtkChild]
-    private TreeView dir_tree_view;
-    [GtkChild]
-    private TreeSelection dir_tree_selection;
+    [GtkChild] private TreeView dir_tree_view;
+    [GtkChild] private TreeSelection dir_tree_selection;
+
+    [GtkChild] private Box search_box;
+    [GtkChild] private Entry search_entry;
+    [GtkChild] private Label search_label;
 
     private TreeView key_tree_view;
     [GtkChild]
@@ -43,13 +45,6 @@ class DConfWindow : ApplicationWindow
     private Label type_label;
     [GtkChild]
     private Label default_label;
-
-    [GtkChild]
-    private Box search_box;
-    [GtkChild]
-    private Entry search_entry;
-    [GtkChild]
-    private Label search_label;
 
     private Key? selected_key;
 
@@ -253,12 +248,12 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void find_next_cb ()
     {
-        search_label.set_text ("");
+        search_label.label = "";
 
         /* Get the current position in the tree */
         TreeIter iter;
         TreeIter key_iter = TreeIter ();
-        var have_key_iter = false;
+        bool have_key_iter = false;
         if (dir_tree_selection.get_selected (null, out iter))
         {
             if (key_tree_view.get_selection ().get_selected (null, out key_iter))
@@ -273,11 +268,11 @@ class DConfWindow : ApplicationWindow
         else if (!model.get_iter_first (out iter))
             return;
 
-        var on_first_directory = true;
+        bool on_first_directory = true;
         do
         {
             /* Select next directory that matches */
-            var dir = model.get_directory (iter);
+            Directory dir = model.get_directory (iter);
             if (!have_key_iter)
             {
                 have_key_iter = dir.key_model.get_iter_first (out key_iter);
@@ -309,9 +304,10 @@ class DConfWindow : ApplicationWindow
                 } while (dir.key_model.iter_next (ref key_iter));
             }
             have_key_iter = false;
-        } while (get_next_iter (ref iter));
+        }
+        while (get_next_iter (ref iter));
 
-        search_label.set_text(_("Not found"));
+        search_label.label = _("Not found");
     }
 
     private bool key_matches (Key key, string text)

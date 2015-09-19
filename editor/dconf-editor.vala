@@ -56,7 +56,7 @@ class ConfigurationEditor : Gtk.Application
         Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
         Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-        var app = new ConfigurationEditor ();
+        ConfigurationEditor app = new ConfigurationEditor ();
         return app.run (args);
     }
 

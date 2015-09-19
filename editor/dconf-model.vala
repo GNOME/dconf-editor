@@ -54,16 +54,13 @@ public class Key : GLib.Object
        }
     }
 
-    private Variant? _value;
+    private Variant? _value = null;
     public Variant value
     {
         get
         {
             update_value();
-            if (_value != null)
-                return _value;
-            else
-                return schema.default_value;
+            return _value ?? schema.default_value;
         }
         set
         {
@@ -172,7 +169,9 @@ public class Directory : GLib.Object
         get {
             update_children ();
             if (_key_model == null)
+            {
                 _key_model = new KeyModel (this);
+            }
             return _key_model;
         }
         private set {}
@@ -199,7 +198,7 @@ public class Directory : GLib.Object
         private set { }
     }
 
-    private bool have_children;
+    private bool have_children = false;
 
     public Directory(SettingsModel model, Directory? parent, string name, string full_name)
     {
@@ -209,42 +208,32 @@ public class Directory : GLib.Object
         this.full_name = full_name;
     }
 
-    public Directory get_child(string name)
+    public Directory get_child (string name)
     {
-        Directory? directory = _child_map.lookup(name);
+        Directory? directory = _child_map.lookup (name);
 
         if (directory == null)
         {
-            directory = new Directory(model, this, name, full_name + name + "/");
-            _children.insert_sorted(directory, compare_directories);
-            _child_map.insert(name, directory);
+            directory = new Directory (model, this, name, full_name + name + "/");
+            _children.insert_sorted (directory, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
+            _child_map.insert (name, directory);
         }
 
         return directory;
     }
 
-    private static int compare_directories(Directory a, Directory b)
+    public Key get_key (string name)
     {
-        return strcmp(a.name, b.name);
-    }
-
-    public Key get_key(string name)
-    {
-        Key? key = _key_map.lookup(name);
+        Key? key = _key_map.lookup (name);
 
         if (key == null)
         {
-            key = new Key(model, this, name, full_name + name);
-            _keys.insert_sorted(key, compare_keys);
-            _key_map.insert(name, key);
+            key = new Key (model, this, name, full_name + name);
+            _keys.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
+            _key_map.insert (name, key);
         }
 
         return key;
-    }
-
-    public static int compare_keys(Key a, Key b)
-    {
-        return strcmp(a.name, b.name);
     }
 
     public void load_schema(Schema schema, string path)
@@ -583,9 +572,8 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public signal void item_changed (string key);
 
     void watch_func (DConf.Client client, string path, string[] items, string? tag) {
-        foreach (var item in items) {
+        foreach (var item in items)
             item_changed (path + item);
-        }
     }
 
     public SettingsModel()
@@ -632,15 +620,12 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         return 2;
     }
 
-    public Type get_column_type(int index)
+    public Type get_column_type (int index)
     {
-        if (index == 0)
-            return typeof(Directory);
-        else
-            return typeof(string);
+        return index == 0 ? typeof (Directory) : typeof (string);
     }
 
-    private void set_iter(ref Gtk.TreeIter iter, Directory directory)
+    private void set_iter (ref Gtk.TreeIter iter, Directory directory)
     {
         iter.stamp = 0;
         iter.user_data = directory;
@@ -648,12 +633,9 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         iter.user_data3 = directory;
     }
 
-    public Directory get_directory(Gtk.TreeIter? iter)
+    public Directory get_directory (Gtk.TreeIter? iter)
     {
-        if (iter == null)
-            return root;
-        else
-            return (Directory)iter.user_data;
+        return iter == null ? root : (Directory) iter.user_data;
     }
 
     public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
