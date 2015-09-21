@@ -1,5 +1,6 @@
 [Desktop Entry]
 _Name=dconf Editor
+_GenericName=Configuration editor for dconf
 _Comment=Directly edit your entire configuration database
 _Keywords=settings;configuration;
 Exec=dconf-editor
