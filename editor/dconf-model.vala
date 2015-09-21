@@ -137,15 +137,7 @@ public class Key : GLib.Object
         if (!has_schema)
             return;
 
-        _value = null;
-        try
-        {
-            model.client.write_sync(full_name, null);
-        }
-        catch (GLib.Error e)
-        {
-        }
-        value_changed();
+        value = null;
     }
 
     private void update_value()
