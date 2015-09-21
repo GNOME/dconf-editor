@@ -1,3 +1,12 @@
+dconf-editor 3.18.0
+=====================
+
+Neither change nor new critical bug since the last beta, so here comes 3.18.0.
+This cycle has seen some UI and code cleaning, requiring Gtk+ 3.14 notably, but
+without real technical evolution (planed for next stable release).
+
+Thanks to all people who helped coding and translating this project.
+
 dconf-editor 3.17.92
 =====================
 
