@@ -3,7 +3,8 @@ editor/ca.desrt.dconf-editor.desktop.in.in
 [type: gettext/glade]editor/dconf-editor-menu.ui
 [type: gettext/glade]editor/dconf-editor.ui
 editor/dconf-editor.vala
-editor/dconf-window.vala
 editor/dconf-model.vala
 editor/dconf-schema.vala
 editor/dconf-view.vala
+editor/dconf-window.vala
+[type: gettext/glade]editor/key-editor.ui
