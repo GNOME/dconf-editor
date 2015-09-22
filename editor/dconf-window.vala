@@ -101,7 +101,7 @@ class DConfWindow : ApplicationWindow
 
     private string key_to_description (Key key)
     {
-        switch (key.schema.type)
+        switch (key.type_string)
         {
         case "y":
         case "n":
