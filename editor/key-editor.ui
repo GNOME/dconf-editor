@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="KeyEditor" parent="GtkDialog">
+    <property name="visible">False</property>
+    <property name="modal">True</property>
+    <property name="default-height">1</property><!-- TODO bug of GtkDialog, that reserves space for bottom buttons -->
+    <property name="default-width">600</property>
+    <property name="width-request">600</property>
+    <property name="resizable">False</property>
+    <property name="title" translatable="yes">Key Editor</property>
+    <child type="action">
+      <object class="GtkButton" id="button-cancel">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Cancel</property><!-- TODO _Cancel? -->
+        <property name="width-request">100</property><!-- button_apply is in the same horizontal GtkSizeGroup; same width request for custom_value_switch -->
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="button_apply">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Apply</property><!-- TODO _Apply? -->
+        <property name="can-default">True</property>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="cancel">button-cancel</action-widget>
+      <action-widget response="apply" default="true">button_apply</action-widget>
+    </action-widgets>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="margin">6</property><!-- TODO test -->
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="row-spacing">6</property>
+            <property name="column-spacing">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Schema:</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Summary:</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Description:</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes" comments="Translators: as in datatype (integer, boolean, string, etc)">Type:</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">3</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Default:</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">4</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="schema_label">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="wrap">True</property>
+                <property name="selectable">True</property>
+                <property name="can-focus">False</property>
+<!--                <property name="hexpand">True</property> -->
+                <property name="max-width-chars">42</property>
+                <property name="width-chars">42</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="summary_label">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="wrap">True</property>
+                <property name="selectable">True</property>
+                <property name="can-focus">False</property>
+<!--                <property name="hexpand">True</property> -->
+                <property name="max-width-chars">42</property>
+                <property name="width-chars">42</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="description_label">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="wrap">True</property>
+                <property name="selectable">True</property>
+                <property name="can-focus">False</property>
+<!--                <property name="hexpand">True</property> -->
+                <property name="max-width-chars">42</property>
+                <property name="width-chars">42</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="type_label">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="wrap">True</property>
+                <property name="selectable">True</property>
+                <property name="can-focus">False</property>
+<!--                <property name="hexpand">True</property> -->
+                <property name="max-width-chars">42</property>
+                <property name="width-chars">42</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">3</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="default_label">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="wrap">True</property>
+                <property name="selectable">True</property>
+                <property name="can-focus">False</property>
+                <property name="hexpand">True</property>
+                <!--<property name="max-width-chars">42</property>
+                <property name="width-chars">42</property> -->
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">4</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="label" translatable="yes">Use default value</property>
+                <property name="valign">baseline</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">5</property>
+                <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="custom_value_switch">
+                <property name="visible">True</property>
+                <property name="width-request">100</property><!-- same request than for button_cancel/button_apply -->
+                <property name="halign">end</property>
+              </object>
+              <packing>
+                <property name="left-attach">2</property>
+                <property name="top-attach">5</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid" id="custom_value_grid">
+            <property name="visible">True</property>
+            <property name="hexpand">True</property>
+            <property name="margin-top">6</property><!-- TODO better -->
+            <property name="sensitive" bind-source="custom_value_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

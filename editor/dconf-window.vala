@@ -23,49 +23,14 @@ class DConfWindow : ApplicationWindow
     private SettingsModel model;
     [GtkChild] private TreeView dir_tree_view;
     [GtkChild] private TreeSelection dir_tree_selection;
+    [GtkChild] private ListBox key_list_box;
 
     [GtkChild] private Box search_box;
     [GtkChild] private Entry search_entry;
     [GtkChild] private Label search_label;
 
-    private TreeView key_tree_view;
-    [GtkChild]
-    private ScrolledWindow key_scrolledwindow;  // TODO used only for adding key_tree_view, a pseudo-TreeView
-
-    [GtkChild]
-    private Grid key_info_grid;
-    [GtkChild]
-    private Label schema_label;
-    [GtkChild]
-    private Label summary_label;
-    [GtkChild]
-    private Label description_label;
-    [GtkChild]
-    private Label type_label;
-    [GtkChild]
-    private Label default_label;
-
-    private Key? selected_key;
-
-    private const GLib.ActionEntry[] window_actions =
-    {
-        { "set-default", set_default_cb }
-    };
-    private SimpleAction set_default_action;
-
     public DConfWindow ()
     {
-        add_action_entries (window_actions, this);
-        set_default_action = (SimpleAction) lookup_action ("set-default");
-        set_default_action.set_enabled (false);
-
-        /* key tree */
-        key_tree_view = new DConfKeyView ();
-        key_tree_view.show ();
-        key_tree_view.get_selection ().changed.connect (key_selected_cb);
-        key_scrolledwindow.add (key_tree_view);
-
-        /* dir tree */
         model = new SettingsModel ();
         dir_tree_view.set_model (model);
 
@@ -81,140 +46,36 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void dir_selected_cb ()
     {
-        KeyModel? key_model = null;
+        GLib.ListStore? key_model = null;
 
         TreeIter iter;
         if (dir_tree_selection.get_selected (null, out iter))
             key_model = model.get_directory (iter).key_model;
 
-        key_tree_view.set_model (key_model);
-
-        /* Always select something */
-        if (key_model != null && key_model.get_iter_first (out iter))
-            key_tree_view.get_selection ().select_iter (iter);
+        key_list_box.bind_model (key_model, new_list_box_row);
     }
 
     /*\
-    * * Key TreeView & informations
+    * * Key ListBox
     \*/
 
-    private string key_to_description (Key key)
+    private Widget new_list_box_row (Object item)
     {
-        switch (key.type_string)
+        Key key = (Key) item;
+        if (key.has_schema)
         {
-        case "y":
-        case "n":
-        case "q":
-        case "i":
-        case "u":
-        case "x":
-        case "t":
-            Variant min, max;
-            if (key.schema.range != null)
-            {
-                min = key.schema.range.min;
-                max = key.schema.range.max;
-            }
-            else
-            {
-                min = key.get_min ();
-                max = key.get_max ();
-            }
-            return _("Integer [%s..%s]").printf (min.print (false), max.print (false));
-        case "d":
-            Variant min, max;
-            if (key.schema.range != null)
-            {
-                min = key.schema.range.min;
-                max = key.schema.range.max;
-            }
-            else
-            {
-                min = key.get_min ();
-                max = key.get_max ();
-            }
-            return _("Double [%s..%s]").printf (min.print (false), max.print (false));
-        case "b":
-            return _("Boolean");
-        case "s":
-            return _("String");
-        case "<enum>":
-            return _("Enumeration");
-        default:
-            return key.schema.type;
-        }
-    }
-
-    private void key_selected_cb ()
-    {
-        if (selected_key != null)
-            selected_key.value_changed.disconnect (key_changed_cb);
-
-        TreeIter iter;
-        TreeModel model;
-        if (key_tree_view.get_selection ().get_selected (out model, out iter))
-        {
-            var key_model = (KeyModel) model;
-            selected_key = key_model.get_key (iter);
+            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable (key);
+            key.value_changed.connect (() => { key_list_box_row.update (); });
+            return key_list_box_row;
         }
         else
-            selected_key = null;
-
-        if (selected_key != null)
-            selected_key.value_changed.connect (key_changed_cb);
-
-        key_info_grid.sensitive = selected_key != null;
-        set_default_action.set_enabled (selected_key != null && !selected_key.is_default);
-
-        string schema_name = "", summary = "", description = "", type = "", default_value = "";
-
-        if (selected_key != null)
-        {
-            if (selected_key.schema != null)
-            {
-                var gettext_domain = selected_key.schema.gettext_domain;
-                schema_name = selected_key.schema.schema.id;
-
-                if (selected_key.schema.summary != null)
-                    summary = selected_key.schema.summary;
-                if (gettext_domain != null && summary != "")
-                    summary = dgettext (gettext_domain, summary);
-
-                if (selected_key.schema.description != null)
-                    description = selected_key.schema.description;
-                if (gettext_domain != null && description != "")
-                    description = dgettext (gettext_domain, description);
-
-                type = key_to_description (selected_key);
-                default_value = selected_key.schema.default_value.print (false);
-            }
-            else
-            {
-                schema_name = _("No schema");
-            }
-        }
-
-        schema_label.set_text (schema_name);
-        summary_label.set_text (summary.strip ());
-        description_label.set_text (description.strip ());
-        type_label.set_text (type);
-        default_label.set_text (default_value);
+            return new KeyListBoxRowNonEditable (key.name, key.cool_text_value ());
     }
 
-    /*\
-    * * Set_default button
-    \*/
-
-    private void key_changed_cb (Key key)   /* TODO reuse */
+    [GtkCallback]
+    private void row_activated_cb (ListBoxRow list_box_row)
     {
-        set_default_action.set_enabled (selected_key != null && !selected_key.is_default);
-    }
-
-    private void set_default_cb ()
-    {
-        if (selected_key == null)
-            return;
-        selected_key.set_to_default ();
+        ((KeyListBoxRow) list_box_row.get_child ()).show_dialog (this);
     }
 
     /*\
@@ -249,64 +110,55 @@ class DConfWindow : ApplicationWindow
     {
         search_label.label = "";
 
-        /* Get the current position in the tree */
         TreeIter iter;
-        TreeIter key_iter = TreeIter ();
-        bool have_key_iter = false;
+        int position = 0;
         if (dir_tree_selection.get_selected (null, out iter))
         {
-            if (key_tree_view.get_selection ().get_selected (null, out key_iter))
-            {
-                var dir = model.get_directory (iter);
-                if (dir.key_model.iter_next (ref key_iter))
-                    have_key_iter = true;
-                else
-                    get_next_iter (ref iter);
-            }
+            ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
+            if (selected_row != null)
+                position = selected_row.get_index () + 1;
         }
-        else if (!model.get_iter_first (out iter))
-            return;
+        else if (!model.get_iter_first (out iter))      // TODO doesn't that reset iter?
+            return;     // TODO better
 
         bool on_first_directory = true;
         do
         {
-            /* Select next directory that matches */
             Directory dir = model.get_directory (iter);
-            if (!have_key_iter)
+
+            if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
             {
-                have_key_iter = dir.key_model.get_iter_first (out key_iter);
-                if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
-                {
-                    dir_tree_view.expand_to_path (model.get_path (iter));
-                    dir_tree_selection.select_iter (iter);
-                    dir_tree_view.scroll_to_cell (model.get_path (iter), null, false, 0, 0);
-                    return;
-                }
+                select_dir (iter);
+                return;
             }
             on_first_directory = false;
 
             /* Select next key that matches */
-            if (have_key_iter)
+            GLib.ListStore key_model = dir.key_model;
+            while (position < key_model.get_n_items ())
             {
-                do
+                Key key = (Key) key_model.get_object (position);
+                if (key_matches (key, search_entry.text))
                 {
-                    var key = dir.key_model.get_key (key_iter);
-                    if (key_matches (key, search_entry.text))
-                    {
-                        dir_tree_view.expand_to_path (model.get_path (iter));
-                        dir_tree_selection.select_iter (iter);
-                        dir_tree_view.scroll_to_cell (model.get_path (iter), null, false, 0, 0);
-                        key_tree_view.get_selection ().select_iter (key_iter);
-                        key_tree_view.scroll_to_cell (dir.key_model.get_path (key_iter), null, false, 0, 0);
-                        return;
-                    }
-                } while (dir.key_model.iter_next (ref key_iter));
+                    select_dir (iter);
+                    key_list_box.select_row (key_list_box.get_row_at_index (position));
+                    return;
+                }
+                position++;
             }
-            have_key_iter = false;
+
+            position = 0;
         }
         while (get_next_iter (ref iter));
 
         search_label.label = _("Not found");
+    }
+
+    private void select_dir (TreeIter iter)
+    {
+        dir_tree_view.expand_to_path (model.get_path (iter));
+        dir_tree_selection.select_iter (iter);
+        dir_tree_view.scroll_to_cell (model.get_path (iter), null, false, 0, 0);
     }
 
     private bool key_matches (Key key, string text)
@@ -316,7 +168,7 @@ class DConfWindow : ApplicationWindow
             return true;
 
         /* Check key schema (description) */
-        if (key.schema != null)
+        if (key.has_schema)
         {
             if (key.schema.summary != null && key.schema.summary.index_of (text) >= 0)
                 return true;
@@ -349,5 +201,72 @@ class DConfWindow : ApplicationWindow
         }
 
         return true;
+    }
+}
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
+private abstract class KeyListBoxRow : Grid
+{
+    [GtkChild] protected Label key_name_label;
+    [GtkChild] protected Label key_value_label;
+    [GtkChild] protected Label key_info_label;
+
+    public abstract void show_dialog (ApplicationWindow window);
+}
+
+private class KeyListBoxRowNonEditable : KeyListBoxRow
+{
+    public KeyListBoxRowNonEditable (string key_name, string key_value)
+    {
+        key_name_label.label = key_name;
+        key_value_label.label = key_value;
+        key_info_label.set_markup ("<i>" + _("No Schema") + "</i>");
+    }
+
+    public override void show_dialog (ApplicationWindow window)
+    {
+        MessageDialog dialog = new MessageDialog (window, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.OK, _("No Schema, cannot edit value."));  // TODO with or without punctuation?        // TODO insert key name/path/..?
+        dialog.run ();
+        dialog.destroy ();
+    }
+}
+
+private class KeyListBoxRowEditable : KeyListBoxRow
+{
+    public Key key { get; private set; }
+
+    private Pango.AttrList attr_list = new Pango.AttrList ();
+
+    public KeyListBoxRowEditable (Key _key)
+    {
+        this.key = _key;
+        key_value_label.set_attributes (attr_list);
+        update ();      // sets key_name_label attributes and key_value_label label
+        key_name_label.label = key.name;
+
+        string? summary = key.schema.summary;
+        if (summary == null || summary == "")
+            return;
+
+        string? gettext_domain = key.schema.gettext_domain;
+        if (gettext_domain != null)
+            summary = dgettext (gettext_domain, summary);
+        key_info_label.label = summary.strip ();
+    }
+
+    public void update ()
+    {
+        attr_list.change (Pango.attr_weight_new (key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD));    // TODO good?
+        key_name_label.set_attributes (attr_list);
+        // TODO key_info_label.set_attributes (attr_list); ?
+
+        key_value_label.label = key.cool_text_value ();
+    }
+
+    public override void show_dialog (ApplicationWindow window)
+    {
+        KeyEditor key_editor = new KeyEditor (key);
+        key_editor.set_transient_for (window);
+        key_editor.run ();
     }
 }

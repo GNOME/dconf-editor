@@ -23,7 +23,9 @@ dconf_editor_CFLAGS = \
 resource_data = \
 	dconf-editor.gresource.xml \
 	dconf-editor-menu.ui \
-	dconf-editor.ui
+	dconf-editor.ui \
+	key-list-box-row.ui \
+	key-editor.ui
 
 resources.c: $(resource_data)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --target=$@ --generate-source $<

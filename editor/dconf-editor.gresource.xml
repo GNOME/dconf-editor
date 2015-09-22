@@ -2,6 +2,8 @@
 <gresources>
   <gresource prefix="/ca/desrt/dconf-editor/ui">
     <file preprocess="xml-stripblanks">dconf-editor.ui</file>
+    <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
+    <file preprocess="xml-stripblanks">key-editor.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
     <file preprocess="xml-stripblanks" alias="menus.ui">dconf-editor-menu.ui</file>

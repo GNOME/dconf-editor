@@ -23,17 +23,18 @@ public class Key : GLib.Object
 
     public string name;
     public string full_name;
+    public string cool_text_value ()   // TODO better
+    {
+        // TODO number of chars after coma for double
+        // bool is the only type that permits translation; keep strings for translators
+        return type_string == "b" ? (value.get_boolean () ? _("True") : _("False")) : value.print (false);
+    }
 
     public SchemaKey? schema;
 
     public bool has_schema
     {
         get { return schema != null; }
-    }
-
-    public int index
-    {
-        get { return parent.keys.index (this); }
     }
 
     public string type_string
@@ -132,10 +133,8 @@ public class Key : GLib.Object
     }
 
     public void set_to_default()
+        requires (has_schema)
     {
-        if (!has_schema)
-            return;
-
         value = null;
     }
 
@@ -154,15 +153,13 @@ public class Directory : GLib.Object
 
     public Directory? parent;
 
-    private KeyModel _key_model;
-    public KeyModel key_model
+    private GLib.ListStore _key_model;
+    public GLib.ListStore key_model
     {
         get {
             update_children ();
             if (_key_model == null)
-            {
-                _key_model = new KeyModel (this);
-            }
+                _key_model = new GLib.ListStore (typeof (Key));
             return _key_model;
         }
         private set {}
@@ -182,12 +179,6 @@ public class Directory : GLib.Object
     }
 
     public GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key>(str_hash, str_equal);
-    private GLib.List<Key> _keys = new GLib.List<Key>();
-    public GLib.List<Key> keys
-    {
-        get { update_children(); return _keys; }
-        private set { }
-    }
 
     private bool have_children = false;
 
@@ -220,7 +211,7 @@ public class Directory : GLib.Object
         if (key == null)
         {
             key = new Key (model, this, name, full_name + name);
-            _keys.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
+            key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
             _key_map.insert (name, key);
         }
 
@@ -244,312 +235,18 @@ public class Directory : GLib.Object
         }
     }
 
-    private void update_children()
+    private void update_children ()
     {
-        if (have_children)
+        if (have_children)      // crashes if in the constructor
             return;
         have_children = true;
 
-        string[] items = model.client.list(full_name);
+        string [] items = model.client.list (full_name);
         for (int i = 0; i < items.length; i++)
-        {
-            string item_name = full_name + items[i];
-
-            if (DConf.is_dir(item_name))
-            {
-                string dir_name = items[i][0:-1];
-                get_child(dir_name);
-            }
+            if (DConf.is_dir (full_name + items[i]))
+                get_child (items [i][0:-1]);
             else
-            {
-                get_key(items[i]);
-            }
-        }
-    }
-}
-
-public class KeyModel: GLib.Object, Gtk.TreeModel
-{
-    private Directory directory;
-
-    public KeyModel(Directory directory)
-    {
-        this.directory = directory;
-        foreach (var key in directory.keys)
-            key.value_changed.connect(key_changed_cb); // FIXME: Need to delete this callbacks
-    }
-
-    private void key_changed_cb(Key key)
-    {
-        Gtk.TreeIter iter;
-        if (!get_iter_first(out iter))
-            return;
-
-        do
-        {
-            if(get_key(iter) == key)
-            {
-                row_changed(get_path(iter), iter);
-                return;
-            }
-        } while(iter_next(ref iter));
-    }
-
-    public Gtk.TreeModelFlags get_flags()
-    {
-        return Gtk.TreeModelFlags.LIST_ONLY;
-    }
-
-    public int get_n_columns()
-    {
-        return 3;
-    }
-
-    public Type get_column_type(int index)
-    {
-        if (index == 0)
-            return typeof(Key);
-        else
-            return typeof(string);
-    }
-
-    private void set_iter(ref Gtk.TreeIter iter, Key key)
-    {
-        iter.stamp = 0;
-        iter.user_data = key;
-        iter.user_data2 = key;
-        iter.user_data3 = key;
-    }
-
-    public Key get_key(Gtk.TreeIter iter)
-    {
-        return (Key)iter.user_data;
-    }
-
-    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
-    {
-        iter = Gtk.TreeIter();
-
-        if (path.get_depth() != 1)
-            return false;
-
-        return iter_nth_child(out iter, null, path.get_indices()[0]);
-    }
-
-    public Gtk.TreePath? get_path(Gtk.TreeIter iter)
-    {
-        var path = new Gtk.TreePath();
-        path.append_index(get_key(iter).index);
-        return path;
-    }
-
-    public void get_value(Gtk.TreeIter iter, int column, out Value value)
-    {
-        Key key = get_key(iter);
-
-        if (column == 0)
-            value = key;
-        else if (column == 1)
-            value = key.name;
-        else if (column == 2)
-            value = key.value != null ? key.value.print(false) : "";
-        else if (column == 4)
-            value = key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD;
-        else
-            value = 0;
-    }
-
-    public bool iter_next(ref Gtk.TreeIter iter)
-    {
-        int index = get_key(iter).index;
-        if (index >= directory.keys.length() - 1)
-            return false;
-        set_iter(ref iter, directory.keys.nth_data(index+1));
-        return true;
-    }
-
-    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
-    {
-        iter = Gtk.TreeIter();
-
-        if (parent != null || directory.keys.length() == 0)
-            return false;
-        set_iter(ref iter, directory.keys.nth_data(0));
-
-        return true;
-    }
-
-    public bool iter_has_child(Gtk.TreeIter iter)
-    {
-        return false;
-    }
-
-    public int iter_n_children(Gtk.TreeIter? iter)
-    {
-        if (iter == null)
-            return (int)directory.keys.length();
-        else
-            return 0;
-    }
-
-    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
-    {
-        iter = Gtk.TreeIter();
-
-        if (parent != null)
-            return false;
-
-        if (n >= directory.keys.length())
-            return false;
-        set_iter(ref iter, directory.keys.nth_data(n));
-        return true;
-    }
-
-    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
-    {
-        iter = Gtk.TreeIter();
-        return false;
-    }
-
-    public void ref_node(Gtk.TreeIter iter)
-    {
-        get_key(iter).ref();
-    }
-
-    public void unref_node(Gtk.TreeIter iter)
-    {
-        get_key(iter).unref();
-    }
-}
-
-public class EnumModel: GLib.Object, Gtk.TreeModel
-{
-    private SchemaEnum schema_enum;
-
-    public EnumModel(SchemaEnum schema_enum)
-    {
-        this.schema_enum = schema_enum;
-    }
-
-    public Gtk.TreeModelFlags get_flags()
-    {
-        return Gtk.TreeModelFlags.LIST_ONLY;
-    }
-
-    public int get_n_columns()
-    {
-        return 2;
-    }
-
-    public Type get_column_type(int index)
-    {
-        if (index == 0)
-            return typeof(string);
-        else
-            return typeof(int);
-    }
-
-    private void set_iter(ref Gtk.TreeIter iter, SchemaValue value)
-    {
-        iter.stamp = 0;
-        iter.user_data = value;
-        iter.user_data2 = value;
-        iter.user_data3 = value;
-    }
-
-    public SchemaValue get_enum_value(Gtk.TreeIter iter)
-    {
-        return (SchemaValue)iter.user_data;
-    }
-
-    public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
-    {
-        iter = Gtk.TreeIter();
-
-        if (path.get_depth() != 1)
-            return false;
-
-        return iter_nth_child(out iter, null, path.get_indices()[0]);
-    }
-
-    public Gtk.TreePath? get_path(Gtk.TreeIter iter)
-    {
-        var path = new Gtk.TreePath();
-        path.append_index((int)get_enum_value(iter).index);
-        return path;
-    }
-
-    public void get_value(Gtk.TreeIter iter, int column, out Value value)
-    {
-        if (column == 0)
-            value = get_enum_value(iter).nick;
-        else if (column == 1)
-            value = get_enum_value(iter).value;
-        else
-            value = 0;
-    }
-
-    public bool iter_next(ref Gtk.TreeIter iter)
-    {
-        uint index = get_enum_value(iter).index;
-        if (index >= schema_enum.values.length () - 1)
-            return false;
-        set_iter(ref iter, schema_enum.values.nth_data(index + 1));
-        return true;
-    }
-
-    public bool iter_children(out Gtk.TreeIter iter, Gtk.TreeIter? parent)
-    {
-        iter = Gtk.TreeIter();
-
-        if (parent != null || schema_enum.values.length() == 0)
-            return false;
-
-        set_iter(ref iter, schema_enum.values.nth_data(0));
-
-        return true;
-    }
-
-    public bool iter_has_child(Gtk.TreeIter iter)
-    {
-        return false;
-    }
-
-    public int iter_n_children(Gtk.TreeIter? iter)
-    {
-        if (iter == null)
-            return (int) schema_enum.values.length();
-        else
-            return 0;
-    }
-
-    public bool iter_nth_child(out Gtk.TreeIter iter, Gtk.TreeIter? parent, int n)
-    {
-        iter = Gtk.TreeIter();
-
-        if (parent != null)
-            return false;
-
-        if (n >= schema_enum.values.length())
-            return false;
-        set_iter(ref iter, schema_enum.values.nth_data(n));
-        return true;
-    }
-
-    public bool iter_parent(out Gtk.TreeIter iter, Gtk.TreeIter child)
-    {
-        iter = Gtk.TreeIter();
-        return false;
-    }
-
-    public void ref_node(Gtk.TreeIter iter)
-    {
-        get_enum_value(iter).ref();
-    }
-
-    public void unref_node(Gtk.TreeIter iter)
-    {
-        get_enum_value(iter).unref();
+                get_key (items [i]);
     }
 }
 
@@ -564,7 +261,9 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     void watch_func (DConf.Client client, string path, string[] items, string? tag) {
         foreach (var item in items)
+        {   // don't remove that!
             item_changed (path + item);
+        }
     }
 
     public SettingsModel()

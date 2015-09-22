@@ -15,52 +15,75 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-private class KeyValueRenderer: Gtk.CellRenderer
+using Gtk;
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
+private class KeyEditor : Dialog
 {
-    private DConfKeyView view;
-    private Gtk.CellRendererText text_renderer;
-    private Gtk.CellRendererSpin spin_renderer;
-    private Gtk.CellRendererToggle toggle_renderer;
-    private Gtk.CellRendererCombo combo_renderer;
+    [GtkChild] private Label schema_label;
+    [GtkChild] private Label summary_label;
+    [GtkChild] private Label description_label;
+    [GtkChild] private Label type_label;
+    [GtkChild] private Label default_label;
 
-    private Key _key;
-    public Key key
+    [GtkChild] private Button button_apply;
+    [GtkChild] private Switch custom_value_switch;
+    [GtkChild] private Grid custom_value_grid;
+
+    private Key key;
+    private bool custom_value_is_valid = true;
+
+    public KeyEditor (Key _key)
+        requires (_key.has_schema)
     {
-        get { return _key; }
-        set
+        Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
+
+        this.key = _key;
+
+        // infos
+        this.title = key.name;
+        if (this.use_header_bar == 1)        // TODO else..?
+            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
+
+        string? gettext_domain = key.schema.gettext_domain;
+
+        string summary = key.schema.summary ?? "";
+        if (gettext_domain != null && summary != "")
+            summary = dgettext (gettext_domain, summary);
+
+        string description = key.schema.description ?? "";
+        if (gettext_domain != null && description != "")
+            description = dgettext (gettext_domain, description);
+
+        schema_label.set_text (key.schema.schema.id);
+        summary_label.set_text (summary.strip ());
+        description_label.set_text (description.strip ());
+        type_label.set_text (key_to_description ());
+        default_label.set_text (key.schema.default_value.print (false));
+
+        // widgets creation
+
+        custom_value_switch.set_active (key.is_default);
+        custom_value_switch.notify["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
+
+        custom_value_grid.add (create_child ());
+
+        this.response.connect (response_cb);
+    }
+
+    private KeyEditorChild create_child ()
+    {
+        if (key.schema.choices != null)
+            return new KeyEditorChildChoices (key);
+
+        switch (key.type_string)
         {
-            _key = value;
-
-            if (key.has_schema && key.schema.choices != null)
-            {
-                combo_renderer.text = key.value.print(false);
-                var model = new Gtk.ListStore(2, typeof(string), typeof(string));
-                foreach (var choice in key.schema.choices)
-                {
-                    Gtk.TreeIter iter;
-                    model.append(out iter);
-                    model.set(iter, 0, choice.name, 1, choice.value.print(false), -1);
-                }
-                combo_renderer.model = model;
-                mode = Gtk.CellRendererMode.EDITABLE;
-                return;
-            }
-
-            switch (key.type_string)
-            {
             case "<enum>":
-                combo_renderer.text = key.value.get_string();
-                combo_renderer.model = new EnumModel(key.schema.schema.list.enums.lookup(key.schema.enum_name));
-                mode = Gtk.CellRendererMode.EDITABLE;
-                break;
+                return new KeyEditorChildEnum (key);
             case "b":
-                toggle_renderer.active = key.value.get_boolean();
-                mode = Gtk.CellRendererMode.ACTIVATABLE;
-                break;
+                return new KeyEditorChildBool (key.value.get_boolean ());
             case "s":
-                text_renderer.text = key.value.get_string();
-                mode = Gtk.CellRendererMode.EDITABLE;
-                break;
+                return new KeyEditorChildString (key.value.get_string ());
             case "y":
             case "n":
             case "q":
@@ -69,268 +92,361 @@ private class KeyValueRenderer: Gtk.CellRenderer
             case "x":
             case "t":
             case "d":
-                spin_renderer.text = key.value.print(false);
-                var v = get_variant_as_double(key.value);
-                double min = 0.0, max = 0.0;
-                if (key.has_schema && key.schema.range != null)
+                return new KeyEditorChildNumber (key);
+            default:
+                KeyEditorChildDefault key_editor_child_default = new KeyEditorChildDefault (key.type_string, key.value);
+                key_editor_child_default.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; button_apply.set_sensitive (is_valid); });
+                return key_editor_child_default;
+        }
+    }
+
+    private string key_to_description ()
+    {
+        switch (key.type_string)
+        {
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":
+                Variant min, max;
+                if (key.schema.range != null)
                 {
-                    min = get_variant_as_double(key.schema.range.min);
-                    max = get_variant_as_double(key.schema.range.max);
+                    min = key.schema.range.min;
+                    max = key.schema.range.max;
                 }
                 else
                 {
-                    min = get_variant_as_double(key.get_min());
-                    max = get_variant_as_double(key.get_max());
+                    min = key.get_min ();
+                    max = key.get_max ();
                 }
-                spin_renderer.adjustment = new Gtk.Adjustment(v, min, max, 1, 0, 0);
-                spin_renderer.digits = 0;
-                if (key.type_string == "d")
-                {
-                    spin_renderer.digits = 20;
-                }
-                mode = Gtk.CellRendererMode.EDITABLE;
-                break;
-            default:
-                text_renderer.text = key.value.print(false);
-                mode = Gtk.CellRendererMode.EDITABLE;
-                break;
-            }
-        }
-    }
-
-    private static double get_variant_as_double(Variant value)
-    {
-        if (value == null)
-            return 0.0;
-
-        switch (value.classify ())
-        {
-        case Variant.Class.BYTE:
-            return (double)value.get_byte();
-        case Variant.Class.INT16:
-            return (double)value.get_int16();
-        case Variant.Class.UINT16:
-            return (double)value.get_uint16();
-        case Variant.Class.INT32:
-            return (double)value.get_int32();
-        case Variant.Class.UINT32:
-            return (double)value.get_uint32();
-        case Variant.Class.INT64:
-            return (double)value.get_int64();
-        case Variant.Class.UINT64:
-            return (double)value.get_uint64();
-        case Variant.Class.DOUBLE:
-            return value.get_double();
-        default:
-            return 0.0;
-        }
-    }
-
-    public KeyValueRenderer(DConfKeyView view)
-    {
-        this.view = view;
-
-        text_renderer = new Gtk.CellRendererText();
-        text_renderer.editable = true;
-        text_renderer.edited.connect(text_edited_cb);
-
-        spin_renderer = new Gtk.CellRendererSpin();
-        spin_renderer.editable = true;
-        spin_renderer.edited.connect(spin_edited_cb);
-
-        toggle_renderer = new Gtk.CellRendererToggle();
-        toggle_renderer.xalign = 0f;
-        toggle_renderer.activatable = true;
-        toggle_renderer.toggled.connect(toggle_cb);
-
-        combo_renderer = new Gtk.CellRendererCombo();
-        combo_renderer.has_entry = false;
-        combo_renderer.text_column = 0;
-        combo_renderer.editable = true;
-        combo_renderer.edited.connect(text_edited_cb);
-    }
-
-    private Gtk.CellRenderer renderer
-    {
-        set {}
-        get
-        {
-            if (key.has_schema && key.schema.choices != null)
-                return combo_renderer;
-
-            switch (key.type_string)
-            {
-            case "<enum>":
-                return combo_renderer;
-            case "b":
-                return toggle_renderer;
-            case "y":
-            case "n":
-            case "q":
-            case "i":
-            case "u":
-            case "x":
-            case "t":
+                return _("Integer [%s..%s]").printf (min.print (false), max.print (false));
             case "d":
-                return spin_renderer;
-            default:
+                Variant min, max;
+                if (key.schema.range != null)
+                {
+                    min = key.schema.range.min;
+                    max = key.schema.range.max;
+                }
+                else
+                {
+                    min = key.get_min ();
+                    max = key.get_max ();
+                }
+                return _("Double [%s..%s]").printf (min.print (false), max.print (false));
+            case "b":
+                return _("Boolean");
             case "s":
-                return text_renderer;
-            }
+                return _("String");
+            case "<enum>":
+                return _("Enumeration");
+            default:
+                return key.schema.type;
         }
     }
 
-    public override void get_size(Gtk.Widget     widget,
-                                  Gdk.Rectangle? cell_area,
-                                  out int        x_offset,
-                                  out int        y_offset,
-                                  out int        width,
-                                  out int        height)
+    private void response_cb (Dialog dialog, int response_id)
     {
-        renderer.get_size(widget, cell_area, out x_offset, out y_offset, out width, out height);
-    }
-
-    public override void get_preferred_width(Gtk.Widget widget,
-                                             out int    minimum_size,
-                                             out int    natural_size)
-    {
-        renderer.get_preferred_width(widget, out minimum_size, out natural_size);
-    }
-
-    public override void get_preferred_height_for_width(Gtk.Widget widget,
-                                                        int        width,
-                                                        out int    minimum_height,
-                                                        out int    natural_height)
-    {
-        renderer.get_preferred_height_for_width(widget, width, out minimum_height, out natural_height);
-    }
-
-    public override void get_preferred_height(Gtk.Widget widget,
-                                              out int    minimum_size,
-                                              out int    natural_size)
-    {
-        renderer.get_preferred_height(widget, out minimum_size, out natural_size);
-    }
-
-    public override void get_preferred_width_for_height(Gtk.Widget widget,
-                                                        int        height,
-                                                        out int    minimum_width,
-                                                        out int    natural_width)
-    {
-        renderer.get_preferred_width_for_height(widget, height, out minimum_width, out natural_width);
-    }
-
-    public override void render(Cairo.Context context,
-                                Gtk.Widget    widget,
-                                Gdk.Rectangle background_area,
-                                Gdk.Rectangle cell_area,
-                                Gtk.CellRendererState flags)
-    {
-        renderer.render(context, widget, background_area, cell_area, flags);
-    }
-
-    public override bool activate(Gdk.Event event,
-                                  Gtk.Widget widget,
-                                  string path,
-                                  Gdk.Rectangle background_area,
-                                  Gdk.Rectangle cell_area,
-                                  Gtk.CellRendererState flags)
-    {
-        return renderer.activate(event, widget, path, background_area, cell_area, flags);
-    }
-
-    public override unowned Gtk.CellEditable start_editing(Gdk.Event event,
-                                                           Gtk.Widget widget,
-                                                           string path,
-                                                           Gdk.Rectangle background_area,
-                                                           Gdk.Rectangle cell_area,
-                                                           Gtk.CellRendererState flags)
-    {
-        return renderer.start_editing(event, widget, path, background_area, cell_area, flags);
-    }
-
-    private Key get_key_from_path(string path)
-    {
-        Gtk.TreeIter iter;
-        view.model.get_iter_from_string(out iter, path);
-
-        Key key;
-        view.model.get(iter, 0, out key, -1);
-
-        return key;
-    }
-
-    private void toggle_cb(Gtk.CellRendererToggle renderer, string path)
-    {
-        var key = get_key_from_path(path);
-        key.value = new Variant.boolean(!key.value.get_boolean());
-    }
-
-    private void text_edited_cb(Gtk.CellRendererText renderer, string path, string text)
-    {
-        var key = get_key_from_path(path);
-        if (key.type_string == "s" || key.type_string == "<enum>")
+        if (response_id == ResponseType.APPLY)
         {
-            key.value = new Variant.string(text);
-        }
-        else
-        {
-            try
+            if (!custom_value_switch.active)
             {
-                var value = Variant.parse(new VariantType(key.type_string), text);
-                key.value = value;
+                Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
+                if (key.is_default || key.value != variant)
+                    key.value = variant;
             }
-            catch (VariantParseError e)
-            {
-                var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK, _("Error setting value: %s"), e.message);
-                dialog.run();
-                dialog.destroy();
-            }
+            else if (!key.is_default)
+                key.set_to_default ();
         }
+        this.destroy ();
+    }
+}
+
+public interface KeyEditorChild : Widget
+{
+    public abstract Variant get_variant ();
+}
+
+private class KeyEditorChildMulti : Grid, KeyEditorChild
+{
+    private static const string ACTION_NAME = "key_value";
+    private static const string GROUP_PREFIX = "bool_switch";
+
+    private SimpleAction action;
+    private VariantType variant_type;
+
+    private Grid grid;
+    private MenuButton button;
+    private Popover popover;
+
+    public KeyEditorChildMulti ()
+    {
+        this.visible = true;
+        this.hexpand = true;
+
+        Label label = new Label (_("Custom Value"));
+        label.visible = true;
+        label.halign = Align.START;
+        label.hexpand = true;
+        this.attach (label, 0, 0, 1, 1);
+
+        button = new MenuButton ();
+        button.visible = true;
+        button.use_popover = true;
+        button.halign = Align.END;
+        button.width_request = 100;
+        this.attach (button, 1, 0, 1, 1);
+
+        popover = new Popover (button);
+        button.set_popover (popover);
+
+        grid = new Grid ();
+        grid.orientation = Orientation.VERTICAL;
+        grid.visible = true;
+        grid.row_homogeneous = true;
+        // grid.width_request = 100;
+        popover.add (grid);
+    }
+    protected void init (VariantType _type, Variant initial_value)
+    {
+        variant_type = _type;
+        set_text (initial_value);
+
+        action = new SimpleAction.stateful (ACTION_NAME, variant_type, initial_value);
+        SimpleActionGroup group = new SimpleActionGroup ();
+        ((ActionMap) group).add_action (action);
+        grid.insert_action_group (GROUP_PREFIX, group);
+
+        group.action_state_changed [ACTION_NAME].connect ((unknown_string, variant) => {
+                set_text (variant);
+                popover.closed ();
+            });
     }
 
-    private void spin_edited_cb(Gtk.CellRendererText renderer, string path, string text)
+    private void set_text (Variant variant)
     {
-        var key = get_key_from_path(path);
-        switch (key.type_string)
+        button.label = variant_type == VariantType.STRING ? variant.get_string () : variant.print (false);
+    }
+
+    protected void add_model_button (string text, Variant variant)
+    {
+        ModelButton button = new ModelButton ();
+        button.visible = true;
+        button.text = text;
+        button.action_name = GROUP_PREFIX + "." + ACTION_NAME;
+        button.action_target = variant;
+        grid.add (button);
+    }
+
+    public Variant get_variant ()
+    {
+        return action.get_state ();
+    }
+}
+
+private class KeyEditorChildChoices : KeyEditorChildMulti
+{
+    public KeyEditorChildChoices (Key key)
+    {
+        init (VariantType.ANY, key.value);
+
+        foreach (SchemaChoice choice in key.schema.choices)
+            add_model_button (choice.name, choice.value);
+    }
+}
+
+private class KeyEditorChildEnum : KeyEditorChildMulti
+{
+    public KeyEditorChildEnum (Key key)
+    {
+        init (VariantType.STRING, key.value);
+
+        SchemaEnum schema_enum = key.schema.schema.list.enums.lookup (key.schema.enum_name);
+        if (schema_enum.values.length () <= 0)
+            assert_not_reached ();  // TODO special case 0?
+//        else if (schema_enum.values.length () == 1)
+//            assert_not_reached ();  // TODO
+
+        for (uint index = 0; index < schema_enum.values.length (); index++)
         {
-        case "y":
-            key.value = new Variant.byte((uchar)int.parse(text));
-            break;
-        case "n":
-            key.value = new Variant.int16((int16)int.parse(text));
-            break;
-        case "q":
-            key.value = new Variant.uint16((uint16)int.parse(text));
-            break;
-        case "i":
-            key.value = new Variant.int32(int.parse(text));
-            break;
-        case "u":
-            key.value = new Variant.uint32(int.parse(text));
-            break;
-        case "x":
-            key.value = new Variant.int64(int.parse(text));
-            break;
-        case "t":
-            key.value = new Variant.uint64(int.parse(text));
-            break;
-        case "d":
-            key.value = new Variant.double(double.parse(text));
-            break;
+            string nick = schema_enum.values.nth_data (index).nick;  // value.get_string ()); ? key.value.get_string () ? key.value.print (false) ? nick ?
+            add_model_button (nick, new Variant.string (nick));
         }
     }
 }
 
-public class DConfKeyView : Gtk.TreeView
+private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by action, but can't find a way to ensure one-and-only-one button is active
 {
-    public DConfKeyView()
+    private ToggleButton button_true;
+
+    public KeyEditorChildBool (bool initial_value)
     {
-        /* Translators: this is the column header label in the main view */
-        var column = new Gtk.TreeViewColumn.with_attributes(_("Name"), new Gtk.CellRendererText(), "text", 1, "weight", 4, null);
-        /*column.set_sort_column_id(1);*/
-        append_column(column);
-        /* Translators: this is the column header label in the main view */
-        insert_column_with_attributes(-1, _("Value"), new KeyValueRenderer(this), "key", 0, null);
+        this.visible = true;
+        this.hexpand = true;
+
+        Label label = new Label (_("Custom Value"));
+        label.visible = true;
+        label.halign = Align.START;
+        label.hexpand = true;
+        this.attach (label, 0, 0, 1, 1);
+
+        Grid grid = new Grid ();
+        grid.visible = true;
+        grid.halign = Align.END;
+        grid.column_homogeneous = true;
+        grid.width_request = 100;
+        ((StyleContext) grid.get_style_context ()).add_class ("linked");
+        this.attach (grid, 1, 0, 1, 1);
+
+        ToggleButton button_false = new ToggleButton ();
+        button_false.visible = true;
+        button_false.label = _("False");
+        grid.attach (button_false, 0, 0, 1, 1);
+
+        button_true = new ToggleButton ();
+        button_true.visible = true;
+        button_true.label = _("True");
+        grid.attach (button_true, 1, 0, 1, 1);
+
+        button_true.active = initial_value;
+        button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
+    }
+
+    public Variant get_variant ()
+    {
+        return new Variant.boolean (button_true.active);
+    }
+}
+
+private class KeyEditorChildNumber : Grid, KeyEditorChild
+{
+    private SpinButton spin;
+    private string key_type;
+
+    public KeyEditorChildNumber (Key key)
+    {
+        this.key_type = key.type_string;
+
+        this.visible = true;
+        this.hexpand = true;
+
+        Label label = new Label (_("Custom Value"));
+        label.visible = true;
+        label.halign = Align.START;
+        label.hexpand = true;
+        this.attach (label, 0, 0, 1, 1);
+
+        bool has_range = /* key.has_schema && */ key.schema.range != null;
+        double min = get_variant_as_double ((has_range && key.schema.range.min != null) ? key.schema.range.min : key.get_min ());
+        double max = get_variant_as_double ((has_range && key.schema.range.max != null) ? key.schema.range.max : key.get_max ());
+
+        if (key.type_string == "d")
+        {
+            Adjustment adjustment = new Adjustment (key.value.get_double (), min, max, 0.01, 0.1, 0.0);
+            spin = new SpinButton (adjustment, 0.01, 2);
+        }
+        else
+        {
+            Adjustment adjustment = new Adjustment (get_variant_as_double (key.value), min, max, 1.0, 5.0, 0.0);
+            spin = new SpinButton (adjustment, 1.0, 0);
+        }
+
+        spin.visible = true;
+        spin.update_policy = SpinButtonUpdatePolicy.IF_VALID;
+        spin.snap_to_ticks = true;
+        spin.input_purpose = InputPurpose.NUMBER;   // TODO spin.input_purpose = InputPurpose.DIGITS & spin.numeric = true; (no “e”) if not double?
+        spin.width_chars = 30;
+        this.attach (spin, 1, 0, 1, 1);
+    }
+
+    private static double get_variant_as_double (Variant variant)
+        requires (variant != null)      // TODO is that realllly useful? it shouldn't...
+    {
+        switch (variant.classify ())
+        {
+            case Variant.Class.BYTE:    return (double) variant.get_byte ();
+            case Variant.Class.INT16:   return (double) variant.get_int16 ();
+            case Variant.Class.UINT16:  return (double) variant.get_uint16 ();
+            case Variant.Class.INT32:   return (double) variant.get_int32 ();
+            case Variant.Class.UINT32:  return (double) variant.get_uint32 ();
+            case Variant.Class.INT64:   return (double) variant.get_int64 ();
+            case Variant.Class.UINT64:  return (double) variant.get_uint64 ();
+            case Variant.Class.DOUBLE:  return variant.get_double ();
+            default:                    assert_not_reached ();
+        }
+    }
+
+    public Variant get_variant ()
+    {
+        switch (key_type)
+        {
+            case "y": return new Variant.byte   ((uchar) spin.get_value ());
+            case "n": return new Variant.int16  ((int16) spin.get_value ());
+            case "q": return new Variant.uint16 ((uint16) spin.get_value ());
+            case "i": return new Variant.int32  ((int) spin.get_value ());
+            case "u": return new Variant.uint32 ((int) spin.get_value ());
+            case "x": return new Variant.int64  ((int) spin.get_value ());
+            case "t": return new Variant.uint64 ((int) spin.get_value ());
+            case "d": return new Variant.double (spin.get_value ());
+            default : assert_not_reached ();
+        }
+    }
+}
+
+private class KeyEditorChildString : Entry, KeyEditorChild
+{
+    public KeyEditorChildString (string _text)
+    {
+        this.visible = true;
+        this.hexpand = true;
+        this.text = _text;
+    }
+
+    public Variant get_variant ()
+    {
+        return new Variant.string (this.text);
+    }
+}
+
+private class KeyEditorChildDefault : Entry, KeyEditorChild
+{
+    public signal void is_valid (bool is_valid);
+
+    private string variant_type;
+    private Variant variant;
+
+    public KeyEditorChildDefault (string type, Variant initial_value)
+    {
+        this.variant_type = type;
+        this.variant = initial_value;
+
+        this.visible = true;
+        this.hexpand = true;
+        this.text = initial_value.print (false);
+
+        this.buffer.deleted_text.connect (test_value);
+        this.buffer.inserted_text.connect (test_value);
+        test_value ();
+    }
+
+    private void test_value ()
+    {
+        try
+        {
+            Variant? tmp_variant = Variant.parse (new VariantType (variant_type), this.text);
+            variant = tmp_variant;
+            is_valid (true);
+        }
+        catch (VariantParseError e)
+        {
+            is_valid (false);
+        }
+    }
+
+    public Variant get_variant ()
+    {
+        return variant;
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="KeyListBoxRow" parent="GtkGrid">
+    <property name="visible">True</property>
+    <property name="orientation">horizontal</property>
+    <property name="height-request">42</property>
+    <property name="margin-start">10</property><!-- looks cool -->
+    <property name="column-spacing">6</property>
+    <property name="margin-end">6</property><!-- same as column_spacing -->
+    <child>
+      <object class="GtkLabel" id="key_name_label">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="vexpand">True</property>
+        <property name="width-request">222</property>
+        <property name="wrap">True</property>
+        <property name="wrap-mode">PANGO_WRAP_WORD_CHAR</property>
+        <property name="halign">start</property>
+        <property name="single-line-mode">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="key_value_label">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="vexpand">True</property>
+        <property name="width-request">166</property>
+        <property name="wrap">True</property>
+        <property name="wrap-mode">PANGO_WRAP_WORD_CHAR</property>
+        <property name="halign">start</property>
+        <property name="single-line-mode">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="key_info_label">
+        <property name="visible">True</property>
+        <property name="expand">True</property>
+        <property name="wrap">False</property>
+        <property name="halign">start</property>
+        <property name="single-line-mode">True</property>
+        <property name="ellipsize">end</property>
+      </object>
+    </child>
+  </template>
+</interface>
