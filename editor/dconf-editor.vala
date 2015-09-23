@@ -32,7 +32,6 @@ class ConfigurationEditor : Gtk.Application
 
     private const GLib.ActionEntry[] action_entries =
     {
-        { "find", find_cb },
         { "about", about_cb },
         { "quit", quit }
     };
@@ -135,11 +134,6 @@ class ConfigurationEditor : Gtk.Application
     /*\
     * * App-menu callbacks
     \*/
-
-    private void find_cb ()
-    {
-        window.find_cb ();
-    }
 
     private void about_cb ()
     {

@@ -3,13 +3,6 @@
   <menu id="app-menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Find…</attribute>
-        <attribute name="action">app.find</attribute>
-        <attribute name="accel">&lt;Primary&gt;f</attribute>
-      </item>
-    </section>
-    <section>
-      <item>
         <attribute name="label" translatable="yes">_About</attribute>
         <attribute name="action">app.about</attribute>
       </item>

@@ -25,12 +25,14 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private TreeSelection dir_tree_selection;
     [GtkChild] private ListBox key_list_box;
 
-    [GtkChild] private Box search_box;
-    [GtkChild] private Entry search_entry;
-    [GtkChild] private Label search_label;
+    [GtkChild] private SearchBar search_bar;
+    [GtkChild] private SearchEntry search_entry;
+    [GtkChild] private Button search_next_button;
 
     public DConfWindow ()
     {
+        search_bar.connect_entry (search_entry);
+
         model = new SettingsModel ();
         dir_tree_view.set_model (model);
 
@@ -46,6 +48,8 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void dir_selected_cb ()
     {
+        search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 1/2
+
         GLib.ListStore? key_model = null;
 
         TreeIter iter;
@@ -75,6 +79,8 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void row_activated_cb (ListBoxRow list_box_row)
     {
+        search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 2/2
+
         ((KeyListBoxRow) list_box_row.get_child ()).show_dialog (this);
     }
 
@@ -82,34 +88,21 @@ class DConfWindow : ApplicationWindow
     * * Search box
     \*/
 
-    public void find_cb ()
-    {
-        search_box.show ();
-        search_entry.grab_focus ();
-    }
-
     [GtkCallback]
-    private bool on_key_press_event (Gdk.EventKey event)
+    private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
-        if (event.keyval == Gdk.Key.Escape)
+        if (Gdk.keyval_name (event.keyval) == "f" && (event.state & Gdk.ModifierType.CONTROL_MASK) != 0)    // TODO better?
         {
-            search_box.hide ();
+            search_bar.set_search_mode (!search_bar.get_search_mode ());
             return true;
         }
-        return false;
-    }
+        return search_bar.handle_event (event);
 
-    [GtkCallback]
-    private void on_close_button_clicked ()
-    {
-        search_box.hide ();
     }
 
     [GtkCallback]
     private void find_next_cb ()
     {
-        search_label.label = "";
-
         TreeIter iter;
         int position = 0;
         if (dir_tree_selection.get_selected (null, out iter))
@@ -142,6 +135,7 @@ class DConfWindow : ApplicationWindow
                 {
                     select_dir (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
+                    // TODO select key in ListBox
                     return;
                 }
                 position++;
@@ -151,7 +145,7 @@ class DConfWindow : ApplicationWindow
         }
         while (get_next_iter (ref iter));
 
-        search_label.label = _("Not found");
+        search_next_button.set_sensitive (false);
     }
 
     private void select_dir (TreeIter iter)
