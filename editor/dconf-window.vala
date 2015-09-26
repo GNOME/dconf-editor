@@ -69,11 +69,24 @@ class DConfWindow : ApplicationWindow
         if (key.has_schema)
         {
             KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable (key);
+            key_list_box_row.show_dialog.connect (() => {
+                    KeyEditor key_editor = new KeyEditor (key);
+                    key_editor.set_transient_for (this);
+                    key_editor.run ();
+                });
             key.value_changed.connect (() => { key_list_box_row.update (); });
             return key_list_box_row;
         }
         else
-            return new KeyListBoxRowNonEditable (key.name, key.cool_text_value ());
+        {
+            KeyListBoxRowNonEditable key_list_box_row = new KeyListBoxRowNonEditable (key.name, key.cool_text_value ());
+            key_list_box_row.show_dialog.connect (() => {
+                    MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.OK, _("No Schema, cannot edit value."));  // TODO with or without punctuation?        // TODO insert key name/path/..?
+                    dialog.run ();
+                    dialog.destroy ();
+                });
+            return key_list_box_row;
+        }
     }
 
     [GtkCallback]
@@ -81,7 +94,7 @@ class DConfWindow : ApplicationWindow
     {
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 2/2
 
-        ((KeyListBoxRow) list_box_row.get_child ()).show_dialog (this);
+        ((KeyListBoxRow) list_box_row.get_child ()).show_dialog ();
     }
 
     /*\
@@ -205,7 +218,7 @@ private abstract class KeyListBoxRow : Grid
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
 
-    public abstract void show_dialog (ApplicationWindow window);
+    public signal void show_dialog ();
 }
 
 private class KeyListBoxRowNonEditable : KeyListBoxRow
@@ -215,13 +228,6 @@ private class KeyListBoxRowNonEditable : KeyListBoxRow
         key_name_label.label = key_name;
         key_value_label.label = key_value;
         key_info_label.set_markup ("<i>" + _("No Schema") + "</i>");
-    }
-
-    public override void show_dialog (ApplicationWindow window)
-    {
-        MessageDialog dialog = new MessageDialog (window, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.OK, _("No Schema, cannot edit value."));  // TODO with or without punctuation?        // TODO insert key name/path/..?
-        dialog.run ();
-        dialog.destroy ();
     }
 }
 
@@ -255,12 +261,5 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         // TODO key_info_label.set_attributes (attr_list); ?
 
         key_value_label.label = key.cool_text_value ();
-    }
-
-    public override void show_dialog (ApplicationWindow window)
-    {
-        KeyEditor key_editor = new KeyEditor (key);
-        key_editor.set_transient_for (window);
-        key_editor.run ();
     }
 }
