@@ -211,7 +211,7 @@ class DConfWindow : ApplicationWindow
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
-private abstract class KeyListBoxRow : Grid
+private class KeyListBoxRow : EventBox
 {
     [GtkChild] protected Label key_name_label;
     [GtkChild] protected Label key_value_label;
