@@ -78,7 +78,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            KeyListBoxRowNonEditable key_list_box_row = new KeyListBoxRowNonEditable (key.name, key.cool_text_value ());
+            KeyListBoxRow key_list_box_row = new KeyListBoxRow.fixed_strings (key.name, key.cool_text_value ());
             key_list_box_row.show_dialog.connect (() => {
                     MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.OK, _("No Schema, cannot edit value."));  // TODO with or without punctuation?        // TODO insert key name/path/..?
                     dialog.run ();
@@ -218,11 +218,8 @@ private class KeyListBoxRow : EventBox
     [GtkChild] protected Label key_info_label;
 
     public signal void show_dialog ();
-}
 
-private class KeyListBoxRowNonEditable : KeyListBoxRow
-{
-    public KeyListBoxRowNonEditable (string key_name, string key_value)
+    public KeyListBoxRow.fixed_strings (string key_name, string key_value)
     {
         key_name_label.label = key_name;
         key_value_label.label = key_value;
