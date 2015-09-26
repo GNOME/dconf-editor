@@ -74,7 +74,6 @@ class DConfWindow : ApplicationWindow
                     key_editor.set_transient_for (this);
                     key_editor.run ();
                 });
-            key.value_changed.connect (() => { key_list_box_row.update (); });
             return key_list_box_row;
         }
         else
@@ -252,9 +251,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         if (gettext_domain != null)
             summary = dgettext (gettext_domain, summary);
         key_info_label.label = summary.strip ();
+
+        key.value_changed.connect (() => { update (); });
     }
 
-    public void update ()
+    private void update ()
     {
         attr_list.change (Pango.attr_weight_new (key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD));    // TODO good?
         key_name_label.set_attributes (attr_list);
