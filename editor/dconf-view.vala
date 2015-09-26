@@ -74,12 +74,12 @@ private class KeyEditor : Dialog
     private KeyEditorChild create_child ()
     {
         if (key.schema.choices != null)
-            return new KeyEditorChildChoices (key);
+            return new KeyEditorChildMulti (key);
 
         switch (key.type_string)
         {
             case "<enum>":
-                return new KeyEditorChildEnum (key);
+                return new KeyEditorChildMulti (key);
             case "b":
                 return new KeyEditorChildBool (key.value.get_boolean ());
             case "s":
@@ -171,18 +171,14 @@ public interface KeyEditorChild : Widget
 
 private class KeyEditorChildMulti : Grid, KeyEditorChild
 {
-    private static const string ACTION_NAME = "key_value";
-    private static const string GROUP_PREFIX = "bool_switch";
+    private ContextPopover popover;
 
-    private SimpleAction action;
-    private VariantType variant_type;
+    private Variant variant;
 
-    private Grid grid;
-    private MenuButton button;
-    private Popover popover;
-
-    public KeyEditorChildMulti ()
+    public KeyEditorChildMulti (Key key)
     {
+        this.variant = key.value;
+
         this.visible = true;
         this.hexpand = true;
 
@@ -192,88 +188,28 @@ private class KeyEditorChildMulti : Grid, KeyEditorChild
         label.hexpand = true;
         this.attach (label, 0, 0, 1, 1);
 
-        button = new MenuButton ();
+        MenuButton button = new MenuButton ();
         button.visible = true;
         button.use_popover = true;
         button.halign = Align.END;
         button.width_request = 100;
+        button.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
         this.attach (button, 1, 0, 1, 1);
 
-        popover = new Popover (button);
-        button.set_popover (popover);
-
-        grid = new Grid ();
-        grid.orientation = Orientation.VERTICAL;
-        grid.visible = true;
-        grid.row_homogeneous = true;
-        // grid.width_request = 100;
-        popover.add (grid);
-    }
-    protected void init (VariantType _type, Variant initial_value)
-    {
-        variant_type = _type;
-        set_text (initial_value);
-
-        action = new SimpleAction.stateful (ACTION_NAME, variant_type, initial_value);
-        SimpleActionGroup group = new SimpleActionGroup ();
-        ((ActionMap) group).add_action (action);
-        grid.insert_action_group (GROUP_PREFIX, group);
-
-        group.action_state_changed [ACTION_NAME].connect ((unknown_string, variant) => {
-                set_text (variant);
+        popover = new ContextPopover ();
+        popover.create_buttons_list (key, false);
+        popover.set_relative_to (button);
+        popover.value_changed.connect ((bytes) => {
+                variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
+                button.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
                 popover.closed ();
             });
-    }
-
-    private void set_text (Variant variant)
-    {
-        button.label = variant_type == VariantType.STRING ? variant.get_string () : variant.print (false);
-    }
-
-    protected void add_model_button (string text, Variant variant)
-    {
-        ModelButton button = new ModelButton ();
-        button.visible = true;
-        button.text = text;
-        button.action_name = GROUP_PREFIX + "." + ACTION_NAME;
-        button.action_target = variant;
-        grid.add (button);
+        button.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
     {
-        return action.get_state ();
-    }
-}
-
-private class KeyEditorChildChoices : KeyEditorChildMulti
-{
-    public KeyEditorChildChoices (Key key)
-    {
-        init (VariantType.ANY, key.value);
-
-        foreach (SchemaChoice choice in key.schema.choices)
-            add_model_button (choice.name, choice.value);
-    }
-}
-
-private class KeyEditorChildEnum : KeyEditorChildMulti
-{
-    public KeyEditorChildEnum (Key key)
-    {
-        init (VariantType.STRING, key.value);
-
-        SchemaEnum schema_enum = key.schema.schema.list.enums.lookup (key.schema.enum_name);
-        if (schema_enum.values.length () <= 0)
-            assert_not_reached ();  // TODO special case 0?
-//        else if (schema_enum.values.length () == 1)
-//            assert_not_reached ();  // TODO
-
-        for (uint index = 0; index < schema_enum.values.length (); index++)
-        {
-            string nick = schema_enum.values.nth_data (index).nick;  // value.get_string ()); ? key.value.get_string () ? key.value.print (false) ? nick ?
-            add_model_button (nick, new Variant.string (nick));
-        }
+        return variant;
     }
 }
 

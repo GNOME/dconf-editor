@@ -69,6 +69,7 @@ class DConfWindow : ApplicationWindow
         if (key.has_schema)
         {
             KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable (key);
+            key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
                     KeyEditor key_editor = new KeyEditor (key);
                     key_editor.set_transient_for (this);
@@ -79,6 +80,7 @@ class DConfWindow : ApplicationWindow
         else
         {
             KeyListBoxRow key_list_box_row = new KeyListBoxRow.fixed_strings (key.name, key.cool_text_value ());
+            key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
                     MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.OK, _("No Schema, cannot edit value."));  // TODO with or without punctuation?        // TODO insert key name/path/..?
                     dialog.run ();
@@ -86,6 +88,15 @@ class DConfWindow : ApplicationWindow
                 });
             return key_list_box_row;
         }
+        // TODO bug: list_box_row is always activated after the dialog destruction if mouse is over at this time
+    }
+
+    private bool on_button_pressed (Widget widget, Gdk.EventButton event)
+    {
+        ListBoxRow list_box_row = (ListBoxRow) ((KeyListBoxRow) widget).get_parent ();
+        key_list_box.select_row (list_box_row);
+        list_box_row.grab_focus ();
+        return false;
     }
 
     [GtkCallback]
@@ -225,6 +236,30 @@ private class KeyListBoxRow : EventBox
         key_value_label.label = key_value;
         key_info_label.set_markup ("<i>" + _("No Schema") + "</i>");
     }
+
+    protected ContextPopover? popover = null;
+    protected virtual bool generate_popover () { return false; }
+
+    public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
+    {
+        if (event.button == Gdk.BUTTON_SECONDARY)
+        {
+            if (popover != null)            // TODO remove? put in generate_popover?
+                popover.destroy ();
+            if (!generate_popover ())
+                return false;
+
+            Gdk.Rectangle rect;
+            popover.set_relative_to (this);
+            popover.position = PositionType.BOTTOM;
+            popover.get_pointing_to (out rect);
+            rect.x = (int) (event.x - this.get_allocated_width () / 2.0);
+            popover.set_pointing_to (rect);
+            popover.show ();
+        }
+
+        return false;
+    }
 }
 
 private class KeyListBoxRowEditable : KeyListBoxRow
@@ -249,7 +284,33 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             summary = dgettext (gettext_domain, summary);
         key_info_label.label = summary.strip ();
 
-        key.value_changed.connect (() => { update (); });
+        key.value_changed.connect (() => { update (); if (popover != null) popover.destroy (); });
+    }
+
+    protected override bool generate_popover ()
+    {
+        popover = new ContextPopover ();
+        popover.add_action_button (_("Customize…"), () => { show_dialog (); });
+        popover.add_action_button (_("Copy"), () => {
+                Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
+                string copy = key.schema.schema.id + " " + key.name + " " + key.value.print (false);
+                clipboard.set_text (copy, copy.length);
+            });
+
+        if (key.type_string == "b" || key.type_string == "<enum>" || key.schema.choices != null)
+        {
+            popover.add_separator ();
+            popover.create_buttons_list (key, true);
+
+            popover.set_to_default.connect (() => { key.set_to_default (); popover.destroy (); });
+            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
+        }
+        else if (!key.is_default)
+        {
+            popover.add_separator ();
+            popover.add_action_button (_("Set to default"), () => { key.set_to_default (); });
+        }
+        return true;
     }
 
     private void update ()
@@ -259,5 +320,105 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         // TODO key_info_label.set_attributes (attr_list); ?
 
         key_value_label.label = key.cool_text_value ();
+    }
+}
+
+private class ContextPopover : Popover
+{
+    public signal void set_to_default ();
+    public signal void value_changed (Bytes bytes);
+
+    private static const string ACTION_NAME = "key_value";
+    private static const string GROUP_PREFIX = "group";
+
+    private Grid grid;
+
+    public ContextPopover ()
+    {
+        grid = new Grid ();
+        grid.orientation = Orientation.VERTICAL;
+        grid.visible = true;
+        // grid.width_request = 100;        // TODO
+        grid.margin = 4;
+        grid.row_spacing = 2;
+        this.add (grid);
+    }
+
+    public delegate void button_action ();
+    public void add_action_button (string label, button_action action)
+    {
+        ModelButton button = new ModelButton ();
+        button.visible = true;
+        button.text = label;
+        button.clicked.connect (() => { action (); });
+        grid.add (button);
+    }
+
+    public void add_separator ()
+    {
+        Separator separator = new Separator (Orientation.HORIZONTAL);
+        separator.visible = true;
+        grid.add (separator);
+    }
+
+    public void create_buttons_list (Key key, bool nullable)
+    {
+        if ("m" in key.value.get_type_string ())        // TODO better; is it really needed? ("mmmb"?)
+            assert_not_reached ();
+
+        VariantType original_type = key.value.get_type ();
+        VariantType nullable_type = new VariantType.maybe (original_type);
+        Variant variant = new Variant.maybe (original_type, key.is_default ? null : key.value);
+
+        SimpleAction simple_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
+        SimpleActionGroup group = new SimpleActionGroup ();
+        ((ActionMap) group).add_action (simple_action);
+        grid.insert_action_group (GROUP_PREFIX, group);
+
+        if (nullable)
+            add_model_button (_("Default value"), new Variant.maybe (original_type, null));
+
+        if (key.schema.choices != null)
+        {
+            foreach (SchemaChoice choice in key.schema.choices)
+                add_model_button (choice.name, new Variant.maybe (original_type, choice.value));
+        }
+        else if (key.type_string == "b")
+        {
+            add_model_button (_("True"), new Variant.maybe (original_type, new Variant.boolean (true)));        // TODO string duplication
+            add_model_button (_("False"), new Variant.maybe (original_type, new Variant.boolean (false)));      // TODO string duplication
+        }
+        else if (key.type_string == "<enum>")
+        {
+            SchemaEnum schema_enum = key.schema.schema.list.enums.lookup (key.schema.enum_name);
+            if (schema_enum.values.length () <= 0)
+                assert_not_reached ();  // TODO special case 0?
+    //        else if (schema_enum.values.length () == 1)
+    //            assert_not_reached ();  // TODO
+
+            for (uint index = 0; index < schema_enum.values.length (); index++)
+            {
+                string nick = schema_enum.values.nth_data (index).nick;
+                add_model_button (nick, new Variant.maybe (VariantType.STRING, new Variant.string (nick)));     // FIXME in internals, it’s an int!
+            }
+        }
+
+        group.action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
+                Variant? new_variant = tmp_variant.get_maybe ();
+                if (new_variant == null)
+                    set_to_default ();
+                else
+                    value_changed (new_variant.get_data_as_bytes ());
+            });
+    }
+
+    private void add_model_button (string text, Variant variant)
+    {
+        ModelButton button = new ModelButton ();
+        button.visible = true;
+        button.text = text;
+        button.action_name = GROUP_PREFIX + "." + ACTION_NAME;
+        button.action_target = variant;
+        grid.add (button);
     }
 }
