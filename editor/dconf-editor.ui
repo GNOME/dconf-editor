@@ -7,6 +7,8 @@
     <property name="height_request">525</property>
     <property name="width_request">700</property>
     <signal name="key_press_event" handler="on_key_press_event"/>
+    <signal name="window_state_event" handler="on_window_state_event"/>
+    <signal name="size_allocate" handler="on_size_allocate"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

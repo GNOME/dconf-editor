@@ -20,6 +20,11 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
+    public int window_width { get; private set; default = 0; }
+    public int window_height { get; private set; default = 0; }
+    public bool window_is_maximized { get; private set; default = false; }
+    public bool window_is_fullscreen { get; private set; default = false; }
+
     private SettingsModel model;
     [GtkChild] private TreeView dir_tree_view;
     [GtkChild] private TreeSelection dir_tree_selection;
@@ -39,6 +44,30 @@ class DConfWindow : ApplicationWindow
         TreeIter iter;
         if (model.get_iter_first (out iter))
             dir_tree_selection.select_iter (iter);
+    }
+
+    /*\
+    * * Window management callbacks
+    \*/
+
+    [GtkCallback]
+    private bool on_window_state_event (Widget widget, Gdk.EventWindowState event)
+    {
+        if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
+            window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
+        if ((event.changed_mask & Gdk.WindowState.FULLSCREEN) != 0)
+            window_is_fullscreen = (event.new_window_state & Gdk.WindowState.FULLSCREEN) != 0;
+
+        return false;
+    }
+
+    [GtkCallback]
+    private void on_size_allocate (Allocation allocation)
+    {
+        if (window_is_maximized || window_is_fullscreen)
+            return;
+        window_width = allocation.width;
+        window_height = allocation.height;
     }
 
     /*\
@@ -119,8 +148,8 @@ class DConfWindow : ApplicationWindow
             search_bar.set_search_mode (!search_bar.get_search_mode ());
             return true;
         }
-        return search_bar.handle_event (event);
 
+        return search_bar.handle_event (event);
     }
 
     [GtkCallback]

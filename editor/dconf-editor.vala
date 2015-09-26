@@ -19,10 +19,6 @@ class ConfigurationEditor : Gtk.Application
 {
     private Settings settings;
     private DConfWindow window;
-    private int window_width = 0;
-    private int window_height = 0;
-    private bool window_is_maximized = false;
-    private bool window_is_fullscreen = false;
 
     private const OptionEntry[] option_entries =
     {
@@ -89,9 +85,6 @@ class ConfigurationEditor : Gtk.Application
         else if (settings.get_boolean ("window-is-maximized"))
             window.maximize ();
 
-        window.window_state_event.connect (window_state_event_cb);
-        window.size_allocate.connect (size_allocate_cb);
-
         add_window (window);
     }
 
@@ -103,32 +96,10 @@ class ConfigurationEditor : Gtk.Application
     protected override void shutdown ()
     {
         base.shutdown ();
-        settings.set_int ("window-width", window_width);
-        settings.set_int ("window-height", window_height);
-        settings.set_boolean ("window-is-maximized", window_is_maximized);
-        settings.set_boolean ("window-is-fullscreen", window_is_fullscreen);
-    }
-
-    /*\
-    * * Window callbacks
-    \*/
-
-    private bool window_state_event_cb (Gtk.Widget widget, Gdk.EventWindowState event)
-    {
-        if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
-            window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
-        if ((event.changed_mask & Gdk.WindowState.FULLSCREEN) != 0)
-            window_is_fullscreen = (event.new_window_state & Gdk.WindowState.FULLSCREEN) != 0;
-
-        return false;
-    }
-
-    private void size_allocate_cb (Gtk.Allocation allocation)
-    {
-        if (window_is_maximized || window_is_fullscreen)
-            return;
-        window_width = allocation.width;
-        window_height = allocation.height;
+        settings.set_int ("window-width", window.window_width);
+        settings.set_int ("window-height", window.window_height);
+        settings.set_boolean ("window-is-maximized", window.window_is_maximized);
+        settings.set_boolean ("window-is-fullscreen", window.window_is_fullscreen);
     }
 
     /*\
@@ -139,7 +110,7 @@ class ConfigurationEditor : Gtk.Application
     {
         string[] authors = { "Robert Ancell", "Arnaud Bonatti", null };
         string license = _("Dconf Editor is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nDconf Editor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.");
-        Gtk.show_about_dialog (window,
+        Gtk.show_about_dialog (this.get_active_window (),
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
                                "comments", _("Directly edit your entire configuration database"),
