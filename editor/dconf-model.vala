@@ -153,44 +153,39 @@ public class Directory : GLib.Object
 
     public Directory? parent;
 
-    private GLib.ListStore _key_model;
-    public GLib.ListStore key_model
-    {
-        get {
-            update_children ();
-            if (_key_model == null)
-                _key_model = new GLib.ListStore (typeof (Key));
-            return _key_model;
-        }
-        private set {}
-    }
+    public GLib.ListStore key_model { get; private set; default = new GLib.ListStore (typeof (Key)); }
 
     public int index
     {
        get { return parent.children.index (this); }
     }
 
-    public GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory>(str_hash, str_equal);
-    public GLib.List<Directory> _children = new GLib.List<Directory>();
+    private GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
+    private GLib.List<Directory> _children = new GLib.List<Directory> ();
     public GLib.List<Directory> children
     {
-        get { update_children(); return _children; }
+        get { return _children; }
         private set { }
     }
 
-    public GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key>(str_hash, str_equal);
+    private GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
 
-    private bool have_children = false;
-
-    public Directory(SettingsModel model, Directory? parent, string name, string full_name)
+    public Directory (SettingsModel model, Directory? parent, string name, string full_name)
     {
         this.model = model;
         this.parent = parent;
         this.name = name;
         this.full_name = full_name;
+
+        string [] items = model.client.list (full_name);
+        for (int i = 0; i < items.length; i++)
+            if (DConf.is_dir (full_name + items[i]))        // TODO get_child and get_key don't return void
+                get_child (items [i][0:-1]);
+            else
+                get_key (items [i]);
     }
 
-    public Directory get_child (string name)
+    private Directory get_child (string name)
     {
         Directory? directory = _child_map.lookup (name);
 
@@ -204,7 +199,7 @@ public class Directory : GLib.Object
         return directory;
     }
 
-    public Key get_key (string name)
+    private Key get_key (string name)
     {
         Key? key = _key_map.lookup (name);
 
@@ -234,20 +229,6 @@ public class Directory : GLib.Object
             directory.load_schema(schema, tokens[1]);
         }
     }
-
-    private void update_children ()
-    {
-        if (have_children)      // crashes if in the constructor
-            return;
-        have_children = true;
-
-        string [] items = model.client.list (full_name);
-        for (int i = 0; i < items.length; i++)
-            if (DConf.is_dir (full_name + items[i]))
-                get_child (items [i][0:-1]);
-            else
-                get_key (items [i]);
-    }
 }
 
 public class SettingsModel: GLib.Object, Gtk.TreeModel
@@ -268,11 +249,6 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public SettingsModel()
     {
-        client = new DConf.Client ();
-        client.changed.connect (watch_func);
-        root = new Directory(this, null, "/", "/");
-        client.watch_sync ("/");
-
         schemas = new SchemaList();
         try
         {
@@ -294,6 +270,11 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         } catch (Error e) {
             warning("Failed to parse schemas: %s", e.message);
         }
+
+        client = new DConf.Client ();
+        client.changed.connect (watch_func);
+        root = new Directory(this, null, "/", "/");
+        client.watch_sync ("/");
 
         /* Add keys for the values in the schemas */
         foreach (var schema in schemas.schemas.get_values())
