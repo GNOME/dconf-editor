@@ -179,10 +179,10 @@ public class Directory : GLib.Object
 
         string [] items = model.client.list (full_name);
         for (int i = 0; i < items.length; i++)
-            if (DConf.is_dir (full_name + items[i]))        // TODO get_child and get_key don't return void
-                get_child (items [i][0:-1]);
+            if (DConf.is_dir (full_name + items [i]))
+                get_child (items [i][0:-1]);        // warning: don't return void
             else
-                get_key (items [i]);
+                make_key (items [i]);
     }
 
     private Directory get_child (string name)
@@ -199,34 +199,27 @@ public class Directory : GLib.Object
         return directory;
     }
 
-    private Key get_key (string name)
+    private void make_key (string name)
     {
-        Key? key = _key_map.lookup (name);
+        if (_key_map.lookup (name) != null)
+            return;
 
-        if (key == null)
-        {
-            key = new Key (model, this, name, full_name + name);
-            key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
-            _key_map.insert (name, key);
-        }
-
-        return key;
+        Key key = new Key (model, this, name, full_name + name);
+        key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
+        _key_map.insert (name, key);
     }
 
-    public void load_schema(Schema schema, string path)
+    public void load_schema (Schema schema, string path)
     {
         if (path == "")
         {
-            foreach (var schema_key in schema.keys.get_values())
-                get_key(schema_key.name);
+            foreach (SchemaKey schema_key in schema.keys.get_values ())
+                make_key (schema_key.name);
         }
         else
         {
-            string[] tokens = path.split("/", 2);
-            string name = tokens[0];
-
-            var directory = get_child(name);
-            directory.load_schema(schema, tokens[1]);
+            string [] tokens = path.split ("/", 2);
+            get_child (tokens [0]).load_schema (schema, tokens [1]);
         }
     }
 }
