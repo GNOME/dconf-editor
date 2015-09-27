@@ -119,8 +119,9 @@ private class KeyEditor : Dialog
                 }
                 else
                 {
-                    min = key.get_min ();
-                    max = key.get_max ();
+                    string variant_type = key.value.get_type_string ();
+                    min = Key.get_min (variant_type);
+                    max = Key.get_max (variant_type);
                 }
                 return _("Integer [%s..%s]").printf (min.print (false), max.print (false));
             case "d":
@@ -132,8 +133,9 @@ private class KeyEditor : Dialog
                 }
                 else
                 {
-                    min = key.get_min ();
-                    max = key.get_max ();
+                    string variant_type = key.value.get_type_string ();
+                    min = Key.get_min (variant_type);
+                    max = Key.get_max (variant_type);
                 }
                 return _("Double [%s..%s]").printf (min.print (false), max.print (false));
             case "b":
@@ -275,8 +277,8 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         this.attach (label, 0, 0, 1, 1);
 
         bool has_range = /* key.has_schema && */ key.schema.range != null;
-        double min = get_variant_as_double ((has_range && key.schema.range.min != null) ? key.schema.range.min : key.get_min ());
-        double max = get_variant_as_double ((has_range && key.schema.range.max != null) ? key.schema.range.max : key.get_max ());
+        double min = get_variant_as_double ((has_range && key.schema.range.min != null) ? key.schema.range.min : Key.get_min (key.value.get_type_string ()));
+        double max = get_variant_as_double ((has_range && key.schema.range.max != null) ? key.schema.range.max : Key.get_max (key.value.get_type_string ()));
 
         if (key.type_string == "d")
         {
