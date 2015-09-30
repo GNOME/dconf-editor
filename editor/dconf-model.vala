@@ -32,27 +32,8 @@ public class Key : GLib.Object
 
     public SchemaKey? schema;
 
-    public bool has_schema
-    {
-        get { return schema != null; }
-    }
-
-    public string type_string
-    {
-       private set {}
-       public get
-       {
-           if (value != null)
-           {
-               if (value.is_of_type(VariantType.STRING) && has_schema && schema.enum_name != null)
-                   return "<enum>";
-               else
-                   return value.get_type_string();
-           }
-           else
-               return schema.type;
-       }
-    }
+    public bool has_schema { get; private set; }
+    public string type_string { get; private set; default = "*"; }
 
     private Variant? _value = null;
     public Variant value
@@ -60,7 +41,7 @@ public class Key : GLib.Object
         get
         {
             update_value();
-            return _value ?? schema.default_value;
+            return _value ?? schema.default_value;  // TODO cannot that error?
         }
         set
         {
@@ -89,13 +70,25 @@ public class Key : GLib.Object
             value_changed ();
     }
 
-    public Key(SettingsModel model, Directory parent, string name, string full_name)
+    public Key (SettingsModel model, Directory parent, string name, string full_name)
     {
         this.model = model;
         this.parent = parent;
         this.name = name;
         this.full_name = full_name;
         this.schema = model.schemas.keys.lookup(full_name);
+
+        has_schema = schema != null;
+
+        if (has_schema)
+        {
+            if (schema.type == "s" && schema.enum_name != null)
+                type_string = "<enum>";
+            else
+                type_string = schema.type;
+        }
+        else if (value != null)
+            type_string = value.get_type_string ();
 
         model.item_changed.connect (item_changed);
     }
