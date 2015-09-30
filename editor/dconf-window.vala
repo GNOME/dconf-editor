@@ -304,13 +304,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         update ();      // sets key_name_label attributes and key_value_label label
         key_name_label.label = key.name;
 
-        string? summary = key.schema.summary;
-        if (summary == null || summary == "")
-            return;
-
-        string? gettext_domain = key.schema.gettext_domain;
-        if (gettext_domain != null)
-            summary = dgettext (gettext_domain, summary);
+        string summary = key.schema.summary ?? "";
         key_info_label.label = summary.strip ();
 
         key.value_changed.connect (() => { update (); if (popover != null) popover.destroy (); });
@@ -322,11 +316,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         popover.add_action_button (_("Customize…"), () => { show_dialog (); });
         popover.add_action_button (_("Copy"), () => {
                 Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
-                string copy = key.schema.schema.id + " " + key.name + " " + key.value.print (false);
+                string copy = key.schema.id + " " + key.name + " " + key.value.print (false);
                 clipboard.set_text (copy, copy.length);
             });
 
-        if (key.type_string == "b" || key.type_string == "<enum>" || key.schema.choices != null)
+        if (key.type_string == "b" || key.type_string == "<enum>")
         {
             popover.add_separator ();
             popover.create_buttons_list (key, true);
@@ -407,29 +401,20 @@ private class ContextPopover : Popover
         if (nullable)
             add_model_button (_("Default value"), new Variant.maybe (original_type, null));
 
-        if (key.schema.choices != null)
-        {
-            foreach (SchemaChoice choice in key.schema.choices)
-                add_model_button (choice.name, new Variant.maybe (original_type, choice.value));
-        }
-        else if (key.type_string == "b")
+        if (key.type_string == "b")
         {
             add_model_button (_("True"), new Variant.maybe (original_type, new Variant.boolean (true)));        // TODO string duplication
             add_model_button (_("False"), new Variant.maybe (original_type, new Variant.boolean (false)));      // TODO string duplication
         }
         else if (key.type_string == "<enum>")
         {
-            SchemaEnum schema_enum = key.schema.schema.list.enums.lookup (key.schema.enum_name);
-            if (schema_enum.values.length () <= 0)
-                assert_not_reached ();  // TODO special case 0?
-    //        else if (schema_enum.values.length () == 1)
-    //            assert_not_reached ();  // TODO
-
-            for (uint index = 0; index < schema_enum.values.length (); index++)
-            {
-                string nick = schema_enum.values.nth_data (index).nick;
-                add_model_button (nick, new Variant.maybe (VariantType.STRING, new Variant.string (nick)));     // FIXME in internals, it’s an int!
-            }
+            Variant range = key.schema.range_content;
+            uint size = (uint) range.n_children ();
+            if (size == 0)      // TODO special case also 1?
+                assert_not_reached ();
+            VariantType type = range.get_child_value (0).get_type ();
+            for (uint index = 0; index < size; index++)
+                add_model_button (range.get_child_value (index).print (false), new Variant.maybe (type, range.get_child_value (index)));
         }
 
         group.action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {

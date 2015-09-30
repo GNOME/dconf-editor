@@ -76,17 +76,12 @@ public class Key : GLib.Object
         this.parent = parent;
         this.name = name;
         this.full_name = full_name;
-        this.schema = model.schemas.keys.lookup(full_name);
 
+        schema = model.keys.lookup (full_name);
         has_schema = schema != null;
 
         if (has_schema)
-        {
-            if (schema.type == "s" && schema.enum_name != null)
-                type_string = "<enum>";
-            else
-                type_string = schema.type;
-        }
+            type_string = schema.type;
         else if (value != null)
             type_string = value.get_type_string ();
 
@@ -219,7 +214,8 @@ public class Directory : GLib.Object
 
 public class SettingsModel: GLib.Object, Gtk.TreeModel
 {
-    public SchemaList schemas;
+    public GLib.HashTable<string, Schema> schemas = new GLib.HashTable<string, Schema> (str_hash, str_equal);
+    public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey> (str_hash, str_equal);
 
     public DConf.Client client;
     private Directory root;
@@ -235,27 +231,15 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
     public SettingsModel()
     {
-        schemas = new SchemaList();
-        try
-        {
-            var dirs = GLib.Environment.get_system_data_dirs();
+        SettingsSchemaSource settings_schema_source = SettingsSchemaSource.get_default ();
+        string [] non_relocatable_schemas;
+        string [] relocatable_schemas;
+        settings_schema_source.list_schemas (true /* TODO is_recursive = false */, out non_relocatable_schemas, out relocatable_schemas);
 
-            /* Walk directories in reverse so the schemas in the
-             * directory which appears first in the XDG_DATA_DIRS are
-             * not overridden. */
-            for (int i = dirs.length - 1; i >= 0; i--)
-            {
-                var path = Path.build_filename (dirs[i], "glib-2.0", "schemas");
-                if (File.new_for_path (path).query_exists ())
-                    schemas.load_directory (path);
-            }
-
-            var dir = GLib.Environment.get_variable ("GSETTINGS_SCHEMA_DIR");
-            if (dir != null)
-                schemas.load_directory(dir);
-        } catch (Error e) {
-            warning("Failed to parse schemas: %s", e.message);
-        }
+        foreach (string settings_schema_id in non_relocatable_schemas)
+            create_schema (settings_schema_source.lookup (settings_schema_id, true));
+//        foreach (string settings_schema_id in relocatable_schemas)           // TODO
+//            stderr.printf ("%s\n", settings_schema_id);
 
         client = new DConf.Client ();
         client.changed.connect (watch_func);
@@ -263,8 +247,22 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         client.watch_sync ("/");
 
         /* Add keys for the values in the schemas */
-        foreach (var schema in schemas.schemas.get_values())
+        foreach (Schema schema in schemas.get_values ())
             root.load_schema (schema, schema.path [1:schema.path.length]);
+    }
+
+    public void create_schema (SettingsSchema settings_schema)
+    {
+        string schema_id = settings_schema.get_id ();
+        Schema schema = new Schema ();
+        schema.path = settings_schema.get_path ();          // TODO will always returns null for relocatable schemas
+        foreach (string key_id in settings_schema.list_keys ())
+        {
+            SchemaKey key = new SchemaKey (key_id, settings_schema.get_key (key_id));
+            schema.keys.insert (key.name, key);
+            keys.insert (schema.path + key.name, key);
+        }
+        schemas.insert (schema_id, schema);
     }
 
     public Gtk.TreeModelFlags get_flags()

@@ -45,17 +45,10 @@ private class KeyEditor : Dialog
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
 
-        string? gettext_domain = key.schema.gettext_domain;
-
         string summary = key.schema.summary ?? "";
-        if (gettext_domain != null && summary != "")
-            summary = dgettext (gettext_domain, summary);
-
         string description = key.schema.description ?? "";
-        if (gettext_domain != null && description != "")
-            description = dgettext (gettext_domain, description);
 
-        schema_label.set_text (key.schema.schema.id);
+        schema_label.set_text (key.schema.id);
         summary_label.set_text (summary.strip ());
         description_label.set_text (description.strip ());
         type_label.set_text (key_to_description ());
@@ -73,13 +66,10 @@ private class KeyEditor : Dialog
 
     private KeyEditorChild create_child ()
     {
-        if (key.schema.choices != null)
-            return new KeyEditorChildMulti (key);
-
         switch (key.type_string)
         {
             case "<enum>":
-                return new KeyEditorChildMulti (key);
+                return new KeyEditorChildEnum (key);
             case "b":
                 return new KeyEditorChildBool (key.value.get_boolean ());
             case "s":
@@ -111,33 +101,13 @@ private class KeyEditor : Dialog
             case "u":
             case "x":
             case "t":
-                Variant min, max;
-                if (key.schema.range != null)
-                {
-                    min = key.schema.range.min;
-                    max = key.schema.range.max;
-                }
-                else
-                {
-                    string variant_type = key.value.get_type_string ();
-                    min = Key.get_min (variant_type);
-                    max = Key.get_max (variant_type);
-                }
-                return _("Integer [%s..%s]").printf (min.print (false), max.print (false));
+                string min, max;
+                get_min_and_max (out min, out max);
+                return _("Integer [%s..%s]").printf (min, max);
             case "d":
-                Variant min, max;
-                if (key.schema.range != null)
-                {
-                    min = key.schema.range.min;
-                    max = key.schema.range.max;
-                }
-                else
-                {
-                    string variant_type = key.value.get_type_string ();
-                    min = Key.get_min (variant_type);
-                    max = Key.get_max (variant_type);
-                }
-                return _("Double [%s..%s]").printf (min.print (false), max.print (false));
+                string min, max;
+                get_min_and_max (out min, out max);
+                return _("Double [%s..%s]").printf (min, max);
             case "b":
                 return _("Boolean");
             case "s":
@@ -146,6 +116,21 @@ private class KeyEditor : Dialog
                 return _("Enumeration");
             default:
                 return key.schema.type;
+        }
+    }
+
+    private void get_min_and_max (out string min, out string max)
+    {
+        if (key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?
+        {
+            min = key.schema.range_content.get_child_value (0).print (false);
+            max = key.schema.range_content.get_child_value (1).print (false);
+        }
+        else
+        {
+            string variant_type = key.value.get_type_string ();
+            min = Key.get_min (variant_type).print (false);
+            max = Key.get_max (variant_type).print (false);
         }
     }
 
@@ -171,13 +156,13 @@ public interface KeyEditorChild : Widget
     public abstract Variant get_variant ();
 }
 
-private class KeyEditorChildMulti : Grid, KeyEditorChild
+private class KeyEditorChildEnum : Grid, KeyEditorChild
 {
     private ContextPopover popover;
 
     private Variant variant;
 
-    public KeyEditorChildMulti (Key key)
+    public KeyEditorChildEnum (Key key)
     {
         this.variant = key.value;
 
@@ -276,9 +261,17 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         label.hexpand = true;
         this.attach (label, 0, 0, 1, 1);
 
-        bool has_range = /* key.has_schema && */ key.schema.range != null;
-        double min = get_variant_as_double ((has_range && key.schema.range.min != null) ? key.schema.range.min : Key.get_min (key.value.get_type_string ()));
-        double max = get_variant_as_double ((has_range && key.schema.range.max != null) ? key.schema.range.max : Key.get_max (key.value.get_type_string ()));
+        double min, max;
+        if (key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?
+        {
+            min = get_variant_as_double (key.schema.range_content.get_child_value (0));
+            max = get_variant_as_double (key.schema.range_content.get_child_value (1));
+        }
+        else
+        {
+            min = get_variant_as_double (Key.get_min (key.value.get_type_string ()));
+            max = get_variant_as_double (Key.get_max (key.value.get_type_string ()));
+        }
 
         if (key.type_string == "d")
         {

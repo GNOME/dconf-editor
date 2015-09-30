@@ -36,7 +36,6 @@ PKG_CHECK_MODULES(DCONF_EDITOR, [
   gtk+-3.0 >= $GTK_REQUIRED
   dconf >= $DCONF_REQUIRED
   gmodule-2.0
-  libxml-2.0
 ])
 
 AC_SUBST([GLIB_REQUIRED])
