@@ -329,7 +329,7 @@ public class Schema
     public SchemaList list;
     public string id;
     public string? path;
-    public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey>(str_hash, str_equal);
+    public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey> (str_hash, str_equal);
 
     public Schema.from_xml(SchemaList list, Xml.Node* node, string? gettext_domain)
     {

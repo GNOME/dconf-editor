@@ -259,12 +259,12 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
         client = new DConf.Client ();
         client.changed.connect (watch_func);
-        root = new Directory(this, null, "/", "/");
+        root = new Directory (this, null, "/", "/");
         client.watch_sync ("/");
 
         /* Add keys for the values in the schemas */
         foreach (var schema in schemas.schemas.get_values())
-            root.load_schema(schema, schema.path[1:schema.path.length]);
+            root.load_schema (schema, schema.path [1:schema.path.length]);
     }
 
     public Gtk.TreeModelFlags get_flags()
