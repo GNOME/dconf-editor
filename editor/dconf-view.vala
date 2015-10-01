@@ -94,9 +94,8 @@ private abstract class KeyEditorDialog : Dialog
         }
         else
         {
-            string variant_type = key.type_string;
-            min = Key.get_min (variant_type).print (false);
-            max = Key.get_max (variant_type).print (false);
+            min = Key.get_min (key.type_string).print (false);
+            max = Key.get_max (key.type_string).print (false);
         }
     }
 }
@@ -121,7 +120,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
     protected override void response_apply_cb ()
     {
         Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
-        if (key.is_default || key.value != variant)
+        if (key.value != variant)
             key.value = variant;
     }
 }
@@ -300,8 +299,8 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         }
         else
         {
-            min = get_variant_as_double (Key.get_min (key.value.get_type_string ()));
-            max = get_variant_as_double (Key.get_max (key.value.get_type_string ()));
+            min = get_variant_as_double (Key.get_min (key.type_string));
+            max = get_variant_as_double (Key.get_max (key.type_string));
         }
 
         if (key.type_string == "d")
