@@ -8,3 +8,4 @@ editor/dconf-schema.vala
 editor/dconf-view.vala
 editor/dconf-window.vala
 [type: gettext/glade]editor/key-editor.ui
+[type: gettext/glade]editor/key-editor-no-schema.ui

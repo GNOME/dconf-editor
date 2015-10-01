@@ -17,7 +17,7 @@
 
 public class SchemaKey : GLib.Object
 {
-    public string id;
+    public string schema_id;
     public SettingsSchemaKey settings_schema_key;
 
     public string name;
@@ -29,9 +29,9 @@ public class SchemaKey : GLib.Object
     public string range_type;
     public Variant range_content;
 
-    public SchemaKey (string _id, SettingsSchemaKey _settings_schema_key)
+    public SchemaKey (string _schema_id, SettingsSchemaKey _settings_schema_key)
     {
-        this.id = _id;
+        this.schema_id = _schema_id;
         this.settings_schema_key = _settings_schema_key;
 
         name = settings_schema_key.get_name ();

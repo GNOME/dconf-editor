@@ -258,7 +258,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         schema.path = settings_schema.get_path ();          // TODO will always returns null for relocatable schemas
         foreach (string key_id in settings_schema.list_keys ())
         {
-            SchemaKey key = new SchemaKey (key_id, settings_schema.get_key (key_id));
+            SchemaKey key = new SchemaKey (schema_id, settings_schema.get_key (key_id));
             schema.keys.insert (key.name, key);
             keys.insert (schema.path + key.name, key);
         }

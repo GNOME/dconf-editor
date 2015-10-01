@@ -108,12 +108,12 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            KeyListBoxRow key_list_box_row = new KeyListBoxRow.fixed_strings (key.name, key.cool_text_value ());
+            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema (key);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
-                    MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.WARNING, ButtonsType.OK, _("No Schema, cannot edit value."));  // TODO with or without punctuation?        // TODO insert key name/path/..?
-                    dialog.run ();
-                    dialog.destroy ();
+                    KeyEditorNoSchema key_editor = new KeyEditorNoSchema (key);
+                    key_editor.set_transient_for (this);
+                    key_editor.run ();
                 });
             return key_list_box_row;
         }
@@ -259,13 +259,6 @@ private class KeyListBoxRow : EventBox
 
     public signal void show_dialog ();
 
-    public KeyListBoxRow.fixed_strings (string key_name, string key_value)
-    {
-        key_name_label.label = key_name;
-        key_value_label.label = key_value;
-        key_info_label.set_markup ("<i>" + _("No Schema") + "</i>");
-    }
-
     protected ContextPopover? popover = null;
     protected virtual bool generate_popover () { return false; }
 
@@ -288,6 +281,47 @@ private class KeyListBoxRow : EventBox
         }
 
         return false;
+    }
+}
+
+private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
+{
+    public Key key { get; private set; }
+
+    public KeyListBoxRowEditableNoSchema (Key _key)
+    {
+        this.key = _key;
+
+        Pango.AttrList attr_list = new Pango.AttrList ();
+        attr_list.change (Pango.attr_weight_new (Pango.Weight.BOLD));    // TODO good?
+        key_name_label.set_attributes (attr_list);
+        key_value_label.set_attributes (attr_list);
+
+        key_name_label.label = key.name;
+        key_value_label.label = key.cool_text_value ();
+        key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
+
+        key.value_changed.connect (() => { key_value_label.label = key.cool_text_value (); if (popover != null) popover.destroy (); });
+    }
+
+    protected override bool generate_popover ()
+    {
+        popover = new ContextPopover ();
+        popover.add_action_button (_("Customize…"), () => { show_dialog (); });
+        popover.add_action_button (_("Copy"), () => {
+                Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
+                string copy = key.full_name + " " + key.value.print (false);
+                clipboard.set_text (copy, copy.length);
+            });
+
+        if (key.type_string == "b")
+        {
+            popover.add_separator ();
+            popover.create_buttons_list (key, false);
+
+            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
+        }
+        return true;
     }
 }
 
@@ -316,7 +350,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         popover.add_action_button (_("Customize…"), () => { show_dialog (); });
         popover.add_action_button (_("Copy"), () => {
                 Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
-                string copy = key.schema.id + " " + key.name + " " + key.value.print (false);
+                string copy = key.schema.schema_id + " " + key.name + " " + key.value.print (false);
                 clipboard.set_text (copy, copy.length);
             });
 

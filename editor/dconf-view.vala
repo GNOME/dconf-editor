@@ -17,18 +17,85 @@
 
 using Gtk;
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor-no-schema.ui")]
+private class KeyEditorNoSchema : Dialog
+{
+    [GtkChild] private Button button_apply;
+    [GtkChild] private Grid custom_value_grid;
+
+    private Key key;
+    private bool custom_value_is_valid = true;
+
+    public KeyEditorNoSchema (Key _key)
+        requires (!_key.has_schema)
+    {
+        Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
+
+        this.key = _key;
+
+        // infos
+
+        this.title = key.name;
+        if (this.use_header_bar == 1)        // TODO else..?
+            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
+
+        // widgets creation
+        custom_value_grid.add (create_child ());
+
+        this.response.connect (response_cb);
+    }
+
+    private KeyEditorChild create_child ()
+    {
+        switch (key.type_string)
+        {
+            case "<enum>":
+                return new KeyEditorChildEnum (key);
+            case "b":
+                return new KeyEditorChildBool (key.value.get_boolean ());
+            case "s":
+                return new KeyEditorChildString (key.value.get_string ());
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":
+            case "d":
+                return new KeyEditorChildNumber (key);
+            default:
+                KeyEditorChildDefault key_editor_child_default = new KeyEditorChildDefault (key.type_string, key.value);
+                key_editor_child_default.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; button_apply.set_sensitive (is_valid); });
+                return key_editor_child_default;
+        }
+    }
+
+    private void response_cb (Dialog dialog, int response_id)
+    {
+        if (response_id == ResponseType.APPLY)
+        {
+            Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
+            if (key.is_default || key.value != variant)
+                key.value = variant;
+        }
+        this.destroy ();
+    }
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
 private class KeyEditor : Dialog
 {
+    [GtkChild] private Button button_apply;
+    [GtkChild] private Grid custom_value_grid;
+
     [GtkChild] private Label schema_label;
     [GtkChild] private Label summary_label;
     [GtkChild] private Label description_label;
     [GtkChild] private Label type_label;
     [GtkChild] private Label default_label;
 
-    [GtkChild] private Button button_apply;
     [GtkChild] private Switch custom_value_switch;
-    [GtkChild] private Grid custom_value_grid;
 
     private Key key;
     private bool custom_value_is_valid = true;
@@ -41,6 +108,7 @@ private class KeyEditor : Dialog
         this.key = _key;
 
         // infos
+
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
@@ -48,7 +116,7 @@ private class KeyEditor : Dialog
         string summary = key.schema.summary ?? "";
         string description = key.schema.description ?? "";
 
-        schema_label.set_text (key.schema.id);
+        schema_label.set_text (key.schema.schema_id);
         summary_label.set_text (summary.strip ());
         description_label.set_text (description.strip ());
         type_label.set_text (key_to_description ());
