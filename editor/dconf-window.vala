@@ -293,7 +293,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         this.key = _key;
 
         Pango.AttrList attr_list = new Pango.AttrList ();
-        attr_list.change (Pango.attr_weight_new (Pango.Weight.BOLD));    // TODO good?
+        attr_list.insert (Pango.attr_weight_new (Pango.Weight.BOLD));   // TODO good?
         key_name_label.set_attributes (attr_list);
         key_value_label.set_attributes (attr_list);
 
@@ -334,6 +334,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     public KeyListBoxRowEditable (Key _key)
     {
         this.key = _key;
+
         key_value_label.set_attributes (attr_list);
         update ();      // sets key_name_label attributes and key_value_label label
         key_name_label.label = key.name;

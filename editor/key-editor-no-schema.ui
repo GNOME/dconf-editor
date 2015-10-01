@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="KeyEditorNoSchema" parent="GtkDialog">
+  <template class="KeyEditorNoSchema" parent="KeyEditorDialog">
     <property name="visible">False</property>
     <property name="modal">True</property>
     <property name="default-height">1</property><!-- TODO bug of GtkDialog, that reserves space for bottom buttons -->

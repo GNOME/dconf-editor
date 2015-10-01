@@ -17,35 +17,20 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor-no-schema.ui")]
-private class KeyEditorNoSchema : Dialog
+private abstract class KeyEditorDialog : Dialog
 {
-    [GtkChild] private Button button_apply;
-    [GtkChild] private Grid custom_value_grid;
+    protected Key key;
+    protected bool custom_value_is_valid { get; set; default = true; }
 
-    private Key key;
-    private bool custom_value_is_valid = true;
-
-    public KeyEditorNoSchema (Key _key)
-        requires (!_key.has_schema)
+    public KeyEditorDialog ()
     {
         Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
-
-        this.key = _key;
-
-        // infos
-
-        this.title = key.name;
-        if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
-
-        // widgets creation
-        custom_value_grid.add (create_child ());
-
-        this.response.connect (response_cb);
+        this.response.connect ((dialog, response_id) => { if (response_id == ResponseType.APPLY) response_apply_cb (); this.destroy (); });
     }
 
-    private KeyEditorChild create_child ()
+    protected abstract void response_apply_cb ();
+
+    protected KeyEditorChild create_child ()
     {
         switch (key.type_string)
         {
@@ -66,99 +51,12 @@ private class KeyEditorNoSchema : Dialog
                 return new KeyEditorChildNumber (key);
             default:
                 KeyEditorChildDefault key_editor_child_default = new KeyEditorChildDefault (key.type_string, key.value);
-                key_editor_child_default.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; button_apply.set_sensitive (is_valid); });
+                key_editor_child_default.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
                 return key_editor_child_default;
         }
     }
 
-    private void response_cb (Dialog dialog, int response_id)
-    {
-        if (response_id == ResponseType.APPLY)
-        {
-            Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
-            if (key.is_default || key.value != variant)
-                key.value = variant;
-        }
-        this.destroy ();
-    }
-}
-
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
-private class KeyEditor : Dialog
-{
-    [GtkChild] private Button button_apply;
-    [GtkChild] private Grid custom_value_grid;
-
-    [GtkChild] private Label schema_label;
-    [GtkChild] private Label summary_label;
-    [GtkChild] private Label description_label;
-    [GtkChild] private Label type_label;
-    [GtkChild] private Label default_label;
-
-    [GtkChild] private Switch custom_value_switch;
-
-    private Key key;
-    private bool custom_value_is_valid = true;
-
-    public KeyEditor (Key _key)
-        requires (_key.has_schema)
-    {
-        Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
-
-        this.key = _key;
-
-        // infos
-
-        this.title = key.name;
-        if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
-
-        string summary = key.schema.summary ?? "";
-        string description = key.schema.description ?? "";
-
-        schema_label.set_text (key.schema.schema_id);
-        summary_label.set_text (summary.strip ());
-        description_label.set_text (description.strip ());
-        type_label.set_text (key_to_description ());
-        default_label.set_text (key.schema.default_value.print (false));
-
-        // widgets creation
-
-        custom_value_switch.set_active (key.is_default);
-        custom_value_switch.notify["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
-
-        custom_value_grid.add (create_child ());
-
-        this.response.connect (response_cb);
-    }
-
-    private KeyEditorChild create_child ()
-    {
-        switch (key.type_string)
-        {
-            case "<enum>":
-                return new KeyEditorChildEnum (key);
-            case "b":
-                return new KeyEditorChildBool (key.value.get_boolean ());
-            case "s":
-                return new KeyEditorChildString (key.value.get_string ());
-            case "y":
-            case "n":
-            case "q":
-            case "i":
-            case "u":
-            case "x":
-            case "t":
-            case "d":
-                return new KeyEditorChildNumber (key);
-            default:
-                KeyEditorChildDefault key_editor_child_default = new KeyEditorChildDefault (key.type_string, key.value);
-                key_editor_child_default.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; button_apply.set_sensitive (is_valid); });
-                return key_editor_child_default;
-        }
-    }
-
-    private string key_to_description ()
+    protected string key_to_description ()
     {
         switch (key.type_string)
         {
@@ -183,39 +81,104 @@ private class KeyEditor : Dialog
             case "<enum>":
                 return _("Enumeration");
             default:
-                return key.schema.type;
+                return key.type_string;
         }
     }
 
     private void get_min_and_max (out string min, out string max)
     {
-        if (key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?
+        if (key.has_schema && key.schema.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
         {
             min = key.schema.range_content.get_child_value (0).print (false);
             max = key.schema.range_content.get_child_value (1).print (false);
         }
         else
         {
-            string variant_type = key.value.get_type_string ();
+            string variant_type = key.type_string;
             min = Key.get_min (variant_type).print (false);
             max = Key.get_max (variant_type).print (false);
         }
     }
+}
 
-    private void response_cb (Dialog dialog, int response_id)
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor-no-schema.ui")]
+private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds
+{
+    [GtkChild] private Grid custom_value_grid;
+
+    public KeyEditorNoSchema (Key _key)
+        requires (!_key.has_schema)
     {
-        if (response_id == ResponseType.APPLY)
+        this.key = _key;
+
+        this.title = key.name;
+        if (this.use_header_bar == 1)        // TODO else..?
+            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
+
+        custom_value_grid.add (create_child ());
+    }
+
+    protected override void response_apply_cb ()
+    {
+        Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
+        if (key.is_default || key.value != variant)
+            key.value = variant;
+    }
+}
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
+private class KeyEditor : KeyEditorDialog
+{
+    [GtkChild] private Button button_apply;
+    [GtkChild] private Grid custom_value_grid;
+
+    [GtkChild] private Label schema_label;
+    [GtkChild] private Label summary_label;
+    [GtkChild] private Label description_label;
+    [GtkChild] private Label type_label;
+    [GtkChild] private Label default_label;
+
+    [GtkChild] private Switch custom_value_switch;
+
+    public KeyEditor (Key _key)
+        requires (_key.has_schema)
+    {
+        this.key = _key;
+
+        this.title = key.name;
+        if (this.use_header_bar == 1)        // TODO else..?
+            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
+
+        custom_value_grid.add (create_child ());
+
+        // infos
+
+        string summary = key.schema.summary ?? "";
+        string description = key.schema.description ?? "";
+
+        schema_label.set_text (key.schema.schema_id);
+        summary_label.set_text (summary.strip ());
+        description_label.set_text (description.strip ());
+        type_label.set_text (key_to_description ());
+        default_label.set_text (key.schema.default_value.print (false));
+
+        // switch
+
+        custom_value_switch.set_active (key.is_default);
+        custom_value_switch.notify["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
+        notify["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
+    }
+
+    protected override void response_apply_cb ()
+    {
+        if (!custom_value_switch.active)
         {
-            if (!custom_value_switch.active)
-            {
-                Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
-                if (key.is_default || key.value != variant)
-                    key.value = variant;
-            }
-            else if (!key.is_default)
-                key.set_to_default ();
+            Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
+            if (key.is_default || key.value != variant)
+                key.value = variant;
         }
-        this.destroy ();
+        else if (!key.is_default)
+            key.set_to_default ();
     }
 }
 
@@ -330,7 +293,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         this.attach (label, 0, 0, 1, 1);
 
         double min, max;
-        if (key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?
+        if (key.has_schema && key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?
         {
             min = get_variant_as_double (key.schema.range_content.get_child_value (0));
             max = get_variant_as_double (key.schema.range_content.get_child_value (1));
