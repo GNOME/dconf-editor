@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2015 Arnaud Bonatti <arnaud.bonatti@gmail.com> -->
+<component type="desktop">
+  <id>ca.desrt.dconf-editor.desktop</id>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+
+  <_name>Dconf Editor</_name>
+  <_summary>A graphical tool for editing the dconf database</_summary>
+
+  <description>
+    <_p>
+      Dconf Editor is a tool to allow direct editing of the dconf configuration database.
+      This is useful when developing applications that use these settings.
+    </_p>
+    <_p>
+      Editing your configuration directly is an advanced feature and may cause applications to not work correctly.
+    </_p>
+  </description>
+
+  <screenshots>
+    <screenshot type="default" width="640" height="360">https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot.png</screenshot>
+  </screenshots>
+
+  <url type="homepage">https://wiki.gnome.org/Projects/dconf</url>
+  <url type="bugtracker">https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor</url>
+  <update_contact>arnaud.bonatti_AT_gmail.com</update_contact>
+  <project_group>GNOME</project_group>
+
+  <provides>
+    <binary>dconf-editor</binary>
+  </provides>
+</component>

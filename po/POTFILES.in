@@ -1,3 +1,4 @@
+editor/ca.desrt.dconf-editor.appdata.xml.in
 editor/ca.desrt.dconf-editor.desktop.in.in
 [type: gettext/gsettings]editor/ca.desrt.dconf-editor.gschema.xml
 [type: gettext/glade]editor/dconf-editor-menu.ui

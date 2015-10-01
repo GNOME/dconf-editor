@@ -26,6 +26,9 @@ AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 # Use GSettings
 GLIB_GSETTINGS
 
+# Use AppStream
+APPSTREAM_XML
+
 # Dependencies
 DCONF_REQUIRED=0.23.2
 GLIB_REQUIRED=2.46.0

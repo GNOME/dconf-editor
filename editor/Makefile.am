@@ -55,10 +55,10 @@ ca.desrt.dconf-editor.service: Makefile
 	             echo 'Exec=${bindir}/dconf-editor --gapplication-service') > $@.tmp && \
 	             mv $@.tmp $@
 
-CLEANFILES = $(desktop_DATA) $(dbusservice_DATA) resources.c
-
-appdatadir = $(datadir)/appdata
-dist_appdata_DATA = ca.desrt.dconf-editor.appdata.xml
+@APPSTREAM_XML_RULES@
+appstream_in_files = ca.desrt.dconf-editor.appdata.xml.in
+appstream_XML = $(appstream_in_files:.xml.in=.xml)
+@INTLTOOL_XML_RULE@
 
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@
@@ -84,4 +84,7 @@ update-icon-cache:
 
 man_MANS = dconf-editor.1
 
-EXTRA_DIST = $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
+DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check
+
+CLEANFILES = $(appstream_XML) $(desktop_DATA) $(dbusservice_DATA) resources.c
+EXTRA_DIST = $(appdata_in_files) $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
