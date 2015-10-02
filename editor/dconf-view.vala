@@ -25,10 +25,11 @@ private abstract class KeyEditorDialog : Dialog
     public KeyEditorDialog ()
     {
         Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
-        this.response.connect ((dialog, response_id) => { if (response_id == ResponseType.APPLY) response_apply_cb (); this.destroy (); });
+        this.response.connect ((dialog, response_id) => { if (response_id == ResponseType.APPLY) response_apply_cb (); else this.destroy (); });
     }
 
-    protected abstract void response_apply_cb ();
+    private void response_apply_cb () { on_response_apply (); this.destroy (); }
+    protected abstract void on_response_apply ();
 
     protected KeyEditorChild create_child ()
     {
@@ -39,7 +40,9 @@ private abstract class KeyEditorDialog : Dialog
             case "b":
                 return new KeyEditorChildBool (key.value.get_boolean ());
             case "s":
-                return new KeyEditorChildString (key.value.get_string ());
+                KeyEditorChildString key_editor_child = new KeyEditorChildString (key.value.get_string ());
+                key_editor_child.child_activated.connect (response_apply_cb);
+                return key_editor_child;
             case "y":
             case "n":
             case "q":
@@ -48,11 +51,14 @@ private abstract class KeyEditorDialog : Dialog
             case "x":
             case "t":
             case "d":
-                return new KeyEditorChildNumber (key);
+                KeyEditorChildNumber key_editor_child = new KeyEditorChildNumber (key);
+                key_editor_child.child_activated.connect (response_apply_cb);
+                return key_editor_child;
             default:
-                KeyEditorChildDefault key_editor_child_default = new KeyEditorChildDefault (key.type_string, key.value);
-                key_editor_child_default.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
-                return key_editor_child_default;
+                KeyEditorChildDefault key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
+                key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
+                key_editor_child.child_activated.connect (response_apply_cb);
+                return key_editor_child;
         }
     }
 
@@ -117,7 +123,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
         custom_value_grid.add (create_child ());
     }
 
-    protected override void response_apply_cb ()
+    protected override void on_response_apply ()
     {
         Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
         if (key.value != variant)
@@ -168,7 +174,7 @@ private class KeyEditor : KeyEditorDialog
         notify["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
 
-    protected override void response_apply_cb ()
+    protected override void on_response_apply ()
     {
         if (!custom_value_switch.active)
         {
@@ -184,6 +190,7 @@ private class KeyEditor : KeyEditorDialog
 public interface KeyEditorChild : Widget
 {
     public abstract Variant get_variant ();
+    public signal void child_activated ();
 }
 
 private class KeyEditorChildEnum : Grid, KeyEditorChild
@@ -319,6 +326,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         spin.snap_to_ticks = true;
         spin.input_purpose = InputPurpose.NUMBER;   // TODO spin.input_purpose = InputPurpose.DIGITS & spin.numeric = true; (no “e”) if not double?
         spin.width_chars = 30;
+        spin.activate.connect (() => { child_activated (); });
         this.attach (spin, 1, 0, 1, 1);
     }
 
@@ -363,6 +371,8 @@ private class KeyEditorChildString : Entry, KeyEditorChild
         this.visible = true;
         this.hexpand = true;
         this.text = _text;
+
+        this.activate.connect (() => { child_activated (); });
     }
 
     public Variant get_variant ()
@@ -387,22 +397,25 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         this.hexpand = true;
         this.text = initial_value.print (false);
 
-        this.buffer.deleted_text.connect (test_value);
-        this.buffer.inserted_text.connect (test_value);
-        test_value ();
+        this.buffer.deleted_text.connect (emit_is_valid);
+        this.buffer.inserted_text.connect (emit_is_valid);
+        emit_is_valid ();
+
+        this.activate.connect (() => { if (test_value ()) child_activated (); });
     }
 
-    private void test_value ()
+    private void emit_is_valid () { is_valid (test_value ()); }
+    private bool test_value ()
     {
         try
         {
             Variant? tmp_variant = Variant.parse (new VariantType (variant_type), this.text);
             variant = tmp_variant;
-            is_valid (true);
+            return true;
         }
         catch (VariantParseError e)
         {
-            is_valid (false);
+            return false;
         }
     }
 
