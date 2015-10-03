@@ -155,6 +155,9 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void find_next_cb ()
     {
+        if (!search_bar.get_search_mode ())     // TODO better; switches to next list_box_row when keyboard-activating an entry of the popover
+            return;
+
         TreeIter iter;
         int position = 0;
         if (dir_tree_selection.get_selected (null, out iter))
@@ -307,7 +310,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override bool generate_popover ()
     {
         popover = new ContextPopover ();
-        popover.add_action_button (_("Customize…"), () => { show_dialog (); });
+        popover.add_action_button (_("Customize…"), () => { show_dialog (); }, true);
         popover.add_action_button (_("Copy"), () => {
                 Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
                 string copy = key.full_name + " " + key.value.print (false);
@@ -348,7 +351,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override bool generate_popover ()
     {
         popover = new ContextPopover ();
-        popover.add_action_button (_("Customize…"), () => { show_dialog (); });
+        popover.add_action_button (_("Customize…"), () => { show_dialog (); }, true);
         popover.add_action_button (_("Copy"), () => {
                 Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
                 string copy = key.schema.schema_id + " " + key.name + " " + key.value.print (false);
@@ -403,13 +406,15 @@ private class ContextPopover : Popover
     }
 
     public delegate void button_action ();
-    public void add_action_button (string label, button_action action)
+    public void add_action_button (string label, button_action action, bool is_default = false)
     {
         ModelButton button = new ModelButton ();
         button.visible = true;
         button.text = label;
         button.clicked.connect (() => { action (); });
         grid.add (button);
+        if (is_default)
+            button.grab_focus ();
     }
 
     public void add_separator ()
