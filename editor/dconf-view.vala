@@ -45,13 +45,13 @@ private abstract class KeyEditorDialog : Dialog
                 KeyEditorChildBool _key_editor_child = new KeyEditorChildBool (key.value.get_boolean ());
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 custom_value_grid.add (_key_editor_child);
-                break;
+                return;
             case "s":
                 KeyEditorChildString _key_editor_child = new KeyEditorChildString (key.value.get_string ());
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
                 custom_value_grid.add (_key_editor_child);
-                break;
+                return;
             case "y":
             case "n":
             case "q":
@@ -64,7 +64,7 @@ private abstract class KeyEditorDialog : Dialog
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
                 custom_value_grid.add (_key_editor_child);
-                break;
+                return;
             default:
                 KeyEditorChildDefault _key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
                 _key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
@@ -74,16 +74,27 @@ private abstract class KeyEditorDialog : Dialog
                 break;
         }
 
-        if ("m" in key.type_string)     /* warning: "<enum>" has an "m" in it */
+        if ("s" in key.type_string)         /* warning: "<flags>" has an "s" in it */
         {
-            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-            Label label = new Label ("<i>" + _("Use the keyword “nothing” so set a maybe type (beginning with “m”) to its null value." + "</i>"));
-            label.visible = true;
-            label.use_markup = true;
-            label.max_width_chars = 55;
-            label.wrap = true;
-            custom_value_grid.add (label);
+            if ("m" in key.type_string)     /* warning: "<enum>" has an "m" in it */
+                /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+                custom_value_grid.add (warning_label (_("Use the keyword “nothing” so set a maybe type (beginning with “m”) to its null value. Strings should be surrounded by quotation marks.")));
+            else
+                custom_value_grid.add (warning_label (_("Strings should be surrounded by quotation marks.")));
         }
+        else if ("m" in key.type_string)    /* warning: "<enum>" has an "m" in it */
+            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+            custom_value_grid.add (warning_label (_("Use the keyword “nothing” so set a maybe type (beginning with “m”) to its null value.")));
+    }
+    private Label warning_label (string text)
+    {
+        Label label = new Label ("<i>" + text + "</i>");
+        label.visible = true;
+        label.use_markup = true;
+        label.max_width_chars = 59;
+        label.wrap = true;
+        label.halign = Align.START;
+        return label;
     }
 
     protected string key_to_description ()
