@@ -235,6 +235,8 @@
             <property name="visible">True</property>
             <property name="hexpand">True</property>
             <property name="margin-top">6</property><!-- TODO better -->
+            <property name="orientation">vertical</property>
+            <property name="row-spacing">6</property>
             <property name="sensitive" bind-source="custom_value_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
           </object>
         </child>

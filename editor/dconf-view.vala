@@ -21,6 +21,7 @@ private abstract class KeyEditorDialog : Dialog
 {
     protected Key key;
     protected bool custom_value_is_valid { get; set; default = true; }
+    protected KeyEditorChild key_editor_child;
 
     public KeyEditorDialog ()
     {
@@ -31,18 +32,26 @@ private abstract class KeyEditorDialog : Dialog
     private void response_apply_cb () { on_response_apply (); this.destroy (); }
     protected abstract void on_response_apply ();
 
-    protected KeyEditorChild create_child ()
+    protected void create_child (Grid custom_value_grid)
     {
         switch (key.type_string)
         {
             case "<enum>":
-                return new KeyEditorChildEnum (key);
+                KeyEditorChildEnum _key_editor_child = new KeyEditorChildEnum (key);
+                key_editor_child = (KeyEditorChild) _key_editor_child;
+                custom_value_grid.add (_key_editor_child);
+                return;
             case "b":
-                return new KeyEditorChildBool (key.value.get_boolean ());
+                KeyEditorChildBool _key_editor_child = new KeyEditorChildBool (key.value.get_boolean ());
+                key_editor_child = (KeyEditorChild) _key_editor_child;
+                custom_value_grid.add (_key_editor_child);
+                break;
             case "s":
-                KeyEditorChildString key_editor_child = new KeyEditorChildString (key.value.get_string ());
+                KeyEditorChildString _key_editor_child = new KeyEditorChildString (key.value.get_string ());
+                key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
-                return key_editor_child;
+                custom_value_grid.add (_key_editor_child);
+                break;
             case "y":
             case "n":
             case "q":
@@ -51,14 +60,29 @@ private abstract class KeyEditorDialog : Dialog
             case "x":
             case "t":
             case "d":
-                KeyEditorChildNumber key_editor_child = new KeyEditorChildNumber (key);
+                KeyEditorChildNumber _key_editor_child = new KeyEditorChildNumber (key);
+                key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
-                return key_editor_child;
+                custom_value_grid.add (_key_editor_child);
+                break;
             default:
-                KeyEditorChildDefault key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
-                key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
+                KeyEditorChildDefault _key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
+                _key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
+                key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
-                return key_editor_child;
+                custom_value_grid.add (_key_editor_child);
+                break;
+        }
+
+        if ("m" in key.type_string)     /* warning: "<enum>" has an "m" in it */
+        {
+            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+            Label label = new Label ("<i>" + _("Use the keyword “nothing” so set a maybe type (beginning with “m”) to its null value." + "</i>"));
+            label.visible = true;
+            label.use_markup = true;
+            label.max_width_chars = 55;
+            label.wrap = true;
+            custom_value_grid.add (label);
         }
     }
 
@@ -120,12 +144,12 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
 
-        custom_value_grid.add (create_child ());
+        create_child (custom_value_grid);
     }
 
     protected override void on_response_apply ()
     {
-        Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
+        Variant variant = key_editor_child.get_variant ();
         if (key.value != variant)
             key.value = variant;
     }
@@ -154,7 +178,7 @@ private class KeyEditor : KeyEditorDialog
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;       // TODO get_header_bar() is [transfer none]
 
-        custom_value_grid.add (create_child ());
+        create_child (custom_value_grid);
 
         // infos
 
@@ -178,7 +202,7 @@ private class KeyEditor : KeyEditorDialog
     {
         if (!custom_value_switch.active)
         {
-            Variant variant = ((KeyEditorChild) custom_value_grid.get_child_at (0, 0)).get_variant ();
+            Variant variant = key_editor_child.get_variant ();
             if (key.is_default || key.value != variant)
                 key.value = variant;
         }
