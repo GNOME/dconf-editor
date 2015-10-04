@@ -38,7 +38,6 @@ dconf_editor_SOURCES = \
 	dconf-editor.vala \
 	dconf-window.vala \
 	dconf-model.vala \
-	dconf-schema.vala \
 	dconf-view.vala
 
 desktopdir = $(datadir)/applications

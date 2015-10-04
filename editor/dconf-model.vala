@@ -15,6 +15,18 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+public struct SchemaKey
+{
+    public string schema_id;
+    public string name;
+    public string? summary;
+    public string? description;
+    public Variant default_value;
+    public string type;
+    public string range_type;
+    public Variant range_content;
+}
+
 public class Key : GLib.Object
 {
     private SettingsModel model;
@@ -212,10 +224,16 @@ public class Directory : GLib.Object
     }
 }
 
+public struct Schema
+{
+    public string path;
+    public GLib.HashTable<string, SchemaKey?> keys;
+}
+
 public class SettingsModel: GLib.Object, Gtk.TreeModel
 {
-    public GLib.HashTable<string, Schema> schemas = new GLib.HashTable<string, Schema> (str_hash, str_equal);
-    public GLib.HashTable<string, SchemaKey> keys = new GLib.HashTable<string, SchemaKey> (str_hash, str_equal);
+    public GLib.HashTable<string, Schema?> schemas = new GLib.HashTable<string, Schema?> (str_hash, str_equal);
+    public GLib.HashTable<string, SchemaKey?> keys = new GLib.HashTable<string, SchemaKey?> (str_hash, str_equal);
 
     public DConf.Client client;
     private Directory root;
@@ -254,11 +272,36 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
     public void create_schema (SettingsSchema settings_schema)
     {
         string schema_id = settings_schema.get_id ();
-        Schema schema = new Schema ();
-        schema.path = settings_schema.get_path ();          // TODO will always returns null for relocatable schemas
+        Schema schema = Schema () {
+                path = settings_schema.get_path (),     // TODO will always returns null for relocatable schemas
+                keys = new GLib.HashTable<string, SchemaKey?> (str_hash, str_equal)
+            };
+
         foreach (string key_id in settings_schema.list_keys ())
         {
-            SchemaKey key = new SchemaKey (schema_id, settings_schema.get_key (key_id));
+            SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
+
+            string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
+            string type;
+            switch (range_type)
+            {
+                case "enum":    type = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
+                case "flags":   type = "as";     break;  // TODO better
+                default:
+                case "type":    type = (string) settings_schema_key.get_value_type ().peek_string (); break;
+            }
+
+            SchemaKey key = SchemaKey () {
+                    schema_id = schema_id,
+                    name = settings_schema_key.get_name (),
+                    summary = settings_schema_key.get_summary (),
+                    description = settings_schema_key.get_description (),
+                    default_value = settings_schema_key.get_default_value (),
+                    type = type,
+                    range_type = range_type,
+                    range_content = settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
+                };
+
             schema.keys.insert (key.name, key);
             keys.insert (schema.path + key.name, key);
         }
