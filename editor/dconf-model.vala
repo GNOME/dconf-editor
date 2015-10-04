@@ -30,10 +30,10 @@ public struct SchemaKey
 public class Key : GLib.Object
 {
     private SettingsModel model;
-
-    public Directory? parent;
+    private Directory? parent;
 
     public string name;
+    public string path;
     public string full_name;
     public string cool_text_value ()   // TODO better
     {
@@ -82,12 +82,14 @@ public class Key : GLib.Object
             value_changed ();
     }
 
-    public Key (SettingsModel model, Directory parent, string name, string full_name)
+    public Key (SettingsModel model, Directory parent, string name)
     {
         this.model = model;
         this.parent = parent;
+
         this.name = name;
-        this.full_name = full_name;
+        path = parent.full_name;
+        full_name = path + name;
 
         schema = model.keys.lookup (full_name);
         has_schema = schema != null;
@@ -204,7 +206,7 @@ public class Directory : GLib.Object
         if (_key_map.lookup (name) != null)
             return;
 
-        Key key = new Key (model, this, name, full_name + name);
+        Key key = new Key (model, this, name);
         key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
         _key_map.insert (name, key);
     }
@@ -232,7 +234,7 @@ public struct Schema
 
 public class SettingsModel: GLib.Object, Gtk.TreeModel
 {
-    public GLib.HashTable<string, Schema?> schemas = new GLib.HashTable<string, Schema?> (str_hash, str_equal);
+    private GLib.HashTable<string, Schema?> schemas = new GLib.HashTable<string, Schema?> (str_hash, str_equal);
     public GLib.HashTable<string, SchemaKey?> keys = new GLib.HashTable<string, SchemaKey?> (str_hash, str_equal);
 
     public DConf.Client client;
@@ -247,7 +249,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         }
     }
 
-    public SettingsModel()
+    public SettingsModel ()
     {
         SettingsSchemaSource settings_schema_source = SettingsSchemaSource.get_default ();
         string [] non_relocatable_schemas;
@@ -269,7 +271,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
             root.load_schema (schema, schema.path [1:schema.path.length]);
     }
 
-    public void create_schema (SettingsSchema settings_schema)
+    private void create_schema (SettingsSchema settings_schema)
     {
         string schema_id = settings_schema.get_id ();
         Schema schema = Schema () {
