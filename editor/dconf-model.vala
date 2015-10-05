@@ -152,18 +152,13 @@ public class Directory : GLib.Object
     public string full_name;
 
     public Directory? parent;
+    public int index { get { return parent.children.index (this); }}        // TODO remove
 
-    public GLib.ListStore key_model { get; private set; default = new GLib.ListStore (typeof (Key)); }
+    public GLib.HashTable<string, Directory> child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
+    public GLib.List<Directory> children = new GLib.List<Directory> ();     // TODO remove
 
-    public int index
-    {
-       get { return parent.children.index (this); }
-    }
-
-    public GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
-    public GLib.List<Directory> children = new GLib.List<Directory> ();
-
-    public GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
+    public GLib.HashTable<string, Key> key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
+    public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (Key)); }
 
     public Directory (Directory? parent, string name, string full_name)
     {
@@ -182,9 +177,7 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
 
     void watch_func (DConf.Client client, string path, string[] items, string? tag) {
         foreach (var item in items)
-        {   // don't remove that!
             item_changed (path + item);
-        }
     }
 
     public SettingsModel ()
@@ -244,12 +237,12 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
 
     private Directory get_child (Directory parent_view, string name)
     {
-        Directory view = parent_view._child_map.lookup (name);
+        Directory? view = parent_view.child_map.lookup (name);
         if (view == null)
         {
             view = new Directory (parent_view, name, parent_view.full_name + name + "/");
             parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
-            parent_view._child_map.insert (name, view);
+            parent_view.child_map.insert (name, view);
         }
         return view;
     }
@@ -292,12 +285,12 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
 
     private void make_key (Directory view, string name, SchemaKey? schema_key)
     {
-        if (view._key_map.lookup (name) != null)
+        if (view.key_map.lookup (name) != null)
             return;
 
         Key key = new Key (this, view, name, schema_key);
         view.key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
-        view._key_map.insert (name, key);
+        view.key_map.insert (name, key);
     }
 
     /*\
