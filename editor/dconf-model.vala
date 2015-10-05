@@ -27,14 +27,36 @@ public struct SchemaKey
     public Variant range_content;
 }
 
-public class Key : GLib.Object
+public class SettingObject : GLib.Object
+{
+    public Directory? parent;       // TODO make protected or even remove
+    public string name;
+    public string full_name;
+}
+
+public class Directory : SettingObject
+{
+    public int index { get { return parent.children.index (this); }}        // TODO remove
+
+    public GLib.HashTable<string, Directory> child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
+    public GLib.List<Directory> children = new GLib.List<Directory> ();     // TODO remove
+
+    public GLib.HashTable<string, Key> key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
+    public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (SettingObject)); }
+
+    public Directory (Directory? parent, string name, string full_name)
+    {
+        this.parent = parent;
+        this.name = name;
+        this.full_name = full_name;
+    }
+}
+
+public class Key : SettingObject
 {
     private SettingsModel model;
-    private Directory? parent;
 
-    public string name;
     public string path;
-    public string full_name;
     public string cool_text_value ()   // TODO better
     {
         // TODO number of chars after coma for double
@@ -146,28 +168,6 @@ public class Key : GLib.Object
     }
 }
 
-public class Directory : GLib.Object
-{
-    public string name;
-    public string full_name;
-
-    public Directory? parent;
-    public int index { get { return parent.children.index (this); }}        // TODO remove
-
-    public GLib.HashTable<string, Directory> child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
-    public GLib.List<Directory> children = new GLib.List<Directory> ();     // TODO remove
-
-    public GLib.HashTable<string, Key> key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
-    public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (Key)); }
-
-    public Directory (Directory? parent, string name, string full_name)
-    {
-        this.parent = parent;
-        this.name = name;
-        this.full_name = full_name;
-    }
-}
-
 public class SettingsModel : GLib.Object, Gtk.TreeModel
 {
     public DConf.Client client;
@@ -196,8 +196,6 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
             create_keys (view, settings_schema, schema_path);
         }
-//        foreach (string settings_schema_id in relocatable_schemas)        // TODO
-//            stderr.printf ("%s\n", settings_schema_id);
 
         client = new DConf.Client ();
         client.changed.connect (watch_func);
@@ -289,7 +287,7 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
             return;
 
         Key key = new Key (this, view, name, schema_key);
-        view.key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
+        view.key_model.insert_sorted (key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
         view.key_map.insert (name, key);
     }
 
