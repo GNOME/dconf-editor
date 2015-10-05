@@ -82,7 +82,7 @@ public class Key : GLib.Object
             value_changed ();
     }
 
-    public Key (SettingsModel model, Directory parent, string name)
+    public Key (SettingsModel model, Directory parent, string name, SchemaKey? schema)
     {
         this.model = model;
         this.parent = parent;
@@ -91,7 +91,7 @@ public class Key : GLib.Object
         path = parent.full_name;
         full_name = path + name;
 
-        schema = model.keys.lookup (full_name);
+        this.schema = schema;
         has_schema = schema != null;
 
         if (has_schema)
@@ -148,8 +148,6 @@ public class Key : GLib.Object
 
 public class Directory : GLib.Object
 {
-    private SettingsModel model;
-
     public string name;
     public string full_name;
 
@@ -162,83 +160,34 @@ public class Directory : GLib.Object
        get { return parent.children.index (this); }
     }
 
-    private GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
-    private GLib.List<Directory> _children = new GLib.List<Directory> ();
-    public GLib.List<Directory> children
-    {
-        get { return _children; }
-        private set { }
-    }
+    public GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
+    public GLib.List<Directory> children = new GLib.List<Directory> ();
 
     private GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
 
-    public Directory (SettingsModel model, Directory? parent, string name, string full_name)
+    public Directory (Directory? parent, string name, string full_name)
     {
-        this.model = model;
         this.parent = parent;
         this.name = name;
         this.full_name = full_name;
-
-        string [] items = model.client.list (full_name);
-        for (int i = 0; i < items.length; i++)
-            if (DConf.is_dir (full_name + items [i]))
-                get_child (items [i][0:-1]);        // warning: don't return void
-            else
-                make_key (items [i]);
     }
 
-    private Directory get_child (string name)
-    {
-        Directory? directory = _child_map.lookup (name);
-
-        if (directory == null)
-        {
-            directory = new Directory (model, this, name, full_name + name + "/");
-            _children.insert_sorted (directory, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
-            _child_map.insert (name, directory);
-        }
-
-        return directory;
-    }
-
-    private void make_key (string name)
+    public void make_key (SettingsModel model, string name, SchemaKey? schema_key)
     {
         if (_key_map.lookup (name) != null)
             return;
 
-        Key key = new Key (model, this, name);
+        Key key = new Key (model, this, name, schema_key);
         key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
         _key_map.insert (name, key);
     }
-
-    public void load_schema (Schema schema, string path)
-    {
-        if (path == "")
-        {
-            foreach (SchemaKey schema_key in schema.keys.get_values ())
-                make_key (schema_key.name);
-        }
-        else
-        {
-            string [] tokens = path.split ("/", 2);
-            get_child (tokens [0]).load_schema (schema, tokens [1]);
-        }
-    }
-}
-
-public struct Schema
-{
-    public string path;
-    public GLib.HashTable<string, SchemaKey?> keys;
 }
 
 public class SettingsModel: GLib.Object, Gtk.TreeModel
 {
-    private GLib.HashTable<string, Schema?> schemas = new GLib.HashTable<string, Schema?> (str_hash, str_equal);
-    public GLib.HashTable<string, SchemaKey?> keys = new GLib.HashTable<string, SchemaKey?> (str_hash, str_equal);
-
     public DConf.Client client;
     private Directory root;
+    private Directory? view;
 
     public signal void item_changed (string key);
 
@@ -256,29 +205,27 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         string [] relocatable_schemas;
         settings_schema_source.list_schemas (true /* TODO is_recursive = false */, out non_relocatable_schemas, out relocatable_schemas);
 
+        root = new Directory (null, "/", "/");
+        view = root;    // if a schema is installed on "/"
         foreach (string settings_schema_id in non_relocatable_schemas)
-            create_schema (settings_schema_source.lookup (settings_schema_id, true));
+        {
+            SettingsSchema settings_schema = settings_schema_source.lookup (settings_schema_id, true);
+            string schema_path = settings_schema.get_path ();
+            create_gsettings_views (root, schema_path [1:schema_path.length]);
+            create_keys (settings_schema, schema_path);
+        }
 //        foreach (string settings_schema_id in relocatable_schemas)           // TODO
 //            stderr.printf ("%s\n", settings_schema_id);
 
         client = new DConf.Client ();
         client.changed.connect (watch_func);
-        root = new Directory (this, null, "/", "/");
+        create_dconf_views (root);
         client.watch_sync ("/");
-
-        /* Add keys for the values in the schemas */
-        foreach (Schema schema in schemas.get_values ())
-            root.load_schema (schema, schema.path [1:schema.path.length]);
     }
 
-    private void create_schema (SettingsSchema settings_schema)
+    private void create_keys (SettingsSchema settings_schema, string schema_path)
     {
         string schema_id = settings_schema.get_id ();
-        Schema schema = Schema () {
-                path = settings_schema.get_path (),     // TODO will always returns null for relocatable schemas
-                keys = new GLib.HashTable<string, SchemaKey?> (str_hash, str_equal)
-            };
-
         foreach (string key_id in settings_schema.list_keys ())
         {
             SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
@@ -295,7 +242,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
 
             SchemaKey key = SchemaKey () {
                     schema_id = schema_id,
-                    name = settings_schema_key.get_name (),
+                    name = key_id,
                     summary = settings_schema_key.get_summary (),
                     description = settings_schema_key.get_description (),
                     default_value = settings_schema_key.get_default_value (),
@@ -304,10 +251,47 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
                     range_content = settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
                 };
 
-            schema.keys.insert (key.name, key);
-            keys.insert (schema.path + key.name, key);
+            view.make_key (this, key_id, key);
         }
-        schemas.insert (schema_id, schema);
+    }
+
+    private void create_gsettings_views (Directory parent_view, string remaining)
+    {
+        if (remaining == "")
+            return;
+
+        string [] tokens = remaining.split ("/", 2);
+        string path = parent_view.full_name + tokens [0] + "/";
+
+        view = parent_view._child_map.lookup (tokens [0]);
+        new_directory_if_needed (parent_view, tokens [0], path);
+        create_gsettings_views (view, tokens [1]);
+    }
+
+    private void create_dconf_views (Directory parent_view)
+    {
+        string [] items = client.list (parent_view.full_name);
+        for (int i = 0; i < items.length; i++)
+        {
+            view = parent_view._child_map.lookup (items [i][0:-1]);
+            string path = parent_view.full_name + items [i];
+            if (DConf.is_dir (path))
+            {
+                new_directory_if_needed (parent_view, items [i][0:-1], path);
+                create_dconf_views (view);
+            }
+            else
+                parent_view.make_key (this, items [i], null);
+        }
+    }
+
+    private void new_directory_if_needed (Directory parent_view, string name, string path)
+    {
+        if (view != null)
+            return;
+        view = new Directory (parent_view, name, path);
+        parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
+        parent_view._child_map.insert (name, view);
     }
 
     public Gtk.TreeModelFlags get_flags()
