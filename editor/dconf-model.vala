@@ -163,7 +163,7 @@ public class Directory : GLib.Object
     public GLib.HashTable<string, Directory> _child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
     public GLib.List<Directory> children = new GLib.List<Directory> ();
 
-    private GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
+    public GLib.HashTable<string, Key> _key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
 
     public Directory (Directory? parent, string name, string full_name)
     {
@@ -171,23 +171,12 @@ public class Directory : GLib.Object
         this.name = name;
         this.full_name = full_name;
     }
-
-    public void make_key (SettingsModel model, string name, SchemaKey? schema_key)
-    {
-        if (_key_map.lookup (name) != null)
-            return;
-
-        Key key = new Key (model, this, name, schema_key);
-        key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
-        _key_map.insert (name, key);
-    }
 }
 
 public class SettingsModel: GLib.Object, Gtk.TreeModel
 {
     public DConf.Client client;
     private Directory root;
-    private Directory? view;
 
     public signal void item_changed (string key);
 
@@ -206,13 +195,13 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         settings_schema_source.list_schemas (true /* TODO is_recursive = false */, out non_relocatable_schemas, out relocatable_schemas);
 
         root = new Directory (null, "/", "/");
-        view = root;    // if a schema is installed on "/"
+
         foreach (string settings_schema_id in non_relocatable_schemas)
         {
             SettingsSchema settings_schema = settings_schema_source.lookup (settings_schema_id, true);
             string schema_path = settings_schema.get_path ();
-            create_gsettings_views (root, schema_path [1:schema_path.length]);
-            create_keys (settings_schema, schema_path);
+            Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
+            create_keys (view, settings_schema, schema_path);
         }
 //        foreach (string settings_schema_id in relocatable_schemas)           // TODO
 //            stderr.printf ("%s\n", settings_schema_id);
@@ -223,7 +212,11 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         client.watch_sync ("/");
     }
 
-    private void create_keys (SettingsSchema settings_schema, string schema_path)
+    /*\
+    * * Keys creation
+    \*/
+
+    private void create_keys (Directory view, SettingsSchema settings_schema, string schema_path)
     {
         string schema_id = settings_schema.get_id ();
         foreach (string key_id in settings_schema.list_keys ())
@@ -251,21 +244,33 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
                     range_content = settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
                 };
 
-            view.make_key (this, key_id, key);
+            make_key (view, key_id, key);
         }
     }
 
-    private void create_gsettings_views (Directory parent_view, string remaining)
+    private void make_key (Directory view, string name, SchemaKey? schema_key)
     {
-        if (remaining == "")
+        if (view._key_map.lookup (name) != null)
             return;
 
-        string [] tokens = remaining.split ("/", 2);
-        string path = parent_view.full_name + tokens [0] + "/";
+        Key key = new Key (this, view, name, schema_key);
+        view.key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
+        view._key_map.insert (name, key);
+    }
 
-        view = parent_view._child_map.lookup (tokens [0]);
-        new_directory_if_needed (parent_view, tokens [0], path);
-        create_gsettings_views (view, tokens [1]);
+    /*\
+    * * Recursive creation of views (directories)
+    \*/
+
+    private Directory create_gsettings_views (Directory parent_view, string remaining)
+    {
+        if (remaining == "")
+            return parent_view;
+
+        string [] tokens = remaining.split ("/", 2);
+
+        Directory view = get_child (parent_view, tokens [0]);
+        return create_gsettings_views (view, tokens [1]);
     }
 
     private void create_dconf_views (Directory parent_view)
@@ -273,26 +278,31 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         string [] items = client.list (parent_view.full_name);
         for (int i = 0; i < items.length; i++)
         {
-            view = parent_view._child_map.lookup (items [i][0:-1]);
-            string path = parent_view.full_name + items [i];
-            if (DConf.is_dir (path))
+            if (DConf.is_dir (parent_view.full_name + items [i]))
             {
-                new_directory_if_needed (parent_view, items [i][0:-1], path);
+                Directory view = get_child (parent_view, items [i][0:-1]);
                 create_dconf_views (view);
             }
             else
-                parent_view.make_key (this, items [i], null);
+                make_key (parent_view, items [i], null);
         }
     }
 
-    private void new_directory_if_needed (Directory parent_view, string name, string path)
+    private Directory get_child (Directory parent_view, string name)
     {
-        if (view != null)
-            return;
-        view = new Directory (parent_view, name, path);
-        parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
-        parent_view._child_map.insert (name, view);
+        Directory view = parent_view._child_map.lookup (name);
+        if (view == null)
+        {
+            view = new Directory (parent_view, name, parent_view.full_name + name + "/");
+            parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
+            parent_view._child_map.insert (name, view);
+        }
+        return view;
     }
+
+    /*\
+    * * TreeModel things
+    \*/
 
     public Gtk.TreeModelFlags get_flags()
     {
