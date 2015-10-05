@@ -173,7 +173,7 @@ public class Directory : GLib.Object
     }
 }
 
-public class SettingsModel: GLib.Object, Gtk.TreeModel
+public class SettingsModel : GLib.Object, Gtk.TreeModel
 {
     public DConf.Client client;
     private Directory root;
@@ -192,7 +192,7 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         SettingsSchemaSource settings_schema_source = SettingsSchemaSource.get_default ();
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
-        settings_schema_source.list_schemas (true /* TODO is_recursive = false */, out non_relocatable_schemas, out relocatable_schemas);
+        settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
         root = new Directory (null, "/", "/");
 
@@ -203,13 +203,55 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
             create_keys (view, settings_schema, schema_path);
         }
-//        foreach (string settings_schema_id in relocatable_schemas)           // TODO
+//        foreach (string settings_schema_id in relocatable_schemas)        // TODO
 //            stderr.printf ("%s\n", settings_schema_id);
 
         client = new DConf.Client ();
         client.changed.connect (watch_func);
         create_dconf_views (root);
         client.watch_sync ("/");
+    }
+
+    /*\
+    * * Recursive creation of views (directories)
+    \*/
+
+    private Directory create_gsettings_views (Directory parent_view, string remaining)
+    {
+        if (remaining == "")
+            return parent_view;
+
+        string [] tokens = remaining.split ("/", 2);
+
+        Directory view = get_child (parent_view, tokens [0]);
+        return create_gsettings_views (view, tokens [1]);
+    }
+
+    private void create_dconf_views (Directory parent_view)
+    {
+        string [] items = client.list (parent_view.full_name);
+        for (int i = 0; i < items.length; i++)
+        {
+            if (DConf.is_dir (parent_view.full_name + items [i]))
+            {
+                Directory view = get_child (parent_view, items [i][0:-1]);
+                create_dconf_views (view);
+            }
+            else
+                make_key (parent_view, items [i], null);
+        }
+    }
+
+    private Directory get_child (Directory parent_view, string name)
+    {
+        Directory view = parent_view._child_map.lookup (name);
+        if (view == null)
+        {
+            view = new Directory (parent_view, name, parent_view.full_name + name + "/");
+            parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
+            parent_view._child_map.insert (name, view);
+        }
+        return view;
     }
 
     /*\
@@ -256,48 +298,6 @@ public class SettingsModel: GLib.Object, Gtk.TreeModel
         Key key = new Key (this, view, name, schema_key);
         view.key_model.insert_sorted (key, (a, b) => { return strcmp (((Key) a).name, ((Key) b).name); });
         view._key_map.insert (name, key);
-    }
-
-    /*\
-    * * Recursive creation of views (directories)
-    \*/
-
-    private Directory create_gsettings_views (Directory parent_view, string remaining)
-    {
-        if (remaining == "")
-            return parent_view;
-
-        string [] tokens = remaining.split ("/", 2);
-
-        Directory view = get_child (parent_view, tokens [0]);
-        return create_gsettings_views (view, tokens [1]);
-    }
-
-    private void create_dconf_views (Directory parent_view)
-    {
-        string [] items = client.list (parent_view.full_name);
-        for (int i = 0; i < items.length; i++)
-        {
-            if (DConf.is_dir (parent_view.full_name + items [i]))
-            {
-                Directory view = get_child (parent_view, items [i][0:-1]);
-                create_dconf_views (view);
-            }
-            else
-                make_key (parent_view, items [i], null);
-        }
-    }
-
-    private Directory get_child (Directory parent_view, string name)
-    {
-        Directory view = parent_view._child_map.lookup (name);
-        if (view == null)
-        {
-            view = new Directory (parent_view, name, parent_view.full_name + name + "/");
-            parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
-            parent_view._child_map.insert (name, view);
-        }
-        return view;
     }
 
     /*\
