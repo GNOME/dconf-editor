@@ -1,6 +1,7 @@
 *.c
 *.stamp
 dconf-editor
+ca.desrt.dconf-editor.appdata.xml
 ca.desrt.dconf-editor.desktop.in
 ca.desrt.dconf-editor.desktop
 ca.desrt.dconf-editor.service
