@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain='dconf'>
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
+    <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
       <default>800</default>
       <summary>The width of the window</summary>
@@ -20,6 +21,67 @@
       <default>false</default>
       <summary>A flag to enable fullscreen mode</summary>
       <description>A flag to enable fullscreen mode</description>
+    </key>
+  </schema>
+  <enum id="ca.desrt.dconf-editor.DemoEnum">
+    <value value="0" nick="Red"/>
+    <value value="4" nick="White"/>
+    <value value="2" nick="Blue"/>
+    <value value="3" nick="Yellow"/>
+    <value value="1" nick="Green"/>
+  </enum>
+  <schema id="ca.desrt.dconf-editor.Demo" path="/ca/desrt/dconf-editor/demo/">
+    <key name="boolean" type="b">
+      <default>true</default>
+      <summary>A boolean, type "b"</summary>
+      <description>Booleans can only take two values, "true" or "false" (lowercase).</description>
+    </key>
+    <key name="double" type="d">
+      <default>3.14159265358979324</default>
+      <summary>A double, type "d"</summary>
+      <description>A double value could represent any real number.</description>
+    </key>
+    <key name="enumeration" enum="ca.desrt.dconf-editor.DemoEnum">
+      <default>'White'</default>
+      <summary>A 5-choices enumeration</summary>
+      <description>Enumerations could be done either with the "enum" attribute, or with a "choices" tag.</description>
+    </key>
+    <key name="integer" type="i">
+      <default>3</default>
+      <summary>An integer</summary>
+      <description>See also unsigned-integer.</description> <!-- TODO better description -->
+    </key>
+    <key name="nullable-boolean" type="mb">
+      <default>nothing</default>
+      <summary>A nullable boolean, type "mb"</summary>
+      <description>GSettings allows nullable types, that are similar to other types but could take a "nothing" value.</description>
+    </key>
+    <!-- TODO add a nullable-(unsigned-)integer -->
+    <key name="nullable-string" type="ms">
+      <default>nothing</default>
+      <summary>A nullable string, type "ms"</summary>
+      <description>GSettings allows nullable types, that are similar to other types but could take a "nothing" value.</description>
+    </key>
+    <key name="number-with-range" type="i">
+      <default>3</default>
+      <range min="-5" max="9"/>
+      <summary>A number with range</summary>
+      <description>Every numeral setting (integers and unsigned integers of every type, plus doubles) could be limited to a custom range of values. For example, this integer could only take a value between -5 and 9.</description>
+    </key>
+    <key name="pair-of-integers" type="(ii)">
+      <default>(800, 600)</default>
+      <summary>A custom type</summary>
+      <description>Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn't have a better widget.</description>
+    </key>
+    <key name="string" type="s">
+      <default>'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'</default>
+      <summary>A string, type "s"</summary>
+      <description></description> <!-- TODO bug here -->
+    </key>
+    <key name="unsigned-integer" type="u">
+      <default>3</default>
+      <summary>An unsigned integer</summary>
+      <!-- TODO description -->
     </key>
   </schema>
 </schemalist>
