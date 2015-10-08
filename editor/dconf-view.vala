@@ -65,6 +65,11 @@ private abstract class KeyEditorDialog : Dialog
                 key_editor_child.child_activated.connect (response_apply_cb);
                 custom_value_grid.add (_key_editor_child);
                 return;
+            case "mb":
+                KeyEditorChildNullableBool _key_editor_child = new KeyEditorChildNullableBool (key);
+                key_editor_child = (KeyEditorChild) _key_editor_child;
+                custom_value_grid.add (_key_editor_child);
+                return;
             default:
                 KeyEditorChildDefault _key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
                 _key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
@@ -226,12 +231,19 @@ public interface KeyEditorChild : Widget
 {
     public abstract Variant get_variant ();
     public signal void child_activated ();
+
+    protected Label new_label_custom_value ()       // not used by String & Default
+    {
+        Label label = new Label (_("Custom Value"));
+        label.visible = true;
+        label.halign = Align.START;
+        label.hexpand = true;
+        return label;
+    }
 }
 
 private class KeyEditorChildEnum : Grid, KeyEditorChild
 {
-    private ContextPopover popover;
-
     private Variant variant;
 
     public KeyEditorChildEnum (Key key)
@@ -241,11 +253,7 @@ private class KeyEditorChildEnum : Grid, KeyEditorChild
         this.visible = true;
         this.hexpand = true;
 
-        Label label = new Label (_("Custom Value"));
-        label.visible = true;
-        label.halign = Align.START;
-        label.hexpand = true;
-        this.attach (label, 0, 0, 1, 1);
+        this.attach (new_label_custom_value (), 0, 0, 1, 1);
 
         MenuButton button = new MenuButton ();
         button.visible = true;
@@ -255,12 +263,63 @@ private class KeyEditorChildEnum : Grid, KeyEditorChild
         button.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
         this.attach (button, 1, 0, 1, 1);
 
-        popover = new ContextPopover ();
+        ContextPopover popover = new ContextPopover ();
         popover.create_buttons_list (key, false);
         popover.set_relative_to (button);
         popover.value_changed.connect ((bytes) => {
                 variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
                 button.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
+                popover.closed ();
+            });
+        button.set_popover ((Popover) popover);
+    }
+
+    public Variant get_variant ()
+    {
+        return variant;
+    }
+}
+
+private class KeyEditorChildNullableBool : Grid, KeyEditorChild
+{
+    private Variant variant;
+
+    public KeyEditorChildNullableBool (Key key)
+    {
+        this.variant = key.value;
+        Variant? maybe_variant = variant.get_maybe ();
+
+        this.visible = true;
+        this.hexpand = true;
+
+        this.attach (new_label_custom_value (), 0, 0, 1, 1);
+
+        MenuButton button = new MenuButton ();
+        button.visible = true;
+        button.use_popover = true;
+        button.halign = Align.END;
+        button.width_request = 100;
+        if (maybe_variant == null)
+            button.label = Key.cool_boolean_text_value (null);
+        else
+            button.label = Key.cool_boolean_text_value (maybe_variant.get_boolean ());
+        this.attach (button, 1, 0, 1, 1);
+
+        ContextPopover popover = new ContextPopover ();
+        popover.create_buttons_list (key, false);
+        popover.set_relative_to (button);
+        popover.value_changed.connect ((bytes) => {
+                if (bytes == null)
+                {
+                    variant = new Variant.maybe (VariantType.BOOLEAN, null);
+                    button.label = Key.cool_boolean_text_value (null);
+                }
+                else
+                {
+                    variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
+                    maybe_variant = variant.get_maybe ();
+                    button.label = Key.cool_boolean_text_value (maybe_variant.get_boolean ());
+                }
                 popover.closed ();
             });
         button.set_popover ((Popover) popover);
@@ -281,11 +340,7 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
         this.visible = true;
         this.hexpand = true;
 
-        Label label = new Label (_("Custom Value"));
-        label.visible = true;
-        label.halign = Align.START;
-        label.hexpand = true;
-        this.attach (label, 0, 0, 1, 1);
+        this.attach (new_label_custom_value (), 0, 0, 1, 1);
 
         Grid grid = new Grid ();
         grid.visible = true;
@@ -327,11 +382,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         this.visible = true;
         this.hexpand = true;
 
-        Label label = new Label (_("Custom Value"));
-        label.visible = true;
-        label.halign = Align.START;
-        label.hexpand = true;
-        this.attach (label, 0, 0, 1, 1);
+        this.attach (new_label_custom_value (), 0, 0, 1, 1);
 
         double min, max;
         if (key.has_schema && key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?

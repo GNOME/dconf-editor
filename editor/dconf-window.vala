@@ -317,12 +317,12 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 clipboard.set_text (copy, copy.length);
             });
 
-        if (key.type_string == "b")
+        if (key.type_string == "b" || key.type_string == "mb")
         {
             popover.add_separator ();
             popover.create_buttons_list (key, false);
 
-            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
+            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
         }
         return true;
     }
@@ -358,13 +358,13 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 clipboard.set_text (copy, copy.length);
             });
 
-        if (key.type_string == "b" || key.type_string == "<enum>")
+        if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {
             popover.add_separator ();
             popover.create_buttons_list (key, true);
 
             popover.set_to_default.connect (() => { key.set_to_default (); popover.destroy (); });
-            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
+            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
         }
         else if (!key.is_default)
         {
@@ -387,7 +387,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 private class ContextPopover : Popover
 {
     public signal void set_to_default ();
-    public signal void value_changed (Bytes bytes);
+    public signal void value_changed (Bytes? bytes);
 
     private static const string ACTION_NAME = "key_value";
     private static const string GROUP_PREFIX = "group";
@@ -426,9 +426,6 @@ private class ContextPopover : Popover
 
     public void create_buttons_list (Key key, bool nullable)
     {
-        if ("m" in key.value.get_type_string ())        // TODO better; is it really needed? ("mmmb"?)
-            assert_not_reached ();
-
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
         Variant variant = new Variant.maybe (original_type, key.is_default ? null : key.value);
@@ -441,26 +438,34 @@ private class ContextPopover : Popover
         if (nullable)
             add_model_button (_("Default value"), new Variant.maybe (original_type, null));
 
-        if (key.type_string == "b")
+        switch (key.type_string)
         {
-            add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (original_type, new Variant.boolean (true)));
-            add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (original_type, new Variant.boolean (false)));
-        }
-        else if (key.type_string == "<enum>")
-        {
-            Variant range = key.schema.range_content;
-            uint size = (uint) range.n_children ();
-            if (size == 0)      // TODO special case also 1?
-                assert_not_reached ();
-            VariantType type = range.get_child_value (0).get_type ();
-            for (uint index = 0; index < size; index++)
-                add_model_button (range.get_child_value (index).print (false), new Variant.maybe (type, range.get_child_value (index)));
+            case "b":
+                add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (true)));
+                add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (false)));
+                break;
+            case "<enum>":
+                Variant range = key.schema.range_content;
+                uint size = (uint) range.n_children ();
+                if (size == 0)      // TODO special case also 1?
+                    assert_not_reached ();
+                VariantType type = range.get_child_value (0).get_type ();
+                for (uint index = 0; index < size; index++)
+                    add_model_button (range.get_child_value (index).print (false), new Variant.maybe (type, range.get_child_value (index)));
+                break;
+            case "mb":
+                add_model_button (Key.cool_boolean_text_value (null), new Variant.maybe (original_type, new Variant.maybe (VariantType.BOOLEAN, null)));
+                add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (original_type, new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (true))));
+                add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (original_type, new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (false))));
+                break;
         }
 
         group.action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
                 Variant? new_variant = tmp_variant.get_maybe ();
                 if (new_variant == null)
                     set_to_default ();
+                else if (new_variant.get_data () == null)
+                    value_changed (null);
                 else
                     value_changed (new_variant.get_data_as_bytes ());
             });
