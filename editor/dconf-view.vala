@@ -83,13 +83,13 @@ private abstract class KeyEditorDialog : Dialog
         {
             if ("m" in key.type_string)     /* warning: "<enum>" has an "m" in it */
                 /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-                custom_value_grid.add (warning_label (_("Use the keyword “nothing” so set a maybe type (beginning with “m”) to its null value. Strings should be surrounded by quotation marks.")));
+                custom_value_grid.add (warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings should be surrounded by quotation marks.")));
             else
                 custom_value_grid.add (warning_label (_("Strings should be surrounded by quotation marks.")));
         }
         else if ("m" in key.type_string)    /* warning: "<enum>" has an "m" in it */
             /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-            custom_value_grid.add (warning_label (_("Use the keyword “nothing” so set a maybe type (beginning with “m”) to its null value.")));
+            custom_value_grid.add (warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value.")));
     }
     private Label warning_label (string text)
     {
