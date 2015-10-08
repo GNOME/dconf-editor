@@ -57,11 +57,44 @@ public class Key : SettingObject
     private SettingsModel model;
 
     public string path;
-    public string cool_text_value ()   // TODO better
+    public string cool_text_value ()    // TODO cannot do a property from this because of ownership problem with variant.print()
     {
+        return cool_text_value_from_variant (value, type_string);
+    }
+    public static string cool_text_value_from_variant (Variant variant, string type)
+    {
+        if (type == "b")
+            return cool_boolean_text_value (variant.get_boolean (), false);
+        if (type.has_prefix ("m"))
+        {
+            Variant? maybe_variant = variant.get_maybe ();
+            if (maybe_variant == null)
+                return cool_boolean_text_value (null, false);
+            if (type == "mb")
+                return cool_boolean_text_value (maybe_variant.get_boolean (), false);
+        }
         // TODO number of chars after coma for double
-        // bool is the only type that permits translation; keep strings for translators
-        return type_string == "b" ? (value.get_boolean () ? _("True") : _("False")) : value.print (false);
+        return variant.print (false);
+    }
+    public static string cool_boolean_text_value (bool? nullable_boolean, bool capitalized = true)
+    {
+        if (capitalized)
+        {
+            if (nullable_boolean == true)
+                return _("True");
+            if (nullable_boolean == false)
+                return _("False");
+            return _("Nothing");
+        }
+        else
+        {
+            if (nullable_boolean == true)
+                return _("true");
+            if (nullable_boolean == false)
+                return _("false");
+            /* Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)" */
+            return _("nothing");
+        }
     }
 
     public SchemaKey? schema;

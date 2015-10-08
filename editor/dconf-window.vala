@@ -443,8 +443,8 @@ private class ContextPopover : Popover
 
         if (key.type_string == "b")
         {
-            add_model_button (_("True"), new Variant.maybe (original_type, new Variant.boolean (true)));        // TODO string duplication
-            add_model_button (_("False"), new Variant.maybe (original_type, new Variant.boolean (false)));      // TODO string duplication
+            add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (original_type, new Variant.boolean (true)));
+            add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (original_type, new Variant.boolean (false)));
         }
         else if (key.type_string == "<enum>")
         {

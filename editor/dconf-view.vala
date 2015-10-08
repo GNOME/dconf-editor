@@ -200,7 +200,7 @@ private class KeyEditor : KeyEditorDialog
         summary_label.set_text (summary.strip ());
         description_label.set_text (description.strip ());
         type_label.set_text (key_to_description ());
-        default_label.set_text (key.schema.default_value.print (false));
+        default_label.set_text ((key.schema.type == "b" || key.schema.type == "mb") ? Key.cool_text_value_from_variant (key.schema.default_value, key.schema.type) : key.schema.default_value.print (false));
 
         // switch
 
@@ -297,12 +297,12 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
 
         ToggleButton button_false = new ToggleButton ();
         button_false.visible = true;
-        button_false.label = _("False");
+        button_false.label = Key.cool_boolean_text_value (false);
         grid.attach (button_false, 0, 0, 1, 1);
 
         button_true = new ToggleButton ();
         button_true.visible = true;
-        button_true.label = _("True");
+        button_true.label = Key.cool_boolean_text_value (true);
         grid.attach (button_true, 1, 0, 1, 1);
 
         button_true.active = initial_value;
