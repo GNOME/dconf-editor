@@ -91,7 +91,8 @@ class DConfWindow : ApplicationWindow
         window_height = allocation.height;
     }
 
-    public void save_settings ()
+    [GtkCallback]
+    private void on_destroy ()
     {
         settings.set_string ("saved-view", current_path);
         settings.set_int ("window-width", window_width);

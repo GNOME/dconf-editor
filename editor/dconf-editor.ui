@@ -77,6 +77,7 @@ be added here</property> <!-- line wrap wanted -->
     <signal name="key-press-event" handler="on_key_press_event"/>
     <signal name="window-state-event" handler="on_window_state_event"/>
     <signal name="size-allocate" handler="on_size_allocate"/>
+    <signal name="destroy" handler="on_destroy"/>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>

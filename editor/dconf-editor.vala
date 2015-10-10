@@ -17,32 +17,23 @@
 
 class ConfigurationEditor : Gtk.Application
 {
-    private DConfWindow window;
-
-    private const OptionEntry[] option_entries =
+    private const OptionEntry [] option_entries =
     {
         { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
         { null }
     };
 
-    private const GLib.ActionEntry[] action_entries =
+    private const GLib.ActionEntry [] action_entries =
     {
         { "about", about_cb },
-        { "quit", quit }
+        { "quit", quit_cb }
     };
 
     /*\
     * * Application init
     \*/
 
-    public ConfigurationEditor ()
-    {
-        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.FLAGS_NONE);
-
-        add_main_option_entries (option_entries);
-    }
-
-    public static int main (string[] args)
+    public static int main (string [] args)
     {
         Intl.setlocale (LocaleCategory.ALL, "");
         Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -53,7 +44,14 @@ class ConfigurationEditor : Gtk.Application
         return app.run (args);
     }
 
-    protected override int handle_local_options (GLib.VariantDict options)
+    public ConfigurationEditor ()
+    {
+        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.FLAGS_NONE);
+
+        add_main_option_entries (option_entries);
+    }
+
+    protected override int handle_local_options (VariantDict options)
     {
         if (options.contains ("version"))
         {
@@ -61,8 +59,6 @@ class ConfigurationEditor : Gtk.Application
             stdout.printf ("%1$s %2$s\n", "dconf-editor", Config.VERSION);
             return Posix.EXIT_SUCCESS;
         }
-
-        /* Activate */
         return -1;
     }
 
@@ -74,20 +70,12 @@ class ConfigurationEditor : Gtk.Application
 
         add_action_entries (action_entries, this);
 
-        /* window */
-        window = new DConfWindow ();
-        add_window (window);
+        add_window (new DConfWindow ());
     }
 
     protected override void activate ()
     {
-        window.present ();
-    }
-
-    protected override void shutdown ()
-    {
-        base.shutdown ();
-        window.save_settings ();
+        get_active_window ().present ();
     }
 
     /*\
@@ -96,9 +84,9 @@ class ConfigurationEditor : Gtk.Application
 
     private void about_cb ()
     {
-        string[] authors = { "Robert Ancell", "Arnaud Bonatti", null };
+        string [] authors = { "Robert Ancell", "Arnaud Bonatti", null };
         string license = _("Dconf Editor is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nDconf Editor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.");
-        Gtk.show_about_dialog (this.get_active_window (),
+        Gtk.show_about_dialog (get_active_window (),
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
                                "comments", _("Directly edit your entire configuration database"),
@@ -109,5 +97,10 @@ class ConfigurationEditor : Gtk.Application
                                "translator-credits", _("translator-credits"),
                                "logo-icon-name", "dconf-editor",
                                null);
+    }
+
+    private void quit_cb ()     // session crash (!) if a modal GtkMessageDialog/KeyEditorDialog is open
+    {
+        get_active_window ().destroy ();
     }
 }
