@@ -167,38 +167,6 @@ public class Key : SettingObject
     {
         _value = model.client.read(full_name);
     }
-
-    public static Variant? get_min (string variant_type)
-    {
-        switch (variant_type)
-        {
-            case "y": return new Variant.byte (0);
-            case "n": return new Variant.int16 (int16.MIN);
-            case "q": return new Variant.uint16 (uint16.MIN);
-            case "i": return new Variant.int32 (int32.MIN);
-            case "u": return new Variant.uint32 (uint32.MIN);
-            case "x": return new Variant.int64 (int64.MIN);
-            case "t": return new Variant.uint64 (uint64.MIN);
-            case "d": return new Variant.double (double.MIN);
-            default:  return null;
-        }
-    }
-
-    public static Variant? get_max (string variant_type)
-    {
-        switch (variant_type)
-        {
-            case "y": return new Variant.byte (255);
-            case "n": return new Variant.int16 (int16.MAX);
-            case "q": return new Variant.uint16 (uint16.MAX);
-            case "i": return new Variant.int32 (int32.MAX);
-            case "u": return new Variant.uint32 (uint32.MAX);
-            case "x": return new Variant.int64 (int64.MAX);
-            case "t": return new Variant.uint64 (uint64.MAX);
-            case "d": return new Variant.double (double.MAX);
-            default:  return null;
-        }
-    }
 }
 
 public class SettingsModel : GLib.Object, Gtk.TreeModel

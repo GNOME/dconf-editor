@@ -139,9 +139,22 @@ private abstract class KeyEditorDialog : Dialog
             max = key.schema.range_content.get_child_value (1).print (false);
         }
         else
+            get_min_and_max_string (out min, out max, key.type_string);
+    }
+
+    private static void get_min_and_max_string (out string min, out string max, string type)
+    {
+        switch (type)
         {
-            min = Key.get_min (key.type_string).print (false);
-            max = Key.get_max (key.type_string).print (false);
+            case "y": min = "0";                        max = "255";                    return;
+            case "n": min = int16.MIN.to_string ();     max = int16.MAX.to_string ();   return;
+            case "q": min = "0";                        max = uint16.MAX.to_string ();  return;
+            case "i": min = int32.MIN.to_string ();     max = int32.MAX.to_string ();   return;
+            case "u": min = "0";                        max = uint32.MAX.to_string ();  return;
+            case "x": min = int64.MIN.to_string ();     max = int64.MAX.to_string ();   return;
+            case "t": min = "0";                        max = uint64.MAX.to_string ();  return;
+            case "d": min = double.MIN.to_string ();    max = double.MAX.to_string ();  return;
+            default: assert_not_reached ();
         }
     }
 }
@@ -391,10 +404,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
             max = get_variant_as_double (key.schema.range_content.get_child_value (1));
         }
         else
-        {
-            min = get_variant_as_double (Key.get_min (key.type_string));
-            max = get_variant_as_double (Key.get_max (key.type_string));
-        }
+            get_min_and_max_double (out min, out max, key.type_string);
 
         if (key.type_string == "d")
         {
@@ -416,8 +426,23 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         this.attach (spin, 1, 0, 1, 1);
     }
 
+    private static void get_min_and_max_double (out double min, out double max, string variant_type)
+    {
+        switch (variant_type)
+        {
+            case "y": min = (double) 0.0;           max = (double) 255.0;       break;
+            case "n": min = (double) int16.MIN;     max = (double) int16.MAX;   break;
+            case "q": min = (double) uint16.MIN;    max = (double) uint16.MAX;  break;
+            case "i": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
+            case "u": min = (double) uint32.MIN;    max = (double) uint32.MAX;  break;
+            case "x": min = (double) int64.MIN;     max = (double) int64.MAX;   break;
+            case "t": min = (double) uint64.MIN;    max = (double) uint64.MAX;  break;
+            case "d": min = (double) double.MIN;    max = (double) double.MAX;  break;
+            default: assert_not_reached ();
+        }
+    }
+
     private static double get_variant_as_double (Variant variant)
-        requires (variant != null)      // TODO is that realllly useful? it shouldn't...
     {
         switch (variant.classify ())
         {
@@ -429,7 +454,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
             case Variant.Class.INT64:   return (double) variant.get_int64 ();
             case Variant.Class.UINT64:  return (double) variant.get_uint64 ();
             case Variant.Class.DOUBLE:  return variant.get_double ();
-            default:                    assert_not_reached ();
+            default: assert_not_reached ();
         }
     }
 
@@ -445,7 +470,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
             case "x": return new Variant.int64  ((int) spin.get_value ());
             case "t": return new Variant.uint64 ((int) spin.get_value ());
             case "d": return new Variant.double (spin.get_value ());
-            default : assert_not_reached ();
+            default: assert_not_reached ();
         }
     }
 }
