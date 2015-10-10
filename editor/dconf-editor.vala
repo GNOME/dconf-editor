@@ -17,7 +17,6 @@
 
 class ConfigurationEditor : Gtk.Application
 {
-    private Settings settings;
     private DConfWindow window;
 
     private const OptionEntry[] option_entries =
@@ -77,14 +76,6 @@ class ConfigurationEditor : Gtk.Application
 
         /* window */
         window = new DConfWindow ();
-
-        settings = new Settings ("ca.desrt.dconf-editor.Settings");
-        window.set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
-        if (settings.get_boolean ("window-is-fullscreen"))
-            window.fullscreen ();
-        else if (settings.get_boolean ("window-is-maximized"))
-            window.maximize ();
-
         add_window (window);
     }
 
@@ -96,10 +87,7 @@ class ConfigurationEditor : Gtk.Application
     protected override void shutdown ()
     {
         base.shutdown ();
-        settings.set_int ("window-width", window.window_width);
-        settings.set_int ("window-height", window.window_height);
-        settings.set_boolean ("window-is-maximized", window.window_is_maximized);
-        settings.set_boolean ("window-is-fullscreen", window.window_is_fullscreen);
+        window.save_settings ();
     }
 
     /*\

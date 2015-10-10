@@ -20,10 +20,11 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
-    public int window_width { get; private set; default = 0; }
-    public int window_height { get; private set; default = 0; }
-    public bool window_is_maximized { get; private set; default = false; }
-    public bool window_is_fullscreen { get; private set; default = false; }
+    private string current_path = "/";
+    private int window_width = 0;
+    private int window_height = 0;
+    private bool window_is_maximized = false;
+    private bool window_is_fullscreen = false;
 
     private SettingsModel model;
     [GtkChild] private TreeView dir_tree_view;
@@ -41,18 +42,29 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow ()
     {
+        settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+
+        set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
+        if (settings.get_boolean ("window-is-fullscreen"))
+            fullscreen ();
+        else if (settings.get_boolean ("window-is-maximized"))
+            maximize ();
+
         search_bar.connect_entry (search_entry);
 
         model = new SettingsModel ();
         dir_tree_view.set_model (model);
 
-        settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
         settings.changed ["bookmarks"].connect (update_bookmarks);
         update_bookmarks ();
 
-        TreeIter iter;
-        if (model.get_iter_first (out iter))
-            dir_tree_selection.select_iter (iter);
+        current_path = settings.get_string ("saved-view");
+        if (!settings.get_boolean ("restore-view") || current_path == "/" || current_path == "" || !scroll_to_path (current_path))
+        {
+            TreeIter iter;
+            if (model.get_iter_first (out iter))
+                dir_tree_selection.select_iter (iter);
+        }
     }
 
     /*\
@@ -79,6 +91,15 @@ class DConfWindow : ApplicationWindow
         window_height = allocation.height;
     }
 
+    public void save_settings ()
+    {
+        settings.set_string ("saved-view", current_path);
+        settings.set_int ("window-width", window_width);
+        settings.set_int ("window-height", window_height);
+        settings.set_boolean ("window-is-maximized", window_is_maximized);
+        settings.set_boolean ("window-is-fullscreen", window_is_fullscreen);
+    }
+
     /*\
     * * Dir TreeView
     \*/
@@ -92,7 +113,10 @@ class DConfWindow : ApplicationWindow
 
         TreeIter iter;
         if (dir_tree_selection.get_selected (null, out iter))
+        {
             key_model = model.get_directory (iter).key_model;
+            current_path = model.get_directory (iter).full_name;
+        }
 
         key_list_box.bind_model (key_model, new_list_box_row);
     }
@@ -299,10 +323,18 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void bookmark_activated_cb (ListBoxRow list_box_row)
     {
+        if (scroll_to_path (((Bookmark) list_box_row.get_child ()).full_name))
+            return;
+        MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
+        dialog.run ();
+        dialog.destroy ();
+    }
+
+    private bool scroll_to_path (string full_name)
+    {
         TreeIter iter;
         if (model.get_iter_first (out iter))
         {
-            string full_name = ((Bookmark) list_box_row.get_child ()).full_name;
             do
             {
                 Directory dir = model.get_directory (iter);
@@ -311,14 +343,12 @@ class DConfWindow : ApplicationWindow
                 {
                     bookmarks_popover.closed ();
                     select_dir (iter);
-                    return;
+                    return true;
                 }
             }
             while (get_next_iter (ref iter));
         }
-        MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
-        dialog.run ();
-        dialog.destroy ();
+        return false;
     }
 }
 
