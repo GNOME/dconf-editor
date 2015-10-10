@@ -335,7 +335,7 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
 
     public int get_n_columns()
     {
-        return 2;
+        return 3;
     }
 
     public Type get_column_type (int index)
@@ -381,12 +381,15 @@ public class SettingsModel : GLib.Object, Gtk.TreeModel
         return path;
     }
 
-    public void get_value(Gtk.TreeIter iter, int column, out Value value)
+    public void get_value (Gtk.TreeIter iter, int column, out Value value)
     {
-        if (column == 0)
-            value = get_directory(iter);
-        else
-            value = get_directory(iter).name;
+        switch (column)
+        {
+            case 0: value = get_directory (iter); break;
+            case 1: value = get_directory (iter).name; break;
+            case 2: value = get_directory (iter).full_name; break;
+            default: assert_not_reached ();
+        }
     }
 
     public bool iter_next(ref Gtk.TreeIter iter)

@@ -26,7 +26,8 @@ resource_data = \
 	dconf-editor.ui \
 	key-list-box-row.ui \
 	key-editor.ui \
-	key-editor-no-schema.ui
+	key-editor-no-schema.ui \
+	bookmark.ui
 
 resources.c: $(resource_data)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --target=$@ --generate-source $<

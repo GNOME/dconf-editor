@@ -22,6 +22,11 @@
       <summary>A flag to enable fullscreen mode</summary>
       <description>A flag to enable fullscreen mode</description>
     </key>
+    <key name="bookmarks" type="as">
+      <default>[]</default>
+      <summary>A list of bookmarked paths</summary>
+      <description>Contains all paths bookmarked by the user as an array of strings.</description>
+    </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
     <value value="0" nick="Red"/>

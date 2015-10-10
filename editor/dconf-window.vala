@@ -30,6 +30,11 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private TreeSelection dir_tree_selection;
     [GtkChild] private ListBox key_list_box;
 
+    private GLib.ListStore bookmarks_model;
+    private GLib.Settings settings;
+    [GtkChild] private Popover bookmarks_popover;
+    [GtkChild] private ListBox bookmarks_list_box;
+
     [GtkChild] private SearchBar search_bar;
     [GtkChild] private SearchEntry search_entry;
     [GtkChild] private Button search_next_button;
@@ -40,6 +45,10 @@ class DConfWindow : ApplicationWindow
 
         model = new SettingsModel ();
         dir_tree_view.set_model (model);
+
+        settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+        settings.changed ["bookmarks"].connect (update_bookmarks);
+        update_bookmarks ();
 
         TreeIter iter;
         if (model.get_iter_first (out iter))
@@ -250,6 +259,91 @@ class DConfWindow : ApplicationWindow
         }
 
         return true;
+    }
+
+    /*\
+    * * Bookmarks
+    \*/
+
+    private void update_bookmarks ()
+    {
+        bookmarks_model = new GLib.ListStore (typeof (Bookmark));
+        string [] bookmarks = settings.get_strv ("bookmarks");
+        foreach (string bookmark in bookmarks)
+            bookmarks_model.append (new Bookmark (bookmark));
+        bookmarks_list_box.bind_model (bookmarks_model, new_bookmark_row);
+    }
+
+    [GtkCallback]
+    private void add_bookmark_cb ()
+    {
+        bookmarks_popover.closed ();
+
+        TreeIter iter;
+        if (!dir_tree_selection.get_selected (null, out iter))
+            assert_not_reached ();
+        Value full_path_value = Value (typeof (string));
+        model.get_value (iter, 2, out full_path_value);
+        string full_path = full_path_value.get_string ();
+
+        string [] bookmarks = settings.get_strv ("bookmarks");
+        bookmarks += full_path;
+        settings.set_strv ("bookmarks", bookmarks);
+    }
+
+    private Widget new_bookmark_row (Object item)
+    {
+        return (Bookmark) item;
+    }
+
+    [GtkCallback]
+    private void bookmark_activated_cb (ListBoxRow list_box_row)
+    {
+        TreeIter iter;
+        if (model.get_iter_first (out iter))
+        {
+            string full_name = ((Bookmark) list_box_row.get_child ()).full_name;
+            do
+            {
+                Directory dir = model.get_directory (iter);
+
+                if (dir.full_name == full_name)
+                {
+                    bookmarks_popover.closed ();
+                    select_dir (iter);
+                    return;
+                }
+            }
+            while (get_next_iter (ref iter));
+        }
+        MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
+        dialog.run ();
+        dialog.destroy ();
+    }
+}
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
+private class Bookmark : Grid
+{
+    public string full_name;
+    [GtkChild] private Label bookmark_label;
+
+    public Bookmark (string _full_name)
+    {
+        this.full_name = _full_name;
+        bookmark_label.set_label (_full_name);
+    }
+
+    [GtkCallback]
+    private void remove_cb ()
+    {
+        GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+        string [] old_bookmarks = settings.get_strv ("bookmarks");
+        string [] new_bookmarks = new string [0];
+        foreach (string bookmark in old_bookmarks)
+            if (bookmark != full_name)
+                new_bookmarks += bookmark;
+        settings.set_strv ("bookmarks", new_bookmarks);
     }
 }
 

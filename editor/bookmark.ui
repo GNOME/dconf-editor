@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="Bookmark" parent="GtkGrid">
+    <property name="orientation">horizontal</property>
+    <property name="margin-left">8</property>
+    <child>
+      <object class="GtkLabel" id="bookmark_label">
+        <property name="visible">True</property>
+        <property name="hexpand">True</property>
+        <property name="halign">start</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="visible">True</property>
+        <property name="margin">2</property>
+        <signal name="clicked" handler="remove_cb"/>
+        <style>
+          <class name="image-button"/>
+          <class name="sidebar-button"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-size">1</property>
+            <property name="icon-name">window-close-symbolic</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
