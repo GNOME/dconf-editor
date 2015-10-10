@@ -1,8 +1,9 @@
 # dconf's Portuguese translation.
 # Copyright © 2012, 2013 dconf
 # This file is distributed under the same license as the dconf package.
-# 
-# Duarte Loreto <happyguy_pt@hotmail.com>, 2012, 2013., 2015.
+#
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2012, 2013.
+# Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
