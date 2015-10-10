@@ -27,7 +27,7 @@ public struct SchemaKey
     public Variant range_content;
 }
 
-public class SettingObject : GLib.Object
+public class SettingObject : Object
 {
     public Directory? parent;       // TODO make protected or even remove
     public string name;
@@ -38,10 +38,10 @@ public class Directory : SettingObject
 {
     public int index { get { return parent.children.index (this); }}        // TODO remove
 
-    public GLib.HashTable<string, Directory> child_map = new GLib.HashTable<string, Directory> (str_hash, str_equal);
-    public GLib.List<Directory> children = new GLib.List<Directory> ();     // TODO remove
+    public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
+    public List<Directory> children = new List<Directory> ();     // TODO remove
 
-    public GLib.HashTable<string, Key> key_map = new GLib.HashTable<string, Key> (str_hash, str_equal);
+    public HashTable<string, Key> key_map = new HashTable<string, Key> (str_hash, str_equal);
     public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (SettingObject)); }
 
     public Directory (Directory? parent, string name, string full_name)
@@ -117,7 +117,7 @@ public class Key : SettingObject
             {
                 model.client.write_sync(full_name, value);
             }
-            catch (GLib.Error e)
+            catch (Error e)
             {
             }
             value_changed();
@@ -169,7 +169,7 @@ public class Key : SettingObject
     }
 }
 
-public class SettingsModel : GLib.Object, Gtk.TreeModel
+public class SettingsModel : Object, Gtk.TreeModel
 {
     public DConf.Client client;
     private Directory root;
