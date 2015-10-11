@@ -329,7 +329,7 @@ private class KeyEditorChildNullableBool : Grid, KeyEditorChild
         if (maybe_variant == null)
             button.label = Key.cool_boolean_text_value (null);
         else
-            button.label = Key.cool_boolean_text_value (maybe_variant.get_boolean ());
+            button.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
         this.attach (button, 1, 0, 1, 1);
 
         ContextPopover popover = new ContextPopover ();
@@ -538,7 +538,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         try
         {
             Variant? tmp_variant = Variant.parse (new VariantType (variant_type), this.text);
-            variant = tmp_variant;
+            variant = (!) tmp_variant;
             return true;
         }
         catch (VariantParseError e)

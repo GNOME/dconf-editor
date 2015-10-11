@@ -17,10 +17,9 @@
 
 class ConfigurationEditor : Gtk.Application
 {
-    private const OptionEntry [] option_entries =
+    private const OptionEntry option_entries [] =
     {
-        { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
-        { null }
+        { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null }
     };
 
     private const GLib.ActionEntry [] action_entries =
@@ -84,7 +83,7 @@ class ConfigurationEditor : Gtk.Application
 
     private void about_cb ()
     {
-        string [] authors = { "Robert Ancell", "Arnaud Bonatti", null };
+        string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
         string license = _("Dconf Editor is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nDconf Editor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.");
         Gtk.show_about_dialog (get_active_window (),
                                "program-name", _("dconf Editor"),
@@ -99,7 +98,7 @@ class ConfigurationEditor : Gtk.Application
                                null);
     }
 
-    private void quit_cb ()     // session crash (!) if a modal GtkMessageDialog/KeyEditorDialog is open
+    private void quit_cb ()
     {
         get_active_window ().destroy ();
     }

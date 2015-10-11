@@ -81,7 +81,7 @@ public class Key : SettingObject
             if (maybe_variant == null)
                 return cool_boolean_text_value (null, false);
             if (type == "mb")
-                return cool_boolean_text_value (maybe_variant.get_boolean (), false);
+                return cool_boolean_text_value (((!) maybe_variant).get_boolean (), false);
         }
         return variant.print (false);
     }
@@ -135,7 +135,7 @@ public class Key : SettingObject
 
     public bool is_default
     {
-        get { update_value(); return _value == null; }
+        get { update_value (); return _value == null; }
     }
 
     public signal void value_changed();
@@ -158,9 +158,9 @@ public class Key : SettingObject
         this.schema = schema;
         has_schema = schema != null;
 
-        if (has_schema)
-            type_string = schema.type;
-        else if (value != null)
+        if (schema != null)
+            type_string = ((!) schema).type;
+        else if (_value != null)
             type_string = value.get_type_string ();
 
         model.item_changed.connect (item_changed);
@@ -169,7 +169,15 @@ public class Key : SettingObject
     public void set_to_default()
         requires (has_schema)
     {
-        value = null;
+        _value = null;
+        try
+        {
+            model.client.write_sync (full_name, null);
+        }
+        catch (Error e)
+        {
+        }
+        value_changed ();
     }
 
     private void update_value()
@@ -201,10 +209,12 @@ public class SettingsModel : Object, Gtk.TreeModel
 
         foreach (string settings_schema_id in non_relocatable_schemas)
         {
-            SettingsSchema settings_schema = settings_schema_source.lookup (settings_schema_id, true);
-            string schema_path = settings_schema.get_path ();
+            SettingsSchema? settings_schema = settings_schema_source.lookup (settings_schema_id, true);
+            if (settings_schema == null)
+                continue;       // TODO better
+            string schema_path = ((!) settings_schema).get_path ();
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
-            create_keys (view, settings_schema, schema_path);
+            create_keys (view, (!) settings_schema, schema_path);
         }
 
         client = new DConf.Client ();
@@ -246,13 +256,13 @@ public class SettingsModel : Object, Gtk.TreeModel
     private Directory get_child (Directory parent_view, string name)
     {
         Directory? view = parent_view.child_map.lookup (name);
-        if (view == null)
-        {
-            view = new Directory (parent_view, name, parent_view.full_name + name + "/");
-            parent_view.children.insert_sorted (view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
-            parent_view.child_map.insert (name, view);
-        }
-        return view;
+        if (view != null)
+            return (!) view;
+
+        Directory new_view = new Directory (parent_view, name, parent_view.full_name + name + "/");
+        parent_view.children.insert_sorted (new_view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
+        parent_view.child_map.insert (name, new_view);
+        return new_view;
     }
 
     /*\
@@ -293,12 +303,13 @@ public class SettingsModel : Object, Gtk.TreeModel
 
     private void make_key (Directory view, string name, SchemaKey? schema_key)
     {
-        if (view.key_map.lookup (name) != null)
+        Key? key = view.key_map.lookup (name);
+        if (key != null)
             return;
 
-        Key key = new Key (this, view, name, schema_key);
-        view.key_model.insert_sorted (key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
-        view.key_map.insert (name, key);
+        Key new_key = new Key (this, view, name, schema_key);
+        view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+        view.key_map.insert (name, new_key);
     }
 
     /*\

@@ -198,7 +198,7 @@ class DConfWindow : ApplicationWindow
         {
             ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
             if (selected_row != null)
-                position = selected_row.get_index () + 1;
+                position = ((!) selected_row).get_index () + 1;
         }
         else if (!model.get_iter_first (out iter))      // TODO doesn't that reset iter?
             return;     // TODO better
@@ -442,7 +442,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         popover = new ContextPopover ();
         popover.add_action_button (_("Customize…"), () => { show_dialog (); }, true);
         popover.add_action_button (_("Copy"), () => {
-                Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
+                Gdk.Display? display = Gdk.Display.get_default ();
+                    if (display == null) return;
+                Clipboard clipboard = Clipboard.get_default ((!) display);
                 string copy = key.full_name + " " + key.value.print (false);
                 clipboard.set_text (copy, copy.length);
             });
@@ -483,7 +485,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         popover = new ContextPopover ();
         popover.add_action_button (_("Customize…"), () => { show_dialog (); }, true);
         popover.add_action_button (_("Copy"), () => {
-                Clipboard clipboard = Clipboard.get_default (Gdk.Display.get_default ());
+                Gdk.Display? display = Gdk.Display.get_default ();
+                    if (display == null) return;
+                Clipboard clipboard = Clipboard.get_default ((!) display);
                 string copy = key.schema.schema_id + " " + key.name + " " + key.value.print (false);
                 clipboard.set_text (copy, copy.length);
             });
@@ -594,10 +598,10 @@ private class ContextPopover : Popover
                 Variant? new_variant = tmp_variant.get_maybe ();
                 if (new_variant == null)
                     set_to_default ();
-                else if (new_variant.get_data () == null)
+                else if (((!) new_variant).get_data () == null)     // TODO better
                     value_changed (null);
                 else
-                    value_changed (new_variant.get_data_as_bytes ());
+                    value_changed (((!) new_variant).get_data_as_bytes ());
             });
     }
 
