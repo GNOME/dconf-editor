@@ -30,7 +30,13 @@ private abstract class KeyEditorDialog : Dialog
     }
 
     private void response_apply_cb () { on_response_apply (); this.destroy (); }
-    protected abstract void on_response_apply ();
+
+    protected virtual void on_response_apply ()
+    {
+        Variant variant = key_editor_child.get_variant ();
+        if (key.value != variant)
+            key.value = variant;
+    }
 
     protected void create_child (Grid custom_value_grid)
     {
@@ -60,6 +66,7 @@ private abstract class KeyEditorDialog : Dialog
             case "x":
             case "t":
             case "d":
+            case "h":
                 KeyEditorChildNumber _key_editor_child = new KeyEditorChildNumber (key);
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
@@ -79,13 +86,13 @@ private abstract class KeyEditorDialog : Dialog
                 break;
         }
 
-        if ("s" in key.type_string)         /* warning: "<flags>" has an "s" in it */
+        if ("s" in key.type_string || "g" in key.type_string || "o" in key.type_string) /* warning: "<flags>" has an "s" in it */
         {
-            if ("m" in key.type_string)     /* warning: "<enum>" has an "m" in it */
+            if ("m" in key.type_string)                                                 /* warning: "<enum>" has an "m" in it */
                 /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-                custom_value_grid.add (warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings should be surrounded by quotation marks.")));
+                custom_value_grid.add (warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks.")));
             else
-                custom_value_grid.add (warning_label (_("Strings should be surrounded by quotation marks.")));
+                custom_value_grid.add (warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks.")));
         }
         else if ("m" in key.type_string)    /* warning: "<enum>" has an "m" in it */
             /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
@@ -106,7 +113,28 @@ private abstract class KeyEditorDialog : Dialog
     {
         switch (key.type_string)
         {
-            case "y":
+            case "b":
+                return _("Boolean");
+            case "s":
+                return _("String");
+            case "as":
+                return _("String array");
+            case "<enum>":
+                return _("Enumeration");
+            case "d":
+                string min, max;
+                get_min_and_max (out min, out max);
+                return _("Double [%s..%s]").printf (min, max);
+            case "h":
+                /* Translators: this handle type is an index; you may maintain the word "handle" */
+                return _("D-Bus handle type");
+            case "o":
+                return _("D-Bus object path");
+            case "ao":
+                return _("D-Bus object path array");
+            case "g":
+                return _("D-Bus signature");
+            case "y":       // TODO byte, bytestring, bytestring array
             case "n":
             case "q":
             case "i":
@@ -116,44 +144,30 @@ private abstract class KeyEditorDialog : Dialog
                 string min, max;
                 get_min_and_max (out min, out max);
                 return _("Integer [%s..%s]").printf (min, max);
-            case "d":
-                string min, max;
-                get_min_and_max (out min, out max);
-                return _("Double [%s..%s]").printf (min, max);
-            case "b":
-                return _("Boolean");
-            case "s":
-                return _("String");
-            case "<enum>":
-                return _("Enumeration");
             default:
                 return key.type_string;
         }
     }
 
-    private void get_min_and_max (out string min, out string max)
+    protected virtual void get_min_and_max (out string min, out string max)
     {
-        if (key.has_schema && key.schema.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
-        {
-            min = key.schema.range_content.get_child_value (0).print (false);
-            max = key.schema.range_content.get_child_value (1).print (false);
-        }
-        else
-            get_min_and_max_string (out min, out max, key.type_string);
+        get_min_and_max_string (out min, out max, key.type_string);
     }
 
     private static void get_min_and_max_string (out string min, out string max, string type)
     {
         switch (type)
         {
-            case "y": min = "0";                        max = "255";                    return;
-            case "n": min = int16.MIN.to_string ();     max = int16.MAX.to_string ();   return;
-            case "q": min = "0";                        max = uint16.MAX.to_string ();  return;
-            case "i": min = int32.MIN.to_string ();     max = int32.MAX.to_string ();   return;
-            case "u": min = "0";                        max = uint32.MAX.to_string ();  return;
-            case "x": min = int64.MIN.to_string ();     max = int64.MAX.to_string ();   return;
-            case "t": min = "0";                        max = uint64.MAX.to_string ();  return;
-            case "d": min = double.MIN.to_string ();    max = double.MAX.to_string ();  return;
+            // TODO %I'xx everywhere! but would need support from the spinbutton…
+            case "y": min = "%hhu".printf (uint8.MIN);      max = "%hhu".printf (uint8.MAX);    return;
+            case "n": min = "%'hi".printf (int16.MIN);      max = "%'hi".printf (int16.MAX);    return;
+            case "q": min = "%'hu".printf (uint16.MIN);     max = "%'hu".printf (uint16.MAX);   return;
+            case "i": min = "%'i".printf (int32.MIN);       max = "%'i".printf (int32.MAX);     return;     // TODO why is 'li' failing to display '-'?
+            case "u": min = "%'u".printf (uint32.MIN);      max = "%'u".printf (uint32.MAX);    return;     // TODO is 'lu' failing also?
+            case "x": min = "%'lli".printf (int64.MIN);     max = "%'lli".printf (int64.MAX);   return;
+            case "t": min = "%'llu".printf (uint64.MIN);    max = "%'llu".printf (uint64.MAX);  return;
+            case "d": min = double.MIN.to_string ();        max = double.MAX.to_string ();      return;     // TODO something
+            case "h": min = "%'i".printf (int32.MIN);       max = "%'i".printf (int32.MAX);     return;
             default: assert_not_reached ();
         }
     }
@@ -174,13 +188,6 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
             ((HeaderBar) this.get_header_bar ()).subtitle = key.path;       // TODO get_header_bar() is [transfer none]
 
         create_child (custom_value_grid);
-    }
-
-    protected override void on_response_apply ()
-    {
-        Variant variant = key_editor_child.get_variant ();
-        if (key.value != variant)
-            key.value = variant;
     }
 }
 
@@ -218,7 +225,7 @@ private class KeyEditor : KeyEditorDialog
         summary_label.set_text (summary.strip ());
         description_label.set_text (description.strip ());
         type_label.set_text (key_to_description ());
-        default_label.set_text ((key.schema.type == "b" || key.schema.type == "mb") ? Key.cool_text_value_from_variant (key.schema.default_value, key.schema.type) : key.schema.default_value.print (false));
+        default_label.set_text (Key.cool_text_value_from_variant (key.schema.default_value, key.schema.type));
 
         // switch
 
@@ -227,14 +234,21 @@ private class KeyEditor : KeyEditorDialog
         notify["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
 
+    protected override void get_min_and_max (out string min, out string max)
+    {
+        if (key.schema.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
+        {
+            min = Key.cool_text_value_from_variant (key.schema.range_content.get_child_value (0), key.type_string);
+            max = Key.cool_text_value_from_variant (key.schema.range_content.get_child_value (1), key.type_string);
+        }
+        else
+            base.get_min_and_max (out min, out max);
+    }
+
     protected override void on_response_apply ()
     {
         if (!custom_value_switch.active)
-        {
-            Variant variant = key_editor_child.get_variant ();
-            if (key.is_default || key.value != variant)
-                key.value = variant;
-        }
+            base.on_response_apply ();
         else if (!key.is_default)
             key.set_to_default ();
     }
@@ -430,7 +444,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
     {
         switch (variant_type)
         {
-            case "y": min = (double) 0.0;           max = (double) 255.0;       break;
+            case "y": min = (double) uint8.MIN;     max = (double) uint8.MAX;   break;
             case "n": min = (double) int16.MIN;     max = (double) int16.MAX;   break;
             case "q": min = (double) uint16.MIN;    max = (double) uint16.MAX;  break;
             case "i": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
@@ -438,6 +452,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
             case "x": min = (double) int64.MIN;     max = (double) int64.MAX;   break;
             case "t": min = (double) uint64.MIN;    max = (double) uint64.MAX;  break;
             case "d": min = (double) double.MIN;    max = (double) double.MAX;  break;
+            case "h": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
             default: assert_not_reached ();
         }
     }
@@ -454,6 +469,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
             case Variant.Class.INT64:   return (double) variant.get_int64 ();
             case Variant.Class.UINT64:  return (double) variant.get_uint64 ();
             case Variant.Class.DOUBLE:  return variant.get_double ();
+            case Variant.Class.HANDLE:  return (double) variant.get_handle ();
             default: assert_not_reached ();
         }
     }
@@ -462,7 +478,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
     {
         switch (key_type)
         {
-            case "y": return new Variant.byte   ((uchar) spin.get_value ());
+            case "y": return new Variant.byte   ((uchar) spin.get_value ());        // TODO uchar or uint8?
             case "n": return new Variant.int16  ((int16) spin.get_value ());
             case "q": return new Variant.uint16 ((uint16) spin.get_value ());
             case "i": return new Variant.int32  ((int) spin.get_value ());
@@ -470,6 +486,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
             case "x": return new Variant.int64  ((int) spin.get_value ());
             case "t": return new Variant.uint64 ((int) spin.get_value ());
             case "d": return new Variant.double (spin.get_value ());
+            case "h": return new Variant.handle ((int) spin.get_value ());
             default: assert_not_reached ();
         }
     }

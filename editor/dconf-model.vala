@@ -58,10 +58,23 @@ public class Key : SettingObject
 
     public string path;
 
-    public static string cool_text_value_from_variant (Variant variant, string type)
+    public static string cool_text_value_from_variant (Variant variant, string type)        // called from subclasses and from KeyListBoxRow
     {
-        if (type == "b")
-            return cool_boolean_text_value (variant.get_boolean (), false);
+        switch (type)
+        {
+            case "b": return cool_boolean_text_value (variant.get_boolean (), false);
+            // TODO %I'xx everywhere! but would need support from the spinbutton…
+            case "y": return "%hhu (%s)".printf (variant.get_byte (), variant.print (false));   // TODO i18n problem here
+            case "n": return "%'hi".printf (variant.get_int16 ());
+            case "q": return "%'hu".printf (variant.get_uint16 ());
+            case "i": return "%'i".printf (variant.get_int32 ());       // TODO why is 'li' failing to display '-'?
+            case "u": return "%'u".printf (variant.get_uint32 ());      // TODO is 'lu' failing also?
+            case "x": return "%'lli".printf (variant.get_int64 ());
+            case "t": return "%'llu".printf (variant.get_uint64 ());
+            case "d": return variant.get_double ().to_string ();        // TODO something; notably, number of chars after coma
+            case "h": return "%'i".printf (variant.get_handle ());
+            default: break;
+        }
         if (type.has_prefix ("m"))
         {
             Variant? maybe_variant = variant.get_maybe ();
@@ -70,7 +83,6 @@ public class Key : SettingObject
             if (type == "mb")
                 return cool_boolean_text_value (maybe_variant.get_boolean (), false);
         }
-        // TODO number of chars after coma for double
         return variant.print (false);
     }
     public static string cool_boolean_text_value (bool? nullable_boolean, bool capitalized = true)
