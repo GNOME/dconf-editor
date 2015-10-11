@@ -410,6 +410,11 @@ private class KeyListBoxRow : EventBox
 
         return false;
     }
+
+    protected static string cool_text_value (Key key)    // TODO better
+    {
+        return Key.cool_text_value_from_variant (key.value, key.type_string);
+    }
 }
 
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
@@ -421,15 +426,15 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         this.key = _key;
 
         Pango.AttrList attr_list = new Pango.AttrList ();
-        attr_list.insert (Pango.attr_weight_new (Pango.Weight.BOLD));   // TODO good?
+        attr_list.insert (Pango.attr_weight_new (Pango.Weight.BOLD));
         key_name_label.set_attributes (attr_list);
         key_value_label.set_attributes (attr_list);
 
         key_name_label.label = key.name;
-        key_value_label.label = key.cool_text_value ();
+        key_value_label.label = cool_text_value (key);
         key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
 
-        key.value_changed.connect (() => { key_value_label.label = key.cool_text_value (); if (popover != null) popover.destroy (); });
+        key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (popover != null) popover.destroy (); });
     }
 
     protected override bool generate_popover ()
@@ -501,11 +506,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     private void update ()
     {
-        attr_list.change (Pango.attr_weight_new (key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD));    // TODO good?
+        attr_list.change (Pango.attr_weight_new (key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD));
         key_name_label.set_attributes (attr_list);
         // TODO key_info_label.set_attributes (attr_list); ?
 
-        key_value_label.label = key.cool_text_value ();
+        key_value_label.label = cool_text_value (key);
     }
 }
 

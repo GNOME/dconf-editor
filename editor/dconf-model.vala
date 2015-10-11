@@ -57,10 +57,7 @@ public class Key : SettingObject
     private SettingsModel model;
 
     public string path;
-    public string cool_text_value ()    // TODO cannot do a property from this because of ownership problem with variant.print()
-    {
-        return cool_text_value_from_variant (value, type_string);
-    }
+
     public static string cool_text_value_from_variant (Variant variant, string type)
     {
         if (type == "b")
