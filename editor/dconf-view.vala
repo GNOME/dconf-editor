@@ -225,11 +225,11 @@ private class KeyEditor : KeyEditorDialog
 
         // infos
 
-        schema_label.set_text (key.schema.schema_id);
-        summary_label.set_text (key.schema.summary);
-        description_label.set_text (key.schema.description);
+        schema_label.set_text (key.schema_id);
+        summary_label.set_text (key.summary);
+        description_label.set_text (key.description);
         type_label.set_text (key_to_description ());
-        default_label.set_text (Key.cool_text_value_from_variant (key.schema.default_value, key.schema.type));
+        default_label.set_text (Key.cool_text_value_from_variant (key.default_value, key.type_string));
 
         // switch
 
@@ -240,10 +240,10 @@ private class KeyEditor : KeyEditorDialog
 
     protected override void get_min_and_max (out string min, out string max)
     {
-        if (key.schema.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
+        if (key.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
         {
-            min = Key.cool_text_value_from_variant (key.schema.range_content.get_child_value (0), key.type_string);
-            max = Key.cool_text_value_from_variant (key.schema.range_content.get_child_value (1), key.type_string);
+            min = Key.cool_text_value_from_variant (key.range_content.get_child_value (0), key.type_string);
+            max = Key.cool_text_value_from_variant (key.range_content.get_child_value (1), key.type_string);
         }
         else
             base.get_min_and_max (out min, out max);
@@ -420,10 +420,10 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         this.attach (new_label_custom_value (), 0, 0, 1, 1);
 
         double min, max;
-        if (key.has_schema && ((GSettingsKey) key).schema.range_type == "range")    // TODO test more; and what happen if only min/max is in range?
+        if (key.has_schema && ((GSettingsKey) key).range_type == "range")    // TODO test more; and what happen if only min/max is in range?
         {
-            min = get_variant_as_double (((GSettingsKey) key).schema.range_content.get_child_value (0));
-            max = get_variant_as_double (((GSettingsKey) key).schema.range_content.get_child_value (1));
+            min = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (0));
+            max = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (1));
         }
         else
             get_min_and_max_double (out min, out max, key.type_string);

@@ -252,9 +252,9 @@ class DConfWindow : ApplicationWindow
         /* Check key schema (description) */
         if (key.has_schema)
         {
-            if (((GSettingsKey) key).schema.summary.index_of (text) >= 0)
+            if (((GSettingsKey) key).summary.index_of (text) >= 0)
                 return true;
-            if (((GSettingsKey) key).schema.description.index_of (text) >= 0)
+            if (((GSettingsKey) key).description.index_of (text) >= 0)
                 return true;
         }
 
@@ -472,7 +472,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_value_label.set_attributes (attr_list);
         update ();      // sets key_name_label attributes and key_value_label label
         key_name_label.label = key.name;
-        key_info_label.label = key.schema.summary;
+        key_info_label.label = key.summary;
 
         key.value_changed.connect (() => { update (); if (popover != null) popover.destroy (); });
     }
@@ -485,7 +485,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 Gdk.Display? display = Gdk.Display.get_default ();
                     if (display == null) return;
                 Clipboard clipboard = Clipboard.get_default ((!) display);
-                string copy = key.schema.schema_id + " " + key.name + " " + key.value.print (false);
+                string copy = key.schema_id + " " + key.name + " " + key.value.print (false);
                 clipboard.set_text (copy, copy.length);
             });
 
@@ -576,7 +576,7 @@ private class ContextPopover : Popover
                 add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (false)));
                 break;
             case "<enum>":      // defined by the schema
-                Variant range = ((GSettingsKey) key).schema.range_content;
+                Variant range = ((GSettingsKey) key).range_content;
                 uint size = (uint) range.n_children ();
                 if (size == 0)      // TODO special case also 1?
                     assert_not_reached ();

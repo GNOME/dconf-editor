@@ -15,18 +15,6 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-public struct SchemaKey
-{
-    public string schema_id;
-    public string name;
-    public string summary;
-    public string description;
-    public Variant default_value;
-    public string type;
-    public string range_type;
-    public Variant range_content;
-}
-
 public class SettingObject : Object
 {
     public Directory? parent { get; protected set; }    // TODO make protected or even remove
@@ -156,7 +144,12 @@ public class GSettingsKey : Key
 {
     private DConf.Client client;
 
-    public SchemaKey schema;
+    public string schema_id { get; private set; }
+    public string summary { get; private set; }
+    public string description { get; private set; }
+    public Variant default_value { get; private set; }
+    public string range_type { get; private set; }
+    public Variant range_content { get; private set; }
 
     public override bool has_schema { get { return true; } }
 
@@ -166,7 +159,7 @@ public class GSettingsKey : Key
         get
         {
             update_value ();
-            return _value ?? schema.default_value;
+            return _value ?? default_value;
         }
         set
         {
@@ -187,7 +180,7 @@ public class GSettingsKey : Key
         get { update_value (); return _value == null; }
     }
 
-    public GSettingsKey (DConf.Client client, Directory parent, string name, SchemaKey schema)
+    public GSettingsKey (DConf.Client client, Directory parent, string name, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
         this.client = client;
         this.parent = parent;
@@ -196,8 +189,16 @@ public class GSettingsKey : Key
         path = parent.full_name;
         full_name = path + name;
 
-        this.schema = schema;
-        type_string = schema.type;
+        this.schema_id = schema_id;
+
+        this.summary = summary;
+        this.description = description;
+
+        this.type_string = type_string;
+        this.default_value = default_value;
+
+        this.range_type = range_type;
+        this.range_content = range_content;
     }
 
     public void set_to_default ()
@@ -270,16 +271,12 @@ public class SettingsModel : Object, Gtk.TreeModel
 
     private void create_dconf_views (Directory parent_view)
     {
-        string [] items = client.list (parent_view.full_name);
-        for (int i = 0; i < items.length; i++)
+        foreach (string item in client.list (parent_view.full_name))
         {
-            if (DConf.is_dir (parent_view.full_name + items [i]))
-            {
-                Directory view = get_child (parent_view, items [i][0:-1]);
-                create_dconf_views (view);
-            }
-            else
-                make_key (parent_view, items [i], null);
+            if (DConf.is_dir (parent_view.full_name + item))
+                create_dconf_views (get_child (parent_view, item [0:-1]));
+            else if (!key_exists (parent_view, item))
+                connect_key (parent_view, item, new DConfKey (client, parent_view, item));
         }
     }
 
@@ -304,44 +301,45 @@ public class SettingsModel : Object, Gtk.TreeModel
         string schema_id = settings_schema.get_id ();
         foreach (string key_id in settings_schema.list_keys ())
         {
+            if (key_exists (view, key_id))
+                continue;
+
             SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
 
             string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
-            string type;
+            string type_string;
             switch (range_type)
             {
-                case "enum":    type = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
-                case "flags":   type = "as";     break;  // TODO better
+                case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
+                case "flags":   type_string = "as";     break;  // TODO better
                 default:
-                case "type":    type = (string) settings_schema_key.get_value_type ().peek_string (); break;
+                case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
             }
 
-            SchemaKey key = SchemaKey () {
-                    schema_id = schema_id,
-                    name = key_id,
-                    summary = (settings_schema_key.get_summary () ?? "").strip (),
-                    description = (settings_schema_key.get_description () ?? "").strip (),
-                    default_value = settings_schema_key.get_default_value (),
-                    type = type,
-                    range_type = range_type,
-                    range_content = settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
-                };
-
-            make_key (view, key_id, key);
+            GSettingsKey new_key = new GSettingsKey (
+                    client,
+                    view,
+                    key_id,
+                    schema_id,
+                    (settings_schema_key.get_summary () ?? "").strip (),
+                    (settings_schema_key.get_description () ?? "").strip (),
+                    type_string,
+                    settings_schema_key.get_default_value (),
+                    range_type,
+                    settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
+                );
+            connect_key (view, key_id, (Key) new_key);
         }
     }
 
-    private void make_key (Directory view, string name, SchemaKey? schema_key)
+    private bool key_exists (Directory view, string key_id)     // TODO better
     {
-        Key? key = view.key_map.lookup (name);
-        if (key != null)
-            return;
+        Key? key = view.key_map.lookup (key_id);
+        return key != null;
+    }
 
-        Key new_key;
-        if (schema_key == null)
-            new_key = new DConfKey (client, view, name);
-        else
-            new_key = new GSettingsKey (client, view, name, (!) schema_key);
+    private void connect_key (Directory view, string name, Key new_key)
+    {
         item_changed.connect ((key_name) => {
                 if ((key_name.has_suffix ("/") && new_key.full_name.has_prefix (key_name)) || key_name == new_key.full_name)
                     new_key.value_changed ();
