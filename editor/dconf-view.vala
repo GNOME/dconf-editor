@@ -19,9 +19,10 @@ using Gtk;
 
 private abstract class KeyEditorDialog : Dialog
 {
-    protected Key key;
     protected bool custom_value_is_valid { get; set; default = true; }
     protected KeyEditorChild key_editor_child;
+
+    protected string type_string { private get; protected set; }
 
     public KeyEditorDialog ()
     {
@@ -31,14 +32,9 @@ private abstract class KeyEditorDialog : Dialog
 
     private void response_apply_cb () { on_response_apply (); this.destroy (); }
 
-    protected virtual void on_response_apply ()
-    {
-        Variant variant = key_editor_child.get_variant ();
-        if (key.value != variant)
-            key.value = variant;
-    }
+    protected abstract void on_response_apply ();
 
-    protected void create_child (Grid custom_value_grid)
+    protected void create_child (Grid custom_value_grid, Key key)
     {
         switch (key.type_string)
         {
@@ -111,7 +107,7 @@ private abstract class KeyEditorDialog : Dialog
 
     protected string key_to_description ()
     {
-        switch (key.type_string)
+        switch (type_string)
         {
             case "b":
                 return _("Boolean");
@@ -145,18 +141,18 @@ private abstract class KeyEditorDialog : Dialog
                 get_min_and_max (out min, out max);
                 return _("Integer [%s..%s]").printf (min, max);
             default:
-                return key.type_string;
+                return type_string;
         }
     }
 
     protected virtual void get_min_and_max (out string min, out string max)
     {
-        get_min_and_max_string (out min, out max, key.type_string);
+        get_min_and_max_string (out min, out max, type_string);
     }
 
-    private static void get_min_and_max_string (out string min, out string max, string type)
+    private static void get_min_and_max_string (out string min, out string max, string type_string)
     {
-        switch (type)
+        switch (type_string)
         {
             // TODO %I'xx everywhere! but would need support from the spinbutton…
             case "y": min = "%hhu".printf (uint8.MIN);      max = "%hhu".printf (uint8.MAX);    return;
@@ -178,16 +174,25 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 {
     [GtkChild] private Grid custom_value_grid;
 
-    public KeyEditorNoSchema (Key _key)
-        requires (!_key.has_schema)
+    private DConfKey key;
+
+    public KeyEditorNoSchema (DConfKey _key)
     {
-        this.key = _key;
+        key = _key;
+        type_string = key.type_string;
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.path;       // TODO get_header_bar() is [transfer none]
 
-        create_child (custom_value_grid);
+        create_child (custom_value_grid, (Key) _key);
+    }
+
+    protected override void on_response_apply ()
+    {
+        Variant variant = key_editor_child.get_variant ();
+        if (key.value != variant)
+            key.value = variant;
     }
 }
 
@@ -205,16 +210,18 @@ private class KeyEditor : KeyEditorDialog
 
     [GtkChild] private Switch custom_value_switch;
 
-    public KeyEditor (Key _key)
-        requires (_key.has_schema)
+    protected GSettingsKey key;
+
+    public KeyEditor (GSettingsKey _key)
     {
-        this.key = _key;
+        key = _key;
+        type_string = key.type_string;
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.path;       // TODO get_header_bar() is [transfer none]
 
-        create_child (custom_value_grid);
+        create_child (custom_value_grid, (Key) key);
 
         // infos
 
@@ -248,7 +255,11 @@ private class KeyEditor : KeyEditorDialog
     protected override void on_response_apply ()
     {
         if (!custom_value_switch.active)
-            base.on_response_apply ();
+        {
+            Variant variant = key_editor_child.get_variant ();
+            if (key.value != variant)
+                key.value = variant;
+        }
         else if (!key.is_default)
             key.set_to_default ();
     }
@@ -412,10 +423,10 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         this.attach (new_label_custom_value (), 0, 0, 1, 1);
 
         double min, max;
-        if (key.has_schema && key.schema.range_type == "range")       // TODO test more; and what happen if only min/max is in range?
+        if (key.has_schema && ((GSettingsKey) key).schema.range_type == "range")    // TODO test more; and what happen if only min/max is in range?
         {
-            min = get_variant_as_double (key.schema.range_content.get_child_value (0));
-            max = get_variant_as_double (key.schema.range_content.get_child_value (1));
+            min = get_variant_as_double (((GSettingsKey) key).schema.range_content.get_child_value (0));
+            max = get_variant_as_double (((GSettingsKey) key).schema.range_content.get_child_value (1));
         }
         else
             get_min_and_max_double (out min, out max, key.type_string);

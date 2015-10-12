@@ -29,9 +29,9 @@ public struct SchemaKey
 
 public class SettingObject : Object
 {
-    public Directory? parent;       // TODO make protected or even remove
-    public string name;
-    public string full_name;
+    public Directory? parent { get; protected set; }    // TODO make protected or even remove
+    public string name { get; protected set; }
+    public string full_name { get; protected set; }
 }
 
 public class Directory : SettingObject
@@ -52,11 +52,14 @@ public class Directory : SettingObject
     }
 }
 
-public class Key : SettingObject
+public abstract class Key : SettingObject
 {
-    private DConf.Client client;
+    public string path { get; protected set; }
+    public abstract bool has_schema { get; }
+    public string type_string { get; protected set; default = "*"; }
+    public abstract Variant value { get; set; }
 
-    public string path;
+    public signal void value_changed ();
 
     public static string cool_text_value_from_variant (Variant variant, string type)        // called from subclasses and from KeyListBoxRow
     {
@@ -85,6 +88,7 @@ public class Key : SettingObject
         }
         return variant.print (false);
     }
+
     public static string cool_boolean_text_value (bool? nullable_boolean, bool capitalized = true)
     {
         if (capitalized)
@@ -105,19 +109,64 @@ public class Key : SettingObject
             return _("nothing");
         }
     }
+}
 
-    public SchemaKey? schema;
+public class DConfKey : Key
+{
+    private DConf.Client client;
 
-    public bool has_schema { get; private set; }
-    public string type_string { get; private set; default = "*"; }
+    public override bool has_schema { get { return false; } }
+
+    private Variant _value;
+    public override Variant value
+    {
+        get
+        {
+            _value = client.read (full_name);
+            return _value;  // TODO cannot that error?
+        }
+        set
+        {
+            _value = value;
+            try
+            {
+                client.write_sync (full_name, value);
+            }
+            catch (Error e)
+            {
+            }
+            value_changed ();
+        }
+    }
+
+    public DConfKey (DConf.Client client, Directory parent, string name)
+    {
+        this.client = client;
+        this.parent = parent;
+
+        this.name = name;
+        path = parent.full_name;
+        full_name = path + name;
+
+        type_string = value.get_type_string ();
+    }
+}
+
+public class GSettingsKey : Key
+{
+    private DConf.Client client;
+
+    public SchemaKey schema;
+
+    public override bool has_schema { get { return true; } }
 
     private Variant? _value = null;
-    public Variant value
+    public override Variant value
     {
         get
         {
             update_value ();
-            return _value ?? schema.default_value;  // TODO cannot that error?
+            return _value ?? schema.default_value;
         }
         set
         {
@@ -138,9 +187,7 @@ public class Key : SettingObject
         get { update_value (); return _value == null; }
     }
 
-    public signal void value_changed ();
-
-    public Key (DConf.Client client, Directory parent, string name, SchemaKey? schema)
+    public GSettingsKey (DConf.Client client, Directory parent, string name, SchemaKey schema)
     {
         this.client = client;
         this.parent = parent;
@@ -150,16 +197,10 @@ public class Key : SettingObject
         full_name = path + name;
 
         this.schema = schema;
-        has_schema = schema != null;
-
-        if (schema != null)
-            type_string = ((!) schema).type;
-        else if (_value != null)
-            type_string = value.get_type_string ();
+        type_string = schema.type;
     }
 
     public void set_to_default ()
-        requires (has_schema)
     {
         _value = null;
         try
@@ -296,13 +337,17 @@ public class SettingsModel : Object, Gtk.TreeModel
         if (key != null)
             return;
 
-        Key new_key = new Key (client, view, name, schema_key);
+        Key new_key;
+        if (schema_key == null)
+            new_key = new DConfKey (client, view, name);
+        else
+            new_key = new GSettingsKey (client, view, name, (!) schema_key);
         item_changed.connect ((key_name) => {
                 if ((key_name.has_suffix ("/") && new_key.full_name.has_prefix (key_name)) || key_name == new_key.full_name)
                     new_key.value_changed ();
             });
-        view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
-        view.key_map.insert (name, new_key);
+        view.key_model.insert_sorted ((Key) new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+        view.key_map.insert (name, (Key) new_key);
     }
 
     /*\

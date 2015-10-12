@@ -128,13 +128,12 @@ class DConfWindow : ApplicationWindow
 
     private Widget new_list_box_row (Object item)
     {
-        Key key = (Key) item;
-        if (key.has_schema)
+        if (((Key) item).has_schema)
         {
-            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable (key);
+            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
-                    KeyEditor key_editor = new KeyEditor (key);
+                    KeyEditor key_editor = new KeyEditor ((GSettingsKey) item);
                     key_editor.set_transient_for (this);
                     key_editor.run ();
                 });
@@ -142,10 +141,10 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema (key);
+            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
-                    KeyEditorNoSchema key_editor = new KeyEditorNoSchema (key);
+                    KeyEditorNoSchema key_editor = new KeyEditorNoSchema ((DConfKey) item);
                     key_editor.set_transient_for (this);
                     key_editor.run ();
                 });
@@ -253,9 +252,9 @@ class DConfWindow : ApplicationWindow
         /* Check key schema (description) */
         if (key.has_schema)
         {
-            if (key.schema.summary != null && key.schema.summary.index_of (text) >= 0)
+            if (((GSettingsKey) key).schema.summary != null && ((GSettingsKey) key).schema.summary.index_of (text) >= 0)
                 return true;
-            if (key.schema.description != null && key.schema.description.index_of (text) >= 0)
+            if (((GSettingsKey) key).schema.description != null && ((GSettingsKey) key).schema.description.index_of (text) >= 0)
                 return true;
         }
 
@@ -419,9 +418,9 @@ private class KeyListBoxRow : EventBox
 
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
-    public Key key { get; private set; }
+    public DConfKey key { get; private set; }
 
-    public KeyListBoxRowEditableNoSchema (Key _key)
+    public KeyListBoxRowEditableNoSchema (DConfKey _key)
     {
         this.key = _key;
 
@@ -462,11 +461,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
 private class KeyListBoxRowEditable : KeyListBoxRow
 {
-    public Key key { get; private set; }
+    public GSettingsKey key { get; private set; }
 
     private Pango.AttrList attr_list = new Pango.AttrList ();
 
-    public KeyListBoxRowEditable (Key _key)
+    public KeyListBoxRowEditable (GSettingsKey _key)
     {
         this.key = _key;
 
@@ -562,7 +561,7 @@ private class ContextPopover : Popover
     {
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
-        Variant variant = new Variant.maybe (original_type, key.is_default ? null : key.value);
+        Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : key.value);
 
         SimpleAction simple_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
         SimpleActionGroup group = new SimpleActionGroup ();
@@ -578,8 +577,8 @@ private class ContextPopover : Popover
                 add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (true)));
                 add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (false)));
                 break;
-            case "<enum>":
-                Variant range = key.schema.range_content;
+            case "<enum>":      // defined by the schema
+                Variant range = ((GSettingsKey) key).schema.range_content;
                 uint size = (uint) range.n_children ();
                 if (size == 0)      // TODO special case also 1?
                     assert_not_reached ();
