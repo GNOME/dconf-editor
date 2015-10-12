@@ -252,9 +252,9 @@ class DConfWindow : ApplicationWindow
         /* Check key schema (description) */
         if (key.has_schema)
         {
-            if (((GSettingsKey) key).schema.summary != null && ((GSettingsKey) key).schema.summary.index_of (text) >= 0)
+            if (((GSettingsKey) key).schema.summary.index_of (text) >= 0)
                 return true;
-            if (((GSettingsKey) key).schema.description != null && ((GSettingsKey) key).schema.description.index_of (text) >= 0)
+            if (((GSettingsKey) key).schema.description.index_of (text) >= 0)
                 return true;
         }
 
@@ -472,9 +472,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_value_label.set_attributes (attr_list);
         update ();      // sets key_name_label attributes and key_value_label label
         key_name_label.label = key.name;
-
-        string summary = key.schema.summary ?? "";
-        key_info_label.label = summary.strip ();
+        key_info_label.label = key.schema.summary;
 
         key.value_changed.connect (() => { update (); if (popover != null) popover.destroy (); });
     }

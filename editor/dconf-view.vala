@@ -225,12 +225,9 @@ private class KeyEditor : KeyEditorDialog
 
         // infos
 
-        string summary = key.schema.summary ?? "";
-        string description = key.schema.description ?? "";
-
         schema_label.set_text (key.schema.schema_id);
-        summary_label.set_text (summary.strip ());
-        description_label.set_text (description.strip ());
+        summary_label.set_text (key.schema.summary);
+        description_label.set_text (key.schema.description);
         type_label.set_text (key_to_description ());
         default_label.set_text (Key.cool_text_value_from_variant (key.schema.default_value, key.schema.type));
 

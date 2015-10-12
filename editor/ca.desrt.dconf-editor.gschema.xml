@@ -88,7 +88,7 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     <key name="dbus-object-path-array" type="ao">
       <default>['/ca/desrt/dconf_editor/menus/appmenu', '/ca/desrt/dconf_editor/window/1']</default>
       <summary>A D-Bus object path array, type "ao"</summary>
-      <description>An object path array could contain any number of object paths (including 0: "[]").
+      <description>An object path array could contain any number of object paths (including none: "[]").
 
 If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>

@@ -19,8 +19,8 @@ public struct SchemaKey
 {
     public string schema_id;
     public string name;
-    public string? summary;
-    public string? description;
+    public string summary;
+    public string description;
     public Variant default_value;
     public string type;
     public string range_type;
@@ -319,8 +319,8 @@ public class SettingsModel : Object, Gtk.TreeModel
             SchemaKey key = SchemaKey () {
                     schema_id = schema_id,
                     name = key_id,
-                    summary = settings_schema_key.get_summary (),
-                    description = settings_schema_key.get_description (),
+                    summary = (settings_schema_key.get_summary () ?? "").strip (),
+                    description = (settings_schema_key.get_description () ?? "").strip (),
                     default_value = settings_schema_key.get_default_value (),
                     type = type,
                     range_type = range_type,
