@@ -54,7 +54,7 @@ public class Directory : SettingObject
 
 public class Key : SettingObject
 {
-    private SettingsModel model;
+    private DConf.Client client;
 
     public string path;
 
@@ -116,7 +116,7 @@ public class Key : SettingObject
     {
         get
         {
-            update_value();
+            update_value ();
             return _value ?? schema.default_value;  // TODO cannot that error?
         }
         set
@@ -124,12 +124,12 @@ public class Key : SettingObject
             _value = value;
             try
             {
-                model.client.write_sync(full_name, value);
+                client.write_sync (full_name, value);
             }
             catch (Error e)
             {
             }
-            value_changed();
+            value_changed ();
         }
     }
 
@@ -138,17 +138,11 @@ public class Key : SettingObject
         get { update_value (); return _value == null; }
     }
 
-    public signal void value_changed();
+    public signal void value_changed ();
 
-    void item_changed (string key)
+    public Key (DConf.Client client, Directory parent, string name, SchemaKey? schema)
     {
-        if ((key.has_suffix ("/") && full_name.has_prefix (key)) || key == full_name)
-            value_changed ();
-    }
-
-    public Key (SettingsModel model, Directory parent, string name, SchemaKey? schema)
-    {
-        this.model = model;
+        this.client = client;
         this.parent = parent;
 
         this.name = name;
@@ -162,17 +156,15 @@ public class Key : SettingObject
             type_string = ((!) schema).type;
         else if (_value != null)
             type_string = value.get_type_string ();
-
-        model.item_changed.connect (item_changed);
     }
 
-    public void set_to_default()
+    public void set_to_default ()
         requires (has_schema)
     {
         _value = null;
         try
         {
-            model.client.write_sync (full_name, null);
+            client.write_sync (full_name, null);
         }
         catch (Error e)
         {
@@ -180,22 +172,22 @@ public class Key : SettingObject
         value_changed ();
     }
 
-    private void update_value()
+    private void update_value ()
     {
-        _value = model.client.read(full_name);
+        _value = client.read (full_name);
     }
 }
 
 public class SettingsModel : Object, Gtk.TreeModel
 {
-    public DConf.Client client;
-    private Directory root;
+    private DConf.Client client = new DConf.Client ();
+    private Directory root = new Directory (null, "/", "/");
 
-    public signal void item_changed (string key);
-
-    void watch_func (DConf.Client client, string path, string[] items, string? tag) {
-        foreach (var item in items)
-            item_changed (path + item);
+    private signal void item_changed (string key);
+    private void watch_func (DConf.Client client, string path, string [] items, string? tag)
+    {
+        foreach (string item in items)
+            item_changed (path + item);     // TODO better
     }
 
     public SettingsModel ()
@@ -204,8 +196,6 @@ public class SettingsModel : Object, Gtk.TreeModel
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
         settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
-
-        root = new Directory (null, "/", "/");
 
         foreach (string settings_schema_id in non_relocatable_schemas)
         {
@@ -217,7 +207,6 @@ public class SettingsModel : Object, Gtk.TreeModel
             create_keys (view, (!) settings_schema, schema_path);
         }
 
-        client = new DConf.Client ();
         client.changed.connect (watch_func);
         create_dconf_views (root);
         client.watch_sync ("/");
@@ -307,7 +296,11 @@ public class SettingsModel : Object, Gtk.TreeModel
         if (key != null)
             return;
 
-        Key new_key = new Key (this, view, name, schema_key);
+        Key new_key = new Key (client, view, name, schema_key);
+        item_changed.connect ((key_name) => {
+                if ((key_name.has_suffix ("/") && new_key.full_name.has_prefix (key_name)) || key_name == new_key.full_name)
+                    new_key.value_changed ();
+            });
         view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
         view.key_map.insert (name, new_key);
     }
