@@ -1,3 +1,9 @@
+dconf-editor 3.18.1
+=====================
+
+Fixed a crash happening when a range was set without either a min or a max
+value (thanks to heftig).
+
 dconf-editor 3.18.0
 =====================
 
