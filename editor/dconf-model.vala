@@ -38,7 +38,7 @@ public class Directory : SettingObject
     public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
     public List<Directory> children = new List<Directory> ();     // TODO remove
 
-    public HashTable<string, Key> key_map = new HashTable<string, Key> (str_hash, str_equal);
+    public string []? key_map = null;
     public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (SettingObject)); }
 
     public Directory (Directory? parent, string name)
@@ -238,14 +238,17 @@ public class SettingsModel : Object, Gtk.TreeModel
         string [] relocatable_schemas;
         settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
-        foreach (string settings_schema_id in non_relocatable_schemas)
+        foreach (string schema_id in non_relocatable_schemas)
         {
-            SettingsSchema? settings_schema = settings_schema_source.lookup (settings_schema_id, true);
+            SettingsSchema? settings_schema = settings_schema_source.lookup (schema_id, true);
             if (settings_schema == null)
                 continue;       // TODO better
+
             string schema_path = ((!) settings_schema).get_path ();
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
-            create_keys (view, (!) settings_schema, schema_path);
+            view.key_map = settings_schema.list_keys ();
+            foreach (string key_id in (!) view.key_map)
+                create_key (view, ((!) settings_schema).get_key (key_id), schema_path, schema_id, key_id);
         }
 
         client.changed.connect (watch_func);
@@ -268,14 +271,14 @@ public class SettingsModel : Object, Gtk.TreeModel
         return create_gsettings_views (view, tokens [1]);
     }
 
-    private void create_dconf_views (Directory parent_view)
+    private void create_dconf_views (Directory view)
     {
-        foreach (string item in client.list (parent_view.full_name))
+        foreach (string item in client.list (view.full_name))
         {
-            if (DConf.is_dir (parent_view.full_name + item))
-                create_dconf_views (get_child (parent_view, item [0:-1]));
-            else if (!key_exists (parent_view, item))
-                connect_key (parent_view, item, new DConfKey (client, parent_view, item));
+            if (DConf.is_dir (view.full_name + item))
+                create_dconf_views (get_child (view, item [0:-1]));
+            else if (view.key_map == null || !(item in view.key_map))
+                connect_key (view, item, new DConfKey (client, view, item));
         }
     }
 
@@ -295,46 +298,31 @@ public class SettingsModel : Object, Gtk.TreeModel
     * * Keys creation
     \*/
 
-    private void create_keys (Directory view, SettingsSchema settings_schema, string schema_path)
+    private void create_key (Directory view, SettingsSchemaKey settings_schema_key, string schema_path, string schema_id, string key_id)
     {
-        string schema_id = settings_schema.get_id ();
-        foreach (string key_id in settings_schema.list_keys ())
+        string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
+        string type_string;
+        switch (range_type)
         {
-            if (key_exists (view, key_id))
-                continue;
-
-            SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
-
-            string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
-            string type_string;
-            switch (range_type)
-            {
-                case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
-                case "flags":   type_string = "as";     break;  // TODO better
-                default:
-                case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
-            }
-
-            GSettingsKey new_key = new GSettingsKey (
-                    client,
-                    view,
-                    key_id,
-                    schema_id,
-                    (settings_schema_key.get_summary () ?? "").strip (),
-                    (settings_schema_key.get_description () ?? "").strip (),
-                    type_string,
-                    settings_schema_key.get_default_value (),
-                    range_type,
-                    settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
-                );
-            connect_key (view, key_id, (Key) new_key);
+            case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
+            case "flags":   type_string = "as";     break;  // TODO better
+            default:
+            case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
         }
-    }
 
-    private bool key_exists (Directory view, string key_id)     // TODO better
-    {
-        Key? key = view.key_map.lookup (key_id);
-        return key != null;
+        GSettingsKey new_key = new GSettingsKey (
+                client,
+                view,
+                key_id,
+                schema_id,
+                (settings_schema_key.get_summary () ?? "").strip (),
+                (settings_schema_key.get_description () ?? "").strip (),
+                type_string,
+                settings_schema_key.get_default_value (),
+                range_type,
+                settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
+            );
+        connect_key (view, key_id, (Key) new_key);
     }
 
     private void connect_key (Directory view, string name, Key new_key)
@@ -344,7 +332,6 @@ public class SettingsModel : Object, Gtk.TreeModel
                     new_key.value_changed ();
             });
         view.key_model.insert_sorted ((Key) new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
-        view.key_map.insert (name, (Key) new_key);
     }
 
     /*\
