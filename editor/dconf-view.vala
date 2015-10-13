@@ -183,7 +183,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = key.path;       // TODO get_header_bar() is [transfer none]
+            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;   // TODO get_header_bar() is [transfer none]
 
         create_child (custom_value_grid, (Key) _key);
     }
@@ -219,7 +219,7 @@ private class KeyEditor : KeyEditorDialog
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = key.path;       // TODO get_header_bar() is [transfer none]
+            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;   // TODO get_header_bar() is [transfer none]
 
         create_child (custom_value_grid, (Key) key);
 

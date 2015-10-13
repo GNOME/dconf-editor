@@ -15,15 +15,24 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-public class SettingObject : Object
+public abstract class SettingObject : Object
 {
-    public Directory? parent { get; protected set; }    // TODO make protected or even remove
-    public string name { get; protected set; }
-    public string full_name { get; protected set; }
+    public abstract bool is_view { get; }
+
+    public Directory? parent { get; construct; }    // TODO make protected or even remove
+    public string name { get; construct; }
+
+    public string full_name { get; private set; }
+    construct
+    {
+        full_name = parent == null ? "/" : ((!) parent).full_name + name + (is_view ? "/" : "");
+    }
 }
 
 public class Directory : SettingObject
 {
+    public override bool is_view { get { return true; } }
+
     public int index { get { return parent.children.index (this); }}        // TODO remove
 
     public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
@@ -32,17 +41,16 @@ public class Directory : SettingObject
     public HashTable<string, Key> key_map = new HashTable<string, Key> (str_hash, str_equal);
     public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (SettingObject)); }
 
-    public Directory (Directory? parent, string name, string full_name)
+    public Directory (Directory? parent, string name)
     {
-        this.parent = parent;
-        this.name = name;
-        this.full_name = full_name;
+        Object (parent: parent, name: name);
     }
 }
 
 public abstract class Key : SettingObject
 {
-    public string path { get; protected set; }
+    public override bool is_view { get { return false; } }
+
     public abstract bool has_schema { get; }
     public string type_string { get; protected set; default = "*"; }
     public abstract Variant value { get; set; }
@@ -129,14 +137,10 @@ public class DConfKey : Key
 
     public DConfKey (DConf.Client client, Directory parent, string name)
     {
+        Object (parent: parent, name: name);
+
         this.client = client;
-        this.parent = parent;
-
-        this.name = name;
-        path = parent.full_name;
-        full_name = path + name;
-
-        type_string = value.get_type_string ();
+        this.type_string = value.get_type_string ();
     }
 }
 
@@ -144,12 +148,12 @@ public class GSettingsKey : Key
 {
     private DConf.Client client;
 
-    public string schema_id { get; private set; }
-    public string summary { get; private set; }
-    public string description { get; private set; }
-    public Variant default_value { get; private set; }
-    public string range_type { get; private set; }
-    public Variant range_content { get; private set; }
+    public string schema_id { get; construct; }
+    public string summary { get; construct; }
+    public string description { get; construct; }
+    public Variant default_value { get; construct; }
+    public string range_type { get; construct; }
+    public Variant range_content { get; construct; }
 
     public override bool has_schema { get { return true; } }
 
@@ -182,23 +186,18 @@ public class GSettingsKey : Key
 
     public GSettingsKey (DConf.Client client, Directory parent, string name, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
+        Object (parent: parent,
+                name: name,
+                // schema infos
+                schema_id: schema_id,
+                summary: summary,
+                description: description,
+                default_value: default_value,
+                range_type: range_type,
+                range_content: range_content);
+
         this.client = client;
-        this.parent = parent;
-
-        this.name = name;
-        path = parent.full_name;
-        full_name = path + name;
-
-        this.schema_id = schema_id;
-
-        this.summary = summary;
-        this.description = description;
-
         this.type_string = type_string;
-        this.default_value = default_value;
-
-        this.range_type = range_type;
-        this.range_content = range_content;
     }
 
     public void set_to_default ()
@@ -223,7 +222,7 @@ public class GSettingsKey : Key
 public class SettingsModel : Object, Gtk.TreeModel
 {
     private DConf.Client client = new DConf.Client ();
-    private Directory root = new Directory (null, "/", "/");
+    private Directory root = new Directory (null, "/");
 
     private signal void item_changed (string key);
     private void watch_func (DConf.Client client, string path, string [] items, string? tag)
@@ -286,7 +285,7 @@ public class SettingsModel : Object, Gtk.TreeModel
         if (view != null)
             return (!) view;
 
-        Directory new_view = new Directory (parent_view, name, parent_view.full_name + name + "/");
+        Directory new_view = new Directory (parent_view, name);
         parent_view.children.insert_sorted (new_view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
         parent_view.child_map.insert (name, new_view);
         return new_view;
