@@ -53,7 +53,7 @@ public abstract class Key : SettingObject
 
     public abstract bool has_schema { get; }
     public string type_string { get; protected set; default = "*"; }
-    public abstract Variant value { get; set; }
+    public abstract Variant value { owned get; set; }
 
     public signal void value_changed ();
 
@@ -116,7 +116,7 @@ public class DConfKey : Key
     private Variant _value;
     public override Variant value
     {
-        get
+        owned get
         {
             _value = client.read (full_name);
             return _value;  // TODO cannot that error?
@@ -146,9 +146,9 @@ public class DConfKey : Key
 
 public class GSettingsKey : Key
 {
-    private DConf.Client client;
+    private GLib.Settings settings;
+    public string schema_id { get; private set; }
 
-    public string schema_id { get; construct; }
     public string summary { get; construct; }
     public string description { get; construct; }
     public Variant default_value { get; construct; }
@@ -157,65 +157,36 @@ public class GSettingsKey : Key
 
     public override bool has_schema { get { return true; } }
 
-    private Variant? _value = null;
     public override Variant value
     {
-        get
-        {
-            update_value ();
-            return _value ?? default_value;
-        }
-        set
-        {
-            _value = value;
-            try
-            {
-                client.write_sync (full_name, value);
-            }
-            catch (Error e)
-            {
-            }
-            value_changed ();
-        }
+        owned get { return settings.get_value (name); }
+        set { settings.set_value (name, value); }
     }
 
     public bool is_default
     {
-        get { update_value (); return _value == null; }
+        get { return settings.get_user_value (name) == null; }
     }
 
-    public GSettingsKey (DConf.Client client, Directory parent, string name, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
+    public GSettingsKey (GLib.Settings settings, Directory parent, string name, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
         Object (parent: parent,
                 name: name,
                 // schema infos
-                schema_id: schema_id,
                 summary: summary,
                 description: description,
-                default_value: default_value,
+                default_value: default_value,       // TODO devel default/admin default
                 range_type: range_type,
                 range_content: range_content);
 
-        this.client = client;
+        this.settings = settings;
+        this.schema_id = settings.schema_id;
         this.type_string = type_string;
     }
 
     public void set_to_default ()
     {
-        _value = null;
-        try
-        {
-            client.write_sync (full_name, null);
-        }
-        catch (Error e)
-        {
-        }
-        value_changed ();
-    }
-
-    private void update_value ()
-    {
-        _value = client.read (full_name);
+        settings.reset (name);
     }
 }
 
@@ -246,9 +217,10 @@ public class SettingsModel : Object, Gtk.TreeModel
 
             string schema_path = ((!) settings_schema).get_path ();
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
+            GLib.Settings settings = new GLib.Settings (schema_id);
             view.key_map = settings_schema.list_keys ();
             foreach (string key_id in (!) view.key_map)
-                create_key (view, ((!) settings_schema).get_key (key_id), schema_id, key_id);
+                create_gsettings_key (view, key_id, ((!) settings_schema).get_key (key_id), settings);
         }
 
         client.changed.connect (watch_func);
@@ -278,7 +250,7 @@ public class SettingsModel : Object, Gtk.TreeModel
             if (DConf.is_dir (view.full_name + item))
                 create_dconf_views (get_child (view, item [0:-1]));
             else if (view.key_map == null || !(item in view.key_map))
-                connect_key (view, item, new DConfKey (client, view, item));
+                create_dconf_key (view, item);
         }
     }
 
@@ -298,7 +270,7 @@ public class SettingsModel : Object, Gtk.TreeModel
     * * Keys creation
     \*/
 
-    private void create_key (Directory view, SettingsSchemaKey settings_schema_key, string schema_id, string key_id)
+    private void create_gsettings_key (Directory view, string key_id, SettingsSchemaKey settings_schema_key, Settings settings)
     {
         string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
         string type_string;
@@ -310,11 +282,10 @@ public class SettingsModel : Object, Gtk.TreeModel
             case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
         }
 
-        GSettingsKey new_key = new GSettingsKey (
-                client,
+        Key new_key = new GSettingsKey (
+                settings,
                 view,
                 key_id,
-                schema_id,
                 (settings_schema_key.get_summary () ?? "").strip (),
                 (settings_schema_key.get_description () ?? "").strip (),
                 type_string,
@@ -322,16 +293,18 @@ public class SettingsModel : Object, Gtk.TreeModel
                 range_type,
                 settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
             );
-        connect_key (view, key_id, (Key) new_key);
+        settings.changed [key_id].connect (() => { new_key.value_changed (); });
+        view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
     }
 
-    private void connect_key (Directory view, string name, Key new_key)
+    private void create_dconf_key (Directory view, string key_id)
     {
+        Key new_key = new DConfKey (client, view, key_id);
         item_changed.connect ((key_name) => {
                 if ((key_name.has_suffix ("/") && new_key.full_name.has_prefix (key_name)) || key_name == new_key.full_name)
                     new_key.value_changed ();
             });
-        view.key_model.insert_sorted ((Key) new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+        view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
     }
 
     /*\
