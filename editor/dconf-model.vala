@@ -248,7 +248,7 @@ public class SettingsModel : Object, Gtk.TreeModel
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
             view.key_map = settings_schema.list_keys ();
             foreach (string key_id in (!) view.key_map)
-                create_key (view, ((!) settings_schema).get_key (key_id), schema_path, schema_id, key_id);
+                create_key (view, ((!) settings_schema).get_key (key_id), schema_id, key_id);
         }
 
         client.changed.connect (watch_func);
@@ -298,7 +298,7 @@ public class SettingsModel : Object, Gtk.TreeModel
     * * Keys creation
     \*/
 
-    private void create_key (Directory view, SettingsSchemaKey settings_schema_key, string schema_path, string schema_id, string key_id)
+    private void create_key (Directory view, SettingsSchemaKey settings_schema_key, string schema_id, string key_id)
     {
         string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
         string type_string;
