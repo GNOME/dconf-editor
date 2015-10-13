@@ -9,6 +9,8 @@
         <property name="visible">True</property>
         <property name="hexpand">True</property>
         <property name="halign">start</property>
+        <property name="max-width-chars">42</property>
+        <property name="ellipsize">PANGO_ELLIPSIZE_START</property>
       </object>
     </child>
     <child>
