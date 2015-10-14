@@ -27,6 +27,7 @@ resource_data = \
 	key-list-box-row.ui \
 	key-editor.ui \
 	key-editor-no-schema.ui \
+	bookmarks.ui \
 	bookmark.ui
 
 resources.c: $(resource_data)
@@ -39,7 +40,8 @@ dconf_editor_SOURCES = \
 	dconf-editor.vala \
 	dconf-window.vala \
 	dconf-model.vala \
-	dconf-view.vala
+	dconf-view.vala \
+	bookmarks.vala
 
 desktopdir = $(datadir)/applications
 desktop_in_files = ca.desrt.dconf-editor.desktop.in.in
