@@ -91,9 +91,7 @@ public class Directory : SettingObject
             return;
 
         gsettings_key_map = ((!) settings_schema).list_keys ();
-
-        string schema_id = ((!) settings_schema).get_id ();
-        settings = new GLib.Settings (schema_id);
+        settings = new GLib.Settings (((!) settings_schema).get_id ());
 
         foreach (string key_id in (!) gsettings_key_map)
             create_gsettings_key (key_id, ((!) settings_schema).get_key (key_id));
@@ -112,9 +110,10 @@ public class Directory : SettingObject
         }
 
         GSettingsKey new_key = new GSettingsKey (
-                settings,
                 this,
                 key_id,
+                settings,
+                settings.schema_id,
                 ((!) (settings_schema_key.get_summary () ?? "")).strip (),
                 ((!) (settings_schema_key.get_description () ?? "")).strip (),
                 type_string,
@@ -122,7 +121,6 @@ public class Directory : SettingObject
                 range_type,
                 settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
             );
-        settings.changed [key_id].connect (() => { new_key.value_changed (); });
         insert_key (new_key);
     }
 
@@ -159,8 +157,8 @@ public class Directory : SettingObject
 public abstract class Key : SettingObject
 {
     public override bool is_view { get { return false; } }
-
     public abstract bool has_schema { get; }
+
     public string type_string { get; protected set; default = "*"; }
     public abstract Variant value { owned get; set; }
 
@@ -218,9 +216,9 @@ public abstract class Key : SettingObject
 
 public class DConfKey : Key
 {
-    private DConf.Client client;
-
     public override bool has_schema { get { return false; } }
+
+    private DConf.Client client;
 
     private Variant _value;
     public override Variant value
@@ -255,16 +253,16 @@ public class DConfKey : Key
 
 public class GSettingsKey : Key
 {
-    private GLib.Settings settings;
-    public string schema_id { get; private set; }
+    public override bool has_schema { get { return true; } }
 
+    public string schema_id { get; construct; }
     public string summary { get; construct; }
     public string description { get; construct; }
     public Variant default_value { get; construct; }
     public string range_type { get; construct; }
     public Variant range_content { get; construct; }
 
-    public override bool has_schema { get { return true; } }
+    private GLib.Settings settings;
 
     public override Variant value
     {
@@ -277,11 +275,17 @@ public class GSettingsKey : Key
         get { return settings.get_user_value (name) == null; }
     }
 
-    public GSettingsKey (GLib.Settings settings, Directory parent, string name, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
+    public void set_to_default ()
+    {
+        settings.reset (name);
+    }
+
+    public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
         Object (parent: parent,
                 name: name,
                 // schema infos
+                schema_id: schema_id,
                 summary: summary,
                 description: description,
                 default_value: default_value,       // TODO devel default/admin default
@@ -289,13 +293,9 @@ public class GSettingsKey : Key
                 range_content: range_content);
 
         this.settings = settings;
-        this.schema_id = settings.schema_id;
-        this.type_string = type_string;
-    }
+        settings.changed [name].connect (() => { value_changed (); });
 
-    public void set_to_default ()
-    {
-        settings.reset (name);
+        this.type_string = type_string;
     }
 }
 
