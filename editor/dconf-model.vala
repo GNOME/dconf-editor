@@ -38,12 +38,121 @@ public class Directory : SettingObject
     public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
     public List<Directory> children = new List<Directory> ();     // TODO remove
 
-    public string []? key_map = null;
-    public GLib.ListStore key_model { get; set; default = new GLib.ListStore (typeof (SettingObject)); }
-
-    public Directory (Directory? parent, string name)
+    public Directory (Directory? parent, string name, DConf.Client client)
     {
         Object (parent: parent, name: name);
+
+        this.client = client;
+    }
+
+    /*\
+    * * Keys management
+    \*/
+
+    private SettingsSchema? settings_schema = null;
+    private string []? gsettings_key_map = null;
+
+    private GLib.Settings settings;
+
+    private DConf.Client client;
+
+    private GLib.ListStore? _key_model = null;
+    public GLib.ListStore key_model
+    {
+        get
+        {
+            if (_key_model == null)
+            {
+                _key_model = new GLib.ListStore (typeof (SettingObject));
+                create_gsettings_keys ();
+                create_dconf_keys ();
+            }
+            return (!) _key_model;
+        }
+    }
+
+    private void insert_key (Key key)
+    {
+        ((!) _key_model).insert_sorted (key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+    }
+
+    /*\
+    * * GSettings keys creation
+    \*/
+
+    public void init_gsettings_keys (SettingsSchema _settings_schema)
+    {
+        settings_schema = _settings_schema;
+    }
+
+    private void create_gsettings_keys ()
+    {
+        if (settings_schema == null)
+            return;
+
+        gsettings_key_map = ((!) settings_schema).list_keys ();
+
+        string schema_id = ((!) settings_schema).get_id ();
+        settings = new GLib.Settings (schema_id);
+
+        foreach (string key_id in (!) gsettings_key_map)
+            create_gsettings_key (key_id, ((!) settings_schema).get_key (key_id));
+    }
+
+    private void create_gsettings_key (string key_id, SettingsSchemaKey settings_schema_key)
+    {
+        string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
+        string type_string;
+        switch (range_type)
+        {
+            case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
+            case "flags":   type_string = "as";     break;  // TODO better
+            default:
+            case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
+        }
+
+        GSettingsKey new_key = new GSettingsKey (
+                settings,
+                this,
+                key_id,
+                ((!) (settings_schema_key.get_summary () ?? "")).strip (),
+                ((!) (settings_schema_key.get_description () ?? "")).strip (),
+                type_string,
+                settings_schema_key.get_default_value (),
+                range_type,
+                settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
+            );
+        settings.changed [key_id].connect (() => { new_key.value_changed (); });
+        insert_key (new_key);
+    }
+
+    /*\
+    * * DConf keys creation
+    \*/
+
+    private signal void item_changed (string item);
+    private void dconf_client_change (DConf.Client client, string path, string [] items, string? tag)
+    {
+        foreach (string item in items)
+            item_changed (path + item);
+    }
+
+    private void create_dconf_keys ()
+    {
+        foreach (string item in client.list (full_name))
+            if (DConf.is_key (full_name + item) && (settings_schema == null || !(item in gsettings_key_map)))
+                create_dconf_key (item);
+        client.changed.connect (dconf_client_change);       // TODO better
+    }
+
+    private void create_dconf_key (string key_id)
+    {
+        Key new_key = new DConfKey (client, this, key_id);
+        item_changed.connect ((item) => {
+                if ((item.has_suffix ("/") && new_key.full_name.has_prefix (item)) || item == new_key.full_name)    // TODO better
+                    new_key.value_changed ();
+            });
+        insert_key (new_key);
     }
 }
 
@@ -193,14 +302,7 @@ public class GSettingsKey : Key
 public class SettingsModel : Object, Gtk.TreeModel
 {
     private DConf.Client client = new DConf.Client ();
-    private Directory root = new Directory (null, "/");
-
-    private signal void item_changed (string key);
-    private void watch_func (DConf.Client client, string path, string [] items, string? tag)
-    {
-        foreach (string item in items)
-            item_changed (path + item);     // TODO better
-    }
+    private Directory root;
 
     public SettingsModel ()
     {
@@ -208,6 +310,8 @@ public class SettingsModel : Object, Gtk.TreeModel
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
         settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
+
+        root = new Directory (null, "/", client);
 
         foreach (string schema_id in non_relocatable_schemas)
         {
@@ -217,14 +321,11 @@ public class SettingsModel : Object, Gtk.TreeModel
 
             string schema_path = ((!) settings_schema).get_path ();
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
-            GLib.Settings settings = new GLib.Settings (schema_id);
-            view.key_map = settings_schema.list_keys ();
-            foreach (string key_id in (!) view.key_map)
-                create_gsettings_key (view, key_id, ((!) settings_schema).get_key (key_id), settings);
+            view.init_gsettings_keys ((!) settings_schema);
         }
 
-        client.changed.connect (watch_func);
         create_dconf_views (root);
+
         client.watch_sync ("/");
     }
 
@@ -246,12 +347,8 @@ public class SettingsModel : Object, Gtk.TreeModel
     private void create_dconf_views (Directory view)
     {
         foreach (string item in client.list (view.full_name))
-        {
             if (DConf.is_dir (view.full_name + item))
                 create_dconf_views (get_child (view, item [0:-1]));
-            else if (view.key_map == null || !(item in view.key_map))
-                create_dconf_key (view, item);
-        }
     }
 
     private Directory get_child (Directory parent_view, string name)
@@ -260,51 +357,10 @@ public class SettingsModel : Object, Gtk.TreeModel
         if (view != null)
             return (!) view;
 
-        Directory new_view = new Directory (parent_view, name);
+        Directory new_view = new Directory (parent_view, name, client);
         parent_view.children.insert_sorted (new_view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
         parent_view.child_map.insert (name, new_view);
         return new_view;
-    }
-
-    /*\
-    * * Keys creation
-    \*/
-
-    private void create_gsettings_key (Directory view, string key_id, SettingsSchemaKey settings_schema_key, Settings settings)
-    {
-        string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
-        string type_string;
-        switch (range_type)
-        {
-            case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
-            case "flags":   type_string = "as";     break;  // TODO better
-            default:
-            case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
-        }
-
-        Key new_key = new GSettingsKey (
-                settings,
-                view,
-                key_id,
-                (settings_schema_key.get_summary () ?? "").strip (),
-                (settings_schema_key.get_description () ?? "").strip (),
-                type_string,
-                settings_schema_key.get_default_value (),
-                range_type,
-                settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
-            );
-        settings.changed [key_id].connect (() => { new_key.value_changed (); });
-        view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
-    }
-
-    private void create_dconf_key (Directory view, string key_id)
-    {
-        Key new_key = new DConfKey (client, view, key_id);
-        item_changed.connect ((key_name) => {
-                if ((key_name.has_suffix ("/") && new_key.full_name.has_prefix (key_name)) || key_name == new_key.full_name)
-                    new_key.value_changed ();
-            });
-        view.key_model.insert_sorted (new_key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
     }
 
     /*\
