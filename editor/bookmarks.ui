@@ -83,7 +83,7 @@ be added here</property> <!-- line wrap wanted -->
     <child>
       <object class="GtkImage" id="bookmarks_icon">
         <property name="visible">True</property>
-        <property name="icon-name">non-starred-symbolic</property> <!-- or starred-symbolic? may be changing -->
+        <property name="icon-name">non-starred-symbolic</property>
         <property name="icon-size">1</property>
       </object>
     </child>

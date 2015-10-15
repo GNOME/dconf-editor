@@ -44,11 +44,10 @@
           </packing>
         </child>
         <child>
-          <object class="Bookmarks">
+          <object class="Bookmarks" id="bookmarks_button">
             <property name="visible">True</property>
             <property name="schema">ca.desrt.dconf-editor.Settings</property>
             <signal name="bookmark_activated" handler="scroll_to_path"/>
-            <signal name="get_current_path" handler="get_current_path"/>
           </object>
           <packing>
             <property name="pack-type">end</property>

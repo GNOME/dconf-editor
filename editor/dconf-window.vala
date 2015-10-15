@@ -32,6 +32,7 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private ListBox key_list_box;
 
     private GLib.Settings settings;
+    [GtkChild] private Bookmarks bookmarks_button;
 
     [GtkChild] private SearchBar search_bar;
     [GtkChild] private SearchEntry search_entry;
@@ -111,9 +112,35 @@ class DConfWindow : ApplicationWindow
         {
             key_model = model.get_directory (iter).key_model;
             current_path = model.get_directory (iter).full_name;
+            bookmarks_button.current_path = current_path;
         }
 
         key_list_box.bind_model (key_model, new_list_box_row);
+    }
+
+    [GtkCallback]
+    private bool scroll_to_path (string full_name)
+    {
+        TreeIter iter;
+        if (model.get_iter_first (out iter))
+        {
+            do
+            {
+                Directory dir = model.get_directory (iter);
+
+                if (dir.full_name == full_name)
+                {
+                    select_dir (iter);
+                    bookmarks_button.current_path = full_name;
+                    return true;
+                }
+            }
+            while (get_next_iter (ref iter));
+        }
+        MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
+        dialog.run ();
+        dialog.destroy ();
+        return false;
     }
 
     /*\
@@ -277,46 +304,6 @@ class DConfWindow : ApplicationWindow
         }
 
         return true;
-    }
-
-    /*\
-    * * Bookmarks
-    \*/
-
-    [GtkCallback]
-    private string get_current_path ()
-    {
-        TreeIter iter;
-        if (!dir_tree_selection.get_selected (null, out iter))
-            assert_not_reached ();
-
-        Value full_path_value = Value (typeof (string));
-        model.get_value (iter, 2, out full_path_value);
-        return full_path_value.get_string ();
-    }
-
-    [GtkCallback]
-    private bool scroll_to_path (string full_name)
-    {
-        TreeIter iter;
-        if (model.get_iter_first (out iter))
-        {
-            do
-            {
-                Directory dir = model.get_directory (iter);
-
-                if (dir.full_name == full_name)
-                {
-                    select_dir (iter);
-                    return true;
-                }
-            }
-            while (get_next_iter (ref iter));
-        }
-        MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
-        dialog.run ();
-        dialog.destroy ();
-        return false;
     }
 }
 

@@ -22,19 +22,33 @@ public class Bookmarks : MenuButton
 {
     [GtkChild] private ListBox bookmarks_list_box;
     [GtkChild] private Popover bookmarks_popover;
+    [GtkChild] private Image bookmarks_icon;
 
+    public string current_path { get; set; }
     public string schema { get; construct; }
     private GLib.Settings settings;
     private GLib.ListStore bookmarks_model;
 
-    public signal string get_current_path ();
     public signal bool bookmark_activated (string bookmark);
 
     construct
     {
         settings = new GLib.Settings (schema);
         settings.changed ["bookmarks"].connect (update_bookmarks);
+        notify ["current-path"].connect (update_icon);
         update_bookmarks ();
+    }
+
+    private void update_icon ()
+    {
+        bool path_is_bookmarked = false;
+        string [] bookmarks = settings.get_strv ("bookmarks");
+        foreach (string bookmark in bookmarks)
+        {
+            if (bookmark == current_path)
+                path_is_bookmarked = true;
+        }
+        bookmarks_icon.icon_name = path_is_bookmarked ? "starred-symbolic" : "non-starred-symbolic";
     }
 
     private void update_bookmarks ()
@@ -48,6 +62,7 @@ public class Bookmarks : MenuButton
             bookmarks_model.append (bookmark_row);
         }
         bookmarks_list_box.bind_model (bookmarks_model, new_bookmark_row);
+        update_icon ();     // TODO duplicates work
     }
 
     [GtkCallback]
@@ -55,10 +70,8 @@ public class Bookmarks : MenuButton
     {
         bookmarks_popover.closed ();
 
-        string path = get_current_path ();
-
         string [] bookmarks = settings.get_strv ("bookmarks");
-        bookmarks += path;
+        bookmarks += current_path;
         settings.set_strv ("bookmarks", bookmarks);
     }
 
