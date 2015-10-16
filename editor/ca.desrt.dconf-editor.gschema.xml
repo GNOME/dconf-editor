@@ -37,6 +37,11 @@
       <summary>A path to restore the last view</summary>
       <description>If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to navigate to this path.</description>
     </key>
+    <key name="show-warning" type="b">
+      <default>true</default>
+      <summary>Show initial warning</summary>
+      <description>If 'true', Dconf Editor opens a popup when launched reminding the user to be careful.</description>
+    </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
     <value value="0" nick="Red"/>

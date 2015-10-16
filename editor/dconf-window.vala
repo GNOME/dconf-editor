@@ -67,6 +67,26 @@ class DConfWindow : ApplicationWindow
     \*/
 
     [GtkCallback]
+    private void on_show ()
+    {
+        if (!settings.get_boolean ("show-warning"))
+            return;
+
+        Gtk.MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.INFO, ButtonsType.NONE, _("Thanks for using Dconf Editor for editing your configurations!"));
+        dialog.format_secondary_text (_("Don't forget that some option may break applications, so be careful."));
+        dialog.add_buttons (_("I'd be careful."), ResponseType.ACCEPT);
+        Box box = (Box) dialog.get_message_area ();
+        CheckButton checkbutton = new CheckButton.with_label (_("Show this dialog next time."));
+        checkbutton.visible = true;
+        checkbutton.active = true;
+        checkbutton.margin_top = 5;
+        checkbutton.toggled.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
+        box.add (checkbutton);
+        dialog.run ();
+        dialog.destroy ();
+    }
+
+    [GtkCallback]
     private bool on_window_state_event (Widget widget, Gdk.EventWindowState event)
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
