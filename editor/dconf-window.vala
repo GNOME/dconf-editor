@@ -197,16 +197,24 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
-        if (bookmarks_button.active)        // TODO open bug
-            return false;
-
         if (Gdk.keyval_name (event.keyval) == "f" && (event.state & Gdk.ModifierType.CONTROL_MASK) != 0)    // TODO better?
         {
+            if (bookmarks_button.active)
+                bookmarks_button.active = false;
             search_bar.set_search_mode (!search_bar.get_search_mode ());
             return true;
         }
 
+        if (bookmarks_button.active)        // TODO open bug
+            return false;
+
         return search_bar.handle_event (event);
+    }
+
+    [GtkCallback]
+    private void on_bookmarks_button_clicked ()
+    {
+        search_bar.set_search_mode (false);
     }
 
     [GtkCallback]

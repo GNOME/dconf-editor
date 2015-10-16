@@ -41,6 +41,7 @@ public class Bookmarks : MenuButton
         notify ["current-path"].connect (update_icon_and_switch);
         bookmarked_switch.notify ["active"].connect (switch_changed_cb);    // TODO activated when current_path changes...
         update_bookmarks ();
+        bookmarked_switch.grab_focus ();
     }
 
     private void update_icon_and_switch ()
