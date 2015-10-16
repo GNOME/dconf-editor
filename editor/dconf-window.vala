@@ -31,6 +31,7 @@ class DConfWindow : ApplicationWindow
     private int window_height = 0;
     private bool window_is_maximized = false;
     private bool window_is_fullscreen = false;
+    private bool window_is_tiled = false;
 
     private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
@@ -126,6 +127,9 @@ class DConfWindow : ApplicationWindow
             window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
         if ((event.changed_mask & Gdk.WindowState.FULLSCREEN) != 0)
             window_is_fullscreen = (event.new_window_state & Gdk.WindowState.FULLSCREEN) != 0;
+        /* We don’t save this state, but track it for saving size allocation */
+        if ((event.changed_mask & Gdk.WindowState.TILED) != 0)
+            window_is_tiled = (event.new_window_state & Gdk.WindowState.TILED) != 0;
 
         return false;
     }
@@ -133,7 +137,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void on_size_allocate ()
     {
-        if (window_is_maximized || window_is_fullscreen)
+        if (window_is_maximized || window_is_fullscreen || window_is_tiled)
             return;
         get_size (out window_width, out window_height);
     }
