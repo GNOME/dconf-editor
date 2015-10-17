@@ -104,7 +104,7 @@ public class Directory : SettingObject
         switch (range_type)
         {
             case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
-            case "flags":   type_string = "as";     break;  // TODO better
+            case "flags":   type_string = "<flags>"; break; // flags=""
             default:
             case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
         }

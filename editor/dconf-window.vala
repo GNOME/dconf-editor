@@ -458,6 +458,14 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.set_to_default.connect (() => { key.set_to_default (); popover.destroy (); });
             popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
         }
+        else if (key.type_string == "<flags>")
+        {
+            popover.add_separator ();
+            popover.add_action_button (_("Default value"), () => { key.set_to_default (); popover.destroy (); }, true);     // TODO string duplication
+            popover.create_flags_list ((GSettingsKey) key);
+
+            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (VariantType.STRING_ARRAY, bytes, true); });
+        }
         else if (!key.is_default)
         {
             popover.add_separator ();
@@ -497,6 +505,10 @@ private class ContextPopover : Popover
         this.add (grid);
     }
 
+    /*\
+    * * Simple actions
+    \*/
+
     public delegate void button_action ();
     public void add_action_button (string label, button_action action, bool is_default = false)
     {
@@ -515,6 +527,47 @@ private class ContextPopover : Popover
         separator.visible = true;
         grid.add (separator);
     }
+
+    /*\
+    * * Flags
+    \*/
+
+    public void create_flags_list (GSettingsKey key)
+    {
+        GLib.Settings settings = new GLib.Settings (key.schema_id);
+        string [] active_flags = settings.get_strv (key.name);
+        string [] all_flags = key.range_content.get_strv ();
+        CheckButton [] buttons = new CheckButton [0];
+        foreach (string flag in all_flags)
+            buttons += new_flag_button (flag, flag in active_flags);
+
+        foreach (CheckButton button in buttons)
+            button.toggled.connect (() => { calculate_flags_value (buttons); });
+    }
+
+    private CheckButton new_flag_button (string text, bool is_active)
+    {
+        CheckButton button = new CheckButton ();
+        button.visible = true;
+        button.label = text;
+        button.active = is_active;
+        grid.add (button);
+        return button;
+    }
+
+    private void calculate_flags_value (CheckButton [] buttons)
+    {
+        string [] new_flags = new string [0];
+        foreach (CheckButton button in buttons)
+            if (button.active)
+                new_flags += button.label;
+        Variant variant = new Variant.strv (new_flags);
+        value_changed (variant.get_data_as_bytes ());
+    }
+
+    /*\
+    * * Choices
+    \*/
 
     public void create_buttons_list (Key key, bool nullable)
     {

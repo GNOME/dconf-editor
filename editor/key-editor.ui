@@ -109,8 +109,8 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="halign">end</property>
+                <property name="valign">end</property>
                 <property name="label" translatable="yes">Use default value</property>
-                <property name="valign">baseline</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>

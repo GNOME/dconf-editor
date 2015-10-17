@@ -42,6 +42,10 @@ private abstract class KeyEditorDialog : Dialog
                 KeyEditorChildEnum _key_editor_child = new KeyEditorChildEnum (key);
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 return (Widget) _key_editor_child;
+            case "<flags>":
+                KeyEditorChildFlags _key_editor_child = new KeyEditorChildFlags ((GSettingsKey) key);
+                key_editor_child = (KeyEditorChild) _key_editor_child;
+                return (Widget) _key_editor_child;
             case "b":
                 KeyEditorChildBool _key_editor_child = new KeyEditorChildBool (key.value.get_boolean ());
                 key_editor_child = (KeyEditorChild) _key_editor_child;
@@ -308,6 +312,46 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
                 popover.closed ();
             });
         this.set_popover ((Popover) popover);
+    }
+
+    public Variant get_variant ()
+    {
+        return variant;
+    }
+}
+
+private class KeyEditorChildFlags : Grid, KeyEditorChild
+{
+    private Variant variant;
+
+    public KeyEditorChildFlags (GSettingsKey key)
+    {
+        this.variant = key.value;
+
+        this.visible = true;
+        this.hexpand = true;
+
+        Label label = new Label (variant.print (false));
+        label.visible = true;
+        label.halign = Align.START;
+        label.hexpand = true;
+        this.attach (label, 0, 0, 1, 1);
+
+        MenuButton button = new MenuButton ();
+        button.visible = true;
+        button.use_popover = true;
+        button.halign = Align.END;
+        ((StyleContext) button.get_style_context ()).add_class ("image-button");
+        this.attach (button, 1, 0, 1, 1);
+
+        ContextPopover popover = new ContextPopover ();
+        popover.create_flags_list (key);
+        popover.set_relative_to (button);
+        popover.value_changed.connect ((bytes) => {
+                variant = new Variant.from_bytes (VariantType.STRING_ARRAY, bytes, true);
+                label.label = variant.print (false);
+            });
+        button.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
