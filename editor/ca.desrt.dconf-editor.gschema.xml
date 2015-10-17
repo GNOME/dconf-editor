@@ -50,6 +50,13 @@
     <value value="3" nick="Yellow"/>
     <value value="1" nick="Green"/>
   </enum>
+  <flags id="ca.desrt.dconf-editor.DemoFlags">
+    <value value="16" nick="Red"/>      <!-- TODO report bug: 0 validates... -->
+    <value value="4" nick="White"/>
+    <value value="2" nick="Blue"/>
+    <value value="8" nick="Yellow"/>
+    <value value="1" nick="Green"/>
+  </flags>
   <schema id="ca.desrt.dconf-editor.Demo" path="/ca/desrt/dconf-editor/demo/">
     <key name="boolean" type="b">
       <default>true</default>
@@ -118,6 +125,11 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <default>-32768</default>
       <summary>A short integer, type "n"</summary>
       <description>A 16bit signed integer. See also the "integer-16-unsigned" key.</description>
+    </key>
+    <key name="flags" flags="ca.desrt.dconf-editor.DemoFlags">
+      <default>["Blue", "White", "Red"]</default>
+      <summary>Flags: choose-colors-you-love</summary>
+      <description>Flags could be set by the "enum" attribute.</description>
     </key>
     <key name="integer-16-unsigned" type="q">
       <default>65535</default>

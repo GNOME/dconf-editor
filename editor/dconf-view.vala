@@ -117,6 +117,8 @@ private abstract class KeyEditorDialog : Dialog
                 return _("String array");
             case "<enum>":
                 return _("Enumeration");
+            case "<flags>":
+                return _("Flags");
             case "d":
                 string min, max;
                 get_min_and_max (out min, out max);
