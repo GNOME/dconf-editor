@@ -98,9 +98,9 @@ be added here</property> <!-- line wrap wanted -->
   </object>
   <template class="Bookmarks" parent="GtkMenuButton">
     <property name="popover">bookmarks_popover</property>
-    <style>
-      <class name="image-button"/>
-    </style>
+<!--    <style>
+      <class name="image-button"/>  TODO bug https://bugzilla.gnome.org/show_bug.cgi?id=756731
+    </style> -->
     <child internal-child="accessible">
       <object class="AtkObject">
         <property name="AtkObject::accessible-name" translatable="yes">Bookmarks</property>

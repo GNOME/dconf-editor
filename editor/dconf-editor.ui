@@ -50,6 +50,9 @@
             <property name="schema">ca.desrt.dconf-editor.Settings</property>
             <signal name="clicked" handler="on_bookmarks_button_clicked"/>
             <signal name="bookmark_activated" handler="scroll_to_path"/>
+            <style>
+              <class name="image-button"/> <!-- TODO https://bugzilla.gnome.org/show_bug.cgi?id=756731 -->
+            </style>
           </object>
           <packing>
             <property name="pack-type">end</property>
