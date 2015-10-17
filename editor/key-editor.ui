@@ -31,16 +31,16 @@
       <object class="GtkBox">
         <property name="margin">6</property><!-- TODO test -->
         <child>
-          <object class="GtkGrid">
+          <object class="GtkGrid" id="grid">
             <property name="visible">True</property>
             <property name="row-spacing">6</property>
-            <property name="column-spacing">6</property>
+            <property name="column-spacing">12</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">Schema:</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">Schema</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -52,9 +52,9 @@
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">Summary:</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">Summary</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -66,9 +66,9 @@
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">Description:</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">Description</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -80,9 +80,9 @@
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes" comments="Translators: as in datatype (integer, boolean, string, etc)">Type:</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes" comments="Translators: as in datatype (integer, boolean, string, etc.)">Type</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -94,13 +94,41 @@
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">Default:</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">Default</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
                 <property name="top-attach">4</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">Use default value</property>
+                <property name="valign">baseline</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">5</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="halign">end</property>
+<!--                <property name="valign">start</property>  TODO -->
+                <property name="label" translatable="yes">Custom value</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">6</property>
                 <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
@@ -113,14 +141,13 @@
                 <property name="wrap">True</property>
                 <property name="selectable">True</property>
                 <property name="can-focus">False</property>
-<!--                <property name="hexpand">True</property> -->
                 <property name="max-width-chars">42</property>
                 <property name="width-chars">42</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">0</property>
-                <property name="width">2</property>
+                <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
@@ -132,14 +159,13 @@
                 <property name="wrap">True</property>
                 <property name="selectable">True</property>
                 <property name="can-focus">False</property>
-<!--                <property name="hexpand">True</property> -->
                 <property name="max-width-chars">42</property>
                 <property name="width-chars">42</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">1</property>
-                <property name="width">2</property>
+                <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
@@ -151,14 +177,13 @@
                 <property name="wrap">True</property>
                 <property name="selectable">True</property>
                 <property name="can-focus">False</property>
-<!--                <property name="hexpand">True</property> -->
                 <property name="max-width-chars">42</property>
                 <property name="width-chars">42</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">2</property>
-                <property name="width">2</property>
+                <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
@@ -170,14 +195,13 @@
                 <property name="wrap">True</property>
                 <property name="selectable">True</property>
                 <property name="can-focus">False</property>
-<!--                <property name="hexpand">True</property> -->
                 <property name="max-width-chars">42</property>
                 <property name="width-chars">42</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">3</property>
-                <property name="width">2</property>
+                <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
@@ -189,29 +213,13 @@
                 <property name="wrap">True</property>
                 <property name="selectable">True</property>
                 <property name="can-focus">False</property>
-                <property name="hexpand">True</property>
                 <property name="max-width-chars">42</property>
                 <property name="width-chars">42</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">4</property>
-                <property name="width">2</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="label" translatable="yes">Use default value</property>
-                <property name="valign">baseline</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">5</property>
-                <property name="width">2</property>
+                <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
@@ -220,24 +228,15 @@
                 <property name="visible">True</property>
                 <property name="width-request">100</property><!-- same request than for button_cancel/button_apply -->
                 <property name="halign">end</property>
+                <property name="hexpand">True</property>
               </object>
               <packing>
-                <property name="left-attach">2</property>
+                <property name="left-attach">1</property>
                 <property name="top-attach">5</property>
                 <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkGrid" id="custom_value_grid">
-            <property name="visible">True</property>
-            <property name="hexpand">True</property>
-            <property name="margin-top">6</property><!-- TODO better -->
-            <property name="orientation">vertical</property>
-            <property name="row-spacing">6</property>
-            <property name="sensitive" bind-source="custom_value_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
           </object>
         </child>
       </object>

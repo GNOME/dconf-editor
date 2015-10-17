@@ -34,26 +34,23 @@ private abstract class KeyEditorDialog : Dialog
 
     protected abstract void on_response_apply ();
 
-    protected void create_child (Grid custom_value_grid, Key key)
+    protected Widget create_child (Key key)
     {
         switch (key.type_string)
         {
             case "<enum>":
                 KeyEditorChildEnum _key_editor_child = new KeyEditorChildEnum (key);
                 key_editor_child = (KeyEditorChild) _key_editor_child;
-                custom_value_grid.add (_key_editor_child);
-                return;
+                return (Widget) _key_editor_child;
             case "b":
                 KeyEditorChildBool _key_editor_child = new KeyEditorChildBool (key.value.get_boolean ());
                 key_editor_child = (KeyEditorChild) _key_editor_child;
-                custom_value_grid.add (_key_editor_child);
-                return;
+                return (Widget) _key_editor_child;
             case "s":
                 KeyEditorChildString _key_editor_child = new KeyEditorChildString (key.value.get_string ());
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
-                custom_value_grid.add (_key_editor_child);
-                return;
+                return (Widget) _key_editor_child;
             case "y":
             case "n":
             case "q":
@@ -66,35 +63,36 @@ private abstract class KeyEditorDialog : Dialog
                 KeyEditorChildNumber _key_editor_child = new KeyEditorChildNumber (key);
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
-                custom_value_grid.add (_key_editor_child);
-                return;
+                return (Widget) _key_editor_child;
             case "mb":
                 KeyEditorChildNullableBool _key_editor_child = new KeyEditorChildNullableBool (key);
                 key_editor_child = (KeyEditorChild) _key_editor_child;
-                custom_value_grid.add (_key_editor_child);
-                return;
+                return (Widget) _key_editor_child;
             default:
                 KeyEditorChildDefault _key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
                 _key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
                 key_editor_child = (KeyEditorChild) _key_editor_child;
                 key_editor_child.child_activated.connect (response_apply_cb);
-                custom_value_grid.add (_key_editor_child);
-                break;
+                return (Widget) _key_editor_child;
         }
-
-        if ("s" in key.type_string || "g" in key.type_string || "o" in key.type_string) /* warning: "<flags>" has an "s" in it */
-        {
-            if ("m" in key.type_string)                                                 /* warning: "<enum>" has an "m" in it */
-                /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-                custom_value_grid.add (warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks.")));
-            else
-                custom_value_grid.add (warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks.")));
-        }
-        else if ("m" in key.type_string)    /* warning: "<enum>" has an "m" in it */
-            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-            custom_value_grid.add (warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value.")));
     }
-    private Label warning_label (string text)
+
+    protected Widget? add_warning (Key key)
+    {
+        if (key.type_string != "<flags>" && (("s" in key.type_string && key.type_string != "s") || "g" in key.type_string) || "o" in key.type_string)
+        {
+            if ("m" in key.type_string)
+                /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+                return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks."));
+            else
+                return warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks."));
+        }
+        else if ("m" in key.type_string && key.type_string != "m" && key.type_string != "mb" && key.type_string != "<enum>")
+            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+            return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."));
+        return null;
+    }
+    private Widget warning_label (string text)
     {
         Label label = new Label ("<i>" + text + "</i>");
         label.visible = true;
@@ -102,7 +100,7 @@ private abstract class KeyEditorDialog : Dialog
         label.max_width_chars = 59;
         label.wrap = true;
         label.halign = Align.START;
-        return label;
+        return (Widget) label;
     }
 
     protected string key_to_description ()
@@ -172,9 +170,12 @@ private abstract class KeyEditorDialog : Dialog
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor-no-schema.ui")]
-private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds
+private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds; doesn't have a "Custom value" text
 {
-    [GtkChild] private Grid custom_value_grid;
+    [GtkChild] private Button button_apply;
+    [GtkChild] private Grid grid;
+
+    [GtkChild] private Label type_label;
 
     private DConfKey key;
 
@@ -187,7 +188,15 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;   // TODO get_header_bar() is [transfer none]
 
-        create_child (custom_value_grid, (Key) _key);
+        Widget _key_editor_child = create_child ((Key) _key);
+        grid.attach (_key_editor_child, 1, 1, 1, 1);
+        Widget? warning = add_warning ((Key) _key);
+        if (warning != null)
+            grid.attach ((!) warning, 0, 2, 2, 1);
+
+        type_label.set_text (key_to_description ());
+
+        notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
 
     protected override void on_response_apply ()
@@ -202,7 +211,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 private class KeyEditor : KeyEditorDialog
 {
     [GtkChild] private Button button_apply;
-    [GtkChild] private Grid custom_value_grid;
+    [GtkChild] private Grid grid;
 
     [GtkChild] private Label schema_label;
     [GtkChild] private Label summary_label;
@@ -223,7 +232,12 @@ private class KeyEditor : KeyEditorDialog
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;   // TODO get_header_bar() is [transfer none]
 
-        create_child (custom_value_grid, (Key) key);
+        Widget _key_editor_child = create_child ((Key) key);
+        grid.attach (_key_editor_child, 1, 6, 1, 1);
+        custom_value_switch.bind_property ("active", _key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+        Widget? warning = add_warning ((Key) _key);
+        if (warning != null)
+            grid.attach ((!) warning, 0, 7, 2, 1);
 
         // infos
 
@@ -236,8 +250,8 @@ private class KeyEditor : KeyEditorDialog
         // switch
 
         custom_value_switch.set_active (key.is_default);
-        custom_value_switch.notify["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
-        notify["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
+        custom_value_switch.notify ["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
+        notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
 
     protected override void get_min_and_max (out string min, out string max)
@@ -268,18 +282,9 @@ public interface KeyEditorChild : Widget
 {
     public abstract Variant get_variant ();
     public signal void child_activated ();
-
-    protected Label new_label_custom_value ()       // not used by String & Default
-    {
-        Label label = new Label (_("Custom Value"));
-        label.visible = true;
-        label.halign = Align.START;
-        label.hexpand = true;
-        return label;
-    }
 }
 
-private class KeyEditorChildEnum : Grid, KeyEditorChild
+private class KeyEditorChildEnum : MenuButton, KeyEditorChild
 {
     private Variant variant;
 
@@ -289,26 +294,20 @@ private class KeyEditorChildEnum : Grid, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
-
-        this.attach (new_label_custom_value (), 0, 0, 1, 1);
-
-        MenuButton button = new MenuButton ();
-        button.visible = true;
-        button.use_popover = true;
-        button.halign = Align.END;
-        button.width_request = 100;
-        button.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
-        this.attach (button, 1, 0, 1, 1);
+        this.halign = Align.END;
+        this.use_popover = true;
+        this.width_request = 100;
+        this.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
 
         ContextPopover popover = new ContextPopover ();
         popover.create_buttons_list (key, false);
-        popover.set_relative_to (button);
+        popover.set_relative_to (this);
         popover.value_changed.connect ((bytes) => {
                 variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
-                button.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
+                this.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
                 popover.closed ();
             });
-        button.set_popover ((Popover) popover);
+        this.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
@@ -317,7 +316,7 @@ private class KeyEditorChildEnum : Grid, KeyEditorChild
     }
 }
 
-private class KeyEditorChildNullableBool : Grid, KeyEditorChild
+private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
 {
     private Variant variant;
 
@@ -328,38 +327,32 @@ private class KeyEditorChildNullableBool : Grid, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
-
-        this.attach (new_label_custom_value (), 0, 0, 1, 1);
-
-        MenuButton button = new MenuButton ();
-        button.visible = true;
-        button.use_popover = true;
-        button.halign = Align.END;
-        button.width_request = 100;
+        this.halign = Align.END;
+        this.use_popover = true;
+        this.width_request = 100;
         if (maybe_variant == null)
-            button.label = Key.cool_boolean_text_value (null);
+            this.label = Key.cool_boolean_text_value (null);
         else
-            button.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
-        this.attach (button, 1, 0, 1, 1);
+            this.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
 
         ContextPopover popover = new ContextPopover ();
         popover.create_buttons_list (key, false);
-        popover.set_relative_to (button);
+        popover.set_relative_to (this);
         popover.value_changed.connect ((bytes) => {
                 if (bytes == null)
                 {
                     variant = new Variant.maybe (VariantType.BOOLEAN, null);
-                    button.label = Key.cool_boolean_text_value (null);
+                    this.label = Key.cool_boolean_text_value (null);
                 }
                 else
                 {
                     variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
                     maybe_variant = variant.get_maybe ();
-                    button.label = Key.cool_boolean_text_value (maybe_variant.get_boolean ());
+                    this.label = Key.cool_boolean_text_value (maybe_variant.get_boolean ());
                 }
                 popover.closed ();
             });
-        button.set_popover ((Popover) popover);
+        this.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
@@ -376,26 +369,20 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
     {
         this.visible = true;
         this.hexpand = true;
-
-        this.attach (new_label_custom_value (), 0, 0, 1, 1);
-
-        Grid grid = new Grid ();
-        grid.visible = true;
-        grid.halign = Align.END;
-        grid.column_homogeneous = true;
-        grid.width_request = 100;
-        ((StyleContext) grid.get_style_context ()).add_class ("linked");
-        this.attach (grid, 1, 0, 1, 1);
+        this.halign = Align.END;
+        this.column_homogeneous = true;
+        this.width_request = 100;
+        ((StyleContext) this.get_style_context ()).add_class ("linked");
 
         ToggleButton button_false = new ToggleButton ();
         button_false.visible = true;
         button_false.label = Key.cool_boolean_text_value (false);
-        grid.attach (button_false, 0, 0, 1, 1);
+        this.attach (button_false, 0, 0, 1, 1);
 
         button_true = new ToggleButton ();
         button_true.visible = true;
         button_true.label = Key.cool_boolean_text_value (true);
-        grid.attach (button_true, 1, 0, 1, 1);
+        this.attach (button_true, 1, 0, 1, 1);
 
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
@@ -407,9 +394,8 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
     }
 }
 
-private class KeyEditorChildNumber : Grid, KeyEditorChild
+private class KeyEditorChildNumber : SpinButton, KeyEditorChild
 {
-    private SpinButton spin;
     private string key_type;
 
     public KeyEditorChildNumber (Key key)
@@ -418,8 +404,7 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
-
-        this.attach (new_label_custom_value (), 0, 0, 1, 1);
+        this.halign = Align.END;
 
         double min, max;
         if (key.has_schema && ((GSettingsKey) key).range_type == "range")    // TODO test more; and what happen if only min/max is in range?
@@ -433,21 +418,19 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
         if (key.type_string == "d")
         {
             Adjustment adjustment = new Adjustment (key.value.get_double (), min, max, 0.01, 0.1, 0.0);
-            spin = new SpinButton (adjustment, 0.01, 2);
+            this.configure (adjustment, 0.01, 2);
         }
         else
         {
             Adjustment adjustment = new Adjustment (get_variant_as_double (key.value), min, max, 1.0, 5.0, 0.0);
-            spin = new SpinButton (adjustment, 1.0, 0);
+            this.configure (adjustment, 1.0, 0);
         }
 
-        spin.visible = true;
-        spin.update_policy = SpinButtonUpdatePolicy.IF_VALID;
-        spin.snap_to_ticks = true;
-        spin.input_purpose = InputPurpose.NUMBER;   // TODO spin.input_purpose = InputPurpose.DIGITS & spin.numeric = true; (no “e”) if not double?
-        spin.width_chars = 30;
-        spin.activate.connect (() => { child_activated (); });
-        this.attach (spin, 1, 0, 1, 1);
+        this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
+        this.snap_to_ticks = true;
+        this.input_purpose = InputPurpose.NUMBER;   // TODO spin.input_purpose = InputPurpose.DIGITS & spin.numeric = true; (no “e”) if not double?
+        this.width_chars = 30;
+        this.activate.connect (() => { child_activated (); });
     }
 
     private static void get_min_and_max_double (out double min, out double max, string variant_type)
@@ -488,15 +471,15 @@ private class KeyEditorChildNumber : Grid, KeyEditorChild
     {
         switch (key_type)
         {
-            case "y": return new Variant.byte   ((uchar) spin.get_value ());        // TODO uchar or uint8?
-            case "n": return new Variant.int16  ((int16) spin.get_value ());
-            case "q": return new Variant.uint16 ((uint16) spin.get_value ());
-            case "i": return new Variant.int32  ((int) spin.get_value ());
-            case "u": return new Variant.uint32 ((int) spin.get_value ());
-            case "x": return new Variant.int64  ((int) spin.get_value ());
-            case "t": return new Variant.uint64 ((int) spin.get_value ());
-            case "d": return new Variant.double (spin.get_value ());
-            case "h": return new Variant.handle ((int) spin.get_value ());
+            case "y": return new Variant.byte   ((uchar) this.get_value ());        // TODO uchar or uint8?
+            case "n": return new Variant.int16  ((int16) this.get_value ());
+            case "q": return new Variant.uint16 ((uint16) this.get_value ());
+            case "i": return new Variant.int32  ((int) this.get_value ());
+            case "u": return new Variant.uint32 ((int) this.get_value ());
+            case "x": return new Variant.int64  ((int) this.get_value ());
+            case "t": return new Variant.uint64 ((int) this.get_value ());
+            case "d": return new Variant.double (this.get_value ());
+            case "h": return new Variant.handle ((int) this.get_value ());
             default: assert_not_reached ();
         }
     }
