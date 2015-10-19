@@ -5,7 +5,6 @@ dconf_editor_VALAFLAGS = \
 	--pkg gio-2.0 \
 	--pkg gtk+-3.0 \
 	--pkg gmodule-2.0 \
-	--pkg libxml-2.0 \
 	--pkg dconf \
 	--gresources $(builddir)/dconf-editor.gresource.xml \
 	--target-glib $(GLIB_REQUIRED)
