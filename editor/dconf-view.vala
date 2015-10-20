@@ -307,7 +307,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         popover.create_buttons_list (key, false);
         popover.set_relative_to (this);
         popover.value_changed.connect ((bytes) => {
-                variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
+                variant = new Variant.from_bytes (key.value.get_type (), (!) bytes, true);
                 this.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
                 popover.closed ();
             });
@@ -348,7 +348,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         popover.create_flags_list (key);
         popover.set_relative_to (button);
         popover.value_changed.connect ((bytes) => {
-                variant = new Variant.from_bytes (VariantType.STRING_ARRAY, bytes, true);
+                variant = new Variant.from_bytes (VariantType.STRING_ARRAY, (!) bytes, true);
                 label.label = variant.print (false);
             });
         button.set_popover ((Popover) popover);
@@ -390,9 +390,9 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
                 }
                 else
                 {
-                    variant = new Variant.from_bytes (key.value.get_type (), bytes, true);
+                    variant = new Variant.from_bytes (key.value.get_type (), (!) bytes, true);
                     maybe_variant = variant.get_maybe ();
-                    this.label = Key.cool_boolean_text_value (maybe_variant.get_boolean ());
+                    this.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
                 }
                 popover.closed ();
             });

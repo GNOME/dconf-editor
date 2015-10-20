@@ -347,21 +347,27 @@ private class KeyListBoxRow : EventBox
 
     public signal void show_dialog ();
 
-    protected ContextPopover? popover = null;
+    protected bool popover_created = false;
+    protected ContextPopover popover;
     protected virtual bool generate_popover () { return false; }
+    protected virtual bool update_popover () { return false; }
 
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
-            if (popover != null)            // TODO remove? put in generate_popover?
-                popover.destroy ();
-            if (!generate_popover ())
+            if (!popover_created)
+            {
+                if (!generate_popover ())
+                    return false;
+                popover_created = true;
+                popover.set_relative_to (this);
+                popover.position = PositionType.BOTTOM;
+            }
+            else if (!update_popover ())
                 return false;
 
             Gdk.Rectangle rect;
-            popover.set_relative_to (this);
-            popover.position = PositionType.BOTTOM;
             popover.get_pointing_to (out rect);
             rect.x = (int) (event.x - this.get_allocated_width () / 2.0);
             popover.set_pointing_to (rect);
@@ -394,7 +400,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_value_label.label = cool_text_value (key);
         key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
 
-        key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (popover != null) popover.destroy (); });
+        key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (popover_created) popover.hide (); });
     }
 
     protected override bool generate_popover ()
@@ -414,8 +420,15 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.add_separator ();
             popover.create_buttons_list (key, false);
 
-            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
+            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); popover.hide (); });
         }
+        return true;
+    }
+
+    protected override bool update_popover ()
+    {
+        if (key.type_string == "b" || key.type_string == "mb")
+            popover.update_multi ((Key) key);
         return true;
     }
 }
@@ -435,7 +448,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_name_label.label = key.name;
         key_info_label.label = key.summary;
 
-        key.value_changed.connect (() => { update (); if (popover != null) popover.destroy (); });
+        key.value_changed.connect (() => { update (); if (popover_created) popover.hide (); });
     }
 
     protected override bool generate_popover ()
@@ -455,22 +468,31 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.add_separator ();
             popover.create_buttons_list (key, true);
 
-            popover.set_to_default.connect (() => { key.set_to_default (); popover.destroy (); });
-            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), bytes, true); popover.destroy (); });
+            popover.set_to_default.connect (() => { key.set_to_default (); popover.hide (); });
+            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); popover.hide (); });
         }
         else if (key.type_string == "<flags>")
         {
             popover.add_separator ();
-            popover.add_action_button (_("Default value"), () => { key.set_to_default (); popover.destroy (); }, true);     // TODO string duplication
+            popover.add_action_button (_("Default value"), () => { key.set_to_default (); popover.hide (); }, true);        // TODO string duplication
             popover.create_flags_list ((GSettingsKey) key);
 
-            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (VariantType.STRING_ARRAY, bytes, true); });
+            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (VariantType.STRING_ARRAY, (!) bytes, true); });
         }
         else if (!key.is_default)
         {
             popover.add_separator ();
             popover.add_action_button (_("Set to default"), () => { key.set_to_default (); });
         }
+        return true;
+    }
+
+    protected override bool update_popover ()
+    {
+        if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
+            popover.update_multi ((Key) key);
+        else if (key.type_string == "<flags>")
+            popover.update_flags (key);
         return true;
     }
 
@@ -486,12 +508,19 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
 private class ContextPopover : Popover
 {
+    // public signals
     public signal void set_to_default ();
     public signal void value_changed (Bytes? bytes);
 
+    // name of the action for keys with multiple choices
     private static const string ACTION_NAME = "key_value";
     private static const string GROUP_PREFIX = "group";
 
+    // update value
+    private SimpleAction simple_action;
+    private CheckButton [] buttons;
+
+    // init; TODO in a template?
     private Grid grid;
 
     public ContextPopover ()
@@ -537,7 +566,7 @@ private class ContextPopover : Popover
         GLib.Settings settings = new GLib.Settings (key.schema_id);
         string [] active_flags = settings.get_strv (key.name);
         string [] all_flags = key.range_content.get_strv ();
-        CheckButton [] buttons = new CheckButton [0];
+        buttons = new CheckButton [0];
         foreach (string flag in all_flags)
             buttons += new_flag_button (flag, flag in active_flags);
 
@@ -565,6 +594,15 @@ private class ContextPopover : Popover
         value_changed (variant.get_data_as_bytes ());
     }
 
+    public void update_flags (GSettingsKey key)
+    {
+        GLib.Settings settings = new GLib.Settings (((GSettingsKey) key).schema_id);
+        string [] active_flags = settings.get_strv (key.name);
+
+        foreach (CheckButton button in buttons)
+            button.active = button.label in active_flags;
+    }
+
     /*\
     * * Choices
     \*/
@@ -575,9 +613,9 @@ private class ContextPopover : Popover
         VariantType nullable_type = new VariantType.maybe (original_type);
         Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : key.value);
 
-        SimpleAction simple_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
+        simple_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
         SimpleActionGroup group = new SimpleActionGroup ();
-        ((ActionMap) group).add_action (simple_action);
+        ((ActionMap) group).add_action ((!) simple_action);
         grid.insert_action_group (GROUP_PREFIX, group);
 
         if (nullable)
@@ -624,5 +662,10 @@ private class ContextPopover : Popover
         button.action_name = GROUP_PREFIX + "." + ACTION_NAME;
         button.action_target = variant;
         grid.add (button);
+    }
+
+    public void update_multi (Key key)
+    {
+        simple_action.set_state (new Variant.maybe (key.value.get_type (), key.has_schema && ((GSettingsKey) key).is_default ? null : key.value));
     }
 }
