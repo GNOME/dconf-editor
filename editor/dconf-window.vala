@@ -26,12 +26,12 @@ class DConfWindow : ApplicationWindow
     private bool window_is_maximized = false;
     private bool window_is_fullscreen = false;
 
-    private SettingsModel model;
+    private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
     [GtkChild] private TreeSelection dir_tree_selection;
     [GtkChild] private ListBox key_list_box;
 
-    private GLib.Settings settings;
+    private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     [GtkChild] private Bookmarks bookmarks_button;
 
     [GtkChild] private SearchBar search_bar;
@@ -40,8 +40,6 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow ()
     {
-        settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
-
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-fullscreen"))
             fullscreen ();
@@ -50,7 +48,6 @@ class DConfWindow : ApplicationWindow
 
         search_bar.connect_entry (search_entry);
 
-        model = new SettingsModel ();
         dir_tree_view.set_model (model);
 
         current_path = settings.get_string ("saved-view");
@@ -75,13 +72,16 @@ class DConfWindow : ApplicationWindow
         Gtk.MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.INFO, ButtonsType.NONE, _("Thanks for using Dconf Editor for editing your configurations!"));
         dialog.format_secondary_text (_("Don't forget that some option may break applications, so be careful."));
         dialog.add_buttons (_("I'd be careful."), ResponseType.ACCEPT);
+
+        // TODO don't show box if the user explicitely said she wanted to see the dialog next time?
         Box box = (Box) dialog.get_message_area ();
         CheckButton checkbutton = new CheckButton.with_label (_("Show this dialog next time."));
         checkbutton.visible = true;
         checkbutton.active = true;
         checkbutton.margin_top = 5;
-        checkbutton.toggled.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
         box.add (checkbutton);
+
+        dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
         dialog.run ();
         dialog.destroy ();
     }
@@ -362,7 +362,7 @@ private class KeyListBoxRow : EventBox
                     return false;
                 popover_created = true;
                 popover.set_relative_to (this);
-                popover.position = PositionType.BOTTOM;
+                popover.position = PositionType.BOTTOM;     // TODO better
             }
             else if (!update_popover ())
                 return false;
