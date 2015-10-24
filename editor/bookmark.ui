@@ -3,6 +3,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="Bookmark" parent="GtkGrid">
     <property name="orientation">horizontal</property>
+    <property name="column-spacing">2</property>
     <property name="margin-left">8</property>
     <child>
       <object class="GtkLabel" id="bookmark_label">
