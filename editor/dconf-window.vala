@@ -417,7 +417,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (key.type_string == "b" || key.type_string == "mb")
         {
-            popover.add_separator ();
+            popover.new_section ();
             popover.create_buttons_list (key, false);
 
             popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); popover.hide (); });
@@ -465,7 +465,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {
-            popover.add_separator ();
+            popover.new_section ();
             popover.create_buttons_list (key, true);
 
             popover.set_to_default.connect (() => { key.set_to_default (); popover.hide (); });
@@ -473,7 +473,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
         else if (key.type_string == "<flags>")
         {
-            popover.add_separator ();
+            popover.new_section ();
             popover.add_action_button (_("Default value"), () => { key.set_to_default (); popover.hide (); }, true);        // TODO string duplication
             popover.create_flags_list ((GSettingsKey) key);
 
@@ -481,7 +481,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
         else if (!key.is_default)
         {
-            popover.add_separator ();
+            popover.new_section ();
             popover.add_action_button (_("Set to default"), () => { key.set_to_default (); });
         }
         return true;
@@ -550,7 +550,7 @@ private class ContextPopover : Popover
             button.grab_focus ();
     }
 
-    public void add_separator ()
+    public void new_section ()
     {
         Separator separator = new Separator (Orientation.HORIZONTAL);
         separator.visible = true;
