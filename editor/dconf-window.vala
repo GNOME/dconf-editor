@@ -347,10 +347,10 @@ private class KeyListBoxRow : EventBox
 
     public signal void show_dialog ();
 
-    protected bool popover_created = false;
+    protected bool popover_created { get; private set; default = false; }
     protected ContextPopover popover;
-    protected virtual bool generate_popover () { return false; }
-    protected virtual bool update_popover () { return false; }
+    protected virtual bool generate_popover () { return false; }        // no popover should be created
+    protected virtual bool update_popover () { return true; }           // false disables a created popover
 
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
