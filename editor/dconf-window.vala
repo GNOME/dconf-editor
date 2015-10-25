@@ -347,31 +347,25 @@ private class KeyListBoxRow : EventBox
 
     public signal void show_dialog ();
 
-    protected bool popover_created { get; private set; default = false; }
-    protected ContextPopover popover;
-    protected virtual bool generate_popover () { return false; }        // no popover should be created
-    protected virtual bool update_popover () { return true; }           // false disables a created popover
+    protected ContextPopover? nullable_popover;
+    protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
 
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
-            if (!popover_created)
-            {
-                if (!generate_popover ())
-                    return false;
-                popover_created = true;
-                popover.set_relative_to (this);
-                popover.position = PositionType.BOTTOM;     // TODO better
-            }
-            else if (!update_popover ())
+            nullable_popover = new ContextPopover ();
+            if (!generate_popover ((!) nullable_popover))
                 return false;
 
+            ((!) nullable_popover).set_relative_to (this);
+            ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
+
             Gdk.Rectangle rect;
-            popover.get_pointing_to (out rect);
+            ((!) nullable_popover).get_pointing_to (out rect);
             rect.x = (int) (event.x - this.get_allocated_width () / 2.0);
-            popover.set_pointing_to (rect);
-            popover.show ();
+            ((!) nullable_popover).set_pointing_to (rect);
+            ((!) nullable_popover).show ();
         }
 
         return false;
@@ -400,14 +394,13 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_value_label.label = cool_text_value (key);
         key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
 
-        key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (popover_created) popover.hide (); });
+        key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (nullable_popover != null) nullable_popover.destroy (); });
     }
 
-    protected override bool generate_popover ()
+    protected override bool generate_popover (ContextPopover popover)
     {
-        popover = new ContextPopover ();
-        popover.add_action_button (_("Customize…"), () => { show_dialog (); }, true);
-        popover.add_action_button (_("Copy"), () => {
+        popover.new_action ("customize", () => { show_dialog (); });
+        popover.new_action ("copy", () => {
                 Gdk.Display? display = Gdk.Display.get_default ();
                     if (display == null) return;
                 Clipboard clipboard = Clipboard.get_default ((!) display);
@@ -420,15 +413,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.new_section ();
             popover.create_buttons_list (key, false);
 
-            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); popover.hide (); });
+            popover.value_changed.connect ((bytes) => { nullable_popover.destroy (); key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); });
         }
-        return true;
-    }
-
-    protected override bool update_popover ()
-    {
-        if (key.type_string == "b" || key.type_string == "mb")
-            popover.update_multi ((Key) key);
         return true;
     }
 }
@@ -448,14 +434,13 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_name_label.label = key.name;
         key_info_label.label = key.summary;
 
-        key.value_changed.connect (() => { update (); if (popover_created) popover.hide (); });
+        key.value_changed.connect (() => { update (); if (nullable_popover != null) nullable_popover.destroy (); });
     }
 
-    protected override bool generate_popover ()
+    protected override bool generate_popover (ContextPopover popover)
     {
-        popover = new ContextPopover ();
-        popover.add_action_button (_("Customize…"), () => { show_dialog (); }, true);
-        popover.add_action_button (_("Copy"), () => {
+        popover.new_action ("customize", () => { show_dialog (); });
+        popover.new_action ("copy", () => {
                 Gdk.Display? display = Gdk.Display.get_default ();
                     if (display == null) return;
                 Clipboard clipboard = Clipboard.get_default ((!) display);
@@ -468,13 +453,17 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.new_section ();
             popover.create_buttons_list (key, true);
 
-            popover.set_to_default.connect (() => { key.set_to_default (); popover.hide (); });
-            popover.value_changed.connect ((bytes) => { key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); popover.hide (); });
+            popover.set_to_default.connect (() => { nullable_popover.destroy (); key.set_to_default (); });
+            popover.value_changed.connect ((bytes) => { nullable_popover.destroy (); key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); });
         }
         else if (key.type_string == "<flags>")
         {
             popover.new_section ();
-            popover.add_action_button (_("Default value"), () => { key.set_to_default (); popover.hide (); }, true);        // TODO string duplication
+            if (!key.is_default)
+            {
+                popover.new_action ("default2", () => { nullable_popover.destroy (); key.set_to_default (); });
+                popover.new_section (false);    // ensures a flag called "default2" won't cause problems
+            }
             popover.create_flags_list ((GSettingsKey) key);
 
             popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (VariantType.STRING_ARRAY, (!) bytes, true); });
@@ -482,17 +471,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         else if (!key.is_default)
         {
             popover.new_section ();
-            popover.add_action_button (_("Set to default"), () => { key.set_to_default (); });
+            popover.new_action ("default1", () => { key.set_to_default (); });
         }
-        return true;
-    }
-
-    protected override bool update_popover ()
-    {
-        if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
-            popover.update_multi ((Key) key);
-        else if (key.type_string == "<flags>")
-            popover.update_flags (key);
         return true;
     }
 
@@ -508,30 +488,26 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
 private class ContextPopover : Popover
 {
+    private GLib.Menu menu = new GLib.Menu ();
+    private GLib.Menu current_section;
+
+    private ActionMap current_group;
+    private string current_group_prefix = "";
+
     // public signals
     public signal void set_to_default ();
     public signal void value_changed (Bytes? bytes);
 
-    // name of the action for keys with multiple choices
-    private static const string ACTION_NAME = "key_value";
-    private static const string GROUP_PREFIX = "group";
-
-    // update value
-    private SimpleAction simple_action;
-    private CheckButton [] buttons;
-
-    // init; TODO in a template?
-    private Grid grid;
+    // action for keys with multiple choices and flags
+    private SimpleAction multi_action;
+    private SimpleAction [] flags_actions;
+    private const string ACTION_NAME = "reservedactionprefix";
 
     public ContextPopover ()
     {
-        grid = new Grid ();
-        grid.orientation = Orientation.VERTICAL;
-        grid.visible = true;
-        // grid.width_request = 100;        // TODO
-        grid.margin = 4;
-        grid.row_spacing = 2;
-        this.add (grid);
+        new_section ();
+
+        bind_model (menu, null);    // TODO menu.freeze() [and sections?], somewhere
     }
 
     /*\
@@ -539,22 +515,40 @@ private class ContextPopover : Popover
     \*/
 
     public delegate void button_action ();
-    public void add_action_button (string label, button_action action, bool is_default = false)
+    public void new_action (string action_action, button_action action)
     {
-        ModelButton button = new ModelButton ();
-        button.visible = true;
-        button.text = label;
-        button.clicked.connect (() => { action (); });
-        grid.add (button);
-        if (is_default)
-            button.grab_focus ();
+        string text;
+        switch (action_action)        // TODO enum
+        {
+            /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
+            case "customize":   text = _("Customize…");     break;
+            /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
+            case "copy":        text = _("Copy");           break;
+            /* Translators: "reset key value" action in the right-click menu on the list of keys */
+            case "default1":    text = _("Set to default"); break;
+            /* Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys */
+            case "default2":    text = _("Default value");  break;      // TODO string duplication
+            default: assert_not_reached ();
+        }
+
+        SimpleAction simple_action = new SimpleAction (action_action, null);
+        simple_action.activate.connect (() => { action (); });
+        current_group.add_action (simple_action);
+
+        current_section.append (text, current_group_prefix + "." + action_action);
     }
 
-    public void new_section ()
+    public void new_section (bool draw_line = true)
     {
-        Separator separator = new Separator (Orientation.HORIZONTAL);
-        separator.visible = true;
-        grid.add (separator);
+        current_group_prefix += "a";
+        current_group = new SimpleActionGroup ();
+        insert_action_group (current_group_prefix, (SimpleActionGroup) current_group);
+
+        if (!draw_line)
+            return;
+
+        current_section = new GLib.Menu ();
+        menu.append_section (null, current_section);
     }
 
     /*\
@@ -566,41 +560,27 @@ private class ContextPopover : Popover
         GLib.Settings settings = new GLib.Settings (key.schema_id);
         string [] active_flags = settings.get_strv (key.name);
         string [] all_flags = key.range_content.get_strv ();
-        buttons = new CheckButton [0];
+        flags_actions = new SimpleAction [0];
         foreach (string flag in all_flags)
-            buttons += new_flag_button (flag, flag in active_flags);
+        {
+            SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (flag in active_flags));
+            current_group.add_action (simple_action);
 
-        foreach (CheckButton button in buttons)
-            button.toggled.connect (() => { calculate_flags_value (buttons); });
-    }
+            current_section.append (flag, current_group_prefix + "." + flag);
 
-    private CheckButton new_flag_button (string text, bool is_active)
-    {
-        CheckButton button = new CheckButton ();
-        button.visible = true;
-        button.label = text;
-        button.active = is_active;
-        grid.add (button);
-        return button;
-    }
+            flags_actions += simple_action;
 
-    private void calculate_flags_value (CheckButton [] buttons)
-    {
-        string [] new_flags = new string [0];
-        foreach (CheckButton button in buttons)
-            if (button.active)
-                new_flags += button.label;
-        Variant variant = new Variant.strv (new_flags);
-        value_changed (variant.get_data_as_bytes ());
-    }
+            simple_action.change_state.connect ((gaction, gvariant) => {
+                    gaction.set_state (gvariant);
 
-    public void update_flags (GSettingsKey key)
-    {
-        GLib.Settings settings = new GLib.Settings (((GSettingsKey) key).schema_id);
-        string [] active_flags = settings.get_strv (key.name);
-
-        foreach (CheckButton button in buttons)
-            button.active = button.label in active_flags;
+                    string [] new_flags = new string [0];
+                    foreach (SimpleAction action in flags_actions)
+                        if (action.state.get_boolean ())
+                            new_flags += action.name;
+                    Variant variant = new Variant.strv (new_flags);
+                    value_changed (variant.get_data_as_bytes ());
+                });
+        }
     }
 
     /*\
@@ -611,39 +591,37 @@ private class ContextPopover : Popover
     {
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
+        string nullable_type_string = nullable_type.dup_string ();
         Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : key.value);
 
-        simple_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
-        SimpleActionGroup group = new SimpleActionGroup ();
-        ((ActionMap) group).add_action ((!) simple_action);
-        grid.insert_action_group (GROUP_PREFIX, group);
+        multi_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
+        current_group.add_action (multi_action);
 
         if (nullable)
-            add_model_button (_("Default value"), new Variant.maybe (original_type, null));
+            current_section.append (_("Default value"), current_group_prefix + "." + ACTION_NAME + "(@" + nullable_type_string + " nothing)");   // TODO string duplication
 
         switch (key.type_string)
         {
             case "b":
-                add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (true)));
-                add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (false)));
+                current_section.append (Key.cool_boolean_text_value (true), current_group_prefix + "." + ACTION_NAME + "(@mb true)");
+                current_section.append (Key.cool_boolean_text_value (false), current_group_prefix + "." + ACTION_NAME + "(@mb false)");
                 break;
             case "<enum>":      // defined by the schema
                 Variant range = ((GSettingsKey) key).range_content;
                 uint size = (uint) range.n_children ();
                 if (size == 0)      // TODO special case also 1?
                     assert_not_reached ();
-                VariantType type = range.get_child_value (0).get_type ();
                 for (uint index = 0; index < size; index++)
-                    add_model_button (range.get_child_value (index).print (false), new Variant.maybe (type, range.get_child_value (index)));
+                    current_section.append (range.get_child_value (index).print (false), current_group_prefix + "." + ACTION_NAME + "(@ms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
                 break;
             case "mb":
-                add_model_button (Key.cool_boolean_text_value (null), new Variant.maybe (original_type, new Variant.maybe (VariantType.BOOLEAN, null)));
-                add_model_button (Key.cool_boolean_text_value (true), new Variant.maybe (original_type, new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (true))));
-                add_model_button (Key.cool_boolean_text_value (false), new Variant.maybe (original_type, new Variant.maybe (VariantType.BOOLEAN, new Variant.boolean (false))));
+                current_section.append (Key.cool_boolean_text_value (null), current_group_prefix + "." + ACTION_NAME + "(@mmb just nothing)");
+                current_section.append (Key.cool_boolean_text_value (true), current_group_prefix + "." + ACTION_NAME + "(@mmb true)");
+                current_section.append (Key.cool_boolean_text_value (false), current_group_prefix + "." + ACTION_NAME + "(@mmb false)");
                 break;
         }
 
-        group.action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
+        ((GLib.ActionGroup) current_group).action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
                 Variant? new_variant = tmp_variant.get_maybe ();
                 if (new_variant == null)
                     set_to_default ();
@@ -652,20 +630,5 @@ private class ContextPopover : Popover
                 else
                     value_changed (((!) new_variant).get_data_as_bytes ());
             });
-    }
-
-    private void add_model_button (string text, Variant variant)
-    {
-        ModelButton button = new ModelButton ();
-        button.visible = true;
-        button.text = text;
-        button.action_name = GROUP_PREFIX + "." + ACTION_NAME;
-        button.action_target = variant;
-        grid.add (button);
-    }
-
-    public void update_multi (Key key)
-    {
-        simple_action.set_state (new Variant.maybe (key.value.get_type (), key.has_schema && ((GSettingsKey) key).is_default ? null : key.value));
     }
 }
