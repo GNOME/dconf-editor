@@ -4,7 +4,7 @@
   <template class="Bookmark" parent="GtkGrid">
     <property name="orientation">horizontal</property>
     <property name="column-spacing">2</property>
-    <property name="margin-left">8</property>
+    <property name="margin-start">8</property>
     <child>
       <object class="GtkLabel" id="bookmark_label">
         <property name="visible">True</property>
