@@ -498,11 +498,6 @@ private class ContextPopover : Popover
     public signal void set_to_default ();
     public signal void value_changed (Bytes? bytes);
 
-    // action for keys with multiple choices and flags
-    private SimpleAction multi_action;
-    private SimpleAction [] flags_actions;
-    private const string ACTION_NAME = "reservedactionprefix";
-
     public ContextPopover ()
     {
         new_section ();
@@ -560,7 +555,7 @@ private class ContextPopover : Popover
         GLib.Settings settings = new GLib.Settings (key.schema_id);
         string [] active_flags = settings.get_strv (key.name);
         string [] all_flags = key.range_content.get_strv ();
-        flags_actions = new SimpleAction [0];
+        SimpleAction [] flags_actions = new SimpleAction [0];
         foreach (string flag in all_flags)
         {
             SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (flag in active_flags));
@@ -589,13 +584,14 @@ private class ContextPopover : Popover
 
     public void create_buttons_list (Key key, bool nullable)
     {
+        const string ACTION_NAME = "reservedactionprefix";
+
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
         string nullable_type_string = nullable_type.dup_string ();
         Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : key.value);
 
-        multi_action = new SimpleAction.stateful (ACTION_NAME, nullable_type, variant);
-        current_group.add_action (multi_action);
+        current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_type, variant));
 
         if (nullable)
             current_section.append (_("Default value"), current_group_prefix + "." + ACTION_NAME + "(@" + nullable_type_string + " nothing)");   // TODO string duplication
