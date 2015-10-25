@@ -1,14 +1,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-06 16:14+0000\n"
-"PO-Revision-Date: 2013-09-05 22:50+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-10-17 01:01+0000\n"
+"PO-Revision-Date: 2015-10-25 18:46+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -16,127 +16,84 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "Lisää tämä sijainti kirjanmerkkeihin"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "Sijainti lisätty kirjanmerkkeihin"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr ""
+
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"Kirjanmerkit\n"
+"lisätään tänne"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "Kirjanmerkit"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "Hallitse kirjanmerkkejä"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "Poista"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "Poista tämä kirjanmerkki"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+#| msgid "dconf Editor"
+msgid "Dconf Editor"
+msgstr "Dconf-muokkain"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "Graafinen työkalu dconf-tietokannan muokkaamiseen"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
+#: ../editor/dconf-editor.vala:90
 msgid "dconf Editor"
 msgstr "dconf-muokkain"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+msgid "Configuration editor for dconf"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:92
 msgid "Directly edit your entire configuration database"
 msgstr "Muokkaa suoraan koko asetustietokantaasi"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "settings;configuration;asetukset;määritykset;"
-
-#: ../editor/dconf-editor.vala:186
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Kokonaisluku [%s..%s]"
-
-#: ../editor/dconf-editor.vala:188
-msgid "Boolean"
-msgstr "Totuusarvo"
-
-#: ../editor/dconf-editor.vala:190
-msgid "String"
-msgstr "Merkkijono"
-
-#: ../editor/dconf-editor.vala:192
-msgid "Enumeration"
-msgstr "Enumeraatio"
-
-#: ../editor/dconf-editor.vala:240
-msgid "No schema"
-msgstr "Ei skeemaa"
-
-#: ../editor/dconf-editor.vala:350
-msgid "Not found"
-msgstr "Ei löytynyt"
-
-#: ../editor/dconf-editor.vala:398
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-
-#: ../editor/dconf-editor.vala:404
-msgid "Copyright © Canonical Ltd"
-msgstr "Tekijänoikeus © Canonical Ltd"
-
-#: ../editor/dconf-editor.vala:408
-msgid "translator-credits"
-msgstr "Jiri Grönroos"
-
-#: ../editor/dconf-view.vala:264
-#, c-format
-msgid "Error setting value: %s"
-msgstr "Virhe arvoa asettaessa: %s"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:318
-msgid "Name"
-msgstr "Nimi"
-
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Value"
-msgstr "Arvo"
-
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Palauta oletusarvo"
-
-#: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Skeema:"
-
-#: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Yhteenveto:"
-
-#: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Kuvaus:"
-
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Tyyppi:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Oletus:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Seuraava"
-
-#: ../editor/dconf-editor-menu.ui.h:1
-#| msgid "_Find"
-msgid "_Find…"
-msgstr "_Etsi…"
-
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "_Tietoja"
-
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "_Lopeta"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
 msgid "The width of the window"
@@ -161,3 +118,536 @@ msgstr ""
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
 msgid "A flag to enable fullscreen mode"
 msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "A list of bookmarked paths"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid "A flag to restore the last view"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid "A path to restore the last view"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid "Show initial warning"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "A boolean, type \"b\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "A nullable boolean, type \"mb\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid "A byte (unsigned), type \"y\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "A bytestring, type \"ay\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid "A bytestring array, type \"aay\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid "A D-Bus handle type, type \"h\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid "A D-Bus object path, type \"o\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
+msgid "A D-Bus object path array, type \"ao\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
+msgid "A D-Bus signature, type \"g\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
+msgid "A double, type \"d\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A double value could represent any real number."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid "A 5-choices enumeration"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
+msgid "A short integer, type \"n\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "Flags: choose-colors-you-love"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid "An unsigned short integer, type \"q\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "An usual integer, type \"i\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "An unsigned usual integer, type \"u\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A long integer, type \"x\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "An unsigned long integer, type \"t\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A number with range"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A custom type, here \"(ii)\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A string, type \"s\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid "A string array, type \"as\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid "A nullable string, type \"ms\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+
+#: ../editor/dconf-editor-menu.ui.h:1
+msgid "_About"
+msgstr "_Tietoja"
+
+#: ../editor/dconf-editor-menu.ui.h:2
+msgid "_Quit"
+msgstr "_Lopeta"
+
+#: ../editor/dconf-editor.ui.h:2
+msgid "Search"
+msgstr ""
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Search keys"
+msgstr ""
+
+#: ../editor/dconf-editor.ui.h:4
+msgid "No keys in this path"
+msgstr ""
+
+#: ../editor/dconf-editor.vala:22
+msgid "Print release version and exit"
+msgstr "Tulosta julkaisuversio ja sulkeudu"
+
+#: ../editor/dconf-editor.vala:88
+msgid ""
+"Dconf Editor is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or (at your option) "
+"any later version.\n"
+"\n"
+"Dconf Editor is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program. If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+
+#: ../editor/dconf-editor.vala:93
+msgid "Copyright © Canonical Ltd"
+msgstr "Tekijänoikeus © Canonical Ltd"
+
+#: ../editor/dconf-editor.vala:97
+msgid "translator-credits"
+msgstr "Jiri Grönroos"
+
+#: ../editor/dconf-model.vala:200
+msgid "True"
+msgstr ""
+
+#: ../editor/dconf-model.vala:202
+msgid "False"
+msgstr ""
+
+#: ../editor/dconf-model.vala:203
+msgid "Nothing"
+msgstr ""
+
+#: ../editor/dconf-model.vala:208
+msgid "true"
+msgstr ""
+
+#: ../editor/dconf-model.vala:210
+msgid "false"
+msgstr ""
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:212
+msgid "nothing"
+msgstr ""
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:86
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+
+#: ../editor/dconf-view.vala:88
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr ""
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:92
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+
+#: ../editor/dconf-view.vala:111
+msgid "Boolean"
+msgstr "Totuusarvo"
+
+#: ../editor/dconf-view.vala:113
+msgid "String"
+msgstr "Merkkijono"
+
+#: ../editor/dconf-view.vala:115
+#, fuzzy
+#| msgid "String"
+msgid "String array"
+msgstr "Merkkijono"
+
+#: ../editor/dconf-view.vala:117
+msgid "Enumeration"
+msgstr "Enumeraatio"
+
+#: ../editor/dconf-view.vala:119
+msgid "Flags"
+msgstr ""
+
+#: ../editor/dconf-view.vala:123
+#, fuzzy, c-format
+#| msgid "Integer [%s..%s]"
+msgid "Double [%s..%s]"
+msgstr "Kokonaisluku [%s..%s]"
+
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-view.vala:126
+msgid "D-Bus handle type"
+msgstr ""
+
+#: ../editor/dconf-view.vala:128
+msgid "D-Bus object path"
+msgstr ""
+
+#: ../editor/dconf-view.vala:130
+msgid "D-Bus object path array"
+msgstr ""
+
+#: ../editor/dconf-view.vala:132
+msgid "D-Bus signature"
+msgstr ""
+
+#: ../editor/dconf-view.vala:142
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Kokonaisluku [%s..%s]"
+
+#: ../editor/dconf-window.vala:75
+msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgstr ""
+
+#: ../editor/dconf-window.vala:76
+msgid "Don't forget that some option may break applications, so be careful."
+msgstr ""
+
+#: ../editor/dconf-window.vala:77
+msgid "I'd be careful."
+msgstr ""
+
+#: ../editor/dconf-window.vala:79
+msgid "Show this dialog next time."
+msgstr ""
+
+#: ../editor/dconf-window.vala:160
+msgid "Oops! Cannot find something at this path."
+msgstr ""
+
+#: ../editor/dconf-window.vala:395
+#, fuzzy
+#| msgid "No schema"
+msgid "No Schema Found"
+msgstr "Ei skeemaa"
+
+#: ../editor/dconf-window.vala:403 ../editor/dconf-window.vala:444
+msgid "Customize…"
+msgstr "Muokkaa…"
+
+#: ../editor/dconf-window.vala:404 ../editor/dconf-window.vala:445
+msgid "Copy"
+msgstr "Kopioi"
+
+#: ../editor/dconf-window.vala:464
+#, fuzzy
+#| msgid "Set to Default"
+msgid "Set to default"
+msgstr "Palauta oletusarvo"
+
+#: ../editor/dconf-window.vala:531
+#| msgid "Default:"
+msgid "Default value"
+msgstr "Oletusarvo"
+
+#: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
+#, fuzzy
+#| msgid "dconf Editor"
+msgid "Key Editor"
+msgstr "dconf-muokkain"
+
+#: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
+msgid "Cancel"
+msgstr "Peru"
+
+#: ../editor/key-editor-no-schema.ui.h:3 ../editor/key-editor.ui.h:3
+msgid "Apply"
+msgstr "Toteuta"
+
+#: ../editor/key-editor-no-schema.ui.h:4
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
+#, fuzzy
+#| msgid "Type:"
+msgid "Type"
+msgstr "Tyyppi:"
+
+#: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
+msgid "Custom value"
+msgstr ""
+
+#: ../editor/key-editor.ui.h:4
+#| msgid "Schema:"
+msgid "Schema"
+msgstr "Skeema"
+
+#: ../editor/key-editor.ui.h:5
+#| msgid "Summary:"
+msgid "Summary"
+msgstr "Yhteenveto"
+
+#: ../editor/key-editor.ui.h:6
+#| msgid "Description:"
+msgid "Description"
+msgstr "Kuvaus"
+
+#: ../editor/key-editor.ui.h:9
+#| msgid "Default:"
+msgid "Default"
+msgstr "Oletus"
+
+#: ../editor/key-editor.ui.h:10
+msgid "Use default value"
+msgstr "Käytä oletusarvoa"
+
+#~ msgid "Not found"
+#~ msgstr "Ei löytynyt"
+
+#~ msgid "Error setting value: %s"
+#~ msgstr "Virhe arvoa asettaessa: %s"
+
+#~ msgid "Name"
+#~ msgstr "Nimi"
+
+#~ msgid "Value"
+#~ msgstr "Arvo"
+
+#~ msgid "Next"
+#~ msgstr "Seuraava"
+
+#~| msgid "_Find"
+#~ msgid "_Find…"
+#~ msgstr "_Etsi…"
