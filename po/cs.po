@@ -1,7 +1,6 @@
 # Czech translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-#
 # Marek Černocký <marek@manet.cz>, 2012, 2013, 2015.
 #
 msgid ""
@@ -9,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-23 12:18+0000\n"
-"PO-Revision-Date: 2015-03-01 18:01+0100\n"
+"POT-Creation-Date: 2015-10-17 01:01+0000\n"
+"PO-Revision-Date: 2015-10-25 09:08+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -18,20 +17,85 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
+
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "Toto umístění do záložek"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "Umístění je v záložkách"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr ""
+
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"Záložky budou\n"
+"přidány zde"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "Záložky"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "Spravovat své záložky"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "Odebrat"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "Odebrat tuto záložku"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+msgid "Dconf Editor"
+msgstr "Editor Dconf"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "Grafický editor pro úpravy databáze dconf"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+"Editor Dconf je nástroj, který umožňuje přímo upravovat databázi nastavení "
+"dconf. Hodí se, když vyvíjíte aplikace, které používají tato nastavení."
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr ""
+"Přímé zásahy do nastavení jsou pokročilo funkcí a mohou způsobit, že "
+"aplikace nebudou správně fungovat."
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
-#: ../editor/dconf-editor.vala:433
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
+#: ../editor/dconf-editor.vala:90
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:436
+msgid "Configuration editor for dconf"
+msgstr "Editor nastavení pro dconf"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:92
 msgid "Directly edit your entire configuration database"
 msgstr "Přímo upravujte celou svoji databázi nastavení"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "nastavení;konfigurace;"
 
@@ -59,129 +123,526 @@ msgstr "Příznak zapnutého režimu maximalizace"
 msgid "A flag to enable fullscreen mode"
 msgstr "Příznak zapnutého režimu celé obrazovky"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Hledat…"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "A list of bookmarked paths"
+msgstr "Seznam cest v záložkách"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+"Obsahuje v podobě pole řetězců všechny cesty, které si dal uživatel do "
+"záložek."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid "A flag to restore the last view"
+msgstr "Příznak pro obnovení posledního zobrazení"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+"Když je „pravda“, pokusí se editor Dconf rozbalit cestu popsanou v klíči "
+"„saved-view“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid "A path to restore the last view"
+msgstr "Cesta pro obnovení posledního zobrazení"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+"Když je klíč „restore-view“ nastaven na „pravda“, pokusí se editor Dconf "
+"rozbalit tuto cestu."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid "Show initial warning"
+msgstr "Zobrazit úvodní varování"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr ""
+"Když je „pravda“, otevře editor Dconf při spuštění vyskakovací okno, které "
+"upozorní uživatele, aby byl opatrný."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "A boolean, type \"b\""
+msgstr "Pravdivostní hodnota, typ „b“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr ""
+"Pravdivostní hodnota může nabývat jen dvou hodnot, „pravda“ a „nepravda“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "A nullable boolean, type \"mb\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid "A byte (unsigned), type \"y\""
+msgstr "Bajt (bez znaménka), typ „y“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr ""
+"Hodnota typu bajt je celé číslo v rozsahu 0 až 255. Může být použita i k "
+"předání znaku."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "A bytestring, type \"ay\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid "A bytestring array, type \"aay\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid "A D-Bus handle type, type \"h\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid "A D-Bus object path, type \"o\""
+msgstr "Cesta k objektu D-Bus, typ „o“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "Pole cest k objektům D-Bus, typ „ao“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
+msgid "A D-Bus signature, type \"g\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
+msgid "A double, type \"d\""
+msgstr "Dvojitá přesnost, typ „d“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A double value could represent any real number."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid "A 5-choices enumeration"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
+msgid "A short integer, type \"n\""
+msgstr "Krátké celé číslo, typ „n“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr "16bitové celé číslo bez znaménka. Viz také klíč „integer-16-unsigned“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "Flags: choose-colors-you-love"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid "An unsigned short integer, type \"q\""
+msgstr "Krátké celé číslo bez znaménka, typ „q“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr "16bitové celé číslo bez znaménka. Viz také klíč „integer-16-signed“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "An usual integer, type \"i\""
+msgstr "Běžné celé číslo, typ „i“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr "32bitové celé číslo se znaménkem. Viz také klíč „integer-32-unsigned“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "An unsigned usual integer, type \"u\""
+msgstr "Běžné celé číslo bez znaménka, typ „u“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr "32bitové celé číslo bez znaménka. Viz také klíč „integer-32-signed“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A long integer, type \"x\""
+msgstr "Dlouhé celé číslo, typ „x“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr "64bitové celé číslo se znaménkem. Viz také klíč „integer-64-unsigned“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "An unsigned long integer, type \"t\""
+msgstr "Dlouhé celé číslo bez znaménka, typ „t“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr "64bitév celé číslo bez znaménka. Viz také klíč „integer-64-signed“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A number with range"
+msgstr "Číslo s rozsahem"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A custom type, here \"(ii)\""
+msgstr "Vlastní typ, zde „(ii)“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A string, type \"s\""
+msgstr "Řetězec, typ „s“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+"Typ řetězec může přijímat jakýkoliv řetězec v utf8. Upozorňujeme, že prázdný "
+"řetězec „''“ není to stejné co NULL (nic, prázdná hodnota). Viz také klíč "
+"„nullable-key“."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid "A string array, type \"as\""
+msgstr "Pole řetězců, typ „as“"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid "A nullable string, type \"ms\""
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+
+#: ../editor/dconf-editor-menu.ui.h:1
 msgid "_About"
 msgstr "O _aplikaci"
 
-#: ../editor/dconf-editor-menu.ui.h:3
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_Quit"
 msgstr "U_končit"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Nastavit na výchozí"
-
 #: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Schéma:"
+msgid "Search"
+msgstr ""
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Stručný popis:"
+msgid "Search keys"
+msgstr ""
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Úplný popis:"
+msgid "No keys in this path"
+msgstr ""
 
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Typ:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Výchozí:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Následující"
-
-#: ../editor/dconf-editor.vala:29
+#: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Vypsat verzi vydání a skončit"
 
-#: ../editor/dconf-editor.vala:206
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Celé číslo [%s‥%s]"
-
-#: ../editor/dconf-editor.vala:219
-#, c-format
-msgid "Double [%s..%s]"
-msgstr "Desetinné číslo [%s‥%s]"
-
-#: ../editor/dconf-editor.vala:221
-msgid "Boolean"
-msgstr "Pravdivostní hodnota"
-
-#: ../editor/dconf-editor.vala:223
-msgid "String"
-msgstr "Řetězec"
-
-#: ../editor/dconf-editor.vala:225
-msgid "Enumeration"
-msgstr "Výčet"
-
-#: ../editor/dconf-editor.vala:273
-msgid "No schema"
-msgstr "Bez schématu"
-
-#: ../editor/dconf-editor.vala:383
-msgid "Not found"
-msgstr "Nenalezeno"
-
-#: ../editor/dconf-editor.vala:431
+#: ../editor/dconf-editor.vala:88
 msgid ""
-"This program is free software; you can redistribute it and/or modify it "
+"Dconf Editor is free software: you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
+"Software Foundation, either version 3 of the License, or (at your option) "
 "any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
+"Dconf Editor is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+"this program. If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Tento program je svobodný software: Můžete jej dále šířit a/nebo upravovat "
-"za podmínek licence GNU General Public License v podobě, v jaké ji vydala "
-"Free Software Foundation, a to buď ve verzi 2 této licence nebo (dle vaší "
-"volby) v libovolné novější verzi.\n"
+"Editor Dconf je svobodný software: Můžete jej dále šířit a/nebo upravovat za "
+"podmínek licence GNU General Public License v podobě, v jaké ji vydala Free "
+"Software Foundation, a to buď ve verzi 3 této licence nebo (dle vaší volby) "
+"v libovolné novější verzi.\n"
 "\n"
-"Tento program je šířen ve víře, že bude užitečný, ale BEZ JAKÝCHKOLIV ZÁRUK, "
+"Editor Dconf je šířen ve víře, že bude užitečný, ale BEZ JAKÝCHKOLIV ZÁRUK, "
 "a to i bez předpokládané záruky na PRODEJNOST nebo VHODNOST PRO KONKRÉTNÍ "
 "ÚČEL. Více podrobností najdete přímo v licenci GNU General Public License.\n"
 "\n"
 "Spolu s tímto programem byste měli obdržet kopii licence GNU General Public "
-"License. Pokud se tak nestalo, napište do Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+"License. Pokud se tak nestalo, podívejte se na <http://www.gnu.org/licenses/"
+">."
 
-#: ../editor/dconf-editor.vala:437
+#: ../editor/dconf-editor.vala:93
 msgid "Copyright © Canonical Ltd"
 msgstr "Copyright © Canonical Ltd"
 
-#: ../editor/dconf-editor.vala:441
+#: ../editor/dconf-editor.vala:97
 msgid "translator-credits"
 msgstr "Marek Černocký <marek@manet.cz>"
 
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-model.vala:200
+msgid "True"
+msgstr "Pravda"
+
+#: ../editor/dconf-model.vala:202
+msgid "False"
+msgstr "Nepravda"
+
+#: ../editor/dconf-model.vala:203
+msgid "Nothing"
+msgstr "Nic"
+
+#: ../editor/dconf-model.vala:208
+msgid "true"
+msgstr "pravda"
+
+#: ../editor/dconf-model.vala:210
+msgid "false"
+msgstr "nepravda"
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:212
+msgid "nothing"
+msgstr "nic"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:86
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+
+#: ../editor/dconf-view.vala:88
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr ""
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:92
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+
+#: ../editor/dconf-view.vala:111
+msgid "Boolean"
+msgstr "Pravdivostní hodnota"
+
+#: ../editor/dconf-view.vala:113
+msgid "String"
+msgstr "Řetězec"
+
+#: ../editor/dconf-view.vala:115
+msgid "String array"
+msgstr "Pole řetězců"
+
+#: ../editor/dconf-view.vala:117
+msgid "Enumeration"
+msgstr "Výčet"
+
+#: ../editor/dconf-view.vala:119
+msgid "Flags"
+msgstr "Příznaky"
+
+#: ../editor/dconf-view.vala:123
 #, c-format
-msgid "Error setting value: %s"
-msgstr "Chyba nastavení hodnoty: %s"
+msgid "Double [%s..%s]"
+msgstr "Desetinné číslo [%s‥%s]"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Name"
-msgstr "Název"
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-view.vala:126
+msgid "D-Bus handle type"
+msgstr ""
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
-msgid "Value"
-msgstr "Hodnota"
+#: ../editor/dconf-view.vala:128
+msgid "D-Bus object path"
+msgstr "Cesta k objektu D-Bus"
+
+#: ../editor/dconf-view.vala:130
+msgid "D-Bus object path array"
+msgstr "Pole cest k objektům D-Bus"
+
+#: ../editor/dconf-view.vala:132
+msgid "D-Bus signature"
+msgstr ""
+
+#: ../editor/dconf-view.vala:142
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Celé číslo [%s‥%s]"
+
+#: ../editor/dconf-window.vala:75
+msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgstr ""
+
+#: ../editor/dconf-window.vala:76
+msgid "Don't forget that some option may break applications, so be careful."
+msgstr ""
+
+#: ../editor/dconf-window.vala:77
+msgid "I'd be careful."
+msgstr ""
+
+#: ../editor/dconf-window.vala:79
+msgid "Show this dialog next time."
+msgstr "Zobrazit toto varování i příště."
+
+#: ../editor/dconf-window.vala:160
+msgid "Oops! Cannot find something at this path."
+msgstr ""
+
+#: ../editor/dconf-window.vala:395
+msgid "No Schema Found"
+msgstr "Nenalezeno žádné schéma"
+
+#: ../editor/dconf-window.vala:403 ../editor/dconf-window.vala:444
+msgid "Customize…"
+msgstr "Přizpůsobit…"
+
+#: ../editor/dconf-window.vala:404 ../editor/dconf-window.vala:445
+msgid "Copy"
+msgstr "Kopírovat"
+
+#: ../editor/dconf-window.vala:464
+msgid "Set to default"
+msgstr "Nastavit na výchozí"
+
+#: ../editor/dconf-window.vala:531
+msgid "Default value"
+msgstr "Výchozí hodnota"
+
+#: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
+msgid "Key Editor"
+msgstr "Editor klíče"
+
+#: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: ../editor/key-editor-no-schema.ui.h:3 ../editor/key-editor.ui.h:3
+msgid "Apply"
+msgstr "Použít"
+
+#: ../editor/key-editor-no-schema.ui.h:4
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
+msgid "Type"
+msgstr "Typ"
+
+#: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
+msgid "Custom value"
+msgstr "Vlastní hodnota"
+
+#: ../editor/key-editor.ui.h:4
+msgid "Schema"
+msgstr "Schéma"
+
+#: ../editor/key-editor.ui.h:5
+msgid "Summary"
+msgstr "Přehled"
+
+#: ../editor/key-editor.ui.h:6
+msgid "Description"
+msgstr "Popis"
+
+#: ../editor/key-editor.ui.h:9
+msgid "Default"
+msgstr "Výchozí"
+
+#: ../editor/key-editor.ui.h:10
+msgid "Use default value"
+msgstr "Použít výchozí hodnotu"
