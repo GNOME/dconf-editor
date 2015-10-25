@@ -170,15 +170,15 @@ public abstract class Key : SettingObject
         {
             case "b": return cool_boolean_text_value (variant.get_boolean (), false);
             // TODO %I'xx everywhere! but would need support from the spinbutton…
-            case "y": return "%hhu (%s)".printf (variant.get_byte (), variant.print (false));   // TODO i18n problem here
-            case "n": return "%'hi".printf (variant.get_int16 ());
-            case "q": return "%'hu".printf (variant.get_uint16 ());
-            case "i": return "%'i".printf (variant.get_int32 ());       // TODO why is 'li' failing to display '-'?
-            case "u": return "%'u".printf (variant.get_uint32 ());      // TODO is 'lu' failing also?
-            case "x": return "%'lli".printf (variant.get_int64 ());
-            case "t": return "%'llu".printf (variant.get_uint64 ());
-            case "d": return variant.get_double ().to_string ();        // TODO something; notably, number of chars after coma
-            case "h": return "%'i".printf (variant.get_handle ());
+            case "y": return "%hhu (%s)".printf (variant.get_byte (), variant.print (false));               // TODO i18n problem here
+            case "n": return "%'hi".printf (variant.get_int16 ()).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (variant.get_int16 ());
+            case "q": return "%'hu".printf (variant.get_uint16 ()).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (variant.get_uint16 ());
+            case "i": return "%'i".printf (variant.get_int32 ()).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (variant.get_int32 ());     // TODO why is 'li' failing to display '-'?
+            case "u": return "%'u".printf (variant.get_uint32 ()).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (variant.get_uint32 ());
+            case "x": return "%'lli".printf (variant.get_int64 ()).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (variant.get_int64 ());
+            case "t": return "%'llu".printf (variant.get_uint64 ()).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (variant.get_uint64 ());
+            case "d": return variant.get_double ().to_string ();                                            // TODO something; notably, number of chars after coma
+            case "h": return "%'i".printf (variant.get_handle ()).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (variant.get_int32 ());
             default: break;
         }
         if (type.has_prefix ("m"))
