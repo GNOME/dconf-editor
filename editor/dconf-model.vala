@@ -106,7 +106,7 @@ public class Directory : SettingObject
             case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
             case "flags":   type_string = "<flags>"; break; // flags=""
             default:
-            case "type":    type_string = (string) settings_schema_key.get_value_type ().peek_string (); break;
+            case "type":    type_string = settings_schema_key.get_value_type ().dup_string (); break;
         }
 
         GSettingsKey new_key = new GSettingsKey (
