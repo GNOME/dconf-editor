@@ -85,13 +85,12 @@ class ConfigurationEditor : Gtk.Application
     private void about_cb ()
     {
         string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
-        string license = _("Dconf Editor is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nDconf Editor is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.");
         Gtk.show_about_dialog (get_active_window (),
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
                                "comments", _("Directly edit your entire configuration database"),
-                               "copyright", _("Copyright \xc2\xa9 Canonical Ltd"),
-                               "license", license,
+                               "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015 – Arnaud Bonatti"),
+                               "license-type", Gtk.License.GPL_3_0,
                                "wrap-license", true,
                                "authors", authors,
                                "translator-credits", _("translator-credits"),
