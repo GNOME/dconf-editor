@@ -88,4 +88,4 @@ man_MANS = dconf-editor.1
 DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check
 
 CLEANFILES = $(appstream_XML) $(desktop_DATA) $(dbusservice_DATA) resources.c
-EXTRA_DIST = $(appdata_in_files) $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
+EXTRA_DIST = $(appstream_in_files) $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
