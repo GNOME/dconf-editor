@@ -1,3 +1,18 @@
+dconf-editor 3.19.1
+=====================
+
+Many big changes. First, dconf-editor is now distributed under GPL 3. Secondly,
+it now uses GSettingsSchema to access schemas informations, and GSettings to
+edit settings when that’s possible. Thirdly, the UI of the keys list has been
+updated to use a GtkListBox, more accessible, more usable, cleaner. And many
+other things already done (and more to come).
+
+Translations updated:
+ Finnish (Jiri Grönroos)
+ Czech (Marek Černocký)
+ Romanian (Daniel Șerbănescu)
+ Galician (Fran Dieguez)
+
 dconf-editor 3.18.0
 =====================
 
