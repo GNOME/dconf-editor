@@ -333,9 +333,9 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         ContextPopover popover = new ContextPopover ();
         popover.create_buttons_list (key, false);
         popover.set_relative_to (this);
-        popover.value_changed.connect ((bytes) => {
-                variant = new Variant.from_bytes (key.value.get_type (), (!) bytes, true);
-                this.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
+        popover.value_changed.connect ((gvariant) => {
+                variant = gvariant;
+                this.label = gvariant.get_type () == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
                 popover.closed ();
             });
         this.set_popover ((Popover) popover);
@@ -374,9 +374,9 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         ContextPopover popover = new ContextPopover ();
         popover.create_flags_list (key);
         popover.set_relative_to (button);
-        popover.value_changed.connect ((bytes) => {
-                variant = new Variant.from_bytes (VariantType.STRING_ARRAY, (!) bytes, true);
-                label.label = variant.print (false);
+        popover.value_changed.connect ((gvariant) => {
+                variant = gvariant;
+                label.label = gvariant.print (false);
             });
         button.set_popover ((Popover) popover);
     }
@@ -409,18 +409,13 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         ContextPopover popover = new ContextPopover ();
         popover.create_buttons_list (key, false);
         popover.set_relative_to (this);
-        popover.value_changed.connect ((bytes) => {
-                if (bytes == null)
-                {
-                    variant = new Variant.maybe (VariantType.BOOLEAN, null);
+        popover.value_changed.connect ((gvariant) => {
+                variant = gvariant;
+                maybe_variant = gvariant.get_maybe ();
+                if (maybe_variant == null)
                     this.label = Key.cool_boolean_text_value (null);
-                }
                 else
-                {
-                    variant = new Variant.from_bytes (key.value.get_type (), (!) bytes, true);
-                    maybe_variant = variant.get_maybe ();
                     this.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
-                }
                 popover.closed ();
             });
         this.set_popover ((Popover) popover);

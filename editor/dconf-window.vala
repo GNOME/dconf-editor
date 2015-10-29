@@ -413,7 +413,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.new_section ();
             popover.create_buttons_list (key, false);
 
-            popover.value_changed.connect ((bytes) => { nullable_popover.destroy (); key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); });
+            popover.value_changed.connect ((gvariant) => { nullable_popover.destroy (); key.value = gvariant; });
         }
         return true;
     }
@@ -454,7 +454,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.create_buttons_list (key, true);
 
             popover.set_to_default.connect (() => { nullable_popover.destroy (); key.set_to_default (); });
-            popover.value_changed.connect ((bytes) => { nullable_popover.destroy (); key.value = bytes == null ? new Variant.maybe (VariantType.BOOLEAN, null) : new Variant.from_bytes (key.value.get_type (), (!) bytes, true); });
+            popover.value_changed.connect ((gvariant) => { nullable_popover.destroy (); key.value = gvariant; });
         }
         else if (key.type_string == "<flags>")
         {
@@ -466,7 +466,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             }
             popover.create_flags_list ((GSettingsKey) key);
 
-            popover.value_changed.connect ((bytes) => { key.value = new Variant.from_bytes (VariantType.STRING_ARRAY, (!) bytes, true); });
+            popover.value_changed.connect ((gvariant) => { key.value = gvariant; });
         }
         else if (!key.is_default)
         {
@@ -496,7 +496,7 @@ private class ContextPopover : Popover
 
     // public signals
     public signal void set_to_default ();
-    public signal void value_changed (Bytes? bytes);
+    public signal void value_changed (Variant gvariant);
 
     public ContextPopover ()
     {
@@ -573,7 +573,7 @@ private class ContextPopover : Popover
                         if (action.state.get_boolean ())
                             new_flags += action.name;
                     Variant variant = new Variant.strv (new_flags);
-                    value_changed (variant.get_data_as_bytes ());
+                    value_changed (variant);
                 });
         }
     }
@@ -621,10 +621,8 @@ private class ContextPopover : Popover
                 Variant? new_variant = tmp_variant.get_maybe ();
                 if (new_variant == null)
                     set_to_default ();
-                else if (((!) new_variant).get_data () == null)     // TODO better
-                    value_changed (null);
                 else
-                    value_changed (((!) new_variant).get_data_as_bytes ());
+                    value_changed ((!) new_variant);
             });
     }
 }
