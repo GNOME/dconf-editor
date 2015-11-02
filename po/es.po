@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-10-17 01:01+0000\n"
-"PO-Revision-Date: 2015-10-29 16:05+0100\n"
+"PO-Revision-Date: 2015-11-02 13:31+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -70,6 +70,9 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
+"El editor de dconf es una herramienta que permite editar directamente la "
+"base de datos de configuraciones. Esto es útil al desarrollar aplicaciones "
+"que usas estas configuraciones."
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
 msgid ""
@@ -129,6 +132,8 @@ msgstr "Una lista de rutas en marcadores"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
+"Contiene todas las rutas añadidas a marcadores por el usuario como un vector "
+"de cadenas."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid "A flag to restore the last view"
@@ -139,6 +144,8 @@ msgid ""
 "If 'true', Dconf Editor tries at launch to navigate to the path described in "
 "the 'saved-view' key."
 msgstr ""
+"Si es cierto, el editor de dconf intenta navegar a la ruta descrita en la "
+"clave'saved-view'."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
 msgid "A path to restore the last view"
@@ -149,28 +156,32 @@ msgid ""
 "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
+"Si la clave 'restore-view' es cierta, el edidor de dconf intenta navegar a "
+"esta ruta."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
 msgid "Show initial warning"
-msgstr ""
+msgstr "Mostrar advertencia inicial"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
 msgid ""
 "If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"Si es cierto, el editor de dconf abre una ventana emergente al ejecutarse "
+"recordando al usuario que debe tener cuidado."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
 msgid "A boolean, type \"b\""
-msgstr ""
+msgstr "Un valor booleano, escriba «b»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
 msgid "Booleans can only take two values, \"true\" or \"false\"."
-msgstr ""
+msgstr "Los valores booleanos sólo pueden tener dos valores, «true» o «false»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
 msgid "A nullable boolean, type \"mb\""
-msgstr ""
+msgstr "Un valor booleano nullo, escriba «mb» "
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
 msgid ""
@@ -178,6 +189,9 @@ msgid ""
 "take a \"nothing\" value. A nullable boolean can only take three values, "
 "\"true\", \"false\" and \"nothing\"."
 msgstr ""
+"GSettings permite valores nulos, que son similares a otros tipos pero pueden "
+"tener un valor «ninguno». Un valor booleano nulo sólo puede tener tres "
+"valores, «true», «false» y «nothing»."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
 msgid "A byte (unsigned), type \"y\""
@@ -188,10 +202,12 @@ msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
+"Un valor de byte es un entero entre 0 y 255. Se puede usar para pasar "
+"caracteres."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
 msgid "A bytestring, type \"ay\""
-msgstr ""
+msgstr "Una cadena de bytes, escriba «ay»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
 msgid ""
@@ -199,10 +215,13 @@ msgid ""
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
+"El tipo vector de cadena se usa habitualmente para pasar cadenas que pueden "
+"no ser válidas en UTF-8. En este caso, el convenio es que se debe incluir el "
+"carácter terminador nulo como el último carácter del vector."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid "A bytestring array, type \"aay\""
-msgstr ""
+msgstr "Un vector de cadena de bytes, escriba «aay»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
 msgid ""
@@ -212,7 +231,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
 msgid "A D-Bus handle type, type \"h\""
-msgstr ""
+msgstr "Un tipo de manejador D-Bus, escriba «h»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
 msgid ""
@@ -226,7 +245,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid "A D-Bus object path, type \"o\""
-msgstr ""
+msgstr "Un tipo de ruta de objeto D-Bus, escriba «o»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
 msgid ""
@@ -236,10 +255,14 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Un objeto de ruta se usa para identificar objetos D-Bus en un destino "
+"especificado del bus.\n"
+"\n"
+"Si no está trabajando con D-Bus, no hay razón para usar este tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
 msgid "A D-Bus object path array, type \"ao\""
-msgstr ""
+msgstr "Un tipo de vector de ruta de objeto D-Bus, escriba «ao»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
 msgid ""
@@ -249,10 +272,14 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Un objeto de vector de ruta puede contener cualquier número de rutas a "
+"objetos (incluso ninguno; «[]»).\n"
+"\n"
+"Si no está trabajando con D-Bus, no hay razón para usar este tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
 msgid "A D-Bus signature, type \"g\""
-msgstr ""
+msgstr "Una firma D-Bus, escriba «g»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
 msgid ""
@@ -262,14 +289,18 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Una firma D-Bus es una cadena usada como firma de tipo para un método o "
+"mensaje de D-Bus.\n"
+"\n"
+"Si no está trabajando con D-Bus, no hay razón para usar este tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
 msgid "A double, type \"d\""
-msgstr ""
+msgstr "Un valor, doble, escriba «d» "
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
 msgid "A double value could represent any real number."
-msgstr ""
+msgstr "Un valor doble puede representar cualquier número real."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
 msgid "A 5-choices enumeration"
@@ -283,11 +314,12 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
 msgid "A short integer, type \"n\""
-msgstr ""
+msgstr "Un entero corto, escriba «n»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
+"Un entero de 16bit con signo. Consulte también la clave «integer-16-unsigned»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
 msgid "Flags: choose-colors-you-love"
@@ -299,47 +331,52 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
 msgid "An unsigned short integer, type \"q\""
-msgstr ""
+msgstr "Un entero corto sin signo, escriba «q»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
 msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
+"Un entero de 16bit sin signo. Consulte también la clave «integer-16-signed»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
 msgid "An usual integer, type \"i\""
-msgstr ""
+msgstr "Un entero normal, escriba «i»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
+"Un entero de 32bit con signo. Consulte también la clave «integer-32-unsigned»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
 msgid "An unsigned usual integer, type \"u\""
-msgstr ""
+msgstr "Un entero normal sin signo, escriba «u»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
+"Un entero de 32bit sin signo. Consulte también la clave «integer-32-signed»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
 msgid "A long integer, type \"x\""
-msgstr ""
+msgstr "Un entero largo, escriba «x»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
+"Un entero de 64bit con signo. Consulte también la clave «integer-64-unsigned»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
 msgid "An unsigned long integer, type \"t\""
-msgstr ""
+msgstr "Un entero largo sin signo, escriba «t»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
+"Un entero de 64bit sin signo. Consulte también la clave «integer-64-signed»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
 msgid "A number with range"
-msgstr ""
+msgstr "Un número en un rango"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
 msgid ""
@@ -350,7 +387,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
 msgid "A custom type, here \"(ii)\""
-msgstr ""
+msgstr "Un tipo personalizado, escriba «(ii)»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
 msgid ""
@@ -361,7 +398,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A string, type \"s\""
-msgstr ""
+msgstr "Un tipo cadena, escriba «s»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
 msgid ""
@@ -372,17 +409,19 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
 msgid "A string array, type \"as\""
-msgstr ""
+msgstr "Un vector de cadena, escriba «as»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
 msgstr ""
+"Un vector de cadena puede contener cualquier número de cadenas de cualquier "
+"longitud. Puede incluso ser un vector vacío, «[]»."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid "A nullable string, type \"ms\""
-msgstr ""
+msgstr "Una cadena que puede ser nula, escriba «ms»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
 msgid ""
@@ -416,7 +455,6 @@ msgid "Print release version and exit"
 msgstr "Mostrar información de la versión y salir"
 
 #: ../editor/dconf-editor.vala:88
-#, fuzzy
 #| msgid ""
 #| "This program is free software; you can redistribute it and/or modify it "
 #| "under the terms of the GNU General Public License as published by the "
@@ -456,8 +494,7 @@ msgstr ""
 "GNU para obtener más detalles.\n"
 "\n"
 "Debería haber recibido una copia de la Licencia Pública General de GNU junto "
-"con este programa, si no es así, escriba a la Free Software Foundation, Inc, "
-"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 EE.UU."
+"con este programa, si no es así, consulte <http://www.gnu.org/licenses/>."
 
 #: ../editor/dconf-editor.vala:93
 msgid "Copyright © Canonical Ltd"
@@ -499,11 +536,14 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"Use la palabra clave «nothing» para establecer un valor posible (empezando "
+"por «m») para su valor vacío. Cadenas, firmas y rutas a objetos se deben "
+"encerrar entre comillas."
 
 #: ../editor/dconf-view.vala:88
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr ""
+msgstr "Cadenas, firmas y rutas a objetos se deben encerrar entre comillas."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: ../editor/dconf-view.vala:92
@@ -511,6 +551,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"Use la palabra clave «nothing» para establecer un valor posible (empezando "
+"por «m») para su valor vacío."
 
 #: ../editor/dconf-view.vala:111
 msgid "Boolean"
@@ -521,10 +563,9 @@ msgid "String"
 msgstr "Cadena"
 
 #: ../editor/dconf-view.vala:115
-#, fuzzy
 #| msgid "String"
 msgid "String array"
-msgstr "Cadena"
+msgstr "Vector de cadena"
 
 #: ../editor/dconf-view.vala:117
 msgid "Enumeration"
@@ -542,19 +583,19 @@ msgstr "Doble [%s..%s]"
 #. Translators: this handle type is an index; you may maintain the word "handle"
 #: ../editor/dconf-view.vala:126
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "Tipo de manejador D-Bus"
 
 #: ../editor/dconf-view.vala:128
 msgid "D-Bus object path"
-msgstr ""
+msgstr "Ruta al objeto de D-Bus"
 
 #: ../editor/dconf-view.vala:130
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "Vector de la ruta del objeto de D-Bus"
 
 #: ../editor/dconf-view.vala:132
 msgid "D-Bus signature"
-msgstr ""
+msgstr "Firma de D-Bus"
 
 #: ../editor/dconf-view.vala:142
 #, c-format
@@ -563,7 +604,7 @@ msgstr "Entero [%s..%s]"
 
 #: ../editor/dconf-window.vala:75
 msgid "Thanks for using Dconf Editor for editing your configurations!"
-msgstr ""
+msgstr "Gracias por usar el editor de dconf para editar su configuración."
 
 #: ../editor/dconf-window.vala:76
 msgid "Don't forget that some option may break applications, so be careful."
