@@ -2,36 +2,102 @@
 # Copyright (C) 2012, 2013, 2014, 2015. Free Software Foundation, Inc.
 # This file is distributed under the same license as the dconf package.
 #
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2012, 2015.
 # Balázs Úr <urbalazs at gmail dot com>, 2012, 2013, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-23 12:18+0000\n"
-"PO-Revision-Date: 2015-02-27 22:03+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2015-10-27 16:23+0000\n"
+"PO-Revision-Date: 2015-11-09 00:40+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "A hely könyvjelzőzése"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "Hely könyvjelzőzve"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr "Könyvjelző be/ki ezen a helyen"
+
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"A könyvjelzők ide\n"
+"lesznek hozzáadva"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "Könyvjelzők"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "Könyvjelzők kezelése"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "Könyvjelző eltávolítása"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+msgid "Dconf Editor"
+msgstr "Dconf szerkesztő"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "Grafikus eszköz a dconf adatbázis szerkesztéséhez"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+"A Dconf szerkesztő egy grafikus eszköz a dconf adatbázis közvetlen "
+"szerkesztéséhez. Hasznos olyan alkalmazások fejlesztése "
+"során, amelyek használják ezeket a beállításokat."
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr ""
+"A konfiguráció közvetlen szerkesztése speciális funkció, és az alkalmazások "
+"nem megfelelő működését okozhatja."
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
-#: ../editor/dconf-editor.vala:433
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
+#: ../editor/dconf-editor.vala:89
 msgid "dconf Editor"
 msgstr "dconf szerkesztő"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:436
+msgid "Configuration editor for dconf"
+msgstr "Konfigurációszerkesztő a dconf-hoz"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:91
 msgid "Directly edit your entire configuration database"
 msgstr "A konfigurációs adatbázis közvetlen szerkesztése"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "beállítások;konfiguráció;"
 
@@ -59,130 +125,621 @@ msgstr "A teljes méretű mód engedélyezése"
 msgid "A flag to enable fullscreen mode"
 msgstr "Teljes képernyős mód engedélyezése"
 
-#: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Keresés…"
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "A list of bookmarked paths"
+msgstr "A könyvjelzőzött útvonalak listája"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+"Tartalmazza az összes könyvjelzőzött útvonalat egy karakterlánc tömbben."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid "A flag to restore the last view"
+msgstr "Az utolsó nézet helyreállítása"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+"Ha igaz, akkor a Dconf szerkesztő indításkor megpróbál arra az útvonalra "
+"navigálni, ami a „saved-view” kulcsnál be van állítva."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid "A path to restore the last view"
+msgstr "Az utolsó nézet helyreállítási útvonala"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+"Ha a „restore-view” kulcs igaz, akkor a Dconf szerkesztő indításkor "
+"megpróbál erre az útvonalra navigálni"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid "Show initial warning"
+msgstr "Kezdeti figyelmeztetés megjelenítése"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr ""
+"Ha igaz, akkor a Dconf szerkesztő indításkor egy felugró ablakkal "
+"figyelmezteti a felhasználót, hogy legyen óvatos."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "A boolean, type \"b\""
+msgstr "Egy logikai érték, típusa „b”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr "A logikai típusoknak csak két értéke lehet: „igaz” vagy „hamis”."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "A nullable boolean, type \"mb\""
+msgstr "Egy nullozható logikai érték, típusa „nb”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+"A GSettings megengedi a nullozható típusokat, ezek hasonlóak a többi "
+"típushoz, de a „semmi” (nothing) értéket is felvehetik. Egy nullozható "
+"logikai értéknek három állapota lehet: „igaz”, „hamis” és „semmi”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid "A byte (unsigned), type \"y\""
+msgstr "Egy bájt (előjel nélküli), típusa „y”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr ""
+"Egy bájt érték egy 0 és 255 közötti egészet jelöl. Karakterek továbbadására "
+"használható."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "A bytestring, type \"ay\""
+msgstr "Egy bájtsorozat, típusa „ay”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+"A bájtsorozatot gyakran használják arra, hogy nem feltétlenül érvényes utf8 "
+"karakterláncokat adjanak tovább. Ebben az esetben a konvenció szerint a "
+"null lezáró karakternek kell lennie a tömb utolsó elemének."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid "A bytestring array, type \"aay\""
+msgstr "Egy bájtsorozat tömb, típusa „aay”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr ""
+"Ez a típus bájtsorozatok egy tömbje. A bájtsorozatokat gyakran "
+"használják arra, hogy nem feltétlenül érvényes utf8 karakterláncokat adjanak "
+"tovább."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid "A D-Bus handle type, type \"h\""
+msgstr "Egy D-Bus azonosító típus, típusa „h”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Az azonosító típus egy 32 bites előjeles egész érték, amely a konvenció "
+"szerint "
+"indexként kerül felhasználásra egy fájlleírókból álló tömbhöz, amely a D-Bus "
+"üzenet mellett kerül elküldésre.\n"
+"\n"
+"Ha nem érintkezik a D-Bus-szal, akkor nincs oka ennek a típusnak a "
+"használatára."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid "A D-Bus object path, type \"o\""
+msgstr "Egy D-Bus objektumútvonal, típusa „o”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Az objektumútvonal arra szolgál, hogy a D-Bus objektumokat azonosítsa a busz "
+"egy megadott célállomásán.\n"
+"\n"
+"Ha nem érintkezik a D-Bus-szal, akkor nincs oka ennek a típusnak a "
+"használatára."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "Egy D-Bus objektumútvonal tömb, típusa „ao”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Egy objektumútvonal tömb tetszőleges számú objektumútvonalat tartalmazhat "
+"(beleértve a nullát is: „[]”).\n"
+"\n"
+"Ha nem érintkezik a D-Bus-szal, akkor nincs ok ennek a típusnak a "
+"használatára."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
+msgid "A D-Bus signature, type \"g\""
+msgstr "Egy D-Bus szignatúra, típusa „g”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"A D-Bus szignatúra egy karakterlánc, amelyet egy D-Bus metódus vagy üzenet "
+"típusszignatúrájaként használunk.\n"
+"\n"
+"Ha nem érintkezik a D-Bus-szal, akkor nincs ok ennek a típusnak a "
+"használatára."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
+msgid "A double, type \"d\""
+msgstr "Egy lebegőpontos érték, típusa „d”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A double value could represent any real number."
+msgstr "A lebegőpontos értékek valós számokat reprezentálnak."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid "A 5-choices enumeration"
+msgstr "Egy ötelemű felsorolás"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr ""
+"A felsorolások vagy az „enum” attribútummal, vagy egy „choices” címkével "
+"hozhatóak létre."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
+msgid "A short integer, type \"n\""
+msgstr "Egy rövid egész, típusa „n”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr ""
+"Egy 16 bites előjeles egész. Lásd még az „integer-16-unsigned” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "Flags: choose-colors-you-love"
+msgstr "Jelzők: válasszon olyan színeket amelyeket szeret"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr "Az „enum” attribútum által beállítható jelzők."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid "An unsigned short integer, type \"q\""
+msgstr "Egy előjel nélküli rövid egész, típusa „q”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr ""
+"Egy 16 bites előjel nélküli egész. Lásd még az „integer-16-signed” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "An usual integer, type \"i\""
+msgstr "Egy szokványos egész, típusa „i”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr ""
+"Egy 32 bites előjeles egész. Lásd még az „integer-32-unsigned” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "An unsigned usual integer, type \"u\""
+msgstr "Egy előjel nélküli, szokványos egész, típusa „u”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr ""
+"Egy 32 bites előjel nélküli egész. Lásd még az „integer-32-signed” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A long integer, type \"x\""
+msgstr "Egy hosszú egész, típusa „x”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr ""
+"Egy 64 bites előjeles egész. Lásd még az „integer-64-unsigned” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "An unsigned long integer, type \"t\""
+msgstr "Egy előjel nélküli hosszú egész, típusa „t”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr ""
+"Egy 64 bites előjel nélküli egész. Lásd még az „integer-64-signed” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A number with range"
+msgstr "Egy szám egy megadott intervallumban"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+"Minden számszerű érték (előjeles és előjel nélküli egészek, valamint a "
+"lebegőpontosok) lekorlátozható egy adott intervallumra. Például ez az egész "
+"érték csak -5 és 9 között vehet fel értékeket."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A custom type, here \"(ii)\""
+msgstr "Egy saját típus, itt „(ii)”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+"A Dconf szerkesztővel tetszőleges, a GSettings által támogatott "
+"beállítástípust "
+"szerkeszthet, szükség esetén karakterláncként, ha nincs más lehetőség. "
+"Itt egy két 32 bites előjeles egészből álló ennest láthat."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A string, type \"s\""
+msgstr "Egy karakterlánc, típusa „s”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+"A karakterlánc típus bármilyen utf8 karakterláncot el tud fogadni. "
+"Megjegyezzük, hogy az „''” üres karakterlánc nem ugyanaz, mint a NULL "
+"(„semmi”); lásd még a „string-nullable” kulcsot."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid "A string array, type \"as\""
+msgstr "Egy karakterlánc tömb, típusa „as”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+"Egy karakterlánc tömb tetszőleges számú és hosszúságú karakterláncot "
+"tartalmaz. Lehet üres tömb is, „[]”."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid "A nullable string, type \"ms\""
+msgstr "Egy nullozható karakterlánc, típusa „ms”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+"A GSettings megengedi a nullozható típusokat, amelyek hasonlóak a többi "
+"típushoz, de felvehetik a „semmi” (nothing) értéket is. Egy nullozható "
+"karakterlánc tetszőleges értéket felvehet, beleértve az „''” üres "
+"karakterláncot, vagy lehet NULL is (semmi)."
+
+#: ../editor/dconf-editor-menu.ui.h:1
 msgid "_About"
 msgstr "_Névjegy"
 
-#: ../editor/dconf-editor-menu.ui.h:3
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_Quit"
 msgstr "_Kilépés"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Beállítás az alapértelmezésre"
-
 #: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Séma:"
+msgid "Search"
+msgstr "Keresés"
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Összefoglaló:"
+msgid "Search keys"
+msgstr "Kulcsok keresése"
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Leírás:"
+msgid "No keys in this path"
+msgstr "Nincsenek kulcsok ezen az útvonalon"
 
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Típus:"
-
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Alapértelmezett:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Következő"
-
-#: ../editor/dconf-editor.vala:29
+#: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Kiadási verzió kiírása és kilépés"
 
-#: ../editor/dconf-editor.vala:206
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Egész [%s..%s]"
+#: ../editor/dconf-editor.vala:92
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015 – Arnaud Bonatti"
+msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:219
+#: ../editor/dconf-editor.vala:96
+msgid "translator-credits"
+msgstr ""
+"Kelemen Gábor <kelemeng at gnome dot hu>\n"
+"Meskó Balázs <meskobalazs at gmail dot com>"
+
+#: ../editor/dconf-model.vala:200
+msgid "True"
+msgstr "Igaz"
+
+#: ../editor/dconf-model.vala:202
+msgid "False"
+msgstr "Hamis"
+
+#: ../editor/dconf-model.vala:203
+msgid "Nothing"
+msgstr "Semmi"
+
+#: ../editor/dconf-model.vala:208
+msgid "true"
+msgstr "igaz"
+
+#: ../editor/dconf-model.vala:210
+msgid "false"
+msgstr "hamis"
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:212
+msgid "nothing"
+msgstr "semmi (nothing)"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:90
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+"Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) "
+"üres értékre állításához. A karakterláncokat, szignatúrákat és "
+"objektumútvonalakat "
+"idézőjelek közé kell tenni."
+
+#: ../editor/dconf-view.vala:92
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr ""
+"A karakterláncokat, szignatúrákat és objektumútvonalakat idézőjelek közé "
+"kell tenni."
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:96
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+"Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) "
+"üres értékre állításához."
+
+#: ../editor/dconf-view.vala:115
+msgid "Boolean"
+msgstr "Logikai"
+
+#: ../editor/dconf-view.vala:117
+msgid "String"
+msgstr "Karakterlánc"
+
+#: ../editor/dconf-view.vala:119
+msgid "String array"
+msgstr "Karakterlánc tömb"
+
+#: ../editor/dconf-view.vala:121
+msgid "Enumeration"
+msgstr "Felsorolás"
+
+#: ../editor/dconf-view.vala:123
+msgid "Flags"
+msgstr "Jelzők"
+
+#: ../editor/dconf-view.vala:127
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Lebegőpontos [%s..%s]"
 
-#: ../editor/dconf-editor.vala:221
-msgid "Boolean"
-msgstr "Logikai"
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-view.vala:130
+msgid "D-Bus handle type"
+msgstr "D-Bus azonosító típus"
 
-#: ../editor/dconf-editor.vala:223
-msgid "String"
-msgstr "Karakterlánc"
+#: ../editor/dconf-view.vala:132
+msgid "D-Bus object path"
+msgstr "D-Bus objektumútvonal"
 
-#: ../editor/dconf-editor.vala:225
-msgid "Enumeration"
-msgstr "Felsorolás"
+#: ../editor/dconf-view.vala:134
+msgid "D-Bus object path array"
+msgstr "D-Bus objektumútvonal tömb"
 
-#: ../editor/dconf-editor.vala:273
-msgid "No schema"
-msgstr "Nincs séma"
+#: ../editor/dconf-view.vala:136
+msgid "D-Bus signature"
+msgstr "D-Bus szignatúra"
 
-#: ../editor/dconf-editor.vala:383
-msgid "Not found"
-msgstr "Nem található"
-
-#: ../editor/dconf-editor.vala:431
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Ez a program szabad szoftver, terjesztheti és/vagy módosíthatja a Free "
-"Software Foundation által kiadott GNU General Public License második (vagy "
-"bármely későbbi) változatában foglaltak alapján.\n"
-"\n"
-"Ezt a programot abban a reményben terjesztjük, hogy hasznos lesz, de nem "
-"vállalunk SEMMIFÉLE GARANCIÁT, még olyan értelemben sem, hogy a program "
-"alkalmas-e a KÖZREADÁSRA vagy EGY BIZONYOS FELADAT ELVÉGZÉSÉRE. További "
-"részletekért tanulmányozza a GNU GPL licencet.\n"
-"\n"
-"A programhoz a GNU General Public License egy példánya is jár, ha nem kapta "
-"meg, írjon a Free Software Foundation Inc.-nek. Levélcímük: 51 Franklin "
-"Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#: ../editor/dconf-editor.vala:437
-msgid "Copyright © Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
-
-#: ../editor/dconf-editor.vala:441
-msgid "translator-credits"
-msgstr "Kelemen Gábor <kelemeng at gnome dot hu>"
-
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-view.vala:146
 #, c-format
-msgid "Error setting value: %s"
-msgstr "Hiba az érték beállításakor: %s"
+msgid "Integer [%s..%s]"
+msgstr "Egész [%s..%s]"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Name"
-msgstr "Név"
+#: ../editor/dconf-window.vala:72
+msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgstr "Köszönjük, hogy a Dconf szerkesztővel szerkeszti a konfigurációt."
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
-msgid "Value"
-msgstr "Érték"
+#: ../editor/dconf-window.vala:73
+msgid "Don't forget that some option may break applications, so be careful."
+msgstr ""
+"Ne feledje, hogy egyes beállítások tönkretehetik az alkalmazásokat, legyen "
+"óvatos!"
 
+#: ../editor/dconf-window.vala:74
+msgid "I'll be careful."
+msgstr "Óvatos leszek."
+
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+#: ../editor/dconf-window.vala:78
+msgid "Show this dialog next time."
+msgstr "Mutassa ezt legközelebb is."
+
+#: ../editor/dconf-window.vala:160
+msgid "Oops! Cannot find something at this path."
+msgstr "Hoppá! Valami nem található ezen az útvonalon."
+
+#: ../editor/dconf-window.vala:395
+msgid "No Schema Found"
+msgstr "Nem található séma"
+
+#. TODO enum
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/dconf-window.vala:519
+msgid "Customize…"
+msgstr "Testreszabás…"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/dconf-window.vala:521
+msgid "Copy"
+msgstr "Másolás"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/dconf-window.vala:523
+msgid "Set to default"
+msgstr "Beállítás az alapértelmezésre"
+
+#. Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys
+#: ../editor/dconf-window.vala:525 ../editor/dconf-window.vala:597
+msgid "Default value"
+msgstr "Alapértelmezett érték"
+
+#: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
+msgid "Key Editor"
+msgstr "Kulcsszerkesztő"
+
+#: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
+msgid "Cancel"
+msgstr "Mégse"
+
+#: ../editor/key-editor-no-schema.ui.h:3 ../editor/key-editor.ui.h:3
+msgid "Apply"
+msgstr "Alkalmaz"
+
+#: ../editor/key-editor-no-schema.ui.h:4
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+"Nincs elérhető séma. A Dconf szerkesztő nem talált ehhez a kulcshoz "
+"kapcsolódó sémát. Az alkalmazás, amely feltelepítette ezt a kulcsot, lehet "
+"hogy eltávolításra került, abbahagyta a kulcs használatát, vagy áthelyezhető "
+"sémát használ a kulcsai meghatározására."
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
+msgid "Type"
+msgstr "Típus"
+
+#: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
+msgid "Custom value"
+msgstr "Egyedi érték"
+
+#: ../editor/key-editor.ui.h:4
+msgid "Schema"
+msgstr "Séma"
+
+#: ../editor/key-editor.ui.h:5
+msgid "Summary"
+msgstr "Összefoglaló"
+
+#: ../editor/key-editor.ui.h:6
+msgid "Description"
+msgstr "Leírás"
+
+#: ../editor/key-editor.ui.h:9
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: ../editor/key-editor.ui.h:10
+msgid "Use default value"
+msgstr "Alapértelmezés használata"
+
+#~ msgid ""
+#~ "Dconf Editor is free software: you can redistribute it and/or modify it "
+#~ "under the terms of the GNU General Public License as published by the "
+#~ "Free Software Foundation, either version 3 of the License, or (at your "
+#~ "option) any later version.\n"
+#~ "\n"
+#~ "Dconf Editor is distributed in the hope that it will be useful, but "
+#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General "
+#~ "Public License for more details.\n"
+#~ "\n"
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with this program. If not, see <http://www.gnu.org/licenses/>."
+#~ msgstr ""
+#~ "A Dconf szerkesztő szabad szoftver, terjesztheti és/vagy módosíthatja a "
+#~ "Free Software Foundation által kiadott GNU General Public License második "
+#~ "(vagy bármely későbbi) változatában foglaltak alapján.\n"
+#~ "\n"
+#~ "A Dconf szerkesztőt abban a reményben terjesztjük, hogy hasznos lesz, de "
+#~ "nem vállalunk SEMMIFÉLE GARANCIÁT, még olyan értelemben sem, hogy a "
+#~ "program alkalmas-e a KÖZREADÁSRA vagy EGY BIZONYOS FELADAT ELVÉGZÉSÉRE. "
+#~ "További részletekért tanulmányozza a GNU GPL licencet.\n"
+#~ "\n"
+#~ "A programhoz a GNU General Public License egy példánya is jár, ha nem "
+#~ "kapta meg, írjon a látogassa meg az <http://www.gnu.org/licenses/> oldalt."
+
+#~ msgid "Copyright © Canonical Ltd"
+#~ msgstr "Copyright © Canonical Ltd"
+
+#~ msgid "_Find…"
+#~ msgstr "_Keresés…"
+
+#~ msgid "Next"
+#~ msgstr "Következő"
+
+#~ msgid "Not found"
+#~ msgstr "Nem található"
+
+#~ msgid "Error setting value: %s"
+#~ msgstr "Hiba az érték beállításakor: %s"
+
+#~ msgid "Name"
+#~ msgstr "Név"
+
+#~ msgid "Value"
+#~ msgstr "Érték"
