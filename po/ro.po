@@ -35,7 +35,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 msgid "settings;configuration;"
-msgstr "settings;configuration;configurări;configurație;setări"
+msgstr "settings;configuration;configurări;configurație;setări;"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
 msgid "The width of the window"
