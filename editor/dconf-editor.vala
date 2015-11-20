@@ -67,6 +67,7 @@ class ConfigurationEditor : Gtk.Application
         base.startup ();
 
         Environment.set_application_name (_("dconf Editor"));
+        Gtk.Window.set_default_icon_name ("dconf-editor");
 
         add_action_entries (action_entries, this);
 
