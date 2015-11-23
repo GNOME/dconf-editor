@@ -1,3 +1,18 @@
+dconf-editor 3.19.2
+=====================
+
+Removed an unnecessary big hack, and improved some other little things here and
+there. A new Occitan translation, and some translations updates –many thanks to
+all people who helped– as the new UI has more strings.
+
+Translations updated:
+ Spanish (Daniel Mustieles)
+ Norwegian bokmål (Kjartan Maraas)
+ Romanian (Kalev Lember)
+ Occitan (Cédric Valmary; new translation)
+ Hungarian (Balázs Meskó)
+ Portuguese (Pedro Albuquerque)
+
 dconf-editor 3.19.1
 =====================
 
