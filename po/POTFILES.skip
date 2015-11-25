@@ -1,7 +1,8 @@
 editor/ca.desrt.dconf-editor.desktop.in
 editor/dconf-editor.c
-editor/dconf-window.c
 editor/dconf-model.c
 editor/dconf-view.c
+editor/dconf-window.c
+editor/key-list-box-row.c
 # Autotools failure
 sub/editor/ca.desrt.dconf-editor.desktop.in
