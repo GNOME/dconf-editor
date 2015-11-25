@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
-private class KeyListBoxRow : EventBox
+private abstract class KeyListBoxRow : EventBox
 {
     protected Window window { get; set; }
     protected Notification notification = new Notification (_("Copied to clipboard"));
@@ -55,8 +55,11 @@ private class KeyListBoxRow : EventBox
         return false;
     }
 
-    protected void copy_text (string text)
+    protected abstract string get_text ();
+    public void copy_text ()
     {
+        string text = get_text ();
+
         // clipboard
         Gdk.Display? display = Gdk.Display.get_default ();
         if (display == null)
@@ -69,7 +72,7 @@ private class KeyListBoxRow : EventBox
         GLib.Application application = window.get_application ();   // TODO better; but "of course", after the window is added to the application...
         if (notification_active == true)
         {
-            Source.remove (notification_number);
+            Source.remove (notification_number);  // FIXME doesn't work [as expected], the timeout runs until its end, and withdraws the notification then
             notification_active = false;
         }
 
@@ -114,10 +117,15 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (nullable_popover != null) nullable_popover.destroy (); });
     }
 
+    protected override string get_text ()
+    {
+        return key.full_name + " " + key.value.print (false);
+    }
+
     protected override bool generate_popover (ContextPopover popover)
     {
         popover.new_action ("customize", () => { show_dialog (); });
-        popover.new_action ("copy", () => { copy_text (key.full_name + " " + key.value.print (false)); });
+        popover.new_action ("copy", () => { copy_text (); });
 
         if (key.type_string == "b" || key.type_string == "mb")
         {
@@ -149,10 +157,15 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key.value_changed.connect (() => { update (); if (nullable_popover != null) nullable_popover.destroy (); });
     }
 
+    protected override string get_text ()
+    {
+        return key.schema_id + " " + key.name + " " + key.value.print (false);
+    }
+
     protected override bool generate_popover (ContextPopover popover)
     {
         popover.new_action ("customize", () => { show_dialog (); });
-        popover.new_action ("copy", () => { copy_text (key.schema_id + " " + key.name + " " + key.value.print (false)); });
+        popover.new_action ("copy", () => { copy_text (); });
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {

@@ -219,12 +219,23 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
-        if (Gdk.keyval_name (event.keyval) == "f" && (event.state & Gdk.ModifierType.CONTROL_MASK) != 0)    // TODO better?
+        if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
         {
-            if (bookmarks_button.active)
-                bookmarks_button.active = false;
-            search_bar.set_search_mode (!search_bar.get_search_mode ());
-            return true;
+            switch (Gdk.keyval_name (event.keyval))
+            {
+                case "f":
+                    if (bookmarks_button.active)
+                        bookmarks_button.active = false;
+                    search_bar.set_search_mode (!search_bar.get_search_mode ());
+                    return true;
+                case "c":
+                    ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
+                    if (selected_row != null)
+                        ((KeyListBoxRow) ((!) selected_row).get_child ()).copy_text ();
+                    return true;
+                default:
+                    break;  // TODO report bug for making <ctrl>v work?
+            }
         }
 
         if (bookmarks_button.active)        // TODO open bug
