@@ -109,6 +109,8 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void on_destroy ()
     {
+        ((Window) this).get_application ().withdraw_notification ("copy");
+
         settings.set_string ("saved-view", current_path);
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
@@ -171,7 +173,7 @@ class DConfWindow : ApplicationWindow
     {
         if (((Key) item).has_schema)
         {
-            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
+            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((Window) this, (GSettingsKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
                     KeyEditor key_editor = new KeyEditor ((GSettingsKey) item);
@@ -182,7 +184,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
+            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((Window) this, (DConfKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
                     KeyEditorNoSchema key_editor = new KeyEditorNoSchema ((DConfKey) item);
@@ -341,6 +343,11 @@ class DConfWindow : ApplicationWindow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private class KeyListBoxRow : EventBox
 {
+    protected Window window { get; set; }
+    protected Notification notification = new Notification (_("Copied to clipboard"));
+    protected bool notification_active = false;
+    protected uint notification_number;
+
     [GtkChild] protected Label key_name_label;
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
@@ -371,7 +378,39 @@ private class KeyListBoxRow : EventBox
         return false;
     }
 
-    protected static string cool_text_value (Key key)    // TODO better
+    protected void copy_text (string text)
+    {
+        // clipboard
+        Gdk.Display? display = Gdk.Display.get_default ();
+        if (display == null)
+            return;
+
+        Clipboard clipboard = Clipboard.get_default ((!) display);
+        clipboard.set_text (text, text.length);
+
+        // notification
+        GLib.Application application = window.get_application ();   // TODO better; but "of course", after the window is added to the application...
+        if (notification_active == true)
+        {
+            Source.remove (notification_number);
+            notification_active = false;
+        }
+
+        notification_number = Timeout.add_seconds (30, () => {
+                if (notification_active == false)
+                    return Source.CONTINUE;
+                application.withdraw_notification ("copy");
+                notification_active = false;
+                return Source.REMOVE;
+            });
+        notification_active = true;
+
+        notification.set_body (text);
+        application.withdraw_notification ("copy");     // TODO report bug: Shell cancels previous notification of the same name, instead of replacing it
+        application.send_notification ("copy", notification);
+    }
+
+    protected static string cool_text_value (Key key)   // TODO better
     {
         return Key.cool_text_value_from_variant (key.value, key.type_string);
     }
@@ -381,8 +420,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
     public DConfKey key { get; private set; }
 
-    public KeyListBoxRowEditableNoSchema (DConfKey _key)
+    public KeyListBoxRowEditableNoSchema (Window _window, DConfKey _key)
     {
+        this.window = _window;
         this.key = _key;
 
         Pango.AttrList attr_list = new Pango.AttrList ();
@@ -400,13 +440,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         popover.new_action ("customize", () => { show_dialog (); });
-        popover.new_action ("copy", () => {
-                Gdk.Display? display = Gdk.Display.get_default ();
-                    if (display == null) return;
-                Clipboard clipboard = Clipboard.get_default ((!) display);
-                string copy = key.full_name + " " + key.value.print (false);
-                clipboard.set_text (copy, copy.length);
-            });
+        popover.new_action ("copy", () => { copy_text (key.full_name + " " + key.value.print (false)); });
 
         if (key.type_string == "b" || key.type_string == "mb")
         {
@@ -425,8 +459,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     private Pango.AttrList attr_list = new Pango.AttrList ();
 
-    public KeyListBoxRowEditable (GSettingsKey _key)
+    public KeyListBoxRowEditable (Window _window, GSettingsKey _key)
     {
+        this.window = _window;
         this.key = _key;
 
         key_value_label.set_attributes (attr_list);
@@ -440,13 +475,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         popover.new_action ("customize", () => { show_dialog (); });
-        popover.new_action ("copy", () => {
-                Gdk.Display? display = Gdk.Display.get_default ();
-                    if (display == null) return;
-                Clipboard clipboard = Clipboard.get_default ((!) display);
-                string copy = key.schema_id + " " + key.name + " " + key.value.print (false);
-                clipboard.set_text (copy, copy.length);
-            });
+        popover.new_action ("copy", () => { copy_text (key.schema_id + " " + key.name + " " + key.value.print (false)); });
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {
