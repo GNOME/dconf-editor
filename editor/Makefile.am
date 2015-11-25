@@ -40,7 +40,8 @@ dconf_editor_SOURCES = \
 	dconf-window.vala \
 	dconf-model.vala \
 	dconf-view.vala \
-	bookmarks.vala
+	bookmarks.vala \
+	key-list-box-row.vala
 
 desktopdir = $(datadir)/applications
 desktop_in_files = ca.desrt.dconf-editor.desktop.in.in
