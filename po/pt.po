@@ -1,28 +1,28 @@
 # dconf's Portuguese translation.
 # Copyright © 2012, 2013 dconf
 # This file is distributed under the same license as the dconf package.
-#
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2012, 2013.
-# Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # <> <>, 2015.
+# Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-05 04:23+0000\n"
-"PO-Revision-Date: 2015-11-06 16:05+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"POT-Creation-Date: 2015-11-28 04:22+0000\n"
+"PO-Revision-Date: 2015-11-28 09:14+0000\n"
+"Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
+"Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n\n"
 "X-Generator: Gtranslator 2.91.6\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
+"X-Project-Style: gnome\n"
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
@@ -88,7 +88,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
-#: ../editor/dconf-editor.vala:89
+#: ../editor/dconf-editor.vala:90
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
@@ -97,7 +97,7 @@ msgid "Configuration editor for dconf"
 msgstr "Editor de configurações para dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:91
+#: ../editor/dconf-editor.vala:92
 msgid "Directly edit your entire configuration database"
 msgstr "Edite diretamente toda a sua base de dados de configuração"
 
@@ -485,7 +485,7 @@ msgstr "Nenhuma chave neste caminho"
 msgid "Print release version and exit"
 msgstr "Imprimir versão do lançamento e sair"
 
-#: ../editor/dconf-editor.vala:92
+#: ../editor/dconf-editor.vala:93
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015 – Arnaud Bonatti"
@@ -493,7 +493,7 @@ msgstr ""
 "Direitos de autor © 2010-2014 – Canonical Ltd\n"
 "Direitos de autor © 2015 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:96
+#: ../editor/dconf-editor.vala:97
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
@@ -618,34 +618,9 @@ msgstr "Terei cuidado."
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo da próxima vez."
 
-#: ../editor/dconf-window.vala:160
+#: ../editor/dconf-window.vala:162
 msgid "Oops! Cannot find something at this path."
 msgstr "Oops! Impossível encontrar algo neste caminho."
-
-#: ../editor/dconf-window.vala:395
-msgid "No Schema Found"
-msgstr "Nenhum esquema encontrado"
-
-#. TODO enum
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:519
-msgid "Customize…"
-msgstr "Personalizar…"
-
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:521
-msgid "Copy"
-msgstr "Copiar"
-
-#. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:523
-msgid "Set to default"
-msgstr "Predefinir"
-
-#. Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:525 ../editor/dconf-window.vala:597
-msgid "Default value"
-msgstr "Valor predefinido"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -699,6 +674,35 @@ msgstr "Predefinição"
 #: ../editor/key-editor.ui.h:10
 msgid "Use default value"
 msgstr "Usar valor predefinido"
+
+#: ../editor/key-list-box-row.vala:24
+msgid "Copied to clipboard"
+msgstr "Copiado para a área de transferência"
+
+#: ../editor/key-list-box-row.vala:115
+msgid "No Schema Found"
+msgstr "Nenhum esquema encontrado"
+
+#. TODO enum
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:238
+msgid "Customize…"
+msgstr "Personalizar…"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:240
+msgid "Copy"
+msgstr "Copiar"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:242
+msgid "Set to default"
+msgstr "Predefinir"
+
+#. Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:244 ../editor/key-list-box-row.vala:316
+msgid "Default value"
+msgstr "Valor predefinido"
 
 #~ msgid "_Find…"
 #~ msgstr "_Localizar…"
