@@ -47,7 +47,7 @@
         <child>
           <object class="Bookmarks" id="bookmarks_button">
             <property name="visible">True</property>
-            <property name="schema">ca.desrt.dconf-editor.Settings</property>
+            <property name="schema-id">ca.desrt.dconf-editor.Settings</property>
             <signal name="clicked" handler="on_bookmarks_button_clicked"/>
             <signal name="bookmark_activated" handler="scroll_to_path"/>
             <style>

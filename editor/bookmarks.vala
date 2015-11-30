@@ -27,7 +27,7 @@ public class Bookmarks : MenuButton
     [GtkChild] private Switch bookmarked_switch;
     public string current_path { get; set; }
 
-    public string schema { get; construct; }
+    public string schema_id { get; construct; }
     private GLib.Settings settings;
     private GLib.ListStore bookmarks_model;
 
@@ -35,7 +35,7 @@ public class Bookmarks : MenuButton
 
     construct
     {
-        settings = new GLib.Settings (schema);
+        settings = new GLib.Settings (schema_id);
         settings.changed ["bookmarks"].connect (update_bookmarks);
         settings.changed ["bookmarks"].connect (update_icon_and_switch);    // TODO updates switch if switch changed settings...
         notify ["current-path"].connect (update_icon_and_switch);
