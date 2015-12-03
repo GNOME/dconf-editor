@@ -141,7 +141,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
             if (!key.is_default)
                 popover.new_action ("default2", () => { nullable_popover.destroy (); key.set_to_default (); });
-            popover.new_group ();   // ensures a flag called "customize" or "default2" won't cause problems
+            popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
 
             popover.create_flags_list ((GSettingsKey) key);
 
@@ -179,7 +179,6 @@ private class ContextPopover : Popover
 
     public ContextPopover ()
     {
-        new_group ();
         new_section_real ();
 
         bind_model (menu, null);
@@ -192,6 +191,9 @@ private class ContextPopover : Popover
     public delegate void button_action ();
     public void new_action (string action_action, button_action action)
     {
+        set_group ("options");
+        string group_dot_action = "options." + action_action;
+
         SimpleAction simple_action = new SimpleAction (action_action, null);
         simple_action.activate.connect (() => { action (); });
         current_group.add_action (simple_action);
@@ -200,14 +202,14 @@ private class ContextPopover : Popover
         {
             case "customize":
                 /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-                current_section.append (_("Customize…"), current_group_prefix + "." + action_action);
+                current_section.append (_("Customize…"), group_dot_action);
                 return;
             case "default1":
                 /* Translators: "reset key value" action in the right-click menu on the list of keys */
-                current_section.append (_("Set to default"), current_group_prefix + "." + action_action);
+                current_section.append (_("Set to default"), group_dot_action);
                 return;
             case "default2":
-                new_multi_default_action (current_group_prefix + "." + action_action);
+                new_multi_default_action (group_dot_action);
                 return;
             default: assert_not_reached ();
         }
@@ -219,11 +221,17 @@ private class ContextPopover : Popover
         current_section.append (_("Copy"), "app.copy(\"" + text + "\")");   // TODO protection against some chars in text? 2/2
     }
 
-    public void new_group ()
+    public void set_group (string group_name)
     {
-        current_group_prefix += "a";
-        current_group = new SimpleActionGroup ();
-        insert_action_group (current_group_prefix, (SimpleActionGroup) current_group);
+        current_group_prefix = group_name;
+        GLib.ActionGroup? group = get_action_group (group_name);
+        if (group == null)
+        {
+            current_group = new SimpleActionGroup ();
+            insert_action_group (current_group_prefix, (SimpleActionGroup) current_group);
+        }
+        else
+            current_group = (ActionMap) ((!) group);
     }
 
     public void new_section ()
@@ -243,6 +251,9 @@ private class ContextPopover : Popover
 
     public void create_flags_list (GSettingsKey key)
     {
+        set_group ("flags");
+        string group_dot = "flags.";
+
         GLib.Settings settings = new GLib.Settings (key.schema_id);
         string [] active_flags = settings.get_strv (key.name);
         string [] all_flags = key.range_content.get_strv ();
@@ -252,7 +263,7 @@ private class ContextPopover : Popover
             SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (flag in active_flags));
             current_group.add_action (simple_action);
 
-            current_section.append (flag, current_group_prefix + "." + flag);
+            current_section.append (flag, group_dot + flag);
 
             flags_actions += simple_action;
 
@@ -277,8 +288,9 @@ private class ContextPopover : Popover
 
     public void create_buttons_list (Key key, bool nullable)
     {
-        const string ACTION_NAME = "reservedactionprefix";
-        string group_dot_action = current_group_prefix + "." + ACTION_NAME;
+        set_group ("enum");
+        const string ACTION_NAME = "choice";
+        string group_dot_action = "enum.choice";
 
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
@@ -333,7 +345,7 @@ private class ContextPopover : Popover
     }
 
     private void finalize_menu ()
-        requires (!menu.is_mutable ())  // should just "return;" then if function is made public
+        requires (menu.is_mutable ())  // should just "return;" then if function is made public
     {
         current_section.freeze ();
         menu.freeze ();
