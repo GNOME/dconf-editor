@@ -333,7 +333,7 @@ private class ContextPopover : Popover
     }
 
     private void finalize_menu ()
-        ensures (!menu.is_mutable ())   // should just "return;" then if function is made public
+        requires (!menu.is_mutable ())  // should just "return;" then if function is made public
     {
         current_section.freeze ();
         menu.freeze ();
