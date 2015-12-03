@@ -38,6 +38,8 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private SearchEntry search_entry;
     [GtkChild] private Button search_next_button;
 
+    [GtkChild] private MenuButton info_button;
+
     public DConfWindow ()
     {
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
@@ -135,6 +137,10 @@ class DConfWindow : ApplicationWindow
             key_model = model.get_directory (iter).key_model;
             current_path = model.get_directory (iter).full_name;
             bookmarks_button.current_path = current_path;
+
+            GLib.Menu menu = new GLib.Menu ();
+            menu.append (_("Copy current path"), "app.copy('" + current_path + "')");   // TODO protection against some chars in text? 1/2
+            info_button.set_menu_model ((MenuModel) menu);
         }
 
         key_list_box.bind_model (key_model, new_list_box_row);
@@ -153,7 +159,6 @@ class DConfWindow : ApplicationWindow
                 if (dir.full_name == full_name)
                 {
                     select_dir (iter);
-                    bookmarks_button.current_path = full_name;
                     return true;
                 }
             }
@@ -173,7 +178,7 @@ class DConfWindow : ApplicationWindow
     {
         if (((Key) item).has_schema)
         {
-            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((Window) this, (GSettingsKey) item);
+            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
                     KeyEditor key_editor = new KeyEditor ((GSettingsKey) item);
@@ -184,7 +189,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((Window) this, (DConfKey) item);
+            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
             key_list_box_row.show_dialog.connect (() => {
                     KeyEditorNoSchema key_editor = new KeyEditorNoSchema ((DConfKey) item);
@@ -226,26 +231,28 @@ class DConfWindow : ApplicationWindow
                 case "f":
                     if (bookmarks_button.active)
                         bookmarks_button.active = false;
+                    if (info_button.active)
+                        info_button.active = false;
                     search_bar.set_search_mode (!search_bar.get_search_mode ());
                     return true;
                 case "c":
                     ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
-                    if (selected_row != null)
-                        ((KeyListBoxRow) ((!) selected_row).get_child ()).copy_text ();
+                    ConfigurationEditor application = (ConfigurationEditor) get_application ();
+                    application.copy (selected_row == null ? current_path : ((KeyListBoxRow) ((!) selected_row).get_child ()).get_text ());
                     return true;
                 default:
                     break;  // TODO report bug for making <ctrl>v work?
             }
         }
 
-        if (bookmarks_button.active)        // TODO open bug
+        if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
             return false;
 
         return search_bar.handle_event (event);
     }
 
     [GtkCallback]
-    private void on_bookmarks_button_clicked ()
+    private void on_menu_button_clicked ()
     {
         search_bar.set_search_mode (false);
     }

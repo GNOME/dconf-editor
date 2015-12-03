@@ -20,11 +20,6 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : EventBox
 {
-    protected Window window { get; set; }
-    protected Notification notification = new Notification (_("Copied to clipboard"));
-    protected bool notification_active = false;
-    protected uint notification_number;
-
     [GtkChild] protected Label key_name_label;
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
@@ -33,6 +28,8 @@ private abstract class KeyListBoxRow : EventBox
 
     protected ContextPopover? nullable_popover;
     protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
+
+    public abstract string get_text ();
 
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
@@ -55,41 +52,6 @@ private abstract class KeyListBoxRow : EventBox
         return false;
     }
 
-    protected abstract string get_text ();
-    public void copy_text ()
-    {
-        string text = get_text ();
-
-        // clipboard
-        Gdk.Display? display = Gdk.Display.get_default ();
-        if (display == null)
-            return;
-
-        Clipboard clipboard = Clipboard.get_default ((!) display);
-        clipboard.set_text (text, text.length);
-
-        // notification
-        GLib.Application application = window.get_application ();   // TODO better; but "of course", after the window is added to the application...
-        if (notification_active == true)
-        {
-            Source.remove (notification_number);  // FIXME doesn't work [as expected], the timeout runs until its end, and withdraws the notification then
-            notification_active = false;
-        }
-
-        notification_number = Timeout.add_seconds (30, () => {
-                if (notification_active == false)
-                    return Source.CONTINUE;
-                application.withdraw_notification ("copy");
-                notification_active = false;
-                return Source.REMOVE;
-            });
-        notification_active = true;
-
-        notification.set_body (text);
-        application.withdraw_notification ("copy");     // TODO report bug: Shell cancels previous notification of the same name, instead of replacing it
-        application.send_notification ("copy", notification);
-    }
-
     protected static string cool_text_value (Key key)   // TODO better
     {
         return Key.cool_text_value_from_variant (key.value, key.type_string);
@@ -100,9 +62,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
     public DConfKey key { get; private set; }
 
-    public KeyListBoxRowEditableNoSchema (Window _window, DConfKey _key)
+    public KeyListBoxRowEditableNoSchema (DConfKey _key)
     {
-        this.window = _window;
         this.key = _key;
 
         Pango.AttrList attr_list = new Pango.AttrList ();
@@ -125,7 +86,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         popover.new_action ("customize", () => { show_dialog (); });
-        popover.new_action ("copy", () => { copy_text (); });
+        popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "mb")
         {
@@ -144,9 +105,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     private Pango.AttrList attr_list = new Pango.AttrList ();
 
-    public KeyListBoxRowEditable (Window _window, GSettingsKey _key)
+    public KeyListBoxRowEditable (GSettingsKey _key)
     {
-        this.window = _window;
         this.key = _key;
 
         key_value_label.set_attributes (attr_list);
@@ -165,7 +125,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         popover.new_action ("customize", () => { show_dialog (); });
-        popover.new_action ("copy", () => { copy_text (); });
+        popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {
@@ -236,8 +196,6 @@ private class ContextPopover : Popover
         {
             /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
             case "customize":   text = _("Customize…");     break;
-            /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
-            case "copy":        text = _("Copy");           break;
             /* Translators: "reset key value" action in the right-click menu on the list of keys */
             case "default1":    text = _("Set to default"); break;
             /* Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys */
@@ -250,6 +208,12 @@ private class ContextPopover : Popover
         current_group.add_action (simple_action);
 
         current_section.append (text, current_group_prefix + "." + action_action);
+    }
+
+    public void new_copy_action (string text)
+    {
+        /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
+        current_section.append (_("Copy"), "app.copy('" + text + "')");   // TODO protection against some chars in text? 2/2
     }
 
     public void new_section (bool draw_line = true)

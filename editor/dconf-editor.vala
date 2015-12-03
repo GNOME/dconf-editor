@@ -25,6 +25,10 @@ class ConfigurationEditor : Gtk.Application
 
     private const GLib.ActionEntry [] action_entries =
     {
+        // generic
+        { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
+
+        // app-menu
         { "about", about_cb },
         { "quit", quit_cb }
     };
@@ -77,6 +81,52 @@ class ConfigurationEditor : Gtk.Application
     protected override void activate ()
     {
         get_active_window ().present ();
+    }
+
+    /*\
+    * * Copy action
+    \*/
+
+    private Notification notification = new Notification (_("Copied to clipboard"));
+    private bool notification_active = false;
+    private uint notification_number;
+
+    private void copy_cb (SimpleAction action, Variant? gvariant)
+    {
+        if (gvariant == null)
+            return;
+        copy (((!) gvariant).get_string ());
+    }
+
+    public void copy (string text)
+    {
+        // clipboard
+        Gdk.Display? display = Gdk.Display.get_default ();
+        if (display == null)
+            return;
+
+        Gtk.Clipboard clipboard = Gtk.Clipboard.get_default ((!) display);
+        clipboard.set_text (text, text.length);
+
+        // notification
+        if (notification_active == true)
+        {
+            Source.remove (notification_number);    // FIXME doesn't work [as expected], timeout runs until its end and withdraws the notification then
+            notification_active = false;
+        }
+
+        notification_number = Timeout.add_seconds (30, () => {
+                if (notification_active == false)
+                    return Source.CONTINUE;
+                withdraw_notification ("copy");
+                notification_active = false;
+                return Source.REMOVE;
+            });
+        notification_active = true;
+
+        notification.set_body (text);
+        withdraw_notification ("copy");             // TODO report bug: Shell cancels previous notification of the same name, instead of replacing it
+        send_notification ("copy", notification);
     }
 
     /*\

@@ -17,10 +17,33 @@
         <property name="show-close-button">True</property>
         <property name="title" translatable="yes">dconf Editor</property>
         <child>
+          <object class="GtkMenuButton" id="info_button">
+            <property name="visible">True</property>
+            <signal name="clicked" handler="on_menu_button_clicked"/>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child internal-child="accessible">
+              <object class="AtkObject">
+                <property name="AtkObject::accessible-name" translatable="yes">Actions</property> <!-- TODO 1/3 Informations -->
+                <property name="AtkObject::accessible-description" translatable="yes">Current view actions</property> <!-- TODO 2/3 About the current view -->
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">open-menu-symbolic</property> <!-- TODO 3/3 dialog-information-symbolic -->
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkToggleButton" id="search_button">
             <property name="visible">True</property>
-            <property name="valign">center</property>
-            <property name="sensitive">True</property>
             <property name="active" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional|sync-create"/>
             <!-- <accelerator key="F" signal="toggled" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>
@@ -48,7 +71,7 @@
           <object class="Bookmarks" id="bookmarks_button">
             <property name="visible">True</property>
             <property name="schema-id">ca.desrt.dconf-editor.Settings</property>
-            <signal name="clicked" handler="on_bookmarks_button_clicked"/>
+            <signal name="clicked" handler="on_menu_button_clicked"/>
             <signal name="bookmark_activated" handler="scroll_to_path"/>
             <style>
               <class name="image-button"/> <!-- TODO https://bugzilla.gnome.org/show_bug.cgi?id=756731 -->
