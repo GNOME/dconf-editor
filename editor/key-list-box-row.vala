@@ -197,21 +197,15 @@ private class ContextPopover : Popover
         simple_action.activate.connect (() => { action (); });
         current_group.add_action (simple_action);
 
-        switch (action_action)        // TODO enum
-        {
-            case "customize":
-                /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-                current_section.append (_("Customize…"), group_dot_action);
-                return;
-            case "default1":
-                /* Translators: "reset key value" action in the right-click menu on the list of keys */
-                current_section.append (_("Set to default"), group_dot_action);
-                return;
-            case "default2":
-                new_multi_default_action (group_dot_action);
-                return;
-            default: assert_not_reached ();
-        }
+        if (action_action == "customize")
+            /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
+            current_section.append (_("Customize…"), group_dot_action);
+        else if (action_action == "default1")
+            /* Translators: "reset key value" action in the right-click menu on the list of keys */
+            current_section.append (_("Set to default"), group_dot_action);
+        else if (action_action == "default2")
+            new_multi_default_action (group_dot_action);
+        else assert_not_reached ();
     }
 
     public void new_copy_action (string text)
