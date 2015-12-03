@@ -171,7 +171,6 @@ private class ContextPopover : Popover
     private GLib.Menu current_section;
 
     private ActionMap current_group;
-    private string current_group_prefix = "";
 
     // public signals
     public signal void set_to_default ();
@@ -223,12 +222,11 @@ private class ContextPopover : Popover
 
     public void set_group (string group_name)
     {
-        current_group_prefix = group_name;
         GLib.ActionGroup? group = get_action_group (group_name);
         if (group == null)
         {
             current_group = new SimpleActionGroup ();
-            insert_action_group (current_group_prefix, (SimpleActionGroup) current_group);
+            insert_action_group (group_name, (SimpleActionGroup) current_group);
         }
         else
             current_group = (ActionMap) ((!) group);
