@@ -138,11 +138,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         else if (key.type_string == "<flags>")
         {
             popover.new_section ();
+
             if (!key.is_default)
-            {
                 popover.new_action ("default2", () => { nullable_popover.destroy (); key.set_to_default (); });
-                popover.new_section (false);    // ensures a flag called "default2" won't cause problems
-            }
+            popover.new_group ();   // ensures a flag called "customize" or "default2" won't cause problems
+
             popover.create_flags_list ((GSettingsKey) key);
 
             popover.value_changed.connect ((gvariant) => { key.value = gvariant; });
@@ -179,9 +179,10 @@ private class ContextPopover : Popover
 
     public ContextPopover ()
     {
-        new_section ();
+        new_group ();
+        new_section_real ();
 
-        bind_model (menu, null);    // TODO menu.freeze() [and sections?], somewhere
+        bind_model (menu, null);
     }
 
     /*\
@@ -218,15 +219,20 @@ private class ContextPopover : Popover
         current_section.append (_("Copy"), "app.copy(\"" + text + "\")");   // TODO protection against some chars in text? 2/2
     }
 
-    public void new_section (bool draw_line = true)
+    public void new_group ()
     {
         current_group_prefix += "a";
         current_group = new SimpleActionGroup ();
         insert_action_group (current_group_prefix, (SimpleActionGroup) current_group);
+    }
 
-        if (!draw_line)
-            return;
-
+    public void new_section ()
+    {
+        current_section.freeze ();
+        new_section_real ();
+    }
+    private void new_section_real ()
+    {
         current_section = new GLib.Menu ();
         menu.append_section (null, current_section);
     }
@@ -261,6 +267,8 @@ private class ContextPopover : Popover
                     value_changed (variant);
                 });
         }
+
+        finalize_menu ();
     }
 
     /*\
@@ -309,6 +317,8 @@ private class ContextPopover : Popover
                 else
                     value_changed ((!) new_variant);
             });
+
+        finalize_menu ();
     }
 
     /*\
@@ -319,5 +329,12 @@ private class ContextPopover : Popover
     {
         /* Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys */
         current_section.append (_("Default value"), action);
+    }
+
+    private void finalize_menu ()
+        ensures (!menu.is_mutable ())   // should just "return;" then if function is made public
+    {
+        current_section.freeze ();
+        menu.freeze ();
     }
 }
