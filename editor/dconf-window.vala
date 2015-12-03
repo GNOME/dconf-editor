@@ -20,6 +20,12 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
+    private const GLib.ActionEntry [] action_entries =
+    {
+        /* { "reset-recursive", reset_recursively }, */
+        { "reset-visible", reset }
+    };
+
     private string current_path = "/";
     private int window_width = 0;
     private int window_height = 0;
@@ -29,7 +35,9 @@ class DConfWindow : ApplicationWindow
     private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
     [GtkChild] private TreeSelection dir_tree_selection;
+
     [GtkChild] private ListBox key_list_box;
+    private GLib.ListStore? key_model = null;
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     [GtkChild] private Bookmarks bookmarks_button;
@@ -42,6 +50,8 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow ()
     {
+        add_action_entries (action_entries, this);
+
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-fullscreen"))
             fullscreen ();
@@ -129,7 +139,7 @@ class DConfWindow : ApplicationWindow
     {
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 1/2
 
-        GLib.ListStore? key_model = null;
+        key_model = null;
 
         TreeIter iter;
         if (dir_tree_selection.get_selected (null, out iter))
@@ -140,6 +150,12 @@ class DConfWindow : ApplicationWindow
 
             GLib.Menu menu = new GLib.Menu ();
             menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
+            GLib.Menu section = new GLib.Menu ();
+            section.append (_("Reset visible keys"), "win.reset-visible");
+            /* section.append (_("Reset recursively"), "win.reset-recursive"); */
+            section.freeze ();
+            menu.append_section (null, section);
+            menu.freeze ();
             info_button.set_menu_model ((MenuModel) menu);
         }
 
@@ -215,6 +231,38 @@ class DConfWindow : ApplicationWindow
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 2/2
 
         ((KeyListBoxRow) list_box_row.get_child ()).show_dialog ();
+    }
+
+    /*\
+    * * Action entries
+    \*/
+
+    private void reset ()
+    {
+        reset_generic (key_model, false);
+    }
+
+    /* private void reset_recursively ()
+    {
+        reset_generic (key_model, true);
+    } */
+
+    private void reset_generic (GLib.ListStore objects, bool recursively)
+    {
+        uint position = 0;
+        do
+        {
+            Object? object = key_model.get_object (position);
+            if (object == null)
+                return;
+            SettingObject setting_object = (SettingObject) ((!) object);
+            /* if (recursively && setting_object.is_view)
+                reset_generic (((Directory) setting_object).key_model, true);
+            else */ if (setting_object.is_view || !((Key) setting_object).has_schema)
+                continue;
+            ((GSettingsKey) setting_object).set_to_default ();
+            position++;
+        } while (true);
     }
 
     /*\
