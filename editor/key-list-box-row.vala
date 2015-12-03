@@ -191,23 +191,25 @@ private class ContextPopover : Popover
     public delegate void button_action ();
     public void new_action (string action_action, button_action action)
     {
-        string text;
-        switch (action_action)        // TODO enum
-        {
-            /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-            case "customize":   text = _("Customize…");     break;
-            /* Translators: "reset key value" action in the right-click menu on the list of keys */
-            case "default1":    text = _("Set to default"); break;
-            /* Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys */
-            case "default2":    text = _("Default value");  break;      // TODO string duplication
-            default: assert_not_reached ();
-        }
-
         SimpleAction simple_action = new SimpleAction (action_action, null);
         simple_action.activate.connect (() => { action (); });
         current_group.add_action (simple_action);
 
-        current_section.append (text, current_group_prefix + "." + action_action);
+        switch (action_action)        // TODO enum
+        {
+            case "customize":
+                /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
+                current_section.append (_("Customize…"), current_group_prefix + "." + action_action);
+                return;
+            case "default1":
+                /* Translators: "reset key value" action in the right-click menu on the list of keys */
+                current_section.append (_("Set to default"), current_group_prefix + "." + action_action);
+                return;
+            case "default2":
+                new_multi_default_action (current_group_prefix + "." + action_action);
+                return;
+            default: assert_not_reached ();
+        }
     }
 
     public void new_copy_action (string text)
@@ -277,7 +279,7 @@ private class ContextPopover : Popover
         current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_type, variant));
 
         if (nullable)
-            current_section.append (_("Default value"), current_group_prefix + "." + ACTION_NAME + "(@" + nullable_type_string + " nothing)");   // TODO string duplication
+            new_multi_default_action (current_group_prefix + "." + ACTION_NAME + "(@" + nullable_type_string + " nothing)");
 
         switch (key.type_string)
         {
@@ -307,5 +309,15 @@ private class ContextPopover : Popover
                 else
                     value_changed ((!) new_variant);
             });
+    }
+
+    /*\
+    * * Multi utilities
+    \*/
+
+    private void new_multi_default_action (string action)
+    {
+        /* Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys */
+        current_section.append (_("Default value"), action);
     }
 }
