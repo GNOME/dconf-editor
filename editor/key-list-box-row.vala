@@ -278,6 +278,7 @@ private class ContextPopover : Popover
     public void create_buttons_list (Key key, bool nullable)
     {
         const string ACTION_NAME = "reservedactionprefix";
+        string group_dot_action = current_group_prefix + "." + ACTION_NAME;
 
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
@@ -287,13 +288,13 @@ private class ContextPopover : Popover
         current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_type, variant));
 
         if (nullable)
-            new_multi_default_action (current_group_prefix + "." + ACTION_NAME + "(@" + nullable_type_string + " nothing)");
+            new_multi_default_action (group_dot_action + "(@" + nullable_type_string + " nothing)");
 
         switch (key.type_string)
         {
             case "b":
-                current_section.append (Key.cool_boolean_text_value (true), current_group_prefix + "." + ACTION_NAME + "(@mb true)");
-                current_section.append (Key.cool_boolean_text_value (false), current_group_prefix + "." + ACTION_NAME + "(@mb false)");
+                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mb true)");
+                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mb false)");
                 break;
             case "<enum>":      // defined by the schema
                 Variant range = ((GSettingsKey) key).range_content;
@@ -301,12 +302,12 @@ private class ContextPopover : Popover
                 if (size == 0)      // TODO special case also 1?
                     assert_not_reached ();
                 for (uint index = 0; index < size; index++)
-                    current_section.append (range.get_child_value (index).print (false), current_group_prefix + "." + ACTION_NAME + "(@ms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
+                    current_section.append (range.get_child_value (index).print (false), group_dot_action + "(@ms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
                 break;
             case "mb":
-                current_section.append (Key.cool_boolean_text_value (null), current_group_prefix + "." + ACTION_NAME + "(@mmb just nothing)");
-                current_section.append (Key.cool_boolean_text_value (true), current_group_prefix + "." + ACTION_NAME + "(@mmb true)");
-                current_section.append (Key.cool_boolean_text_value (false), current_group_prefix + "." + ACTION_NAME + "(@mmb false)");
+                current_section.append (Key.cool_boolean_text_value (null), group_dot_action + "(@mmb just nothing)");
+                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mmb true)");
+                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mmb false)");
                 break;
         }
 
