@@ -139,7 +139,7 @@ class DConfWindow : ApplicationWindow
             bookmarks_button.current_path = current_path;
 
             GLib.Menu menu = new GLib.Menu ();
-            menu.append (_("Copy current path"), "app.copy('" + current_path + "')");   // TODO protection against some chars in text? 1/2
+            menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
             info_button.set_menu_model ((MenuModel) menu);
         }
 

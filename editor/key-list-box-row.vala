@@ -215,7 +215,7 @@ private class ContextPopover : Popover
     public void new_copy_action (string text)
     {
         /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
-        current_section.append (_("Copy"), "app.copy('" + text + "')");   // TODO protection against some chars in text? 2/2
+        current_section.append (_("Copy"), "app.copy(\"" + text + "\")");   // TODO protection against some chars in text? 2/2
     }
 
     public void new_section (bool draw_line = true)
