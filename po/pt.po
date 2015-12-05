@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-11-28 04:22+0000\n"
-"PO-Revision-Date: 2015-11-28 09:14+0000\n"
+"POT-Creation-Date: 2015-12-05 04:23+0000\n"
+"PO-Revision-Date: 2015-12-05 07:43+0000\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: pt\n"
@@ -87,8 +87,8 @@ msgstr ""
 "fazer com que certas aplicações não funcionem corretamente."
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
-#: ../editor/dconf-editor.vala:90
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:140
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
@@ -97,7 +97,7 @@ msgid "Configuration editor for dconf"
 msgstr "Editor de configurações para dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:92
+#: ../editor/dconf-editor.vala:142
 msgid "Directly edit your entire configuration database"
 msgstr "Edite diretamente toda a sua base de dados de configuração"
 
@@ -470,14 +470,22 @@ msgid "_Quit"
 msgstr "_Sair"
 
 #: ../editor/dconf-editor.ui.h:2
+msgid "Actions"
+msgstr "Ações"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Current view actions"
+msgstr "Ações da vista atual"
+
+#: ../editor/dconf-editor.ui.h:4
 msgid "Search"
 msgstr "Procurar"
 
-#: ../editor/dconf-editor.ui.h:3
+#: ../editor/dconf-editor.ui.h:5
 msgid "Search keys"
 msgstr "Procurar chaves"
 
-#: ../editor/dconf-editor.ui.h:4
+#: ../editor/dconf-editor.ui.h:6
 msgid "No keys in this path"
 msgstr "Nenhuma chave neste caminho"
 
@@ -485,7 +493,12 @@ msgstr "Nenhuma chave neste caminho"
 msgid "Print release version and exit"
 msgstr "Imprimir versão do lançamento e sair"
 
-#: ../editor/dconf-editor.vala:93
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:90
+msgid "Copied to clipboard"
+msgstr "Copiado para a área de transferência"
+
+#: ../editor/dconf-editor.vala:143
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015 – Arnaud Bonatti"
@@ -493,7 +506,7 @@ msgstr ""
 "Direitos de autor © 2010-2014 – Canonical Ltd\n"
 "Direitos de autor © 2015 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:97
+#: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
@@ -598,27 +611,36 @@ msgstr "Assinatura D-Bus"
 msgid "Integer [%s..%s]"
 msgstr "Inteiro [%s..%s]"
 
-#: ../editor/dconf-window.vala:72
+#: ../editor/dconf-window.vala:84
 msgid "Thanks for using Dconf Editor for editing your configurations!"
 msgstr ""
 "Obrigado por utilizar o Editor Dconf para editar as suas configurações!"
 
-#: ../editor/dconf-window.vala:73
+#: ../editor/dconf-window.vala:85
 msgid "Don't forget that some option may break applications, so be careful."
 msgstr ""
 "Não se esqueça que algumas opções podem quebrar as suas aplicações, tenha "
 "cuidado."
 
-#: ../editor/dconf-window.vala:74
+#: ../editor/dconf-window.vala:86
 msgid "I'll be careful."
 msgstr "Terei cuidado."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:78
+#: ../editor/dconf-window.vala:90
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo da próxima vez."
 
-#: ../editor/dconf-window.vala:162
+#: ../editor/dconf-window.vala:152
+msgid "Copy current path"
+msgstr "Copiar caminho atual"
+
+#. TODO protection against some chars in text? 1/2
+#: ../editor/dconf-window.vala:154
+msgid "Reset visible keys"
+msgstr "Repor chaves visíveis"
+
+#: ../editor/dconf-window.vala:183
 msgid "Oops! Cannot find something at this path."
 msgstr "Oops! Impossível encontrar algo neste caminho."
 
@@ -675,32 +697,27 @@ msgstr "Predefinição"
 msgid "Use default value"
 msgstr "Usar valor predefinido"
 
-#: ../editor/key-list-box-row.vala:24
-msgid "Copied to clipboard"
-msgstr "Copiado para a área de transferência"
-
-#: ../editor/key-list-box-row.vala:115
+#: ../editor/key-list-box-row.vala:76
 msgid "No Schema Found"
 msgstr "Nenhum esquema encontrado"
 
-#. TODO enum
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:238
+#: ../editor/key-list-box-row.vala:202
 msgid "Customize…"
 msgstr "Personalizar…"
 
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:240
-msgid "Copy"
-msgstr "Copiar"
-
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:242
+#: ../editor/key-list-box-row.vala:205
 msgid "Set to default"
 msgstr "Predefinir"
 
-#. Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:244 ../editor/key-list-box-row.vala:316
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:214
+msgid "Copy"
+msgstr "Copiar"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:336
 msgid "Default value"
 msgstr "Valor predefinido"
 
