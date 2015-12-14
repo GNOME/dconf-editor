@@ -143,6 +143,7 @@
                     <child>
                       <object class="GtkTreeViewColumn">
                         <property name="title">Key</property>
+                        <property name="sizing">autosize</property>
                         <child>
                           <object class="GtkCellRendererText"/>
                           <attributes>
