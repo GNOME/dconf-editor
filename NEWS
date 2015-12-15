@@ -1,3 +1,15 @@
+dconf-editor 3.19.3
+=====================
+
+Added a notification for the multiple “copy” actions, and a new menu for actions
+on the view (notably a “reset visible keys” action – no recursion for now).
+
+Translations updated:
+ Portuguese (Pedro Albuquerque)
+ Spanish (Daniel Mustieles)
+ Slovak (Dušan Kazik)
+ Kazakh (Baurzhan Muftakhidinov)
+
 dconf-editor 3.19.2
 =====================
 
