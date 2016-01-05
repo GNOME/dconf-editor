@@ -20,7 +20,8 @@
         <property name="margin">2</property>
         <style>
           <class name="image-button"/>
-          <class name="sidebar-button"/>
+          <class name="circular"/>
+          <class name="flat"/>
         </style>
         <child internal-child="accessible">
           <object class="AtkObject">
