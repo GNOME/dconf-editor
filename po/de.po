@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-25 16:22+0000\n"
-"PO-Revision-Date: 2015-12-25 20:40+0100\n"
+"POT-Creation-Date: 2016-01-02 16:23+0000\n"
+"PO-Revision-Date: 2016-01-02 22:38+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
@@ -134,6 +134,8 @@ msgstr "Liste der als Lesezeichen gespeicherten Pfade"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
+"Enthält alle vom Benutzer als Lesezeichen gespeicherten Pfade als ein Feld "
+"aus Zeichenketten."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid "A flag to restore the last view"
@@ -144,34 +146,40 @@ msgid ""
 "If 'true', Dconf Editor tries at launch to navigate to the path described in "
 "the 'saved-view' key."
 msgstr ""
+"Wenn dies »wahr« gesetzt ist, versucht Dconf-Editor beim Start zum Pfad im "
+"Schlüssel »saved-view« zu navigieren."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
 msgid "A path to restore the last view"
-msgstr ""
+msgstr "Ein Pfad zum Wiederherstellen der letzten Ansicht"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
 msgid ""
 "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
+"Wenn »restore-view« auf »wahr« gesetzt ist, versucht Dconf-Editor beim Start "
+"zu diesem Pfad zu navigieren."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
 msgid "Show initial warning"
-msgstr ""
+msgstr "Anfängliche Warnung anzeigen"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
 msgid ""
 "If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"Wenn auf wahr gesetzt, öffnet Dconf-Editor beim Start einen Warnhinweis an "
+"den Benutzer, vorsichtig zu sein."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
 msgid "A boolean, type \"b\""
-msgstr ""
+msgstr "Ein boolescher Wert des Typs »b«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
 msgid "Booleans can only take two values, \"true\" or \"false\"."
-msgstr ""
+msgstr "Boolesche Werte können nur »wahr« oder »falsch« sein."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
 msgid "A nullable boolean, type \"mb\""
@@ -186,17 +194,20 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
 msgid "A byte (unsigned), type \"y\""
-msgstr ""
+msgstr "Ein Byte (vorzeichenlos), Typ »y«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+#, fuzzy
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
+"Ein Byte-Wert ist eine Ganzzahl zwischen 0 und 255. Es kann dazu verwendet "
+"werden ?"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
 msgid "A bytestring, type \"ay\""
-msgstr ""
+msgstr "Ein Bytestring, Typ »ay«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
 msgid ""
@@ -207,7 +218,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid "A bytestring array, type \"aay\""
-msgstr ""
+msgstr "Ein Bytestring-Feld, Typ »aay«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
 msgid ""
@@ -231,7 +242,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid "A D-Bus object path, type \"o\""
-msgstr ""
+msgstr "Ein D-Bus-Objektpfad des Typs »o«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
 msgid ""
@@ -241,10 +252,14 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Ein Objektpfad wird zur Identifizierung des D-Bus-Objekts am angegebenen "
+"Ziel auf dem Bus verwendet.\n"
+"Wenn Sie nicht mit D-Bus interagieren, gibt es keinen Grund, diesen Typ zu "
+"verwenden."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
 msgid "A D-Bus object path array, type \"ao\""
-msgstr ""
+msgstr "Ein D-Bus-Objektpfad-Feld des Typs »ao«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
 msgid ""
@@ -254,10 +269,15 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Ein Objektpfad-Feld kann eine beliebige Anzahl Objektpfade enthalten (auch "
+"leere: »[]«).\n"
+"\n"
+"Wenn Sie nicht mit D-Bus interagieren, gibt es keinen Grund, diesen Typ zu "
+"verwenden."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
 msgid "A D-Bus signature, type \"g\""
-msgstr ""
+msgstr "Eine D-Bus-Signature des Typs »g«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
 msgid ""
@@ -278,7 +298,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
 msgid "A 5-choices enumeration"
-msgstr ""
+msgstr "Eine Aufzählung mit fünf Auswahlmöglichkeiten"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
 msgid ""
@@ -288,15 +308,17 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
 msgid "A short integer, type \"n\""
-msgstr ""
+msgstr "Eine kurze Ganzzahl, Typ »n«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
+"Eine vorzeichenbehaftete 16bit-Ganzzahl. Siehe auch den Schlüssel "
+"»integer-16-unsigned«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
 msgid "Flags: choose-colors-you-love"
-msgstr ""
+msgstr "Markierungen: choose-colors-you-love"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
 msgid "Flags could be set by the \"enum\" attribute."
@@ -304,11 +326,13 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
 msgid "An unsigned short integer, type \"q\""
-msgstr ""
+msgstr "Eine vorzeichenlose kurze Ganzzahl, Typ »n«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
 msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
+"Eine vorzeichenlose 16bit-Ganzzahl. Siehe auch den Schlüssel »integer-16-"
+"signed«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
 msgid "An usual integer, type \"i\""
@@ -317,6 +341,8 @@ msgstr "Eine normale Ganzzahl, Typ »i«"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
+"Eine vorzeichenbehaftete 32bit-Ganzzahl. Siehe auch den Schlüssel "
+"»integer-32-unsigned«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
 msgid "An unsigned usual integer, type \"u\""
@@ -325,6 +351,8 @@ msgstr "Eine normale positive Ganzzahl, Typ »u«"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
+"Eine vorzeichenlose 32bit-Ganzzahl. Siehe auch den Schlüssel »integer-32-"
+"signed«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
 msgid "A long integer, type \"x\""
@@ -333,6 +361,8 @@ msgstr "Eine lange Ganzzahl, Typ »x«"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
+"Eine vorzeichenbehaftete 64bit-Ganzzahl. Siehe auch den Schlüssel "
+"»integer-64-unsigned«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
 msgid "An unsigned long integer, type \"t\""
@@ -341,10 +371,12 @@ msgstr "Eine positive lange Ganzzahl, Typ »t«"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
+"Eine vorzeichenlose 64bit-Ganzzahl. Siehe auch den Schlüssel »integer-64-"
+"signed«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
 msgid "A number with range"
-msgstr ""
+msgstr "Eine Zahl mit Bereichsangabe"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
 msgid ""
@@ -355,18 +387,21 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
 msgid "A custom type, here \"(ii)\""
-msgstr ""
+msgstr "Ein benutzerdefinierter Typ, hier »ii«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+#, fuzzy
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn't have a better way to do. Here is a "
 "tuple of two 32bit signed integers."
 msgstr ""
+"Mit Dconf-Editor können Sie beliebige von GSettings unterstützte "
+"Einstellungen ändern, "
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A string, type \"s\""
-msgstr ""
+msgstr "Eine Zeichenkette des Typs »s«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
 msgid ""
@@ -377,13 +412,15 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
 msgid "A string array, type \"as\""
-msgstr ""
+msgstr "Ein Zeichenketten-Feld des Typs »as«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
 msgstr ""
+"Ein Zeichenketten-Feld enthält Zeichenketten von beliebiger Anzahl und "
+"Länge. Es darf auch ein leeres Feld sein, »[]«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid "A nullable string, type \"ms\""
@@ -410,7 +447,7 @@ msgstr "Aktionen"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Current view actions"
-msgstr ""
+msgstr "Aktuelle Ansichtsaktionen"
 
 #: ../editor/dconf-editor.ui.h:4
 msgid "Search"
@@ -479,6 +516,9 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"Mit dem Schlüsselwort »nothing« setzen Sie hier einen möglichen Typ "
+"(beginnend mit »m«) auf einen leeren Wert. Zeichenketten, Signaturen und "
+"Objektpfade sollten in Anführungszeichen gesetzt werden."
 
 #: ../editor/dconf-view.vala:92
 msgid ""
@@ -491,6 +531,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"Mit dem Schlüsselwort »nothing« setzen Sie hier einen möglichen Typ "
+"(beginnend mit »m«) auf einen leeren Wert."
 
 #: ../editor/dconf-view.vala:115
 msgid "Boolean"
@@ -509,9 +551,8 @@ msgid "Enumeration"
 msgstr "Aufzählung"
 
 #: ../editor/dconf-view.vala:123
-#, fuzzy
 msgid "Flags"
-msgstr "Optionen"
+msgstr "Markierungen"
 
 #: ../editor/dconf-view.vala:127
 #, c-format
@@ -529,7 +570,7 @@ msgstr "D-Bus Objektpfad"
 
 #: ../editor/dconf-view.vala:134
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "D-Bus-Objektpfad-Feld"
 
 #: ../editor/dconf-view.vala:136
 msgid "D-Bus signature"
