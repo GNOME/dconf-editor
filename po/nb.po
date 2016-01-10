@@ -1,14 +1,14 @@
 # Norwegian bokmål translation of dconf-editor.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999-2015.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2016.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor 3.19.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-15 19:13+0100\n"
-"PO-Revision-Date: 2015-11-15 19:30+0100\n"
+"POT-Creation-Date: 2016-01-10 20:16+0100\n"
+"PO-Revision-Date: 2016-01-10 20:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -27,7 +27,7 @@ msgstr "Laget bokmerke for denne lokasjonen"
 
 #: ../editor/bookmarks.ui.h:3
 msgid "Toggle to bookmark this location"
-msgstr ""
+msgstr "Trykk for å lage bokmerke for denne lokasjonen"
 
 #: ../editor/bookmarks.ui.h:4
 msgid ""
@@ -66,17 +66,22 @@ msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
 "settings."
-msgstr "Dconf-editor er et verktøy som lar deg redigere dconf konfigurasjonsdatabasen direkte. Dette er nyttig når man utvikler applikasjoner som bruker disse innstillingene."
+msgstr ""
+"Dconf-editor er et verktøy som lar deg redigere dconf "
+"konfigurasjonsdatabasen direkte. Dette er nyttig når man utvikler "
+"applikasjoner som bruker disse innstillingene."
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
-msgstr "Direkte redigering av konfigurasjonen er en avansert funksjon og kan forårsake at programmer ikke fungerer korrekt."
+msgstr ""
+"Direkte redigering av konfigurasjonen er en avansert funksjon og kan "
+"forårsake at programmer ikke fungerer korrekt."
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
-#: ../editor/dconf-editor.vala:89
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:140
 msgid "dconf Editor"
 msgstr "dconf redigering"
 
@@ -85,7 +90,7 @@ msgid "Configuration editor for dconf"
 msgstr "Konfigurasjonsredigering fo dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:91
+#: ../editor/dconf-editor.vala:142
 msgid "Directly edit your entire configuration database"
 msgstr "Rediger konfigurasjonsdatabasen direkte"
 
@@ -119,7 +124,7 @@ msgstr "Et flagg som slår på fullskjerm modus"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
 msgid "A list of bookmarked paths"
-msgstr ""
+msgstr "En liste med stier som har bokmerker"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "Contains all paths bookmarked by the user as an array of strings."
@@ -395,14 +400,22 @@ msgid "_Quit"
 msgstr "A_vslutt"
 
 #: ../editor/dconf-editor.ui.h:2
+msgid "Actions"
+msgstr ""
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Current view actions"
+msgstr ""
+
+#: ../editor/dconf-editor.ui.h:4
 msgid "Search"
 msgstr "Søk"
 
-#: ../editor/dconf-editor.ui.h:3
+#: ../editor/dconf-editor.ui.h:5
 msgid "Search keys"
 msgstr "Søk i nøkler"
 
-#: ../editor/dconf-editor.ui.h:4
+#: ../editor/dconf-editor.ui.h:6
 msgid "No keys in this path"
 msgstr "Ingen nøkler i denne stien"
 
@@ -410,7 +423,12 @@ msgstr "Ingen nøkler i denne stien"
 msgid "Print release version and exit"
 msgstr "Skriv ut versjon og avslutt"
 
-#: ../editor/dconf-editor.vala:92
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:90
+msgid "Copied to clipboard"
+msgstr ""
+
+#: ../editor/dconf-editor.vala:143
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015 – Arnaud Bonatti"
@@ -418,7 +436,7 @@ msgstr ""
 "Opphavsrett © 2010-2014 – Canonical Ltd\n"
 "Opphavsrett © 2015 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:96
+#: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
@@ -515,51 +533,35 @@ msgstr "D-Bus-signatur"
 msgid "Integer [%s..%s]"
 msgstr "Heltall [%s..%s]"
 
-#: ../editor/dconf-window.vala:72
+#: ../editor/dconf-window.vala:84
 msgid "Thanks for using Dconf Editor for editing your configurations!"
-msgstr ""
+msgstr "Takk for at du bruker Dconf-redigering for å redigere dine konfigurasjoner!"
 
-#: ../editor/dconf-window.vala:73
+#: ../editor/dconf-window.vala:85
 msgid "Don't forget that some option may break applications, so be careful."
-msgstr ""
+msgstr "Ikke glem at noen innstillinger kan forstyrre programmer, så vær forsiktig."
 
-#: ../editor/dconf-window.vala:74
+#: ../editor/dconf-window.vala:86
 msgid "I'll be careful."
-msgstr ""
+msgstr "Jeg skal være forsiktig"
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:78
+#: ../editor/dconf-window.vala:90
 msgid "Show this dialog next time."
 msgstr "Vis denne dialogen neste gang."
 
-#: ../editor/dconf-window.vala:160
+#: ../editor/dconf-window.vala:152
+msgid "Copy current path"
+msgstr "Kopier denne stien"
+
+#. TODO protection against some chars in text? 1/2
+#: ../editor/dconf-window.vala:154
+msgid "Reset visible keys"
+msgstr "Nullstill synlige nøkler"
+
+#: ../editor/dconf-window.vala:183
 msgid "Oops! Cannot find something at this path."
-msgstr ""
-
-#: ../editor/dconf-window.vala:395
-msgid "No Schema Found"
-msgstr "Fant ingen skjema"
-
-#. TODO enum
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:519
-msgid "Customize…"
-msgstr "Tilpass …"
-
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:521
-msgid "Copy"
-msgstr "Kopier"
-
-#. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:523
-msgid "Set to default"
-msgstr "Sett til forvalg"
-
-#. Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:525 ../editor/dconf-window.vala:597
-msgid "Default value"
-msgstr "Forvalgt verdi"
+msgstr "Oops! Fant ingen ting i denne stien."
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -609,3 +611,27 @@ msgstr "Forvalg"
 #: ../editor/key-editor.ui.h:10
 msgid "Use default value"
 msgstr "Bruk forvalgt verdi"
+
+#: ../editor/key-list-box-row.vala:76
+msgid "No Schema Found"
+msgstr "Fant ingen skjema"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:202
+msgid "Customize…"
+msgstr "Tilpass …"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:205
+msgid "Set to default"
+msgstr "Sett til forvalg"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:214
+msgid "Copy"
+msgstr "Kopier"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:336
+msgid "Default value"
+msgstr "Forvalgt verdi"
