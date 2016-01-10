@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-03 22:51+0000\n"
-"PO-Revision-Date: 2015-12-20 16:30+0200\n"
+"POT-Creation-Date: 2016-01-05 04:23+0000\n"
+"PO-Revision-Date: 2016-01-05 15:33+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
@@ -57,7 +57,6 @@ msgid "Remove this bookmark"
 msgstr "Pašalinti šią žymelę"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
-#| msgid "dconf Editor"
 msgid "Dconf Editor"
 msgstr "Dconf redaktorius"
 
@@ -566,7 +565,6 @@ msgid "String"
 msgstr "Simbolių eilutė"
 
 #: ../editor/dconf-view.vala:119
-#| msgid "String"
 msgid "String array"
 msgstr "Simbolių eilučių masyvas"
 
@@ -613,7 +611,7 @@ msgstr ""
 #: ../editor/dconf-window.vala:85
 msgid "Don't forget that some option may break applications, so be careful."
 msgstr ""
-"Nepamirškite, kai dėl kai kurių nustatymų programos gali nebeveikti, tad "
+"Nepamirškite, kai dėl kai kurių parametrų programos gali nebeveikti, tad "
 "būkite atsargus."
 
 #: ../editor/dconf-window.vala:86
@@ -639,7 +637,6 @@ msgid "Oops! Cannot find something at this path."
 msgstr "Oi! Nepavyko kažko rasti šiame kelyje."
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
-#| msgid "dconf Editor"
 msgid "Key Editor"
 msgstr "Raktų redaktorius"
 
@@ -664,7 +661,6 @@ msgstr ""
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
 #: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
-#| msgid "Type:"
 msgid "Type"
 msgstr "Tipas"
 
@@ -673,22 +669,18 @@ msgid "Custom value"
 msgstr "Pasirinktinė vertė"
 
 #: ../editor/key-editor.ui.h:4
-#| msgid "Schema:"
 msgid "Schema"
 msgstr "Schema"
 
 #: ../editor/key-editor.ui.h:5
-#| msgid "Summary:"
 msgid "Summary"
 msgstr "Santrauka"
 
 #: ../editor/key-editor.ui.h:6
-#| msgid "Description:"
 msgid "Description"
 msgstr "Aprašymas"
 
 #: ../editor/key-editor.ui.h:9
-#| msgid "Default:"
 msgid "Default"
 msgstr "Numatyta"
 
@@ -697,7 +689,6 @@ msgid "Use default value"
 msgstr "Naudoti numatytąją vertę"
 
 #: ../editor/key-list-box-row.vala:76
-#| msgid "No schema"
 msgid "No Schema Found"
 msgstr "Nerasta schema"
 
@@ -708,7 +699,6 @@ msgstr "Tinkinti…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:205
-#| msgid "Set to Default"
 msgid "Set to default"
 msgstr "Nustatyti į numatytą"
 
@@ -719,7 +709,6 @@ msgstr "Kopijuoti"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:336
-#| msgid "Default:"
 msgid "Default value"
 msgstr "Numatyta vertė"
 
