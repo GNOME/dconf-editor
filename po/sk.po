@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-01-17 04:23+0000\n"
-"PO-Revision-Date: 2016-01-17 09:19+0100\n"
+"PO-Revision-Date: 2016-01-17 09:21+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -446,7 +446,9 @@ msgstr ""
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
-msgstr "Pavol Klačanský <pavol@klacansky.com>"
+msgstr ""
+"Pavol Klačanský <pavol@klacansky.com>\n"
+"Dušan Kazik <prescott66@gmail.com>"
 
 #: ../editor/dconf-model.vala:200
 msgid "True"
