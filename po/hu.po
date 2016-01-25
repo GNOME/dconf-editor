@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-27 16:23+0000\n"
-"PO-Revision-Date: 2015-11-09 00:40+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"POT-Creation-Date: 2016-01-25 04:22+0000\n"
+"PO-Revision-Date: 2016-01-25 09:41+0100\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../editor/bookmarks.ui.h:1
@@ -71,8 +71,8 @@ msgid ""
 "settings."
 msgstr ""
 "A Dconf szerkesztő egy grafikus eszköz a dconf adatbázis közvetlen "
-"szerkesztéséhez. Hasznos olyan alkalmazások fejlesztése "
-"során, amelyek használják ezeket a beállításokat."
+"szerkesztéséhez. Hasznos olyan alkalmazások fejlesztése során, amelyek "
+"használják ezeket a beállításokat."
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
 msgid ""
@@ -83,8 +83,8 @@ msgstr ""
 "nem megfelelő működését okozhatja."
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
-#: ../editor/dconf-editor.vala:89
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:140
 msgid "dconf Editor"
 msgstr "dconf szerkesztő"
 
@@ -93,7 +93,7 @@ msgid "Configuration editor for dconf"
 msgstr "Konfigurációszerkesztő a dconf-hoz"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:91
+#: ../editor/dconf-editor.vala:142
 msgid "Directly edit your entire configuration database"
 msgstr "A konfigurációs adatbázis közvetlen szerkesztése"
 
@@ -215,8 +215,8 @@ msgid ""
 "character should be included as the last character in the array."
 msgstr ""
 "A bájtsorozatot gyakran használják arra, hogy nem feltétlenül érvényes utf8 "
-"karakterláncokat adjanak tovább. Ebben az esetben a konvenció szerint a "
-"null lezáró karakternek kell lennie a tömb utolsó elemének."
+"karakterláncokat adjanak tovább. Ebben az esetben a konvenció szerint a null "
+"lezáró karakternek kell lennie a tömb utolsó elemének."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid "A bytestring array, type \"aay\""
@@ -227,9 +227,8 @@ msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
-"Ez a típus bájtsorozatok egy tömbje. A bájtsorozatokat gyakran "
-"használják arra, hogy nem feltétlenül érvényes utf8 karakterláncokat adjanak "
-"tovább."
+"Ez a típus bájtsorozatok egy tömbje. A bájtsorozatokat gyakran használják "
+"arra, hogy nem feltétlenül érvényes utf8 karakterláncokat adjanak tovább."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
 msgid "A D-Bus handle type, type \"h\""
@@ -245,9 +244,8 @@ msgid ""
 "of this type."
 msgstr ""
 "Az azonosító típus egy 32 bites előjeles egész érték, amely a konvenció "
-"szerint "
-"indexként kerül felhasználásra egy fájlleírókból álló tömbhöz, amely a D-Bus "
-"üzenet mellett kerül elküldésre.\n"
+"szerint indexként kerül felhasználásra egy fájlleírókból álló tömbhöz, amely "
+"a D-Bus üzenet mellett kerül elküldésre.\n"
 "\n"
 "Ha nem érintkezik a D-Bus-szal, akkor nincs oka ennek a típusnak a "
 "használatára."
@@ -413,9 +411,8 @@ msgid ""
 "tuple of two 32bit signed integers."
 msgstr ""
 "A Dconf szerkesztővel tetszőleges, a GSettings által támogatott "
-"beállítástípust "
-"szerkeszthet, szükség esetén karakterláncként, ha nincs más lehetőség. "
-"Itt egy két 32 bites előjeles egészből álló ennest láthat."
+"beállítástípust szerkeszthet, szükség esetén karakterláncként, ha nincs más "
+"lehetőség. Itt egy két 32 bites előjeles egészből álló ennest láthat."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A string, type \"s\""
@@ -467,14 +464,22 @@ msgid "_Quit"
 msgstr "_Kilépés"
 
 #: ../editor/dconf-editor.ui.h:2
+msgid "Actions"
+msgstr "Műveletek"
+
+#: ../editor/dconf-editor.ui.h:3
+msgid "Current view actions"
+msgstr "Jelenlegi nézet műveletei"
+
+#: ../editor/dconf-editor.ui.h:4
 msgid "Search"
 msgstr "Keresés"
 
-#: ../editor/dconf-editor.ui.h:3
+#: ../editor/dconf-editor.ui.h:5
 msgid "Search keys"
 msgstr "Kulcsok keresése"
 
-#: ../editor/dconf-editor.ui.h:4
+#: ../editor/dconf-editor.ui.h:6
 msgid "No keys in this path"
 msgstr "Nincsenek kulcsok ezen az útvonalon"
 
@@ -482,7 +487,12 @@ msgstr "Nincsenek kulcsok ezen az útvonalon"
 msgid "Print release version and exit"
 msgstr "Kiadási verzió kiírása és kilépés"
 
-#: ../editor/dconf-editor.vala:92
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:90
+msgid "Copied to clipboard"
+msgstr "Vágólapra másolva"
+
+#: ../editor/dconf-editor.vala:143
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015 – Arnaud Bonatti"
@@ -490,7 +500,7 @@ msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:96
+#: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
 msgstr ""
 "Kelemen Gábor <kelemeng at gnome dot hu>\n"
@@ -528,10 +538,9 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) "
-"üres értékre állításához. A karakterláncokat, szignatúrákat és "
-"objektumútvonalakat "
-"idézőjelek közé kell tenni."
+"Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) üres "
+"értékre állításához. A karakterláncokat, szignatúrákat és "
+"objektumútvonalakat idézőjelek közé kell tenni."
 
 #: ../editor/dconf-view.vala:92
 msgid ""
@@ -546,8 +555,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) "
-"üres értékre állításához."
+"Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) üres "
+"értékre állításához."
 
 #: ../editor/dconf-view.vala:115
 msgid "Boolean"
@@ -596,53 +605,37 @@ msgstr "D-Bus szignatúra"
 msgid "Integer [%s..%s]"
 msgstr "Egész [%s..%s]"
 
-#: ../editor/dconf-window.vala:72
+#: ../editor/dconf-window.vala:84
 msgid "Thanks for using Dconf Editor for editing your configurations!"
 msgstr "Köszönjük, hogy a Dconf szerkesztővel szerkeszti a konfigurációt."
 
-#: ../editor/dconf-window.vala:73
+#: ../editor/dconf-window.vala:85
 msgid "Don't forget that some option may break applications, so be careful."
 msgstr ""
 "Ne feledje, hogy egyes beállítások tönkretehetik az alkalmazásokat, legyen "
 "óvatos!"
 
-#: ../editor/dconf-window.vala:74
+#: ../editor/dconf-window.vala:86
 msgid "I'll be careful."
 msgstr "Óvatos leszek."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:78
+#: ../editor/dconf-window.vala:90
 msgid "Show this dialog next time."
 msgstr "Mutassa ezt legközelebb is."
 
-#: ../editor/dconf-window.vala:160
+#: ../editor/dconf-window.vala:152
+msgid "Copy current path"
+msgstr "Jelenlegi útvonal másolása"
+
+#. TODO protection against some chars in text? 1/2
+#: ../editor/dconf-window.vala:154
+msgid "Reset visible keys"
+msgstr "Látható gombok visszaállítása"
+
+#: ../editor/dconf-window.vala:183
 msgid "Oops! Cannot find something at this path."
 msgstr "Hoppá! Valami nem található ezen az útvonalon."
-
-#: ../editor/dconf-window.vala:395
-msgid "No Schema Found"
-msgstr "Nem található séma"
-
-#. TODO enum
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:519
-msgid "Customize…"
-msgstr "Testreszabás…"
-
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:521
-msgid "Copy"
-msgstr "Másolás"
-
-#. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:523
-msgid "Set to default"
-msgstr "Beállítás az alapértelmezésre"
-
-#. Translators: "reset key value" option of a multi-choice list in the right-click menu on the list of keys
-#: ../editor/dconf-window.vala:525 ../editor/dconf-window.vala:597
-msgid "Default value"
-msgstr "Alapértelmezett érték"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -696,6 +689,30 @@ msgstr "Alapértelmezett"
 #: ../editor/key-editor.ui.h:10
 msgid "Use default value"
 msgstr "Alapértelmezés használata"
+
+#: ../editor/key-list-box-row.vala:76
+msgid "No Schema Found"
+msgstr "Nem található séma"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:202
+msgid "Customize…"
+msgstr "Testreszabás…"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:205
+msgid "Set to default"
+msgstr "Beállítás az alapértelmezésre"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:214
+msgid "Copy"
+msgstr "Másolás"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:336
+msgid "Default value"
+msgstr "Alapértelmezett érték"
 
 #~ msgid ""
 #~ "Dconf Editor is free software: you can redistribute it and/or modify it "
