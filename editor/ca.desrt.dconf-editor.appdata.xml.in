@@ -31,4 +31,5 @@
   <provides>
     <binary>dconf-editor</binary>
   </provides>
+  <translation type="gettext">dconf</translation>
 </component>
