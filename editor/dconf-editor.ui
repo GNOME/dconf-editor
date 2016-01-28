@@ -21,6 +21,7 @@
           <object class="GtkMenuButton" id="info_button">
             <property name="visible">True</property>
             <property name="valign">center</property>
+            <property name="focus-on-click">False</property>
             <signal name="clicked" handler="on_menu_button_clicked"/>
             <style>
               <class name="image-button"/>
@@ -47,6 +48,7 @@
           <object class="GtkToggleButton" id="search_button">
             <property name="visible">True</property>
             <property name="valign">center</property>
+            <!-- TODO <property name="focus-on-click">False</property> does not work here because of explicit focus grab -->
             <property name="active" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional|sync-create"/>
             <!-- <accelerator key="F" signal="toggled" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>
@@ -74,6 +76,7 @@
           <object class="Bookmarks" id="bookmarks_button">
             <property name="visible">True</property>
             <property name="valign">center</property>
+            <property name="focus-on-click">False</property>
             <property name="schema-id">ca.desrt.dconf-editor.Settings</property>
             <signal name="clicked" handler="on_menu_button_clicked"/>
             <signal name="bookmark_activated" handler="scroll_to_path"/>
