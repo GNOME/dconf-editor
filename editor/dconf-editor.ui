@@ -181,7 +181,7 @@
                     <property name="activate-on-single-click">True</property>
                     <property name="selection-mode">browse</property><!-- permits to not have an item selected -->
                     <signal name="row-activated" handler="row_activated_cb"/>
-                    <child type="placeholder">      <!-- see nautilus/src/nautilus-folder-is-empty.ui -->
+                    <child type="placeholder">      <!-- see nautilus/src/resources/ui/nautilus-folder-is-empty.ui -->
                       <object class="GtkGrid">
                         <property name="visible">True</property>
                         <property name="row-spacing">12</property>
