@@ -78,6 +78,11 @@ public class Bookmarks : MenuButton
         }
     }
 
+    public void toggle_bookmark ()
+    {
+        bookmarked_switch.set_active (!bookmarked_switch.get_active ());
+    }
+
     private Widget new_bookmark_row (Object item)
     {
         return (Bookmark) item;

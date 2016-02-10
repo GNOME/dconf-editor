@@ -276,6 +276,16 @@ class DConfWindow : ApplicationWindow
         {
             switch (Gdk.keyval_name (event.keyval))
             {
+                case "b":
+                    if (search_bar.get_search_mode ())
+                        search_bar.set_search_mode (false);
+                    if (info_button.active)
+                        info_button.active = false;
+                    bookmarks_button.clicked ();
+                    return true;
+                case "d":
+                    bookmarks_button.toggle_bookmark ();
+                    return true;
                 case "f":
                     if (bookmarks_button.active)
                         bookmarks_button.active = false;

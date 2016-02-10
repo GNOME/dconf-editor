@@ -27,7 +27,8 @@ resource_data = \
 	key-editor.ui \
 	key-editor-no-schema.ui \
 	bookmarks.ui \
-	bookmark.ui
+	bookmark.ui \
+	help-overlay.ui
 
 resources.c: $(resource_data)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --target=$@ --generate-source $<
