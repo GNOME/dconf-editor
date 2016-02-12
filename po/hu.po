@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-25 04:22+0000\n"
-"PO-Revision-Date: 2016-01-25 09:41+0100\n"
+"POT-Creation-Date: 2016-02-11 04:23+0000\n"
+"PO-Revision-Date: 2016-02-11 14:37+0100\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -456,10 +456,14 @@ msgstr ""
 "karakterláncot, vagy lehet NULL is (semmi)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Gyorsbillentyűk"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Névjegy"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Kilépés"
 
@@ -636,6 +640,66 @@ msgstr "Látható gombok visszaállítása"
 #: ../editor/dconf-window.vala:183
 msgid "Oops! Cannot find something at this path."
 msgstr "Hoppá! Valami nem található ezen az útvonalon."
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Általános"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Ezen súgó megjelenítése"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Toggle search bar"
+msgstr "Keresési sáv be/ki"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Kilépés"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Vágólap"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Copy path or descriptor"
+msgstr "Útvonal vagy leíró másolása"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Bookmarks"
+msgstr "Könyvjelzők"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Bookmark or unbookmark this path"
+msgstr "Könyvjelző be/ki ezen a helyen"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Toggle bookmarks popover"
+msgstr "Könyvjelző popover be/ki"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Fa navigáció"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Összes részfa kibontása"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Összes részfa összecsukása"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
