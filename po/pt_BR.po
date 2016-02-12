@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-08 20:32+0000\n"
-"PO-Revision-Date: 2016-02-08 19:38-0200\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>\n"
+"POT-Creation-Date: 2016-02-11 16:24+0000\n"
+"PO-Revision-Date: 2016-02-11 18:43-0300\n"
+"Last-Translator: Fábio Nogueira <fnogueira@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -23,15 +23,15 @@ msgstr ""
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
-msgstr "Favorite este local"
+msgstr "Favorite esta localização"
 
 #: ../editor/bookmarks.ui.h:2
 msgid "Location bookmarked"
-msgstr "Local incluído aos favoritos"
+msgstr "Localização incluída aos favoritos"
 
 #: ../editor/bookmarks.ui.h:3
 msgid "Toggle to bookmark this location"
-msgstr "Ative para adicionar este local aos favoritos"
+msgstr "Ative para adicionar esta localização aos favoritos"
 
 #: ../editor/bookmarks.ui.h:4
 msgid ""
@@ -68,22 +68,24 @@ msgstr "Uma ferramenta gráfica para editar o banco de dados dconf"
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
-"database. This is useful when developing applications that use these settings."
+"database. This is useful when developing applications that use these "
+"settings."
 msgstr ""
-"O editor Dconf é uma ferramenta que permite editar diretamente o banco de dados "
-"de configuração do dconf. Isto é útil ao desenvolver aplicações que utilizam "
-"essas configurações."
+"O editor Dconf é uma ferramenta que permite editar diretamente o banco de "
+"dados de configuração do dconf. Isto é útil ao desenvolver aplicações que "
+"utilizam essas configurações."
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
-"Editar suas configurações diretamente é um recurso avançado e pode fazer com que "
-"as aplicações não funcionem corretamente."
+"Editar suas configurações diretamente é um recurso avançado e pode fazer com "
+"que as aplicações não funcionem corretamente."
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.ui.h:1
-#: ../editor/dconf-editor.vala:73 ../editor/dconf-editor.vala:140
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:140
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
@@ -130,7 +132,8 @@ msgstr "Uma lista de caminhos favoritos"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "Contains all paths bookmarked by the user as an array of strings."
-msgstr "Contém todos os caminhos favoritos do usuário como uma matriz de strings."
+msgstr ""
+"Contém todos os caminhos favoritos do usuário como uma matriz de strings."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid "A flag to restore the last view"
@@ -138,11 +141,11 @@ msgstr "Um sinalizador para restaurar a última visão"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
 msgid ""
-"If 'true', Dconf Editor tries at launch to navigate to the path described in the "
-"'saved-view' key."
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
 msgstr ""
-"Se \"verdadeiro\", o editor dconf tenta na inicialização navegar pelo caminho "
-"descrito na chave \"saved-view\"."
+"Se \"verdadeiro\", o editor dconf tenta na inicialização navegar pelo "
+"caminho descrito na chave \"saved-view\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
 msgid "A path to restore the last view"
@@ -153,8 +156,8 @@ msgid ""
 "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
-"Se a chave \"restore-view\" estiver definida para \"verdadeiro\", o editor dconf "
-"tenta na inicialização navegar para este caminho."
+"Se a chave \"restore-view\" estiver definida para \"verdadeiro\", o editor "
+"dconf tenta na inicialização navegar para este caminho."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
 msgid "Show initial warning"
@@ -165,8 +168,8 @@ msgid ""
 "If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
-"Se \"verdadeiro\", o editor Dconf abre uma janela ao ser iniciado para lembrar o "
-"usuário de que ele tem que ter cuidado."
+"Se \"verdadeiro\", o editor Dconf abre uma janela ao ser iniciado para "
+"lembrar o usuário de que ele tem que ter cuidado."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
 msgid "A boolean, type \"b\""
@@ -174,7 +177,8 @@ msgstr "Um booleano, tipo \"b\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
 msgid "Booleans can only take two values, \"true\" or \"false\"."
-msgstr "Booleanos podem receber apenas dois valores, \"verdadeiro\" ou \"falso\"."
+msgstr ""
+"Booleanos podem receber apenas dois valores, \"verdadeiro\" ou \"falso\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
 msgid "A nullable boolean, type \"mb\""
@@ -182,13 +186,13 @@ msgstr "Um booleano anulável, tipo \"mb\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
 msgid ""
-"GSettings allows nullable types, that are similar to other types but could take "
-"a \"nothing\" value. A nullable boolean can only take three values, \"true\", "
-"\"false\" and \"nothing\"."
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
 msgstr ""
-"GSettings permite tipos anuláveis, que são similares a outros tipos, mas podem "
-"receber um valor \"nada\". Um valor booleano pode receber três valores, "
-"\"verdadeiro\", \"falso\" e \"nada\"."
+"GSettings permite tipos anuláveis, que são similares a outros tipos, mas "
+"podem receber um valor \"nada\". Um valor booleano pode receber três "
+"valores, \"verdadeiro\", \"falso\" e \"nada\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
 msgid "A byte (unsigned), type \"y\""
@@ -209,12 +213,12 @@ msgstr "Uma bytestring, tipo \"ay\""
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
-"valid utf8. In that case, the convention is that the nul terminator character "
-"should be included as the last character in the array."
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
 msgstr ""
-"O tipo bytestring é comumente usado para passar strings que podem não ser utf8 "
-"válidos. Neste caso, a convenção é que o caractere terminador nulo deva ser "
-"incluído como o último caractere na matriz."
+"O tipo bytestring é comumente usado para passar strings que podem não ser "
+"utf8 válidos. Neste caso, a convenção é que o caractere terminador nulo deva "
+"ser incluído como o último caractere na matriz."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid "A bytestring array, type \"aay\""
@@ -225,8 +229,8 @@ msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
-"Este é o tipo de uma matriz de bytestrings. O tipo bytestring  é comumente usado "
-"para passar strings que podem não ser utf8 válidos."
+"Este é o tipo de uma matriz de bytestrings. O tipo bytestring  é comumente "
+"usado para passar strings que podem não ser utf8 válidos."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
 msgid "A D-Bus handle type, type \"h\""
@@ -234,19 +238,19 @@ msgstr "Um tipo handle D-Bus, tipo \"h\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used as "
-"an index into an array of file descriptors that are sent alongside a D-Bus "
-"message.\n"
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
 "\n"
-"If you are not interacting with D-Bus, then there is no reason to make use of "
-"this type."
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"O tipo handle é um valor inteiro assinado de 32 bits que é, por convenção, usado "
-"como um índice na matriz dos descritores de arquivo que são enviados juntamente "
-"a uma mensagem D-Bus.\n"
+"O tipo handle é um valor inteiro assinado de 32 bits que é, por convenção, "
+"usado como um índice na matriz dos descritores de arquivo que são enviados "
+"juntamente a uma mensagem D-Bus.\n"
 "\n"
-"Se você não está interagindo com D-Bus, então não há motivo para fazer uso deste "
-"tipo."
+"Se você não está interagindo com D-Bus, então não há motivo para fazer uso "
+"deste tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid "A D-Bus object path, type \"o\""
@@ -254,17 +258,17 @@ msgstr "Um caminho de objeto de D-Bus, tipo \"o\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
 msgid ""
-"An object path is used to identify D-Bus objects at a given destination on the "
-"bus.\n"
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
 "\n"
-"If you are not interacting with D-Bus, then there is no reason to make use of "
-"this type."
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Um caminho de objeto é usado para identificar objetos D-Bus na destinação "
 "fornecida no barramento.\n"
 "\n"
-"Se você não está interagindo com D-Bus, então não há motivo para fazer uso deste "
-"tipo."
+"Se você não está interagindo com D-Bus, então não há motivo para fazer uso "
+"deste tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
 msgid "A D-Bus object path array, type \"ao\""
@@ -272,17 +276,17 @@ msgstr "Uma matriz de caminho de objeto de D-Bus, tipo \"ao\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
 msgid ""
-"An object path array could contain any number of object paths (including none: "
-"\"[]\").\n"
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
 "\n"
-"If you are not interacting with D-Bus, then there is no reason to make use of "
-"this type."
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Uma matriz de caminho de objeto pode conter qualquer número de caminhos de "
 "objeto (incluindo nenhum: \"[]\").\n"
 "\n"
-"Se você não está interagindo com D-Bus, então não há motivo para fazer uso deste "
-"tipo."
+"Se você não está interagindo com D-Bus, então não há motivo para fazer uso "
+"deste tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
 msgid "A D-Bus signature, type \"g\""
@@ -293,14 +297,14 @@ msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message.\n"
 "\n"
-"If you are not interacting with D-Bus, then there is no reason to make use of "
-"this type."
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"Uma assinatura D-Bus é uma string usada como assinatura de tipo para um método "
-"ou uma mensagem D-Bus.\n"
+"Uma assinatura D-Bus é uma string usada como assinatura de tipo para um "
+"método ou uma mensagem D-Bus.\n"
 "\n"
-"Se você não está interagindo com D-Bus, então não há motivo para fazer uso deste "
-"tipo."
+"Se você não está interagindo com D-Bus, então não há motivo para fazer uso "
+"deste tipo."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
 msgid "A double, type \"d\""
@@ -346,7 +350,8 @@ msgstr "Um inteiro curto não-assinado, tipo\"q\""
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
 msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
-"Um inteiro não assinado de 16 bits. Veja também a chave \"integer-16-signed\"."
+"Um inteiro não assinado de 16 bits. Veja também a chave \"integer-16-signed"
+"\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
 msgid "An usual integer, type \"i\""
@@ -364,7 +369,8 @@ msgstr "Um inteiro comum não assinado, tipo \"u\""
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
-"Um inteiro não-assinado de 32 bits. Veja também a chave \"integer-32-signed\"."
+"Um inteiro não-assinado de 32 bits. Veja também a chave \"integer-32-signed"
+"\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
 msgid "A long integer, type \"x\""
@@ -382,7 +388,8 @@ msgstr "Um inteiro longo não assinado, tipo \"t\""
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
-"Um inteiro não-assinado de 64 bits. Veja também a chave \"integer-64-signed\"."
+"Um inteiro não-assinado de 64 bits. Veja também a chave \"integer-64-signed"
+"\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
 msgid "A number with range"
@@ -391,12 +398,12 @@ msgstr "Um número com intervalo"
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
-"doubles) could be limited to a custom range of values. For example, this integer "
-"could only take a value between -5 and 9."
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
 msgstr ""
-"Toda definição de numeral (inteiros e inteiros não-assinados de todo tipo, além "
-"de duplos) pode ser limitada a um intervalo de valores personalizado. Por "
-"exemplo, este inteiro poderia apenas receber um valor entre -5 e 9."
+"Toda definição de numeral (inteiros e inteiros não-assinados de todo tipo, "
+"além de duplos) pode ser limitada a um intervalo de valores personalizado. "
+"Por exemplo, este inteiro poderia apenas receber um valor entre -5 e 9."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
 msgid "A custom type, here \"(ii)\""
@@ -405,12 +412,13 @@ msgstr "Um tipo personalizado, aqui \"(ii)\""
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn't have a better way to do. Here is a tuple "
-"of two 32bit signed integers."
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
 msgstr ""
-"Edito dconf permite que você edite qualquer tipo de definições desde que haja "
-"suporte no GSettings, retornando para uma string quando ele não tiver um jeito "
-"melhor de fazer isso. Aqui está um tuplo de dois inteiros assinados de 32 bits."
+"Edito dconf permite que você edite qualquer tipo de definições desde que "
+"haja suporte no GSettings, retornando para uma string quando ele não tiver "
+"um jeito melhor de fazer isso. Aqui está um tuplo de dois inteiros assinados "
+"de 32 bits."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A string, type \"s\""
@@ -418,11 +426,13 @@ msgstr "Uma string, tipo \"s\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string \"''\" "
-"is not the same as NULL (nothing); see also the \"string-nullable\" key."
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
 msgstr ""
-"O tipo string pode aceitar qualquer string em utf8. Note que uma string vazia "
-"\"''\" não é o mesmo que NULO (nada); veja também a chave \"string-nullable\"."
+"O tipo string pode aceitar qualquer string em utf8. Note que uma string "
+"vazia \"''\" não é o mesmo que NULO (nada); veja também a chave \"string-"
+"nullable\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
 msgid "A string array, type \"as\""
@@ -430,11 +440,11 @@ msgstr "Uma matriz de string, tipo \"as\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid ""
-"A string array contains any number of strings of whatever length. It may be an "
-"empty array, \"[]\"."
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
 msgstr ""
-"Uma matriz de string contém qualquer número de strings de qualquer tamanho. Ela "
-"pode ser uma matriz vazia, \"[]\"."
+"Uma matriz de string contém qualquer número de strings de qualquer tamanho. "
+"Ela pode ser uma matriz vazia, \"[]\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid "A nullable string, type \"ms\""
@@ -442,19 +452,23 @@ msgstr "Uma string anulável, tipo \"ms\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
 msgid ""
-"GSettings allows nullable types, that are similar to other types but could take "
-"a \"nothing\" value. A nullable string can take any string as value, including "
-"the empty string \"''\", or can be NULL (nothing)."
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
-"GSettings permite tipos anuláveis, que são similares a outros tipos, mas podem "
-"receber um valor \"nada\". Uma string anulável pode receber qualquer string como "
-"valor, incluindo uma string vazia \"''\" ou pode ser NULA (nada)."
+"GSettings permite tipos anuláveis, que são similares a outros tipos, mas "
+"podem receber um valor \"nada\". Uma string anulável pode receber qualquer "
+"string como valor, incluindo uma string vazia \"''\" ou pode ser NULA (nada)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos de teclado"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Sobre"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "S_air"
 
@@ -532,27 +546,28 @@ msgstr "nada (nothing)"
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: ../editor/dconf-view.vala:90
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty "
-"value. Strings, signatures and object paths should be surrounded by quotation "
-"marks."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
 msgstr ""
-"Use a palavra-chave \"nothing\" para definir um tipo \"maybe\" (começando com \"m"
-"\") para seu valor vazio. Strings, assinaturas e caminhos de objeto devem estar "
-"envoltos com aspas."
+"Use a palavra-chave \"nothing\" para definir um tipo \"maybe\" (começando "
+"com \"m\") para seu valor vazio. Strings, assinaturas e caminhos de objeto "
+"devem estar envoltos com aspas."
 
 #: ../editor/dconf-view.vala:92
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr "Strings, assinaturas e caminhos de objeto devem estar envoltos com aspas."
+msgstr ""
+"Strings, assinaturas e caminhos de objeto devem estar envoltos com aspas."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: ../editor/dconf-view.vala:96
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty "
-"value."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
 msgstr ""
-"Use a palavra-chave \"nothing\" para definir um tipo \"maybe\" (começando com "
-"“m”) para seu valor vazio."
+"Use a palavra-chave \"nothing\" para definir um tipo \"maybe\" (começando "
+"com “m”) para seu valor vazio."
 
 #: ../editor/dconf-view.vala:115
 msgid "Boolean"
@@ -633,6 +648,66 @@ msgstr "Redefinir chaves visíveis"
 msgid "Oops! Cannot find something at this path."
 msgstr "Ops! Não foi possível encontrar algo neste caminho."
 
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Geral"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Mostrar esta ajuda"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Toggle search bar"
+msgstr "Ativar barra de pesquisa"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Sair"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Área de transferência"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Copy path or descriptor"
+msgstr "Copiar o caminho ou descritor"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Bookmarks"
+msgstr "Favoritos"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Bookmark or unbookmark this path"
+msgstr "Favoritar ou desfavoritar este caminho"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Toggle bookmarks popover"
+msgstr "Ative janela sobreposta de favoritos"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Navegação em árvore"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Expandir todas as subárvores"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Recolher todas as subárvores"
+
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
 msgstr "Editor de chave"
@@ -647,14 +722,15 @@ msgstr "Aplicar"
 
 #: ../editor/key-editor-no-schema.ui.h:4
 msgid ""
-"No schema available. Dconf Editor can’t find a schema associated with this key. "
-"The application that installed this key may have been removed, may have stop the "
-"use of this key, or may use a relocatable schema for defining its keys."
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
 msgstr ""
-"Nenhum esquema disponível. O editor Dconf não encontrou um esquema associado com "
-"esta chave. O aplicativo que instalou esta chave pode ter sido removido, talvez "
-"tenha parado de usar esta chave ou pode usar um esquema recolocável para "
-"definição de suas chaves."
+"Nenhum esquema disponível. O editor Dconf não encontrou um esquema associado "
+"com esta chave. O aplicativo que instalou esta chave pode ter sido removido, "
+"talvez tenha parado de usar esta chave ou pode usar um esquema recolocável "
+"para definição de suas chaves."
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
 #: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
@@ -719,33 +795,33 @@ msgstr "Valor padrão"
 #~ msgstr "Não encontrado"
 
 #~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it under "
-#~ "the terms of the GNU General Public License as published by the Free Software "
-#~ "Foundation; either version 2 of the License, or (at your option) any later "
-#~ "version.\n"
+#~ "This program is free software; you can redistribute it and/or modify it "
+#~ "under the terms of the GNU General Public License as published by the "
+#~ "Free Software Foundation; either version 2 of the License, or (at your "
+#~ "option) any later version.\n"
 #~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but WITHOUT "
-#~ "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS "
-#~ "FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more "
-#~ "details.\n"
+#~ "This program is distributed in the hope that it will be useful, but "
+#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
+#~ "Public License for more details.\n"
 #~ "\n"
-#~ "You should have received a copy of the GNU General Public License along with "
-#~ "this program; if not, write to the Free Software Foundation, Inc., 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with this program; if not, write to the Free Software Foundation, Inc., "
+#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 #~ msgstr ""
-#~ "Este programa é um software livre; você pode redistribuí-lo e/ou modificá-lo "
-#~ "sob os termos da Licença Pública Geral GNU publicada pela Free Software "
-#~ "Foundation; qualquer versão 2 da Licença, ou (a seu critério) outra versão "
-#~ "posterior.\n"
+#~ "Este programa é um software livre; você pode redistribuí-lo e/ou modificá-"
+#~ "lo sob os termos da Licença Pública Geral GNU publicada pela Free "
+#~ "Software Foundation; qualquer versão 2 da Licença, ou (a seu critério) "
+#~ "outra versão posterior.\n"
 #~ "\n"
-#~ "Este programa é distribuído na expectativa de que seja útil, mas SEM NENHUMA "
-#~ "GARANTIA; sem mesmo implicar garantias de COMERCIABILIDADE ou ADAPTAÇÃO A UM "
-#~ "PROPÓSITO PARTICULAR. Veja a Licença Pública Geral GNU (GPL) para mais "
-#~ "detalhes.\n"
+#~ "Este programa é distribuído na expectativa de que seja útil, mas SEM "
+#~ "NENHUMA GARANTIA; sem mesmo implicar garantias de COMERCIABILIDADE ou "
+#~ "ADAPTAÇÃO A UM PROPÓSITO PARTICULAR. Veja a Licença Pública Geral GNU "
+#~ "(GPL) para mais detalhes.\n"
 #~ "\n"
-#~ "Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este "
-#~ "programa; caso contrário, escreva para Free Software Foundation, Inc., 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#~ "Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com "
+#~ "este programa; caso contrário, escreva para Free Software Foundation, "
+#~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "Copyright © Canonical Ltd"
