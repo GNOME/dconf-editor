@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-06 14:54+0100\n"
-"PO-Revision-Date: 2015-02-06 14:55+0100\n"
+"POT-Creation-Date: 2016-02-14 18:41+0100\n"
+"PO-Revision-Date: 2016-02-14 18:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -463,10 +463,14 @@ msgstr ""
 "wynosić „NULL” (nic, „nothing”)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Skróty klawiszowe"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_O programie"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "Za_kończ"
 
@@ -641,6 +645,86 @@ msgstr "Przywróć widoczne klucze"
 #: ../editor/dconf-window.vala:183
 msgid "Oops! Cannot find something at this path."
 msgstr "Nie można czegoś odnaleźć w tej ścieżce."
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Działania"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "menu zakładek"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Dodanie zakładki do tej ścieżki"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Usunięcie zakładki z tej ścieżki"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Pasek wyszukiwania"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Menu działań"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Schowek"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Copy path or descriptor"
+msgstr "Skopiowanie ścieżki lub deskryptora"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Nawigacja w drzewie"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Rozwinięcie"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Rozwinięcie wszystkich poddrzew"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Zwinięcie"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Zwinięcie wszystkich poddrzew"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Ogólne"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Wyświetlenie tej pomocy"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Zakończenie działania"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
