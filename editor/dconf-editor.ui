@@ -22,6 +22,7 @@
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="focus-on-click">False</property>
+            <accelerator key="F10" signal="clicked"/>
             <signal name="clicked" handler="on_menu_button_clicked"/>
             <style>
               <class name="image-button"/>

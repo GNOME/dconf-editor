@@ -272,19 +272,26 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
+        string name = Gdk.keyval_name (event.keyval);
+
         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
         {
-            switch (Gdk.keyval_name (event.keyval))
+            switch (name)
             {
                 case "b":
-                    if (search_bar.get_search_mode ())
-                        search_bar.set_search_mode (false);
                     if (info_button.active)
                         info_button.active = false;
                     bookmarks_button.clicked ();
                     return true;
                 case "d":
-                    bookmarks_button.toggle_bookmark ();
+                    if (info_button.active)
+                        info_button.active = false;
+                    bookmarks_button.set_bookmarked (true);
+                    return true;
+                case "D":
+                    if (info_button.active)
+                        info_button.active = false;
+                    bookmarks_button.set_bookmarked (false);
                     return true;
                 case "f":
                     if (bookmarks_button.active)
@@ -302,6 +309,14 @@ class DConfWindow : ApplicationWindow
                     break;  // TODO report bug for making <ctrl>v work?
             }
         }
+        else if (name == "F10")
+        {
+            bookmarks_button.active = false;
+            return false;
+        }
+        else if (name == "plus"   || name == "minus" ||
+                 name == "KP_Add" || name == "KP_Subtract")     // TODO open bug for search_bar blocking standard treeview shortcuts
+            return false;                                       // TODO GtkTreeView has a weird behaviour if expanding without children
 
         if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
             return false;

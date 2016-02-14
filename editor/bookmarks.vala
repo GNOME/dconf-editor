@@ -78,9 +78,10 @@ public class Bookmarks : MenuButton
         }
     }
 
-    public void toggle_bookmark ()
+    public void set_bookmarked (bool new_state)
     {
-        bookmarked_switch.set_active (!bookmarked_switch.get_active ());
+        if (bookmarked_switch.get_active () != new_state)
+            bookmarked_switch.set_active (new_state);
     }
 
     private Widget new_bookmark_row (Object item)
