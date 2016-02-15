@@ -305,6 +305,16 @@ class DConfWindow : ApplicationWindow
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row == null ? current_path : ((KeyListBoxRow) ((!) selected_row).get_child ()).get_text ());
                     return true;
+                case "C":
+                    ((ConfigurationEditor) get_application ()).copy (current_path);
+                    return true;
+                case "F1":
+                    if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
+                    {
+                        ((ConfigurationEditor) get_application ()).about_cb ();
+                        return true;
+                    }
+                    return false;
                 default:
                     break;  // TODO report bug for making <ctrl>v work?
             }

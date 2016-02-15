@@ -133,14 +133,14 @@ class ConfigurationEditor : Gtk.Application
     * * App-menu callbacks
     \*/
 
-    private void about_cb ()
+    public void about_cb ()
     {
         string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
         Gtk.show_about_dialog (get_active_window (),
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
                                "comments", _("Directly edit your entire configuration database"),
-                               "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015 – Arnaud Bonatti"),
+                               "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2016 – Arnaud Bonatti"),
                                "license-type", Gtk.License.GPL_3_0,
                                "wrap-license", true,
                                "authors", authors,

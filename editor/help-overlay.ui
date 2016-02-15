@@ -53,8 +53,15 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
-                <property name="title" translatable="yes" context="shortcut window">Copy path or descriptor</property>
+                <property name="title" translatable="yes" context="shortcut window">Copy descriptor</property>
                 <property name="accelerator">&lt;Primary&gt;c</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Copy path</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;c</property>
               </object>
             </child>
           </object>
@@ -102,6 +109,13 @@
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Show this help</property>
                 <property name="accelerator">&lt;Primary&gt;question &lt;Primary&gt;F1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">About</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;F1</property>
               </object>
             </child>
             <child>
