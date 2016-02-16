@@ -1,15 +1,15 @@
 # Spanish translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012, 2013, 2014, 2015.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-07 04:23+0000\n"
-"PO-Revision-Date: 2015-12-07 11:30+0100\n"
+"POT-Creation-Date: 2016-02-15 04:23+0000\n"
+"PO-Revision-Date: 2016-02-16 13:12+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -452,10 +452,14 @@ msgstr ""
 "cadena, incluyendo la cadena vacía «''», o puede ser NULL (nada)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Atajos del teclado"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "A_cerca de"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Salir"
 
@@ -628,6 +632,94 @@ msgstr "Restablecer las teclas visibles"
 #: ../editor/dconf-window.vala:183
 msgid "Oops! Cannot find something at this path."
 msgstr "No se puede encontrar nada en este ruta."
+
+#: ../editor/help-overlay.ui.h:1
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Acciones"
+
+#: ../editor/help-overlay.ui.h:2
+#| msgid "Bookmarks"
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Menú de marcadores"
+
+#: ../editor/help-overlay.ui.h:3
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Añadir esta ubicación a marcadores"
+
+#: ../editor/help-overlay.ui.h:4
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Quitar esta ubicación de marcadores"
+
+#: ../editor/help-overlay.ui.h:5
+#| msgid "Search"
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Barra de búsqueda"
+
+#: ../editor/help-overlay.ui.h:6
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Menú de acciones"
+
+#: ../editor/help-overlay.ui.h:7
+#| msgid "Copied to clipboard"
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Portapapeles"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Copy path or descriptor"
+msgstr "Copiar ruta o descriptor"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Navegación en árbol"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Expandir"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Expandir todos los subárboles"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Contraer"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Contraer todos los subárboles"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Genérico"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Mostrar esta ayuda"
+
+#: ../editor/help-overlay.ui.h:16
+#| msgid "_Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Salir"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
