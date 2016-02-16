@@ -309,12 +309,10 @@ class DConfWindow : ApplicationWindow
                     ((ConfigurationEditor) get_application ()).copy (current_path);
                     return true;
                 case "F1":
-                    if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
-                    {
-                        ((ConfigurationEditor) get_application ()).about_cb ();
-                        return true;
-                    }
-                    return false;
+                    if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
+                        return false;   // help overlay
+                    ((ConfigurationEditor) get_application ()).about_cb ();
+                    return true;
                 default:
                     break;  // TODO report bug for making <ctrl>v work?
             }
