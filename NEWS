@@ -1,3 +1,25 @@
+dconf-editor 3.19.90
+=====================
+
+This release has seen some improvements to the keyboard usability, with some new
+shortcuts added, and an help overlay to document them (requiring a GTK+ 3.19 at
+least). Other changes include some more metadata in the AppData file (used by
+software centers to know about the application), and minor corrections caused by
+recent GTK+ changes.
+
+Translations updated:
+ Brazilian Portuguese (Fábio Nogueira and Rafael Fontenelle)
+ Chinese (Taiwan) (Chao-Hsiung Liao)
+ Czech (Marek Černocký)
+ German (Mario Blättermann)
+ Hungarian (Balázs Meskó)
+ Latvian (Rūdolfs Mazurs)
+ Lithuanian (Aurimas Černius)
+ Norwegian bokmål (Kjartan Maraas)
+ Polish (Piotr Drąg)
+ Serbian (Мирослав Николић)
+ Slovak (Dušan Kazik)
+
 dconf-editor 3.19.3
 =====================
 

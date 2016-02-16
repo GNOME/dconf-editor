@@ -1,5 +1,5 @@
 AC_INIT([dconf-editor],
-        [3.19.3],
+        [3.19.90],
         [https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],
         [dconf-editor])
 
@@ -32,7 +32,7 @@ APPSTREAM_XML
 # Dependencies
 DCONF_REQUIRED=0.23.2
 GLIB_REQUIRED=2.46.0
-GTK_REQUIRED=3.16.0
+GTK_REQUIRED=3.19.5
 
 PKG_CHECK_MODULES(DCONF_EDITOR, [
   glib-2.0 >= $GLIB_REQUIRED
