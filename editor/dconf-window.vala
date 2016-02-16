@@ -110,12 +110,11 @@ class DConfWindow : ApplicationWindow
     }
 
     [GtkCallback]
-    private void on_size_allocate (Allocation allocation)
+    private void on_size_allocate ()
     {
         if (window_is_maximized || window_is_fullscreen)
             return;
-        window_width = allocation.width;
-        window_height = allocation.height;
+        get_size (out window_width, out window_height);
     }
 
     [GtkCallback]
