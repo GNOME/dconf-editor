@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 19:37+0100\n"
-"PO-Revision-Date: 2016-02-14 19:38+0100\n"
+"POT-Creation-Date: 2016-02-17 22:29+0100\n"
+"PO-Revision-Date: 2016-02-17 22:30+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -506,10 +506,10 @@ msgstr "Skopiowano do schowka"
 #: ../editor/dconf-editor.vala:143
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -633,16 +633,16 @@ msgstr "Zachowam ostrożność."
 msgid "Show this dialog next time."
 msgstr "Wyświetlenie tego okna następnym razem."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Skopiuj bieżącą ścieżkę"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Przywróć widoczne klucze"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "Nie można czegoś odnaleźć w tej ścieżce."
 
@@ -683,45 +683,55 @@ msgstr "Schowek"
 
 #: ../editor/help-overlay.ui.h:8
 msgctxt "shortcut window"
-msgid "Copy path or descriptor"
-msgstr "Skopiowanie ścieżki lub deskryptora"
+msgid "Copy descriptor"
+msgstr "Skopiowanie deskryptora"
 
 #: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Skopiowanie ścieżki"
+
+#: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
 msgid "Tree navigation"
 msgstr "Nawigacja w drzewie"
 
-#: ../editor/help-overlay.ui.h:10
+#: ../editor/help-overlay.ui.h:11
 msgctxt "shortcut window"
 msgid "Expand"
 msgstr "Rozwinięcie"
 
-#: ../editor/help-overlay.ui.h:11
+#: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
 msgid "Expand all subtrees"
 msgstr "Rozwinięcie wszystkich poddrzew"
 
-#: ../editor/help-overlay.ui.h:12
+#: ../editor/help-overlay.ui.h:13
 msgctxt "shortcut window"
 msgid "Collapse"
 msgstr "Zwinięcie"
 
-#: ../editor/help-overlay.ui.h:13
+#: ../editor/help-overlay.ui.h:14
 msgctxt "shortcut window"
 msgid "Collapse all subtrees"
 msgstr "Zwinięcie wszystkich poddrzew"
 
-#: ../editor/help-overlay.ui.h:14
+#: ../editor/help-overlay.ui.h:15
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Ogólne"
 
-#: ../editor/help-overlay.ui.h:15
+#: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Wyświetlenie tej pomocy"
 
-#: ../editor/help-overlay.ui.h:16
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "About"
+msgstr "O programie"
+
+#: ../editor/help-overlay.ui.h:18
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Zakończenie działania"
