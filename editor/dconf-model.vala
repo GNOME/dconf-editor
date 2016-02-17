@@ -117,7 +117,7 @@ public class Directory : SettingObject
                 ((!) (settings_schema_key.get_summary () ?? "")).strip (),
                 ((!) (settings_schema_key.get_description () ?? "")).strip (),
                 type_string,
-                settings_schema_key.get_default_value (),
+                settings.get_default_value (key_id), /* TODO present also settings_schema_key.get_default_value () */
                 range_type,
                 settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
             );
