@@ -4,13 +4,14 @@
 # Enrico Nicoletto <liverig@gmail.com>, 2012, 2013, 2014.
 # Fábio Nogueira <fnogueira@gnome.org>, 2016.
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-11 16:24+0000\n"
-"PO-Revision-Date: 2016-02-11 18:43-0300\n"
+"POT-Creation-Date: 2016-02-17 16:23+0000\n"
+"PO-Revision-Date: 2016-02-17 18:07-0300\n"
 "Last-Translator: Fábio Nogueira <fnogueira@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -504,10 +505,10 @@ msgstr "Copiado para a área de transferência"
 #: ../editor/dconf-editor.vala:143
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Direitos autorais © 2010-2014 – Canonical Ltd\n"
-"Direitos autorais © 2015 – Arnaud Bonatti"
+"Direitos autorais © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -635,63 +636,63 @@ msgstr "Serei cuidadoso."
 msgid "Show this dialog next time."
 msgstr "Exibir este diálogo da próxima vez."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Copiar caminho atual"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Redefinir chaves visíveis"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "Ops! Não foi possível encontrar algo neste caminho."
 
 #: ../editor/help-overlay.ui.h:1
 msgctxt "shortcut window"
-msgid "General"
-msgstr "Geral"
+msgid "Actions"
+msgstr "Ações"
 
 #: ../editor/help-overlay.ui.h:2
 msgctxt "shortcut window"
-msgid "Show this help"
-msgstr "Mostrar esta ajuda"
+msgid "Bookmarks menu"
+msgstr "Menu de favoritos"
 
 #: ../editor/help-overlay.ui.h:3
 msgctxt "shortcut window"
-msgid "Toggle search bar"
-msgstr "Ativar barra de pesquisa"
+msgid "Bookmark this path"
+msgstr "Favoritar esta localização"
 
 #: ../editor/help-overlay.ui.h:4
 msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Sair"
+msgid "Unbookmark this path"
+msgstr "Desfavoritar esta localização"
 
 #: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Barra de pesquisa"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Menu de ações"
+
+#: ../editor/help-overlay.ui.h:7
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Área de transferência"
 
-#: ../editor/help-overlay.ui.h:6
-msgctxt "shortcut window"
-msgid "Copy path or descriptor"
-msgstr "Copiar o caminho ou descritor"
-
-#: ../editor/help-overlay.ui.h:7
-msgctxt "shortcut window"
-msgid "Bookmarks"
-msgstr "Favoritos"
-
 #: ../editor/help-overlay.ui.h:8
 msgctxt "shortcut window"
-msgid "Bookmark or unbookmark this path"
-msgstr "Favoritar ou desfavoritar este caminho"
+msgid "Copy descriptor"
+msgstr "Descritor da cópia"
 
 #: ../editor/help-overlay.ui.h:9
 msgctxt "shortcut window"
-msgid "Toggle bookmarks popover"
-msgstr "Ative janela sobreposta de favoritos"
+msgid "Copy path"
+msgstr "Caminho da cópia"
 
 #: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
@@ -700,13 +701,43 @@ msgstr "Navegação em árvore"
 
 #: ../editor/help-overlay.ui.h:11
 msgctxt "shortcut window"
-msgid "Expand all subtrees"
-msgstr "Expandir todas as subárvores"
+msgid "Expand"
+msgstr "Expandir"
 
 #: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Expandir todas as subárvores"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Recolher"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
 msgid "Collapse all subtrees"
 msgstr "Recolher todas as subárvores"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Genérico"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Mostrar esta ajuda"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Sobre"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Sair"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -784,6 +815,18 @@ msgstr "Copiar"
 #: ../editor/key-list-box-row.vala:336
 msgid "Default value"
 msgstr "Valor padrão"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle search bar"
+#~ msgstr "Ativar barra de pesquisa"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Bookmarks"
+#~ msgstr "Favoritos"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle bookmarks popover"
+#~ msgstr "Ative janela sobreposta de favoritos"
 
 #~ msgid "_Find…"
 #~ msgstr "_Pesquisar…"
