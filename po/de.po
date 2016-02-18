@@ -1,7 +1,7 @@
-# German translation for dconf.
+# German translation for dconf-editor.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2012, 2013, 2015.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2012, 2013, 2015-2016.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2013.
 # Simon Linden <xhi2018@googlemail.com>, 2015.
 #
@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-02 16:23+0000\n"
-"PO-Revision-Date: 2016-01-02 22:38+0100\n"
+"POT-Creation-Date: 2016-02-16 00:18+0000\n"
+"PO-Revision-Date: 2016-02-16 19:43+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
@@ -31,7 +31,7 @@ msgstr "Ort wurde als Lesezeichen gespeichert"
 
 #: ../editor/bookmarks.ui.h:3
 msgid "Toggle to bookmark this location"
-msgstr ""
+msgstr "Diesen Ort als Lesezeichen speichern"
 
 #: ../editor/bookmarks.ui.h:4
 msgid ""
@@ -181,29 +181,33 @@ msgstr "Ein boolescher Wert des Typs »b«"
 msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgstr "Boolesche Werte können nur »wahr« oder »falsch« sein."
 
+# https://en.wikipedia.org/wiki/Nullable_type
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
 msgid "A nullable boolean, type \"mb\""
-msgstr ""
+msgstr "Ein nullbarer boolescher Wert des Typs »mb«"
 
+# Ich bin mir hier nicht sicher, aber meiner Meinung nach erscheinen boolesche Werte in dconf nicht im Klartext, können also übersetzt werden.
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a \"nothing\" value. A nullable boolean can only take three values, "
 "\"true\", \"false\" and \"nothing\"."
 msgstr ""
+"GSettings erlaubt »nullbare« Werte, die anderen Typen ähnlich sind, jedoch "
+"den Wert »nichts« annehmen können. Ein nullbarer boolescher Ausdruck kann "
+"drei Werte haben, »wahr«, »falsch« oder »nichts«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
 msgid "A byte (unsigned), type \"y\""
 msgstr "Ein Byte (vorzeichenlos), Typ »y«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
-#, fuzzy
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
-"Ein Byte-Wert ist eine Ganzzahl zwischen 0 und 255. Es kann dazu verwendet "
-"werden ?"
+"Ein Byte-Wert ist eine Ganzzahl zwischen 0 und 255. Er kann dazu verwendet "
+"werden, Zeichen unverändert weiterzugeben."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
 msgid "A bytestring, type \"ay\""
@@ -215,6 +219,9 @@ msgid ""
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
+"Der Bytestring-Typ wird meist dazu verwendet, Zeichenketten unverändert "
+"weiterzugeben, die nicht zwingend gültiges UTF-8 sein müssen. In diesem Fall "
+"ist es üblich, das NUL-Zeichen als letztes Zeichen im Feld zu verwenden."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid "A bytestring array, type \"aay\""
@@ -225,10 +232,13 @@ msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
+"Dies ist der Typ eines Feldes aus Bytestrings. Er wird meist dazu verwendet, "
+"Zeichenketten unverändert weiterzugeben, die nicht zwingend gültiges UTF-8 "
+"sein müssen."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
 msgid "A D-Bus handle type, type \"h\""
-msgstr ""
+msgstr "Ein D-Bus-Handle-Typ, Typ »h«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
 msgid ""
@@ -239,6 +249,12 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Der Handle-Typ ist eine vorzeichenbehaftete Ganzzahl, die üblicherweise als "
+"Index in einem Feld aus Dateideskriptoren verwendet wird, die mit einer D-"
+"Bus-Meldung versendet werden.\n"
+"\n"
+"Wenn Sie nicht mit D-Bus interagieren, gibt es keinen Grund, diesen Typ zu "
+"verwenden."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid "A D-Bus object path, type \"o\""
@@ -254,6 +270,7 @@ msgid ""
 msgstr ""
 "Ein Objektpfad wird zur Identifizierung des D-Bus-Objekts am angegebenen "
 "Ziel auf dem Bus verwendet.\n"
+"\n"
 "Wenn Sie nicht mit D-Bus interagieren, gibt es keinen Grund, diesen Typ zu "
 "verwenden."
 
@@ -277,7 +294,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
 msgid "A D-Bus signature, type \"g\""
-msgstr "Eine D-Bus-Signature des Typs »g«"
+msgstr "Eine D-Bus-Signatur des Typs »g«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
 msgid ""
@@ -287,14 +304,21 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Eine D-Bus-Signatur ist eine Zeichenkette, die als Typ-Signatur einer D-Bus-"
+"Methode oder -Meldung verwendet wird.\n"
+"\n"
+"Wenn Sie nicht mit D-Bus interagieren, gibt es keinen Anwendungsfall für "
+"diesen Typ."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
 msgid "A double, type \"d\""
-msgstr "Eine Gleitkommazahl, Typ »d«"
+msgstr "Eine Gleitkommazahl doppelter Genauigkeit, Typ »d«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
 msgid "A double value could represent any real number."
 msgstr ""
+"Ein Gleitkommawert doppelter Genauigkeit kann jede reelle Zahl "
+"repräsentieren."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
 msgid "A 5-choices enumeration"
@@ -305,6 +329,8 @@ msgid ""
 "Enumerations could be done either with the \"enum\" attribute, or with a "
 "\"choices\" tag."
 msgstr ""
+"Aufzählungen können entweder mit dem »enum«-Attribut oder mit einer "
+"»choices«-Markierung realisiert werden."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
 msgid "A short integer, type \"n\""
@@ -322,7 +348,7 @@ msgstr "Markierungen: choose-colors-you-love"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
 msgid "Flags could be set by the \"enum\" attribute."
-msgstr ""
+msgstr "Markierungen können mit dem »enum«-Attribut gesetzt werden."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
 msgid "An unsigned short integer, type \"q\""
@@ -384,20 +410,25 @@ msgid ""
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -5 and 9."
 msgstr ""
+"Alle numerischen Einstellungswerte (Ganzzahlen und vorzeichenlose Ganzzahlen "
+"jedes Typs sowie Gleitkommazahlen doppelter Genauigkeit) können auf einen "
+"benutzerdefinierten Bereich begrenzt werden. Zum Beispiel kann diese "
+"Ganzzahl nur einen Wert zwischen -5 und 9 haben."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
 msgid "A custom type, here \"(ii)\""
 msgstr "Ein benutzerdefinierter Typ, hier »ii«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
-#, fuzzy
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn't have a better way to do. Here is a "
 "tuple of two 32bit signed integers."
 msgstr ""
 "Mit Dconf-Editor können Sie beliebige von GSettings unterstützte "
-"Einstellungen ändern, "
+"Einstellungen ändern, wobei auf einen Zeichenketten-Eintrag ausgewichen "
+"wird, wenn keine bessere Möglichkeit vorhanden ist. Hier ist ein Tupel aus "
+"zwei vorzeichenbehafteten 32-Bit-Ganzzahlen."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A string, type \"s\""
@@ -409,6 +440,9 @@ msgid ""
 "\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
 "key."
 msgstr ""
+"Der Zeichenkettentyp kann jede UTF-8-Zeichenkette akzeptieren. Beachten Sie, "
+"dass die leere Zeichenkette »''« nicht mit NULL (nichts) gleichzusetzen ist. "
+"Siehe Schlüssel »string-nullable«."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
 msgid "A string array, type \"as\""
@@ -424,7 +458,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid "A nullable string, type \"ms\""
-msgstr ""
+msgstr "Eine nullbare Zeichenkette des Typs »ms«"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
 msgid ""
@@ -432,12 +466,20 @@ msgid ""
 "take a \"nothing\" value. A nullable string can take any string as value, "
 "including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
+"GSettings erlaubt »nullbare« Werte, die anderen Typen ähnlich sind, jedoch "
+"den Wert »nichts« annehmen können. Eine nullbare Zeichenkette kann jede "
+"Zeichenkette als Wert annehmen, auch die leere Zeichenkette »''«, oder kann "
+"NULL (nichts) sein."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Tastenkombinationen"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Info"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Beenden"
 
@@ -471,12 +513,15 @@ msgid "Copied to clipboard"
 msgstr "In Zwischenablage kopiert"
 
 #: ../editor/dconf-editor.vala:143
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -524,6 +569,8 @@ msgstr ""
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
+"Zeichenketten, Signaturen und Objektpfade sollten in Anführungszeichen "
+"gesetzt werden."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: ../editor/dconf-view.vala:96
@@ -562,11 +609,11 @@ msgstr "Gleitkommazahl doppelter Genauigkeit [%s..%s]"
 #. Translators: this handle type is an index; you may maintain the word "handle"
 #: ../editor/dconf-view.vala:130
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "D-Bus-Handle-Typ"
 
 #: ../editor/dconf-view.vala:132
 msgid "D-Bus object path"
-msgstr "D-Bus Objektpfad"
+msgstr "D-Bus-Objektpfad"
 
 #: ../editor/dconf-view.vala:134
 msgid "D-Bus object path array"
@@ -601,18 +648,108 @@ msgstr "Ich werde vorsichtig sein."
 msgid "Show this dialog next time."
 msgstr "Diesen Dialog beim nächsten Mal anzeigen."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Aktuellen Pfad kopieren"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Sichtbare Schlüssel zurücksetzen"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "In diesem Pfad konnte nichts gefunden werden."
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Aktionen"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Lesezeichen-Menü"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Diesen Pfad als Lesezeichen speichern"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Lesezeichen für diesen Pfad löschen"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Suchleiste"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Aktionen-Menü"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Zwischenablage"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Deskriptor kopieren"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Pfad kopieren"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Baumnavigation"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Ausklappen"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Alle Zweige ausklappen"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Einklappen"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Alle Zweige einklappen"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Allgemein"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Diese Hilfe anzeigen"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Info"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Beenden"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -690,56 +827,3 @@ msgstr "Kopieren"
 #: ../editor/key-list-box-row.vala:336
 msgid "Default value"
 msgstr "Vorgabewert"
-
-#~ msgid "_Find…"
-#~ msgstr "_Suchen …"
-
-#~ msgid "Next"
-#~ msgstr "Weiter"
-
-#~ msgid "Not found"
-#~ msgstr "Nicht gefunden"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Dieses Programm ist freie Software, Sie können sie weitergeben und/oder "
-#~ "verändern, solange Sie sich an die Regeln der GNU General Public License "
-#~ "halten, so wie sie von der Free Software Foundation festgelegt wurden; "
-#~ "entweder in Version 2 der Lizenz oder (nach Ihrem Ermessen) in jeder "
-#~ "folgenden Version.\n"
-#~ "\n"
-#~ "Dieses Programm wurde mit dem Ziel veröffentlicht, dass Sie es nützlich "
-#~ "finden, jedoch OHNE JEDWEDE GARANTIE, sogar ohne eine implizite Garantie "
-#~ "der VERKAUFBARKEIT oder der NUTZBARKEIT FÜR EINEN SPEZIELLEN ZWECK. "
-#~ "Schauen Sie für weitere Informationen bitte in der GNU General Public "
-#~ "License (GNU GPL) nach.\n"
-#~ "\n"
-#~ "Mit diesem Programm sollten Sie außerdem eine Kopie der GNU General "
-#~ "Public License erhalten haben. Wenn dem nicht so ist, so schreiben Sie "
-#~ "bitte an die Free Software Foundation, Inc., 51 Franklin Street, Fifth "
-#~ "Floor, Boston, MA  02110-1301, USA."
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
-
-#~ msgid "Error setting value: %s"
-#~ msgstr "Fehler beim Zuweisen des Wertes: %s"
-
-#~ msgid "Name"
-#~ msgstr "Name"
-
-#~ msgid "Value"
-#~ msgstr "Wert"
