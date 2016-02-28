@@ -2,22 +2,22 @@
 # Copyright (C) 2012, 2013, 2014, 2015. Free Software Foundation, Inc.
 # This file is distributed under the same license as the dconf package.
 #
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2012, 2015.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2012, 2015, 2016.
 # Balázs Úr <urbalazs at gmail dot com>, 2012, 2013, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-11 04:23+0000\n"
-"PO-Revision-Date: 2016-02-11 14:37+0100\n"
-"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"POT-Creation-Date: 2016-02-27 04:22+0000\n"
+"PO-Revision-Date: 2016-02-28 14:58+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../editor/bookmarks.ui.h:1
@@ -497,12 +497,15 @@ msgid "Copied to clipboard"
 msgstr "Vágólapra másolva"
 
 #: ../editor/dconf-editor.vala:143
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -628,63 +631,73 @@ msgstr "Óvatos leszek."
 msgid "Show this dialog next time."
 msgstr "Mutassa ezt legközelebb is."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Jelenlegi útvonal másolása"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Látható gombok visszaállítása"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "Hoppá! Valami nem található ezen az útvonalon."
 
 #: ../editor/help-overlay.ui.h:1
+#| msgid "Actions"
 msgctxt "shortcut window"
-msgid "General"
-msgstr "Általános"
+msgid "Actions"
+msgstr "Műveletek"
 
 #: ../editor/help-overlay.ui.h:2
+#| msgid "Bookmarks"
 msgctxt "shortcut window"
-msgid "Show this help"
-msgstr "Ezen súgó megjelenítése"
+msgid "Bookmarks menu"
+msgstr "Könyvjelzők menü"
 
 #: ../editor/help-overlay.ui.h:3
+#| msgid "Bookmark this Location"
 msgctxt "shortcut window"
-msgid "Toggle search bar"
-msgstr "Keresési sáv be/ki"
+msgid "Bookmark this path"
+msgstr "Az útvonal könyvjelzőzése"
 
 #: ../editor/help-overlay.ui.h:4
+#| msgctxt "shortcut window"
+#| msgid "Bookmark or unbookmark this path"
 msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Kilépés"
+msgid "Unbookmark this path"
+msgstr "Az útvonal könyvjelzőjének törlése"
 
 #: ../editor/help-overlay.ui.h:5
+#| msgid "Search"
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Keresősáv"
+
+#: ../editor/help-overlay.ui.h:6
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Műveletek menü"
+
+#: ../editor/help-overlay.ui.h:7
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Vágólap"
 
-#: ../editor/help-overlay.ui.h:6
-msgctxt "shortcut window"
-msgid "Copy path or descriptor"
-msgstr "Útvonal vagy leíró másolása"
-
-#: ../editor/help-overlay.ui.h:7
-msgctxt "shortcut window"
-msgid "Bookmarks"
-msgstr "Könyvjelzők"
-
 #: ../editor/help-overlay.ui.h:8
+#| msgctxt "shortcut window"
+#| msgid "Copy path or descriptor"
 msgctxt "shortcut window"
-msgid "Bookmark or unbookmark this path"
-msgstr "Könyvjelző be/ki ezen a helyen"
+msgid "Copy descriptor"
+msgstr "Leíró másolása"
 
 #: ../editor/help-overlay.ui.h:9
+#| msgid "Copy current path"
 msgctxt "shortcut window"
-msgid "Toggle bookmarks popover"
-msgstr "Könyvjelző popover be/ki"
+msgid "Copy path"
+msgstr "Útvonal másolása"
 
 #: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
@@ -693,13 +706,46 @@ msgstr "Fa navigáció"
 
 #: ../editor/help-overlay.ui.h:11
 msgctxt "shortcut window"
-msgid "Expand all subtrees"
-msgstr "Összes részfa kibontása"
+msgid "Expand"
+msgstr "Kibontás"
 
 #: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Összes részfa kibontása"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Összecsukás"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
 msgid "Collapse all subtrees"
 msgstr "Összes részfa összecsukása"
+
+#: ../editor/help-overlay.ui.h:15
+#| msgctxt "shortcut window"
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Általános"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Ezen súgó megjelenítése"
+
+#: ../editor/help-overlay.ui.h:17
+#| msgid "_About"
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Névjegy"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Kilépés"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -777,6 +823,18 @@ msgstr "Másolás"
 #: ../editor/key-list-box-row.vala:336
 msgid "Default value"
 msgstr "Alapértelmezett érték"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle search bar"
+#~ msgstr "Keresési sáv be/ki"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Bookmarks"
+#~ msgstr "Könyvjelzők"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle bookmarks popover"
+#~ msgstr "Könyvjelző popover be/ki"
 
 #~ msgid ""
 #~ "Dconf Editor is free software: you can redistribute it and/or modify it "
