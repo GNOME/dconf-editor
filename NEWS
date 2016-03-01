@@ -1,3 +1,23 @@
+dconf-editor 3.19.91
+=====================
+
+Only one code change for this second beta release: the presentation of a key’s
+“default value” now takes care of distributor and admin overrides, instead of
+showing the default value proposed in the gschema. Ideally, we should show the
+two informations, but this one is more logical to present with the current UI.
+
+Translations updated:
+ Brazilian Portuguese: Rafael Fontenelle
+ Catalan: Jordi Mas
+ Chinese (Taiwan): Chao-Hsiung Liao
+ Galician: Fran Dieguez
+ German: Mario Blättermann
+ Hungarian: Gábor Kelemen
+ Occitan: Cédric Valmary
+ Polish: Piotr Drąg
+ Serbian: Мирослав Николић
+ Spanish: Daniel Mustieles
+
 dconf-editor 3.19.90
 =====================
 
