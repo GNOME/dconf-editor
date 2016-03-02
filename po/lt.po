@@ -1,15 +1,15 @@
 # Lithuanian translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014, 2015.
+# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-01-05 04:23+0000\n"
-"PO-Revision-Date: 2016-01-05 15:33+0200\n"
+"POT-Creation-Date: 2016-02-16 00:18+0000\n"
+"PO-Revision-Date: 2016-03-02 20:30+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
@@ -457,10 +457,14 @@ msgstr ""
 "būti NULL (nieko)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Klaviatūros trumpiniai"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Apie"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Išeiti"
 
@@ -494,12 +498,15 @@ msgid "Copied to clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
 #: ../editor/dconf-editor.vala:143
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Autorių teisės priklauso © 2010-2014 – Canonical Ltd\n"
-"Autorių teisės priklauso © 2015 – Arnaud Bonatti"
+"Autorių teisės priklauso © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -623,18 +630,121 @@ msgstr "Būsiu atsargus."
 msgid "Show this dialog next time."
 msgstr "Rodyti šį dialogą kitą kartą."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Kopijuoti dabartinį kelią"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Atstatyti matomus raktus"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "Oi! Nepavyko kažko rasti šiame kelyje."
+
+#: ../editor/help-overlay.ui.h:1
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Veiksmai"
+
+#: ../editor/help-overlay.ui.h:2
+#| msgid "Bookmarks"
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Žymelių meniu"
+
+#: ../editor/help-overlay.ui.h:3
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Pažymėti šį kelią"
+
+#: ../editor/help-overlay.ui.h:4
+#| msgctxt "shortcut window"
+#| msgid "Bookmark or unbookmark this path"
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Atžymėti šį kelią"
+
+#: ../editor/help-overlay.ui.h:5
+#| msgid "Search"
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Paieškos juosta"
+
+#: ../editor/help-overlay.ui.h:6
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Veiksmų meniu"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Iškarpinė"
+
+#: ../editor/help-overlay.ui.h:8
+#| msgctxt "shortcut window"
+#| msgid "Copy path or descriptor"
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Kopijuoti deskriptorių"
+
+#: ../editor/help-overlay.ui.h:9
+#| msgid "Copy current path"
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopijuoti kelią"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Medžio naršymas"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Išskleisti"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Išskleisti visus pomedžius"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Suskleisti"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Suskleisti visus pomedžius"
+
+#: ../editor/help-overlay.ui.h:15
+#| msgctxt "shortcut window"
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Bendra"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Rodyti šį žinyną"
+
+#: ../editor/help-overlay.ui.h:17
+#| msgid "_About"
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Apie"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Išeiti"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -711,6 +821,18 @@ msgstr "Kopijuoti"
 #: ../editor/key-list-box-row.vala:336
 msgid "Default value"
 msgstr "Numatyta vertė"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle search bar"
+#~ msgstr "Perjungti paieškos juostą"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Bookmarks"
+#~ msgstr "Žymelės"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle bookmarks popover"
+#~ msgstr "Perjungti iššokantį žymėlių langelį"
 
 #~ msgid "_Find…"
 #~ msgstr "_Rasti…"
