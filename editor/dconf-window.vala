@@ -248,20 +248,19 @@ class DConfWindow : ApplicationWindow
 
     private void reset_generic (GLib.ListStore objects, bool recursively)
     {
-        uint position = 0;
-        do
+        for (uint position = 0;; position++)
         {
             Object? object = key_model.get_object (position);
             if (object == null)
                 return;
+
             SettingObject setting_object = (SettingObject) ((!) object);
             /* if (recursively && setting_object.is_view)
                 reset_generic (((Directory) setting_object).key_model, true);
             else */ if (setting_object.is_view || !((Key) setting_object).has_schema)
                 continue;
             ((GSettingsKey) setting_object).set_to_default ();
-            position++;
-        } while (true);
+        }
     }
 
     /*\
