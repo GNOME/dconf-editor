@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-ed"
 "itor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-03 22:51+0000\n"
-"PO-Revision-Date: 2016-02-05 20:22+0200\n"
+"POT-Creation-Date: 2016-03-01 16:23+0000\n"
+"PO-Revision-Date: 2016-03-03 21:07+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -57,7 +57,6 @@ msgid "Remove this bookmark"
 msgstr "Izņemt to grāmatzīmi"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
-#| msgid "dconf Editor"
 msgid "Dconf Editor"
 msgstr "Dconf redaktors"
 
@@ -430,8 +429,8 @@ msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
 msgstr ""
-"Virknes masīvs var saturēt dažādu skaitu virkņu. Tas var būt arī tukšs masīvs "
-"“[]”."
+"Virknes masīvs var saturēt dažādu skaitu virkņu. Tas var būt arī tukšs "
+"masīvs “[]”."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid "A nullable string, type \"ms\""
@@ -448,10 +447,14 @@ msgstr ""
 "skaitā tukša virkne “''”, bet var būt arī NULL (nekas)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Tastatūras saīsnes"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "P_ar"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "I_ziet"
 
@@ -485,12 +488,15 @@ msgid "Copied to clipboard"
 msgstr "Kopēts starpliktuvē"
 
 #: ../editor/dconf-editor.vala:143
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Autortiesības © 2010-2014 – Canonical Ltd\n"
-"Autortiesības © 2015 – Arnaud Bonatti"
+"Autortiesības © 2015-2016  – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -554,7 +560,6 @@ msgid "String"
 msgstr "Virkne"
 
 #: ../editor/dconf-view.vala:119
-#| msgid "String"
 msgid "String array"
 msgstr "Virkņu masīvs"
 
@@ -612,21 +617,121 @@ msgstr "Es būšu uzmanīgs."
 msgid "Show this dialog next time."
 msgstr "Nākamajā reizē rādīt šo dialoglodziņu."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Kopēt pašreizējo ceļu"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Atiestatīt redzamās atslēgas"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "Ak vai! Nevar atrast kau ko šajā ceļā."
 
+#: ../editor/help-overlay.ui.h:1
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Darbības"
+
+#: ../editor/help-overlay.ui.h:2
+#| msgid "Bookmarks"
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Grāmatzīmju izvēlne"
+
+#: ../editor/help-overlay.ui.h:3
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Pievienot šo ceļu grāmatzīmēm"
+
+#: ../editor/help-overlay.ui.h:4
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Noņemt šo ceļu no grāmatzīmēm"
+
+#: ../editor/help-overlay.ui.h:5
+#| msgid "Search"
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Meklēšanas josla"
+
+#: ../editor/help-overlay.ui.h:6
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Darbību izvēlne"
+
+#: ../editor/help-overlay.ui.h:7
+#| msgid "Copied to clipboard"
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Starpliktuve"
+
+#: ../editor/help-overlay.ui.h:8
+#| msgid "Description"
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Kopēt deskriptoru"
+
+#: ../editor/help-overlay.ui.h:9
+#| msgid "Copy current path"
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopēt ceļu"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Koka navigācija"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Izvērst"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Izvērst visus apakškokus"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Sakļaut"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Sakļaut visus apakškokus"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Vispārējs"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Rādīt šo palīdzību"
+
+#: ../editor/help-overlay.ui.h:17
+#| msgid "_About"
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Par"
+
+#: ../editor/help-overlay.ui.h:18
+#| msgid "_Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Iziet"
+
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
-#| msgid "dconf Editor"
 msgid "Key Editor"
 msgstr "Atslēgu redaktors"
 
@@ -647,12 +752,11 @@ msgid ""
 msgstr ""
 "Nav pieejamu shēmu. Dconf redaktors nevar atrast shēmu, kas būtu saistīta ar "
 "šo atslēgu. Lietotne, kas instalēja šo atslēgu, varētu būt atinstalēta, "
-"varētu būt beigusi lietot šo atslēgu, vai varētu būt izmantojusi pārvietojamu "
-"shēmu šo atslēgu definēšanai."
+"varētu būt beigusi lietot šo atslēgu, vai varētu būt izmantojusi "
+"pārvietojamu shēmu šo atslēgu definēšanai."
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
 #: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
-#| msgid "Type:"
 msgid "Type"
 msgstr "Tips"
 
@@ -661,22 +765,18 @@ msgid "Custom value"
 msgstr "Pielāgotā vērtība"
 
 #: ../editor/key-editor.ui.h:4
-#| msgid "Schema:"
 msgid "Schema"
 msgstr "Shēma"
 
 #: ../editor/key-editor.ui.h:5
-#| msgid "Summary:"
 msgid "Summary"
 msgstr "Kopsavilkums"
 
 #: ../editor/key-editor.ui.h:6
-#| msgid "Description:"
 msgid "Description"
 msgstr "Apraksts"
 
 #: ../editor/key-editor.ui.h:9
-#| msgid "Default:"
 msgid "Default"
 msgstr "Noklusējuma"
 
@@ -685,7 +785,6 @@ msgid "Use default value"
 msgstr "Izmantojiet noklusējuma vērtību"
 
 #: ../editor/key-list-box-row.vala:76
-#| msgid "No schema"
 msgid "No Schema Found"
 msgstr "Nav atrastu shēmu"
 
@@ -696,7 +795,6 @@ msgstr "Pielāgot…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:205
-#| msgid "Set to Default"
 msgid "Set to default"
 msgstr "Iestatīt uz noklusējuma"
 
@@ -707,6 +805,6 @@ msgstr "Kopēt"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:336
-#| msgid "Default:"
 msgid "Default value"
 msgstr "Noklusējuma vērtība"
+
