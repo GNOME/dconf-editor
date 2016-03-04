@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-03 22:51+0000\n"
-"PO-Revision-Date: 2015-12-06 19:44+0500\n"
+"POT-Creation-Date: 2016-03-03 16:23+0000\n"
+"PO-Revision-Date: 2016-03-04 08:49+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk@li.org>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: ../editor/bookmarks.ui.h:1
 msgid "Bookmark this Location"
@@ -24,7 +24,7 @@ msgstr "Бұл орналасуды бетбелгілерге қосу"
 
 #: ../editor/bookmarks.ui.h:2
 msgid "Location bookmarked"
-msgstr ""
+msgstr "Орналасу бетбелгілерге қосылды"
 
 #: ../editor/bookmarks.ui.h:3
 msgid "Toggle to bookmark this location"
@@ -50,10 +50,9 @@ msgstr "Өшіру"
 
 #: ../editor/bookmark.ui.h:2
 msgid "Remove this bookmark"
-msgstr ""
+msgstr "Бұл бетбелгіні өшіру"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
-#| msgid "dconf Editor"
 msgid "Dconf Editor"
 msgstr "Dconf түзетушісі"
 
@@ -387,10 +386,14 @@ msgid ""
 msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "О_сы туралы"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Шығу"
 
@@ -424,12 +427,15 @@ msgid "Copied to clipboard"
 msgstr "Алмасу буферіне көшірілді"
 
 #: ../editor/dconf-editor.vala:143
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
@@ -537,25 +543,116 @@ msgstr ""
 
 #: ../editor/dconf-window.vala:86
 msgid "I'll be careful."
-msgstr ""
+msgstr "Мен абай боламын."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 #: ../editor/dconf-window.vala:90
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "Бұл сұхбатты келесі рет көрсету."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
-msgstr ""
+msgstr "Ағымдағы орналасуды көшіріп алу"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr ""
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr ""
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Әрекеттер"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Бетбелгілер мәзірі"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Бұл орналасуды бетбелгілерге қосу"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Бұл орналасуды бетбелгілерден алып тастау"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Іздеу жолағы"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Әрекеттер мәзірі"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Алмасу буфері"
+
+#: ../editor/help-overlay.ui.h:8
+#| msgid "Description"
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Орналасуын көшіріп алу"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Ағаш тектес навигация"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Жазық қылу"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Барлық ішкі деңгейлерді жазық қылу"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Жинау"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Барлық ішкі деңгейлерді жинау"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Бұл көмекті көрсету"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Осы туралы"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Шығу"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
