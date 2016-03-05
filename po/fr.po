@@ -1,34 +1,101 @@
 # French translation of dconf.
-# Copyright (C) 2012 dconf copyright holder
+# Copyright (C) 2012-2016 dconf copyright holder
 # This file is distributed under the same license as the dconf package.
 # Frederic Peters <fpeters@0d.be>, 2012.
+# Claude Paroz <claude@2xlibre.net>, 2016
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-23 12:18+0000\n"
-"PO-Revision-Date: 2015-02-24 01:51+0100\n"
-"Last-Translator: Frederic Peters <fpeters@0d.be>\n"
+"POT-Creation-Date: 2016-02-16 00:18+0000\n"
+"PO-Revision-Date: 2016-03-05 11:53+0100\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "Ajouter un signet pour cet emplacement"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "Signet créé pour cet emplacement"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr "Bascule pour créer un signet vers cet emplacement"
+
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"Les signets seront\n"
+"ajoutés ici"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "Signets"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "Gestion des signets"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "Enlever"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "Enlever ce signet"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+msgid "Dconf Editor"
+msgstr "Éditeur Dconf"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "Un outil visuel pour éditer la base de données dconf"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+"Éditeur Dconf est un outil permettant la modification directe de la base de "
+"données de configuration dconf. Utile lors du développement d'applications "
+"qui s'appuient sur ces réglages."
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr ""
+"La modification directe de la configuration est une fonctionnalité avancée "
+"et pourrait perturber le bon fonctionnement des applications."
+
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
-#: ../editor/dconf-editor.vala:433
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:140
 msgid "dconf Editor"
 msgstr "Éditeur dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:436
+msgid "Configuration editor for dconf"
+msgstr "Éditeur de configuration pour dconf"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:142
 msgid "Directly edit your entire configuration database"
 msgstr "Modifier directement toute votre base de données de configuration"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "paramètres;configuration;"
 
@@ -56,9 +123,334 @@ msgstr "Un drapeau pour activer le mode maximisé"
 msgid "A flag to enable fullscreen mode"
 msgstr "Un drapeau pour activer le mode plein écran"
 
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "A list of bookmarked paths"
+msgstr "Une liste de chemins disposant de signets"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+"Contient tous les chemins cibles d'un signet de l'utilisateur, sous forme "
+"d'un tableau de chaînes."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid "A flag to restore the last view"
+msgstr "Un drapeau pour restaurer la dernière vue"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+"Si vrai, l'éditeur Dconf, au démarrage, essaie de se placer au niveau du "
+"chemin indiqué par la clé « saved-view »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid "A path to restore the last view"
+msgstr "Un chemin pour restaurer la dernière vue"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+"Si la clé « restore-view » est définie à vrai, l'éditeur Dconf essaie de se "
+"placer au niveau de ce chemin au démarrage."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid "Show initial warning"
+msgstr "Afficher l'avertissement initial"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr ""
+"Si vrai, l'éditeur Dconf ouvre une fenêtre au démarrage rappelant à "
+"l'utilisateur d'être prudent."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "A boolean, type \"b\""
+msgstr "Une valeur booléenne, type « b »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr ""
+"Les valeurs booléennes n'acceptent que deux valeurs, « true » ou « false »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "A nullable boolean, type \"mb\""
+msgstr "Une valeur booléenne ou nulle, type « mb »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+"GSettings autorise les types avec valeur nulle, comme les autres types mais "
+"qui acceptent une valeur « nothing ». Une valeur booléenne ou nulle "
+"n'accepte que trois valeurs, « true », « false » ou « nothing »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid "A byte (unsigned), type \"y\""
+msgstr "Un octet (non signé), type « y »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr ""
+"Une valeur d'octet est un entier entre 0 et 255. Il peut être utilisé pour "
+"transmettre des caractères."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "A bytestring, type \"ay\""
+msgstr "Une chaîne d'octets, type « ay »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+"Le type chaîne d'octets est couramment utilisé pour transmettre des chaînes "
+"qui ne sont pas toujours de l'UTF-8 valide. Dans ce cas, la convention est "
+"que le caractère de terminaison nul doit être inclus comme dernier caractère "
+"de la chaîne."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid "A bytestring array, type \"aay\""
+msgstr "Un tableau d'octets, type « aay »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr ""
+"Ce type contient un tableau de chaînes d'octets. Le type chaîne d'octets est "
+"couramment utilisé pour transmettre des chaînes qui ne sont pas toujours de "
+"l'UTF-8 valide."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid "A D-Bus handle type, type \"h\""
+msgstr "Un type d'identificateur D-Bus, type « h »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Le type identificateur est un entier signé 32bit utilisé par convention comme "
+"indice d'un tableau de descripteurs de fichiers qui accompagnent un message "
+"D-Bus.\n"
+"\n"
+"Si vous n'êtes pas dans un contexte D-Bus, ce type ne vous sert à rien."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid "A D-Bus object path, type \"o\""
+msgstr "Un chemin d'objet D-Bus, type « o »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Un chemin d'objet est utilisé pour identifier des objets D-Bus à une "
+"destination donnée sur le bus.\n"
+"\n"
+"Si vous n'êtes pas dans un contexte D-Bus, ce type ne vous sert à rien."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "Un tableau de chemins d'objet D-Bus, type « ao »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Un tableau de chemins d'objets peut contenir un nombre indéfini de chemins "
+"d'objets (y compris aucun : « [] »).\n"
+"\n"
+"Si vous n'êtes pas dans un contexte D-Bus, ce type ne vous sert à rien."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
+msgid "A D-Bus signature, type \"g\""
+msgstr "Une signature D-Bus, type « g »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Une signature D-Bus est une chaîne utilisée comme signature de type pour une "
+"méthode ou un message D-Bus.\n"
+"\n"
+"Si vous n'êtes pas dans un contexte D-Bus, ce type ne vous sert à rien."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
+msgid "A double, type \"d\""
+msgstr "Un nombre flottant double, type « d »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A double value could represent any real number."
+msgstr ""
+"Une valeur flottante double peut représenter n'importe quel nombre réel."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid "A 5-choices enumeration"
+msgstr "Une énumération à 5 choix"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr ""
+"Les énumérations se font soit avec l'attribut « enum », soit avec une balise "
+"« choices »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
+msgid "A short integer, type \"n\""
+msgstr "Un entier court, type « n »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr "Un entier signé 16bit. Voir aussi la clé « integer-16-unsigned »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "Flags: choose-colors-you-love"
+msgstr "Drapeaux : choisir-vos-couleurs-préférées"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr "Les drapeaux peuvent être définis par l'attribut « enum »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid "An unsigned short integer, type \"q\""
+msgstr "Un entier court non signé, type « q »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr "Un entier non signé 16bit. Voir aussi la clé « integer-16-signed »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "An usual integer, type \"i\""
+msgstr "Un entier habituel, type « i »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr "Un entier signé 32bit. Voir aussi la clé « integer-32-unsigned »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "An unsigned usual integer, type \"u\""
+msgstr "Un entier non signé habituel, type « u »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr "Un entier non signé 32bit. Voir aussi la clé « integer-32-signed »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A long integer, type \"x\""
+msgstr "Un entier long, type « x »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr "Un entier signé 64bit. Voir aussi la clé « integer-64-unsigned »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "An unsigned long integer, type \"t\""
+msgstr "Un entier long non signé, type « t »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr "Un entier non signé 64bit. Voir aussi la clé « integer-64-signed »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A number with range"
+msgstr "Un nombre avec intervalle"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+"Chaque réglage numérique (entiers signés et non signés de chaque type, plus "
+"nombres à virgule) peut être limité par un intervalle de valeurs. Par "
+"exemple, cet entier accepte uniquement des valeurs entre -5 et 9."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A custom type, here \"(ii)\""
+msgstr "Un type personnalisé, ici « ii »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+"L'éditeur Dconf permet d'éditer n'importe quel type de réglage pris en "
+"charge par GSettings, se rabattant sur un type chaîne s'il n'a pas d'autre "
+"moyen de représentation. Ceci est un tuple de deux entiers signés 32bit."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A string, type \"s\""
+msgstr "Une chaîne, type « s »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+"Le type chaîne accepte n'importe quelle chaîne UTF-8. Notez qu'une chaîne "
+"vide « '' » n'est pas équivalente à NULL (rien) ; voir aussi la clé « string-"
+"nullable »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid "A string array, type \"as\""
+msgstr "Un tableau de chaînes, type « as »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+"Un tableau de chaînes contient un nombre indéfini de chaînes de longueur "
+"indéfinie. Il peut s'agit d'un tableau vide, « [] »."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid "A nullable string, type \"ms\""
+msgstr "Une chaîne ou valeur nulle, type « ms »"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+"GSettings autorise les types pouvant valoir nul, semblables aux autres types "
+"mais acceptant la valeur « nothing ». Le type chaîne ou valeur nulle accepte "
+"n'importe quelle chaîne, y compris la chaîne vide « '' » ou peut contenir la "
+"valeur nulle (« nothing »)."
+
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Rechercher…"
+msgid "Keyboard Shortcuts"
+msgstr "Raccourcis clavier"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -68,119 +460,343 @@ msgstr "À _propos"
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Positionner à la valeur par défaut"
-
 #: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Schéma :"
+msgid "Actions"
+msgstr "Actions"
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Résumé :"
+msgid "Current view actions"
+msgstr "Actions de la vue actuelle"
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Description :"
+msgid "Search"
+msgstr "Rechercher"
 
-#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:5
+msgid "Search keys"
+msgstr "Recherche de clés"
+
 #: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Type :"
+msgid "No keys in this path"
+msgstr "Aucune clé dans ce chemin"
 
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Valeur par défaut :"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Suivant"
-
-#: ../editor/dconf-editor.vala:29
+#: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Afficher la version et sortir"
 
-#: ../editor/dconf-editor.vala:206
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Entier [%s..%s]"
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:90
+msgid "Copied to clipboard"
+msgstr "Copié dans le presse-papiers"
 
-#: ../editor/dconf-editor.vala:219
+#: ../editor/dconf-editor.vala:143
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
+msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
+
+#: ../editor/dconf-editor.vala:147
+msgid "translator-credits"
+msgstr ""
+"Frédéric Péters <fpeters@0d.be>\n"
+"Claude Paroz <claude@2xlibre.net>"
+
+#: ../editor/dconf-model.vala:200
+msgid "True"
+msgstr "Vrai"
+
+#: ../editor/dconf-model.vala:202
+msgid "False"
+msgstr "Faux"
+
+#: ../editor/dconf-model.vala:203
+msgid "Nothing"
+msgstr "Rien"
+
+#: ../editor/dconf-model.vala:208
+msgid "true"
+msgstr "vrai"
+
+#: ../editor/dconf-model.vala:210
+msgid "false"
+msgstr "faux"
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:212
+msgid "nothing"
+msgstr "rien (nothing)"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:90
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+"Employez le mot-clé « nothing » (rien) pour définir à nul un type acceptant "
+"la valeur nulle (commençant par « m »). Les chaînes, les signatures et les "
+"chemins d'objets doivent être placés entre guillemets."
+
+#: ../editor/dconf-view.vala:92
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr ""
+"Les chaînes, les signatures et les chemins d'objets doivent être placés "
+"entre guillemets."
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:96
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+"Employez le mot-clé « nothing » (rien) pour définir à nul un type acceptant "
+"la valeur nulle (commençant par « m »)."
+
+#: ../editor/dconf-view.vala:115
+msgid "Boolean"
+msgstr "Booléen"
+
+#: ../editor/dconf-view.vala:117
+msgid "String"
+msgstr "Chaîne"
+
+#: ../editor/dconf-view.vala:119
+msgid "String array"
+msgstr "Tableau de chaînes"
+
+#: ../editor/dconf-view.vala:121
+msgid "Enumeration"
+msgstr "Énumération"
+
+#: ../editor/dconf-view.vala:123
+msgid "Flags"
+msgstr "Drapeaux"
+
+#: ../editor/dconf-view.vala:127
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Réel [%s..%s]"
 
-#: ../editor/dconf-editor.vala:221
-msgid "Boolean"
-msgstr "Booléen"
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-view.vala:130
+msgid "D-Bus handle type"
+msgstr "Type identificateur D-Bus"
 
-#: ../editor/dconf-editor.vala:223
-msgid "String"
-msgstr "Chaîne"
+#: ../editor/dconf-view.vala:132
+msgid "D-Bus object path"
+msgstr "Chemin d'objet D-Bus"
 
-#: ../editor/dconf-editor.vala:225
-msgid "Enumeration"
-msgstr "Énumération"
+#: ../editor/dconf-view.vala:134
+msgid "D-Bus object path array"
+msgstr "Tableau de chemins d'objets D-Bus"
 
-#: ../editor/dconf-editor.vala:273
-msgid "No schema"
-msgstr "Aucun schéma"
+#: ../editor/dconf-view.vala:136
+msgid "D-Bus signature"
+msgstr "Signature D-Bus"
 
-#: ../editor/dconf-editor.vala:383
-msgid "Not found"
-msgstr "Non trouvé"
-
-#: ../editor/dconf-editor.vala:431
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le "
-"modifier selon les termes de la Licence Publique Générale GNU publiée par la "
-"Free Software Foundation ; soit la version 2 ou, (à votre discrétion) toute "
-"autre version ultérieure.\n"
-"\n"
-"Ce programme est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE "
-"GARANTIE ; sans même une garantie implicite de COMMERCIABILITÉ ou DE "
-"CONFORMITÉ À UNE UTILISATION PARTICULIÈRE. Voir la Licence Publique Générale "
-"GNU pour plus de détails.\n"
-"\n"
-"Vous devez avoir reçu une copie de la Licence Publique Générale GNU en même "
-"temps que ce programme ; si ce n'est pas le cas, écrivez à la Free Software "
-"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, "
-"États-Unis."
-
-#: ../editor/dconf-editor.vala:437
-msgid "Copyright © Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
-
-#: ../editor/dconf-editor.vala:441
-msgid "translator-credits"
-msgstr "Frédéric Péters <fpeters@0d.be>"
-
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-view.vala:146
 #, c-format
-msgid "Error setting value: %s"
-msgstr "Erreur lors de la définition de la valeur : %s"
+msgid "Integer [%s..%s]"
+msgstr "Entier [%s..%s]"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Name"
-msgstr "Nom"
+#: ../editor/dconf-window.vala:84
+msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgstr "Merci d'utiliser l'éditeur Dconf pour modifier vos configurations !"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
-msgid "Value"
-msgstr "Valeur"
+#: ../editor/dconf-window.vala:85
+msgid "Don't forget that some option may break applications, so be careful."
+msgstr ""
+"N'oubliez pas que certaines options peuvent casser les applications, restez "
+"donc prudent."
+
+#: ../editor/dconf-window.vala:86
+msgid "I'll be careful."
+msgstr "Je serai prudent."
+
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+#: ../editor/dconf-window.vala:90
+msgid "Show this dialog next time."
+msgstr "Afficher cette boîte de dialogue la prochaine fois."
+
+#: ../editor/dconf-window.vala:151
+msgid "Copy current path"
+msgstr "Copier le chemin actuel"
+
+#. TODO protection against some chars in text? 1/2
+#: ../editor/dconf-window.vala:153
+msgid "Reset visible keys"
+msgstr "Réinitialiser les clés visibles"
+
+#: ../editor/dconf-window.vala:182
+msgid "Oops! Cannot find something at this path."
+msgstr "Oups ! Impossible de trouver quelque chose dans ce chemin."
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Actions"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Menu des signets"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Ajouter un signet pour ce chemin"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Enlever le signet pour ce chemin"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Barre de recherche"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Menu des actions"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Presse-papiers"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Copier le descripteur"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Copier le chemin"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Navigation dans l'arborescence"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Étendre"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Étendre toutes les sous-arborescences"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Réduire"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Réduire toutes les sous-arborescences"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Générique"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Afficher cette aide"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "About"
+msgstr "À propos"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Quitter"
+
+#: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
+msgid "Key Editor"
+msgstr "Éditeur de clés"
+
+#: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
+msgid "Cancel"
+msgstr "Annuler"
+
+#: ../editor/key-editor-no-schema.ui.h:3 ../editor/key-editor.ui.h:3
+msgid "Apply"
+msgstr "Appliquer"
+
+#: ../editor/key-editor-no-schema.ui.h:4
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+"Aucun schéma disponible. L'éditeur Dconf ne peut pas trouver de schéma "
+"associé à cette clé. L'application qui a installé cette clé peut avoir été "
+"enlevée, ou a cessé d'utiliser cette clé, ou utilise peut-être un schéma "
+"déplaçable pour la définition de ses clés."
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
+msgid "Type"
+msgstr "Type"
+
+#: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
+msgid "Custom value"
+msgstr "Valeur personnalisée"
+
+#: ../editor/key-editor.ui.h:4
+msgid "Schema"
+msgstr "Schéma"
+
+#: ../editor/key-editor.ui.h:5
+msgid "Summary"
+msgstr "Résumé"
+
+#: ../editor/key-editor.ui.h:6
+msgid "Description"
+msgstr "Description"
+
+#: ../editor/key-editor.ui.h:9
+msgid "Default"
+msgstr "Valeur par défaut"
+
+#: ../editor/key-editor.ui.h:10
+msgid "Use default value"
+msgstr "Utiliser la valeur par défaut"
+
+#: ../editor/key-list-box-row.vala:76
+msgid "No Schema Found"
+msgstr "Aucun schéma trouvé"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:202
+msgid "Customize…"
+msgstr "Personnaliser…"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:205
+msgid "Set to default"
+msgstr "Définir à la valeur par défaut"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:214
+msgid "Copy"
+msgstr "Copier"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:336
+msgid "Default value"
+msgstr "Valeur par défaut"
