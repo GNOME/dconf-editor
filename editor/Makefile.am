@@ -7,8 +7,7 @@ dconf_editor_VALAFLAGS = \
 	--pkg gmodule-2.0 \
 	--pkg dconf \
 	--gresources $(builddir)/dconf-editor.gresource.xml \
-	--target-glib $(GLIB_REQUIRED) \
-	--enable-experimental-non-null
+	--target-glib $(GLIB_REQUIRED)
 
 dconf_editor_LDADD = $(DCONF_EDITOR_LIBS)
 
