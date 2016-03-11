@@ -88,7 +88,7 @@ msgstr "Editor del dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
 msgid "Configuration editor for dconf"
-msgstr "Editor de configuacions per al dconf"
+msgstr "Editor de configuracions per al dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 #: ../editor/dconf-editor.vala:142
@@ -200,7 +200,7 @@ msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
-"Un valor byte es un enter entre 0 i 255. Pot usar-se per passar caràcters a "
+"Un valor byte és un enter entre 0 i 255. Pot usar-se per passar caràcters a "
 "altres llocs."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
@@ -253,7 +253,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid "A D-Bus object path, type \"o\""
-msgstr "Un cami d'objecte D-Bus, tipus «o»"
+msgstr "Un camí d'objecte D-Bus, tipus «o»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
 msgid ""
@@ -263,7 +263,7 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
-"Un camí d'objecte s'usa per identicar objectes D-Bus a una destinació donara "
+"Un camí d'objecte s'usa per identificar objectes D-Bus a una destinació donada "
 "al bus.\n"
 "\n"
 "Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap raó per usar "
@@ -271,7 +271,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
 msgid "A D-Bus object path array, type \"ao\""
-msgstr "Una matriu de camins de objectes D-Bus, tipus «ao»"
+msgstr "Una matriu de camins d'objectes D-Bus, tipus «ao»"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
 msgid ""
@@ -496,7 +496,7 @@ msgstr "Mostra la versió de llançament i surt"
 #. #. * * Copy action
 #. #: ../editor/dconf-editor.vala:90
 msgid "Copied to clipboard"
-msgstr "S'ha copiat al portaretalls"
+msgstr "S'ha copiat al porta-retalls"
 
 #: ../editor/dconf-editor.vala:143
 msgid ""
