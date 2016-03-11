@@ -75,6 +75,10 @@ class ConfigurationEditor : Gtk.Application
 
         add_action_entries (action_entries, this);
 
+        Gtk.CssProvider css_provider = new Gtk.CssProvider ();
+        css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
+        Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
         add_window (new DConfWindow ());
     }
 

@@ -143,7 +143,9 @@
               <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
                 <property name="hscrollbar-policy">never</property>
-                <property name="width-request">222</property>
+                <style>
+                  <class name="sidebar"/>
+                </style>
                 <child>
                   <object class="GtkTreeView" id="dir_tree_view">
                     <property name="visible">True</property>
