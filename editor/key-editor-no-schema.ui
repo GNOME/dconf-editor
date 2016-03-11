@@ -3,10 +3,9 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="KeyEditorNoSchema" parent="KeyEditorDialog">
     <property name="visible">False</property>
+    <property name="valign">center</property> <!-- TODO bug of GtkDialog, that adds space at the bottom -->
     <property name="modal">True</property>
-    <property name="default-height">1</property><!-- TODO bug of GtkDialog, that reserves space for bottom buttons -->
     <property name="default-width">600</property>
-    <property name="width-request">600</property>
     <property name="resizable">False</property>
     <property name="title" translatable="yes">Key Editor</property>
     <child type="action">
