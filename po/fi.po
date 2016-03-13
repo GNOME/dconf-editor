@@ -1,14 +1,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2015.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-17 01:01+0000\n"
-"PO-Revision-Date: 2015-10-25 18:46+0200\n"
+"POT-Creation-Date: 2016-03-13 04:23+0000\n"
+"PO-Revision-Date: 2016-03-13 15:35+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -55,7 +55,6 @@ msgid "Remove this bookmark"
 msgstr "Poista tämä kirjanmerkki"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
-#| msgid "dconf Editor"
 msgid "Dconf Editor"
 msgstr "Dconf-muokkain"
 
@@ -77,8 +76,8 @@ msgid ""
 msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:69
-#: ../editor/dconf-editor.vala:90
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:144
 msgid "dconf Editor"
 msgstr "dconf-muokkain"
 
@@ -87,7 +86,7 @@ msgid "Configuration editor for dconf"
 msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:92
+#: ../editor/dconf-editor.vala:146
 msgid "Directly edit your entire configuration database"
 msgstr "Muokkaa suoraan koko asetustietokantaasi"
 
@@ -389,50 +388,55 @@ msgid ""
 msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Pikanäppäimet"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Tietoja"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Lopeta"
 
 #: ../editor/dconf-editor.ui.h:2
-msgid "Search"
+msgid "Actions"
 msgstr ""
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Search keys"
+msgid "Current view actions"
 msgstr ""
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "No keys in this path"
+msgid "Search"
 msgstr ""
+
+#: ../editor/dconf-editor.ui.h:5
+msgid "Search keys"
+msgstr ""
+
+#: ../editor/dconf-editor.ui.h:6
+msgid "No keys in this path"
+msgstr "Ei avaimia tässä polussa"
 
 #: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Tulosta julkaisuversio ja sulkeudu"
 
-#: ../editor/dconf-editor.vala:88
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:94
+msgid "Copied to clipboard"
+msgstr "Kopioitu leikepöydälle"
+
+#: ../editor/dconf-editor.vala:147
 msgid ""
-"Dconf Editor is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"Dconf Editor is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program. If not, see <http://www.gnu.org/licenses/>."
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
+"Tekijänoikeus © 2010-2014 – Canonical Ltd\n"
+"Tekijänoikeus © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:93
-msgid "Copyright © Canonical Ltd"
-msgstr "Tekijänoikeus © Canonical Ltd"
-
-#: ../editor/dconf-editor.vala:97
+#: ../editor/dconf-editor.vala:151
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
@@ -462,125 +466,212 @@ msgid "nothing"
 msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:86
+#: ../editor/dconf-view.vala:90
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
 
-#: ../editor/dconf-view.vala:88
+#: ../editor/dconf-view.vala:92
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:92
+#: ../editor/dconf-view.vala:96
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
 
-#: ../editor/dconf-view.vala:111
+#: ../editor/dconf-view.vala:115
 msgid "Boolean"
 msgstr "Totuusarvo"
 
-#: ../editor/dconf-view.vala:113
+#: ../editor/dconf-view.vala:117
 msgid "String"
 msgstr "Merkkijono"
 
-#: ../editor/dconf-view.vala:115
+#: ../editor/dconf-view.vala:119
 #, fuzzy
 #| msgid "String"
 msgid "String array"
 msgstr "Merkkijono"
 
-#: ../editor/dconf-view.vala:117
+#: ../editor/dconf-view.vala:121
 msgid "Enumeration"
 msgstr "Enumeraatio"
 
-#: ../editor/dconf-view.vala:119
+#: ../editor/dconf-view.vala:123
 msgid "Flags"
 msgstr ""
 
-#: ../editor/dconf-view.vala:123
+#: ../editor/dconf-view.vala:127
 #, fuzzy, c-format
 #| msgid "Integer [%s..%s]"
 msgid "Double [%s..%s]"
 msgstr "Kokonaisluku [%s..%s]"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: ../editor/dconf-view.vala:126
+#: ../editor/dconf-view.vala:130
 msgid "D-Bus handle type"
 msgstr ""
 
-#: ../editor/dconf-view.vala:128
+#: ../editor/dconf-view.vala:132
 msgid "D-Bus object path"
 msgstr ""
 
-#: ../editor/dconf-view.vala:130
+#: ../editor/dconf-view.vala:134
 msgid "D-Bus object path array"
 msgstr ""
 
-#: ../editor/dconf-view.vala:132
+#: ../editor/dconf-view.vala:136
 msgid "D-Bus signature"
 msgstr ""
 
-#: ../editor/dconf-view.vala:142
+#: ../editor/dconf-view.vala:146
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Kokonaisluku [%s..%s]"
 
-#: ../editor/dconf-window.vala:75
+#: ../editor/dconf-window.vala:84
 msgid "Thanks for using Dconf Editor for editing your configurations!"
-msgstr ""
+msgstr "Kiitos kun käytät Dconf-muokkainta asetuksien määrittämiseen!"
 
-#: ../editor/dconf-window.vala:76
+#: ../editor/dconf-window.vala:85
 msgid "Don't forget that some option may break applications, so be careful."
 msgstr ""
+"Ota huomioon, että jotkin valinnat voivat rikkoa sovelluksia. Ole siis "
+"varovainen!"
 
-#: ../editor/dconf-window.vala:77
-msgid "I'd be careful."
-msgstr ""
+#: ../editor/dconf-window.vala:86
+msgid "I'll be careful."
+msgstr "Olen varovainen."
 
-#: ../editor/dconf-window.vala:79
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+#: ../editor/dconf-window.vala:90
 msgid "Show this dialog next time."
+msgstr "Näytä tämä varoitus ensi kerralla."
+
+#: ../editor/dconf-window.vala:151
+msgid "Copy current path"
+msgstr "Kopioi nykyinen polku"
+
+#. TODO protection against some chars in text? 1/2
+#: ../editor/dconf-window.vala:153
+msgid "Reset visible keys"
 msgstr ""
 
-#: ../editor/dconf-window.vala:160
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr ""
 
-#: ../editor/dconf-window.vala:395
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Toiminnot"
+
+#: ../editor/help-overlay.ui.h:2
 #, fuzzy
-#| msgid "No schema"
-msgid "No Schema Found"
-msgstr "Ei skeemaa"
+#| msgid "Bookmarks"
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Kirjanmerkit"
 
-#: ../editor/dconf-window.vala:403 ../editor/dconf-window.vala:444
-msgid "Customize…"
-msgstr "Muokkaa…"
-
-#: ../editor/dconf-window.vala:404 ../editor/dconf-window.vala:445
-msgid "Copy"
-msgstr "Kopioi"
-
-#: ../editor/dconf-window.vala:464
+#: ../editor/help-overlay.ui.h:3
 #, fuzzy
-#| msgid "Set to Default"
-msgid "Set to default"
-msgstr "Palauta oletusarvo"
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Lisää tämä sijainti kirjanmerkkeihin"
 
-#: ../editor/dconf-window.vala:531
-#| msgid "Default:"
-msgid "Default value"
-msgstr "Oletusarvo"
+#: ../editor/help-overlay.ui.h:4
+#, fuzzy
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Lisää tämä sijainti kirjanmerkkeihin"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Hakupalkki"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Toimintovalikko"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Leikepöytä"
+
+#: ../editor/help-overlay.ui.h:8
+#, fuzzy
+#| msgid "Description"
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Kuvaus"
+
+#: ../editor/help-overlay.ui.h:9
+#| msgid "Copy"
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopioi polku"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Näytä tämä ohje"
+
+#: ../editor/help-overlay.ui.h:17
+#| msgid "_About"
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Tietoja"
+
+#: ../editor/help-overlay.ui.h:18
+#| msgid "_Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Lopeta"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
-#, fuzzy
 #| msgid "dconf Editor"
 msgid "Key Editor"
-msgstr "dconf-muokkain"
+msgstr "Avainmuokkain"
 
 #: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
 msgid "Cancel"
@@ -610,28 +701,54 @@ msgid "Custom value"
 msgstr ""
 
 #: ../editor/key-editor.ui.h:4
-#| msgid "Schema:"
 msgid "Schema"
 msgstr "Skeema"
 
 #: ../editor/key-editor.ui.h:5
-#| msgid "Summary:"
 msgid "Summary"
 msgstr "Yhteenveto"
 
 #: ../editor/key-editor.ui.h:6
-#| msgid "Description:"
 msgid "Description"
 msgstr "Kuvaus"
 
 #: ../editor/key-editor.ui.h:9
-#| msgid "Default:"
 msgid "Default"
 msgstr "Oletus"
 
 #: ../editor/key-editor.ui.h:10
 msgid "Use default value"
 msgstr "Käytä oletusarvoa"
+
+#: ../editor/key-list-box-row.vala:76
+#, fuzzy
+#| msgid "No schema"
+msgid "No Schema Found"
+msgstr "Ei skeemaa"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:202
+msgid "Customize…"
+msgstr "Muokkaa…"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:205
+#| msgid "Set to Default"
+msgid "Set to default"
+msgstr "Palauta oletusarvo"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:214
+msgid "Copy"
+msgstr "Kopioi"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:336
+msgid "Default value"
+msgstr "Oletusarvo"
+
+#~ msgid "Copyright © Canonical Ltd"
+#~ msgstr "Tekijänoikeus © Canonical Ltd"
 
 #~ msgid "Not found"
 #~ msgstr "Ei löytynyt"
