@@ -22,6 +22,7 @@ dconf_editor_CFLAGS = \
 resource_data = \
 	dconf-editor.gresource.xml \
 	dconf-editor-menu.ui \
+	dconf-editor.css \
 	dconf-editor.ui \
 	key-list-box-row.ui \
 	key-editor.ui \
