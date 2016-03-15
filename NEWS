@@ -1,3 +1,24 @@
+dconf-editor 3.19.92
+=====================
+
+Some problems have appeared related to the sizing of the key-editor dialogs, and
+will need more testing with a clean Gtk+ release, even if all looks corrected.
+An infinite loop has also be spotted when trying to reset all keys of a folder
+containing keys without schema. Also, a CSS resource with one rule only has been
+added to look better when using the “Big Text” accessibility feature.
+
+Translations updated:
+  Catalan: Jordi Mas
+  Czech: Marek Černocký
+  Finnish: Jiri Grönroos
+  French: Claude Paroz
+  Hebrew: Yosef Or Boczko
+  Kazakh: Baurzhan Muftakhidinov
+  Korean: Changwoo Ryu
+  Latvian: Rūdolfs Mazurs
+  Lithuanian: Aurimas Černius
+  Slovak: Dušan Kazik
+
 dconf-editor 3.19.91
 =====================
 
