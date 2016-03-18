@@ -312,7 +312,7 @@ class DConfWindow : ApplicationWindow
                     ((ConfigurationEditor) get_application ()).about_cb ();
                     return true;
                 default:
-                    break;  // TODO report bug for making <ctrl>v work?
+                    break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
             }
         }
         else if (name == "F10")
@@ -321,7 +321,7 @@ class DConfWindow : ApplicationWindow
             return false;
         }
         else if (name == "plus"   || name == "minus" ||
-                 name == "KP_Add" || name == "KP_Subtract")     // TODO open bug for search_bar blocking standard treeview shortcuts
+                 name == "KP_Add" || name == "KP_Subtract")     // https://bugzilla.gnome.org/show_bug.cgi?id=762256 is WONTFIX
             return false;                                       // TODO GtkTreeView has a weird behaviour if expanding without children
 
         if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
