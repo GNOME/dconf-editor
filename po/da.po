@@ -2,33 +2,107 @@
 # Copyright (C) 2012 The Free Software Foundation
 # This file is distributed under the same license as the dconf package.
 # Kenneth Nielsen <k.nielsen81@gmail.com>, 2012.
+# scootergrisen, 2016.
 #
+# double -> decimaltal.  Typen double (dobbeltpræcisionsdecimaltal)
+# findes, men ikke enkeltpræcisions-.  Dermed kan det blot oversættes
+# til decimaltal.
+#
+# Korrektur Ask Hjorth Larsen <asklarsen@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-21 16:27+0100\n"
-"PO-Revision-Date: 2015-03-14 17:37+0100\n"
-"Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
+"POT-Creation-Date: 2016-03-19 15:09+0100\n"
+"PO-Revision-Date: 2016-03-19 15:06+0100\n"
+"Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
+"X-Project-Style: gnome\n"
+
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "Bogmærk denne placering"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "Placeringen blev bogmærket"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr "Slå bogmærke til/fra for denne placering"
+
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"Bogmærker vil\n"
+"blive tilføjet her"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "Bogmærker"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "Håndtér dine bogmærker"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "Fjern"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "Fjern dette bogmærke"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+msgid "Dconf Editor"
+msgstr "Dconf-redigering"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "Et grafisk værktøj til at redigere dconf-databasen"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+"Dconf-redigering er et værktøj der giver mulighed for direkte redigering af "
+"dconf-konfigurationsdatabasen. Det er nyttigt ved udvikling af programmer, "
+"der bruger disse indstillinger."
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr ""
+"Direkte redigering af dine indstillinger er en avanceret funktion og kan få "
+"programmer til ikke at virke korrekt."
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
-#: ../editor/dconf-editor.vala:433
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:144
 msgid "dconf Editor"
 msgstr "dconf-redigering"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:436
+msgid "Configuration editor for dconf"
+msgstr "Konfigurationsredigering til dconf"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:146
 msgid "Directly edit your entire configuration database"
 msgstr "Redigér direkte i hele din konfigurationsdatabase"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "indstillinger;valgmuligheder;valg;konfiguration;"
 
@@ -56,9 +130,334 @@ msgstr "Et flag til at aktivere maksimeret tilstand"
 msgid "A flag to enable fullscreen mode"
 msgstr "Et flag til at aktivere fuldskærmstilstand"
 
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "A list of bookmarked paths"
+msgstr "En liste over bogmærkede stier"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+"Indeholder alle stier som er bogmærket af brugeren som et array af strenge."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid "A flag to restore the last view"
+msgstr "Et flag til at gendanne sidste visning"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+"Hvis \"sand\", forsøger Dconf-redigering ved opstart at navigere til stien "
+"beskrevet i nøglen \"saved-view\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid "A path to restore the last view"
+msgstr "En sti til at gendanne den sidste visning"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+"Hvis nøglen \"restore-view\" er sat til \"sand\", forsøger Dconf-redigering "
+"ved opstart at navigere til denne sti."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid "Show initial warning"
+msgstr "Vis indledende advarsel"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr ""
+"Hvis 'sand', åbner Dconf-redigering ved opstart en pop-op for at minde "
+"brugeren om at være forsigtig."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "A boolean, type \"b\""
+msgstr "En boolesk variabel, type \"b\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr "Booleske variable kan kun tage to værdier, \"sand\" eller \"falsk\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "A nullable boolean, type \"mb\""
+msgstr "En nulbar boolesk variabel, type \"mb\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+"Gsettings tillader nulbare typer, som ligner andre typer men kan tage "
+"værdien \"intet\". En nulbar boolesk variabel kan kun tage tre værdier, "
+"\"sand\", \"falsk\" og \"intet\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid "A byte (unsigned), type \"y\""
+msgstr "En byte (uden fortegn), type \"y\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr ""
+"En byteværdi er et heltal mellem 0 og 255. Den kan bruges til at videregive "
+"tegn."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "A bytestring, type \"ay\""
+msgstr "En bytestreng, type \"ay\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+"Typen bytestreng bruges almindeligvis til at videregive strenge som måske "
+"ikke er gyldig utf8. I dette tilfælde er konventionen sådan at nul-"
+"terminatortegnet skal inkluderes som det sidste tegn i arrayet."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid "A bytestring array, type \"aay\""
+msgstr "Et bytestreng-array, type \"aay\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr ""
+"Dette er typen af et array, af bytestrenge. Typen bytestreng bruges "
+"almindeligvis til at videregive strenge som måske ikke er gyldig utf8."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid "A D-Bus handle type, type \"h\""
+msgstr "En type for D-Bus-håndtag, type \"h\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Håndtagstypen er en 32-bit heltalsværdi med fortegn som, ved konvention, "
+"bruges som et indeks inde i et array af fildeskriptorer, der sendes "
+"sideløbende med en D-Bus-meddelelse.\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid "A D-Bus object path, type \"o\""
+msgstr "En D-Bus-objektsti, type \"o\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"En objektsti bruges til at identificere D-Bus-objekter på en given "
+"destination på bussen.\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "Et D-Bus-objektsti-array, type \"ao\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Et objektsti-array kan indeholde et hvilket som helst antal objektstier "
+"(inklusive ingen: \"[]\").\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
+msgid "A D-Bus signature, type \"g\""
+msgstr "En D-Bus-signatur, type \"g\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"En D-Bus-signatur er en streng, der bruges som typesignatur for en D-Bus-"
+"metode eller -meddelelse.\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
+msgid "A double, type \"d\""
+msgstr "Et decimaltal, type \"d\""
+
+# Heh, optimistisk beskrivelse
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A double value could represent any real number."
+msgstr "Et decimaltal kan repræsentere et reelt tal."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid "A 5-choices enumeration"
+msgstr "En 5-valgsnummerering"
+
+# Enumeration i programmeringssammenhæng har vist ikke nogen god oversættelse til dansk.  Det kan vi tænke over på et tidspunkt
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr ""
+"Nummerering kan enten gøres med \"enum\"-attributten eller med et \"valg\"-"
+"mærkat."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
+msgid "A short integer, type \"n\""
+msgstr "Et kort heltal, type \"n\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr "Et 16-bit heltal med fortegn. Se også nøglen \"integer-16-unsigned\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "Flags: choose-colors-you-love"
+msgstr "Flag: vælg-farver-du-elsker"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr "Flag kan sættes med \"enum\"-attributten."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid "An unsigned short integer, type \"q\""
+msgstr "Et kort heltal uden fortegn, type \"q\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr "Et 16-bit heltal uden fortegn. Se også nøglen \"integer-16-signed\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "An usual integer, type \"i\""
+msgstr "Et almindeligt heltal, type \"i\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr "Et 32-bit heltal med fortegn. Se også nøglen \"integer-32-unsigned\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "An unsigned usual integer, type \"u\""
+msgstr "Et almindeligt heltal uden fortegn, type \"u\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr "Et 32-bit heltal uden fortegn. Se også nøglen \"integer-32-signed\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A long integer, type \"x\""
+msgstr "Et langt heltal, type \"x\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr "Et 64-bit heltal med fortegn. Se også nøglen \"integer-64-unsigned\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "An unsigned long integer, type \"t\""
+msgstr "Et langt heltal uden fortegn, type \"t\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr "Et 64-bit heltal uden fortegn. Se også nøglen \"integer-64-signed\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A number with range"
+msgstr "Et tal med interval"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+"Enhver talindstilling (heltal og heltal uden fortegn for hver type samt "
+"decimaltal) kan være begrænset til et brugerdefineret område af værdier. F."
+"eks. kan dette heltal kun tage en værdi mellem -5 og 9."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A custom type, here \"(ii)\""
+msgstr "En brugerdefineret type, her \"(ii)\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+"Dconf-redigering lader dig redigere enhver indstillingstype som undersøttes "
+"af GSettings og falder tilbage til en streng når den ikke har en bedre måde "
+"at gøre det på. Her er en tuple af to 32-bit heltal med fortegn."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A string, type \"s\""
+msgstr "En streng, type \"s\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+"Typen streng kan acceptere enhver utf8-streng. Bemærk at en tom streng "
+"\"''\" ikke er det samme som NULL (intet). Se også nøglen \"string-nullable"
+"\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid "A string array, type \"as\""
+msgstr "Et streng-array, type \"as\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+"Et streng-array indeholder et hvilket som helst antal strenge med en hvilken "
+"som helst længde. Det kan være et tomt array, \"[]\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid "A nullable string, type \"ms\""
+msgstr "En nulbar streng, type \"ms\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+"GSettings tillader nulbare typer, som ligner andre typer men kan tage "
+"værdien \"intet\". En nulbar streng kan tage enhver streng som værdi, "
+"inklusive den tomme streng \"''\", eller den kan være NULL (intet)."
+
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Find…"
+msgid "Keyboard Shortcuts"
+msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -68,123 +467,358 @@ msgstr "_Om"
 msgid "_Quit"
 msgstr "_Afslut"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Set til standardværdi"
-
 #: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Skema:"
+msgid "Actions"
+msgstr "Handlinger"
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Sammendrag:"
+msgid "Current view actions"
+msgstr "Aktuelle visningshandlinger"
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Beskrivelse:"
+msgid "Search"
+msgstr "Søg"
 
-#. Translators: as in datatype (integer, boolean, string, etc)
+#: ../editor/dconf-editor.ui.h:5
+msgid "Search keys"
+msgstr "Søg på nøgler"
+
 #: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Type:"
+msgid "No keys in this path"
+msgstr "Ingen nøgler i denne sti"
 
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Standardværdi:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Næste"
-
-#: ../editor/dconf-editor.vala:29
+#: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Udskriv versionsoplysninger og afslut"
 
-#: ../editor/dconf-editor.vala:206
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Heltal [%s..%s]"
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:94
+msgid "Copied to clipboard"
+msgstr "Kopieret til udklipsholderen"
 
-# Strengt taget dobbelt præcision, men der er ikke nogen float her
-#: ../editor/dconf-editor.vala:219
-#, c-format
-msgid "Double [%s..%s]"
-msgstr "Decimaltal [%s..%s]"
-
-#: ../editor/dconf-editor.vala:221
-msgid "Boolean"
-msgstr "Boolesk"
-
-#: ../editor/dconf-editor.vala:223
-msgid "String"
-msgstr "Streng"
-
-#: ../editor/dconf-editor.vala:225
-msgid "Enumeration"
-msgstr "Nummerering"
-
-#: ../editor/dconf-editor.vala:273
-msgid "No schema"
-msgstr "Intet skema"
-
-#: ../editor/dconf-editor.vala:383
-msgid "Not found"
-msgstr "Ikke fundet"
-
-#: ../editor/dconf-editor.vala:431
+#: ../editor/dconf-editor.vala:147
+#, fuzzy
 msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
-"Dette program er fri software. Du kan redistribuere og/eller modificere det "
-"under de betingelserne som er angivet i GNU General Public License, som er "
-"udgivet af Free Software Foundation. Enten version 2 af licensen eller "
-"(efter eget valg) enhver senere version.\n"
-"\n"
-"Dette program distribueres i håb om at det vil vise sig nyttigt, men UDEN "
-"NOGEN FORM FOR GARANTI, uden selv de underforståede garantier omkring "
-"SALGBARHED eller EGNETHED TIL ET BESTEMT FORMÅL. Yderligere detaljer kan "
-"læses i GNU General Public License.\n"
-"\n"
-"Du bør have modtaget en kopi af GNU General Public License sammen med dette "
-"program. Hvis ikke, så skriv til Free software Foundation, Inc., 51 Franklin "
-"Street, Fifth Floor, Boston, MA 02110-1301, USA"
+"Ophavsret © 2010-2014 – Canonical Ltd\n"
+"Ophavsret © 2015 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:437
-msgid "Copyright © Canonical Ltd"
-msgstr "Ophavsret © Canonical Ltd"
-
-#: ../editor/dconf-editor.vala:441
+#: ../editor/dconf-editor.vala:151
 msgid "translator-credits"
 msgstr ""
 "Kenneth Nielsen\n"
+"scootergrisen\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-model.vala:200
+msgid "True"
+msgstr "Sand"
+
+#: ../editor/dconf-model.vala:202
+msgid "False"
+msgstr "Falsk"
+
+#: ../editor/dconf-model.vala:203
+msgid "Nothing"
+msgstr "Intet"
+
+#: ../editor/dconf-model.vala:208
+msgid "true"
+msgstr "sand"
+
+#: ../editor/dconf-model.vala:210
+msgid "false"
+msgstr "falsk"
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:212
+msgid "nothing"
+msgstr "intet (nothing)"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:90
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+"Brug nøgleordet \"intet\" for at sætte en måsketype (starter med \"m\") til "
+"dens tomme værdi. Strenge, signaturer og objektstier skal sættes i "
+"anførselstegn."
+
+#: ../editor/dconf-view.vala:92
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr "Strenge, signaturer og objektstier skal sættes i anførselstegn."
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/dconf-view.vala:96
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+"Brug nøgleordet \"intet\" til at sætte en måsketype (starter med \"m\") til "
+"sin tomme værdi."
+
+#: ../editor/dconf-view.vala:115
+msgid "Boolean"
+msgstr "Boolesk"
+
+#: ../editor/dconf-view.vala:117
+msgid "String"
+msgstr "Streng"
+
+#: ../editor/dconf-view.vala:119
+msgid "String array"
+msgstr "Streng-array"
+
+#: ../editor/dconf-view.vala:121
+msgid "Enumeration"
+msgstr "Nummerering"
+
+#: ../editor/dconf-view.vala:123
+msgid "Flags"
+msgstr "Flag"
+
+# Strengt taget dobbelt præcision, men der er ikke nogen float her
+#: ../editor/dconf-view.vala:127
 #, c-format
-msgid "Error setting value: %s"
-msgstr "Fejl ved ændring af værdi: %s"
+msgid "Double [%s..%s]"
+msgstr "Decimaltal [%s..%s]"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Name"
-msgstr "Navn"
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-view.vala:130
+msgid "D-Bus handle type"
+msgstr "D-Bus-håndtagstype (handle)"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
-msgid "Value"
-msgstr "Værdi"
+#: ../editor/dconf-view.vala:132
+msgid "D-Bus object path"
+msgstr "D-Bus-objektsti"
+
+#: ../editor/dconf-view.vala:134
+msgid "D-Bus object path array"
+msgstr "D-Bus-objektsti-array"
+
+#: ../editor/dconf-view.vala:136
+msgid "D-Bus signature"
+msgstr "D-Bus-signatur"
+
+#: ../editor/dconf-view.vala:146
+#, c-format
+msgid "Integer [%s..%s]"
+msgstr "Heltal [%s..%s]"
+
+#: ../editor/dconf-window.vala:84
+msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgstr ""
+"Tak fordi du bruger Dconf-redigering til at redigere dine indstillinger."
+
+#: ../editor/dconf-window.vala:85
+msgid "Don't forget that some option may break applications, so be careful."
+msgstr ""
+"Husk på at nogle indstillinger kan få programmer til ikke at virke. Så vær "
+"forsigtig."
+
+#: ../editor/dconf-window.vala:86
+msgid "I'll be careful."
+msgstr "Jeg skal nok være forsigtig."
+
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+#: ../editor/dconf-window.vala:90
+msgid "Show this dialog next time."
+msgstr "Vis denne dialog næste gang."
+
+#: ../editor/dconf-window.vala:151
+msgid "Copy current path"
+msgstr "Kopiér aktuelle sti"
+
+#. TODO protection against some chars in text? 1/2
+#: ../editor/dconf-window.vala:153
+msgid "Reset visible keys"
+msgstr "Nulstil synlige nøgler"
+
+#: ../editor/dconf-window.vala:182
+msgid "Oops! Cannot find something at this path."
+msgstr "Ups! Kan ikke finde noget på denne sti."
+
+#: ../editor/help-overlay.ui.h:1
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Handlinger"
+
+#: ../editor/help-overlay.ui.h:2
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Bogmærker"
+
+#: ../editor/help-overlay.ui.h:3
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Bogmærk denne placering"
+
+#: ../editor/help-overlay.ui.h:4
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Bogmærk denne placering"
+
+#: ../editor/help-overlay.ui.h:5
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Søg"
+
+#: ../editor/help-overlay.ui.h:6
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Handlinger"
+
+#: ../editor/help-overlay.ui.h:7
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Kopieret til udklipsholderen"
+
+#: ../editor/help-overlay.ui.h:8
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Beskrivelse"
+
+#: ../editor/help-overlay.ui.h:9
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopiér aktuelle sti"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:17
+#, fuzzy
+msgctxt "shortcut window"
+msgid "About"
+msgstr "_Om"
+
+#: ../editor/help-overlay.ui.h:18
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "_Afslut"
+
+#: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
+msgid "Key Editor"
+msgstr "Redigering af nøgle"
+
+#: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
+msgid "Cancel"
+msgstr "Annullér"
+
+#: ../editor/key-editor-no-schema.ui.h:3 ../editor/key-editor.ui.h:3
+msgid "Apply"
+msgstr "Anvend"
+
+#: ../editor/key-editor-no-schema.ui.h:4
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+"Intet tilgængeligt skema. Dconf-redigering kan ikke finde et skema som er "
+"tilknyttet denne nøgle. Programmet, der installerede denne nøgle, kan være "
+"blevet fjernet, kan have stoppet brugen af denne nøgle eller kan bruge et "
+"flytbart skema til at definere sine nøgler."
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
+msgid "Type"
+msgstr "Type"
+
+#: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
+msgid "Custom value"
+msgstr "Brugerdefineret værdi"
+
+#: ../editor/key-editor.ui.h:4
+msgid "Schema"
+msgstr "Skema"
+
+#: ../editor/key-editor.ui.h:5
+msgid "Summary"
+msgstr "Sammendrag"
+
+#: ../editor/key-editor.ui.h:6
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: ../editor/key-editor.ui.h:9
+msgid "Default"
+msgstr "Standard"
+
+#: ../editor/key-editor.ui.h:10
+msgid "Use default value"
+msgstr "Anvend standardværdi"
+
+#: ../editor/key-list-box-row.vala:76
+msgid "No Schema Found"
+msgstr "Intet skema fundet"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:202
+msgid "Customize…"
+msgstr "Tilpas…"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:205
+msgid "Set to default"
+msgstr "Indstil til standard"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:214
+msgid "Copy"
+msgstr "Kopiér"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:336
+msgid "Default value"
+msgstr "Standardværdi"
