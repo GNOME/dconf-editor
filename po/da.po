@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the dconf package.
 # Kenneth Nielsen <k.nielsen81@gmail.com>, 2012.
 # scootergrisen, 2016.
+# Ask Hjorth Larsen <asklarsen@gmail.com>, 2016
 #
 # double -> decimaltal.  Typen double (dobbeltpræcisionsdecimaltal)
 # findes, men ikke enkeltpræcisions-.  Dermed kan det blot oversættes
 # til decimaltal.
 #
-# Korrektur Ask Hjorth Larsen <asklarsen@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-19 15:09+0100\n"
-"PO-Revision-Date: 2016-03-19 15:06+0100\n"
-"Last-Translator: scootergrisen\n"
+"POT-Creation-Date: 2016-03-20 23:27+0100\n"
+"PO-Revision-Date: 2016-03-20 02:53+0100\n"
+"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -457,7 +457,7 @@ msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastaturgenveje"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -497,19 +497,19 @@ msgid "Copied to clipboard"
 msgstr "Kopieret til udklipsholderen"
 
 #: ../editor/dconf-editor.vala:147
-#, fuzzy
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
-"Ophavsret © 2010-2014 – Canonical Ltd\n"
-"Ophavsret © 2015 – Arnaud Bonatti"
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:151
 msgid "translator-credits"
 msgstr ""
 "Kenneth Nielsen\n"
 "scootergrisen\n"
+"Ask Hjorth Larsen\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
@@ -646,105 +646,94 @@ msgid "Oops! Cannot find something at this path."
 msgstr "Ups! Kan ikke finde noget på denne sti."
 
 #: ../editor/help-overlay.ui.h:1
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Handlinger"
 
 #: ../editor/help-overlay.ui.h:2
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr "Bogmærker"
+msgstr "Bogmærkemenu"
 
 #: ../editor/help-overlay.ui.h:3
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr "Bogmærk denne placering"
+msgstr "Bogmærk denne sti"
 
 #: ../editor/help-overlay.ui.h:4
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr "Bogmærk denne placering"
+msgstr "Fjern bogmærke fra denne sti"
 
 #: ../editor/help-overlay.ui.h:5
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Search bar"
-msgstr "Søg"
+msgstr "Søgebjælke"
 
 #: ../editor/help-overlay.ui.h:6
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr "Handlinger"
+msgstr "Handlingsmenu"
 
 #: ../editor/help-overlay.ui.h:7
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Clipboard"
-msgstr "Kopieret til udklipsholderen"
+msgstr "Udklipsholder"
 
 #: ../editor/help-overlay.ui.h:8
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr "Beskrivelse"
+msgstr "Kopiér deskriptor"
 
 #: ../editor/help-overlay.ui.h:9
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr "Kopiér aktuelle sti"
+msgstr "Kopiér sti"
 
 #: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
 msgid "Tree navigation"
-msgstr ""
+msgstr "Trænavigering"
 
 #: ../editor/help-overlay.ui.h:11
 msgctxt "shortcut window"
 msgid "Expand"
-msgstr ""
+msgstr "Udfold"
 
 #: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
 msgid "Expand all subtrees"
-msgstr ""
+msgstr "Fold alle undertræer ud"
 
 #: ../editor/help-overlay.ui.h:13
 msgctxt "shortcut window"
 msgid "Collapse"
-msgstr ""
+msgstr "Sammenfold"
 
 #: ../editor/help-overlay.ui.h:14
 msgctxt "shortcut window"
 msgid "Collapse all subtrees"
-msgstr ""
+msgstr "Fold alle undertræer sammen"
 
 #: ../editor/help-overlay.ui.h:15
 msgctxt "shortcut window"
 msgid "Generic"
-msgstr ""
+msgstr "Generisk"
 
 #: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr ""
+msgstr "Vis denne hjælp"
 
 #: ../editor/help-overlay.ui.h:17
-#, fuzzy
 msgctxt "shortcut window"
 msgid "About"
-msgstr "_Om"
+msgstr "Om"
 
 #: ../editor/help-overlay.ui.h:18
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "_Afslut"
+msgstr "Afslut"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
