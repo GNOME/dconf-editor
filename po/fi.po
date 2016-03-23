@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-13 04:23+0000\n"
-"PO-Revision-Date: 2016-03-13 15:35+0200\n"
+"POT-Creation-Date: 2016-03-23 04:26+0000\n"
+"PO-Revision-Date: 2016-03-23 14:23+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -83,7 +83,7 @@ msgstr "dconf-muokkain"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "Asetusmuokkain dconfille"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 #: ../editor/dconf-editor.vala:146
@@ -401,7 +401,7 @@ msgstr "_Lopeta"
 
 #: ../editor/dconf-editor.ui.h:2
 msgid "Actions"
-msgstr ""
+msgstr "Toiminnot"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Current view actions"
@@ -573,25 +573,22 @@ msgid "Actions"
 msgstr "Toiminnot"
 
 #: ../editor/help-overlay.ui.h:2
-#, fuzzy
 #| msgid "Bookmarks"
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr "Kirjanmerkit"
+msgstr "Kirjanmerkkivalikko"
 
 #: ../editor/help-overlay.ui.h:3
-#, fuzzy
 #| msgid "Bookmark this Location"
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr "Lisää tämä sijainti kirjanmerkkeihin"
+msgstr "Lisää tämä polku kirjanmerkkeihin"
 
 #: ../editor/help-overlay.ui.h:4
-#, fuzzy
 #| msgid "Bookmark this Location"
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr "Lisää tämä sijainti kirjanmerkkeihin"
+msgstr "Poista tämä polku kirjanmerkeistä"
 
 #: ../editor/help-overlay.ui.h:5
 msgctxt "shortcut window"
@@ -616,7 +613,6 @@ msgid "Copy descriptor"
 msgstr "Kuvaus"
 
 #: ../editor/help-overlay.ui.h:9
-#| msgid "Copy"
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Kopioi polku"
@@ -657,19 +653,16 @@ msgid "Show this help"
 msgstr "Näytä tämä ohje"
 
 #: ../editor/help-overlay.ui.h:17
-#| msgid "_About"
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Tietoja"
 
 #: ../editor/help-overlay.ui.h:18
-#| msgid "_Quit"
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Lopeta"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
-#| msgid "dconf Editor"
 msgid "Key Editor"
 msgstr "Avainmuokkain"
 
@@ -698,7 +691,7 @@ msgstr "Tyyppi:"
 
 #: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
 msgid "Custom value"
-msgstr ""
+msgstr "Omavalintainen arvo"
 
 #: ../editor/key-editor.ui.h:4
 msgid "Schema"
@@ -733,7 +726,6 @@ msgstr "Muokkaa…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:205
-#| msgid "Set to Default"
 msgid "Set to default"
 msgstr "Palauta oletusarvo"
 
