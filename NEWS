@@ -1,3 +1,14 @@
+dconf-editor 3.20.1
+=====================
+
+An english typo has been corrected in the welcome dialog, and translations files
+have been updated accordingly.
+
+Translations updated:
+  Esperanto: Kristjan Schmidt
+  Finnish: Jiri Grönroos
+  Greek: Tom Tryfonidis
+
 dconf-editor 3.20.0
 =====================
 
