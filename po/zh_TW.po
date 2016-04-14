@@ -572,7 +572,7 @@ msgid "Thanks for using Dconf Editor for editing your configurations!"
 msgstr "感謝您使用 Dconf 編輯器來編輯您的設定！"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr "別忘了一些選項可能會中斷應用程式，所以要小心。"
 
 #: ../editor/dconf-window.vala:86

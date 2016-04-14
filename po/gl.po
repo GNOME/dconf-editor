@@ -615,7 +615,7 @@ msgid "Thanks for using Dconf Editor for editing your configurations!"
 msgstr "Grazas por usar o Editor de Dconf para editar as súas configuracións!"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Non esqueza que algunhas opcións poden romper aplicativos, teña coidado."
 

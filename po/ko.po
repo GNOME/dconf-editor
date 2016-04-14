@@ -553,7 +553,7 @@ msgid "Thanks for using Dconf Editor for editing your configurations!"
 msgstr "dconf 편집기를 사용해 주셔서 감사합니다. 이 프로그램으로 설정을 편집합니다."
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr "옵션에 따라 잘못 바꾸면 프로그램 실행에 문제가 있을 수도 있습니다. 그러니 주의하십시오."
 
 #: ../editor/dconf-window.vala:86

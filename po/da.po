@@ -618,7 +618,7 @@ msgstr ""
 "Tak fordi du bruger Dconf-redigering til at redigere dine indstillinger."
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Husk på at nogle indstillinger kan få programmer til ikke at virke. Så vær "
 "forsigtig."

@@ -633,7 +633,7 @@ msgstr ""
 "ρυθμίσεων σας!"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Μην ξεχνάτε πως ορισμένες επιλογές μπορεί να κάνουν τις εφαρμογές να μη "
 "λειτουργούν σωστά, γι αυτό να είστε προσεκτικοί"

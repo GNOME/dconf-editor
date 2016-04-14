@@ -625,7 +625,7 @@ msgstr ""
 "Grazie per usare Editor dconf per modificare la proprio configurazione."
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Prestare attenzione: alcune delle opzioni qui presenti potrebbero "
 "danneggiare le applicazioni."

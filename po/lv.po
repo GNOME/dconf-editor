@@ -604,7 +604,7 @@ msgstr ""
 "Paldies, ka izmantojat Dconf redaktoru, lai rediģētu savu konfigurāciju!"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Neaizmirstiet, ka dažas opcijas var salauzt lietotnes, tāpēc esat uzmanīgi."
 

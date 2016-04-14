@@ -618,7 +618,7 @@ msgstr ""
 "konfigurationer!"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Glöm inte att vissa inställningar kan ta sönder program, så var aktsam."
 
