@@ -598,7 +598,7 @@ msgid "Integer [%s..%s]"
 msgstr "מספר חיובי שלם [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "תודה עבור השימוש בערוך Dconf לעריכת התצורה שלך!"
 
 #: ../editor/dconf-window.vala:85

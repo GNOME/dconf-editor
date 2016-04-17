@@ -603,7 +603,7 @@ msgid "Integer [%s..%s]"
 msgstr "Цео број [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Хвала вам што користите Дконф за уређивање ваших подешавања!"
 
 #: ../editor/dconf-window.vala:85

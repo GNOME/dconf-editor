@@ -549,7 +549,7 @@ msgid "Integer [%s..%s]"
 msgstr "Celé číslo [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Ďakujeme za používanie Editora systému Dconf na úpravu vašich konfigurácií!"
 

@@ -599,7 +599,7 @@ msgid "Integer [%s..%s]"
 msgstr "Vesels skaitlis [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Paldies, ka izmantojat Dconf redaktoru, lai rediģētu savu konfigurāciju!"
 

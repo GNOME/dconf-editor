@@ -613,7 +613,7 @@ msgid "Integer [%s..%s]"
 msgstr "Egész [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Köszönjük, hogy a Dconf szerkesztővel szerkeszti a konfigurációt."
 
 #: ../editor/dconf-window.vala:85

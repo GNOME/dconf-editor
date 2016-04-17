@@ -549,7 +549,7 @@ msgid "Integer [%s..%s]"
 msgstr "정수형 [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "dconf 편집기를 사용해 주셔서 감사합니다. 이 프로그램으로 설정을 편집합니다."
 
 #: ../editor/dconf-window.vala:85

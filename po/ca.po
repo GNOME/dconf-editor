@@ -610,7 +610,7 @@ msgid "Integer [%s..%s]"
 msgstr "Enter [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Gràcies per usar l'editor del Dconf per editar les vostres configuracions!"
 

@@ -536,7 +536,7 @@ msgid "Integer [%s..%s]"
 msgstr "Kokonaisluku [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Kiitos kun käytät Dconf-muokkainta asetuksien määrittämiseen!"
 
 #: ../editor/dconf-window.vala:85

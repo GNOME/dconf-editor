@@ -613,7 +613,7 @@ msgid "Integer [%s..%s]"
 msgstr "Heltal [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Tak fordi du bruger Dconf-redigering til at redigere dine indstillinger."
 
