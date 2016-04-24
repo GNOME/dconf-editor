@@ -75,7 +75,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_value_label.label = cool_text_value (key);
         key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
 
-        key.value_changed.connect (() => { key_value_label.label = cool_text_value (key); if (nullable_popover != null) nullable_popover.destroy (); });
+        key.value_changed.connect (() => {
+                key_value_label.label = cool_text_value (key);
+                if (nullable_popover != null)
+                    ((!) nullable_popover).destroy ();
+            });
     }
 
     protected override string get_text ()
@@ -93,7 +97,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.new_section ();
             popover.create_buttons_list (key, false);
 
-            popover.value_changed.connect ((gvariant) => { nullable_popover.destroy (); key.value = gvariant; });
+            popover.value_changed.connect ((gvariant) => {
+                    if (nullable_popover != null)   // shouldn't be needed here (1/4)
+                        ((!) nullable_popover).destroy ();
+                    key.value = gvariant;
+                });
         }
         return true;
     }
@@ -114,7 +122,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_name_label.label = key.name;
         key_info_label.label = key.summary;
 
-        key.value_changed.connect (() => { update (); if (nullable_popover != null) nullable_popover.destroy (); });
+        key.value_changed.connect (() => {
+                update ();
+                if (nullable_popover != null)
+                    ((!) nullable_popover).destroy ();
+            });
     }
 
     protected override string get_text ()
@@ -132,15 +144,27 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.new_section ();
             popover.create_buttons_list (key, true);
 
-            popover.set_to_default.connect (() => { nullable_popover.destroy (); key.set_to_default (); });
-            popover.value_changed.connect ((gvariant) => { nullable_popover.destroy (); key.value = gvariant; });
+            popover.set_to_default.connect (() => {
+                    if (nullable_popover != null)   // shouldn't be needed here (2/4)
+                        ((!) nullable_popover).destroy ();
+                    key.set_to_default ();
+                });
+            popover.value_changed.connect ((gvariant) => {
+                    if (nullable_popover != null)   // shouldn't be needed here (3/4)
+                        ((!) nullable_popover).destroy ();
+                    key.value = gvariant;
+                });
         }
         else if (key.type_string == "<flags>")
         {
             popover.new_section ();
 
             if (!key.is_default)
-                popover.new_action ("default2", () => { nullable_popover.destroy (); key.set_to_default (); });
+                popover.new_action ("default2", () => {
+                        if (nullable_popover != null)   // shouldn't be needed here (4/4)
+                            ((!) nullable_popover).destroy ();
+                        key.set_to_default ();
+                    });
             popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
 
             popover.create_flags_list ((GSettingsKey) key);
@@ -260,11 +284,11 @@ private class ContextPopover : Popover
             flags_actions += simple_action;
 
             simple_action.change_state.connect ((gaction, gvariant) => {
-                    gaction.set_state (gvariant);
+                    gaction.set_state ((!) gvariant);
 
                     string [] new_flags = new string [0];
                     foreach (SimpleAction action in flags_actions)
-                        if (action.state.get_boolean ())
+                        if (((!) action.state).get_boolean ())
                             new_flags += action.name;
                     Variant variant = new Variant.strv (new_flags);
                     value_changed (variant);
