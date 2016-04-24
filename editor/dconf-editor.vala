@@ -156,5 +156,7 @@ class ConfigurationEditor : Gtk.Application
     private void quit_cb ()
     {
         get_active_window ().destroy ();
+
+        base.quit ();
     }
 }

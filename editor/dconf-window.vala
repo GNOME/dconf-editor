@@ -120,13 +120,15 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void on_destroy ()
     {
-        ((Window) this).get_application ().withdraw_notification ("copy");
+        get_application ().withdraw_notification ("copy");
 
         settings.set_string ("saved-view", current_path);
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
         settings.set_boolean ("window-is-fullscreen", window_is_fullscreen);
+
+        base.destroy ();
     }
 
     /*\
@@ -250,7 +252,7 @@ class DConfWindow : ApplicationWindow
     {
         for (uint position = 0;; position++)
         {
-            Object? object = key_model.get_object (position);
+            Object? object = objects.get_object (position);
             if (object == null)
                 return;
 
