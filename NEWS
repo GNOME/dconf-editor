@@ -1,3 +1,18 @@
+dconf-editor 3.21.1
+=====================
+
+Some nullable variables are more correctly checked.
+
+dconf-editor 3.20.2
+=====================
+
+The english wording of the welcome dialog has (again) been improved, and a bug
+appearing when closing the application with the app-menu has been corrected.
+
+Translations updated:
+  Polish: Piotr Drąg
+  Swedish: Anders Jonsson
+
 dconf-editor 3.20.1
 =====================
 
