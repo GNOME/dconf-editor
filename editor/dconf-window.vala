@@ -248,11 +248,14 @@ class DConfWindow : ApplicationWindow
         reset_generic (key_model, true);
     } */
 
-    private void reset_generic (GLib.ListStore objects, bool recursively)
+    private void reset_generic (GLib.ListStore? objects, bool recursively)
     {
+        if (objects == null)
+            return;
+
         for (uint position = 0;; position++)
         {
-            Object? object = objects.get_object (position);
+            Object? object = ((!) objects).get_object (position);
             if (object == null)
                 return;
 
@@ -272,7 +275,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
-        string name = Gdk.keyval_name (event.keyval);
+        string name = Gdk.keyval_name (event.keyval) ?? "";
 
         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
         {

@@ -217,7 +217,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;   // TODO get_header_bar() is [transfer none]
+            ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
         Widget _key_editor_child = create_child ((Key) _key);
         grid.attach (_key_editor_child, 1, 1, 1, 1);
@@ -261,7 +261,7 @@ private class KeyEditor : KeyEditorDialog
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = key.parent.full_name;   // TODO get_header_bar() is [transfer none]
+            ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
         Widget _key_editor_child = create_child ((Key) key);
         grid.attach (_key_editor_child, 1, 6, 1, 1);
