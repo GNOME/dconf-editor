@@ -48,6 +48,8 @@ class DConfWindow : ApplicationWindow
 
     [GtkChild] private MenuButton info_button;
 
+    [GtkChild] private PathBar pathbar;
+
     public DConfWindow ()
     {
         add_action_entries (action_entries, this);
@@ -148,6 +150,7 @@ class DConfWindow : ApplicationWindow
             key_model = model.get_directory (iter).key_model;
             current_path = model.get_directory (iter).full_name;
             bookmarks_button.current_path = current_path;
+            pathbar.set_path (current_path);
 
             GLib.Menu menu = new GLib.Menu ();
             menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2

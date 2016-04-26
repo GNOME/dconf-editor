@@ -8,6 +8,8 @@
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-editor.ui</file>
     <file preprocess="xml-stripblanks">key-editor-no-schema.ui</file>
+    <file preprocess="xml-stripblanks">pathbar.ui</file>
+    <file preprocess="xml-stripblanks">pathbar-item.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
     <file preprocess="xml-stripblanks" alias="menus.ui">dconf-editor-menu.ui</file>

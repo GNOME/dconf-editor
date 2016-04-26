@@ -29,7 +29,9 @@ resource_data = \
 	key-editor-no-schema.ui \
 	bookmarks.ui \
 	bookmark.ui \
-	help-overlay.ui
+	help-overlay.ui \
+	pathbar.ui \
+	pathbar-item.ui
 
 resources.c: $(resource_data)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --target=$@ --generate-source $<
@@ -43,7 +45,8 @@ dconf_editor_SOURCES = \
 	dconf-model.vala \
 	dconf-view.vala \
 	bookmarks.vala \
-	key-list-box-row.vala
+	key-list-box-row.vala \
+	pathbar.vala
 
 desktopdir = $(datadir)/applications
 desktop_in_files = ca.desrt.dconf-editor.desktop.in.in

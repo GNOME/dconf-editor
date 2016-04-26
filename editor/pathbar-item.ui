@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="PathBarItem" parent="GtkButton">
+    <signal name="clicked" handler="on_path_bar_item_clicked"/>
+    <child>
+      <object class="GtkLabel" id="text">
+        <property name="visible">True</property>
+        <property name="ellipsize">middle</property>
+      </object>
+    </child>
+  </template>
+</interface>

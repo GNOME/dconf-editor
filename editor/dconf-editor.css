@@ -18,3 +18,38 @@
 scrolledwindow.sidebar {
   min-width:15em;
 }
+
+.pathbar {
+  margin-left:8px;
+  margin-right:8px;
+}
+
+.pathbar > button {
+  padding-left:0.2em;
+  padding-right:0.2em;
+  margin-left:0.1em;
+  margin-right:0.1em;
+
+  border:none;
+  border-color:transparent;
+  box-shadow:none;
+  background:none;
+  background-color:transparent;
+}
+
+.pathbar > button > label {
+  border-width:2px 0px;
+  border-style:solid;
+  border-color:transparent;
+}
+
+.pathbar > button:hover > label {
+  border-bottom-color:grey;
+}
+
+.pathbar > button:last-child > label,
+.pathbar > button:last-child:hover > label,
+.pathbar > button:nth-last-child(2) > label,
+.pathbar > button:nth-last-child(2):hover > label {
+  border-bottom-color:blue;
+}

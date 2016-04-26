@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="PathBar" parent="GtkBox">
+    <property name="orientation">horizontal</property>
+    <style>
+      <class name="pathbar"/>
+    </style>
+  </template>
+</interface>
