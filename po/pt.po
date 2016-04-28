@@ -4,22 +4,24 @@
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2012, 2013.
 # <> <>, 2015.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
+# Sérgio Cardeira <cardeira dot sergio at gmail dot com>, 2016.
+# Tiago Santos <tiagofsantos81@sapo.pt>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-05 04:23+0000\n"
-"PO-Revision-Date: 2015-12-05 07:43+0000\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
-"Language-Team: Português <palbuquerque73@gmail.com>\n"
+"POT-Creation-Date: 2016-02-18 04:23+0000\n"
+"PO-Revision-Date: 2016-04-28 14:07+0100\n"
+"Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
+"Language-Team: Português <>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\\n\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
 "X-Project-Style: gnome\n"
@@ -135,8 +137,7 @@ msgstr "Uma lista de caminhos marcados"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "Contains all paths bookmarked by the user as an array of strings."
-msgstr ""
-"Contém todos os caminhos marcados do usador como uma matriz de cadeias."
+msgstr "Contém todos os caminhos marcados do usador como uma matriz de cadeias."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid "A flag to restore the last view"
@@ -335,8 +336,7 @@ msgstr "Um inteiro curto, tipo \"n\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
-msgstr ""
-"Um inteiro assinado de 16 bits. Veja também a chave \"integer-16-unsigned\"."
+msgstr "Um inteiro assinado de 16 bits. Veja também a chave \"integer-16-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
 msgid "Flags: choose-colors-you-love"
@@ -362,8 +362,7 @@ msgstr "Um inteiro típico, tipo \"i\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
-msgstr ""
-"Um inteiro assinado de 32 bits. Veja também a chave \"integer-32-unsigned\"."
+msgstr "Um inteiro assinado de 32 bits. Veja também a chave \"integer-32-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
 msgid "An unsigned usual integer, type \"u\""
@@ -371,8 +370,7 @@ msgstr "Um inteiro típico não assinado, tipo \"u\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
-msgstr ""
-"Um inteiro não assinado de 32 bits. Veja também a chave \"integer-32-signed"
+msgstr "Um inteiro não assinado de 32 bits. Veja também a chave \"integer-32-signed"
 "\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
@@ -381,8 +379,7 @@ msgstr "Um inteiro longo, tipo \"x\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
-msgstr ""
-"Um inteiro assinado de 64 bits. Veja também a chave \"integer-64-unsigned\"."
+msgstr "Um inteiro assinado de 64 bits. Veja também a chave \"integer-64-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
 msgid "An unsigned long integer, type \"t\""
@@ -390,8 +387,7 @@ msgstr "Um inteiro longo não assinado, tipo \"t\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
-msgstr ""
-"Um inteiro não assinado de 64 bits. Veja também a chave \"integer-64-signed"
+msgstr "Um inteiro não assinado de 64 bits. Veja também a chave \"integer-64-signed"
 "\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
@@ -462,10 +458,14 @@ msgstr ""
 "cadeia, incluindo a cadeia vazia \"''\" ou pode ser NULL (nada)."
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos de teclado"
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Sobre"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "_Sair"
 
@@ -499,18 +499,21 @@ msgid "Copied to clipboard"
 msgstr "Copiado para a área de transferência"
 
 #: ../editor/dconf-editor.vala:143
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
 "Direitos de autor © 2010-2014 – Canonical Ltd\n"
-"Direitos de autor © 2015 – Arnaud Bonatti"
+"Direitos de autor © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:147
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"Tiago S. <almosthumane@portugalmail.pt>\n"
+"Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Pedro Albuqerque <palbuquerque73@gmail.com>"
 
 #: ../editor/dconf-model.vala:200
@@ -612,14 +615,13 @@ msgid "Integer [%s..%s]"
 msgstr "Inteiro [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your settings!"
+msgid "Thanks for using Dconf Editor for editing your configurations!"
 msgstr ""
 "Obrigado por utilizar o Editor Dconf para editar as suas configurações!"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some options may break applications, so be careful."
-msgstr ""
-"Não se esqueça que algumas opções podem quebrar as suas aplicações, tenha "
+msgid "Don't forget that some option may break applications, so be careful."
+msgstr "Não se esqueça que algumas opções podem quebrar as suas aplicações, tenha "
 "cuidado."
 
 #: ../editor/dconf-window.vala:86
@@ -631,18 +633,119 @@ msgstr "Terei cuidado."
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo da próxima vez."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:151
 msgid "Copy current path"
 msgstr "Copiar caminho atual"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:153
 msgid "Reset visible keys"
 msgstr "Repor chaves visíveis"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:182
 msgid "Oops! Cannot find something at this path."
 msgstr "Oops! Impossível encontrar algo neste caminho."
+
+#: ../editor/help-overlay.ui.h:1
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Ações"
+
+#: ../editor/help-overlay.ui.h:2
+#| msgid "Bookmarks"
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Marcadores"
+
+#: ../editor/help-overlay.ui.h:3
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Marcar esta localização"
+
+#: ../editor/help-overlay.ui.h:4
+#| msgid "Bookmark this Location"
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Desmarcar esta localização"
+
+#: ../editor/help-overlay.ui.h:5
+#| msgid "Search"
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Procurar"
+
+#: ../editor/help-overlay.ui.h:6
+#| msgid "Actions"
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Ações"
+
+#: ../editor/help-overlay.ui.h:7
+#| msgid "Copied to clipboard"
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Área de transferência"
+
+#: ../editor/help-overlay.ui.h:8
+#| msgid "Description"
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Copiar descritor"
+
+#: ../editor/help-overlay.ui.h:9
+#| msgid "Copy current path"
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Copiar caminho"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Vista em árvore"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Expandir"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Expandir todas as sub-árvores"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Colapsar"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Colapsar todas"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Genérico"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Mostrar esta ajuda"
+
+#: ../editor/help-overlay.ui.h:17
+#| msgid "_About"
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Sobre"
+
+#: ../editor/help-overlay.ui.h:18
+#| msgid "_Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Sair"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
