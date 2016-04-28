@@ -7,6 +7,9 @@
       <object class="GtkLabel" id="text">
         <property name="visible">True</property>
         <property name="ellipsize">middle</property>
+        <style>
+          <class name="item"/>
+        </style>
       </object>
     </child>
   </template>

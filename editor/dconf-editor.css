@@ -19,6 +19,10 @@ scrolledwindow.sidebar {
   min-width:15em;
 }
 
+/*\
+* * pathbar
+\*/
+
 .pathbar {
   margin-left:8px;
   margin-right:8px;
@@ -37,19 +41,23 @@ scrolledwindow.sidebar {
   background-color:transparent;
 }
 
-.pathbar > button > label {
+.pathbar > button > .item {
   border-width:2px 0px;
   border-style:solid;
   border-color:transparent;
 }
 
-.pathbar > button:hover > label {
+.pathbar > button:hover > .item {
   border-bottom-color:grey;
 }
 
-.pathbar > button:last-child > label,
-.pathbar > button:last-child:hover > label,
-.pathbar > button:nth-last-child(2) > label,
-.pathbar > button:nth-last-child(2):hover > label {
+.pathbar:dir(ltr) > button:last-child > .item,
+.pathbar:dir(ltr) > button:last-child:hover > .item,
+.pathbar:dir(ltr) > button:nth-last-child(2) > .item,
+.pathbar:dir(ltr) > button:nth-last-child(2):hover > .item,
+.pathbar:dir(rtl) > button:first-child > .item,
+.pathbar:dir(rtl) > button:first-child:hover > .item,
+.pathbar:dir(rtl) > button:nth-child(2) > .item,
+.pathbar:dir(rtl) > button:nth-child(2):hover > .item {
   border-bottom-color:blue;
 }
