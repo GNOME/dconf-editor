@@ -200,7 +200,7 @@ class DConfWindow : ApplicationWindow
         {
             KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
-            key_list_box_row.show_dialog.connect (() => {
+            key_list_box_row.on_row_clicked.connect (() => {
                     KeyEditor key_editor = new KeyEditor ((GSettingsKey) item);
                     key_editor.set_transient_for (this);
                     key_editor.run ();
@@ -211,7 +211,7 @@ class DConfWindow : ApplicationWindow
         {
             KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
-            key_list_box_row.show_dialog.connect (() => {
+            key_list_box_row.on_row_clicked.connect (() => {
                     KeyEditorNoSchema key_editor = new KeyEditorNoSchema ((DConfKey) item);
                     key_editor.set_transient_for (this);
                     key_editor.run ();
@@ -223,7 +223,7 @@ class DConfWindow : ApplicationWindow
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)
     {
-        ListBoxRow list_box_row = (ListBoxRow) ((KeyListBoxRow) widget).get_parent ();
+        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
         key_list_box.select_row (list_box_row);
         list_box_row.grab_focus ();
         return false;
@@ -234,7 +234,7 @@ class DConfWindow : ApplicationWindow
     {
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 2/2
 
-        ((KeyListBoxRow) list_box_row.get_child ()).show_dialog ();
+        ((ClickableListBoxRow) list_box_row.get_child ()).on_row_clicked ();
     }
 
     /*\
@@ -309,7 +309,7 @@ class DConfWindow : ApplicationWindow
                 case "c":
                     ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
-                    application.copy (selected_row == null ? current_path : ((KeyListBoxRow) ((!) selected_row).get_child ()).get_text ());
+                    application.copy (selected_row == null ? current_path : ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ());
                     return true;
                 case "C":
                     ((ConfigurationEditor) get_application ()).copy (current_path);

@@ -17,6 +17,13 @@
 
 using Gtk;
 
+private interface ClickableListBoxRow : Object
+{
+    public signal void on_row_clicked ();
+
+    public abstract string get_text ();
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : EventBox
 {
@@ -24,12 +31,8 @@ private abstract class KeyListBoxRow : EventBox
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
 
-    public signal void show_dialog ();
-
     protected ContextPopover? nullable_popover;
     protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
-
-    public abstract string get_text ();
 
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
@@ -58,7 +61,7 @@ private abstract class KeyListBoxRow : EventBox
     }
 }
 
-private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
+private class KeyListBoxRowEditableNoSchema : KeyListBoxRow, ClickableListBoxRow
 {
     public DConfKey key { get; private set; }
 
@@ -82,14 +85,14 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             });
     }
 
-    protected override string get_text ()
+    protected string get_text ()
     {
         return key.full_name + " " + key.value.print (false);
     }
 
     protected override bool generate_popover (ContextPopover popover)
     {
-        popover.new_action ("customize", () => { show_dialog (); });
+        popover.new_action ("customize", () => { on_row_clicked (); });
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "mb")
@@ -107,7 +110,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     }
 }
 
-private class KeyListBoxRowEditable : KeyListBoxRow
+private class KeyListBoxRowEditable : KeyListBoxRow, ClickableListBoxRow
 {
     public GSettingsKey key { get; private set; }
 
@@ -129,14 +132,14 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             });
     }
 
-    protected override string get_text ()
+    protected string get_text ()
     {
         return key.schema_id + " " + key.name + " " + key.value.print (false);
     }
 
     protected override bool generate_popover (ContextPopover popover)
     {
-        popover.new_action ("customize", () => { show_dialog (); });
+        popover.new_action ("customize", () => { on_row_clicked (); });
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
