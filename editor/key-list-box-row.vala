@@ -24,6 +24,24 @@ private interface ClickableListBoxRow : Object
     public abstract string get_text ();
 }
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
+private class FolderListBoxRow : EventBox, ClickableListBoxRow
+{
+    [GtkChild] private Label folder_name_label;
+    private string full_name;
+
+    public FolderListBoxRow (string label, string path)
+    {
+        folder_name_label.set_text (label);
+        full_name = path;
+    }
+
+    public string get_text ()
+    {
+        return full_name;
+    }
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : EventBox
 {

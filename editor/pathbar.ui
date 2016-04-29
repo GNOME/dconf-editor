@@ -6,5 +6,21 @@
     <style>
       <class name="pathbar"/>
     </style>
+    <child>
+      <object class="GtkButton" id="root_button">
+        <property name="visible">True</property>
+        <property name="focus-on-click">False</property>
+        <signal name="clicked" handler="set_root_path"/>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">dconf-editor-symbolic</property>
+            <style>
+              <class name="item"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
   </template>
 </interface>

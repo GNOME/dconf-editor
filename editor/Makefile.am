@@ -24,6 +24,7 @@ resource_data = \
 	dconf-editor-menu.ui \
 	dconf-editor.css \
 	dconf-editor.ui \
+	folder-list-box-row.ui \
 	key-list-box-row.ui \
 	key-editor.ui \
 	key-editor-no-schema.ui \

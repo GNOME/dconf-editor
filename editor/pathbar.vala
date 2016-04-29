@@ -20,12 +20,14 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar.ui")]
 public class PathBar : Box
 {
+    [GtkChild] Button root_button;
+
     public signal bool path_selected (string path);
 
     public void set_path (string path, bool notify = false)
         requires (path [0] == '/')
     {
-        @foreach ((child) => { child.destroy (); });
+        @foreach ((child) => { if (child != root_button) child.destroy (); });
 
         string [] split = path.split ("/", 0);
 
@@ -54,6 +56,12 @@ public class PathBar : Box
         if (notify)
             if (!path_selected (path))
                 warning ("something has got wrong with pathbar");
+    }
+
+    [GtkCallback]
+    private void set_root_path ()
+    {
+        set_path ("/", true);
     }
 }
 

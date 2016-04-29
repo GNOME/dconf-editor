@@ -15,8 +15,23 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-scrolledwindow.sidebar {
-  min-width:15em;
+/*\
+* * folder rows
+\*/
+
+.dconf-list > row > .folder > grid {
+  background-image:-gtk-icontheme("folder-symbolic");
+  background-size:24px;
+  background-repeat:no-repeat;
+}
+
+.dconf-list:dir(ltr) > row > .folder > grid {
+  padding-left:48px;
+  background-position:12px center;
+}
+.dconf-list:dir(rtl) > row > .folder > grid {
+  padding-right:48px;
+  background-position:calc(100%-12px) center;
 }
 
 /*\

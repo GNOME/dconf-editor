@@ -5,6 +5,7 @@
     <file preprocess="xml-stripblanks">bookmarks.ui</file>
     <file>dconf-editor.css</file>
     <file preprocess="xml-stripblanks">dconf-editor.ui</file>
+    <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-editor.ui</file>
     <file preprocess="xml-stripblanks">key-editor-no-schema.ui</file>

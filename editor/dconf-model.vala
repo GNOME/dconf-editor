@@ -64,6 +64,7 @@ public class Directory : SettingObject
             if (_key_model == null)
             {
                 _key_model = new GLib.ListStore (typeof (SettingObject));
+                create_folders ();
                 create_gsettings_keys ();
                 create_dconf_keys ();
             }
@@ -73,7 +74,20 @@ public class Directory : SettingObject
 
     private void insert_key (Key key)
     {
-        ((!) _key_model).insert_sorted (key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+        ((!) _key_model).insert_sorted ((SettingObject) key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+    }
+
+    /*\
+    * * Folders creation
+    \*/
+
+    public void create_folders ()
+    {
+        children.foreach ((dir) => {
+                ((!) _key_model).insert_sorted ((SettingObject) dir, (a, b) => {
+                        return strcmp (((SettingObject) a).name, ((SettingObject) b).name);
+                    });
+            });
     }
 
     /*\
@@ -327,6 +341,11 @@ public class SettingsModel : Object, Gtk.TreeModel
         create_dconf_views (root);
 
         client.watch_sync ("/");
+    }
+
+    public Directory get_root_directory ()
+    {
+        return root;
     }
 
     /*\

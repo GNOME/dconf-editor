@@ -65,7 +65,7 @@ class DConfWindow : ApplicationWindow
         dir_tree_view.set_model (model);
 
         current_path = settings.get_string ("saved-view");
-        if (!settings.get_boolean ("restore-view") || current_path == "/" || current_path == "" || !scroll_to_path (current_path))
+        if (!settings.get_boolean ("restore-view") || current_path == "" || !scroll_to_path (current_path))
         {
             TreeIter iter;
             if (model.get_iter_first (out iter))
@@ -145,23 +145,26 @@ class DConfWindow : ApplicationWindow
         key_model = null;
 
         TreeIter iter;
+        Directory dir;
         if (dir_tree_selection.get_selected (null, out iter))
-        {
-            key_model = model.get_directory (iter).key_model;
-            current_path = model.get_directory (iter).full_name;
-            bookmarks_button.current_path = current_path;
-            pathbar.set_path (current_path);
+            dir = model.get_directory (iter);
+        else
+            dir = model.get_root_directory ();
 
-            GLib.Menu menu = new GLib.Menu ();
-            menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
-            GLib.Menu section = new GLib.Menu ();
-            section.append (_("Reset visible keys"), "win.reset-visible");
-            /* section.append (_("Reset recursively"), "win.reset-recursive"); */
-            section.freeze ();
-            menu.append_section (null, section);
-            menu.freeze ();
-            info_button.set_menu_model ((MenuModel) menu);
-        }
+        key_model = dir.key_model;
+        current_path = dir.full_name;
+        bookmarks_button.current_path = current_path;
+        pathbar.set_path (current_path);
+
+        GLib.Menu menu = new GLib.Menu ();
+        menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
+        GLib.Menu section = new GLib.Menu ();
+        section.append (_("Reset visible keys"), "win.reset-visible");
+        /* section.append (_("Reset recursively"), "win.reset-recursive"); */
+        section.freeze ();
+        menu.append_section (null, section);
+        menu.freeze ();
+        info_button.set_menu_model ((MenuModel) menu);
 
         key_list_box.bind_model (key_model, new_list_box_row);
     }
@@ -169,6 +172,12 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool scroll_to_path (string full_name)
     {
+        if (full_name == "/")
+        {
+            dir_tree_selection.unselect_all ();
+            return true;
+        }
+
         TreeIter iter;
         if (model.get_iter_first (out iter))
         {
@@ -196,7 +205,17 @@ class DConfWindow : ApplicationWindow
 
     private Widget new_list_box_row (Object item)
     {
-        if (((Key) item).has_schema)
+        if (((SettingObject) item).is_view)
+        {
+            FolderListBoxRow box = new FolderListBoxRow (((SettingObject) item).name, ((SettingObject) item).full_name);
+            box.button_press_event.connect (on_button_pressed);
+            box.on_row_clicked.connect (() => {
+                    if (!scroll_to_path (((SettingObject) item).full_name))
+                        warning ("Something got wrong with this folder.");
+                });
+            return box;
+        }
+        else if (((Key) item).has_schema)
         {
             KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
@@ -328,9 +347,6 @@ class DConfWindow : ApplicationWindow
             bookmarks_button.active = false;
             return false;
         }
-        else if (name == "plus"   || name == "minus" ||
-                 name == "KP_Add" || name == "KP_Subtract")     // https://bugzilla.gnome.org/show_bug.cgi?id=762256 is WONTFIX
-            return false;                                       // TODO GtkTreeView has a weird behaviour if expanding without children
 
         if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
             return false;
@@ -351,17 +367,21 @@ class DConfWindow : ApplicationWindow
             return;
 
         TreeIter iter;
+        bool on_first_directory;
         int position = 0;
         if (dir_tree_selection.get_selected (null, out iter))
         {
             ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
             if (selected_row != null)
                 position = ((!) selected_row).get_index () + 1;
+
+            on_first_directory = true;
         }
-        else if (!model.get_iter_first (out iter))      // TODO doesn't that reset iter?
+        else if (model.get_iter_first (out iter))
+            on_first_directory = false;
+        else
             return;     // TODO better
 
-        bool on_first_directory = true;
         do
         {
             Directory dir = model.get_directory (iter);
@@ -377,8 +397,9 @@ class DConfWindow : ApplicationWindow
             GLib.ListStore key_model = dir.key_model;
             while (position < key_model.get_n_items ())
             {
-                Key key = (Key) key_model.get_object (position);
-                if (key_matches (key, search_entry.text))
+                SettingObject object = (SettingObject) key_model.get_object (position);
+                if (object.name.index_of (search_entry.text) >= 0 || 
+                    (!object.is_view && key_matches ((Key) object, search_entry.text)))
                 {
                     select_dir (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
@@ -404,10 +425,6 @@ class DConfWindow : ApplicationWindow
 
     private bool key_matches (Key key, string text)
     {
-        /* Check key name */
-        if (key.name.index_of (text) >= 0)
-            return true;
-
         /* Check key schema (description) */
         if (key.has_schema)
         {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="FolderListBoxRow" parent="GtkEventBox">
+    <property name="visible">True</property>
+    <style>
+      <class name="folder"/>
+    </style>
+    <child>
+      <object class="GtkGrid">
+        <property name="visible">True</property>
+        <property name="orientation">horizontal</property>
+        <property name="height-request">42</property>
+        <!-- no margin_start: done via CSS -->
+        <property name="column-spacing">6</property>
+        <property name="margin-end">6</property><!-- same as column_spacing -->
+        <property name="hexpand">True</property><!-- TODO add to key-list-box-row.ui? -->
+        <child>
+          <object class="GtkLabel" id="folder_name_label">
+            <property name="visible">True</property>
+            <property name="vexpand">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
