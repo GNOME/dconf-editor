@@ -420,7 +420,6 @@ class DConfWindow : ApplicationWindow
     {
         dir_tree_view.expand_to_path (model.get_path (iter));
         dir_tree_selection.select_iter (iter);
-        dir_tree_view.scroll_to_cell (model.get_path (iter), null, false, 0, 0);
     }
 
     private bool key_matches (Key key, string text)

@@ -148,47 +148,22 @@
           </object>
         </child>
         <child>
-          <object class="GtkPaned">
-            <property name="orientation">horizontal</property>
+          <object class="GtkStack">
             <property name="visible">True</property>
-            <property name="position">100</property>
+            <property name="visible-child">browse-view</property>
             <property name="expand">True</property>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkTreeView" id="dir_tree_view">
                 <property name="visible">False</property>
-                <property name="hscrollbar-policy">never</property>
-                <child>
-                  <object class="GtkTreeView" id="dir_tree_view">
-                    <property name="visible">True</property>
-                    <property name="headers-visible">False</property>
-                    <!-- <property name="activate-on-single-click">True</property> TODO -->
-                    <child>
-                      <object class="GtkTreeViewColumn">
-                        <property name="title">Key</property>
-                        <property name="sizing">autosize</property>
-                        <child>
-                          <object class="GtkCellRendererText"/>
-                          <attributes>
-                            <attribute name="text">1</attribute>
-                          </attributes>
-                        </child>
-                      </object>
-                    </child>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection" id="dir_tree_selection">
-                        <signal name="changed" handler="dir_selected_cb"/>
-                      </object>
-                    </child>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection" id="dir_tree_selection">
+                    <signal name="changed" handler="dir_selected_cb"/>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="resize">False</property>
-                <property name="shrink">False</property>
-              </packing>
             </child>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkScrolledWindow" id="browse-view">
                 <property name="visible">True</property>
                 <child>
                   <object class="GtkListBox" id="key_list_box">
