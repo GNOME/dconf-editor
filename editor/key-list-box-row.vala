@@ -27,8 +27,14 @@ private abstract class ClickableListBoxRow : EventBox
     * * right click popover stuff
     \*/
 
-    protected ContextPopover? nullable_popover;
+    private ContextPopover? nullable_popover = null;
     protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
+
+    protected void destroy_popover ()
+    {
+        if (nullable_popover != null)       // check sometimes not useful
+            ((!) nullable_popover).destroy ();
+    }
 
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
@@ -68,6 +74,14 @@ private class FolderListBoxRow : ClickableListBoxRow
     {
         return full_name;
     }
+
+    protected override bool generate_popover (ContextPopover popover)
+    {
+        popover.new_action ("open", () => { on_row_clicked (); });
+        popover.new_copy_action (get_text ());
+
+        return true;
+    }
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
@@ -102,8 +116,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         key.value_changed.connect (() => {
                 key_value_label.label = cool_text_value (key);
-                if (nullable_popover != null)
-                    ((!) nullable_popover).destroy ();
+                destroy_popover ();
             });
     }
 
@@ -123,8 +136,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.create_buttons_list (key, false);
 
             popover.value_changed.connect ((gvariant) => {
-                    if (nullable_popover != null)   // shouldn't be needed here (1/4)
-                        ((!) nullable_popover).destroy ();
+                    destroy_popover ();
                     key.value = gvariant;
                 });
         }
@@ -149,8 +161,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
         key.value_changed.connect (() => {
                 update ();
-                if (nullable_popover != null)
-                    ((!) nullable_popover).destroy ();
+                destroy_popover ();
             });
     }
 
@@ -170,13 +181,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.create_buttons_list (key, true);
 
             popover.set_to_default.connect (() => {
-                    if (nullable_popover != null)   // shouldn't be needed here (2/4)
-                        ((!) nullable_popover).destroy ();
+                    destroy_popover ();
                     key.set_to_default ();
                 });
             popover.value_changed.connect ((gvariant) => {
-                    if (nullable_popover != null)   // shouldn't be needed here (3/4)
-                        ((!) nullable_popover).destroy ();
+                    destroy_popover ();
                     key.value = gvariant;
                 });
         }
@@ -186,8 +195,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
             if (!key.is_default)
                 popover.new_action ("default2", () => {
-                        if (nullable_popover != null)   // shouldn't be needed here (4/4)
-                            ((!) nullable_popover).destroy ();
+                        destroy_popover ();
                         key.set_to_default ();
                     });
             popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
@@ -254,6 +262,9 @@ private class ContextPopover : Popover
             current_section.append (_("Set to default"), group_dot_action);
         else if (action_action == "default2")
             new_multi_default_action (group_dot_action);
+        else if (action_action == "open")
+            /* Translators: "open folder" action in the right-click menu on a folder */
+            current_section.append (_("Open"), group_dot_action);
         else assert_not_reached ();
     }
 
