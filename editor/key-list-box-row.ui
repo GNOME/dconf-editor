@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="KeyListBoxRow" parent="GtkEventBox">
+  <template class="KeyListBoxRow" parent="ClickableListBoxRow">
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>

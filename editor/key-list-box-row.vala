@@ -17,37 +17,15 @@
 
 using Gtk;
 
-private interface ClickableListBoxRow : Object
+private abstract class ClickableListBoxRow : EventBox
 {
     public signal void on_row_clicked ();
 
     public abstract string get_text ();
-}
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
-private class FolderListBoxRow : EventBox, ClickableListBoxRow
-{
-    [GtkChild] private Label folder_name_label;
-    private string full_name;
-
-    public FolderListBoxRow (string label, string path)
-    {
-        folder_name_label.set_text (label);
-        full_name = path;
-    }
-
-    public string get_text ()
-    {
-        return full_name;
-    }
-}
-
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
-private abstract class KeyListBoxRow : EventBox
-{
-    [GtkChild] protected Label key_name_label;
-    [GtkChild] protected Label key_value_label;
-    [GtkChild] protected Label key_info_label;
+    /*\
+    * * right click popover stuff
+    \*/
 
     protected ContextPopover? nullable_popover;
     protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
@@ -72,6 +50,32 @@ private abstract class KeyListBoxRow : EventBox
 
         return false;
     }
+}
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
+private class FolderListBoxRow : ClickableListBoxRow
+{
+    [GtkChild] private Label folder_name_label;
+    private string full_name;
+
+    public FolderListBoxRow (string label, string path)
+    {
+        folder_name_label.set_text (label);
+        full_name = path;
+    }
+
+    public override string get_text ()
+    {
+        return full_name;
+    }
+}
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
+private abstract class KeyListBoxRow : ClickableListBoxRow
+{
+    [GtkChild] protected Label key_name_label;
+    [GtkChild] protected Label key_value_label;
+    [GtkChild] protected Label key_info_label;
 
     protected static string cool_text_value (Key key)   // TODO better
     {
@@ -79,7 +83,7 @@ private abstract class KeyListBoxRow : EventBox
     }
 }
 
-private class KeyListBoxRowEditableNoSchema : KeyListBoxRow, ClickableListBoxRow
+private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
     public DConfKey key { get; private set; }
 
@@ -103,7 +107,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow, ClickableListBoxRow
             });
     }
 
-    protected string get_text ()
+    protected override string get_text ()
     {
         return key.full_name + " " + key.value.print (false);
     }
@@ -128,7 +132,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow, ClickableListBoxRow
     }
 }
 
-private class KeyListBoxRowEditable : KeyListBoxRow, ClickableListBoxRow
+private class KeyListBoxRowEditable : KeyListBoxRow
 {
     public GSettingsKey key { get; private set; }
 
@@ -150,7 +154,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow, ClickableListBoxRow
             });
     }
 
-    protected string get_text ()
+    protected override string get_text ()
     {
         return key.schema_id + " " + key.name + " " + key.value.print (false);
     }
