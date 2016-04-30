@@ -6,7 +6,6 @@
       <object class="GtkGrid">
         <property name="visible">True</property>
         <property name="orientation">horizontal</property>
-        <property name="height-request">42</property>
         <property name="margin-start">10</property><!-- looks cool -->
         <property name="column-spacing">6</property>
         <property name="margin-end">6</property><!-- same as column_spacing -->

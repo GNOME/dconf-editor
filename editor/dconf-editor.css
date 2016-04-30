@@ -16,23 +16,40 @@
 */
 
 /*\
-* * folder rows
+* * rows height and icon
 \*/
 
+/* row height */
+.dconf-list > row {
+  transition:min-height 0.3s;
+}
+            .dconf-list > row { min-height:2.6rem; }
+.small-rows .dconf-list > row { min-height:1.3rem; }
+
+/* folder icon */
 .dconf-list > row > .folder > grid {
   background-image:-gtk-icontheme("folder-symbolic");
-  background-size:24px;
   background-repeat:no-repeat;
+
+  transition:background-position 0.3s,
+             background-size 0.3s,
+             padding-left 0.3s,
+             padding-right 0.3s; /* warning: ltr/rtl */
 }
 
-.dconf-list:dir(ltr) > row > .folder > grid {
-  padding-left:48px;
-  background-position:12px center;
-}
-.dconf-list:dir(rtl) > row > .folder > grid {
-  padding-right:48px;
-  background-position:calc(100%-12px) center;
-}
+/* visual padding: 0.75rem */
+.dconf-list:dir(ltr) > row > .folder > grid { background-position:0.75rem              center; }
+.dconf-list:dir(rtl) > row > .folder > grid { background-position:calc(100% - 0.75rem) center; }
+
+/* icon sizing */
+            .dconf-list > row > .folder > grid { background-size:1.5rem; }
+.small-rows .dconf-list > row > .folder > grid { background-size:0.75rem; }
+
+/* technical padding: (2 * visual padding) + icon size */
+            .dconf-list:dir(ltr) > row > .folder > grid { padding-left:  3rem; }
+.small-rows .dconf-list:dir(ltr) > row > .folder > grid { padding-left:  2.25rem; }
+            .dconf-list:dir(rtl) > row > .folder > grid { padding-right: 3rem; }
+.small-rows .dconf-list:dir(rtl) > row > .folder > grid { padding-right: 2.25rem; }
 
 /*\
 * * pathbar

@@ -62,6 +62,17 @@ class DConfWindow : ApplicationWindow
 
         search_bar.connect_entry (search_entry);
 
+        settings.changed["theme"].connect (() => {
+                string theme = settings.get_string ("theme");
+                StyleContext context = get_style_context ();
+                if (theme == "three-twenty-two" && context.has_class ("small-rows"))
+                    context.remove_class ("small-rows");
+                else if (theme == "small-rows" && !context.has_class ("small-rows"))
+                    context.add_class ("small-rows");
+            });
+        if (settings.get_string ("theme") == "small-rows")
+            get_style_context ().add_class ("small-rows");
+
         dir_tree_view.set_model (model);
 
         current_path = settings.get_string ("saved-view");

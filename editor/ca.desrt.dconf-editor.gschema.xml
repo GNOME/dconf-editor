@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain='dconf'>
+  <enum id="ca.desrt.dconf-editor.Themes">
+    <value value="0" nick="three-twenty-two"/>
+    <value value="1" nick="small-rows"/>
+  </enum>
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
@@ -41,6 +45,11 @@
       <default>true</default>
       <summary>Show initial warning</summary>
       <description>If 'true', Dconf Editor opens a popup when launched reminding the user to be careful.</description>
+    </key>
+    <key name="theme" enum="ca.desrt.dconf-editor.Themes">
+      <default>'three-twenty-two'</default>
+      <summary>The theme of the navigation list</summary>
+      <description>The themes are defined by the application, you cannot add one. Two themes are available for now: 'three-twenty-two' that will remain as close as possible to the default theme of the 3.22 release, and 'small-rows' that tries to minimize the rows height.</description>
     </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
