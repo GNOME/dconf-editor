@@ -46,10 +46,23 @@
 .small-rows .dconf-list > row > .folder > grid { background-size:0.75rem; }
 
 /* technical padding: (2 * visual padding) + icon size */
+            .dconf-list:dir(ltr) > row > .key    > grid { padding-left:  10px; } /* looks cool */
             .dconf-list:dir(ltr) > row > .folder > grid { padding-left:  3rem; }
 .small-rows .dconf-list:dir(ltr) > row > .folder > grid { padding-left:  2.25rem; }
+            .dconf-list:dir(rtl) > row > .key    > grid { padding-right: 10px; }
             .dconf-list:dir(rtl) > row > .folder > grid { padding-right: 3rem; }
 .small-rows .dconf-list:dir(rtl) > row > .folder > grid { padding-right: 2.25rem; }
+
+/* technical labels placing */
+            .dconf-list          > row > .key    > grid  label.key-name { min-width:     222px; }
+            .dconf-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 3rem); }
+.small-rows .dconf-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 2.25rem); }
+
+            .dconf-list          > row > .key    > grid > grid          { min-width:400px; }
+
+/* grid spacing and padding-end */
+            .dconf-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
+            .dconf-list:dir(rtl) > row  grid > label { padding-left:  0.5em; }
 
 /*\
 * * pathbar
