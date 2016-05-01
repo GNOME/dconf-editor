@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dconf-editor 3.19.x\n"
+"Project-Id-Version: dconf-editor 3.20.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 20:16+0100\n"
-"PO-Revision-Date: 2016-01-10 20:18+0100\n"
+"POT-Creation-Date: 2016-05-01 18:19+0200\n"
+"PO-Revision-Date: 2016-05-01 18:29+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -81,7 +81,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:140
+#: ../editor/dconf-editor.vala:144
 msgid "dconf Editor"
 msgstr "dconf redigering"
 
@@ -90,7 +90,7 @@ msgid "Configuration editor for dconf"
 msgstr "Konfigurasjonsredigering fo dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:142
+#: ../editor/dconf-editor.vala:146
 msgid "Directly edit your entire configuration database"
 msgstr "Rediger konfigurasjonsdatabasen direkte"
 
@@ -392,20 +392,24 @@ msgid ""
 msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
 msgstr "_Om"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: ../editor/dconf-editor-menu.ui.h:3
 msgid "_Quit"
 msgstr "A_vslutt"
 
 #: ../editor/dconf-editor.ui.h:2
 msgid "Actions"
-msgstr ""
+msgstr "Handlinger"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Current view actions"
-msgstr ""
+msgstr "Handlinger for aktiv visning"
 
 #: ../editor/dconf-editor.ui.h:4
 msgid "Search"
@@ -424,19 +428,19 @@ msgid "Print release version and exit"
 msgstr "Skriv ut versjon og avslutt"
 
 #. #. * * Copy action
-#. #: ../editor/dconf-editor.vala:90
+#. #: ../editor/dconf-editor.vala:94
 msgid "Copied to clipboard"
-msgstr ""
-
-#: ../editor/dconf-editor.vala:143
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015 – Arnaud Bonatti"
-msgstr ""
-"Opphavsrett © 2010-2014 – Canonical Ltd\n"
-"Opphavsrett © 2015 – Arnaud Bonatti"
+msgstr "Kopiert til utklippstavlen"
 
 #: ../editor/dconf-editor.vala:147
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
+msgstr ""
+"Opphavsrett © 2010-2014 – Canonical Ltd\n"
+"Opphavsrett © 2015-2016 – Arnaud Bonatti"
+
+#: ../editor/dconf-editor.vala:151
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
@@ -535,11 +539,13 @@ msgstr "Heltall [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr "Takk for at du bruker Dconf-redigering for å redigere dine konfigurasjoner!"
+msgstr ""
+"Takk for at du bruker Dconf-redigering for å redigere dine konfigurasjoner!"
 
 #: ../editor/dconf-window.vala:85
 msgid "Don't forget that some options may break applications, so be careful."
-msgstr "Ikke glem at noen innstillinger kan forstyrre programmer, så vær forsiktig."
+msgstr ""
+"Ikke glem at noen innstillinger kan forstyrre programmer, så vær forsiktig."
 
 #: ../editor/dconf-window.vala:86
 msgid "I'll be careful."
@@ -550,18 +556,109 @@ msgstr "Jeg skal være forsiktig"
 msgid "Show this dialog next time."
 msgstr "Vis denne dialogen neste gang."
 
-#: ../editor/dconf-window.vala:152
+#: ../editor/dconf-window.vala:153
 msgid "Copy current path"
 msgstr "Kopier denne stien"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:154
+#: ../editor/dconf-window.vala:155
 msgid "Reset visible keys"
 msgstr "Nullstill synlige nøkler"
 
-#: ../editor/dconf-window.vala:183
+#: ../editor/dconf-window.vala:184
 msgid "Oops! Cannot find something at this path."
 msgstr "Oops! Fant ingen ting i denne stien."
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Handlinger"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Bokmerkemeny"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Lag bokmerke for denne lokasjonen"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Fjern bokmerke for denne lokasjonen"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Søkefelt"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Handlingsmeny"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Utklippstavle"
+
+#: ../editor/help-overlay.ui.h:8
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Beskrivelse"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopier sti"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Tree navigation"
+msgstr "Trenavigasjon"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Expand"
+msgstr "Utvid"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Expand all subtrees"
+msgstr "Utvid alle undertrær"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Collapse"
+msgstr "Slå sammen"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Collapse all subtrees"
+msgstr "Slå sammen alle undertrær"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Generisk"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Vis denne hjelpteksten"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Om"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Avslutt"
 
 #: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
 msgid "Key Editor"
@@ -617,21 +714,21 @@ msgid "No Schema Found"
 msgstr "Fant ingen skjema"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:202
+#: ../editor/key-list-box-row.vala:226
 msgid "Customize…"
 msgstr "Tilpass …"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:205
+#: ../editor/key-list-box-row.vala:229
 msgid "Set to default"
 msgstr "Sett til forvalg"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:214
+#: ../editor/key-list-box-row.vala:238
 msgid "Copy"
 msgstr "Kopier"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:336
+#: ../editor/key-list-box-row.vala:360
 msgid "Default value"
 msgstr "Forvalgt verdi"
