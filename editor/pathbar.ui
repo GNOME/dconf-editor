@@ -12,11 +12,10 @@
         <property name="focus-on-click">False</property>
         <signal name="clicked" handler="set_root_path"/>
         <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">dconf-editor-symbolic</property>
+          <object class="GtkLabel">
             <style>
               <class name="item"/>
+              <class name="root-button"/>
             </style>
           </object>
         </child>

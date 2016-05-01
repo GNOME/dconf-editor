@@ -68,9 +68,16 @@
 * * pathbar
 \*/
 
+.root-button {
+  background-image:-gtk-icontheme("dconf-editor-symbolic");
+  background-position:center;
+  background-size:1.1rem;
+  background-repeat:no-repeat;
+  min-width:1.1rem;
+}
+
 .pathbar {
-  margin-left:8px;
-  margin-right:8px;
+  margin:0 2px;
 }
 
 .pathbar > button {
