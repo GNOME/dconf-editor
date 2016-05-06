@@ -67,54 +67,15 @@
               </object>
             </child>
             <child>
-              <object class="GtkListBoxRow">
+              <object class="PropertyRow" id="custom_value_row">
                 <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <child>
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="orientation">horizontal</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="valign">center</property>
-                        <property name="vexpand">true</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Use default value</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSwitch" id="custom_value_switch">
-                        <property name="visible">True</property>
-                        <property name="width-request">100</property><!-- same request than for button_cancel/button_apply -->
-                        <property name="halign">end</property>
-                        <property name="hexpand">True</property>
-                        <property name="valign">center</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
+                <property name="label" translatable="yes">Use default value</property>
               </object>
             </child>
             <child>
-              <object class="GtkListBoxRow">
+              <object class="PropertyRow" id="value_row">
                 <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <child>
-                  <object class="GtkGrid" id="grid">
-                    <property name="visible">True</property>
-                    <property name="orientation">horizontal</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="valign">center</property>
-                        <property name="vexpand">true</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Custom value</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
+                <property name="label" translatable="yes">Custom value</property>
               </object>
             </child>
           </object>

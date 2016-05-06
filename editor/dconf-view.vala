@@ -20,8 +20,10 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
 private class PropertyRow : ListBoxRow
 {
+    bool locked = false;
+
+    [GtkChild] private Grid grid;
     [GtkChild] private Label name_label;
-    [GtkChild] private Label value_label;
 
     public string label { get; construct; }
 
@@ -30,9 +32,54 @@ private class PropertyRow : ListBoxRow
         name_label.set_text (label);
     }
 
-    public void set_text (string text)  /* TODO all properties cannot be edited after construction */
+    public void set_text (string text)
+        requires (locked == false)  /* TODO some properties can be edited after construction */
     {
-        value_label.set_text (text);
+        Label value_label = new Label (text);
+        value_label.valign = Align.START;
+        value_label.xalign = 0;
+        value_label.yalign = 0;
+        value_label.wrap = true;
+        value_label.selectable = true;
+        value_label.max_width_chars = 42;
+        value_label.width_chars = 42;
+        value_label.show ();
+        grid.attach (value_label, 1, 0, 1, 1);
+
+        locked = true;
+    }
+
+    public void set_widget (Widget widget, Widget? warning)
+        requires (locked == false)
+    {
+        grid.attach (widget, 1, 0, 1, 1);
+        widget.valign = Align.CENTER;
+
+        if (warning != null)
+        {
+            grid.row_spacing = 4;
+            grid.attach ((!) warning, 0, 1, 2, 1);
+            warning.hexpand = true;
+            warning.halign = Align.CENTER;
+        }
+
+        locked = true;
+    }
+
+    public Switch set_switch ()
+        requires (locked == false)
+    {
+        Switch custom_value_switch = new Switch ();
+        custom_value_switch.width_request = 100; /* same request than for button_cancel/button_apply on scale 1; TODO better */
+        custom_value_switch.halign = Align.END;
+        custom_value_switch.hexpand = true;
+        custom_value_switch.valign = Align.CENTER;
+        custom_value_switch.show ();
+        grid.attach (custom_value_switch, 1, 0, 1, 1);
+
+        locked = true;
+
+        return custom_value_switch;
     }
 }
 
@@ -223,9 +270,8 @@ private abstract class KeyEditorDialog : Dialog
 private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds; doesn't have a "Custom value" text
 {
     [GtkChild] private Button button_apply;
-    [GtkChild] private Grid grid;
-
     [GtkChild] private PropertyRow type_row;
+    [GtkChild] private PropertyRow value_row;
 
     private DConfKey key;
 
@@ -238,17 +284,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
-        Widget _key_editor_child = create_child ((Key) _key);
-        grid.attach (_key_editor_child, 1, 0, 1, 1);
-        _key_editor_child.valign = Align.CENTER;
-
-        Widget? warning = add_warning ((Key) _key);
-        if (warning != null)
-        {
-            grid.attach ((!) warning, 0, 1, 2, 1);
-            warning.hexpand = true;
-            warning.halign = Align.CENTER;
-        }
+        value_row.set_widget (create_child ((Key) _key), add_warning ((Key) _key));
 
         type_row.set_text (key_to_description ());
 
@@ -267,15 +303,15 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 private class KeyEditor : KeyEditorDialog
 {
     [GtkChild] private Button button_apply;
-    [GtkChild] private Grid grid;
-
     [GtkChild] private PropertyRow schema_row;
     [GtkChild] private PropertyRow summary_row;
     [GtkChild] private PropertyRow description_row;
     [GtkChild] private PropertyRow type_row;
     [GtkChild] private PropertyRow default_row;
+    [GtkChild] private PropertyRow custom_value_row;
+    [GtkChild] private PropertyRow value_row;
 
-    [GtkChild] private Switch custom_value_switch;
+    private Switch custom_value_switch;
 
     protected GSettingsKey key;
 
@@ -288,18 +324,13 @@ private class KeyEditor : KeyEditorDialog
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
-        Widget _key_editor_child = create_child ((Key) key);
-        grid.attach (_key_editor_child, 1, 0, 1, 1);
-        _key_editor_child.valign = Align.CENTER;
-        custom_value_switch.bind_property ("active", _key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+        // actions
 
-        Widget? warning = add_warning ((Key) _key);
-        if (warning != null)
-        {
-            grid.attach ((!) warning, 0, 1, 2, 1);
-            warning.hexpand = true;
-            warning.halign = Align.CENTER;
-        }
+        Widget _key_editor_child = create_child ((Key) key);
+        value_row.set_widget (_key_editor_child, add_warning ((Key) _key));
+
+        custom_value_switch = custom_value_row.set_switch ();
+        custom_value_switch.bind_property ("active", _key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
         // infos
 
