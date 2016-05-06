@@ -113,3 +113,30 @@
 .pathbar:dir(rtl) > button:nth-child(2):hover > .item {
   border-bottom-color:blue;
 }
+
+/*\
+* * properties list
+\*/
+
+/* cool list background and padding */
+list.properties-list {
+  background-color:initial;
+  padding:0.3em 0;
+}
+list.properties-list > row {
+  padding:0 6px; /* align on headerbar's buttons */
+}
+
+/* rows usual height */
+list.properties-list > row > grid > label {
+  min-height:1.5rem;
+  padding-top:0.6rem;
+  padding-bottom:0.6rem;
+}
+
+/* rows content placement */
+list.properties-list > row > grid > :first-child {
+  min-width:12.5rem;
+}
+list.properties-list:dir(ltr) > row > grid > label { padding-right:1em; }
+list.properties-list:dir(rtl) > row > grid > label { padding-left:1em; }

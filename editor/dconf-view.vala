@@ -17,6 +17,25 @@
 
 using Gtk;
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
+private class PropertyRow : ListBoxRow
+{
+    [GtkChild] private Label name_label;
+    [GtkChild] private Label value_label;
+
+    public string label { get; construct; }
+
+    construct
+    {
+        name_label.set_text (label);
+    }
+
+    public void set_text (string text)  /* TODO all properties cannot be edited after construction */
+    {
+        value_label.set_text (text);
+    }
+}
+
 private abstract class KeyEditorDialog : Dialog
 {
     protected bool custom_value_is_valid { get; set; default = true; }
@@ -206,7 +225,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
     [GtkChild] private Button button_apply;
     [GtkChild] private Grid grid;
 
-    [GtkChild] private Label type_label;
+    [GtkChild] private PropertyRow type_row;
 
     private DConfKey key;
 
@@ -220,12 +239,18 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
             ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
         Widget _key_editor_child = create_child ((Key) _key);
-        grid.attach (_key_editor_child, 1, 1, 1, 1);
+        grid.attach (_key_editor_child, 1, 0, 1, 1);
+        _key_editor_child.valign = Align.CENTER;
+
         Widget? warning = add_warning ((Key) _key);
         if (warning != null)
-            grid.attach ((!) warning, 0, 2, 2, 1);
+        {
+            grid.attach ((!) warning, 0, 1, 2, 1);
+            warning.hexpand = true;
+            warning.halign = Align.CENTER;
+        }
 
-        type_label.set_text (key_to_description ());
+        type_row.set_text (key_to_description ());
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
@@ -244,11 +269,11 @@ private class KeyEditor : KeyEditorDialog
     [GtkChild] private Button button_apply;
     [GtkChild] private Grid grid;
 
-    [GtkChild] private Label schema_label;
-    [GtkChild] private Label summary_label;
-    [GtkChild] private Label description_label;
-    [GtkChild] private Label type_label;
-    [GtkChild] private Label default_label;
+    [GtkChild] private PropertyRow schema_row;
+    [GtkChild] private PropertyRow summary_row;
+    [GtkChild] private PropertyRow description_row;
+    [GtkChild] private PropertyRow type_row;
+    [GtkChild] private PropertyRow default_row;
 
     [GtkChild] private Switch custom_value_switch;
 
@@ -264,19 +289,25 @@ private class KeyEditor : KeyEditorDialog
             ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
         Widget _key_editor_child = create_child ((Key) key);
-        grid.attach (_key_editor_child, 1, 6, 1, 1);
+        grid.attach (_key_editor_child, 1, 0, 1, 1);
+        _key_editor_child.valign = Align.CENTER;
         custom_value_switch.bind_property ("active", _key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
         Widget? warning = add_warning ((Key) _key);
         if (warning != null)
-            grid.attach ((!) warning, 0, 7, 2, 1);
+        {
+            grid.attach ((!) warning, 0, 1, 2, 1);
+            warning.hexpand = true;
+            warning.halign = Align.CENTER;
+        }
 
         // infos
 
-        schema_label.set_text (key.schema_id);
-        summary_label.set_text (key.summary);
-        description_label.set_text (key.description);
-        type_label.set_text (key_to_description ());
-        default_label.set_text (Key.cool_text_value_from_variant (key.default_value, key.type_string));
+        schema_row.set_text (key.schema_id);
+        summary_row.set_text (key.summary);
+        description_row.set_text (key.description);
+        type_row.set_text (key_to_description ());
+        default_row.set_text (Key.cool_text_value_from_variant (key.default_value, key.type_string));
 
         // switch
 

@@ -32,7 +32,8 @@ resource_data = \
 	bookmark.ui \
 	help-overlay.ui \
 	pathbar.ui \
-	pathbar-item.ui
+	pathbar-item.ui \
+	property-row.ui
 
 resources.c: $(resource_data)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --target=$@ --generate-source $<

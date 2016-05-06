@@ -50,56 +50,39 @@
           </object>
         </child>
         <child>
-          <object class="GtkGrid" id="grid">
+          <object class="GtkListBox">
             <property name="visible">True</property>
-            <property name="hexpand">True</property>
-            <property name="margin">8</property>
-            <property name="row-spacing">6</property>
-            <property name="column-spacing">12</property>
+            <property name="selection-mode">none</property>
+            <style>
+              <class name="properties-list"/>
+            </style>
             <child>
-              <object class="GtkLabel">
+              <object class="PropertyRow" id="type_row">
                 <property name="visible">True</property>
-                <property name="halign">end</property>
-                <property name="valign">start</property>
                 <property name="label" translatable="yes" comments="Translators: as in datatype (integer, boolean, string, etc.)">Type</property>
               </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
+            </child><!-- TODO report bug; doesn't warn if </child><child> is removed -->
             <child>
-              <object class="GtkLabel">
+              <object class="GtkListBoxRow">
                 <property name="visible">True</property>
-                <property name="halign">end</property>
-                <property name="label" translatable="yes">Custom value</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="type_label">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
-                <property name="wrap">True</property>
-                <property name="selectable">True</property>
                 <property name="can-focus">False</property>
-                <property name="max-width-chars">42</property>
-                <property name="width-chars">42</property>
+                <child>
+                  <object class="GtkGrid" id="grid">
+                    <property name="visible">True</property>
+                    <property name="orientation">horizontal</property>
+                    <property name="row-spacing">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="valign">center</property>
+                        <property name="vexpand">true</property>
+                        <property name="xalign">1</property>
+                        <property name="label" translatable="yes">Custom value</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
             </child>
           </object>
         </child>
