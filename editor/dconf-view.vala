@@ -83,8 +83,19 @@ private class PropertyRow : ListBoxRow
     }
 }
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
 private abstract class KeyEditorDialog : Dialog
 {
+    [GtkChild] protected Button button_apply;
+    [GtkChild] protected InfoBar no_schema_warning;
+    [GtkChild] protected PropertyRow schema_row;
+    [GtkChild] protected PropertyRow summary_row;
+    [GtkChild] protected PropertyRow description_row;
+    [GtkChild] protected PropertyRow type_row;
+    [GtkChild] protected PropertyRow default_row;
+    [GtkChild] protected PropertyRow custom_value_row;
+    [GtkChild] protected PropertyRow value_row;
+
     protected bool custom_value_is_valid { get; set; default = true; }
     protected KeyEditorChild key_editor_child;
 
@@ -266,13 +277,8 @@ private abstract class KeyEditorDialog : Dialog
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor-no-schema.ui")]
 private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds; doesn't have a "Custom value" text
 {
-    [GtkChild] private Button button_apply;
-    [GtkChild] private PropertyRow type_row;
-    [GtkChild] private PropertyRow value_row;
-
     private DConfKey key;
 
     public KeyEditorNoSchema (DConfKey _key)
@@ -289,6 +295,13 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
         type_row.set_text (key_to_description ());
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
+
+        no_schema_warning.show ();
+        schema_row.destroy ();
+        summary_row.destroy ();
+        description_row.destroy ();
+        default_row.destroy ();
+        custom_value_row.destroy ();
     }
 
     protected override void on_response_apply ()
@@ -299,18 +312,8 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
 private class KeyEditor : KeyEditorDialog
 {
-    [GtkChild] private Button button_apply;
-    [GtkChild] private PropertyRow schema_row;
-    [GtkChild] private PropertyRow summary_row;
-    [GtkChild] private PropertyRow description_row;
-    [GtkChild] private PropertyRow type_row;
-    [GtkChild] private PropertyRow default_row;
-    [GtkChild] private PropertyRow custom_value_row;
-    [GtkChild] private PropertyRow value_row;
-
     private Switch custom_value_switch;
 
     protected GSettingsKey key;
@@ -334,6 +337,7 @@ private class KeyEditor : KeyEditorDialog
 
         // infos
 
+        no_schema_warning.destroy ();
         schema_row.set_text (key.schema_id);
         summary_row.set_text (key.summary);
         description_row.set_text (key.description);

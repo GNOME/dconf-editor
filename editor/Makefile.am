@@ -27,7 +27,6 @@ resource_data = \
 	folder-list-box-row.ui \
 	key-list-box-row.ui \
 	key-editor.ui \
-	key-editor-no-schema.ui \
 	bookmarks.ui \
 	bookmark.ui \
 	help-overlay.ui \
