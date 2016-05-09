@@ -29,7 +29,7 @@ msgstr "Signet creat per aqueste emplaçament"
 
 #: ../editor/bookmarks.ui.h:3
 msgid "Toggle to bookmark this location"
-msgstr "Bascula per crear un signet vers aqueste emplaçament"
+msgstr "Bascula per crear un signet cap a aqueste emplaçament"
 
 #: ../editor/bookmarks.ui.h:4
 msgid ""
