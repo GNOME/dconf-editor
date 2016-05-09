@@ -1,3 +1,15 @@
+dconf-editor 3.20.2
+=====================
+
+The english wording of the welcome dialog has (again) been improved, and a bug
+appearing when closing the application with the app-menu has been corrected.
+
+Translations updated:
+  Norwegian bokmål: Kjartan Maraas
+  Polish: Piotr Drąg
+  Portuguese: Sérgio Cardeira & Tiago Santos
+  Swedish: Anders Jonsson
+
 dconf-editor 3.20.1
 =====================
 
