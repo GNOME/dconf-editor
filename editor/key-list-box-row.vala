@@ -39,22 +39,41 @@ private abstract class ClickableListBoxRow : EventBox
     public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
     {
         if (event.button == Gdk.BUTTON_SECONDARY)
+            show_right_click_popover ((int) (event.x - this.get_allocated_width () / 2.0));
+
+        return false;
+    }
+
+    public void hide_right_click_popover ()
+    {
+        if (nullable_popover != null)
+            ((!) nullable_popover).hide ();
+    }
+
+    public void show_right_click_popover (int event_x = 0)
+    {
+        if (nullable_popover == null)
         {
             nullable_popover = new ContextPopover ();
             if (!generate_popover ((!) nullable_popover))
-                return false;
+            {
+                ((!) nullable_popover).destroy ();  // TODO better, again
+                return;
+            }
+
+            ((!) nullable_popover).destroy.connect (() => { nullable_popover = null; });
 
             ((!) nullable_popover).set_relative_to (this);
             ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
-
-            Gdk.Rectangle rect;
-            ((!) nullable_popover).get_pointing_to (out rect);
-            rect.x = (int) (event.x - this.get_allocated_width () / 2.0);
-            ((!) nullable_popover).set_pointing_to (rect);
-            ((!) nullable_popover).show ();
         }
+        else if ((!) nullable_popover.visible)
+            warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click or long Menu key press
 
-        return false;
+        Gdk.Rectangle rect;
+        ((!) nullable_popover).get_pointing_to (out rect);
+        rect.x = event_x;
+        ((!) nullable_popover).set_pointing_to (rect);
+        ((!) nullable_popover).show ();
     }
 }
 
@@ -238,6 +257,16 @@ private class ContextPopover : Popover
         new_section_real ();
 
         bind_model (menu, null);
+
+        key_press_event.connect (on_key_press_event);
+    }
+
+    private bool on_key_press_event (Widget widget, Gdk.EventKey event)
+    {
+        if (Gdk.keyval_name (event.keyval) != "Menu")
+            return false;
+        hide ();
+        return true;
     }
 
     /*\

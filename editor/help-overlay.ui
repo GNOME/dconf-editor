@@ -44,6 +44,13 @@
                 <property name="accelerator">F10</property>
               </object>
             </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Current row menu</property>
+                <property name="accelerator">Menu</property>
+              </object>
+            </child>
           </object>
         </child>
         <child>

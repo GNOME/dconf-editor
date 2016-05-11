@@ -305,6 +305,14 @@ class DConfWindow : ApplicationWindow
     * * Search box
     \*/
 
+    private void discard_row_popover ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return;
+        ((ClickableListBoxRow) ((!) selected_row).get_child ()).hide_right_click_popover ();
+    }
+
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
@@ -317,16 +325,19 @@ class DConfWindow : ApplicationWindow
                 case "b":
                     if (info_button.active)
                         info_button.active = false;
+                    discard_row_popover ();
                     bookmarks_button.clicked ();
                     return true;
                 case "d":
                     if (info_button.active)
                         info_button.active = false;
+                    discard_row_popover ();
                     bookmarks_button.set_bookmarked (true);
                     return true;
                 case "D":
                     if (info_button.active)
                         info_button.active = false;
+                    discard_row_popover ();
                     bookmarks_button.set_bookmarked (false);
                     return true;
                 case "f":
@@ -334,17 +345,21 @@ class DConfWindow : ApplicationWindow
                         bookmarks_button.active = false;
                     if (info_button.active)
                         info_button.active = false;
+                    discard_row_popover ();
                     search_bar.set_search_mode (!search_bar.get_search_mode ());
                     return true;
                 case "c":
+                    discard_row_popover (); // TODO avoid duplicate get_selected_row () call
                     ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row == null ? current_path : ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ());
                     return true;
                 case "C":
+                    discard_row_popover ();
                     ((ConfigurationEditor) get_application ()).copy (current_path);
                     return true;
                 case "F1":
+                    discard_row_popover ();
                     if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
                         return false;   // help overlay
                     ((ConfigurationEditor) get_application ()).about_cb ();
@@ -353,10 +368,35 @@ class DConfWindow : ApplicationWindow
                     break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
             }
         }
-        else if (name == "F10")
+
+        /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
+        if (name == "F10")
         {
-            bookmarks_button.active = false;
+            discard_row_popover ();
+            if (bookmarks_button.active)
+                bookmarks_button.active = false;
             return false;
+        }
+        else if (name == "Menu")
+        {
+            ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
+            if (selected_row != null)
+            {
+                if (bookmarks_button.active)
+                    bookmarks_button.active = false;
+                if (info_button.active)
+                    info_button.active = false;
+                ((ClickableListBoxRow) ((!) selected_row).get_child ()).show_right_click_popover ();
+            }
+            else if (info_button.active == false)
+            {
+                if (bookmarks_button.active)
+                    bookmarks_button.active = false;
+                info_button.active = true;
+            }
+            else
+                info_button.active = false;
+            return true;
         }
 
         if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
@@ -368,6 +408,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void on_menu_button_clicked ()
     {
+        discard_row_popover ();
         search_bar.set_search_mode (false);
     }
 
