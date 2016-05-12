@@ -476,14 +476,9 @@ class DConfWindow : ApplicationWindow
 
     private bool key_matches (Key key, string text)
     {
-        /* Check key schema (description) */
-        if (key.has_schema)
-        {
-            if (((GSettingsKey) key).summary.index_of (text) >= 0)
-                return true;
-            if (((GSettingsKey) key).description.index_of (text) >= 0)
-                return true;
-        }
+        /* Check in key's metadata */
+        if (key.has_schema && ((GSettingsKey) key).search_for (text))
+            return true;
 
         /* Check key value */
         if (key.value.is_of_type (VariantType.STRING) && key.value.get_string ().index_of (text) >= 0)
