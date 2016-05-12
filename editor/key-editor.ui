@@ -81,6 +81,18 @@
               </object>
             </child>
             <child>
+              <object class="PropertyRow" id="minimum_row">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Minimum</property>
+              </object>
+            </child>
+            <child>
+              <object class="PropertyRow" id="maximum_row">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Maximum</property>
+              </object>
+            </child>
+            <child>
               <object class="PropertyRow" id="default_row">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Default</property>

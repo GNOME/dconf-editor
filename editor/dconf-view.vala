@@ -92,6 +92,8 @@ private abstract class KeyEditorDialog : Dialog
     [GtkChild] protected PropertyRow summary_row;
     [GtkChild] protected PropertyRow description_row;
     [GtkChild] protected PropertyRow type_row;
+    [GtkChild] protected PropertyRow minimum_row;
+    [GtkChild] protected PropertyRow maximum_row;
     [GtkChild] protected PropertyRow default_row;
     [GtkChild] protected PropertyRow custom_value_row;
     [GtkChild] protected PropertyRow value_row;
@@ -184,9 +186,9 @@ private abstract class KeyEditorDialog : Dialog
         return (Widget) label;
     }
 
-    protected string key_to_description ()
+    protected static string key_to_description (string type)
     {
-        switch (type_string)
+        switch (type)
         {
             case "b":
                 return _("Boolean");
@@ -199,9 +201,7 @@ private abstract class KeyEditorDialog : Dialog
             case "<flags>":
                 return _("Flags");
             case "d":
-                string min, max;
-                get_min_and_max (out min, out max);
-                return _("Double [%s..%s]").printf (min, max);
+                return _("Double");
             case "h":
                 /* Translators: this handle type is an index; you may maintain the word "handle" */
                 return _("D-Bus handle type");
@@ -218,27 +218,20 @@ private abstract class KeyEditorDialog : Dialog
             case "u":
             case "x":
             case "t":
-                string min, max;
-                get_min_and_max (out min, out max);
-                return _("Integer [%s..%s]").printf (min, max);
+                return _("Integer");
             default:
-                return type_string;
+                return type;
         }
     }
 
-    protected virtual void get_min_and_max (out string min, out string max)
-    {
-        get_min_and_max_string (out min, out max, type_string);
-    }
-
-    private static void get_min_and_max_string (out string min, out string max, string type_string)
+    protected static void get_min_and_max_string (out string min, out string max, string type_string)
     {
         switch (type_string)
         {
             // TODO %I'xx everywhere! but would need support from the spinbutton…
             case "y":
-                min = "%hhu".printf (uint8.MIN);
-                max = "%hhu".printf (uint8.MAX);
+                min = "%hhu".printf (uint8.MIN);    // TODO format as in
+                max = "%hhu".printf (uint8.MAX);    //   cool_text_value_from_variant()
                 return;
             case "n":
                 min = "%'hi".printf (int16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MIN);
@@ -285,6 +278,7 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
     {
         key = _key;
         type_string = key.type_string;
+        string _type_string = key.type_string;
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
@@ -292,7 +286,19 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 
         value_row.set_widget (create_child ((Key) _key), add_warning ((Key) _key));
 
-        type_row.set_text (key_to_description ());
+        type_row.set_text (key_to_description (_type_string));
+        if (_type_string == "d" || _type_string == "y" || _type_string == "n" || _type_string == "q" || _type_string == "i" || _type_string == "u" || _type_string == "x" || _type_string == "t")   // TODO "h"? 1/2
+        {
+            string min, max;
+            get_min_and_max_string (out min, out max, _type_string);
+            minimum_row.set_text (min);
+            maximum_row.set_text (max);
+        }
+        else
+        {
+            minimum_row.destroy ();
+            maximum_row.destroy ();
+        }
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
 
@@ -322,6 +328,7 @@ private class KeyEditor : KeyEditorDialog
     {
         key = _key;
         type_string = key.type_string;
+        string _type_string = key.type_string;
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
@@ -341,7 +348,25 @@ private class KeyEditor : KeyEditorDialog
         schema_row.set_text (key.schema_id);
         summary_row.set_text (key.summary);
         description_row.set_text (key.description);
-        type_row.set_text (key_to_description ());
+        type_row.set_text (key_to_description (_type_string));
+        if (_type_string == "d" || _type_string == "y" || _type_string == "n" || _type_string == "q" || _type_string == "i" || _type_string == "u" || _type_string == "x" || _type_string == "t")   // TODO "h"? 2/2
+        {
+            string min, max;
+            if (key.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
+            {
+                min = Key.cool_text_value_from_variant (key.range_content.get_child_value (0), _type_string);
+                max = Key.cool_text_value_from_variant (key.range_content.get_child_value (1), _type_string);
+            }
+            else
+                get_min_and_max_string (out min, out max, _type_string);
+            minimum_row.set_text (min);
+            maximum_row.set_text (max);
+        }
+        else
+        {
+            minimum_row.destroy ();
+            maximum_row.destroy ();
+        }
         default_row.set_text (Key.cool_text_value_from_variant (key.default_value, key.type_string));
 
         // switch
@@ -349,17 +374,6 @@ private class KeyEditor : KeyEditorDialog
         custom_value_switch.set_active (key.is_default);
         custom_value_switch.notify ["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
-    }
-
-    protected override void get_min_and_max (out string min, out string max)
-    {
-        if (key.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
-        {
-            min = Key.cool_text_value_from_variant (key.range_content.get_child_value (0), key.type_string);
-            max = Key.cool_text_value_from_variant (key.range_content.get_child_value (1), key.type_string);
-        }
-        else
-            base.get_min_and_max (out min, out max);
     }
 
     protected override void on_response_apply ()
