@@ -88,20 +88,18 @@ private abstract class KeyEditorDialog : Dialog
 {
     [GtkChild] protected Button button_apply;
     [GtkChild] protected InfoBar no_schema_warning;
-    [GtkChild] protected PropertyRow schema_row;
-    [GtkChild] protected PropertyRow summary_row;
-    [GtkChild] protected PropertyRow description_row;
-    [GtkChild] protected PropertyRow type_row;
-    [GtkChild] protected PropertyRow minimum_row;
-    [GtkChild] protected PropertyRow maximum_row;
-    [GtkChild] protected PropertyRow default_row;
+    [GtkChild] private PropertyRow schema_row;
+    [GtkChild] private PropertyRow summary_row;
+    [GtkChild] private PropertyRow description_row;
+    [GtkChild] private PropertyRow type_row;
+    [GtkChild] private PropertyRow minimum_row;
+    [GtkChild] private PropertyRow maximum_row;
+    [GtkChild] private PropertyRow default_row;
     [GtkChild] protected PropertyRow custom_value_row;
     [GtkChild] protected PropertyRow value_row;
 
     protected bool custom_value_is_valid { get; set; default = true; }
     protected KeyEditorChild key_editor_child;
-
-    protected string type_string { private get; protected set; }
 
     public KeyEditorDialog ()
     {
@@ -112,6 +110,36 @@ private abstract class KeyEditorDialog : Dialog
     private void response_apply_cb () { on_response_apply (); this.destroy (); }
 
     protected abstract void on_response_apply ();
+
+    protected void setup_rows (bool has_schema, Variant dict)
+    {
+        if (has_schema)
+        {
+            no_schema_warning.destroy ();
+        }
+        else
+        {
+            custom_value_row.destroy ();
+            no_schema_warning.show ();
+        }
+
+        // TODO use VariantDict
+        string tmp_string;
+        if (dict.lookup ("schema-id",     "s", out tmp_string))      schema_row.set_text (tmp_string);
+        else schema_row.destroy ();
+        if (dict.lookup ("summary",       "s", out tmp_string))     summary_row.set_text (tmp_string);
+        else summary_row.destroy ();
+        if (dict.lookup ("description",   "s", out tmp_string)) description_row.set_text (tmp_string);
+        else description_row.destroy ();
+        if (dict.lookup ("type-name",     "s", out tmp_string))        type_row.set_text (tmp_string);
+        else assert_not_reached ();
+        if (dict.lookup ("minimum",       "s", out tmp_string))     minimum_row.set_text (tmp_string);
+        else minimum_row.destroy ();
+        if (dict.lookup ("maximum",       "s", out tmp_string))     maximum_row.set_text (tmp_string);
+        else maximum_row.destroy ();
+        if (dict.lookup ("default-value", "s", out tmp_string))     default_row.set_text (tmp_string);
+        else default_row.destroy ();
+    }
 
     protected Widget create_child (Key key)
     {
@@ -194,8 +222,6 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
     public KeyEditorNoSchema (DConfKey _key)
     {
         key = _key;
-        type_string = key.type_string;
-        string _type_string = key.type_string;
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
@@ -203,28 +229,12 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 
         value_row.set_widget (create_child ((Key) _key), add_warning ((Key) _key));
 
-        type_row.set_text (Key.key_to_description (_type_string));
-        if (_type_string == "d" || _type_string == "y" || _type_string == "n" || _type_string == "q" || _type_string == "i" || _type_string == "u" || _type_string == "x" || _type_string == "t")   // TODO "h"? 1/2
-        {
-            string min, max;
-            Key.get_min_and_max_string (out min, out max, _type_string);
-            minimum_row.set_text (min);
-            maximum_row.set_text (max);
-        }
-        else
-        {
-            minimum_row.destroy ();
-            maximum_row.destroy ();
-        }
+        bool has_schema;
+        unowned Variant [] dict_container;
+        key.properties.get ("(ba{ss})", out has_schema, out dict_container);
+        setup_rows (has_schema, dict_container [0]);
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
-
-        no_schema_warning.show ();
-        schema_row.destroy ();
-        summary_row.destroy ();
-        description_row.destroy ();
-        default_row.destroy ();
-        custom_value_row.destroy ();
     }
 
     protected override void on_response_apply ()
@@ -244,12 +254,17 @@ private class KeyEditor : KeyEditorDialog
     public KeyEditor (GSettingsKey _key)
     {
         key = _key;
-        type_string = key.type_string;
-        string _type_string = key.type_string;
 
         this.title = key.name;
         if (this.use_header_bar == 1)        // TODO else..?
             ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
+
+        // infos
+
+        bool has_schema;
+        unowned Variant [] dict_container;
+        key.properties.get ("(ba{ss})", out has_schema, out dict_container);
+        setup_rows (has_schema, dict_container [0]);
 
         // actions
 
@@ -258,33 +273,6 @@ private class KeyEditor : KeyEditorDialog
 
         custom_value_switch = custom_value_row.set_switch ();
         custom_value_switch.bind_property ("active", _key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
-
-        // infos
-
-        no_schema_warning.destroy ();
-        schema_row.set_text (key.schema_id);
-        summary_row.set_text (key.summary);
-        description_row.set_text (key.description);
-        type_row.set_text (Key.key_to_description (_type_string));
-        if (_type_string == "d" || _type_string == "y" || _type_string == "n" || _type_string == "q" || _type_string == "i" || _type_string == "u" || _type_string == "x" || _type_string == "t")   // TODO "h"? 2/2
-        {
-            string min, max;
-            if (key.range_type == "range")     // TODO test more; and what happen if only min/max is in range?
-            {
-                min = Key.cool_text_value_from_variant (key.range_content.get_child_value (0), _type_string);
-                max = Key.cool_text_value_from_variant (key.range_content.get_child_value (1), _type_string);
-            }
-            else
-                Key.get_min_and_max_string (out min, out max, _type_string);
-            minimum_row.set_text (min);
-            maximum_row.set_text (max);
-        }
-        else
-        {
-            minimum_row.destroy ();
-            maximum_row.destroy ();
-        }
-        default_row.set_text (Key.cool_text_value_from_variant (key.default_value, key.type_string));
 
         // switch
 

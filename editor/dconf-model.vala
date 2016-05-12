@@ -174,11 +174,13 @@ public abstract class Key : SettingObject
     public abstract bool has_schema { get; }
 
     public string type_string { get; protected set; default = "*"; }
+    public Variant properties { owned get; protected set; }
+
     public abstract Variant value { owned get; set; }
 
     public signal void value_changed ();
 
-    public static string key_to_description (string type)
+    protected static string key_to_description (string type)
     {
         switch (type)
         {
@@ -216,7 +218,7 @@ public abstract class Key : SettingObject
         }
     }
 
-    public static void get_min_and_max_string (out string min, out string max, string type_string)
+    protected static void get_min_and_max_string (out string min, out string max, string type_string)
     {
         switch (type_string)
         {
@@ -309,6 +311,11 @@ public abstract class Key : SettingObject
             return _("nothing");
         }
     }
+
+    protected static bool show_min_and_max (string type)
+    {
+        return (type == "d" || type == "y" || type == "n" || type == "q" || type == "i" || type == "u" || type == "x" || type == "t");
+    }
 }
 
 public class DConfKey : Key
@@ -345,6 +352,21 @@ public class DConfKey : Key
 
         this.client = client;
         this.type_string = value.get_type_string ();
+
+        if (show_min_and_max (type_string))
+        {
+            string min, max;
+            get_min_and_max_string (out min, out max, type_string);
+            properties = new Variant.parsed ("(false, [{'type-name', %s},
+                                                       {'minimum', %s},
+                                                       {'maximum', %s}])",
+                                             key_to_description (type_string),
+                                             min,
+                                             max);
+        }
+        else
+            properties = new Variant.parsed ("(false, [{'type-name', %s}])",
+                                             key_to_description (type_string));
     }
 }
 
@@ -352,12 +374,12 @@ public class GSettingsKey : Key
 {
     public override bool has_schema { get { return true; } }
 
-    public string schema_id { get; construct; }
-    public string summary { get; construct; }
-    public string description { get; construct; }
-    public Variant default_value { get; construct; }
-    public string range_type { get; construct; }
-    public Variant range_content { get; construct; }
+    public string schema_id              { get; construct; }
+    public string summary                { get; construct; }
+    public string description    { private get; construct; }
+    public Variant default_value { private get; construct; }
+    public string range_type             { get; construct; }
+    public Variant range_content         { get; construct; }
 
     private GLib.Settings settings;
 
@@ -393,6 +415,43 @@ public class GSettingsKey : Key
         settings.changed [name].connect (() => { value_changed (); });
 
         this.type_string = type_string;
+        if (show_min_and_max (type_string))
+        {
+            string min, max;
+            if (range_type == "range")     // TODO test more; and what happen if only min/max is in range?
+            {
+                min = cool_text_value_from_variant (range_content.get_child_value (0), type_string);
+                max = cool_text_value_from_variant (range_content.get_child_value (1), type_string);
+            }
+            else
+                get_min_and_max_string (out min, out max, type_string);
+
+            properties = new Variant.parsed ("(true, [{'type-name', %s},
+                                                      {'schema-id', %s},
+                                                      {'summary', %s},
+                                                      {'description', %s},
+                                                      {'default-value', %s},
+                                                      {'minimum', %s},
+                                                      {'maximum', %s}])",
+                                             key_to_description (type_string),
+                                             schema_id,
+                                             summary,
+                                             description,
+                                             cool_text_value_from_variant (default_value, type_string),
+                                             min,
+                                             max);
+        }
+        else
+            properties = new Variant.parsed ("(true, [{'type-name', %s},
+                                                      {'schema-id', %s},
+                                                      {'summary', %s},
+                                                      {'description', %s},
+                                                      {'default-value', %s}])",
+                                             key_to_description (type_string),
+                                             schema_id,
+                                             summary,
+                                             description,
+                                             cool_text_value_from_variant (default_value, type_string));
     }
 
     public bool search_for (string text)
