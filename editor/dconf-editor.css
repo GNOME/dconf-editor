@@ -80,6 +80,10 @@
   margin:0 2px;
 }
 
+.pathbar > label {
+  color:alpha(currentColor,0.75);
+}
+
 .pathbar > button {
   padding-left:0.2em;
   padding-right:0.2em;
