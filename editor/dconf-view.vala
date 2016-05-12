@@ -185,89 +185,6 @@ private abstract class KeyEditorDialog : Dialog
         label.halign = Align.START;
         return (Widget) label;
     }
-
-    protected static string key_to_description (string type)
-    {
-        switch (type)
-        {
-            case "b":
-                return _("Boolean");
-            case "s":
-                return _("String");
-            case "as":
-                return _("String array");
-            case "<enum>":
-                return _("Enumeration");
-            case "<flags>":
-                return _("Flags");
-            case "d":
-                return _("Double");
-            case "h":
-                /* Translators: this handle type is an index; you may maintain the word "handle" */
-                return _("D-Bus handle type");
-            case "o":
-                return _("D-Bus object path");
-            case "ao":
-                return _("D-Bus object path array");
-            case "g":
-                return _("D-Bus signature");
-            case "y":       // TODO byte, bytestring, bytestring array
-            case "n":
-            case "q":
-            case "i":
-            case "u":
-            case "x":
-            case "t":
-                return _("Integer");
-            default:
-                return type;
-        }
-    }
-
-    protected static void get_min_and_max_string (out string min, out string max, string type_string)
-    {
-        switch (type_string)
-        {
-            // TODO %I'xx everywhere! but would need support from the spinbutton…
-            case "y":
-                min = "%hhu".printf (uint8.MIN);    // TODO format as in
-                max = "%hhu".printf (uint8.MAX);    //   cool_text_value_from_variant()
-                return;
-            case "n":
-                min = "%'hi".printf (int16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MIN);
-                max = "%'hi".printf (int16.MAX).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MAX);
-                return;
-            case "q":
-                min = "%'hu".printf (uint16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (uint16.MIN);
-                max = "%'hu".printf (uint16.MAX).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (uint16.MAX);
-                return;
-            case "i":
-                min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MIN);
-                max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MAX);
-                return;     // TODO why is 'li' failing to display '-'?
-            case "u":
-                min = "%'u".printf (uint32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (uint32.MIN);
-                max = "%'u".printf (uint32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (uint32.MAX);
-                return;     // TODO is 'lu' failing also?
-            case "x":
-                min = "%'lli".printf (int64.MIN).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (int64.MIN);
-                max = "%'lli".printf (int64.MAX).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (int64.MAX);
-                return;
-            case "t":
-                min = "%'llu".printf (uint64.MIN).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (uint64.MIN);
-                max = "%'llu".printf (uint64.MAX).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (uint64.MAX);
-                return;
-            case "d":
-                min = double.MIN.to_string ();
-                max = double.MAX.to_string ();
-                return;     // TODO something
-            case "h":
-                min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MIN);
-                max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MAX);
-                return;
-            default: assert_not_reached ();
-        }
-    }
 }
 
 private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds; doesn't have a "Custom value" text
@@ -286,11 +203,11 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
 
         value_row.set_widget (create_child ((Key) _key), add_warning ((Key) _key));
 
-        type_row.set_text (key_to_description (_type_string));
+        type_row.set_text (Key.key_to_description (_type_string));
         if (_type_string == "d" || _type_string == "y" || _type_string == "n" || _type_string == "q" || _type_string == "i" || _type_string == "u" || _type_string == "x" || _type_string == "t")   // TODO "h"? 1/2
         {
             string min, max;
-            get_min_and_max_string (out min, out max, _type_string);
+            Key.get_min_and_max_string (out min, out max, _type_string);
             minimum_row.set_text (min);
             maximum_row.set_text (max);
         }
@@ -348,7 +265,7 @@ private class KeyEditor : KeyEditorDialog
         schema_row.set_text (key.schema_id);
         summary_row.set_text (key.summary);
         description_row.set_text (key.description);
-        type_row.set_text (key_to_description (_type_string));
+        type_row.set_text (Key.key_to_description (_type_string));
         if (_type_string == "d" || _type_string == "y" || _type_string == "n" || _type_string == "q" || _type_string == "i" || _type_string == "u" || _type_string == "x" || _type_string == "t")   // TODO "h"? 2/2
         {
             string min, max;
@@ -358,7 +275,7 @@ private class KeyEditor : KeyEditorDialog
                 max = Key.cool_text_value_from_variant (key.range_content.get_child_value (1), _type_string);
             }
             else
-                get_min_and_max_string (out min, out max, _type_string);
+                Key.get_min_and_max_string (out min, out max, _type_string);
             minimum_row.set_text (min);
             maximum_row.set_text (max);
         }

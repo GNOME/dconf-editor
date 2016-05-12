@@ -178,6 +178,89 @@ public abstract class Key : SettingObject
 
     public signal void value_changed ();
 
+    public static string key_to_description (string type)
+    {
+        switch (type)
+        {
+            case "b":
+                return _("Boolean");
+            case "s":
+                return _("String");
+            case "as":
+                return _("String array");
+            case "<enum>":
+                return _("Enumeration");
+            case "<flags>":
+                return _("Flags");
+            case "d":
+                return _("Double");
+            case "h":
+                /* Translators: this handle type is an index; you may maintain the word "handle" */
+                return _("D-Bus handle type");
+            case "o":
+                return _("D-Bus object path");
+            case "ao":
+                return _("D-Bus object path array");
+            case "g":
+                return _("D-Bus signature");
+            case "y":       // TODO byte, bytestring, bytestring array
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":
+                return _("Integer");
+            default:
+                return type;
+        }
+    }
+
+    public static void get_min_and_max_string (out string min, out string max, string type_string)
+    {
+        switch (type_string)
+        {
+            // TODO %I'xx everywhere! but would need support from the spinbutton…
+            case "y":
+                min = "%hhu".printf (uint8.MIN);    // TODO format as in
+                max = "%hhu".printf (uint8.MAX);    //   cool_text_value_from_variant()
+                return;
+            case "n":
+                min = "%'hi".printf (int16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MIN);
+                max = "%'hi".printf (int16.MAX).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MAX);
+                return;
+            case "q":
+                min = "%'hu".printf (uint16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (uint16.MIN);
+                max = "%'hu".printf (uint16.MAX).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (uint16.MAX);
+                return;
+            case "i":
+                min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MIN);
+                max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MAX);
+                return;     // TODO why is 'li' failing to display '-'?
+            case "u":
+                min = "%'u".printf (uint32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (uint32.MIN);
+                max = "%'u".printf (uint32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (uint32.MAX);
+                return;     // TODO is 'lu' failing also?
+            case "x":
+                min = "%'lli".printf (int64.MIN).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (int64.MIN);
+                max = "%'lli".printf (int64.MAX).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (int64.MAX);
+                return;
+            case "t":
+                min = "%'llu".printf (uint64.MIN).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (uint64.MIN);
+                max = "%'llu".printf (uint64.MAX).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (uint64.MAX);
+                return;
+            case "d":
+                min = double.MIN.to_string ();
+                max = double.MAX.to_string ();
+                return;     // TODO something
+            case "h":
+                min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MIN);
+                max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MAX);
+                return;
+            default: assert_not_reached ();
+        }
+    }
+
     public static string cool_text_value_from_variant (Variant variant, string type)        // called from subclasses and from KeyListBoxRow
     {
         switch (type)
