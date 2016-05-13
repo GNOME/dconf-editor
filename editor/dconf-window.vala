@@ -216,31 +216,27 @@ class DConfWindow : ApplicationWindow
 
     private Widget new_list_box_row (Object item)
     {
+        ClickableListBoxRow row;
         if (((SettingObject) item).is_view)
         {
-            FolderListBoxRow box = new FolderListBoxRow (((SettingObject) item).name, ((SettingObject) item).full_name);
-            box.button_press_event.connect (on_button_pressed);
-            box.on_row_clicked.connect (() => {
+            row = new FolderListBoxRow (((SettingObject) item).name, ((SettingObject) item).full_name);
+            row.on_row_clicked.connect (() => {
                     if (!scroll_to_path (((SettingObject) item).full_name))
                         warning ("Something got wrong with this folder.");
                 });
-            return box;
-        }
-        else if (((Key) item).has_schema)
-        {
-            KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
-            key_list_box_row.button_press_event.connect (on_button_pressed);
-            key_list_box_row.on_row_clicked.connect (() => { new_key_editor ((Key) item); });
-            return key_list_box_row;
         }
         else
         {
-            KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
-            key_list_box_row.button_press_event.connect (on_button_pressed);
-            key_list_box_row.on_row_clicked.connect (() => { new_key_editor ((Key) item); });
-            return key_list_box_row;
+            Key key = (Key) item;
+            if (key.has_schema)
+                row = new KeyListBoxRowEditable ((GSettingsKey) key);
+            else
+                row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
+            row.on_row_clicked.connect (() => { new_key_editor (key); });
+            // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
-        // TODO bug: list_box_row is always activated after the dialog destruction if mouse is over at this time
+        row.button_press_event.connect (on_button_pressed);
+        return row;
     }
 
     private void new_key_editor (Key key)
