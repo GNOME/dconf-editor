@@ -125,6 +125,16 @@ private abstract class KeyEditorDialog : Dialog
 
         // TODO use VariantDict
         string tmp_string;
+
+        if (dict.lookup ("key-name",      "s", out tmp_string)) this.title = tmp_string;
+        else (assert_not_reached ());
+        if (dict.lookup ("parent-path",   "s", out tmp_string))
+        {
+            if (this.use_header_bar == 1)        // TODO else..?
+                ((HeaderBar) this.get_header_bar ()).subtitle = tmp_string;   // TODO get_header_bar() is [transfer none]
+        }
+        else (assert_not_reached ());
+
         if (dict.lookup ("schema-id",     "s", out tmp_string))      schema_row.set_text (tmp_string);
         else schema_row.destroy ();
         if (dict.lookup ("summary",       "s", out tmp_string))     summary_row.set_text (tmp_string);
@@ -223,10 +233,6 @@ private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type informa
     {
         key = _key;
 
-        this.title = key.name;
-        if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
-
         value_row.set_widget (create_child ((Key) _key), add_warning ((Key) _key));
 
         bool has_schema;
@@ -254,10 +260,6 @@ private class KeyEditor : KeyEditorDialog
     public KeyEditor (GSettingsKey _key)
     {
         key = _key;
-
-        this.title = key.name;
-        if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = ((!) key.parent).full_name;   // TODO get_header_bar() is [transfer none]
 
         // infos
 
