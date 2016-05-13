@@ -50,66 +50,12 @@
           </object>
         </child>
         <child>
-          <object class="GtkListBox">
+          <object class="GtkListBox" id="listbox">
             <property name="visible">True</property>
             <property name="selection-mode">none</property>
             <style>
               <class name="properties-list"/>
             </style>
-            <child>
-              <object class="PropertyRow" id="schema_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Schema</property>
-              </object>
-            </child><!-- TODO report bug; doesn't warn if </child><child> is removed -->
-            <child>
-              <object class="PropertyRow" id="summary_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Summary</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="description_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Description</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="type_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes" comments="Translators: as in datatype (integer, boolean, string, etc.)">Type</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="minimum_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Minimum</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="maximum_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Maximum</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="default_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Default</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="custom_value_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Use default value</property>
-              </object>
-            </child>
-            <child>
-              <object class="PropertyRow" id="value_row">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Custom value</property>
-              </object>
-            </child>
           </object>
         </child>
       </object>

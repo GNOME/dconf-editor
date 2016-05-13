@@ -2,6 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <template class="PropertyRow" parent="GtkListBoxRow">
+    <property name="visible">True</property>
     <property name="can-focus">False</property>
     <child>
       <object class="GtkGrid" id="grid">

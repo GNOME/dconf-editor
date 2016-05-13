@@ -20,22 +20,14 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
 private class PropertyRow : ListBoxRow
 {
-    bool locked = false;
-
     [GtkChild] private Grid grid;
     [GtkChild] private Label name_label;
 
-    public string label { get; construct; }
-
-    construct
+    public PropertyRow.from_label (string property_name, string property_value)
     {
-        name_label.set_text (label);
-    }
+        name_label.set_text (property_name);
 
-    public void set_text (string text)
-        requires (locked == false)  /* TODO some properties can be edited after construction */
-    {
-        Label value_label = new Label (text);
+        Label value_label = new Label (property_value);
         value_label.valign = Align.START;
         value_label.xalign = 0;
         value_label.yalign = 0;
@@ -45,13 +37,12 @@ private class PropertyRow : ListBoxRow
         value_label.width_chars = 42;
         value_label.show ();
         grid.attach (value_label, 1, 0, 1, 1);
-
-        locked = true;
     }
 
-    public void set_widget (Widget widget, Widget? warning)
-        requires (locked == false)
+    public PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
     {
+        name_label.set_text (property_name);
+
         grid.attach (widget, 1, 0, 1, 1);
         widget.valign = Align.CENTER;
 
@@ -62,24 +53,6 @@ private class PropertyRow : ListBoxRow
             warning.hexpand = true;
             warning.halign = Align.CENTER;
         }
-
-        locked = true;
-    }
-
-    public Switch set_switch ()
-        requires (locked == false)
-    {
-        Switch custom_value_switch = new Switch ();
-        custom_value_switch.width_request = 100; /* same request than for button_cancel/button_apply on scale 1; TODO better */
-        custom_value_switch.halign = Align.END;
-        custom_value_switch.hexpand = true;
-        custom_value_switch.valign = Align.CENTER;
-        custom_value_switch.show ();
-        grid.attach (custom_value_switch, 1, 0, 1, 1);
-
-        locked = true;
-
-        return custom_value_switch;
     }
 }
 
@@ -88,15 +61,7 @@ private class KeyEditor : Dialog
 {
     [GtkChild] private Button button_apply;
     [GtkChild] private InfoBar no_schema_warning;
-    [GtkChild] private PropertyRow schema_row;
-    [GtkChild] private PropertyRow summary_row;
-    [GtkChild] private PropertyRow description_row;
-    [GtkChild] private PropertyRow type_row;
-    [GtkChild] private PropertyRow minimum_row;
-    [GtkChild] private PropertyRow maximum_row;
-    [GtkChild] private PropertyRow default_row;
-    [GtkChild] private PropertyRow custom_value_row;
-    [GtkChild] private PropertyRow value_row;
+    [GtkChild] private ListBox listbox;
 
     // "protected" is for emiting "notify::custom-value-is-valid"; something like [CCode(notify = true)] seems to fail
     protected bool custom_value_is_valid { get; set; default = true; }
@@ -122,25 +87,26 @@ private class KeyEditor : Dialog
         }
         else (assert_not_reached ());
 
-        if (dict.lookup ("schema-id",     "s", out tmp_string))      schema_row.set_text (tmp_string);
-        else schema_row.destroy ();
-        if (dict.lookup ("summary",       "s", out tmp_string))     summary_row.set_text (tmp_string);
-        else summary_row.destroy ();
-        if (dict.lookup ("description",   "s", out tmp_string)) description_row.set_text (tmp_string);
-        else description_row.destroy ();
-        if (dict.lookup ("type-name",     "s", out tmp_string))        type_row.set_text (tmp_string);
+        if (dict.lookup ("schema-id",     "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Schema"),      tmp_string));
+        if (dict.lookup ("summary",       "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Summary"),     tmp_string));
+        if (dict.lookup ("description",   "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Description"), tmp_string));
+        /* Translators: as in datatype (integer, boolean, string, etc.) */
+        if (dict.lookup ("type-name",     "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Type"),        tmp_string));
         else assert_not_reached ();
-        if (dict.lookup ("minimum",       "s", out tmp_string))     minimum_row.set_text (tmp_string);
-        else minimum_row.destroy ();
-        if (dict.lookup ("maximum",       "s", out tmp_string))     maximum_row.set_text (tmp_string);
-        else maximum_row.destroy ();
-        if (dict.lookup ("default-value", "s", out tmp_string))     default_row.set_text (tmp_string);
-        else default_row.destroy ();
+        if (dict.lookup ("minimum",       "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Minimum"),     tmp_string));
+        if (dict.lookup ("maximum",       "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Maximum"),     tmp_string));
+        if (dict.lookup ("default-value", "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Default"),     tmp_string));
 
         Widget key_editor_child = create_child (key);
         if (has_schema)
         {
-            Switch custom_value_switch = custom_value_row.set_switch ();
+            Switch custom_value_switch = new Switch ();
+            custom_value_switch.width_request = 100; /* same request than for button_cancel/button_apply on scale 1; TODO better */
+            custom_value_switch.halign = Align.END;
+            custom_value_switch.hexpand = true;
+            custom_value_switch.show ();
+            listbox.add (new PropertyRow.from_widgets (_("Use default value"), custom_value_switch, null));
+
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
             GSettingsKey gkey = (GSettingsKey) key;
@@ -164,8 +130,6 @@ private class KeyEditor : Dialog
         }
         else
         {
-            custom_value_row.destroy ();
-
             this.response.connect ((dialog, response_id) => {
                     if (response_id == ResponseType.APPLY)
                     {
@@ -176,7 +140,7 @@ private class KeyEditor : Dialog
                     this.destroy ();
                 });
         }
-        value_row.set_widget (key_editor_child, add_warning (key.type_string));
+        listbox.add (new PropertyRow.from_widgets (_("Custom value"), key_editor_child, add_warning (key.type_string)));
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
