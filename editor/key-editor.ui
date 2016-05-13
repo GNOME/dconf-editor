@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="KeyEditorDialog" parent="GtkDialog">
+  <template class="KeyEditor" parent="GtkDialog">
     <property name="visible">False</property>
     <property name="valign">center</property> <!-- TODO bug of GtkDialog, that adds space at the bottom -->
     <property name="modal">True</property>

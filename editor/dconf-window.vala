@@ -230,25 +230,28 @@ class DConfWindow : ApplicationWindow
         {
             KeyListBoxRowEditable key_list_box_row = new KeyListBoxRowEditable ((GSettingsKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
-            key_list_box_row.on_row_clicked.connect (() => {
-                    KeyEditor key_editor = new KeyEditor ((GSettingsKey) item);
-                    key_editor.set_transient_for (this);
-                    key_editor.run ();
-                });
+            key_list_box_row.on_row_clicked.connect (() => { new_key_editor ((Key) item); });
             return key_list_box_row;
         }
         else
         {
             KeyListBoxRowEditableNoSchema key_list_box_row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
             key_list_box_row.button_press_event.connect (on_button_pressed);
-            key_list_box_row.on_row_clicked.connect (() => {
-                    KeyEditorNoSchema key_editor = new KeyEditorNoSchema ((DConfKey) item);
-                    key_editor.set_transient_for (this);
-                    key_editor.run ();
-                });
+            key_list_box_row.on_row_clicked.connect (() => { new_key_editor ((Key) item); });
             return key_list_box_row;
         }
         // TODO bug: list_box_row is always activated after the dialog destruction if mouse is over at this time
+    }
+
+    private void new_key_editor (Key key)
+    {
+        bool has_schema;
+        unowned Variant [] dict_container;
+        key.properties.get ("(ba{ss})", out has_schema, out dict_container);
+
+        KeyEditor key_editor = new KeyEditor (has_schema, dict_container [0], key);
+        key_editor.set_transient_for (this);
+        key_editor.run ();
     }
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)

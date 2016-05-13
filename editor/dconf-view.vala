@@ -84,10 +84,10 @@ private class PropertyRow : ListBoxRow
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
-private abstract class KeyEditorDialog : Dialog
+private class KeyEditor : Dialog
 {
-    [GtkChild] protected Button button_apply;
-    [GtkChild] protected InfoBar no_schema_warning;
+    [GtkChild] private Button button_apply;
+    [GtkChild] private InfoBar no_schema_warning;
     [GtkChild] private PropertyRow schema_row;
     [GtkChild] private PropertyRow summary_row;
     [GtkChild] private PropertyRow description_row;
@@ -95,33 +95,20 @@ private abstract class KeyEditorDialog : Dialog
     [GtkChild] private PropertyRow minimum_row;
     [GtkChild] private PropertyRow maximum_row;
     [GtkChild] private PropertyRow default_row;
-    [GtkChild] protected PropertyRow custom_value_row;
-    [GtkChild] protected PropertyRow value_row;
+    [GtkChild] private PropertyRow custom_value_row;
+    [GtkChild] private PropertyRow value_row;
 
+    // "protected" is for emiting "notify::custom-value-is-valid"; something like [CCode(notify = true)] seems to fail
     protected bool custom_value_is_valid { get; set; default = true; }
-    protected KeyEditorChild key_editor_child;
 
-    public KeyEditorDialog ()
+    public KeyEditor (bool has_schema, Variant dict, Key key)
     {
         Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
-        this.response.connect ((dialog, response_id) => { if (response_id == ResponseType.APPLY) response_apply_cb (); else this.destroy (); });
-    }
 
-    private void response_apply_cb () { on_response_apply (); this.destroy (); }
-
-    protected abstract void on_response_apply ();
-
-    protected void setup_rows (bool has_schema, Variant dict)
-    {
         if (has_schema)
-        {
             no_schema_warning.destroy ();
-        }
         else
-        {
-            custom_value_row.destroy ();
             no_schema_warning.show ();
-        }
 
         // TODO use VariantDict
         string tmp_string;
@@ -149,28 +136,64 @@ private abstract class KeyEditorDialog : Dialog
         else maximum_row.destroy ();
         if (dict.lookup ("default-value", "s", out tmp_string))     default_row.set_text (tmp_string);
         else default_row.destroy ();
+
+        Widget key_editor_child = create_child (key);
+        if (has_schema)
+        {
+            Switch custom_value_switch = custom_value_row.set_switch ();
+            custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            GSettingsKey gkey = (GSettingsKey) key;
+            custom_value_switch.set_active (gkey.is_default);
+            custom_value_switch.notify ["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
+
+            this.response.connect ((dialog, response_id) => {
+                    if (response_id == ResponseType.APPLY)
+                    {
+                        if (!custom_value_switch.active)
+                        {
+                            Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
+                            if (key.value != variant)
+                                key.value = variant;
+                        }
+                        else if (!gkey.is_default)
+                            gkey.set_to_default ();
+                    }
+                    this.destroy ();
+                });
+        }
+        else
+        {
+            custom_value_row.destroy ();
+
+            this.response.connect ((dialog, response_id) => {
+                    if (response_id == ResponseType.APPLY)
+                    {
+                        Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
+                        if (key.value != variant)
+                            key.value = variant;
+                    }
+                    this.destroy ();
+                });
+        }
+        value_row.set_widget (key_editor_child, add_warning (key.type_string));
+
+        notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
 
-    protected Widget create_child (Key key)
+    private Widget create_child (Key key)
     {
         switch (key.type_string)
         {
             case "<enum>":
-                KeyEditorChildEnum _key_editor_child = new KeyEditorChildEnum (key);
-                key_editor_child = (KeyEditorChild) _key_editor_child;
-                return (Widget) _key_editor_child;
+                return (Widget) new KeyEditorChildEnum (key);
             case "<flags>":
-                KeyEditorChildFlags _key_editor_child = new KeyEditorChildFlags ((GSettingsKey) key);
-                key_editor_child = (KeyEditorChild) _key_editor_child;
-                return (Widget) _key_editor_child;
+                return (Widget) new KeyEditorChildFlags ((GSettingsKey) key);
             case "b":
-                KeyEditorChildBool _key_editor_child = new KeyEditorChildBool (key.value.get_boolean ());
-                key_editor_child = (KeyEditorChild) _key_editor_child;
-                return (Widget) _key_editor_child;
+                return (Widget) new KeyEditorChildBool (key.value.get_boolean ());
             case "s":
                 KeyEditorChildString _key_editor_child = new KeyEditorChildString (key.value.get_string ());
-                key_editor_child = (KeyEditorChild) _key_editor_child;
-                key_editor_child.child_activated.connect (response_apply_cb);
+                _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
                 return (Widget) _key_editor_child;
             case "y":
             case "n":
@@ -182,38 +205,35 @@ private abstract class KeyEditorDialog : Dialog
             case "d":
             case "h":
                 KeyEditorChildNumber _key_editor_child = new KeyEditorChildNumber (key);
-                key_editor_child = (KeyEditorChild) _key_editor_child;
-                key_editor_child.child_activated.connect (response_apply_cb);
+                _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
                 return (Widget) _key_editor_child;
             case "mb":
                 KeyEditorChildNullableBool _key_editor_child = new KeyEditorChildNullableBool (key);
-                key_editor_child = (KeyEditorChild) _key_editor_child;
                 return (Widget) _key_editor_child;
-            default:
+            default:    // TODO "o" is a string-only with syntax verification
                 KeyEditorChildDefault _key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
                 _key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
-                key_editor_child = (KeyEditorChild) _key_editor_child;
-                key_editor_child.child_activated.connect (response_apply_cb);
+                _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
                 return (Widget) _key_editor_child;
         }
     }
 
-    protected Widget? add_warning (Key key)
+    private static Widget? add_warning (string type)
     {
-        if (key.type_string != "<flags>" && (("s" in key.type_string && key.type_string != "s") || "g" in key.type_string) || "o" in key.type_string)
+        if (type != "<flags>" && (("s" in type && type != "s") || "g" in type) || "o" in type)
         {
-            if ("m" in key.type_string)
+            if ("m" in type)
                 /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
                 return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks."));
             else
                 return warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks."));
         }
-        else if ("m" in key.type_string && key.type_string != "m" && key.type_string != "mb" && key.type_string != "<enum>")
+        else if ("m" in type && type != "m" && type != "mb" && type != "<enum>")
             /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
             return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."));
         return null;
     }
-    private Widget warning_label (string text)
+    private static Widget warning_label (string text)
     {
         Label label = new Label ("<i>" + text + "</i>");
         label.visible = true;
@@ -222,77 +242,6 @@ private abstract class KeyEditorDialog : Dialog
         label.wrap = true;
         label.halign = Align.START;
         return (Widget) label;
-    }
-}
-
-private class KeyEditorNoSchema : KeyEditorDialog       // TODO add type information, or integrate type information in KeyEditorChilds; doesn't have a "Custom value" text
-{
-    private DConfKey key;
-
-    public KeyEditorNoSchema (DConfKey _key)
-    {
-        key = _key;
-
-        value_row.set_widget (create_child ((Key) _key), add_warning ((Key) _key));
-
-        bool has_schema;
-        unowned Variant [] dict_container;
-        key.properties.get ("(ba{ss})", out has_schema, out dict_container);
-        setup_rows (has_schema, dict_container [0]);
-
-        notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
-    }
-
-    protected override void on_response_apply ()
-    {
-        Variant variant = key_editor_child.get_variant ();
-        if (key.value != variant)
-            key.value = variant;
-    }
-}
-
-private class KeyEditor : KeyEditorDialog
-{
-    private Switch custom_value_switch;
-
-    protected GSettingsKey key;
-
-    public KeyEditor (GSettingsKey _key)
-    {
-        key = _key;
-
-        // infos
-
-        bool has_schema;
-        unowned Variant [] dict_container;
-        key.properties.get ("(ba{ss})", out has_schema, out dict_container);
-        setup_rows (has_schema, dict_container [0]);
-
-        // actions
-
-        Widget _key_editor_child = create_child ((Key) key);
-        value_row.set_widget (_key_editor_child, add_warning ((Key) _key));
-
-        custom_value_switch = custom_value_row.set_switch ();
-        custom_value_switch.bind_property ("active", _key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
-
-        // switch
-
-        custom_value_switch.set_active (key.is_default);
-        custom_value_switch.notify ["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
-        notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
-    }
-
-    protected override void on_response_apply ()
-    {
-        if (!custom_value_switch.active)
-        {
-            Variant variant = key_editor_child.get_variant ();
-            if (key.value != variant)
-                key.value = variant;
-        }
-        else if (!key.is_default)
-            key.set_to_default ();
     }
 }
 
@@ -447,7 +396,7 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
     }
 }
 
-private class KeyEditorChildNumber : SpinButton, KeyEditorChild
+private class KeyEditorChildNumber : SpinButton, KeyEditorChild     // TODO check for correctness of entry value
 {
     private string key_type;
 
