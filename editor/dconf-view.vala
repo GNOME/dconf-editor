@@ -87,15 +87,15 @@ private class KeyEditor : Dialog
         }
         else (assert_not_reached ());
 
-        if (dict.lookup ("schema-id",     "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Schema"),      tmp_string));
-        if (dict.lookup ("summary",       "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Summary"),     tmp_string));
-        if (dict.lookup ("description",   "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Description"), tmp_string));
+        if (dict.lookup ("schema-id",     "s", out tmp_string)) add_row_from_label (_("Schema"),      tmp_string);
+        if (dict.lookup ("summary",       "s", out tmp_string)) add_row_from_label (_("Summary"),     tmp_string);
+        if (dict.lookup ("description",   "s", out tmp_string)) add_row_from_label (_("Description"), tmp_string);
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (dict.lookup ("type-name",     "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Type"),        tmp_string));
+        if (dict.lookup ("type-name",     "s", out tmp_string)) add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
-        if (dict.lookup ("minimum",       "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Minimum"),     tmp_string));
-        if (dict.lookup ("maximum",       "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Maximum"),     tmp_string));
-        if (dict.lookup ("default-value", "s", out tmp_string)) listbox.add (new PropertyRow.from_label (_("Default"),     tmp_string));
+        if (dict.lookup ("minimum",       "s", out tmp_string)) add_row_from_label (_("Minimum"),     tmp_string);
+        if (dict.lookup ("maximum",       "s", out tmp_string)) add_row_from_label (_("Maximum"),     tmp_string);
+        if (dict.lookup ("default-value", "s", out tmp_string)) add_row_from_label (_("Default"),     tmp_string);
 
         Widget key_editor_child = create_child (key);
         if (has_schema)
@@ -105,7 +105,7 @@ private class KeyEditor : Dialog
             custom_value_switch.halign = Align.END;
             custom_value_switch.hexpand = true;
             custom_value_switch.show ();
-            listbox.add (new PropertyRow.from_widgets (_("Use default value"), custom_value_switch, null));
+            add_row_from_widget (_("Use default value"), custom_value_switch, null);
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
@@ -140,7 +140,7 @@ private class KeyEditor : Dialog
                     this.destroy ();
                 });
         }
-        listbox.add (new PropertyRow.from_widgets (_("Custom value"), key_editor_child, add_warning (key.type_string)));
+        add_row_from_widget (_("Custom value"), key_editor_child, key.type_string);
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
@@ -180,6 +180,16 @@ private class KeyEditor : Dialog
                 _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
                 return (Widget) _key_editor_child;
         }
+    }
+
+    private add_row_from_label (string property_name, string property_value)
+    {
+        listbox.add (new PropertyRow.from_label (property_name, property_value));
+    }
+
+    private add_row_from_widget (string property_name, Widget widget, string? type)
+    {
+        listbox.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning (type) : null));
     }
 
     private static Widget? add_warning (string type)
