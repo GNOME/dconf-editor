@@ -182,12 +182,12 @@ private class KeyEditor : Dialog
         }
     }
 
-    private add_row_from_label (string property_name, string property_value)
+    private void add_row_from_label (string property_name, string property_value)
     {
         listbox.add (new PropertyRow.from_label (property_name, property_value));
     }
 
-    private add_row_from_widget (string property_name, Widget widget, string? type)
+    private void add_row_from_widget (string property_name, Widget widget, string? type)
     {
         listbox.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning (type) : null));
     }
