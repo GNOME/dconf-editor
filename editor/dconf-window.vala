@@ -244,10 +244,111 @@ class DConfWindow : ApplicationWindow
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
+        Variant dict = dict_container [0];
 
-        KeyEditor key_editor = new KeyEditor (has_schema, dict_container [0], key);
+        // TODO use VariantDict
+        string tmp_string_1, tmp_string_2;
+
+        if (!dict.lookup ("key-name",     "s", out tmp_string_1)) assert_not_reached ();
+        if (!dict.lookup ("parent-path",  "s", out tmp_string_2)) assert_not_reached ();
+
+        KeyEditor key_editor = new KeyEditor (has_schema, tmp_string_1, tmp_string_2);
+
+        if (!dict.lookup ("type-code",    "s", out tmp_string_1)) assert_not_reached ();
+
+        if (dict.lookup ("schema-id",     "s", out tmp_string_2)) key_editor.add_row_from_label (_("Schema"),      tmp_string_2);
+        if (dict.lookup ("summary",       "s", out tmp_string_2)) key_editor.add_row_from_label (_("Summary"),     tmp_string_2);
+        if (dict.lookup ("description",   "s", out tmp_string_2)) key_editor.add_row_from_label (_("Description"), tmp_string_2);
+        /* Translators: as in datatype (integer, boolean, string, etc.) */
+        if (dict.lookup ("type-name",     "s", out tmp_string_2)) key_editor.add_row_from_label (_("Type"),        tmp_string_2);
+        else assert_not_reached ();
+        if (dict.lookup ("minimum",       "s", out tmp_string_2)) key_editor.add_row_from_label (_("Minimum"),     tmp_string_2);
+        if (dict.lookup ("maximum",       "s", out tmp_string_2)) key_editor.add_row_from_label (_("Maximum"),     tmp_string_2);
+        if (dict.lookup ("default-value", "s", out tmp_string_2)) key_editor.add_row_from_label (_("Default"),     tmp_string_2);
+
+        Widget key_editor_child = create_child (key_editor, key);
+        if (has_schema)
+        {
+            Switch custom_value_switch = new Switch ();
+            custom_value_switch.width_request = 100; /* same request than for button_cancel/button_apply on scale 1; TODO better */
+            custom_value_switch.halign = Align.END;
+            custom_value_switch.hexpand = true;
+            custom_value_switch.show ();
+            key_editor.add_row_from_widget (_("Use default value"), custom_value_switch, null);
+
+            custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+
+            GSettingsKey gkey = (GSettingsKey) key;
+            custom_value_switch.set_active (gkey.is_default);
+            custom_value_switch.notify ["active"].connect (() => { key_editor.switch_is_active (custom_value_switch.get_active ()); });
+
+            key_editor.response.connect ((dialog, response_id) => {
+                    if (response_id == ResponseType.APPLY)
+                    {
+                        if (!custom_value_switch.active)
+                        {
+                            Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
+                            if (key.value != variant)
+                                key.value = variant;
+                        }
+                        else if (!gkey.is_default)
+                            gkey.set_to_default ();
+                    }
+                    dialog.destroy ();
+                });
+        }
+        else
+        {
+            key_editor.response.connect ((dialog, response_id) => {
+                    if (response_id == ResponseType.APPLY)
+                    {
+                        Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
+                        if (key.value != variant)
+                            key.value = variant;
+                    }
+                    dialog.destroy ();
+                });
+        }
+        key_editor.add_row_from_widget (_("Custom value"), key_editor_child, tmp_string_1);
+
         key_editor.set_transient_for (this);
         key_editor.run ();
+    }
+
+    private static Widget create_child (KeyEditor dialog, Key key)
+    {
+        switch (key.type_string)
+        {
+            case "<enum>":
+                return (Widget) new KeyEditorChildEnum (key);
+            case "<flags>":
+                return (Widget) new KeyEditorChildFlags ((GSettingsKey) key);
+            case "b":
+                return (Widget) new KeyEditorChildBool (key.value.get_boolean ());
+            case "s":
+                KeyEditorChildString key_editor_child = new KeyEditorChildString (key.value.get_string ());
+                key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
+                return (Widget) key_editor_child;
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":
+            case "d":
+            case "h":
+                KeyEditorChildNumber key_editor_child = new KeyEditorChildNumber (key);
+                key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
+                return (Widget) key_editor_child;
+            case "mb":
+                return (Widget) new KeyEditorChildNullableBool (key);
+            default:    // TODO "o" is a string-only with syntax verification
+                KeyEditorChildDefault key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
+                key_editor_child.is_valid.connect ((is_valid) => { dialog.custom_value_is_valid = is_valid; });
+                key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
+                return (Widget) key_editor_child;
+        }
     }
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)

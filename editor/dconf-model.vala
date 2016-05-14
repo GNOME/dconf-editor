@@ -359,11 +359,13 @@ public class DConfKey : Key
             get_min_and_max_string (out min, out max, type_string);
             properties = new Variant.parsed ("(false, [{'key-name', %s},
                                                        {'parent-path', %s},
+                                                       {'type-code', %s},
                                                        {'type-name', %s},
                                                        {'minimum', %s},
                                                        {'maximum', %s}])",
                                              name,
                                              ((!) parent).full_name,
+                                             type_string,
                                              key_to_description (type_string),
                                              min,
                                              max);
@@ -371,9 +373,11 @@ public class DConfKey : Key
         else
             properties = new Variant.parsed ("(false, [{'key-name', %s},
                                                        {'parent-path', %s},
+                                                       {'type-code', %s},
                                                        {'type-name', %s}])",
                                              name,
                                              ((!) parent).full_name,
+                                             type_string,
                                              key_to_description (type_string));
     }
 }
@@ -436,6 +440,7 @@ public class GSettingsKey : Key
 
             properties = new Variant.parsed ("(true, [{'key-name', %s},
                                                       {'parent-path', %s},
+                                                      {'type-code', %s},
                                                       {'type-name', %s},
                                                       {'schema-id', %s},
                                                       {'summary', %s},
@@ -445,6 +450,7 @@ public class GSettingsKey : Key
                                                       {'maximum', %s}])",
                                              name,
                                              ((!) parent).full_name,
+                                             type_string,
                                              key_to_description (type_string),
                                              schema_id,
                                              summary,
@@ -456,6 +462,7 @@ public class GSettingsKey : Key
         else
             properties = new Variant.parsed ("(true, [{'key-name', %s},
                                                       {'parent-path', %s},
+                                                      {'type-code', %s},
                                                       {'type-name', %s},
                                                       {'schema-id', %s},
                                                       {'summary', %s},
@@ -463,6 +470,7 @@ public class GSettingsKey : Key
                                                       {'default-value', %s}])",
                                              name,
                                              ((!) parent).full_name,
+                                             type_string,
                                              key_to_description (type_string),
                                              schema_id,
                                              summary,

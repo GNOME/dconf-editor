@@ -63,10 +63,9 @@ private class KeyEditor : Dialog
     [GtkChild] private InfoBar no_schema_warning;
     [GtkChild] private ListBox listbox;
 
-    // "protected" is for emiting "notify::custom-value-is-valid"; something like [CCode(notify = true)] seems to fail
-    protected bool custom_value_is_valid { get; set; default = true; }
+    public bool custom_value_is_valid { get; set; default = true; }
 
-    public KeyEditor (bool has_schema, Variant dict, Key key)
+    public KeyEditor (bool has_schema, string name, string parent_path)
     {
         Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
 
@@ -75,121 +74,27 @@ private class KeyEditor : Dialog
         else
             no_schema_warning.show ();
 
-        // TODO use VariantDict
-        string tmp_string;
+        this.title = name;
 
-        if (dict.lookup ("key-name",      "s", out tmp_string)) this.title = tmp_string;
-        else (assert_not_reached ());
-        if (dict.lookup ("parent-path",   "s", out tmp_string))
-        {
-            if (this.use_header_bar == 1)        // TODO else..?
-                ((HeaderBar) this.get_header_bar ()).subtitle = tmp_string;   // TODO get_header_bar() is [transfer none]
-        }
-        else (assert_not_reached ());
-
-        if (dict.lookup ("schema-id",     "s", out tmp_string)) add_row_from_label (_("Schema"),      tmp_string);
-        if (dict.lookup ("summary",       "s", out tmp_string)) add_row_from_label (_("Summary"),     tmp_string);
-        if (dict.lookup ("description",   "s", out tmp_string)) add_row_from_label (_("Description"), tmp_string);
-        /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (dict.lookup ("type-name",     "s", out tmp_string)) add_row_from_label (_("Type"),        tmp_string);
-        else assert_not_reached ();
-        if (dict.lookup ("minimum",       "s", out tmp_string)) add_row_from_label (_("Minimum"),     tmp_string);
-        if (dict.lookup ("maximum",       "s", out tmp_string)) add_row_from_label (_("Maximum"),     tmp_string);
-        if (dict.lookup ("default-value", "s", out tmp_string)) add_row_from_label (_("Default"),     tmp_string);
-
-        Widget key_editor_child = create_child (key);
-        if (has_schema)
-        {
-            Switch custom_value_switch = new Switch ();
-            custom_value_switch.width_request = 100; /* same request than for button_cancel/button_apply on scale 1; TODO better */
-            custom_value_switch.halign = Align.END;
-            custom_value_switch.hexpand = true;
-            custom_value_switch.show ();
-            add_row_from_widget (_("Use default value"), custom_value_switch, null);
-
-            custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
-
-            GSettingsKey gkey = (GSettingsKey) key;
-            custom_value_switch.set_active (gkey.is_default);
-            custom_value_switch.notify ["active"].connect (() => { button_apply.set_sensitive (custom_value_switch.get_active () ? true : custom_value_is_valid); });
-
-            this.response.connect ((dialog, response_id) => {
-                    if (response_id == ResponseType.APPLY)
-                    {
-                        if (!custom_value_switch.active)
-                        {
-                            Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
-                            if (key.value != variant)
-                                key.value = variant;
-                        }
-                        else if (!gkey.is_default)
-                            gkey.set_to_default ();
-                    }
-                    this.destroy ();
-                });
-        }
-        else
-        {
-            this.response.connect ((dialog, response_id) => {
-                    if (response_id == ResponseType.APPLY)
-                    {
-                        Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
-                        if (key.value != variant)
-                            key.value = variant;
-                    }
-                    this.destroy ();
-                });
-        }
-        add_row_from_widget (_("Custom value"), key_editor_child, key.type_string);
+        if (this.use_header_bar == 1)        // TODO else..?
+            ((HeaderBar) this.get_header_bar ()).subtitle = parent_path;   // TODO get_header_bar() is [transfer none]
 
         notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
     }
 
-    private Widget create_child (Key key)
+    public void switch_is_active (bool active)
     {
-        switch (key.type_string)
-        {
-            case "<enum>":
-                return (Widget) new KeyEditorChildEnum (key);
-            case "<flags>":
-                return (Widget) new KeyEditorChildFlags ((GSettingsKey) key);
-            case "b":
-                return (Widget) new KeyEditorChildBool (key.value.get_boolean ());
-            case "s":
-                KeyEditorChildString _key_editor_child = new KeyEditorChildString (key.value.get_string ());
-                _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
-                return (Widget) _key_editor_child;
-            case "y":
-            case "n":
-            case "q":
-            case "i":
-            case "u":
-            case "x":
-            case "t":
-            case "d":
-            case "h":
-                KeyEditorChildNumber _key_editor_child = new KeyEditorChildNumber (key);
-                _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
-                return (Widget) _key_editor_child;
-            case "mb":
-                KeyEditorChildNullableBool _key_editor_child = new KeyEditorChildNullableBool (key);
-                return (Widget) _key_editor_child;
-            default:    // TODO "o" is a string-only with syntax verification
-                KeyEditorChildDefault _key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
-                _key_editor_child.is_valid.connect ((is_valid) => { custom_value_is_valid = is_valid; });
-                _key_editor_child.child_activated.connect (() => { response (ResponseType.APPLY); });
-                return (Widget) _key_editor_child;
-        }
+        button_apply.set_sensitive (active ? true : custom_value_is_valid);
     }
 
-    private void add_row_from_label (string property_name, string property_value)
+    public void add_row_from_label (string property_name, string property_value)
     {
         listbox.add (new PropertyRow.from_label (property_name, property_value));
     }
 
-    private void add_row_from_widget (string property_name, Widget widget, string? type)
+    public void add_row_from_widget (string property_name, Widget widget, string? type)
     {
-        listbox.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning (type) : null));
+        listbox.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null));
     }
 
     private static Widget? add_warning (string type)
