@@ -42,6 +42,11 @@ class DConfWindow : ApplicationWindow
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     [GtkChild] private Bookmarks bookmarks_button;
 
+    private HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
+    private GenericSet<string> keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
+    [GtkChild] private Revealer revealer;
+    [GtkChild] private Label revealer_label;
+
     [GtkChild] private SearchBar search_bar;
     [GtkChild] private SearchEntry search_entry;
     [GtkChild] private Button search_next_button;
@@ -368,6 +373,48 @@ class DConfWindow : ApplicationWindow
     }
 
     /*\
+    * * Revealer stuff
+    \*/
+
+    private void add_delayed_settings (GSettingsKey key, Variant? new_value)
+    {
+        GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
+        if (settings == null)
+        {
+            settings = new GLib.Settings (key.schema_id);
+            ((!) settings).delay ();
+            delayed_settings_hashtable.insert (key.schema_id, (!) settings);
+        }
+
+        if (new_value == null)
+            ((!) settings).reset (key.name);
+        else
+            ((!) settings).set_value (key.name, (!) new_value);
+
+        if (!keys_awaiting_hashtable.contains (key.descriptor))
+            keys_awaiting_hashtable.add (key.descriptor);
+        revealer_label.set_text (_("%u operations awaiting.").printf (keys_awaiting_hashtable.length));
+
+        revealer.set_reveal_child (true);
+    }
+
+    [GtkCallback]
+    private void apply_delayed_settings ()
+    {
+        revealer.set_reveal_child (false);
+        delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.apply (); return true; });
+        keys_awaiting_hashtable.remove_all ();
+    }
+
+    [GtkCallback]
+    private void dismiss_delayed_settings ()
+    {
+        revealer.set_reveal_child (false);
+        delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.revert (); return true; });
+        keys_awaiting_hashtable.remove_all ();
+    }
+
+    /*\
     * * Action entries
     \*/
 
@@ -395,9 +442,9 @@ class DConfWindow : ApplicationWindow
             SettingObject setting_object = (SettingObject) ((!) object);
             /* if (recursively && setting_object.is_view)
                 reset_generic (((Directory) setting_object).key_model, true);
-            else */ if (setting_object.is_view || !((Key) setting_object).has_schema)
+            else */ if (setting_object.is_view || !((Key) setting_object).has_schema || ((GSettingsKey) setting_object).is_default)
                 continue;
-            ((GSettingsKey) setting_object).set_to_default ();
+            add_delayed_settings ((GSettingsKey) setting_object, null);
         }
     }
 

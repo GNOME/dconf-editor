@@ -186,7 +186,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     protected override string get_text ()
     {
-        return key.schema_id + " " + key.name + " " + key.value.print (false);
+        return key.descriptor + " " + key.value.print (false);
     }
 
     protected override bool generate_popover (ContextPopover popover)
