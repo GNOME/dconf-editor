@@ -22,7 +22,7 @@ class DConfWindow : ApplicationWindow
 {
     private const GLib.ActionEntry [] action_entries =
     {
-        /* { "reset-recursive", reset_recursively }, */
+        { "reset-recursive", reset_recursively },
         { "reset-visible", reset }
     };
 
@@ -176,7 +176,7 @@ class DConfWindow : ApplicationWindow
         menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
         GLib.Menu section = new GLib.Menu ();
         section.append (_("Reset visible keys"), "win.reset-visible");
-        /* section.append (_("Reset recursively"), "win.reset-recursive"); */
+        section.append (_("Reset recursively"), "win.reset-recursive");
         section.freeze ();
         menu.append_section (null, section);
         menu.freeze ();
@@ -423,10 +423,10 @@ class DConfWindow : ApplicationWindow
         reset_generic (key_model, false);
     }
 
-    /* private void reset_recursively ()
+    private void reset_recursively ()
     {
         reset_generic (key_model, true);
-    } */
+    }
 
     private void reset_generic (GLib.ListStore? objects, bool recursively)
     {
@@ -440,11 +440,14 @@ class DConfWindow : ApplicationWindow
                 return;
 
             SettingObject setting_object = (SettingObject) ((!) object);
-            /* if (recursively && setting_object.is_view)
-                reset_generic (((Directory) setting_object).key_model, true);
-            else */ if (setting_object.is_view || !((Key) setting_object).has_schema || ((GSettingsKey) setting_object).is_default)
+            if (setting_object.is_view)
+            {
+                if (recursively)
+                    reset_generic (((Directory) setting_object).key_model, true);
                 continue;
-            add_delayed_settings ((GSettingsKey) setting_object, null);
+            }
+            if (((Key) setting_object).has_schema && !((GSettingsKey) setting_object).is_default)
+                add_delayed_settings ((GSettingsKey) setting_object, null);
         }
     }
 
