@@ -258,24 +258,24 @@ class DConfWindow : ApplicationWindow
         Variant dict = dict_container [0];
 
         // TODO use VariantDict
-        string tmp_string_1, tmp_string_2;
+        string key_name, tmp_string;
 
-        if (!dict.lookup ("key-name",     "s", out tmp_string_1)) assert_not_reached ();
-        if (!dict.lookup ("parent-path",  "s", out tmp_string_2)) assert_not_reached ();
+        if (!dict.lookup ("key-name",     "s", out key_name))   assert_not_reached ();
+        if (!dict.lookup ("parent-path",  "s", out tmp_string)) assert_not_reached ();
 
-        KeyEditor key_editor = new KeyEditor (has_schema, tmp_string_1, tmp_string_2);
+        KeyEditor key_editor = new KeyEditor (has_schema, key_name, tmp_string);
 
-        if (!dict.lookup ("type-code",    "s", out tmp_string_1)) assert_not_reached ();
-
-        if (dict.lookup ("schema-id",     "s", out tmp_string_2)) key_editor.add_row_from_label (_("Schema"),      tmp_string_2);
-        if (dict.lookup ("summary",       "s", out tmp_string_2)) key_editor.add_row_from_label (_("Summary"),     tmp_string_2);
-        if (dict.lookup ("description",   "s", out tmp_string_2)) key_editor.add_row_from_label (_("Description"), tmp_string_2);
+        if (dict.lookup ("schema-id",     "s", out tmp_string)) key_editor.add_row_from_label (_("Schema"),      tmp_string);
+        if (dict.lookup ("summary",       "s", out tmp_string)) key_editor.add_row_from_label (_("Summary"),     tmp_string);
+        if (dict.lookup ("description",   "s", out tmp_string)) key_editor.add_row_from_label (_("Description"), tmp_string);
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (dict.lookup ("type-name",     "s", out tmp_string_2)) key_editor.add_row_from_label (_("Type"),        tmp_string_2);
+        if (dict.lookup ("type-name",     "s", out tmp_string)) key_editor.add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
-        if (dict.lookup ("minimum",       "s", out tmp_string_2)) key_editor.add_row_from_label (_("Minimum"),     tmp_string_2);
-        if (dict.lookup ("maximum",       "s", out tmp_string_2)) key_editor.add_row_from_label (_("Maximum"),     tmp_string_2);
-        if (dict.lookup ("default-value", "s", out tmp_string_2)) key_editor.add_row_from_label (_("Default"),     tmp_string_2);
+        if (dict.lookup ("minimum",       "s", out tmp_string)) key_editor.add_row_from_label (_("Minimum"),     tmp_string);
+        if (dict.lookup ("maximum",       "s", out tmp_string)) key_editor.add_row_from_label (_("Maximum"),     tmp_string);
+        if (dict.lookup ("default-value", "s", out tmp_string)) key_editor.add_row_from_label (_("Default"),     tmp_string);
+
+        if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
 
         Widget key_editor_child = create_child (key_editor, key);
         if (has_schema)
@@ -320,7 +320,7 @@ class DConfWindow : ApplicationWindow
                     dialog.destroy ();
                 });
         }
-        key_editor.add_row_from_widget (_("Custom value"), key_editor_child, tmp_string_1);
+        key_editor.add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
 
         key_editor.set_transient_for (this);
         key_editor.run ();
