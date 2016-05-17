@@ -43,9 +43,12 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Bookmarks bookmarks_button;
 
     private HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
-    private GenericSet<string> keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
+    private GenericSet<string> gsettings_keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
     [GtkChild] private Revealer revealer;
     [GtkChild] private Label revealer_label;
+    private DConf.Client dconf_client = new DConf.Client ();
+    private DConf.Changeset dconf_changeset = new DConf.Changeset ();
+    private HashTable<string, DConfKey> dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey> (str_hash, str_equal);
 
     [GtkChild] private SearchBar search_bar;
     [GtkChild] private SearchEntry search_entry;
@@ -83,9 +86,9 @@ class DConfWindow : ApplicationWindow
         current_path = settings.get_string ("saved-view");
         if (!settings.get_boolean ("restore-view") || current_path == "" || !scroll_to_path (current_path))
         {
-            TreeIter iter;
-            if (model.get_iter_first (out iter))
-                dir_tree_selection.select_iter (iter);
+            current_path = "/";
+            if (!scroll_to_path ("/"))
+                assert_not_reached ();
         }
     }
 
@@ -246,6 +249,9 @@ class DConfWindow : ApplicationWindow
 
     private void new_key_editor (Key key)
     {
+        if (!key.has_schema && ((DConfKey) key).is_ghost)
+            return;
+
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
@@ -376,7 +382,18 @@ class DConfWindow : ApplicationWindow
     * * Revealer stuff
     \*/
 
-    private void add_delayed_settings (GSettingsKey key, Variant? new_value)
+    private void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
+    {
+        dconf_changeset.set (key.full_name, new_value);
+
+        DConfKey? existing_key = dconf_keys_awaiting_hashtable.lookup (key.full_name);
+        if (existing_key == null)
+            dconf_keys_awaiting_hashtable.insert (key.full_name, key);
+
+        update_revealer ();
+    }
+
+    private void add_delayed_glib_settings (GSettingsKey key, Variant? new_value)
     {
         GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
         if (settings == null)
@@ -391,9 +408,21 @@ class DConfWindow : ApplicationWindow
         else
             ((!) settings).set_value (key.name, (!) new_value);
 
-        if (!keys_awaiting_hashtable.contains (key.descriptor))
-            keys_awaiting_hashtable.add (key.descriptor);
-        revealer_label.set_text (_("%u operations awaiting.").printf (keys_awaiting_hashtable.length));
+        if (!gsettings_keys_awaiting_hashtable.contains (key.descriptor))
+            gsettings_keys_awaiting_hashtable.add (key.descriptor);
+
+        update_revealer ();
+    }
+
+    private void update_revealer ()
+        requires (dconf_keys_awaiting_hashtable.length != 0 || gsettings_keys_awaiting_hashtable.length != 0)
+    {
+        if (dconf_keys_awaiting_hashtable.length == 0)
+            revealer_label.set_text (_("%u gsettings operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length));
+        else if (gsettings_keys_awaiting_hashtable.length == 0)
+            revealer_label.set_text (_("%u dconf operations awaiting.").printf (dconf_keys_awaiting_hashtable.length));
+        else
+            revealer_label.set_text (_("%u gsettings operations and %u dconf operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length, dconf_keys_awaiting_hashtable.length));
 
         revealer.set_reveal_child (true);
     }
@@ -402,16 +431,29 @@ class DConfWindow : ApplicationWindow
     private void apply_delayed_settings ()
     {
         revealer.set_reveal_child (false);
+
         delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.apply (); return true; });
-        keys_awaiting_hashtable.remove_all ();
+        gsettings_keys_awaiting_hashtable.remove_all ();
+
+        try {
+            dconf_client.change_sync (dconf_changeset);
+        } catch (Error error) {
+            warning (error.message);
+        }
+        dconf_changeset = new DConf.Changeset ();
+        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => { key.is_ghost = true; return true; });
     }
 
     [GtkCallback]
     private void dismiss_delayed_settings ()
     {
         revealer.set_reveal_child (false);
+
         delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.revert (); return true; });
-        keys_awaiting_hashtable.remove_all ();
+        gsettings_keys_awaiting_hashtable.remove_all ();
+
+        dconf_changeset = new DConf.Changeset ();
+        dconf_keys_awaiting_hashtable.remove_all ();
     }
 
     /*\
@@ -428,7 +470,7 @@ class DConfWindow : ApplicationWindow
         reset_generic (key_model, true);
     }
 
-    private void reset_generic (GLib.ListStore? objects, bool recursively)
+    private void reset_generic (GLib.ListStore? objects, bool recursively)   // TODO notification if nothing to reset
     {
         if (objects == null)
             return;
@@ -446,8 +488,13 @@ class DConfWindow : ApplicationWindow
                     reset_generic (((Directory) setting_object).key_model, true);
                 continue;
             }
-            if (((Key) setting_object).has_schema && !((GSettingsKey) setting_object).is_default)
-                add_delayed_settings ((GSettingsKey) setting_object, null);
+            if (!((Key) setting_object).has_schema)
+            {
+                if (!((DConfKey) setting_object).is_ghost)
+                    add_delayed_dconf_settings ((DConfKey) setting_object, null);
+            }
+            else if (!((GSettingsKey) setting_object).is_default)
+                add_delayed_glib_settings ((GSettingsKey) setting_object, null);
         }
     }
 

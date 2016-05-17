@@ -159,12 +159,15 @@ public class Directory : SettingObject
 
     private void create_dconf_key (string key_id)
     {
-        Key new_key = new DConfKey (client, this, key_id);
+        DConfKey new_key = new DConfKey (client, this, key_id);
         item_changed.connect ((item) => {
                 if ((item.has_suffix ("/") && new_key.full_name.has_prefix (item)) || item == new_key.full_name)    // TODO better
+                {
+                    new_key.is_ghost = client.read (new_key.full_name) == null;
                     new_key.value_changed ();
+                }
             });
-        insert_key (new_key);
+        insert_key ((Key) new_key);
     }
 }
 
@@ -324,13 +327,15 @@ public class DConfKey : Key
 
     private DConf.Client client;
 
+    public bool is_ghost { get; set; default = false; }
+
     private Variant _value;
     public override Variant value
     {
         owned get
         {
-            _value = client.read (full_name);
-            return _value;  // TODO cannot that error?
+            _value = (!) client.read (full_name);
+            return _value;
         }
         set
         {
@@ -339,8 +344,9 @@ public class DConfKey : Key
             {
                 client.write_sync (full_name, value);
             }
-            catch (Error e)
+            catch (Error error)
             {
+                warning (error.message);
             }
             value_changed ();
         }

@@ -58,6 +58,7 @@ private abstract class ClickableListBoxRow : EventBox
             if (!generate_popover ((!) nullable_popover))
             {
                 ((!) nullable_popover).destroy ();  // TODO better, again
+                nullable_popover = null;
                 return;
             }
 
@@ -124,28 +125,39 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     {
         this.key = _key;
 
-        Pango.AttrList attr_list = new Pango.AttrList ();
-        attr_list.insert (Pango.attr_weight_new (Pango.Weight.BOLD));
-        key_name_label.set_attributes (attr_list);
-        key_value_label.set_attributes (attr_list);
-
-        key_name_label.label = key.name;
-        key_value_label.label = cool_text_value (key);
+        update ();
         key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
 
         key.value_changed.connect (() => {
-                key_value_label.label = cool_text_value (key);
+                update ();
                 destroy_popover ();
             });
     }
 
+    private void update ()
+    {
+        if (key.is_ghost)
+        {
+            key_name_label.set_markup (key.name);
+            key_value_label.set_markup ("<i>" + _("Key erased.") + "</i>");
+        }
+        else
+        {
+            key_name_label.set_markup ("<b>" + key.name + "</b>");
+            key_value_label.set_markup ("<b>" + cool_text_value (key) + "</b>");
+        }
+    }
+
     protected override string get_text ()
     {
-        return key.full_name + " " + key.value.print (false);
+        return key.is_ghost ? _("%s (key erased)").printf (key.full_name) : key.full_name + " " + key.value.print (false);
     }
 
     protected override bool generate_popover (ContextPopover popover)
     {
+        if (key.is_ghost)
+            return false;
+
         popover.new_action ("customize", () => { on_row_clicked (); });
         popover.new_copy_action (get_text ());
 
@@ -235,7 +247,6 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     {
         attr_list.change (Pango.attr_weight_new (key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD));
         key_name_label.set_attributes (attr_list);
-        // TODO key_info_label.set_attributes (attr_list); ?
 
         key_value_label.label = cool_text_value (key);
     }
