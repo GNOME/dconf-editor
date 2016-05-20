@@ -323,8 +323,6 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild     // TODO chec
             case "q": min = (double) uint16.MIN;    max = (double) uint16.MAX;  break;
             case "i": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
             case "u": min = (double) uint32.MIN;    max = (double) uint32.MAX;  break;
-            case "x": min = (double) int64.MIN;     max = (double) int64.MAX;   break;
-            case "t": min = (double) uint64.MIN;    max = (double) uint64.MAX;  break;
             case "d": min = (double) double.MIN;    max = (double) double.MAX;  break;
             case "h": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
             default: assert_not_reached ();
@@ -340,8 +338,6 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild     // TODO chec
             case Variant.Class.UINT16:  return (double) variant.get_uint16 ();
             case Variant.Class.INT32:   return (double) variant.get_int32 ();
             case Variant.Class.UINT32:  return (double) variant.get_uint32 ();
-            case Variant.Class.INT64:   return (double) variant.get_int64 ();
-            case Variant.Class.UINT64:  return (double) variant.get_uint64 ();
             case Variant.Class.DOUBLE:  return variant.get_double ();
             case Variant.Class.HANDLE:  return (double) variant.get_handle ();
             default: assert_not_reached ();
@@ -355,12 +351,10 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild     // TODO chec
             case "y": return new Variant.byte   ((uchar) this.get_value ());        // TODO uchar or uint8?
             case "n": return new Variant.int16  ((int16) this.get_value ());
             case "q": return new Variant.uint16 ((uint16) this.get_value ());
-            case "i": return new Variant.int32  ((int) this.get_value ());
-            case "u": return new Variant.uint32 ((int) this.get_value ());
-            case "x": return new Variant.int64  ((int) this.get_value ());
-            case "t": return new Variant.uint64 ((int) this.get_value ());
+            case "i": return new Variant.int32  ((int32) this.get_value ());
+            case "u": return new Variant.uint32 ((uint32) this.get_value ());
             case "d": return new Variant.double (this.get_value ());
-            case "h": return new Variant.handle ((int) this.get_value ());
+            case "h": return new Variant.handle ((int32) this.get_value ());
             default: assert_not_reached ();
         }
     }

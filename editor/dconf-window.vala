@@ -345,10 +345,8 @@ class DConfWindow : ApplicationWindow
             case "q":
             case "i":
             case "u":
-            case "x":
-            case "t":
             case "d":
-            case "h":
+            case "h":   // TODO "x" and "t" are not working in spinbuttons (double-based)
                 KeyEditorChildNumber key_editor_child = new KeyEditorChildNumber (key);
                 key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
                 return (Widget) key_editor_child;
