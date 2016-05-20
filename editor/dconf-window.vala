@@ -277,7 +277,7 @@ class DConfWindow : ApplicationWindow
 
         if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
 
-        Widget key_editor_child = create_child (key_editor, key);
+        KeyEditorChild key_editor_child = create_child (key_editor, key);
         if (has_schema)
         {
             Switch custom_value_switch = new Switch ();
@@ -291,14 +291,17 @@ class DConfWindow : ApplicationWindow
 
             GSettingsKey gkey = (GSettingsKey) key;
             custom_value_switch.set_active (gkey.is_default);
-            custom_value_switch.notify ["active"].connect (() => { key_editor.switch_is_active (custom_value_switch.get_active ()); });
+            custom_value_switch.notify ["active"].connect (() => {
+                    bool is_active = custom_value_switch.get_active ();
+                    key_editor.switch_is_active (is_active);
+                });
 
             key_editor.response.connect ((dialog, response_id) => {
                     if (response_id == ResponseType.APPLY)
                     {
                         if (!custom_value_switch.active)
                         {
-                            Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
+                            Variant variant = key_editor_child.get_variant ();
                             if (key.value != variant)
                                 key.value = variant;
                         }
@@ -313,33 +316,34 @@ class DConfWindow : ApplicationWindow
             key_editor.response.connect ((dialog, response_id) => {
                     if (response_id == ResponseType.APPLY)
                     {
-                        Variant variant = ((KeyEditorChild) key_editor_child).get_variant ();
+                        Variant variant = key_editor_child.get_variant ();
                         if (key.value != variant)
                             key.value = variant;
                     }
                     dialog.destroy ();
                 });
         }
+        key_editor_child.value_has_changed.connect ((is_valid) => { key_editor.custom_value_is_valid = is_valid; });    // TODO not always useful
+        key_editor_child.child_activated.connect (() => {       // TODO "only" used for string-based and spin widgets
+                if (key_editor.custom_value_is_valid)
+                    key_editor.response (ResponseType.APPLY);
+            });
         key_editor.add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
 
         key_editor.set_transient_for (this);
         key_editor.run ();
     }
 
-    private static Widget create_child (KeyEditor dialog, Key key)
+    private static KeyEditorChild create_child (KeyEditor dialog, Key key)
     {
         switch (key.type_string)
         {
             case "<enum>":
-                return (Widget) new KeyEditorChildEnum (key);
+                return (KeyEditorChild) new KeyEditorChildEnum (key);
             case "<flags>":
-                return (Widget) new KeyEditorChildFlags ((GSettingsKey) key);
+                return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key);
             case "b":
-                return (Widget) new KeyEditorChildBool (key.value.get_boolean ());
-            case "s":
-                KeyEditorChildString key_editor_child = new KeyEditorChildString (key.value.get_string ());
-                key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
-                return (Widget) key_editor_child;
+                return (KeyEditorChild) new KeyEditorChildBool (key.value.get_boolean ());
             case "y":
             case "n":
             case "q":
@@ -347,16 +351,11 @@ class DConfWindow : ApplicationWindow
             case "u":
             case "d":
             case "h":   // TODO "x" and "t" are not working in spinbuttons (double-based)
-                KeyEditorChildNumber key_editor_child = new KeyEditorChildNumber (key);
-                key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
-                return (Widget) key_editor_child;
+                return (KeyEditorChild) new KeyEditorChildNumber (key);
             case "mb":
-                return (Widget) new KeyEditorChildNullableBool (key);
-            default:    // TODO "o" is a string-only with syntax verification
-                KeyEditorChildDefault key_editor_child = new KeyEditorChildDefault (key.type_string, key.value);
-                key_editor_child.is_valid.connect ((is_valid) => { dialog.custom_value_is_valid = is_valid; });
-                key_editor_child.child_activated.connect (() => { dialog.response (ResponseType.APPLY); });
-                return (Widget) key_editor_child;
+                return (KeyEditorChild) new KeyEditorChildNullableBool (key);
+            default:
+                return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.value);
         }
     }
 
