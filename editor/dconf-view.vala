@@ -288,12 +288,52 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
     }
 }
 
-private class KeyEditorChildNumber : SpinButton, KeyEditorChild
+private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
+{
+    public KeyEditorChildNumberDouble (Key key)
+        requires (key.type_string == "d")
+    {
+        this.visible = true;
+        this.hexpand = true;
+        this.halign = Align.END;
+
+        double min, max;
+        if (key.has_schema && ((GSettingsKey) key).range_type == "range")
+        {
+            min = (((GSettingsKey) key).range_content.get_child_value (0)).get_double ();
+            max = (((GSettingsKey) key).range_content.get_child_value (1)).get_double ();
+        }
+        else
+        {
+            min = double.MIN;
+            max = double.MAX;
+        }
+
+        Adjustment adjustment = new Adjustment (key.value.get_double (), min, max, 0.01, 0.1, 0.0);
+        this.configure (adjustment, 0.01, 2);
+
+        this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
+        this.snap_to_ticks = false;
+        this.input_purpose = InputPurpose.NUMBER;
+        this.width_chars = 30;
+
+        this.buffer.deleted_text.connect (() => { value_has_changed (true); });     // TODO test value for
+        this.buffer.inserted_text.connect (() => { value_has_changed (true); });    //   non-numeric chars
+        this.activate.connect (() => { update (); child_activated (); });
+    }
+
+    public Variant get_variant ()
+    {
+        return new Variant.double (this.get_value ());
+    }
+}
+
+private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 {
     private string key_type;
 
-    public KeyEditorChildNumber (Key key)
-        requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "d" || key.type_string == "h")
+    public KeyEditorChildNumberInt (Key key)
+        requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "h")     // TODO key.type_string == "x" || key.type_string == "t" ||
     {
         this.key_type = key.type_string;
 
@@ -302,7 +342,7 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild
         this.halign = Align.END;
 
         double min, max;
-        if (key.has_schema && ((GSettingsKey) key).range_type == "range")    // TODO test more; and what happen if only min/max is in range?
+        if (key.has_schema && ((GSettingsKey) key).range_type == "range")
         {
             min = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (0));
             max = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (1));
@@ -310,20 +350,13 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild
         else
             get_min_and_max_double (out min, out max, key.type_string);
 
-        if (key.type_string == "d")
-        {
-            Adjustment adjustment = new Adjustment (key.value.get_double (), min, max, 0.01, 0.1, 0.0);
-            this.configure (adjustment, 0.01, 2);
-        }
-        else
-        {
-            Adjustment adjustment = new Adjustment (get_variant_as_double (key.value), min, max, 1.0, 5.0, 0.0);
-            this.configure (adjustment, 1.0, 0);
-        }
+        Adjustment adjustment = new Adjustment (get_variant_as_double (key.value), min, max, 1.0, 5.0, 0.0);
+        this.configure (adjustment, 1.0, 0);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
         this.snap_to_ticks = true;
-        this.input_purpose = InputPurpose.NUMBER;   // TODO spin.input_purpose = InputPurpose.DIGITS & spin.numeric = true; (no “e”) if not double?
+        this.numeric = true;
+        this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
         this.width_chars = 30;
 
         this.buffer.deleted_text.connect (() => { value_has_changed (true); });     // TODO test value for
@@ -340,7 +373,6 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild
             case "q": min = (double) uint16.MIN;    max = (double) uint16.MAX;  break;
             case "i": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
             case "u": min = (double) uint32.MIN;    max = (double) uint32.MAX;  break;
-            case "d": min = (double) double.MIN;    max = (double) double.MAX;  break;
             case "h": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
             default: assert_not_reached ();
         }
@@ -355,7 +387,6 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild
             case Variant.Class.UINT16:  return (double) variant.get_uint16 ();
             case Variant.Class.INT32:   return (double) variant.get_int32 ();
             case Variant.Class.UINT32:  return (double) variant.get_uint32 ();
-            case Variant.Class.DOUBLE:  return variant.get_double ();
             case Variant.Class.HANDLE:  return (double) variant.get_handle ();
             default: assert_not_reached ();
         }
@@ -370,7 +401,6 @@ private class KeyEditorChildNumber : SpinButton, KeyEditorChild
             case "q": return new Variant.uint16 ((uint16) this.get_value ());
             case "i": return new Variant.int32  ((int32) this.get_value ());
             case "u": return new Variant.uint32 ((uint32) this.get_value ());
-            case "d": return new Variant.double (this.get_value ());
             case "h": return new Variant.handle ((int32) this.get_value ());
             default: assert_not_reached ();
         }

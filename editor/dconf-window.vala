@@ -349,9 +349,10 @@ class DConfWindow : ApplicationWindow
             case "q":
             case "i":
             case "u":
-            case "d":
             case "h":   // TODO "x" and "t" are not working in spinbuttons (double-based)
-                return (KeyEditorChild) new KeyEditorChildNumber (key);
+                return (KeyEditorChild) new KeyEditorChildNumberInt (key);
+            case "d":
+                return (KeyEditorChild) new KeyEditorChildNumberDouble (key);
             case "mb":
                 return (KeyEditorChild) new KeyEditorChildNullableBool (key);
             default:
