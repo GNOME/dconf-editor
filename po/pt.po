@@ -5,15 +5,15 @@
 # <> <>, 2015.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Sérgio Cardeira <cardeira dot sergio at gmail dot com>, 2016.
-# Tiago Santos <tiagofsantos81@sapo.pt>, 2016.
+# Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-02-18 04:23+0000\n"
-"PO-Revision-Date: 2016-04-28 14:07+0100\n"
+"POT-Creation-Date: 2016-05-20 03:53+0000\n"
+"PO-Revision-Date: 2016-05-02 15:44+0100\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português <>\n"
 "Language: pt\n"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:140
+#: ../editor/dconf-editor.vala:144
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
@@ -99,7 +99,7 @@ msgid "Configuration editor for dconf"
 msgstr "Editor de configurações para dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:142
+#: ../editor/dconf-editor.vala:146
 msgid "Directly edit your entire configuration database"
 msgstr "Edite diretamente toda a sua base de dados de configuração"
 
@@ -137,7 +137,8 @@ msgstr "Uma lista de caminhos marcados"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "Contains all paths bookmarked by the user as an array of strings."
-msgstr "Contém todos os caminhos marcados do usador como uma matriz de cadeias."
+msgstr ""
+"Contém todos os caminhos marcados do usador como uma matriz de cadeias."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid "A flag to restore the last view"
@@ -336,7 +337,8 @@ msgstr "Um inteiro curto, tipo \"n\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
-msgstr "Um inteiro assinado de 16 bits. Veja também a chave \"integer-16-unsigned\"."
+msgstr ""
+"Um inteiro assinado de 16 bits. Veja também a chave \"integer-16-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
 msgid "Flags: choose-colors-you-love"
@@ -362,7 +364,8 @@ msgstr "Um inteiro típico, tipo \"i\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
-msgstr "Um inteiro assinado de 32 bits. Veja também a chave \"integer-32-unsigned\"."
+msgstr ""
+"Um inteiro assinado de 32 bits. Veja também a chave \"integer-32-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
 msgid "An unsigned usual integer, type \"u\""
@@ -370,7 +373,8 @@ msgstr "Um inteiro típico não assinado, tipo \"u\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
-msgstr "Um inteiro não assinado de 32 bits. Veja também a chave \"integer-32-signed"
+msgstr ""
+"Um inteiro não assinado de 32 bits. Veja também a chave \"integer-32-signed"
 "\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
@@ -379,7 +383,8 @@ msgstr "Um inteiro longo, tipo \"x\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
-msgstr "Um inteiro assinado de 64 bits. Veja também a chave \"integer-64-unsigned\"."
+msgstr ""
+"Um inteiro assinado de 64 bits. Veja também a chave \"integer-64-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
 msgid "An unsigned long integer, type \"t\""
@@ -387,7 +392,8 @@ msgstr "Um inteiro longo não assinado, tipo \"t\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
-msgstr "Um inteiro não assinado de 64 bits. Veja também a chave \"integer-64-signed"
+msgstr ""
+"Um inteiro não assinado de 64 bits. Veja também a chave \"integer-64-signed"
 "\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
@@ -494,14 +500,11 @@ msgid "Print release version and exit"
 msgstr "Imprimir versão do lançamento e sair"
 
 #. #. * * Copy action
-#. #: ../editor/dconf-editor.vala:90
+#. #: ../editor/dconf-editor.vala:94
 msgid "Copied to clipboard"
 msgstr "Copiado para a área de transferência"
 
-#: ../editor/dconf-editor.vala:143
-#| msgid ""
-#| "Copyright © 2010-2014 – Canonical Ltd\n"
-#| "Copyright © 2015 – Arnaud Bonatti"
+#: ../editor/dconf-editor.vala:147
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -509,7 +512,7 @@ msgstr ""
 "Direitos de autor © 2010-2014 – Canonical Ltd\n"
 "Direitos de autor © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:147
+#: ../editor/dconf-editor.vala:151
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
@@ -542,7 +545,7 @@ msgid "nothing"
 msgstr "nada"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:90
+#: ../editor/dconf-view.vala:88
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -552,14 +555,14 @@ msgstr ""
 "por \"m\") nos seus valores vazios. Cadeias, assinaturas e caminhos de "
 "objetos devem ser rodeados por aspas."
 
-#: ../editor/dconf-view.vala:92
+#: ../editor/dconf-view.vala:90
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Cadeias, assinaturas e caminhos de objetos devem ser rodeados por aspas."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:96
+#: ../editor/dconf-view.vala:94
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -567,60 +570,59 @@ msgstr ""
 "Utilize a palavra chave \"nothing\" para definir um tipo talvez (começado "
 "por \"m\") nos seus valores vazios."
 
-#: ../editor/dconf-view.vala:115
+#: ../editor/dconf-view.vala:113
 msgid "Boolean"
 msgstr "Booliano"
 
-#: ../editor/dconf-view.vala:117
+#: ../editor/dconf-view.vala:115
 msgid "String"
 msgstr "Cadeia"
 
-#: ../editor/dconf-view.vala:119
+#: ../editor/dconf-view.vala:117
 msgid "String array"
 msgstr "Matraiz de cadeias"
 
-#: ../editor/dconf-view.vala:121
+#: ../editor/dconf-view.vala:119
 msgid "Enumeration"
 msgstr "Enumeração"
 
-#: ../editor/dconf-view.vala:123
+#: ../editor/dconf-view.vala:121
 msgid "Flags"
 msgstr "Parâmetros"
 
-#: ../editor/dconf-view.vala:127
+#: ../editor/dconf-view.vala:125
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Duplo [%s..%s]"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: ../editor/dconf-view.vala:130
+#: ../editor/dconf-view.vala:128
 msgid "D-Bus handle type"
 msgstr "Tipo de gestor do D-Bus"
 
-#: ../editor/dconf-view.vala:132
+#: ../editor/dconf-view.vala:130
 msgid "D-Bus object path"
 msgstr "Caminho do objeto D-Bus"
 
-#: ../editor/dconf-view.vala:134
+#: ../editor/dconf-view.vala:132
 msgid "D-Bus object path array"
 msgstr "Uma matriz de caminhos de objeto D-Bus"
 
-#: ../editor/dconf-view.vala:136
+#: ../editor/dconf-view.vala:134
 msgid "D-Bus signature"
 msgstr "Assinatura D-Bus"
 
-#: ../editor/dconf-view.vala:146
+#: ../editor/dconf-view.vala:144
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Inteiro [%s..%s]"
 
 #: ../editor/dconf-window.vala:84
-msgid "Thanks for using Dconf Editor for editing your configurations!"
-msgstr ""
-"Obrigado por utilizar o Editor Dconf para editar as suas configurações!"
+msgid "Thanks for using Dconf Editor for editing your settings!"
+msgstr "Obrigado por utilizar o Editor Dconf para editar as suas configurações!"
 
 #: ../editor/dconf-window.vala:85
-msgid "Don't forget that some option may break applications, so be careful."
+msgid "Don't forget that some options may break applications, so be careful."
 msgstr "Não se esqueça que algumas opções podem quebrar as suas aplicações, tenha "
 "cuidado."
 
@@ -633,69 +635,60 @@ msgstr "Terei cuidado."
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo da próxima vez."
 
-#: ../editor/dconf-window.vala:151
+#: ../editor/dconf-window.vala:153
 msgid "Copy current path"
 msgstr "Copiar caminho atual"
 
 #. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:153
+#: ../editor/dconf-window.vala:155
 msgid "Reset visible keys"
 msgstr "Repor chaves visíveis"
 
-#: ../editor/dconf-window.vala:182
+#: ../editor/dconf-window.vala:184
 msgid "Oops! Cannot find something at this path."
 msgstr "Oops! Impossível encontrar algo neste caminho."
 
 #: ../editor/help-overlay.ui.h:1
-#| msgid "Actions"
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Ações"
 
 #: ../editor/help-overlay.ui.h:2
-#| msgid "Bookmarks"
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Marcadores"
 
 #: ../editor/help-overlay.ui.h:3
-#| msgid "Bookmark this Location"
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Marcar esta localização"
 
 #: ../editor/help-overlay.ui.h:4
-#| msgid "Bookmark this Location"
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Desmarcar esta localização"
 
 #: ../editor/help-overlay.ui.h:5
-#| msgid "Search"
 msgctxt "shortcut window"
 msgid "Search bar"
 msgstr "Procurar"
 
 #: ../editor/help-overlay.ui.h:6
-#| msgid "Actions"
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Ações"
 
 #: ../editor/help-overlay.ui.h:7
-#| msgid "Copied to clipboard"
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Área de transferência"
 
 #: ../editor/help-overlay.ui.h:8
-#| msgid "Description"
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Copiar descritor"
 
 #: ../editor/help-overlay.ui.h:9
-#| msgid "Copy current path"
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Copiar caminho"
@@ -736,13 +729,11 @@ msgid "Show this help"
 msgstr "Mostrar esta ajuda"
 
 #: ../editor/help-overlay.ui.h:17
-#| msgid "_About"
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Sobre"
 
 #: ../editor/help-overlay.ui.h:18
-#| msgid "_Quit"
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Sair"
@@ -805,24 +796,42 @@ msgid "No Schema Found"
 msgstr "Nenhum esquema encontrado"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:202
+#: ../editor/key-list-box-row.vala:226
 msgid "Customize…"
 msgstr "Personalizar…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:205
+#: ../editor/key-list-box-row.vala:229
 msgid "Set to default"
 msgstr "Predefinir"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:214
+#: ../editor/key-list-box-row.vala:238
 msgid "Copy"
 msgstr "Copiar"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:336
+#: ../editor/key-list-box-row.vala:360
 msgid "Default value"
 msgstr "Valor predefinido"
+
+#~| msgid "The width of the main window in pixels."
+#~ msgid "The theme of the navigation list"
+#~ msgstr "O tema da lista de navegação"
+
+#~ msgid ""
+#~ "The themes are defined by the application, you cannot add one. Two themes "
+#~ "are available for now: 'three-twenty-two' that will remain as close as "
+#~ "possible to the default theme of the 3.22 release, and 'small-rows' that "
+#~ "tries to minimize the rows height."
+#~ msgstr ""
+#~ "Os temas são definidos pela aplicação e não os pode adicionar. Dois temas "
+#~ "estão disponíveis de momento: 'três-vinte-dois' que se mantém o mais fiel "
+#~ "possível ao tema original da versão 3.22 e 'linhas-pequenas' que tenta "
+#~ "minimizar a altura das linhas."
+
+#~ msgid "Open"
+#~ msgstr "Abrir"
 
 #~ msgid "_Find…"
 #~ msgstr "_Localizar…"
