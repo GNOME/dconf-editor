@@ -158,7 +158,10 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         if (key.is_ghost)
-            return false;
+        {
+            popover.new_copy_action (get_text ());
+            return true;
+        }
 
         popover.new_action ("customize", () => { on_row_clicked (); });
         popover.new_copy_action (get_text ());
