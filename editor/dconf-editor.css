@@ -16,6 +16,34 @@
 */
 
 /*\
+* * hamburger menu
+\*/
+
+/* egtk */
+window > popover.menu {
+  background:inherit;
+}
+
+/* separators */
+window > popover.menu > stack > box > box separator {
+  color:transparent;
+  min-height:0;
+  margin:0 0 0.4em 0;
+  border:none;  /* egtk */
+}
+
+window > popover.menu > stack > box > box > box {
+  border-top:1px solid alpha(currentColor,0.25);
+  margin-top:0.4em;
+}
+
+/* title */
+window > popover.menu > stack > box > box > box > box > label.separator {
+  font-weight:bold;
+  margin:0.5em 4rem 0 4rem;   /* 4rem left/right should be enough to be the biggest menu entry, so to center title */
+}
+
+/*\
 * * rows height and icon
 \*/
 

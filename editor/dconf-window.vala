@@ -61,6 +61,7 @@ class DConfWindow : ApplicationWindow
     public DConfWindow ()
     {
         add_action_entries (action_entries, this);
+        add_action (settings.create_action ("delayed-apply-menu"));
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-fullscreen"))
@@ -177,11 +178,18 @@ class DConfWindow : ApplicationWindow
 
         GLib.Menu menu = new GLib.Menu ();
         menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
+
         GLib.Menu section = new GLib.Menu ();
         section.append (_("Reset visible keys"), "win.reset-visible");
         section.append (_("Reset recursively"), "win.reset-recursive");
         section.freeze ();
         menu.append_section (null, section);
+
+        section = new GLib.Menu ();
+        section.append (_("Right click menu"), "win.delayed-apply-menu");
+        section.freeze ();
+        menu.append_section (_("Delayed Apply"), section);
+
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
 
@@ -237,9 +245,15 @@ class DConfWindow : ApplicationWindow
         {
             Key key = (Key) item;
             if (key.has_schema)
+            {
                 row = new KeyListBoxRowEditable ((GSettingsKey) key);
+                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_glib_key_value ((GSettingsKey) key, variant); });
+            }
             else
+            {
                 row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
+                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_dconf_key_value ((DConfKey) key, variant); });
+            }
             row.on_row_clicked.connect (() => { new_key_editor (key); });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
@@ -379,6 +393,26 @@ class DConfWindow : ApplicationWindow
     /*\
     * * Revealer stuff
     \*/
+
+    private void set_dconf_key_value (DConfKey key, Variant? new_value)
+    {
+        if (settings.get_boolean ("delayed-apply-menu"))
+            add_delayed_dconf_settings (key, new_value);
+        else if (new_value != null)
+            key.value = new_value;
+        else
+            assert_not_reached ();
+    }
+
+    private void set_glib_key_value (GSettingsKey key, Variant? new_value)
+    {
+        if (settings.get_boolean ("delayed-apply-menu"))
+            add_delayed_glib_settings (key, new_value);
+        else if (new_value != null)
+            key.value = new_value;
+        else
+            key.set_to_default ();
+    }
 
     private void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
     {

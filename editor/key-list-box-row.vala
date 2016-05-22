@@ -111,6 +111,8 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
 
+    public signal void set_key_value (Variant? new_value);
+
     protected static string cool_text_value (Key key)   // TODO better
     {
         return Key.cool_text_value_from_variant (key.value, key.type_string);
@@ -168,7 +170,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
             popover.value_changed.connect ((gvariant) => {
                     destroy_popover ();
-                    key.value = gvariant;
+                    set_key_value (gvariant);
                 });
         }
         return true;
@@ -211,13 +213,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.new_section ();
             popover.create_buttons_list (key, true);
 
-            popover.set_to_default.connect (() => {
-                    destroy_popover ();
-                    key.set_to_default ();
-                });
             popover.value_changed.connect ((gvariant) => {
                     destroy_popover ();
-                    key.value = gvariant;
+                    set_key_value (gvariant);
                 });
         }
         else if (key.type_string == "<flags>")
@@ -227,18 +225,22 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             if (!key.is_default)
                 popover.new_action ("default2", () => {
                         destroy_popover ();
-                        key.set_to_default ();
+                        set_key_value (null);
                     });
             popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
 
             popover.create_flags_list ((GSettingsKey) key);
 
-            popover.value_changed.connect ((gvariant) => { key.value = gvariant; });
+            popover.value_changed.connect ((gvariant) => {
+                    set_key_value (gvariant);
+                });
         }
         else if (!key.is_default)
         {
             popover.new_section ();
-            popover.new_action ("default1", () => { key.set_to_default (); });
+            popover.new_action ("default1", () => {
+                    set_key_value (null);
+                });
         }
         return true;
     }
@@ -260,8 +262,7 @@ private class ContextPopover : Popover
     private ActionMap current_group;
 
     // public signals
-    public signal void set_to_default ();
-    public signal void value_changed (Variant gvariant);
+    public signal void value_changed (Variant? gvariant);
 
     public ContextPopover ()
     {
@@ -416,11 +417,7 @@ private class ContextPopover : Popover
         }
 
         ((GLib.ActionGroup) current_group).action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
-                Variant? new_variant = tmp_variant.get_maybe ();
-                if (new_variant == null)
-                    set_to_default ();
-                else
-                    value_changed ((!) new_variant);
+                value_changed (tmp_variant.get_maybe ());
             });
 
         finalize_menu ();
