@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor 3.20.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-01 18:19+0200\n"
-"PO-Revision-Date: 2016-05-01 18:29+0200\n"
+"POT-Creation-Date: 2016-05-23 18:31+0200\n"
+"PO-Revision-Date: 2016-05-23 18:35+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
@@ -393,7 +393,7 @@ msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastatursnarveier"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -470,69 +470,68 @@ msgid "nothing"
 msgstr "ingenting"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:90
+#: ../editor/dconf-view.vala:88
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
 
-#: ../editor/dconf-view.vala:92
+#: ../editor/dconf-view.vala:90
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:96
+#: ../editor/dconf-view.vala:94
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
 
-#: ../editor/dconf-view.vala:115
+#: ../editor/dconf-view.vala:113
 msgid "Boolean"
 msgstr "Boolean"
 
-#: ../editor/dconf-view.vala:117
+#: ../editor/dconf-view.vala:115
 msgid "String"
 msgstr "Streng"
 
-#: ../editor/dconf-view.vala:119
-#, fuzzy
+#: ../editor/dconf-view.vala:117
 msgid "String array"
-msgstr "Streng"
+msgstr "Matrise med strenger"
 
-#: ../editor/dconf-view.vala:121
+#: ../editor/dconf-view.vala:119
 msgid "Enumeration"
 msgstr "Oppregning"
 
-#: ../editor/dconf-view.vala:123
+#: ../editor/dconf-view.vala:121
 msgid "Flags"
 msgstr "Flagg"
 
-#: ../editor/dconf-view.vala:127
+#: ../editor/dconf-view.vala:125
 #, c-format
 msgid "Double [%s..%s]"
 msgstr "Double [%s..%s]"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: ../editor/dconf-view.vala:130
+#: ../editor/dconf-view.vala:128
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "Type D-Bus-håndtak"
+
+#: ../editor/dconf-view.vala:130
+msgid "D-Bus object path"
+msgstr "Objektsti for D-Bus"
 
 #: ../editor/dconf-view.vala:132
-msgid "D-Bus object path"
-msgstr ""
+msgid "D-Bus object path array"
+msgstr "Matrise med stier for D-Bus"
 
 #: ../editor/dconf-view.vala:134
-msgid "D-Bus object path array"
-msgstr ""
-
-#: ../editor/dconf-view.vala:136
 msgid "D-Bus signature"
 msgstr "D-Bus-signatur"
 
-#: ../editor/dconf-view.vala:146
+#: ../editor/dconf-view.vala:144
 #, c-format
 msgid "Integer [%s..%s]"
 msgstr "Heltall [%s..%s]"
@@ -605,10 +604,9 @@ msgid "Clipboard"
 msgstr "Utklippstavle"
 
 #: ../editor/help-overlay.ui.h:8
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr "Beskrivelse"
+msgstr "Kopier descriptor"
 
 #: ../editor/help-overlay.ui.h:9
 msgctxt "shortcut window"
