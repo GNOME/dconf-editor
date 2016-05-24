@@ -30,6 +30,7 @@ resource_data = \
 	bookmarks.ui \
 	bookmark.ui \
 	help-overlay.ui \
+	modifications-revealer.ui \
 	pathbar.ui \
 	pathbar-item.ui \
 	property-row.ui
@@ -47,6 +48,7 @@ dconf_editor_SOURCES = \
 	dconf-view.vala \
 	bookmarks.vala \
 	key-list-box-row.vala \
+	modifications-revealer.vala \
 	pathbar.vala
 
 desktopdir = $(datadir)/applications

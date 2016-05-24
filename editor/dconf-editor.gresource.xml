@@ -8,6 +8,7 @@
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-editor.ui</file>
+    <file preprocess="xml-stripblanks">modifications-revealer.ui</file>
     <file preprocess="xml-stripblanks">pathbar.ui</file>
     <file preprocess="xml-stripblanks">pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">property-row.ui</file>

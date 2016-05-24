@@ -214,51 +214,11 @@
           </object>
         </child>
         <child>
-          <object class="GtkRevealer" id="revealer">
+          <object class="ModificationsRevealer" id="revealer">
             <property name="visible">True</property>
-            <property name="reveal-child">False</property>
-            <child>
-              <object class="GtkActionBar">
-                <property name="visible">True</property>
-                <child>
-                  <object class="GtkButton" id="dismiss-button">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Dismiss</property>
-                    <signal name="clicked" handler="dismiss_delayed_settings"/>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="revealer_label">
-                    <property name="visible">True</property>
-                    <property name="margin-left">6</property><!-- GtkActionBar creates a GtkBox which "spacing" property is not editable -->
-                    <property name="margin-right">6</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="apply-button">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Apply</property>
-                    <signal name="clicked" handler="apply_delayed_settings"/>
-                    <style>
-                      <class name="suggested-action"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="pack-type">end</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
           </object>
         </child>
       </object>
     </child>
   </template>
-  <object class="GtkSizeGroup">
-    <property name="mode">both</property>
-    <widgets>
-      <widget name="dismiss-button"/>
-      <widget name="apply-button"/>
-    </widgets>
-  </object>
 </interface>

@@ -42,13 +42,7 @@ class DConfWindow : ApplicationWindow
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     [GtkChild] private Bookmarks bookmarks_button;
 
-    private HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
-    private GenericSet<string> gsettings_keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
-    [GtkChild] private Revealer revealer;
-    [GtkChild] private Label revealer_label;
-    private DConf.Client dconf_client = new DConf.Client ();
-    private DConf.Changeset dconf_changeset = new DConf.Changeset ();
-    private HashTable<string, DConfKey> dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey> (str_hash, str_equal);
+    [GtkChild] private ModificationsRevealer revealer;
 
     [GtkChild] private SearchBar search_bar;
     [GtkChild] private SearchEntry search_entry;
@@ -397,7 +391,7 @@ class DConfWindow : ApplicationWindow
     private void set_dconf_key_value (DConfKey key, Variant? new_value)
     {
         if (settings.get_boolean ("delayed-apply-menu"))
-            add_delayed_dconf_settings (key, new_value);
+            revealer.add_delayed_dconf_settings (key, new_value);
         else if (new_value != null)
             key.value = new_value;
         else
@@ -407,85 +401,11 @@ class DConfWindow : ApplicationWindow
     private void set_glib_key_value (GSettingsKey key, Variant? new_value)
     {
         if (settings.get_boolean ("delayed-apply-menu"))
-            add_delayed_glib_settings (key, new_value);
+            revealer.add_delayed_glib_settings (key, new_value);
         else if (new_value != null)
             key.value = new_value;
         else
             key.set_to_default ();
-    }
-
-    private void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
-    {
-        dconf_changeset.set (key.full_name, new_value);
-
-        DConfKey? existing_key = dconf_keys_awaiting_hashtable.lookup (key.full_name);
-        if (existing_key == null)
-            dconf_keys_awaiting_hashtable.insert (key.full_name, key);
-
-        update_revealer ();
-    }
-
-    private void add_delayed_glib_settings (GSettingsKey key, Variant? new_value)
-    {
-        GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
-        if (settings == null)
-        {
-            settings = new GLib.Settings (key.schema_id);
-            ((!) settings).delay ();
-            delayed_settings_hashtable.insert (key.schema_id, (!) settings);
-        }
-
-        if (new_value == null)
-            ((!) settings).reset (key.name);
-        else
-            ((!) settings).set_value (key.name, (!) new_value);
-
-        if (!gsettings_keys_awaiting_hashtable.contains (key.descriptor))
-            gsettings_keys_awaiting_hashtable.add (key.descriptor);
-
-        update_revealer ();
-    }
-
-    private void update_revealer ()
-        requires (dconf_keys_awaiting_hashtable.length != 0 || gsettings_keys_awaiting_hashtable.length != 0)
-    {
-        if (dconf_keys_awaiting_hashtable.length == 0)
-            revealer_label.set_text (_("%u gsettings operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length));
-        else if (gsettings_keys_awaiting_hashtable.length == 0)
-            revealer_label.set_text (_("%u dconf operations awaiting.").printf (dconf_keys_awaiting_hashtable.length));
-        else
-            revealer_label.set_text (_("%u gsettings operations and %u dconf operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length, dconf_keys_awaiting_hashtable.length));
-
-        revealer.set_reveal_child (true);
-    }
-
-    [GtkCallback]
-    private void apply_delayed_settings ()
-    {
-        revealer.set_reveal_child (false);
-
-        delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.apply (); return true; });
-        gsettings_keys_awaiting_hashtable.remove_all ();
-
-        try {
-            dconf_client.change_sync (dconf_changeset);
-        } catch (Error error) {
-            warning (error.message);
-        }
-        dconf_changeset = new DConf.Changeset ();
-        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => { key.is_ghost = true; return true; });
-    }
-
-    [GtkCallback]
-    private void dismiss_delayed_settings ()
-    {
-        revealer.set_reveal_child (false);
-
-        delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.revert (); return true; });
-        gsettings_keys_awaiting_hashtable.remove_all ();
-
-        dconf_changeset = new DConf.Changeset ();
-        dconf_keys_awaiting_hashtable.remove_all ();
     }
 
     /*\
@@ -523,10 +443,10 @@ class DConfWindow : ApplicationWindow
             if (!((Key) setting_object).has_schema)
             {
                 if (!((DConfKey) setting_object).is_ghost)
-                    add_delayed_dconf_settings ((DConfKey) setting_object, null);
+                    revealer.add_delayed_dconf_settings ((DConfKey) setting_object, null);
             }
             else if (!((GSettingsKey) setting_object).is_default)
-                add_delayed_glib_settings ((GSettingsKey) setting_object, null);
+                revealer.add_delayed_glib_settings ((GSettingsKey) setting_object, null);
         }
     }
 

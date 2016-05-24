@@ -12,3 +12,5 @@ editor/dconf-window.vala
 [type: gettext/glade]editor/help-overlay.ui
 [type: gettext/glade]editor/key-editor.ui
 editor/key-list-box-row.vala
+[type: gettext/glade]editor/modifications-revealer.ui
+editor/modifications-revealer.vala
