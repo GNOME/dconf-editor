@@ -4,5 +4,6 @@ editor/dconf-model.c
 editor/dconf-view.c
 editor/dconf-window.c
 editor/key-list-box-row.c
+editor/modifications-revealer.c
 # Autotools failure
 sub/editor/ca.desrt.dconf-editor.desktop.in
