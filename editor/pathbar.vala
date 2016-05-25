@@ -30,6 +30,8 @@ public class PathBar : Box
         @foreach ((child) => { if (child != root_button) child.destroy (); });
 
         string [] split = path.split ("/", 0);
+        string last = split [split.length - 1];
+        bool is_key_path = last != "";
 
         /* add initial text (set to "settings://"?) */
         string complete_path = "/";
@@ -37,17 +39,20 @@ public class PathBar : Box
 
         /* add one item per folder */
         if (split.length > 2)
+        {
+            uint index = 0;
             foreach (string item in split [1:split.length - 1])
             {
+                index++;
                 complete_path += item + "/";
-                add (new PathBarItem (item, complete_path));
+                add (new PathBarItem (item, complete_path, is_key_path || (index != split.length - 2)));
                 add (new Label ("/"));
             }
+        }
 
         /* if key path */
-        string last = split [split.length - 1];
-        if (last != "")
-            add (new PathBarItem (last, complete_path + last));
+        if (is_key_path)
+            add (new PathBarItem (last, complete_path + last, false));
 
         /* only draw when finished, for CSS :last-child rendering */
         show_all ();
@@ -69,18 +74,21 @@ public class PathBar : Box
 private class PathBarItem : Button
 {
     public string complete_path { get; construct; }
+    private bool is_clickable;
 
     [GtkChild] private Label text;
 
-    public PathBarItem (string label, string path)
+    public PathBarItem (string label, string path, bool _is_clickable)
     {
         Object (complete_path: path);
         text.set_text (label);
+        is_clickable = _is_clickable;
     }
 
     [GtkCallback]
     private void on_path_bar_item_clicked ()
     {
-        ((PathBar) get_parent ()).set_path (complete_path, true);
+        if (is_clickable)
+            ((PathBar) get_parent ()).set_path (complete_path, true);
     }
 }
