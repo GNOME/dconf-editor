@@ -359,32 +359,23 @@ public class DConfKey : Key
         this.client = client;
         this.type_string = value.get_type_string ();
 
+        VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));     // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
+        builder.add ("b",    false);
+        builder.open (new VariantType ("a{ss}"));
+        builder.add ("{ss}", "key-name",    name);
+        builder.add ("{ss}", "parent-path", ((!) parent).full_name);
+        builder.add ("{ss}", "type-code",   type_string);
+        builder.add ("{ss}", "type-name",   key_to_description (type_string));
         if (show_min_and_max (type_string))
         {
             string min, max;
             get_min_and_max_string (out min, out max, type_string);
-            properties = new Variant.parsed ("(false, [{'key-name', %s},
-                                                       {'parent-path', %s},
-                                                       {'type-code', %s},
-                                                       {'type-name', %s},
-                                                       {'minimum', %s},
-                                                       {'maximum', %s}])",
-                                             name,
-                                             ((!) parent).full_name,
-                                             type_string,
-                                             key_to_description (type_string),
-                                             min,
-                                             max);
+
+            builder.add ("{ss}", "minimum", min);
+            builder.add ("{ss}", "maximum", max);
         }
-        else
-            properties = new Variant.parsed ("(false, [{'key-name', %s},
-                                                       {'parent-path', %s},
-                                                       {'type-code', %s},
-                                                       {'type-name', %s}])",
-                                             name,
-                                             ((!) parent).full_name,
-                                             type_string,
-                                             key_to_description (type_string));
+        builder.close ();
+        properties = builder.end ();
     }
 }
 
@@ -435,6 +426,18 @@ public class GSettingsKey : Key
         settings.changed [name].connect (() => { value_changed (); });
 
         this.type_string = type_string;
+
+        VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));
+        builder.add ("b",    true);
+        builder.open (new VariantType ("a{ss}"));
+        builder.add ("{ss}", "key-name",    name);
+        builder.add ("{ss}", "parent-path", ((!) parent).full_name);
+        builder.add ("{ss}", "type-code",   type_string);
+        builder.add ("{ss}", "type-name",   key_to_description (type_string));
+        builder.add ("{ss}", "schema-id",   schema_id);
+        builder.add ("{ss}", "summary",     summary);
+        builder.add ("{ss}", "description", description);
+        builder.add ("{ss}", "default-value", cool_text_value_from_variant (default_value, type_string));
         if (show_min_and_max (type_string))
         {
             string min, max;
@@ -446,44 +449,11 @@ public class GSettingsKey : Key
             else
                 get_min_and_max_string (out min, out max, type_string);
 
-            properties = new Variant.parsed ("(true, [{'key-name', %s},
-                                                      {'parent-path', %s},
-                                                      {'type-code', %s},
-                                                      {'type-name', %s},
-                                                      {'schema-id', %s},
-                                                      {'summary', %s},
-                                                      {'description', %s},
-                                                      {'default-value', %s},
-                                                      {'minimum', %s},
-                                                      {'maximum', %s}])",
-                                             name,
-                                             ((!) parent).full_name,
-                                             type_string,
-                                             key_to_description (type_string),
-                                             schema_id,
-                                             summary,
-                                             description,
-                                             cool_text_value_from_variant (default_value, type_string),
-                                             min,
-                                             max);
+            builder.add ("{ss}", "minimum", min);
+            builder.add ("{ss}", "maximum", max);
         }
-        else
-            properties = new Variant.parsed ("(true, [{'key-name', %s},
-                                                      {'parent-path', %s},
-                                                      {'type-code', %s},
-                                                      {'type-name', %s},
-                                                      {'schema-id', %s},
-                                                      {'summary', %s},
-                                                      {'description', %s},
-                                                      {'default-value', %s}])",
-                                             name,
-                                             ((!) parent).full_name,
-                                             type_string,
-                                             key_to_description (type_string),
-                                             schema_id,
-                                             summary,
-                                             description,
-                                             cool_text_value_from_variant (default_value, type_string));
+        builder.close ();
+        properties = builder.end ();
     }
 
     public bool search_for (string text)
