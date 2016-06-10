@@ -26,7 +26,6 @@ class ModificationsRevealer : Revealer
     private GenericSet<string> gsettings_keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
 
     private DConf.Client dconf_client = new DConf.Client ();
-    private HashTable<string, Variant?> dconf_values_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
     private HashTable<string, DConfKey> dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey> (str_hash, str_equal);
 
     /*\
@@ -35,9 +34,8 @@ class ModificationsRevealer : Revealer
 
     public void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
     {
-        string full_name = key.full_name;
-        dconf_values_hashtable.insert (full_name, new_value);
-        dconf_keys_awaiting_hashtable.insert (full_name, key);
+        key.planned_value = new_value;
+        dconf_keys_awaiting_hashtable.insert (key.full_name, key);
 
         update ();
     }
@@ -79,16 +77,11 @@ class ModificationsRevealer : Revealer
 
         /* DConf stuff */
 
-        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
-                Variant? new_value = dconf_values_hashtable.lookup (full_name);
-                if (new_value == null)
-                    key.is_ghost = true;
-                return true;
-            });
-
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
-        dconf_values_hashtable.foreach_remove ((full_name, new_value) => {
-                dconf_changeset.set (full_name, new_value);
+        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
+                dconf_changeset.set (full_name, key.planned_value);
+                if (key.planned_value == null)
+                    key.is_ghost = true;
                 return true;
             });
 
@@ -104,10 +97,13 @@ class ModificationsRevealer : Revealer
     {
         set_reveal_child (false);
 
+        /* GSettings stuff */
+
         delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.revert (); return true; });
         gsettings_keys_awaiting_hashtable.remove_all ();
 
-        dconf_values_hashtable.remove_all ();
+        /* DConf stuff */
+
         dconf_keys_awaiting_hashtable.remove_all ();
     }
 

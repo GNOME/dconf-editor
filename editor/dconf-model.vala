@@ -179,6 +179,7 @@ public abstract class Key : SettingObject
     public string type_string { get; protected set; default = "*"; }
     public Variant properties { owned get; protected set; }
 
+    public Variant? planned_value { get; set; default = null; }
     public abstract Variant value { owned get; set; }
 
     public signal void value_changed ();
@@ -329,17 +330,14 @@ public class DConfKey : Key
 
     public bool is_ghost { get; set; default = false; }
 
-    private Variant _value;
     public override Variant value
     {
         owned get
         {
-            _value = (!) client.read (full_name);
-            return _value;
+            return (!) client.read (full_name);
         }
         set
         {
-            _value = value;
             try
             {
                 client.write_sync (full_name, value);
