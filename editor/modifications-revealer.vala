@@ -22,11 +22,10 @@ class ModificationsRevealer : Revealer
 {
     [GtkChild] private Label label;
 
-    private HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
-    private GenericSet<string> gsettings_keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
-
     private DConf.Client dconf_client = new DConf.Client ();
-    private HashTable<string, DConfKey> dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey> (str_hash, str_equal);
+
+    private HashTable<string, DConfKey>         dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey>     (str_hash, str_equal);
+    private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
     /*\
     * * Public calls
@@ -42,21 +41,8 @@ class ModificationsRevealer : Revealer
 
     public void add_delayed_glib_settings (GSettingsKey key, Variant? new_value)
     {
-        GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
-        if (settings == null)
-        {
-            settings = new GLib.Settings (key.schema_id);
-            ((!) settings).delay ();
-            delayed_settings_hashtable.insert (key.schema_id, (!) settings);
-        }
-
-        if (new_value == null)
-            ((!) settings).reset (key.name);
-        else
-            ((!) settings).set_value (key.name, (!) new_value);
-
-        if (!gsettings_keys_awaiting_hashtable.contains (key.descriptor))
-            gsettings_keys_awaiting_hashtable.add (key.descriptor);
+        key.planned_value = new_value;
+        gsettings_keys_awaiting_hashtable.insert (key.descriptor, key);
 
         update ();
     }
@@ -72,16 +58,35 @@ class ModificationsRevealer : Revealer
 
         /* GSettings stuff */
 
+        HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
+        gsettings_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
+                GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
+                if (settings == null)
+                {
+                    settings = new GLib.Settings (key.schema_id);
+                    ((!) settings).delay ();
+                    delayed_settings_hashtable.insert (key.schema_id, (!) settings);
+                }
+
+                if (key.planned_value == null)
+                    ((!) settings).reset (key.name);
+                else
+                    ((!) settings).set_value (key.name, (!) key.planned_value);
+
+                return true;
+            });
+
         delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.apply (); return true; });
-        gsettings_keys_awaiting_hashtable.remove_all ();
 
         /* DConf stuff */
 
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
         dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
                 dconf_changeset.set (full_name, key.planned_value);
+
                 if (key.planned_value == null)
                     key.is_ghost = true;
+
                 return true;
             });
 
@@ -97,13 +102,7 @@ class ModificationsRevealer : Revealer
     {
         set_reveal_child (false);
 
-        /* GSettings stuff */
-
-        delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.revert (); return true; });
         gsettings_keys_awaiting_hashtable.remove_all ();
-
-        /* DConf stuff */
-
         dconf_keys_awaiting_hashtable.remove_all ();
     }
 
