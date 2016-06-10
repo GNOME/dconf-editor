@@ -26,7 +26,7 @@ class ModificationsRevealer : Revealer
     private GenericSet<string> gsettings_keys_awaiting_hashtable = new GenericSet<string> (str_hash, str_equal);
 
     private DConf.Client dconf_client = new DConf.Client ();
-    private DConf.Changeset dconf_changeset = new DConf.Changeset ();
+    private HashTable<string, Variant?> dconf_values_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
     private HashTable<string, DConfKey> dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey> (str_hash, str_equal);
 
     /*\
@@ -35,11 +35,9 @@ class ModificationsRevealer : Revealer
 
     public void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
     {
-        dconf_changeset.set (key.full_name, new_value);
-
-        DConfKey? existing_key = dconf_keys_awaiting_hashtable.lookup (key.full_name);
-        if (existing_key == null)
-            dconf_keys_awaiting_hashtable.insert (key.full_name, key);
+        string full_name = key.full_name;
+        dconf_values_hashtable.insert (full_name, new_value);
+        dconf_keys_awaiting_hashtable.insert (full_name, key);
 
         update ();
     }
@@ -74,16 +72,31 @@ class ModificationsRevealer : Revealer
     {
         set_reveal_child (false);
 
+        /* GSettings stuff */
+
         delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.apply (); return true; });
         gsettings_keys_awaiting_hashtable.remove_all ();
+
+        /* DConf stuff */
+
+        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
+                Variant? new_value = dconf_values_hashtable.lookup (full_name);
+                if (new_value == null)
+                    key.is_ghost = true;
+                return true;
+            });
+
+        DConf.Changeset dconf_changeset = new DConf.Changeset ();
+        dconf_values_hashtable.foreach_remove ((full_name, new_value) => {
+                dconf_changeset.set (full_name, new_value);
+                return true;
+            });
 
         try {
             dconf_client.change_sync (dconf_changeset);
         } catch (Error error) {
             warning (error.message);
         }
-        dconf_changeset = new DConf.Changeset ();
-        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => { key.is_ghost = true; return true; });
     }
 
     [GtkCallback]
@@ -94,7 +107,7 @@ class ModificationsRevealer : Revealer
         delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.revert (); return true; });
         gsettings_keys_awaiting_hashtable.remove_all ();
 
-        dconf_changeset = new DConf.Changeset ();
+        dconf_values_hashtable.remove_all ();
         dconf_keys_awaiting_hashtable.remove_all ();
     }
 
