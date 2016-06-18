@@ -93,6 +93,13 @@ class DConfWindow : ApplicationWindow
         }
     }
 
+    private static string stripped_path (string path)
+    {
+        if (path.length <= 1)
+            return "/";
+        return path.slice (0, path.last_index_of_char ('/') + 1);
+    }
+
     /*\
     * * Window management callbacks
     \*/
@@ -147,7 +154,7 @@ class DConfWindow : ApplicationWindow
     {
         get_application ().withdraw_notification ("copy");
 
-        settings.set_string ("saved-view", current_path);
+        settings.set_string ("saved-view", stripped_path (current_path));
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
@@ -175,26 +182,7 @@ class DConfWindow : ApplicationWindow
             dir = model.get_root_directory ();
 
         key_model = dir.key_model;
-        current_path = dir.full_name;
-        bookmarks_button.current_path = current_path;
-        pathbar.set_path (current_path);
-
-        GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
-
-        GLib.Menu section = new GLib.Menu ();
-        section.append (_("Reset visible keys"), "win.reset-visible");
-        section.append (_("Reset recursively"), "win.reset-recursive");
-        section.freeze ();
-        menu.append_section (null, section);
-
-        section = new GLib.Menu ();
-        section.append (_("Right click menu"), "win.delayed-apply-menu");
-        section.freeze ();
-        menu.append_section (_("Delayed Apply"), section);
-
-        menu.freeze ();
-        info_button.set_menu_model ((MenuModel) menu);
+        update_current_path (dir.full_name);
 
         key_list_box.bind_model (key_model, new_list_box_row);
     }
@@ -447,6 +435,35 @@ class DConfWindow : ApplicationWindow
     /*\
     * * Action entries
     \*/
+
+    private void update_current_path (string path)
+    {
+        GLib.Menu section;
+
+        current_path = path;
+        bookmarks_button.current_path = stripped_path (current_path);
+        pathbar.set_path (current_path);
+
+        GLib.Menu menu = new GLib.Menu ();
+        menu.append (_("Copy current path"), "app.copy(\"" + current_path + "\")");   // TODO protection against some chars in text? 1/2
+
+        if (current_path.has_suffix ("/"))
+        {
+            section = new GLib.Menu ();
+            section.append (_("Reset visible keys"), "win.reset-visible");
+            section.append (_("Reset recursively"), "win.reset-recursive");
+            section.freeze ();
+            menu.append_section (null, section);
+        }
+
+        section = new GLib.Menu ();
+        section.append (_("Right click menu"), "win.delayed-apply-menu");
+        section.freeze ();
+        menu.append_section (_("Delayed Apply"), section);
+
+        menu.freeze ();
+        info_button.set_menu_model ((MenuModel) menu);
+    }
 
     private void reset ()
     {
