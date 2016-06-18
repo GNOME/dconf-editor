@@ -42,6 +42,8 @@ class DConfWindow : ApplicationWindow
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     [GtkChild] private Bookmarks bookmarks_button;
 
+    private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
+
     [GtkChild] private ModificationsRevealer revealer;
 
     [GtkChild] private SearchBar search_bar;
@@ -56,6 +58,9 @@ class DConfWindow : ApplicationWindow
     {
         add_action_entries (action_entries, this);
         add_action (settings.create_action ("delayed-apply-menu"));
+
+        settings.changed["delayed-apply-menu"].connect (invalidate_popovers);
+        revealer.invalidate_popovers.connect (invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-fullscreen"))
@@ -193,6 +198,8 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool scroll_to_path (string full_name)
     {
+        invalidate_popovers ();
+
         if (full_name == "/")
         {
             dir_tree_selection.unselect_all ();
@@ -240,13 +247,17 @@ class DConfWindow : ApplicationWindow
             Key key = (Key) item;
             if (key.has_schema)
             {
-                row = new KeyListBoxRowEditable ((GSettingsKey) key);
-                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_glib_key_value ((GSettingsKey) key, variant); });
+                GSettingsKey gkey = (GSettingsKey) key;
+                row = new KeyListBoxRowEditable (gkey);
+                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_glib_key_value (gkey, variant); });
+                ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_glib_change (gkey); });
             }
             else
             {
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
-                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_dconf_key_value ((DConfKey) key, variant); });
+                DConfKey dkey = (DConfKey) key;
+                row = new KeyListBoxRowEditableNoSchema (dkey);
+                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_dconf_key_value (dkey, variant); });
+                ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_dconf_change (dkey); });
             }
             row.on_row_clicked.connect (() => { new_key_editor (key); });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
@@ -373,6 +384,14 @@ class DConfWindow : ApplicationWindow
         ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
         key_list_box.select_row (list_box_row);
         list_box_row.grab_focus ();
+
+        ClickableListBoxRow row = (ClickableListBoxRow) widget;
+        if (event.button == Gdk.BUTTON_SECONDARY)
+        {
+            row.show_right_click_popover (settings.get_boolean ("delayed-apply-menu"), (int) (event.x - row.get_allocated_width () / 2.0));
+            rows_possibly_with_popover.append (row);
+        }
+
         return false;
     }
 
@@ -384,13 +403,26 @@ class DConfWindow : ApplicationWindow
         ((ClickableListBoxRow) list_box_row.get_child ()).on_row_clicked ();
     }
 
+    private void invalidate_popovers ()
+    {
+        uint position = 0;
+        ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
+        while (row != null)
+        {
+            row.destroy_popover ();
+            position++;
+            row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
+        }
+        rows_possibly_with_popover.remove_all ();
+    }
+
     /*\
     * * Revealer stuff
     \*/
 
     private void set_dconf_key_value (DConfKey key, Variant? new_value)
     {
-        if (settings.get_boolean ("delayed-apply-menu"))
+        if (settings.get_boolean ("delayed-apply-menu") || key.planned_change)
             revealer.add_delayed_dconf_settings (key, new_value);
         else if (new_value != null)
             key.value = new_value;
@@ -400,7 +432,7 @@ class DConfWindow : ApplicationWindow
 
     private void set_glib_key_value (GSettingsKey key, Variant? new_value)
     {
-        if (settings.get_boolean ("delayed-apply-menu"))
+        if (settings.get_boolean ("delayed-apply-menu") || key.planned_change)
             revealer.add_delayed_glib_settings (key, new_value);
         else if (new_value != null)
             key.value = new_value;
@@ -415,11 +447,13 @@ class DConfWindow : ApplicationWindow
     private void reset ()
     {
         reset_generic (key_model, false);
+        invalidate_popovers ();
     }
 
     private void reset_recursively ()
     {
         reset_generic (key_model, true);
+        invalidate_popovers ();
     }
 
     private void reset_generic (GLib.ListStore? objects, bool recursively)   // TODO notification if nothing to reset
@@ -535,7 +569,9 @@ class DConfWindow : ApplicationWindow
                     bookmarks_button.active = false;
                 if (info_button.active)
                     info_button.active = false;
-                ((ClickableListBoxRow) ((!) selected_row).get_child ()).show_right_click_popover ();
+                ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
+                row.show_right_click_popover (settings.get_boolean ("delayed-apply-menu"));
+                rows_possibly_with_popover.append (row);
             }
             else if (info_button.active == false)
             {

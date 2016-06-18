@@ -27,12 +27,15 @@ class ModificationsRevealer : Revealer
     private HashTable<string, DConfKey>         dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey>     (str_hash, str_equal);
     private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
+    public signal void invalidate_popovers ();
+
     /*\
     * * Public calls
     \*/
 
     public void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
     {
+        key.planned_change = true;
         key.planned_value = new_value;
         dconf_keys_awaiting_hashtable.insert (key.full_name, key);
 
@@ -41,8 +44,27 @@ class ModificationsRevealer : Revealer
 
     public void add_delayed_glib_settings (GSettingsKey key, Variant? new_value)
     {
+        key.planned_change = true;
         key.planned_value = new_value;
         gsettings_keys_awaiting_hashtable.insert (key.descriptor, key);
+
+        update ();
+    }
+
+    public void dismiss_dconf_change (DConfKey key)
+    {
+        key.planned_change = false;
+        key.planned_value = null;
+        dconf_keys_awaiting_hashtable.remove (key.full_name);
+
+        update ();
+    }
+
+    public void dismiss_glib_change (GSettingsKey key)
+    {
+        key.planned_change = false;
+        key.planned_value = null;
+        gsettings_keys_awaiting_hashtable.remove (key.descriptor);
 
         update ();
     }
@@ -55,11 +77,12 @@ class ModificationsRevealer : Revealer
     private void apply_delayed_settings ()
     {
         set_reveal_child (false);
+        invalidate_popovers ();
 
         /* GSettings stuff */
 
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
-        gsettings_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
+        gsettings_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
                 GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
                 if (settings == null)
                 {
@@ -72,6 +95,7 @@ class ModificationsRevealer : Revealer
                     ((!) settings).reset (key.name);
                 else
                     ((!) settings).set_value (key.name, (!) key.planned_value);
+                key.planned_change = false;
 
                 return true;
             });
@@ -86,6 +110,7 @@ class ModificationsRevealer : Revealer
 
                 if (key.planned_value == null)
                     key.is_ghost = true;
+                key.planned_change = false;
 
                 return true;
             });
@@ -101,9 +126,21 @@ class ModificationsRevealer : Revealer
     private void dismiss_delayed_settings ()
     {
         set_reveal_child (false);
+        invalidate_popovers ();
 
-        gsettings_keys_awaiting_hashtable.remove_all ();
-        dconf_keys_awaiting_hashtable.remove_all ();
+        /* GSettings stuff */
+
+        gsettings_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
+                key.planned_change = false;
+                return true;
+            });
+
+        /* DConf stuff */
+
+        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
+                key.planned_change = false;
+                return true;
+            });
     }
 
     /*\
@@ -111,8 +148,14 @@ class ModificationsRevealer : Revealer
     \*/
 
     private void update ()
-        requires (dconf_keys_awaiting_hashtable.length != 0 || gsettings_keys_awaiting_hashtable.length != 0)
     {
+        if (dconf_keys_awaiting_hashtable.length == 0 && gsettings_keys_awaiting_hashtable.length == 0)
+        {
+            set_reveal_child (false);
+            label.set_text ("");
+            return;
+        }
+
         if (dconf_keys_awaiting_hashtable.length == 0)
             label.set_text (_("%u gsettings operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length));
         else if (gsettings_keys_awaiting_hashtable.length == 0)

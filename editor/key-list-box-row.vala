@@ -28,20 +28,12 @@ private abstract class ClickableListBoxRow : EventBox
     \*/
 
     private ContextPopover? nullable_popover = null;
-    protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
+    protected virtual bool generate_popover (ContextPopover popover, bool delayed_apply_menu) { return false; }      // no popover should be created
 
-    protected void destroy_popover ()
+    public void destroy_popover ()
     {
         if (nullable_popover != null)       // check sometimes not useful
             ((!) nullable_popover).destroy ();
-    }
-
-    public override bool button_press_event (Gdk.EventButton event)     // list_box_row selection is done elsewhere
-    {
-        if (event.button == Gdk.BUTTON_SECONDARY)
-            show_right_click_popover ((int) (event.x - this.get_allocated_width () / 2.0));
-
-        return false;
     }
 
     public void hide_right_click_popover ()
@@ -50,12 +42,12 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).hide ();
     }
 
-    public void show_right_click_popover (int event_x = 0)
+    public void show_right_click_popover (bool delayed_apply_menu, int event_x = 0)
     {
         if (nullable_popover == null)
         {
             nullable_popover = new ContextPopover ();
-            if (!generate_popover ((!) nullable_popover))
+            if (!generate_popover ((!) nullable_popover, delayed_apply_menu))
             {
                 ((!) nullable_popover).destroy ();  // TODO better, again
                 nullable_popover = null;
@@ -95,7 +87,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         return full_name;
     }
 
-    protected override bool generate_popover (ContextPopover popover)
+    protected override bool generate_popover (ContextPopover popover, bool unused)  // TODO better
     {
         popover.new_action ("open", () => { on_row_clicked (); });
         popover.new_copy_action (get_text ());
@@ -112,6 +104,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     [GtkChild] protected Label key_info_label;
 
     public signal void set_key_value (Variant? new_value);
+    public signal void change_dismissed ();
 
     protected static string cool_text_value (Key key)   // TODO better
     {
@@ -155,7 +148,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         return key.is_ghost ? _("%s (key erased)").printf (key.full_name) : key.full_name + " " + key.value.print (false);
     }
 
-    protected override bool generate_popover (ContextPopover popover)
+    protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)
     {
         if (key.is_ghost)
         {
@@ -169,11 +162,23 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         if (key.type_string == "b" || key.type_string == "mb")
         {
             popover.new_section ();
-            popover.create_buttons_list (key, false);
+            popover.create_buttons_list (key, true, delayed_apply_menu);
 
+            popover.change_dismissed.connect (() => {
+                    destroy_popover ();
+                    change_dismissed ();
+                });
             popover.value_changed.connect ((gvariant) => {
                     destroy_popover ();
                     set_key_value (gvariant);
+                });
+        }
+        else if (delayed_apply_menu && key.planned_change)
+        {
+            popover.new_section ();
+            popover.new_action ("dismiss", () => {
+                    destroy_popover ();
+                    change_dismissed ();
                 });
         }
         return true;
@@ -206,7 +211,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         return key.descriptor + " " + key.value.print (false);
     }
 
-    protected override bool generate_popover (ContextPopover popover)
+    protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)
     {
         popover.new_action ("customize", () => { on_row_clicked (); });
         popover.new_copy_action (get_text ());
@@ -214,14 +219,18 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {
             popover.new_section ();
-            popover.create_buttons_list (key, true);
+            popover.create_buttons_list (key, true, delayed_apply_menu);
 
+            popover.change_dismissed.connect (() => {
+                    destroy_popover ();
+                    change_dismissed ();
+                });
             popover.value_changed.connect ((gvariant) => {
                     destroy_popover ();
                     set_key_value (gvariant);
                 });
         }
-        else if (key.type_string == "<flags>")
+        else if (!delayed_apply_menu && !key.planned_change && key.type_string == "<flags>")
         {
             popover.new_section ();
 
@@ -238,10 +247,24 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     set_key_value (gvariant);
                 });
         }
+        else if (key.planned_change)
+        {
+            popover.new_section ();
+            popover.new_action ("dismiss", () => {
+                    destroy_popover ();
+                    change_dismissed ();
+                });
+            if (key.planned_value != null)
+                popover.new_action ("default1", () => {
+                        destroy_popover ();
+                        set_key_value (null);
+                    });
+        }
         else if (!key.is_default)
         {
             popover.new_section ();
             popover.new_action ("default1", () => {
+                    destroy_popover ();
                     set_key_value (null);
                 });
         }
@@ -266,6 +289,7 @@ private class ContextPopover : Popover
 
     // public signals
     public signal void value_changed (Variant? gvariant);
+    public signal void change_dismissed ();
 
     public ContextPopover ()
     {
@@ -306,6 +330,9 @@ private class ContextPopover : Popover
             current_section.append (_("Set to default"), group_dot_action);
         else if (action_action == "default2")
             new_multi_default_action (group_dot_action);
+        else if (action_action == "dismiss")
+            /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
+            current_section.append (_("Dismiss change"), group_dot_action);
         else if (action_action == "open")
             /* Translators: "open folder" action in the right-click menu on a folder */
             current_section.append (_("Open"), group_dot_action);
@@ -382,7 +409,7 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    public void create_buttons_list (Key key, bool nullable)
+    public void create_buttons_list (Key key, bool has_default_value, bool delayed_apply_menu)
     {
         set_group ("enum");
         const string ACTION_NAME = "choice";
@@ -390,19 +417,34 @@ private class ContextPopover : Popover
 
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
-        string nullable_type_string = nullable_type.dup_string ();
-        Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : key.value);
+        VariantType nullable_nullable_type = new VariantType.maybe (nullable_type);
+        string nullable_nullable_type_string = nullable_nullable_type.dup_string ();
 
-        current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_type, variant));
+        Variant value_variant = key.planned_change ? key.planned_value : key.value;
+        Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : value_variant);
+        Variant nullable_variant = new Variant.maybe (nullable_type, delayed_apply_menu && !key.planned_change ? null : variant);
+        current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant));
 
-        if (nullable)
-            new_multi_default_action (group_dot_action + "(@" + nullable_type_string + " nothing)");
+        if (has_default_value)
+        {
+            bool complete_menu = delayed_apply_menu || key.planned_change;
+
+            if (complete_menu)
+                /* Translators: "no change" option in the right-click menu on a key when on delayed mode */
+                current_section.append (_("No change"), group_dot_action + "(@" + nullable_nullable_type_string + " nothing)");
+
+            if (key.has_schema)
+                new_multi_default_action (group_dot_action + "(@" + nullable_nullable_type_string + " just nothing)");
+            else if (complete_menu)
+                /* Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode */
+                current_section.append (_("Erase key"), group_dot_action + "(@" + nullable_nullable_type_string + " just nothing)");
+        }
 
         switch (key.type_string)
         {
             case "b":
-                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mb true)");
-                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mb false)");
+                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mmb true)");
+                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mmb false)");
                 break;
             case "<enum>":      // defined by the schema
                 Variant range = ((GSettingsKey) key).range_content;
@@ -410,17 +452,21 @@ private class ContextPopover : Popover
                 if (size == 0)      // TODO special case also 1?
                     assert_not_reached ();
                 for (uint index = 0; index < size; index++)
-                    current_section.append (range.get_child_value (index).print (false), group_dot_action + "(@ms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
+                    current_section.append (range.get_child_value (index).print (false), group_dot_action + "(@mms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
                 break;
             case "mb":
-                current_section.append (Key.cool_boolean_text_value (null), group_dot_action + "(@mmb just nothing)");
-                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mmb true)");
-                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mmb false)");
+                current_section.append (Key.cool_boolean_text_value (null), group_dot_action + "(@mmmb just just nothing)");
+                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mmmb true)");
+                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mmmb false)");
                 break;
         }
 
         ((GLib.ActionGroup) current_group).action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
-                value_changed (tmp_variant.get_maybe ());
+                Variant? change_variant = tmp_variant.get_maybe ();
+                if (change_variant != null)
+                    value_changed (change_variant.get_maybe ());
+                else
+                    change_dismissed ();
             });
 
         finalize_menu ();

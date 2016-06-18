@@ -149,7 +149,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         this.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
 
         ContextPopover popover = new ContextPopover ();
-        popover.create_buttons_list (key, false);
+        popover.create_buttons_list (key, false, false);
         popover.set_relative_to (this);
         popover.value_changed.connect ((gvariant) => {
                 variant = gvariant;
@@ -231,7 +231,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
             this.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
 
         ContextPopover popover = new ContextPopover ();
-        popover.create_buttons_list (key, false);
+        popover.create_buttons_list (key, false, false);
         popover.set_relative_to (this);
         popover.value_changed.connect ((gvariant) => {
                 variant = gvariant;
