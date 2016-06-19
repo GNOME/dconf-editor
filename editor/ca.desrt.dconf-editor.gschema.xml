@@ -21,11 +21,6 @@
       <summary>A flag to enable maximized mode</summary>
       <description>A flag to enable maximized mode</description>
     </key>
-    <key name="window-is-fullscreen" type="b">
-      <default>false</default>
-      <summary>A flag to enable fullscreen mode</summary>
-      <description>A flag to enable fullscreen mode</description>
-    </key>
     <key name="bookmarks" type="as">
       <default>[]</default>
       <summary>A list of bookmarked paths</summary>

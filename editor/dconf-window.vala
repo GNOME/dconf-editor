@@ -31,7 +31,6 @@ class DConfWindow : ApplicationWindow
     private int window_width = 0;
     private int window_height = 0;
     private bool window_is_maximized = false;
-    private bool window_is_fullscreen = false;
     private bool window_is_tiled = false;
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
@@ -49,9 +48,7 @@ class DConfWindow : ApplicationWindow
         settings.changed["delayed-apply-menu"].connect (invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
-        if (settings.get_boolean ("window-is-fullscreen"))
-            fullscreen ();  // TODO deprecate
-        else if (settings.get_boolean ("window-is-maximized"))
+        if (settings.get_boolean ("window-is-maximized"))
             maximize ();
 
         settings.changed["theme"].connect (() => {
@@ -109,8 +106,6 @@ class DConfWindow : ApplicationWindow
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
             window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
-        if ((event.changed_mask & Gdk.WindowState.FULLSCREEN) != 0)
-            window_is_fullscreen = (event.new_window_state & Gdk.WindowState.FULLSCREEN) != 0;
         /* We don’t save this state, but track it for saving size allocation */
         if ((event.changed_mask & Gdk.WindowState.TILED) != 0)
             window_is_tiled = (event.new_window_state & Gdk.WindowState.TILED) != 0;
@@ -121,7 +116,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void on_size_allocate ()
     {
-        if (window_is_maximized || window_is_fullscreen || window_is_tiled)
+        if (window_is_maximized || window_is_tiled)
             return;
         get_size (out window_width, out window_height);
     }
@@ -135,7 +130,6 @@ class DConfWindow : ApplicationWindow
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
-        settings.set_boolean ("window-is-fullscreen", window_is_fullscreen);
 
         base.destroy ();
     }
