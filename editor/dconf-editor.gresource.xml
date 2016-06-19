@@ -12,6 +12,7 @@
     <file preprocess="xml-stripblanks">pathbar.ui</file>
     <file preprocess="xml-stripblanks">pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">property-row.ui</file>
+    <file preprocess="xml-stripblanks">registry-view.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
     <file preprocess="xml-stripblanks" alias="menus.ui">dconf-editor-menu.ui</file>
