@@ -35,7 +35,7 @@ class RegistryView : Grid
 
     [GtkChild] private ModificationsRevealer revealer;
 
-    [GtkChild] public SearchBar search_bar;
+    [GtkChild] private SearchBar search_bar;
     [GtkChild] private SearchEntry search_entry;
     [GtkChild] private Button search_next_button;
 
@@ -371,6 +371,19 @@ class RegistryView : Grid
     /*\
     * * Search box
     \*/
+
+    public void set_search_mode (bool? mode)
+    {
+        if (mode == null)
+            search_bar.set_search_mode (!search_bar.get_search_mode ());
+        else
+            search_bar.set_search_mode ((!) mode);
+    }
+
+    public bool handle_search_event (Gdk.EventKey event)
+    {
+        return search_bar.handle_event (event);
+    }
 
     public bool show_row_popover ()
     {

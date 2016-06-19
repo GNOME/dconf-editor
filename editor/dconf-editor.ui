@@ -60,7 +60,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToggleButton" id="search_button">
+          <object class="GtkToggleButton">
             <property name="visible">True</property>
             <property name="valign">center</property>
             <!-- TODO <property name="focus-on-click">False</property> does not work here because of explicit focus grab -->

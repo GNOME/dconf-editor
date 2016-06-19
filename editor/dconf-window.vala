@@ -228,7 +228,7 @@ class DConfWindow : ApplicationWindow
                     if (info_button.active)
                         info_button.active = false;
                     registry_view.discard_row_popover ();
-                    registry_view.search_bar.set_search_mode (!registry_view.search_bar.get_search_mode ());
+                    registry_view.set_search_mode (null);
                     return true;
                 case "c":
                     registry_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
@@ -282,13 +282,13 @@ class DConfWindow : ApplicationWindow
         if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
             return false;
 
-        return registry_view.search_bar.handle_event (event);
+        return registry_view.handle_search_event (event);
     }
 
     [GtkCallback]
     private void on_menu_button_clicked ()
     {
         registry_view.discard_row_popover ();
-        registry_view.search_bar.set_search_mode (false);
+        registry_view.set_search_mode (false);
     }
 }
