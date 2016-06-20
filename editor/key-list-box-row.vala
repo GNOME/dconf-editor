@@ -418,10 +418,14 @@ private class ContextPopover : Popover
         VariantType original_type = key.value.get_type ();
         VariantType nullable_type = new VariantType.maybe (original_type);
         VariantType nullable_nullable_type = new VariantType.maybe (nullable_type);
-        string nullable_nullable_type_string = nullable_nullable_type.dup_string ();
+        string type_string = original_type.dup_string ();
 
-        Variant value_variant = key.planned_change ? key.planned_value : key.value;
-        Variant variant = new Variant.maybe (original_type, key.has_schema && ((GSettingsKey) key).is_default ? null : value_variant);
+        Variant? value_variant;
+        if (key.planned_change) // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
+            value_variant = key.planned_value;
+        else
+            value_variant = key.has_schema && ((GSettingsKey) key).is_default ? null : key.value;
+        Variant variant = new Variant.maybe (original_type, value_variant);
         Variant nullable_variant = new Variant.maybe (nullable_type, delayed_apply_menu && !key.planned_change ? null : variant);
         current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant));
 
@@ -431,13 +435,13 @@ private class ContextPopover : Popover
 
             if (complete_menu)
                 /* Translators: "no change" option in the right-click menu on a key when on delayed mode */
-                current_section.append (_("No change"), group_dot_action + "(@" + nullable_nullable_type_string + " nothing)");
+                current_section.append (_("No change"), group_dot_action + "(@mm" + type_string + " nothing)");
 
             if (key.has_schema)
-                new_multi_default_action (group_dot_action + "(@" + nullable_nullable_type_string + " just nothing)");
+                new_multi_default_action (group_dot_action + "(@mm" + type_string + " just nothing)");
             else if (complete_menu)
                 /* Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode */
-                current_section.append (_("Erase key"), group_dot_action + "(@" + nullable_nullable_type_string + " just nothing)");
+                current_section.append (_("Erase key"), group_dot_action + "(@mm" + type_string + " just nothing)");
         }
 
         switch (key.type_string)
@@ -464,7 +468,7 @@ private class ContextPopover : Popover
         ((GLib.ActionGroup) current_group).action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
                 Variant? change_variant = tmp_variant.get_maybe ();
                 if (change_variant != null)
-                    value_changed (change_variant.get_maybe ());
+                    value_changed (((!) change_variant).get_maybe ());
                 else
                     change_dismissed ();
             });

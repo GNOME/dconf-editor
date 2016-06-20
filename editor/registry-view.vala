@@ -315,7 +315,7 @@ class RegistryView : Grid
         if (delayed_apply_menu || key.planned_change)
             revealer.add_delayed_dconf_settings (key, new_value);
         else if (new_value != null)
-            key.value = new_value;
+            key.value = (!) new_value;
         else
             assert_not_reached ();
     }
@@ -325,7 +325,7 @@ class RegistryView : Grid
         if (delayed_apply_menu || key.planned_change)
             revealer.add_delayed_glib_settings (key, new_value);
         else if (new_value != null)
-            key.value = new_value;
+            key.value = (!) new_value;
         else
             key.set_to_default ();
     }
