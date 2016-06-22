@@ -172,3 +172,15 @@ list.properties-list > row > grid > :first-child {
 }
 list.properties-list:dir(ltr) > row > grid > label { padding-right:1em; }
 list.properties-list:dir(rtl) > row > grid > label { padding-left:1em; }
+
+/*\
+* * text formating
+\*/
+
+.italic-label {
+  font-style:italic;
+}
+
+.bold-label {
+  font-weight:bold;
+}

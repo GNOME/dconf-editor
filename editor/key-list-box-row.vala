@@ -121,7 +121,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         this.key = _key;
 
         update ();
-        key_info_label.set_markup ("<i>" + _("No Schema Found") + "</i>");
+        key_info_label.get_style_context ().add_class ("italic-label");
+        key_info_label.set_label (_("No Schema Found"));
 
         key.value_changed.connect (() => {
                 update ();
@@ -131,16 +132,26 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     private void update ()
     {
+        StyleContext context = key_value_label.get_style_context ();
         if (key.is_ghost)
         {
-            key_name_label.set_markup (key.name);
-            key_value_label.set_markup ("<i>" + _("Key erased.") + "</i>");
+            if (!context.has_class ("italic-label")) context.add_class ("italic-label");
+            if (context.has_class ("bold-label")) context.remove_class ("bold-label");
+            key_value_label.set_label (_("Key erased."));
+
+            context = key_name_label.get_style_context ();
+            if (context.has_class ("bold-label")) context.remove_class ("bold-label");
         }
         else
         {
-            key_name_label.set_markup ("<b>" + key.name + "</b>");
-            key_value_label.set_markup ("<b>" + cool_text_value (key) + "</b>");
+            if (context.has_class ("italic-label")) context.remove_class ("italic-label");
+            if (!context.has_class ("bold-label")) context.add_class ("bold-label");
+            key_value_label.set_label (cool_text_value (key));
+
+            context = key_name_label.get_style_context ();
+            if (!context.has_class ("bold-label")) context.add_class ("bold-label");
         }
+        key_name_label.set_label (key.name);
     }
 
     protected override string get_text ()
