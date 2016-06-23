@@ -168,8 +168,9 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
     private void reload (Variant gvariant)
     {
         variant = gvariant;
-        label = gvariant.get_type () == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
-        action.change_state (new Variant.maybe (null, new Variant.maybe (VariantType.STRING, gvariant)));
+        VariantType type = gvariant.get_type ();
+        label = type == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
+        action.change_state (new Variant.maybe (null, new Variant.maybe (type, gvariant)));
     }
 }
 
@@ -220,6 +221,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
 {
     private Variant variant;
     private Variant? maybe_variant;
+    private GLib.Action action;
 
     public KeyEditorChildNullableBool (Key key)
         requires (key.type_string == "mb")
@@ -231,7 +233,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
-        GLib.Action action = popover.create_buttons_list (key, false, false);
+        action = popover.create_buttons_list (key, false, false);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
@@ -258,6 +260,8 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
             label = Key.cool_boolean_text_value (null);
         else
             label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
+
+        action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType ("mb"), gvariant)));
     }
 }
 
