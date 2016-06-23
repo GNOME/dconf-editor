@@ -136,19 +136,13 @@ class RegistryView : Grid
         {
             Key key = (Key) item;
             if (key.has_schema)
-            {
-                GSettingsKey gkey = (GSettingsKey) key;
-                row = new KeyListBoxRowEditable (gkey);
-                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_glib_key_value (gkey, variant); });
-                ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_glib_change (gkey); });
-            }
+                row = new KeyListBoxRowEditable ((GSettingsKey) key);
             else
-            {
-                DConfKey dkey = (DConfKey) key;
-                row = new KeyListBoxRowEditableNoSchema (dkey);
-                ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_dconf_key_value (dkey, variant); });
-                ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_dconf_change (dkey); });
-            }
+                row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
+
+            ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_key_value (key, variant); });
+            ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_change (key); });
+
             row.on_row_clicked.connect (() => { new_key_editor (key); });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
@@ -310,24 +304,16 @@ class RegistryView : Grid
     * * Revealer stuff
     \*/
 
-    private void set_dconf_key_value (DConfKey key, Variant? new_value)
+    private void set_key_value (Key key, Variant? new_value)
     {
         if (delayed_apply_menu || key.planned_change)
-            revealer.add_delayed_dconf_settings (key, new_value);
+            revealer.add_delayed_setting (key, new_value);
         else if (new_value != null)
             key.value = (!) new_value;
+        else if (key.has_schema)
+            ((GSettingsKey) key).set_to_default ();
         else
             assert_not_reached ();
-    }
-
-    private void set_glib_key_value (GSettingsKey key, Variant? new_value)
-    {
-        if (delayed_apply_menu || key.planned_change)
-            revealer.add_delayed_glib_settings (key, new_value);
-        else if (new_value != null)
-            key.value = (!) new_value;
-        else
-            key.set_to_default ();
     }
 
     /*\
@@ -361,10 +347,10 @@ class RegistryView : Grid
             if (!((Key) setting_object).has_schema)
             {
                 if (!((DConfKey) setting_object).is_ghost)
-                    revealer.add_delayed_dconf_settings ((DConfKey) setting_object, null);
+                    revealer.add_delayed_setting ((Key) setting_object, null);
             }
             else if (!((GSettingsKey) setting_object).is_default)
-                revealer.add_delayed_glib_settings ((GSettingsKey) setting_object, null);
+                revealer.add_delayed_setting ((Key) setting_object, null);
         }
     }
 

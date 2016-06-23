@@ -156,7 +156,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     protected override string get_text ()
     {
-        return key.is_ghost ? _("%s (key erased)").printf (key.full_name) : key.full_name + " " + key.value.print (false);
+        return key.is_ghost ? _("%s (key erased)").printf (key.full_name) : key.descriptor + " " + key.value.print (false);
     }
 
     protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)

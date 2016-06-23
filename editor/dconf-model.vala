@@ -175,6 +175,7 @@ public abstract class Key : SettingObject
 {
     public override bool is_view { get { return false; } }
     public abstract bool has_schema { get; }
+    public abstract string descriptor { owned get; }
 
     public string type_string { get; protected set; default = "*"; }
     public Variant properties { owned get; protected set; }
@@ -328,6 +329,8 @@ public class DConfKey : Key
 {
     public override bool has_schema { get { return false; } }
 
+    public override string descriptor { owned get { return full_name; } }
+
     private DConf.Client client;
 
     public bool is_ghost { get; set; default = false; }
@@ -390,7 +393,7 @@ public class GSettingsKey : Key
     public string range_type             { get; construct; }
     public Variant range_content         { get; construct; }
 
-    public string descriptor { owned get { return schema_id + " " + name; } }
+    public override string descriptor { owned get { return schema_id + " " + name; } }
 
     private GLib.Settings settings;
 

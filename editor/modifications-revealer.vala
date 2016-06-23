@@ -33,38 +33,28 @@ class ModificationsRevealer : Revealer
     * * Public calls
     \*/
 
-    public void add_delayed_dconf_settings (DConfKey key, Variant? new_value)
+    public void add_delayed_setting (Key key, Variant? new_value)
     {
         key.planned_change = true;
         key.planned_value = new_value;
-        dconf_keys_awaiting_hashtable.insert (key.full_name, key);
+
+        if (key.has_schema)
+            gsettings_keys_awaiting_hashtable.insert (key.descriptor, (GSettingsKey) key);
+        else
+            dconf_keys_awaiting_hashtable.insert (key.descriptor, (DConfKey) key);
 
         update ();
     }
 
-    public void add_delayed_glib_settings (GSettingsKey key, Variant? new_value)
-    {
-        key.planned_change = true;
-        key.planned_value = new_value;
-        gsettings_keys_awaiting_hashtable.insert (key.descriptor, key);
-
-        update ();
-    }
-
-    public void dismiss_dconf_change (DConfKey key)
+    public void dismiss_change (Key key)
     {
         key.planned_change = false;
         key.planned_value = null;
-        dconf_keys_awaiting_hashtable.remove (key.full_name);
 
-        update ();
-    }
-
-    public void dismiss_glib_change (GSettingsKey key)
-    {
-        key.planned_change = false;
-        key.planned_value = null;
-        gsettings_keys_awaiting_hashtable.remove (key.descriptor);
+        if (key.has_schema)
+            gsettings_keys_awaiting_hashtable.remove (key.descriptor);
+        else
+            dconf_keys_awaiting_hashtable.remove (key.descriptor);
 
         update ();
     }
@@ -105,8 +95,8 @@ class ModificationsRevealer : Revealer
         /* DConf stuff */
 
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
-        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
-                dconf_changeset.set (full_name, key.planned_value);
+        dconf_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
+                dconf_changeset.set (key.full_name, key.planned_value);
 
                 if (key.planned_value == null)
                     key.is_ghost = true;
@@ -137,7 +127,7 @@ class ModificationsRevealer : Revealer
 
         /* DConf stuff */
 
-        dconf_keys_awaiting_hashtable.foreach_remove ((full_name, key) => {
+        dconf_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
                 key.planned_change = false;
                 return true;
             });
