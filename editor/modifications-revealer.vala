@@ -156,13 +156,15 @@ class ModificationsRevealer : Revealer
             return;
         }
 
-        if (dconf_keys_awaiting_hashtable.length == 0)
-            label.set_text (_("%u gsettings operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length));
-        else if (gsettings_keys_awaiting_hashtable.length == 0)
-            label.set_text (_("%u dconf operations awaiting.").printf (dconf_keys_awaiting_hashtable.length));
-        else
-            label.set_text (_("%u gsettings operations and %u dconf operations awaiting.").printf (gsettings_keys_awaiting_hashtable.length, dconf_keys_awaiting_hashtable.length));
-
+        label.set_text (get_text (dconf_keys_awaiting_hashtable.length, gsettings_keys_awaiting_hashtable.length));
         set_reveal_child (true);
+    }
+
+    private static string get_text (uint dconf, uint gsettings)     // TODO change text if current path is a key?
+        requires (dconf > 0 || gsettings > 0)
+    {
+        if (dconf == 0) return _("%u gsettings operations awaiting.").printf (gsettings);
+        if (gsettings == 0) return _("%u dconf operations awaiting.").printf (dconf);
+        return _("%u gsettings operations and %u dconf operations awaiting.").printf (gsettings, dconf);
     }
 }
