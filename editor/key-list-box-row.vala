@@ -173,14 +173,16 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         if (key.type_string == "b" || key.type_string == "mb")
         {
             popover.new_section ();
-            popover.create_buttons_list (key, true, delayed_apply_menu);
+            GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
 
             popover.change_dismissed.connect (() => {
-                    destroy_popover ();
+                    hide_right_click_popover ();
+                    action.change_state (new Variant.maybe (new VariantType ("m" + key.type_string), null));
                     change_dismissed ();
                 });
             popover.value_changed.connect ((gvariant) => {
-                    destroy_popover ();
+                    hide_right_click_popover ();
+                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key.type_string), gvariant)));
                     set_key_value (gvariant);
                 });
         }
@@ -229,15 +231,19 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
         {
+            string real_type_string = key.value.get_type_string ();
+
             popover.new_section ();
-            popover.create_buttons_list (key, true, delayed_apply_menu);
+            GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
 
             popover.change_dismissed.connect (() => {
-                    destroy_popover ();
+                    hide_right_click_popover ();
+                    action.change_state (new Variant.maybe (new VariantType ("m" + real_type_string), null));
                     change_dismissed ();
                 });
             popover.value_changed.connect ((gvariant) => {
-                    destroy_popover ();
+                    hide_right_click_popover ();
+                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (real_type_string), gvariant)));
                     set_key_value (gvariant);
                 });
         }
@@ -420,7 +426,7 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    public void create_buttons_list (Key key, bool has_default_value, bool delayed_apply_menu)
+    public GLib.Action create_buttons_list (Key key, bool has_default_value, bool delayed_apply_menu)
     {
         set_group ("enum");
         const string ACTION_NAME = "choice";
@@ -432,13 +438,17 @@ private class ContextPopover : Popover
         string type_string = original_type.dup_string ();
 
         Variant? value_variant;
-        if (key.planned_change) // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
+        if (!has_default_value) // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
+            value_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
+        else if (key.planned_change)
             value_variant = key.planned_value;
         else
             value_variant = key.has_schema && ((GSettingsKey) key).is_default ? null : key.value;
         Variant variant = new Variant.maybe (original_type, value_variant);
         Variant nullable_variant = new Variant.maybe (nullable_type, delayed_apply_menu && !key.planned_change ? null : variant);
-        current_group.add_action (new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant));
+
+        GLib.Action action = (GLib.Action) new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant);
+        current_group.add_action (action);
 
         if (has_default_value)
         {
@@ -485,6 +495,8 @@ private class ContextPopover : Popover
             });
 
         finalize_menu ();
+
+        return action;
     }
 
     /*\

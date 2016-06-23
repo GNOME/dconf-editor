@@ -135,35 +135,41 @@ public interface KeyEditorChild : Widget
 private class KeyEditorChildEnum : MenuButton, KeyEditorChild
 {
     private Variant variant;
+    private GLib.Action action;
 
     public KeyEditorChildEnum (Key key)
         requires (key.type_string == "<enum>")
     {
-        this.variant = key.value;
-
         this.visible = true;
         this.hexpand = true;
         this.halign = Align.END;
         this.use_popover = true;
         this.width_request = 100;
-        this.label = variant.get_type () == VariantType.STRING ? variant.get_string () : variant.print (false);
 
         ContextPopover popover = new ContextPopover ();
-        popover.create_buttons_list (key, false, false);
+        action = popover.create_buttons_list (key, false, false);
         popover.set_relative_to (this);
+
         popover.value_changed.connect ((gvariant) => {
-                variant = gvariant;
-                this.label = gvariant.get_type () == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
+                reload (gvariant);
                 popover.closed ();
 
                 value_has_changed (true);
             });
+        reload (key.value);
         this.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
     {
         return variant;
+    }
+
+    private void reload (Variant gvariant)
+    {
+        variant = gvariant;
+        label = gvariant.get_type () == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
+        action.change_state (new Variant.maybe (null, new Variant.maybe (VariantType.STRING, gvariant)));
     }
 }
 
@@ -213,43 +219,45 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
 private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
 {
     private Variant variant;
+    private Variant? maybe_variant;
 
     public KeyEditorChildNullableBool (Key key)
         requires (key.type_string == "mb")
     {
-        this.variant = key.value;
-        Variant? maybe_variant = variant.get_maybe ();
-
         this.visible = true;
         this.hexpand = true;
         this.halign = Align.END;
         this.use_popover = true;
         this.width_request = 100;
-        if (maybe_variant == null)
-            this.label = Key.cool_boolean_text_value (null);
-        else
-            this.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
 
         ContextPopover popover = new ContextPopover ();
-        popover.create_buttons_list (key, false, false);
+        GLib.Action action = popover.create_buttons_list (key, false, false);
         popover.set_relative_to (this);
+
         popover.value_changed.connect ((gvariant) => {
-                variant = gvariant;
-                maybe_variant = gvariant.get_maybe ();
-                if (maybe_variant == null)
-                    this.label = Key.cool_boolean_text_value (null);
-                else
-                    this.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
+                reload (gvariant);
                 popover.closed ();
 
                 value_has_changed (true);
             });
+        reload (key.value);
         this.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
     {
         return variant;
+    }
+
+    private void reload (Variant gvariant)
+    {
+        variant = gvariant;
+        maybe_variant = variant.get_maybe ();
+
+        if (maybe_variant == null)
+            label = Key.cool_boolean_text_value (null);
+        else
+            label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
     }
 }
 
