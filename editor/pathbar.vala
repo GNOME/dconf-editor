@@ -73,22 +73,12 @@ public class PathBar : Box
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
 private class PathBarItem : Button
 {
-    public string complete_path { get; construct; }
-    private bool is_clickable;
-
     [GtkChild] private Label text;
 
-    public PathBarItem (string label, string path, bool _is_clickable)
+    public PathBarItem (string label, string path, bool is_clickable)
     {
-        Object (complete_path: path);
         text.set_text (label);
-        is_clickable = _is_clickable;
-    }
-
-    [GtkCallback]
-    private void on_path_bar_item_clicked ()
-    {
         if (is_clickable)
-            ((PathBar) get_parent ()).set_path (complete_path, true);
+            clicked.connect (() => { ((PathBar) get_parent ()).set_path (path, true); });
     }
 }
