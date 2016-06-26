@@ -176,8 +176,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
 
             popover.change_dismissed.connect (() => {
-                    hide_right_click_popover ();
-                    action.change_state (new Variant.maybe (new VariantType ("m" + key.type_string), null));
+                    destroy_popover ();
                     change_dismissed ();
                 });
             popover.value_changed.connect ((gvariant) => {
@@ -237,8 +236,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
 
             popover.change_dismissed.connect (() => {
-                    hide_right_click_popover ();
-                    action.change_state (new Variant.maybe (new VariantType ("m" + real_type_string), null));
+                    destroy_popover ();
                     change_dismissed ();
                 });
             popover.value_changed.connect ((gvariant) => {
@@ -416,6 +414,13 @@ private class ContextPopover : Popover
                             new_flags += action.name;
                     Variant variant = new Variant.strv (new_flags);
                     value_changed (variant);
+                });
+
+            key.notify ["planned-value"].connect (() => {
+                    active_flags = key.planned_value != null ? key.planned_value.get_strv () : key.value.get_strv ();
+                    bool active = flag in active_flags;
+                    if (active != simple_action.get_state ())
+                        simple_action.set_state (new Variant.boolean (active));
                 });
         }
 

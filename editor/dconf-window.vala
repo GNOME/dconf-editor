@@ -67,7 +67,7 @@ class DConfWindow : ApplicationWindow
         registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
     }
 
-    private static string stripped_path (string path)
+    public static string stripped_path (string path)
     {
         if (path.length <= 1)
             return "/";

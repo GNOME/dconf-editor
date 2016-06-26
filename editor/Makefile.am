@@ -26,7 +26,6 @@ resource_data = \
 	dconf-editor.ui \
 	folder-list-box-row.ui \
 	key-list-box-row.ui \
-	key-editor.ui \
 	bookmarks.ui \
 	bookmark.ui \
 	help-overlay.ui \

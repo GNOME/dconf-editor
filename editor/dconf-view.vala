@@ -56,80 +56,14 @@ private class PropertyRow : ListBoxRow
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-editor.ui")]
-private class KeyEditor : Dialog
-{
-    [GtkChild] private Button button_apply;
-    [GtkChild] private InfoBar no_schema_warning;
-    [GtkChild] private ListBox listbox;
-
-    public bool custom_value_is_valid { get; set; default = true; }
-
-    public KeyEditor (bool has_schema, string name, string parent_path)
-    {
-        Object (use_header_bar: Gtk.Settings.get_default ().gtk_dialogs_use_header ? 1 : 0);
-
-        if (has_schema)
-            no_schema_warning.destroy ();
-        else
-            no_schema_warning.show ();
-
-        this.title = name;
-
-        if (this.use_header_bar == 1)        // TODO else..?
-            ((HeaderBar) this.get_header_bar ()).subtitle = parent_path;   // TODO get_header_bar() is [transfer none]
-
-        notify ["custom-value-is-valid"].connect (() => { button_apply.set_sensitive (custom_value_is_valid); });
-    }
-
-    public void switch_is_active (bool active)
-    {
-        button_apply.set_sensitive (active ? true : custom_value_is_valid);
-    }
-
-    public void add_row_from_label (string property_name, string property_value)
-    {
-        listbox.add (new PropertyRow.from_label (property_name, property_value));
-    }
-
-    public void add_row_from_widget (string property_name, Widget widget, string? type)
-    {
-        listbox.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null));
-    }
-
-    private static Widget? add_warning (string type)
-    {
-        if (type != "<flags>" && ((type != "s" && "s" in type) || (type != "g" && "g" in type)) || (type != "o" && "o" in type))
-        {
-            if ("m" in type)
-                /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-                return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks."));
-            else
-                return warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks."));
-        }
-        else if (type != "m" && type != "mb" && type != "<enum>" && "m" in type)
-            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
-            return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."));
-        return null;
-    }
-    private static Widget warning_label (string text)
-    {
-        Label label = new Label ("<i>" + text + "</i>");
-        label.visible = true;
-        label.use_markup = true;
-        label.max_width_chars = 59;
-        label.wrap = true;
-        label.halign = Align.START;
-        return (Widget) label;
-    }
-}
-
 public interface KeyEditorChild : Widget
 {
-    public signal void value_has_changed (bool is_valid);
+    public signal void value_has_changed (bool enable_revealer, bool is_valid = false);
 
     public abstract Variant get_variant ();
     public signal void child_activated ();
+
+    public abstract void reload (Variant gvariant);
 }
 
 private class KeyEditorChildEnum : MenuButton, KeyEditorChild
@@ -154,9 +88,9 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
                 reload (gvariant);
                 popover.closed ();
 
-                value_has_changed (true);
+                value_has_changed (true, true);
             });
-        reload (key.value);
+        reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         this.set_popover ((Popover) popover);
     }
 
@@ -165,7 +99,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         return variant;
     }
 
-    private void reload (Variant gvariant)
+    public void reload (Variant gvariant)
     {
         variant = gvariant;
         VariantType type = gvariant.get_type ();
@@ -177,16 +111,14 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
 private class KeyEditorChildFlags : Grid, KeyEditorChild
 {
     private Variant variant;
+    private Label label = new Label ("");
 
     public KeyEditorChildFlags (GSettingsKey key)
         requires (key.type_string == "<flags>")
     {
-        this.variant = key.value;
-
         this.visible = true;
         this.hexpand = true;
 
-        Label label = new Label (variant.print (false));
         label.visible = true;
         label.halign = Align.START;
         label.hexpand = true;
@@ -203,17 +135,23 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         popover.create_flags_list (key);
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
-                variant = gvariant;
-                label.label = gvariant.print (false);
-
-                value_has_changed (true);
+                reload (gvariant);
+                value_has_changed (true, true);
             });
+        reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         button.set_popover ((Popover) popover);
     }
 
     public Variant get_variant ()
     {
         return variant;
+    }
+
+    public void reload (Variant gvariant)
+    {
+        this.variant = gvariant;
+        label.label = gvariant.print (false);
+        value_has_changed (false);
     }
 }
 
@@ -240,9 +178,9 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
                 reload (gvariant);
                 popover.closed ();
 
-                value_has_changed (true);
+                value_has_changed (true, true);
             });
-        reload (key.value);
+        reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         this.set_popover ((Popover) popover);
     }
 
@@ -251,7 +189,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         return variant;
     }
 
-    private void reload (Variant gvariant)
+    public void reload (Variant gvariant)
     {
         variant = gvariant;
         maybe_variant = variant.get_maybe ();
@@ -291,17 +229,25 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
 
-        button_true.toggled.connect (() => { value_has_changed (true); });
+        button_true.toggled.connect (() => { value_has_changed (true, true); });
     }
 
     public Variant get_variant ()
     {
         return new Variant.boolean (button_true.active);
     }
+
+    public void reload (Variant gvariant)
+    {
+        button_true.active = gvariant.get_boolean ();
+        value_has_changed (false);
+    }
 }
 
 private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
 {
+    private uint locked = 0;
+
     public KeyEditorChildNumberDouble (Key key)
         requires (key.type_string == "d")
     {
@@ -321,7 +267,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
             max = double.MAX;
         }
 
-        Adjustment adjustment = new Adjustment (key.value.get_double (), min, max, 0.01, 0.1, 0.0);
+        Adjustment adjustment = new Adjustment (key.planned_change && (key.planned_value != null) ? key.planned_value.get_double () : key.value.get_double (), min, max, 0.01, 0.1, 0.0);
         this.configure (adjustment, 0.01, 2);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
@@ -329,8 +275,8 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
         this.input_purpose = InputPurpose.NUMBER;
         this.width_chars = 30;
 
-        this.buffer.deleted_text.connect (() => { value_has_changed (true); });     // TODO test value for
-        this.buffer.inserted_text.connect (() => { value_has_changed (true); });    //   non-numeric chars
+        this.buffer.deleted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });     // TODO test value for
+        this.buffer.inserted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });    //   non-numeric chars
         this.activate.connect (() => { update (); child_activated (); });
     }
 
@@ -338,11 +284,19 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
     {
         return new Variant.double (this.get_value ());
     }
+
+    public void reload (Variant gvariant)
+    {
+        locked = 2;
+        this.set_value (gvariant.get_double ());
+        value_has_changed (false);  // set disable_revealer_for_value to false, might be useful for corner cases
+    }
 }
 
 private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 {
     private string key_type;
+    private uint locked = 0;
 
     public KeyEditorChildNumberInt (Key key)
         requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "h")     // TODO key.type_string == "x" || key.type_string == "t" ||
@@ -362,7 +316,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         else
             get_min_and_max_double (out min, out max, key.type_string);
 
-        Adjustment adjustment = new Adjustment (get_variant_as_double (key.value), min, max, 1.0, 5.0, 0.0);
+        Adjustment adjustment = new Adjustment (get_variant_as_double (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value), min, max, 1.0, 5.0, 0.0);
         this.configure (adjustment, 1.0, 0);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
@@ -371,8 +325,8 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
         this.width_chars = 30;
 
-        this.buffer.deleted_text.connect (() => { value_has_changed (true); });     // TODO test value for
-        this.buffer.inserted_text.connect (() => { value_has_changed (true); });    //   non-numeric chars
+        this.buffer.deleted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });     // TODO test value for
+        this.buffer.inserted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });    //   non-numeric chars
         this.activate.connect (() => { update (); child_activated (); });
     }
 
@@ -408,14 +362,21 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (key_type)
         {
-            case "y": return new Variant.byte   ((uchar) this.get_value ());        // TODO uchar or uint8?
-            case "n": return new Variant.int16  ((int16) this.get_value ());
-            case "q": return new Variant.uint16 ((uint16) this.get_value ());
-            case "i": return new Variant.int32  ((int32) this.get_value ());
-            case "u": return new Variant.uint32 ((uint32) this.get_value ());
-            case "h": return new Variant.handle ((int32) this.get_value ());
+            case "y": return new Variant.byte   ((uchar) this.get_value_as_int ());     // TODO uchar or uint8?
+            case "n": return new Variant.int16  ((int16) this.get_value_as_int ());
+            case "q": return new Variant.uint16 ((uint16) this.get_value_as_int ());
+            case "i": return new Variant.int32  (this.get_value_as_int ());
+            case "u": return new Variant.uint32 ((uint32) this.get_value ());           // TODO also use get_value_as_int?
+            case "h": return new Variant.handle (this.get_value_as_int ());
             default: assert_not_reached ();
         }
+    }
+
+    public void reload (Variant gvariant)
+    {
+        locked = 2;
+        this.set_value (get_variant_as_double (gvariant));
+        value_has_changed (false);  // set disable_revealer_for_value to false, might be useful for corner cases
     }
 }
 
@@ -424,6 +385,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
     private string variant_type;
     private Variant variant;
     private bool is_string;
+    private bool locked = false;
 
     public KeyEditorChildDefault (string type, Variant initial_value)
     {
@@ -432,14 +394,16 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
+        this.secondary_icon_activatable = false;
+        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type."));    // TODO report bug, not displayed, neither like that nor by setting secondary_icon_tooltip_text
 
         this.is_string = type == "s" || type == "o" || type == "g";
         this.text = is_string ? initial_value.get_string () : initial_value.print (false);
 
-        this.buffer.deleted_text.connect (() => { value_has_changed (test_value ()); });
-        this.buffer.inserted_text.connect (() => { value_has_changed (test_value ()); });
+        this.buffer.deleted_text.connect (() => { if (!locked) value_has_changed (true, test_value ()); });
+        this.buffer.inserted_text.connect (() => { if (!locked) value_has_changed (true, test_value ()); });
         this.activate.connect (() => { if (test_value ()) child_activated (); });
-        value_has_changed (test_value ());
+        value_has_changed (true, test_value ());
     }
 
     private bool test_value ()
@@ -454,10 +418,21 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
             string tmp_text = is_string ? @"'$text'" : this.text;
             Variant? tmp_variant = Variant.parse (new VariantType (variant_type), tmp_text);
             variant = (!) tmp_variant;
+
+            StyleContext context = get_style_context ();
+            if (context.has_class ("error"))
+                context.remove_class ("error");
+            secondary_icon_name = null;
+
             return true;
         }
         catch (VariantParseError e)
         {
+            StyleContext context = get_style_context ();
+            if (!context.has_class ("error"))
+                context.add_class ("error");
+            secondary_icon_name = "dialog-error-symbolic";
+
             return false;
         }
     }
@@ -465,5 +440,14 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
     public Variant get_variant ()
     {
         return variant;
+    }
+
+    public void reload (Variant gvariant)
+    {
+        locked = true;
+        this.text = is_string ? gvariant.get_string () : gvariant.print (false);
+        if (!test_value ())
+            assert_not_reached ();
+        locked = false;
     }
 }

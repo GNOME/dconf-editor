@@ -27,7 +27,7 @@ class ModificationsRevealer : Revealer
     private HashTable<string, DConfKey>         dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey>     (str_hash, str_equal);
     private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
-    public signal void invalidate_popovers ();
+    public signal void reload ();
 
     /*\
     * * Public calls
@@ -64,10 +64,9 @@ class ModificationsRevealer : Revealer
     \*/
 
     [GtkCallback]
-    private void apply_delayed_settings ()
+    public void apply_delayed_settings ()
     {
         set_reveal_child (false);
-        invalidate_popovers ();
 
         /* GSettings stuff */
 
@@ -116,7 +115,6 @@ class ModificationsRevealer : Revealer
     private void dismiss_delayed_settings ()
     {
         set_reveal_child (false);
-        invalidate_popovers ();
 
         /* GSettings stuff */
 
@@ -131,6 +129,10 @@ class ModificationsRevealer : Revealer
                 key.planned_change = false;
                 return true;
             });
+
+        /* reload notably key_editor_child */
+
+        reload ();
     }
 
     /*\

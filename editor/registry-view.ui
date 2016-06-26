@@ -18,6 +18,7 @@
         <property name="visible">True</property>
         <property name="search-mode-enabled">False</property>
         <property name="show-close-button">False</property>
+        <signal name="notify::search-mode-enabled" handler="show_browse_view"/>
         <child>
           <object class="GtkGrid">
             <property name="visible">True</property>
@@ -51,9 +52,10 @@
       </object>
     </child>
     <child>
-      <object class="GtkStack">
+      <object class="GtkStack" id="stack">
         <property name="visible">True</property>
-        <property name="visible-child">browse-view</property>
+        <property name="visible-child">browse-view</property> <!-- uses the "id" attribute -->
+        <property name="transition-type">crossfade</property>
         <property name="expand">True</property>
         <child>
           <object class="GtkScrolledWindow" id="browse-view">
@@ -103,6 +105,58 @@
               </object>
             </child>
           </object>
+          <packing>
+            <property name="name">browse-view</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkRevealer" id="no_schema_warning"> <!-- TODO report bug: hiding and showing infobar fails to draw it the 2nd time -->
+                <property name="visible">True</property>
+                <property name="reveal-child">False</property>
+                <child>
+                  <object class="GtkInfoBar">
+                    <property name="visible">True</property>
+                    <property name="message-type">info</property>
+                    <child internal-child="content_area">
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="max-width-chars">40</property>
+                            <property name="use-markup">True</property>
+                            <property name="wrap">True</property>
+                            <property name="label" translatable="yes">&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema associated with this key. The application that installed this key may have been removed, may have stop the use of this key, or may use a relocatable schema for defining its keys.</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkListBox" id="properties_list_box">
+                    <property name="visible">True</property>
+                    <property name="selection-mode">none</property>
+                    <style>
+                      <class name="properties-list"/>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="name">properties-view</property>
+          </packing>
         </child>
       </object>
     </child>

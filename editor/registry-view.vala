@@ -23,10 +23,15 @@ class RegistryView : Grid
     public string current_path { get; private set; }
     public bool show_search_bar { get; set; }
     public bool delayed_apply_menu { get; set; }
+    public bool planned_change { get { return revealer.get_reveal_child (); }}
 
     private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
     [GtkChild] private TreeSelection dir_tree_selection;
+
+    [GtkChild] private Revealer no_schema_warning;
+    [GtkChild] private Stack stack;
+    [GtkChild] private ListBox properties_list_box;
 
     [GtkChild] private ListBox key_list_box;
     private GLib.ListStore? key_model = null;
@@ -41,7 +46,7 @@ class RegistryView : Grid
 
     construct
     {
-        revealer.invalidate_popovers.connect (invalidate_popovers);
+        revealer.reload.connect (invalidate_popovers);
 
         search_entry.get_buffer ().deleted_text.connect (() => { search_next_button.set_sensitive (true); });
         search_bar.connect_entry (search_entry);
@@ -59,6 +64,12 @@ class RegistryView : Grid
             if (!scroll_to_path ("/"))
                 assert_not_reached ();
         }
+    }
+
+    private void update_current_path (string path)
+    {
+        current_path = path;
+        ((DConfWindow) this.get_parent ()).update_current_path ();
     }
 
     /*\
@@ -80,14 +91,23 @@ class RegistryView : Grid
             dir = model.get_root_directory ();
 
         key_model = dir.key_model;
-        current_path = dir.full_name;
-        ((DConfWindow) this.get_parent ()).update_current_path ();
+        update_current_path (dir.full_name);
 
         key_list_box.bind_model (key_model, new_list_box_row);
     }
 
-    public bool scroll_to_path (string full_name)
+    public bool scroll_to_path (string _full_name)      // TODO for now we assume full_name is a folder; also, don't do all the selection work if the folder didn't change
     {
+        string full_name = _full_name.dup ();
+
+        if (!full_name.has_suffix ("/"))
+            full_name = DConfWindow.stripped_path (full_name);
+
+        update_current_path (full_name);
+
+        no_schema_warning.set_reveal_child (false);
+        stack.set_visible_child_name ("browse-view");
+
         invalidate_popovers ();
 
         if (full_name == "/")
@@ -143,18 +163,27 @@ class RegistryView : Grid
             ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_key_value (key, variant); });
             ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_change (key); });
 
-            row.on_row_clicked.connect (() => { new_key_editor (key); });
+            row.on_row_clicked.connect (() => {
+                    if (!key.has_schema && ((DConfKey) key).is_ghost)
+                        return;
+
+                    properties_list_box.@foreach ((widget) => { widget.destroy (); });
+                    populate_properties_list_box (key);
+
+                    stack.set_visible_child_name ("properties-view");
+
+                    update_current_path (key.full_name);
+
+                    no_schema_warning.set_reveal_child (!key.has_schema);
+                });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
         row.button_press_event.connect (on_button_pressed);
         return row;
     }
 
-    private void new_key_editor (Key key)
+    private void populate_properties_list_box (Key key)
     {
-        if (!key.has_schema && ((DConfKey) key).is_ghost)
-            return;
-
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
@@ -166,78 +195,70 @@ class RegistryView : Grid
         if (!dict.lookup ("key-name",     "s", out key_name))   assert_not_reached ();
         if (!dict.lookup ("parent-path",  "s", out tmp_string)) assert_not_reached ();
 
-        KeyEditor key_editor = new KeyEditor (has_schema, key_name, tmp_string);
-
-        if (dict.lookup ("schema-id",     "s", out tmp_string)) key_editor.add_row_from_label (_("Schema"),      tmp_string);
-        if (dict.lookup ("summary",       "s", out tmp_string)) key_editor.add_row_from_label (_("Summary"),     tmp_string);
-        if (dict.lookup ("description",   "s", out tmp_string)) key_editor.add_row_from_label (_("Description"), tmp_string);
+        if (dict.lookup ("schema-id",     "s", out tmp_string)) add_row_from_label (_("Schema"),      tmp_string);
+        if (dict.lookup ("summary",       "s", out tmp_string)) add_row_from_label (_("Summary"),     tmp_string);
+        if (dict.lookup ("description",   "s", out tmp_string)) add_row_from_label (_("Description"), tmp_string);
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (dict.lookup ("type-name",     "s", out tmp_string)) key_editor.add_row_from_label (_("Type"),        tmp_string);
+        if (dict.lookup ("type-name",     "s", out tmp_string)) add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
-        if (dict.lookup ("minimum",       "s", out tmp_string)) key_editor.add_row_from_label (_("Minimum"),     tmp_string);
-        if (dict.lookup ("maximum",       "s", out tmp_string)) key_editor.add_row_from_label (_("Maximum"),     tmp_string);
-        if (dict.lookup ("default-value", "s", out tmp_string)) key_editor.add_row_from_label (_("Default"),     tmp_string);
+        if (dict.lookup ("minimum",       "s", out tmp_string)) add_row_from_label (_("Minimum"),     tmp_string);
+        if (dict.lookup ("maximum",       "s", out tmp_string)) add_row_from_label (_("Maximum"),     tmp_string);
+        if (dict.lookup ("default-value", "s", out tmp_string)) add_row_from_label (_("Default"),     tmp_string);
 
         if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
 
-        KeyEditorChild key_editor_child = create_child (key_editor, key);
+        bool disable_revealer_for_value = false;
+        KeyEditorChild key_editor_child = create_child (key);
         if (has_schema)
         {
             Switch custom_value_switch = new Switch ();
-            custom_value_switch.width_request = 100; /* same request than for button_cancel/button_apply on scale 1; TODO better */
             custom_value_switch.halign = Align.END;
             custom_value_switch.hexpand = true;
             custom_value_switch.show ();
-            key_editor.add_row_from_widget (_("Use default value"), custom_value_switch, null);
+            add_row_from_widget (_("Use default value"), custom_value_switch, null);
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
+            bool disable_revealer_for_switch = false;
             GSettingsKey gkey = (GSettingsKey) key;
-            custom_value_switch.set_active (gkey.is_default);
+            revealer.reload.connect (() => {
+                    disable_revealer_for_switch = true;
+                    custom_value_switch.set_active (gkey.is_default);
+                    disable_revealer_for_switch = false;    // TODO bad but needed
+                });
+            custom_value_switch.set_active (key.planned_change ? key.planned_value == null : gkey.is_default);
             custom_value_switch.notify ["active"].connect (() => {
-                    bool is_active = custom_value_switch.get_active ();
-                    key_editor.switch_is_active (is_active);
-                });
-
-            key_editor.response.connect ((dialog, response_id) => {
-                    if (response_id == ResponseType.APPLY)
+                    if (disable_revealer_for_switch)
+                        disable_revealer_for_switch = false;
+                    else if (custom_value_switch.get_active ())
+                        revealer.add_delayed_setting (key, null);
+                    else
                     {
-                        if (!custom_value_switch.active)
-                        {
-                            Variant variant = key_editor_child.get_variant ();
-                            if (key.value != variant)
-                                key.value = variant;
-                        }
-                        else if (!gkey.is_default)
-                            gkey.set_to_default ();
+                        Variant tmp_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
+                        revealer.add_delayed_setting (key, tmp_variant);
+                        key_editor_child.reload (tmp_variant);
                     }
-                    dialog.destroy ();
                 });
         }
-        else
-        {
-            key_editor.response.connect ((dialog, response_id) => {
-                    if (response_id == ResponseType.APPLY)
-                    {
-                        Variant variant = key_editor_child.get_variant ();
-                        if (key.value != variant)
-                            key.value = variant;
-                    }
-                    dialog.destroy ();
-                });
-        }
-        key_editor_child.value_has_changed.connect ((is_valid) => { key_editor.custom_value_is_valid = is_valid; });    // TODO not always useful
-        key_editor_child.child_activated.connect (() => {       // TODO "only" used for string-based and spin widgets
-                if (key_editor.custom_value_is_valid)
-                    key_editor.response (ResponseType.APPLY);
+        key_editor_child.value_has_changed.connect ((enable_revealer, is_valid) => {
+                if (disable_revealer_for_value)
+                    disable_revealer_for_value = false;
+                else if (enable_revealer && is_valid)
+                    revealer.add_delayed_setting (key, key_editor_child.get_variant ());
+                else if (enable_revealer && !is_valid)
+                    revealer.dismiss_change (key);
             });
-        key_editor.add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
-
-        key_editor.set_transient_for ((Window) this.get_parent ());
-        key_editor.run ();
+        key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
+        revealer.reload.connect (() => {
+                disable_revealer_for_value = true;
+                key_editor_child.reload (key.value);
+                if (tmp_string == "<flags>")
+                    key.planned_value = key.value;
+            });
+        add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
     }
 
-    private static KeyEditorChild create_child (KeyEditor dialog, Key key)
+    private static KeyEditorChild create_child (Key key)
     {
         switch (key.type_string)
         {
@@ -246,7 +267,7 @@ class RegistryView : Grid
             case "<flags>":
                 return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key);
             case "b":
-                return (KeyEditorChild) new KeyEditorChildBool (key.value.get_boolean ());
+                return (KeyEditorChild) new KeyEditorChildBool (key.planned_change && (key.planned_value != null) ? ((!) key.planned_value).get_boolean () : key.value.get_boolean ());
             case "y":
             case "n":
             case "q":
@@ -259,7 +280,7 @@ class RegistryView : Grid
             case "mb":
                 return (KeyEditorChild) new KeyEditorChildNullableBool (key);
             default:
-                return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.value);
+                return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         }
     }
 
@@ -272,7 +293,7 @@ class RegistryView : Grid
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
             ClickableListBoxRow row = (ClickableListBoxRow) widget;
-            row.show_right_click_popover (delayed_apply_menu, (int) (event.x - row.get_allocated_width () / 2.0));
+            row.show_right_click_popover (delayed_apply_menu || planned_change, (int) (event.x - row.get_allocated_width () / 2.0));
             rows_possibly_with_popover.append (row);
         }
 
@@ -301,12 +322,52 @@ class RegistryView : Grid
     }
 
     /*\
+    * * Properties listbox
+    \*/
+
+    private void add_row_from_label (string property_name, string property_value)
+    {
+        properties_list_box.add (new PropertyRow.from_label (property_name, property_value));
+    }
+
+    private void add_row_from_widget (string property_name, Widget widget, string? type)
+    {
+        properties_list_box.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null));
+    }
+
+    private static Widget? add_warning (string type)
+    {
+        if (type != "<flags>" && ((type != "s" && "s" in type) || (type != "g" && "g" in type)) || (type != "o" && "o" in type))
+        {
+            if ("m" in type)
+                /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+                return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks."));
+            else
+                return warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks."));
+        }
+        else if (type != "m" && type != "mb" && type != "<enum>" && "m" in type)
+            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+            return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."));
+        return null;
+    }
+    private static Widget warning_label (string text)
+    {
+        Label label = new Label ("<i>" + text + "</i>");
+        label.visible = true;
+        label.use_markup = true;
+        label.max_width_chars = 59;
+        label.wrap = true;
+        label.halign = Align.START;
+        return (Widget) label;
+    }
+
+    /*\
     * * Revealer stuff
     \*/
 
     private void set_key_value (Key key, Variant? new_value)
     {
-        if (delayed_apply_menu || key.planned_change)
+        if (delayed_apply_menu || planned_change)
             revealer.add_delayed_setting (key, new_value);
         else if (new_value != null)
             key.value = (!) new_value;
@@ -358,7 +419,14 @@ class RegistryView : Grid
     * * Search box
     \*/
 
-    public void set_search_mode (bool? mode)
+    [GtkCallback]
+    private void show_browse_view ()
+    {
+        if (stack.get_visible_child_name () != "browse-view")
+            stack.set_visible_child_name ("browse-view");
+    }
+
+    public void set_search_mode (bool? mode)    // mode is never 'true'...
     {
         if (mode == null)
             search_bar.set_search_mode (!search_bar.get_search_mode ());
@@ -368,17 +436,23 @@ class RegistryView : Grid
 
     public bool handle_search_event (Gdk.EventKey event)
     {
+        if (stack.get_visible_child_name () != "browse-view")
+            return false;
+
         return search_bar.handle_event (event);
     }
 
     public bool show_row_popover ()
     {
+        if (stack.get_visible_child_name () != "browse-view")
+            return false;
+
         ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
         if (selected_row == null)
             return false;
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-        row.show_right_click_popover (delayed_apply_menu);
+        row.show_right_click_popover (delayed_apply_menu || planned_change);
         rows_possibly_with_popover.append (row);
         return true;
     }
