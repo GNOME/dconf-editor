@@ -33,6 +33,7 @@ resource_data = \
 	pathbar.ui \
 	pathbar-item.ui \
 	property-row.ui \
+	registry-info.ui \
 	registry-view.ui
 
 resources.c: $(resource_data)
@@ -50,6 +51,7 @@ dconf_editor_SOURCES = \
 	key-list-box-row.vala \
 	modifications-revealer.vala \
 	pathbar.vala \
+	registry-info.vala \
 	registry-view.vala
 
 desktopdir = $(datadir)/applications

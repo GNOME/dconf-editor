@@ -17,45 +17,6 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
-private class PropertyRow : ListBoxRow
-{
-    [GtkChild] private Grid grid;
-    [GtkChild] private Label name_label;
-
-    public PropertyRow.from_label (string property_name, string property_value)
-    {
-        name_label.set_text (property_name);
-
-        Label value_label = new Label (property_value);
-        value_label.valign = Align.START;
-        value_label.xalign = 0;
-        value_label.yalign = 0;
-        value_label.wrap = true;
-        value_label.selectable = true;
-        value_label.max_width_chars = 42;
-        value_label.width_chars = 42;
-        value_label.show ();
-        grid.attach (value_label, 1, 0, 1, 1);
-    }
-
-    public PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
-    {
-        name_label.set_text (property_name);
-
-        grid.attach (widget, 1, 0, 1, 1);
-        widget.valign = Align.CENTER;
-
-        if (warning != null)
-        {
-            grid.row_spacing = 4;
-            grid.attach ((!) warning, 0, 1, 2, 1);
-            warning.hexpand = true;
-            warning.halign = Align.CENTER;
-        }
-    }
-}
-
 public interface KeyEditorChild : Widget
 {
     public signal void value_has_changed (bool enable_revealer, bool is_valid = false);

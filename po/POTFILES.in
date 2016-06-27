@@ -13,5 +13,7 @@ editor/dconf-window.vala
 editor/key-list-box-row.vala
 [type: gettext/glade]editor/modifications-revealer.ui
 editor/modifications-revealer.vala
+[type: gettext/glade]editor/registry-info.ui
+editor/registry-info.vala
 [type: gettext/glade]editor/registry-view.ui
 editor/registry-view.vala

@@ -5,6 +5,7 @@ editor/dconf-view.c
 editor/dconf-window.c
 editor/key-list-box-row.c
 editor/modifications-revealer.c
+editor/registry-info.c
 editor/registry-view.c
 # Autotools failure
 sub/editor/ca.desrt.dconf-editor.desktop.in
