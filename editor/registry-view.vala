@@ -352,12 +352,12 @@ class RegistryView : Grid
     }
     private static Widget warning_label (string text)
     {
-        Label label = new Label ("<i>" + text + "</i>");
+        Label label = new Label (text);
         label.visible = true;
-        label.use_markup = true;
         label.max_width_chars = 59;
         label.wrap = true;
         label.halign = Align.START;
+        label.get_style_context ().add_class ("italic-label");
         return (Widget) label;
     }
 

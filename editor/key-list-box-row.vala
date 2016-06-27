@@ -331,7 +331,7 @@ private class ContextPopover : Popover
     public void new_action (string action_action, button_action action)
     {
         set_group ("options");
-        string group_dot_action = "options." + action_action;
+        string group_dot_action = @"options.$action_action";
 
         SimpleAction simple_action = new SimpleAction (action_action, null);
         simple_action.activate.connect (() => { action (); });
@@ -357,7 +357,7 @@ private class ContextPopover : Popover
     public void new_copy_action (string text)
     {
         /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
-        current_section.append (_("Copy"), "app.copy(\"" + text + "\")");   // TODO protection against some chars in text? 2/2
+        current_section.append (_("Copy"), "app.copy(\"" + text.escape ("") + "\")");
     }
 
     public void set_group (string group_name)
@@ -461,20 +461,20 @@ private class ContextPopover : Popover
 
             if (complete_menu)
                 /* Translators: "no change" option in the right-click menu on a key when on delayed mode */
-                current_section.append (_("No change"), group_dot_action + "(@mm" + type_string + " nothing)");
+                current_section.append (_("No change"), @"$group_dot_action(@mm$type_string nothing)");
 
             if (key.has_schema)
-                new_multi_default_action (group_dot_action + "(@mm" + type_string + " just nothing)");
+                new_multi_default_action (@"$group_dot_action(@mm$type_string just nothing)");
             else if (complete_menu)
                 /* Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode */
-                current_section.append (_("Erase key"), group_dot_action + "(@mm" + type_string + " just nothing)");
+                current_section.append (_("Erase key"), @"$group_dot_action(@mm$type_string just nothing)");
         }
 
         switch (key.type_string)
         {
             case "b":
-                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mmb true)");
-                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mmb false)");
+                current_section.append (Key.cool_boolean_text_value (true), @"$group_dot_action(@mmb true)");
+                current_section.append (Key.cool_boolean_text_value (false), @"$group_dot_action(@mmb false)");
                 break;
             case "<enum>":      // defined by the schema
                 Variant range = ((GSettingsKey) key).range_content;
@@ -482,12 +482,12 @@ private class ContextPopover : Popover
                 if (size == 0)      // TODO special case also 1?
                     assert_not_reached ();
                 for (uint index = 0; index < size; index++)
-                    current_section.append (range.get_child_value (index).print (false), group_dot_action + "(@mms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
+                    current_section.append (range.get_child_value (index).print (false), @"$group_dot_action(@mms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
                 break;
             case "mb":
-                current_section.append (Key.cool_boolean_text_value (null), group_dot_action + "(@mmmb just just nothing)");
-                current_section.append (Key.cool_boolean_text_value (true), group_dot_action + "(@mmmb true)");
-                current_section.append (Key.cool_boolean_text_value (false), group_dot_action + "(@mmmb false)");
+                current_section.append (Key.cool_boolean_text_value (null), @"$group_dot_action(@mmmb just just nothing)");
+                current_section.append (Key.cool_boolean_text_value (true), @"$group_dot_action(@mmmb true)");
+                current_section.append (Key.cool_boolean_text_value (false), @"$group_dot_action(@mmmb false)");
                 break;
         }
 

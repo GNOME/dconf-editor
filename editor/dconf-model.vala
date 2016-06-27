@@ -393,7 +393,7 @@ public class GSettingsKey : Key
     public string range_type             { get; construct; }
     public Variant range_content         { get; construct; }
 
-    public override string descriptor { owned get { return schema_id + " " + name; } }
+    public override string descriptor { owned get { return @"$schema_id $name"; } }
 
     private GLib.Settings settings;
 
