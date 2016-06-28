@@ -21,6 +21,9 @@ using Gtk;
 class ModificationsRevealer : Revealer
 {
     [GtkChild] private Label label;
+    [GtkChild] private ModelButton apply_button;
+
+    private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 
     private DConf.Client dconf_client = new DConf.Client ();
 
@@ -28,6 +31,28 @@ class ModificationsRevealer : Revealer
     private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
     public signal void reload ();
+
+    /*\
+    * * Window management callbacks
+    \*/
+
+    [GtkCallback]
+    private void on_size_allocate (Allocation allocation)
+    {
+        StyleContext context = apply_button.get_style_context ();
+        if (allocation.width < 900)
+        {
+            context.remove_class ("text-button");
+            apply_button.icon = apply_button_icon;
+            context.add_class ("image-button");
+        }
+        else
+        {
+            context.remove_class ("image-button");
+            apply_button.icon = null;
+            context.add_class ("text-button");
+        }
+    }
 
     /*\
     * * Public calls

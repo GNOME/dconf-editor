@@ -3,16 +3,10 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="ModificationsRevealer" parent="GtkRevealer">
     <property name="reveal-child">False</property>
+    <signal name="size-allocate" handler="on_size_allocate"/>
     <child>
       <object class="GtkActionBar">
         <property name="visible">True</property>
-        <child>
-          <object class="GtkButton" id="dismiss-button">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">Dismiss</property>
-            <signal name="clicked" handler="dismiss_delayed_settings"/>
-          </object>
-        </child>
         <child>
           <object class="GtkLabel" id="label">
             <property name="visible">True</property>
@@ -21,9 +15,39 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="apply-button">
+          <object class="GtkButton" id="dismiss-button">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Apply</property>
+            <signal name="clicked" handler="dismiss_delayed_settings"/>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">window-close-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkModelButton" id="apply_button">
+            <property name="visible">True</property>
+            <property name="text" translatable="yes">Apply</property>
+            <property name="centered">True</property>
+            <property name="iconic">True</property>
             <signal name="clicked" handler="apply_delayed_settings"/>
             <style>
               <class name="suggested-action"/>
@@ -36,11 +60,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkSizeGroup">
-    <property name="mode">both</property>
-    <widgets>
-      <widget name="dismiss-button"/>
-      <widget name="apply-button"/>
-    </widgets>
-  </object>
 </interface>
