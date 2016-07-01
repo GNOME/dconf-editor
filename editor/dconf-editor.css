@@ -134,7 +134,7 @@ window > popover.menu {
 .pathbar:dir(rtl) > button:first-child:hover > .item,
 .pathbar:dir(rtl) > button:nth-child(2) > .item,
 .pathbar:dir(rtl) > button:nth-child(2):hover > .item {
-  border-bottom-color:blue;
+  border-bottom-color: @theme_selected_bg_color;
 }
 
 /*\
