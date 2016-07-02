@@ -19,6 +19,7 @@
             <property name="visible">True</property>
             <signal name="clicked" handler="dismiss_delayed_settings"/>
             <style>
+              <class name="flat"/>
               <class name="image-button"/>
             </style>
             <child>
