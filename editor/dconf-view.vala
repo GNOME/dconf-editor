@@ -207,7 +207,7 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
 
 private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
 {
-    private bool locked = false;
+    private uint locked = 0;
 
     public KeyEditorChildNumberDouble (Key key)
         requires (key.type_string == "d")
@@ -236,7 +236,8 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
         this.input_purpose = InputPurpose.NUMBER;
         this.width_chars = 30;
 
-        this.value_changed.connect (() => { if (locked) locked = false; else value_has_changed (true, true); });   // TODO test value for non-numeric chars
+        this.buffer.deleted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });     // TODO test value for
+        this.buffer.inserted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });    //   non-numeric chars
         this.activate.connect (() => { update (); child_activated (); });
     }
 
@@ -247,7 +248,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
 
     public void reload (Variant gvariant)
     {
-        locked = true;
+        locked = 2;
         this.set_value (gvariant.get_double ());
         value_has_changed (false);  // set disable_revealer_for_value to false, might be useful for corner cases
     }
@@ -256,7 +257,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
 private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 {
     private string key_type;
-    private bool locked = false;
+    private uint locked = 0;
 
     public KeyEditorChildNumberInt (Key key)
         requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "h")     // TODO key.type_string == "x" || key.type_string == "t" ||
@@ -285,7 +286,8 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
         this.width_chars = 30;
 
-        this.value_changed.connect (() => { if (locked) locked = false; else value_has_changed (true, true); });   // TODO test value for non-numeric chars
+        this.buffer.deleted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });     // TODO test value for
+        this.buffer.inserted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });    //   non-numeric chars
         this.activate.connect (() => { update (); child_activated (); });
     }
 
@@ -333,7 +335,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 
     public void reload (Variant gvariant)
     {
-        locked = true;
+        locked = 2;
         this.set_value (get_variant_as_double (gvariant));
         value_has_changed (false);  // set disable_revealer_for_value to false, might be useful for corner cases
     }
