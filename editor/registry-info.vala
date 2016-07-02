@@ -28,7 +28,7 @@ class RegistryInfo : Grid
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
-        
+
         if (!has_schema)
         {
             if (((DConfKey) key).is_ghost)
@@ -83,23 +83,47 @@ class RegistryInfo : Grid
             custom_value_switch.notify ["active"].connect (() => {
                     if (disable_revealer_for_switch)
                         disable_revealer_for_switch = false;
-                    else if (custom_value_switch.get_active ())
-                        revealer.add_delayed_setting (key, null);
+                    else if (revealer.should_delay_apply (tmp_string))
+                    {
+                        if (custom_value_switch.get_active ())
+                            revealer.add_delayed_setting (key, null);
+                        else
+                        {
+                            Variant tmp_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
+                            revealer.add_delayed_setting (key, tmp_variant);
+                            key_editor_child.reload (tmp_variant);
+                        }
+                    }
                     else
                     {
-                        Variant tmp_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
-                        revealer.add_delayed_setting (key, tmp_variant);
-                        key_editor_child.reload (tmp_variant);
+                        if (custom_value_switch.get_active ())
+                        {
+                            ((GSettingsKey) key).set_to_default ();
+                            disable_revealer_for_value = true;
+                            key_editor_child.reload (key.value);
+                            if (tmp_string == "<flags>")
+                                key.planned_value = key.value;
+                        }
+                        else
+                            key.value = key.value;  // TODO that hurts...
                     }
                 });
         }
         key_editor_child.value_has_changed.connect ((enable_revealer, is_valid) => {
                 if (disable_revealer_for_value)
                     disable_revealer_for_value = false;
-                else if (enable_revealer && is_valid)
-                    revealer.add_delayed_setting (key, key_editor_child.get_variant ());
-                else if (enable_revealer && !is_valid)
-                    revealer.dismiss_change (key);
+                else if (enable_revealer)
+                {
+                    if (revealer.should_delay_apply (tmp_string))
+                    {
+                        if (is_valid)
+                            revealer.add_delayed_setting (key, key_editor_child.get_variant ());
+                        else
+                            revealer.dismiss_change (key);
+                    }
+                    else
+                        key.value = key_editor_child.get_variant ();
+                }
             });
         key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
         revealer.reload.connect (() => {

@@ -22,8 +22,7 @@ class RegistryView : Grid
 {
     public string current_path { get; private set; }
     public bool show_search_bar { get; set; }
-    public bool delayed_apply_menu { get; set; }
-    public bool planned_change { get { return revealer.get_reveal_child (); }}
+    public Behaviour behaviour { get; set; }
 
     private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
@@ -50,6 +49,7 @@ class RegistryView : Grid
         search_entry.get_buffer ().deleted_text.connect (() => { search_next_button.set_sensitive (true); });
         search_bar.connect_entry (search_entry);
         bind_property ("show-search-bar", search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);   // TODO in UI file?
+        bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
     }
 
     public void init (string path, bool restore_view)
@@ -67,8 +67,9 @@ class RegistryView : Grid
 
     private void update_current_path (string path)
     {
+        revealer.path_changed ();
         current_path = path;
-        ((DConfWindow) this.get_parent ()).update_current_path ();
+        ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
     }
 
     /*\
@@ -183,7 +184,7 @@ class RegistryView : Grid
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
             ClickableListBoxRow row = (ClickableListBoxRow) widget;
-            row.show_right_click_popover (delayed_apply_menu || planned_change, (int) (event.x - row.get_allocated_width () / 2.0));
+            row.show_right_click_popover (get_current_delay_mode (), (int) (event.x - row.get_allocated_width () / 2.0));
             rows_possibly_with_popover.append (row);
         }
 
@@ -209,15 +210,27 @@ class RegistryView : Grid
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
         }
         rows_possibly_with_popover.remove_all ();
+        ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
     }
 
     /*\
     * * Revealer stuff
     \*/
 
+    public bool get_current_delay_mode ()
+    {
+        return revealer.get_current_delay_mode ();
+    }
+
+    public void enter_delay_mode ()
+    {
+        revealer.enter_delay_mode ();
+        ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
+    }
+
     private void set_key_value (Key key, Variant? new_value)
     {
-        if (delayed_apply_menu || planned_change)
+        if (get_current_delay_mode ())
             revealer.add_delayed_setting (key, new_value);
         else if (new_value != null)
             key.value = (!) new_value;
@@ -233,11 +246,13 @@ class RegistryView : Grid
 
     public void reset (bool recursively)
     {
+        revealer.enter_delay_mode ();
         reset_generic (key_model, recursively);
         invalidate_popovers ();
+        revealer.warn_if_no_planned_changes ();
     }
 
-    private void reset_generic (GLib.ListStore? objects, bool recursively)   // TODO notification if nothing to reset
+    private void reset_generic (GLib.ListStore? objects, bool recursively)
     {
         if (objects == null)
             return;
@@ -302,7 +317,7 @@ class RegistryView : Grid
             return false;
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-        row.show_right_click_popover (delayed_apply_menu || planned_change);
+        row.show_right_click_popover (get_current_delay_mode ());
         rows_possibly_with_popover.append (row);
         return true;
     }

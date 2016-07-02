@@ -20,6 +20,13 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
 class ModificationsRevealer : Revealer
 {
+    private enum Mode {
+        NONE,
+        TEMPORARY,
+        DELAYED
+    }
+    private Mode mode = Mode.NONE;
+
     [GtkChild] private Label label;
     [GtkChild] private ModelButton apply_button;
 
@@ -31,6 +38,8 @@ class ModificationsRevealer : Revealer
     private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
     public signal void reload ();
+
+    public Behaviour behaviour { get; set; }
 
     /*\
     * * Window management callbacks
@@ -58,6 +67,30 @@ class ModificationsRevealer : Revealer
     * * Public calls
     \*/
 
+    public bool get_current_delay_mode ()
+    {
+        return mode == Mode.DELAYED || behaviour == Behaviour.ALWAYS_DELAY;
+    }
+
+    public bool should_delay_apply (string type_string)
+    {
+        if (get_current_delay_mode () || behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
+            return true;
+        if (behaviour == Behaviour.UNSAFE)
+            return false;
+        if (behaviour == Behaviour.SAFE)
+            return type_string != "b" && type_string != "mb" && type_string != "<enum>" && type_string != "<flags>";
+        assert_not_reached ();
+    }
+
+    public void enter_delay_mode ()
+    {
+        mode = Mode.DELAYED;
+        apply_button.sensitive = dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length != 0;
+        update ();
+        reload ();
+    }
+
     public void add_delayed_setting (Key key, Variant? new_value)
     {
         key.planned_change = true;
@@ -68,11 +101,20 @@ class ModificationsRevealer : Revealer
         else
             dconf_keys_awaiting_hashtable.insert (key.descriptor, (DConfKey) key);
 
+        mode = get_current_delay_mode () ? Mode.DELAYED : Mode.TEMPORARY;
+
+        apply_button.sensitive = true;
         update ();
     }
 
     public void dismiss_change (Key key)
     {
+        if (mode == Mode.NONE)
+        {
+            dismiss_delayed_settings ();
+            return;
+        }
+
         key.planned_change = false;
         key.planned_value = null;
 
@@ -81,7 +123,26 @@ class ModificationsRevealer : Revealer
         else
             dconf_keys_awaiting_hashtable.remove (key.descriptor);
 
+        apply_button.sensitive = (mode != Mode.TEMPORARY) && (dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length != 0);
         update ();
+    }
+
+    public void path_changed ()
+    {
+        if (mode != Mode.TEMPORARY)
+            return;
+        if (behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.SAFE)
+            apply_delayed_settings ();
+        else if (behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
+            dismiss_delayed_settings ();
+        else
+            assert_not_reached ();
+    }
+
+    public void warn_if_no_planned_changes ()
+    {
+        if (dconf_keys_awaiting_hashtable.length == 0 && gsettings_keys_awaiting_hashtable.length == 0)
+            label.set_text (_("Nothing to reset."));
     }
 
     /*\
@@ -91,7 +152,8 @@ class ModificationsRevealer : Revealer
     [GtkCallback]
     public void apply_delayed_settings ()
     {
-        set_reveal_child (false);
+        mode = Mode.NONE;
+        update ();
 
         /* GSettings stuff */
 
@@ -134,12 +196,17 @@ class ModificationsRevealer : Revealer
         } catch (Error error) {
             warning (error.message);
         }
+
+        /* reload notably the hamburger menu */
+
+        reload ();
     }
 
     [GtkCallback]
     private void dismiss_delayed_settings ()
     {
-        set_reveal_child (false);
+        mode = Mode.NONE;
+        update ();
 
         /* GSettings stuff */
 
@@ -166,22 +233,43 @@ class ModificationsRevealer : Revealer
 
     private void update ()
     {
-        if (dconf_keys_awaiting_hashtable.length == 0 && gsettings_keys_awaiting_hashtable.length == 0)
+        if (mode == Mode.NONE)
         {
             set_reveal_child (false);
             label.set_text ("");
-            return;
         }
-
-        label.set_text (get_text (dconf_keys_awaiting_hashtable.length, gsettings_keys_awaiting_hashtable.length));
-        set_reveal_child (true);
+        else if (mode == Mode.TEMPORARY)
+        {
+            uint length = dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length;
+            if (length == 0)
+                label.set_text (_("The value is invalid."));
+            else if (length != 1)
+                assert_not_reached ();
+            else if (behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
+                label.set_text (_("The change will be dismissed if you quit this view without applying."));
+            else if (behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.SAFE)
+                label.set_text (_("The change will be applied on such request or if you quit this view."));
+            else
+                assert_not_reached ();
+            set_reveal_child (true);
+        }
+        else // if (mode == Mode.DELAYED)
+        {
+            label.set_text (get_text (dconf_keys_awaiting_hashtable.length, gsettings_keys_awaiting_hashtable.length));
+            set_reveal_child (true);
+        }
     }
 
     private static string get_text (uint dconf, uint gsettings)     // TODO change text if current path is a key?
-        requires (dconf > 0 || gsettings > 0)
     {
-        if (dconf == 0) return _("%u gsettings operations awaiting.").printf (gsettings);
-        if (gsettings == 0) return _("%u dconf operations awaiting.").printf (dconf);
+        if (dconf == 0)
+        {
+            if (gsettings == 0)
+                return _("Changes will be delayed until you request it.");
+            return _("%u gsettings operations awaiting.").printf (gsettings);
+        }
+        if (gsettings == 0)
+            return _("%u dconf operations awaiting.").printf (dconf);
         return _("%u gsettings operations and %u dconf operations awaiting.").printf (gsettings, dconf);
     }
 }

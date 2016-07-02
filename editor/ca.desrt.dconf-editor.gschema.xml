@@ -4,6 +4,13 @@
     <value value="0" nick="three-twenty-two"/>
     <value value="1" nick="small-rows"/>
   </enum>
+  <enum id="ca.desrt.dconf-editor.Behaviour">
+    <value value="0" nick="unsafe"/>
+    <value value="1" nick="safe"/>
+    <value value="2" nick="always-confirm-implicit"/>
+    <value value="3" nick="always-confirm-explicit"/>
+    <value value="4" nick="always-delay"/>
+  </enum>
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
@@ -46,10 +53,10 @@
       <summary>The theme of the navigation list</summary>
       <description>The themes are defined by the application, you cannot add one. Two themes are available for now: 'three-twenty-two' that will remain as close as possible to the default theme of the 3.22 release, and 'small-rows' that tries to minimize the rows height.</description>
     </key>
-    <key name="delayed-apply-menu" type="b">
-      <default>false</default>
-      <summary>Switch right-click menu in delayed mode</summary>
-      <description>If 'true', dconf-editor ask for confirmation before applying changes set by the right-click menu.</description>
+    <key name="behaviour" enum="ca.desrt.dconf-editor.Behaviour">
+      <default>'always-confirm-implicit'</default>
+      <summary>Change the behaviour of a key value change request</summary>
+      <description>The 'unsafe' value is discouraged: for keys that have a non-special-cased type, it updates the key value each time something changes in the entry, so including intermediate states. The 'safe' value asks for confirmation in these cases, but allows instant changes for booleans and nullable booleans, enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' values always asks for confirmation, but the first applies the change if you change path whereas the second dismiss it. The 'always-delay' value adds each change in delay mode, allowing to apply multiple keys at once.</description>
     </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">

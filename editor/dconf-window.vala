@@ -17,13 +17,22 @@
 
 using Gtk;
 
+public enum Behaviour {
+    UNSAFE,
+    SAFE,
+    ALWAYS_CONFIRM_IMPLICIT,
+    ALWAYS_CONFIRM_EXPLICIT,
+    ALWAYS_DELAY
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
     private const GLib.ActionEntry [] action_entries =
     {
         { "reset-recursive", reset_recursively },
-        { "reset-visible", reset }
+        { "reset-visible", reset },
+        { "enter-delay-mode", enter_delay_mode }
     };
 
     public string current_path { private get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
@@ -43,9 +52,8 @@ class DConfWindow : ApplicationWindow
     public DConfWindow ()
     {
         add_action_entries (action_entries, this);
-        add_action (settings.create_action ("delayed-apply-menu"));
 
-        settings.changed["delayed-apply-menu"].connect (invalidate_popovers);
+        settings.changed ["behaviour"].connect (invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-maximized"))
@@ -63,7 +71,7 @@ class DConfWindow : ApplicationWindow
             get_style_context ().add_class ("small-rows");
 
         registry_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
-        settings.bind ("delayed-apply-menu", registry_view, "delayed-apply-menu", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+        settings.bind ("behaviour", registry_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
     }
 
@@ -153,7 +161,7 @@ class DConfWindow : ApplicationWindow
     * * Action entries
     \*/
 
-    public void update_current_path ()
+    public void update_hamburger_menu ()
     {
         GLib.Menu section;
 
@@ -172,10 +180,13 @@ class DConfWindow : ApplicationWindow
             menu.append_section (null, section);
         }
 
-        section = new GLib.Menu ();
-        section.append (_("Right click menu"), "win.delayed-apply-menu");
-        section.freeze ();
-        menu.append_section (_("Delayed Apply"), section);
+        if (!registry_view.get_current_delay_mode ())
+        {
+            section = new GLib.Menu ();
+            section.append (_("Enter delay mode"), "win.enter-delay-mode");
+            section.freeze ();
+            menu.append_section (null, section);
+        }
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
@@ -189,6 +200,11 @@ class DConfWindow : ApplicationWindow
     private void reset_recursively ()
     {
         registry_view.reset (true);
+    }
+
+    private void enter_delay_mode ()
+    {
+        registry_view.enter_delay_mode ();
     }
 
     /*\
