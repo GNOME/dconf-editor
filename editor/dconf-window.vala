@@ -122,8 +122,18 @@ class DConfWindow : ApplicationWindow
     }
 
     [GtkCallback]
-    private void on_size_allocate ()
+    private void on_size_allocate (Allocation allocation)
     {
+        /* responsive design */
+
+        StyleContext context = get_style_context ();
+        if (allocation.width > 1000)
+            context.add_class ("large-window");
+        else
+            context.remove_class ("large-window");
+
+        /* save size */
+
         if (window_is_maximized || window_is_tiled)
             return;
         get_size (out window_width, out window_height);
