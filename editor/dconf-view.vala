@@ -243,7 +243,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
 
     public Variant get_variant ()
     {
-        return new Variant.double (this.get_value ());
+        return new Variant.double (this.get_value ());  // TODO parse the text instead of getting the value, or updates when editing manually are buggy
     }
 
     public void reload (Variant gvariant)
@@ -323,14 +323,18 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (key_type)
         {
-            case "y": return new Variant.byte   ((uchar) this.get_value_as_int ());     // TODO uchar or uint8?
-            case "n": return new Variant.int16  ((int16) this.get_value_as_int ());
-            case "q": return new Variant.uint16 ((uint16) this.get_value_as_int ());
-            case "i": return new Variant.int32  (this.get_value_as_int ());
-            case "u": return new Variant.uint32 ((uint32) this.get_value ());           // TODO also use get_value_as_int?
-            case "h": return new Variant.handle (this.get_value_as_int ());
+            case "y": return new Variant.byte   ((uchar)  get_int64_from_entry ()); // TODO uchar or uint8?
+            case "n": return new Variant.int16  ((int16)  get_int64_from_entry ());
+            case "q": return new Variant.uint16 ((uint16) get_int64_from_entry ());
+            case "i": return new Variant.int32  ((int32)  get_int64_from_entry ());
+            case "u": return new Variant.uint32 ((uint32) get_int64_from_entry ()); // TODO also use get_value_as_int?
+            case "h": return new Variant.handle ((int32)  get_int64_from_entry ());
             default: assert_not_reached ();
         }
+    }
+    private int64 get_int64_from_entry ()
+    {
+        return int64.parse (this.get_text ());
     }
 
     public void reload (Variant gvariant)
