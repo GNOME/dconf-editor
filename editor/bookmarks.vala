@@ -31,15 +31,18 @@ public class Bookmarks : MenuButton
     private GLib.Settings settings;
     private GLib.ListStore bookmarks_model;
 
+    private string [] current_bookmarks;
+
     public signal bool bookmark_activated (string bookmark);
 
     construct
     {
         settings = new GLib.Settings (schema_id);
+        current_bookmarks = settings.get_strv ("bookmarks");
         settings.changed ["bookmarks"].connect (update_bookmarks);
         settings.changed ["bookmarks"].connect (update_icon_and_switch);    // TODO updates switch if switch changed settings...
         notify ["current-path"].connect (update_icon_and_switch);
-        bookmarked_switch.notify ["active"].connect (switch_changed_cb);    // TODO activated when current_path changes...
+        bookmarked_switch.notify ["active"].connect (switch_changed_cb);    // TODO activated when current_path changes; see current_bookmarks
         update_bookmarks ();
         bookmarked_switch.grab_focus ();
     }
@@ -69,6 +72,9 @@ public class Bookmarks : MenuButton
         bookmarks_popover.closed ();
 
         string [] bookmarks = settings.get_strv ("bookmarks");
+        if (bookmarks == current_bookmarks)
+            return;
+
         if (!bookmarked_switch.get_active ())
             remove_bookmark (current_path);
         else if (!(current_path in bookmarks))
