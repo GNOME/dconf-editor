@@ -55,6 +55,7 @@ class RegistryView : Grid
     public void init (string path, bool restore_view)
     {
         dir_tree_view.set_model (model);
+        dir_tree_view.expand_all ();
 
         current_path = path;
         if (!restore_view || current_path == "" || !scroll_to_path (current_path))
@@ -124,7 +125,7 @@ class RegistryView : Grid
 
                 if (dir.full_name == full_name)
                 {
-                    select_dir (iter);
+                    dir_tree_selection.select_iter (iter);
                     return true;
                 }
             }
@@ -364,7 +365,7 @@ class RegistryView : Grid
 
             if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
             {
-                select_dir (iter);
+                dir_tree_selection.select_iter (iter);
                 return;
             }
             on_first_directory = false;
@@ -377,7 +378,7 @@ class RegistryView : Grid
                 if (object.name.index_of (search_entry.text) >= 0 || 
                     (!object.is_view && key_matches ((Key) object, search_entry.text)))
                 {
-                    select_dir (iter);
+                    dir_tree_selection.select_iter (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
                     // TODO select key in ListBox
                     return;
@@ -390,12 +391,6 @@ class RegistryView : Grid
         while (get_next_iter (ref iter));
 
         search_next_button.set_sensitive (false);
-    }
-
-    private void select_dir (TreeIter iter)
-    {
-        dir_tree_view.expand_to_path (model.get_path (iter));
-        dir_tree_selection.select_iter (iter);
     }
 
     private bool key_matches (Key key, string text)
