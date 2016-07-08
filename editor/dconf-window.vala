@@ -162,6 +162,14 @@ class DConfWindow : ApplicationWindow
     }
 
     [GtkCallback]
+    private bool scroll_to_path_without_transition (string full_name)
+    {
+        registry_view.enable_transition (false);
+        bool return_value = registry_view.scroll_to_path (full_name);
+        registry_view.enable_transition (true);
+        return return_value;
+    }
+    [GtkCallback]
     private bool scroll_to_path (string full_name)
     {
         return registry_view.scroll_to_path (full_name);
@@ -175,7 +183,7 @@ class DConfWindow : ApplicationWindow
     {
         GLib.Menu section;
 
-        bookmarks_button.current_path = stripped_path (current_path);
+        bookmarks_button.current_path = current_path;
         pathbar.set_path (current_path);
 
         GLib.Menu menu = new GLib.Menu ();

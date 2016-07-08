@@ -73,6 +73,11 @@ class RegistryView : Grid
         ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
     }
 
+    public void enable_transition (bool enable)
+    {
+        stack.set_transition_type (enable ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+    }
+
     /*\
     * * Dir TreeView
     \*/
@@ -111,10 +116,9 @@ class RegistryView : Grid
             return false;
         }
 
-        update_current_path (full_name);
-
         if (full_name == folder_name)
         {
+            update_current_path (full_name);
             show_browse_view ();
         }
         else
@@ -123,12 +127,14 @@ class RegistryView : Grid
             Key? key = get_key_from_name (names [names.length - 1]);
             if (key == null)
             {
+                update_current_path (folder_name);
                 empty_path_message_dialog ((Window) this.get_parent ());
                 return false;
             }
             if (!properties_view.populate_properties_list_box (revealer, (!) key))
                 return false;
 
+            update_current_path (full_name);
             stack.set_visible_child (properties_view);
         }
 
@@ -209,8 +215,8 @@ class RegistryView : Grid
                     if (!properties_view.populate_properties_list_box (revealer, key))  // TODO unduplicate
                         return;
 
-                    stack.set_visible_child (properties_view);
                     update_current_path (key.full_name);
+                    stack.set_visible_child (properties_view);
                 });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
