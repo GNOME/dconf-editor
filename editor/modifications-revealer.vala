@@ -88,7 +88,6 @@ class ModificationsRevealer : Revealer
         mode = Mode.DELAYED;
         apply_button.sensitive = dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length != 0;
         update ();
-        reload ();
     }
 
     public void add_delayed_setting (Key key, Variant? new_value)
