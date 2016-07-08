@@ -18,7 +18,6 @@
         <property name="visible">True</property>
         <property name="search-mode-enabled">False</property>
         <property name="show-close-button">False</property>
-        <signal name="notify::search-mode-enabled" handler="show_browse_view"/>
         <child>
           <object class="GtkGrid">
             <property name="visible">True</property>

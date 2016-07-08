@@ -119,7 +119,7 @@ class RegistryView : Grid
         if (full_name == folder_name)
         {
             update_current_path (full_name);
-            show_browse_view ();
+            stack.set_visible_child_name ("browse-view");
         }
         else
         {
@@ -128,7 +128,7 @@ class RegistryView : Grid
             if (key == null)
             {
                 update_current_path (folder_name);
-                show_browse_view ();
+                stack.set_visible_child_name ("browse-view");
                 empty_path_message_dialog ((Window) this.get_parent ());
                 return false;
             }
@@ -334,13 +334,6 @@ class RegistryView : Grid
     * * Search box
     \*/
 
-    [GtkCallback]
-    private void show_browse_view ()    // TODO remove when search is available also in properties-view
-    {
-        if (stack.get_visible_child_name () != "browse-view")
-            stack.set_visible_child_name ("browse-view");
-    }
-
     public void set_search_mode (bool? mode)    // mode is never 'true'...
     {
         if (mode == null)
@@ -414,8 +407,12 @@ class RegistryView : Grid
 
             if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
             {
-                update_current_path (dir.full_name);
                 dir_tree_selection.select_iter (iter);
+                update_current_path (dir.full_name);
+
+                enable_transition (false);
+                stack.set_visible_child_name ("browse-view");
+                enable_transition (true);
                 return;
             }
             on_first_directory = false;
@@ -425,14 +422,31 @@ class RegistryView : Grid
             while (position < key_model.get_n_items ())
             {
                 SettingObject object = (SettingObject) key_model.get_object (position);
-                if (object.name.index_of (search_entry.text) >= 0 || 
-                    (!object.is_view && key_matches ((Key) object, search_entry.text)))
+                if (object.name.index_of (search_entry.text) >= 0)
                 {
-                    update_current_path (dir.full_name);
                     dir_tree_selection.select_iter (iter);
-                    key_list_box.select_row (key_list_box.get_row_at_index (position));
-                    // TODO select key in ListBox
+                    update_current_path (dir.full_name);
+                    key_list_box.select_row (key_list_box.get_row_at_index (position)); // TODO scroll to key in ListBox
+
+                    enable_transition (false);
+                    stack.set_visible_child_name ("browse-view");
+                    enable_transition (true);
                     return;
+                }
+                else if (!object.is_view)
+                {
+                    Key key = (Key) object;
+                    if (key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (revealer, key))
+                    {
+                        dir_tree_selection.select_iter (iter);
+                        update_current_path (object.full_name);
+                        key_list_box.select_row (key_list_box.get_row_at_index (position));
+
+                        enable_transition (false);
+                        stack.set_visible_child (properties_view);
+                        enable_transition (true);
+                        return;
+                    }
                 }
                 position++;
             }
