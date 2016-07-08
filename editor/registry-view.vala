@@ -81,35 +81,61 @@ class RegistryView : Grid
     private void dir_selected_cb ()
     {
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 1/2
-
-        key_model = null;
-
-        TreeIter iter;
-        Directory dir;
-        if (dir_tree_selection.get_selected (null, out iter))
-            dir = model.get_directory (iter);
-        else
-            dir = model.get_root_directory ();
-
-        key_model = dir.key_model;
-        update_current_path (dir.full_name);
-
+        key_model = get_selected_directory ().key_model;
         key_list_box.bind_model (key_model, new_list_box_row);
     }
 
-    public bool scroll_to_path (string _full_name)      // TODO for now we assume full_name is a folder; also, don't do all the selection work if the folder didn't change
+    private Directory get_selected_directory ()
     {
-        string full_name = _full_name.dup ();
+        TreeIter iter;
+        if (dir_tree_selection.get_selected (null, out iter))
+            return model.get_directory (iter);
+        else
+            return model.get_root_directory ();
+    }
 
-        if (!full_name.has_suffix ("/"))
-            full_name = DConfWindow.stripped_path (full_name);
+    public bool scroll_to_path (string _full_name)      // TODO don't do all the selection work if the folder didn't change
+    {
+        invalidate_popovers ();
+
+        string full_name = _full_name.dup ();
+        string folder_name;
+        if (full_name.has_suffix ("/"))
+            folder_name = full_name;
+        else
+            folder_name = DConfWindow.stripped_path (full_name);
+
+        if (!select_folder (folder_name))
+        {
+            empty_path_message_dialog ((Window) this.get_parent ());
+            return false;
+        }
 
         update_current_path (full_name);
 
-        stack.set_visible_child_name ("browse-view");
+        if (full_name == folder_name)
+        {
+            show_browse_view ();
+        }
+        else
+        {
+            string [] names = full_name.split ("/");
+            Key? key = get_key_from_name (names [names.length - 1]);
+            if (key == null)
+            {
+                empty_path_message_dialog ((Window) this.get_parent ());
+                return false;
+            }
+            if (!properties_view.populate_properties_list_box (revealer, (!) key))
+                return false;
 
-        invalidate_popovers ();
+            stack.set_visible_child (properties_view);
+        }
 
+        return true;
+    }
+    private bool select_folder (string full_name)
+    {
         if (full_name == "/")
         {
             dir_tree_selection.unselect_all ();
@@ -131,10 +157,26 @@ class RegistryView : Grid
             }
             while (get_next_iter (ref iter));
         }
-        MessageDialog dialog = new MessageDialog ((Window) this.get_parent (), DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
+        return false;
+    }
+    private Key? get_key_from_name (string key_name)
+    {
+        uint position = 0;
+        while (position < key_model.get_n_items ())
+        {
+            SettingObject object = (SettingObject) key_model.get_object (position);
+            if (!object.is_view && object.name == key_name)
+                return (Key) object;
+            position++;
+        }
+        return null;
+    }
+
+    private static void empty_path_message_dialog (Window window)
+    {
+        MessageDialog dialog = new MessageDialog (window, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
         dialog.run ();
         dialog.destroy ();
-        return false;
     }
 
     /*\
@@ -164,7 +206,7 @@ class RegistryView : Grid
             ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_change (key); });
 
             row.on_row_clicked.connect (() => {
-                    if (!properties_view.populate_properties_list_box (revealer, key))
+                    if (!properties_view.populate_properties_list_box (revealer, key))  // TODO unduplicate
                         return;
 
                     stack.set_visible_child (properties_view);
@@ -286,7 +328,7 @@ class RegistryView : Grid
     \*/
 
     [GtkCallback]
-    private void show_browse_view ()
+    private void show_browse_view ()    // TODO remove when search is available also in properties-view
     {
         if (stack.get_visible_child_name () != "browse-view")
             stack.set_visible_child_name ("browse-view");
@@ -365,6 +407,7 @@ class RegistryView : Grid
 
             if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
             {
+                update_current_path (dir.full_name);
                 dir_tree_selection.select_iter (iter);
                 return;
             }
@@ -378,6 +421,7 @@ class RegistryView : Grid
                 if (object.name.index_of (search_entry.text) >= 0 || 
                     (!object.is_view && key_matches ((Key) object, search_entry.text)))
                 {
+                    update_current_path (dir.full_name);
                     dir_tree_selection.select_iter (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
                     // TODO select key in ListBox

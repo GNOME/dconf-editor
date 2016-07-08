@@ -144,7 +144,7 @@ class DConfWindow : ApplicationWindow
     {
         get_application ().withdraw_notification ("copy");
 
-        settings.set_string ("saved-view", stripped_path (current_path));
+        settings.set_string ("saved-view", current_path);
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
