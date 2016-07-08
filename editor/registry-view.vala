@@ -128,6 +128,7 @@ class RegistryView : Grid
             if (key == null)
             {
                 update_current_path (folder_name);
+                show_browse_view ();
                 empty_path_message_dialog ((Window) this.get_parent ());
                 return false;
             }
