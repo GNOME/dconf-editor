@@ -46,6 +46,10 @@ window > popover.menu {
              padding-right 0.3s; /* warning: ltr/rtl */
 }
 
+.dconf-list > row:active > .folder > grid {
+  background-image:-gtk-icontheme("folder-open-symbolic");
+}
+
 /* visual padding: 0.75rem */
                          .dconf-list:dir(ltr) > row > .folder > grid { background-position:0.75rem              center; }
                          .dconf-list:dir(rtl) > row > .folder > grid { background-position:calc(100% - 0.75rem) center; }
