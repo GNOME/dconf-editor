@@ -238,7 +238,7 @@ class RegistryView : Grid
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
             ClickableListBoxRow row = (ClickableListBoxRow) widget;
-            row.show_right_click_popover (get_current_delay_mode (), (int) (event.x - row.get_allocated_width () / 2.0));
+            row.show_right_click_popover (get_current_delay_mode (), (int) (event.x));
             rows_possibly_with_popover.append (row);
         }
 

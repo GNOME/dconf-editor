@@ -24,6 +24,25 @@ private abstract class ClickableListBoxRow : EventBox
     public abstract string get_text ();
 
     /*\
+    * * Dismiss popover on window resize
+    \*/
+
+    private int width;
+
+    construct
+    {
+        size_allocate.connect (on_size_allocate);
+    }
+
+    private void on_size_allocate (Allocation allocation)
+    {
+        if (allocation.width == width)
+            return;
+        hide_right_click_popover ();
+        width = allocation.width;
+    }
+
+    /*\
     * * right click popover stuff
     \*/
 
@@ -42,7 +61,7 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).hide ();
     }
 
-    public void show_right_click_popover (bool delayed_apply_menu, int event_x = 0)
+    public void show_right_click_popover (bool delayed_apply_menu, int event_x = (int) (get_allocated_width () / 2.0))
     {
         if (nullable_popover == null)
         {
@@ -62,9 +81,7 @@ private abstract class ClickableListBoxRow : EventBox
         else if ((!) nullable_popover.visible)
             warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click or long Menu key press
 
-        Gdk.Rectangle rect;
-        ((!) nullable_popover).get_pointing_to (out rect);
-        rect.x = event_x;
+        Gdk.Rectangle rect = { x:event_x, y:get_allocated_height (), width:0, height:0 };
         ((!) nullable_popover).set_pointing_to (rect);
         ((!) nullable_popover).show ();
     }
