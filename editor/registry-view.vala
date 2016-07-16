@@ -52,13 +52,13 @@ class RegistryView : Grid
         bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
     }
 
-    public void init (string path, bool restore_view)
+    public void init (string path, bool restore_view)   // TODO check path format
     {
         dir_tree_view.set_model (model);
         dir_tree_view.expand_all ();
 
         current_path = path;
-        if (!restore_view || current_path == "" || !scroll_to_path (current_path))
+        if (!restore_view || current_path == "" || path [0] != '/' || !scroll_to_path (current_path))
         {
             current_path = "/";
             if (!scroll_to_path ("/"))
@@ -70,7 +70,7 @@ class RegistryView : Grid
     {
         revealer.path_changed ();
         current_path = path;
-        ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
+        get_dconf_window ().update_hamburger_menu ();
     }
 
     public void enable_transition (bool enable)
@@ -99,10 +99,8 @@ class RegistryView : Grid
             return model.get_root_directory ();
     }
 
-    public bool scroll_to_path (string _full_name)      // TODO don't do all the selection work if the folder didn't change
+    public bool scroll_to_path (string _full_name)      // TODO don't do all the selection work if the folder didn't change; clarify what "return true" means
     {
-        invalidate_popovers ();
-
         string full_name = _full_name.dup ();
         string folder_name;
         if (full_name.has_suffix ("/"))
@@ -112,33 +110,35 @@ class RegistryView : Grid
 
         if (!select_folder (folder_name))
         {
-            empty_path_message_dialog ((Window) this.get_parent ());
+            get_dconf_window ().show_notification (_("Cannot find folder \"%s\".").printf (folder_name));
             return false;
         }
 
         if (full_name == folder_name)
         {
-            update_current_path (full_name);
-            stack.set_visible_child_name ("browse-view");
+            open_folder (full_name);
+            return true;
         }
-        else
+
+        string [] names = full_name.split ("/");
+        string key_name = names [names.length - 1];
+        Key? key = get_key_from_name (key_name);
+        if (key == null)
         {
-            string [] names = full_name.split ("/");
-            Key? key = get_key_from_name (names [names.length - 1]);
-            if (key == null)
-            {
-                update_current_path (folder_name);
-                stack.set_visible_child_name ("browse-view");
-                empty_path_message_dialog ((Window) this.get_parent ());
-                return false;
-            }
-            if (!properties_view.populate_properties_list_box (revealer, (!) key))
-                return false;
-
-            update_current_path (full_name);
-            stack.set_visible_child (properties_view);
+            open_folder (folder_name);
+            get_dconf_window ().show_notification (_("Cannot find key \"%s\" here.").printf (key_name));
+            return true;
+        }
+        if (!properties_view.populate_properties_list_box (revealer, (!) key))
+        {
+            open_folder (folder_name);
+            get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
+            return true;
         }
 
+        update_current_path (full_name);
+        invalidate_popovers ();
+        stack.set_visible_child (properties_view);
         return true;
     }
     private bool select_folder (string full_name)
@@ -178,12 +178,16 @@ class RegistryView : Grid
         }
         return null;
     }
-
-    private static void empty_path_message_dialog (Window window)
+    private void open_folder (string folder_path)
     {
-        MessageDialog dialog = new MessageDialog (window, DialogFlags.MODAL, MessageType.ERROR, ButtonsType.OK, _("Oops! Cannot find something at this path."));
-        dialog.run ();
-        dialog.destroy ();
+        update_current_path (folder_path);
+        invalidate_popovers ();
+        stack.set_visible_child_name ("browse-view");
+    }
+
+    private DConfWindow get_dconf_window ()
+    {
+        return (DConfWindow) this.get_parent ().get_parent ();
     }
 
     /*\
@@ -260,7 +264,7 @@ class RegistryView : Grid
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
         }
         rows_possibly_with_popover.remove_all ();
-        ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
+        get_dconf_window ().update_hamburger_menu ();
     }
 
     /*\
@@ -275,7 +279,7 @@ class RegistryView : Grid
     public void enter_delay_mode ()
     {
         revealer.enter_delay_mode ();
-        ((DConfWindow) this.get_parent ()).update_hamburger_menu ();
+        get_dconf_window ().update_hamburger_menu ();
     }
 
     private void set_key_value (Key key, Variant? new_value)

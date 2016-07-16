@@ -49,6 +49,9 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private PathBar pathbar;
     [GtkChild] private RegistryView registry_view;
 
+    [GtkChild] private Revealer notification_revealer;
+    [GtkChild] private Label notification_label;
+
     public DConfWindow ()
     {
         add_action_entries (action_entries, this);
@@ -325,5 +328,21 @@ class DConfWindow : ApplicationWindow
     {
         registry_view.discard_row_popover ();
         registry_view.set_search_mode (false);
+    }
+
+    /*\
+    * * Non-existant path notifications
+    \*/
+
+    public void show_notification (string notification)
+    {
+        notification_label.set_text (notification);
+        notification_revealer.set_reveal_child (true);
+    }
+
+    [GtkCallback]
+    private void hide_notification ()
+    {
+        notification_revealer.set_reveal_child (false);
     }
 }

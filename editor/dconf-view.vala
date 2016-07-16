@@ -337,7 +337,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         return int64.parse (this.get_text ());
     }
 
-    public void reload (Variant gvariant)
+    public void reload (Variant gvariant)       // TODO "key_editor_child_number_int_real_reload: assertion 'gvariant != NULL' failed" two times when ghosting a key
     {
         locked = 2;
         this.set_value (get_variant_as_double (gvariant));
