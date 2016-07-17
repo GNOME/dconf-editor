@@ -279,7 +279,7 @@ class RegistryView : Grid
     public void enter_delay_mode ()
     {
         revealer.enter_delay_mode ();
-        get_dconf_window ().update_hamburger_menu ();
+        invalidate_popovers ();
     }
 
     private void set_key_value (Key key, Variant? new_value)
