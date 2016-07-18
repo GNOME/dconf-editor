@@ -199,7 +199,9 @@ class RegistryInfo : Grid
         label.max_width_chars = 59;
         label.wrap = true;
         label.halign = Align.START;
-        label.get_style_context ().add_class ("italic-label");
+        StyleContext context = label.get_style_context ();
+        context.add_class ("italic-label");
+        context.add_class ("greyed-label");
         return (Widget) label;
     }
 }
