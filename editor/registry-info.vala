@@ -60,6 +60,17 @@ class RegistryInfo : Grid
 
         if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
 
+        Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
+        key.value_changed.connect (() => { label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key)); });
+        label.halign = Align.START;
+        label.xalign = 0;
+        label.yalign = 0;
+        label.hexpand = true;
+        label.show ();
+        add_row_from_widget (_("Current value"), label, null);
+
+        add_separator ();
+
         bool disable_revealer_for_value = false;
         KeyEditorChild key_editor_child = create_child (key);
         if (has_schema)
@@ -163,6 +174,14 @@ class RegistryInfo : Grid
         }
     }
 
+    private static string get_current_value_text (bool is_default, Key key)
+    {
+        if (is_default)
+            return _("Default value");
+        else
+            return Key.cool_text_value_from_variant (key.value, key.type_string);
+    }
+
     /*\
     * * Rows creation
     \*/
@@ -175,6 +194,17 @@ class RegistryInfo : Grid
     private void add_row_from_widget (string property_name, Widget widget, string? type)
     {
         properties_list_box.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null));
+    }
+
+    private void add_separator ()
+    {
+        Separator separator = new Separator (Orientation.HORIZONTAL);
+        separator.halign = Align.CENTER;
+        separator.width_request = 620;
+        separator.margin_bottom = 5;
+        separator.margin_top = 5;
+        separator.show ();
+        properties_list_box.add (separator);
     }
 
     private static Widget? add_warning (string type)
@@ -195,10 +225,8 @@ class RegistryInfo : Grid
     private static Widget warning_label (string text)
     {
         Label label = new Label (text);
-        label.visible = true;
         label.max_width_chars = 59;
         label.wrap = true;
-        label.halign = Align.START;
         StyleContext context = label.get_style_context ();
         context.add_class ("italic-label");
         context.add_class ("greyed-label");
@@ -237,10 +265,11 @@ private class PropertyRow : ListBoxRow
 
         if (warning != null)
         {
+            ((!) warning).hexpand = true;
+            ((!) warning).halign = Align.CENTER;
+            ((!) warning).show ();
             grid.row_spacing = 4;
             grid.attach ((!) warning, 0, 1, 2, 1);
-            warning.hexpand = true;
-            warning.halign = Align.CENTER;
         }
     }
 }
