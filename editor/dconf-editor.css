@@ -100,7 +100,10 @@ window > popover.menu {
 }
 
 .pathbar > label {
-  color:alpha(currentColor,0.75);
+  color:alpha(currentColor,0.8);
+}
+.pathbar > label:backdrop {
+  color:alpha(currentColor,0.9);
 }
 
 .pathbar > button {
