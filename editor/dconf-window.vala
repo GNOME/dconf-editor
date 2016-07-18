@@ -130,10 +130,30 @@ class DConfWindow : ApplicationWindow
         /* responsive design */
 
         StyleContext context = get_style_context ();
-        if (allocation.width > 1000)
+        if (allocation.width > 1200)
+        {
+            context.add_class ("xxl");
+            context.add_class ("xl");
             context.add_class ("large-window");
+        }
+        else if (allocation.width > 1100)
+        {
+            context.remove_class ("xxl");
+            context.add_class ("xl");
+            context.add_class ("large-window");
+        }
+        else if (allocation.width > 1000)
+        {
+            context.remove_class ("xxl");
+            context.remove_class ("xl");
+            context.add_class ("large-window");
+        }
         else
+        {
+            context.remove_class ("xxl");
+            context.remove_class ("xl");
             context.remove_class ("large-window");
+        }
 
         /* save size */
 

@@ -78,6 +78,8 @@ window > popover.menu {
 
                          .dconf-list          > row > .key    > grid > grid          { min-width:400px; transition:min-width 0.3s; }
 .large-window            .dconf-list          > row > .key    > grid > grid          { min-width:450px; }
+.large-window.xl         .dconf-list          > row > .key    > grid > grid          { min-width:474px; }
+.large-window.xl.xxl     .dconf-list          > row > .key    > grid > grid          { min-width:500px; }
 
 /* grid spacing and padding-end */
                          .dconf-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
