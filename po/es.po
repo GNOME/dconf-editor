@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-07-02 15:39+0000\n"
-"PO-Revision-Date: 2016-07-06 10:10+0200\n"
+"POT-Creation-Date: 2016-07-16 11:01+0000\n"
+"PO-Revision-Date: 2016-07-18 10:03+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -608,42 +608,42 @@ msgstr "falso"
 msgid "nothing"
 msgstr "nada (nothing)"
 
-#: ../editor/dconf-view.vala:357
+#: ../editor/dconf-view.vala:363
 msgid "This value is invalid for the key type."
 msgstr "Este valor no es válido para este tipo de clave."
 
-#: ../editor/dconf-window.vala:95
+#: ../editor/dconf-window.vala:98
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Gracias por usar el editor de dconf para editar su configuración."
 
-#: ../editor/dconf-window.vala:96
+#: ../editor/dconf-window.vala:99
 msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "No olvide que algunas opciones pueden hacer que las aplicaciones fallen, por "
 "lo que debe tener cuidado."
 
-#: ../editor/dconf-window.vala:97
+#: ../editor/dconf-window.vala:100
 msgid "I'll be careful."
 msgstr "Tendré cuidado."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:101
+#: ../editor/dconf-window.vala:104
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo la próxima vez."
 
-#: ../editor/dconf-window.vala:172
+#: ../editor/dconf-window.vala:194
 msgid "Copy current path"
 msgstr "Copiar la ruta actual"
 
-#: ../editor/dconf-window.vala:177
+#: ../editor/dconf-window.vala:199
 msgid "Reset visible keys"
 msgstr "Restablecer las teclas visibles"
 
-#: ../editor/dconf-window.vala:178
+#: ../editor/dconf-window.vala:200
 msgid "Reset recursively"
 msgstr "Restablecer recursivamente"
 
-#: ../editor/dconf-window.vala:186
+#: ../editor/dconf-window.vala:208
 msgid "Enter delay mode"
 msgstr "Introducir modo de retardo"
 
@@ -774,38 +774,37 @@ msgstr "Valor predeterminado"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: ../editor/modifications-revealer.vala:145
+#: ../editor/modifications-revealer.vala:144
 msgid "Nothing to reset."
 msgstr "Nada que restablecer."
 
-#: ../editor/modifications-revealer.vala:245
-#| msgid "This value is invalid for the key type."
+#: ../editor/modifications-revealer.vala:244
 msgid "The value is invalid."
 msgstr "El valor no es válido."
 
-#: ../editor/modifications-revealer.vala:249
+#: ../editor/modifications-revealer.vala:248
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr "El cambio se descartará si sale de esta vista sin aplicar."
 
-#: ../editor/modifications-revealer.vala:251
+#: ../editor/modifications-revealer.vala:250
 msgid "The change will be applied on such request or if you quit this view."
 msgstr "El cambio se aplicará en la petición o si sale de esta vista."
 
-#: ../editor/modifications-revealer.vala:268
+#: ../editor/modifications-revealer.vala:267
 msgid "Changes will be delayed until you request it."
 msgstr "Los cambios se retrasarán hasta que lo solicite."
 
-#: ../editor/modifications-revealer.vala:269
+#: ../editor/modifications-revealer.vala:268
 #, c-format
 msgid "%u gsettings operations awaiting."
 msgstr "%u operaciones de gsettings esperando."
 
-#: ../editor/modifications-revealer.vala:272
+#: ../editor/modifications-revealer.vala:271
 #, c-format
 msgid "%u dconf operations awaiting."
 msgstr "%u operaciones de dconf esperando."
 
-#: ../editor/modifications-revealer.vala:273
+#: ../editor/modifications-revealer.vala:272
 #, c-format
 msgid "%u gsettings operations and %u dconf operations awaiting."
 msgstr "%u operaciones de gsettings y %u operaciones de dconf esperando."
@@ -888,9 +887,23 @@ msgstr ""
 msgid "No keys in this path"
 msgstr "No hay claves en esta ruta"
 
-#: ../editor/registry-view.vala:133
-msgid "Oops! Cannot find something at this path."
-msgstr "No se puede encontrar nada en este ruta."
+#: ../editor/registry-view.vala:113
+#, c-format
+msgid "Cannot find folder \"%s\"."
+msgstr "No se puede encontrar la carpeta «%s»."
+
+#: ../editor/registry-view.vala:129
+#, c-format
+msgid "Cannot find key \"%s\" here."
+msgstr "No se puede encontrar aquí la clave «%s»."
+
+#: ../editor/registry-view.vala:135
+#, c-format
+msgid "Key \"%s\" has been removed."
+msgstr "Se ha eliminado la clave «%s»."
+
+#~ msgid "Oops! Cannot find something at this path."
+#~ msgstr "No se puede encontrar nada en este ruta."
 
 #~ msgid "Switch right-click menu in delayed mode"
 #~ msgstr "Cambiar el menú del botón derecho en el modo retardado"
