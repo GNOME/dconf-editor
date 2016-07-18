@@ -65,7 +65,7 @@ class RegistryInfo : Grid
         if (has_schema)
         {
             Switch custom_value_switch = new Switch ();
-            custom_value_switch.halign = Align.END;
+            custom_value_switch.halign = Align.START;
             custom_value_switch.hexpand = true;
             custom_value_switch.show ();
             add_row_from_widget (_("Use default value"), custom_value_switch, null);

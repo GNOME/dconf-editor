@@ -37,7 +37,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
     {
         this.visible = true;
         this.hexpand = true;
-        this.halign = Align.END;
+        this.halign = Align.START;
         this.use_popover = true;
         this.width_request = 100;
 
@@ -79,18 +79,20 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     {
         this.visible = true;
         this.hexpand = true;
-
-        label.visible = true;
-        label.halign = Align.START;
-        label.hexpand = true;
-        this.attach (label, 0, 0, 1, 1);
+        this.orientation = Orientation.HORIZONTAL;
+        this.column_spacing = 8;
 
         MenuButton button = new MenuButton ();
         button.visible = true;
         button.use_popover = true;
-        button.halign = Align.END;
+        button.halign = Align.START;
         ((StyleContext) button.get_style_context ()).add_class ("image-button");
-        this.attach (button, 1, 0, 1, 1);
+        this.add (button);
+
+        label.visible = true;
+        label.halign = Align.START;
+        label.hexpand = true;
+        this.add (label);
 
         ContextPopover popover = new ContextPopover ();
         popover.create_flags_list (key);
@@ -127,7 +129,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
     {
         this.visible = true;
         this.hexpand = true;
-        this.halign = Align.END;
+        this.halign = Align.START;
         this.use_popover = true;
         this.width_request = 100;
 
@@ -172,7 +174,8 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
     {
         this.visible = true;
         this.hexpand = true;
-        this.halign = Align.END;
+        this.orientation = Orientation.HORIZONTAL;
+        this.halign = Align.START;
         this.column_homogeneous = true;
         this.width_request = 100;
         ((StyleContext) this.get_style_context ()).add_class ("linked");
@@ -180,12 +183,12 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
         ToggleButton button_false = new ToggleButton ();
         button_false.visible = true;
         button_false.label = Key.cool_boolean_text_value (false);
-        this.attach (button_false, 0, 0, 1, 1);
+        this.add (button_false);
 
         button_true = new ToggleButton ();
         button_true.visible = true;
         button_true.label = Key.cool_boolean_text_value (true);
-        this.attach (button_true, 1, 0, 1, 1);
+        this.add (button_true);
 
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
@@ -214,7 +217,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
     {
         this.visible = true;
         this.hexpand = true;
-        this.halign = Align.END;
+        this.halign = Align.START;
 
         double min, max;
         if (key.has_schema && ((GSettingsKey) key).range_type == "range")
@@ -266,7 +269,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
-        this.halign = Align.END;
+        this.halign = Align.START;
 
         double min, max;
         if (key.has_schema && ((GSettingsKey) key).range_type == "range")

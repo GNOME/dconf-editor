@@ -17,6 +17,9 @@
             <property name="vexpand">true</property>
             <property name="xalign">1</property>
             <property name="yalign">0</property>
+            <style>
+              <class name="greyed-label"/>
+            </style>
           </object>
         </child>
       </object>

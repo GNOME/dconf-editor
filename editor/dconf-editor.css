@@ -175,3 +175,10 @@ list.properties-list:dir(rtl) > row > grid > label { padding-left:1em; }
 .bold-label {
   font-weight:bold;
 }
+
+.greyed-label {
+  color:@theme_fg_color;
+}
+.greyed-label:backdrop {
+  color:@theme_unfocused_fg_color;
+}
