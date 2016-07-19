@@ -213,11 +213,11 @@ class RegistryView : Grid
             else
                 row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
 
-            ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_key_value (key, variant); });
+            ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
             ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_change (key); });
 
-            key.notify ["planned-change"].connect (() => { set_delayed_icon (row, key.planned_change); });
-            set_delayed_icon (row, key.planned_change);
+            key.notify ["planned-change"].connect (() => { set_delayed_icon (row, key); });
+            set_delayed_icon (row, key);
 
             row.on_row_clicked.connect (() => {
                     if (!properties_view.populate_properties_list_box (revealer, key))  // TODO unduplicate
@@ -232,10 +232,20 @@ class RegistryView : Grid
         return row;
     }
 
-    private void set_delayed_icon (ClickableListBoxRow row, bool state)
+    private void set_delayed_icon (ClickableListBoxRow row, Key key)
     {
-        if (state)
-            row.get_style_context ().add_class ("delayed");
+        if (key.planned_change)
+        {
+            StyleContext context = row.get_style_context ();
+            context.add_class ("delayed");
+            if (!key.has_schema)
+            {
+                if (key.planned_value == null)
+                    context.add_class ("erase");
+                else
+                    context.remove_class ("erase");
+            }
+        }
         else
             row.get_style_context ().remove_class ("delayed");
     }

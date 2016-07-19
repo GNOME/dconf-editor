@@ -216,7 +216,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             if (key.planned_change)
             {
                 popover.new_section ();
-                popover.new_action ("dismiss", () => {
+                popover.new_action (key.planned_value == null ? "unerase" : "dismiss", () => {
                         destroy_popover ();
                         change_dismissed ();
                     });
@@ -392,6 +392,9 @@ private class ContextPopover : Popover
         else if (action_action == "erase")
             /* Translators: "erase key" action in the right-click menu on a key without schema */
             current_section.append (_("Erase key"), group_dot_action);
+        else if (action_action == "unerase")
+            /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
+            current_section.append (_("Do not erase"), group_dot_action);
         else assert_not_reached ();
     }
 

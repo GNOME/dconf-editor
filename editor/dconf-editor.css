@@ -88,10 +88,8 @@ window > popover.menu {
 /* pending change icon */
 
                          .dconf-list          > row > .key         { transition:background-position 0.3s; }
-                         .dconf-list          > row > .key.delayed {
-                           background-image:-gtk-icontheme("document-open-recent-symbolic");
-                           background-repeat:no-repeat;
-                         }
+                         .dconf-list          > row > .key.delayed { background-image:-gtk-icontheme("document-open-recent-symbolic"); background-repeat:no-repeat; }
+                         .dconf-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
 
                          .dconf-list          > row > .key.delayed { background-size:16px; transition:background-size 0.3s; }
              .small-rows .dconf-list          > row > .key.delayed { background-size:12px; }
