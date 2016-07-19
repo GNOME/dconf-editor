@@ -202,7 +202,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                     set_key_value (gvariant);
                 });
         }
-        else if (delayed_apply_menu && key.planned_change)
+        else if (key.planned_change)
         {
             popover.new_section ();
             popover.new_action ("dismiss", () => {

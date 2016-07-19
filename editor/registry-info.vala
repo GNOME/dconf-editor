@@ -63,8 +63,13 @@ class RegistryInfo : Grid
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
         key.value_changed.connect (() => { label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key)); });
         label.halign = Align.START;
+        label.valign = Align.START;
         label.xalign = 0;
         label.yalign = 0;
+        label.wrap = true;
+        label.selectable = true;
+        label.max_width_chars = 42;
+        label.width_chars = 42;
         label.hexpand = true;
         label.show ();
         add_row_from_widget (_("Current value"), label, null);
