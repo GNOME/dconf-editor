@@ -201,14 +201,35 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key.type_string), gvariant)));
                     set_key_value (gvariant);
                 });
+
+            if (!delayed_apply_menu)
+            {
+                popover.new_section ();
+                popover.new_action ("erase", () => {
+                        destroy_popover ();
+                        set_key_value (null);
+                    });
+            }
         }
-        else if (key.planned_change)
+        else
         {
-            popover.new_section ();
-            popover.new_action ("dismiss", () => {
-                    destroy_popover ();
-                    change_dismissed ();
-                });
+            if (key.planned_change)
+            {
+                popover.new_section ();
+                popover.new_action ("dismiss", () => {
+                        destroy_popover ();
+                        change_dismissed ();
+                    });
+            }
+
+            if (!key.planned_change || key.planned_value != null)
+            {
+                popover.new_section ();
+                popover.new_action ("erase", () => {
+                        destroy_popover ();
+                        set_key_value (null);
+                    });
+            }
         }
         return true;
     }
@@ -368,6 +389,9 @@ private class ContextPopover : Popover
         else if (action_action == "open")
             /* Translators: "open folder" action in the right-click menu on a folder */
             current_section.append (_("Open"), group_dot_action);
+        else if (action_action == "erase")
+            /* Translators: "erase key" action in the right-click menu on a key without schema */
+            current_section.append (_("Erase key"), group_dot_action);
         else assert_not_reached ();
     }
 

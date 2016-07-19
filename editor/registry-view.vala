@@ -301,8 +301,13 @@ class RegistryView : Grid
             key.value = (!) new_value;
         else if (key.has_schema)
             ((GSettingsKey) key).set_to_default ();
+        else if (behaviour != Behaviour.UNSAFE)
+        {
+            revealer.enter_delay_mode ();
+            revealer.add_delayed_setting (key, null);
+        }
         else
-            assert_not_reached ();
+            ((DConfKey) key).erase ();
     }
 
     /*\

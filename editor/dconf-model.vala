@@ -334,6 +334,20 @@ public class DConfKey : Key
     private DConf.Client client;
 
     public bool is_ghost { get; set; default = false; }
+    public void erase ()
+    {
+        try
+        {
+            client.write_sync (full_name, null);
+        }
+        catch (Error error)
+        {
+            warning (error.message);
+        }
+        is_ghost = true;
+        planned_change = false;
+        value_changed ();
+    }
 
     public override Variant value
     {
