@@ -456,7 +456,7 @@ class RegistryView : Grid
                 else if (!object.is_view)
                 {
                     Key key = (Key) object;
-                    if (key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (revealer, key))
+                    if ((key.has_schema || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (revealer, key))
                     {
                         dir_tree_selection.select_iter (iter);
                         update_current_path (object.full_name);
