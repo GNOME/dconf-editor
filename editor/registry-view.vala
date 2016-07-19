@@ -303,7 +303,7 @@ class RegistryView : Grid
             ((GSettingsKey) key).set_to_default ();
         else if (behaviour != Behaviour.UNSAFE)
         {
-            revealer.enter_delay_mode ();
+            enter_delay_mode ();
             revealer.add_delayed_setting (key, null);
         }
         else
@@ -316,9 +316,8 @@ class RegistryView : Grid
 
     public void reset (bool recursively)
     {
-        revealer.enter_delay_mode ();
+        enter_delay_mode ();
         reset_generic (key_model, recursively);
-        invalidate_popovers ();
         revealer.warn_if_no_planned_changes ();
     }
 
