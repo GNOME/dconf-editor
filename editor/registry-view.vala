@@ -216,6 +216,9 @@ class RegistryView : Grid
             ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_key_value (key, variant); });
             ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_change (key); });
 
+            key.notify ["planned-change"].connect (() => { set_delayed_icon (row, key.planned_change); });
+            set_delayed_icon (row, key.planned_change);
+
             row.on_row_clicked.connect (() => {
                     if (!properties_view.populate_properties_list_box (revealer, key))  // TODO unduplicate
                         return;
@@ -227,6 +230,14 @@ class RegistryView : Grid
         }
         row.button_press_event.connect (on_button_pressed);
         return row;
+    }
+
+    private void set_delayed_icon (ClickableListBoxRow row, bool state)
+    {
+        if (state)
+            row.get_style_context ().add_class ("delayed");
+        else
+            row.get_style_context ().remove_class ("delayed");
     }
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)

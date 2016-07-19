@@ -85,6 +85,24 @@ window > popover.menu {
                          .dconf-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
                          .dconf-list:dir(rtl) > row  grid > label { padding-left:  0.5em; }
 
+/* pending change icon */
+
+                         .dconf-list          > row > .key         { transition:background-position 0.3s; }
+                         .dconf-list          > row > .key.delayed {
+                           background-image:-gtk-icontheme("document-open-recent-symbolic");
+                           background-repeat:no-repeat;
+                         }
+
+                         .dconf-list          > row > .key.delayed { background-size:16px; transition:background-size 0.3s; }
+             .small-rows .dconf-list          > row > .key.delayed { background-size:12px; }
+
+                         .dconf-list:dir(ltr) > row > .key.delayed { padding-right: 28px; }
+                         .dconf-list:dir(rtl) > row > .key.delayed { padding-left:  28px; }
+                         .dconf-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(1.3rem - 8px); }
+                         .dconf-list:dir(rtl) > row > .key         { background-position:            16px  calc(1.3rem - 8px); }
+             .small-rows .dconf-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(0.65rem - 5px); }
+             .small-rows .dconf-list:dir(rtl) > row > .key         { background-position:            16px  calc(0.65rem - 5px); }
+
 /*\
 * * pathbar
 \*/
