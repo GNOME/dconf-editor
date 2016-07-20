@@ -1,3 +1,18 @@
+dconf-editor 3.21.4
+=====================
+
+The UI has completely evolved, into an all-in-one-window. That permits notably a
+"delay mode" in which multiple changes are applied at the same time (only schema
+by schema when there're some, and other keys via a DConfChangeset). Keys without
+schema can also be deleted now.
+
+Translations updated:
+  Indonesian: Andika Triwidada
+  Occitan: Cédric Valmary
+  Portuguese: Sérgio Cardeira and Tiago Santos
+  Spanish: Daniel Mustieles
+  Turkish: Muhammet Kara
+
 dconf-editor 3.21.1
 =====================
 
