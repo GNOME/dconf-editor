@@ -38,6 +38,7 @@ class ModificationsRevealer : Revealer
     private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
     public signal void reload ();
+    public signal void reload_menu ();
 
     public Behaviour behaviour { get; set; }
 
@@ -198,7 +199,7 @@ class ModificationsRevealer : Revealer
 
         /* reload notably the hamburger menu */
 
-        reload ();
+        reload_menu ();
     }
 
     [GtkCallback]

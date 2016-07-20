@@ -45,6 +45,7 @@ class RegistryView : Grid
     construct
     {
         revealer.reload.connect (invalidate_popovers);
+        revealer.reload_menu.connect (invalidate_popovers);
 
         search_entry.get_buffer ().deleted_text.connect (() => { search_next_button.set_sensitive (true); });
         search_bar.connect_entry (search_entry);
