@@ -22,9 +22,30 @@ class RegistryInfo : Grid
 {
     [GtkChild] private Revealer no_schema_warning;
     [GtkChild] private ListBox properties_list_box;
+    [GtkChild] private Button erase_button;
+
+    private ulong erase_button_handler = 0;
+    private ulong revealer_reload_1_handler = 0;
+    private ulong revealer_reload_2_handler = 0;
 
     public bool populate_properties_list_box (ModificationsRevealer revealer, Key key)
     {
+        if (erase_button_handler != 0)
+        {
+            erase_button.disconnect (erase_button_handler);
+            erase_button_handler = 0;
+        }
+        if (revealer_reload_1_handler != 0)
+        {
+            revealer.disconnect (revealer_reload_1_handler);
+            revealer_reload_1_handler = 0;
+        }
+        if (revealer_reload_2_handler != 0)
+        {
+            revealer.disconnect (revealer_reload_2_handler);
+            revealer_reload_2_handler = 0;
+        }
+
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
@@ -90,7 +111,8 @@ class RegistryInfo : Grid
 
             bool disable_revealer_for_switch = false;
             GSettingsKey gkey = (GSettingsKey) key;
-            revealer.reload.connect (() => {
+            revealer_reload_1_handler = revealer.reload.connect (() => {
+                    warning ("reload 1");
                     disable_revealer_for_switch = true;
                     custom_value_switch.set_active (gkey.is_default);
                     disable_revealer_for_switch = false;    // TODO bad but needed
@@ -125,6 +147,14 @@ class RegistryInfo : Grid
                     }
                 });
         }
+        else
+        {
+            erase_button_handler = erase_button.clicked.connect (() => {
+                    revealer.enter_delay_mode ();
+                    revealer.add_delayed_setting (key, null);
+                });
+        }
+
         key_editor_child.value_has_changed.connect ((enable_revealer, is_valid) => {
                 if (disable_revealer_for_value)
                     disable_revealer_for_value = false;
@@ -142,7 +172,7 @@ class RegistryInfo : Grid
                 }
             });
         key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
-        revealer.reload.connect (() => {
+        revealer_reload_2_handler = revealer.reload.connect (() => {
                 disable_revealer_for_value = true;
                 key_editor_child.reload (key.value);
                 if (tmp_string == "<flags>")
