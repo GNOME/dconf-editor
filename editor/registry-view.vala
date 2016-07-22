@@ -44,13 +44,20 @@ class RegistryView : Grid
 
     construct
     {
-        revealer.reload.connect (invalidate_popovers);
-        revealer.reload_menu.connect (invalidate_popovers);
+        ulong revealer_reload_menu_handler = revealer.reload_menu.connect (invalidate_popovers);
 
-        search_entry.get_buffer ().deleted_text.connect (() => { search_next_button.set_sensitive (true); });
+        EntryBuffer buffer = search_entry.get_buffer ();
+        ulong search_entry_buffer_deleted_text_handler = buffer.deleted_text.connect (() => { search_next_button.set_sensitive (true); });
         search_bar.connect_entry (search_entry);
         bind_property ("show-search-bar", search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);   // TODO in UI file?
         bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
+
+        destroy.connect (() => {
+                revealer.disconnect (revealer_reload_menu_handler);
+                buffer.disconnect (search_entry_buffer_deleted_text_handler);
+
+                base.destroy ();
+            });
     }
 
     public void init (string path, bool restore_view)   // TODO check path format
@@ -198,10 +205,11 @@ class RegistryView : Grid
     private Widget new_list_box_row (Object item)
     {
         ClickableListBoxRow row;
+        ulong on_row_clicked_handler;
         if (((SettingObject) item).is_view)
         {
             row = new FolderListBoxRow (((SettingObject) item).name, ((SettingObject) item).full_name);
-            row.on_row_clicked.connect (() => {
+            on_row_clicked_handler = row.on_row_clicked.connect (() => {
                     if (!scroll_to_path (((SettingObject) item).full_name))
                         warning ("Something got wrong with this folder.");
                 });
@@ -214,13 +222,14 @@ class RegistryView : Grid
             else
                 row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
 
-            ((KeyListBoxRow) row).set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
-            ((KeyListBoxRow) row).change_dismissed.connect (() => { revealer.dismiss_change (key); });
+            KeyListBoxRow key_row = ((KeyListBoxRow) row);
+            ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
+            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => { revealer.dismiss_change (key); });
 
-            key.notify ["planned-change"].connect (() => { set_delayed_icon (row, key); });
+            ulong key_planned_change_handler = key.notify ["planned-change"].connect (() => { set_delayed_icon (row, key); });
             set_delayed_icon (row, key);
 
-            row.on_row_clicked.connect (() => {
+            on_row_clicked_handler = row.on_row_clicked.connect (() => {
                     if (!properties_view.populate_properties_list_box (revealer, key))  // TODO unduplicate
                         return;
 
@@ -228,8 +237,20 @@ class RegistryView : Grid
                     stack.set_visible_child (properties_view);
                 });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
+
+            row.destroy.connect (() => {
+                    key_row.disconnect (set_key_value_handler);
+                    key_row.disconnect (change_dismissed_handler);
+                    key.disconnect (key_planned_change_handler);
+                });
         }
-        row.button_press_event.connect (on_button_pressed);
+        ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
+
+        row.destroy.connect (() => {
+                row.disconnect (on_row_clicked_handler);
+                row.disconnect (button_press_event_handler);
+            });
+
         return row;
     }
 

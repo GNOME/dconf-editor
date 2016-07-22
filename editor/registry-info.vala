@@ -112,7 +112,6 @@ class RegistryInfo : Grid
             bool disable_revealer_for_switch = false;
             GSettingsKey gkey = (GSettingsKey) key;
             revealer_reload_1_handler = revealer.reload.connect (() => {
-                    warning ("reload 1");
                     disable_revealer_for_switch = true;
                     custom_value_switch.set_active (gkey.is_default);
                     disable_revealer_for_switch = false;    // TODO bad but needed

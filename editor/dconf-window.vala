@@ -52,17 +52,20 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Revealer notification_revealer;
     [GtkChild] private Label notification_label;
 
+    private ulong behaviour_changed_handler = 0;
+    private ulong theme_changed_handler = 0;
+
     public DConfWindow ()
     {
         add_action_entries (action_entries, this);
 
-        settings.changed ["behaviour"].connect (invalidate_popovers);
+        behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-maximized"))
             maximize ();
 
-        settings.changed["theme"].connect (() => {
+        theme_changed_handler = settings.changed ["theme"].connect (() => {
                 string theme = settings.get_string ("theme");
                 StyleContext context = get_style_context ();    // TODO only check once?
                 if (theme == "three-twenty-two" && context.has_class ("small-rows"))
@@ -107,8 +110,9 @@ class DConfWindow : ApplicationWindow
         checkbutton.margin_top = 5;
         box.add (checkbutton);
 
-        dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
+        ulong dialog_response_handler = dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
         dialog.run ();
+        dialog.disconnect (dialog_response_handler);
         dialog.destroy ();
     }
 
@@ -167,10 +171,15 @@ class DConfWindow : ApplicationWindow
     {
         get_application ().withdraw_notification ("copy");
 
+        settings.disconnect (behaviour_changed_handler);
+        settings.disconnect (theme_changed_handler);
+
+        settings.delay ();
         settings.set_string ("saved-view", current_path);
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
+        settings.apply ();
 
         base.destroy ();
     }

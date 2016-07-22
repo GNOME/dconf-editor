@@ -141,10 +141,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_info_label.get_style_context ().add_class ("italic-label");
         key_info_label.set_label (_("No Schema Found"));
 
-        key.value_changed.connect (() => {
+        ulong key_value_changed_handler = key.value_changed.connect (() => {
                 update ();
                 destroy_popover ();
             });
+        destroy.connect (() => { key.disconnect (key_value_changed_handler); });    // TODO move to KeyListBoxRow
     }
 
     private void update ()
@@ -250,10 +251,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_name_label.label = key.name;
         key_info_label.label = key.summary;
 
-        key.value_changed.connect (() => {
+        ulong key_value_changed_handler = key.value_changed.connect (() => {
                 update ();
                 destroy_popover ();
             });
+        destroy.connect (() => { key.disconnect (key_value_changed_handler); });    // TODO move to KeyListBoxRow
     }
 
     protected override string get_text ()
@@ -350,7 +352,7 @@ private class ContextPopover : Popover
 
         bind_model (menu, null);
 
-        key_press_event.connect (on_key_press_event);
+        key_press_event.connect (on_key_press_event);   // TODO should be only for RegistryView popovers, not for RegistryInfo ones (nullable booleans & enums)
     }
 
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)
@@ -375,27 +377,31 @@ private class ContextPopover : Popover
         simple_action.activate.connect (() => { action (); });
         current_group.add_action (simple_action);
 
-        if (action_action == "customize")
-            /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-            current_section.append (_("Customize…"), group_dot_action);
-        else if (action_action == "default1")
-            /* Translators: "reset key value" action in the right-click menu on the list of keys */
-            current_section.append (_("Set to default"), group_dot_action);
-        else if (action_action == "default2")
-            new_multi_default_action (group_dot_action);
-        else if (action_action == "dismiss")
-            /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
-            current_section.append (_("Dismiss change"), group_dot_action);
-        else if (action_action == "open")
-            /* Translators: "open folder" action in the right-click menu on a folder */
-            current_section.append (_("Open"), group_dot_action);
-        else if (action_action == "erase")
-            /* Translators: "erase key" action in the right-click menu on a key without schema */
-            current_section.append (_("Erase key"), group_dot_action);
-        else if (action_action == "unerase")
-            /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
-            current_section.append (_("Do not erase"), group_dot_action);
-        else assert_not_reached ();
+        switch (action_action)
+        {
+            case "customize":
+                /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
+                current_section.append (_("Customize…"), group_dot_action);     return;
+            case "default1":
+                /* Translators: "reset key value" action in the right-click menu on the list of keys */
+                current_section.append (_("Set to default"), group_dot_action); return;
+            case "default2":
+                new_multi_default_action (group_dot_action);                    return;
+            case "dismiss":
+                /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
+                current_section.append (_("Dismiss change"), group_dot_action); return;
+            case "open":
+                /* Translators: "open folder" action in the right-click menu on a folder */
+                current_section.append (_("Open"), group_dot_action);           return;
+            case "erase":
+                /* Translators: "erase key" action in the right-click menu on a key without schema */
+                current_section.append (_("Erase key"), group_dot_action);      return;
+            case "unerase":
+                /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
+                current_section.append (_("Do not erase"), group_dot_action);   return;
+            default:
+                assert_not_reached ();
+        }
     }
 
     public void new_copy_action (string text)

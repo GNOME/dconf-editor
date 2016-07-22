@@ -197,7 +197,7 @@ class ModificationsRevealer : Revealer
             warning (error.message);
         }
 
-        /* reload notably the hamburger menu */
+        /* reload the hamburger menu */ /* FIXME should go back to keys list if the key is erased */
 
         reload_menu ();
     }
@@ -225,6 +225,7 @@ class ModificationsRevealer : Revealer
         /* reload notably key_editor_child */
 
         reload ();
+        reload_menu ();
     }
 
     /*\

@@ -27,7 +27,18 @@ public class PathBar : Box
     public void set_path (string path, bool notify = false)
         requires (path [0] == '/')
     {
-        @foreach ((child) => { if (child != root_button) child.destroy (); });
+        @foreach ((child) => {
+                if (child != root_button)
+                {
+                    if (child is PathBarItem)
+                    {
+                        ulong path_bar_item_clicked_handler = ((PathBarItem) child).path_bar_item_clicked_handler;
+                        if (path_bar_item_clicked_handler != 0)
+                            child.disconnect (((PathBarItem) child).path_bar_item_clicked_handler);
+                    }
+                    child.destroy ();
+                }
+            });
 
         string [] split = path.split ("/", 0);
         string last = split [split.length - 1];
@@ -73,12 +84,14 @@ public class PathBar : Box
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
 private class PathBarItem : Button
 {
+    public ulong path_bar_item_clicked_handler = 0;
+
     [GtkChild] private Label text;
 
     public PathBarItem (string label, string path, bool is_clickable)
     {
         text.set_text (label);
         if (is_clickable)
-            clicked.connect (() => { ((PathBar) get_parent ()).set_path (path, true); });
+            path_bar_item_clicked_handler = clicked.connect (() => { ((PathBar) get_parent ()).set_path (path, true); });
     }
 }
