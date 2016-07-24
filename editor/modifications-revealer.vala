@@ -96,7 +96,7 @@ class ModificationsRevealer : Revealer
         key.planned_change = true;
         key.planned_value = new_value;
 
-        if (key.has_schema)
+        if (key is GSettingsKey)
             gsettings_keys_awaiting_hashtable.insert (key.descriptor, (GSettingsKey) key);
         else
             dconf_keys_awaiting_hashtable.insert (key.descriptor, (DConfKey) key);
@@ -118,7 +118,7 @@ class ModificationsRevealer : Revealer
         key.planned_change = false;
         key.planned_value = null;
 
-        if (key.has_schema)
+        if (key is GSettingsKey)
             gsettings_keys_awaiting_hashtable.remove (key.descriptor);
         else
             dconf_keys_awaiting_hashtable.remove (key.descriptor);

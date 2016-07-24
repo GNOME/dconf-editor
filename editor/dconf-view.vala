@@ -220,7 +220,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
         this.halign = Align.START;
 
         double min, max;
-        if (key.has_schema && ((GSettingsKey) key).range_type == "range")
+        if (key is GSettingsKey && ((GSettingsKey) key).range_type == "range")
         {
             min = (((GSettingsKey) key).range_content.get_child_value (0)).get_double ();
             max = (((GSettingsKey) key).range_content.get_child_value (1)).get_double ();
@@ -272,7 +272,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.halign = Align.START;
 
         double min, max;
-        if (key.has_schema && ((GSettingsKey) key).range_type == "range")
+        if (key is GSettingsKey && ((GSettingsKey) key).range_type == "range")
         {
             min = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (0));
             max = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (1));

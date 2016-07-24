@@ -180,7 +180,7 @@ class RegistryView : Grid
         while (position < key_model.get_n_items ())
         {
             SettingObject object = (SettingObject) key_model.get_object (position);
-            if (!object.is_view && object.name == key_name)
+            if (object is Key && object.name == key_name)
                 return (Key) object;
             position++;
         }
@@ -206,22 +206,23 @@ class RegistryView : Grid
     {
         ClickableListBoxRow row;
         ulong on_row_clicked_handler;
-        if (((SettingObject) item).is_view)
+        if (item is Directory)
         {
-            row = new FolderListBoxRow (((SettingObject) item).name, ((SettingObject) item).full_name);
+            SettingObject setting_object = (SettingObject) item;
+            row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
             on_row_clicked_handler = row.on_row_clicked.connect (() => {
-                    if (!scroll_to_path (((SettingObject) item).full_name))
+                    if (!scroll_to_path (setting_object.full_name))
                         warning ("Something got wrong with this folder.");
                 });
         }
         else
         {
-            Key key = (Key) item;
-            if (key.has_schema)
-                row = new KeyListBoxRowEditable ((GSettingsKey) key);
+            if (item is GSettingsKey)
+                row = new KeyListBoxRowEditable ((GSettingsKey) item);
             else
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) key);
+                row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
 
+            Key key = (Key) item;
             KeyListBoxRow key_row = ((KeyListBoxRow) row);
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => { revealer.dismiss_change (key); });
@@ -260,7 +261,7 @@ class RegistryView : Grid
         {
             StyleContext context = row.get_style_context ();
             context.add_class ("delayed");
-            if (!key.has_schema)
+            if (key is DConfKey)
             {
                 if (key.planned_value == null)
                     context.add_class ("erase");
@@ -331,7 +332,7 @@ class RegistryView : Grid
             revealer.add_delayed_setting (key, new_value);
         else if (new_value != null)
             key.value = (!) new_value;
-        else if (key.has_schema)
+        else if (key is GSettingsKey)
             ((GSettingsKey) key).set_to_default ();
         else if (behaviour != Behaviour.UNSAFE)
         {
@@ -365,13 +366,13 @@ class RegistryView : Grid
                 return;
 
             SettingObject setting_object = (SettingObject) ((!) object);
-            if (setting_object.is_view)
+            if (setting_object is Directory)
             {
                 if (recursively)
                     reset_generic (((Directory) setting_object).key_model, true);
                 continue;
             }
-            if (!((Key) setting_object).has_schema)
+            if (setting_object is DConfKey)
             {
                 if (!((DConfKey) setting_object).is_ghost)
                     revealer.add_delayed_setting ((Key) setting_object, null);
@@ -484,10 +485,10 @@ class RegistryView : Grid
                     enable_transition (true);
                     return;
                 }
-                else if (!object.is_view)
+                else if (object is Key)
                 {
                     Key key = (Key) object;
-                    if ((key.has_schema || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (revealer, key))
+                    if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (revealer, key))
                     {
                         dir_tree_selection.select_iter (iter);
                         update_current_path (object.full_name);
@@ -512,7 +513,7 @@ class RegistryView : Grid
     private bool key_matches (Key key, string text)
     {
         /* Check in key's metadata */
-        if (key.has_schema && ((GSettingsKey) key).search_for (text))
+        if (key is GSettingsKey && ((GSettingsKey) key).search_for (text))
             return true;
 
         /* Check key value */

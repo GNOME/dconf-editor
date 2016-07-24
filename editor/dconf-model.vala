@@ -17,22 +17,18 @@
 
 public abstract class SettingObject : Object
 {
-    public abstract bool is_view { get; }
-
     public Directory? parent { get; construct; }    // TODO make protected or even remove
     public string name { get; construct; }
 
     public string full_name { get; private set; }
     construct
     {
-        full_name = parent == null ? "/" : ((!) parent).full_name + name + (is_view ? "/" : "");
+        full_name = parent == null ? "/" : ((!) parent).full_name + name + ((this is Directory) ? "/" : "");
     }
 }
 
 public class Directory : SettingObject
 {
-    public override bool is_view { get { return true; } }
-
     public int index { get { return parent.children.index (this); }}        // TODO remove
 
     public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
@@ -173,8 +169,6 @@ public class Directory : SettingObject
 
 public abstract class Key : SettingObject
 {
-    public override bool is_view { get { return false; } }
-    public abstract bool has_schema { get; }
     public abstract string descriptor { owned get; }
 
     public string type_string { get; protected set; default = "*"; }
@@ -327,8 +321,6 @@ public abstract class Key : SettingObject
 
 public class DConfKey : Key
 {
-    public override bool has_schema { get { return false; } }
-
     public override string descriptor { owned get { return full_name; } }
 
     private DConf.Client client;
@@ -398,8 +390,6 @@ public class DConfKey : Key
 
 public class GSettingsKey : Key
 {
-    public override bool has_schema { get { return true; } }
-
     public string schema_id              { get; construct; }
     public string summary                { get; construct; }
     public string description    { private get; construct; }

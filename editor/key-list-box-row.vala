@@ -498,7 +498,7 @@ private class ContextPopover : Popover
         else if (key.planned_change)
             value_variant = key.planned_value;
         else
-            value_variant = key.has_schema && ((GSettingsKey) key).is_default ? null : key.value;
+            value_variant = key is GSettingsKey && ((GSettingsKey) key).is_default ? null : key.value;
         Variant variant = new Variant.maybe (original_type, value_variant);
         Variant nullable_variant = new Variant.maybe (nullable_type, delayed_apply_menu && !key.planned_change ? null : variant);
 
@@ -513,7 +513,7 @@ private class ContextPopover : Popover
                 /* Translators: "no change" option in the right-click menu on a key when on delayed mode */
                 current_section.append (_("No change"), @"$group_dot_action(@mm$type_string nothing)");
 
-            if (key.has_schema)
+            if (key is GSettingsKey)
                 new_multi_default_action (@"$group_dot_action(@mm$type_string just nothing)");
             else if (complete_menu)
                 /* Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode */
