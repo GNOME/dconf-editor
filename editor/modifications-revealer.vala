@@ -38,7 +38,6 @@ class ModificationsRevealer : Revealer
     private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
 
     public signal void reload ();
-    public signal void reload_menu ();
 
     public Behaviour behaviour { get; set; }
 
@@ -110,10 +109,7 @@ class ModificationsRevealer : Revealer
     public void dismiss_change (Key key)
     {
         if (mode == Mode.NONE)
-        {
-            dismiss_delayed_settings ();
-            return;
-        }
+            mode = behaviour == Behaviour.ALWAYS_DELAY ? Mode.DELAYED : Mode.TEMPORARY;
 
         key.planned_change = false;
         key.planned_value = null;
@@ -199,7 +195,7 @@ class ModificationsRevealer : Revealer
 
         /* reload the hamburger menu */ /* FIXME should go back to keys list if the key is erased */
 
-        reload_menu ();
+        reload ();
     }
 
     [GtkCallback]
@@ -225,7 +221,6 @@ class ModificationsRevealer : Revealer
         /* reload notably key_editor_child */
 
         reload ();
-        reload_menu ();
     }
 
     /*\

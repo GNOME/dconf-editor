@@ -110,19 +110,16 @@ class RegistryInfo : Grid
 
         KeyEditorChild key_editor_child = create_child (key);
 
-        ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((enable_revealer, is_valid) => {
-                if (enable_revealer)
+        ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
+                if (revealer.should_delay_apply (tmp_string))
                 {
-                    if (revealer.should_delay_apply (tmp_string))
-                    {
-                        if (is_valid)
-                            revealer.add_delayed_setting (key, key_editor_child.get_variant ());
-                        else
-                            revealer.dismiss_change (key);
-                    }
+                    if (is_valid)
+                        revealer.add_delayed_setting (key, key_editor_child.get_variant ());
                     else
-                        key.value = key_editor_child.get_variant ();
+                        revealer.dismiss_change (key);
                 }
+                else
+                    key.value = key_editor_child.get_variant ();
             });
 
         if (has_schema)

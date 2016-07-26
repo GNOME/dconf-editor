@@ -19,7 +19,7 @@ using Gtk;
 
 public interface KeyEditorChild : Widget
 {
-    public signal void value_has_changed (bool enable_revealer, bool is_valid = false);
+    public signal void value_has_changed (bool is_valid = true);
 
     public abstract Variant get_variant ();
     public signal void child_activated ();
@@ -49,7 +49,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
                 reload (gvariant);
                 popover.closed ();
 
-                value_has_changed (true, true);
+                value_has_changed ();
             });
         reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         this.set_popover ((Popover) popover);
@@ -99,7 +99,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
                 reload (gvariant);
-                value_has_changed (true, true);
+                value_has_changed ();
             });
         reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         button.set_popover ((Popover) popover);
@@ -114,7 +114,6 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     {
         this.variant = gvariant;
         label.label = gvariant.print (false);
-        value_has_changed (false);
     }
 }
 
@@ -141,7 +140,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
                 reload (gvariant);
                 popover.closed ();
 
-                value_has_changed (true, true);
+                value_has_changed ();
             });
         reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
         this.set_popover ((Popover) popover);
@@ -193,7 +192,7 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
 
-        button_true.toggled.connect (() => { value_has_changed (true, true); });
+        button_true.toggled.connect (() => { value_has_changed (); });
     }
 
     public Variant get_variant ()
@@ -204,13 +203,13 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
     public void reload (Variant gvariant)
     {
         button_true.active = gvariant.get_boolean ();
-        value_has_changed (false);
     }
 }
 
 private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
 {
-    private uint locked = 0;
+    private ulong deleted_text_handler = 0;
+    private ulong inserted_text_handler = 0;
 
     public KeyEditorChildNumberDouble (Key key)
         requires (key.type_string == "d")
@@ -239,28 +238,52 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
         this.input_purpose = InputPurpose.NUMBER;
         this.width_chars = 30;
 
-        this.buffer.deleted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });     // TODO test value for
-        this.buffer.inserted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });    //   non-numeric chars
-        this.activate.connect (() => { update (); child_activated (); });
+        EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => { value_has_changed (); });     // TODO test value for
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => { value_has_changed (); });   //   non-numeric chars
+        ulong entry_activate_handler = activate.connect (() => { update (); child_activated (); });
+
+        destroy.connect (() => {
+                ref_buffer.disconnect (deleted_text_handler);
+                ref_buffer.disconnect (inserted_text_handler);
+                disconnect (entry_activate_handler);
+            });
     }
 
-    public Variant get_variant ()
+    public Variant get_variant ()   // TODO test_value against range
     {
         return new Variant.double (this.get_value ());  // TODO parse the text instead of getting the value, or updates when editing manually are buggy
     }
 
+    private void set_lock (bool state)
+        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
+    {
+        if (state)
+        {
+            SignalHandler.block (buffer, deleted_text_handler);
+            SignalHandler.block (buffer, inserted_text_handler);
+        }
+        else
+        {
+            SignalHandler.unblock (buffer, deleted_text_handler);
+            SignalHandler.unblock (buffer, inserted_text_handler);
+        }
+    }
+
     public void reload (Variant gvariant)
     {
-        locked = 2;
+        set_lock (true);
         this.set_value (gvariant.get_double ());
-        value_has_changed (false);  // set disable_revealer_for_value to false, might be useful for corner cases
+        set_lock (false);
     }
 }
 
 private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 {
     private string key_type;
-    private uint locked = 0;
+
+    private ulong deleted_text_handler = 0;
+    private ulong inserted_text_handler = 0;
 
     public KeyEditorChildNumberInt (Key key)
         requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "h")     // TODO key.type_string == "x" || key.type_string == "t" ||
@@ -289,9 +312,16 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
         this.width_chars = 30;
 
-        this.buffer.deleted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });     // TODO test value for
-        this.buffer.inserted_text.connect (() => { if (locked > 0) locked -= 1; else value_has_changed (true, true); });    //   non-numeric chars
-        this.activate.connect (() => { update (); child_activated (); });
+        EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => { value_has_changed (); });
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => { value_has_changed (); });
+        ulong entry_activate_handler = activate.connect (() => { update (); child_activated (); });
+
+        destroy.connect (() => {
+                ref_buffer.disconnect (deleted_text_handler);
+                ref_buffer.disconnect (inserted_text_handler);
+                disconnect (entry_activate_handler);
+            });
     }
 
     private static void get_min_and_max_double (out double min, out double max, string variant_type)
@@ -322,7 +352,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         }
     }
 
-    public Variant get_variant ()
+    public Variant get_variant ()   // TODO test_value against range
     {
         switch (key_type)
         {
@@ -340,11 +370,26 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         return int64.parse (this.get_text ());
     }
 
+    private void set_lock (bool state)
+        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
+    {
+        if (state)
+        {
+            SignalHandler.block (buffer, deleted_text_handler);
+            SignalHandler.block (buffer, inserted_text_handler);
+        }
+        else
+        {
+            SignalHandler.unblock (buffer, deleted_text_handler);
+            SignalHandler.unblock (buffer, inserted_text_handler);
+        }
+    }
+
     public void reload (Variant gvariant)       // TODO "key_editor_child_number_int_real_reload: assertion 'gvariant != NULL' failed" two times when ghosting a key
     {
-        locked = 2;
+        set_lock (true);
         this.set_value (get_variant_as_double (gvariant));
-        value_has_changed (false);  // set disable_revealer_for_value to false, might be useful for corner cases
+        set_lock (false);
     }
 }
 
@@ -353,7 +398,9 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
     private string variant_type;
     private Variant variant;
     private bool is_string;
-    private bool locked = false;
+
+    private ulong deleted_text_handler = 0;
+    private ulong inserted_text_handler = 0;
 
     public KeyEditorChildDefault (string type, Variant initial_value)
     {
@@ -368,10 +415,16 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         this.is_string = type == "s" || type == "o" || type == "g";
         this.text = is_string ? initial_value.get_string () : initial_value.print (false);
 
-        this.buffer.deleted_text.connect (() => { if (!locked) value_has_changed (true, test_value ()); });
-        this.buffer.inserted_text.connect (() => { if (!locked) value_has_changed (true, test_value ()); });
-        this.activate.connect (() => { if (test_value ()) child_activated (); });
-        value_has_changed (true, test_value ());
+        EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => { value_has_changed (test_value ()); });
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => { value_has_changed (test_value ()); });
+        ulong entry_activate_handler = activate.connect (() => { if (test_value ()) child_activated (); });
+
+        destroy.connect (() => {
+                ref_buffer.disconnect (deleted_text_handler);
+                ref_buffer.disconnect (inserted_text_handler);
+                disconnect (entry_activate_handler);
+            });
     }
 
     private bool test_value ()
@@ -410,12 +463,27 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         return variant;
     }
 
+    private void set_lock (bool state)
+        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
+    {
+        if (state)
+        {
+            SignalHandler.block (buffer, deleted_text_handler);
+            SignalHandler.block (buffer, inserted_text_handler);
+        }
+        else
+        {
+            SignalHandler.unblock (buffer, deleted_text_handler);
+            SignalHandler.unblock (buffer, inserted_text_handler);
+        }
+    }
+
     public void reload (Variant gvariant)
     {
-        locked = true;
+        set_lock (true);
         this.text = is_string ? gvariant.get_string () : gvariant.print (false);
         if (!test_value ())
             assert_not_reached ();
-        locked = false;
+        set_lock (false);
     }
 }

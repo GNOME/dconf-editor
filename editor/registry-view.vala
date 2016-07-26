@@ -44,7 +44,7 @@ class RegistryView : Grid
 
     construct
     {
-        ulong revealer_reload_menu_handler = revealer.reload_menu.connect (invalidate_popovers);
+        ulong revealer_reload_handler = revealer.reload.connect (invalidate_popovers);
 
         EntryBuffer buffer = search_entry.get_buffer ();
         ulong search_entry_buffer_deleted_text_handler = buffer.deleted_text.connect (() => { search_next_button.set_sensitive (true); });
@@ -53,7 +53,7 @@ class RegistryView : Grid
         bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
 
         destroy.connect (() => {
-                revealer.disconnect (revealer_reload_menu_handler);
+                revealer.disconnect (revealer_reload_handler);
                 buffer.disconnect (search_entry_buffer_deleted_text_handler);
 
                 base.destroy ();
@@ -245,6 +245,7 @@ class RegistryView : Grid
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => { revealer.dismiss_change (key); });
 
             ulong key_planned_change_handler = key.notify ["planned-change"].connect (() => { set_delayed_icon (row, key); });
+            ulong key_planned_value_handler = key.notify ["planned-value"].connect (() => { set_delayed_icon (row, key); });
             set_delayed_icon (row, key);
 
             on_row_clicked_handler = row.on_row_clicked.connect (() => {
@@ -260,6 +261,7 @@ class RegistryView : Grid
                     key_row.disconnect (set_key_value_handler);
                     key_row.disconnect (change_dismissed_handler);
                     key.disconnect (key_planned_change_handler);
+                    key.disconnect (key_planned_value_handler);
                 });
         }
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
