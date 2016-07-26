@@ -81,6 +81,23 @@ class RegistryView : Grid
         get_dconf_window ().update_hamburger_menu ();
     }
 
+    /*\
+    * * Stack switching
+    \*/
+
+    private void show_browse_view (bool transition = true)
+    {
+        enable_transition (transition);
+        stack.set_visible_child_name ("browse-view");
+        properties_view.clean ();
+    }
+
+    private void show_properties_view (bool transition = true)
+    {
+        enable_transition (transition);
+        stack.set_visible_child (properties_view);
+    }
+
     public void enable_transition (bool enable)
     {
         stack.set_transition_type (enable ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
@@ -137,7 +154,7 @@ class RegistryView : Grid
             get_dconf_window ().show_notification (_("Cannot find key \"%s\" here.").printf (key_name));
             return true;
         }
-        if (!properties_view.populate_properties_list_box (revealer, (!) key))
+        if (!properties_view.populate_properties_list_box ((!) key))
         {
             open_folder (folder_name);
             get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
@@ -146,7 +163,7 @@ class RegistryView : Grid
 
         update_current_path (full_name);
         invalidate_popovers ();
-        stack.set_visible_child (properties_view);
+        show_properties_view ();
         return true;
     }
     private bool select_folder (string full_name)
@@ -190,7 +207,7 @@ class RegistryView : Grid
     {
         update_current_path (folder_path);
         invalidate_popovers ();
-        stack.set_visible_child_name ("browse-view");
+        show_browse_view ();
     }
 
     private DConfWindow get_dconf_window ()
@@ -231,11 +248,11 @@ class RegistryView : Grid
             set_delayed_icon (row, key);
 
             on_row_clicked_handler = row.on_row_clicked.connect (() => {
-                    if (!properties_view.populate_properties_list_box (revealer, key))  // TODO unduplicate
+                    if (!properties_view.populate_properties_list_box (key))  // TODO unduplicate
                         return;
 
                     update_current_path (key.full_name);
-                    stack.set_visible_child (properties_view);
+                    show_properties_view ();
                 });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
 
@@ -462,9 +479,7 @@ class RegistryView : Grid
                 dir_tree_selection.select_iter (iter);
                 update_current_path (dir.full_name);
 
-                enable_transition (false);
-                stack.set_visible_child_name ("browse-view");
-                enable_transition (true);
+                show_browse_view (false);
                 return;
             }
             on_first_directory = false;
@@ -480,23 +495,19 @@ class RegistryView : Grid
                     update_current_path (dir.full_name);
                     key_list_box.select_row (key_list_box.get_row_at_index (position)); // TODO scroll to key in ListBox
 
-                    enable_transition (false);
-                    stack.set_visible_child_name ("browse-view");
-                    enable_transition (true);
+                    show_browse_view (false);
                     return;
                 }
                 else if (object is Key)
                 {
                     Key key = (Key) object;
-                    if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (revealer, key))
+                    if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (key))
                     {
                         dir_tree_selection.select_iter (iter);
                         update_current_path (object.full_name);
                         key_list_box.select_row (key_list_box.get_row_at_index (position));
 
-                        enable_transition (false);
-                        stack.set_visible_child (properties_view);
-                        enable_transition (true);
+                        show_properties_view (false);
                         return;
                     }
                 }

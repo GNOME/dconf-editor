@@ -24,28 +24,39 @@ class RegistryInfo : Grid
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
+    public ModificationsRevealer revealer { get; set; }
+
+    /*\
+    * * Cleaning
+    \*/
+
     private ulong erase_button_handler = 0;
     private ulong revealer_reload_1_handler = 0;
     private ulong revealer_reload_2_handler = 0;
 
-    public bool populate_properties_list_box (ModificationsRevealer revealer, Key key)
+    public void clean ()
     {
-        if (erase_button_handler != 0)
-        {
-            erase_button.disconnect (erase_button_handler);
-            erase_button_handler = 0;
-        }
-        if (revealer_reload_1_handler != 0)
-        {
-            revealer.disconnect (revealer_reload_1_handler);
-            revealer_reload_1_handler = 0;
-        }
-        if (revealer_reload_2_handler != 0)
-        {
-            revealer.disconnect (revealer_reload_2_handler);
-            revealer_reload_2_handler = 0;
-        }
+        disconnect_handler (erase_button, ref erase_button_handler);
+        disconnect_handler (revealer, ref revealer_reload_1_handler);
+        disconnect_handler (revealer, ref revealer_reload_2_handler);
+        properties_list_box.@foreach ((widget) => { widget.destroy (); });
+    }
 
+    private void disconnect_handler (Widget widget, ref ulong handler)
+    {
+        if (handler == 0)   // erase_button_handler & revealer_reload_1_handler depend of the key's type
+            return;
+        widget.disconnect (handler);
+        handler = 0;
+    }
+
+    /*\
+    * * Populating
+    \*/
+
+    public bool populate_properties_list_box (Key key)
+        requires (erase_button_handler == 0 && revealer_reload_1_handler == 0 && revealer_reload_2_handler == 0)
+    {
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
@@ -82,7 +93,7 @@ class RegistryInfo : Grid
         if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
 
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
-        key.value_changed.connect (() => { label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key)); });
+        ulong key_value_changed_handler = key.value_changed.connect (() => { label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key)); });
         label.halign = Align.START;
         label.valign = Align.START;
         label.xalign = 0;
@@ -97,8 +108,23 @@ class RegistryInfo : Grid
 
         add_separator ();
 
-        bool disable_revealer_for_value = false;
         KeyEditorChild key_editor_child = create_child (key);
+
+        ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((enable_revealer, is_valid) => {
+                if (enable_revealer)
+                {
+                    if (revealer.should_delay_apply (tmp_string))
+                    {
+                        if (is_valid)
+                            revealer.add_delayed_setting (key, key_editor_child.get_variant ());
+                        else
+                            revealer.dismiss_change (key);
+                    }
+                    else
+                        key.value = key_editor_child.get_variant ();
+                }
+            });
+
         if (has_schema)
         {
             Switch custom_value_switch = new Switch ();
@@ -109,18 +135,10 @@ class RegistryInfo : Grid
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
-            bool disable_revealer_for_switch = false;
             GSettingsKey gkey = (GSettingsKey) key;
-            revealer_reload_1_handler = revealer.reload.connect (() => {
-                    disable_revealer_for_switch = true;
-                    custom_value_switch.set_active (gkey.is_default);
-                    disable_revealer_for_switch = false;    // TODO bad but needed
-                });
             custom_value_switch.set_active (key.planned_change ? key.planned_value == null : gkey.is_default);
-            custom_value_switch.notify ["active"].connect (() => {
-                    if (disable_revealer_for_switch)
-                        disable_revealer_for_switch = false;
-                    else if (revealer.should_delay_apply (tmp_string))
+            ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
+                    if (revealer.should_delay_apply (tmp_string))
                     {
                         if (custom_value_switch.get_active ())
                             revealer.add_delayed_setting (key, null);
@@ -136,15 +154,22 @@ class RegistryInfo : Grid
                         if (custom_value_switch.get_active ())
                         {
                             ((GSettingsKey) key).set_to_default ();
-                            disable_revealer_for_value = true;
+                            SignalHandler.block (key_editor_child, value_has_changed_handler);
                             key_editor_child.reload (key.value);
                             if (tmp_string == "<flags>")
                                 key.planned_value = key.value;
+                            SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
                             key.value = key.value;  // TODO that hurts...
                     }
                 });
+            revealer_reload_1_handler = revealer.reload.connect (() => {
+                    SignalHandler.block (custom_value_switch, switch_active_handler);
+                    custom_value_switch.set_active (gkey.is_default);
+                    SignalHandler.unblock (custom_value_switch, switch_active_handler);
+                });
+            custom_value_switch.destroy.connect (() => { custom_value_switch.disconnect (switch_active_handler); });
         }
         else
         {
@@ -154,30 +179,21 @@ class RegistryInfo : Grid
                 });
         }
 
-        key_editor_child.value_has_changed.connect ((enable_revealer, is_valid) => {
-                if (disable_revealer_for_value)
-                    disable_revealer_for_value = false;
-                else if (enable_revealer)
-                {
-                    if (revealer.should_delay_apply (tmp_string))
-                    {
-                        if (is_valid)
-                            revealer.add_delayed_setting (key, key_editor_child.get_variant ());
-                        else
-                            revealer.dismiss_change (key);
-                    }
-                    else
-                        key.value = key_editor_child.get_variant ();
-                }
-            });
-        key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
+        ulong child_activated_handler = key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = revealer.reload.connect (() => {
-                disable_revealer_for_value = true;
+                SignalHandler.block (key_editor_child, value_has_changed_handler);
                 key_editor_child.reload (key.value);
                 if (tmp_string == "<flags>")
                     key.planned_value = key.value;
+                SignalHandler.unblock (key_editor_child, value_has_changed_handler);
             });
         add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
+
+        key_editor_child.destroy.connect (() => {
+                key.disconnect (key_value_changed_handler);
+                key_editor_child.disconnect (value_has_changed_handler);
+                key_editor_child.disconnect (child_activated_handler);
+            });
 
         return true;
     }

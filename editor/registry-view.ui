@@ -111,6 +111,7 @@
         <child>
           <object class="RegistryInfo" id="properties_view">
             <property name="visible">True</property>
+            <property name="revealer">revealer</property>
           </object>
         </child>
       </object>
