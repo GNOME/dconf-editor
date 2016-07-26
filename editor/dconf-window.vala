@@ -216,7 +216,8 @@ class DConfWindow : ApplicationWindow
     {
         GLib.Menu section;
 
-        bookmarks_button.current_path = current_path;
+        if (bookmarks_button.current_path != current_path)
+            bookmarks_button.current_path = current_path;
         pathbar.set_path (current_path);
 
         GLib.Menu menu = new GLib.Menu ();

@@ -29,39 +29,68 @@ public class Bookmarks : MenuButton
 
     public string schema_id { get; construct; }
     private GLib.Settings settings;
-    private GLib.ListStore bookmarks_model;
-
-    private string [] current_bookmarks;
 
     public signal bool bookmark_activated (string bookmark);
+
+    private ulong switch_active_handler = 0;
 
     construct
     {
         settings = new GLib.Settings (schema_id);
-        current_bookmarks = settings.get_strv ("bookmarks");
-        settings.changed ["bookmarks"].connect (update_bookmarks);
-        settings.changed ["bookmarks"].connect (update_icon_and_switch);    // TODO updates switch if switch changed settings...
-        notify ["current-path"].connect (update_icon_and_switch);
-        bookmarked_switch.notify ["active"].connect (switch_changed_cb);    // TODO activated when current_path changes; see current_bookmarks
+
+        switch_active_handler = bookmarked_switch.notify ["active"].connect (switch_changed_cb);
+        ulong current_path_changed_handler = notify ["current-path"].connect (update_icon_and_switch);
+        ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (() => {
+                update_bookmarks ();
+                update_icon_and_switch ();
+            });
+
         update_bookmarks ();
         bookmarked_switch.grab_focus ();
+
+        destroy.connect (() => {
+                disconnect (current_path_changed_handler);
+                settings.disconnect (bookmarks_changed_handler);
+            });
+        bookmarked_switch.destroy.connect (() => {
+                bookmarked_switch.disconnect (switch_active_handler);
+            });
     }
 
     private void update_icon_and_switch ()
     {
-        bool is_bookmarked = current_path in settings.get_strv ("bookmarks");
-        bookmarks_icon.icon_name = is_bookmarked ? "starred-symbolic" : "non-starred-symbolic";
-        bookmarked_switch.active = is_bookmarked;
+        if (current_path in settings.get_strv ("bookmarks"))
+        {
+            if (bookmarks_icon.icon_name != "starred-symbolic")
+                bookmarks_icon.icon_name = "starred-symbolic";
+            update_switch (true);
+        }
+        else
+        {
+            if (bookmarks_icon.icon_name != "non-starred-symbolic")
+                bookmarks_icon.icon_name = "non-starred-symbolic";
+            update_switch (false);
+        }
+    }
+    private void update_switch (bool bookmarked)
+        requires (switch_active_handler != 0)
+    {
+        if (bookmarked == bookmarked_switch.active)
+            return;
+        SignalHandler.block (bookmarked_switch, switch_active_handler);
+        bookmarked_switch.active = bookmarked;
+        SignalHandler.unblock (bookmarked_switch, switch_active_handler);
     }
 
     private void update_bookmarks ()
     {
-        bookmarks_model = new GLib.ListStore (typeof (Bookmark));
+        GLib.ListStore bookmarks_model = new GLib.ListStore (typeof (Bookmark));    // TODO use the binding to add/remove rows
         string [] bookmarks = settings.get_strv ("bookmarks");
         foreach (string bookmark in bookmarks)
         {
             Bookmark bookmark_row = new Bookmark (bookmark);
-            bookmark_row.destroy_button.clicked.connect (() => { remove_bookmark (bookmark); });
+            ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => { remove_bookmark (bookmark); });
+            bookmark_row.destroy_button.destroy.connect (() => { bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler); });
             bookmarks_model.append (bookmark_row);
         }
         bookmarks_list_box.bind_model (bookmarks_model, new_bookmark_row);
@@ -72,8 +101,6 @@ public class Bookmarks : MenuButton
         bookmarks_popover.closed ();
 
         string [] bookmarks = settings.get_strv ("bookmarks");
-        if (bookmarks == current_bookmarks)
-            return;
 
         if (!bookmarked_switch.get_active ())
             remove_bookmark (current_path);
