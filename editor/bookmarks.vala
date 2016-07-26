@@ -149,14 +149,18 @@ public class Bookmarks : MenuButton
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
 private class Bookmark : Grid
 {
-    public string bookmark_name { get; private set; }
+    public string bookmark_name { get; construct; }
 
     [GtkChild] private Label bookmark_label;
     [GtkChild] public Button destroy_button;
 
-    public Bookmark (string name)
+    construct
     {
-        bookmark_name = name;
-        bookmark_label.set_label (name);
+        bookmark_label.set_label (bookmark_name);
+    }
+
+    public Bookmark (string bookmark_name)
+    {
+        Object (bookmark_name: bookmark_name);
     }
 }
