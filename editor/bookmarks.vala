@@ -25,7 +25,15 @@ public class Bookmarks : MenuButton
 
     [GtkChild] private Image bookmarks_icon;
     [GtkChild] private Switch bookmarked_switch;
-    public string current_path { get; set; }
+    private string _current_path = "/";
+    public string current_path {
+        private get { return _current_path; }
+        public set {
+            if (_current_path != value)
+                _current_path = value;
+            update_icon_and_switch ();
+        }
+    }
 
     public string schema_id { get; construct; }
     private GLib.Settings settings;
@@ -39,7 +47,6 @@ public class Bookmarks : MenuButton
         settings = new GLib.Settings (schema_id);
 
         switch_active_handler = bookmarked_switch.notify ["active"].connect (switch_changed_cb);
-        ulong current_path_changed_handler = notify ["current-path"].connect (update_icon_and_switch);
         ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (() => {
                 update_bookmarks ();
                 update_icon_and_switch ();
@@ -49,7 +56,6 @@ public class Bookmarks : MenuButton
         bookmarked_switch.grab_focus ();
 
         destroy.connect (() => {
-                disconnect (current_path_changed_handler);
                 settings.disconnect (bookmarks_changed_handler);
             });
         bookmarked_switch.destroy.connect (() => {
