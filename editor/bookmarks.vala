@@ -25,14 +25,13 @@ public class Bookmarks : MenuButton
 
     [GtkChild] private Image bookmarks_icon;
     [GtkChild] private Switch bookmarked_switch;
-    private string _current_path = "/";
-    public string current_path {
-        private get { return _current_path; }
-        public set {
-            if (_current_path != value)
-                _current_path = value;
-            update_icon_and_switch ();
-        }
+
+    private string current_path = "/";
+    public void set_path (string path)
+    {
+        if (current_path != path)
+            current_path = path;
+        update_icon_and_switch ();
     }
 
     public string schema_id { get; construct; }
@@ -90,16 +89,17 @@ public class Bookmarks : MenuButton
 
     private void update_bookmarks ()
     {
-        GLib.ListStore bookmarks_model = new GLib.ListStore (typeof (Bookmark));    // TODO use the binding to add/remove rows
+        bookmarks_list_box.@foreach ((widget) => { widget.destroy (); });
+
         string [] bookmarks = settings.get_strv ("bookmarks");
         foreach (string bookmark in bookmarks)
         {
             Bookmark bookmark_row = new Bookmark (bookmark);
             ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => { remove_bookmark (bookmark); });
             bookmark_row.destroy_button.destroy.connect (() => { bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler); });
-            bookmarks_model.append (bookmark_row);
+            bookmark_row.show ();
+            bookmarks_list_box.add (bookmark_row);
         }
-        bookmarks_list_box.bind_model (bookmarks_model, new_bookmark_row);
     }
 
     private void switch_changed_cb ()
@@ -121,11 +121,6 @@ public class Bookmarks : MenuButton
     {
         if (bookmarked_switch.get_active () != new_state)
             bookmarked_switch.set_active (new_state);
-    }
-
-    private Widget new_bookmark_row (Object item)
-    {
-        return (Bookmark) item;
     }
 
     [GtkCallback]
