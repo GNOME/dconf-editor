@@ -54,6 +54,8 @@ class DConfWindow : ApplicationWindow
 
     private ulong behaviour_changed_handler = 0;
     private ulong theme_changed_handler = 0;
+    private ulong small_keys_list_rows_handler = 0;
+    private ulong small_bookmarks_rows_handler = 0;
 
     public DConfWindow ()
     {
@@ -65,16 +67,35 @@ class DConfWindow : ApplicationWindow
         if (settings.get_boolean ("window-is-maximized"))
             maximize ();
 
+        StyleContext context = get_style_context ();
         theme_changed_handler = settings.changed ["theme"].connect (() => {
                 string theme = settings.get_string ("theme");
-                StyleContext context = get_style_context ();    // TODO only check once?
-                if (theme == "three-twenty-two" && context.has_class ("small-rows"))
-                    context.remove_class ("small-rows");
-                else if (theme == "small-rows" && !context.has_class ("small-rows"))
-                    context.add_class ("small-rows");
+                if (theme == "non-symbolic-keys-list")
+                {
+                    if (!context.has_class ("non-symbolic")) context.add_class ("non-symbolic");
+                }
+                else if (context.has_class ("non-symbolic")) context.remove_class ("non-symbolic");
             });
-        if (settings.get_string ("theme") == "small-rows")
-            get_style_context ().add_class ("small-rows");
+        small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
+                if (settings.get_boolean ("small-keys-list-rows"))
+                {
+                    if (!context.has_class ("small-keys-list-rows")) context.add_class ("small-keys-list-rows");
+                }
+                else if (context.has_class ("small-keys-list-rows")) context.remove_class ("small-keys-list-rows");
+            });
+        small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
+                if (settings.get_boolean ("small-bookmarks-rows"))
+                {
+                    if (!context.has_class ("small-bookmarks-rows")) context.add_class ("small-bookmarks-rows");
+                }
+                else if (context.has_class ("small-bookmarks-rows")) context.remove_class ("small-bookmarks-rows");
+            });
+        if (settings.get_string ("theme") == "non-symbolic-keys-list")
+            context.add_class ("non-symbolic");
+        if (settings.get_boolean ("small-keys-list-rows"))
+            context.add_class ("small-keys-list-rows");
+        if (settings.get_boolean ("small-bookmarks-rows"))
+            context.add_class ("small-bookmarks-rows");
 
         registry_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
         settings.bind ("behaviour", registry_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -173,6 +194,8 @@ class DConfWindow : ApplicationWindow
 
         settings.disconnect (behaviour_changed_handler);
         settings.disconnect (theme_changed_handler);
+        settings.disconnect (small_keys_list_rows_handler);
+        settings.disconnect (small_bookmarks_rows_handler);
 
         settings.delay ();
         settings.set_string ("saved-view", current_path);

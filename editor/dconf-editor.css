@@ -25,81 +25,103 @@ window > popover.menu {
 }
 
 /*\
-* * rows height and icon
+* * lists rows height and icon
 \*/
 
 /* row height */
-.dconf-list > row {
-  transition:min-height 0.3s;
-}
-            .dconf-list > row { min-height:2.6rem; }
-.small-rows .dconf-list > row { min-height:1.3rem; }
+                                                .keys-list          > row { transition:min-height 0.3s; } /* not for .bookmarks, as the transition will start at the popover opening */
+
+                                                .keys-list          > row,
+                                                .bookmarks     list > row { min-height:2.6rem; }
+                          .small-keys-list-rows .keys-list          > row,
+                          .small-bookmarks-rows .bookmarks     list > row { min-height:1.3rem; }
+
+/* bookmarks */
+                          .small-bookmarks-rows .bookmarks     list > row > grid > button.circular.flat {
+                            min-height:0;
+                            padding-bottom:1px;
+                            padding-top:1px;
+                            margin-top:-2px;
+                            margin-bottom:-2px;
+                          }
 
 /* folder icon */
-.dconf-list > row > .folder > grid {
-  background-image:-gtk-icontheme("folder-symbolic");
-  background-repeat:no-repeat;
+                                                .keys-list          > row        > .folder > grid {
+                                                  background-repeat:no-repeat;
+                                                  transition:background-position 0.3s,
+                                                             background-size 0.3s,
+                                                             padding-left 0.3s,
+                                                             padding-right 0.3s; /* warning: ltr/rtl */
+                                                }
 
-  transition:background-position 0.3s,
-             background-size 0.3s,
-             padding-left 0.3s,
-             padding-right 0.3s; /* warning: ltr/rtl */
-}
+                                                .keys-list          > row        > .folder > grid { background-image:-gtk-icontheme("folder-symbolic"); }
+                                                .keys-list          > row:active > .folder > grid { background-image:-gtk-icontheme("folder-open-symbolic"); }
 
-.dconf-list > row:active > .folder > grid {
-  background-image:-gtk-icontheme("folder-open-symbolic");
-}
+             .non-symbolic                      .keys-list          > row        > .folder > grid { background-image:-gtk-icontheme("folder"); }
+             .non-symbolic                      .keys-list          > row:active > .folder > grid { background-image:-gtk-icontheme("folder-open"); }
 
-/* visual padding: 0.75rem */
-                         .dconf-list:dir(ltr) > row > .folder > grid { background-position:0.75rem              center; }
-                         .dconf-list:dir(rtl) > row > .folder > grid { background-position:calc(100% - 0.75rem) center; }
+/* visual padding */
+                                                .keys-list:dir(ltr) > row > .key    > grid { padding-left:  10px; } /* looks cool */
+                                                .keys-list:dir(rtl) > row > .key    > grid { padding-right: 10px; }
+
+                                                .keys-list:dir(ltr) > row > .folder > grid { background-position:            0.75rem  center; }
+                                                .keys-list:dir(rtl) > row > .folder > grid { background-position:calc(100% - 0.75rem) center; }
 
 /* icon sizing */
-                         .dconf-list          > row > .folder > grid { background-size:1.5rem; }
-             .small-rows .dconf-list          > row > .folder > grid { background-size:0.75rem; }
+                                                .keys-list          > row > .folder > grid { background-size:1.5rem; }
+             .non-symbolic                      .keys-list          > row > .folder > grid { background-size:1.75rem; }
+                          .small-keys-list-rows .keys-list          > row > .folder > grid,
+             .non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid { background-size:1rem; }
 
-/* technical padding: (2 * visual padding) + icon size */
-                         .dconf-list:dir(ltr) > row > .key    > grid { padding-left:  10px; } /* looks cool */
-                         .dconf-list:dir(ltr) > row > .folder > grid { padding-left:  3rem; }
-             .small-rows .dconf-list:dir(ltr) > row > .folder > grid { padding-left:  2.25rem; }
-                         .dconf-list:dir(rtl) > row > .key    > grid { padding-right: 10px; }
-                         .dconf-list:dir(rtl) > row > .folder > grid { padding-right: 3rem; }
-             .small-rows .dconf-list:dir(rtl) > row > .folder > grid { padding-right: 2.25rem; }
+/* technical padding: icon visual padding + icon size + some padding */
+                                                .keys-list:dir(ltr) > row > .folder > grid { padding-left:  3rem; }
+             .non-symbolic                      .keys-list:dir(ltr) > row > .folder > grid { padding-left:  3.25rem; }
+                          .small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid,
+             .non-symbolic.small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid { padding-left:  2.25rem; }
+
+                                                .keys-list:dir(rtl) > row > .folder > grid { padding-right: 3rem; }
+             .non-symbolic                      .keys-list:dir(rtl) > row > .folder > grid { padding-right: 3.25rem; }
+                          .small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid,
+             .non-symbolic.small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid { padding-right: 2.25rem; }
 
 /* technical labels placing */
-                         .dconf-list          > row                   label.key-name { transition:min-width 0.3s; }
-                         .dconf-list          > row > .key    > grid  label.key-name { min-width:     222px; }
-                         .dconf-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 3rem); }
-             .small-rows .dconf-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 2.25rem); }
+                                                .keys-list          > row                   label.key-name { transition:min-width 0.3s; }
+                                                .keys-list          > row > .key    > grid  label.key-name { min-width:     222px; }
+                                                .keys-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 3rem); }
+             .non-symbolic                      .keys-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 3.25rem); }
+                          .small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name,
+             .non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 2.25rem); }
 
-.large-window            .dconf-list          > row > .key    > grid  label.key-name { min-width:     250px; }
-.large-window            .dconf-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 3rem); }
-.large-window.small-rows .dconf-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 2.25rem); }
+.large-window                                   .keys-list          > row > .key    > grid  label.key-name { min-width:     250px; }
+.large-window                                   .keys-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 3rem); }
+.large-window.non-symbolic                      .keys-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 3.25rem); }
+.large-window             .small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name,
+.large-window.non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 2.25rem); }
 
-                         .dconf-list          > row > .key    > grid > grid          { min-width:400px; transition:min-width 0.3s; }
-.large-window            .dconf-list          > row > .key    > grid > grid          { min-width:450px; }
-.large-window.xl         .dconf-list          > row > .key    > grid > grid          { min-width:474px; }
-.large-window.xl.xxl     .dconf-list          > row > .key    > grid > grid          { min-width:500px; }
+                                                .keys-list          > row > .key    > grid > grid          { min-width:400px; transition:min-width 0.3s; }
+.large-window                                   .keys-list          > row > .key    > grid > grid          { min-width:450px; }
+.large-window.xl                                .keys-list          > row > .key    > grid > grid          { min-width:474px; }
+.large-window.xl.xxl                            .keys-list          > row > .key    > grid > grid          { min-width:500px; }
 
 /* grid spacing and padding-end */
-                         .dconf-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
-                         .dconf-list:dir(rtl) > row  grid > label { padding-left:  0.5em; }
+                                                .keys-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
+                                                .keys-list:dir(rtl) > row  grid > label { padding-left:  0.5em; }
 
 /* pending change icon */
 
-                         .dconf-list          > row > .key         { transition:background-position 0.3s; }
-                         .dconf-list          > row > .key.delayed { background-image:-gtk-icontheme("document-open-recent-symbolic"); background-repeat:no-repeat; }
-                         .dconf-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
+                                                .keys-list          > row > .key         { transition:background-position 0.3s; }
+                                                .keys-list          > row > .key.delayed { background-image:-gtk-icontheme("document-open-recent-symbolic"); background-repeat:no-repeat; }
+                                                .keys-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
 
-                         .dconf-list          > row > .key.delayed { background-size:16px; transition:background-size 0.3s; }
-             .small-rows .dconf-list          > row > .key.delayed { background-size:12px; }
+                                                .keys-list          > row > .key.delayed { background-size:16px; transition:background-size 0.3s; }
+                          .small-keys-list-rows .keys-list          > row > .key.delayed { background-size:12px; }
 
-                         .dconf-list:dir(ltr) > row > .key.delayed { padding-right: 28px; }
-                         .dconf-list:dir(rtl) > row > .key.delayed { padding-left:  28px; }
-                         .dconf-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(1.3rem - 8px); }
-                         .dconf-list:dir(rtl) > row > .key         { background-position:            16px  calc(1.3rem - 8px); }
-             .small-rows .dconf-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(0.65rem - 5px); }
-             .small-rows .dconf-list:dir(rtl) > row > .key         { background-position:            16px  calc(0.65rem - 5px); }
+                                                .keys-list:dir(ltr) > row > .key.delayed { padding-right: 28px; }
+                                                .keys-list:dir(rtl) > row > .key.delayed { padding-left:  28px; }
+                                                .keys-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(1.3rem - 8px); }
+                                                .keys-list:dir(rtl) > row > .key         { background-position:            16px  calc(1.3rem - 8px); }
+                          .small-keys-list-rows .keys-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(0.65rem - 5px); }
+                          .small-keys-list-rows .keys-list:dir(rtl) > row > .key         { background-position:            16px  calc(0.65rem - 5px); }
 
 /*\
 * * pathbar

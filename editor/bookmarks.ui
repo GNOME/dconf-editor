@@ -4,6 +4,9 @@
   <object class="GtkPopover" id="bookmarks_popover">
     <property name="width-request">350</property>
     <property name="height-request">300</property>
+    <style>
+      <class name="bookmarks"/>
+    </style>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
