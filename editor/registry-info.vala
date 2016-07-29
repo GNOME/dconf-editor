@@ -55,8 +55,9 @@ class RegistryInfo : Grid
     \*/
 
     public bool populate_properties_list_box (Key key)
-        requires (erase_button_handler == 0 && revealer_reload_1_handler == 0 && revealer_reload_2_handler == 0)
     {
+        clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
+
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
