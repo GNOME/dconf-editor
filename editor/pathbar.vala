@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar.ui")]
 public class PathBar : Box
 {
-    [GtkChild] Button root_button;
+    [GtkChild] private Button root_button;
 
     public signal bool path_selected (string path);
 
@@ -63,14 +63,20 @@ public class PathBar : Box
             {
                 index++;
                 complete_path += item + "/";
-                add (new PathBarItem (item, (is_key_path || (index != split.length - 2)) ? complete_path : null));
+                PathBarItem path_bar_item = new PathBarItem (item);
+                if (is_key_path || (index != split.length - 2))
+                {
+                    string local_complete_path = complete_path;
+                    path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => { set_path_and_notify (local_complete_path); });
+                }
+                add (path_bar_item);
                 add (new Label ("/"));
             }
         }
 
         /* if key path */
         if (is_key_path)
-            add (new PathBarItem (last, null));
+            add (new PathBarItem (last));
 
         /* only draw when finished, for CSS :last-child rendering */
         show_all ();
@@ -90,10 +96,8 @@ private class PathBarItem : Button
 
     [GtkChild] private Label text;
 
-    public PathBarItem (string label, string? path)
+    public PathBarItem (string label)
     {
         text.set_text (label);
-        if (path != null)
-            path_bar_item_clicked_handler = clicked.connect (() => ((PathBar) get_parent ()).set_path_and_notify ((!) path));
     }
 }
