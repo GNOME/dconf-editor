@@ -85,7 +85,7 @@ class RegistryView : Grid
     * * Stack switching
     \*/
 
-    private void show_browse_view (bool transition = true)
+    public void show_browse_view (bool transition = true)
     {
         enable_transition (transition);
         stack.set_visible_child_name ("browse-view");

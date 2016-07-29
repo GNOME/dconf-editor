@@ -93,7 +93,12 @@ class RegistryInfo : Grid
         if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
 
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
-        ulong key_value_changed_handler = key.value_changed.connect (() => { label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key)); });
+        ulong key_value_changed_handler = key.value_changed.connect (() => {
+                if (!has_schema && ((DConfKey) key).is_ghost)
+                    ((RegistryView) get_parent ().get_parent ()).show_browse_view (false);
+                else
+                    label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
+            });
         label.halign = Align.START;
         label.valign = Align.START;
         label.xalign = 0;
@@ -178,6 +183,8 @@ class RegistryInfo : Grid
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = revealer.reload.connect (() => {
+                if (key is DConfKey && ((DConfKey) key).is_ghost)
+                    return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
                 key_editor_child.reload (key.value);
                 if (tmp_string == "<flags>")
