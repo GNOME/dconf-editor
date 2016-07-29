@@ -24,7 +24,14 @@ public class PathBar : Box
 
     public signal bool path_selected (string path);
 
-    public void set_path (string path, bool notify = false)
+    public void set_path_and_notify (string path)
+    {
+        set_path (path);
+        if (!path_selected (path))
+            warning ("something has got wrong with pathbar");
+    }
+
+    public void set_path (string path)
         requires (path [0] == '/')
     {
         @foreach ((child) => {
@@ -56,28 +63,23 @@ public class PathBar : Box
             {
                 index++;
                 complete_path += item + "/";
-                add (new PathBarItem (item, complete_path, is_key_path || (index != split.length - 2)));
+                add (new PathBarItem (item, (is_key_path || (index != split.length - 2)) ? complete_path : null));
                 add (new Label ("/"));
             }
         }
 
         /* if key path */
         if (is_key_path)
-            add (new PathBarItem (last, complete_path + last, false));
+            add (new PathBarItem (last, null));
 
         /* only draw when finished, for CSS :last-child rendering */
         show_all ();
-
-        /* notify if requested */
-        if (notify)
-            if (!path_selected (path))
-                warning ("something has got wrong with pathbar");
     }
 
     [GtkCallback]
     private void set_root_path ()
     {
-        set_path ("/", true);
+        set_path_and_notify ("/");
     }
 }
 
@@ -88,10 +90,10 @@ private class PathBarItem : Button
 
     [GtkChild] private Label text;
 
-    public PathBarItem (string label, string path, bool is_clickable)
+    public PathBarItem (string label, string? path)
     {
         text.set_text (label);
-        if (is_clickable)
-            path_bar_item_clicked_handler = clicked.connect (() => { ((PathBar) get_parent ()).set_path (path, true); });
+        if (path != null)
+            path_bar_item_clicked_handler = clicked.connect (() => ((PathBar) get_parent ()).set_path_and_notify ((!) path));
     }
 }
