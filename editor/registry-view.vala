@@ -78,7 +78,7 @@ class RegistryView : Grid
     {
         revealer.path_changed ();
         current_path = path;
-        get_dconf_window ().update_hamburger_menu ();
+        invalidate_popovers ();
     }
 
     /*\
@@ -162,7 +162,6 @@ class RegistryView : Grid
         }
 
         update_current_path (full_name);
-        invalidate_popovers ();
         show_properties_view ();
         return true;
     }
@@ -206,7 +205,6 @@ class RegistryView : Grid
     private void open_folder (string folder_path)
     {
         update_current_path (folder_path);
-        invalidate_popovers ();
         show_browse_view ();
     }
 

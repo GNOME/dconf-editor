@@ -24,6 +24,11 @@ public class PathBar : Box
 
     public signal bool path_selected (string path);
 
+    construct
+    {
+        add (new Label ("/"));
+    }
+
     public void set_path_and_notify (string path)
     {
         set_path (path);
@@ -34,49 +39,66 @@ public class PathBar : Box
     public void set_path (string path)
         requires (path [0] == '/')
     {
+        string complete_path = "/";
+        string [] split = path.split ("/", /* max tokens disabled */ 0);
+        split = split [1:split.length];
+
+        bool destroy_all = false;
         @foreach ((child) => {
-                if (child != root_button)
+                if (child == root_button)
+                    return;
+
+                if (!(child is PathBarItem))
                 {
-                    if (child is PathBarItem)
-                    {
-                        ulong path_bar_item_clicked_handler = ((PathBarItem) child).path_bar_item_clicked_handler;
-                        if (path_bar_item_clicked_handler != 0)
-                            child.disconnect (((PathBarItem) child).path_bar_item_clicked_handler);
-                    }
-                    child.destroy ();
+                    if (destroy_all)
+                        child.destroy ();
+                    return;
                 }
+
+                if (!destroy_all && ((PathBarItem) child).text_string == split [0])
+                {
+                    complete_path += split [0] + "/";
+                    if (split.length > 0)
+                        split = split [1:split.length];
+                    return;
+                }
+
+                ulong path_bar_item_clicked_handler = ((PathBarItem) child).path_bar_item_clicked_handler;
+                if (path_bar_item_clicked_handler != 0)
+                    child.disconnect (((PathBarItem) child).path_bar_item_clicked_handler);
+
+                child.destroy ();
+                destroy_all = true;
             });
 
-        string [] split = path.split ("/", 0);
-        string last = split [split.length - 1];
-        bool is_key_path = last != "";
-
-        /* add initial text (set to "settings://"?) */
-        string complete_path = "/";
-        add (new Label ("/"));
-
-        /* add one item per folder */
-        if (split.length > 2)
+        if (split.length > 0)
         {
-            uint index = 0;
-            foreach (string item in split [1:split.length - 1])
-            {
-                index++;
-                complete_path += item + "/";
-                PathBarItem path_bar_item = new PathBarItem (item);
-                if (is_key_path || (index != split.length - 2))
-                {
-                    string local_complete_path = complete_path;
-                    path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => { set_path_and_notify (local_complete_path); });
-                }
-                add (path_bar_item);
-                add (new Label ("/"));
-            }
-        }
+            string last = split [split.length - 1];
+            bool is_key_path = last != "";
 
-        /* if key path */
-        if (is_key_path)
-            add (new PathBarItem (last));
+            /* add one item per folder */
+            if (split.length > 1)
+            {
+                uint index = 0;
+                foreach (string item in split [0:split.length - 1])
+                {
+                    complete_path += item + "/";
+                    PathBarItem path_bar_item = new PathBarItem (item);
+                    if (is_key_path || (index != split.length - 1))
+                    {
+                        string local_complete_path = complete_path;
+                        path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => set_path_and_notify (local_complete_path));
+                    }
+                    add (path_bar_item);
+                    add (new Label ("/"));
+                    index++;
+                }
+            }
+
+            /* if key path */
+            if (is_key_path)
+                add (new PathBarItem (last));
+        }
 
         /* only draw when finished, for CSS :last-child rendering */
         show_all ();
@@ -94,10 +116,12 @@ private class PathBarItem : Button
 {
     public ulong path_bar_item_clicked_handler = 0;
 
-    [GtkChild] private Label text;
+    public string text_string { get; private set; }
+    [GtkChild] private Label text_label;
 
     public PathBarItem (string label)
     {
-        text.set_text (label);
+        text_string = label;
+        text_label.set_text (label);
     }
 }

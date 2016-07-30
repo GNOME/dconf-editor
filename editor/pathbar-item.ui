@@ -3,7 +3,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="PathBarItem" parent="GtkButton">
     <child>
-      <object class="GtkLabel" id="text">
+      <object class="GtkLabel" id="text_label">
         <property name="visible">True</property>
         <property name="ellipsize">middle</property>
         <style>
