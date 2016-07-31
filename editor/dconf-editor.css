@@ -159,6 +159,7 @@ window > popover.menu {
   background-color:transparent;
 }
 
+/* underline selected label */
 .pathbar > button > .item {
   border-width:2px 0px;
   border-style:solid;
@@ -170,15 +171,20 @@ window > popover.menu {
   border-bottom-color:#8b8e8f;  /* color mostly used for backdrop things */
 }
 
-.pathbar:dir(ltr) > button:last-child > .item,
-.pathbar:dir(ltr) > button:last-child:hover > .item,
-.pathbar:dir(ltr) > button:nth-last-child(2) > .item,
-.pathbar:dir(ltr) > button:nth-last-child(2):hover > .item,
-.pathbar:dir(rtl) > button:first-child > .item,
-.pathbar:dir(rtl) > button:first-child:hover > .item,
-.pathbar:dir(rtl) > button:nth-child(2) > .item,
-.pathbar:dir(rtl) > button:nth-child(2):hover > .item {
+.pathbar:dir(ltr) > button:disabled       > .item,
+.pathbar:dir(ltr) > button:disabled:hover > .item {
   border-bottom-color: @theme_selected_bg_color;
+}
+
+/* ensure label color */
+.pathbar          > button          > .item,
+.pathbar          > button:disabled > .item {
+  color:@theme_fg_color;
+}
+
+.pathbar:backdrop > button          > .item,
+.pathbar:backdrop > button:disabled > .item {
+  color:@theme_unfocused_fg_color;
 }
 
 /*\
