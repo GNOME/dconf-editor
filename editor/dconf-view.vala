@@ -192,7 +192,7 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
 
-        button_true.toggled.connect (() => { value_has_changed (); });
+        button_true.toggled.connect (() => value_has_changed ());
     }
 
     public Variant get_variant ()
@@ -239,8 +239,8 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
         this.width_chars = 30;
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
-        deleted_text_handler = ref_buffer.deleted_text.connect (() => { value_has_changed (); });     // TODO test value for
-        inserted_text_handler = ref_buffer.inserted_text.connect (() => { value_has_changed (); });   //   non-numeric chars
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed ());     // TODO test value for
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed ());   //   non-numeric chars
         ulong entry_activate_handler = activate.connect (() => { update (); child_activated (); });
 
         destroy.connect (() => {
@@ -313,8 +313,8 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.width_chars = 30;
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
-        deleted_text_handler = ref_buffer.deleted_text.connect (() => { value_has_changed (); });
-        inserted_text_handler = ref_buffer.inserted_text.connect (() => { value_has_changed (); });
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed ());
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed ());
         ulong entry_activate_handler = activate.connect (() => { update (); child_activated (); });
 
         destroy.connect (() => {
@@ -416,8 +416,8 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         this.text = is_string ? initial_value.get_string () : initial_value.print (false);
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
-        deleted_text_handler = ref_buffer.deleted_text.connect (() => { value_has_changed (test_value ()); });
-        inserted_text_handler = ref_buffer.inserted_text.connect (() => { value_has_changed (test_value ()); });
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
         ulong entry_activate_handler = activate.connect (() => { if (test_value ()) child_activated (); });
 
         destroy.connect (() => {

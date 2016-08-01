@@ -39,7 +39,7 @@ class RegistryInfo : Grid
         disconnect_handler (erase_button, ref erase_button_handler);
         disconnect_handler (revealer, ref revealer_reload_1_handler);
         disconnect_handler (revealer, ref revealer_reload_2_handler);
-        properties_list_box.@foreach ((widget) => { widget.destroy (); });
+        properties_list_box.@foreach ((widget) => widget.destroy ());
     }
 
     private void disconnect_handler (Widget widget, ref ulong handler)
@@ -71,7 +71,7 @@ class RegistryInfo : Grid
         else
             no_schema_warning.set_reveal_child (false);
 
-        properties_list_box.@foreach ((widget) => { widget.destroy (); });
+        properties_list_box.@foreach ((widget) => widget.destroy ());
 
         Variant dict = dict_container [0];
 
@@ -172,7 +172,7 @@ class RegistryInfo : Grid
                     custom_value_switch.set_active (gkey.is_default);
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
                 });
-            custom_value_switch.destroy.connect (() => { custom_value_switch.disconnect (switch_active_handler); });
+            custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
         }
         else
         {
@@ -182,7 +182,7 @@ class RegistryInfo : Grid
                 });
         }
 
-        ulong child_activated_handler = key_editor_child.child_activated.connect (() => { revealer.apply_delayed_settings (); });  // TODO "only" used for string-based and spin widgets
+        ulong child_activated_handler = key_editor_child.child_activated.connect (() => revealer.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = revealer.reload.connect (() => {
                 if (key is DConfKey && ((DConfKey) key).is_ghost)
                     return;

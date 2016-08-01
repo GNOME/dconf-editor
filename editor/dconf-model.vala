@@ -430,7 +430,7 @@ public class GSettingsKey : Key
                 range_content: range_content);
 
         this.settings = settings;
-        settings.changed [name].connect (() => { value_changed (); });
+        settings.changed [name].connect (() => value_changed ());
 
         this.type_string = type_string;
 

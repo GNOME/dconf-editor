@@ -73,7 +73,7 @@ private abstract class ClickableListBoxRow : EventBox
                 return;
             }
 
-            ((!) nullable_popover).destroy.connect (() => { nullable_popover = null; });
+            ((!) nullable_popover).destroy.connect (() => nullable_popover = null);
 
             ((!) nullable_popover).set_relative_to (this);
             ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
@@ -106,7 +106,7 @@ private class FolderListBoxRow : ClickableListBoxRow
 
     protected override bool generate_popover (ContextPopover popover, bool unused)  // TODO better
     {
-        popover.new_action ("open", () => { on_row_clicked (); });
+        popover.new_action ("open", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
         return true;
@@ -145,7 +145,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 update ();
                 destroy_popover ();
             });
-        destroy.connect (() => { key.disconnect (key_value_changed_handler); });    // TODO move to KeyListBoxRow
+        destroy.connect (() => key.disconnect (key_value_changed_handler));     // TODO move to KeyListBoxRow
     }
 
     private void update ()
@@ -185,7 +185,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             return true;
         }
 
-        popover.new_action ("customize", () => { on_row_clicked (); });
+        popover.new_action ("customize", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "mb")
@@ -255,7 +255,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 update ();
                 destroy_popover ();
             });
-        destroy.connect (() => { key.disconnect (key_value_changed_handler); });    // TODO move to KeyListBoxRow
+        destroy.connect (() => key.disconnect (key_value_changed_handler));     // TODO move to KeyListBoxRow
     }
 
     protected override string get_text ()
@@ -265,7 +265,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)
     {
-        popover.new_action ("customize", () => { on_row_clicked (); });
+        popover.new_action ("customize", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
@@ -298,9 +298,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
             popover.create_flags_list ((GSettingsKey) key);
 
-            popover.value_changed.connect ((gvariant) => {
-                    set_key_value (gvariant);
-                });
+            popover.value_changed.connect ((gvariant) => set_key_value (gvariant));
         }
         else if (key.planned_change)
         {
@@ -374,7 +372,7 @@ private class ContextPopover : Popover
         string group_dot_action = @"options.$action_action";
 
         SimpleAction simple_action = new SimpleAction (action_action, null);
-        simple_action.activate.connect (() => { action (); });
+        simple_action.activate.connect (() => action ());
         current_group.add_action (simple_action);
 
         switch (action_action)

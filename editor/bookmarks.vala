@@ -54,12 +54,8 @@ public class Bookmarks : MenuButton
         update_bookmarks ();
         bookmarked_switch.grab_focus ();
 
-        destroy.connect (() => {
-                settings.disconnect (bookmarks_changed_handler);
-            });
-        bookmarked_switch.destroy.connect (() => {
-                bookmarked_switch.disconnect (switch_active_handler);
-            });
+        destroy.connect (() => settings.disconnect (bookmarks_changed_handler));
+        bookmarked_switch.destroy.connect (() => bookmarked_switch.disconnect (switch_active_handler));
     }
 
     private void update_icon_and_switch ()
@@ -89,14 +85,14 @@ public class Bookmarks : MenuButton
 
     private void update_bookmarks ()
     {
-        bookmarks_list_box.@foreach ((widget) => { widget.destroy (); });
+        bookmarks_list_box.@foreach ((widget) => widget.destroy ());
 
         string [] bookmarks = settings.get_strv ("bookmarks");
         foreach (string bookmark in bookmarks)
         {
             Bookmark bookmark_row = new Bookmark (bookmark);
-            ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => { remove_bookmark (bookmark); });
-            bookmark_row.destroy_button.destroy.connect (() => { bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler); });
+            ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => remove_bookmark (bookmark));
+            bookmark_row.destroy_button.destroy.connect (() => bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler));
             bookmark_row.show ();
             bookmarks_list_box.add (bookmark_row);
         }
