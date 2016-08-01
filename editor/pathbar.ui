@@ -10,7 +10,6 @@
       <object class="GtkButton" id="root_button">
         <property name="visible">True</property>
         <property name="focus-on-click">False</property>
-        <signal name="clicked" handler="set_root_path"/>
         <child>
           <object class="GtkLabel">
             <style>

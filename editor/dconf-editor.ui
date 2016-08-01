@@ -20,7 +20,7 @@
           <object class="PathBar" id="pathbar">
             <property name="visible">True</property>
             <property name="valign">center</property>
-            <signal name="path_selected" handler="scroll_to_path"/>
+            <signal name="path_selected" handler="scroll_to_sure_path"/>
           </object>
           <packing>
             <property name="pack-type">start</property>

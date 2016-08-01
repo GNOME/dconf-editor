@@ -22,18 +22,12 @@ public class PathBar : Box
 {
     [GtkChild] private Button root_button;
 
-    public signal bool path_selected (string path);
+    public signal void path_selected (string path);
 
     construct
     {
         add_slash_label ();
-    }
-
-    public void set_path_and_notify (string path)
-    {
-        set_path (path);
-        if (!path_selected (path))
-            warning ("something has got wrong with pathbar");
+        root_button.clicked.connect (() => path_selected ("/"));
     }
 
     public void set_path (string path)
@@ -106,20 +100,12 @@ public class PathBar : Box
             }
         }
 
-        /* only draw when finished, for CSS :last-child rendering */
         show_all ();
     }
 
     /*\
     * * widgets
     \*/
-
-    [GtkCallback]
-    private void set_root_path ()
-    {
-        root_button.set_sensitive (false);
-        set_path_and_notify ("/");
-    }
 
     private void add_slash_label ()
     {
@@ -130,7 +116,7 @@ public class PathBar : Box
     {
         PathBarItem path_bar_item = new PathBarItem (label);
 
-        path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => set_path_and_notify (complete_path));
+        path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => path_selected (complete_path));
         path_bar_item.set_sensitive (!block);
 
         add (path_bar_item);
@@ -142,12 +128,12 @@ private class PathBarItem : Button
 {
     public ulong path_bar_item_clicked_handler = 0;
 
-    public string text_string { get; private set; }
+    public string text_string { get; construct; }
     [GtkChild] private Label text_label;
 
     public PathBarItem (string label)
     {
-        text_string = label;
+        Object (text_string: label);
         text_label.set_text (label);
     }
 }

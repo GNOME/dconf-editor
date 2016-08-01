@@ -225,6 +225,11 @@ class DConfWindow : ApplicationWindow
         return return_value;
     }
     [GtkCallback]
+    private void scroll_to_sure_path (string full_name)
+    {
+        if (!scroll_to_path (full_name))
+            assert_not_reached ();
+    }
     private bool scroll_to_path (string full_name)
     {
         registry_view.set_search_mode (false);
