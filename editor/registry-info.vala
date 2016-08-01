@@ -76,27 +76,27 @@ class RegistryInfo : Grid
         Variant dict = dict_container [0];
 
         // TODO use VariantDict
-        string key_name, tmp_string;
+        string key_name, parent_path, tmp_string;
 
-        if (!dict.lookup ("key-name",     "s", out key_name))   assert_not_reached ();
-        if (!dict.lookup ("parent-path",  "s", out tmp_string)) assert_not_reached ();
+        if (!dict.lookup ("key-name",     "s", out key_name))    assert_not_reached ();
+        if (!dict.lookup ("parent-path",  "s", out parent_path)) assert_not_reached ();
 
-        if (dict.lookup ("schema-id",     "s", out tmp_string)) add_row_from_label (_("Schema"),      tmp_string);
-        if (dict.lookup ("summary",       "s", out tmp_string)) add_row_from_label (_("Summary"),     tmp_string);
-        if (dict.lookup ("description",   "s", out tmp_string)) add_row_from_label (_("Description"), tmp_string);
+        if (dict.lookup ("schema-id",     "s", out tmp_string))  add_row_from_label (_("Schema"),      tmp_string);
+        if (dict.lookup ("summary",       "s", out tmp_string))  add_row_from_label (_("Summary"),     tmp_string);
+        if (dict.lookup ("description",   "s", out tmp_string))  add_row_from_label (_("Description"), tmp_string);
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (dict.lookup ("type-name",     "s", out tmp_string)) add_row_from_label (_("Type"),        tmp_string);
+        if (dict.lookup ("type-name",     "s", out tmp_string))  add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
-        if (dict.lookup ("minimum",       "s", out tmp_string)) add_row_from_label (_("Minimum"),     tmp_string);
-        if (dict.lookup ("maximum",       "s", out tmp_string)) add_row_from_label (_("Maximum"),     tmp_string);
-        if (dict.lookup ("default-value", "s", out tmp_string)) add_row_from_label (_("Default"),     tmp_string);
+        if (dict.lookup ("minimum",       "s", out tmp_string))  add_row_from_label (_("Minimum"),     tmp_string);
+        if (dict.lookup ("maximum",       "s", out tmp_string))  add_row_from_label (_("Maximum"),     tmp_string);
+        if (dict.lookup ("default-value", "s", out tmp_string))  add_row_from_label (_("Default"),     tmp_string);
 
-        if (!dict.lookup ("type-code",    "s", out tmp_string)) assert_not_reached ();
+        if (!dict.lookup ("type-code",    "s", out tmp_string))  assert_not_reached ();
 
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
                 if (!has_schema && ((DConfKey) key).is_ghost)
-                    ((RegistryView) get_parent ().get_parent ()).show_browse_view (false);
+                    ((RegistryView) get_parent ().get_parent ()).scroll_to_path (parent_path);
                 else
                     label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
             });
