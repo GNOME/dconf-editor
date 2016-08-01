@@ -61,7 +61,7 @@ class DConfWindow : ApplicationWindow
     {
         add_action_entries (action_entries, this);
 
-        behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
+        behaviour_changed_handler = settings.changed ["behaviour"].connect (registry_view.invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-maximized"))
@@ -208,13 +208,8 @@ class DConfWindow : ApplicationWindow
     }
 
     /*\
-    * *
+    * * Path changing
     \*/
-
-    private void invalidate_popovers ()
-    {
-        registry_view.invalidate_popovers ();
-    }
 
     [GtkCallback]
     private void request_path (string full_name)
@@ -222,10 +217,6 @@ class DConfWindow : ApplicationWindow
         registry_view.set_search_mode (false);  // TODO only useful when called from pathbar
         registry_view.request_path (full_name);
     }
-
-    /*\
-    * * Action entries
-    \*/
 
     public void update_hamburger_menu ()
     {
@@ -257,6 +248,10 @@ class DConfWindow : ApplicationWindow
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
     }
+
+    /*\
+    * * Action entries
+    \*/
 
     private void reset ()
     {
