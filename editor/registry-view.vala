@@ -74,33 +74,30 @@ class RegistryView : Grid
         }
     }
 
+    /*\
+    * * Stack switching
+    \*/
+
+    private void show_browse_view (string path)
+    {
+        stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        update_current_path (path);
+        stack.set_visible_child_name ("browse-view");
+        properties_view.clean ();
+    }
+
+    private void show_properties_view (string path)
+    {
+        stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        update_current_path (path);
+        stack.set_visible_child (properties_view);
+    }
+
     private void update_current_path (string path)
     {
         revealer.path_changed ();
         current_path = path;
         invalidate_popovers ();
-    }
-
-    /*\
-    * * Stack switching
-    \*/
-
-    public void show_browse_view (bool transition = true)
-    {
-        enable_transition (transition);
-        stack.set_visible_child_name ("browse-view");
-        properties_view.clean ();
-    }
-
-    private void show_properties_view (bool transition = true)
-    {
-        enable_transition (transition);
-        stack.set_visible_child (properties_view);
-    }
-
-    public void enable_transition (bool enable)
-    {
-        stack.set_transition_type (enable ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
     /*\
@@ -124,7 +121,13 @@ class RegistryView : Grid
             return model.get_root_directory ();
     }
 
-    public bool scroll_to_path (string _full_name)      // TODO don't do all the selection work if the folder didn't change; clarify what "return true" means
+    public void request_path (string path)
+    {
+        if (!scroll_to_path (path))
+            assert_not_reached ();
+    }
+
+    private bool scroll_to_path (string _full_name)     // TODO don't do all the selection work if the folder didn't change; clarify what "return true" means
     {
         string full_name = _full_name.dup ();
         string folder_name;
@@ -141,7 +144,7 @@ class RegistryView : Grid
 
         if (full_name == folder_name)
         {
-            open_folder (full_name);
+            show_browse_view (full_name);
             return true;
         }
 
@@ -150,19 +153,18 @@ class RegistryView : Grid
         Key? key = get_key_from_name (key_name);
         if (key == null)
         {
-            open_folder (folder_name);
+            show_browse_view (folder_name);
             get_dconf_window ().show_notification (_("Cannot find key \"%s\" here.").printf (key_name));
             return true;
         }
         if (!properties_view.populate_properties_list_box ((!) key))
         {
-            open_folder (folder_name);
+            show_browse_view (folder_name);
             get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
             return true;
         }
 
-        update_current_path (full_name);
-        show_properties_view ();
+        show_properties_view (full_name);
         return true;
     }
     private bool select_folder (string full_name)
@@ -201,11 +203,6 @@ class RegistryView : Grid
             position++;
         }
         return null;
-    }
-    private void open_folder (string folder_path)
-    {
-        update_current_path (folder_path);
-        show_browse_view ();
     }
 
     private DConfWindow get_dconf_window ()
@@ -250,8 +247,7 @@ class RegistryView : Grid
                     if (!properties_view.populate_properties_list_box (key))  // TODO unduplicate
                         return;
 
-                    update_current_path (key.full_name);
-                    show_properties_view ();
+                    show_properties_view (key.full_name);
                 });
             // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
 
@@ -477,9 +473,7 @@ class RegistryView : Grid
             if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
             {
                 dir_tree_selection.select_iter (iter);
-                update_current_path (dir.full_name);
-
-                show_browse_view (false);
+                show_browse_view (dir.full_name);
                 return;
             }
             on_first_directory = false;
@@ -492,10 +486,8 @@ class RegistryView : Grid
                 if (object.name.index_of (search_entry.text) >= 0)
                 {
                     dir_tree_selection.select_iter (iter);
-                    update_current_path (dir.full_name);
                     key_list_box.select_row (key_list_box.get_row_at_index (position)); // TODO scroll to key in ListBox
-
-                    show_browse_view (false);
+                    show_browse_view (dir.full_name);
                     return;
                 }
                 else if (object is Key)
@@ -504,10 +496,8 @@ class RegistryView : Grid
                     if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (key))
                     {
                         dir_tree_selection.select_iter (iter);
-                        update_current_path (object.full_name);
                         key_list_box.select_row (key_list_box.get_row_at_index (position));
-
-                        show_properties_view (false);
+                        show_properties_view (object.full_name);
                         return;
                     }
                 }

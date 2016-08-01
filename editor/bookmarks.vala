@@ -37,7 +37,7 @@ public class Bookmarks : MenuButton
     public string schema_id { get; construct; }
     private GLib.Settings settings;
 
-    public signal bool bookmark_activated (string bookmark);
+    public signal void request_path (string bookmark);
 
     private ulong switch_active_handler = 0;
 
@@ -124,8 +124,7 @@ public class Bookmarks : MenuButton
     {
         bookmarks_popover.closed ();
         string bookmark = ((Bookmark) list_box_row.get_child ()).bookmark_name;
-        if (!bookmark_activated (bookmark))
-            warning ("broken bookmark: %s", bookmark);
+        request_path (bookmark);
     }
 
     private void remove_bookmark (string bookmark_name)

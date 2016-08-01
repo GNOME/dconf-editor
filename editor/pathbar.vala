@@ -22,12 +22,12 @@ public class PathBar : Box
 {
     [GtkChild] private Button root_button;
 
-    public signal void path_selected (string path);
+    public signal void request_path (string path);
 
     construct
     {
         add_slash_label ();
-        root_button.clicked.connect (() => path_selected ("/"));
+        root_button.clicked.connect (() => request_path ("/"));
     }
 
     public void set_path (string path)
@@ -116,7 +116,7 @@ public class PathBar : Box
     {
         PathBarItem path_bar_item = new PathBarItem (label);
 
-        path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => path_selected (complete_path));
+        path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => request_path (complete_path));
         path_bar_item.set_sensitive (!block);
 
         add (path_bar_item);

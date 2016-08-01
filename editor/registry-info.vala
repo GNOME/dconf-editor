@@ -96,7 +96,7 @@ class RegistryInfo : Grid
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
                 if (!has_schema && ((DConfKey) key).is_ghost)
-                    ((RegistryView) get_parent ().get_parent ()).scroll_to_path (parent_path);
+                    ((RegistryView) get_parent ().get_parent ()).request_path (parent_path);
                 else
                     label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
             });

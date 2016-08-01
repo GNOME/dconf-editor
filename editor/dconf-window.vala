@@ -217,23 +217,10 @@ class DConfWindow : ApplicationWindow
     }
 
     [GtkCallback]
-    private bool scroll_to_path_without_transition (string full_name)
+    private void request_path (string full_name)
     {
-        registry_view.enable_transition (false);
-        bool return_value = registry_view.scroll_to_path (full_name);
-        registry_view.enable_transition (true);
-        return return_value;
-    }
-    [GtkCallback]
-    private void scroll_to_sure_path (string full_name)
-    {
-        if (!scroll_to_path (full_name))
-            assert_not_reached ();
-    }
-    private bool scroll_to_path (string full_name)
-    {
-        registry_view.set_search_mode (false);
-        return registry_view.scroll_to_path (full_name);
+        registry_view.set_search_mode (false);  // TODO only useful when called from pathbar
+        registry_view.request_path (full_name);
     }
 
     /*\
