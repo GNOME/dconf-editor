@@ -240,13 +240,15 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 {
     public GSettingsKey key { get; private set; }
 
-    private Pango.AttrList attr_list = new Pango.AttrList ();
+    private StyleContext name_context;
+    private StyleContext value_context;
 
     public KeyListBoxRowEditable (GSettingsKey _key)
     {
         this.key = _key;
 
-        key_value_label.set_attributes (attr_list);
+        name_context = key_name_label.get_style_context ();
+        value_context = key_value_label.get_style_context ();
         update ();      // sets key_name_label attributes and key_value_label label
         key_name_label.label = key.name;
         key_info_label.label = key.summary;
@@ -326,8 +328,16 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     private void update ()
     {
-        attr_list.change (Pango.attr_weight_new (key.is_default ? Pango.Weight.NORMAL : Pango.Weight.BOLD));
-        key_name_label.set_attributes (attr_list);
+        if (key.is_default)
+        {
+            if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
+            if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
+        }
+        else
+        {
+            if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
+            if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
+        }
 
         key_value_label.label = cool_text_value (key);
     }
