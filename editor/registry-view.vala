@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-class RegistryView : Grid
+class RegistryView : Grid, PathElement
 {
     public string current_path { get; private set; }
     public bool show_search_bar { get; set; }
@@ -65,13 +65,8 @@ class RegistryView : Grid
         dir_tree_view.set_model (model);
         dir_tree_view.expand_all ();
 
-        current_path = path;
-        if (!restore_view || current_path == "" || path [0] != '/' || !scroll_to_path (current_path))
-        {
-            current_path = "/";
-            if (!scroll_to_path ("/"))
-                assert_not_reached ();
-        }
+        current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
+        path_requested (current_path);
     }
 
     /*\
@@ -97,6 +92,7 @@ class RegistryView : Grid
     {
         revealer.path_changed ();
         current_path = path;
+        get_dconf_window ().update_path_elements ();
         invalidate_popovers ();
     }
 
@@ -121,13 +117,7 @@ class RegistryView : Grid
             return model.get_root_directory ();
     }
 
-    public void request_path (string path)
-    {
-        if (!scroll_to_path (path))
-            assert_not_reached ();
-    }
-
-    private bool scroll_to_path (string _full_name)     // TODO don't do all the selection work if the folder didn't change; clarify what "return true" means
+    public void path_requested (string _full_name)     // TODO don't do all the selection work if the folder didn't change
     {
         string full_name = _full_name.dup ();
         string folder_name;
@@ -139,13 +129,15 @@ class RegistryView : Grid
         if (!select_folder (folder_name))
         {
             get_dconf_window ().show_notification (_("Cannot find folder \"%s\".").printf (folder_name));
-            return false;
+            current_path = "/";
+            show_browse_view ("/");
+            return;
         }
 
         if (full_name == folder_name)
         {
             show_browse_view (full_name);
-            return true;
+            return;
         }
 
         string [] names = full_name.split ("/");
@@ -155,17 +147,18 @@ class RegistryView : Grid
         {
             show_browse_view (folder_name);
             get_dconf_window ().show_notification (_("Cannot find key \"%s\" here.").printf (key_name));
-            return true;
+            return;
         }
-        if (!properties_view.populate_properties_list_box ((!) key))
+        if (((!) key) is DConfKey && ((DConfKey) ((!) key)).is_ghost)
         {
             show_browse_view (folder_name);
             get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
-            return true;
+            return;
         }
 
+        properties_view.populate_properties_list_box ((!) key);
         show_properties_view (full_name);
-        return true;
+        return;
     }
     private bool select_folder (string full_name)
     {
@@ -217,25 +210,19 @@ class RegistryView : Grid
     private Widget new_list_box_row (Object item)
     {
         ClickableListBoxRow row;
-        ulong on_row_clicked_handler;
-        if (item is Directory)
-        {
-            SettingObject setting_object = (SettingObject) item;
+        SettingObject setting_object = (SettingObject) item;
+
+        if (setting_object is Directory)
             row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
-            on_row_clicked_handler = row.on_row_clicked.connect (() => {
-                    if (!scroll_to_path (setting_object.full_name))
-                        warning ("Something got wrong with this folder.");
-                });
-        }
         else
         {
-            if (item is GSettingsKey)
-                row = new KeyListBoxRowEditable ((GSettingsKey) item);
+            if (setting_object is GSettingsKey)
+                row = new KeyListBoxRowEditable ((GSettingsKey) setting_object);
             else
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) item);
+                row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object);
 
-            Key key = (Key) item;
-            KeyListBoxRow key_row = ((KeyListBoxRow) row);
+            Key key = (Key) setting_object;
+            KeyListBoxRow key_row = (KeyListBoxRow) row;
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => revealer.dismiss_change (key));
 
@@ -243,21 +230,16 @@ class RegistryView : Grid
             ulong key_planned_value_handler = key.notify ["planned-value"].connect (() => set_delayed_icon (row, key));
             set_delayed_icon (row, key);
 
-            on_row_clicked_handler = row.on_row_clicked.connect (() => {
-                    if (!properties_view.populate_properties_list_box (key))  // TODO unduplicate
-                        return;
-
-                    show_properties_view (key.full_name);
-                });
-            // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
-
             row.destroy.connect (() => {
                     key_row.disconnect (set_key_value_handler);
                     key_row.disconnect (change_dismissed_handler);
                     key.disconnect (key_planned_change_handler);
                     key.disconnect (key_planned_value_handler);
                 });
+            // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
+
+        ulong on_row_clicked_handler = row.on_row_clicked.connect (() => request_path (setting_object.full_name));
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
 
         row.destroy.connect (() => {
@@ -493,8 +475,9 @@ class RegistryView : Grid
                 else if (object is Key)
                 {
                     Key key = (Key) object;
-                    if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text) && properties_view.populate_properties_list_box (key))
-                    {
+                    if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text))
+                    {   // TODO use request_path (object.full_name); problem with hiding or not the pathbar
+                        properties_view.populate_properties_list_box (key);
                         dir_tree_selection.select_iter (iter);
                         key_list_box.select_row (key_list_box.get_row_at_index (position));
                         show_properties_view (object.full_name);

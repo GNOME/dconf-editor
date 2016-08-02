@@ -112,6 +112,7 @@
         <child>
           <object class="RegistryView" id="registry_view">
             <property name="visible">True</property>
+            <signal name="request_path" handler="request_path"/>
           </object>
         </child>
         <child type="overlay">

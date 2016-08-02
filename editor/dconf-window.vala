@@ -214,16 +214,19 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void request_path (string full_name)
     {
-        registry_view.set_search_mode (false);  // TODO only useful when called from pathbar
-        registry_view.request_path (full_name);
+        registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
+        registry_view.path_requested (full_name);
+    }
+
+    public void update_path_elements ()
+    {
+        bookmarks_button.set_path (current_path);
+        pathbar.set_path (current_path);
     }
 
     public void update_hamburger_menu ()
     {
         GLib.Menu section;
-
-        bookmarks_button.set_path (current_path);
-        pathbar.set_path (current_path);
 
         GLib.Menu menu = new GLib.Menu ();
         menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape ("") + "\")");
@@ -384,4 +387,9 @@ class DConfWindow : ApplicationWindow
     {
         notification_revealer.set_reveal_child (false);
     }
+}
+
+public interface PathElement
+{
+    public signal void request_path (string path);
 }

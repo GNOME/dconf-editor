@@ -18,11 +18,9 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar.ui")]
-public class PathBar : Box
+public class PathBar : Box, PathElement
 {
     [GtkChild] private Button root_button;
-
-    public signal void request_path (string path);
 
     construct
     {

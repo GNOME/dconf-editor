@@ -54,22 +54,17 @@ class RegistryInfo : Grid
     * * Populating
     \*/
 
-    public bool populate_properties_list_box (Key key)
+    public void populate_properties_list_box (Key key)
     {
+        if (key is DConfKey && ((DConfKey) key).is_ghost)   // TODO place in "requires"
+            assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
         bool has_schema;
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
-        if (!has_schema)
-        {
-            if (((DConfKey) key).is_ghost)
-                return false;
-            no_schema_warning.set_reveal_child (true);
-        }
-        else
-            no_schema_warning.set_reveal_child (false);
+        no_schema_warning.set_reveal_child (!has_schema);
 
         properties_list_box.@foreach ((widget) => widget.destroy ());
 
@@ -199,8 +194,6 @@ class RegistryInfo : Grid
                 key_editor_child.disconnect (value_has_changed_handler);
                 key_editor_child.disconnect (child_activated_handler);
             });
-
-        return true;
     }
 
     private static KeyEditorChild create_child (Key key)

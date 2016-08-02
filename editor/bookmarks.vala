@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
-public class Bookmarks : MenuButton
+public class Bookmarks : MenuButton, PathElement
 {
     [GtkChild] private ListBox bookmarks_list_box;
     [GtkChild] private Popover bookmarks_popover;
@@ -36,8 +36,6 @@ public class Bookmarks : MenuButton
 
     public string schema_id { get; construct; }
     private GLib.Settings settings;
-
-    public signal void request_path (string bookmark);
 
     private ulong switch_active_handler = 0;
 
