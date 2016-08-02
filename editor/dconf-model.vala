@@ -124,8 +124,8 @@ public class Directory : SettingObject
                 key_id,
                 settings,
                 settings.schema_id,
-                ((!) (settings_schema_key.get_summary () ?? "")).strip (),
-                ((!) (settings_schema_key.get_description () ?? "")).strip (),
+                ((!) (settings_schema_key.get_summary () ?? "")).strip ().locale_to_utf8 (-1, null, null, null) ?? "",
+                ((!) (settings_schema_key.get_description () ?? "")).strip ().locale_to_utf8 (-1, null, null, null) ?? "",
                 type_string,
                 settings.get_default_value (key_id), /* TODO present also settings_schema_key.get_default_value () */
                 range_type,
