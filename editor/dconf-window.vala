@@ -331,6 +331,24 @@ class DConfWindow : ApplicationWindow
             }
         }
 
+        if (((event.state & Gdk.ModifierType.MOD1_MASK) != 0))
+        {
+            if (name == "Up")
+            {
+                if (current_path == "/")
+                    return true;
+                if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
+                    request_path ("/");
+                else if (current_path.has_suffix ("/"))
+                    request_path (current_path.slice (0, current_path.slice (0, current_path.length - 1).last_index_of_char ('/') + 1));
+                else
+                    request_path (current_path.slice (0, current_path.last_index_of_char ('/') + 1));
+                return true;
+            }
+            else if (name == "Down")
+                return pathbar.open_child ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0 ? null : current_path);
+        }
+
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
         if (name == "F10")
         {

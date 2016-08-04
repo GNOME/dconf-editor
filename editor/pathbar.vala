@@ -22,18 +22,24 @@ public class PathBar : Box, PathElement
 {
     [GtkChild] private Button root_button;
 
+    private string complete_path = "";
+
     construct
     {
         add_slash_label ();
         root_button.clicked.connect (() => request_path ("/"));
     }
 
+    /*\
+    * * public calls
+    \*/
+
     public void set_path (string path)
         requires (path [0] == '/')
     {
         root_button.set_sensitive (path != "/");
 
-        string complete_path = "";
+        complete_path = "";
         string [] split = path.split ("/", /* max tokens disabled */ 0);
         string last = split [split.length - 1];
         bool is_key_path = last != "";
@@ -52,6 +58,7 @@ public class PathBar : Box, PathElement
 
                 if (maintain_all)
                 {
+                    complete_path += ((PathBarItem) child).text_string;
                     child.set_sensitive (true);
                     return;
                 }
@@ -101,8 +108,22 @@ public class PathBar : Box, PathElement
         show_all ();
     }
 
+    public bool open_child (string? current_path)
+    {
+        if (current_path == null)
+        {
+            request_path (complete_path);
+            return true;
+        }
+        if (current_path == complete_path)
+            return false;
+        int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
+        request_path (index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1));
+        return true;
+    }
+
     /*\
-    * * widgets
+    * * widgets creation
     \*/
 
     private void add_slash_label ()
