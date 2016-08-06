@@ -270,11 +270,11 @@ class ModificationsRevealer : Revealer
             return ngettext ("One dconf operation delayed.", "%u dconf operations delayed.", dconf).printf (dconf);
             /* Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
                             Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it. */
-        return "%s%s".printf (ngettext ("One gsettings operation", "%u gsettings operations", gsettings).printf (gsettings),
+        return _("%s%s").printf (ngettext ("One gsettings operation", "%u gsettings operations", gsettings).printf (gsettings),
             /* Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
                              * the space before the "and" is probably wanted, and
                              * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
                             Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it. */
-                              ngettext (" and one dconf operation delayed.", " and %u dconf operations delayed.", dconf).printf (dconf));
+                                 ngettext (" and one dconf operation delayed.", " and %u dconf operations delayed.", dconf).printf (dconf));
     }
 }

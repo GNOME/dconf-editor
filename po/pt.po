@@ -877,8 +877,8 @@ msgstr[1] "%u operações do dconf em espera."
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "Uma operação do gsettings em espera."
-msgstr[1] "%u operações do gsettings em espera."
+msgstr[0] "Uma operação do gsettings em espera"
+msgstr[1] "%u operações do gsettings em espera"
 
 #. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, and
@@ -888,8 +888,8 @@ msgstr[1] "%u operações do gsettings em espera."
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] "e uma operação do dconf em espera."
-msgstr[1] "e %u operações do dconf em espera."
+msgstr[0] " e uma operação do dconf em espera."
+msgstr[1] " e %u operações do dconf em espera."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
