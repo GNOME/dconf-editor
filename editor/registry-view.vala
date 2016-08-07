@@ -306,6 +306,23 @@ class RegistryView : Grid, PathElement
         get_dconf_window ().update_hamburger_menu ();
     }
 
+    private void scroll_to_selected_row ()
+    {
+        ListBoxRow? row = key_list_box.get_selected_row ();
+        if (row == null)
+            return;
+
+        Allocation list_allocation, row_allocation;
+        stack.get_allocation (out list_allocation);
+        row.get_allocation (out row_allocation);
+        int middle = (int) ((row_allocation.height - list_allocation.height) / 2.0);
+
+        int dest_x, dest_y;
+        if (!row.translate_coordinates (key_list_box, 0, middle, out dest_x, out dest_y))
+            assert_not_reached ();
+        key_list_box.get_adjustment ().set_value (dest_y);
+    }
+
     /*\
     * * Revealer stuff
     \*/
@@ -468,7 +485,8 @@ class RegistryView : Grid, PathElement
                 if (object.name.index_of (search_entry.text) >= 0)
                 {
                     dir_tree_selection.select_iter (iter);
-                    key_list_box.select_row (key_list_box.get_row_at_index (position)); // TODO scroll to key in ListBox
+                    key_list_box.select_row (key_list_box.get_row_at_index (position));
+                    scroll_to_selected_row ();
                     show_browse_view (dir.full_name);
                     return;
                 }
