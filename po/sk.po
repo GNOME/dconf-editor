@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-04 23:59+0000\n"
-"PO-Revision-Date: 2016-08-05 13:01+0200\n"
+"POT-Creation-Date: 2016-08-06 10:19+0000\n"
+"PO-Revision-Date: 2016-08-08 14:07+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -792,29 +792,33 @@ msgstr ""
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%u operácií gsettings oneskorených."
+msgstr[1] "Jedna operácia gsettings oneskorená."
+msgstr[2] "%u operácie gsettings oneskorené."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: ../editor/modifications-revealer.vala:270
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%u operácií dconf oneskorených."
+msgstr[1] "Jedna operácia dconf oneskorená."
+msgstr[2] "%u operácie dconf oneskorené."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: ../editor/modifications-revealer.vala:273
-#, fuzzy, c-format
-#| msgid "settings;configuration;"
+#, c-format
+msgid "%s%s"
+msgstr "%s%s"
+
+#: ../editor/modifications-revealer.vala:273
+#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "nastavenia;konfigurácia;"
-msgstr[1] "nastavenia;konfigurácia;"
-msgstr[2] "nastavenia;konfigurácia;"
+msgstr[0] "Oneskorených %u operácií gsettings"
+msgstr[1] "Oneskorená jedna operácia gsettings"
+msgstr[2] "Oneskorené %u operácie gsettings"
 
 #. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, and
@@ -824,27 +828,21 @@ msgstr[2] "nastavenia;konfigurácia;"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] " a %u operácií dconf."
+msgstr[1] " a jedna operácia dconf."
+msgstr[2] " a %u operácie dconf."
 
 #: ../editor/registry-info.ui.h:1
-#, fuzzy
-#| msgid ""
-#| "No schema available. Dconf Editor can’t find a schema associated with "
-#| "this key. The application that installed this key may have been removed, "
-#| "may have stop the use of this key, or may use a relocatable schema for "
-#| "defining its keys."
 msgid ""
 "&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
 "been removed, may have stop the use of this key, or may use a relocatable "
 "schema for defining its keys."
 msgstr ""
-"Nie je dostupná žiadna schéma. Editor systému Dconf nemôže nájsť schému "
-"priradenú tomuto kľúču. Aplikácia, ktorá nainštalovala tento kľúč mohla byť "
-"odstránená, mohla prestať používať tento kľúč, alebo mohla použiť znovu "
-"prideliteľnú schému na definovanie svojich kľúčov."
+"&#60;b&#62;Nie je dostupná žiadna schéma.&#60;/b&#62; Editor systému Dconf "
+"nemôže nájsť schému priradenú tomuto kľúču. Aplikácia, ktorá nainštalovala "
+"tento kľúč mohla byť odstránená, mohla prestať používať tento kľúč, alebo "
+"mohla použiť znovu prideliteľnú schému na definovanie svojich kľúčov."
 
 #: ../editor/registry-info.vala:79
 msgid "Schema"
@@ -915,17 +913,17 @@ msgstr "Na tejto ceste sa nenachádzajú žiadne kľúče"
 #: ../editor/registry-view.vala:131
 #, c-format
 msgid "Cannot find folder \"%s\"."
-msgstr ""
+msgstr "Nedá sa nájsť priečinok „%s”."
 
 #: ../editor/registry-view.vala:149
 #, c-format
 msgid "Cannot find key \"%s\" here."
-msgstr ""
+msgstr "Tu sa nedá nájsť kľúč „%s”."
 
 #: ../editor/registry-view.vala:155
 #, c-format
 msgid "Key \"%s\" has been removed."
-msgstr ""
+msgstr "Kľúč „%s” bol odstránený."
 
 # %s %s range
 #~ msgid "Double [%s..%s]"
