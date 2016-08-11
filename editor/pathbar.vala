@@ -122,6 +122,14 @@ public class PathBar : Box, PathElement
         return true;
     }
 
+    public string? get_selected_child (string current_path)
+    {
+        if (!complete_path.has_prefix (current_path) || complete_path == current_path)
+            return null;
+        int index_of_last_slash = complete_path.index_of ("/", current_path.length);
+        return complete_path.slice (current_path.length, index_of_last_slash == -1 ? complete_path.length : index_of_last_slash);
+    }
+
     /*\
     * * widgets creation
     \*/

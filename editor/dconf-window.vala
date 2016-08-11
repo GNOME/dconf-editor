@@ -215,7 +215,7 @@ class DConfWindow : ApplicationWindow
     private void request_path (string full_name)
     {
         registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
-        registry_view.path_requested (full_name);
+        registry_view.path_requested (full_name, pathbar.get_selected_child (full_name));
     }
 
     public void update_path_elements ()

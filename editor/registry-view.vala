@@ -66,20 +66,50 @@ class RegistryView : Grid, PathElement
         dir_tree_view.expand_all ();
 
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
-        path_requested (current_path);
+        path_requested (current_path, null);
     }
 
     /*\
     * * Stack switching
     \*/
 
-    private void show_browse_view (string path)
+    private void show_browse_view (string path, string? selected)
     {
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         update_current_path (path);
         stack.set_visible_child_name ("browse-view");
+        if (selected != null)
+        {
+            check_resize ();
+            ListBoxRow row = key_list_box.get_row_at_index (get_row_position ((!) selected));
+            if (row == null)
+                assert_not_reached ();
+            scroll_to_row ((!) row);
+        }
         properties_view.clean ();
     }
+    private int get_row_position (string selected)
+    {
+        uint position = 0;
+        while (position < key_model.get_n_items ())
+        {
+            SettingObject object = (SettingObject) key_model.get_object (position);
+            if (object.name == selected)
+                return (int) position;
+            position++;
+        }
+        assert_not_reached ();
+    }
+    private void scroll_to_row (ListBoxRow row)
+    {
+        key_list_box.select_row (row);
+
+        Allocation list_allocation, row_allocation;
+        stack.get_allocation (out list_allocation);
+        row.get_allocation (out row_allocation);
+        key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+    }
+
 
     private void show_properties_view (string path)
     {
@@ -117,7 +147,7 @@ class RegistryView : Grid, PathElement
             return model.get_root_directory ();
     }
 
-    public void path_requested (string _full_name)     // TODO don't do all the selection work if the folder didn't change
+    public void path_requested (string _full_name, string? selected)     // TODO don't do all the selection work if the folder didn't change
     {
         string full_name = _full_name.dup ();
         string folder_name;
@@ -130,13 +160,13 @@ class RegistryView : Grid, PathElement
         {
             get_dconf_window ().show_notification (_("Cannot find folder \"%s\".").printf (folder_name));
             current_path = "/";
-            show_browse_view ("/");
+            show_browse_view ("/", null);
             return;
         }
 
         if (full_name == folder_name)
         {
-            show_browse_view (full_name);
+            show_browse_view (full_name, selected);
             return;
         }
 
@@ -145,13 +175,13 @@ class RegistryView : Grid, PathElement
         Key? key = get_key_from_name (key_name);
         if (key == null)
         {
-            show_browse_view (folder_name);
+            show_browse_view (folder_name, null);
             get_dconf_window ().show_notification (_("Cannot find key \"%s\" here.").printf (key_name));
             return;
         }
         if (((!) key) is DConfKey && ((DConfKey) ((!) key)).is_ghost)
         {
-            show_browse_view (folder_name);
+            show_browse_view (folder_name, key_name);
             get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
             return;
         }
@@ -306,23 +336,6 @@ class RegistryView : Grid, PathElement
         get_dconf_window ().update_hamburger_menu ();
     }
 
-    private void scroll_to_selected_row ()
-    {
-        ListBoxRow? row = key_list_box.get_selected_row ();
-        if (row == null)
-            return;
-
-        Allocation list_allocation, row_allocation;
-        stack.get_allocation (out list_allocation);
-        row.get_allocation (out row_allocation);
-        int middle = (int) ((row_allocation.height - list_allocation.height) / 2.0);
-
-        int dest_x, dest_y;
-        if (!row.translate_coordinates (key_list_box, 0, middle, out dest_x, out dest_y))
-            assert_not_reached ();
-        key_list_box.get_adjustment ().set_value (dest_y);
-    }
-
     /*\
     * * Revealer stuff
     \*/
@@ -472,7 +485,7 @@ class RegistryView : Grid, PathElement
             if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
             {
                 dir_tree_selection.select_iter (iter);
-                show_browse_view (dir.full_name);
+                show_browse_view (dir.full_name, null);
                 return;
             }
             on_first_directory = false;
@@ -486,8 +499,7 @@ class RegistryView : Grid, PathElement
                 {
                     dir_tree_selection.select_iter (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
-                    scroll_to_selected_row ();
-                    show_browse_view (dir.full_name);
+                    show_browse_view (dir.full_name, null);
                     return;
                 }
                 else if (object is Key)
