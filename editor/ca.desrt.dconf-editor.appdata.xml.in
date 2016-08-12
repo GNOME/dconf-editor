@@ -20,7 +20,14 @@
   </description>
 
   <screenshots>
-    <screenshot type="default" width="640" height="360">https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot.png</screenshot>
+    <screenshot type="default" height="576" width="1024">
+      <image>https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot1.png</image>
+      <_caption>Browse the keys used by installed applications.</_caption>
+    </screenshot>
+    <screenshot type="default" height="576" width="1024">
+      <image>https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot2.png</image>
+      <_caption>Read keys descriptions and edit their values.</_caption>
+    </screenshot>
   </screenshots>
 
   <kudos>
@@ -32,11 +39,16 @@
 
   <url type="homepage">https://wiki.gnome.org/Projects/dconf</url>
   <url type="bugtracker">https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor</url>
-  <update_contact>arnaud.bonatti_AT_gmail.com</update_contact>
+  <update_contact>arnaud.bonatti_at_gmail.com</update_contact>
   <project_group>GNOME</project_group>
+  <!--a translatable version of project_group-->
+  <_developer_name>The GNOME Project</_developer_name>
+  <!--GNOME Projects usually have no per-app donation page-->
+  <url type="donation">http://www.gnome.org/friends/</url>
 
   <provides>
     <binary>dconf-editor</binary>
   </provides>
   <translation type="gettext">dconf</translation>
+  <url type="translate">https://wiki.gnome.org/TranslationProject</url>
 </component>
