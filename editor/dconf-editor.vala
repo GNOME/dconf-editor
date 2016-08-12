@@ -94,8 +94,7 @@ class ConfigurationEditor : Gtk.Application
     \*/
 
     private Notification notification = new Notification (_("Copied to clipboard"));
-    private bool notification_active = false;
-    private uint notification_number;
+    private uint notification_number = 0;
 
     private void copy_cb (SimpleAction action, Variant? gvariant)
     {
@@ -115,23 +114,20 @@ class ConfigurationEditor : Gtk.Application
         clipboard.set_text (text, text.length);
 
         // notification
-        if (notification_active == true)
+        if (notification_number > 0)
         {
-            Source.remove (notification_number);    // FIXME doesn't work [as expected], timeout runs until its end and withdraws the notification then
-            notification_active = false;
+            withdraw_notification ("copy");         // TODO needed, report bug: Shell cancels previous notification of the same name, instead of replacing it
+            Source.remove (notification_number);
+            notification_number = 0;
         }
 
         notification_number = Timeout.add_seconds (30, () => {
-                if (notification_active == false)
-                    return Source.CONTINUE;
                 withdraw_notification ("copy");
-                notification_active = false;
+                notification_number = 0;
                 return Source.REMOVE;
             });
-        notification_active = true;
 
         notification.set_body (text);
-        withdraw_notification ("copy");             // TODO report bug: Shell cancels previous notification of the same name, instead of replacing it
         send_notification ("copy", notification);
     }
 
