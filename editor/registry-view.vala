@@ -147,7 +147,7 @@ class RegistryView : Grid, PathElement
             return model.get_root_directory ();
     }
 
-    public void path_requested (string _full_name, string? selected)     // TODO don't do all the selection work if the folder didn't change
+    public void path_requested (string _full_name, string? selected)
     {
         string full_name = _full_name.dup ();
         string folder_name;
@@ -199,11 +199,20 @@ class RegistryView : Grid, PathElement
         }
 
         TreeIter iter;
+        Directory dir;
+
+        if (dir_tree_selection.get_selected (null, out iter))
+        {
+            dir = model.get_directory (iter);
+            if (dir.full_name == full_name)
+                return true;
+        }
+
         if (model.get_iter_first (out iter))
         {
             do
             {
-                Directory dir = model.get_directory (iter);
+                dir = model.get_directory (iter);
 
                 if (dir.full_name == full_name)
                 {
@@ -213,6 +222,8 @@ class RegistryView : Grid, PathElement
             }
             while (get_next_iter (ref iter));
         }
+        else
+            assert_not_reached ();
         return false;
     }
     private Key? get_key_from_name (string key_name)
