@@ -81,7 +81,7 @@ class RegistryView : Grid, PathElement
         if (selected != null)
         {
             check_resize ();
-            ListBoxRow row = key_list_box.get_row_at_index (get_row_position ((!) selected));
+            ListBoxRow? row = key_list_box.get_row_at_index (get_row_position ((!) selected));
             if (row == null)
                 assert_not_reached ();
             scroll_to_row ((!) row);
