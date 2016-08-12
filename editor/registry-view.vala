@@ -277,7 +277,6 @@ class RegistryView : Grid, PathElement
                     key.disconnect (key_planned_change_handler);
                     key.disconnect (key_planned_value_handler);
                 });
-            // TODO bug: row is always visually activated after the dialog destruction if mouse is over at this time
         }
 
         ulong on_row_clicked_handler = row.on_row_clicked.connect (() => request_path (setting_object.full_name));
