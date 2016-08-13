@@ -6,8 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-14 00:30+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-08-06 10:19+0000\n"
 "PO-Revision-Date: 2016-08-08 14:07+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
@@ -80,22 +81,9 @@ msgstr ""
 "Priama úprava vašej konfigurácie je pokročilá funkcia a môže spôsobiť "
 "nesprávnu funkčnosť aplikácií."
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
-msgid "Browse the keys used by installed applications."
-msgstr ""
-
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
-msgid "Read keys descriptions and edit their values."
-msgstr ""
-
-#. a translatable version of project_group
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
-msgid "The GNOME Project"
-msgstr ""
-
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:147
+#: ../editor/dconf-editor.vala:146
 msgid "dconf Editor"
 msgstr "Editor systému dconf"
 
@@ -105,7 +93,7 @@ msgstr "Editor konfigurácie systému dconf"
 
 # about dialog desc
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:149
+#: ../editor/dconf-editor.vala:148
 msgid "Directly edit your entire configuration database"
 msgstr "Priama úprava celej vašej databázy nastavení"
 
@@ -178,6 +166,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
 #, fuzzy
+#| msgid "A flag to enable fullscreen mode"
 msgid "A flag to enable small rows for keys list"
 msgstr "Príznak, ktorý povolí celoobrazovkový režim"
 
@@ -451,17 +440,6 @@ msgid ""
 "including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Vymenovanie hodnôt"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:77
-msgid ""
-"An enumeration could contain only one item, but that's probably an error. "
-"Dconf Editor warns you in that case."
-msgstr ""
-
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Klávesové skratky"
@@ -499,7 +477,7 @@ msgstr "Vypíše verziu vydania a skončí"
 msgid "Copied to clipboard"
 msgstr "Skopírované do schránky"
 
-#: ../editor/dconf-editor.vala:150
+#: ../editor/dconf-editor.vala:149
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -507,7 +485,7 @@ msgstr ""
 "Autorské práva © 2010-2014 – Canonical Ltd\n"
 "Autorské práva © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:154
+#: ../editor/dconf-editor.vala:153
 msgid "translator-credits"
 msgstr ""
 "Pavol Klačanský <pavol@klacansky.com>\n"
@@ -584,7 +562,7 @@ msgstr "false"
 msgid "nothing"
 msgstr "nič(nothing)"
 
-#: ../editor/dconf-view.vala:432
+#: ../editor/dconf-view.vala:413
 msgid "This value is invalid for the key type."
 msgstr ""
 
@@ -676,6 +654,8 @@ msgstr "Kopírovanie aktuálnej cesty"
 
 #: ../editor/help-overlay.ui.h:11
 #, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Tree navigation"
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Navigácia v strome"
@@ -721,65 +701,65 @@ msgid "Quit"
 msgstr "Ukončenie"
 
 # Schema:
-#: ../editor/key-list-box-row.vala:162
+#: ../editor/key-list-box-row.vala:142
 msgid "No Schema Found"
 msgstr "Nenašla sa žiadna schéma"
 
-#: ../editor/key-list-box-row.vala:171
+#: ../editor/key-list-box-row.vala:158
 msgid "Key erased."
 msgstr "Kľúč vymazaný."
 
-#: ../editor/key-list-box-row.vala:187
+#: ../editor/key-list-box-row.vala:177
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (kľúč vymazaný)"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:389
+#: ../editor/key-list-box-row.vala:392
 msgid "Customize…"
 msgstr "Prispôsobiť…"
 
 # hodnota
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:392
+#: ../editor/key-list-box-row.vala:395
 msgid "Set to default"
 msgstr "Nastaviť na predvolenú"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: ../editor/key-list-box-row.vala:397
+#: ../editor/key-list-box-row.vala:400
 msgid "Dismiss change"
 msgstr "Zahodiť zmenu"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: ../editor/key-list-box-row.vala:400
+#: ../editor/key-list-box-row.vala:403
 msgid "Open"
 msgstr "Otvoriť"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:525
+#: ../editor/key-list-box-row.vala:406 ../editor/key-list-box-row.vala:528
 #: ../editor/registry-info.ui.h:2
 msgid "Erase key"
 msgstr "Vymazať kľúč"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: ../editor/key-list-box-row.vala:406
+#: ../editor/key-list-box-row.vala:409
 msgid "Do not erase"
 msgstr "Nevymazať"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:415
+#: ../editor/key-list-box-row.vala:418
 msgid "Copy"
 msgstr "Kopírovať"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: ../editor/key-list-box-row.vala:519
+#: ../editor/key-list-box-row.vala:522
 msgid "No change"
 msgstr "Bez zmeny"
 
 # hodnota
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
+#: ../editor/key-list-box-row.vala:572 ../editor/registry-info.vala:228
 msgid "Default value"
 msgstr "Predvolená hodnota"
 
@@ -864,70 +844,63 @@ msgstr ""
 "tento kľúč mohla byť odstránená, mohla prestať používať tento kľúč, alebo "
 "mohla použiť znovu prideliteľnú schému na definovanie svojich kľúčov."
 
-#: ../editor/registry-info.ui.h:3
-msgid ""
-"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
-"probably an error of the application that installed this schema. If "
-"possible, please open a bug about it."
-msgstr ""
-
-#: ../editor/registry-info.vala:80
+#: ../editor/registry-info.vala:79
 msgid "Schema"
 msgstr "Schéma"
 
-#: ../editor/registry-info.vala:81
+#: ../editor/registry-info.vala:80
 msgid "Summary"
 msgstr "Súhrn"
 
-#: ../editor/registry-info.vala:82
+#: ../editor/registry-info.vala:81
 msgid "Description"
 msgstr "Popis"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: ../editor/registry-info.vala:84
+#: ../editor/registry-info.vala:83
 msgid "Type"
 msgstr "Typ"
 
-#: ../editor/registry-info.vala:86
+#: ../editor/registry-info.vala:85
 msgid "Minimum"
 msgstr ""
 
-#: ../editor/registry-info.vala:87
+#: ../editor/registry-info.vala:86
 msgid "Maximum"
 msgstr ""
 
 # hodnota
-#: ../editor/registry-info.vala:88
+#: ../editor/registry-info.vala:87
 msgid "Default"
 msgstr "Predvolená"
 
-#: ../editor/registry-info.vala:109
+#: ../editor/registry-info.vala:108
 msgid "Current value"
 msgstr "Aktuálna hodnota"
 
-#: ../editor/registry-info.vala:134
+#: ../editor/registry-info.vala:132
 msgid "Use default value"
 msgstr "Použiť predvolenú hodnotu"
 
-#: ../editor/registry-info.vala:192
+#: ../editor/registry-info.vala:190
 msgid "Custom value"
 msgstr "Vlastná hodnota"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:271
+#: ../editor/registry-info.vala:264
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
 
-#: ../editor/registry-info.vala:273
+#: ../editor/registry-info.vala:266
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:277
+#: ../editor/registry-info.vala:270
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -937,17 +910,17 @@ msgstr ""
 msgid "No keys in this path"
 msgstr "Na tejto ceste sa nenachádzajú žiadne kľúče"
 
-#: ../editor/registry-view.vala:161
+#: ../editor/registry-view.vala:131
 #, c-format
 msgid "Cannot find folder \"%s\"."
 msgstr "Nedá sa nájsť priečinok „%s”."
 
-#: ../editor/registry-view.vala:179
+#: ../editor/registry-view.vala:149
 #, c-format
 msgid "Cannot find key \"%s\" here."
 msgstr "Tu sa nedá nájsť kľúč „%s”."
 
-#: ../editor/registry-view.vala:185
+#: ../editor/registry-view.vala:155
 #, c-format
 msgid "Key \"%s\" has been removed."
 msgstr "Kľúč „%s” bol odstránený."

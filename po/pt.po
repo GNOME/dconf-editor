@@ -10,8 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-14 00:30+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2016-08-04 23:59+0000\n"
 "PO-Revision-Date: 2016-08-05 11:36+0100\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português <>\n"
@@ -87,22 +88,9 @@ msgstr ""
 "Editar as configurações diretamente é uma funcionalidade avançada e pode "
 "fazer com que certas aplicações não funcionem corretamente."
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
-msgid "Browse the keys used by installed applications."
-msgstr ""
-
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
-msgid "Read keys descriptions and edit their values."
-msgstr ""
-
-#. a translatable version of project_group
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
-msgid "The GNOME Project"
-msgstr ""
-
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:147
+#: ../editor/dconf-editor.vala:146
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
@@ -111,7 +99,7 @@ msgid "Configuration editor for dconf"
 msgstr "Editor de configurações para dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:149
+#: ../editor/dconf-editor.vala:148
 msgid "Directly edit your entire configuration database"
 msgstr "Edite diretamente toda a sua base de dados de configuração"
 
@@ -526,17 +514,6 @@ msgstr ""
 "que podem ter um valor \"nada\". Uma cadeia anulável pode receber qualquer "
 "cadeia, incluindo a cadeia vazia \"''\" ou pode ser NULL (nada)."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Uma enumeração de 5 escolhas"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:77
-msgid ""
-"An enumeration could contain only one item, but that's probably an error. "
-"Dconf Editor warns you in that case."
-msgstr ""
-
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de teclado"
@@ -574,7 +551,7 @@ msgstr "Imprimir versão do lançamento e sair"
 msgid "Copied to clipboard"
 msgstr "Copiado para a área de transferência"
 
-#: ../editor/dconf-editor.vala:150
+#: ../editor/dconf-editor.vala:149
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -582,7 +559,7 @@ msgstr ""
 "Direitos de autor © 2010-2014 – Canonical Ltd\n"
 "Direitos de autor © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:154
+#: ../editor/dconf-editor.vala:153
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
@@ -659,7 +636,7 @@ msgstr "falso"
 msgid "nothing"
 msgstr "nada"
 
-#: ../editor/dconf-view.vala:432
+#: ../editor/dconf-view.vala:413
 msgid "This value is invalid for the key type."
 msgstr "Este valor é inválido para o tipo de chave."
 
@@ -794,63 +771,63 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Sair"
 
-#: ../editor/key-list-box-row.vala:162
+#: ../editor/key-list-box-row.vala:142
 msgid "No Schema Found"
 msgstr "Nenhum esquema encontrado"
 
-#: ../editor/key-list-box-row.vala:171
+#: ../editor/key-list-box-row.vala:158
 msgid "Key erased."
 msgstr "Chave apagada."
 
-#: ../editor/key-list-box-row.vala:187
+#: ../editor/key-list-box-row.vala:177
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (chave apagada)"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:389
+#: ../editor/key-list-box-row.vala:392
 msgid "Customize…"
 msgstr "Personalizar…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:392
+#: ../editor/key-list-box-row.vala:395
 msgid "Set to default"
 msgstr "Predefinir"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: ../editor/key-list-box-row.vala:397
+#: ../editor/key-list-box-row.vala:400
 msgid "Dismiss change"
 msgstr "Descartar alteração"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: ../editor/key-list-box-row.vala:400
+#: ../editor/key-list-box-row.vala:403
 msgid "Open"
 msgstr "Abrir"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:525
+#: ../editor/key-list-box-row.vala:406 ../editor/key-list-box-row.vala:528
 #: ../editor/registry-info.ui.h:2
 msgid "Erase key"
 msgstr "Apagar chave"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: ../editor/key-list-box-row.vala:406
+#: ../editor/key-list-box-row.vala:409
 msgid "Do not erase"
 msgstr "Não apagar"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:415
+#: ../editor/key-list-box-row.vala:418
 msgid "Copy"
 msgstr "Copiar"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: ../editor/key-list-box-row.vala:519
+#: ../editor/key-list-box-row.vala:522
 msgid "No change"
 msgstr "Sem alterações"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
+#: ../editor/key-list-box-row.vala:572 ../editor/registry-info.vala:228
 msgid "Default value"
 msgstr "Valor predefinido"
 
@@ -898,11 +875,6 @@ msgstr[1] "%u operações do dconf em espera."
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: ../editor/modifications-revealer.vala:273
 #, c-format
-msgid "%s%s"
-msgstr ""
-
-#: ../editor/modifications-revealer.vala:273
-#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
 msgstr[0] "Uma operação do gsettings em espera"
@@ -932,56 +904,49 @@ msgstr ""
 "esta chave ou pode utilizar um esquema re-localizável para definir as suas "
 "chaves."
 
-#: ../editor/registry-info.ui.h:3
-msgid ""
-"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
-"probably an error of the application that installed this schema. If "
-"possible, please open a bug about it."
-msgstr ""
-
-#: ../editor/registry-info.vala:80
+#: ../editor/registry-info.vala:79
 msgid "Schema"
 msgstr "Esquema"
 
-#: ../editor/registry-info.vala:81
+#: ../editor/registry-info.vala:80
 msgid "Summary"
 msgstr "Resumo"
 
-#: ../editor/registry-info.vala:82
+#: ../editor/registry-info.vala:81
 msgid "Description"
 msgstr "Descrição"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: ../editor/registry-info.vala:84
+#: ../editor/registry-info.vala:83
 msgid "Type"
 msgstr "Tipo"
 
-#: ../editor/registry-info.vala:86
+#: ../editor/registry-info.vala:85
 msgid "Minimum"
 msgstr "Mínimo"
 
-#: ../editor/registry-info.vala:87
+#: ../editor/registry-info.vala:86
 msgid "Maximum"
 msgstr "Máximo"
 
-#: ../editor/registry-info.vala:88
+#: ../editor/registry-info.vala:87
 msgid "Default"
 msgstr "Predefinição"
 
-#: ../editor/registry-info.vala:109
+#: ../editor/registry-info.vala:108
 msgid "Current value"
 msgstr "Valor atual"
 
-#: ../editor/registry-info.vala:134
+#: ../editor/registry-info.vala:132
 msgid "Use default value"
 msgstr "Usar valor predefinido"
 
-#: ../editor/registry-info.vala:192
+#: ../editor/registry-info.vala:190
 msgid "Custom value"
 msgstr "Valor personalizado"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:271
+#: ../editor/registry-info.vala:264
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -991,14 +956,14 @@ msgstr ""
 "por \"m\") nos seus valores vazios. Cadeias, assinaturas e caminhos de "
 "objetos devem ser rodeados por aspas."
 
-#: ../editor/registry-info.vala:273
+#: ../editor/registry-info.vala:266
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Cadeias, assinaturas e caminhos de objetos devem ser rodeados por aspas."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:277
+#: ../editor/registry-info.vala:270
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1010,17 +975,17 @@ msgstr ""
 msgid "No keys in this path"
 msgstr "Nenhuma chave neste caminho"
 
-#: ../editor/registry-view.vala:161
+#: ../editor/registry-view.vala:131
 #, c-format
 msgid "Cannot find folder \"%s\"."
 msgstr "Não foi possível encontrar a pasta \"%s\"."
 
-#: ../editor/registry-view.vala:179
+#: ../editor/registry-view.vala:149
 #, c-format
 msgid "Cannot find key \"%s\" here."
 msgstr "Não foi possível encontrar a chave \"%s\" aqui."
 
-#: ../editor/registry-view.vala:185
+#: ../editor/registry-view.vala:155
 #, c-format
 msgid "Key \"%s\" has been removed."
 msgstr "Chave \"%s\" foi removida."

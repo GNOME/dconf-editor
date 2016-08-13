@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf Editor\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-14 00:30+0300\n"
-"PO-Revision-Date: 2016-08-14 00:35+0300\n"
-"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"POT-Creation-Date: 2016-08-07 16:25+0300\n"
+"PO-Revision-Date: 2016-08-07 17:08+0300\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gnome.org>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -83,22 +83,9 @@ msgstr ""
 "עריכה התצורה שלי ישירות היא תכונה מתקדמת ועשויה לגרום ליישומים לא לעבוד "
 "כראוי."
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
-msgid "Browse the keys used by installed applications."
-msgstr "דפדוף במפתחות המשמשות יישומים מותקנים."
-
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
-msgid "Read keys descriptions and edit their values."
-msgstr "קריאת פרטי מפתחות ועריכת הערך שלהן."
-
-#. a translatable version of project_group
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
-msgid "The GNOME Project"
-msgstr "מיזם GNOME"
-
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:147
+#: ../editor/dconf-editor.vala:146
 msgid "dconf Editor"
 msgstr "עורך dconf"
 
@@ -107,7 +94,7 @@ msgid "Configuration editor for dconf"
 msgstr "עורך תצורה עבור dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:149
+#: ../editor/dconf-editor.vala:148
 msgid "Directly edit your entire configuration database"
 msgstr "עריכה ישירה של כל מסד נתוני התצורה שלך"
 
@@ -511,18 +498,6 @@ msgstr ""
 "take a \"nothing\" value. A nullable string can take any string as value, "
 "including the empty string \"''\", or can be NULL (nothing)."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
-msgid "A 1-choice enumeration"
-msgstr "A 1-choice enumeration"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:77
-msgid ""
-"An enumeration could contain only one item, but that's probably an error. "
-"Dconf Editor warns you in that case."
-msgstr ""
-"An enumeration could contain only one item, but that's probably an error. "
-"Dconf Editor warns you in that case."
-
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "צירופי מקשים"
@@ -560,7 +535,7 @@ msgstr "Print release version and exit"
 msgid "Copied to clipboard"
 msgstr "הועתקה ללוח הגזירים"
 
-#: ../editor/dconf-editor.vala:150
+#: ../editor/dconf-editor.vala:149
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -568,7 +543,7 @@ msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:154
+#: ../editor/dconf-editor.vala:153
 msgid "translator-credits"
 msgstr ""
 "ירון שהרבני <sh.yaron@gmail.com>\n"
@@ -644,7 +619,7 @@ msgstr "שקר"
 msgid "nothing"
 msgstr "כלום"
 
-#: ../editor/dconf-view.vala:432
+#: ../editor/dconf-view.vala:413
 msgid "This value is invalid for the key type."
 msgstr "ערך זה אינו תקף עבור סוג המפתח."
 
@@ -776,63 +751,63 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "יציאה"
 
-#: ../editor/key-list-box-row.vala:162
+#: ../editor/key-list-box-row.vala:142
 msgid "No Schema Found"
 msgstr "לא נמצא תרשים"
 
-#: ../editor/key-list-box-row.vala:171
+#: ../editor/key-list-box-row.vala:158
 msgid "Key erased."
 msgstr "מפתח נמחק."
 
-#: ../editor/key-list-box-row.vala:187
+#: ../editor/key-list-box-row.vala:177
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (מפתח נמחק)"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:389
+#: ../editor/key-list-box-row.vala:392
 msgid "Customize…"
 msgstr "התאמה…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:392
+#: ../editor/key-list-box-row.vala:395
 msgid "Set to default"
 msgstr "הגדרה לברירת מחדל"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: ../editor/key-list-box-row.vala:397
+#: ../editor/key-list-box-row.vala:400
 msgid "Dismiss change"
 msgstr "ביטול השינוי"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: ../editor/key-list-box-row.vala:400
+#: ../editor/key-list-box-row.vala:403
 msgid "Open"
 msgstr "פתיחה"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:525
+#: ../editor/key-list-box-row.vala:406 ../editor/key-list-box-row.vala:528
 #: ../editor/registry-info.ui.h:2
 msgid "Erase key"
 msgstr "מחיקת מפתח"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: ../editor/key-list-box-row.vala:406
+#: ../editor/key-list-box-row.vala:409
 msgid "Do not erase"
 msgstr "לא למחוק"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:415
+#: ../editor/key-list-box-row.vala:418
 msgid "Copy"
 msgstr "העתקה"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: ../editor/key-list-box-row.vala:519
+#: ../editor/key-list-box-row.vala:522
 msgid "No change"
 msgstr "לא לשנות"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
+#: ../editor/key-list-box-row.vala:572 ../editor/registry-info.vala:228
 msgid "Default value"
 msgstr "ערך ברירת מחדל"
 
@@ -912,58 +887,49 @@ msgstr ""
 "זה. יתכן והיישום שהתקין מפתח זה הוסר, הפסיק להשתמש במפתח זה, או אולי השתמש "
 "בתרשים אחרת עבור הגדרת מפתח זה."
 
-#: ../editor/registry-info.ui.h:3
-msgid ""
-"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
-"probably an error of the application that installed this schema. If "
-"possible, please open a bug about it."
-msgstr ""
-"&#60;b&#62;רשומה זו מציעה בחירה אחת בלבד.&#60;/b&#62; "
-"זו כנראה שגיאה של היישום שהתקין תרשים זה. אם אפשרי, נא לפתוח באג על כך."
-
-#: ../editor/registry-info.vala:80
+#: ../editor/registry-info.vala:79
 msgid "Schema"
 msgstr "תרשים"
 
-#: ../editor/registry-info.vala:81
+#: ../editor/registry-info.vala:80
 msgid "Summary"
 msgstr "תקציר"
 
-#: ../editor/registry-info.vala:82
+#: ../editor/registry-info.vala:81
 msgid "Description"
 msgstr "תיאור"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: ../editor/registry-info.vala:84
+#: ../editor/registry-info.vala:83
 msgid "Type"
 msgstr "סוג"
 
-#: ../editor/registry-info.vala:86
+#: ../editor/registry-info.vala:85
 msgid "Minimum"
 msgstr "מזערי"
 
-#: ../editor/registry-info.vala:87
+#: ../editor/registry-info.vala:86
 msgid "Maximum"
 msgstr "מרבי"
 
-#: ../editor/registry-info.vala:88
+#: ../editor/registry-info.vala:87
 msgid "Default"
 msgstr "ברירת מחדל"
 
-#: ../editor/registry-info.vala:109
+#: ../editor/registry-info.vala:108
 msgid "Current value"
 msgstr "ערך נוכחי"
 
-#: ../editor/registry-info.vala:134
+#: ../editor/registry-info.vala:132
 msgid "Use default value"
 msgstr "שימוש בערך ברירת מחדל"
 
-#: ../editor/registry-info.vala:192
+#: ../editor/registry-info.vala:190
 msgid "Custom value"
 msgstr "ערך מותאם"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:271
+#: ../editor/registry-info.vala:264
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -972,13 +938,13 @@ msgstr ""
 "שימוש במפתח „כלום” להגדרת ערך לא וודאי (מתחיל עם „כ”) לערך ריק. מחרוזות, "
 "חתימות ונתיבי עצמים צריכים להיות בתוך מירכאות כפולות."
 
-#: ../editor/registry-info.vala:273
+#: ../editor/registry-info.vala:266
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "מחרוזות, חתימות ונתיבי עצמים צריכים להיות בתוך מירכאות כפולות."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:277
+#: ../editor/registry-info.vala:270
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -988,17 +954,17 @@ msgstr "שימוש במפתח „כלום” להגדרת ערך לא וודאי
 msgid "No keys in this path"
 msgstr "אין מפתחות בנתיב זה"
 
-#: ../editor/registry-view.vala:161
+#: ../editor/registry-view.vala:131
 #, c-format
 msgid "Cannot find folder \"%s\"."
 msgstr "לא נתן למצוא את התיקייה „%s”."
 
-#: ../editor/registry-view.vala:179
+#: ../editor/registry-view.vala:149
 #, c-format
 msgid "Cannot find key \"%s\" here."
 msgstr "לא נתן למצוא את המפתח „%s” כאן."
 
-#: ../editor/registry-view.vala:185
+#: ../editor/registry-view.vala:155
 #, c-format
 msgid "Key \"%s\" has been removed."
 msgstr "המפתח „%s” הוסר."
