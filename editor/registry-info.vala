@@ -21,6 +21,7 @@ using Gtk;
 class RegistryInfo : Grid
 {
     [GtkChild] private Revealer no_schema_warning;
+    [GtkChild] private Revealer one_choice_enum_warning;
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
@@ -110,6 +111,7 @@ class RegistryInfo : Grid
         add_separator ();
 
         KeyEditorChild key_editor_child = create_child (key);
+        one_choice_enum_warning.set_reveal_child (key_editor_child is KeyEditorChildEnumSingle);
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
                 if (revealer.should_delay_apply (tmp_string))
@@ -201,7 +203,12 @@ class RegistryInfo : Grid
         switch (key.type_string)
         {
             case "<enum>":
-                return (KeyEditorChild) new KeyEditorChildEnum (key);
+                switch (((GSettingsKey) key).range_content.n_children ())
+                {
+                    case 0:  assert_not_reached ();
+                    case 1:  return (KeyEditorChild) new KeyEditorChildEnumSingle (key.value);
+                    default: return (KeyEditorChild) new KeyEditorChildEnum (key);
+                }
             case "<flags>":
                 return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key);
             case "b":

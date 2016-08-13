@@ -534,7 +534,7 @@ private class ContextPopover : Popover
             case "<enum>":      // defined by the schema
                 Variant range = ((GSettingsKey) key).range_content;
                 uint size = (uint) range.n_children ();
-                if (size == 0)      // TODO special case also 1?
+                if (size == 0 || (size == 1 && !has_default_value))
                     assert_not_reached ();
                 for (uint index = 0; index < size; index++)
                     current_section.append (range.get_child_value (index).print (false), @"$group_dot_action(@mms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()

@@ -83,6 +83,9 @@
     <value value="8" nick="Yellow"/>
     <value value="1" nick="Green"/>
   </flags>
+  <enum id="ca.desrt.dconf-editor.DemoWeirdEnum">
+    <value value="0" nick="only-choice"/>
+  </enum>
   <schema id="ca.desrt.dconf-editor.Demo" path="/ca/desrt/dconf-editor/demo/">
     <key name="boolean" type="b">
       <default>true</default>
@@ -208,6 +211,11 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <default>nothing</default>
       <summary>A nullable string, type "ms"</summary>
       <description>GSettings allows nullable types, that are similar to other types but could take a "nothing" value. A nullable string can take any string as value, including the empty string "''", or can be NULL (nothing).</description>
+    </key>
+    <key name="weird-enum" enum="ca.desrt.dconf-editor.DemoWeirdEnum">
+      <default>'only-choice'</default>
+      <summary>A 1-choice enumeration</summary>
+      <description>An enumeration could contain only one item, but that's probably an error. Dconf Editor warns you in that case.</description>
     </key>
   </schema>
 </schemalist>

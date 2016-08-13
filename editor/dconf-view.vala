@@ -27,6 +27,25 @@ public interface KeyEditorChild : Widget
     public abstract void reload (Variant gvariant);
 }
 
+private class KeyEditorChildEnumSingle : Label, KeyEditorChild
+{
+    private Variant variant;
+
+    public KeyEditorChildEnumSingle (Variant key_value)
+    {
+        variant = key_value;
+        set_label (key_value.get_string ());
+        show ();
+    }
+
+    public Variant get_variant ()
+    {
+        return variant;
+    }
+
+    public void reload (Variant gvariant) {}
+}
+
 private class KeyEditorChildEnum : MenuButton, KeyEditorChild
 {
     private Variant variant;
