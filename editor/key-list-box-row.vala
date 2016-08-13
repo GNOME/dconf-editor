@@ -116,9 +116,12 @@ private class FolderListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : ClickableListBoxRow
 {
-    [GtkChild] protected Label key_name_label;
+    [GtkChild] private Label key_name_label;
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
+
+    protected StyleContext name_context;
+    protected StyleContext value_context;
 
     public signal void set_key_value (Variant? new_value);
     public signal void change_dismissed ();
@@ -127,49 +130,56 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     {
         return Key.cool_text_value_from_variant (key.value, key.type_string);
     }
+
+    construct
+    {
+        name_context = key_name_label.get_style_context ();
+        value_context = key_value_label.get_style_context ();
+
+        update ();
+        key_name_label.set_label (abstract_key.name);
+
+        ulong key_value_changed_handler = abstract_key.value_changed.connect (() => {
+                update ();
+                destroy_popover ();
+            });
+        destroy.connect (() => abstract_key.disconnect (key_value_changed_handler));
+    }
+    private abstract Key abstract_key { get; }
+    protected abstract void update ();
 }
 
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
-    public DConfKey key { get; private set; }
+    public DConfKey key { get; construct; }
+    private override Key abstract_key { get { return (Key) key; }}
 
     public KeyListBoxRowEditableNoSchema (DConfKey _key)
     {
-        this.key = _key;
+        Object (key: _key);
 
-        update ();
         key_info_label.get_style_context ().add_class ("italic-label");
         key_info_label.set_label (_("No Schema Found"));
-
-        ulong key_value_changed_handler = key.value_changed.connect (() => {
-                update ();
-                destroy_popover ();
-            });
-        destroy.connect (() => key.disconnect (key_value_changed_handler));     // TODO move to KeyListBoxRow
     }
 
-    private void update ()
+    protected override void update ()
     {
-        StyleContext context = key_value_label.get_style_context ();
         if (key.is_ghost)
         {
-            if (!context.has_class ("italic-label")) context.add_class ("italic-label");
-            if (context.has_class ("bold-label")) context.remove_class ("bold-label");
+            if (!value_context.has_class ("italic-label")) value_context.add_class ("italic-label");
+            if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
             key_value_label.set_label (_("Key erased."));
 
-            context = key_name_label.get_style_context ();
-            if (context.has_class ("bold-label")) context.remove_class ("bold-label");
+            if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
         }
         else
         {
-            if (context.has_class ("italic-label")) context.remove_class ("italic-label");
-            if (!context.has_class ("bold-label")) context.add_class ("bold-label");
+            if (value_context.has_class ("italic-label")) value_context.remove_class ("italic-label");
+            if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
             key_value_label.set_label (cool_text_value (key));
 
-            context = key_name_label.get_style_context ();
-            if (!context.has_class ("bold-label")) context.add_class ("bold-label");
+            if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
         }
-        key_name_label.set_label (key.name);
     }
 
     protected override string get_text ()
@@ -238,26 +248,29 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
 private class KeyListBoxRowEditable : KeyListBoxRow
 {
-    public GSettingsKey key { get; private set; }
-
-    private StyleContext name_context;
-    private StyleContext value_context;
+    public GSettingsKey key { get; construct; }
+    private override Key abstract_key { get { return (Key) key; }}
 
     public KeyListBoxRowEditable (GSettingsKey _key)
     {
-        this.key = _key;
+        Object (key: _key);
 
-        name_context = key_name_label.get_style_context ();
-        value_context = key_value_label.get_style_context ();
-        update ();      // sets key_name_label attributes and key_value_label label
-        key_name_label.label = key.name;
-        key_info_label.label = key.summary;
+        key_info_label.set_label (key.summary);
+    }
 
-        ulong key_value_changed_handler = key.value_changed.connect (() => {
-                update ();
-                destroy_popover ();
-            });
-        destroy.connect (() => key.disconnect (key_value_changed_handler));     // TODO move to KeyListBoxRow
+    protected override void update ()
+    {
+        if (key.is_default)
+        {
+            if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
+            if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
+        }
+        else
+        {
+            if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
+            if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
+        }
+        key_value_label.set_label (cool_text_value (key));
     }
 
     protected override string get_text ()
@@ -324,22 +337,6 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 });
         }
         return true;
-    }
-
-    private void update ()
-    {
-        if (key.is_default)
-        {
-            if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
-            if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
-        }
-        else
-        {
-            if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
-            if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
-        }
-
-        key_value_label.label = cool_text_value (key);
     }
 }
 
