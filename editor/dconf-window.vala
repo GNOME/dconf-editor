@@ -190,7 +190,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void on_destroy ()
     {
-        get_application ().withdraw_notification ("copy");
+        ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
         settings.disconnect (behaviour_changed_handler);
         settings.disconnect (theme_changed_handler);

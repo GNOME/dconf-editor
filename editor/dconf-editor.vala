@@ -114,12 +114,7 @@ class ConfigurationEditor : Gtk.Application
         clipboard.set_text (text, text.length);
 
         // notification
-        if (notification_number > 0)
-        {
-            withdraw_notification ("copy");         // TODO needed, report bug: Shell cancels previous notification of the same name, instead of replacing it
-            Source.remove (notification_number);
-            notification_number = 0;
-        }
+        clean_copy_notification ();
 
         notification_number = Timeout.add_seconds (30, () => {
                 withdraw_notification ("copy");
@@ -129,6 +124,16 @@ class ConfigurationEditor : Gtk.Application
 
         notification.set_body (text);
         send_notification ("copy", notification);
+    }
+
+    public void clean_copy_notification ()
+    {
+        if (notification_number > 0)
+        {
+            withdraw_notification ("copy");         // TODO needed, report bug: Shell cancels previous notification of the same name, instead of replacing it
+            Source.remove (notification_number);
+            notification_number = 0;
+        }
     }
 
     /*\
