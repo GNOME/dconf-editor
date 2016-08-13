@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-07-28 14:34+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-14 00:30+0300\n"
 "PO-Revision-Date: 2016-07-31 19:40+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
@@ -82,9 +81,22 @@ msgstr ""
 "Tiesioginis konfigūracijos redagavimas yra sudėtingas ir dėl jo programos "
 "gali veikti nekorektiškai."
 
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
+msgid "Browse the keys used by installed applications."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
+msgid "Read keys descriptions and edit their values."
+msgstr ""
+
+#. a translatable version of project_group
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
+msgid "The GNOME Project"
+msgstr ""
+
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:146
+#: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf Redaktorius"
 
@@ -93,7 +105,7 @@ msgid "Configuration editor for dconf"
 msgstr "Konfigūracijos redaktorius dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:148
+#: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Tiesiogiai redaguokite savo visą konfigūracijos duomenų bazę"
 
@@ -166,7 +178,6 @@ msgstr ""
 "naudotoją būti atsargiu."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
-#| msgid "A flag to enable fullscreen mode"
 msgid "A flag to enable small rows for keys list"
 msgstr "Požymis mažoms eilutėms klavišams įjungti"
 
@@ -183,7 +194,6 @@ msgid "If 'true', the bookmarks list use smaller rows."
 msgstr "Jei teigiama, žymelėms naudojamos mažesnės eilutės."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
-#| msgid "The width of the main window in pixels."
 msgid "The theme of the navigation list"
 msgstr "Judėjimo sąrašo tema"
 
@@ -508,6 +518,17 @@ msgstr ""
 "būti bet kokia simbolių seka, įskaitant tuščią eilutę „''“, arba ji gali "
 "būti NULL (nieko)."
 
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
+#, fuzzy
+msgid "A 1-choice enumeration"
+msgstr "5 pasirinkimų išvardinimas"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:77
+msgid ""
+"An enumeration could contain only one item, but that's probably an error. "
+"Dconf Editor warns you in that case."
+msgstr ""
+
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
 msgstr "Klaviatūros trumpiniai"
@@ -545,7 +566,7 @@ msgstr "Atspausdinti versiją ir išeiti"
 msgid "Copied to clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
-#: ../editor/dconf-editor.vala:149
+#: ../editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -553,7 +574,7 @@ msgstr ""
 "Autorių teisės priklauso © 2010-2014 – Canonical Ltd\n"
 "Autorių teisės priklauso © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:153
+#: ../editor/dconf-editor.vala:154
 msgid "translator-credits"
 msgstr "išvertė:Aurimas Černius <aurisc4@gmail.com>"
 
@@ -599,7 +620,6 @@ msgid "D-Bus signature"
 msgstr "D-Bus aprašas"
 
 #: ../editor/dconf-model.vala:216
-#| msgid "Integer [%s..%s]"
 msgid "Integer"
 msgstr "Sveikas skaičius"
 
@@ -628,7 +648,7 @@ msgstr "neigiama"
 msgid "nothing"
 msgstr "nieko"
 
-#: ../editor/dconf-view.vala:413
+#: ../editor/dconf-view.vala:432
 msgid "This value is invalid for the key type."
 msgstr "Vertė yra netinkama šio tipo raktui."
 
@@ -652,19 +672,19 @@ msgstr "Būsiu atsargus."
 msgid "Show this dialog next time."
 msgstr "Rodyti šį dialogą kitą kartą."
 
-#: ../editor/dconf-window.vala:246
+#: ../editor/dconf-window.vala:232
 msgid "Copy current path"
 msgstr "Kopijuoti dabartinį kelią"
 
-#: ../editor/dconf-window.vala:251
+#: ../editor/dconf-window.vala:237
 msgid "Reset visible keys"
 msgstr "Atstatyti matomus raktus"
 
-#: ../editor/dconf-window.vala:252
+#: ../editor/dconf-window.vala:238
 msgid "Reset recursively"
 msgstr "Rekursyviai atstatyti"
 
-#: ../editor/dconf-window.vala:260
+#: ../editor/dconf-window.vala:246
 msgid "Enter delay mode"
 msgstr "Pradėti delsiamą veikseną"
 
@@ -699,7 +719,6 @@ msgid "Actions menu"
 msgstr "Veiksmų meniu"
 
 #: ../editor/help-overlay.ui.h:7
-#| msgid "Current view actions"
 msgctxt "shortcut window"
 msgid "Current row menu"
 msgstr "Dabartinės eilutės meniu"
@@ -720,82 +739,108 @@ msgid "Copy path"
 msgstr "Kopijuoti kelią"
 
 #: ../editor/help-overlay.ui.h:11
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Path bar navigation"
+msgstr "Medžio naršymas"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Open root folder"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Open parent folder"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Open active direct child"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Open active last child"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Bendra"
 
-#: ../editor/help-overlay.ui.h:12
+#: ../editor/help-overlay.ui.h:17
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Rodyti šį žinyną"
 
-#: ../editor/help-overlay.ui.h:13
+#: ../editor/help-overlay.ui.h:18
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Apie"
 
-#: ../editor/help-overlay.ui.h:14
+#: ../editor/help-overlay.ui.h:19
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Išeiti"
 
-#: ../editor/key-list-box-row.vala:142
+#: ../editor/key-list-box-row.vala:162
 msgid "No Schema Found"
 msgstr "Nerasta schema"
 
-#: ../editor/key-list-box-row.vala:158
+#: ../editor/key-list-box-row.vala:171
 msgid "Key erased."
 msgstr "Raktas ištrintas."
 
-#: ../editor/key-list-box-row.vala:177
+#: ../editor/key-list-box-row.vala:187
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (raktas ištrintas)"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:384
+#: ../editor/key-list-box-row.vala:389
 msgid "Customize…"
 msgstr "Tinkinti…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:387
+#: ../editor/key-list-box-row.vala:392
 msgid "Set to default"
 msgstr "Nustatyti į numatytą"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: ../editor/key-list-box-row.vala:392
+#: ../editor/key-list-box-row.vala:397
 msgid "Dismiss change"
 msgstr "Atmesti pakeitimą"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: ../editor/key-list-box-row.vala:395
+#: ../editor/key-list-box-row.vala:400
 msgid "Open"
 msgstr "Atverti"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: ../editor/key-list-box-row.vala:398 ../editor/key-list-box-row.vala:520
+#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:525
 #: ../editor/registry-info.ui.h:2
 msgid "Erase key"
 msgstr "Ištrinti raktą"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: ../editor/key-list-box-row.vala:401
+#: ../editor/key-list-box-row.vala:406
 msgid "Do not erase"
 msgstr "Neištrinti"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:410
+#: ../editor/key-list-box-row.vala:415
 msgid "Copy"
 msgstr "Kopijuoti"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: ../editor/key-list-box-row.vala:514
+#: ../editor/key-list-box-row.vala:519
 msgid "No change"
 msgstr "Nėra pakeitimo"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:564 ../editor/registry-info.vala:227
+#: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
 msgid "Default value"
 msgstr "Numatyta vertė"
 
@@ -823,27 +868,52 @@ msgstr "Pakeitimas bus pritaikytas jo paprašius arba jei užversite šį rodin�
 msgid "Changes will be delayed until you request it."
 msgstr "Pakeitimai bus atidėti iki jų paprašysite."
 
-#: ../editor/modifications-revealer.vala:265
-#, c-format
-msgid "%u gsettings operations awaiting."
-msgstr "Laukia %u gsettings veiksmų."
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:266
+#, fuzzy, c-format
+msgid "One gsettings operation delayed."
+msgid_plural "%u gsettings operations delayed."
+msgstr[0] "Laukia %u gsettings veiksmų."
+msgstr[1] "Laukia %u gsettings veiksmų."
+msgstr[2] "Laukia %u gsettings veiksmų."
 
-#: ../editor/modifications-revealer.vala:268
-#, c-format
-msgid "%u dconf operations awaiting."
-msgstr "Laukia %u dconf veiksmų."
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:270
+#, fuzzy, c-format
+msgid "One dconf operation delayed."
+msgid_plural "%u dconf operations delayed."
+msgstr[0] "Laukia %u dconf veiksmų."
+msgstr[1] "Laukia %u dconf veiksmų."
+msgstr[2] "Laukia %u dconf veiksmų."
 
-#: ../editor/modifications-revealer.vala:269
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:273
 #, c-format
-msgid "%u gsettings operations and %u dconf operations awaiting."
-msgstr "Laukia %u gsettings ir %u dconf veiksmų."
+msgid "%s%s"
+msgstr ""
+
+#: ../editor/modifications-revealer.vala:273
+#, fuzzy, c-format
+msgid "One gsettings operation"
+msgid_plural "%u gsettings operations"
+msgstr[0] "Laukia %u gsettings veiksmų."
+msgstr[1] "Laukia %u gsettings veiksmų."
+msgstr[2] "Laukia %u gsettings veiksmų."
+
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:278
+#, fuzzy, c-format
+msgid " and one dconf operation delayed."
+msgid_plural " and %u dconf operations delayed."
+msgstr[0] "Laukia %u dconf veiksmų."
+msgstr[1] "Laukia %u dconf veiksmų."
+msgstr[2] "Laukia %u dconf veiksmų."
 
 #: ../editor/registry-info.ui.h:1
-#| msgid ""
-#| "No schema available. Dconf Editor can’t find a schema associated with "
-#| "this key. The application that installed this key may have been removed, "
-#| "may have stop the use of this key, or may use a relocatable schema for "
-#| "defining its keys."
 msgid ""
 "&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
@@ -855,50 +925,56 @@ msgstr ""
 "būti pašalinta, nustojo naudoti šį raktą arba naudoja perkeliamą schemą savo "
 "raktų aprašymui."
 
-#: ../editor/registry-info.vala:83
+#: ../editor/registry-info.ui.h:3
+msgid ""
+"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
+"probably an error of the application that installed this schema. If "
+"possible, please open a bug about it."
+msgstr ""
+
+#: ../editor/registry-info.vala:80
 msgid "Schema"
 msgstr "Schema"
 
-#: ../editor/registry-info.vala:84
+#: ../editor/registry-info.vala:81
 msgid "Summary"
 msgstr "Santrauka"
 
-#: ../editor/registry-info.vala:85
+#: ../editor/registry-info.vala:82
 msgid "Description"
 msgstr "Aprašymas"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: ../editor/registry-info.vala:87
+#: ../editor/registry-info.vala:84
 msgid "Type"
 msgstr "Tipas"
 
-#: ../editor/registry-info.vala:89
+#: ../editor/registry-info.vala:86
 msgid "Minimum"
 msgstr "Mažiausia"
 
-#: ../editor/registry-info.vala:90
+#: ../editor/registry-info.vala:87
 msgid "Maximum"
 msgstr "Didžiausia"
 
-#: ../editor/registry-info.vala:91
+#: ../editor/registry-info.vala:88
 msgid "Default"
 msgstr "Numatyta"
 
-#: ../editor/registry-info.vala:107
-#| msgid "Custom value"
+#: ../editor/registry-info.vala:109
 msgid "Current value"
 msgstr "Dabartinė vertė"
 
-#: ../editor/registry-info.vala:131
+#: ../editor/registry-info.vala:134
 msgid "Use default value"
 msgstr "Naudoti numatytąją vertę"
 
-#: ../editor/registry-info.vala:187
+#: ../editor/registry-info.vala:192
 msgid "Custom value"
 msgstr "Pasirinktinė vertė"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:263
+#: ../editor/registry-info.vala:271
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -908,14 +984,14 @@ msgstr ""
 "į tuščia vertę. Simbolių eilutės bei objektų keliai turi būti apsupti "
 "kabutėmis."
 
-#: ../editor/registry-info.vala:265
+#: ../editor/registry-info.vala:273
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Simbolių eilutės, aprašai bei objektų keliai turi būti apsupti kabutėmis."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:269
+#: ../editor/registry-info.vala:277
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -927,30 +1003,29 @@ msgstr ""
 msgid "No keys in this path"
 msgstr "Nėra raktų šiame kelyje"
 
-#: ../editor/registry-view.vala:138
+#: ../editor/registry-view.vala:161
 #, c-format
 msgid "Cannot find folder \"%s\"."
 msgstr "Nepavyko rasti aplanko „%s“."
 
-#: ../editor/registry-view.vala:154
+#: ../editor/registry-view.vala:179
 #, c-format
 msgid "Cannot find key \"%s\" here."
 msgstr "Nepavyko rasti rakto „%s“ čia."
 
-#: ../editor/registry-view.vala:160
+#: ../editor/registry-view.vala:185
 #, c-format
 msgid "Key \"%s\" has been removed."
 msgstr "Raktas „%s“ buvo pašalintas."
+
+#~ msgid "%u gsettings operations and %u dconf operations awaiting."
+#~ msgstr "Laukia %u gsettings ir %u dconf veiksmų."
 
 #~ msgid "Double [%s..%s]"
 #~ msgstr "Slankaus kablelio skaičius [%s..%s]"
 
 #~ msgid "Oops! Cannot find something at this path."
 #~ msgstr "Oi! Nepavyko kažko rasti šiame kelyje."
-
-#~ msgctxt "shortcut window"
-#~ msgid "Tree navigation"
-#~ msgstr "Medžio naršymas"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Expand"

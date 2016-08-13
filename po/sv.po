@@ -8,9 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-17 06:17+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-14 00:30+0300\n"
 "PO-Revision-Date: 2016-04-17 11:20+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -82,9 +81,22 @@ msgstr ""
 "Att redigera din konfiguration direkt är en avancerad funktion som kan "
 "förorsaka att program inte fungerar korrekt."
 
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
+msgid "Browse the keys used by installed applications."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
+msgid "Read keys descriptions and edit their values."
+msgstr ""
+
+#. a translatable version of project_group
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
+msgid "The GNOME Project"
+msgstr ""
+
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:144
+#: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf-redigerare"
 
@@ -93,7 +105,7 @@ msgid "Configuration editor for dconf"
 msgstr "Konfigurationsredigerare för dconf"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
-#: ../editor/dconf-editor.vala:146
+#: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Redigera hela din konfigurationsdatabas direkt"
 
@@ -122,24 +134,20 @@ msgid "A flag to enable maximized mode"
 msgstr "En flagga för att aktivera maximerat läge"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "En flagga för att aktivera helskärmsläge"
-
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
 msgid "A list of bookmarked paths"
 msgstr "En lista över bokmärkta sökvägar"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Innehåller alla sökvägar som bokmärkts av användaren som en vektor av "
 "strängar."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
 msgid "A flag to restore the last view"
 msgstr "En flagga för att återställa den sista vyn"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid ""
 "If 'true', Dconf Editor tries at launch to navigate to the path described in "
 "the 'saved-view' key."
@@ -147,11 +155,11 @@ msgstr ""
 "Om \"true\", kommer Dconf-redigeraren att vid uppstart navigera till "
 "sökvägen som beskrivs i nyckeln \"saved-view\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
 msgid "A path to restore the last view"
 msgstr "En sökväg för att återställa den senaste vyn"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
 msgid ""
 "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
@@ -159,11 +167,11 @@ msgstr ""
 "Om nyckeln \"restore-view\" är satt till \"true\" kommer Dconf-redigeraren "
 "att vid uppstart navigera till denna sökväg."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
 msgid "Show initial warning"
 msgstr "Visa första varning"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
 msgid ""
 "If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -171,19 +179,64 @@ msgstr ""
 "Om \"true\" kommer Dconf-redigeraren att öppna en popup vid uppstart som "
 "påminner användaren om att vara aktsam."
 
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+#, fuzzy
+msgid "A flag to enable small rows for keys list"
+msgstr "En flagga för att aktivera helskärmsläge"
+
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "If 'true', the keys list use smaller rows."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "A flag to enable small rows for bookmarks list"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "If 'true', the bookmarks list use smaller rows."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+#, fuzzy
+msgid "The theme of the navigation list"
+msgstr "Bredd för huvudfönstret i bildpunkter."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid ""
+"The themes are defined by the application, you cannot add one. The theme "
+"'three-twenty-two' will remain as close as possible to the default theme of "
+"the 3.22 release."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid "Change the behaviour of a key value change request"
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid ""
+"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+"type, it updates the key value each time something changes in the entry, so "
+"including intermediate states. The 'safe' value asks for confirmation in "
+"these cases, but allows instant changes for booleans and nullable booleans, "
+"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
+"values always asks for confirmation, but the first applies the change if you "
+"change path whereas the second dismiss it. The 'always-delay' value adds "
+"each change in delay mode, allowing to apply multiple keys at once."
+msgstr ""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
 msgid "A boolean, type \"b\""
 msgstr "En boolesk variabel, typ \"b\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgstr "Booleska variabler kan bara anta två värden, \"true\" eller \"false\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
 msgid "A nullable boolean, type \"mb\""
 msgstr "En boolesk variabel som kan vara null, typ \"mb\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a \"nothing\" value. A nullable boolean can only take three values, "
@@ -193,11 +246,11 @@ msgstr ""
 "kan anta ett \"ingenting\"-värde. En boolesk variabel som kan vara null kan "
 "bara anta tre värden, \"true\", \"false\" och \"nothing\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
 msgid "A byte (unsigned), type \"y\""
 msgstr "En byte (teckenlös), typ \"y\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:27
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -205,11 +258,11 @@ msgstr ""
 "Ett bytevärde är ett heltal mellan 0 och 255. Det kan användas för att "
 "skicka runt tecken."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:28
 msgid "A bytestring, type \"ay\""
 msgstr "En bytesträng, typ \"ay\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -219,11 +272,11 @@ msgstr ""
 "inte är giltig utf8. I det fallet är konventionen att nul-terminatortecken "
 "bör inkluderas som det sista tecknet i vektorn."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
 msgid "A bytestring array, type \"aay\""
 msgstr "En vektor av bytesträngar, typ \"aay\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -231,11 +284,11 @@ msgstr ""
 "Detta är typen av en vektor av bytesträngar. Bytesträngstypen används "
 "vanligen för att skicka runt strängar som kanske inte är giltig utf8."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:32
 msgid "A D-Bus handle type, type \"h\""
 msgstr "En D-Bus-handtagstyp, typ \"h\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -251,11 +304,11 @@ msgstr ""
 "Om du inte interagerar med D-Bus finns det ingen anledning att använda denna "
 "typ."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:36
 msgid "A D-Bus object path, type \"o\""
 msgstr "En D-Bus-objektsökväg, typ \"o\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus.\n"
@@ -269,11 +322,11 @@ msgstr ""
 "Om du inte interagerar med D-Bus finns det ingen anledning att använda denna "
 "typ."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:40
 msgid "A D-Bus object path array, type \"ao\""
 msgstr "En vektor av D-Bus-objektsökvägar, typ \"ao\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: \"[]\").\n"
@@ -287,11 +340,11 @@ msgstr ""
 "Om du inte interagerar med D-Bus finns det ingen anledning att använda denna "
 "typ."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
 msgid "A D-Bus signature, type \"g\""
 msgstr "En D-Bus-signatur, typ \"g\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message.\n"
@@ -305,20 +358,20 @@ msgstr ""
 "Om du inte interagerar med D-Bus finns det ingen anledning att använda denna "
 "typ."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
 msgid "A double, type \"d\""
 msgstr "Ett dubbelprecisionsflyttal, typ \"d\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
 msgid "A double value could represent any real number."
 msgstr ""
 "Ett dubbelprecisionsflyttal kan representera vilket reellt tal som helst."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
 msgid "A 5-choices enumeration"
 msgstr "En 5-vägsuppräkning"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
 msgid ""
 "Enumerations could be done either with the \"enum\" attribute, or with a "
 "\"choices\" tag."
@@ -326,73 +379,73 @@ msgstr ""
 "Uppräkningar kan göras antingen med attributet \"enum\", eller med en "
 "\"choices\"-tagg"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A short integer, type \"n\""
 msgstr "Ett kort heltal, typ \"n\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
 "Ett 16-bitars heltal med tecken. Se även nyckeln \"integer-16-unsigned\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "Flags: choose-colors-you-love"
 msgstr "Flaggor: välj-färgerna-du-tycker-om"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
 msgid "Flags could be set by the \"enum\" attribute."
 msgstr "Flaggor kan ställas in av attributet \"enum\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
 msgid "An unsigned short integer, type \"q\""
 msgstr "Ett kort, teckenlöst heltal, typ \"q\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
 msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
 "Ett 16-bitars teckenlöst heltal. Se även nyckeln \"integer-16-signed\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "An usual integer, type \"i\""
 msgstr "Ett vanligt heltal, typ \"i\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
 "Ett 32-bitars heltal med tecken. Se även nyckeln \"integer-32-unsigned\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
 msgid "An unsigned usual integer, type \"u\""
 msgstr "Ett vanligt teckenlöst heltal, typ \"u\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
 "Ett 32-bitars teckenlöst heltal. Se även nyckeln \"integer-32-signed\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
 msgid "A long integer, type \"x\""
 msgstr "Ett långt heltal, typ \"x\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
 "Ett 64-bitars heltal med tecken. Se även nyckeln \"integer-64-unsigned\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
 msgid "An unsigned long integer, type \"t\""
 msgstr "Ett långt teckenlöst heltal, typ \"t\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
 "Ett 64-bitars teckenlöst heltal. Se även nyckeln \"integer-64-signed\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid "A number with range"
 msgstr "Ett tal med intervall"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -401,11 +454,11 @@ msgstr ""
 "Varje numerisk inställning (heltal med tecken och teckenlösa heltal av varje "
 "typ samt dubbelprecisionsflyttal)"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
 msgid "A custom type, here \"(ii)\""
 msgstr "En anpassad typ, här \"(ii)\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:69
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn't have a better way to do. Here is a "
@@ -415,11 +468,11 @@ msgstr ""
 "stöds av GSettings, men faller tillbaka på en strängpost när det inte kan "
 "göra något bättre. Här finns en tupel av två 32-bitars heltal med tecken."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
 msgid "A string, type \"s\""
 msgstr "En sträng, typ \"s\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:71
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string "
 "\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
@@ -429,11 +482,11 @@ msgstr ""
 "sträng \"''\" inte är det samma som NULL (ingenting); se även nyckeln "
 "\"string-nullable\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
 msgid "A string array, type \"as\""
 msgstr "En strängvektor, typ \"as\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:73
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
@@ -441,11 +494,11 @@ msgstr ""
 "En strängvektor innehåller ett godtyckligt antal strängar av godtyckliga "
 "längder. Den kan vara den tomma vektorn, \"[]\"."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
 msgid "A nullable string, type \"ms\""
 msgstr "En sträng som kan vara null, typ \"ms\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:75
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a \"nothing\" value. A nullable string can take any string as value, "
@@ -455,6 +508,17 @@ msgstr ""
 "kan anta ett \"ingenting\"-värde. En sträng som kan vara null kan anta "
 "vilken sträng som helst som värde, inklusive den tomma strängen \"''\" eller "
 "kan vara NULL (ingenting)."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
+#, fuzzy
+msgid "A 1-choice enumeration"
+msgstr "En 5-vägsuppräkning"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:77
+msgid ""
+"An enumeration could contain only one item, but that's probably an error. "
+"Dconf Editor warns you in that case."
+msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
@@ -484,20 +548,16 @@ msgstr "Sök"
 msgid "Search keys"
 msgstr "Sök nycklar"
 
-#: ../editor/dconf-editor.ui.h:6
-msgid "No keys in this path"
-msgstr "Inga nycklar i denna sökväg"
-
 #: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Skriv ut utgåvans version och avsluta"
 
 #. #. * * Copy action
-#. #: ../editor/dconf-editor.vala:94
+#. #: ../editor/dconf-editor.vala:96
 msgid "Copied to clipboard"
 msgstr "Kopierat till urklipp"
 
-#: ../editor/dconf-editor.vala:147
+#: ../editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -505,7 +565,7 @@ msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:151
+#: ../editor/dconf-editor.vala:154
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -514,135 +574,116 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: ../editor/dconf-model.vala:200
+#: ../editor/dconf-model.vala:189
+msgid "Boolean"
+msgstr "Boolesk"
+
+#: ../editor/dconf-model.vala:191
+msgid "String"
+msgstr "Sträng"
+
+#: ../editor/dconf-model.vala:193
+msgid "String array"
+msgstr "Strängvektor"
+
+#: ../editor/dconf-model.vala:195
+msgid "Enumeration"
+msgstr "Uppräkning"
+
+#: ../editor/dconf-model.vala:197
+msgid "Flags"
+msgstr "Flaggor"
+
+#: ../editor/dconf-model.vala:199
+msgid "Double"
+msgstr ""
+
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-model.vala:202
+msgid "D-Bus handle type"
+msgstr "D-Bus-handtagstyp"
+
+#: ../editor/dconf-model.vala:204
+msgid "D-Bus object path"
+msgstr "D-Bus-objektsökväg"
+
+#: ../editor/dconf-model.vala:206
+msgid "D-Bus object path array"
+msgstr "D-Bus-objektsökvägsvektor"
+
+#: ../editor/dconf-model.vala:208
+msgid "D-Bus signature"
+msgstr "D-Bus-signatur"
+
+#: ../editor/dconf-model.vala:216
+#, fuzzy
+msgid "Integer"
+msgstr "Heltal [%s..%s]"
+
+#: ../editor/dconf-model.vala:300
 msgid "True"
 msgstr "Sant"
 
-#: ../editor/dconf-model.vala:202
+#: ../editor/dconf-model.vala:302
 msgid "False"
 msgstr "Falskt"
 
-#: ../editor/dconf-model.vala:203
+#: ../editor/dconf-model.vala:303
 msgid "Nothing"
 msgstr "Ingenting"
 
-#: ../editor/dconf-model.vala:208
+#: ../editor/dconf-model.vala:308
 msgid "true"
 msgstr "sant"
 
-#: ../editor/dconf-model.vala:210
+#: ../editor/dconf-model.vala:310
 msgid "false"
 msgstr "falskt"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: ../editor/dconf-model.vala:212
+#: ../editor/dconf-model.vala:312
 msgid "nothing"
 msgstr "ingenting (nothing)"
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:90
-msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
-"empty value. Strings, signatures and object paths should be surrounded by "
-"quotation marks."
+#: ../editor/dconf-view.vala:432
+msgid "This value is invalid for the key type."
 msgstr ""
-"Använd nyckelordet ”nothing” för att ställa in en kansketyp (som börjar med "
-"”m”) till dess tomma värde. Strängar, signaturer och objektsökvägar bör "
-"omges av citationstecken."
 
-#: ../editor/dconf-view.vala:92
-msgid ""
-"Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr "Strängar, signaturer och objektsökvägar bör omges av citationstecken."
-
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/dconf-view.vala:96
-msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
-"empty value."
-msgstr ""
-"Använd nyckelordet ”nothing” för att ställa in en kansketyp (börjar med ”m”) "
-"till dess tomma värde."
-
-#: ../editor/dconf-view.vala:115
-msgid "Boolean"
-msgstr "Boolesk"
-
-#: ../editor/dconf-view.vala:117
-msgid "String"
-msgstr "Sträng"
-
-#: ../editor/dconf-view.vala:119
-msgid "String array"
-msgstr "Strängvektor"
-
-#: ../editor/dconf-view.vala:121
-msgid "Enumeration"
-msgstr "Uppräkning"
-
-#: ../editor/dconf-view.vala:123
-msgid "Flags"
-msgstr "Flaggor"
-
-#: ../editor/dconf-view.vala:127
-#, c-format
-msgid "Double [%s..%s]"
-msgstr "Flyttal [%s..%s]"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: ../editor/dconf-view.vala:130
-msgid "D-Bus handle type"
-msgstr "D-Bus-handtagstyp"
-
-#: ../editor/dconf-view.vala:132
-msgid "D-Bus object path"
-msgstr "D-Bus-objektsökväg"
-
-#: ../editor/dconf-view.vala:134
-msgid "D-Bus object path array"
-msgstr "D-Bus-objektsökvägsvektor"
-
-#: ../editor/dconf-view.vala:136
-msgid "D-Bus signature"
-msgstr "D-Bus-signatur"
-
-#: ../editor/dconf-view.vala:146
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Heltal [%s..%s]"
-
-#: ../editor/dconf-window.vala:84
+#: ../editor/dconf-window.vala:122
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Tack för att du använder Dconf-redigeraren för att redigera dina "
 "inställningar!"
 
-#: ../editor/dconf-window.vala:85
+#: ../editor/dconf-window.vala:123
 msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
 "Glöm inte att vissa inställningar kan ta sönder program, så var aktsam."
 
-#: ../editor/dconf-window.vala:86
+#: ../editor/dconf-window.vala:124
 msgid "I'll be careful."
 msgstr "Jag kommer att vara aktsam."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:90
+#: ../editor/dconf-window.vala:128
 msgid "Show this dialog next time."
 msgstr "Visa denna dialog nästa gång."
 
-#: ../editor/dconf-window.vala:151
+#: ../editor/dconf-window.vala:232
 msgid "Copy current path"
 msgstr "Kopiera aktuell sökväg"
 
-#. TODO protection against some chars in text? 1/2
-#: ../editor/dconf-window.vala:153
+#: ../editor/dconf-window.vala:237
 msgid "Reset visible keys"
 msgstr "Återställ synliga nycklar"
 
-#: ../editor/dconf-window.vala:182
-msgid "Oops! Cannot find something at this path."
-msgstr "Kan inte hitta något i denna sökväg."
+#: ../editor/dconf-window.vala:238
+msgid "Reset recursively"
+msgstr ""
+
+#: ../editor/dconf-window.vala:246
+msgid "Enter delay mode"
+msgstr ""
 
 #: ../editor/help-overlay.ui.h:1
 msgctxt "shortcut window"
@@ -675,141 +716,330 @@ msgid "Actions menu"
 msgstr "Åtgärdsmeny"
 
 #: ../editor/help-overlay.ui.h:7
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Current row menu"
+msgstr "Åtgärder för aktuell vy"
+
+#: ../editor/help-overlay.ui.h:8
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Urklipp"
 
-#: ../editor/help-overlay.ui.h:8
+#: ../editor/help-overlay.ui.h:9
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Kopiera beskrivning"
 
-#: ../editor/help-overlay.ui.h:9
+#: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Kopiera sökväg"
 
-#: ../editor/help-overlay.ui.h:10
-msgctxt "shortcut window"
-msgid "Tree navigation"
-msgstr "Trädnavigering"
-
 #: ../editor/help-overlay.ui.h:11
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Expand"
-msgstr "Expandera"
+msgid "Path bar navigation"
+msgstr "Trädnavigering"
 
 #: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
-msgid "Expand all subtrees"
-msgstr "Expandera alla underträd"
+msgid "Open root folder"
+msgstr ""
 
 #: ../editor/help-overlay.ui.h:13
 msgctxt "shortcut window"
-msgid "Collapse"
-msgstr "Fäll ihop"
+msgid "Open parent folder"
+msgstr ""
 
 #: ../editor/help-overlay.ui.h:14
 msgctxt "shortcut window"
-msgid "Collapse all subtrees"
-msgstr "Fäll ihop alla underträd"
+msgid "Open active direct child"
+msgstr ""
 
 #: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Open active last child"
+msgstr ""
+
+#: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Allmänt"
 
-#: ../editor/help-overlay.ui.h:16
+#: ../editor/help-overlay.ui.h:17
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Visa denna hjälp"
 
-#: ../editor/help-overlay.ui.h:17
+#: ../editor/help-overlay.ui.h:18
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Om"
 
-#: ../editor/help-overlay.ui.h:18
+#: ../editor/help-overlay.ui.h:19
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Avsluta"
 
-#: ../editor/key-editor-no-schema.ui.h:1 ../editor/key-editor.ui.h:1
-msgid "Key Editor"
-msgstr "Nyckelredigerare"
+#: ../editor/key-list-box-row.vala:162
+msgid "No Schema Found"
+msgstr "Inget schema hittades"
 
-#: ../editor/key-editor-no-schema.ui.h:2 ../editor/key-editor.ui.h:2
-msgid "Cancel"
-msgstr "Avbryt"
+#: ../editor/key-list-box-row.vala:171
+msgid "Key erased."
+msgstr ""
 
-#: ../editor/key-editor-no-schema.ui.h:3 ../editor/key-editor.ui.h:3
+#: ../editor/key-list-box-row.vala:187
+#, c-format
+msgid "%s (key erased)"
+msgstr ""
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:389
+msgid "Customize…"
+msgstr "Anpassa…"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:392
+msgid "Set to default"
+msgstr "Ställ in till standard"
+
+#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
+#: ../editor/key-list-box-row.vala:397
+msgid "Dismiss change"
+msgstr ""
+
+#. Translators: "open folder" action in the right-click menu on a folder
+#: ../editor/key-list-box-row.vala:400
+msgid "Open"
+msgstr ""
+
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:525
+#: ../editor/registry-info.ui.h:2
+msgid "Erase key"
+msgstr ""
+
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: ../editor/key-list-box-row.vala:406
+msgid "Do not erase"
+msgstr ""
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:415
+msgid "Copy"
+msgstr "Kopiera"
+
+#. Translators: "no change" option in the right-click menu on a key when on delayed mode
+#: ../editor/key-list-box-row.vala:519
+msgid "No change"
+msgstr ""
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
+msgid "Default value"
+msgstr "Standardvärde"
+
+#: ../editor/modifications-revealer.ui.h:1
 msgid "Apply"
 msgstr "Tillämpa"
 
-#: ../editor/key-editor-no-schema.ui.h:4
+#: ../editor/modifications-revealer.vala:141
+msgid "Nothing to reset."
+msgstr ""
+
+#: ../editor/modifications-revealer.vala:241
+msgid "The value is invalid."
+msgstr ""
+
+#: ../editor/modifications-revealer.vala:245
+msgid "The change will be dismissed if you quit this view without applying."
+msgstr ""
+
+#: ../editor/modifications-revealer.vala:247
+msgid "The change will be applied on such request or if you quit this view."
+msgstr ""
+
+#: ../editor/modifications-revealer.vala:264
+msgid "Changes will be delayed until you request it."
+msgstr ""
+
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:266
+#, c-format
+msgid "One gsettings operation delayed."
+msgid_plural "%u gsettings operations delayed."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:270
+#, c-format
+msgid "One dconf operation delayed."
+msgid_plural "%u dconf operations delayed."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:273
+#, c-format
+msgid "%s%s"
+msgstr ""
+
+#: ../editor/modifications-revealer.vala:273
+#, fuzzy, c-format
+msgid "One gsettings operation"
+msgid_plural "%u gsettings operations"
+msgstr[0] "inställningar;konfiguration;"
+msgstr[1] "inställningar;konfiguration;"
+
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:278
+#, c-format
+msgid " and one dconf operation delayed."
+msgid_plural " and %u dconf operations delayed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../editor/registry-info.ui.h:1
+#, fuzzy
 msgid ""
-"No schema available. Dconf Editor can’t find a schema associated with this "
-"key. The application that installed this key may have been removed, may have "
-"stop the use of this key, or may use a relocatable schema for defining its "
-"keys."
+"&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
+"associated with this key. The application that installed this key may have "
+"been removed, may have stop the use of this key, or may use a relocatable "
+"schema for defining its keys."
 msgstr ""
 "Inga scheman tillgängliga. Dconf-redigeraren kan inte hitta ett schema som "
 "associerats med denna nyckel. Programmet som installerade denna nyckel kan "
 "ha tagits bort, ha slutat använda denna nyckel eller kan använda ett "
 "omlokaliseringsbart schema vid definition av dess nycklar."
 
-#. Translators: as in datatype (integer, boolean, string, etc.)
-#: ../editor/key-editor-no-schema.ui.h:6 ../editor/key-editor.ui.h:8
-msgid "Type"
-msgstr "Typ"
+#: ../editor/registry-info.ui.h:3
+msgid ""
+"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
+"probably an error of the application that installed this schema. If "
+"possible, please open a bug about it."
+msgstr ""
 
-#: ../editor/key-editor-no-schema.ui.h:7 ../editor/key-editor.ui.h:11
-msgid "Custom value"
-msgstr "Anpassat värde"
-
-#: ../editor/key-editor.ui.h:4
+#: ../editor/registry-info.vala:80
 msgid "Schema"
 msgstr "Schema"
 
-#: ../editor/key-editor.ui.h:5
+#: ../editor/registry-info.vala:81
 msgid "Summary"
 msgstr "Sammandrag"
 
-#: ../editor/key-editor.ui.h:6
+#: ../editor/registry-info.vala:82
 msgid "Description"
 msgstr "Beskrivning"
 
-#: ../editor/key-editor.ui.h:9
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/registry-info.vala:84
+msgid "Type"
+msgstr "Typ"
+
+#: ../editor/registry-info.vala:86
+msgid "Minimum"
+msgstr ""
+
+#: ../editor/registry-info.vala:87
+msgid "Maximum"
+msgstr ""
+
+#: ../editor/registry-info.vala:88
 msgid "Default"
 msgstr "Standard"
 
-#: ../editor/key-editor.ui.h:10
+#: ../editor/registry-info.vala:109
+#, fuzzy
+msgid "Current value"
+msgstr "Anpassat värde"
+
+#: ../editor/registry-info.vala:134
 msgid "Use default value"
 msgstr "Använd standardvärde"
 
-#: ../editor/key-list-box-row.vala:76
-msgid "No Schema Found"
-msgstr "Inget schema hittades"
+#: ../editor/registry-info.vala:192
+msgid "Custom value"
+msgstr "Anpassat värde"
 
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:202
-msgid "Customize…"
-msgstr "Anpassa…"
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/registry-info.vala:271
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+"Använd nyckelordet ”nothing” för att ställa in en kansketyp (som börjar med "
+"”m”) till dess tomma värde. Strängar, signaturer och objektsökvägar bör "
+"omges av citationstecken."
 
-#. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:205
-msgid "Set to default"
-msgstr "Ställ in till standard"
+#: ../editor/registry-info.vala:273
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr "Strängar, signaturer och objektsökvägar bör omges av citationstecken."
 
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:214
-msgid "Copy"
-msgstr "Kopiera"
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/registry-info.vala:277
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+"Använd nyckelordet ”nothing” för att ställa in en kansketyp (börjar med ”m”) "
+"till dess tomma värde."
 
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:336
-msgid "Default value"
-msgstr "Standardvärde"
+#: ../editor/registry-view.ui.h:1
+msgid "No keys in this path"
+msgstr "Inga nycklar i denna sökväg"
+
+#: ../editor/registry-view.vala:161
+#, c-format
+msgid "Cannot find folder \"%s\"."
+msgstr ""
+
+#: ../editor/registry-view.vala:179
+#, c-format
+msgid "Cannot find key \"%s\" here."
+msgstr ""
+
+#: ../editor/registry-view.vala:185
+#, c-format
+msgid "Key \"%s\" has been removed."
+msgstr ""
+
+#~ msgid "Double [%s..%s]"
+#~ msgstr "Flyttal [%s..%s]"
+
+#~ msgid "Oops! Cannot find something at this path."
+#~ msgstr "Kan inte hitta något i denna sökväg."
+
+#~ msgctxt "shortcut window"
+#~ msgid "Expand"
+#~ msgstr "Expandera"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Expand all subtrees"
+#~ msgstr "Expandera alla underträd"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Collapse"
+#~ msgstr "Fäll ihop"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Collapse all subtrees"
+#~ msgstr "Fäll ihop alla underträd"
+
+#~ msgid "Key Editor"
+#~ msgstr "Nyckelredigerare"
+
+#~ msgid "Cancel"
+#~ msgstr "Avbryt"
 
 #~ msgid "_Find…"
 #~ msgstr "_Sök…"
