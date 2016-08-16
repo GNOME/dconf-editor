@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-16 17:58+0200\n"
+"PO-Revision-Date: 2016-08-16 18:59+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -176,6 +176,8 @@ msgid ""
 "If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"Se VÊR, l'Editôr Dconf al vierç un popup, cuant che al ven inviât, par "
+"ricuardâ al utent di jessi prudent."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
 #, fuzzy
@@ -185,15 +187,15 @@ msgstr "Un flag par abilitâ la modalitât massimizade"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
 msgid "If 'true', the keys list use smaller rows."
-msgstr ""
+msgstr "Se VÊR, la liste des clâfs e doprarà riis plui piçulis."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
 msgid "A flag to enable small rows for bookmarks list"
-msgstr ""
+msgstr "Une opzion par ativâ riis piçulis pe liste dai segnelibris"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
 msgid "If 'true', the bookmarks list use smaller rows."
-msgstr ""
+msgstr "Se VÊR, la liste dai segnelibris e doprarà riis plui piçulis."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
 #, fuzzy
@@ -512,7 +514,7 @@ msgstr ""
 
 #: ../editor/dconf-editor.vala:154
 msgid "translator-credits"
-msgstr ""
+msgstr "Fabio Tomat, <f.t.public@gmail.com>"
 
 #: ../editor/dconf-model.vala:189
 msgid "Boolean"
