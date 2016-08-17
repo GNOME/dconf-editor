@@ -73,7 +73,7 @@ class RegistryView : Grid, PathElement
     * * Stack switching
     \*/
 
-    private void show_browse_view (string path, string? selected)
+    private void show_browse_view (string path, string? selected, bool grab = true)
     {
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         update_current_path (path);
@@ -84,16 +84,13 @@ class RegistryView : Grid, PathElement
             ListBoxRow? row = key_list_box.get_row_at_index (get_row_position ((!) selected));
             if (row == null)
                 assert_not_reached ();
-            scroll_to_row ((!) row);
+            scroll_to_row ((!) row, grab);
         }
         else
         {
             ListBoxRow? row = key_list_box.get_row_at_index (0);
             if (row != null)
-            {
-                key_list_box.select_row (row);
-                row.grab_focus ();
-            }
+                scroll_to_row ((!) row, grab);
         }
         properties_view.clean ();
     }
@@ -109,10 +106,11 @@ class RegistryView : Grid, PathElement
         }
         assert_not_reached ();
     }
-    private void scroll_to_row (ListBoxRow row)
+    private void scroll_to_row (ListBoxRow row, bool grab)
     {
         key_list_box.select_row (row);
-        row.grab_focus ();
+        if (grab)
+            row.grab_focus ();
 
         Allocation list_allocation, row_allocation;
         stack.get_allocation (out list_allocation);
@@ -502,13 +500,17 @@ class RegistryView : Grid, PathElement
         {
             Directory dir = model.get_directory (iter);
 
-            if (!on_first_directory && dir.name.index_of (search_entry.text) >= 0)
+            if (!on_first_directory)
             {
-                dir_tree_selection.select_iter (iter);
-                show_browse_view (dir.full_name, null);
-                return;
+                if (dir.name.index_of (search_entry.text) >= 0)
+                {
+                    dir_tree_selection.select_iter (iter);
+                    show_browse_view (dir.full_name, null, false);
+                    return;
+                }
             }
-            on_first_directory = false;
+            else
+                on_first_directory = false;
 
             /* Select next key that matches */
             GLib.ListStore key_model = dir.key_model;
@@ -519,7 +521,7 @@ class RegistryView : Grid, PathElement
                 {
                     dir_tree_selection.select_iter (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
-                    show_browse_view (dir.full_name, null);
+                    show_browse_view (dir.full_name, object.name, false);
                     return;
                 }
                 else if (object is Key)
