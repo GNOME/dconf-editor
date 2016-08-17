@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-17 15:18+0200\n"
+"PO-Revision-Date: 2016-08-17 15:45+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -296,7 +296,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:32
 msgid "A D-Bus handle type, type \"h\""
-msgstr ""
+msgstr "Un gjenar handle D-Bus, scrîf \"h\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:33
 msgid ""
@@ -307,10 +307,16 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Il gjenar handle al è un valôr intîr a 32 bit cun segn che, par convenzion, "
+"al ven doprât come indiç di un array di descritôrs di file inviâts adun "
+"cuntun messaç D-Bus.\n"
+"\n"
+"Gjavant il câs che no si stedi interagjint cun D-Bus, no'nd è altris motîfs "
+"par doprâ chest gjenar."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:36
 msgid "A D-Bus object path, type \"o\""
-msgstr ""
+msgstr "Un percors di ogjet D-Bus, scrîf \"o\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:37
 msgid ""
@@ -320,10 +326,15 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Un percors di ogjet al ven doprât par identificâ ogjets D-Bus a une "
+"destinazion sul bus.\n"
+"\n"
+"Gjavant il câs che no si stedi interagjint cun D-Bus, no'nd è altris motîfs "
+"par doprâ chest gjenar."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:40
 msgid "A D-Bus object path array, type \"ao\""
-msgstr ""
+msgstr "Un array di percors di ogjets D-Bus, scrîf \"ao\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:41
 msgid ""
@@ -333,10 +344,15 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Un array di percors di ogjets al pues contignî un cualsisei numar di percors "
+"(ancje nissun: \"[]\").\n"
+"\n"
+"Gjavant il câs che si stedi interagjint cun D-Bus, no'nd è altis motîfs par "
+"doprâ chest gjenar."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:44
 msgid "A D-Bus signature, type \"g\""
-msgstr ""
+msgstr "Une firme D-Bus, scrîf \"g\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:45
 msgid ""
@@ -346,14 +362,19 @@ msgid ""
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
 msgstr ""
+"Une firme D-Bus e je une stringhe doprade come gjenar firme par un metodi o "
+"messaç di D-Bus.\n"
+"\n"
+"Gjavant il câs che no si stedi interagjint cun D-Bus, no'nd è altris motîfs "
+"par doprâ chest gjenar."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
 msgid "A double, type \"d\""
-msgstr ""
+msgstr "Un dopli, scrîf \"d\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
 msgid "A double value could represent any real number."
-msgstr ""
+msgstr "Un valôr dopli al pues rapresentâ cualsisei numar reâl."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
 msgid "A 5-choices enumeration"
