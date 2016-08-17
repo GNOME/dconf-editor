@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-16 20:35+0200\n"
+"PO-Revision-Date: 2016-08-17 15:18+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -56,8 +56,6 @@ msgid "Remove this bookmark"
 msgstr "Gjave chest segnelibri"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
-#, fuzzy
-#| msgid "dconf Editor"
 msgid "Dconf Editor"
 msgstr "Editôr di dconf"
 
@@ -180,10 +178,8 @@ msgstr ""
 "ricuardâ al utent di jessi prudent."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
-#, fuzzy
-#| msgid "A flag to enable maximized mode"
 msgid "A flag to enable small rows for keys list"
-msgstr "Un flag par abilitâ la modalitât massimizade"
+msgstr "Une opzion par abilitâ lis riis piçulis pe liste des clâfs"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
 msgid "If 'true', the keys list use smaller rows."
@@ -268,10 +264,12 @@ msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
+"Un valôr byte al è un intîr comprindût tra 0 e 255; al pues jessi doprât par "
+"passâ caratars."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:28
 msgid "A bytestring, type \"ay\""
-msgstr ""
+msgstr "Une stringhe di byte, gjenar \"ay\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
 msgid ""
@@ -279,16 +277,22 @@ msgid ""
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
+"Il gjenar stringhe di byte al è di solit doprât par passâ stringhis che a "
+"puedin jessi utf8 no valit. In chel câs, par convenzion, il caratar terminâl "
+"nul al varès di jessi includût come ultin caratar dal array."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
 msgid "A bytestring array, type \"aay\""
-msgstr ""
+msgstr "Un array di stringhis di byte, gjenar \"aay\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
+"Chest al è il gjenar par un array componût di stringhis di byte. Il gjenar "
+"stringhis di byte al è di solit doprât par passâ stringhis che a podaressin "
+"jessi utf8 no valit."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:32
 msgid "A D-Bus handle type, type \"h\""
@@ -485,7 +489,7 @@ msgstr ""
 
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Scurtis di tastiere"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -497,7 +501,7 @@ msgstr "_Jessi"
 
 #: ../editor/dconf-editor.ui.h:2
 msgid "Actions"
-msgstr ""
+msgstr "Azions"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Current view actions"
@@ -513,18 +517,20 @@ msgstr ""
 
 #: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
-msgstr ""
+msgstr "Mostre la version dal program e jes"
 
 #. #. * * Copy action
 #. #: ../editor/dconf-editor.vala:96
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Copiât tes notis"
 
 #: ../editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: ../editor/dconf-editor.vala:154
 msgid "translator-credits"
@@ -539,10 +545,8 @@ msgid "String"
 msgstr "Stringhe"
 
 #: ../editor/dconf-model.vala:193
-#, fuzzy
-#| msgid "String"
 msgid "String array"
-msgstr "Stringhe"
+msgstr "Array di stringhis"
 
 #: ../editor/dconf-model.vala:195
 msgid "Enumeration"
@@ -550,11 +554,11 @@ msgstr "Enumerazion"
 
 #: ../editor/dconf-model.vala:197
 msgid "Flags"
-msgstr ""
+msgstr "Opzions"
 
 #: ../editor/dconf-model.vala:199
 msgid "Double"
-msgstr ""
+msgstr "Dopli"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
 #: ../editor/dconf-model.vala:202
@@ -574,60 +578,60 @@ msgid "D-Bus signature"
 msgstr ""
 
 #: ../editor/dconf-model.vala:216
-#, fuzzy
-#| msgid "Integer [%s..%s]"
 msgid "Integer"
-msgstr "Intîr [%s..%s]"
+msgstr "Intîr"
 
 #: ../editor/dconf-model.vala:300
 msgid "True"
-msgstr ""
+msgstr "Vêr"
 
 #: ../editor/dconf-model.vala:302
 msgid "False"
-msgstr ""
+msgstr "Fals"
 
 #: ../editor/dconf-model.vala:303
 msgid "Nothing"
-msgstr ""
+msgstr "Nuie"
 
 #: ../editor/dconf-model.vala:308
 msgid "true"
-msgstr ""
+msgstr "vêr"
 
 #: ../editor/dconf-model.vala:310
 msgid "false"
-msgstr ""
+msgstr "fals"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
 #: ../editor/dconf-model.vala:312
 msgid "nothing"
-msgstr ""
+msgstr "nuie"
 
 #: ../editor/dconf-view.vala:432
 msgid "This value is invalid for the key type."
-msgstr ""
+msgstr "Chest valôr nol è valit pal gjenar di clâf."
 
 #: ../editor/dconf-window.vala:122
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr ""
+msgstr "Gracie di doprâ l'Editôr Dconf par modificâ la proprie configurazion!"
 
 #: ../editor/dconf-window.vala:123
 msgid "Don't forget that some options may break applications, so be careful."
 msgstr ""
+"No stâ dismenteâ che cualchi opzion e pues comprometi lis aplicazions, "
+"duncje sta atent."
 
 #: ../editor/dconf-window.vala:124
 msgid "I'll be careful."
-msgstr ""
+msgstr "O starai atent."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 #: ../editor/dconf-window.vala:128
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "Mostre chest dialic la prossime volte."
 
 #: ../editor/dconf-window.vala:232
 msgid "Copy current path"
-msgstr ""
+msgstr "Copie il percors atuâl"
 
 #: ../editor/dconf-window.vala:237
 msgid "Reset visible keys"
@@ -644,42 +648,42 @@ msgstr ""
 #: ../editor/help-overlay.ui.h:1
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Azions"
 
 #: ../editor/help-overlay.ui.h:2
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "Menù segnelibris"
 
 #: ../editor/help-overlay.ui.h:3
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "Salve chest percors tai segnelibris"
 
 #: ../editor/help-overlay.ui.h:4
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "Gjave chest percors dai segnelibris"
 
 #: ../editor/help-overlay.ui.h:5
 msgctxt "shortcut window"
 msgid "Search bar"
-msgstr ""
+msgstr "Sbare di ricercje"
 
 #: ../editor/help-overlay.ui.h:6
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "Menù azions"
 
 #: ../editor/help-overlay.ui.h:7
 msgctxt "shortcut window"
 msgid "Current row menu"
-msgstr ""
+msgstr "Menù rie atuâl"
 
 #: ../editor/help-overlay.ui.h:8
 msgctxt "shortcut window"
 msgid "Clipboard"
-msgstr ""
+msgstr "Notis"
 
 #: ../editor/help-overlay.ui.h:9
 msgctxt "shortcut window"
@@ -689,7 +693,7 @@ msgstr ""
 #: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr ""
+msgstr "Copie percors"
 
 #: ../editor/help-overlay.ui.h:11
 msgctxt "shortcut window"
@@ -719,80 +723,72 @@ msgstr ""
 #: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
 msgid "Generic"
-msgstr ""
+msgstr "Gjeneric"
 
 #: ../editor/help-overlay.ui.h:17
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr ""
+msgstr "Mostre chest jutori"
 
 #: ../editor/help-overlay.ui.h:18
-#, fuzzy
-#| msgid "_About"
 msgctxt "shortcut window"
 msgid "About"
-msgstr "_Par chest cont"
+msgstr "Informazions"
 
 #: ../editor/help-overlay.ui.h:19
-#, fuzzy
-#| msgid "_Quit"
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "_Jessi"
+msgstr "Jes"
 
 #: ../editor/key-list-box-row.vala:162
-#, fuzzy
-#| msgid "No schema"
 msgid "No Schema Found"
-msgstr "No scheme"
+msgstr "Nissun scheme cjatât"
 
 #: ../editor/key-list-box-row.vala:171
 msgid "Key erased."
-msgstr ""
+msgstr "Clâf scancelade."
 
 #: ../editor/key-list-box-row.vala:187
 #, c-format
 msgid "%s (key erased)"
-msgstr ""
+msgstr "%s (clâf scancelade)"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:389
 msgid "Customize…"
-msgstr ""
+msgstr "Personalize..."
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:392
-#, fuzzy
-#| msgid "Set to Default"
 msgid "Set to default"
-msgstr "Imposte ai valôrs di Default"
+msgstr "Met i valôrs predefinîts"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: ../editor/key-list-box-row.vala:397
 msgid "Dismiss change"
-msgstr ""
+msgstr "Scarte la modifiche"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: ../editor/key-list-box-row.vala:400
 msgid "Open"
-msgstr ""
+msgstr "Vierç"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
 #: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:525
 #: ../editor/registry-info.ui.h:2
 msgid "Erase key"
-msgstr ""
+msgstr "Scancele clâf"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
 #: ../editor/key-list-box-row.vala:406
 msgid "Do not erase"
-msgstr ""
+msgstr "No stâ scancelâ"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:415
 msgid "Copy"
-msgstr ""
+msgstr "Copie"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
 #: ../editor/key-list-box-row.vala:519
@@ -801,14 +797,12 @@ msgstr ""
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
-#, fuzzy
-#| msgid "Default:"
 msgid "Default value"
-msgstr "Default:"
+msgstr "Valôr predefinît"
 
 #: ../editor/modifications-revealer.ui.h:1
 msgid "Apply"
-msgstr ""
+msgstr "Apliche"
 
 #: ../editor/modifications-revealer.vala:141
 msgid "Nothing to reset."
@@ -816,15 +810,18 @@ msgstr ""
 
 #: ../editor/modifications-revealer.vala:241
 msgid "The value is invalid."
-msgstr ""
+msgstr "Il valôr nol è valit."
 
 #: ../editor/modifications-revealer.vala:245
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
+"La modifiche e vegnarà scartade se tu jessis di cheste viodude cence aplicâ."
 
 #: ../editor/modifications-revealer.vala:247
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
+"La modifiche e vegnarà aplicade ae richieste o se tu jessarâs di cheste "
+"viodude."
 
 #: ../editor/modifications-revealer.vala:264
 msgid "Changes will be delayed until you request it."
@@ -887,55 +884,45 @@ msgid ""
 msgstr ""
 
 #: ../editor/registry-info.vala:80
-#, fuzzy
-#| msgid "Schema:"
 msgid "Schema"
-msgstr "Scheme:"
+msgstr "Scheme"
 
 #: ../editor/registry-info.vala:81
-#, fuzzy
-#| msgid "Summary:"
 msgid "Summary"
-msgstr "Sumari:"
+msgstr "Somari"
 
 #: ../editor/registry-info.vala:82
-#, fuzzy
-#| msgid "Description:"
 msgid "Description"
-msgstr "Descrizion:"
+msgstr "Descrizion"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
 #: ../editor/registry-info.vala:84
-#, fuzzy
-#| msgid "Type:"
 msgid "Type"
-msgstr "Tipo:"
+msgstr "Gjenar"
 
 #: ../editor/registry-info.vala:86
 msgid "Minimum"
-msgstr ""
+msgstr "Minim"
 
 #: ../editor/registry-info.vala:87
 msgid "Maximum"
-msgstr ""
+msgstr "Massim"
 
 #: ../editor/registry-info.vala:88
-#, fuzzy
-#| msgid "Default:"
 msgid "Default"
-msgstr "Default:"
+msgstr "Predefinît"
 
 #: ../editor/registry-info.vala:109
 msgid "Current value"
-msgstr ""
+msgstr "Valôr atuâl"
 
 #: ../editor/registry-info.vala:134
 msgid "Use default value"
-msgstr ""
+msgstr "Dopre valôr predefinît"
 
 #: ../editor/registry-info.vala:192
 msgid "Custom value"
-msgstr ""
+msgstr "Valôr personalizât"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: ../editor/registry-info.vala:271
@@ -959,22 +946,22 @@ msgstr ""
 
 #: ../editor/registry-view.ui.h:1
 msgid "No keys in this path"
-msgstr ""
+msgstr "Nissune clâf in chest percors"
 
 #: ../editor/registry-view.vala:161
 #, c-format
 msgid "Cannot find folder \"%s\"."
-msgstr ""
+msgstr "Impussibil cjatâ la cartele \"%s\"."
 
 #: ../editor/registry-view.vala:179
 #, c-format
 msgid "Cannot find key \"%s\" here."
-msgstr ""
+msgstr "Impussibil cjatâ chi la clâf \"%s\"."
 
 #: ../editor/registry-view.vala:185
 #, c-format
 msgid "Key \"%s\" has been removed."
-msgstr ""
+msgstr "La clâf \"%s\" e je stade gjavade."
 
 #~ msgid "Not found"
 #~ msgstr "No cjatât"
