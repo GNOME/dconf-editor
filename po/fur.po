@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-17 15:45+0200\n"
+"PO-Revision-Date: 2016-08-17 18:47+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -388,43 +388,47 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A short integer, type \"n\""
-msgstr ""
+msgstr "Un intîr curt, scrîf \"n\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
+"Un intîr cun segn di 16 bit; viôt ancje la clâf \"integer-16-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
 msgid "Flags: choose-colors-you-love"
-msgstr ""
+msgstr "Opzions: sielç-colôrs-che-ti-plasin"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
 msgid "Flags could be set by the \"enum\" attribute."
-msgstr ""
+msgstr "Lis opzions si puedin stabilî cul atribût \"enum\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
 msgid "An unsigned short integer, type \"q\""
-msgstr ""
+msgstr "Un intîr curt cence segn, scrîf \"q\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
 msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
+"Un intîr cence segn a 16 bit; viôt ancje la clâf \"integer-16-signed\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
 msgid "An usual integer, type \"i\""
-msgstr ""
+msgstr "Un intîr nomâl, scrîf \"i\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
+"Un intîr cun segn a 32 bit; viôt ancje la clâf \"integer-32-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
 msgid "An unsigned usual integer, type \"u\""
-msgstr ""
+msgstr "Un intîr normâl cence segn, scrîf \"u\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
+"Un intîr cence segn a 32 bit; viôt ancje la clâf \"integer-32-signed\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
 msgid "A long integer, type \"x\""
