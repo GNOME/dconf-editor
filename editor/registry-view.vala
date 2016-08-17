@@ -86,6 +86,15 @@ class RegistryView : Grid, PathElement
                 assert_not_reached ();
             scroll_to_row ((!) row);
         }
+        else
+        {
+            ListBoxRow? row = key_list_box.get_row_at_index (0);
+            if (row != null)
+            {
+                key_list_box.select_row (row);
+                row.grab_focus ();
+            }
+        }
         properties_view.clean ();
     }
     private int get_row_position (string selected)
@@ -103,6 +112,7 @@ class RegistryView : Grid, PathElement
     private void scroll_to_row (ListBoxRow row)
     {
         key_list_box.select_row (row);
+        row.grab_focus ();
 
         Allocation list_allocation, row_allocation;
         stack.get_allocation (out list_allocation);
