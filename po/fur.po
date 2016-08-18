@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-18 12:31+0200\n"
+"PO-Revision-Date: 2016-08-18 14:33+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -194,10 +194,8 @@ msgid "If 'true', the bookmarks list use smaller rows."
 msgstr "Se VÊR, la liste dai segnelibris e doprarà riis plui piçulis."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
-#, fuzzy
-#| msgid "The width of the main window in pixels."
 msgid "The theme of the navigation list"
-msgstr "La largjece dal barcon principâl in pixel."
+msgstr "Il teme de liste di navigazion"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
 msgid ""
@@ -481,7 +479,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
 msgid "A string, type \"s\""
-msgstr ""
+msgstr "Une stringhe, scrîf \"s\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:71
 msgid ""
@@ -489,20 +487,25 @@ msgid ""
 "\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
 "key."
 msgstr ""
+"Un gjenar stringhe al pues acetâ cualsisei stringhe in utf8. Ten di ment che "
+"une stringhe vueide \"''\" no je la stesse robe di NULL (nuie); viôt ancje "
+"la clâf \"string-nullable\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
 msgid "A string array, type \"as\""
-msgstr ""
+msgstr "Un array di stringhis, scrîf \"as\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:73
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
 msgstr ""
+"Un array di stringhis al ten un cualsisei numar di stringhi di cualsisei "
+"lungjece. Al pues jessi un array vueit, \"[]\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
 msgid "A nullable string, type \"ms\""
-msgstr ""
+msgstr "Une stringhe anulabile, scrîf \"ms\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:75
 msgid ""
@@ -510,18 +513,22 @@ msgid ""
 "take a \"nothing\" value. A nullable string can take any string as value, "
 "including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
+"GSettings al permet gjenars anulabii, chei a son come chei altris gjenars ma "
+"a puedin vê un valôr \"nuie\". Une stringhe anulabile e pues vê cualsisei "
+"stringhe come valôr, ancje une stringhe vueide \"''\" o e pues jessi NULL "
+"(nuie)."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
-#, fuzzy
-#| msgid "Enumeration"
 msgid "A 1-choice enumeration"
-msgstr "Enumerazion"
+msgstr "Une enumerazion a 1 sielte"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:77
 msgid ""
 "An enumeration could contain only one item, but that's probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
+"Une enumerazion e pues contignî nome un element, ma al è facil che chel al "
+"sedi un erôr. L'Editôr Dconf, in chel câs, ti vise."
 
 #: ../editor/dconf-editor-menu.ui.h:1
 msgid "Keyboard Shortcuts"
@@ -967,11 +974,16 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"Dopre la peraule clâf \"nothing\" par meti un gjenar di pussibilitât (che al "
+"tache cun \"m\") al so valôr vueit. Stringhis, firmis e percors di ogjet a "
+"varessin di jessi sierâts tra virgulutis."
 
 #: ../editor/registry-info.vala:273
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
+"Stringhis, firmis e percors di ogjet e varessin di jessi sierâts tra "
+"virgulutis."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: ../editor/registry-info.vala:277
@@ -979,6 +991,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"Dopre la peraule clâf \"nothing\" par meti un gjenar di pussibilitât (che al "
+"tache cun \"m\") al so valôr vueit."
 
 #: ../editor/registry-view.ui.h:1
 msgid "No keys in this path"
