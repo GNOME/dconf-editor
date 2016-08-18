@@ -259,7 +259,12 @@ class RegistryInfo : Grid
         separator.margin_bottom = 5;
         separator.margin_top = 5;
         separator.show ();
-        properties_list_box.add (separator);
+
+        ListBoxRow row = new ListBoxRow ();
+        row.add (separator);
+        row.set_sensitive (false);
+        row.show ();
+        properties_list_box.add (row);
     }
 
     private static Widget? add_warning (string type)
