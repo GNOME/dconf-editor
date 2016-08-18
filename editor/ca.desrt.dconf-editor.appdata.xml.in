@@ -22,11 +22,11 @@
   <screenshots>
     <screenshot type="default" height="576" width="1024">
       <image>https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot1.png</image>
-      <_caption>Browse the keys used by installed applications.</_caption>
+      <_caption>Browse the keys used by installed applications</_caption>
     </screenshot>
     <screenshot type="default" height="576" width="1024">
       <image>https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot2.png</image>
-      <_caption>Read keys descriptions and edit their values.</_caption>
+      <_caption>Read keys descriptions and edit their values</_caption>
     </screenshot>
   </screenshots>
 
