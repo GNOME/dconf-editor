@@ -1,3 +1,20 @@
+dconf-editor 3.21.90
+=====================
+
+Mainly polished the new UI, including improving keyboard navigation and updating
+some metadatas. Looks quite good for an exciting new stable release, but please,
+test! :)
+
+Translations updated:
+  British English: David King
+  Czech: Marek Černocký
+  Friulian: Fabio Tomat
+  Hebrew: Yosef Or Boczko
+  Lithuanian: Aurimas Černius
+  Portuguese: Tiago Santos
+  Slovak: Dušan Kazik
+  Spanish: Daniel Mustieles
+
 dconf-editor 3.21.4
 =====================
 
