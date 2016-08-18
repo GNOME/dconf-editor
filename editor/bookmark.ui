@@ -18,6 +18,8 @@
       <object class="GtkButton" id="destroy_button">
         <property name="visible">True</property>
         <property name="margin">2</property>
+        <property name="valign">center</property>
+        <property name="vexpand">True</property>
         <style>
           <class name="image-button"/>
           <class name="circular"/>
