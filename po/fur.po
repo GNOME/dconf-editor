@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-17 18:47+0200\n"
+"PO-Revision-Date: 2016-08-18 12:31+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -378,13 +378,15 @@ msgstr "Un valôr dopli al pues rapresentâ cualsisei numar reâl."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
 msgid "A 5-choices enumeration"
-msgstr ""
+msgstr "Une enumerazion a 5 sieltis"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
 msgid ""
 "Enumerations could be done either with the \"enum\" attribute, or with a "
 "\"choices\" tag."
 msgstr ""
+"Lis enumerazions a puedin jessi fatis a mieç dal atribût \"enum\" o cun la "
+"etichete \"choices\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
 msgid "A short integer, type \"n\""
@@ -432,23 +434,25 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
 msgid "A long integer, type \"x\""
-msgstr ""
+msgstr "Un intîr lunc, scrîf \"x\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
+"Un intîr cun segn a 64 bit; viôt ancje la clâf \"integer-64-unsigned\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
 msgid "An unsigned long integer, type \"t\""
-msgstr ""
+msgstr "Un intîr lunc cence segn, scrîf \"t\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
+"Un intîr cence segn a 64 bit; viôt ancje la clâf \"integer-64-signed\"."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid "A number with range"
-msgstr ""
+msgstr "Un numar intun interval"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid ""
@@ -456,10 +460,13 @@ msgid ""
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -5 and 9."
 msgstr ""
+"Dutis lis impostazions numerichis (intîrs, intîrs cence segn di ducj i "
+"gjenars e i doplis) a puedin jessi limitâts intun interval di valôrs "
+"personalizât. Par esempli, chest intîr al pues nome vê un valôr tra -5 e 9."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
 msgid "A custom type, here \"(ii)\""
-msgstr ""
+msgstr "Un gjenar personalizât, in chest câs \"(ii)\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:69
 msgid ""
@@ -467,6 +474,10 @@ msgid ""
 "back on a string entry when it doesn't have a better way to do. Here is a "
 "tuple of two 32bit signed integers."
 msgstr ""
+"L'Editôr Dconf ti permet di modificâ ducj i gjenars di impostazions "
+"supuartâts di GSettings, doprant stringhis tal câs che nol sedi bon di "
+"gjestî il dât. Chê chi daurman e je une tuple di doi intîrs di 32 bit cun "
+"segn."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
 msgid "A string, type \"s\""
@@ -534,11 +545,11 @@ msgstr ""
 
 #: ../editor/dconf-editor.ui.h:4
 msgid "Search"
-msgstr ""
+msgstr "Cîr"
 
 #: ../editor/dconf-editor.ui.h:5
 msgid "Search keys"
-msgstr ""
+msgstr "Tascj di ricercje"
 
 #: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
