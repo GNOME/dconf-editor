@@ -278,7 +278,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
-        string name = Gdk.keyval_name (event.keyval) ?? "";
+        string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
 
         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
         {
@@ -346,7 +346,12 @@ class DConfWindow : ApplicationWindow
                 return true;
             }
             else if (name == "Down")
-                return pathbar.open_child ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0 ? null : current_path);
+            {
+                if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
+                    return pathbar.open_child (null);
+                else
+                    return pathbar.open_child (current_path);
+            }
         }
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
