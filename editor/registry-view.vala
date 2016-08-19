@@ -95,11 +95,12 @@ class RegistryView : Grid, PathElement
         properties_view.clean ();
     }
     private int get_row_position (string selected)
+        requires (key_model != null)
     {
         uint position = 0;
-        while (position < key_model.get_n_items ())
+        while (position < ((!) key_model).get_n_items ())
         {
-            SettingObject object = (SettingObject) key_model.get_object (position);
+            SettingObject object = (SettingObject) ((!) key_model).get_object (position);
             if (object.name == selected)
                 return (int) position;
             position++;
@@ -235,11 +236,12 @@ class RegistryView : Grid, PathElement
         return false;
     }
     private Key? get_key_from_name (string key_name)
+        requires (key_model != null)
     {
         uint position = 0;
-        while (position < key_model.get_n_items ())
+        while (position < ((!) key_model).get_n_items ())
         {
-            SettingObject object = (SettingObject) key_model.get_object (position);
+            SettingObject object = (SettingObject) ((!) key_model).get_object (position);
             if (object is Key && object.name == key_name)
                 return (Key) object;
             position++;
@@ -249,7 +251,14 @@ class RegistryView : Grid, PathElement
 
     private DConfWindow get_dconf_window ()
     {
-        return (DConfWindow) this.get_parent ().get_parent ();
+        return (DConfWindow) _get_parent (_get_parent (this));
+    }
+    private Widget _get_parent (Widget widget)
+    {
+        Widget? parent = widget.get_parent ();
+        if (parent == null)
+            assert_not_reached ();
+        return (!) parent;
     }
 
     /*\
@@ -346,7 +355,7 @@ class RegistryView : Grid, PathElement
         ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
         while (row != null)
         {
-            row.destroy_popover ();
+            ((!) row).destroy_popover ();
             position++;
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
         }
@@ -462,8 +471,11 @@ class RegistryView : Grid, PathElement
 
     public string? get_selected_row_text ()
     {
-        ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
-        return selected_row == null ? null : ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return null;
+        else
+            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
     }
 
     public void discard_row_popover ()
