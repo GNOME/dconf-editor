@@ -908,23 +908,23 @@ msgstr[2] " a %u operací dconf byly odloženy."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
-"&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
+"<b>No schema available.</b> Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
 "been removed, may have stop the use of this key, or may use a relocatable "
 "schema for defining its keys."
 msgstr ""
-"&#60;b&#62;Není dostupné žádné schéma.&#60;/b&#62; Editor dconf nemůže najít "
+"<b>Není dostupné žádné schéma.</b> Editor dconf nemůže najít "
 "schéma přiřazené k tomuto klíči. Aplikace, která nainstalovala tento klíč, "
 "byla možná odstraněna, nebo přestala tento klíč používat, nebo může používat "
 "přemístitelné schéma pro definici svých klíčů."
 
 #: ../editor/registry-info.ui.h:3
 msgid ""
-"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
+"<b>This enumeration offers only one choice.</b> That’s "
 "probably an error of the application that installed this schema. If "
 "possible, please open a bug about it."
 msgstr ""
-"&#60;b&#62;Výčet nabízí jen jednu volbu.&#60;/b&#62; Pravděpodobně se jedná "
+"<b>Výčet nabízí jen jednu volbu.</b> Pravděpodobně se jedná "
 "o chybu aplikace, která toto schéma nainstalovala. Jestli je to možné, "
 "nahlaste prosím příslušnou chybu."
 

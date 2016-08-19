@@ -914,12 +914,12 @@ msgstr[0] "dan %u operasi dconf ditunda."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
-"&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
+"<b>No schema available.</b> Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
 "been removed, may have stop the use of this key, or may use a relocatable "
 "schema for defining its keys."
 msgstr ""
-"&#60;b&#62;Tidak tersedia skema.&#60;/b&#62;  Penyunting DConf tak bisa "
+"<b>Tidak tersedia skema.</b> Penyunting DConf tak bisa "
 "menemukan suatu skema yang berasosiasi dengan kunci ini. Aplikasi yang "
 "memasang kunci ini mungkin telah dihapus, tidak memakai kunci ini lagi, atau "
 "mungkin memakai skema yang dapat direlokasi untuk mendefinisikan kunci-"
@@ -927,11 +927,11 @@ msgstr ""
 
 #: ../editor/registry-info.ui.h:3
 msgid ""
-"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
+"<b>This enumeration offers only one choice.</b> That’s "
 "probably an error of the application that installed this schema. If "
 "possible, please open a bug about it."
 msgstr ""
-"&#60;b&#62;Enumerasi ini hanya menawarkan satu pilihan.&#60;/b&#62; Itu "
+"<b>Enumerasi ini hanya menawarkan satu pilihan.</b> Itu "
 "mungkin kesalahan aplikasi yang memasang skema ini. Bila mungkin, bukalah "
 "suatu kutu tentang itu."
 
