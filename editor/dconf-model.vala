@@ -17,13 +17,14 @@
 
 public abstract class SettingObject : Object
 {
-    public Directory? parent { get; construct; }    // TODO make protected or even remove
+    public Directory? nullable_parent { private get; construct; }
+    public Directory parent { get { return nullable_parent == null ? (Directory) this : (!) nullable_parent; }}   // TODO make protected or even remove
     public string name { get; construct; }
 
     public string full_name { get; private set; }
     construct
     {
-        full_name = parent == null ? "/" : ((!) parent).full_name + name + ((this is Directory) ? "/" : "");
+        full_name = nullable_parent == null ? "/" : ((!) nullable_parent).full_name + name + ((this is Directory) ? "/" : "");
     }
 }
 
@@ -36,7 +37,7 @@ public class Directory : SettingObject
 
     public Directory (Directory? parent, string name, DConf.Client client)
     {
-        Object (parent: parent, name: name);
+        Object (nullable_parent: parent, name: name);
 
         this.client = client;
     }
@@ -363,7 +364,7 @@ public class DConfKey : Key
 
     public DConfKey (DConf.Client client, Directory parent, string name)
     {
-        Object (parent: parent, name: name);
+        Object (nullable_parent: parent, name: name);
 
         this.client = client;
         this.type_string = value.get_type_string ();
@@ -372,7 +373,7 @@ public class DConfKey : Key
         builder.add ("b",    false);
         builder.open (new VariantType ("a{ss}"));
         builder.add ("{ss}", "key-name",    name);
-        builder.add ("{ss}", "parent-path", ((!) parent).full_name);
+        builder.add ("{ss}", "parent-path", parent.full_name);
         builder.add ("{ss}", "type-code",   type_string);
         builder.add ("{ss}", "type-name",   key_to_description (type_string));
         if (show_min_and_max (type_string))
@@ -419,7 +420,7 @@ public class GSettingsKey : Key
 
     public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
-        Object (parent: parent,
+        Object (nullable_parent: parent,
                 name: name,
                 // schema infos
                 schema_id: schema_id,
@@ -438,7 +439,7 @@ public class GSettingsKey : Key
         builder.add ("b",    true);
         builder.open (new VariantType ("a{ss}"));
         builder.add ("{ss}", "key-name",    name);
-        builder.add ("{ss}", "parent-path", ((!) parent).full_name);
+        builder.add ("{ss}", "parent-path", parent.full_name);
         builder.add ("{ss}", "type-code",   type_string);
         builder.add ("{ss}", "type-name",   key_to_description (type_string));
         builder.add ("{ss}", "schema-id",   schema_id);
@@ -568,7 +569,7 @@ public class SettingsModel : Object, Gtk.TreeModel
 
     public Directory get_directory (Gtk.TreeIter? iter)
     {
-        return iter == null ? root : (Directory) iter.user_data;
+        return iter == null ? root : (Directory) ((!) iter).user_data;
     }
 
     public bool get_iter(out Gtk.TreeIter iter, Gtk.TreePath path)
