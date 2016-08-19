@@ -92,7 +92,7 @@ class RegistryInfo : Grid
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
                 if (!has_schema && ((DConfKey) key).is_ghost)
-                    ((RegistryView) get_parent ().get_parent ()).request_path (parent_path);
+                    ((RegistryView) _get_parent (_get_parent (this))).request_path (parent_path);
                 else
                     label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
             });
@@ -144,7 +144,7 @@ class RegistryInfo : Grid
                             revealer.add_delayed_setting (key, null);
                         else
                         {
-                            Variant tmp_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
+                            Variant tmp_variant = key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value;
                             revealer.add_delayed_setting (key, tmp_variant);
                             key_editor_child.reload (tmp_variant);
                         }
@@ -197,6 +197,13 @@ class RegistryInfo : Grid
                 key_editor_child.disconnect (child_activated_handler);
             });
     }
+    private Widget _get_parent (Widget widget)
+    {
+        Widget? parent = widget.get_parent ();
+        if (parent == null)
+            assert_not_reached ();
+        return (!) parent;
+    }
 
     private static KeyEditorChild create_child (Key key)
     {
@@ -225,7 +232,7 @@ class RegistryInfo : Grid
             case "mb":
                 return (KeyEditorChild) new KeyEditorChildNullableBool (key);
             default:
-                return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
+                return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
         }
     }
 
