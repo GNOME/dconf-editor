@@ -120,15 +120,20 @@ public class Directory : SettingObject
             case "type":    type_string = settings_schema_key.get_value_type ().dup_string (); break;
         }
 
+        string? nullable_summary = settings_schema_key.get_summary ();
+        string? nullable_description = settings_schema_key.get_description ();
+        Variant? default_value = settings.get_default_value (key_id);       /* TODO present also settings_schema_key.get_default_value () */
+        if (default_value == null)
+            assert_not_reached ();  // TODO report bug, shouldn't be nullable
         GSettingsKey new_key = new GSettingsKey (
                 this,
                 key_id,
                 settings,
                 settings.schema_id,
-                ((!) (settings_schema_key.get_summary () ?? "")).strip (),
-                ((!) (settings_schema_key.get_description () ?? "")).strip (),
+                ((!) (nullable_summary ?? "")).strip (),
+                ((!) (nullable_description ?? "")).strip (),
                 type_string,
-                settings.get_default_value (key_id), /* TODO present also settings_schema_key.get_default_value () */
+                (!) default_value,
                 range_type,
                 settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
             );
@@ -230,36 +235,50 @@ public abstract class Key : SettingObject
                 max = "%hhu".printf (uint8.MAX);    //   cool_text_value_from_variant()
                 return;
             case "n":
-                min = "%'hi".printf (int16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MIN);
-                max = "%'hi".printf (int16.MAX).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (int16.MAX);
+                string? nullable_min = "%'hi".printf (int16.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'hi".printf (int16.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%hi".printf (int16.MIN));
+                max = (!) (nullable_max ?? "%hi".printf (int16.MAX));
                 return;
             case "q":
-                min = "%'hu".printf (uint16.MIN).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (uint16.MIN);
-                max = "%'hu".printf (uint16.MAX).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (uint16.MAX);
+                string? nullable_min = "%'hu".printf (uint16.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'hu".printf (uint16.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%hu".printf (uint16.MIN));
+                max = (!) (nullable_max ?? "%hu".printf (uint16.MAX));
                 return;
             case "i":
-                min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MIN);
-                max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MAX);
+                string? nullable_min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%i".printf (int32.MIN));
+                max = (!) (nullable_max ?? "%i".printf (int32.MAX));
                 return;     // TODO why is 'li' failing to display '-'?
             case "u":
-                min = "%'u".printf (uint32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (uint32.MIN);
-                max = "%'u".printf (uint32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (uint32.MAX);
+                string? nullable_min = "%'u".printf (uint32.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'u".printf (uint32.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%u".printf (uint32.MIN));
+                max = (!) (nullable_max ?? "%u".printf (uint32.MAX));
                 return;     // TODO is 'lu' failing also?
             case "x":
-                min = "%'lli".printf (int64.MIN).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (int64.MIN);
-                max = "%'lli".printf (int64.MAX).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (int64.MAX);
+                string? nullable_min = "%'lli".printf (int64.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'lli".printf (int64.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%lli".printf (int64.MIN));
+                max = (!) (nullable_max ?? "%lli".printf (int64.MAX));
                 return;
             case "t":
-                min = "%'llu".printf (uint64.MIN).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (uint64.MIN);
-                max = "%'llu".printf (uint64.MAX).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (uint64.MAX);
+                string? nullable_min = "%'llu".printf (uint64.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'llu".printf (uint64.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%llu".printf (uint64.MIN));
+                max = (!) (nullable_max ?? "%llu".printf (uint64.MAX));
                 return;
             case "d":
                 min = double.MIN.to_string ();
                 max = double.MAX.to_string ();
                 return;     // TODO something
             case "h":
-                min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MIN);
-                max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (int32.MAX);
+                string? nullable_min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%i".printf (int32.MIN));
+                max = (!) (nullable_max ?? "%i".printf (int32.MAX));
                 return;
             default: assert_not_reached ();
         }
@@ -269,17 +288,34 @@ public abstract class Key : SettingObject
     {
         switch (type)
         {
-            case "b": return cool_boolean_text_value (variant.get_boolean (), false);
+            case "b":
+                return cool_boolean_text_value (variant.get_boolean (), false);
             // TODO %I'xx everywhere! but would need support from the spinbutton…
-            case "y": return "%hhu (%s)".printf (variant.get_byte (), variant.print (false));               // TODO i18n problem here
-            case "n": return "%'hi".printf (variant.get_int16 ()).locale_to_utf8 (-1, null, null, null) ?? "%hi".printf (variant.get_int16 ());
-            case "q": return "%'hu".printf (variant.get_uint16 ()).locale_to_utf8 (-1, null, null, null) ?? "%hu".printf (variant.get_uint16 ());
-            case "i": return "%'i".printf (variant.get_int32 ()).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (variant.get_int32 ());     // TODO why is 'li' failing to display '-'?
-            case "u": return "%'u".printf (variant.get_uint32 ()).locale_to_utf8 (-1, null, null, null) ?? "%u".printf (variant.get_uint32 ());
-            case "x": return "%'lli".printf (variant.get_int64 ()).locale_to_utf8 (-1, null, null, null) ?? "%lli".printf (variant.get_int64 ());
-            case "t": return "%'llu".printf (variant.get_uint64 ()).locale_to_utf8 (-1, null, null, null) ?? "%llu".printf (variant.get_uint64 ());
-            case "d": return variant.get_double ().to_string ();                                            // TODO something; notably, number of chars after coma
-            case "h": return "%'i".printf (variant.get_handle ()).locale_to_utf8 (-1, null, null, null) ?? "%i".printf (variant.get_int32 ());
+            case "y":
+                return "%hhu (%s)".printf (variant.get_byte (), variant.print (false));     // TODO i18n problem here
+            case "n":
+                string? nullable_text = "%'hi".printf (variant.get_int16 ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%hi".printf (variant.get_int16 ()));
+            case "q":
+                string? nullable_text = "%'hu".printf (variant.get_uint16 ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%hu".printf (variant.get_uint16 ()));
+            case "i":
+                string? nullable_text = "%'i".printf (variant.get_int32 ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%i".printf (variant.get_int32 ()));           // TODO why is 'li' failing to display '-'?
+            case "u":
+                string? nullable_text = "%'u".printf (variant.get_uint32 ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%u".printf (variant.get_uint32 ()));
+            case "x":
+                string? nullable_text = "%'lli".printf (variant.get_int64 ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%lli".printf (variant.get_int64 ()));
+            case "t":
+                string? nullable_text = "%'llu".printf (variant.get_uint64 ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%llu".printf (variant.get_uint64 ()));
+            case "d":
+                return variant.get_double ().to_string ();                                  // TODO something; notably, number of chars after coma
+            case "h":
+                string? nullable_text = "%'i".printf (variant.get_handle ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%i".printf (variant.get_int32 ()));
             default: break;
         }
         if (type.has_prefix ("m"))
