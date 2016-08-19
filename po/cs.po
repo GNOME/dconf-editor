@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-18 14:08+0000\n"
-"PO-Revision-Date: 2016-08-18 21:30+0200\n"
+"POT-Creation-Date: 2016-08-19 12:18+0000\n"
+"PO-Revision-Date: 2016-08-19 14:33+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -908,23 +908,23 @@ msgstr[2] " a %u operací dconf byly odloženy."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
-"<b>No schema available.</b> Dconf Editor can’t find a schema "
+"&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
 "been removed, may have stop the use of this key, or may use a relocatable "
 "schema for defining its keys."
 msgstr ""
-"<b>Není dostupné žádné schéma.</b> Editor dconf nemůže najít "
+"&#60;b&#62;Není dostupné žádné schéma.&#60;/b&#62; Editor dconf nemůže najít "
 "schéma přiřazené k tomuto klíči. Aplikace, která nainstalovala tento klíč, "
 "byla možná odstraněna, nebo přestala tento klíč používat, nebo může používat "
 "přemístitelné schéma pro definici svých klíčů."
 
 #: ../editor/registry-info.ui.h:3
 msgid ""
-"<b>This enumeration offers only one choice.</b> That’s "
+"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That’s "
 "probably an error of the application that installed this schema. If "
 "possible, please open a bug about it."
 msgstr ""
-"<b>Výčet nabízí jen jednu volbu.</b> Pravděpodobně se jedná "
+"&#60;b&#62;Výčet nabízí jen jednu volbu.&#60;/b&#62; Pravděpodobně se jedná "
 "o chybu aplikace, která toto schéma nainstalovala. Jestli je to možné, "
 "nahlaste prosím příslušnou chybu."
 
@@ -970,7 +970,7 @@ msgid "Custom value"
 msgstr "Vlastní hodnota"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:271
+#: ../editor/registry-info.vala:276
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -980,13 +980,13 @@ msgstr ""
 "„m“ (z anglického „maybe“ – „možná“). Řetězce, podpisy a cesty by měli být "
 "uzavřené do uvozovek."
 
-#: ../editor/registry-info.vala:273
+#: ../editor/registry-info.vala:278
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Řetězce, podpisy a cesty by měli být uzavřené do uvozovek."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:277
+#: ../editor/registry-info.vala:282
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
