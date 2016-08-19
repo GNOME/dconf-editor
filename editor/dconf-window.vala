@@ -109,6 +109,14 @@ class DConfWindow : ApplicationWindow
         return path.slice (0, path.last_index_of_char ('/') + 1);
     }
 
+    public static Widget _get_parent (Widget widget)
+    {
+        Widget? parent = widget.get_parent ();
+        if (parent == null)
+            assert_not_reached ();
+        return (!) parent;
+    }
+
     /*\
     * * Window management callbacks
     \*/

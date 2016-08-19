@@ -92,7 +92,7 @@ class RegistryInfo : Grid
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
                 if (!has_schema && ((DConfKey) key).is_ghost)
-                    ((RegistryView) _get_parent (_get_parent (this))).request_path (parent_path);
+                    ((RegistryView) DConfWindow._get_parent (DConfWindow._get_parent (this))).request_path (parent_path);
                 else
                     label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
             });
@@ -196,13 +196,6 @@ class RegistryInfo : Grid
                 key_editor_child.disconnect (value_has_changed_handler);
                 key_editor_child.disconnect (child_activated_handler);
             });
-    }
-    private Widget _get_parent (Widget widget)
-    {
-        Widget? parent = widget.get_parent ();
-        if (parent == null)
-            assert_not_reached ();
-        return (!) parent;
     }
 
     private static KeyEditorChild create_child (Key key)

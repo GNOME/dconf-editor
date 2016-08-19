@@ -251,14 +251,7 @@ class RegistryView : Grid, PathElement
 
     private DConfWindow get_dconf_window ()
     {
-        return (DConfWindow) _get_parent (_get_parent (this));
-    }
-    private Widget _get_parent (Widget widget)
-    {
-        Widget? parent = widget.get_parent ();
-        if (parent == null)
-            assert_not_reached ();
-        return (!) parent;
+        return (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (this));
     }
 
     /*\
