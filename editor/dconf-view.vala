@@ -65,12 +65,14 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
-                reload (gvariant);
+                if (gvariant == null)   // TODO better (1/3)
+                    assert_not_reached ();
+                reload ((!) gvariant);
                 popover.closed ();
 
                 value_has_changed ();
             });
-        reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
+        reload (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
         this.set_popover ((Popover) popover);
     }
 
@@ -117,10 +119,12 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         popover.create_flags_list (key);
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
-                reload (gvariant);
+                if (gvariant == null)   // TODO better (2/3)
+                    assert_not_reached ();
+                reload ((!) gvariant);
                 value_has_changed ();
             });
-        reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
+        reload (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
         button.set_popover ((Popover) popover);
     }
 
@@ -156,12 +160,14 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
-                reload (gvariant);
+                if (gvariant == null)   // TODO better (3/3)
+                    assert_not_reached ();
+                reload ((!) gvariant);
                 popover.closed ();
 
                 value_has_changed ();
             });
-        reload (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value);
+        reload (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
         this.set_popover ((Popover) popover);
     }
 
@@ -249,7 +255,7 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
             max = double.MAX;
         }
 
-        Adjustment adjustment = new Adjustment (key.planned_change && (key.planned_value != null) ? key.planned_value.get_double () : key.value.get_double (), min, max, 0.01, 0.1, 0.0);
+        Adjustment adjustment = new Adjustment (key.planned_change && (key.planned_value != null) ? ((!) key.planned_value).get_double () : key.value.get_double (), min, max, 0.01, 0.1, 0.0);
         this.configure (adjustment, 0.01, 2);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
@@ -322,7 +328,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         else
             get_min_and_max_double (out min, out max, key.type_string);
 
-        Adjustment adjustment = new Adjustment (get_variant_as_double (key.planned_change && (key.planned_value != null) ? key.planned_value : key.value), min, max, 1.0, 5.0, 0.0);
+        Adjustment adjustment = new Adjustment (get_variant_as_double (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value), min, max, 1.0, 5.0, 0.0);
         this.configure (adjustment, 1.0, 0);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
@@ -462,7 +468,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
             StyleContext context = get_style_context ();
             if (context.has_class ("error"))
                 context.remove_class ("error");
-            secondary_icon_name = null;
+            set_icon_from_icon_name (EntryIconPosition.SECONDARY, null);
 
             return true;
         }
