@@ -909,23 +909,23 @@ msgstr[1] " y %u operaciones de dconf retrasada."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
-"<b>No schema available.</b> Dconf Editor can’t find a schema "
+"No schema available. Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
 "been removed, may have stop the use of this key, or may use a relocatable "
 "schema for defining its keys."
 msgstr ""
-"<b>No hay ningún esquema disponible.</b> El editor de dconf "
+"No hay ningún esquema disponible. El editor de dconf "
 "no puede encontrar un esquema asociado a esta clave. Es posible que se haya "
 "eliminado la aplicación que instaló esta clave, que haya dejado de usarla o "
 "puede que use un esquema reubicable para definir sus claves."
 
 #: ../editor/registry-info.ui.h:3
 msgid ""
-"<b>This enumeration offers only one choice.</b> That’s "
+"This enumeration offers only one choice. That’s "
 "probably an error of the application that installed this schema. If "
 "possible, please open a bug about it."
 msgstr ""
-"<b>Este enumerado le ofrece sólo una opción.</b> Esto es "
+"Este enumerado le ofrece sólo una opción. Esto es "
 "probablemente un error de la aplicación que ha instalado este esquema. Si es "
 "posible, abra un informe de error sobre esto."
 
