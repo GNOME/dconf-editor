@@ -78,7 +78,7 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).set_relative_to (this);
             ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
         }
-        else if ((!) nullable_popover.visible)
+        else if (((!) nullable_popover).visible)
             warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click or long Menu key press
 
         Gdk.Rectangle rect = { x:event_x, y:get_allocated_height (), width:0, height:0 };
@@ -472,7 +472,7 @@ private class ContextPopover : Popover
                 });
 
             key.notify ["planned-value"].connect (() => {
-                    active_flags = key.planned_value != null ? key.planned_value.get_strv () : key.value.get_strv ();
+                    active_flags = key.planned_value != null ? ((!) key.planned_value).get_strv () : key.value.get_strv ();
                     bool active = flag in active_flags;
                     if (active != simple_action.get_state ())
                         simple_action.set_state (new Variant.boolean (active));
@@ -502,10 +502,16 @@ private class ContextPopover : Popover
             value_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
         else if (key.planned_change)
             value_variant = key.planned_value;
+        else if (key is GSettingsKey && ((GSettingsKey) key).is_default)
+            value_variant = null;
         else
-            value_variant = key is GSettingsKey && ((GSettingsKey) key).is_default ? null : key.value;
+            value_variant = key.value;
         Variant variant = new Variant.maybe (original_type, value_variant);
-        Variant nullable_variant = new Variant.maybe (nullable_type, delayed_apply_menu && !key.planned_change ? null : variant);
+        Variant nullable_variant;
+        if (delayed_apply_menu && !key.planned_change)
+            nullable_variant = new Variant.maybe (nullable_type, null);
+        else
+            nullable_variant = new Variant.maybe (nullable_type, variant);
 
         GLib.Action action = (GLib.Action) new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant);
         current_group.add_action (action);
