@@ -20,7 +20,7 @@ class ConfigurationEditor : Gtk.Application
     private const OptionEntry [] option_entries =
     {
         { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
-        { null }
+        {}
     };
 
     private const GLib.ActionEntry [] action_entries =
