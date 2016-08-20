@@ -101,7 +101,7 @@ class RegistryView : Grid, PathElement
         while (position < ((!) key_model).get_n_items ())
         {
             SettingObject object = (SettingObject) ((!) key_model).get_object (position);
-            if (object.name == selected)
+            if (object.full_name == selected)
                 return (int) position;
             position++;
         }
@@ -190,7 +190,7 @@ class RegistryView : Grid, PathElement
         }
         if (((!) key) is DConfKey && ((DConfKey) ((!) key)).is_ghost)
         {
-            show_browse_view (folder_name, key_name);
+            show_browse_view (folder_name, folder_name + key_name);
             get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
             return;
         }
@@ -526,7 +526,7 @@ class RegistryView : Grid, PathElement
                 {
                     dir_tree_selection.select_iter (iter);
                     key_list_box.select_row (key_list_box.get_row_at_index (position));
-                    show_browse_view (dir.full_name, object.name, false);
+                    show_browse_view (dir.full_name, object.full_name, false);
                     return;
                 }
                 else if (object is Key)
