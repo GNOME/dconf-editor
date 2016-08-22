@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-16 12:03+0200\n"
+"POT-Creation-Date: 2016-08-19 13:56+0000\n"
+"PO-Revision-Date: 2016-08-22 11:55+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -82,12 +82,14 @@ msgstr ""
 "puede hacer que las aplicaciones no funcionen correctamente."
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
-msgid "Browse the keys used by installed applications."
-msgstr "Explorar las claves usadas por la aplicaciones instaladas."
+#| msgid "Browse the keys used by installed applications."
+msgid "Browse the keys used by installed applications"
+msgstr "Explorar las claves usadas por la aplicaciones instaladas"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
-msgid "Read keys descriptions and edit their values."
-msgstr "Leer las descripciones y editar sus valores."
+#| msgid "Read keys descriptions and edit their values."
+msgid "Read keys descriptions and edit their values"
+msgstr "Leer las descripciones y editar sus valores"
 
 #. a translatable version of project_group
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
@@ -517,7 +519,6 @@ msgstr ""
 "cadena, incluyendo la cadena vacía «''», o puede ser NULL (nada)."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:76
-#| msgid "A 5-choices enumeration"
 msgid "A 1-choice enumeration"
 msgstr "Un enumerado de 1 opción"
 
@@ -909,25 +910,25 @@ msgstr[1] " y %u operaciones de dconf retrasada."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
-"No schema available. Dconf Editor can’t find a schema "
-"associated with this key. The application that installed this key may have "
-"been removed, may have stop the use of this key, or may use a relocatable "
-"schema for defining its keys."
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
 msgstr ""
-"No hay ningún esquema disponible. El editor de dconf "
-"no puede encontrar un esquema asociado a esta clave. Es posible que se haya "
-"eliminado la aplicación que instaló esta clave, que haya dejado de usarla o "
-"puede que use un esquema reubicable para definir sus claves."
+"No hay ningún esquema disponible. El editor de dconf no puede encontrar un "
+"esquema asociado a esta clave. Es posible que se haya eliminado la "
+"aplicación que instaló esta clave, que haya dejado de usarla o puede que use "
+"un esquema reubicable para definir sus claves."
 
 #: ../editor/registry-info.ui.h:3
 msgid ""
-"This enumeration offers only one choice. That’s "
-"probably an error of the application that installed this schema. If "
-"possible, please open a bug about it."
+"This enumeration offers only one choice. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
 msgstr ""
-"Este enumerado le ofrece sólo una opción. Esto es "
-"probablemente un error de la aplicación que ha instalado este esquema. Si es "
-"posible, abra un informe de error sobre esto."
+"Este enumerado le ofrece sólo una opción. Esto es probablemente un error de "
+"la aplicación que ha instalado este esquema. Si es posible, abra un informe "
+"de error sobre esto."
 
 #: ../editor/registry-info.vala:80
 msgid "Schema"
@@ -971,7 +972,7 @@ msgid "Custom value"
 msgstr "Valor personalizado"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:271
+#: ../editor/registry-info.vala:276
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -981,13 +982,13 @@ msgstr ""
 "por «m») para su valor vacío. Cadenas, firmas y rutas a objetos se deben "
 "encerrar entre comillas."
 
-#: ../editor/registry-info.vala:273
+#: ../editor/registry-info.vala:278
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Cadenas, firmas y rutas a objetos se deben encerrar entre comillas."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:277
+#: ../editor/registry-info.vala:282
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -999,17 +1000,17 @@ msgstr ""
 msgid "No keys in this path"
 msgstr "No hay claves en esta ruta"
 
-#: ../editor/registry-view.vala:161
+#: ../editor/registry-view.vala:169
 #, c-format
 msgid "Cannot find folder \"%s\"."
 msgstr "No se puede encontrar la carpeta «%s»."
 
-#: ../editor/registry-view.vala:179
+#: ../editor/registry-view.vala:187
 #, c-format
 msgid "Cannot find key \"%s\" here."
 msgstr "No se puede encontrar aquí la clave «%s»."
 
-#: ../editor/registry-view.vala:185
+#: ../editor/registry-view.vala:193
 #, c-format
 msgid "Key \"%s\" has been removed."
 msgstr "Se ha eliminado la clave «%s»."
