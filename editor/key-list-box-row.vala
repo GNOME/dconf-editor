@@ -58,7 +58,7 @@ private abstract class ClickableListBoxRow : EventBox
     public void hide_right_click_popover ()
     {
         if (nullable_popover != null)
-            ((!) nullable_popover).hide ();
+            ((!) nullable_popover).popdown ();
     }
 
     public void show_right_click_popover (bool delayed_apply_menu, int event_x = (int) (get_allocated_width () / 2.0))
@@ -83,7 +83,7 @@ private abstract class ClickableListBoxRow : EventBox
 
         Gdk.Rectangle rect = { x:event_x, y:get_allocated_height (), width:0, height:0 };
         ((!) nullable_popover).set_pointing_to (rect);
-        ((!) nullable_popover).show ();
+        ((!) nullable_popover).popup ();
     }
 }
 
@@ -364,7 +364,7 @@ private class ContextPopover : Popover
     {
         if (Gdk.keyval_name (event.keyval) != "Menu")
             return false;
-        hide ();
+        popdown ();
         return true;
     }
 
