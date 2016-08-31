@@ -11,6 +11,9 @@
     <signal name="window-state-event" handler="on_window_state_event"/>
     <signal name="size-allocate" handler="on_size_allocate"/>
     <signal name="destroy" handler="on_destroy"/>
+    <style>
+      <class name="dconf-editor"/>
+    </style>
     <child type="titlebar">
       <object class="GtkHeaderBar">
         <property name="visible">True</property>
