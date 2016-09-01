@@ -65,6 +65,7 @@
     <child>
       <object class="GtkScrolledWindow">
         <property name="visible">True</property>
+        <property name="vexpand">True</property>
         <child>
           <object class="GtkListBox" id="properties_list_box">
             <property name="visible">True</property>
