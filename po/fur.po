@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2016-08-13 21:47+0000\n"
-"PO-Revision-Date: 2016-08-18 14:33+0200\n"
+"PO-Revision-Date: 2016-09-02 16:06+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -548,7 +548,7 @@ msgstr "Azions"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Current view actions"
-msgstr ""
+msgstr "Azions de viodude atuâl"
 
 #: ../editor/dconf-editor.ui.h:4
 msgid "Search"
@@ -606,19 +606,19 @@ msgstr "Dopli"
 #. Translators: this handle type is an index; you may maintain the word "handle"
 #: ../editor/dconf-model.vala:202
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "Gjenar handle D-Bus"
 
 #: ../editor/dconf-model.vala:204
 msgid "D-Bus object path"
-msgstr ""
+msgstr "Percors ogjet D-Bus"
 
 #: ../editor/dconf-model.vala:206
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "Array di percors ogjet D-Bus"
 
 #: ../editor/dconf-model.vala:208
 msgid "D-Bus signature"
-msgstr ""
+msgstr "Firme D-Bus"
 
 #: ../editor/dconf-model.vala:216
 msgid "Integer"
@@ -678,15 +678,15 @@ msgstr "Copie il percors atuâl"
 
 #: ../editor/dconf-window.vala:237
 msgid "Reset visible keys"
-msgstr ""
+msgstr "Ristabilìs lis clâfs visibilis"
 
 #: ../editor/dconf-window.vala:238
 msgid "Reset recursively"
-msgstr ""
+msgstr "Ristabilìs in maniere ricorsive"
 
 #: ../editor/dconf-window.vala:246
 msgid "Enter delay mode"
-msgstr ""
+msgstr "Introdûs mût di ritart"
 
 #: ../editor/help-overlay.ui.h:1
 msgctxt "shortcut window"
@@ -731,7 +731,7 @@ msgstr "Notis"
 #: ../editor/help-overlay.ui.h:9
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "Copie il descritôr"
 
 #: ../editor/help-overlay.ui.h:10
 msgctxt "shortcut window"
@@ -741,27 +741,27 @@ msgstr "Copie percors"
 #: ../editor/help-overlay.ui.h:11
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr ""
+msgstr "Navigazion cun la sbare di percors"
 
 #: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "Vierç cartele lidrîs"
 
 #: ../editor/help-overlay.ui.h:13
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "Vierç cartele superiôr"
 
 #: ../editor/help-overlay.ui.h:14
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr ""
+msgstr "Vierç il fi diret atîf"
 
 #: ../editor/help-overlay.ui.h:15
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
+msgstr "Vierç il fi ultin atîf"
 
 #: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
@@ -836,7 +836,7 @@ msgstr "Copie"
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
 #: ../editor/key-list-box-row.vala:519
 msgid "No change"
-msgstr ""
+msgstr "Nissun cambiament"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: ../editor/key-list-box-row.vala:569 ../editor/registry-info.vala:235
@@ -849,7 +849,7 @@ msgstr "Apliche"
 
 #: ../editor/modifications-revealer.vala:141
 msgid "Nothing to reset."
-msgstr ""
+msgstr "Nuie di ristabilî."
 
 #: ../editor/modifications-revealer.vala:241
 msgid "The value is invalid."
@@ -868,37 +868,37 @@ msgstr ""
 
 #: ../editor/modifications-revealer.vala:264
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "I cambiaments a vegnaran rimandâts fintremai che tu lu domandarâs."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: ../editor/modifications-revealer.vala:266
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Une operazion gsettings rimandade."
+msgstr[1] "%u operazions gsettings rimandadis."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: ../editor/modifications-revealer.vala:270
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Une operazion dconf ritardade."
+msgstr[1] "%u operazions dconf ritardadis."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: ../editor/modifications-revealer.vala:273
 #, c-format
 msgid "%s%s"
-msgstr ""
+msgstr "%s%s"
 
 #: ../editor/modifications-revealer.vala:273
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Une operazion gsettings"
+msgstr[1] "%u operazions gsettings"
 
 #. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, and
@@ -908,12 +908,12 @@ msgstr[1] ""
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " e une operazion dconf rimandade."
+msgstr[1] " e %u operazions dconf rimandadis."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
-"No schema available. Dconf Editor can’t find a schema "
+"&#60;b&#62;No schema available.&#60;/b&#62; Dconf Editor can’t find a schema "
 "associated with this key. The application that installed this key may have "
 "been removed, may have stop the use of this key, or may use a relocatable "
 "schema for defining its keys."
@@ -921,7 +921,7 @@ msgstr ""
 
 #: ../editor/registry-info.ui.h:3
 msgid ""
-"This enumeration offers only one choice. That’s "
+"&#60;b&#62;This enumeration offers only one choice.&#60;/b&#62; That's "
 "probably an error of the application that installed this schema. If "
 "possible, please open a bug about it."
 msgstr ""
