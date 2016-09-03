@@ -101,7 +101,6 @@ class RegistryInfo : Grid
         label.xalign = 0;
         label.yalign = 0;
         label.wrap = true;
-        label.selectable = true;
         label.max_width_chars = 42;
         label.width_chars = 42;
         label.hexpand = true;
@@ -128,10 +127,11 @@ class RegistryInfo : Grid
         if (has_schema)
         {
             Switch custom_value_switch = new Switch ();
+            custom_value_switch.set_can_focus (false);
             custom_value_switch.halign = Align.START;
             custom_value_switch.hexpand = true;
             custom_value_switch.show ();
-            add_row_from_widget (_("Use default value"), custom_value_switch, null);
+            add_switch_row (_("Use default value"), custom_value_switch);
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
@@ -237,6 +237,17 @@ class RegistryInfo : Grid
             return Key.cool_text_value_from_variant (key.value, key.type_string);
     }
 
+    public string? get_copy_text ()
+    {
+        Widget? focused_row = properties_list_box.get_focus_child ();
+        if (focused_row == null)
+            return null;
+        else if ((!) focused_row is PropertyRow)
+            return ((PropertyRow) (!) focused_row).get_copy_text ();
+        else    // separator
+            return null;
+    }
+
     /*\
     * * Rows creation
     \*/
@@ -244,6 +255,14 @@ class RegistryInfo : Grid
     private void add_row_from_label (string property_name, string property_value)
     {
         properties_list_box.add (new PropertyRow.from_label (property_name, property_value));
+    }
+
+    private void add_switch_row (string property_name, Switch custom_value_switch)
+    {
+        PropertyRow row = new PropertyRow.from_widgets (property_name, custom_value_switch, null);
+        ulong default_value_row_activate_handler = row.activate.connect (() => custom_value_switch.set_active (!custom_value_switch.get_active ()));
+        row.destroy.connect (() => row.disconnect (default_value_row_activate_handler));
+        properties_list_box.add (row);
     }
 
     private void add_row_from_widget (string property_name, Widget widget, string? type)
@@ -263,6 +282,7 @@ class RegistryInfo : Grid
         ListBoxRow row = new ListBoxRow ();
         row.add (separator);
         row.set_sensitive (false);
+/* TODO could be selected by down arrow        row.focus.connect ((direction) => { row.move_focus (direction); return false; }); */
         row.show ();
         properties_list_box.add (row);
     }
@@ -300,16 +320,18 @@ private class PropertyRow : ListBoxRow
     [GtkChild] private Grid grid;
     [GtkChild] private Label name_label;
 
+    private Widget? value_widget = null;
+
     public PropertyRow.from_label (string property_name, string property_value)
     {
         name_label.set_text (property_name);
 
         Label value_label = new Label (property_value);
+        value_widget = value_label;
         value_label.valign = Align.START;
         value_label.xalign = 0;
         value_label.yalign = 0;
         value_label.wrap = true;
-        value_label.selectable = true;
         value_label.max_width_chars = 42;
         value_label.width_chars = 42;
         value_label.show ();
@@ -319,6 +341,9 @@ private class PropertyRow : ListBoxRow
     public PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
     {
         name_label.set_text (property_name);
+
+        if (widget is Label)    // TODO handle other rows
+            value_widget = widget;
 
         grid.attach (widget, 1, 0, 1, 1);
         widget.valign = Align.CENTER;
@@ -331,5 +356,13 @@ private class PropertyRow : ListBoxRow
             grid.row_spacing = 4;
             grid.attach ((!) warning, 0, 1, 2, 1);
         }
+    }
+
+    public string? get_copy_text ()
+    {
+        if (value_widget != null)
+            return ((Label) (!) value_widget).get_label ();
+        else
+            return null;
     }
 }

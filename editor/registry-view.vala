@@ -462,13 +462,18 @@ class RegistryView : Grid, PathElement
         return true;
     }
 
-    public string? get_selected_row_text ()
+    public string? get_copy_text ()
     {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return null;
+        if (stack.get_visible_child_name () != "browse-view")
+            return properties_view.get_copy_text ();
         else
-            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+        {
+            ListBoxRow? selected_row = key_list_box.get_selected_row ();
+            if (selected_row == null)
+                return null;
+            else
+                return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+        }
     }
 
     public void discard_row_popover ()

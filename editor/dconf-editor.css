@@ -196,7 +196,7 @@ list.properties-list {
   background-color:initial;
   padding:0.3em 0;
 }
-list.properties-list > row {
+list.properties-list > row {    /* TODO what? */
   padding:0 6px; /* align on headerbar's buttons */
 }
 

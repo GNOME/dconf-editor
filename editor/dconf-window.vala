@@ -320,7 +320,7 @@ class DConfWindow : ApplicationWindow
                     return true;
                 case "c":
                     registry_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
-                    string? selected_row_text = registry_view.get_selected_row_text ();
+                    string? selected_row_text = registry_view.get_copy_text ();
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;
