@@ -666,13 +666,13 @@ msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Köszönjük, hogy a Dconf szerkesztővel szerkeszti a konfigurációt."
 
 #: ../editor/dconf-window.vala:123
-msgid "Don't forget that some options may break applications, so be careful."
+msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Ne feledje, hogy egyes beállítások tönkretehetik az alkalmazásokat, legyen "
 "óvatos!"
 
 #: ../editor/dconf-window.vala:124
-msgid "I'll be careful."
+msgid "I’ll be careful."
 msgstr "Óvatos leszek."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?

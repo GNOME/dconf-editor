@@ -128,8 +128,8 @@ class DConfWindow : ApplicationWindow
             return;
 
         Gtk.MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.INFO, ButtonsType.NONE, _("Thanks for using Dconf Editor for editing your settings!"));
-        dialog.format_secondary_text (_("Don't forget that some options may break applications, so be careful."));
-        dialog.add_buttons (_("I'll be careful."), ResponseType.ACCEPT);
+        dialog.format_secondary_text (_("Don’t forget that some options may break applications, so be careful."));
+        dialog.add_buttons (_("I’ll be careful."), ResponseType.ACCEPT);
 
         // TODO don't show box if the user explicitely said she wanted to see the dialog next time?
         Box box = (Box) dialog.get_message_area ();

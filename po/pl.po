@@ -651,13 +651,13 @@ msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Dziękujemy za używanie edytora dconf do modyfikowania ustawień."
 
 #: ../editor/dconf-window.vala:131
-msgid "Don't forget that some options may break applications, so be careful."
+msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Prosimy pamiętać, że niektóre opcje mogą uszkodzić inne programy, więc "
 "należy zachować ostrożność."
 
 #: ../editor/dconf-window.vala:132
-msgid "I'll be careful."
+msgid "I’ll be careful."
 msgstr "Zachowam ostrożność."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
