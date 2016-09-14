@@ -84,7 +84,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
 msgid "Browse the keys used by installed applications"
-msgstr "Consulter les clés utilisées par les applications"
+msgstr "Voir les clés utilisées par les applications"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
 msgid "Read keys descriptions and edit their values"
