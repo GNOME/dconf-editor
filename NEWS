@@ -1,3 +1,31 @@
+dconf-editor 3.21.92
+=====================
+
+The keyboard navigation has been improved, and various a11y and i18n bugs have
+been fixed. Also, dconf-editor should now be able to compile with the valac flag
+--enable-experimental-non-null, reducing the number of potential code errors.
+
+Translations updated:
+  Catalan: Jordi Mas
+  Czech: Marek Černocký
+  British English: David King
+  Finnish: Jiri Grönroos
+  French: Charles Monzat
+  Friulian: Fabio Tomat
+  Galician: Fran Dieguez
+  German: Mario Blättermann
+  Hebrew: Yosef Or Boczko
+  Hungarian: Balázs Úr
+  Indonesian: Andika Triwidada
+  Kazakh: Baurzhan Muftakhidinov
+  Korean: Changwoo Ryu
+  Latvian: Rūdolfs Mazurs
+  Lithuanian: Aurimas Černius
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Gabriel Speckhahn
+  Serbian: Мирослав Николић
+  Spanish: Daniel Mustieles
+
 dconf-editor 3.21.90
 =====================
 
