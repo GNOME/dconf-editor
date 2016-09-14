@@ -190,7 +190,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
     }
 }
 
-private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by action, but can't find a way to ensure one-and-only-one button is active
+private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by action, but can't find a way to ensure one-and-only-one button is active  // https://bugzilla.gnome.org/show_bug.cgi?id=769876
 {
     private ToggleButton button_true;
 
@@ -200,7 +200,7 @@ private class KeyEditorChildBool : Grid, KeyEditorChild // might be managed by a
         this.hexpand = true;
         this.orientation = Orientation.HORIZONTAL;
         this.halign = Align.START;
-        this.column_homogeneous = true;
+        this.homogeneous = true;
         this.width_request = 100;
         ((StyleContext) this.get_style_context ()).add_class ("linked");
 

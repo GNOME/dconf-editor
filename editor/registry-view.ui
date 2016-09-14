@@ -19,7 +19,7 @@
         <property name="search-mode-enabled">False</property>
         <property name="show-close-button">False</property>
         <child>
-          <object class="GtkGrid">
+          <object class="GtkBox"> <!-- https://bugzilla.gnome.org/show_bug.cgi?id=769876 -->
             <property name="visible">True</property>
             <property name="orientation">horizontal</property>
             <style>
