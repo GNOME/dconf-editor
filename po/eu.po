@@ -3,36 +3,114 @@
 # This file is distributed under the same license as the dconf package.
 #
 # Asier Sarasua Garmendia <asiersar@yahoo.com>, 2013.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2013, 2014, 2015.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-21 16:35+0100\n"
-"PO-Revision-Date: 2015-03-21 16:35+0100\n"
-"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-17 12:53+0200\n"
+"PO-Revision-Date: 2016-09-17 18:04+0100\n"
+"Last-Translator: dooteo <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "Sortu kokaleku honen laster-marka"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "Kokalekuaren laster-marka sortuta"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr "Txandakatu kokaleku honen laster-marka"
+
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"Laster-markak\n"
+"hemen gehituko dira"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "Laster-markak"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "Kudeatu laster-markak"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "Kendu"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "Kendu laster-marka hau"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+msgid "Dconf Editor"
+msgstr "Dconf editorea"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "Dconf-en datu-basea editatzeko tresna grafikoa"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+"Dconf-en editorea tresna bat da dconf konfigurazioaren datu-basea "
+"zuzenean editatzeko. Hau erabilgarria da ezarpen hauek erabiltzen "
+"dituzten aplikazioak garatzean."
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr ""
+"Zure konfigurazioa zuzenean editatzea eginbide aurreratu bat da, eta "
+"aplikazioak ongi ez funtzionatzea eragin dezake."
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
+msgid "Browse the keys used by installed applications"
+msgstr "Arakatu gakoak instalatutako aplikazioak erabiliz"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
+msgid "Read keys descriptions and edit their values"
+msgstr "Irakurri gakoen azalpenak eta editatu haien balioak"
+
+#. a translatable version of project_group
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
+msgid "The GNOME Project"
+msgstr "GNOME proiektua"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
-#: ../editor/dconf-editor.vala:433
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf editorea"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:436
+msgid "Configuration editor for dconf"
+msgstr "Dconf-en konfigurazioaren editorea"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Editatu zuzenean zure konfigurazioaren datu-base osoa"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "ezarpenak;konfigurazioa;"
 
@@ -57,12 +135,402 @@ msgid "A flag to enable maximized mode"
 msgstr "Modu maximizatua gaitzeko bandera"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "Pantaila osoko modua gaitzeko bandera"
+msgid "A list of bookmarked paths"
+msgstr "Laster-markak dituzten bide-izenen zerrenda"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+"Erabiltzaileak bide-izen guztien sortutako laster-markak ditu "
+"kate baten matrize gisa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "A flag to restore the last view"
+msgstr "Azken ikuspegia leheneratzeko bandera"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+"'true' (egia) bada, Dconf editoreak abiarazten saiatuko da "
+"'saved-view' gakoan azaldutako bide-izenera nabigatzeko."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid "A path to restore the last view"
+msgstr "Azken ikuspegia leheneratzeko bide-izena"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+"'restore-view' gakoa 'true' (egia) gisa ezartzen bada, Dconf editoreak "
+"abiarazten saiatuko da bere bide-izenera nabigatzeko."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid "Show initial warning"
+msgstr "Erakutsi hasierako abisua"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr ""
+"'true' (egia) bada, Dconf editoreak laster-leiho bat irekiko du abiaraztean "
+"erabiltzaileari kontu handiz ibiltzeko gogoraraziz."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid "A flag to enable small rows for keys list"
+msgstr "Gakoen zerrendan errenkada txikiak baimentzeko bandera"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "If 'true', the keys list use smaller rows."
+msgstr ""
+"'true' (egia) bada, gakoen zerrendak errenkada txikiagoak erabiliko ditu."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "A flag to enable small rows for bookmarks list"
+msgstr "Laster-marken zerrendan errenkada txikiak baimentzeko bandera"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "If 'true', the bookmarks list use smaller rows."
+msgstr ""
+"'true' (egia) bada, laster-marken zerrendak errenkada txikiagoak erabiliko"
+" ditu."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid "Change the behaviour of a key value change request"
+msgstr "Aldatu gako-balioa aldatzeko eskaeraren portaera"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid ""
+"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+"type, it updates the key value each time something changes in the entry, so "
+"including intermediate states. The 'safe' value asks for confirmation in "
+"these cases, but allows instant changes for booleans and nullable booleans, "
+"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
+"values always asks for confirmation, but the first applies the change if you "
+"change path whereas the second dismiss it. The 'always-delay' value adds "
+"each change in delay mode, allowing to apply multiple keys at once."
+msgstr ""
+"'unsafe' balioa ez da gomendagarria mota berezia ez duten gakoetan, "
+"honek gakoaren balioa eguneratzen du sarreran zerbait aldatzen den"
+" bakoitzean, "
+"tarteko egoerak barne. 'safe' balioak berrespena eskatuko du "
+"egoera horietan, baina boolearretan eta nuluak izan daitezkeen "
+"boolearretan, zerrendapenetan eta banderetan aldaketa berehala baimentzen"
+" ditu. "
+"'always-confirm-implicit' eta 'always-confirm-explicit' balioek beti eskatuko"
+" dute "
+"berrespena, aurrenekoak aldaketak aplikatzen ditu bide-izenak aldatzen"
+" dituzunean, "
+"bigarrengoak berriz baztertu egiten du. 'always-delay' balioak aldaketa"
+" bakoitza "
+"atzerapen moduan gehitzen du, hainbat gako aldi berean aplikatzea baimenduz."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid "A boolean, type \"b\""
+msgstr "Balio boolearra, \"b\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr ""
+"Boolearrek soilik bi balio erabil ditzakete: 'true' (egia) edo 'false'"
+" (faltsua)"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid "A nullable boolean, type \"mb\""
+msgstr "Balio boolear nulua, \"mb\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+"GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina "
+"'nothing' (ezer ere ez) balioa har dezakete. Balio boolear nulu batek hiru"
+" balio "
+"soilik eduki ditzake: 'true', 'false' eta 'nothing'."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid "A byte (unsigned), type \"y\""
+msgstr "Byte bat (zeinurik gabekoa), \"y\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr ""
+"Byte baten balioa osoko zenbaki bat da 0 eta 255 artekoa. Karaktereak "
+"igortzeko erabil daiteke."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid "A bytestring, type \"ay\""
+msgstr "Byte-katea, \"ay\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:27
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+"Byte-katea mota utf8 formatuan baliozkoak ez diren kateak igortzeko erabili"
+" ohi da. "
+"Egoera horretan, karaktere nulua matrizeko azken karaktere gisa "
+"txertatzeko joera egon ohi da."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:28
+msgid "A bytestring array, type \"aay\""
+msgstr "Byte-kateen matrizea, \"aay\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr ""
+"Byte-kateen matrize baten mota da. Byte-katea mota utf8 formatuan "
+"baliozkoak ez diren kateak igortzeko erabili ohi da."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid "A D-Bus handle type, type \"h\""
+msgstr "D-Bus helduleku mota, \"h\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Helduleku mota 32 bit-eko zeinudun zenbaki osoko balio bat da, D-Bus-eko "
+"mezuarekin batera bidaltzen diren matrizeen indize edo fitxategien"
+" deskriptore "
+"gisa erabiltzeko.\n"
+"\n"
+"Ez baduzu D-Bus-arekin elkarreragiten, ez dago mota hau erabiltzeko"
+" arrazoirik."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid "A D-Bus object path, type \"o\""
+msgstr "D-Bus objektu baten bide-izena, \"o\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:35
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Objektu baten bide-izena D-Bus-eko objektuak identifikatzeko erabiltzen da, "
+"emandako bus-eko helburu batekoak.\n"
+"\n"
+"Ez baduzu D-Bus-arekin elkarreragiten, ez dago mota hau erabiltzeko"
+" arrazoirik."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "D-Bus objektu batzuen bide-izenen matrizea, \"ao\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:39
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"Objektuen bide-izenen matrize batek hainbat objektuen bide-izen eduki "
+"ditzake (hutsa baita ere: \"[]\").\n"
+"\n"
+"Ez baduzu D-Bus-arekin elkarreragiten, ez dago mota hau erabiltzeko"
+" arrazoirik."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A D-Bus signature, type \"g\""
+msgstr "D-Bus baten sinadura, \"g\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"D-Bus baten sinadura kate bat da D-Bus baten metodo edo mezu gisa"
+" erabiltzeko.\n"
+"\n"
+"Ez baduzu D-Bus-arekin elkarreragiten, ez dago mota hau erabiltzeko"
+" arrazoirik."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A double, type \"d\""
+msgstr "Bikoitza, \"d\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "A double value could represent any real number."
+msgstr "Balio bikoitza edozer zenbaki erreal adierazteko."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "A 5-choices enumeration"
+msgstr "5 aukeretako zerrendapena"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr ""
+"Zerrendapenak \"enum\" atributuarekin egin daiteke, edo \"choices\" "
+"etiketa batekin."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A short integer, type \"n\""
+msgstr "Osoko laburra, \"n\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr "16 bit-eko zeinudun osokoa. Ikus integer-16-unsigned\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "Flags: choose-colors-you-love"
+msgstr "Banderak: choose-colors-you-love (aukeratu maite dituzun koloreak)"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr "banderak \"enum\" atributuarekin ezar daitezke."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "An unsigned short integer, type \"q\""
+msgstr "Zeinurik gabeko osoko laburra, \"q\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr "16 bit-eko zeinurik gabeko osokoa. Ikus \"integer-16-signed\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "An usual integer, type \"i\""
+msgstr "Ohiko osokoa, \"i\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr "32 bit-eko zeinudun osokoa. Ikus \"integer-32-unsigned\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "An unsigned usual integer, type \"u\""
+msgstr "Zeinurik gabeko ohiko osokoa, \"u\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr "32 bit-eko zeinurik gabeko osokoa. Ikus \"integer-32-signed\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid "A long integer, type \"x\""
+msgstr "Osoko luzea, \"x\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr "64 bit-eko zeinudun osokoa. Ikus \"integer-64-unsigned\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid "An unsigned long integer, type \"t\""
+msgstr "Zeinurik gabeko osoko luzea, \"t\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr "64 bit-eko zeinurik gabeko osokoa. Ikus \"integer-64-signed\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid "A number with range"
+msgstr "Barrutia duen zenbaki bat"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+"Zenbakizko ezarpen bakoitza (edozer motatako osokoak eta zeinurik gabeko"
+" osokoak "
+"baita bikoitzak ere)  balioen barruti pertsonalizatu batera muga daiteke. "
+"Adibidez, osoko honek -5 eta 9 arteko balio bat har dezake soilik."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid "A custom type, here \"(ii)\""
+msgstr "Mota pertsonalizatu bat, hemen \"(ii)\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+"Dconf editoreak GSettings-ek onartutako edozer ezarpen mota editatzea"
+" baimentzen dizu. "
+"kate bat lehenetsi gisa hartuz gauzak hobea ezin dituenean egin. "
+"Hemen bi 32 bit-eko zeinudun osokoen tupla dago."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid "A string, type \"s\""
+msgstr "Kate bat, \"s\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:69
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+"Kate motak edozer utf8 kate onar dezake. Jakin ezazu \"''\" kate hutsa "
+"ez dela NULL-en (nulua) berdina; ikus \"string-nullable\" gakoa."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
+msgid "A string array, type \"as\""
+msgstr "Kateen matrize bat, \"as\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:71
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+"Kateen matrize batek edozer luzerako edozer kate kopuru eduki dezake. Kate"
+" hutsa "
+"ere izan daiteke: \"[]\"."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
+msgid "A nullable string, type \"ms\""
+msgstr "Nulua izan daitekeen katea, \"ms\" mota"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:73
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+"GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina "
+"'nothing' (ezer ere ez) balioa har dezakete). Nulua izan daitekeen kate"
+" edozer "
+"kate eduki dezake balio gisa, bai \"''\" kate hutsa baita NULL (nulua) ere."
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
+msgid "A 1-choice enumeration"
+msgstr "Aukera bakarreko zerrendapena"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:75
+msgid ""
+"An enumeration could contain only one item, but that's probably an error. "
+"Dconf Editor warns you in that case."
+msgstr ""
+"Zerrendapenak soilik elementu bat eduki dezake, hala ere "
+"baliteke errore bat izatea. Dconf editoreak abisu bat "
+"igorriko dizu egoera horretan."
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "_Bilatu…"
+msgid "Keyboard Shortcuts"
+msgstr "Laster-teklak"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -72,120 +540,538 @@ msgstr "Honi _buruz"
 msgid "_Quit"
 msgstr "I_rten"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "Ezarri lehenetsira"
-
 #: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "Eskema:"
+msgid "Actions"
+msgstr "Ekintzak"
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "Laburpena:"
+msgid "Current view actions"
+msgstr "Uneko ikuspegiaren ekintzak"
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "Deskribapena:"
+msgid "Search"
+msgstr "Bilatu"
 
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "Mota:"
+#: ../editor/dconf-editor.ui.h:5
+msgid "Search keys"
+msgstr "Gakoen bilaketa"
 
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "Lehenetsia:"
-
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "Hurrengoa"
-
-#: ../editor/dconf-editor.vala:29
+#: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Erakutsi bertsioaren informazioa eta irten"
 
-#: ../editor/dconf-editor.vala:206
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "Osokoa [%s..%s]"
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:96
+msgid "Copied to clipboard"
+msgstr "Kopiatu arbelean"
 
-#: ../editor/dconf-editor.vala:219
-#, c-format
-msgid "Double [%s..%s]"
-msgstr "Bikoitza [%s..%s]"
-
-#: ../editor/dconf-editor.vala:221
-msgid "Boolean"
-msgstr "Boolearra"
-
-#: ../editor/dconf-editor.vala:223
-msgid "String"
-msgstr "Katea"
-
-#: ../editor/dconf-editor.vala:225
-msgid "Enumeration"
-msgstr "Zerrendatzea"
-
-#: ../editor/dconf-editor.vala:273
-msgid "No schema"
-msgstr "Eskemarik ez"
-
-#: ../editor/dconf-editor.vala:383
-msgid "Not found"
-msgstr "Ez da aurkitu"
-
-#: ../editor/dconf-editor.vala:431
+#: ../editor/dconf-editor.vala:150
 msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
-"Programa hau librea da; birbana eta/edo alda dezakezu Software Foundation-ek "
-"argitaratutako GNU Lizentzia Publiko Orokorraren 2. bertsioan, edo (nahiago "
-"baduzu) beste berriago batean, jasotako baldintzak betez gero.\n"
-"\n"
-"Programa hau erabilgarria izango delakoan banatzen da, baina, INOLAKO "
-"BERMERIK GABE; era berean, ez da bermatzen beraren EGOKITASUNA "
-"MERKATURATZEKO edo HELBURU PARTIKULARRETARAKO ERABILTZEKO.  Argibide gehiago "
-"nahi izanez gero, ikus GNU Lizentzia Publiko Orokorra.\n"
-"\n"
-"Programa honekin batera GNU Lizentzia Publiko Orokorraren kopia bat jasoko "
-"zenuen; hala ez bada, idatzi hona: Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
+"Copyright-a © 2010-2014 – Canonical Ltd\n"
+"Copyright-a © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:437
-msgid "Copyright © Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
-
-#: ../editor/dconf-editor.vala:441
+#: ../editor/dconf-editor.vala:154
 msgid "translator-credits"
 msgstr ""
 "Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
 "Iñaki Larrañaga Murgoitio <dooteo@zundan.com>"
 
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-model.vala:195
+msgid "Boolean"
+msgstr "Boolearra"
+
+#: ../editor/dconf-model.vala:197
+msgid "String"
+msgstr "Katea"
+
+#: ../editor/dconf-model.vala:199
+msgid "String array"
+msgstr "Kateen matrizea"
+
+#: ../editor/dconf-model.vala:201
+msgid "Enumeration"
+msgstr "Zerrendatzea"
+
+#: ../editor/dconf-model.vala:203
+msgid "Flags"
+msgstr "Banderak"
+
+#: ../editor/dconf-model.vala:205
+msgid "Double"
+msgstr "Bikoitza"
+
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-model.vala:208
+msgid "D-Bus handle type"
+msgstr "D-Bus helduleku mota"
+
+#: ../editor/dconf-model.vala:210
+msgid "D-Bus object path"
+msgstr "D-Bus objektuaren bide-izena"
+
+#: ../editor/dconf-model.vala:212
+msgid "D-Bus object path array"
+msgstr "D-Bus objektuen bide-izenen matrizea"
+
+#: ../editor/dconf-model.vala:214
+msgid "D-Bus signature"
+msgstr "D-Bus-en sinadura"
+
+#: ../editor/dconf-model.vala:222
+msgid "Integer"
+msgstr "Osokoa"
+
+#: ../editor/dconf-model.vala:337
+msgid "True"
+msgstr "Egia"
+
+#: ../editor/dconf-model.vala:339
+msgid "False"
+msgstr "Faltsua"
+
+#: ../editor/dconf-model.vala:340
+msgid "Nothing"
+msgstr "Ezer ere ez"
+
+#: ../editor/dconf-model.vala:345
+msgid "true"
+msgstr "egia"
+
+#: ../editor/dconf-model.vala:347
+msgid "false"
+msgstr "faltsua"
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:349
+msgid "nothing"
+msgstr "ezer ere ez"
+
+#: ../editor/dconf-view.vala:438
+msgid "This value is invalid for the key type."
+msgstr "Balio hau baliogabea da gako honentzako."
+
+#: ../editor/dconf-window.vala:130
+msgid "Thanks for using Dconf Editor for editing your settings!"
+msgstr ""
+"Eskerrik asko Dconf editorea zure ezarpenak editatzeko erabiltzeagatik!"
+
+#: ../editor/dconf-window.vala:131
+msgid "Don’t forget that some options may break applications, so be careful."
+msgstr ""
+"Ez ahaztu aukera batzuk aplikazioak honda ditzaketela, kontu handiz erabili"
+" beraz."
+
+#: ../editor/dconf-window.vala:132
+msgid "I’ll be careful."
+msgstr "Kontu handiz erabiliko dut."
+
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+#: ../editor/dconf-window.vala:136
+msgid "Show this dialog next time."
+msgstr "Erakutsi elkarrizketa-koadro hau aurrerantzean."
+
+#: ../editor/dconf-window.vala:240
+msgid "Copy current path"
+msgstr "Kopiatu uneko bide-izena"
+
+#: ../editor/dconf-window.vala:245
+msgid "Reset visible keys"
+msgstr "Leheneratu gako ikusgaiak"
+
+#: ../editor/dconf-window.vala:246
+msgid "Reset recursively"
+msgstr "Leheneratu errekurtsiboki"
+
+#: ../editor/dconf-window.vala:254
+msgid "Enter delay mode"
+msgstr "Sartu atzerapen modua"
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Ekintzak"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "Laster-marken menua"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "Sortu bide-izen honen laster-marka"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "Kendu bide-izen honen laster-marka"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "Bilaketa-barra"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "Ekintzen menua"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Current row menu"
+msgstr "Uneko errenkadaren menua"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Arbela"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Kopiatu deskriptorea"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopiatu bide-izena"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Path bar navigation"
+msgstr "Bide-izenen barraren nabigazioa"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Open root folder"
+msgstr "Ireki erroko karpeta"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Open parent folder"
+msgstr "Ireki karpeta gurasoa"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Open active direct child"
+msgstr "Ireki direktorio ume aktiboa"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Open active last child"
+msgstr "Ireki azken ume aktiboa"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Orokorra"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Erakutsi laguntza hau"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Honi buruz"
+
+#: ../editor/help-overlay.ui.h:19
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Irten"
+
+#: ../editor/key-list-box-row.vala:162
+msgid "No Schema Found"
+msgstr "Ez da eskemarik aurkitu"
+
+#: ../editor/key-list-box-row.vala:171
+msgid "Key erased."
+msgstr "Gakoa ezabatuta."
+
+#: ../editor/key-list-box-row.vala:187
 #, c-format
-msgid "Error setting value: %s"
-msgstr "Errorea balioa ezartzean: %s"
+msgid "%s (key erased)"
+msgstr "%s (gakoa ezabatuta)"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Name"
-msgstr "Izena"
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:389
+msgid "Customize…"
+msgstr "Pertsonalizatu…"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
-msgid "Value"
-msgstr "Balioa"
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:392
+msgid "Set to default"
+msgstr "Ezarri lehenetsira"
 
+#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
+#: ../editor/key-list-box-row.vala:397
+msgid "Dismiss change"
+msgstr "Baztertu aldaketak"
+
+#. Translators: "open folder" action in the right-click menu on a folder
+#: ../editor/key-list-box-row.vala:400
+msgid "Open"
+msgstr "Ireki"
+
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:531
+#: ../editor/registry-info.ui.h:2
+msgid "Erase key"
+msgstr "Garbitu gakoa"
+
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: ../editor/key-list-box-row.vala:406
+msgid "Do not erase"
+msgstr "Ez garbitu"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:415
+msgid "Copy"
+msgstr "Kopiatu"
+
+#. Translators: "no change" option in the right-click menu on a key when on delayed mode
+#: ../editor/key-list-box-row.vala:525
+msgid "No change"
+msgstr "Aldaketarik gabe"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:575 ../editor/registry-info.vala:235
+msgid "Default value"
+msgstr "Balio lehenetsia"
+
+#: ../editor/modifications-revealer.ui.h:1
+msgid "Apply"
+msgstr "Aplikatu"
+
+#: ../editor/modifications-revealer.vala:141
+msgid "Nothing to reset."
+msgstr "Ezer ez leheneratzeko."
+
+#: ../editor/modifications-revealer.vala:241
+msgid "The value is invalid."
+msgstr "Balio hau baliogabea da."
+
+#: ../editor/modifications-revealer.vala:245
+msgid "The change will be dismissed if you quit this view without applying."
+msgstr ""
+"Aldaketak baztertu egingo dira ikuspegi honetatik aplikatu gabe irteten"
+" bazara."
+
+#: ../editor/modifications-revealer.vala:247
+msgid "The change will be applied on such request or if you quit this view."
+msgstr ""
+"Aldaketak halako eskaeran aplikatuko dira, edo ikuspegi honetatik irteten"
+" bazara."
+
+#: ../editor/modifications-revealer.vala:264
+msgid "Changes will be delayed until you request it."
+msgstr "Aldaketak atzeratu egingo dira zuk eskatu arte."
+
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:266
+#, c-format
+msgid "One gsettings operation delayed."
+msgid_plural "%u gsettings operations delayed."
+msgstr[0] "'gsettings' eragiketa bat atzeratuta."
+msgstr[1] "%u 'gsettings' eragiketa atzeratuta."
+
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:270
+#, c-format
+msgid "One dconf operation delayed."
+msgid_plural "%u dconf operations delayed."
+msgstr[0] "'dconf' eragiketa bat atzeratuta."
+msgstr[1] "%u 'dconf' eragiketa atzeratuta."
+
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:273
+#, c-format
+msgid "%s%s"
+msgstr "%s%s"
+
+#: ../editor/modifications-revealer.vala:273
+#, c-format
+msgid "One gsettings operation"
+msgid_plural "%u gsettings operations"
+msgstr[0] "'gsettings' eragiketa bat"
+msgstr[1] "%u 'gsettings' eragiketa"
+
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:278
+#, c-format
+msgid " and one dconf operation delayed."
+msgid_plural " and %u dconf operations delayed."
+msgstr[0] "eta 'dconf' eragiketa bat atzeratuta."
+msgstr[1] "eta %u 'dconf' eragiketa atzeratuta."
+
+#: ../editor/registry-info.ui.h:1
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+"Ez dago eskemarik erabilgarri. Dconf editoreak ezin du gako honekin"
+" esleitutako "
+"eskema aurkitu. Gako hau instalatu zuen aplikazioa kenduta egon daiteke, "
+"agian gako hau erabiltzeari utzi dio edo kokalekuz alda daitekeen eskema"
+" darabil "
+"bere gakoak definitzeko."
+
+#: ../editor/registry-info.ui.h:3
+msgid ""
+"This enumeration offers only one choice. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
+msgstr ""
+"Zerrendapen honek aukera bakar bat eskaintzen du. Baliteke eskema hau "
+"instalatu zuen aplikazioaren errore bat izatea. Horrela bada, mesedez, "
+"bidali erroreari buruzko txosten bat."
+
+#: ../editor/registry-info.vala:80
+msgid "Schema"
+msgstr "Eskema"
+
+#: ../editor/registry-info.vala:81
+msgid "Summary"
+msgstr "Laburpena"
+
+#: ../editor/registry-info.vala:82
+msgid "Description"
+msgstr "Azalpena"
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/registry-info.vala:84
+msgid "Type"
+msgstr "Mota"
+
+#: ../editor/registry-info.vala:86
+msgid "Minimum"
+msgstr "Gutxienekoa"
+
+#: ../editor/registry-info.vala:87
+msgid "Maximum"
+msgstr "Gehienezkoa"
+
+#: ../editor/registry-info.vala:88
+msgid "Default"
+msgstr "Lehenetsia"
+
+#: ../editor/registry-info.vala:108
+msgid "Current value"
+msgstr "Uneko balioa"
+
+#: ../editor/registry-info.vala:134
+msgid "Use default value"
+msgstr "Erabili balio lehenetsia"
+
+#: ../editor/registry-info.vala:192
+msgid "Custom value"
+msgstr "Balio pertsonalizatua"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/registry-info.vala:296
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+"Erabili \"nothing\" gako-hitza mota posible bat (\"m\" hizkiarekin hasitakoa) "
+"bere balio hutsera ezartzeko. Kateak, sinadurak eta objektuen bide-izenak "
+"komatxoz (\") inguratuta egon beharko lukete."
+
+#: ../editor/registry-info.vala:298
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr ""
+"Kateak, sinadurak eta objektuen bide-izenak komatxoz (\")"
+"inguratuta egon beharko lukete."
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/registry-info.vala:302
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr ""
+"Erabili \"nothing\" gako-hitza mota posible bat (\"m\" hizkiarekin hasitakoa) "
+"bere balio hutsera ezartzeko."
+
+#: ../editor/registry-view.ui.h:1
+msgid "No keys in this path"
+msgstr "Ez dago gakorik bide-izen honetan"
+
+#: ../editor/registry-view.vala:170
+#, c-format
+msgid "Cannot find folder \"%s\"."
+msgstr "Ezin da \"%s\" karpeta aurkitu."
+
+#: ../editor/registry-view.vala:188
+#, c-format
+msgid "Cannot find key \"%s\" here."
+msgstr "Ezin da \"%s\" gakoa aurkitu hemen."
+
+#: ../editor/registry-view.vala:194
+#, c-format
+msgid "Key \"%s\" has been removed."
+msgstr "\"%s\" gakoa kendu egin da."
+
+#~ msgid "_Find…"
+#~ msgstr "_Bilatu…"
+
+#~ msgid "Next"
+#~ msgstr "Hurrengoa"
+
+#~ msgid "Double [%s..%s]"
+#~ msgstr "Bikoitza [%s..%s]"
+
+#~ msgid "Not found"
+#~ msgstr "Ez da aurkitu"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it and/or modify it "
+#~ "under the terms of the GNU General Public License as published by the "
+#~ "Free Software Foundation; either version 2 of the License, or (at your "
+#~ "option) any later version.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be useful, but "
+#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
+#~ "Public License for more details.\n"
+#~ "\n"
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with this program; if not, write to the Free Software Foundation, Inc., "
+#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#~ msgstr ""
+#~ "Programa hau librea da; birbana eta/edo alda dezakezu Software Foundation-"
+#~ "ek argitaratutako GNU Lizentzia Publiko Orokorraren 2. bertsioan, edo "
+#~ "(nahiago baduzu) beste berriago batean, jasotako baldintzak betez gero.\n"
+#~ "\n"
+#~ "Programa hau erabilgarria izango delakoan banatzen da, baina, INOLAKO "
+#~ "BERMERIK GABE; era berean, ez da bermatzen beraren EGOKITASUNA "
+#~ "MERKATURATZEKO edo HELBURU PARTIKULARRETARAKO ERABILTZEKO.  Argibide "
+#~ "gehiago nahi izanez gero, ikus GNU Lizentzia Publiko Orokorra.\n"
+#~ "\n"
+#~ "Programa honekin batera GNU Lizentzia Publiko Orokorraren kopia bat "
+#~ "jasoko zenuen; hala ez bada, idatzi hona: Free Software Foundation, Inc., "
+#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
+
+#~ msgid "Copyright © Canonical Ltd"
+#~ msgstr "Copyright © Canonical Ltd"
+
+#~ msgid "Error setting value: %s"
+#~ msgstr "Errorea balioa ezartzean: %s"
+
+#~ msgid "Name"
+#~ msgstr "Izena"
+
+#~ msgid "Value"
+#~ msgstr "Balioa"
