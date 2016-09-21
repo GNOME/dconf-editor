@@ -136,10 +136,12 @@ window > popover.menu {
 }
 
 .pathbar {
-  margin:0 2px;
+  margin:0 4px;
 }
 
 .pathbar > label {
+  padding-left:0.1em;
+  padding-right:0.1em;
   color:alpha(currentColor,0.8);
 }
 .pathbar > label:backdrop {
@@ -147,10 +149,12 @@ window > popover.menu {
 }
 
 .pathbar > button {
-  padding-left:0.2em;
-  padding-right:0.2em;
+  padding-left:0.1em;
+  padding-right:0.1em;
   margin-left:0.1em;
   margin-right:0.1em;
+
+  outline-offset:0;
 
   border:none;
   border-color:transparent;
