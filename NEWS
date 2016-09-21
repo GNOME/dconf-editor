@@ -1,3 +1,15 @@
+dconf-editor 3.22.0
+=====================
+
+The appdata file validation has been changed to work without hacks (but... isn't
+that a hack?). Hopefully, all should be good now for a new great stable release!
+
+Translations updated:
+  Basque: Inaki Larranaga Murgoitio
+  Danish: Kenneth Nielsen
+  Polish: Piotr Drąg
+  Swedish: Anders Jonsson
+
 dconf-editor 3.21.92
 =====================
 
