@@ -68,10 +68,15 @@ ca.desrt.dconf-editor.service: Makefile
 	             echo 'Exec=${bindir}/dconf-editor --gapplication-service') > $@.tmp && \
 	             mv $@.tmp $@
 
-@APPSTREAM_XML_RULES@
 appstream_in_files = ca.desrt.dconf-editor.appdata.xml.in
 appstream_XML = $(appstream_in_files:.xml.in=.xml)
 @INTLTOOL_XML_RULE@
+
+%.appdata.valid: %.appdata.xml
+	$(AM_V_GEN) if test -f "$<"; then d=; else d="$(srcdir)/"; fi; \
+	            if test -n "$(APPSTREAM_UTIL)"; \
+	                then $(APPSTREAM_UTIL) --nonet validate-relax $${d}$<; fi
+check-am: $(appstream_XML:.appdata.xml=.appdata.valid)
 
 gsettings_SCHEMAS = ca.desrt.dconf-editor.gschema.xml
 @GSETTINGS_RULES@
@@ -96,8 +101,6 @@ update-icon-cache:
 	fi
 
 man_MANS = dconf-editor.1
-
-DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check
 
 CLEANFILES = $(appstream_XML) $(desktop_DATA) $(dbusservice_DATA) resources.c
 EXTRA_DIST = $(appstream_in_files) $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
