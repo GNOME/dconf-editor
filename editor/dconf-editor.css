@@ -15,6 +15,11 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+  THEMES HACKERS, you've got a ".dconf-editor" CSS target on the window, as all
+  the things could not be solved generically. But don't hesitate to file a bug.
+*/
+
 /*\
 * * hamburger menu
 \*/
