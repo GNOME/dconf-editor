@@ -2,6 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <template class="PathBarItem" parent="GtkButton">
+    <property name="focus-on-click">False</property>
     <child>
       <object class="GtkLabel" id="text_label">
         <property name="visible">True</property>
