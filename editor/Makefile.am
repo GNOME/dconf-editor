@@ -68,6 +68,7 @@ ca.desrt.dconf-editor.service: Makefile
 	             echo 'Exec=${bindir}/dconf-editor --gapplication-service') > $@.tmp && \
 	             mv $@.tmp $@
 
+@APPSTREAM_XML_RULES@
 appstream_in_files = ca.desrt.dconf-editor.appdata.xml.in
 appstream_XML = $(appstream_in_files:.xml.in=.xml)
 @INTLTOOL_XML_RULE@
