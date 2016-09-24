@@ -37,7 +37,7 @@ public class PathBar : Box, PathElement
     public void set_path (string path)
         requires (path [0] == '/')
     {
-        root_button.set_sensitive (path != "/");
+        activate_item (root_button, path == "/");
 
         complete_path = "";
         string [] split = path.split ("/", /* max tokens disabled */ 0);
@@ -59,7 +59,7 @@ public class PathBar : Box, PathElement
                 if (maintain_all)
                 {
                     complete_path += ((PathBarItem) child).text_string;
-                    child.set_sensitive (true);
+                    activate_item (child, false);
                     return;
                 }
 
@@ -69,11 +69,11 @@ public class PathBar : Box, PathElement
                     split = split [1:split.length];
                     if (split.length == 0 || (split.length == 1 && !is_key_path))
                     {
-                        child.set_sensitive (false);
+                        activate_item (child, true);
                         maintain_all = true;
                     }
                     else
-                        child.set_sensitive (true);
+                        activate_item (child, false);
                     return;
                 }
 
@@ -131,7 +131,7 @@ public class PathBar : Box, PathElement
     }
 
     /*\
-    * * widgets creation
+    * * widgets management
     \*/
 
     private void add_slash_label ()
@@ -144,9 +144,20 @@ public class PathBar : Box, PathElement
         PathBarItem path_bar_item = new PathBarItem (label);
 
         path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => request_path (complete_path));
-        path_bar_item.set_sensitive (!block);
+        activate_item (path_bar_item, block);
 
         add (path_bar_item);
+    }
+
+    private void activate_item (Widget item, bool state)
+    {
+        StyleContext context = item.get_style_context ();
+        if (state == context.has_class ("active"))
+            return;
+        if (state)
+            context.add_class ("active");
+        else
+            context.remove_class ("active");
     }
 }
 
