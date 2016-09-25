@@ -166,6 +166,7 @@ window > popover.menu {
   box-shadow:none;
   background:none;
   background-color:transparent;
+  color:currentColor;
 }
 
 /* underline selected label */
