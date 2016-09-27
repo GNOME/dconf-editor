@@ -30,6 +30,8 @@ class DConfWindow : ApplicationWindow
 {
     private const GLib.ActionEntry [] action_entries =
     {
+        { "open-path", open_path, "s" },
+
         { "reset-recursive", reset_recursively },
         { "reset-visible", reset },
         { "enter-delay-mode", enter_delay_mode }
@@ -263,6 +265,12 @@ class DConfWindow : ApplicationWindow
     /*\
     * * Action entries
     \*/
+
+    private void open_path (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        request_path (((!) path_variant).get_string ());
+    }
 
     private void reset ()
     {
