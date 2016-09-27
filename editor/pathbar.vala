@@ -27,7 +27,6 @@ public class PathBar : Box, PathElement
     construct
     {
         add_slash_label ();
-        root_button.clicked.connect (() => request_path ("/"));
     }
 
     /*\
@@ -77,7 +76,6 @@ public class PathBar : Box, PathElement
                     return;
                 }
 
-                child.disconnect (((PathBarItem) child).path_bar_item_clicked_handler);
                 child.destroy ();
                 destroy_all = true;
             });
@@ -142,11 +140,10 @@ public class PathBar : Box, PathElement
     private void add_path_bar_item (string label, string complete_path, bool block)
     {
         PathBarItem path_bar_item = new PathBarItem (label);
-
-        path_bar_item.path_bar_item_clicked_handler = path_bar_item.clicked.connect (() => request_path (complete_path));
-        activate_item (path_bar_item, block);
+        path_bar_item.action_target = new Variant.string (complete_path);
 
         add (path_bar_item);
+        activate_item (path_bar_item, block);   // has to be after add()
     }
 
     private void activate_item (Widget item, bool state)
@@ -164,8 +161,6 @@ public class PathBar : Box, PathElement
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
 private class PathBarItem : Button
 {
-    public ulong path_bar_item_clicked_handler = 0;
-
     public string text_string { get; construct; }
     [GtkChild] private Label text_label;
 
