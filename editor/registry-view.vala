@@ -167,7 +167,7 @@ class RegistryView : Grid, PathElement
 
         if (!select_folder (folder_name))
         {
-            get_dconf_window ().show_notification (_("Cannot find folder \"%s\".").printf (folder_name));
+            get_dconf_window ().show_notification (_("Cannot find folder “%s”.").printf (folder_name));
             current_path = "/";
             show_browse_view ("/", null);
             return;
@@ -185,13 +185,13 @@ class RegistryView : Grid, PathElement
         if (key == null)
         {
             show_browse_view (folder_name, null);
-            get_dconf_window ().show_notification (_("Cannot find key \"%s\" here.").printf (key_name));
+            get_dconf_window ().show_notification (_("Cannot find key “%s” here.").printf (key_name));
             return;
         }
         if (((!) key) is DConfKey && ((DConfKey) ((!) key)).is_ghost)
         {
             show_browse_view (folder_name, folder_name + key_name);
-            get_dconf_window ().show_notification (_("Key \"%s\" has been removed.").printf (key_name));
+            get_dconf_window ().show_notification (_("Key “%s” has been removed.").printf (key_name));
             return;
         }
 

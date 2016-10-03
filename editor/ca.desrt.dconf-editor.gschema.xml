@@ -36,37 +36,37 @@
     <key name="restore-view" type="b">
       <default>true</default>
       <summary>A flag to restore the last view</summary>
-      <description>If 'true', Dconf Editor tries at launch to navigate to the path described in the 'saved-view' key.</description>
+      <description>If “true”, Dconf Editor tries at launch to navigate to the path described in the “saved-view” key.</description>
     </key>
     <key name="saved-view" type="s">
       <default>'/'</default>
       <summary>A path to restore the last view</summary>
-      <description>If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to navigate to this path.</description>
+      <description>If the “restore-view” key is set to “true”, Dconf Editor tries at launch to navigate to this path.</description>
     </key>
     <key name="show-warning" type="b">
       <default>true</default>
       <summary>Show initial warning</summary>
-      <description>If 'true', Dconf Editor opens a popup when launched reminding the user to be careful.</description>
+      <description>If “true”, Dconf Editor opens a popup when launched reminding the user to be careful.</description>
     </key>
     <key name="small-keys-list-rows" type="b">
       <default>false</default>
       <summary>A flag to enable small rows for keys list</summary>
-      <description>If 'true', the keys list use smaller rows.</description>
+      <description>If “true”, the keys list use smaller rows.</description>
     </key>
     <key name="small-bookmarks-rows" type="b">
       <default>false</default>
       <summary>A flag to enable small rows for bookmarks list</summary>
-      <description>If 'true', the bookmarks list use smaller rows.</description>
+      <description>If “true”, the bookmarks list use smaller rows.</description>
     </key>
     <!-- key name="theme" enum="ca.desrt.dconf-editor.Themes">
       <default>'three-twenty-two'</default>
       <summary>The theme of the navigation list</summary>
-      <description>The themes are defined by the application, you cannot add one. The theme 'three-twenty-two' will remain as close as possible to the default theme of the 3.22 release.</description>
+      <description>The themes are defined by the application, you cannot add one. The theme “three-twenty-two” will remain as close as possible to the default theme of the 3.22 release.</description>
     </key -->
     <key name="behaviour" enum="ca.desrt.dconf-editor.Behaviour">
       <default>'always-confirm-implicit'</default>
       <summary>Change the behaviour of a key value change request</summary>
-      <description>The 'unsafe' value is discouraged: for keys that have a non-special-cased type, it updates the key value each time something changes in the entry, so including intermediate states. The 'safe' value asks for confirmation in these cases, but allows instant changes for booleans and nullable booleans, enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' values always asks for confirmation, but the first applies the change if you change path whereas the second dismiss it. The 'always-delay' value adds each change in delay mode, allowing to apply multiple keys at once.</description>
+      <description>The “unsafe” value is discouraged: for keys that have a non-special-cased type, it updates the key value each time something changes in the entry, so including intermediate states. The “safe” value asks for confirmation in these cases, but allows instant changes for booleans and nullable booleans, enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” values always asks for confirmation, but the first applies the change if you change path whereas the second dismiss it. The “always-delay” value adds each change in delay mode, allowing to apply multiple keys at once.</description>
     </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
@@ -89,101 +89,101 @@
   <schema id="ca.desrt.dconf-editor.Demo" path="/ca/desrt/dconf-editor/demo/">
     <key name="boolean" type="b">
       <default>true</default>
-      <summary>A boolean, type "b"</summary>
-      <description>Booleans can only take two values, "true" or "false".</description>
+      <summary>A boolean, type ‘b’</summary>
+      <description>Booleans can only take two values, “true” or “false”.</description>
     </key>
     <key name="boolean-nullable" type="mb">
       <default>nothing</default>
-      <summary>A nullable boolean, type "mb"</summary>
-      <description>GSettings allows nullable types, that are similar to other types but could take a "nothing" value. A nullable boolean can only take three values, "true", "false" and "nothing".</description>
+      <summary>A nullable boolean, type ‘mb’</summary>
+      <description>GSettings allows nullable types, that are similar to other types but could take a “nothing” value. A nullable boolean can only take three values, “true”, “false” and “nothing”.</description>
     </key>
     <key name="byte" type="y">
       <default>66</default>
-      <summary>A byte (unsigned), type "y"</summary>
+      <summary>A byte (unsigned), type ‘y’</summary>
       <description>A byte value is an integer between 0 and 255. It may be used to pass around characters.</description>
     </key>
     <key name="bytestring" type="ay">
       <default>[72, 101, 108, 108, 108]</default>
-      <summary>A bytestring, type "ay"</summary>
+      <summary>A bytestring, type ‘ay’</summary>
       <description>The bytestring type is commonly used to pass around strings that may not be valid utf8. In that case, the convention is that the nul terminator character should be included as the last character in the array.</description>
     </key>
     <key name="bytestring-array" type="aay">
       <default>[[72, 101, 108, 108, 108], [87, 111, 114, 108, 100], [33]]</default>
-      <summary>A bytestring array, type "aay"</summary>
+      <summary>A bytestring array, type ‘aay’</summary>
       <description>This is the type of an array of bytestrings. The bytestring type is commonly used to pass around strings that may not be valid utf8.</description>
     </key>
     <key name="dbus-handle" type="h">
       <default>0</default>
-      <summary>A D-Bus handle type, type "h"</summary>
+      <summary>A D-Bus handle type, type ‘h’</summary>
       <description>The handle type is a 32bit signed integer value that is, by convention, used as an index into an array of file descriptors that are sent alongside a D-Bus message.
 
 If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="dbus-object-path" type="o">
       <default>'/ca/desrt/dconf_editor'</default>
-      <summary>A D-Bus object path, type "o"</summary>
+      <summary>A D-Bus object path, type ‘o’</summary>
       <description>An object path is used to identify D-Bus objects at a given destination on the bus.
 
 If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="dbus-object-path-array" type="ao">
       <default>['/ca/desrt/dconf_editor/menus/appmenu', '/ca/desrt/dconf_editor/window/1']</default>
-      <summary>A D-Bus object path array, type "ao"</summary>
-      <description>An object path array could contain any number of object paths (including none: "[]").
+      <summary>A D-Bus object path array, type ‘ao’</summary>
+      <description>An object path array could contain any number of object paths (including none: “[]”).
 
 If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="dbus-signature" type="g">
       <default>'ii'</default>
-      <summary>A D-Bus signature, type "g"</summary>
+      <summary>A D-Bus signature, type ‘g’</summary>
       <description>A D-Bus signature is a string used as type signature for a D-Bus method or message.
 
 If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="double" type="d">
       <default>3.1415926535897933</default>
-      <summary>A double, type "d"</summary>
+      <summary>A double, type ‘d’</summary>
       <description>A double value could represent any real number.</description>
     </key>
     <key name="enumeration" enum="ca.desrt.dconf-editor.DemoEnum">
       <default>'White'</default>
       <summary>A 5-choices enumeration</summary>
-      <description>Enumerations could be done either with the "enum" attribute, or with a "choices" tag.</description>
+      <description>Enumerations could be done either with the “enum” attribute, or with a “choices” tag.</description>
     </key>
     <key name="integer-16-signed" type="n">
       <default>-32768</default>
-      <summary>A short integer, type "n"</summary>
-      <description>A 16bit signed integer. See also the "integer-16-unsigned" key.</description>
+      <summary>A short integer, type ‘n’</summary>
+      <description>A 16bit signed integer. See also the “integer-16-unsigned” key.</description>
     </key>
     <key name="flags" flags="ca.desrt.dconf-editor.DemoFlags">
       <default>["Blue", "White", "Red"]</default>
       <summary>Flags: choose-colors-you-love</summary>
-      <description>Flags could be set by the "enum" attribute.</description>
+      <description>Flags could be set by the “enum” attribute.</description>
     </key>
     <key name="integer-16-unsigned" type="q">
       <default>65535</default>
-      <summary>An unsigned short integer, type "q"</summary>
-      <description>A 16bit unsigned integer. See also the "integer-16-signed" key.</description>
+      <summary>An unsigned short integer, type ‘q’</summary>
+      <description>A 16bit unsigned integer. See also the “integer-16-signed” key.</description>
     </key>
     <key name="integer-32-signed" type="i">
       <default>-2147483648</default>
-      <summary>An usual integer, type "i"</summary>
-      <description>A 32bit signed integer. See also the "integer-32-unsigned" key.</description>
+      <summary>An usual integer, type ‘i’</summary>
+      <description>A 32bit signed integer. See also the “integer-32-unsigned” key.</description>
     </key>
     <key name="integer-32-unsigned" type="u">
       <default>4294967295</default>
-      <summary>An unsigned usual integer, type "u"</summary>
-      <description>A 32bit unsigned integer. See also the "integer-32-signed" key.</description>
+      <summary>An unsigned usual integer, type ‘u’</summary>
+      <description>A 32bit unsigned integer. See also the “integer-32-signed” key.</description>
     </key>
     <key name="integer-64-signed" type="x">
       <default>-9223372036854775808</default>
-      <summary>A long integer, type "x"</summary>
-      <description>A 64bit signed integer. See also the "integer-64-unsigned" key.</description>
+      <summary>A long integer, type ‘x’</summary>
+      <description>A 64bit signed integer. See also the “integer-64-unsigned” key.</description>
     </key>
     <key name="integer-64-unsigned" type="t">
       <default>18446744073709551615</default>
-      <summary>An unsigned long integer, type "t"</summary>
-      <description>A 64bit unsigned integer. See also the "integer-64-signed" key.</description>
+      <summary>An unsigned long integer, type ‘t’</summary>
+      <description>A 64bit unsigned integer. See also the “integer-64-signed” key.</description>
     </key>
     <!-- TODO add a nullable-(unsigned-)integer -->
     <key name="number-with-range" type="i">
@@ -194,28 +194,28 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     </key>
     <key name="pair-of-integers" type="(ii)">
       <default>(800, 600)</default>
-      <summary>A custom type, here "(ii)"</summary>
-      <description>Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn't have a better way to do. Here is a tuple of two 32bit signed integers.</description>
+      <summary>A custom type, here ‘(ii)’</summary>
+      <description>Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn’t have a better way to do. Here is a tuple of two 32bit signed integers.</description>
     </key>
     <key name="string" type="s">
       <default>'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'</default>
-      <summary>A string, type "s"</summary>
-      <description>The string type could accept any utf8 string. Note that an empty string "''" is not the same as NULL (nothing); see also the "string-nullable" key.</description>
+      <summary>A string, type ‘s’</summary>
+      <description>The string type could accept any utf8 string. Note that an empty string “''” is not the same as NULL (nothing); see also the “string-nullable” key.</description>
     </key>
     <key name="string-array" type="as">
       <default>['orange', 'banana', 'pear']</default>
-      <summary>A string array, type "as"</summary>
-      <description>A string array contains any number of strings of whatever length. It may be an empty array, "[]".</description>
+      <summary>A string array, type ‘as’</summary>
+      <description>A string array contains any number of strings of whatever length. It may be an empty array, “[]”.</description>
     </key>
     <key name="string-nullable" type="ms">
       <default>nothing</default>
-      <summary>A nullable string, type "ms"</summary>
-      <description>GSettings allows nullable types, that are similar to other types but could take a "nothing" value. A nullable string can take any string as value, including the empty string "''", or can be NULL (nothing).</description>
+      <summary>A nullable string, type ‘ms’</summary>
+      <description>GSettings allows nullable types, that are similar to other types but could take a “nothing” value. A nullable string can take any string as value, including the empty string “''”, or can be NULL (nothing).</description>
     </key>
     <key name="weird-enum" enum="ca.desrt.dconf-editor.DemoWeirdEnum">
       <default>'only-choice'</default>
       <summary>A 1-choice enumeration</summary>
-      <description>An enumeration could contain only one item, but that's probably an error. Dconf Editor warns you in that case.</description>
+      <description>An enumeration could contain only one item, but that’s probably an error. Dconf Editor warns you in that case.</description>
     </key>
   </schema>
 </schemalist>
