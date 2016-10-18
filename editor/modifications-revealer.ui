@@ -10,8 +10,8 @@
         <child>
           <object class="GtkLabel" id="label">
             <property name="visible">True</property>
-            <property name="margin-left">6</property><!-- GtkActionBar creates a GtkBox which "spacing" property is not editable -->
-            <property name="margin-right">6</property>
+            <property name="margin-start">6</property><!-- GtkActionBar creates a GtkBox which "spacing" property is not editable -->
+            <property name="margin-end">6</property>
           </object>
         </child>
         <child>
