@@ -21,15 +21,6 @@
 */
 
 /*\
-* * hamburger menu
-\*/
-
-/* egtk */
-window > popover.menu {
-  background:inherit;
-}
-
-/*\
 * * lists rows height and icon
 \*/
 
