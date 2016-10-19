@@ -194,7 +194,13 @@ class DConfWindow : ApplicationWindow
 
         if (window_is_maximized || window_is_tiled)
             return;
-        get_size (out window_width, out window_height);
+        int? _window_width = null;
+        int? _window_height = null;
+        get_size (out _window_width, out _window_height);
+        if (_window_width == null || _window_height == null)
+            return;
+        window_width = (!) _window_width;
+        window_height = (!) _window_height;
     }
 
     [GtkCallback]
