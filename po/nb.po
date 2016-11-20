@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor 3.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-15 15:15+0200\n"
-"PO-Revision-Date: 2016-10-15 15:16+0200\n"
+"POT-Creation-Date: 2016-11-20 23:00+0100\n"
+"PO-Revision-Date: 2016-11-20 23:03+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -586,19 +586,19 @@ msgstr "Jeg skal være forsiktig"
 msgid "Show this dialog next time."
 msgstr "Vis denne dialogen neste gang."
 
-#: ../editor/dconf-window.vala:242
+#: ../editor/dconf-window.vala:248
 msgid "Copy current path"
 msgstr "Kopier denne stien"
 
-#: ../editor/dconf-window.vala:247
+#: ../editor/dconf-window.vala:253
 msgid "Reset visible keys"
 msgstr "Nullstill synlige nøkler"
 
-#: ../editor/dconf-window.vala:248
+#: ../editor/dconf-window.vala:254
 msgid "Reset recursively"
 msgstr "Nullstill rekursivt"
 
-#: ../editor/dconf-window.vala:256
+#: ../editor/dconf-window.vala:262
 msgid "Enter delay mode"
 msgstr "Gå til pausemodus"
 
@@ -668,15 +668,14 @@ msgid "Open parent folder"
 msgstr "Åpne opphavsmappe"
 
 #: ../editor/help-overlay.ui.h:14
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr "Åpne aktiv "
+msgstr "Åpne aktivt direkte barn"
 
 #: ../editor/help-overlay.ui.h:15
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
+msgstr "Åpne aktivt siste barn"
 
 #: ../editor/help-overlay.ui.h:16
 msgctxt "shortcut window"
@@ -810,11 +809,11 @@ msgid "%s%s"
 msgstr "%s%s"
 
 #: ../editor/modifications-revealer.vala:273
-#, fuzzy, c-format
+#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "innstillinger;konfigurasjon;"
-msgstr[1] "innstillinger;konfigurasjon;"
+msgstr[0] "En gsettings-operasjon"
+msgstr[1] "%u gsettings-operasjoner"
 
 #. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, and
@@ -824,8 +823,8 @@ msgstr[1] "innstillinger;konfigurasjon;"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " og en dconf-operasjon utsatt."
+msgstr[1] " og %u dconf-operasjoner utsatt."
 
 #: ../editor/registry-info.ui.h:1
 msgid ""
