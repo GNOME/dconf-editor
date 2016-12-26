@@ -1,22 +1,22 @@
 # Kazakh translation for dconf.
 # Copyright (C) 2014 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2014.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2014-2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-08-31 04:57+0000\n"
-"PO-Revision-Date: 2016-09-03 22:47+0500\n"
+"POT-Creation-Date: 2016-10-05 23:27+0000\n"
+"PO-Revision-Date: 2016-12-26 09:36+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk@li.org>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../editor/bookmarks.ui.h:1
@@ -29,13 +29,13 @@ msgstr "Орналасу бетбелгілерге қосылды"
 
 #: ../editor/bookmarks.ui.h:3
 msgid "Toggle to bookmark this location"
-msgstr ""
+msgstr "Бұл орналасуды бетбелгілерге қосу үшін қосыңыз"
 
 #: ../editor/bookmarks.ui.h:4
 msgid ""
 "Bookmarks will\n"
 "be added here"
-msgstr ""
+msgstr "Бетбелгілер осында қосылады"
 
 #: ../editor/bookmarks.ui.h:6
 msgid "Bookmarks"
@@ -43,7 +43,7 @@ msgstr "Бетбелгілер"
 
 #: ../editor/bookmarks.ui.h:7
 msgid "Manage your bookmarks"
-msgstr ""
+msgstr "Бетбелгілеріңізді басқарыңыз"
 
 #: ../editor/bookmark.ui.h:1
 msgid "Remove"
@@ -59,7 +59,7 @@ msgstr "Dconf түзетушісі"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
 msgid "A graphical tool for editing the dconf database"
-msgstr ""
+msgstr "dconf дерекқорын өңдеудің графикалық сайманы"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
 msgid ""
@@ -67,6 +67,8 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
+"Dconf түзеткіші - dconf баптаулар дерекқорын тікелей түзетуді мүмкін ететін "
+"сайман. Бұл осы баптауларды қолданатын қолданбаларды жасау кезінде пайдалы."
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
 msgid ""
@@ -76,16 +78,16 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
 msgid "Browse the keys used by installed applications"
-msgstr ""
+msgstr "Орнатылған қолданбалар қолданатын кілттерді шолу"
 
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
 msgid "Read keys descriptions and edit their values"
-msgstr ""
+msgstr "Кілттер сипаттамаларын оқып, олардың мәндерін түзету"
 
 #. a translatable version of project_group
 #: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
 msgid "The GNOME Project"
-msgstr ""
+msgstr "GNOME жобасы"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
@@ -95,7 +97,7 @@ msgstr "dconf түзетушісі"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "dconf үшін баптаулар түзеткіші"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
 #: ../editor/dconf-editor.vala:149
@@ -104,7 +106,7 @@ msgstr "Баптаулар дерекқорын тікелей түзетіңі�
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
-msgstr "баптаулар;қалаулар;"
+msgstr "settings;configuration;баптаулар;қалаулар;"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
 msgid "The width of the window"
@@ -428,7 +430,6 @@ msgid ""
 msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
-#| msgid "Enumeration"
 msgid "A 1-choice enumeration"
 msgstr ""
 
@@ -456,7 +457,7 @@ msgstr "Әрекеттер"
 
 #: ../editor/dconf-editor.ui.h:3
 msgid "Current view actions"
-msgstr ""
+msgstr "Ағымдағы көрініс әрекеттері"
 
 #: ../editor/dconf-editor.ui.h:4
 msgid "Search"
@@ -464,7 +465,7 @@ msgstr "Іздеу"
 
 #: ../editor/dconf-editor.ui.h:5
 msgid "Search keys"
-msgstr ""
+msgstr "Кілттерден іздеу"
 
 #: ../editor/dconf-editor.vala:22
 msgid "Print release version and exit"
@@ -561,36 +562,36 @@ msgstr "ешнәрсе (nothing)"
 msgid "This value is invalid for the key type."
 msgstr ""
 
-#: ../editor/dconf-window.vala:130
+#: ../editor/dconf-window.vala:132
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 
-#: ../editor/dconf-window.vala:131
+#: ../editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 
-#: ../editor/dconf-window.vala:132
+#: ../editor/dconf-window.vala:134
 msgid "I’ll be careful."
 msgstr "Мен абай боламын."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:136
+#: ../editor/dconf-window.vala:138
 msgid "Show this dialog next time."
 msgstr "Бұл сұхбатты келесі рет көрсету."
 
-#: ../editor/dconf-window.vala:240
+#: ../editor/dconf-window.vala:242
 msgid "Copy current path"
 msgstr "Ағымдағы орналасуды көшіріп алу"
 
-#: ../editor/dconf-window.vala:245
+#: ../editor/dconf-window.vala:247
 msgid "Reset visible keys"
-msgstr ""
+msgstr "Көрінетін кілттерді тастау"
 
-#: ../editor/dconf-window.vala:246
+#: ../editor/dconf-window.vala:248
 msgid "Reset recursively"
-msgstr ""
+msgstr "Рекурсивті тастау"
 
-#: ../editor/dconf-window.vala:254
+#: ../editor/dconf-window.vala:256
 msgid "Enter delay mode"
 msgstr ""
 
@@ -652,12 +653,12 @@ msgstr "Орналасулар жолағы навигациясы"
 #: ../editor/help-overlay.ui.h:12
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "Түбірлік бумасын ашу"
 
 #: ../editor/help-overlay.ui.h:13
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "Аталық бумасын ашу"
 
 #: ../editor/help-overlay.ui.h:14
 msgctxt "shortcut window"
@@ -796,7 +797,6 @@ msgstr "%s%s"
 
 #: ../editor/modifications-revealer.vala:273
 #, c-format
-#| msgid "settings;configuration;"
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
 msgstr[0] "%u gsettings әрекеті"
@@ -845,7 +845,7 @@ msgstr "Түрі"
 
 #: ../editor/registry-info.vala:86
 msgid "Minimum"
-msgstr ""
+msgstr "Минимум"
 
 #: ../editor/registry-info.vala:87
 msgid "Maximum"
@@ -855,7 +855,7 @@ msgstr "Максимум"
 msgid "Default"
 msgstr "Бастапқы"
 
-#: ../editor/registry-info.vala:109
+#: ../editor/registry-info.vala:108
 msgid "Current value"
 msgstr "Ағымдағы мәні"
 
@@ -868,20 +868,20 @@ msgid "Custom value"
 msgstr "Таңдауыңызша мәні"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:276
+#: ../editor/registry-info.vala:296
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
 
-#: ../editor/registry-info.vala:278
+#: ../editor/registry-info.vala:298
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:282
+#: ../editor/registry-info.vala:302
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -894,7 +894,7 @@ msgstr ""
 #: ../editor/registry-view.vala:170
 #, c-format
 msgid "Cannot find folder \"%s\"."
-msgstr ""
+msgstr "\"%s\" бумасын табу мүмкін емес."
 
 #: ../editor/registry-view.vala:188
 #, c-format
