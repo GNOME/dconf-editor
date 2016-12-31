@@ -1,19 +1,19 @@
-[type: gettext/glade]editor/bookmarks.ui
-[type: gettext/glade]editor/bookmark.ui
+editor/bookmarks.ui
+editor/bookmark.ui
 editor/ca.desrt.dconf-editor.appdata.xml.in
 editor/ca.desrt.dconf-editor.desktop.in
-[type: gettext/gsettings]editor/ca.desrt.dconf-editor.gschema.xml
-[type: gettext/glade]editor/dconf-editor-menu.ui
-[type: gettext/glade]editor/dconf-editor.ui
+editor/ca.desrt.dconf-editor.gschema.xml
+editor/dconf-editor-menu.ui
+editor/dconf-editor.ui
 editor/dconf-editor.vala
 editor/dconf-model.vala
 editor/dconf-view.vala
 editor/dconf-window.vala
-[type: gettext/glade]editor/help-overlay.ui
+editor/help-overlay.ui
 editor/key-list-box-row.vala
-[type: gettext/glade]editor/modifications-revealer.ui
+editor/modifications-revealer.ui
 editor/modifications-revealer.vala
-[type: gettext/glade]editor/registry-info.ui
+editor/registry-info.ui
 editor/registry-info.vala
-[type: gettext/glade]editor/registry-view.ui
+editor/registry-view.ui
 editor/registry-view.vala

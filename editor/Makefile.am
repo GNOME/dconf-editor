@@ -55,10 +55,13 @@ dconf_editor_SOURCES = \
 	registry-info.vala \
 	registry-view.vala
 
+
 desktopdir = $(datadir)/applications
 desktop_in_files = ca.desrt.dconf-editor.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-@INTLTOOL_DESKTOP_RULE@
+
+ca.desrt.dconf-editor.desktop: ca.desrt.dconf-editor.desktop.in
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 dbusservicedir = $(datadir)/dbus-1/services
 dbusservice_DATA = ca.desrt.dconf-editor.service
@@ -72,7 +75,9 @@ ca.desrt.dconf-editor.service: Makefile
 @APPSTREAM_XML_RULES@
 appstream_in_files = ca.desrt.dconf-editor.appdata.xml.in
 appstream_XML = $(appstream_in_files:.xml.in=.xml)
-@INTLTOOL_XML_RULE@
+
+ca.desrt.dconf-editor.appdata.xml: ca.desrt.dconf-editor.appdata.xml.in
+	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 %.appdata.valid: %.appdata.xml
 	$(AM_V_GEN) if test -f "$<"; then d=; else d="$(srcdir)/"; fi; \

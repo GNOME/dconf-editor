@@ -1,11 +1,13 @@
 [Desktop Entry]
-_Name=dconf Editor
-_GenericName=Configuration editor for dconf
-_Comment=Directly edit your entire configuration database
-_Keywords=settings;configuration;
+Name=dconf Editor
+GenericName=Configuration editor for dconf
+Comment=Directly edit your entire configuration database
+# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+Keywords=settings;configuration;
 Exec=dconf-editor
 Terminal=false
 Type=Application
+# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=dconf-editor
 StartupNotify=true
 Categories=GNOME;GTK;System;

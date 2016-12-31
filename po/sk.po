@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-10-11 13:56+0000\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor\n"
+"POT-Creation-Date: 2016-12-31 09:12+0100\n"
 "PO-Revision-Date: 2016-10-14 16:37+0200\n"
 "Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
@@ -20,19 +20,19 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../editor/bookmarks.ui.h:1
+#: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
 msgstr "Pridať toto umiestnenie do záložiek"
 
-#: ../editor/bookmarks.ui.h:2
+#: editor/bookmarks.ui:34
 msgid "Location bookmarked"
 msgstr "Umiestnenie sa nachádza v záložkách"
 
-#: ../editor/bookmarks.ui.h:3
+#: editor/bookmarks.ui:35
 msgid "Toggle to bookmark this location"
 msgstr "Prepnutím pridáte toto umiestnenie do záložiek"
 
-#: ../editor/bookmarks.ui.h:4
+#: editor/bookmarks.ui:84
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -40,31 +40,31 @@ msgstr ""
 "Tu sa budú\n"
 "pridávať záložky"
 
-#: ../editor/bookmarks.ui.h:6
+#: editor/bookmarks.ui:113
 msgid "Bookmarks"
 msgstr "Záložky"
 
-#: ../editor/bookmarks.ui.h:7
+#: editor/bookmarks.ui:114
 msgid "Manage your bookmarks"
 msgstr "Spravuje vaše záložky"
 
-#: ../editor/bookmark.ui.h:1
+#: editor/bookmark.ui:30
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: ../editor/bookmark.ui.h:2
+#: editor/bookmark.ui:31
 msgid "Remove this bookmark"
 msgstr "Odstráni túto záložku"
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
 msgstr "Editor systému Dconf"
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
 msgstr "Grafický nástroj na úpravu databázy systému dconf"
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
@@ -74,7 +74,7 @@ msgstr ""
 "databázy systému dconf. To je užitočné pri vývoji aplikácií, ktoré používajú "
 "tieto nastavenia."
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
@@ -82,73 +82,73 @@ msgstr ""
 "Priama úprava vašej konfigurácie je pokročilá funkcia a môže spôsobiť "
 "nesprávnu funkčnosť aplikácií."
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:25
 msgid "Browse the keys used by installed applications"
 msgstr "Prehliadajte kľúče použité nainštalovanými aplikáciami"
 
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
 msgid "Read keys descriptions and edit their values"
 msgstr "Prečítajte popisy kľúčov a upravujte ich hodnoty"
 
-#. a translatable version of project_group
-#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
-msgid "The GNOME Project"
-msgstr "Projekt GNOME"
-
-#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
-#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
-#: ../editor/dconf-editor.vala:147
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
+#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "Editor systému dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
+#: editor/ca.desrt.dconf-editor.desktop.in:4
+#, fuzzy
 msgid "Configuration editor for dconf"
 msgstr "Editor konfigurácie systému dconf"
 
 # about dialog desc
-#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
-#: ../editor/dconf-editor.vala:149
+#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Priama úprava celej vašej databázy nastavení"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "nastavenia;konfigurácia;"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:1
+#: editor/ca.desrt.dconf-editor.desktop.in:12
+#, fuzzy
+msgid "dconf-editor"
+msgstr "Editor systému dconf"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
 msgstr "Šírka okna"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:2
+#: editor/ca.desrt.dconf-editor.gschema.xml:19
 msgid "The width of the main window in pixels."
 msgstr "Šírka hlavného okna v pixeloch."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:3
+#: editor/ca.desrt.dconf-editor.gschema.xml:23
 msgid "The height of the window"
 msgstr "Výška okna"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:4
+#: editor/ca.desrt.dconf-editor.gschema.xml:24
 msgid "The height of the main window in pixels."
 msgstr "Výška hlavného okna v pixeloch."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:5
+#: editor/ca.desrt.dconf-editor.gschema.xml:28
+#: editor/ca.desrt.dconf-editor.gschema.xml:29
 msgid "A flag to enable maximized mode"
 msgstr "Príznak, ktorý povolí režim maximalizovaného okna"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
+#: editor/ca.desrt.dconf-editor.gschema.xml:33
 msgid "A list of bookmarked paths"
 msgstr "Zoznam ciest pridaných do záložiek"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+#: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Obsahuje všetky cesty pridané do záložiek používateľom ako pole reťazcov."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+#: editor/ca.desrt.dconf-editor.gschema.xml:38
 msgid "A flag to restore the last view"
 msgstr "Príznak, ktorý obnoví posledné zobrazenie"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+#: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid ""
 "If 'true', Dconf Editor tries at launch to navigate to the path described in "
 "the 'saved-view' key."
@@ -156,11 +156,11 @@ msgstr ""
 "Ak je hodnota „true”, editor systému Dconf sa pokúsi po spustení naviesť na "
 "cestu popísanú v kľúči „saved-view”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+#: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A path to restore the last view"
 msgstr "Cesta na obnovenie posledného zobrazenia"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+#: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
 "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
@@ -168,11 +168,11 @@ msgstr ""
 "Ak je kľúč „restore-view” nastavený na „true”, editor systému Dconf sa "
 "pokúsi po spustení presunúť na túto cestu."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+#: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "Show initial warning"
 msgstr "Zobraziť počiatočné upozornenie"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+#: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
 "If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -180,27 +180,27 @@ msgstr ""
 "Ak je hodnota „true”, editor systému Dconf otvorí po spustení vyskakovacie "
 "okno, ktoré upozorní používateľa, aby bol opatrný."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+#: editor/ca.desrt.dconf-editor.gschema.xml:53
 msgid "A flag to enable small rows for keys list"
 msgstr "Príznak, ktorý povolí malé riadky pre zoznam kľúčov"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+#: editor/ca.desrt.dconf-editor.gschema.xml:54
 msgid "If 'true', the keys list use smaller rows."
 msgstr "Ak je hodnota „true”, zoznam kľúčov bude používať menšie riadky."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+#: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for bookmarks list"
 msgstr "Príznak, ktorý povolí malé riadky pre zoznam poznámok"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+#: editor/ca.desrt.dconf-editor.gschema.xml:59
 msgid "If 'true', the bookmarks list use smaller rows."
 msgstr "Ak je hodnota „true”, zoznam poznámok bude používať menšie riadky."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+#: editor/ca.desrt.dconf-editor.gschema.xml:68
 msgid "Change the behaviour of a key value change request"
 msgstr "Správanie zmeny kľúča pri požiadavke na zmenu"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+#: editor/ca.desrt.dconf-editor.gschema.xml:69
 msgid ""
 "The 'unsafe' value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -222,21 +222,21 @@ msgstr ""
 "delay” (vždy počkať) pridá každú zmenu do režimu čakania, čo umožňuje zmeniť "
 "viacero kľúčov naraz."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr "Logická hodnota, typ „b”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+#: editor/ca.desrt.dconf-editor.gschema.xml:93
 msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgstr ""
 "Logická hodnota (Boolean) môže nadobúdať dve hodnoty „true” (pravda) alebo "
 "„false” (nepravda)."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+#: editor/ca.desrt.dconf-editor.gschema.xml:97
 msgid "A nullable boolean, type \"mb\""
 msgstr "Logická hodnota s ničím, typ Ak je hodnota „mb”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+#: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a \"nothing\" value. A nullable boolean can only take three values, "
@@ -247,11 +247,11 @@ msgstr ""
 "môže nadobúdať tri hodnoty „true” (pravda), „false” (nepravda) a "
 "„nothing” (nič)."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+#: editor/ca.desrt.dconf-editor.gschema.xml:102
 msgid "A byte (unsigned), type \"y\""
 msgstr "Bajt (bez znamienka), typ „y”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+#: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -259,11 +259,11 @@ msgstr ""
 "Hodnota bajt je celé číslo v rozsahu 0 až 255. Môže byť tiež použitý na "
 "zadávanie znakov."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "A bytestring, type \"ay\""
 msgstr "Bajtový reťazec, typ „ay”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:27
+#: editor/ca.desrt.dconf-editor.gschema.xml:108
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -273,11 +273,11 @@ msgstr ""
 "byť v platnom kódovaní utf8. V takom prípade, je zvykom, že ako posledný "
 "znak poľa je zadaný nulový ukončovací znak."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:28
+#: editor/ca.desrt.dconf-editor.gschema.xml:112
 msgid "A bytestring array, type \"aay\""
 msgstr "Pole bajtových reťazcov, typ „aay”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+#: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -286,18 +286,17 @@ msgstr ""
 "často používa na predávanie reťazcov, ktoré nemusia byť v platnom kódovaní "
 "utf8."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid "A D-Bus handle type, type \"h\""
 msgstr "Typ obsluhy D-Bus, typ „h”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
+#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#, fuzzy
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"Bus message. If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 "Typ obsluhy je 32 bitová hodnota so znamienkom, ktorý je podľa zvyku "
 "používaný ako ukazovateľ na pole popisovačov súborov, ktoré sú zasielané "
@@ -305,70 +304,67 @@ msgstr ""
 "\n"
 "Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A D-Bus object path, type \"o\""
 msgstr "Cesta objektu D-Bus, typ „o”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:35
+#: editor/ca.desrt.dconf-editor.gschema.xml:125
+#, fuzzy
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"the bus. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 "Cesta objektu sa používa na identifikovanie objektov zbernice D-Bus podľa "
 "daného umiestnenia na zbernici.\n"
 "\n"
 "Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid "A D-Bus object path array, type \"ao\""
 msgstr "Pole ciest objektov D-Bus, typ „ao”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:39
+#: editor/ca.desrt.dconf-editor.gschema.xml:132
+#, fuzzy
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: \"[]\").\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"none: \"[]\"). If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 "Pole ciest objektov by malo obsahovať ľubovoľný počet ciest objektov "
 "(vrátane žiadnej: „[]”).\n"
 "\n"
 "Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A D-Bus signature, type \"g\""
 msgstr "Podpis D-Bus, typ „g”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+#: editor/ca.desrt.dconf-editor.gschema.xml:139
+#, fuzzy
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"message. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 "Podpis zbernice D-Bus je reťazec používaný ako typ podpisu pre metódu alebo "
 "správu zbernice D-Bus.\n"
 "\n"
 "Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A double, type \"d\""
 msgstr "Desatinné číslo, typ „d”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+#: editor/ca.desrt.dconf-editor.gschema.xml:146
 msgid "A double value could represent any real number."
 msgstr "Hodnota typu desatinné číslo, reprezentuje ľubovoľné reálne číslo."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+#: editor/ca.desrt.dconf-editor.gschema.xml:150
 msgid "A 5-choices enumeration"
 msgstr "Vymenovanie hodnôt s 5 voľbami"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+#: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid ""
 "Enumerations could be done either with the \"enum\" attribute, or with a "
 "\"choices\" tag."
@@ -376,74 +372,74 @@ msgstr ""
 "Vymenovanie hodnôt by malo byť buď s atribútom „enum” alebo so značkou "
 "„choices”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+#: editor/ca.desrt.dconf-editor.gschema.xml:155
 msgid "A short integer, type \"n\""
 msgstr "Krátke celé číslo, typ „n”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+#: editor/ca.desrt.dconf-editor.gschema.xml:156
 msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
 "16 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-16-unsigned”."
 
 # mala by to byť ukážka vymenovania hodnôť ca.desrt.dconf-editor.DemoFlags, ale nemám najnovší dconf neviem to overiť
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+#: editor/ca.desrt.dconf-editor.gschema.xml:160
 msgid "Flags: choose-colors-you-love"
 msgstr "Príznaky: vyberte-farby-ake-chcete"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "Flags could be set by the \"enum\" attribute."
 msgstr "Príznaky by mali byť nastavené atribútom „enum”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+#: editor/ca.desrt.dconf-editor.gschema.xml:165
 msgid "An unsigned short integer, type \"q\""
 msgstr "Krátke celé číslo bez znamienka, typ „q”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
 "16 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-16-signed”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+#: editor/ca.desrt.dconf-editor.gschema.xml:170
 msgid "An usual integer, type \"i\""
 msgstr "Celé číslo, typ „i”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+#: editor/ca.desrt.dconf-editor.gschema.xml:171
 msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
 "32 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-32-unsigned”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid "An unsigned usual integer, type \"u\""
 msgstr "Celé číslo bez znamienka, typ „u”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+#: editor/ca.desrt.dconf-editor.gschema.xml:176
 msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
 "32 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-32-signed”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "A long integer, type \"x\""
 msgstr "Dlhé celé číslo, typ „x”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+#: editor/ca.desrt.dconf-editor.gschema.xml:181
 msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
 "64 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-64-unsigned”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+#: editor/ca.desrt.dconf-editor.gschema.xml:185
 msgid "An unsigned long integer, type \"t\""
 msgstr "Dlhé celé číslo bez znamienka, typ „t”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
 "64 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-64-signed”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+#: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A number with range"
 msgstr "Číslo s rozsahom"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+#: editor/ca.desrt.dconf-editor.gschema.xml:193
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -453,11 +449,11 @@ msgstr ""
 "obmedzené vlastným rozsahom hodnôt. Napríklad táto celo-číselná hodnota môže "
 "byť z rozsahu -5 až 9."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid "A custom type, here \"(ii)\""
 msgstr "Vlastný typ, typ „(ii)”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn't have a better way to do. Here is a "
@@ -467,11 +463,11 @@ msgstr ""
 "GSettings, ktoré sa premenia na reťazec, ak neexistuje lepší spôsob "
 "spracovania. Tu je n-tica dvoch 32 bitových celých čísel so znamienkom."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+#: editor/ca.desrt.dconf-editor.gschema.xml:202
 msgid "A string, type \"s\""
 msgstr "Reťazec, typ \"s\""
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:69
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string "
 "\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
@@ -481,11 +477,11 @@ msgstr ""
 "reťazec „''” nie je to isté ako NULL (nič); pozrite tiež kľúč „string-"
 "nullable”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
+#: editor/ca.desrt.dconf-editor.gschema.xml:207
 msgid "A string array, type \"as\""
 msgstr "Pole reťazcov, typ „as”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:71
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
@@ -493,11 +489,11 @@ msgstr ""
 "Pole reťazcov obsahujúce ľubovoľný počet reťazcov ľubovoľnej dĺžky. Môže byť "
 "aj prázdnym poľom „[]”."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid "A nullable string, type \"ms\""
 msgstr "Reťazec s ničím, typ „ms”"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:73
+#: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a \"nothing\" value. A nullable string can take any string as value, "
@@ -507,11 +503,11 @@ msgstr ""
 "no môžu nadobúdať hodnotu „nothing” (nič). Reťazec s ničím môže obsahovať "
 "prázdny reťazec „''” alebo môže byť NULL (nič)."
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "A 1-choice enumeration"
 msgstr "Vymenovanie hodnôt s 1 voľbou"
 
-#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:75
+#: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid ""
 "An enumeration could contain only one item, but that's probably an error. "
 "Dconf Editor warns you in that case."
@@ -519,44 +515,44 @@ msgstr ""
 "Vymenovanie hodnôt by malo obsahovať len jednu hodnotu, no sú možné aj "
 "chyby. Editor systému Dconf v takom prípade zobrazí upozornenie."
 
-#: ../editor/dconf-editor-menu.ui.h:1
+#: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
 msgstr "Klávesové skratky"
 
-#: ../editor/dconf-editor-menu.ui.h:2
+#: editor/dconf-editor-menu.ui:10
 msgid "_About"
 msgstr "_O programe"
 
-#: ../editor/dconf-editor-menu.ui.h:3
+#: editor/dconf-editor-menu.ui:14
 msgid "_Quit"
 msgstr "U_končiť"
 
-#: ../editor/dconf-editor.ui.h:2
+#: editor/dconf-editor.ui:49
 msgid "Actions"
 msgstr "Akcie"
 
-#: ../editor/dconf-editor.ui.h:3
+#. TODO 1/3 Informations
+#: editor/dconf-editor.ui:50
 msgid "Current view actions"
 msgstr "Aktuálne akcie zobrazenia"
 
-#: ../editor/dconf-editor.ui.h:4
+#: editor/dconf-editor.ui:77
 msgid "Search"
 msgstr "Vyhľadať"
 
-#: ../editor/dconf-editor.ui.h:5
+#: editor/dconf-editor.ui:78
 msgid "Search keys"
 msgstr "Vyhľadá kľúče"
 
-#: ../editor/dconf-editor.vala:22
+#: editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Vypíše verziu vydania a skončí"
 
-#. #. * * Copy action
-#. #: ../editor/dconf-editor.vala:96
+#: editor/dconf-editor.vala:96
 msgid "Copied to clipboard"
 msgstr "Skopírované do schránky"
 
-#: ../editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
@@ -564,306 +560,287 @@ msgstr ""
 "Autorské práva © 2010-2014 – Canonical Ltd\n"
 "Autorské práva © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:154
+#: editor/dconf-editor.vala:154
 msgid "translator-credits"
 msgstr ""
 "Pavol Klačanský <pavol@klacansky.com>\n"
 "Dušan Kazik <prescott66@gmail.com>"
 
-#: ../editor/dconf-model.vala:195
+#: editor/dconf-model.vala:195
 msgid "Boolean"
 msgstr "Logická hodnota"
 
-#: ../editor/dconf-model.vala:197
+#: editor/dconf-model.vala:197
 msgid "String"
 msgstr "Reťazec"
 
-#: ../editor/dconf-model.vala:199
+#: editor/dconf-model.vala:199
 msgid "String array"
 msgstr "Pole reťazcov"
 
-#: ../editor/dconf-model.vala:201
+#: editor/dconf-model.vala:201
 msgid "Enumeration"
 msgstr "Vymenovanie hodnôt"
 
-#: ../editor/dconf-model.vala:203
+#: editor/dconf-model.vala:203
 msgid "Flags"
 msgstr "Príznaky"
 
-#: ../editor/dconf-model.vala:205
+#: editor/dconf-model.vala:205
 msgid "Double"
 msgstr "Desatinné číslo"
 
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: ../editor/dconf-model.vala:208
+#: editor/dconf-model.vala:208
 msgid "D-Bus handle type"
 msgstr "Typ obsluhy zbernice D-Bus"
 
-#: ../editor/dconf-model.vala:210
+#: editor/dconf-model.vala:210
 msgid "D-Bus object path"
 msgstr "Cesta objektu zbernice D-Bus"
 
-#: ../editor/dconf-model.vala:212
+#: editor/dconf-model.vala:212
 msgid "D-Bus object path array"
 msgstr "Pole ciest objektov zbernice D-Bus"
 
-#: ../editor/dconf-model.vala:214
+#: editor/dconf-model.vala:214
 msgid "D-Bus signature"
 msgstr "Podpis zbernice D-Bus"
 
-#: ../editor/dconf-model.vala:222
+#: editor/dconf-model.vala:222
 msgid "Integer"
 msgstr "Celé číslo"
 
-#: ../editor/dconf-model.vala:337
+#: editor/dconf-model.vala:337
 msgid "True"
 msgstr "Pravda (True)"
 
-#: ../editor/dconf-model.vala:339
+#: editor/dconf-model.vala:339
 msgid "False"
 msgstr "Nepravda (False)"
 
-#: ../editor/dconf-model.vala:340
+#: editor/dconf-model.vala:340
 msgid "Nothing"
 msgstr "Nič (Nothing)"
 
-#: ../editor/dconf-model.vala:345
+#: editor/dconf-model.vala:345
 msgid "true"
 msgstr "pravda (true)"
 
-#: ../editor/dconf-model.vala:347
+#: editor/dconf-model.vala:347
 msgid "false"
 msgstr "nepravda (false)"
 
-#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: ../editor/dconf-model.vala:349
+#: editor/dconf-model.vala:349
 msgid "nothing"
 msgstr "nič (nothing)"
 
-#: ../editor/dconf-view.vala:438
+#: editor/dconf-view.vala:438
 msgid "This value is invalid for the key type."
 msgstr "Táto hodnota je neplatná pre typ kľúča."
 
-#: ../editor/dconf-window.vala:132
+#: editor/dconf-window.vala:132
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Ďakujeme za používanie Editora systému Dconf na úpravu vašich konfigurácií!"
 
-#: ../editor/dconf-window.vala:133
+#: editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Nezabúdajte, že niektoré voľby môžu poškodiť vaše aplikácie, preto buďte "
 "opatrný."
 
-#: ../editor/dconf-window.vala:134
+#: editor/dconf-window.vala:134
 msgid "I’ll be careful."
 msgstr "Budem opatrný."
 
-#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: ../editor/dconf-window.vala:138
+#: editor/dconf-window.vala:138
 msgid "Show this dialog next time."
 msgstr "Zobraziť toto dialógové okno aj nabudúce."
 
-#: ../editor/dconf-window.vala:242
+#: editor/dconf-window.vala:248
 msgid "Copy current path"
 msgstr "Kopírovať aktuálnu cestu"
 
-#: ../editor/dconf-window.vala:247
+#: editor/dconf-window.vala:253
 msgid "Reset visible keys"
 msgstr "Vynulovať viditeľné kľúče"
 
-#: ../editor/dconf-window.vala:248
+#: editor/dconf-window.vala:254
 msgid "Reset recursively"
 msgstr "Vynulovať rekurzívne"
 
-#: ../editor/dconf-window.vala:256
+#: editor/dconf-window.vala:262
 msgid "Enter delay mode"
 msgstr "Vstúpiť do oneskoreného režimu"
 
-#: ../editor/help-overlay.ui.h:1
+#: editor/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Akcie"
 
-#: ../editor/help-overlay.ui.h:2
+#: editor/help-overlay.ui:15
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Ponuka záložiek"
 
-#: ../editor/help-overlay.ui.h:3
+#: editor/help-overlay.ui:22
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Pridanie tejto cesty do záložiek"
 
-#: ../editor/help-overlay.ui.h:4
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Odstránenie tejto cesty zo záložiek"
 
-#: ../editor/help-overlay.ui.h:5
+#: editor/help-overlay.ui:36
 msgctxt "shortcut window"
 msgid "Search bar"
 msgstr "Lišta vyhľadávania"
 
-#: ../editor/help-overlay.ui.h:6
+#: editor/help-overlay.ui:43
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Ponuka akcií"
 
-#: ../editor/help-overlay.ui.h:7
-msgctxt "shortcut window"
-msgid "Current row menu"
-msgstr "Ponuka pre aktuálny riadok"
-
-#: ../editor/help-overlay.ui.h:8
+#: editor/help-overlay.ui:59
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Schránka"
 
-#: ../editor/help-overlay.ui.h:9
+#: editor/help-overlay.ui:63
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Kopírovanie popisovača"
 
-#: ../editor/help-overlay.ui.h:10
+#: editor/help-overlay.ui:70
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Kopírovanie aktuálnej cesty"
 
-#: ../editor/help-overlay.ui.h:11
+#: editor/help-overlay.ui:79
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Navigácia v lište s cestou"
 
-#: ../editor/help-overlay.ui.h:12
+#: editor/help-overlay.ui:83
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Otvorenie koreňového priečinku"
 
-#: ../editor/help-overlay.ui.h:13
+#: editor/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Otvorenie nadradeného priečinku"
 
-#: ../editor/help-overlay.ui.h:14
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Otvorenie aktívneho priameho potomka"
 
-#: ../editor/help-overlay.ui.h:15
+#: editor/help-overlay.ui:104
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Otvorenie aktívneho posledného potomka"
 
-#: ../editor/help-overlay.ui.h:16
+#: editor/help-overlay.ui:113
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Všeobecné"
 
-#: ../editor/help-overlay.ui.h:17
+#: editor/help-overlay.ui:117
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Zobrazenie tohto pomocníka"
 
-#: ../editor/help-overlay.ui.h:18
+#: editor/help-overlay.ui:124
 msgctxt "shortcut window"
 msgid "About"
 msgstr "O programe"
 
-#: ../editor/help-overlay.ui.h:19
+#: editor/help-overlay.ui:131
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončenie"
 
 # Schema:
-#: ../editor/key-list-box-row.vala:162
+#: editor/key-list-box-row.vala:162
 msgid "No Schema Found"
 msgstr "Nenašla sa žiadna schéma"
 
-#: ../editor/key-list-box-row.vala:171
+#: editor/key-list-box-row.vala:171
 msgid "Key erased."
 msgstr "Kľúč vymazaný."
 
-#: ../editor/key-list-box-row.vala:187
+#: editor/key-list-box-row.vala:187
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (kľúč vymazaný)"
 
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:389
+#: editor/key-list-box-row.vala:389
 msgid "Customize…"
 msgstr "Prispôsobiť…"
 
 # hodnota
-#. Translators: "reset key value" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:392
+#: editor/key-list-box-row.vala:392
 msgid "Set to default"
 msgstr "Nastaviť na predvolenú"
 
-#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: ../editor/key-list-box-row.vala:397
+#: editor/key-list-box-row.vala:397
 msgid "Dismiss change"
 msgstr "Zahodiť zmenu"
 
-#. Translators: "open folder" action in the right-click menu on a folder
-#: ../editor/key-list-box-row.vala:400
+#: editor/key-list-box-row.vala:400
 msgid "Open"
 msgstr "Otvoriť"
 
-#. Translators: "erase key" action in the right-click menu on a key without schema
-#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:531
-#: ../editor/registry-info.ui.h:2
+#: editor/key-list-box-row.vala:403 editor/key-list-box-row.vala:531
+#: editor/registry-info.ui:28
 msgid "Erase key"
 msgstr "Vymazať kľúč"
 
-#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: ../editor/key-list-box-row.vala:406
+#: editor/key-list-box-row.vala:406
 msgid "Do not erase"
 msgstr "Nevymazať"
 
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:415
+#: editor/key-list-box-row.vala:415
 msgid "Copy"
 msgstr "Kopírovať"
 
-#. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: ../editor/key-list-box-row.vala:525
+#: editor/key-list-box-row.vala:525
 msgid "No change"
 msgstr "Bez zmeny"
 
 # hodnota
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: ../editor/key-list-box-row.vala:575 ../editor/registry-info.vala:235
+#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
 msgid "Default value"
 msgstr "Predvolená hodnota"
 
-#: ../editor/modifications-revealer.ui.h:1
+#: editor/modifications-revealer.ui:49
 msgid "Apply"
 msgstr "Použiť"
 
-#: ../editor/modifications-revealer.vala:141
+#: editor/modifications-revealer.vala:141
 msgid "Nothing to reset."
 msgstr "Nič na obnovenie."
 
-#: ../editor/modifications-revealer.vala:241
+#: editor/modifications-revealer.vala:241
 msgid "The value is invalid."
 msgstr "Hodnota je neplatná."
 
-#: ../editor/modifications-revealer.vala:245
+#: editor/modifications-revealer.vala:245
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr "Zmena bude stratená, keď ukončíte toto zobrazenie bez použitia."
 
-#: ../editor/modifications-revealer.vala:247
+#: editor/modifications-revealer.vala:247
 msgid "The change will be applied on such request or if you quit this view."
 msgstr "Zmena bude použitá pri požiadavke, alebo keď ukončíte toto zobrazenie."
 
-#: ../editor/modifications-revealer.vala:264
+#: editor/modifications-revealer.vala:264
 msgid "Changes will be delayed until you request it."
 msgstr "Zmeny budú oneskorené, až kým si ich nevyžiadate."
 
-#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: ../editor/modifications-revealer.vala:266
+#: editor/modifications-revealer.vala:266
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -871,8 +848,7 @@ msgstr[0] "%u operácií gsettings oneskorených."
 msgstr[1] "Jedna operácia gsettings oneskorená."
 msgstr[2] "%u operácie gsettings oneskorené."
 
-#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: ../editor/modifications-revealer.vala:270
+#: editor/modifications-revealer.vala:270
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -880,14 +856,12 @@ msgstr[0] "%u operácií dconf oneskorených."
 msgstr[1] "Jedna operácia dconf oneskorená."
 msgstr[2] "%u operácie dconf oneskorené."
 
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: ../editor/modifications-revealer.vala:273
+#: editor/modifications-revealer.vala:273
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: ../editor/modifications-revealer.vala:273
+#: editor/modifications-revealer.vala:273
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -895,11 +869,7 @@ msgstr[0] "Oneskorených %u operácií gsettings"
 msgstr[1] "Oneskorená jedna operácia gsettings"
 msgstr[2] "Oneskorené %u operácie gsettings"
 
-#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, and
-#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: ../editor/modifications-revealer.vala:278
+#: editor/modifications-revealer.vala:278
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
@@ -907,7 +877,7 @@ msgstr[0] " a %u operácií dconf."
 msgstr[1] " a jedna operácia dconf."
 msgstr[2] " a %u operácie dconf."
 
-#: ../editor/registry-info.ui.h:1
+#: editor/registry-info.ui:22
 msgid ""
 "No schema available. Dconf Editor can’t find a schema associated with this "
 "key. The application that installed this key may have been removed, may have "
@@ -919,7 +889,7 @@ msgstr ""
 "odstránená, mohla prestať používať tento kľúč, alebo mohla použiť znovu "
 "prideliteľnú schému na definovanie svojich kľúčov."
 
-#: ../editor/registry-info.ui.h:3
+#: editor/registry-info.ui:56
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -929,50 +899,48 @@ msgstr ""
 "aplikácie, ktorá inštalovala túto schému. Ak je to možné, prosím podajte o "
 "tomto chybové hlásenie."
 
-#: ../editor/registry-info.vala:80
+#: editor/registry-info.vala:80
 msgid "Schema"
 msgstr "Schéma"
 
-#: ../editor/registry-info.vala:81
+#: editor/registry-info.vala:81
 msgid "Summary"
 msgstr "Súhrn"
 
-#: ../editor/registry-info.vala:82
+#: editor/registry-info.vala:82
 msgid "Description"
 msgstr "Popis"
 
-#. Translators: as in datatype (integer, boolean, string, etc.)
-#: ../editor/registry-info.vala:84
+#: editor/registry-info.vala:84
 msgid "Type"
 msgstr "Typ"
 
-#: ../editor/registry-info.vala:86
+#: editor/registry-info.vala:86
 msgid "Minimum"
 msgstr "Minimum"
 
-#: ../editor/registry-info.vala:87
+#: editor/registry-info.vala:87
 msgid "Maximum"
 msgstr "Maximum"
 
 # hodnota
-#: ../editor/registry-info.vala:88
+#: editor/registry-info.vala:88
 msgid "Default"
 msgstr "Predvolená"
 
-#: ../editor/registry-info.vala:108
+#: editor/registry-info.vala:108
 msgid "Current value"
 msgstr "Aktuálna hodnota"
 
-#: ../editor/registry-info.vala:134
+#: editor/registry-info.vala:134
 msgid "Use default value"
 msgstr "Použiť predvolenú hodnotu"
 
-#: ../editor/registry-info.vala:192
+#: editor/registry-info.vala:192
 msgid "Custom value"
 msgstr "Vlastná hodnota"
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:296
+#: editor/registry-info.vala:296
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -982,13 +950,12 @@ msgstr ""
 "použite kľúčové slovo  „nothing”. Reťazce, podpisy a cesty objektov je "
 "potrebné zadať do úvodzoviek."
 
-#: ../editor/registry-info.vala:298
+#: editor/registry-info.vala:298
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Reťazce, podpisy a cesty objektov je potrebné zadať do úvodzoviek."
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: ../editor/registry-info.vala:302
+#: editor/registry-info.vala:302
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -996,24 +963,31 @@ msgstr ""
 "Ak chcete pre typ možno (typ začínajúci  „m”) nastaviť prázdnu hodnotu, "
 "použite kľúčové slovo  „nothing”."
 
-#: ../editor/registry-view.ui.h:1
+#: editor/registry-view.ui:95
 msgid "No keys in this path"
 msgstr "Na tejto ceste sa nenachádzajú žiadne kľúče"
 
-#: ../editor/registry-view.vala:170
+#: editor/registry-view.vala:170
 #, c-format
 msgid "Cannot find folder \"%s\"."
 msgstr "Nedá sa nájsť priečinok „%s”."
 
-#: ../editor/registry-view.vala:188
+#: editor/registry-view.vala:188
 #, c-format
 msgid "Cannot find key \"%s\" here."
 msgstr "Tu sa nedá nájsť kľúč „%s”."
 
-#: ../editor/registry-view.vala:194
+#: editor/registry-view.vala:194
 #, c-format
 msgid "Key \"%s\" has been removed."
 msgstr "Kľúč „%s” bol odstránený."
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Projekt GNOME"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Current row menu"
+#~ msgstr "Ponuka pre aktuálny riadok"
 
 #~ msgid "The theme of the navigation list"
 #~ msgstr "Téma navigačného zoznamu"

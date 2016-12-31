@@ -14,16 +14,17 @@ else
   automake_suffix=''
 fi
 
-mkdir -p m4 build-aux
-intltoolize --force
-aclocal${automake_suffix}
-autoheader
-automake${automake_suffix} --add-missing
-autoconf
+AUTORECONF=`which autoreconf`
+if test -z $AUTORECONF; then
+    echo "*** No autoreconf found, please install it ***"
+    exit 1
+fi
 
 CFLAGS=${CFLAGS=-ggdb}
 LDFLAGS=${LDFLAGS=-Wl,-O1}
 export CFLAGS LDFLAGS
+
+autoreconf --force --install --verbose
 
 cd "$olddir"
 

@@ -16,8 +16,6 @@ Makefile
 
 # autofoo stuff here
 /m4/
-/aux/
-/libtool
 /config.*
 /configure
 /autom4te.cache
@@ -26,3 +24,14 @@ Makefile
 /dconf-lcov.info
 /lcov-html
 /build-aux
+
+# autopoint stuff here
+ABOUT-NLS
+po/Makevars.template
+po/Rules-quot
+po/boldquot.sed
+po/en@boldquot.header
+po/en@quot.header
+po/insert-header.sin
+po/quot.sed
+po/remove-potcdate.sin
