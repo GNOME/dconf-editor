@@ -1,4 +1,5 @@
 # for all subdirectories
+*~
 Makefile.in
 Makefile
 .deps
