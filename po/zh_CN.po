@@ -18,18 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
 #: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf 系统配置编辑器"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "便捷地编辑您的系统设置"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "settings;configuration;设定;配置;设置;"
 

@@ -22,18 +22,18 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
 #: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Urejevalnik dConf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Neposredno urejanje celotne podatkovne zbirke nastavitev"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "nastavitve;konfiguracija;sistem;"
 

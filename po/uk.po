@@ -20,18 +20,18 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
 #: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Редактор dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Безпосереднє редагування бази даних налаштувань"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "параметри;налаштування;"
 

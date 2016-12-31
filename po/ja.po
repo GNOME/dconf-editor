@@ -18,18 +18,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
 #: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "dconf エディター"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "設定データベースを直接編集します"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "settings;configuration;設定;gsettings;gschema;"
 

@@ -20,18 +20,18 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:64 ../editor/dconf-editor.vala:83
 #: ../editor/dconf-editor.vala:433
 msgid "dconf Editor"
 msgstr "Uređivač dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:436
 msgid "Directly edit your entire configuration database"
 msgstr "Neposredno uredite vašu bazu sa podešavanjima"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "podešavanja;postavke;konfiguracija;"
 

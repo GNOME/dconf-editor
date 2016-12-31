@@ -1,7 +1,7 @@
 [type: gettext/glade]editor/bookmarks.ui
 [type: gettext/glade]editor/bookmark.ui
 editor/ca.desrt.dconf-editor.appdata.xml.in
-editor/ca.desrt.dconf-editor.desktop.in.in
+editor/ca.desrt.dconf-editor.desktop.in
 [type: gettext/gsettings]editor/ca.desrt.dconf-editor.gschema.xml
 [type: gettext/glade]editor/dconf-editor-menu.ui
 [type: gettext/glade]editor/dconf-editor.ui

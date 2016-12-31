@@ -19,18 +19,18 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
 #: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf সম্পাদক"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "আপোনাৰ সম্পূৰ্ণ সংৰূপ ডাটাবেইচ প্ৰত্যক্ষভাৱে সম্পাদন কৰক"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "settings;configuration;"
 

@@ -53,7 +53,6 @@ IT_PROG_INTLTOOL([0.50.0])
 
 AC_CONFIG_FILES([
   editor/Makefile
-  editor/ca.desrt.dconf-editor.desktop.in
   po/Makefile.in
   Makefile
 ])

@@ -96,22 +96,22 @@ msgstr "Leer las descripciones y editar sus valores"
 msgid "The GNOME Project"
 msgstr "El proyecto GNOME"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
 #: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "Editor de dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 msgid "Configuration editor for dconf"
 msgstr "Editor de configuración para dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 #: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Edite toda la configuración de la base de datos directamente"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
 msgid "settings;configuration;"
 msgstr "configuración;ajustes;"
 

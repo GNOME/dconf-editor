@@ -84,22 +84,22 @@ msgstr ""
 "Επεξεργάζοντας απευθείας τις ρυθμίσεις είναι ένα χαρακτηριστικό για "
 "προχωρημένους και μπορεί να προκαλέσει προβλήματα λειτουργίας στις εφαρμογές."
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
 #: ../editor/dconf-editor.vala:144
 msgid "dconf Editor"
 msgstr "Επεξεργαστής Dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 msgid "Configuration editor for dconf"
 msgstr "Επεξεργαστής ρυμθίσεων για το Dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 #: ../editor/dconf-editor.vala:146
 msgid "Directly edit your entire configuration database"
 msgstr "Άμεση επεξεργασία όλης της βάσης με τα δεδομένα των ρυθμίσεων"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
 msgid "settings;configuration;"
 msgstr "ρυθμίσεις;διαμόρφωση;settings;configuration;"
 

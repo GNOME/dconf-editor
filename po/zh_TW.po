@@ -77,22 +77,22 @@ msgid ""
 "applications to not work correctly."
 msgstr "直接編輯您的設定是一種進階的功能，可能會導致應用程式無法正常運作。"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
 #: ../editor/dconf-editor.vala:140
 msgid "dconf Editor"
 msgstr "dconf 編輯器"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 msgid "Configuration editor for dconf"
 msgstr "dconf 的設定編輯器"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 #: ../editor/dconf-editor.vala:142
 msgid "Directly edit your entire configuration database"
 msgstr "直接編輯您的整個設定資料庫"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
 msgid "settings;configuration;"
 msgstr "settings;configuration;設定值;設定;"
 

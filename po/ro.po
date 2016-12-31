@@ -21,19 +21,19 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:80
 #: ../editor/dconf-editor.vala:150
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:152
 msgid "Directly edit your entire configuration database"
 msgstr ""
 "Editați în mod direct întreaga dumneavoastră bază de date cu configurări"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "settings;configuration;configurări;configurație;setări;"
 

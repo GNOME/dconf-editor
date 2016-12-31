@@ -94,22 +94,22 @@ msgstr "키 설명을 보고 값을 편집합니다"
 msgid "The GNOME Project"
 msgstr "그놈 프로젝트"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
 #: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf 편집기"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 msgid "Configuration editor for dconf"
 msgstr "dconf 설정 편집기"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 #: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "모든 설정 데이터베이스를 직접 편집합니다"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
 msgid "settings;configuration;"
 msgstr "settings;configuration;설정;"
 

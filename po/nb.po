@@ -92,22 +92,22 @@ msgstr ""
 msgid "The GNOME Project"
 msgstr "GNOME prosjektet"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
 #: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf redigering"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 msgid "Configuration editor for dconf"
 msgstr "Konfigurasjonsredigering fo dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 #: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Rediger konfigurasjonsdatabasen direkte"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
 msgid "settings;configuration;"
 msgstr "innstillinger;konfigurasjon;"
 

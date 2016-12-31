@@ -56,8 +56,8 @@ dconf_editor_SOURCES = \
 	registry-view.vala
 
 desktopdir = $(datadir)/applications
-desktop_in_files = ca.desrt.dconf-editor.desktop.in.in
-desktop_DATA = $(desktop_in_files:.desktop.in.in=.desktop)
+desktop_in_files = ca.desrt.dconf-editor.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 dbusservicedir = $(datadir)/dbus-1/services
@@ -105,4 +105,4 @@ update-icon-cache:
 man_MANS = dconf-editor.1
 
 CLEANFILES = $(appstream_XML) $(desktop_DATA) $(dbusservice_DATA) resources.c
-EXTRA_DIST = $(appstream_in_files) $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)
+EXTRA_DIST = $(appstream_in_files) $(desktop_in_files) $(gsettings_SCHEMAS) $(icons) $(resource_data) $(man_MANS)

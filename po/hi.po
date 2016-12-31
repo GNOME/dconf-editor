@@ -21,18 +21,18 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
 #: ../editor/dconf-editor.vala:412
 msgid "dconf Editor"
 msgstr "dconf संपादक"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 #: ../editor/dconf-editor.vala:415
 msgid "Directly edit your entire configuration database"
 msgstr "अपने सम्पूर्ण विन्यास डाटाबेस को सीधे संपादित करें"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "सेटिंग्स; विन्यास;"
 

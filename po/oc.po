@@ -81,22 +81,22 @@ msgstr ""
 "La modificacion dirècta de la configuracion es una foncionalitat avançada e "
 "poiriá perturbar lo bon foncionament de las aplicacions."
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
 #: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
 #: ../editor/dconf-editor.vala:146
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
 msgid "Configuration editor for dconf"
 msgstr "Editor de configuracion per dconf"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 #: ../editor/dconf-editor.vala:148
 msgid "Directly edit your entire configuration database"
 msgstr "Modificar dirèctament tota vòstra basa de donadas de configuracion"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:4
 msgid "settings;configuration;"
 msgstr "paramètres;configuracion;"
 
