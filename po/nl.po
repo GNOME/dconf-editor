@@ -19,16 +19,18 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Launchpad-Export-Date: 2013-09-15 20:52+0000\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:63
+#: ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "dconf-editor"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
+#: ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "De gehele configuratie-database rechtstreeks bewerken"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "instellingen;configuratie;settings;configuration;"
 

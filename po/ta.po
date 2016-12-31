@@ -18,16 +18,18 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:63
+#: ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "டிகான்ஃப் திருத்தி"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
+#: ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "உங்கள் முழு வடிவமைப்பு தரவுத்தளத்தை நேரடியாக திருத்துக"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "அமைப்பு;வடிவமைப்பு;"
 

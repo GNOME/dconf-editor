@@ -19,16 +19,18 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:63 ../editor/dconf-editor.vala:394
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:63
+#: ../editor/dconf-editor.vala:394
 msgid "dconf Editor"
 msgstr "dconf എഡിറ്റര്‍"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:397
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
+#: ../editor/dconf-editor.vala:397
 msgid "Directly edit your entire configuration database"
 msgstr "മൊത്തം ക്രമീകരണ ഡാറ്റാബൈസും നേരിട്ട് തിരുത്തുക"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "settings;configuration;"
 

@@ -18,16 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
 
-#: ../editor/dconf-editor.desktop.in.in.h:1 ../editor/dconf-editor.vala:43
-#: ../editor/dconf-editor.vala:62 ../editor/dconf-editor.vala:400
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:1
+#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
+#: ../editor/dconf-editor.vala:400
 msgid "dconf Editor"
 msgstr "Муҳаррири dconf"
 
-#: ../editor/dconf-editor.desktop.in.in.h:2 ../editor/dconf-editor.vala:403
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:2
+#: ../editor/dconf-editor.vala:403
 msgid "Directly edit your entire configuration database"
 msgstr "Тамоми пойгоҳи иттилооти танзимоти худро бевосита таҳрир кунед"
 
-#: ../editor/dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.h:3
 msgid "settings;configuration;"
 msgstr "танзимот;конфигуратсия;"
 
