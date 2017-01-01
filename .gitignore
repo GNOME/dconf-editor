@@ -23,7 +23,10 @@ Makefile
 /stamp-h1
 /dconf-lcov.info
 /lcov-html
-/build-aux
+/compile
+/depcomp
+/install-sh
+/missing
 
 # autopoint stuff here
 ABOUT-NLS
