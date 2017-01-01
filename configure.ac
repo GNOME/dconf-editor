@@ -20,25 +20,6 @@ AM_PROG_VALAC([0.33.1])
 # Use GLib resources
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 
-dnl requested by 'autoscan'
-
-dnl editor/dconf-model.c:4466
-AC_CHECK_FUNCS([memset])
-dnl editor/dconf-editor.c:126
-AC_CHECK_FUNCS([setlocale])
-dnl editor/dconf-model.c:3550
-AC_CHECK_FUNCS([strstr])
-dnl editor/dconf-model.c:28
-AC_CHECK_HEADERS([float.h])
-dnl editor/dconf-editor.c:28
-AC_CHECK_HEADERS([locale.h])
-dnl editor/modifications-revealer.c:26
-AC_CHECK_HEADERS([stdlib.h])
-dnl editor/modifications-revealer.c:27
-AC_CHECK_HEADERS([string.h])
-dnl editor/key-list-box-row.c:2686
-AC_TYPE_SIZE_T
-
 # Use GSettings
 GLIB_GSETTINGS
 
