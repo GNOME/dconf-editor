@@ -1,7 +1,4 @@
-AC_INIT([dconf-editor],
-        [3.22.0],
-        [https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],
-        [dconf-editor])
+AC_INIT([dconf-editor],[3.22.0],[https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],[dconf-editor])
 
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
