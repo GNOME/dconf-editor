@@ -34,10 +34,6 @@ if test -z $AUTORECONF; then
     exit 1
 fi
 
-CFLAGS=${CFLAGS=-ggdb}
-LDFLAGS=${LDFLAGS=-Wl,-O1}
-export CFLAGS LDFLAGS
-
 autoreconf --force --install --verbose
 
 cd "$olddir"
