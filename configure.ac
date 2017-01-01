@@ -5,6 +5,7 @@ AC_INIT([dconf-editor],[3.22.0],[https://bugzilla.gnome.org/enter_bug.cgi?produc
 AC_CONFIG_SRCDIR([configure.ac])
 
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([1.11.2 foreign -Wno-portability no-dist-gzip dist-xz])
 AM_SILENT_RULES([yes])
