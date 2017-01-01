@@ -8,28 +8,13 @@
   <name xml:lang="en">dconf-editor</name>
   <shortdesc xml:lang="en">dconf Editor</shortdesc>
   <description xml:lang="en">A graphical tool for editing the dconf database</description>
+
   <homepage rdf:resource="https://wiki.gnome.org/Projects/dconf"/>
-  <download-page rdf:resource="http://download.gnome.org/sources/dconf-editor/"/>
+  <download-page rdf:resource="https://download.gnome.org/sources/dconf-editor/"/>
   <bug-database rdf:resource="https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor"/>
   <category rdf:resource="http://api.gnome.org/doap-extensions#core" />
+
   <programming-language>Vala</programming-language>
-
-
-  <maintainer>
-    <foaf:Person>
-      <foaf:name>Robert Ancell</foaf:name>
-      <foaf:mbox rdf:resource="mailto:robert.ancell@canonical.com"/>
-      <gnome:userid>rancell</gnome:userid>
-    </foaf:Person>
-  </maintainer>
-
-  <maintainer>
-    <foaf:Person>
-      <foaf:name>Ryan Lortie</foaf:name>
-      <foaf:mbox rdf:resource="mailto:desrt@desrt.ca"/>
-      <gnome:userid>desrt</gnome:userid>
-    </foaf:Person>
-  </maintainer>
 
   <maintainer>
     <foaf:Person>
