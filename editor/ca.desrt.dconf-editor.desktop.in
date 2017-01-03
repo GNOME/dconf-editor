@@ -7,12 +7,6 @@ Keywords=settings;configuration;
 Exec=dconf-editor
 Terminal=false
 Type=Application
-# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-Icon=dconf-editor
 StartupNotify=true
 Categories=GNOME;GTK;System;
-X-GNOME-Bugzilla-Bugzilla=GNOME
-X-GNOME-Bugzilla-Product=dconf-editor
-X-GNOME-Bugzilla-Component=general
-X-GNOME-Bugzilla-Version=@VERSION@
 DBusActivatable=true
