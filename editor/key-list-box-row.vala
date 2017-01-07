@@ -255,7 +255,13 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     {
         Object (key: _key);
 
-        key_info_label.set_label (key.summary);
+        if (key.summary != "")
+            key_info_label.set_label (key.summary);
+        else
+        {
+            key_info_label.get_style_context ().add_class ("italic-label");
+            key_info_label.set_label (_("No summary provided"));
+        }
     }
 
     protected override void update ()
