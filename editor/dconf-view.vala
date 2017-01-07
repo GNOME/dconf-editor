@@ -107,7 +107,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         button.visible = true;
         button.use_popover = true;
         button.halign = Align.START;
-        ((StyleContext) button.get_style_context ()).add_class ("image-button");
+        button.get_style_context ().add_class ("image-button");
         this.add (button);
 
         label.visible = true;
@@ -202,7 +202,7 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
         this.halign = Align.START;
         this.homogeneous = true;
         this.width_request = 100;
-        ((StyleContext) this.get_style_context ()).add_class ("linked");
+        this.get_style_context ().add_class ("linked");
 
         ToggleButton button_false = new ToggleButton ();
         button_false.visible = true;
