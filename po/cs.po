@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-12-31 18:08+0000\n"
-"PO-Revision-Date: 2017-01-01 23:59+0100\n"
+"POT-Creation-Date: 2017-01-07 08:02+0000\n"
+"PO-Revision-Date: 2017-01-10 00:11+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -105,11 +105,6 @@ msgstr "Přímo upravujte celou svoji databázi nastavení"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "nastavení;konfigurace;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-msgid "dconf-editor"
-msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -757,50 +752,54 @@ msgstr "Klíč byl smazán."
 msgid "%s (key erased)"
 msgstr "%s (klíč smazán)"
 
+#: editor/key-list-box-row.vala:263
+msgid "No summary provided"
+msgstr "Není uveden žádný souhrn"
+
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:389
+#: editor/key-list-box-row.vala:395
 msgid "Customize…"
 msgstr "Přizpůsobit…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:392
+#: editor/key-list-box-row.vala:398
 msgid "Set to default"
 msgstr "Nastavit na výchozí"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:397
+#: editor/key-list-box-row.vala:403
 msgid "Dismiss change"
 msgstr "Zahodit změnu"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:400
+#: editor/key-list-box-row.vala:406
 msgid "Open"
 msgstr "Otevřít"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:403 editor/key-list-box-row.vala:531
+#: editor/key-list-box-row.vala:409 editor/key-list-box-row.vala:537
 #: editor/registry-info.ui:28
 msgid "Erase key"
 msgstr "Smazat klíč"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:406
+#: editor/key-list-box-row.vala:412
 msgid "Do not erase"
 msgstr "Nemazat"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:415
+#: editor/key-list-box-row.vala:421
 msgid "Copy"
 msgstr "Kopírovat"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:525
+#: editor/key-list-box-row.vala:531
 msgid "No change"
 msgstr "Žádná změna"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
+#: editor/key-list-box-row.vala:581 editor/registry-info.vala:235
 msgid "Default value"
 msgstr "Výchozí hodnota"
 
@@ -978,3 +977,6 @@ msgstr "Zde nelze najít klíč „%s“."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "Klíč „%s“ byl odstraněn."
+
+#~ msgid "dconf-editor"
+#~ msgstr "dconf-editor"
