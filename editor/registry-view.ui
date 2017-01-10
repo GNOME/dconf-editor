@@ -14,7 +14,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkRevealer">
+      <object class="GtkRevealer"> <!-- Workaround for the gtk+ bug: https://bugzilla.gnome.org/show_bug.cgi?id=724096 -->
         <property name="visible">True</property>
         <property name="reveal-child" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional">False</property>
         <child>
