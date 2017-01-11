@@ -267,7 +267,9 @@ class RegistryInfo : Grid
 
     private void add_row_from_widget (string property_name, Widget widget, string? type)
     {
-        properties_list_box.add (new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null));
+        PropertyRow row = new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null);
+        widget.bind_property ("sensitive", row, "sensitive", BindingFlags.SYNC_CREATE);
+        properties_list_box.add (row);
     }
 
     private void add_separator ()

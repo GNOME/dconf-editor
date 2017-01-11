@@ -227,3 +227,9 @@
 .greyed-label:backdrop {
   color:@theme_unfocused_fg_color;
 }
+.greyed-label:disabled {
+  color:@insensitive_fg_color;
+}
+.greyed-label:disabled:backdrop {
+  color:@unfocused_insensitive_color;
+}
