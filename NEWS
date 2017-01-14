@@ -1,3 +1,41 @@
+dconf-editor 3.23.4
+=====================
+
+The bigger change is the switch to modern Gettext for translations of XML files,
+in place of the deprecated Intltool. That came with a cleaning of Autotools code
+–let’s hope I didn't break things here or there. Also, Unicode is now used where
+needed in every translatable english string. There're some small changes in keys
+description presentation, but more to come on the topic in this cycle.
+
+Translations (which content has been) updated:
+  Czech: Marek Černocký
+  Friulian: Fabio Tomat
+  Hungarian: Gábor Kelemen
+  Kazakh: Baurzhan Muftakhidinov
+  Norwegian bokmål: Kjartan Maraas
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Spanish: Daniel Mustieles
+
+dconf-editor 3.22.3
+=====================
+
+Little code changes, that's probably the last release of the gnome-3-22 branch.
+
+Translations updated:
+  Italian: Gianvito Cavasoli
+  Norwegian bokmål: Kjartan Maraas
+  Slovak: Peter Mráz
+  Tajik: Victor Ibragimov
+
+dconf-editor 3.22.1
+=====================
+
+Appdata installation has been fixed, and the theming support has been improved.
+
+Translations updated:
+  Slovak: Dušan Kazik
+
 dconf-editor 3.22.0
 =====================
 
