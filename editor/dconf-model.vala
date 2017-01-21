@@ -430,7 +430,7 @@ public class GSettingsKey : Key
     public string schema_id              { get; construct; }
     public string summary                { get; construct; }
     public string description    { private get; construct; }
-    public Variant default_value { private get; construct; }
+    public Variant default_value         { get; construct; }
     public string range_type             { get; construct; }
     public Variant range_content         { get; construct; }
 

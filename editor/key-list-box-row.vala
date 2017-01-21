@@ -116,9 +116,11 @@ private class FolderListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : ClickableListBoxRow
 {
+    [GtkChild] private Grid key_name_and_value_grid;
     [GtkChild] private Label key_name_label;
     [GtkChild] protected Label key_value_label;
     [GtkChild] protected Label key_info_label;
+    protected Switch? boolean_switch = null;
 
     protected StyleContext name_context;
     protected StyleContext value_context;
@@ -135,6 +137,15 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     {
         name_context = key_name_label.get_style_context ();
         value_context = key_value_label.get_style_context ();
+
+        if (abstract_key.type_string == "b")
+        {
+            boolean_switch = new Switch ();
+            ((!) boolean_switch).valign = Align.CENTER;
+            ((!) boolean_switch).show ();
+            key_value_label.hide ();
+            key_name_and_value_grid.add ((!) boolean_switch);
+        }
 
         update ();
         key_name_label.set_label (abstract_key.name);
@@ -158,6 +169,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     {
         Object (key: _key);
 
+        if (boolean_switch != null)
+            ((!) boolean_switch).notify ["active"].connect (() => key.value = new Variant.boolean (((!) boolean_switch).get_active ()));
+
         key_info_label.get_style_context ().add_class ("italic-label");
         key_info_label.set_label (_("No Schema Found"));
     }
@@ -166,6 +180,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     {
         if (key.is_ghost)
         {
+            if (boolean_switch != null)
+            {
+                ((!) boolean_switch).hide ();
+                key_value_label.show ();
+            }
             if (!value_context.has_class ("italic-label")) value_context.add_class ("italic-label");
             if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
             key_value_label.set_label (_("Key erased."));
@@ -174,6 +193,12 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
         else
         {
+            if (boolean_switch != null)
+            {
+                key_value_label.hide ();
+                ((!) boolean_switch).show ();
+                ((!) boolean_switch).set_active (key.value.get_boolean ());
+            }
             if (value_context.has_class ("italic-label")) value_context.remove_class ("italic-label");
             if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
             key_value_label.set_label (cool_text_value (key));
@@ -250,10 +275,20 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 {
     public GSettingsKey key { get; construct; }
     private override Key abstract_key { get { return (Key) key; }}
+    private ulong boolean_switch_toggled_handler = 0;
 
     public KeyListBoxRowEditable (GSettingsKey _key)
     {
         Object (key: _key);
+
+        if (boolean_switch != null)
+            boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
+                    bool boolean = ((!) boolean_switch).get_active ();
+                    if (boolean == key.default_value.get_boolean ())
+                        key.set_to_default ();
+                    else
+                        key.value = new Variant.boolean (boolean);
+                });
 
         if (key.summary != "")
             key_info_label.set_label (key.summary);
@@ -266,6 +301,21 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     protected override void update ()
     {
+        if (boolean_switch != null)
+        {
+            bool boolean = key.value.get_boolean ();
+            if (((!) boolean_switch).get_active () != boolean)
+            {
+                if (boolean_switch_toggled_handler > 0)
+                {
+                    SignalHandler.block ((!) boolean_switch, boolean_switch_toggled_handler);
+                    ((!) boolean_switch).set_active (boolean);
+                    SignalHandler.unblock ((!) boolean_switch, boolean_switch_toggled_handler);
+                }
+                else // first init
+                    ((!) boolean_switch).set_active (boolean);
+            }
+        }
         if (key.is_default)
         {
             if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");

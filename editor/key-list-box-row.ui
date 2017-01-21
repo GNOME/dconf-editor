@@ -10,7 +10,7 @@
         <property name="visible">True</property>
         <property name="orientation">horizontal</property>
         <child>
-          <object class="GtkGrid">
+          <object class="GtkGrid" id="key_name_and_value_grid">
             <property name="visible">True</property>
             <property name="orientation">horizontal</property>
             <child>
