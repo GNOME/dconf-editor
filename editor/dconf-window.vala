@@ -348,6 +348,14 @@ class DConfWindow : ApplicationWindow
                         return false;   // help overlay
                     ((ConfigurationEditor) get_application ()).about_cb ();
                     return true;
+                case "Return":
+                case "KP_Enter":
+                    if (info_button.active || bookmarks_button.active)
+                        return false;
+                    registry_view.set_search_mode (false);
+                    registry_view.discard_row_popover ();
+                    registry_view.toggle_boolean_key ();
+                    return true;
                 default:
                     break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
             }

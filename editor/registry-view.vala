@@ -197,7 +197,6 @@ class RegistryView : Grid, PathElement
 
         properties_view.populate_properties_list_box ((!) key);
         show_properties_view (full_name);
-        return;
     }
     private bool select_folder (string full_name)
     {
@@ -428,7 +427,7 @@ class RegistryView : Grid, PathElement
     }
 
     /*\
-    * * Search box
+    * * Keyboard calls
     \*/
 
     public void set_search_mode (bool? mode)    // mode is never 'true'...
@@ -441,7 +440,7 @@ class RegistryView : Grid, PathElement
 
     public bool handle_search_event (Gdk.EventKey event)
     {
-        if (stack.get_visible_child_name () != "browse-view")
+        if (is_not_browsing_view ())
             return false;
 
         return search_bar.handle_event (event);
@@ -449,10 +448,7 @@ class RegistryView : Grid, PathElement
 
     public bool show_row_popover ()
     {
-        if (stack.get_visible_child_name () != "browse-view")
-            return false;
-
-        ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
+        ListBoxRow? selected_row = get_key_row ();
         if (selected_row == null)
             return false;
 
@@ -464,25 +460,53 @@ class RegistryView : Grid, PathElement
 
     public string? get_copy_text ()
     {
-        if (stack.get_visible_child_name () != "browse-view")
+        if (is_not_browsing_view ())
             return properties_view.get_copy_text ();
+
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return null;
         else
-        {
-            ListBoxRow? selected_row = key_list_box.get_selected_row ();
-            if (selected_row == null)
-                return null;
-            else
-                return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
-        }
+            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+    }
+
+    public void toggle_boolean_key ()
+    {
+        ListBoxRow? selected_row = get_key_row ();
+        if (selected_row == null)
+            return;
+
+        if (!(((!) selected_row).get_child () is KeyListBoxRow))
+            return;
+
+        ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
     }
 
     public void discard_row_popover ()
     {
-        ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
+        ListBoxRow? selected_row = get_key_row ();
         if (selected_row == null)
             return;
+
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).hide_right_click_popover ();
     }
+
+    private bool is_not_browsing_view ()
+    {
+        string? visible_child_name = stack.get_visible_child_name ();
+        return (visible_child_name == null || ((!) visible_child_name) != "browse-view");
+    }
+
+    private ListBoxRow? get_key_row ()
+    {
+        if (is_not_browsing_view ())
+            return null;
+        return (ListBoxRow?) key_list_box.get_selected_row ();
+    }
+
+    /*\
+    * * Search box
+    \*/
 
     [GtkCallback]
     private void find_next_cb ()

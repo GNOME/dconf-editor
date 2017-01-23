@@ -141,6 +141,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         if (abstract_key.type_string == "b")
         {
             boolean_switch = new Switch ();
+            ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
             ((!) boolean_switch).show ();
             key_value_label.hide ();
@@ -158,6 +159,13 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     }
     private abstract Key abstract_key { get; }
     protected abstract void update ();
+
+    public void toggle_boolean_key ()
+    {
+        if (boolean_switch == null)
+            return;
+        ((!) boolean_switch).set_active (!((!) boolean_switch).get_active ());
+    }
 }
 
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
