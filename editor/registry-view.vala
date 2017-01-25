@@ -261,9 +261,13 @@ class RegistryView : Grid, PathElement
     {
         ClickableListBoxRow row;
         SettingObject setting_object = (SettingObject) item;
+        ulong on_delete_call_handler;
 
         if (setting_object is Directory)
+        {
             row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
+            on_delete_call_handler = row.on_delete_call.connect (() => reset_objects (((Directory) setting_object).key_model, true));
+        }
         else
         {
             if (setting_object is GSettingsKey)
@@ -273,6 +277,7 @@ class RegistryView : Grid, PathElement
 
             Key key = (Key) setting_object;
             KeyListBoxRow key_row = (KeyListBoxRow) row;
+            on_delete_call_handler = row.on_delete_call.connect (() => set_key_value (key, null));
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => revealer.dismiss_change (key));
 
@@ -292,6 +297,7 @@ class RegistryView : Grid, PathElement
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
 
         row.destroy.connect (() => {
+                row.disconnect (on_delete_call_handler);
                 row.disconnect (on_row_clicked_handler);
                 row.disconnect (button_press_event_handler);
             });
@@ -393,8 +399,13 @@ class RegistryView : Grid, PathElement
 
     public void reset (bool recursively)
     {
+        reset_objects (key_model, recursively);
+    }
+
+    private void reset_objects (GLib.ListStore? objects, bool recursively)
+    {
         enter_delay_mode ();
-        reset_generic (key_model, recursively);
+        reset_generic (objects, recursively);
         revealer.warn_if_no_planned_changes ();
     }
 
@@ -480,6 +491,15 @@ class RegistryView : Grid, PathElement
             return;
 
         ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
+    }
+
+    public void set_to_default ()
+    {
+        ListBoxRow? selected_row = get_key_row ();
+        if (selected_row == null)
+            return;
+
+        ((ClickableListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
     }
 
     public void discard_row_popover ()

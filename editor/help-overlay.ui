@@ -94,6 +94,13 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Set to default</property>
+                <property name="accelerator">&lt;Primary&gt;Delete</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Toggle boolean value</property>
                 <property name="accelerator">&lt;Primary&gt;Return</property>
               </object>

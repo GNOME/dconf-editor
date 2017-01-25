@@ -20,6 +20,7 @@ using Gtk;
 private abstract class ClickableListBoxRow : EventBox
 {
     public signal void on_row_clicked ();
+    public signal void on_delete_call ();
 
     public abstract string get_text ();
 
@@ -108,6 +109,9 @@ private class FolderListBoxRow : ClickableListBoxRow
     {
         popover.new_action ("open", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
+
+        popover.new_section ();
+        popover.new_action ("recursivereset", () => on_delete_call ());
 
         return true;
     }
@@ -450,24 +454,27 @@ private class ContextPopover : Popover
         {
             case "customize":
                 /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-                current_section.append (_("Customize…"), group_dot_action);     return;
+                current_section.append (_("Customize…"), group_dot_action);         return;
             case "default1":
                 /* Translators: "reset key value" action in the right-click menu on the list of keys */
-                current_section.append (_("Set to default"), group_dot_action); return;
+                current_section.append (_("Set to default"), group_dot_action);     return;
             case "default2":
-                new_multi_default_action (group_dot_action);                    return;
+                new_multi_default_action (group_dot_action);                        return;
             case "dismiss":
                 /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
-                current_section.append (_("Dismiss change"), group_dot_action); return;
+                current_section.append (_("Dismiss change"), group_dot_action);     return;
             case "open":
                 /* Translators: "open folder" action in the right-click menu on a folder */
-                current_section.append (_("Open"), group_dot_action);           return;
+                current_section.append (_("Open"), group_dot_action);               return;
             case "erase":
                 /* Translators: "erase key" action in the right-click menu on a key without schema */
-                current_section.append (_("Erase key"), group_dot_action);      return;
+                current_section.append (_("Erase key"), group_dot_action);          return;
             case "unerase":
                 /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
-                current_section.append (_("Do not erase"), group_dot_action);   return;
+                current_section.append (_("Do not erase"), group_dot_action);       return;
+            case "recursivereset":
+                /* Translators: "reset recursively" action in the right-click menu on a folder */
+                current_section.append (_("Reset recursively"), group_dot_action);  return;
             default:
                 assert_not_reached ();
         }

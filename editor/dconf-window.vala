@@ -356,6 +356,18 @@ class DConfWindow : ApplicationWindow
                     registry_view.discard_row_popover ();
                     registry_view.toggle_boolean_key ();
                     return true;
+                // case "BackSpace":    // ?
+                case "Delete":
+                case "KP_Delete":
+                case "decimalpoint":
+                case "period":
+                case "KP_Decimal":
+                    if (info_button.active || bookmarks_button.active)
+                        return false;
+                    registry_view.set_search_mode (false);
+                    registry_view.discard_row_popover ();
+                    registry_view.set_to_default ();
+                    return true;
                 default:
                     break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
             }
