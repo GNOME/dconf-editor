@@ -332,7 +332,16 @@ class RegistryView : Grid, PathElement
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
             ClickableListBoxRow row = (ClickableListBoxRow) widget;
-            row.show_right_click_popover (get_current_delay_mode (), (int) (event.x));
+
+            int event_x = (int) event.x;
+            if (event.window != widget.get_window ())   // boolean value switch
+            {
+                int widget_x, unused;
+                event.window.get_position (out widget_x, out unused);
+                event_x += widget_x;
+            }
+
+            row.show_right_click_popover (get_current_delay_mode (), event_x);
             rows_possibly_with_popover.append (row);
         }
 
