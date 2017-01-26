@@ -27,14 +27,14 @@ public interface KeyEditorChild : Widget
     public abstract void reload (Variant gvariant);
 }
 
-private class KeyEditorChildEnumSingle : Label, KeyEditorChild
+private class KeyEditorChildSingle : Label, KeyEditorChild
 {
     private Variant variant;
 
-    public KeyEditorChildEnumSingle (Variant key_value)
+    public KeyEditorChildSingle (Variant key_value, string text)
     {
         variant = key_value;
-        set_label (key_value.get_string ());
+        set_label (text);
         show ();
     }
 

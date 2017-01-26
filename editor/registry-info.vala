@@ -21,7 +21,9 @@ using Gtk;
 class RegistryInfo : Grid
 {
     [GtkChild] private Revealer no_schema_warning;
-    [GtkChild] private Revealer one_choice_enum_warning;
+    [GtkChild] private Revealer one_choice_warning_revealer;
+    [GtkChild] private Label one_choice_enum_warning;
+    [GtkChild] private Label one_choice_integer_warning;
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
@@ -109,8 +111,15 @@ class RegistryInfo : Grid
 
         add_separator ();
 
-        KeyEditorChild key_editor_child = create_child (key);
-        one_choice_enum_warning.set_reveal_child (key_editor_child is KeyEditorChildEnumSingle);
+        KeyEditorChild key_editor_child = create_child (key, has_schema);
+        bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
+        if (is_key_editor_child_single)
+        {
+            bool is_enum = tmp_string == "<enum>";
+            one_choice_integer_warning.visible = !is_enum;
+            one_choice_enum_warning.visible = is_enum;
+        }
+        one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
                 if (revealer.should_delay_apply (tmp_string))
@@ -198,7 +207,7 @@ class RegistryInfo : Grid
             });
     }
 
-    private static KeyEditorChild create_child (Key key)
+    private static KeyEditorChild create_child (Key key, bool has_schema)
     {
         switch (key.type_string)
         {
@@ -206,20 +215,37 @@ class RegistryInfo : Grid
                 switch (((GSettingsKey) key).range_content.n_children ())
                 {
                     case 0:  assert_not_reached ();
-                    case 1:  return (KeyEditorChild) new KeyEditorChildEnumSingle (key.value);
+                    case 1:  return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.get_string ());
                     default: return (KeyEditorChild) new KeyEditorChildEnum (key);
                 }
             case "<flags>":
                 return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key);
             case "b":
                 return (KeyEditorChild) new KeyEditorChildBool (key.planned_change && (key.planned_value != null) ? ((!) key.planned_value).get_boolean () : key.value.get_boolean ());
-            case "y":
             case "n":
-            case "q":
             case "i":
+            case "h":
+            // TODO "x" is not working in spinbuttons (double-based)
+                Variant range = ((GSettingsKey) key).range_content;
+                if (has_schema
+                    && (((GSettingsKey) key).range_type == "range")
+                    && (Key.get_variant_as_int64 (range.get_child_value (0)) == Key.get_variant_as_int64 (range.get_child_value (1)))
+                   )
+                    return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
+                else
+                    return (KeyEditorChild) new KeyEditorChildNumberInt (key);
+            case "y":
+            case "q":
             case "u":
-            case "h":   // TODO "x" and "t" are not working in spinbuttons (double-based)
-                return (KeyEditorChild) new KeyEditorChildNumberInt (key);
+            // TODO "t" is not working in spinbuttons (double-based)
+                Variant range = ((GSettingsKey) key).range_content;
+                if (has_schema
+                    && (((GSettingsKey) key).range_type == "range")
+                    && (Key.get_variant_as_uint64 (range.get_child_value (0)) == Key.get_variant_as_uint64 (range.get_child_value (1)))
+                   )
+                    return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
+                else
+                    return (KeyEditorChild) new KeyEditorChildNumberInt (key);
             case "d":
                 return (KeyEditorChild) new KeyEditorChildNumberDouble (key);
             case "mb":

@@ -217,5 +217,11 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <summary>A 1-choice enumeration</summary>
       <description>An enumeration could contain only one item, but that’s probably an error. Dconf Editor warns you in that case.</description>
     </key>
+    <key name="weird-range" type="i">
+      <default>5</default>
+      <range min="5" max="5"/>
+      <summary>A 1-choice integer value</summary>
+      <description>A range could limit an integer key to only allow one value, but that’s probably an error. Dconf Editor warns you in that case.</description>
+    </key>
   </schema>
 </schemalist>
