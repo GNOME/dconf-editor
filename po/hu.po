@@ -483,11 +483,11 @@ msgstr "Egy szám egy megadott intervallumban"
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -5 and 9."
+"integer could only take a value between -2 and 10."
 msgstr ""
 "Minden számszerű érték (előjeles és előjel nélküli egészek, valamint a "
 "lebegőpontosok) lekorlátozható egy adott intervallumra. Például ez az egész "
-"érték csak -5 és 9 között vehet fel értékeket."
+"érték csak -2 és 10 között vehet fel értékeket."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
 #| msgid "A custom type, here \"(ii)\""

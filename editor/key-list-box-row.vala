@@ -351,10 +351,18 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         popover.new_action ("customize", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
-        if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb")
+        if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"
+            || (
+                (key.type_string == "y" || key.type_string == "q" || key.type_string == "u" || key.type_string == "t")
+                && (((GSettingsKey) key).range_type == "range")
+                && (Key.get_variant_as_uint64 (((GSettingsKey) key).range_content.get_child_value (1)) - Key.get_variant_as_uint64 (((GSettingsKey) key).range_content.get_child_value (0)) < 13)
+               )
+            || (
+                (key.type_string == "n" || key.type_string == "i" || key.type_string == "h" || key.type_string == "x")
+                && (((GSettingsKey) key).range_type == "range")
+                && (Key.get_variant_as_int64 (((GSettingsKey) key).range_content.get_child_value (1)) - Key.get_variant_as_int64 (((GSettingsKey) key).range_content.get_child_value (0)) < 13)
+               ))
         {
-            string real_type_string = key.value.get_type_string ();
-
             popover.new_section ();
             GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
 
@@ -364,7 +372,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 });
             popover.value_changed.connect ((gvariant) => {
                     hide_right_click_popover ();
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (real_type_string), gvariant)));
+                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key.value.get_type_string ()), gvariant)));
                     set_key_value (gvariant);
                 });
         }
@@ -620,6 +628,26 @@ private class ContextPopover : Popover
                 current_section.append (Key.cool_boolean_text_value (null), @"$group_dot_action(@mmmb just just nothing)");
                 current_section.append (Key.cool_boolean_text_value (true), @"$group_dot_action(@mmmb true)");
                 current_section.append (Key.cool_boolean_text_value (false), @"$group_dot_action(@mmmb false)");
+                break;
+            case "y":
+            case "q":
+            case "u":
+            case "t":
+                Variant range = ((GSettingsKey) key).range_content;
+                for (uint64 number =  Key.get_variant_as_uint64 (range.get_child_value (0));
+                            number <= Key.get_variant_as_uint64 (range.get_child_value (1));
+                            number++)
+                    current_section.append (number.to_string (), @"$group_dot_action(@mm$type_string $number)");
+                break;
+            case "n":
+            case "i":
+            case "h":
+            case "x":
+                Variant range = ((GSettingsKey) key).range_content;
+                for (int64 number =  Key.get_variant_as_int64 (range.get_child_value (0));
+                           number <= Key.get_variant_as_int64 (range.get_child_value (1));
+                           number++)
+                    current_section.append (number.to_string (), @"$group_dot_action(@mm$type_string $number)");
                 break;
         }
 

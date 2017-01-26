@@ -354,6 +354,30 @@ public abstract class Key : SettingObject
     {
         return (type == "d" || type == "y" || type == "n" || type == "q" || type == "i" || type == "u" || type == "x" || type == "t");
     }
+
+    public static uint64 get_variant_as_uint64 (Variant variant)
+    {
+        switch (variant.classify ())
+        {
+            case Variant.Class.BYTE:    return (int64) variant.get_byte ();
+            case Variant.Class.UINT16:  return (int64) variant.get_uint16 ();
+            case Variant.Class.UINT32:  return (int64) variant.get_uint32 ();
+            case Variant.Class.UINT64:  return variant.get_uint64 ();
+            default: assert_not_reached ();
+        }
+    }
+
+    public static int64 get_variant_as_int64 (Variant variant)
+    {
+        switch (variant.classify ())
+        {
+            case Variant.Class.INT16:   return (int64) variant.get_int16 ();
+            case Variant.Class.INT32:   return (int64) variant.get_int32 ();
+            case Variant.Class.INT64:   return variant.get_int64 ();
+            case Variant.Class.HANDLE:  return (int64) variant.get_handle ();
+            default: assert_not_reached ();
+        }
+    }
 }
 
 public class DConfKey : Key

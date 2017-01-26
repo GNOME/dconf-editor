@@ -374,7 +374,7 @@ msgstr ""
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -5 and 9."
+"integer could only take a value between -2 and 10."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197

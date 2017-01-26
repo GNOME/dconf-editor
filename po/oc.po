@@ -428,11 +428,11 @@ msgstr "Un nombre amb interval"
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -5 and 9."
+"integer could only take a value between -2 and 10."
 msgstr ""
 "Cada reglatge numérique (entièrs signats e pas signats de cada tipe, plus "
 "nombres a virgule) pòt èsser limité per un intervalle de valors. Per "
-"exemple, aqueste entièr accèpta unicament de valors entre -5 e 9."
+"exemple, aqueste entièr accèpta unicament de valors entre -2 e 10."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid "A custom type, here \"(ii)\""

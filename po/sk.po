@@ -443,11 +443,11 @@ msgstr "Číslo s rozsahom"
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -5 and 9."
+"integer could only take a value between -2 and 10."
 msgstr ""
 "Každé číselné nastavenie (celočíselné, prirodzené, alebo desatinné) môže byť "
 "obmedzené vlastným rozsahom hodnôt. Napríklad táto celo-číselná hodnota môže "
-"byť z rozsahu -5 až 9."
+"byť z rozsahu -2 až 10."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid "A custom type, here \"(ii)\""

@@ -351,11 +351,11 @@ msgstr "Un nombre amb rang"
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -5 and 9."
+"integer could only take a value between -2 and 10."
 msgstr ""
 "Cada configuració de numeral (enters i enters sense signe de qualsevol "
 "tipus, a més dels dobles) es podrien limitar a un rang personalitzat de "
-"valors. Per exemple, aquest enter podria prendre sols un valor entre -5 i 9."
+"valors. Per exemple, aquest enter podria prendre sols un valor entre -2 i 10."
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid "A custom type, here ‘(ii)’"

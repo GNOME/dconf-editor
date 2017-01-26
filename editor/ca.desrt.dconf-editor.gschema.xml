@@ -188,9 +188,9 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     <!-- TODO add a nullable-(unsigned-)integer -->
     <key name="number-with-range" type="i">
       <default>3</default>
-      <range min="-5" max="9"/>
+      <range min="-2" max="10"/>
       <summary>A number with range</summary>
-      <description>Every numeral setting (integers and unsigned integers of every type, plus doubles) could be limited to a custom range of values. For example, this integer could only take a value between -5 and 9.</description> <!-- TODO and handle? -->
+      <description>Every numeral setting (integers and unsigned integers of every type, plus doubles) could be limited to a custom range of values. For example, this integer could only take a value between -2 and 10.</description> <!-- TODO and handle? -->
     </key>
     <key name="pair-of-integers" type="(ii)">
       <default>(800, 600)</default>
