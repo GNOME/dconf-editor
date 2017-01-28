@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-01-18 21:45+0000\n"
-"PO-Revision-Date: 2017-01-19 09:58+0100\n"
+"POT-Creation-Date: 2017-01-26 17:05+0000\n"
+"PO-Revision-Date: 2017-01-28 10:25+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -496,6 +496,18 @@ msgstr ""
 "Une enumerazion e pues contignî nome un element, ma al è facil che chel al "
 "sedi un erôr. L'Editôr Dconf, in chel câs, ti vise."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:223
+msgid "A 1-choice integer value"
+msgstr "Un valôr intîr a 1 sielte"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
+msgid ""
+"A range could limit an integer key to only allow one value, but that’s "
+"probably an error. Dconf Editor warns you in that case."
+msgstr ""
+"Un interval al pues limitâ une clâf interie a permeti dome un valôr, ma al è "
+"facil che chel al sedi un erôr. L'Editôr Dconf, in chel câs, ti vise."
+
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
 msgstr "Scurtis di tastiere"
@@ -647,7 +659,8 @@ msgstr "Copie il percors atuâl"
 msgid "Reset visible keys"
 msgstr "Ristabilìs lis clâfs visibilis"
 
-#: editor/dconf-window.vala:254
+#. Translators: "reset recursively" action in the right-click menu on a folder
+#: editor/dconf-window.vala:254 editor/key-list-box-row.vala:485
 msgid "Reset recursively"
 msgstr "Ristabilìs in maniere ricorsive"
 
@@ -685,127 +698,147 @@ msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Menù azions"
 
-#: editor/help-overlay.ui:59
-msgctxt "shortcut window"
-msgid "Clipboard"
-msgstr "Notis"
-
-#: editor/help-overlay.ui:63
-msgctxt "shortcut window"
-msgid "Copy descriptor"
-msgstr "Copie il descritôr"
-
-#: editor/help-overlay.ui:70
-msgctxt "shortcut window"
-msgid "Copy path"
-msgstr "Copie percors"
-
-#: editor/help-overlay.ui:79
+#: editor/help-overlay.ui:52
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Navigazion cun la sbare di percors"
 
-#: editor/help-overlay.ui:83
+#: editor/help-overlay.ui:56
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Vierç cartele lidrîs"
 
-#: editor/help-overlay.ui:90
+#: editor/help-overlay.ui:63
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Vierç cartele superiôr"
 
-#: editor/help-overlay.ui:97
+#: editor/help-overlay.ui:70
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Vierç il fi diret atîf"
 
-#: editor/help-overlay.ui:104
+#: editor/help-overlay.ui:77
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Vierç il fi ultin atîf"
 
+#: editor/help-overlay.ui:86
+msgctxt "shortcut window"
+msgid "Keys list actions"
+msgstr "Liste azions clâfs"
+
+#: editor/help-overlay.ui:90
+msgctxt "shortcut window"
+msgid "Contextual menu"
+msgstr "Menù contestuâl"
+
+#: editor/help-overlay.ui:97
+msgctxt "shortcut window"
+msgid "Set to default"
+msgstr "Met ai valôrs predefinîts"
+
+#: editor/help-overlay.ui:104
+msgctxt "shortcut window"
+msgid "Toggle boolean value"
+msgstr "Comute valôr boolean"
+
 #: editor/help-overlay.ui:113
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Notis"
+
+#: editor/help-overlay.ui:117
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Copie il descritôr"
+
+#: editor/help-overlay.ui:124
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Copie percors"
+
+#: editor/help-overlay.ui:133
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Gjeneric"
 
-#: editor/help-overlay.ui:117
+#: editor/help-overlay.ui:137
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Mostre chest jutori"
 
-#: editor/help-overlay.ui:124
+#: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Informazions"
 
-#: editor/help-overlay.ui:131
+#: editor/help-overlay.ui:151
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Jes"
 
-#: editor/key-list-box-row.vala:162
+#: editor/key-list-box-row.vala:188
 msgid "No Schema Found"
 msgstr "Nissun scheme cjatât"
 
-#: editor/key-list-box-row.vala:171
+#: editor/key-list-box-row.vala:202
 msgid "Key erased."
 msgstr "Clâf scancelade."
 
-#: editor/key-list-box-row.vala:187
+#: editor/key-list-box-row.vala:224
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (clâf scancelade)"
 
-#: editor/key-list-box-row.vala:263
+#: editor/key-list-box-row.vala:310
 msgid "No summary provided"
 msgstr "Nissun somari furnît"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:395
+#: editor/key-list-box-row.vala:465
 msgid "Customize…"
 msgstr "Personalize..."
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:398
+#: editor/key-list-box-row.vala:468
 msgid "Set to default"
 msgstr "Met i valôrs predefinîts"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:403
+#: editor/key-list-box-row.vala:473
 msgid "Dismiss change"
 msgstr "Scarte la modifiche"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:406
+#: editor/key-list-box-row.vala:476
 msgid "Open"
 msgstr "Vierç"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:409 editor/key-list-box-row.vala:537
+#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
 #: editor/registry-info.ui:28
 msgid "Erase key"
 msgstr "Scancele clâf"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:412
+#: editor/key-list-box-row.vala:482
 msgid "Do not erase"
 msgstr "No stâ scancelâ"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:421
+#: editor/key-list-box-row.vala:494
 msgid "Copy"
 msgstr "Copie"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:531
+#: editor/key-list-box-row.vala:604
 msgid "No change"
 msgstr "Nissun cambiament"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:581 editor/registry-info.vala:235
+#: editor/key-list-box-row.vala:674 editor/registry-info.vala:261
 msgid "Default value"
 msgstr "Valôr predefinît"
 
@@ -899,49 +932,59 @@ msgstr ""
 "erôr de aplicazion che e à instalât chest scheme. Se pussibil, vierç une "
 "segnalazion di erôr a rivuart."
 
-#: editor/registry-info.vala:80
+#: editor/registry-info.ui:65
+msgid ""
+"This integer key can only take one value. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
+msgstr ""
+"Cheste clâf interie e pues vê dome un valôr. Al è probabil che al sedi un "
+"erôr de aplicazion che e à instalât chest scheme. Se pussibil, vierç une "
+"segnalazion di erôr a rivuart."
+
+#: editor/registry-info.vala:82
 msgid "Schema"
 msgstr "Scheme"
 
-#: editor/registry-info.vala:81
+#: editor/registry-info.vala:83
 msgid "Summary"
 msgstr "Somari"
 
-#: editor/registry-info.vala:82
+#: editor/registry-info.vala:84
 msgid "Description"
 msgstr "Descrizion"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:84
+#: editor/registry-info.vala:86
 msgid "Type"
 msgstr "Gjenar"
 
-#: editor/registry-info.vala:86
+#: editor/registry-info.vala:88
 msgid "Minimum"
 msgstr "Minim"
 
-#: editor/registry-info.vala:87
+#: editor/registry-info.vala:89
 msgid "Maximum"
 msgstr "Massim"
 
-#: editor/registry-info.vala:88
+#: editor/registry-info.vala:90
 msgid "Default"
 msgstr "Predefinît"
 
-#: editor/registry-info.vala:108
+#: editor/registry-info.vala:110
 msgid "Current value"
 msgstr "Valôr atuâl"
 
-#: editor/registry-info.vala:134
+#: editor/registry-info.vala:143
 msgid "Use default value"
 msgstr "Dopre valôr predefinît"
 
-#: editor/registry-info.vala:192
+#: editor/registry-info.vala:201
 msgid "Custom value"
 msgstr "Valôr personalizât"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:298
+#: editor/registry-info.vala:324
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -951,7 +994,7 @@ msgstr ""
 "tache cun \"m\") al so valôr vueit. Stringhis, firmis e percors di ogjet a "
 "varessin di jessi sierâts tra virgulutis."
 
-#: editor/registry-info.vala:300
+#: editor/registry-info.vala:326
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
@@ -959,7 +1002,7 @@ msgstr ""
 "virgulutis."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:304
+#: editor/registry-info.vala:330
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
