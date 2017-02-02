@@ -64,14 +64,15 @@ public class Directory : SettingObject
                 create_folders ();
                 create_gsettings_keys ();
                 create_dconf_keys ();
+                sort_key_model ();
             }
             return (!) _key_model;
         }
     }
 
-    private void insert_key (Key key)
+    private void sort_key_model ()
     {
-        ((!) _key_model).insert_sorted ((SettingObject) key, (a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+        ((!) _key_model).sort ((a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
     }
 
     /*\
@@ -80,11 +81,7 @@ public class Directory : SettingObject
 
     public void create_folders ()
     {
-        children.foreach ((dir) => {
-                ((!) _key_model).insert_sorted ((SettingObject) dir, (a, b) => {
-                        return strcmp (((SettingObject) a).name, ((SettingObject) b).name);
-                    });
-            });
+        children.foreach ((dir) => ((!) _key_model).append ((SettingObject) dir));
     }
 
     /*\
@@ -137,7 +134,7 @@ public class Directory : SettingObject
                 range_type,
                 settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
             );
-        insert_key (new_key);
+        ((!) _key_model).append (new_key);
     }
 
     /*\
@@ -169,7 +166,7 @@ public class Directory : SettingObject
                     new_key.value_changed ();
                 }
             });
-        insert_key ((Key) new_key);
+        ((!) _key_model).append ((Key) new_key);
     }
 }
 
