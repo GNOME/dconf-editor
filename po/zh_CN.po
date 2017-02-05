@@ -2,34 +2,114 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # billzt <bill_zt@sina.com>, 2012.
+# Bin Li <binli@gnome.org>, 2015.
+# Jeff Bai <jeffbai@aosc.xyz>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=dconf&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-08-03 03:09+0000\n"
-"PO-Revision-Date: 2014-08-03 18:45+0800\n"
-"Last-Translator: 甘露(Gan Lu) <rhythm.gan@gmail.com>\n"
-"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-01-10 23:55+0000\n"
+"PO-Revision-Date: 2017-02-05 17:12+0800\n"
+"Last-Translator: Mandy Wang <wangmychn@gmail.com>\n"
+"Language-Team: Chinese <>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.11\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../editor/bookmarks.ui.h:1
+msgid "Bookmark this Location"
+msgstr "将此位置加入书签"
+
+#: ../editor/bookmarks.ui.h:2
+msgid "Location bookmarked"
+msgstr "此位置已加入书签"
+
+#: ../editor/bookmarks.ui.h:3
+msgid "Toggle to bookmark this location"
+msgstr "切换以将此位置加入书签"
+
+# 想了想，用西化一点的话痨句子吧……本来将在此处就好的。
+#: ../editor/bookmarks.ui.h:4
+msgid ""
+"Bookmarks will\n"
+"be added here"
+msgstr ""
+"书签将会\n"
+"被添加到这里"
+
+#: ../editor/bookmarks.ui.h:6
+msgid "Bookmarks"
+msgstr "书签"
+
+#: ../editor/bookmarks.ui.h:7
+msgid "Manage your bookmarks"
+msgstr "管理书签"
+
+#: ../editor/bookmark.ui.h:1
+msgid "Remove"
+msgstr "移除"
+
+#: ../editor/bookmark.ui.h:2
+msgid "Remove this bookmark"
+msgstr "删除该书签"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:1
+msgid "Dconf Editor"
+msgstr "Dconf 系统配置编辑器"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:2
+msgid "A graphical tool for editing the dconf database"
+msgstr "用于编辑 dconf 数据库的图形界面工具"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:3
+msgid ""
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
+msgstr ""
+"Dconf 编辑器使你能够直接编辑 dconf 配置数据库，这在开发使用这些设置的程序时非"
+"常有用。"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:4
+msgid ""
+"Editing your configuration directly is an advanced feature and may cause "
+"applications to not work correctly."
+msgstr "直接编辑设置属于高级功能，可能会导致应用程序无法正常运作。"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:5
+msgid "Browse the keys used by installed applications"
+msgstr "浏览已安装的应用程序所使用的键"
+
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:6
+msgid "Read keys descriptions and edit their values"
+msgstr "阅读键描述并编辑其对应的值"
+
+#. a translatable version of project_group
+#: ../editor/ca.desrt.dconf-editor.appdata.xml.in.h:8
+msgid "The GNOME Project"
+msgstr "GNOME 项目"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:1
-#: ../editor/dconf-editor.vala:43 ../editor/dconf-editor.vala:62
-#: ../editor/dconf-editor.vala:412
+#: ../editor/dconf-editor.ui.h:1 ../editor/dconf-editor.vala:73
+#: ../editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf 系统配置编辑器"
 
 #: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:2
-#: ../editor/dconf-editor.vala:415
+msgid "Configuration editor for dconf"
+msgstr "dconf 的配置编辑器"
+
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "便捷地编辑您的系统设置"
 
-#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:3
+#: ../editor/ca.desrt.dconf-editor.desktop.in.in.h:4
 msgid "settings;configuration;"
 msgstr "settings;configuration;设定;配置;设置;"
 
@@ -54,12 +134,354 @@ msgid "A flag to enable maximized mode"
 msgstr "启用最大化模式的标记"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:6
-msgid "A flag to enable fullscreen mode"
-msgstr "启用全屏模式的标记"
+msgid "A list of bookmarked paths"
+msgstr "已加入书签的路径列表"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:7
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr "包含用户以字串数组标记书签的所有路径。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:8
+msgid "A flag to restore the last view"
+msgstr "是否还原上次视图的标志"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
+msgid ""
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
+msgstr ""
+"如果设置为“true”，Dconf 编辑器会在运行时尝试跳至“saved-view”键值描述的路径。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:10
+msgid "A path to restore the last view"
+msgstr "要还原的上次查看的路径"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
+msgid ""
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"navigate to this path."
+msgstr ""
+"如果“restore-view”键值设置为“true”，Dconf 编辑器会在运行时尝试跳至这个路径。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:12
+msgid "Show initial warning"
+msgstr "显示初始警告"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
+msgid ""
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
+msgstr "如果设置为“true”，Dconf 编辑器启动时会打开弹出窗口提醒用户小心操作。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:14
+msgid "A flag to enable small rows for keys list"
+msgstr "对键列表启用小行的标记"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
+msgid "If 'true', the keys list use smaller rows."
+msgstr "如果为 true，键列表使用较小的行。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
+msgid "A flag to enable small rows for bookmarks list"
+msgstr "对书签列表启用小行的标记"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
+msgid "If 'true', the bookmarks list use smaller rows."
+msgstr "如果为 true，书签列表中使用较小的行。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
+msgid "Change the behaviour of a key value change request"
+msgstr "更改键值更改请求的行为"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
+msgid ""
+"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+"type, it updates the key value each time something changes in the entry, so "
+"including intermediate states. The 'safe' value asks for confirmation in "
+"these cases, but allows instant changes for booleans and nullable booleans, "
+"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
+"values always asks for confirmation, but the first applies the change if you "
+"change path whereas the second dismiss it. The 'always-delay' value adds "
+"each change in delay mode, allowing to apply multiple keys at once."
+msgstr ""
+"不鼓励“unsafe”的数值：对于具有非特殊类型的键，每次条目中发生更改时键值都会更"
+"新，因此包含中间状态。“safe”数值在这些情况下要求确认，但允许即时更改布尔值和"
+"可空布尔值、枚举和标志。“always-confirm-implicit”和“always-confirm-"
+"explicit”值总是要求确认，但是如果您更改了路径，则前者会应用变更，反之，后者会"
+"解除它。 “always-delay”值将各个更改添加到延迟模式中，允许一次应用多个键。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
+msgid "A boolean, type \"b\""
+msgstr "布尔值，类型 \"b\""
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
+msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgstr "布尔类只能取两种数值，“true”或“false”。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
+msgid "A nullable boolean, type \"mb\""
+msgstr "可空布尔值，类型“mb”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
+msgstr ""
+"GSettings 允许使用“可空”类型。这种类型其他类型相似，但可以接受“nothing”数值。"
+"可空布尔值只能为三种数值，“true”、“false”和“nothing”。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
+msgid "A byte (unsigned), type \"y\""
+msgstr "无符号字节，类型“y”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
+msgid ""
+"A byte value is an integer between 0 and 255. It may be used to pass around "
+"characters."
+msgstr "字节数值为取值 0 到 255 的整数，可以用于传递字符。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
+msgid "A bytestring, type \"ay\""
+msgstr "字节串，类型“ay”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:27
+msgid ""
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
+msgstr ""
+"字节串类型通常用来传递可能不为合法 utf8 的字串。在这种情况下，依惯例是要将结"
+"尾的空字符作为最后一个字符包含入数组。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:28
+msgid "A bytestring array, type \"aay\""
+msgstr "字节串数组，类型“aay”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
+msgid ""
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
+msgstr "这是字节串数组的类型。字节串类型通常用来传递可能不为合法 utf8 的字串。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
+msgid "A D-Bus handle type, type \"h\""
+msgstr "D-Bus 句柄类型，类型“h”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
+msgid ""
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"handle 类型是 32 位有符号整数值，依惯例用作随 D-Bus 消息一并发送的文件描述符"
+"数组的索引。\n"
+"\n"
+"如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
+msgid "A D-Bus object path, type \"o\""
+msgstr "D-Bus 对象路径，类型“o”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:35
+msgid ""
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"对象路径用于识别总线上给定目标的 D-Bus 对象。\n"
+"\n"
+"如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "D-Bus 对象路径数组，类型“ao”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:39
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: \"[]\").\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"对象路径数组可以包含任意数量的对象路径（包括 none：“[]”）。\n"
+"\n"
+"如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
+msgid "A D-Bus signature, type \"g\""
+msgstr "D-Bus 签名，类型“g”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
+msgid ""
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
+msgstr ""
+"D-Bus 签名是一种字串，用于 D-Bus 方法或消息的类型签名。\n"
+"\n"
+"如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
+msgid "A double, type \"d\""
+msgstr "双精度，类型“d”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
+msgid "A double value could represent any real number."
+msgstr "一个双精度值可以表示任何实数。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:48
+msgid "A 5-choices enumeration"
+msgstr "五选项枚举"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
+msgid ""
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
+msgstr "枚举可以使用“enum”属性或“choices”标签完成。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
+msgid "A short integer, type \"n\""
+msgstr "短整数，类型“n”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgstr "16 位有符号整数。另请参阅“integer-16-unsigned”键值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
+msgid "Flags: choose-colors-you-love"
+msgstr "标志：choose-colors-you-love"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
+msgid "Flags could be set by the \"enum\" attribute."
+msgstr "标志可以由“enum”属性设置。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
+msgid "An unsigned short integer, type \"q\""
+msgstr "无符号短整数，类型“q”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgstr "16 位无符号整数。另请参阅“integer-16-signed”键值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
+msgid "An usual integer, type \"i\""
+msgstr "一般整数，类型“i”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgstr "32 位有符号整数。另请参阅“integer-32-unsigned”键值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
+msgid "An unsigned usual integer, type \"u\""
+msgstr "无符号一般整数，类型“u”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgstr "32 位无符号整数。另请参阅“integer-32-signed”键值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
+msgid "A long integer, type \"x\""
+msgstr "长整数，类型“x”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgstr "64 位有符号整数。另请参阅“integer-64-unsigned”键值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
+msgid "An unsigned long integer, type \"t\""
+msgstr "无符号长整数，类型“t”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgstr "64 位无符号整数。另请参阅“integer-64-signed”键值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
+msgid "A number with range"
+msgstr "数字，带范围限制"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:65
+msgid ""
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -5 and 9."
+msgstr ""
+"每个位数的设置值 (各个类型的整型和无符号的整型，及双精度浮点类型) 可限制为自"
+"订的数值范围。例如，此整数只能使用 -5 到 9 之间的一个数值。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
+msgid "A custom type, here \"(ii)\""
+msgstr "自定义类型，此处为“(ii)”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
+msgstr ""
+"Dconf 编辑器让您可以编辑任何 GSettings 支持的设置值类型，当其没有更好方案时则"
+"回退到字串项目。这里有两个 32 位有符号整数元组。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
+msgid "A string, type \"s\""
+msgstr "字串，类型“s”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:69
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
+msgstr ""
+"字串类型可以接受任何 utf8 字串。请注意空字串“''”不是 NULL (空值)；另请参"
+"阅“string-nullable”键值。。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
+msgid "A string array, type \"as\""
+msgstr "字串数组，类型“as”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:71
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, \"[]\"."
+msgstr ""
+"一个字符串数组，包含任意数量的任何长度的字符串。可以是一个空数组，\"[]\"。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
+msgid "A nullable string, type \"ms\""
+msgstr "可空字串，类型“ms”"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:73
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
+msgstr ""
+"GSettings 允许使用“可空”类型。这种类型其他类型相似，但可以接受“nothing”数值。"
+"可空字串可以是任何字串值（包括空字串 \"''\"），或者 NULL (空值)。"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
+msgid "A 1-choice enumeration"
+msgstr "单选项枚举"
+
+#: ../editor/ca.desrt.dconf-editor.gschema.xml.h:75
+msgid ""
+"An enumeration could contain only one item, but that's probably an error. "
+"Dconf Editor warns you in that case."
+msgstr ""
+"一处枚举只能包含一个项目，但这可能是一个错误。 Dconf 系统配置编辑器会在这种情"
+"况下警告您。"
 
 #: ../editor/dconf-editor-menu.ui.h:1
-msgid "_Find…"
-msgstr "查找(_F)…"
+msgid "Keyboard Shortcuts"
+msgstr "快捷键"
 
 #: ../editor/dconf-editor-menu.ui.h:2
 msgid "_About"
@@ -69,110 +491,546 @@ msgstr "关于(_A)"
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: ../editor/dconf-editor.ui.h:1
-msgid "Set to Default"
-msgstr "重置为默认值"
-
 #: ../editor/dconf-editor.ui.h:2
-msgid "Schema:"
-msgstr "层次结构："
+msgid "Actions"
+msgstr "操作"
 
 #: ../editor/dconf-editor.ui.h:3
-msgid "Summary:"
-msgstr "概要："
+msgid "Current view actions"
+msgstr "当前视图操作"
 
 #: ../editor/dconf-editor.ui.h:4
-msgid "Description:"
-msgstr "描述："
+msgid "Search"
+msgstr "搜索"
 
-#. Translators: as in datatype (integer, boolean, string, etc)
-#: ../editor/dconf-editor.ui.h:6
-msgid "Type:"
-msgstr "类型："
+#: ../editor/dconf-editor.ui.h:5
+msgid "Search keys"
+msgstr "搜索键"
 
-#: ../editor/dconf-editor.ui.h:7
-msgid "Default:"
-msgstr "默认值："
+#: ../editor/dconf-editor.vala:22
+msgid "Print release version and exit"
+msgstr "打印发布的版本号并退出"
 
-#: ../editor/dconf-editor.ui.h:8
-msgid "Next"
-msgstr "下一项"
+#. #. * * Copy action
+#. #: ../editor/dconf-editor.vala:96
+msgid "Copied to clipboard"
+msgstr "已复制到剪贴板"
 
-#: ../editor/dconf-editor.vala:185
-#, c-format
-msgid "Integer [%s..%s]"
-msgstr "整数[%s..%s]"
+# 不要翻译 Copyright，不要翻译，不要翻译——GPL Howto。
+#: ../editor/dconf-editor.vala:150
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
+msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
-#: ../editor/dconf-editor.vala:198
-#, c-format
-msgid "Double [%s..%s]"
-msgstr "双精度浮点数[%s..%s]"
+#: ../editor/dconf-editor.vala:154
+msgid "translator-credits"
+msgstr ""
+"Tao Zhu <bill_zt@sina.com>, 2012.\n"
+"Bin Li <binli@gnome.org>, 2015.\n"
+"Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>, 2015, 2016.\n"
+"Mingye Wang <arthur2e5@aosc.xyz>, 2015, 2016.\n"
+"Jeff Bai <jeffbai@aosc.xyz>, 2015, 2016."
 
-#: ../editor/dconf-editor.vala:200
+#: ../editor/dconf-model.vala:195
 msgid "Boolean"
 msgstr "布尔值"
 
-#: ../editor/dconf-editor.vala:202
+#: ../editor/dconf-model.vala:197
 msgid "String"
 msgstr "字符串"
 
-#: ../editor/dconf-editor.vala:204
+#: ../editor/dconf-model.vala:199
+msgid "String array"
+msgstr "字符串数组"
+
+#: ../editor/dconf-model.vala:201
 msgid "Enumeration"
 msgstr "枚举"
 
-#: ../editor/dconf-editor.vala:252
-msgid "No schema"
+#: ../editor/dconf-model.vala:203
+msgid "Flags"
+msgstr "标志"
+
+#: ../editor/dconf-model.vala:205
+msgid "Double"
+msgstr "双精度"
+
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: ../editor/dconf-model.vala:208
+msgid "D-Bus handle type"
+msgstr "D-bus 句柄（handle）类型"
+
+#: ../editor/dconf-model.vala:210
+msgid "D-Bus object path"
+msgstr "D-bus 对象路径"
+
+#: ../editor/dconf-model.vala:212
+msgid "D-Bus object path array"
+msgstr "D-bus 对象路径数组"
+
+#: ../editor/dconf-model.vala:214
+msgid "D-Bus signature"
+msgstr "D-Bus 签名"
+
+#: ../editor/dconf-model.vala:222
+msgid "Integer"
+msgstr "整数"
+
+#: ../editor/dconf-model.vala:337
+msgid "True"
+msgstr "真"
+
+#: ../editor/dconf-model.vala:339
+msgid "False"
+msgstr "假"
+
+#: ../editor/dconf-model.vala:340
+msgid "Nothing"
 msgstr "无"
 
-#: ../editor/dconf-editor.vala:362
-msgid "Not found"
-msgstr "未发现"
+# 下面 nothing 是 keyword，干脆这三个都括号了吧。
+#: ../editor/dconf-model.vala:345
+msgid "true"
+msgstr "真 (true)"
 
-#: ../editor/dconf-editor.vala:410
-msgid ""
-"This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
-"any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program; if not, write to the Free Software Foundation, Inc., 51 "
-"Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-msgstr ""
-"本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，就本"
-"程序再为发布与／或修改；无论您依据的是本授权的第二版或（您自行选择的）任一日"
-"后发行的版本。\n"
-"\n"
-"本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目的"
-"适用性所为的默示性担保。详情请参照GNU通用公共授权。\n"
-"\n"
-"您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请写信至自由软件基金"
-"会：59 Temple Place - Suite 330, Boston, Ma 02111-1307, USA。"
+#: ../editor/dconf-model.vala:347
+msgid "false"
+msgstr "假 (false)"
 
-#: ../editor/dconf-editor.vala:416
-msgid "Copyright © Canonical Ltd"
-msgstr "版权所有 © Canonical Ltd"
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: ../editor/dconf-model.vala:349
+msgid "nothing"
+msgstr "无 (nothing)"
 
-#: ../editor/dconf-editor.vala:420
-msgid "translator-credits"
-msgstr "Tao Zhu <bill_zt@sina.com>, 2012."
+#: ../editor/dconf-view.vala:438
+msgid "This value is invalid for the key type."
+msgstr "这个数值对此类型的设置键是无效的。"
 
-#: ../editor/dconf-view.vala:268
+#: ../editor/dconf-window.vala:132
+msgid "Thanks for using Dconf Editor for editing your settings!"
+msgstr "感谢您使用 Dconf 编辑器编辑配置！"
+
+#: ../editor/dconf-window.vala:133
+msgid "Don’t forget that some options may break applications, so be careful."
+msgstr "要记住有些选项可能会弄坏应用程序，所以要小心。"
+
+#: ../editor/dconf-window.vala:134
+msgid "I’ll be careful."
+msgstr "我会小心的。"
+
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+#: ../editor/dconf-window.vala:138
+msgid "Show this dialog next time."
+msgstr "下一次仍显示此对话框。"
+
+#: ../editor/dconf-window.vala:248
+msgid "Copy current path"
+msgstr "复制当前路径"
+
+#: ../editor/dconf-window.vala:253
+msgid "Reset visible keys"
+msgstr "重设可见键"
+
+#: ../editor/dconf-window.vala:254
+msgid "Reset recursively"
+msgstr "循环重设"
+
+#: ../editor/dconf-window.vala:262
+msgid "Enter delay mode"
+msgstr "进入延迟模式"
+
+#: ../editor/help-overlay.ui.h:1
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "操作"
+
+#: ../editor/help-overlay.ui.h:2
+msgctxt "shortcut window"
+msgid "Bookmarks menu"
+msgstr "书签菜单"
+
+#: ../editor/help-overlay.ui.h:3
+msgctxt "shortcut window"
+msgid "Bookmark this path"
+msgstr "将此路径加入书签"
+
+#: ../editor/help-overlay.ui.h:4
+msgctxt "shortcut window"
+msgid "Unbookmark this path"
+msgstr "将此路径移出书签"
+
+#: ../editor/help-overlay.ui.h:5
+msgctxt "shortcut window"
+msgid "Search bar"
+msgstr "搜索栏"
+
+#: ../editor/help-overlay.ui.h:6
+msgctxt "shortcut window"
+msgid "Actions menu"
+msgstr "操作菜单"
+
+#: ../editor/help-overlay.ui.h:7
+msgctxt "shortcut window"
+msgid "Current row menu"
+msgstr "当前行菜单"
+
+#: ../editor/help-overlay.ui.h:8
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "剪贴板"
+
+#: ../editor/help-overlay.ui.h:9
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "复制描述符"
+
+#: ../editor/help-overlay.ui.h:10
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "复制路径"
+
+#: ../editor/help-overlay.ui.h:11
+msgctxt "shortcut window"
+msgid "Path bar navigation"
+msgstr "路径栏导航"
+
+#: ../editor/help-overlay.ui.h:12
+msgctxt "shortcut window"
+msgid "Open root folder"
+msgstr "打开根目录"
+
+#: ../editor/help-overlay.ui.h:13
+msgctxt "shortcut window"
+msgid "Open parent folder"
+msgstr "打开上层文件夹"
+
+#: ../editor/help-overlay.ui.h:14
+msgctxt "shortcut window"
+msgid "Open active direct child"
+msgstr "打开活动的直接子项目"
+
+#: ../editor/help-overlay.ui.h:15
+msgctxt "shortcut window"
+msgid "Open active last child"
+msgstr "打开最近活跃的子项目"
+
+#: ../editor/help-overlay.ui.h:16
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "通用"
+
+#: ../editor/help-overlay.ui.h:17
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "显示此帮助"
+
+#: ../editor/help-overlay.ui.h:18
+msgctxt "shortcut window"
+msgid "About"
+msgstr "关于"
+
+#: ../editor/help-overlay.ui.h:19
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "退出"
+
+#: ../editor/key-list-box-row.vala:162
+msgid "No Schema Found"
+msgstr "未找到方案"
+
+#: ../editor/key-list-box-row.vala:171
+msgid "Key erased."
+msgstr "设置键已清除。"
+
+#: ../editor/key-list-box-row.vala:187
 #, c-format
-msgid "Error setting value: %s"
-msgstr "错误的设定值：%s"
+msgid "%s (key erased)"
+msgstr "%s（设置键已清除）"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:322
-msgid "Name"
-msgstr "名称"
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:389
+msgid "Customize…"
+msgstr "自定义…"
 
-#. Translators: this is the column header label in the main view
-#: ../editor/dconf-view.vala:326
-msgid "Value"
-msgstr "值"
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:392
+msgid "Set to default"
+msgstr "重置为默认"
+
+#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
+#: ../editor/key-list-box-row.vala:397
+msgid "Dismiss change"
+msgstr "取消变更"
+
+#. Translators: "open folder" action in the right-click menu on a folder
+#: ../editor/key-list-box-row.vala:400
+msgid "Open"
+msgstr "打开"
+
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: ../editor/key-list-box-row.vala:403 ../editor/key-list-box-row.vala:531
+#: ../editor/registry-info.ui.h:2
+msgid "Erase key"
+msgstr "清除设置键"
+
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: ../editor/key-list-box-row.vala:406
+msgid "Do not erase"
+msgstr "不要清除"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:415
+msgid "Copy"
+msgstr "复制"
+
+#. Translators: "no change" option in the right-click menu on a key when on delayed mode
+#: ../editor/key-list-box-row.vala:525
+msgid "No change"
+msgstr "没有变更"
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: ../editor/key-list-box-row.vala:575 ../editor/registry-info.vala:235
+msgid "Default value"
+msgstr "默认值"
+
+#: ../editor/modifications-revealer.ui.h:1
+msgid "Apply"
+msgstr "应用"
+
+#: ../editor/modifications-revealer.vala:141
+msgid "Nothing to reset."
+msgstr "没有要重设的项目。"
+
+#: ../editor/modifications-revealer.vala:241
+msgid "The value is invalid."
+msgstr "此数值无效。"
+
+#: ../editor/modifications-revealer.vala:245
+msgid "The change will be dismissed if you quit this view without applying."
+msgstr "如果您在未应用变更的情况下退出此窗口，变更会被撤销。"
+
+#: ../editor/modifications-revealer.vala:247
+msgid "The change will be applied on such request or if you quit this view."
+msgstr "此变更会应用于此类请求否则您可以退出此窗口。"
+
+#: ../editor/modifications-revealer.vala:264
+msgid "Changes will be delayed until you request it."
+msgstr "变更会延迟直至您提出请求。"
+
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:266
+#, c-format
+msgid "One gsettings operation delayed."
+msgid_plural "%u gsettings operations delayed."
+msgstr[0] "延迟了 %u 个 gsettings 操作。"
+
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:270
+#, c-format
+msgid "One dconf operation delayed."
+msgid_plural "%u dconf operations delayed."
+msgstr[0] "延迟了 %u 个 dconf 操作。"
+
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:273
+#, c-format
+msgid "%s%s"
+msgstr "%s%s"
+
+#: ../editor/modifications-revealer.vala:273
+#, c-format
+msgid "One gsettings operation"
+msgid_plural "%u gsettings operations"
+msgstr[0] "%u 个 gsettings 操作"
+
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: ../editor/modifications-revealer.vala:278
+#, c-format
+msgid " and one dconf operation delayed."
+msgid_plural " and %u dconf operations delayed."
+msgstr[0] "并延迟了 %u 个 dconf 操作。"
+
+# 既然搞不清 Schema，那就放个可以简单查找替换的 _ZH_SCHEMA_ 吧。
+#: ../editor/registry-info.ui.h:1
+msgid ""
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
+msgstr ""
+"没有可用的方案。Dconf 编辑器不能找到关联到此键的方案。安装了此键值的应用程序"
+"可能已被删除、不再使用此键或使用了可重定位的方案定义其键。"
+
+#: ../editor/registry-info.ui.h:3
+msgid ""
+"This enumeration offers only one choice. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
+msgstr ""
+"此枚举只提供一个选择。这可能是应用程序在安装此方案时的一个错误。如果可能的"
+"话，请将此以 bug 形式报告。"
+
+# damned-lies 里面提到 reduce 的时候这么翻译的 schema，不过讲真我也不大相信…
+#: ../editor/registry-info.vala:80
+msgid "Schema"
+msgstr "方案"
+
+#: ../editor/registry-info.vala:81
+msgid "Summary"
+msgstr "摘要"
+
+#: ../editor/registry-info.vala:82
+msgid "Description"
+msgstr "描述"
+
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: ../editor/registry-info.vala:84
+msgid "Type"
+msgstr "类型"
+
+#: ../editor/registry-info.vala:86
+msgid "Minimum"
+msgstr "最小值"
+
+#: ../editor/registry-info.vala:87
+msgid "Maximum"
+msgstr "最大值"
+
+#: ../editor/registry-info.vala:88
+msgid "Default"
+msgstr "默认"
+
+#: ../editor/registry-info.vala:108
+msgid "Current value"
+msgstr "当前值"
+
+#: ../editor/registry-info.vala:134
+msgid "Use default value"
+msgstr "使用默认值"
+
+#: ../editor/registry-info.vala:192
+msgid "Custom value"
+msgstr "自定义值"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/registry-info.vala:296
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
+msgstr ""
+"使用关键字“nothing”来设置“可能”类型 (以 “m” 开头的) 为空值。字串、签名和对象"
+"路径应该用引号括起来。"
+
+#: ../editor/registry-info.vala:298
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
+msgstr "字串、签名和对象路径应该以引号括起来。"
+
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: ../editor/registry-info.vala:302
+msgid ""
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
+msgstr "使用关键字“nothing”来设置“可能”类型 (以 “m” 开头的) 为空值。"
+
+#: ../editor/registry-view.ui.h:1
+msgid "No keys in this path"
+msgstr "此路径中没有键值"
+
+#: ../editor/registry-view.vala:170
+#, c-format
+msgid "Cannot find folder \"%s\"."
+msgstr "找不到文件夹“%s”。"
+
+#: ../editor/registry-view.vala:188
+#, c-format
+msgid "Cannot find key \"%s\" here."
+msgstr "这里找不到设置键“%s”。"
+
+#: ../editor/registry-view.vala:194
+#, c-format
+msgid "Key \"%s\" has been removed."
+msgstr "已经移除设置键“%s”。"
+
+#~ msgid "Double [%s..%s]"
+#~ msgstr "双精度浮点数 [%s..%s]"
+
+#~ msgid "Oops! Cannot find something at this path."
+#~ msgstr "啊呀！按这个路径找不到东西。"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Expand"
+#~ msgstr "展开"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Expand all subtrees"
+#~ msgstr "展开所有子树"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Collapse"
+#~ msgstr "折叠"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Collapse all subtrees"
+#~ msgstr "折叠所有子树"
+
+#~ msgid "Key Editor"
+#~ msgstr "键值编辑器"
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
+
+#~ msgid "_Find…"
+#~ msgstr "查找(_F)…"
+
+#~ msgid "Next"
+#~ msgstr "下一项"
+
+#~ msgid "Not found"
+#~ msgstr "未发现"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it and/or modify it "
+#~ "under the terms of the GNU General Public License as published by the "
+#~ "Free Software Foundation; either version 2 of the License, or (at your "
+#~ "option) any later version.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be useful, but "
+#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
+#~ "Public License for more details.\n"
+#~ "\n"
+#~ "You should have received a copy of the GNU General Public License along "
+#~ "with this program; if not, write to the Free Software Foundation, Inc., "
+#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#~ msgstr ""
+#~ "本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，"
+#~ "就本程序再为发布与／或修改；无论您依据的是本授权的第二版或（您自行选择的）"
+#~ "任一日后发行的版本。\n"
+#~ "\n"
+#~ "本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目"
+#~ "的适用性所为的默示性担保。详情请参照GNU通用公共授权。\n"
+#~ "\n"
+#~ "您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请写信至自由软件"
+#~ "基金会：59 Temple Place - Suite 330, Boston, Ma 02111-1307, USA。"
+
+#~ msgid "Copyright © Canonical Ltd"
+#~ msgstr "版权所有 © Canonical Ltd"
+
+#~ msgid "Error setting value: %s"
+#~ msgstr "错误的设定值：%s"
+
+#~ msgid "Name"
+#~ msgstr "名称"
+
+#~ msgid "Value"
+#~ msgstr "值"
