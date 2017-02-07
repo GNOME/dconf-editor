@@ -21,10 +21,12 @@ public abstract class SettingObject : Object
     public Directory parent { get { return nullable_parent == null ? (Directory) this : (!) nullable_parent; }}   // TODO make protected or even remove
     public string name { get; construct; }
 
+    public string casefolded_name { get; construct; }
     public string full_name { get; private set; }
     construct
     {
         full_name = nullable_parent == null ? "/" : ((!) nullable_parent).full_name + name + ((this is Directory) ? "/" : "");
+        casefolded_name = name.casefold ();
     }
 }
 
@@ -53,6 +55,9 @@ public class Directory : SettingObject
 
     private DConf.Client client;
 
+    private bool? last_sort = null;
+    private bool? require_sorting = null;
+
     private GLib.ListStore? _key_model = null;
     public GLib.ListStore key_model
     {
@@ -64,24 +69,47 @@ public class Directory : SettingObject
                 create_folders ();
                 create_gsettings_keys ();
                 create_dconf_keys ();
-                sort_key_model ();
             }
             return (!) _key_model;
         }
-    }
-
-    private void sort_key_model ()
-    {
-        ((!) _key_model).sort ((a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
     }
 
     /*\
     * * Folders creation
     \*/
 
-    public void create_folders ()
+    private void create_folders ()
     {
-        children.foreach ((dir) => ((!) _key_model).append ((SettingObject) dir));
+        require_sorting = false;
+        children.foreach ((dir) => {
+                SettingObject _dir = (SettingObject) dir;
+                ((!) _key_model).append (_dir);
+                if (_dir.name != _dir.casefolded_name)
+                    require_sorting = true;
+            });
+    }
+
+    public bool need_sorting (bool case_sensitive)
+        requires (require_sorting != null)
+        requires (last_sort != null)
+    {
+        return ((!) require_sorting) && (case_sensitive != (!) last_sort);
+    }
+
+    public void sort_key_model (bool case_sensitive)
+    {
+        if (require_sorting != null && !need_sorting (case_sensitive))
+            return;
+
+        _sort_key_model (key_model, case_sensitive);
+        last_sort = case_sensitive;
+    }
+    private static void _sort_key_model (GLib.ListStore model, bool case_sensitive)
+    {
+        if (case_sensitive)
+            model.sort ((a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
+        else
+            model.sort ((a, b) => { return ((SettingObject) a).casefolded_name.collate (((SettingObject) b).casefolded_name); });
     }
 
     /*\

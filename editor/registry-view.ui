@@ -14,6 +14,41 @@
       </object>
     </child>
     <child>
+      <object class="GtkRevealer" id="need_reload_warning_revealer">
+        <property name="visible">True</property>
+        <property name="reveal-child">False</property>
+        <child>
+          <object class="GtkInfoBar">
+            <property name="visible">True</property>
+            <property name="message-type">warning</property>
+            <child internal-child="content_area">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="max-width-chars">40</property>
+                    <property name="wrap">True</property>
+                    <property name="label" translatable="yes">Sort preferences have changed. Do you want to reload the view?</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Reload</property>
+                    <signal name="clicked" handler="reload"/>
+                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
       <object class="GtkRevealer"> <!-- Workaround for the gtk+ bug: https://bugzilla.gnome.org/show_bug.cgi?id=724096 -->
         <property name="visible">True</property>
         <property name="reveal-child" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional">False</property>

@@ -24,6 +24,9 @@ class RegistryView : Grid, PathElement
     public bool show_search_bar { get; set; }
     public Behaviour behaviour { get; set; }
 
+    private GLib.Settings application_settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+    [GtkChild] private Revealer need_reload_warning_revealer;
+
     private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
     [GtkChild] private TreeSelection dir_tree_selection;
@@ -67,6 +70,11 @@ class RegistryView : Grid, PathElement
 
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
         path_requested (current_path, null);
+
+        application_settings.changed ["sort-case-sensitive"].connect (() => {
+                if (get_selected_directory ().need_sorting (application_settings.get_boolean ("sort-case-sensitive")))
+                    need_reload_warning_revealer.set_reveal_child (true);
+            });
     }
 
     /*\
@@ -76,6 +84,7 @@ class RegistryView : Grid, PathElement
     private void show_browse_view (string path, string? selected, bool grab = true)
     {
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        need_reload_warning_revealer.set_reveal_child (false);
         update_current_path (path);
         stack.set_visible_child_name ("browse-view");
         if (selected != null)
@@ -143,7 +152,10 @@ class RegistryView : Grid, PathElement
     private void dir_selected_cb ()
     {
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 1/2
-        key_model = get_selected_directory ().key_model;
+        Directory dir = get_selected_directory ();
+        dir.sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
+        key_model = dir.key_model;
+
         key_list_box.bind_model (key_model, new_list_box_row);
     }
 
@@ -370,6 +382,22 @@ class RegistryView : Grid, PathElement
         get_dconf_window ().update_hamburger_menu ();
     }
 
+    [GtkCallback]
+    private void reload ()
+        requires (!is_not_browsing_view ())
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        string? saved_selection = null;
+        if (selected_row != null)
+        {
+            int position = ((!) selected_row).get_index ();
+            saved_selection = ((SettingObject) ((!) key_model).get_object (position)).full_name;
+        }
+
+        get_selected_directory ().sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
+        show_browse_view (current_path, saved_selection);
+    }
+
     /*\
     * * Revealer stuff
     \*/
@@ -576,6 +604,7 @@ class RegistryView : Grid, PathElement
                 on_first_directory = false;
 
             /* Select next key that matches */
+            dir.sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
             GLib.ListStore key_model = dir.key_model;
             while (position < key_model.get_n_items ())
             {

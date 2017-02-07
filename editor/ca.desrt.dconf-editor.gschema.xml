@@ -68,6 +68,12 @@
       <summary>Change the behaviour of a key value change request</summary>
       <description>The “unsafe” value is discouraged: for keys that have a non-special-cased type, it updates the key value each time something changes in the entry, so including intermediate states. The “safe” value asks for confirmation in these cases, but allows instant changes for booleans and nullable booleans, enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” values always asks for confirmation, but the first applies the change if you change path whereas the second dismiss it. The “always-delay” value adds each change in delay mode, allowing to apply multiple keys at once.</description>
     </key>
+    <key name="sort-case-sensitive" type="b">
+      <default>false</default>
+      <summary>A flag to sort keys list case-sensitively</summary>
+      <description>GSettings doesn’t allow keys to use upper-case in their names, but installation paths of schemas can. If “true”, the keys list is sorted case-sensitively, with in usual order upper-case folders first.</description>
+    </key>
+    <!-- TODO sort-folder-first/last/mixed ; maybe also sort-reversed, but should that one be saved between sessions if the last path is not? -->
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
     <value value="0" nick="Red"/>
