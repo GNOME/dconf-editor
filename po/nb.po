@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor 3.23.x\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-07 00:38+0000\n"
-"PO-Revision-Date: 2017-02-13 20:05+0100\n"
+"POT-Creation-Date: 2017-02-16 12:40+0000\n"
+"PO-Revision-Date: 2017-02-19 17:02+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -676,7 +676,7 @@ msgstr "Åpne aktivt siste barn"
 #: editor/help-overlay.ui:86
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "Taster lister handlinger"
 
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
@@ -691,7 +691,7 @@ msgstr "Sett til forvalg"
 #: editor/help-overlay.ui:104
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "Slå av/på en bolsk verdi"
 
 #: editor/help-overlay.ui:113
 msgctxt "shortcut window"
@@ -833,8 +833,8 @@ msgstr[1] "%u gsettings-operasjoner utsatt."
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "En dconf-operasjon utsatt."
+msgstr[1] "%u dconf-operasjoner utsatt."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
@@ -881,7 +881,7 @@ msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
-msgstr ""
+msgstr "Denne heltallsnøkkelen kan kun ta en verdi. Det er sannsynligvis en feil fra applikasjonen som installerte dette skjemaet. Åpne en feilrapport for applikasjonen hvis mulig."
 
 #: editor/registry-info.vala:82
 msgid "Schema"
@@ -930,19 +930,19 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
-msgstr ""
+msgstr "Bruk nøkkelordet «nothing» for å sette en kanskje-type (som begynner med «m») til sin tomme verdi. Strenger, signaturer og objektstier skal ha sitattegn rundt seg."
 
 #: editor/registry-info.vala:326
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr ""
+msgstr "Strenger, signaturer og objektstier skal ha sitattegn rundt seg."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:330
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
-msgstr ""
+msgstr "Bruk nøkkelordet «nothing» for å sette en kanskje-type (som begynner med «m») til sin tomme verdi."
 
 #: editor/registry-view.ui:32
 msgid "Sort preferences have changed. Do you want to reload the view?"
