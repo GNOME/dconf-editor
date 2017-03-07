@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2017-03-05 19:23+0000\n"
-"PO-Revision-Date: 2017-03-06 00:06+0100\n"
+"PO-Revision-Date: 2017-03-07 21:42+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -228,7 +228,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:73
 msgid "A flag to sort keys list case-sensitively"
-msgstr "Et flag sortere nøgler med forskel på store og små bogstaver"
+msgstr "Et flag til at sortere nøgler med forskel på store og små bogstaver"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:74
 msgid ""
