@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-01-26 17:05+0000\n"
-"PO-Revision-Date: 2017-01-28 10:25+0100\n"
+"POT-Creation-Date: 2017-03-05 19:23+0000\n"
+"PO-Revision-Date: 2017-03-28 12:58+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -220,19 +220,35 @@ msgstr ""
 "“always-delay” al zonte ogni cambiament in modalitât ritart, permetint di "
 "aplicâ plui clâfs ae volte."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#: editor/ca.desrt.dconf-editor.gschema.xml:73
+msgid "A flag to sort keys list case-sensitively"
+msgstr ""
+"Une opzion par ordenâ la liste des clâfs in base a maiusculis/minusculis"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:74
+msgid ""
+"GSettings doesn’t allow keys to use upper-case in their names, but "
+"installation paths of schemas can. If “true”, the keys list is sorted case-"
+"sensitively, with in usual order upper-case folders first."
+msgstr ""
+"GSettings nol permet di doprâ tes clâfs nons cun letaris maiusculis, ma i "
+"percors di instalazion dai schemis a puedin. Se “vêr”, la liste des clâfs e "
+"je ordenade in base aes maiusculis/minusculis, cul solit ordin dulà che lis "
+"cartelis cun lis maiusculis a vegnin prime."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Un valôr boolean, scrîf “b”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:93
+#: editor/ca.desrt.dconf-editor.gschema.xml:99
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "I booleans a puedin vê dome doi valôrs, “true” o “false”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:97
+#: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Un valôr boolean anulabil, scrîf “mb”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:98
+#: editor/ca.desrt.dconf-editor.gschema.xml:104
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -242,11 +258,11 @@ msgstr ""
 "gjenars ma a puedin vê un valôr “nuie”. Un boolean anulabil al pues dome vê "
 "trê valôrs, “true”, “false” e “nothing”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:102
+#: editor/ca.desrt.dconf-editor.gschema.xml:108
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Un byte (cence segn), gjenar “y”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -254,11 +270,11 @@ msgstr ""
 "Un valôr byte al è un intîr comprindût tra 0 e 255; al pues jessi doprât par "
 "passâ caratars."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:107
+#: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid "A bytestring, type ‘ay’"
 msgstr "Une stringhe di byte, gjenar “ay”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -268,11 +284,11 @@ msgstr ""
 "puedin jessi utf8 no valit. In chel câs, par convenzion, il caratar terminâl "
 "nul al varès di jessi includût come ultin caratar dal array."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:112
+#: editor/ca.desrt.dconf-editor.gschema.xml:118
 msgid "A bytestring array, type ‘aay’"
 msgstr "Un array di stringhis di byte, gjenar “aay”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
+#: editor/ca.desrt.dconf-editor.gschema.xml:119
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -281,11 +297,11 @@ msgstr ""
 "stringhis di byte al è di solit doprât par passâ stringhis che a podaressin "
 "jessi utf8 no valit."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:117
+#: editor/ca.desrt.dconf-editor.gschema.xml:123
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Un gjenar handle D-Bus, scrîf “h”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -297,11 +313,11 @@ msgstr ""
 "cuntun messaç D-Bus. Gjavant il câs che no si stedi interagjint cun D-Bus, "
 "no'nd è altris motîfs par doprâ chest gjenar."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Un percors di ogjet D-Bus, scrîf “o”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:125
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -311,11 +327,11 @@ msgstr ""
 "destinazion sul bus. Gjavant il câs che no si stedi interagjint cun D-Bus, "
 "no'nd è altris motîfs par doprâ chest gjenar."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Un array di percors di ogjets D-Bus, scrîf “ao”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:132
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -325,11 +341,11 @@ msgstr ""
 "(ancje nissun: \"[]\"). Gjavant il câs che si stedi interagjint cun D-Bus, "
 "no'nd è altis motîfs par doprâ chest gjenar."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Une firme D-Bus, scrîf “g”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:139
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -339,19 +355,19 @@ msgstr ""
 "messaç di D-Bus. Gjavant il câs che no si stedi interagjint cun D-Bus, no'nd "
 "è altris motîfs par doprâ chest gjenar."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
 msgstr "Un dopli, scrîf “d”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:146
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A double value could represent any real number."
 msgstr "Un valôr dopli al pues rapresentâ cualsisei numar reâl."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:150
+#: editor/ca.desrt.dconf-editor.gschema.xml:156
 msgid "A 5-choices enumeration"
 msgstr "Une enumerazion a 5 sieltis"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:151
+#: editor/ca.desrt.dconf-editor.gschema.xml:157
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -359,67 +375,67 @@ msgstr ""
 "Lis enumerazions a puedin jessi fatis a mieç dal atribût “enum” o cun la "
 "etichete “choices”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:155
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "A short integer, type ‘n’"
 msgstr "Un intîr curt, scrîf “n”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:156
+#: editor/ca.desrt.dconf-editor.gschema.xml:162
 msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "Un intîr cun segn di 16 bit; viôt ancje la clâf “integer-16-unsigned”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:160
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Flags: choose-colors-you-love"
 msgstr "Opzions: sielç-colôrs-che-ti-plasin"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
+#: editor/ca.desrt.dconf-editor.gschema.xml:167
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Lis opzions si puedin stabilî cul atribût “enum”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:165
+#: editor/ca.desrt.dconf-editor.gschema.xml:171
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Un intîr curt cence segn, scrîf “q”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:172
 msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "Un intîr cence segn a 16 bit; viôt ancje la clâf “integer-16-signed”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:170
+#: editor/ca.desrt.dconf-editor.gschema.xml:176
 msgid "An usual integer, type ‘i’"
 msgstr "Un intîr normâl, scrîf “i”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:177
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "Un intîr cun segn a 32 bit; viôt ancje la clâf “integer-32-unsigned”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
+#: editor/ca.desrt.dconf-editor.gschema.xml:181
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Un intîr normâl cence segn, scrîf “u”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "Un intîr cence segn a 32 bit; viôt ancje la clâf “integer-32-signed”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "A long integer, type ‘x’"
 msgstr "Un intîr lunc, scrîf “x”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "Un intîr cun segn a 64 bit; viôt ancje la clâf “integer-64-unsigned”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:185
+#: editor/ca.desrt.dconf-editor.gschema.xml:191
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Un intîr lunc cence segn, scrîf “t”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "Un intîr cence segn a 64 bit; viôt ancje la clâf “integer-64-signed”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "A number with range"
 msgstr "Un numar intun interval"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:193
+#: editor/ca.desrt.dconf-editor.gschema.xml:199
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -429,11 +445,11 @@ msgstr ""
 "gjenars e i doplis) a puedin jessi limitâts intun interval di valôrs "
 "personalizât. Par esempli, chest intîr al pues nome vê un valôr tra -2 e 10."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:197
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "A custom type, here ‘(ii)’"
 msgstr "Un gjenar personalizât, in chest câs “(ii)”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#: editor/ca.desrt.dconf-editor.gschema.xml:204
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -444,11 +460,11 @@ msgstr ""
 "gjestî il dât. Chê chi daurman e je une tuple di doi intîrs di 32 bit cun "
 "segn."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:202
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A string, type ‘s’"
 msgstr "Une stringhe, scrîf “s”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -457,11 +473,11 @@ msgstr ""
 "une stringhe vueide “''” no je la stesse robe di NULL (nuie); viôt ancje la "
 "clâf “string-nullable”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:207
+#: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid "A string array, type ‘as’"
 msgstr "Un array di stringhis, scrîf “as”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:214
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -469,11 +485,11 @@ msgstr ""
 "Un array di stringhis al ten un cualsisei numar di stringhis di cualsisei "
 "lungjece. Al pues jessi un array vueit, “[]”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:212
+#: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid "A nullable string, type ‘ms’"
 msgstr "Une stringhe anulabile, scrîf “ms”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:213
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -484,11 +500,11 @@ msgstr ""
 "stringhe come valôr, ancje une stringhe vueide “''” o e pues jessi NULL "
 "(nuie)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
+#: editor/ca.desrt.dconf-editor.gschema.xml:223
 msgid "A 1-choice enumeration"
 msgstr "Une enumerazion a 1 sielte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -496,11 +512,11 @@ msgstr ""
 "Une enumerazion e pues contignî nome un element, ma al è facil che chel al "
 "sedi un erôr. L'Editôr Dconf, in chel câs, ti vise."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#: editor/ca.desrt.dconf-editor.gschema.xml:229
 msgid "A 1-choice integer value"
 msgstr "Un valôr intîr a 1 sielte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:230
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -558,73 +574,73 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Fabio Tomat, <f.t.public@gmail.com>"
 
-#: editor/dconf-model.vala:195
+#: editor/dconf-model.vala:220
 msgid "Boolean"
 msgstr "Bulean"
 
-#: editor/dconf-model.vala:197
+#: editor/dconf-model.vala:222
 msgid "String"
 msgstr "Stringhe"
 
-#: editor/dconf-model.vala:199
+#: editor/dconf-model.vala:224
 msgid "String array"
 msgstr "Array di stringhis"
 
-#: editor/dconf-model.vala:201
+#: editor/dconf-model.vala:226
 msgid "Enumeration"
 msgstr "Enumerazion"
 
-#: editor/dconf-model.vala:203
+#: editor/dconf-model.vala:228
 msgid "Flags"
 msgstr "Opzions"
 
-#: editor/dconf-model.vala:205
+#: editor/dconf-model.vala:230
 msgid "Double"
 msgstr "Dopli"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:208
+#: editor/dconf-model.vala:233
 msgid "D-Bus handle type"
 msgstr "Gjenar handle D-Bus"
 
-#: editor/dconf-model.vala:210
+#: editor/dconf-model.vala:235
 msgid "D-Bus object path"
 msgstr "Percors ogjet D-Bus"
 
-#: editor/dconf-model.vala:212
+#: editor/dconf-model.vala:237
 msgid "D-Bus object path array"
 msgstr "Array di percors ogjet D-Bus"
 
-#: editor/dconf-model.vala:214
+#: editor/dconf-model.vala:239
 msgid "D-Bus signature"
 msgstr "Firme D-Bus"
 
-#: editor/dconf-model.vala:222
+#: editor/dconf-model.vala:247
 msgid "Integer"
 msgstr "Intîr"
 
-#: editor/dconf-model.vala:337
+#: editor/dconf-model.vala:362
 msgid "True"
 msgstr "Vêr"
 
-#: editor/dconf-model.vala:339
+#: editor/dconf-model.vala:364
 msgid "False"
 msgstr "Fals"
 
-#: editor/dconf-model.vala:340
+#: editor/dconf-model.vala:365
 msgid "Nothing"
 msgstr "Nuie"
 
-#: editor/dconf-model.vala:345
+#: editor/dconf-model.vala:370
 msgid "true"
 msgstr "vêr"
 
-#: editor/dconf-model.vala:347
+#: editor/dconf-model.vala:372
 msgid "false"
 msgstr "fals"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:349
+#: editor/dconf-model.vala:374
 msgid "nothing"
 msgstr "nuie"
 
@@ -1010,21 +1026,30 @@ msgstr ""
 "Dopre la peraule clâf \"nothing\" par meti un gjenar di pussibilitât (che al "
 "tache cun \"m\") al so valôr vueit."
 
-#: editor/registry-view.ui:101
+#: editor/registry-view.ui:32
+msgid "Sort preferences have changed. Do you want to reload the view?"
+msgstr ""
+"Lis preferencis di ordenament a son cambiadis. Tornâ a cjariâ la viodude?"
+
+#: editor/registry-view.ui:38
+msgid "Reload"
+msgstr "Torne cjarie"
+
+#: editor/registry-view.ui:136
 msgid "No keys in this path"
 msgstr "Nissune clâf in chest percors"
 
-#: editor/registry-view.vala:170
+#: editor/registry-view.vala:182
 #, c-format
 msgid "Cannot find folder “%s”."
 msgstr "Impussibil cjatâ la cartele “%s”."
 
-#: editor/registry-view.vala:188
+#: editor/registry-view.vala:200
 #, c-format
 msgid "Cannot find key “%s” here."
 msgstr "Impussibil cjatâ chi la clâf “%s”."
 
-#: editor/registry-view.vala:194
+#: editor/registry-view.vala:206
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "La clâf “%s” e je stade gjavade."
