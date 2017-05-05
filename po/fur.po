@@ -2,22 +2,23 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # TmTFx <f.t.public@gmail.com>, 2012.
+# Fabio Tomat <f.t.public@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-05 19:23+0000\n"
-"PO-Revision-Date: 2017-03-28 12:58+0200\n"
+"POT-Creation-Date: 2017-04-27 14:26+0000\n"
+"PO-Revision-Date: 2017-05-05 18:00+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
-"Language-Team: Friulian <fur@li.org>\n"
+"Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -655,7 +656,7 @@ msgstr "Gracie di doprâ l'Editôr Dconf par modificâ la proprie configurazion!
 #: editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
-"No stâ dismenteâ che cualchi opzion e pues comprometi lis aplicazions, "
+"No sta dismenteâ che cualchi opzion e pues comprometi lis aplicazions, "
 "duncje sta atent."
 
 #: editor/dconf-window.vala:134
@@ -841,7 +842,7 @@ msgstr "Scancele clâf"
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
 #: editor/key-list-box-row.vala:482
 msgid "Do not erase"
-msgstr "No stâ scancelâ"
+msgstr "No sta scancelâ"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:494
