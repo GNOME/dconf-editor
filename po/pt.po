@@ -583,7 +583,7 @@ msgstr "Cadeia"
 
 #: editor/dconf-model.vala:199
 msgid "String array"
-msgstr "Matraiz de cadeias"
+msgstr "Matriz de cadeias"
 
 #: editor/dconf-model.vala:201
 msgid "Enumeration"
