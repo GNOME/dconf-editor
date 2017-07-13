@@ -10,3 +10,5 @@ Type=Application
 StartupNotify=true
 Categories=GNOME;GTK;System;
 DBusActivatable=true
+# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+Icon=dconf-editor

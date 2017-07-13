@@ -61,13 +61,7 @@ desktop_in_files = ca.desrt.dconf-editor.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 ca.desrt.dconf-editor.desktop: ca.desrt.dconf-editor.desktop.in
-	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@.tmp && \
-	           (echo 'Icon=dconf-editor'; \
-	            echo 'X-GNOME-Bugzilla-Bugzilla=GNOME'; \
-	            echo 'X-GNOME-Bugzilla-Product=dconf-editor'; \
-	            echo 'X-GNOME-Bugzilla-Component=general'; \
-	            echo 'X-GNOME-Bugzilla-Version='$(VERSION)) >> $@.tmp && \
-	           mv $@.tmp $@
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 dbusservicedir = $(datadir)/dbus-1/services
 dbusservice_DATA = ca.desrt.dconf-editor.service
