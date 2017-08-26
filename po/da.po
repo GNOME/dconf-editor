@@ -12,8 +12,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-05 19:23+0000\n"
+"Report-Msgid-Bugs-To: "
+"https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-07-25 10:05+0000\n"
 "PO-Revision-Date: 2017-03-07 21:42+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -157,8 +158,8 @@ msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
-"Hvis \"sand\", forsøger Dconf-redigering ved opstart at navigere til stien "
-"beskrevet i nøglen \"saved-view\"."
+"Hvis “sand”, forsøger Dconf-redigering ved opstart at navigere til stien "
+"beskrevet i nøglen “saved-view”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A path to restore the last view"
@@ -169,8 +170,8 @@ msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
-"Hvis nøglen \"restore-view\" er sat til \"sand\", forsøger Dconf-redigering "
-"ved opstart at navigere til denne sti."
+"Hvis nøglen “restore-view” er sat til “sand”, forsøger Dconf-redigering ved "
+"opstart at navigere til denne sti."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "Show initial warning"
@@ -190,7 +191,7 @@ msgstr "Et flag til at aktivere små rækker for nøglelisten"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
 msgid "If “true”, the keys list use smaller rows."
-msgstr "Hvis \"true\" bruger nøglelisten mindre rækker."
+msgstr "Hvis “true” bruger nøglelisten mindre rækker."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for bookmarks list"
@@ -198,7 +199,7 @@ msgstr "Et flag som aktiverer små rækker for bogmærkelister"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
 msgid "If “true”, the bookmarks list use smaller rows."
-msgstr "Hvis \"true\" bruger bogmærkelisten mindre rækker."
+msgstr "Hvis “true” bruger bogmærkelisten mindre rækker."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
 msgid "Change the behaviour of a key value change request"
@@ -215,14 +216,14 @@ msgid ""
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
-"Værdien \"unsafe\" er frarådet: for nøgler som har en type, som ikke er et "
+"Værdien “unsafe” er frarådet: for nøgler som har en type, som ikke er et "
 "specialtilfælde, vil den opdatere nøgleværdien hver gang noget ændrer sig i "
-"elementet, hvilket inkluderer mellemtilstande. Værdien \"safe\" vil bede om "
+"elementet, hvilket inkluderer mellemtilstande. Værdien “safe” vil bede om "
 "bekræftelse i disse tilfælde, men vil tillade øjeblikkelige ændringer for "
 "booleske variable, booleske variable som kan sættes til null, nummereringer "
 "og flag. Værdierne 'always-confirm-implicit' og 'always-confirm-explicit' "
 "vil altid bede om bekræftelse, men førstnævnte vil anvende ændringen hvis du "
-"skifter sti, hvorimod sidstnævnte forkaster den. Værdien \"always-delay\" "
+"skifter sti, hvorimod sidstnævnte forkaster den. Værdien “always-delay” "
 "tilføjer alle ændringer i ventetilstand, hvilket muliggør anvendelse af "
 "flere nøgler på en gang."
 
@@ -233,21 +234,25 @@ msgstr "Et flag til at sortere nøgler med forskel på store og små bogstaver"
 #: editor/ca.desrt.dconf-editor.gschema.xml:74
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
-"installation paths of schemas can. If “true”, the keys list is sorted case-"
-"sensitively, with in usual order upper-case folders first."
-msgstr "GSettings tillader ikke, at nøgler bruger store bogstaver i deres navne, men installationsstier for skemaer må godt. Hvis \"sand\" vil nøglelisten blive sorteret med forskel på store og små bogstaver, så store bogstaver som udgangspunkt kommer før små."
+"installation paths of schemas can. If “true”, the keys list is sorted "
+"case-sensitively, with in usual order upper-case folders first."
+msgstr ""
+"GSettings tillader ikke, at nøgler bruger store bogstaver i deres navne, men "
+"installationsstier for skemaer må godt. Hvis “sand” vil nøglelisten blive "
+"sorteret med forskel på store og små bogstaver, så store bogstaver som "
+"udgangspunkt kommer før små."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
-msgstr "En boolesk variabel, type \"b\""
+msgstr "En boolesk variabel, type “b”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:99
 msgid "Booleans can only take two values, “true” or “false”."
-msgstr "Booleske variable kan kun tage to værdier, \"sand\" eller \"falsk\"."
+msgstr "Booleske variable kan kun tage to værdier, “sand” eller “falsk”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid "A nullable boolean, type ‘mb’"
-msgstr "En nulbar boolesk variabel, type \"mb\""
+msgstr "En nulbar boolesk variabel, type “mb”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:104
 msgid ""
@@ -256,12 +261,12 @@ msgid ""
 "“true”, “false” and “nothing”."
 msgstr ""
 "Gsettings tillader nulbare typer, som ligner andre typer men kan tage "
-"værdien \"intet\". En nulbar boolesk variabel kan kun tage tre værdier, "
-"\"sand\", \"falsk\" og \"intet\"."
+"værdien “intet”. En nulbar boolesk variabel kan kun tage tre værdier, "
+"“sand”, “falsk” og “intet”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
 msgid "A byte (unsigned), type ‘y’"
-msgstr "En byte (uden fortegn), type \"y\""
+msgstr "En byte (uden fortegn), type “y”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid ""
@@ -273,7 +278,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid "A bytestring, type ‘ay’"
-msgstr "En bytestreng, type \"ay\""
+msgstr "En bytestreng, type “ay”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid ""
@@ -282,12 +287,12 @@ msgid ""
 "character should be included as the last character in the array."
 msgstr ""
 "Typen bytestreng bruges almindeligvis til at videregive strenge som måske "
-"ikke er gyldig utf8. I dette tilfælde er konventionen sådan at nul-"
-"terminatortegnet skal inkluderes som det sidste tegn i arrayet."
+"ikke er gyldig utf8. I dette tilfælde er konventionen sådan at "
+"nul-terminatortegnet skal inkluderes som det sidste tegn i arrayet."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:118
 msgid "A bytestring array, type ‘aay’"
-msgstr "Et bytestreng-array, type \"aay\""
+msgstr "Et bytestreng-array, type “aay”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:119
 msgid ""
@@ -299,52 +304,65 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:123
 msgid "A D-Bus handle type, type ‘h’"
-msgstr "En type for D-Bus-håndtag, type \"h\""
+msgstr "En type for D-Bus-håndtag, type “h”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
-msgstr "Håndtagstypen er en 32-bit heltalsværdi med fortegn som, ved konvention, bruges som et indeks i et array af fildeskriptorer, der sendes sideløbende med en D-Bus-meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug af denne type."
+"as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message. If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
+msgstr ""
+"Håndtagstypen er en 32-bit heltalsværdi med fortegn som, ved konvention, "
+"bruges som et indeks i et array af fildeskriptorer, der sendes sideløbende "
+"med en D-Bus-meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke "
+"nogen grund til at gøre brug af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
-msgstr "En D-Bus-objektsti, type \"o\""
+msgstr "En D-Bus-objektsti, type “o”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
-msgstr "En objektsti bruges til at identificere D-Bus-objekter på en given destination på bussen. Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug af denne type."
+msgstr ""
+"En objektsti bruges til at identificere D-Bus-objekter på en given "
+"destination på bussen. Hvis du ikke interagerer med D-Bus, er der ikke nogen "
+"grund til at gøre brug af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
-msgstr "Et D-Bus-objektsti-array, type \"ao\""
+msgstr "Et D-Bus-objektsti-array, type “ao”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
-msgstr "Et objektsti-array kan indeholde et hvilket som helst antal objektstier (inklusive ingen: \"[]\"). Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug af denne type."
+msgstr ""
+"Et objektsti-array kan indeholde et hvilket som helst antal objektstier "
+"(inklusive ingen: “[]”). Hvis du ikke interagerer med D-Bus, er der ikke "
+"nogen grund til at gøre brug af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
-msgstr "En D-Bus-signatur, type \"g\""
+msgstr "En D-Bus-signatur, type “g”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
-msgstr "En D-Bus-signatur er en streng, der bruges som typesignatur for en D-Bus-metode eller -meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug af denne type."
+msgstr ""
+"En D-Bus-signatur er en streng, der bruges som typesignatur for en "
+"D-Bus-metode eller -meddelelse. Hvis du ikke interagerer med D-Bus, er der "
+"ikke nogen grund til at gøre brug af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
-msgstr "Et decimaltal, type \"d\""
+msgstr "Et decimaltal, type “d”"
 
 # Heh, optimistisk beskrivelse
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
@@ -361,16 +379,16 @@ msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr ""
-"Nummerering kan enten gøres med \"enum\"-attributten eller med et \"valg\"-"
-"mærkat."
+"Nummerering kan enten gøres med “enum”-attributten eller med et "
+"“valg”-mærkat."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "A short integer, type ‘n’"
-msgstr "Et kort heltal, type \"n\""
+msgstr "Et kort heltal, type “n”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
 msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
-msgstr "Et 16-bit heltal med fortegn. Se også nøglen \"integer-16-unsigned\"."
+msgstr "Et 16-bit heltal med fortegn. Se også nøglen “integer-16-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Flags: choose-colors-you-love"
@@ -378,47 +396,47 @@ msgstr "Flag: vælg-farver-du-elsker"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:167
 msgid "Flags could be set by the “enum” attribute."
-msgstr "Flag kan sættes med \"enum\"-attributten."
+msgstr "Flag kan sættes med “enum”-attributten."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
 msgid "An unsigned short integer, type ‘q’"
-msgstr "Et kort heltal uden fortegn, type \"q\""
+msgstr "Et kort heltal uden fortegn, type “q”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
 msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
-msgstr "Et 16-bit heltal uden fortegn. Se også nøglen \"integer-16-signed\"."
+msgstr "Et 16-bit heltal uden fortegn. Se også nøglen “integer-16-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
 msgid "An usual integer, type ‘i’"
-msgstr "Et almindeligt heltal, type \"i\""
+msgstr "Et almindeligt heltal, type “i”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
-msgstr "Et 32-bit heltal med fortegn. Se også nøglen \"integer-32-unsigned\"."
+msgstr "Et 32-bit heltal med fortegn. Se også nøglen “integer-32-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
 msgid "An unsigned usual integer, type ‘u’"
-msgstr "Et almindeligt heltal uden fortegn, type \"u\""
+msgstr "Et almindeligt heltal uden fortegn, type “u”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
-msgstr "Et 32-bit heltal uden fortegn. Se også nøglen \"integer-32-signed\"."
+msgstr "Et 32-bit heltal uden fortegn. Se også nøglen “integer-32-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "A long integer, type ‘x’"
-msgstr "Et langt heltal, type \"x\""
+msgstr "Et langt heltal, type “x”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
-msgstr "Et 64-bit heltal med fortegn. Se også nøglen \"integer-64-unsigned\"."
+msgstr "Et 64-bit heltal med fortegn. Se også nøglen “integer-64-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
 msgid "An unsigned long integer, type ‘t’"
-msgstr "Et langt heltal uden fortegn, type \"t\""
+msgstr "Et langt heltal uden fortegn, type “t”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
-msgstr "Et 64-bit heltal uden fortegn. Se også nøglen \"integer-64-signed\"."
+msgstr "Et 64-bit heltal uden fortegn. Se også nøglen “integer-64-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "A number with range"
@@ -431,12 +449,12 @@ msgid ""
 "integer could only take a value between -2 and 10."
 msgstr ""
 "Enhver talindstilling (heltal og heltal uden fortegn for hver type samt "
-"decimaltal) kan være begrænset til et brugerdefineret område af værdier. F."
-"eks. kan dette heltal kun tage en værdi mellem -2 og 10."
+"decimaltal) kan være begrænset til et brugerdefineret område af værdier. "
+"F.eks. kan dette heltal kun tage en værdi mellem -2 og 10."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "A custom type, here ‘(ii)’"
-msgstr "En brugerdefineret type, her \"(ii)\""
+msgstr "En brugerdefineret type, her “(ii)”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:204
 msgid ""
@@ -450,20 +468,19 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A string, type ‘s’"
-msgstr "En streng, type \"s\""
+msgstr "En streng, type “s”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"Typen streng kan acceptere enhver utf8-streng. Bemærk at en tom streng "
-"\"''\" ikke er det samme som NULL (intet). Se også nøglen \"string-nullable"
-"\"."
+"Typen streng kan acceptere enhver utf8-streng. Bemærk at en tom streng “''” "
+"ikke er det samme som NULL (intet). Se også nøglen “string-nullable”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid "A string array, type ‘as’"
-msgstr "Et streng-array, type \"as\""
+msgstr "Et streng-array, type “as”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:214
 msgid ""
@@ -471,11 +488,11 @@ msgid ""
 "an empty array, “[]”."
 msgstr ""
 "Et streng-array indeholder et hvilket som helst antal strenge med en hvilken "
-"som helst længde. Det kan være et tomt array, \"[]\"."
+"som helst længde. Det kan være et tomt array, “[]”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid "A nullable string, type ‘ms’"
-msgstr "En nulbar streng, type \"ms\""
+msgstr "En nulbar streng, type “ms”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
@@ -484,8 +501,8 @@ msgid ""
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
 "GSettings tillader nulbare typer, som ligner andre typer men kan tage "
-"værdien \"intet\". En nulbar streng kan tage enhver streng som værdi, "
-"inklusive den tomme streng \"''\", eller den kan være NULL (intet)."
+"værdien “intet”. En nulbar streng kan tage enhver streng som værdi, "
+"inklusive den tomme streng “''”, eller den kan være NULL (intet)."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:223
 msgid "A 1-choice enumeration"
@@ -495,7 +512,9 @@ msgstr "En nummerering med ét valg"
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
-msgstr "En nummerering kan indeholde blot et enkelt element, men dette er sandsynligvis en fejl. Dconf-redigeringen advarer dig i det tilfælde."
+msgstr ""
+"En nummerering kan indeholde blot et enkelt element, men dette er "
+"sandsynligvis en fejl. Dconf-redigeringen advarer dig i det tilfælde."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:229
 msgid "A 1-choice integer value"
@@ -505,7 +524,10 @@ msgstr "En heltalsværdi med én mulighed"
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
-msgstr "Et interval kan begrænse heltalsnøgler til kun at tillade en enkelt værdi, men dette er sandsynligvis en fejl. Dconf-redigeringen advarer dig i det tilfælde."
+msgstr ""
+"Et interval kan begrænse heltalsnøgler til kun at tillade en enkelt værdi, "
+"men dette er sandsynligvis en fejl. Dconf-redigeringen advarer dig i det "
+"tilfælde."
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -947,7 +969,10 @@ msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
-msgstr "Denne heltalsnøgle tilbyder kun ét valg. Det er sandsynligvis en fejl i det program, som installerede dette skema. Hvis det er muligt, så åbn en fejlrapport om det."
+msgstr ""
+"Denne heltalsnøgle tilbyder kun ét valg. Det er sandsynligvis en fejl i det "
+"program, som installerede dette skema. Hvis det er muligt, så åbn en "
+"fejlrapport om det."
 
 #: editor/registry-info.vala:82
 msgid "Schema"
@@ -997,9 +1022,8 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Brug nøgleordet \"intet\" for at sætte en måsketype (starter med \"m\") til "
-"dens tomme værdi. Strenge, signaturer og objektstier skal sættes i "
-"anførselstegn."
+"Brug nøgleordet “intet” for at sætte en måsketype (starter med “m”) til dens "
+"tomme værdi. Strenge, signaturer og objektstier skal sættes i anførselstegn."
 
 #: editor/registry-info.vala:326
 msgid ""
@@ -1012,8 +1036,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Brug nøgleordet \"intet\" til at sætte en måsketype (starter med \"m\") til "
-"sin tomme værdi."
+"Brug nøgleordet “intet” til at sætte en måsketype (starter med “m”) til sin "
+"tomme værdi."
 
 #: editor/registry-view.ui:32
 msgid "Sort preferences have changed. Do you want to reload the view?"
@@ -1030,23 +1054,23 @@ msgstr "Ingen nøgler i denne sti"
 #: editor/registry-view.vala:182
 #, c-format
 msgid "Cannot find folder “%s”."
-msgstr "Kan ikke finde mappen \"%s\"."
+msgstr "Kan ikke finde mappen “%s”."
 
 #: editor/registry-view.vala:200
 #, c-format
 msgid "Cannot find key “%s” here."
-msgstr "Kan ikke finde nøglen \"%s\" her."
+msgstr "Kan ikke finde nøglen “%s” her."
 
 #: editor/registry-view.vala:206
 #, c-format
 msgid "Key “%s” has been removed."
-msgstr "Nøglen \"%s\" er blevet fjernet."
+msgstr "Nøglen “%s” er blevet fjernet."
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
 #~ msgstr "Aktuelle rækkemenu"
 
-# Strengt taget dobbelt præcision, men der er ikke nogen float her
+#~ # Strengt taget dobbelt præcision, men der er ikke nogen float her
 #~ msgid "Double [%s..%s]"
 #~ msgstr "Decimaltal [%s..%s]"
 
@@ -1074,3 +1098,5 @@ msgstr "Nøglen \"%s\" er blevet fjernet."
 
 #~ msgid "Cancel"
 #~ msgstr "Annullér"
+
+
