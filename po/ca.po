@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-07-25 10:05+0000\n"
-"PO-Revision-Date: 2017-01-20 07:33+0100\n"
+"POT-Creation-Date: 2017-08-31 05:05+0000\n"
+"PO-Revision-Date: 2017-09-01 22:34+0200\n"
 "Last-Translator: Walter Garcia-Fontes <walter.garcia@upf.edu>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -221,10 +222,10 @@ msgstr ""
 "aplicar claus múltiples de forma immediata."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:73
-#, fuzzy
-#| msgid "A flag to restore the last view"
 msgid "A flag to sort keys list case-sensitively"
-msgstr "Un senyalador per restaurar l'última visualització"
+msgstr ""
+"Un senyalador per ordenar la llista de claus distingint entre majúscules i "
+"minúscules"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:74
 msgid ""
@@ -232,6 +233,10 @@ msgid ""
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
+"GSettings no permet que les claus utilitzin majúscules als noms, però els "
+"camins d'instal·lació d'esquemes sí que poden fer-ho. Si «cert», la llista "
+"de claus s'ordena distingint entre majúscules i minúscules, amb l'ordre "
+"usual de les carpetes en majúscula primer."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
@@ -300,14 +305,6 @@ msgid "A D-Bus handle type, type ‘h’"
 msgstr "Un tipus de gestor D-Bus, tipus «h»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
-#, fuzzy
-#| msgid ""
-#| "The handle type is a 32bit signed integer value that is, by convention, "
-#| "used as an index into an array of file descriptors that are sent "
-#| "alongside a D-Bus message.\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -316,79 +313,50 @@ msgid ""
 msgstr ""
 "El tipus de gestor és un enter amb signe de 32-bit que s'usa, per convenció, "
 "com un índex cap a una matriu de descriptors de fitxers que s'envien "
-"conjuntament amb un missatge D-Bus.\n"
-"\n"
-"Si no esteu interactuant amb D-Bus, aleshores no hi ha cap raó per usar "
-"aquest tipus."
+"conjuntament amb un missatge D-Bus. Si no esteu interactuant amb D-Bus, "
+"aleshores no hi ha cap raó per usar aquest tipus."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Un camí d'objecte D-Bus, tipus «o»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
-#, fuzzy
-#| msgid ""
-#| "An object path is used to identify D-Bus objects at a given destination "
-#| "on the bus.\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
 "Un camí d'objecte s'usa per identificar objectes D-Bus a una destinació "
-"donada al bus.\n"
-"\n"
-"Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap raó per usar "
-"aquest tipus."
+"donada al bus. Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap "
+"raó per usar aquest tipus."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Una matriu de camins d'objectes D-Bus, tipus «ao»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-#, fuzzy
-#| msgid ""
-#| "An object path array could contain any number of object paths (including "
-#| "none: “[]”).\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
 "Una matriu de camins d'objectes podria contenir qualsevol nombre de camins "
-"d'objectes (incloent-hi cap: «[]»).\n"
-"\n"
-"Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap raó per usar "
-"aquest tipus."
+"d'objectes (incloent-hi cap: «[]»). Si no esteu interactuant amb el D-Bus, "
+"aleshores no hi ha cap raó per usar aquest tipus."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Una signatura D-Bus, tipus «g»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-#, fuzzy
-#| msgid ""
-#| "A D-Bus signature is a string used as type signature for a D-Bus method "
-#| "or message.\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
 "Una signatura D-Bus és una cadena usada com a signatura de tipus per a un "
-"mètode o missatge del D-Bus..\n"
-"\n"
-"Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap raó per usar "
-"aquest tipus."
+"mètode o missatge del D-Bus. Si no esteu interactuant amb el D-Bus, "
+"aleshores no hi ha cap raó per usar aquest tipus."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
@@ -554,22 +522,16 @@ msgstr ""
 "error. El Dconf Editor us adverteix en aquest cas."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:229
-#, fuzzy
-#| msgid "A 1-choice enumeration"
 msgid "A 1-choice integer value"
-msgstr "Una enumeració d'una elecció"
+msgstr "Un valor enter d'una elecció"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:230
-#, fuzzy
-#| msgid ""
-#| "An enumeration could contain only one item, but that’s probably an error. "
-#| "Dconf Editor warns you in that case."
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
-"Una enumeració pot contenir sols un element, però això és probablement un "
-"error. El Dconf Editor us adverteix en aquest cas."
+"Un interval podria limitar una clau entera a permetre només un valor, però "
+"això és probablement un error. El Dconf Editor us adverteix en aquest cas."
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -790,16 +752,14 @@ msgstr "Obre l'últim fill actiu"
 #: editor/help-overlay.ui:86
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "Accions de la llista de claus"
 
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "Menú contextual"
 
 #: editor/help-overlay.ui:97
-#, fuzzy
-#| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Estableix-lo al valor predeterminat"
@@ -807,7 +767,7 @@ msgstr "Estableix-lo al valor predeterminat"
 #: editor/help-overlay.ui:104
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "Commuta el valor boleà"
 
 #: editor/help-overlay.ui:113
 msgctxt "shortcut window"
@@ -996,18 +956,13 @@ msgstr ""
 "obriu un informe d'error sobre això."
 
 #: editor/registry-info.ui:65
-#, fuzzy
-#| msgid ""
-#| "This enumeration offers only one choice. That’s probably an error of the "
-#| "application that installed this schema. If possible, please open a bug "
-#| "about it."
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Aquesta enumeració ofereix sols una elecció. Això és probablement un error "
-"de l'aplicació que va instal·lar aquest esquema. Si és possible, si us plau "
+"La clau entera només pot prendre un valor. Això és probablement un error de "
+"l'aplicació que va instal·lar aquest esquema. Si és possible, si us plau "
 "obriu un informe d'error sobre això."
 
 #: editor/registry-info.vala:82
@@ -1081,10 +1036,11 @@ msgstr ""
 #: editor/registry-view.ui:32
 msgid "Sort preferences have changed. Do you want to reload the view?"
 msgstr ""
+"Les preferències d'ordenació han canviat. Voleu tornar a carregar la vista?"
 
 #: editor/registry-view.ui:38
 msgid "Reload"
-msgstr ""
+msgstr "Actualitza"
 
 #: editor/registry-view.ui:136
 msgid "No keys in this path"
