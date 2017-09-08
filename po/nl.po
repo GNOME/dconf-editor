@@ -3,65 +3,67 @@
 # This file is distributed under the same license as the d-conf package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 # Reinout van Schouwen <reinouts@gnome.org>, 2013.
+# Nathan Follens <nthn@unseen.is>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: d-conf\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor\n"
-"POT-Creation-Date: 2016-12-31 09:12+0100\n"
-"PO-Revision-Date: 2013-09-15 23:12+0200\n"
-"Last-Translator: Reinout van Schouwen <reinouts@gnome.org>\n"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-04-27 14:26+0000\n"
+"PO-Revision-Date: 2017-04-27 20:04+0200\n"
+"Last-Translator: Nathan Follens <nthn@unseen.is>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Launchpad-Export-Date: 2013-09-15 20:52+0000\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
-msgstr ""
+msgstr "Locatie toevoegen aan bladwijzers"
 
 #: editor/bookmarks.ui:34
 msgid "Location bookmarked"
-msgstr ""
+msgstr "Locatie toegevoegd aan bladwijzers"
 
 #: editor/bookmarks.ui:35
 msgid "Toggle to bookmark this location"
-msgstr ""
+msgstr "Schakel om deze locatie toe te voegen aan bladwijzers"
 
 #: editor/bookmarks.ui:84
 msgid ""
 "Bookmarks will\n"
 "be added here"
 msgstr ""
+"Bladwijzers zullen\n"
+"hier worden toegevoegd"
 
 #: editor/bookmarks.ui:113
 msgid "Bookmarks"
-msgstr ""
+msgstr "Bladwijzers"
 
 #: editor/bookmarks.ui:114
 msgid "Manage your bookmarks"
-msgstr ""
+msgstr "Uw bladwijzers beheren"
 
 #: editor/bookmark.ui:30
 msgid "Remove"
-msgstr ""
+msgstr "Verwijderen"
 
 #: editor/bookmark.ui:31
 msgid "Remove this bookmark"
-msgstr ""
+msgstr "Deze bladwijzer verwijderen"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
-msgstr "dconf-editor"
+msgstr "Dconf-bewerker"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
-msgstr ""
+msgstr "Een grafisch hulpprogramma voor het bewerken van de dconf-database"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
@@ -69,42 +71,48 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
+"Dconf-bewerker is een hulpprogramma om de dconf-configuratiedatabase "
+"rechtstreeks aan te passen. Dit is nuttig bij het ontwikkelen van "
+"toepassingen die gebruik maken van deze instellingen."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
+"Het rechtstreeks bewerken van uw configuratie is enkel voor gevorderden en "
+"kan ertoe leiden dat sommige toepassingen niet meer correct werken."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:25
 msgid "Browse the keys used by installed applications"
-msgstr ""
+msgstr "Blader door de sleutels gebruikt door geïnstalleerde toepassingen"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:29
 msgid "Read keys descriptions and edit their values"
-msgstr ""
+msgstr "Lees beschrijvingen van sleutels en pas hun waarden aan"
+
+#. a translatable version of project_group
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+msgid "The GNOME Project"
+msgstr "Het Gnome-project"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
 #: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
 msgid "dconf Editor"
-msgstr "dconf-editor"
+msgstr "Dconf-bewerker"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:4
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "Configuratiebewerker voor dconf"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "De gehele configuratie-database rechtstreeks bewerken"
 
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "instellingen;configuratie;settings;configuration;"
-
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -129,312 +137,400 @@ msgstr "Een markering om gemaximaliseerde modus in te schakelen"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:33
 msgid "A list of bookmarked paths"
-msgstr ""
+msgstr "Een lijst van paden opgeslagen in bladwijzers"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
+"Bevat alle door de gebruiker als bladwijzers opgeslagen paden als een reeks "
+"tekenreeksen."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:38
 msgid "A flag to restore the last view"
-msgstr ""
+msgstr "Een vlag om de vorige weergave te herstellen"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid ""
-"If 'true', Dconf Editor tries at launch to navigate to the path described in "
-"the 'saved-view' key."
+"If “true”, Dconf Editor tries at launch to navigate to the path described in "
+"the “saved-view” key."
 msgstr ""
+"Indien waar probeert Dconf-bewerker bij opstarten te bladeren naar het pad "
+"beschreven in de sleutel ‘saved-view’"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A path to restore the last view"
-msgstr ""
+msgstr "Een pad om het vorige overzicht te herstellen"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
-"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
+"Indien de sleutel ‘restore-view’ ingesteld is als waar, zal Dconf-bewerker "
+"bij opstarten proberen bladeren naar dit pad."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "Show initial warning"
-msgstr ""
+msgstr "Toon initiële waarschuwing"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
-"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"Indien waar opent Dconf-bewerker bij opstarten een pop-up die de gebruiker "
+"aanmaant voorzichtig te zijn."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:53
-#, fuzzy
 msgid "A flag to enable small rows for keys list"
-msgstr "Een markering om volledig-schermmodus in te schakelen"
+msgstr "Een vlag om kleine rijen voor sleutellijst in te schakelen"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
-msgid "If 'true', the keys list use smaller rows."
-msgstr ""
+msgid "If “true”, the keys list use smaller rows."
+msgstr "Indien waar gebruikt de sleutellijst kleinere rijen."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for bookmarks list"
-msgstr ""
+msgstr "Een vlag om kleine rijen in te schakelen voor de lijst met bladwijzers"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
-msgid "If 'true', the bookmarks list use smaller rows."
-msgstr ""
+msgid "If “true”, the bookmarks list use smaller rows."
+msgstr "Indien waar zal de lijst met bladwijzers kleinere rijen gebruiken."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
 msgid "Change the behaviour of a key value change request"
-msgstr ""
+msgstr "Wijzig het gedrag van een sleutelwaardeveranderingsverzoek"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:69
 msgid ""
-"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+"The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The 'safe' value asks for confirmation in "
+"including intermediate states. The “safe” value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
+"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
 "values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The 'always-delay' value adds "
+"change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
+"De waarde ‘unsafe’ (onveilig) wordt afgeraden: voor sleutels die een type "
+"zonder speciaal hoofdlettergebruik hebben werkt het de sleutelwaarde bij "
+"telkens iets in de invoer wijzigt, dus inclusief tussentijdse stadia. De "
+"waarde ‘safe’ (veilig) vraagt bevestiging in deze gevallen, maar laat "
+"onmiddellijke wijzigingen toe voor booleaanse waarden en nullable booleaanse "
+"waarden, opsommingen en vlaggen. De waarden ‘always-confirm-implicit’ en "
+"‘always-confirm-explicit’ vragen altijd bevestiging, maar wanneer u van pad "
+"verandert past de eerste de wijzigingen toe, terwijl de tweede ze verwerpt. "
+"De waarde ‘always-delay’ voegt elke wijziging toe in vertraagde modus en "
+"laat zo toe meerdere sleutels tegelijk toe te passen."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
-msgid "A boolean, type \"b\""
+#: editor/ca.desrt.dconf-editor.gschema.xml:73
+msgid "A flag to sort keys list case-sensitively"
 msgstr ""
+"Een vlag om rekening te houden met hoofdletters bij het sorteren van sleutels"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:93
-msgid "Booleans can only take two values, \"true\" or \"false\"."
+#: editor/ca.desrt.dconf-editor.gschema.xml:74
+msgid ""
+"GSettings doesn’t allow keys to use upper-case in their names, but "
+"installation paths of schemas can. If “true”, the keys list is sorted case-"
+"sensitively, with in usual order upper-case folders first."
 msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:97
-msgid "A nullable boolean, type \"mb\""
-msgstr ""
+"GSettings laat het gebruik van hoofdletters in sleutelnamen niet toe, maar "
+"installatiepaden van schema's kunnen dit wel. Indien waar wordt rekening "
+"gehouden met hoofdletters bij sorteren, mappen met hoofdletters eerst."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
-msgid ""
-"GSettings allows nullable types, that are similar to other types but could "
-"take a \"nothing\" value. A nullable boolean can only take three values, "
-"\"true\", \"false\" and \"nothing\"."
-msgstr ""
+msgid "A boolean, type ‘b’"
+msgstr "Een booleaanse waarde, type ‘b’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:102
-msgid "A byte (unsigned), type \"y\""
+#: editor/ca.desrt.dconf-editor.gschema.xml:99
+msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
+"Booleaanse waarden kunnen slechts twee waarden hebben, ‘true’ (waar) of "
+"‘false’ (vals)"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
+msgid "A nullable boolean, type ‘mb’"
+msgstr "Een nullable booleaanse waarde, type ‘mb’"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:104
+msgid ""
+"GSettings allows nullable types, that are similar to other types but could "
+"take a “nothing” value. A nullable boolean can only take three values, "
+"“true”, “false” and “nothing”."
+msgstr ""
+"GSettings laat ‘nullable’ types toe die gelijkaardig zijn aan andere types, "
+"maar een waarde ‘nothing’ (niets) kunnen aanvaarden. Een nullable booleaanse "
+"waarde kan slechts drie waarden aanvaarden, ‘true’ (waar), ‘false’ (onwaar) "
+"en ‘nothing’ (niets)."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:108
+msgid "A byte (unsigned), type ‘y’"
+msgstr "Een byte (unsigned), type ‘y’"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
+"Een bytewaarde is een integer tussen 0 en 255. Deze kan gebruikt worden om "
+"tekens door te geven."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:107
-msgid "A bytestring, type \"ay\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:113
+msgid "A bytestring, type ‘ay’"
+msgstr "Een bytestring, type ‘ay’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
+"Het bytestring-type wordt vaak gebruikt om strings door te geven die "
+"mogelijk ongeldig zijn in utf8. In dat geval is het gebruikelijk dat het "
+"nulterminatorteken als het laatste teken in de array wordt ingegeven."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:112
-msgid "A bytestring array, type \"aay\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:118
+msgid "A bytestring array, type ‘aay’"
+msgstr "Een bytestring-array, type ‘aay’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
+#: editor/ca.desrt.dconf-editor.gschema.xml:119
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
+"Dit is het type van een array van bytestrings. Het bytestring-type wordt "
+"vaak gebruikt om strings door te geven die mogelijk ongeldig zijn in utf8."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:117
-msgid "A D-Bus handle type, type \"h\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:123
+msgid "A D-Bus handle type, type ‘h’"
+msgstr "Een D-Bus-handle-type, type ‘h’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
 "Bus message. If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
+"Het handle-type is een 32-bits signed integer die, per conventie, gebruikt "
+"wordt als index in een array van bestandsdescriptors die samen met een D-Bus-"
+"bericht verzonden worden. Als u niet interageert met D-Bus is er geen reden "
+"om van dit type gebruik te maken."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
-msgid "A D-Bus object path, type \"o\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:130
+msgid "A D-Bus object path, type ‘o’"
+msgstr "Een D-Bus-objectpad, type ‘o’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:125
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"Een objectpad wordt gebruikt om D-Bus-objecten op een bestemming op de bus "
+"te identificeren. Als u niet interageert met D-Bus is er geen reden om van "
+"dit type gebruik te maken."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
-msgid "A D-Bus object path array, type \"ao\""
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:132
-msgid ""
-"An object path array could contain any number of object paths (including "
-"none: \"[]\"). If you are not interacting with D-Bus, then there is no "
-"reason to make use of this type."
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:137
+msgid "A D-Bus object path array, type ‘ao’"
+msgstr "Een D-Bus-objectpadarray, type ‘ao’"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A D-Bus signature, type \"g\""
+msgid ""
+"An object path array could contain any number of object paths (including "
+"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
+"Een objectpadarray kan eender welk aantal objectpaden bevatten (inclusief "
+"geen: ‘[]’). Als u niet interageert met D-Bus is er geen reden om van dit "
+"type gebruik te maken."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:139
+#: editor/ca.desrt.dconf-editor.gschema.xml:144
+msgid "A D-Bus signature, type ‘g’"
+msgstr "Een D-Bus-ondertekening, type ‘g’"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
-msgid "A double, type \"d\""
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:146
-msgid "A double value could represent any real number."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:150
-msgid "A 5-choices enumeration"
-msgstr ""
+"Een D-Bus-ondertekening is een string gebruikt als type-ondertekening voor "
+"een D-Bus-methode of -bericht. Als u niet interageert met D-Bus is er geen "
+"reden om van dit type gebruik te maken."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
-msgid ""
-"Enumerations could be done either with the \"enum\" attribute, or with a "
-"\"choices\" tag."
-msgstr ""
+msgid "A double, type ‘d’"
+msgstr "Een double, type ‘d’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:155
-msgid "A short integer, type \"n\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
+msgid "A double value could represent any real number."
+msgstr "Een double kan eender welk reëel getal voorstellen."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:156
-msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
-msgstr ""
+msgid "A 5-choices enumeration"
+msgstr "Een 5-keuze-opsomming"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:160
-msgid "Flags: choose-colors-you-love"
+#: editor/ca.desrt.dconf-editor.gschema.xml:157
+msgid ""
+"Enumerations could be done either with the “enum” attribute, or with a "
+"“choices” tag."
 msgstr ""
+"Opsommingen kunnen met het ‘enum’-attribuut of met een tag ‘choices’ gedaan "
+"worden."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
-msgid "Flags could be set by the \"enum\" attribute."
-msgstr ""
+msgid "A short integer, type ‘n’"
+msgstr "Een korte integer, type ‘n’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:165
-msgid "An unsigned short integer, type \"q\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:162
+msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+msgstr "Een 16-bits signed integer. Zie ook de sleutel ‘integer-16-unsigned’."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
-msgstr ""
+msgid "Flags: choose-colors-you-love"
+msgstr "Vlaggen: choose-colors-you-love"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:170
-msgid "An usual integer, type \"i\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:167
+msgid "Flags could be set by the “enum” attribute."
+msgstr "Vlaggen kunnen ingesteld worden door het ‘enum’-attribuut."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
-msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
-msgstr ""
+msgid "An unsigned short integer, type ‘q’"
+msgstr "Een unsigned korte integer, type ‘q’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
-msgid "An unsigned usual integer, type \"u\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:172
+msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+msgstr "Een 16-bits unsigned integer. Zie ook de sleutel ‘integer-16-signed’."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
-msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
-msgstr ""
+msgid "An usual integer, type ‘i’"
+msgstr "Een gewone integer, type ‘i’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
-msgid "A long integer, type \"x\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:177
+msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+msgstr "Een 32-bits signed integer. Zie ook de sleutel ‘integer-32-unsigned’."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
-msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
-msgstr ""
+msgid "An unsigned usual integer, type ‘u’"
+msgstr "Een unsigned gewone integer, type ‘u’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:185
-msgid "An unsigned long integer, type \"t\""
-msgstr ""
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
+msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+msgstr "Een 32-bits unsigned integer. Zie ook de sleutel ‘integer-32-signed’."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
-msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
-msgstr ""
+msgid "A long integer, type ‘x’"
+msgstr "Een lange integer, type ‘x’"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
+msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+msgstr "Een 64-bits signed integer. Zie ook de sleutel ‘integer-64-unsigned’."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:191
+msgid "An unsigned long integer, type ‘t’"
+msgstr "Een unsigned lange integer, type ‘t’"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A number with range"
-msgstr ""
+msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+msgstr "Een 64-bits unsigned integer. Zie ook de sleutel ‘integer-64-signed’."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:193
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
+msgid "A number with range"
+msgstr "Een nummer met bereik"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:199
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -2 and 10."
 msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:197
-msgid "A custom type, here \"(ii)\""
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
-msgid ""
-"Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn't have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:202
-msgid "A string, type \"s\""
-msgstr ""
+"Elke numerieke instelling (integers en unsigned integers van elk type, "
+"evenals doubles) kan een aangepast bereik van waarden gebruiken. Deze "
+"integer kan bijvoorbeeld een waarde aannemen tussen -2 en 10."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
-msgid ""
-"The string type could accept any utf8 string. Note that an empty string "
-"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
-"key."
-msgstr ""
+msgid "A custom type, here ‘(ii)’"
+msgstr "Een aangepast type, hier ‘(ii)’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:207
-msgid "A string array, type \"as\""
+#: editor/ca.desrt.dconf-editor.gschema.xml:204
+msgid ""
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn’t have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
 msgstr ""
+"Dconf-bewerker laat u eender welk instellingstype ondersteund door GSettings "
+"aanpassen, waarbij het terugvalt op een tekenreeksinvoer wanneer er geen "
+"betere manier is. Hier is een tupel van twee 32-bits signed integers."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
-msgid ""
-"A string array contains any number of strings of whatever length. It may be "
-"an empty array, \"[]\"."
-msgstr ""
+msgid "A string, type ‘s’"
+msgstr "Een string, type ‘s’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:212
-msgid "A nullable string, type \"ms\""
+#: editor/ca.desrt.dconf-editor.gschema.xml:209
+msgid ""
+"The string type could accept any utf8 string. Note that an empty string “''” "
+"is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
+"Het string-type kan eender welke utf8-string aannemen. Let op: een lege "
+"string ‘''’ is niet hetzelfde als NULL (niets); zie ook de sleutel ‘string-"
+"nullable’."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
-msgid ""
-"GSettings allows nullable types, that are similar to other types but could "
-"take a \"nothing\" value. A nullable string can take any string as value, "
-"including the empty string \"''\", or can be NULL (nothing)."
-msgstr ""
+msgid "A string array, type ‘as’"
+msgstr "Een string-array, type ‘as’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Enumeratie"
+#: editor/ca.desrt.dconf-editor.gschema.xml:214
+msgid ""
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, “[]”."
+msgstr ""
+"Een string-array bevat eender welk aantal strings van eender welke lengte. "
+"De array kan leeg zijn, ‘[]’."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
+msgid "A nullable string, type ‘ms’"
+msgstr "Een nullable string, type ‘ms’"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
-"An enumeration could contain only one item, but that's probably an error. "
+"GSettings allows nullable types, that are similar to other types but could "
+"take a “nothing” value. A nullable string can take any string as value, "
+"including the empty string “''”, or can be NULL (nothing)."
+msgstr ""
+"GSettings aanvaardt nullable types, die gelijkaardig zijn aan andere types "
+"maar een waarde ‘nothing’ (niets) kunnen aannemen. Een nullable string kan "
+"eender welke string als waarde aannemen, inclusief de lege string ‘''’, of "
+"kan NULL (niets) zijn."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:223
+msgid "A 1-choice enumeration"
+msgstr "Een opsomming met 1 keuze"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
+msgid ""
+"An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
+"Een opsomming kan slechts een item bevatten, maar dat is waarschijnlijk een "
+"fout. In dat geval toont Dconf-bewerker een waarschuwing."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:229
+msgid "A 1-choice integer value"
+msgstr "Een integerwaarde met 1 keuze"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:230
+msgid ""
+"A range could limit an integer key to only allow one value, but that’s "
+"probably an error. Dconf Editor warns you in that case."
+msgstr ""
+"Een bereik kan een integer-sleutel beperken tot slechts een waarde, maar dat "
+"is waarschijnlijk een fout. In dat geval toon Dconf-bewerker een "
+"waarschuwing."
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Sneltoetsen"
 
 #: editor/dconf-editor-menu.ui:10
 msgid "_About"
@@ -446,349 +542,400 @@ msgstr "A_fsluiten"
 
 #: editor/dconf-editor.ui:49
 msgid "Actions"
-msgstr ""
+msgstr "Acties"
 
 #. TODO 1/3 Informations
 #: editor/dconf-editor.ui:50
 msgid "Current view actions"
-msgstr ""
+msgstr "Acties voor huidige weergave"
 
 #: editor/dconf-editor.ui:77
 msgid "Search"
-msgstr ""
+msgstr "Zoeken"
 
 #: editor/dconf-editor.ui:78
 msgid "Search keys"
-msgstr ""
+msgstr "Sleutels zoeken"
 
 #: editor/dconf-editor.vala:22
 msgid "Print release version and exit"
-msgstr ""
+msgstr "Uitgaveversie tonen en afsluiten"
 
-#: editor/dconf-editor.vala:96
+#. #. * * Copy action
+#. #: editor/dconf-editor.vala:96
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Gekopieerd naar klembord"
 
 #: editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2015-2016 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:154
 msgid "translator-credits"
 msgstr ""
+"Nathan Follens <nthn@unseen.is>\n"
 "Reinout van Schouwen <reinouts@gnome.org>\n"
 "Launchpad Contributions:\n"
 "  Tico https://launchpad.net/~co-ti"
 
-#: editor/dconf-model.vala:195
+#: editor/dconf-model.vala:220
 msgid "Boolean"
 msgstr "Booleaanse waarde"
 
-#: editor/dconf-model.vala:197
-msgid "String"
-msgstr "Tekenreeks"
-
-#: editor/dconf-model.vala:199
-#, fuzzy
-msgid "String array"
-msgstr "Tekenreeks"
-
-#: editor/dconf-model.vala:201
-msgid "Enumeration"
-msgstr "Enumeratie"
-
-#: editor/dconf-model.vala:203
-msgid "Flags"
-msgstr ""
-
-#: editor/dconf-model.vala:205
-msgid "Double"
-msgstr ""
-
-#: editor/dconf-model.vala:208
-msgid "D-Bus handle type"
-msgstr ""
-
-#: editor/dconf-model.vala:210
-msgid "D-Bus object path"
-msgstr ""
-
-#: editor/dconf-model.vala:212
-msgid "D-Bus object path array"
-msgstr ""
-
-#: editor/dconf-model.vala:214
-msgid "D-Bus signature"
-msgstr ""
-
 #: editor/dconf-model.vala:222
-#, fuzzy
+msgid "String"
+msgstr "String"
+
+#: editor/dconf-model.vala:224
+msgid "String array"
+msgstr "String-array"
+
+#: editor/dconf-model.vala:226
+msgid "Enumeration"
+msgstr "Opsomming"
+
+#: editor/dconf-model.vala:228
+msgid "Flags"
+msgstr "Vlaggen"
+
+#: editor/dconf-model.vala:230
+msgid "Double"
+msgstr "Double"
+
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: editor/dconf-model.vala:233
+msgid "D-Bus handle type"
+msgstr "D-Bus-handle-type"
+
+#: editor/dconf-model.vala:235
+msgid "D-Bus object path"
+msgstr "D-Bus-objectpad"
+
+#: editor/dconf-model.vala:237
+msgid "D-Bus object path array"
+msgstr "D-Bus-objectpadreeks"
+
+#: editor/dconf-model.vala:239
+msgid "D-Bus signature"
+msgstr "D-Bus-ondertekening"
+
+#: editor/dconf-model.vala:247
 msgid "Integer"
-msgstr "Geheel getal [%s..%s]"
+msgstr "Integer"
 
-#: editor/dconf-model.vala:337
+#: editor/dconf-model.vala:362
 msgid "True"
-msgstr ""
+msgstr "Waar"
 
-#: editor/dconf-model.vala:339
+#: editor/dconf-model.vala:364
 msgid "False"
-msgstr ""
+msgstr "Onwaar"
 
-#: editor/dconf-model.vala:340
+#: editor/dconf-model.vala:365
 msgid "Nothing"
-msgstr ""
+msgstr "Niets (Nothing)"
 
-#: editor/dconf-model.vala:345
+#: editor/dconf-model.vala:370
 msgid "true"
-msgstr ""
+msgstr "waar"
 
-#: editor/dconf-model.vala:347
+#: editor/dconf-model.vala:372
 msgid "false"
-msgstr ""
+msgstr "onwaar"
 
-#: editor/dconf-model.vala:349
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: editor/dconf-model.vala:374
 msgid "nothing"
-msgstr ""
+msgstr "niets (nothing)"
 
 #: editor/dconf-view.vala:438
 msgid "This value is invalid for the key type."
-msgstr ""
+msgstr "Deze waarde is ongeldig voor het sleuteltype."
 
 #: editor/dconf-window.vala:132
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
+"Bedankt voor het gebruiken van Dconf-bewerker om uw instellingen aan te "
+"passen!"
 
 #: editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
+"Vergeet niet dat sommige opties de correcte werking van toepassingen kunnen "
+"verhinderen, dus wees voorzichtig."
 
 #: editor/dconf-window.vala:134
 msgid "I’ll be careful."
-msgstr ""
+msgstr "Ik zal voorzichtig zijn."
 
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 #: editor/dconf-window.vala:138
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "Toon deze dialoog volgende keer opnieuw."
 
 #: editor/dconf-window.vala:248
 msgid "Copy current path"
-msgstr ""
+msgstr "Huidig pad kopiëren"
 
 #: editor/dconf-window.vala:253
 msgid "Reset visible keys"
-msgstr ""
+msgstr "Zichtbare sleutels herstellen"
 
-#: editor/dconf-window.vala:254
+#. Translators: "reset recursively" action in the right-click menu on a folder
+#: editor/dconf-window.vala:254 editor/key-list-box-row.vala:485
 msgid "Reset recursively"
-msgstr ""
+msgstr "Recursief terugzetten"
 
 #: editor/dconf-window.vala:262
 msgid "Enter delay mode"
-msgstr ""
+msgstr "Vertragingsmodus instellen"
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Acties"
 
 #: editor/help-overlay.ui:15
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "Bladwijzermenu"
 
 #: editor/help-overlay.ui:22
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "Pad toevoegen aan bladwijzers"
 
 #: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "Pad verwijderen uit bladwijzers"
 
 #: editor/help-overlay.ui:36
 msgctxt "shortcut window"
 msgid "Search bar"
-msgstr ""
+msgstr "Zoekbalk"
 
 #: editor/help-overlay.ui:43
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "Actiemenu"
 
-#: editor/help-overlay.ui:59
+#: editor/help-overlay.ui:52
 msgctxt "shortcut window"
-msgid "Clipboard"
-msgstr ""
+msgid "Path bar navigation"
+msgstr "Padbalknavigatie"
+
+#: editor/help-overlay.ui:56
+msgctxt "shortcut window"
+msgid "Open root folder"
+msgstr "Hoofdmap openen"
 
 #: editor/help-overlay.ui:63
 msgctxt "shortcut window"
-msgid "Copy descriptor"
-msgstr ""
+msgid "Open parent folder"
+msgstr "Bovenliggende map openen"
 
 #: editor/help-overlay.ui:70
 msgctxt "shortcut window"
-msgid "Copy path"
-msgstr ""
+msgid "Open active direct child"
+msgstr "Rechtstreeks onderliggende actieve map openen"
 
-#: editor/help-overlay.ui:79
+#: editor/help-overlay.ui:77
 msgctxt "shortcut window"
-msgid "Path bar navigation"
-msgstr ""
+msgid "Open active last child"
+msgstr "Laatst onderliggende actieve map openen"
 
-#: editor/help-overlay.ui:83
+#: editor/help-overlay.ui:86
 msgctxt "shortcut window"
-msgid "Open root folder"
-msgstr ""
+msgid "Keys list actions"
+msgstr "Sleutellijstacties"
 
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
-msgid "Open parent folder"
-msgstr ""
+msgid "Contextual menu"
+msgstr "Contextmenu"
 
 #: editor/help-overlay.ui:97
 msgctxt "shortcut window"
-msgid "Open active direct child"
-msgstr ""
+msgid "Set to default"
+msgstr "Terug naar standaardwaarde"
 
 #: editor/help-overlay.ui:104
 msgctxt "shortcut window"
-msgid "Open active last child"
-msgstr ""
+msgid "Toggle boolean value"
+msgstr "Booleaanse waarde omschakelen"
 
 #: editor/help-overlay.ui:113
 msgctxt "shortcut window"
-msgid "Generic"
-msgstr ""
+msgid "Clipboard"
+msgstr "Klembord"
 
 #: editor/help-overlay.ui:117
 msgctxt "shortcut window"
-msgid "Show this help"
-msgstr ""
+msgid "Copy descriptor"
+msgstr "Kopieerbeschrijving"
 
 #: editor/help-overlay.ui:124
-#, fuzzy
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopieerpad"
+
+#: editor/help-overlay.ui:133
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Algemeen"
+
+#: editor/help-overlay.ui:137
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Toon deze hulp"
+
+#: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "About"
-msgstr "I_nfo"
+msgstr "Info"
 
-#: editor/help-overlay.ui:131
-#, fuzzy
+#: editor/help-overlay.ui:151
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "A_fsluiten"
+msgstr "Afsluiten"
 
-#: editor/key-list-box-row.vala:162
-#, fuzzy
+#: editor/key-list-box-row.vala:188
 msgid "No Schema Found"
-msgstr "Geen schema"
+msgstr "Geen schema gevonden"
 
-#: editor/key-list-box-row.vala:171
+#: editor/key-list-box-row.vala:202
 msgid "Key erased."
-msgstr ""
+msgstr "Sleutel verwijderd."
 
-#: editor/key-list-box-row.vala:187
+#: editor/key-list-box-row.vala:224
 #, c-format
 msgid "%s (key erased)"
-msgstr ""
+msgstr "%s (sleutel verwijderd)"
 
-#: editor/key-list-box-row.vala:389
+#: editor/key-list-box-row.vala:310
+msgid "No summary provided"
+msgstr "Geen beschrijving opgegeven"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:465
 msgid "Customize…"
-msgstr ""
+msgstr "Aanpassen…"
 
-#: editor/key-list-box-row.vala:392
-#, fuzzy
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:468
 msgid "Set to default"
-msgstr "Naar standaardinstellingen"
+msgstr "Terug naar standaardwaarde"
 
-#: editor/key-list-box-row.vala:397
+#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
+#: editor/key-list-box-row.vala:473
 msgid "Dismiss change"
-msgstr ""
+msgstr "Wijzigingen verwerpen"
 
-#: editor/key-list-box-row.vala:400
+#. Translators: "open folder" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:476
 msgid "Open"
-msgstr ""
+msgstr "Openen"
 
-#: editor/key-list-box-row.vala:403 editor/key-list-box-row.vala:531
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
 #: editor/registry-info.ui:28
 msgid "Erase key"
-msgstr ""
+msgstr "Sleutel verwijderen"
 
-#: editor/key-list-box-row.vala:406
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: editor/key-list-box-row.vala:482
 msgid "Do not erase"
-msgstr ""
+msgstr "Niet verwijderen"
 
-#: editor/key-list-box-row.vala:415
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:494
 msgid "Copy"
-msgstr ""
+msgstr "Kopiëren"
 
-#: editor/key-list-box-row.vala:525
+#. Translators: "no change" option in the right-click menu on a key when on delayed mode
+#: editor/key-list-box-row.vala:604
 msgid "No change"
-msgstr ""
+msgstr "Geen wijziging"
 
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
-#, fuzzy
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:674 editor/registry-info.vala:261
 msgid "Default value"
-msgstr "Standaard:"
+msgstr "Standaardwaarde"
 
 #: editor/modifications-revealer.ui:49
 msgid "Apply"
-msgstr ""
+msgstr "Toepassen"
 
 #: editor/modifications-revealer.vala:141
 msgid "Nothing to reset."
-msgstr ""
+msgstr "Niets om terug te zetten."
 
 #: editor/modifications-revealer.vala:241
 msgid "The value is invalid."
-msgstr ""
+msgstr "De waarde is ongeldig."
 
 #: editor/modifications-revealer.vala:245
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
+"De wijziging zal worden verworpen als u deze weergave verlaat zonder ze toe "
+"te passen."
 
 #: editor/modifications-revealer.vala:247
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
+"De wijziging zal worden toegepast bij dergelijk verzoek of als u deze "
+"weergave verlaat."
 
 #: editor/modifications-revealer.vala:264
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "Wijzigingen zullen vertraagd worden tot u dit verzoekt."
 
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:266
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Één gsettings-bewerking vertraagd."
+msgstr[1] "%u gsettings-bewerkingen vertraagd."
 
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:270
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Één dconf-bewerking vertraagd."
+msgstr[1] "%u dconf-bewerkingen vertraagd."
 
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:273
 #, c-format
 msgid "%s%s"
-msgstr ""
+msgstr "%s%s"
 
 #: editor/modifications-revealer.vala:273
-#, fuzzy, c-format
+#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "instellingen;configuratie;settings;configuration;"
-msgstr[1] "instellingen;configuratie;settings;configuration;"
+msgstr[0] "Een gsettings-bewerking"
+msgstr[1] "%u gsettings-bewerkingen"
 
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:278
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " en één dconf-bewerking vertraagd."
+msgstr[1] " en %u dconf-bewerkingen vertraagd."
 
 #: editor/registry-info.ui:22
 msgid ""
@@ -797,6 +944,10 @@ msgid ""
 "stop the use of this key, or may use a relocatable schema for defining its "
 "keys."
 msgstr ""
+"Geen schema beschikbaar. Dconf-bewerker kan geen schema vinden dat met deze "
+"sleutel geassocieerd kan worden. De toepassing die deze sleutel heeft "
+"geïnstalleerd is mogelijk verwijderd, gebruikt deze sleutel niet meer of "
+"gebruikt een verplaatsbaar schema voor het beschrijven van haar sleutels."
 
 #: editor/registry-info.ui:56
 msgid ""
@@ -804,88 +955,118 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"Deze opsomming biedt slechts een keuze. Dit is waarschijnlijk een fout van "
+"de toepassing die dit schema heeft geïnstalleerd. Open er een bugmelding "
+"over indien mogelijk."
 
-#: editor/registry-info.vala:80
-#, fuzzy
-msgid "Schema"
-msgstr "Schema:"
-
-#: editor/registry-info.vala:81
-#, fuzzy
-msgid "Summary"
-msgstr "Samenvatting:"
+#: editor/registry-info.ui:65
+msgid ""
+"This integer key can only take one value. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
+msgstr ""
+"Deze integer-sleutel kan slechts een waarde aannemen. Dit is waarschijnlijk "
+"een fout van de toepassing die dit schema heeft geïnstalleerd. Open er een "
+"bugmelding over indien mogelijk."
 
 #: editor/registry-info.vala:82
-#, fuzzy
-msgid "Description"
-msgstr "Beschrijving:"
+msgid "Schema"
+msgstr "Schema"
+
+#: editor/registry-info.vala:83
+msgid "Summary"
+msgstr "Samenvatting"
 
 #: editor/registry-info.vala:84
-#, fuzzy
-msgid "Type"
-msgstr "Soort:"
+msgid "Description"
+msgstr "Beschrijving"
 
+#. Translators: as in datatype (integer, boolean, string, etc.)
 #: editor/registry-info.vala:86
-msgid "Minimum"
-msgstr ""
-
-#: editor/registry-info.vala:87
-msgid "Maximum"
-msgstr ""
+msgid "Type"
+msgstr "Soort"
 
 #: editor/registry-info.vala:88
-#, fuzzy
+msgid "Minimum"
+msgstr "Minimum"
+
+#: editor/registry-info.vala:89
+msgid "Maximum"
+msgstr "Maximum"
+
+#: editor/registry-info.vala:90
 msgid "Default"
-msgstr "Standaard:"
+msgstr "Standaard"
 
-#: editor/registry-info.vala:108
+#: editor/registry-info.vala:110
 msgid "Current value"
-msgstr ""
+msgstr "Huidige waarde"
 
-#: editor/registry-info.vala:134
+#: editor/registry-info.vala:143
 msgid "Use default value"
-msgstr ""
+msgstr "Standaardwaarde gebruiken"
 
-#: editor/registry-info.vala:192
+#: editor/registry-info.vala:201
 msgid "Custom value"
-msgstr ""
+msgstr "Aangepaste waarde"
 
-#: editor/registry-info.vala:296
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:324
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"Gebruik het sleutelwoord ‘nothing’ (niets) om een misschien-type (beginnend "
+"met ‘m’) in te stellen naar haar lege waarde. Strings, ondertekeningen en "
+"objectpaden moeten omgeven worden door aanhalingstekens."
 
-#: editor/registry-info.vala:298
+#: editor/registry-info.vala:326
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
+"Strings, ondertekeningen en objectpaden moeten omgeven worden door "
+"aanhalingstekens."
 
-#: editor/registry-info.vala:302
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:330
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"Gebruik het sleutelwoord ‘nothing’ (niets) om een misschien-type (beginnend "
+"met ‘m’) in te stellen naar haar lege waarde."
 
-#: editor/registry-view.ui:95
+#: editor/registry-view.ui:32
+msgid "Sort preferences have changed. Do you want to reload the view?"
+msgstr "Sorteerinstellingen zijn gewijzigd. Wil u de weergave herladen?"
+
+#: editor/registry-view.ui:38
+msgid "Reload"
+msgstr "Herladen"
+
+#: editor/registry-view.ui:136
 msgid "No keys in this path"
-msgstr ""
+msgstr "Geen sleutels in dit pad"
 
-#: editor/registry-view.vala:170
+#: editor/registry-view.vala:182
 #, c-format
-msgid "Cannot find folder \"%s\"."
-msgstr ""
+msgid "Cannot find folder “%s”."
+msgstr "Kan map ‘%s’ niet vinden."
 
-#: editor/registry-view.vala:188
+#: editor/registry-view.vala:200
 #, c-format
-msgid "Cannot find key \"%s\" here."
-msgstr ""
+msgid "Cannot find key “%s” here."
+msgstr "Kan sleutel ‘%s’ hier niet vinden."
 
-#: editor/registry-view.vala:194
+#: editor/registry-view.vala:206
 #, c-format
-msgid "Key \"%s\" has been removed."
-msgstr ""
+msgid "Key “%s” has been removed."
+msgstr "Sleutel ‘%s’ is verwijderd."
+
+#, fuzzy
+#~ msgid "dconf-editor"
+#~ msgstr "dconf-editor"
 
 #~ msgid "Not found"
 #~ msgstr "Niet gevonden"
