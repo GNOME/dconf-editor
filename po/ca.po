@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the dconf package.
 # Gil Forcada <gilforcada@guifi.net>, 2012, 2013, 2014.
 # Walter Garcia-Fontes <walter.garcia@upf.edu>, 2016, 2017.
+# Jordi Serratosa <jordis@softcatala.cat>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-31 05:05+0000\n"
+"POT-Creation-Date: 2017-09-08 09:19+0000\n"
 "PO-Revision-Date: 2017-09-01 22:34+0200\n"
 "Last-Translator: Walter Garcia-Fontes <walter.garcia@upf.edu>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -136,7 +137,7 @@ msgstr "Un senyalador per habilitar el mode maximitzat"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:33
 msgid "A list of bookmarked paths"
-msgstr "una llista de camins afegits a les adreces d'interès"
+msgstr "Una llista de camins afegits a les adreces d'interès"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "Contains all paths bookmarked by the user as an array of strings."
@@ -767,7 +768,7 @@ msgstr "Estableix-lo al valor predeterminat"
 #: editor/help-overlay.ui:104
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr "Commuta el valor boleà"
+msgstr "Commuta el valor booleà"
 
 #: editor/help-overlay.ui:113
 msgctxt "shortcut window"
@@ -874,7 +875,7 @@ msgstr "Aplica"
 
 #: editor/modifications-revealer.vala:141
 msgid "Nothing to reset."
-msgstr "Res a restablir"
+msgstr "Res a restablir."
 
 #: editor/modifications-revealer.vala:241
 msgid "The value is invalid."
@@ -940,7 +941,7 @@ msgid ""
 "stop the use of this key, or may use a relocatable schema for defining its "
 "keys."
 msgstr ""
-"No ha cap esquema disponible. L'editor del Dconf no pot trobar un esquema "
+"No hi ha cap esquema disponible. L'editor del Dconf no pot trobar un esquema "
 "associat amb aquesta clau. L'aplicació que va instal·lar aquest clau pot "
 "haver-se eliminat, pot haver deixat d'usar aquesta clau o pot usar un "
 "esquema reubicable per definir les seves claus."
@@ -952,7 +953,7 @@ msgid ""
 "it."
 msgstr ""
 "Aquesta enumeració ofereix sols una elecció. Això és probablement un error "
-"de l'aplicació que va instal·lar aquest esquema. Si és possible, si us plau "
+"de l'aplicació que va instal·lar aquest esquema. Si és possible, "
 "obriu un informe d'error sobre això."
 
 #: editor/registry-info.ui:65
@@ -962,7 +963,7 @@ msgid ""
 "it."
 msgstr ""
 "La clau entera només pot prendre un valor. Això és probablement un error de "
-"l'aplicació que va instal·lar aquest esquema. Si és possible, si us plau "
+"l'aplicació que va instal·lar aquest esquema. Si és possible, "
 "obriu un informe d'error sobre això."
 
 #: editor/registry-info.vala:82
@@ -1031,7 +1032,7 @@ msgid ""
 "empty value."
 msgstr ""
 "Useu la paraula clau «nothing» per establir un tipus anul·lable (que comença "
-"amb «m» al seu valor buit."
+"amb «m») al seu valor buit."
 
 #: editor/registry-view.ui:32
 msgid "Sort preferences have changed. Do you want to reload the view?"
