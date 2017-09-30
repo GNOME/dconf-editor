@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-07 00:38+0000\n"
-"PO-Revision-Date: 2017-02-12 00:50+0100\n"
+"POT-Creation-Date: 2017-09-30 09:48+0000\n"
+"PO-Revision-Date: 2017-10-01 00:01+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: editor/bookmarks.ui:19
@@ -113,6 +113,11 @@ msgstr "Redigera hela din konfigurationsdatabas direkt"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "inställningar;konfiguration;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -1060,10 +1065,6 @@ msgstr "Kan inte hitta nyckeln ”%s” här."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "Nyckeln ”%s” har tagits bort."
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "dconf-redigerare"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
