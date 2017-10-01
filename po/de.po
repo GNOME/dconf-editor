@@ -1,7 +1,7 @@
 # German translation for dconf-editor.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2012, 2013, 2015-2017.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2012-2013, 2015-2017.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2013.
 # Simon Linden <xhi2018@googlemail.com>, 2015.
 # Franco Della-Monica <franco.della.monica@gmail.com>, 2016.
@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-05 10:39+0000\n"
-"PO-Revision-Date: 2017-03-05 20:21+0100\n"
-"Last-Translator: Bernd Homuth <dev@hmt.im>\n"
+"POT-Creation-Date: 2017-09-30 09:48+0000\n"
+"PO-Revision-Date: 2017-10-01 13:24+0200\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -115,6 +115,11 @@ msgstr "Direkter Zugriff auf Ihre gesamte Konfigurationsdatenbank"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "Einstellungen;Konfiguration;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -900,7 +905,7 @@ msgstr "Nichts zurückzusetzen."
 
 #: editor/modifications-revealer.vala:241
 msgid "The value is invalid."
-msgstr "Der Wert ist ungültig"
+msgstr "Der Wert ist ungültig."
 
 #: editor/modifications-revealer.vala:245
 msgid "The change will be dismissed if you quit this view without applying."
@@ -1001,7 +1006,7 @@ msgstr "Zusammenfassung"
 
 #: editor/registry-info.vala:84
 msgid "Description"
-msgstr "Beschreibung:"
+msgstr "Beschreibung"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
 #: editor/registry-info.vala:86
@@ -1086,56 +1091,3 @@ msgstr "Der Schlüssel »%s« kann hier nicht gefunden werden."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "Der Schlüssel »%s« wurde gelöscht."
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "dconf-Editor"
-
-#~ msgid "The theme of the navigation list"
-#~ msgstr "Das Thema der Navigationsliste."
-
-#~ msgid ""
-#~ "The themes are defined by the application, you cannot add one. The theme "
-#~ "'three-twenty-two' will remain as close as possible to the default theme "
-#~ "of the 3.22 release."
-#~ msgstr ""
-#~ "Die Themen werden durch die Anwendung festgelegt, Sie können keines "
-#~ "hinzufügen. Das Thema »three-twenty-two« bleibt so nahe wie möglich am "
-#~ "Standardthema der Veröffentlichung 3.22."
-
-#~ msgctxt "shortcut window"
-#~ msgid "Current row menu"
-#~ msgstr "Menü für aktuelle Zeile"
-
-#~ msgid "%u gsettings operations and %u dconf operations awaiting."
-#~ msgstr ""
-#~ "%u gsettings »Operationen« und %u dconf »Operationen« werden bereit "
-#~ "gehalten."
-
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Gleitkommazahl doppelter Genauigkeit [%s..%s]"
-
-#~ msgid "Oops! Cannot find something at this path."
-#~ msgstr "In diesem Pfad konnte nichts gefunden werden."
-
-#~ msgctxt "shortcut window"
-#~ msgid "Expand"
-#~ msgstr "Ausklappen"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Expand all subtrees"
-#~ msgstr "Alle Zweige ausklappen"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Collapse"
-#~ msgstr "Einklappen"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Collapse all subtrees"
-#~ msgstr "Alle Zweige einklappen"
-
-#~ msgid "Key Editor"
-#~ msgstr "Schlüssel-Editor"
-
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
