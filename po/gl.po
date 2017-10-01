@@ -5,22 +5,21 @@
 # colaborar connosco, podes atopar máis información en http://www.trasno.net
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
 # Fran Dieguez <frandieguez@gnome.org>, 2012, 2013, 2014, 2015, 2016, 2017.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-05 19:23+0000\n"
-"PO-Revision-Date: 2017-03-11 02:49+0100\n"
+"POT-Creation-Date: 2017-09-30 09:48+0000\n"
+"PO-Revision-Date: 2017-10-01 19:19+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
-"Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
+"Language-Team: Galician\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
 #: editor/bookmarks.ui:19
@@ -115,6 +114,11 @@ msgstr "Edite directamente toda a súa base de datos de configuración"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "preferencias;configuración;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -302,13 +306,6 @@ msgid "A D-Bus handle type, type ‘h’"
 msgstr "Un tipo de xestor de D-Bus, type «h»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
-#| msgid ""
-#| "The handle type is a 32bit signed integer value that is, by convention, "
-#| "used as an index into an array of file descriptors that are sent "
-#| "alongside a D-Bus message.\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -325,12 +322,6 @@ msgid "A D-Bus object path, type ‘o’"
 msgstr "Unha ruta de boxecto D-Bus, tipo «o»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
-#| msgid ""
-#| "An object path is used to identify D-Bus objects at a given destination "
-#| "on the bus.\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -345,12 +336,6 @@ msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Unha matriz de rutas de obxectos de D-Bus, tipo «ao»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-#| msgid ""
-#| "An object path array could contain any number of object paths (including "
-#| "none: “[]”).\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -365,12 +350,6 @@ msgid "A D-Bus signature, type ‘g’"
 msgstr "Unha sinatura de D-Bus, tipo «g»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-#| msgid ""
-#| "A D-Bus signature is a string used as type signature for a D-Bus method "
-#| "or message.\n"
-#| "\n"
-#| "If you are not interacting with D-Bus, then there is no reason to make "
-#| "use of this type."
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -785,7 +764,6 @@ msgid "Contextual menu"
 msgstr "Menú contextual"
 
 #: editor/help-overlay.ui:97
-#| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Estabelecer como predeterminado"
@@ -981,10 +959,6 @@ msgstr ""
 "aplicativo que instala este esquema. Se é posíbel, reporte o erro."
 
 #: editor/registry-info.ui:65
-#| msgid ""
-#| "This enumeration offers only one choice. That’s probably an error of the "
-#| "application that installed this schema. If possible, please open a bug "
-#| "about it."
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1086,10 +1060,6 @@ msgstr "Non é posíbel atopar a chave «%s» aquí."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "A chave «%s» foi eliminada."
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "Editor dconf"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
