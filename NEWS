@@ -1,3 +1,47 @@
+dconf-editor 3.26.1
+=====================
+
+Long time since last release, with some little but interesting changes, and many
+translations updates. First, there is now a toggle on boolean rows for switching
+faster the key value. In the same spirit, integer keys that only accepts a small
+range of values now can be directly changed, from the right-click popover. There
+is also a shortcut for reseting a key to its default value.
+
+Translations updated:
+  Basque: Inaki Larranaga Murgoitio
+  Catalan: Jordi Mas
+  Chinese (China): Mandy Wang
+  Chinese (Taiwan): Chao-Hsiung Liao
+  Czech: Marek Černocký
+  Danish: Ask Hjorth Larsen
+  Dutch: hanniedu
+  Esperanto: Kristjan Schmidt
+  Finnish: Jiri Grönroos
+  French: Claude Paroz
+  Friulian: Fabio Tomat
+  Galician: Fran Dieguez
+  German: Mario Blättermann
+  Hungarian: Balázs Meskó and Gábor Kelemen
+  Indonesian: Andika Triwidada
+  Italian: Milo Casagrande
+  Kazakh: Baurzhan Muftakhidinov
+  Korean: Changwoo Ryu
+  Latvian: Rūdolfs Mazurs
+  Lithuanian: Aurimas Černius
+  Malayalam: Anish Sheela and Nidarsh Raj
+  Nepali: Pawan Chitrakar (new)
+  Norwegian bokmål: Kjartan Maraas
+  Occitan: Cédric Valmary
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Portuguese: Robert Roth
+  Serbian: Мирослав Николић
+  Slovak: Dušan Kazik
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Swedish: Anders Jonsson
+  Turkish: Osman Karagöz
+
 dconf-editor 3.23.4
 =====================
 
