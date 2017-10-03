@@ -10,16 +10,16 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-24 09:23+0000\n"
-"PO-Revision-Date: 2017-02-25 15:42-0200\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2017-10-02 13:12+0000\n"
+"PO-Revision-Date: 2017-10-02 11:37-0300\n"
+"Last-Translator: Fábio Nogueira <fnogueira@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 1.0.0-beta1\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Project-Style: gnome\n"
 
 #: editor/bookmarks.ui:19
@@ -92,6 +92,11 @@ msgstr "Navega pelas chaves usadas pelos aplicativos instalados"
 msgid "Read keys descriptions and edit their values"
 msgstr "Lê as descrições das chaves e edita seus valores"
 
+#. a translatable version of project_group
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+msgid "The GNOME Project"
+msgstr "O projeto GNOME"
+
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
 #: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
 msgid "dconf Editor"
@@ -109,6 +114,11 @@ msgstr "Edite diretamente todo o seu banco de dados de configuração"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "ajustes;configuração;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -219,7 +229,6 @@ msgstr ""
 "modo de atraso, permitindo que várias chaves sejam aplicadas de uma vez."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:73
-#| msgid "A flag to restore the last view"
 msgid "A flag to sort keys list case-sensitively"
 msgstr ""
 "Um sinalizador para ordenar a lista de chaves diferenciando maiúsculo de "
@@ -517,14 +526,10 @@ msgstr ""
 "trata de um erro. O Editor Dconf lhe dá um aviso nesse caso."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:229
-#| msgid "A 1-choice enumeration"
 msgid "A 1-choice integer value"
 msgstr "Uma valor inteiro de uma escolha"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:230
-#| msgid ""
-#| "An enumeration could contain only one item, but that’s probably an error. "
-#| "Dconf Editor warns you in that case."
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -583,7 +588,7 @@ msgid "translator-credits"
 msgstr ""
 "Enrico Nicoletto <liverig@gmail.com>, 2012, 2013, 2014.\n"
 "Fábio Nogueira <fnogueira@gnome.org>, 2016.\n"
-"Rafael Fontenelle <rafaelff@gnome.org>, 2016, 2017."
+"Rafael Fontenelle <rafaelff@gnome.org>, 2016, 2017"
 
 #: editor/dconf-model.vala:220
 msgid "Boolean"
@@ -763,14 +768,11 @@ msgid "Contextual menu"
 msgstr "Menu contextual"
 
 #: editor/help-overlay.ui:97
-#| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Restaura o padrão"
 
 #: editor/help-overlay.ui:104
-#| msgctxt "shortcut window"
-#| msgid "Toggle bookmarks popover"
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Ativa um valor booleano"
@@ -962,10 +964,6 @@ msgstr ""
 "bug sobre isso."
 
 #: editor/registry-info.ui:65
-#| msgid ""
-#| "This enumeration offers only one choice. That’s probably an error of the "
-#| "application that installed this schema. If possible, please open a bug "
-#| "about it."
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1068,13 +1066,6 @@ msgstr "Não foi possível localizar a chave “%s” aqui."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "A chave “%s” foi removida."
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "Editor dconf"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "O projeto GNOME"
 
 #~ msgid "The theme of the navigation list"
 #~ msgstr "O tema da lista de navegação"
