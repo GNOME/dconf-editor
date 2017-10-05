@@ -69,7 +69,7 @@ class RegistryView : Grid, PathElement
         dir_tree_view.expand_all ();
 
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
-        path_requested (current_path, null);
+        path_requested (current_path, null, true);
 
         application_settings.changed ["sort-case-sensitive"].connect (() => {
                 if (get_selected_directory ().need_sorting (application_settings.get_boolean ("sort-case-sensitive")))
@@ -168,7 +168,7 @@ class RegistryView : Grid, PathElement
             return model.get_root_directory ();
     }
 
-    public void path_requested (string _full_name, string? selected)
+    public void path_requested (string _full_name, string? selected, bool tolerant = false)
     {
         string full_name = _full_name.dup ();
         string folder_name;
@@ -192,22 +192,27 @@ class RegistryView : Grid, PathElement
         }
 
         string [] names = full_name.split ("/");
-        string key_name = names [names.length - 1];
-        Key? key = get_key_from_name (key_name);
-        if (key == null)
+        string object_name = names [names.length - 1];
+        SettingObject? object = get_object_from_name (object_name);
+        if ((object == null) || (((!) object) is Directory))
         {
-            show_browse_view (folder_name, null);
-            get_dconf_window ().show_notification (_("Cannot find key “%s” here.").printf (key_name));
+            if ((object != null) && tolerant)
+                show_browse_view (folder_name + object_name + "/", null);
+            else
+            {
+                show_browse_view (folder_name, null);
+                get_dconf_window ().show_notification (_("Cannot find key “%s” here.").printf (object_name));
+            }
             return;
         }
-        if (((!) key) is DConfKey && ((DConfKey) ((!) key)).is_ghost)
+        if (((!) object) is DConfKey && ((DConfKey) ((!) object)).is_ghost)
         {
-            show_browse_view (folder_name, folder_name + key_name);
-            get_dconf_window ().show_notification (_("Key “%s” has been removed.").printf (key_name));
+            show_browse_view (folder_name, folder_name + object_name);
+            get_dconf_window ().show_notification (_("Key “%s” has been removed.").printf (object_name));
             return;
         }
 
-        properties_view.populate_properties_list_box ((!) key);
+        properties_view.populate_properties_list_box ((Key) ((!) object));
         show_properties_view (full_name);
     }
     private bool select_folder (string full_name)
@@ -246,18 +251,25 @@ class RegistryView : Grid, PathElement
             assert_not_reached ();
         return false;
     }
-    private Key? get_key_from_name (string key_name)
+    private SettingObject? get_object_from_name (string object_name)
         requires (key_model != null)
     {
+        SettingObject? directory_exists = null;
+
         uint position = 0;
         while (position < ((!) key_model).get_n_items ())
         {
             SettingObject object = (SettingObject) ((!) key_model).get_object (position);
-            if (object is Key && object.name == key_name)
-                return (Key) object;
+            if (object.name == object_name)
+            {
+                if (object is Directory)
+                    directory_exists = object;
+                else
+                    return object;
+            }
             position++;
         }
-        return null;
+        return directory_exists;
     }
 
     private DConfWindow get_dconf_window ()

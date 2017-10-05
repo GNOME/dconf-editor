@@ -50,7 +50,7 @@ class ConfigurationEditor : Gtk.Application
 
     public ConfigurationEditor ()
     {
-        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.FLAGS_NONE);
+        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE);
 
         add_main_option_entries (option_entries);
     }
@@ -80,12 +80,72 @@ class ConfigurationEditor : Gtk.Application
         Gdk.Screen? screen = Gdk.Screen.get_default ();
         return_if_fail (screen != null);
         Gtk.StyleContext.add_provider_for_screen ((!) screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-        add_window (new DConfWindow ());
     }
+
+    /*\
+    * * Window activation
+    \*/
+
+    private bool first_window = true;
 
     protected override void activate ()
     {
+        simple_activation ();
+    }
+
+    protected override int command_line (ApplicationCommandLine commands)
+    {
+        string [] args = commands.get_arguments ();
+
+        switch (args.length)
+        {
+            case 0 :
+                assert_not_reached ();
+
+            case 1 : // ['dconf-editor']
+                simple_activation ();
+                return Posix.EXIT_SUCCESS;
+
+            case 2 :
+                int ret = Posix.EXIT_SUCCESS;
+                if (first_window)
+                {
+                    string arg = args [1];
+                    string? path = arg;
+
+                    if (!arg.has_prefix ("/"))
+                    {
+                        commands.print (_("Path should start with a '/'.\n"));
+                        path = null;
+                        ret = Posix.EXIT_FAILURE;
+                    }
+                    // TODO more tests
+
+                    add_window (new DConfWindow (path));
+                    first_window = false;
+                }
+                else
+                {
+                    commands.print (_("Only one window can be opened for now.\n"));
+                    ret = Posix.EXIT_FAILURE;
+                }
+                get_active_window ().present ();
+                return ret;
+
+            default:
+                commands.print (_("Only one argument is accepted for now.\n"));
+                simple_activation ();
+                return Posix.EXIT_FAILURE;
+        }
+    }
+
+    private void simple_activation ()
+    {
+        if (first_window)
+        {
+            add_window (new DConfWindow (null));
+            first_window = false;
+        }
         get_active_window ().present ();
     }
 

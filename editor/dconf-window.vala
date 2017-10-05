@@ -59,7 +59,7 @@ class DConfWindow : ApplicationWindow
     private ulong small_keys_list_rows_handler = 0;
     private ulong small_bookmarks_rows_handler = 0;
 
-    public DConfWindow ()
+    public DConfWindow (string? path)
     {
         add_action_entries (action_entries, this);
 
@@ -101,7 +101,11 @@ class DConfWindow : ApplicationWindow
 
         registry_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
         settings.bind ("behaviour", registry_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
-        registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+
+        if (path == null)
+            registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+        else
+            registry_view.init ((!) path, true);
     }
 
     public static string stripped_path (string path)
