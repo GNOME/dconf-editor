@@ -115,7 +115,7 @@ class ConfigurationEditor : Gtk.Application
 
                     if (!arg.has_prefix ("/"))
                     {
-                        commands.print (_("Path should start with a '/'.\n"));
+                        commands.print (_("Path should start with a “/”.\n"));
                         path = null;
                         ret = Posix.EXIT_FAILURE;
                     }
