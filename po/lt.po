@@ -1,15 +1,15 @@
 # Lithuanian translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014, 2015, 2016.
+# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor\n"
-"POT-Creation-Date: 2016-12-31 09:12+0100\n"
-"PO-Revision-Date: 2016-09-05 17:52+0300\n"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-10-04 12:38+0000\n"
+"PO-Revision-Date: 2017-10-08 22:25+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -90,13 +90,17 @@ msgstr "Naršyti programų įdiegtus raktus"
 msgid "Read keys descriptions and edit their values"
 msgstr "Skaityti raktų aprašymus bei keisti jų vertes"
 
+#. a translatable version of project_group
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+msgid "The GNOME Project"
+msgstr "GNOME projektas"
+
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
 #: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
 msgid "dconf Editor"
 msgstr "dconf Redaktorius"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:4
-#, fuzzy
 msgid "Configuration editor for dconf"
 msgstr "Konfigūracijos redaktorius dconf"
 
@@ -104,14 +108,10 @@ msgstr "Konfigūracijos redaktorius dconf"
 msgid "Directly edit your entire configuration database"
 msgstr "Tiesiogiai redaguokite savo visą konfigūracijos duomenų bazę"
 
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "nustatymai;konfigūracija;"
-
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "dconf Redaktorius"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -147,9 +147,12 @@ msgid "A flag to restore the last view"
 msgstr "Požymis paskutinio rodinio atkūrimui"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:39
+#| msgid ""
+#| "If 'true', Dconf Editor tries at launch to navigate to the path described "
+#| "in the 'saved-view' key."
 msgid ""
-"If 'true', Dconf Editor tries at launch to navigate to the path described in "
-"the 'saved-view' key."
+"If “true”, Dconf Editor tries at launch to navigate to the path described in "
+"the “saved-view” key."
 msgstr ""
 "Jei „teigiama“, Dconf redaktorius bandys paleidimo metu nueiti į „saved-"
 "view“ rakto nurodytą kelią."
@@ -159,8 +162,11 @@ msgid "A path to restore the last view"
 msgstr "Kelias paskutiniam vaizdui atkurti"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:44
+#| msgid ""
+#| "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch "
+#| "to navigate to this path."
 msgid ""
-"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
 "Jei „restore-view“ raktas yra nustatytas į „teigiama“, Dconf redaktorius "
@@ -171,8 +177,11 @@ msgid "Show initial warning"
 msgstr "Rodyti pradinį įspėjimą"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:49
+#| msgid ""
+#| "If 'true', Dconf Editor opens a popup when launched reminding the user to "
+#| "be careful."
 msgid ""
-"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
 "Jei „teigiama“, Dconf redaktorius paleidimo metu atvers langelį, perspėjantį "
@@ -183,7 +192,8 @@ msgid "A flag to enable small rows for keys list"
 msgstr "Požymis mažoms eilutėms klavišams įjungti"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
-msgid "If 'true', the keys list use smaller rows."
+#| msgid "If 'true', the keys list use smaller rows."
+msgid "If “true”, the keys list use smaller rows."
 msgstr "Jei teigiama, klavišams naudojamos mažesnės eilutės."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
@@ -191,22 +201,33 @@ msgid "A flag to enable small rows for bookmarks list"
 msgstr "Požymis mažoms eilutėms žymėlėms įjungti"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
-msgid "If 'true', the bookmarks list use smaller rows."
-msgstr "Jei teigiama, žymelėms naudojamos mažesnės eilutės."
+#| msgid "If 'true', the bookmarks list use smaller rows."
+msgid "If “true”, the bookmarks list use smaller rows."
+msgstr "Jei „teigiama“, žymelėms naudojamos mažesnės eilutės."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
 msgid "Change the behaviour of a key value change request"
 msgstr "Pakeisti rakto vertės pakeitimo užklausos elgseną"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:69
+#| msgid ""
+#| "The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+#| "type, it updates the key value each time something changes in the entry, "
+#| "so including intermediate states. The 'safe' value asks for confirmation "
+#| "in these cases, but allows instant changes for booleans and nullable "
+#| "booleans, enums and flags. The 'always-confirm-implicit' and 'always-"
+#| "confirm-explicit' values always asks for confirmation, but the first "
+#| "applies the change if you change path whereas the second dismiss it. The "
+#| "'always-delay' value adds each change in delay mode, allowing to apply "
+#| "multiple keys at once."
 msgid ""
-"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+"The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The 'safe' value asks for confirmation in "
+"including intermediate states. The “safe” value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
+"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
 "values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The 'always-delay' value adds "
+"change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 "Vertė „unsafe“ yra nerekomenduojama: raktams, kurie turi ne specialios "
@@ -220,29 +241,37 @@ msgstr ""
 "delsiamos veiksenos, leisdama vienu metu pakeisti kelis raktus."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
-msgid "A boolean, type \"b\""
+#| msgid "A boolean, type \"b\""
+msgid "A boolean, type ‘b’"
 msgstr "Loginis, tipas „b“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:93
-msgid "Booleans can only take two values, \"true\" or \"false\"."
+#| msgid "Booleans can only take two values, \"true\" or \"false\"."
+msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Loginiai kintamieji gali būti dviejų verčių: „teigiama“ ir „neigiama“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:97
-msgid "A nullable boolean, type \"mb\""
+#| msgid "A nullable boolean, type \"mb\""
+msgid "A nullable boolean, type ‘mb’"
 msgstr "Galimai nenurodytas loginis, tipas „mb“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
+#| msgid ""
+#| "GSettings allows nullable types, that are similar to other types but "
+#| "could take a \"nothing\" value. A nullable boolean can only take three "
+#| "values, \"true\", \"false\" and \"nothing\"."
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a \"nothing\" value. A nullable boolean can only take three values, "
-"\"true\", \"false\" and \"nothing\"."
+"take a “nothing” value. A nullable boolean can only take three values, "
+"“true”, “false” and “nothing”."
 msgstr ""
 "GSettings leidžia galimai nenurodytus tipus, kurie yra panašūs į kitus "
 "tipus, bet gali būti vertės „nieko“. Galimai nenurodytas loginis gali būti "
 "trijų verčių: „teigiama“, „neigiama“ ir „nieko“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
-msgid "A byte (unsigned), type \"y\""
+#| msgid "A byte (unsigned), type \"y\""
+msgid "A byte (unsigned), type ‘y’"
 msgstr "Baitas (be ženklo), tipas „y“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
@@ -254,7 +283,8 @@ msgstr ""
 "simboliams."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:107
-msgid "A bytestring, type \"ay\""
+#| msgid "A bytestring, type \"ay\""
+msgid "A bytestring, type ‘ay’"
 msgstr "Baitų eilutė, tipas „ay“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
@@ -268,7 +298,8 @@ msgstr ""
 "turi būti įterpiamas kaip paskutinis masyvo elementas."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:112
-msgid "A bytestring array, type \"aay\""
+#| msgid "A bytestring array, type \"aay\""
+msgid "A bytestring array, type ‘aay’"
 msgstr "Baitų eilučių pasyvas, tipas „aay“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
@@ -280,11 +311,11 @@ msgstr ""
 "eilutėms, kurios nebūtinai yra tinkamos utf8."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:117
-msgid "A D-Bus handle type, type \"h\""
+#| msgid "A D-Bus handle type, type \"h\""
+msgid "A D-Bus handle type, type ‘h’"
 msgstr "D-Bus rankenėlės tipas, tipas „h“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:118
-#, fuzzy
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -298,55 +329,51 @@ msgstr ""
 "Jei nenaudojate D-Bus, tuomet nėra priežasties naudoti šį tipą."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
-msgid "A D-Bus object path, type \"o\""
+#| msgid "A D-Bus object path, type \"o\""
+msgid "A D-Bus object path, type ‘o’"
 msgstr "D-Bus objekto kelias, tipas „o“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:125
-#, fuzzy
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
 "Objekto kelias naudojamas D-Bus objektams identifikuoti nurodytoje "
-"magistralės kryptyje.\n"
-"\n"
-"Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
+"magistralės kryptyje. Jei nenaudojate D-Bus, nėra priežasties naudoti šį "
+"tipą."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
-msgid "A D-Bus object path array, type \"ao\""
+#| msgid "A D-Bus object path array, type \"ao\""
+msgid "A D-Bus object path array, type ‘ao’"
 msgstr "D-Bus objekto kelio tipas, tipas „ao“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:132
-#, fuzzy
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: \"[]\"). If you are not interacting with D-Bus, then there is no "
-"reason to make use of this type."
+"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 "Objekto kelio masyvas gali turėti bet kokį objektų kelių skaičių (įskaitant "
-"nė vieno: „[]“).\n"
-"\n"
-"Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
+"nė vieno: „[]“). Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A D-Bus signature, type \"g\""
+#| msgid "A D-Bus signature, type \"g\""
+msgid "A D-Bus signature, type ‘g’"
 msgstr "D-Bus aprašas, tipas „g“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:139
-#, fuzzy
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
 "D-Bus aprašas yra simbolių eilutė, naudojama kaip tipo aprašas D-Bus metodui "
-"ar pranešimui.\n"
-"\n"
-"Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
+"ar pranešimui. Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-msgid "A double, type \"d\""
+#| msgid "A double, type \"d\""
+msgid "A double, type ‘d’"
 msgstr "Dvigubas, tipas „d“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:146
@@ -358,19 +385,24 @@ msgid "A 5-choices enumeration"
 msgstr "5 pasirinkimų išvardinimas"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
+#| msgid ""
+#| "Enumerations could be done either with the \"enum\" attribute, or with a "
+#| "\"choices\" tag."
 msgid ""
-"Enumerations could be done either with the \"enum\" attribute, or with a "
-"\"choices\" tag."
+"Enumerations could be done either with the “enum” attribute, or with a "
+"“choices” tag."
 msgstr ""
 "Išvardinimus galima sukurti naudojant arba „enum“ atributą, arba su "
 "„choices“ žyma."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:155
-msgid "A short integer, type \"n\""
+#| msgid "A short integer, type \"n\""
+msgid "A short integer, type ‘n’"
 msgstr "Trumpas sveikasis skaičius, tipas „n“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:156
-msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+#| msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "16 bitų sveikasis skaičius su ženklu. Dar žiūrėkite raktą „integer-16-"
 "unsigned“."
@@ -380,55 +412,66 @@ msgid "Flags: choose-colors-you-love"
 msgstr "Požymiai: choose-colors-you-love"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
-msgid "Flags could be set by the \"enum\" attribute."
+#| msgid "Flags could be set by the \"enum\" attribute."
+msgid "Flags could be set by the “enum” attribute."
 msgstr "Požymiai gali būti nustatyti „enum“ atributu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:165
-msgid "An unsigned short integer, type \"q\""
+#| msgid "An unsigned short integer, type \"q\""
+msgid "An unsigned short integer, type ‘q’"
 msgstr "Sveikasis skaičius be ženklo, tipas „q“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+#| msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16 bitų sveikasis skaičius be ženklo. Dar žiūrėkite raktą „integer-16-"
 "signed“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:170
-msgid "An usual integer, type \"i\""
+#| msgid "An usual integer, type \"i\""
+msgid "An usual integer, type ‘i’"
 msgstr "Įprastinis sveikasis skaičius, tipas „i“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
-msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+#| msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32 bitų sveikasis skaičius su ženklu. Dar žiūrėkite raktą „integer-32-"
 "unsigned“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
-msgid "An unsigned usual integer, type \"u\""
+#| msgid "An unsigned usual integer, type \"u\""
+msgid "An unsigned usual integer, type ‘u’"
 msgstr "Sveikasis skaičius be ženklo, tipas „u“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
-msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+#| msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32 bitų sveikasis skaičius be ženklo. Dar žiūrėkite raktą „integer-32-"
 "signed“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
-msgid "A long integer, type \"x\""
+#| msgid "A long integer, type \"x\""
+msgid "A long integer, type ‘x’"
 msgstr "Ilgas sveikasis skaičius, tipas „x“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
-msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+#| msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64 bitų sveikasis skaičius su ženklu. Dar žiūrėkite raktą „integer-64-"
 "unsigned“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
-msgid "An unsigned long integer, type \"t\""
+#| msgid "An unsigned long integer, type \"t\""
+msgid "An unsigned long integer, type ‘t’"
 msgstr "Ilgasis sveikas skaičius be ženklo, tipas „t“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
-msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+#| msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64 bitų sveikasis skaičius be ženklo. Dar žiūrėkite raktą „integer-64-"
 "signed“."
@@ -448,13 +491,18 @@ msgstr ""
 "sveikasis skaičius gali būti nuo -5 iki 9."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
-msgid "A custom type, here \"(ii)\""
+#| msgid "A custom type, here \"(ii)\""
+msgid "A custom type, here ‘(ii)’"
 msgstr "Pasirinktinis tipas, čia „(ii)“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
+#| msgid ""
+#| "Dconf Editor lets you edit any settings type supported by GSettings, "
+#| "falling back on a string entry when it doesn't have a better way to do. "
+#| "Here is a tuple of two 32bit signed integers."
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn't have a better way to do. Here is a "
+"back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32bit signed integers."
 msgstr ""
 "Dconf redaktorius leidžia jums redaguoti bet kokius GSettings palaikomų tipų "
@@ -462,40 +510,53 @@ msgstr ""
 "yra dviejų 32 bitų sveikų skaičių su ženklu junginys."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:202
-msgid "A string, type \"s\""
+#| msgid "A string, type \"s\""
+msgid "A string, type ‘s’"
 msgstr "Simbolių eilutė, tipas „s“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
+#| msgid ""
+#| "The string type could accept any utf8 string. Note that an empty string "
+#| "\"''\" is not the same as NULL (nothing); see also the \"string-nullable"
+#| "\" key."
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string "
-"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
-"key."
+"The string type could accept any utf8 string. Note that an empty string “''” "
+"is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
 "Simbolių eilutė gali būti bet kokia utf8 eilutė. Pastebėsime, kad tuščia "
 "eilutė „''“ yra ne tas pats kaip NULL (nieko); taip pat žiūrėkite raktą "
 "„string-nullable“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:207
-msgid "A string array, type \"as\""
+#| msgid "A string array, type \"as\""
+msgid "A string array, type ‘as’"
 msgstr "Simbolių eilučių masyvas, tipas „as“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
+#| msgid ""
+#| "A string array contains any number of strings of whatever length. It may "
+#| "be an empty array, \"[]\"."
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
-"an empty array, \"[]\"."
+"an empty array, “[]”."
 msgstr ""
 "Simbolių eilučių masyvas turi bet kokį skaičių bet kokio ilgio eilučių. Tai "
 "gali būti tuščias masyvas, „[]“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
-msgid "A nullable string, type \"ms\""
+#| msgid "A nullable string, type \"ms\""
+msgid "A nullable string, type ‘ms’"
 msgstr "Galimai nenurodyta simbolių eilutė, tipas „ms“"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
+#| msgid ""
+#| "GSettings allows nullable types, that are similar to other types but "
+#| "could take a \"nothing\" value. A nullable string can take any string as "
+#| "value, including the empty string \"''\", or can be NULL (nothing)."
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a \"nothing\" value. A nullable string can take any string as value, "
-"including the empty string \"''\", or can be NULL (nothing)."
+"take a “nothing” value. A nullable string can take any string as value, "
+"including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
 "GSettings leidžia galimai nenurodytus tipus, kurie yra panašūs į kitus "
 "tipus, bet gali būti vertės „nieko“. Galimai nenurodyta simbolių eilutė gali "
@@ -507,8 +568,11 @@ msgid "A 1-choice enumeration"
 msgstr "1 pasirinkimo išvardinimas"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
+#| msgid ""
+#| "An enumeration could contain only one item, but that's probably an error. "
+#| "Dconf Editor warns you in that case."
 msgid ""
-"An enumeration could contain only one item, but that's probably an error. "
+"An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
 "Išvardinimas gali turėti tik vieną elementą, bet tai greičiausiai yra "
@@ -547,7 +611,8 @@ msgstr "Paieškos raktai"
 msgid "Print release version and exit"
 msgstr "Atspausdinti versiją ir išeiti"
 
-#: editor/dconf-editor.vala:96
+#. #. * * Copy action
+#. #: editor/dconf-editor.vala:96
 msgid "Copied to clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
@@ -587,6 +652,7 @@ msgstr "Požymiai"
 msgid "Double"
 msgstr "Dvigubo tikslumo"
 
+#. Translators: this handle type is an index; you may maintain the word "handle"
 #: editor/dconf-model.vala:208
 msgid "D-Bus handle type"
 msgstr "D-Bus rankenėlės tipas"
@@ -627,6 +693,7 @@ msgstr "teigiama"
 msgid "false"
 msgstr "neigiama"
 
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
 #: editor/dconf-model.vala:349
 msgid "nothing"
 msgstr "nieko"
@@ -650,6 +717,7 @@ msgstr ""
 msgid "I’ll be careful."
 msgstr "Būsiu atsargus."
 
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 #: editor/dconf-window.vala:138
 msgid "Show this dialog next time."
 msgstr "Rodyti šį dialogą kitą kartą."
@@ -773,40 +841,54 @@ msgstr "Raktas ištrintas."
 msgid "%s (key erased)"
 msgstr "%s (raktas ištrintas)"
 
-#: editor/key-list-box-row.vala:389
+#: editor/key-list-box-row.vala:263
+msgid "No summary provided"
+msgstr "Nėra pateikto santraukos"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:395
 msgid "Customize…"
 msgstr "Tinkinti…"
 
-#: editor/key-list-box-row.vala:392
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:398
 msgid "Set to default"
 msgstr "Nustatyti į numatytą"
 
-#: editor/key-list-box-row.vala:397
+#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
+#: editor/key-list-box-row.vala:403
 msgid "Dismiss change"
 msgstr "Atmesti pakeitimą"
 
-#: editor/key-list-box-row.vala:400
+#. Translators: "open folder" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:406
 msgid "Open"
 msgstr "Atverti"
 
-#: editor/key-list-box-row.vala:403 editor/key-list-box-row.vala:531
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: editor/key-list-box-row.vala:409 editor/key-list-box-row.vala:537
 #: editor/registry-info.ui:28
 msgid "Erase key"
 msgstr "Ištrinti raktą"
 
-#: editor/key-list-box-row.vala:406
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: editor/key-list-box-row.vala:412
 msgid "Do not erase"
 msgstr "Neištrinti"
 
-#: editor/key-list-box-row.vala:415
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:421
 msgid "Copy"
 msgstr "Kopijuoti"
 
-#: editor/key-list-box-row.vala:525
+#. Translators: "no change" option in the right-click menu on a key when on delayed mode
+#: editor/key-list-box-row.vala:531
 msgid "No change"
 msgstr "Nėra pakeitimo"
 
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:581 editor/registry-info.vala:235
 msgid "Default value"
 msgstr "Numatyta vertė"
 
@@ -834,6 +916,7 @@ msgstr "Pakeitimas bus pritaikytas jo paprašius arba jei užversite šį rodin�
 msgid "Changes will be delayed until you request it."
 msgstr "Pakeitimai bus atidėti iki jų paprašysite."
 
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:266
 #, c-format
 msgid "One gsettings operation delayed."
@@ -842,6 +925,7 @@ msgstr[0] "Laukia %u gsettings veiksmas."
 msgstr[1] "Laukia %u gsettings veiksmai."
 msgstr[2] "Laukia %u gsettings veiksmų."
 
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:270
 #, c-format
 msgid "One dconf operation delayed."
@@ -850,6 +934,8 @@ msgstr[0] "Atidėtas %u dconf veiksmas."
 msgstr[1] "Atidėti %u dconf veiksmai."
 msgstr[2] "Atidėta %u dconf veiksmų."
 
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:273
 #, c-format
 msgid "%s%s"
@@ -863,6 +949,10 @@ msgstr[0] "%u gsettings veiksmas."
 msgstr[1] "%u gsettings veiksmai."
 msgstr[2] "%u gsettings veiksmų."
 
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:278
 #, c-format
 msgid " and one dconf operation delayed."
@@ -903,6 +993,7 @@ msgstr "Santrauka"
 msgid "Description"
 msgstr "Aprašymas"
 
+#. Translators: as in datatype (integer, boolean, string, etc.)
 #: editor/registry-info.vala:84
 msgid "Type"
 msgstr "Tipas"
@@ -931,7 +1022,8 @@ msgstr "Naudoti numatytąją vertę"
 msgid "Custom value"
 msgstr "Pasirinktinė vertė"
 
-#: editor/registry-info.vala:296
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:298
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -941,13 +1033,14 @@ msgstr ""
 "į tuščia vertę. Simbolių eilutės bei objektų keliai turi būti apsupti "
 "kabutėmis."
 
-#: editor/registry-info.vala:298
+#: editor/registry-info.vala:300
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Simbolių eilutės, aprašai bei objektų keliai turi būti apsupti kabutėmis."
 
-#: editor/registry-info.vala:302
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:304
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -955,27 +1048,31 @@ msgstr ""
 "Naudokite raktinį žodį „nothing“ galimam tipui (prasidedančiam „m“) "
 "nustatyti į tuščią vertę."
 
-#: editor/registry-view.ui:95
+#: editor/registry-view.ui:101
 msgid "No keys in this path"
 msgstr "Nėra raktų šiame kelyje"
 
 #: editor/registry-view.vala:170
 #, c-format
-msgid "Cannot find folder \"%s\"."
+#| msgid "Cannot find folder \"%s\"."
+msgid "Cannot find folder “%s”."
 msgstr "Nepavyko rasti aplanko „%s“."
 
 #: editor/registry-view.vala:188
 #, c-format
-msgid "Cannot find key \"%s\" here."
+#| msgid "Cannot find key \"%s\" here."
+msgid "Cannot find key “%s” here."
 msgstr "Nepavyko rasti rakto „%s“ čia."
 
 #: editor/registry-view.vala:194
 #, c-format
-msgid "Key \"%s\" has been removed."
+#| msgid "Key \"%s\" has been removed."
+msgid "Key “%s” has been removed."
 msgstr "Raktas „%s“ buvo pašalintas."
 
-#~ msgid "The GNOME Project"
-#~ msgstr "GNOME projektas"
+#, fuzzy
+#~ msgid "dconf-editor"
+#~ msgstr "dconf Redaktorius"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
