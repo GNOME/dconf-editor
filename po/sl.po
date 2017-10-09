@@ -2,68 +2,69 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2012-2015.
+# Matej Urbančič <mateju@svn.gnome.org>, 2012–2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor\n"
-"POT-Creation-Date: 2016-12-31 09:12+0100\n"
-"PO-Revision-Date: 2015-02-23 22:07+0100\n"
+"editor&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-10-08 19:26+0000\n"
+"PO-Revision-Date: 2017-10-09 20:49+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
-"Language: sl\n"
+"Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
-msgstr ""
+msgstr "Ustvari zaznamek tega mesta"
 
 #: editor/bookmarks.ui:34
 msgid "Location bookmarked"
-msgstr ""
+msgstr "Mesto je dodano med zaznamke"
 
 #: editor/bookmarks.ui:35
 msgid "Toggle to bookmark this location"
-msgstr ""
+msgstr "Preklopi za dodajanje mesta med zaznamke"
 
 #: editor/bookmarks.ui:84
 msgid ""
 "Bookmarks will\n"
 "be added here"
 msgstr ""
+"Zaznamki bodo\n"
+"prikazani v tem polju"
 
 #: editor/bookmarks.ui:113
 msgid "Bookmarks"
-msgstr ""
+msgstr "Zaznamki"
 
 #: editor/bookmarks.ui:114
 msgid "Manage your bookmarks"
-msgstr ""
+msgstr "Urejanje zaznamkov"
 
 #: editor/bookmark.ui:30
 msgid "Remove"
-msgstr ""
+msgstr "Odstrani"
 
 #: editor/bookmark.ui:31
 msgid "Remove this bookmark"
-msgstr ""
+msgstr "Odstrani zaznamek"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
-msgstr "Urejevalnik dConf"
+msgstr "Urejevalnik Dconf"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
-msgstr ""
+msgstr "Grafično orodje za urejanje podatkovne zbirke dconf"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
@@ -71,42 +72,48 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
+"Urejevalnik Dconf je orodje, ki omogoča neposredno urejanje nastavitev "
+"podatkovne zbirke dconf. Orodje je nepogrešljivo za razvijalce programske "
+"opreme, ki uporabljajo te nastavitve."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
+"Neposredno urejanje nastavitev zahteva poglobljeno poznavanje programa in "
+"lahko povzroči nepravilno delovanje sistema."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:25
 msgid "Browse the keys used by installed applications"
-msgstr ""
+msgstr "Prebrskaj med ključi, ki jih uporabljajo nameščeni programi"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:29
 msgid "Read keys descriptions and edit their values"
-msgstr ""
+msgstr "Preberi opise ključev in uredi vrednosti"
+
+#. a translatable version of project_group
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+msgid "The GNOME Project"
+msgstr "Projekt GNOME"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
 #: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
 msgid "dconf Editor"
-msgstr "Urejevalnik dConf"
+msgstr "Urejevalnik Dconf"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:4
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "Urejevalnik nastavitev za dconf"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
 msgid "Directly edit your entire configuration database"
 msgstr "Neposredno urejanje celotne podatkovne zbirke nastavitev"
 
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
-msgstr "nastavitve;konfiguracija;sistem;"
-
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "Urejevalnik dConf"
+msgstr "nastavitve;konfiguracija;sistem;prilagajanje;"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -114,7 +121,7 @@ msgstr "Širina okna"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:19
 msgid "The width of the main window in pixels."
-msgstr "Širina glavnega okna v točkah"
+msgstr "Širina glavnega okna v točkah."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:23
 msgid "The height of the window"
@@ -122,7 +129,7 @@ msgstr "Višina okna"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:24
 msgid "The height of the main window in pixels."
-msgstr "Višina glavnega okna v točkah"
+msgstr "Višina glavnega okna v točkah."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:28
 #: editor/ca.desrt.dconf-editor.gschema.xml:29
@@ -131,107 +138,129 @@ msgstr "Zastavica za omogočanje prikaza v razpetem načinu"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:33
 msgid "A list of bookmarked paths"
-msgstr ""
+msgstr "Seznam zaznamkov s potmi"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
+"Vsebuje vse poti, ki jih je uporabnik označil kot zaznamke, kot polje nizov."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:38
 msgid "A flag to restore the last view"
-msgstr ""
+msgstr "Zastavica za obnovitev zadnjega pogleda"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid ""
-"If 'true', Dconf Editor tries at launch to navigate to the path described in "
-"the 'saved-view' key."
+"If “true”, Dconf Editor tries at launch to navigate to the path described in "
+"the “saved-view” key."
 msgstr ""
+"Izbrana možnost omogoča poskus zagona programa na poti, določeni v ključu "
+"shranjenega pogleda »saved-view«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A path to restore the last view"
-msgstr ""
+msgstr "Pot za obnovitev zadnjega pogleda"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
-"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
+"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
+"V kolikor je za ključ za obnovitev pogleda »restore-view« možnost izbrana, "
+"poskuša program zagnati program na tej poti."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "Show initial warning"
-msgstr ""
+msgstr "Pokaži začetno opozorilo"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
-"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
+"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"Izbrana možnost omogoči odpiranje pogovornega okna z opozorilom za "
+"uporabnika."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:53
-#, fuzzy
 msgid "A flag to enable small rows for keys list"
-msgstr "Zastavica za omogočanje celozaslonskega načina"
+msgstr "Zastavica za omogočanje manjših vrstic za sezname ključev"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
-msgid "If 'true', the keys list use smaller rows."
+msgid "If “true”, the keys list use smaller rows."
 msgstr ""
+"Izbrana možnost določa, da bo seznam ključev prikazan v manjših vrsticah."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for bookmarks list"
-msgstr ""
+msgstr "Zastavica, ki omogoča manjše vrstice za sezname ključev"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
-msgid "If 'true', the bookmarks list use smaller rows."
+msgid "If “true”, the bookmarks list use smaller rows."
 msgstr ""
+"Izbrana možnost določa, da bo seznam zaznamkov prikazan v manjših vrsticah."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
 msgid "Change the behaviour of a key value change request"
-msgstr ""
+msgstr "Način odziva pri zahtevi spremembe vrednosti ključa"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:69
 msgid ""
-"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
+"The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The 'safe' value asks for confirmation in "
+"including intermediate states. The “safe” value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
+"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
 "values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The 'always-delay' value adds "
+"change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
+"»Ne-varna« vrednost ni priporočena: za ključe vrste »non-special-cased« "
+"program spremeni vrednost vsakič, ko se karkoli spremeni v vnosu, vključno z "
+"vmesnimi stanji. »Varna« vrednostzahteva potrditev v teh primerih, vendar pa "
+"dovoli hitre spremembe za boolove in prazne boolove vrednosti, oštevilčenja "
+"in zastavice. Vrednosti »always-confirm-implicit« in »always-confirm-"
+"explicit« zahtevajo potrditev; prva uveljavi spremembe, če se spremeni pot, "
+"druga pa spremembo zavrže. Vrednost »always-delay« določi sistem zamika "
+"vsake spremembe, s čimer je mogoče uveljaviti več ključev naenkrat."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
-msgid "A boolean, type \"b\""
-msgstr ""
+msgid "A boolean, type ‘b’"
+msgstr "Boolova vrednost, vrste »b«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:93
-msgid "Booleans can only take two values, \"true\" or \"false\"."
-msgstr ""
+msgid "Booleans can only take two values, “true” or “false”."
+msgstr "Boolova spremenljivka ima lahko le dve vrednosti; »prav« in »napak«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:97
-msgid "A nullable boolean, type \"mb\""
-msgstr ""
+msgid "A nullable boolean, type ‘mb’"
+msgstr "Praznjena boolova vrednost, vrste »mb«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a \"nothing\" value. A nullable boolean can only take three values, "
-"\"true\", \"false\" and \"nothing\"."
+"take a “nothing” value. A nullable boolean can only take three values, "
+"“true”, “false” and “nothing”."
 msgstr ""
+"V okolju GSettings so dovoljene prazne vrste vpisov, ki so sicer podobne "
+"drugim vrstam, vendar podpirajo tudi vrednost »nič – nothing«. Prazna "
+"Boolova vrednost ima lahko na primer le tri vrednosti; »prav«, »napak« in "
+"»nič«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
-msgid "A byte (unsigned), type \"y\""
-msgstr ""
+msgid "A byte (unsigned), type ‘y’"
+msgstr "Bajt (nepodpisan), vrste »y«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
+"Bitna vrednost je celo število med 0 in 255. Uporabljena je lahko za "
+"določevanje znakov."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:107
-msgid "A bytestring, type \"ay\""
-msgstr ""
+msgid "A bytestring, type ‘ay’"
+msgstr "Bajtni niz, vrste »ay«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
 msgid ""
@@ -239,20 +268,25 @@ msgid ""
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
+"Polje bitnih nizov se uporablja za navajanje nizov, ki niso nujno zapisani v "
+"naboru UTF-8. V takih primerih velja pravilo, da je kot zadnji znak polja "
+"zapisan znak »nul terminator«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:112
-msgid "A bytestring array, type \"aay\""
-msgstr ""
+msgid "A bytestring array, type ‘aay’"
+msgstr "Polje bajtnega niza, vrste »aay«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
+"Polje bitnih nizov se uporablja za navajanje nizov, ki niso nujno zapisani v "
+"naboru UTF-8."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:117
-msgid "A D-Bus handle type, type \"h\""
-msgstr ""
+msgid "A D-Bus handle type, type ‘h’"
+msgstr "Ročnik vodila D-Bus, vrste »h«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:118
 msgid ""
@@ -261,10 +295,13 @@ msgid ""
 "Bus message. If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
+"Ročnik je 32-bitno podpisano celo število, ki je po pretvorbi uporabljeno "
+"kot kazalo za polje opisnika datoteke, poslano skupaj s sporočilom D-Bus. V "
+"kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
-msgid "A D-Bus object path, type \"o\""
-msgstr ""
+msgid "A D-Bus object path, type ‘o’"
+msgstr "Pot predmeta vodila D-Bus, vrste »o«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:125
 msgid ""
@@ -272,21 +309,26 @@ msgid ""
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"Pot predmeta določa predmete vodila D-Bus na podanem cilju vodila. V kolikor "
+"z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
-msgid "A D-Bus object path array, type \"ao\""
-msgstr ""
+msgid "A D-Bus object path array, type ‘ao’"
+msgstr "Polje poti predmeta vodila D-Bus, vrste »ao«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:132
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: \"[]\"). If you are not interacting with D-Bus, then there is no "
-"reason to make use of this type."
+"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
+"Polje poti predmeta lahko vključuje poljubno število poti predmeta (vključno "
+"s praznim poljem » [] «. V kolikor z vodilom ni posebnih povezav, te vrste "
+"ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A D-Bus signature, type \"g\""
-msgstr ""
+msgid "A D-Bus signature, type ‘g’"
+msgstr "Podpis vodila D-Bus, vrste »g«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:139
 msgid ""
@@ -294,84 +336,95 @@ msgid ""
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"Podpis vodila D-Bus je niz, ki je uporabljen kot vrsta za način vodila "
+"oziroma sporočilo. V kolikor z vodilom ni posebnih povezav, te vrste ni "
+"treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-msgid "A double, type \"d\""
-msgstr ""
+msgid "A double, type ‘d’"
+msgstr "Dvojno, vrste »d«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:146
 msgid "A double value could represent any real number."
-msgstr ""
+msgstr "Dvojna vrednost lahko predstavlja katerokoli realno število."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:150
 msgid "A 5-choices enumeration"
-msgstr ""
+msgstr "5-številčno oštevilčenje"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid ""
-"Enumerations could be done either with the \"enum\" attribute, or with a "
-"\"choices\" tag."
+"Enumerations could be done either with the “enum” attribute, or with a "
+"“choices” tag."
 msgstr ""
+"Oštevilčenje je mogoče izvesti prek atributa »enum« ali pa z oznakami "
+"»choices«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:155
-msgid "A short integer, type \"n\""
-msgstr ""
+msgid "A short integer, type ‘n’"
+msgstr "Kratko celo število, vpis »n«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:156
-msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
+msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
+"16-bitno podpisano celo število. Oglejte si tudi ključ »integer-16-unsigned«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:160
 msgid "Flags: choose-colors-you-love"
-msgstr ""
+msgstr "Zastavice: izbor barv po meri"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
-msgid "Flags could be set by the \"enum\" attribute."
-msgstr ""
+msgid "Flags could be set by the “enum” attribute."
+msgstr "Zastavice je mogoče nastaviti tudi prek atributa »enum«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:165
-msgid "An unsigned short integer, type \"q\""
-msgstr ""
+msgid "An unsigned short integer, type ‘q’"
+msgstr "Nepodpisano kratko celo število vrste »q«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
+msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
+"16-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-16-signed«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:170
-msgid "An usual integer, type \"i\""
-msgstr ""
+msgid "An usual integer, type ‘i’"
+msgstr "Običajno celo število vrste »i«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
-msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
+msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
+"32-bitno podpisano celo število. Oglejte si tudi ključ »integer-32-unsigned«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
-msgid "An unsigned usual integer, type \"u\""
-msgstr ""
+msgid "An unsigned usual integer, type ‘u’"
+msgstr "Nepodpisano običajno celo število, vpis »u«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
-msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
+msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
+"32-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-32-signed«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
-msgid "A long integer, type \"x\""
-msgstr ""
+msgid "A long integer, type ‘x’"
+msgstr "Dolgo celo število vrste »x«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
-msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
+msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
+"64-bitno podpisano celo število. Oglejte si tudi ključ »integer-64-unsigned«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
-msgid "An unsigned long integer, type \"t\""
-msgstr ""
+msgid "An unsigned long integer, type ‘t’"
+msgstr "Nepodpisano dolgo celo število, vpis »t«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
-msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
+msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
+"64-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-64-signed«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A number with range"
-msgstr ""
+msgstr "Številka z obsegom"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:193
 msgid ""
@@ -379,64 +432,79 @@ msgid ""
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -5 and 9."
 msgstr ""
+"Vsaka številska nastavitev (cela števila, nepodpisana cela števila vseh vrst "
+"in dvojna števila) je omejena z območjem vrednosti. Navedeno število je "
+"lahko le celo število med –5 in 9."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
-msgid "A custom type, here \"(ii)\""
-msgstr ""
+msgid "A custom type, here ‘(ii)’"
+msgstr "Vrsta po meri, tukaj »(ii)«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn't have a better way to do. Here is a "
+"back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32bit signed integers."
 msgstr ""
+"Urejevalnik Dconf omogoča urejanje katerekoli nastavitve, ki jo podpira "
+"okolje GSettings, se pa nastavitev povrne na vpisano vrednost, če ni drugače "
+"navedeno. Navedeno je urejen 32-bitni seznam."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:202
-msgid "A string, type \"s\""
-msgstr ""
+msgid "A string, type ‘s’"
+msgstr "Niz, vrste »s«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string "
-"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
-"key."
+"The string type could accept any utf8 string. Note that an empty string “''” "
+"is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
+"Vrsta »niz« lahko sprejme katerikoli niz, zapisan v naboru UTF-8. Nevpisan "
+"niz » '' « ni enako praznemu nizu (NULL); za več podrobnosti si oglejte tudi "
+"ključ »string-nullable«."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:207
-msgid "A string array, type \"as\""
-msgstr ""
+msgid "A string array, type ‘as’"
+msgstr "Polje niza, vrste »as«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
-"an empty array, \"[]\"."
+"an empty array, “[]”."
 msgstr ""
+"Polje nizov vsebuje kakršnokoli število nizov s kakršnokoli dolžino. Lahko "
+"je celo prazno polje » [] «."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
-msgid "A nullable string, type \"ms\""
-msgstr ""
+msgid "A nullable string, type ‘ms’"
+msgstr "Praznjen niz, vrste »ms«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a \"nothing\" value. A nullable string can take any string as value, "
-"including the empty string \"''\", or can be NULL (nothing)."
+"take a “nothing” value. A nullable string can take any string as value, "
+"including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
+"V okolju GSettings so dovoljene prazne vrednosti, torej vrednosti, ki so "
+"podobne drugim vrstam, vendar imajo določeno vrednost »nič - nothing«. "
+"Praznjen niz lahko prevzame katerokoli vrednost, vključno z nevpisano "
+"vrednostjo » '' « in pravo prazno vrednostjo (NULL)"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
-#, fuzzy
 msgid "A 1-choice enumeration"
-msgstr "Oštevilčenje"
+msgstr "Oštevilčenje ene možnosti"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid ""
-"An enumeration could contain only one item, but that's probably an error. "
+"An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
+"Oštevilčenje lahko vključuje le en predmet, vendar je to najverjetneje "
+"napaka. Program v tem primeru pokaže opozorilo."
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tipkovne bližnjice"
 
 #: editor/dconf-editor-menu.ui:10
 msgid "_About"
@@ -448,34 +516,37 @@ msgstr "_Končaj"
 
 #: editor/dconf-editor.ui:49
 msgid "Actions"
-msgstr ""
+msgstr "Dejanja"
 
 #. TODO 1/3 Informations
 #: editor/dconf-editor.ui:50
 msgid "Current view actions"
-msgstr ""
+msgstr "Pogled trenutnih dejanj"
 
 #: editor/dconf-editor.ui:77
 msgid "Search"
-msgstr ""
+msgstr "Poišči"
 
 #: editor/dconf-editor.ui:78
 msgid "Search keys"
-msgstr ""
+msgstr "Poišči ključe"
 
 #: editor/dconf-editor.vala:22
 msgid "Print release version and exit"
 msgstr "Izpiši različico programa in končaj"
 
-#: editor/dconf-editor.vala:96
+#. #. * * Copy action
+#. #: editor/dconf-editor.vala:96
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Kopirano v odložišče"
 
 #: editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2016 – Arnaud Bonatti"
 msgstr ""
+"Avtorske pravice © 2010–2014 – Canonical Ltd\n"
+"Avtorske pravice © 2015–2017 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:154
 msgid "translator-credits"
@@ -490,9 +561,8 @@ msgid "String"
 msgstr "Niz"
 
 #: editor/dconf-model.vala:199
-#, fuzzy
 msgid "String array"
-msgstr "Niz"
+msgstr "Polje nizov"
 
 #: editor/dconf-model.vala:201
 msgid "Enumeration"
@@ -500,302 +570,325 @@ msgstr "Oštevilčenje"
 
 #: editor/dconf-model.vala:203
 msgid "Flags"
-msgstr ""
+msgstr "Zastavice"
 
 #: editor/dconf-model.vala:205
 msgid "Double"
-msgstr ""
+msgstr "Dvojno"
 
+#. Translators: this handle type is an index; you may maintain the word "handle"
 #: editor/dconf-model.vala:208
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "Vrsta ročnika vodila D-Bus"
 
 #: editor/dconf-model.vala:210
 msgid "D-Bus object path"
-msgstr ""
+msgstr "Pot predmeta vodila D-Bus"
 
 #: editor/dconf-model.vala:212
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "Polje poti predmeta D-Bus"
 
 #: editor/dconf-model.vala:214
 msgid "D-Bus signature"
-msgstr ""
+msgstr "Podpis vodila D-Bus"
 
 #: editor/dconf-model.vala:222
-#, fuzzy
 msgid "Integer"
-msgstr "Celo število [%s ... %s]"
+msgstr "Celo število"
 
 #: editor/dconf-model.vala:337
 msgid "True"
-msgstr ""
+msgstr "Prav"
 
 #: editor/dconf-model.vala:339
 msgid "False"
-msgstr ""
+msgstr "Napak"
 
 #: editor/dconf-model.vala:340
 msgid "Nothing"
-msgstr ""
+msgstr "Nič"
 
 #: editor/dconf-model.vala:345
 msgid "true"
-msgstr ""
+msgstr "prav"
 
 #: editor/dconf-model.vala:347
 msgid "false"
-msgstr ""
+msgstr "napak"
 
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
 #: editor/dconf-model.vala:349
 msgid "nothing"
-msgstr ""
+msgstr "nič"
 
 #: editor/dconf-view.vala:438
 msgid "This value is invalid for the key type."
-msgstr ""
+msgstr "Vrednost je za to vrsto ključa neveljavna."
 
 #: editor/dconf-window.vala:132
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
+"Veseli nas, da za prilagajanje sistemskih nastavitev uporabljate "
+"urejevalnikj DConf!"
 
 #: editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
+"Nekatere možnosti vplivajo na delovanje sistemskih programov, zato je "
+"previdnost priporočena!"
 
 #: editor/dconf-window.vala:134
 msgid "I’ll be careful."
-msgstr ""
+msgstr "Razumem opozorilo!"
 
+#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 #: editor/dconf-window.vala:138
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "Naslednjič znova pokaži to pogovorno okno."
 
 #: editor/dconf-window.vala:248
 msgid "Copy current path"
-msgstr ""
+msgstr "Kopiraj trenutno pot"
 
 #: editor/dconf-window.vala:253
 msgid "Reset visible keys"
-msgstr ""
+msgstr "Ponastavi vse vidne ključe"
 
 #: editor/dconf-window.vala:254
 msgid "Reset recursively"
-msgstr ""
+msgstr "Ponastavi po strukturi map"
 
 #: editor/dconf-window.vala:262
 msgid "Enter delay mode"
-msgstr ""
+msgstr "Vpis način zamika"
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Dejanja"
 
 #: editor/help-overlay.ui:15
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "Meni zaznamkov"
 
 #: editor/help-overlay.ui:22
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "Ustvari zaznamek te poti"
 
 #: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "Odstrani zaznamek te poti"
 
 #: editor/help-overlay.ui:36
 msgctxt "shortcut window"
 msgid "Search bar"
-msgstr ""
+msgstr "Iskalna vrstica"
 
 #: editor/help-overlay.ui:43
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "Meni dejanj"
 
 #: editor/help-overlay.ui:59
 msgctxt "shortcut window"
 msgid "Clipboard"
-msgstr ""
+msgstr "Odložišče"
 
 #: editor/help-overlay.ui:63
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "Kopiraj opisnik"
 
 #: editor/help-overlay.ui:70
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr ""
+msgstr "Kopiraj pot"
 
 #: editor/help-overlay.ui:79
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr ""
+msgstr "Navigacija prek orodne vrstice poti"
 
 #: editor/help-overlay.ui:83
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "Odpri korensko mapo"
 
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "Odpri nadrejeno mapo"
 
 #: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr ""
+msgstr "Odpri neposredni podrejeni dejavni predmet"
 
 #: editor/help-overlay.ui:104
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
+msgstr "Odpri zadnji podrejeni predmet"
 
 #: editor/help-overlay.ui:113
 msgctxt "shortcut window"
 msgid "Generic"
-msgstr ""
+msgstr "Splošno"
 
 #: editor/help-overlay.ui:117
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr ""
+msgstr "Pokaži to pomoč"
 
 #: editor/help-overlay.ui:124
-#, fuzzy
 msgctxt "shortcut window"
 msgid "About"
-msgstr "_O programu"
+msgstr "O programu"
 
 #: editor/help-overlay.ui:131
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "_Končaj"
+msgstr "Končaj"
 
 #: editor/key-list-box-row.vala:162
-#, fuzzy
 msgid "No Schema Found"
-msgstr "Ni sheme"
+msgstr "Ni najdene sheme"
 
 #: editor/key-list-box-row.vala:171
 msgid "Key erased."
-msgstr ""
+msgstr "Ključ je izbrisan!"
 
 #: editor/key-list-box-row.vala:187
 #, c-format
 msgid "%s (key erased)"
-msgstr ""
+msgstr "%s (ključ je izbrisan)"
 
-#: editor/key-list-box-row.vala:389
+#: editor/key-list-box-row.vala:263
+msgid "No summary provided"
+msgstr "Ni podanega povzetka"
+
+#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:395
 msgid "Customize…"
-msgstr ""
+msgstr "Prilagodi ..."
 
-#: editor/key-list-box-row.vala:392
-#, fuzzy
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:398
 msgid "Set to default"
-msgstr "Povrni na privzeto"
+msgstr "Nastavi na privzeto"
 
-#: editor/key-list-box-row.vala:397
+#. Translators: "dismiss change" action in the right-click menu on a key with pending changes
+#: editor/key-list-box-row.vala:403
 msgid "Dismiss change"
-msgstr ""
+msgstr "Opusti spremembe"
 
-#: editor/key-list-box-row.vala:400
+#. Translators: "open folder" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:406
 msgid "Open"
-msgstr ""
+msgstr "Odpri"
 
-#: editor/key-list-box-row.vala:403 editor/key-list-box-row.vala:531
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: editor/key-list-box-row.vala:409 editor/key-list-box-row.vala:537
 #: editor/registry-info.ui:28
 msgid "Erase key"
-msgstr ""
+msgstr "Izbriši ključ"
 
-#: editor/key-list-box-row.vala:406
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: editor/key-list-box-row.vala:412
 msgid "Do not erase"
-msgstr ""
+msgstr "Ne izbriši"
 
-#: editor/key-list-box-row.vala:415
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:421
 msgid "Copy"
-msgstr ""
+msgstr "Kopiraj"
 
-#: editor/key-list-box-row.vala:525
+#. Translators: "no change" option in the right-click menu on a key when on delayed mode
+#: editor/key-list-box-row.vala:531
 msgid "No change"
-msgstr ""
+msgstr "Pusti nespremenjeno"
 
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
-#, fuzzy
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:581 editor/registry-info.vala:235
 msgid "Default value"
-msgstr "Privzeto:"
+msgstr "Privzeta vrednost"
 
 #: editor/modifications-revealer.ui:49
 msgid "Apply"
-msgstr ""
+msgstr "Uveljavi"
 
 #: editor/modifications-revealer.vala:141
 msgid "Nothing to reset."
-msgstr ""
+msgstr "Ni sprememb za ponastavitev."
 
 #: editor/modifications-revealer.vala:241
 msgid "The value is invalid."
-msgstr ""
+msgstr "Vrednost ni veljavna"
 
 #: editor/modifications-revealer.vala:245
 msgid "The change will be dismissed if you quit this view without applying."
-msgstr ""
+msgstr "Sprememba bo opuščena, če pogled zapustite brez uveljavitve."
 
 #: editor/modifications-revealer.vala:247
 msgid "The change will be applied on such request or if you quit this view."
-msgstr ""
+msgstr "Sprememba bo uveljavljena ob taki zahtevi, če pogled zapustite."
 
 #: editor/modifications-revealer.vala:264
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "Spremembe bodo uveljavljene z zamikom glede na zahtevo."
 
+#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:266
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%u opravil gsettings je zadržanih."
+msgstr[1] "%u opravilo gsettings je zadržano."
+msgstr[2] "%u opravil gsettings sta zadržani."
+msgstr[3] "%u opravil gsettings so zadržana."
 
+#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:270
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%u opravil dconf je zadržanih."
+msgstr[1] "%u opravil dconf je zadržano."
+msgstr[2] "%u opravil dconf sta zadržani."
+msgstr[3] "%u opravil dconf so zadržana."
 
+#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:273
 #, c-format
 msgid "%s%s"
-msgstr ""
+msgstr "%s%s"
 
 #: editor/modifications-revealer.vala:273
-#, fuzzy, c-format
+#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "nastavitve;konfiguracija;sistem;"
-msgstr[1] "nastavitve;konfiguracija;sistem;"
-msgstr[2] "nastavitve;konfiguracija;sistem;"
-msgstr[3] "nastavitve;konfiguracija;sistem;"
+msgstr[0] "%u opravil nastavitev"
+msgstr[1] "%u opravilo nastavitev"
+msgstr[2] "%u opravili nastavitev"
+msgstr[3] "%u opravila nastavitev"
 
+#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, and
+#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:278
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] " in %u opravil dconf je zadržanih."
+msgstr[1] " in %u opravilo dconf je zadržano."
+msgstr[2] " in %u opravil dconf sta zadržani."
+msgstr[3] " in %u opravil dconf so zadržana."
 
 #: editor/registry-info.ui:22
 msgid ""
@@ -804,6 +897,10 @@ msgid ""
 "stop the use of this key, or may use a relocatable schema for defining its "
 "keys."
 msgstr ""
+"Na voljo ni ustrezne sheme. Urejevalnik ne prepozna sheme, vezane na ta "
+"ključ. Program, ki je ustvaril ključ, je morda odstranjen, lahko je s "
+"posodobitvijo ta ključ postal opuščen, ali pa po novem uporablja novo "
+"dodeljeno shemo za določanje ključev."
 
 #: editor/registry-info.ui:56
 msgid ""
@@ -811,97 +908,215 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"Oštevilčenje ponudi le eno možnost. To je najverjetneje napaka programa, ki "
+"je vpisalo shemo. Če je mogoče, pošljite poročilo o napaki."
 
 #: editor/registry-info.vala:80
-#, fuzzy
 msgid "Schema"
-msgstr "Shema:"
+msgstr "Shema"
 
 #: editor/registry-info.vala:81
-#, fuzzy
 msgid "Summary"
-msgstr "Povzetek:"
+msgstr "Povzetek"
 
 #: editor/registry-info.vala:82
-#, fuzzy
 msgid "Description"
-msgstr "Opis:"
+msgstr "Opis"
 
+#. Translators: as in datatype (integer, boolean, string, etc.)
 #: editor/registry-info.vala:84
-#, fuzzy
 msgid "Type"
-msgstr "Vrsta:"
+msgstr "Vrsta"
 
 #: editor/registry-info.vala:86
 msgid "Minimum"
-msgstr ""
+msgstr "Najmanj"
 
 #: editor/registry-info.vala:87
 msgid "Maximum"
-msgstr ""
+msgstr "Največ"
 
 #: editor/registry-info.vala:88
-#, fuzzy
 msgid "Default"
-msgstr "Privzeto:"
+msgstr "Privzeto"
 
 #: editor/registry-info.vala:108
 msgid "Current value"
-msgstr ""
+msgstr "Trenutna vrednost"
 
 #: editor/registry-info.vala:134
 msgid "Use default value"
-msgstr ""
+msgstr "Uporabi privzeto vrednost"
 
 #: editor/registry-info.vala:192
 msgid "Custom value"
-msgstr ""
+msgstr "Vrednost po meri"
 
-#: editor/registry-info.vala:296
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:298
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"Uporabite ključno besedo »nothing« za nastavitev vrste (ki se začne z »m«) "
+"na prazno vrednost. Nizi podpisi in predmetne poti morajo biti zapisane "
+"znotraj navednic."
 
-#: editor/registry-info.vala:298
+#: editor/registry-info.vala:300
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr ""
+msgstr "Nizi podpisi in predmetne poti morajo biti zapisane znotraj navednic."
 
-#: editor/registry-info.vala:302
+#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:304
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"Uporabite ključno besedo »nothing« za nastavitev vrste (ki se začne z »m«) "
+"na prazno vrednost."
 
-#: editor/registry-view.ui:95
+#: editor/registry-view.ui:101
 msgid "No keys in this path"
-msgstr ""
+msgstr "Na tej poti ni ključev"
 
 #: editor/registry-view.vala:170
 #, c-format
-msgid "Cannot find folder \"%s\"."
-msgstr ""
+msgid "Cannot find folder “%s”."
+msgstr "Ni mogoče najti mape »%s«."
 
 #: editor/registry-view.vala:188
 #, c-format
-msgid "Cannot find key \"%s\" here."
-msgstr ""
+msgid "Cannot find key “%s” here."
+msgstr "Na tem mestu ni mogoče najti ključa »%s«."
 
 #: editor/registry-view.vala:194
 #, c-format
-msgid "Key \"%s\" has been removed."
-msgstr ""
+msgid "Key “%s” has been removed."
+msgstr "Ključ »%s« je bil odstranjen."
+
+#~ msgid "dconf-editor"
+#~ msgstr "Urejevalnik Dconf"
+
+#~ msgid "A flag to sort keys list case-sensitively"
+#~ msgstr "Zastavica za razvrščanje seznama ključev upoštevajoč velikost črk"
+
+#~ msgid ""
+#~ "GSettings doesn’t allow keys to use upper-case in their names, but "
+#~ "installation paths of schemas can. If “true”, the keys list is sorted "
+#~ "case-sensitively, with in usual order upper-case folders first."
+#~ msgstr ""
+#~ "V okolju GSettings uporaba velikih črk v imenih ključev ni dovoljena, za "
+#~ "namestitvene poti shem pa to ni omejitev. Izbrana možnost omogoča, da bo "
+#~ "seznam ključev razvrščen upoštevajoč velikost črk, z velikimi spredaj."
+
+#~ msgid "A 1-choice integer value"
+#~ msgstr "Enoizbirna celoštevilska vrednost"
+
+#~ msgid ""
+#~ "A range could limit an integer key to only allow one value, but that’s "
+#~ "probably an error. Dconf Editor warns you in that case."
+#~ msgstr ""
+#~ "Obseg vrednosti lahko omeji celoštevilčni ključ na le eno vrednost, "
+#~ "vendar je to najverjetneje napaka. Program v tem primeru pokaže opozorilo."
+
+#~ msgctxt "shortcut window"
+#~ msgid "Keys list actions"
+#~ msgstr "Dejanja seznama ključev"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Contextual menu"
+#~ msgstr "Vsebinski meni"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Set to default"
+#~ msgstr "Nastavi na privzeto"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Toggle boolean value"
+#~ msgstr "Preklopi Boolovo vrednost"
+
+#~ msgid ""
+#~ "This integer key can only take one value. That’s probably an error of the "
+#~ "application that installed this schema. If possible, please open a bug "
+#~ "about it."
+#~ msgstr ""
+#~ "Celoštevilčni ključ ima lahko le eno vrednost. To je najverjetneje napaka "
+#~ "programa pri vpisu sheme. Če je mogoče, pošljite poročilo o napaki."
+
+#~ msgid "Sort preferences have changed. Do you want to reload the view?"
+#~ msgstr ""
+#~ "Nastavitve razvrščanja so spremenjene. Ali želite ponovno naložiti pogled?"
+
+#~ msgid "Reload"
+#~ msgstr "Ponovno naloži"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Current row menu"
+#~ msgstr "Trenutni meni vrstice"
+
+#~ msgid "Double [%s..%s]"
+#~ msgstr "Dvojno [%s..%s]"
+
+#~ msgid "Integer [%s..%s]"
+#~ msgstr "Celo število [%s ... %s]"
+
+#~ msgid "Oops! Cannot find something at this path."
+#~ msgstr "Ops! Na tej poti ni ničesar."
+
+#~ msgctxt "shortcut window"
+#~ msgid "Expand"
+#~ msgstr "Razširi"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Expand all subtrees"
+#~ msgstr "Razširi vse podmape"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Collapse"
+#~ msgstr "Zloži"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Collapse all subtrees"
+#~ msgstr "Zloži vse podmape"
+
+#~ msgid "Key Editor"
+#~ msgstr "Urejevalnik ključa"
+
+#~ msgid "Cancel"
+#~ msgstr "Prekliči"
+
+#, fuzzy
+#~ msgid "The theme of the navigation list"
+#~ msgstr "Navigation"
 
 #~ msgid "_Find…"
 #~ msgstr "_Najdi ..."
 
+#~ msgid "Set to Default"
+#~ msgstr "Povrni na privzeto"
+
+#~ msgid "Schema:"
+#~ msgstr "Shema:"
+
+#~ msgid "Summary:"
+#~ msgstr "Povzetek:"
+
+#~ msgid "Description:"
+#~ msgstr "Opis:"
+
+#~ msgid "Type:"
+#~ msgstr "Vrsta:"
+
+#~ msgid "Default:"
+#~ msgstr "Privzeto:"
+
 #~ msgid "Next"
 #~ msgstr "Naprej"
 
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Dvojno [%s..%s]"
+#~ msgid "No schema"
+#~ msgstr "Ni sheme"
 
 #~ msgid "Not found"
 #~ msgstr "Ni zadetkov"
