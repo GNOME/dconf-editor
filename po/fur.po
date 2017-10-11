@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-04-27 14:26+0000\n"
-"PO-Revision-Date: 2017-05-05 18:00+0200\n"
+"POT-Creation-Date: 2017-10-09 18:50+0000\n"
+"PO-Revision-Date: 2017-10-11 08:31+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -112,6 +112,11 @@ msgstr "Modifiche diretementri l'intîr database de configurazion"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "impostazions; configurazion;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -1054,10 +1059,6 @@ msgstr "Impussibil cjatâ chi la clâf “%s”."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "La clâf “%s” e je stade gjavade."
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "Editôr di dconf"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
