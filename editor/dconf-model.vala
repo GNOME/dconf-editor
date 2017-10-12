@@ -563,12 +563,28 @@ public class SettingsModel : Object, Gtk.TreeModel
 
     public SettingsModel ()
     {
-        SettingsSchemaSource settings_schema_source = SettingsSchemaSource.get_default ();
+        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+        root = new Directory (null, "/", client);
+
+        if (settings_schema_source != null)
+            parse_schemas ((!) settings_schema_source);
+
+        create_dconf_views (root);
+
+        client.watch_sync ("/");
+    }
+
+    public Directory get_root_directory ()
+    {
+        return root;
+    }
+
+    private void parse_schemas (SettingsSchemaSource settings_schema_source)
+    {
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
-        settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
-        root = new Directory (null, "/", client);
+        settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
         foreach (string schema_id in non_relocatable_schemas)
         {
@@ -580,15 +596,6 @@ public class SettingsModel : Object, Gtk.TreeModel
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
             view.init_gsettings_keys ((!) settings_schema);
         }
-
-        create_dconf_views (root);
-
-        client.watch_sync ("/");
-    }
-
-    public Directory get_root_directory ()
-    {
-        return root;
     }
 
     /*\
