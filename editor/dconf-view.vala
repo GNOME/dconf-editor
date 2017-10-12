@@ -459,9 +459,10 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
             variant = new Variant.string (this.text);
             return true;
         }
+
+        string tmp_text = is_string ? @"'$text'" : this.text; // don't put in the try{} for correct C code
         try
         {
-            string tmp_text = is_string ? @"'$text'" : this.text;
             Variant? tmp_variant = Variant.parse (new VariantType (variant_type), tmp_text);
             variant = (!) tmp_variant;
 
