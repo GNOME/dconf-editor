@@ -1,3 +1,19 @@
+dconf-editor 3.27.1
+=====================
+
+The main change in this (unstable) release is the switch from Autotools to Meson
+for a faster build. Thanks for testing and reporting every bug that’s related to
+this important change (or to any other thing :) of course). And you can now open
+dconf-editor to a path given on the commandline.
+
+Translations updated:
+  Catalan (Valencian): Xavi Ivars
+  Friulian: Fabio Tomat
+  Indonesian: Kukuh Syafaat
+  Italian: Milo Casagrande
+  Lithuanian: Aurimas Černius
+  Brazilian Portuguese: Fábio Nogueira
+
 dconf-editor 3.26.1
 =====================
 

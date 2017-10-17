@@ -1,6 +1,6 @@
 project(
   'dconf-editor', ['c', 'vala'],
-  version: '3.26.1',
+  version: '3.27.1',
   license: 'GPL3+',
   default_options: [
     'buildtype=debugoptimized',
