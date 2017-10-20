@@ -71,7 +71,7 @@ class ConfigurationEditor : Gtk.Application
         base.startup ();
 
         Environment.set_application_name (_("dconf Editor"));
-        Gtk.Window.set_default_icon_name ("dconf-editor");
+        Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
 
@@ -212,7 +212,7 @@ class ConfigurationEditor : Gtk.Application
                                "wrap-license", true,
                                "authors", authors,
                                "translator-credits", _("translator-credits"),
-                               "logo-icon-name", "dconf-editor",
+                               "logo-icon-name", "ca.desrt.dconf-editor",
                                null);
     }
 

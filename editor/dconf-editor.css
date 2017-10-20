@@ -124,7 +124,7 @@
 \*/
 
 .root-button {
-  background-image:-gtk-icontheme("dconf-editor-symbolic");
+  background-image:-gtk-icontheme("ca.desrt.dconf-editor-symbolic");
   background-position:center;
   background-size:1.1rem;
   background-repeat:no-repeat;
