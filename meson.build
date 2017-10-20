@@ -40,7 +40,7 @@ set_defines = [
   ['PACKAGE_NAME', dconf_editor_name],
   ['PACKAGE_STRING', '@0@ @1@'.format(dconf_editor_name, dconf_editor_version)],
   ['PACKAGE_TARNAME', dconf_editor_name],
-  ['PACKAGE_URL', ''],
+  ['PACKAGE_URL', 'https://wiki.gnome.org/Apps/DconfEditor'],
   ['PACKAGE_VERSION', dconf_editor_version],
   ['VERSION', dconf_editor_version],
   # i18n

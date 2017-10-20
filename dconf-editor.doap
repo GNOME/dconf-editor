@@ -7,9 +7,9 @@
 
   <name xml:lang="en">dconf-editor</name>
   <shortdesc xml:lang="en">dconf Editor</shortdesc>
-  <description xml:lang="en">A graphical tool for editing the dconf database</description>
+  <description xml:lang="en">A graphical viewer and editor of applications internal settings</description>
 
-  <homepage rdf:resource="https://wiki.gnome.org/Projects/dconf"/>
+  <homepage rdf:resource="https://wiki.gnome.org/Apps/DconfEditor"/>
   <download-page rdf:resource="https://download.gnome.org/sources/dconf-editor/"/>
   <bug-database rdf:resource="https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor"/>
   <category rdf:resource="http://api.gnome.org/doap-extensions#core" />

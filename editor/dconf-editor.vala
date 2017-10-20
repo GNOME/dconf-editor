@@ -206,13 +206,14 @@ class ConfigurationEditor : Gtk.Application
         Gtk.show_about_dialog (get_active_window (),
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
-                               "comments", _("Directly edit your entire configuration database"),
-                               "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2016 – Arnaud Bonatti"),
+                               "comments", _("A graphical viewer and editor of applications internal settings."),
+                               "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2017 – Arnaud Bonatti"),
                                "license-type", Gtk.License.GPL_3_0,
                                "wrap-license", true,
                                "authors", authors,
                                "translator-credits", _("translator-credits"),
                                "logo-icon-name", "ca.desrt.dconf-editor",
+                               "website", "https://wiki.gnome.org/Apps/DconfEditor",
                                null);
     }
 
