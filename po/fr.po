@@ -4,21 +4,23 @@
 # Frederic Peters <fpeters@0d.be>, 2012.
 # Claude Paroz <claude@2xlibre.net>, 2017
 # Alain Lojewski <allomervan@gmail.com>, 2016
+# Charles Monzat <superboa@hotmail.fr>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-07 00:38+0000\n"
-"PO-Revision-Date: 2017-02-24 10:22+0100\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2017-10-02 13:12+0000\n"
+"PO-Revision-Date: 2017-10-02 23:19+0200\n"
+"Last-Translator: Charles Monzat <superboa@hotmail.fr>\n"
+"Language-Team: français <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -112,6 +114,12 @@ msgstr "Modifier directement toute votre base de données de configuration"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "paramètres;configuration;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+#| msgid "dconf Editor"
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -235,8 +243,8 @@ msgid ""
 msgstr ""
 "GSettings ne permet pas aux clés de contenir des majsucules dans leur nom, "
 "mais les chemins d'installation des schémas le peuvent. Si vrai, la liste "
-"des clés est triée en tenant compte de la casse, avec comme tri habituel "
-"les dossiers en majuscules en premier."
+"des clés est triée en tenant compte de la casse, avec comme tri habituel les "
+"dossiers en majuscules en premier."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
@@ -328,8 +336,8 @@ msgid ""
 "make use of this type."
 msgstr ""
 "Un chemin d'objet est utilisé pour identifier des objets D-Bus à une "
-"destination donnée sur le bus. Si vous n'êtes pas dans un contexte D-Bus, "
-"ce type ne vous sert à rien."
+"destination donnée sur le bus. Si vous n'êtes pas dans un contexte D-Bus, ce "
+"type ne vous sert à rien."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
@@ -342,8 +350,8 @@ msgid ""
 "to make use of this type."
 msgstr ""
 "Un tableau de chemins d'objets peut contenir un nombre indéfini de chemins "
-"d'objets (y compris aucun : « [] »). Si vous n'êtes pas dans un contexte "
-"D-Bus, ce type ne vous sert à rien."
+"d'objets (y compris aucun : « [] »). Si vous n'êtes pas dans un contexte D-"
+"Bus, ce type ne vous sert à rien."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
@@ -525,8 +533,9 @@ msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
-"Un intervalle peut limiter une clé à un nombre entier avec une seule valeur possible, "
-"mais cela est sans doute dû à une erreur. Éditeur Dconf vous en avertit dans ce cas."
+"Un intervalle peut limiter une clé à un nombre entier avec une seule valeur "
+"possible, mais cela est sans doute dû à une erreur. Éditeur Dconf vous en "
+"avertit dans ce cas."
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
