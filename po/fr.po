@@ -246,6 +246,55 @@ msgstr ""
 "des clés est triée en tenant compte de la casse, avec comme tri habituel les "
 "dossiers en majuscules en premier."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:79
+msgid "Use “Back” and “Forward” mouse button events"
+msgstr ""
+"Utiliser les événements des boutons de souris « Suivant » et « Précédent »"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:80
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will determine if any action is taken inside of a browser window when either "
+"is pressed."
+msgstr ""
+"Pour les utilisateurs d’une souris avec des boutons « Suivant » et "
+"« Précédent », cette clé détermine si une action est effectuée dans la "
+"fenêtre de navigation lorsque l’un d’eux est pressé."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr ""
+"Bouton de souris activant la commande « Précédent » dans une fenêtre de "
+"navigation"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pour les utilisateurs d’une souris avec des boutons « Suivant » et "
+"« Précédent », cette clé détermine quel bouton active la commande "
+"« Précédent » dans une fenêtre de navigation. Les valeurs possibles vont de "
+"6 à 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr ""
+"Bouton de souris activant la commande « Suivant » dans une fenêtre de "
+"navigation"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pour les utilisateurs d’une souris avec des boutons « Suivant » et "
+"« Précédent », cette clé détermine quel bouton active la commande "
+"« Suivant » dans une fenêtre de navigation. Les valeurs possibles vont de 6 "
+"à 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Une valeur booléenne, type « b »"

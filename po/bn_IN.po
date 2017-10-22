@@ -197,6 +197,40 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr ""
+"ব্রাউজার উইন্ডোর মধ্যে \"Back\" (পূর্ববর্তী) কমান্ড সক্রিয় করার জন্য মাউস বাটন"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"\"Forward\" (পরবর্তী) ও \"Back\" (পূর্ববর্তী) বাটন সহ মাউসের ক্ষেত্রে এই "
+"দুটির মধ্যে "
+"কোন কি টেপা হলে ব্রাউজার উইন্ডোর মধ্যে \"Back\" (পূর্ববর্তী) কমান্ড সঞ্চালিত "
+"হবে তা, "
+"এই কি দ্বারা নির্ধারিত হবে। সম্ভাব্য মান 6 (৬) থেকে 14 (১৪)-র মধ্যে হবে।"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr ""
+"ব্রাউজার উইন্ডোর মধ্যে \"Forward\" (পরবর্তী) কমান্ড সক্রিয় করার জন্য মাউস বাটন"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"\"Forward\" (পরবর্তী) ও \"Back\" (পূর্ববর্তী) বাটন সহ মাউসের ক্ষেত্রে এই "
+"দুটির মধ্যে "
+"কোন কি টেপা হলে ব্রাউজার উইন্ডোর মধ্যে \"Forward\" (পরবর্তী) কমান্ড সঞ্চালিত "
+"হবে "
+"তা, এই কি দ্বারা নির্ধারিত হবে। সম্ভাব্য মান 6 (৬) থেকে 14 (১৪)-র মধ্যে হবে।"
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

@@ -200,6 +200,40 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr ""
+"విహారిణి కిటికీ నందు \"వెనుకకు\" ఆదేశమును క్రియాశీల పర్చుటకు వాడే మౌస్ బటన్"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"\"ముందుకు\" మరియు \"వెనుకకు\" బటన్సు ఉన్న మౌస్‌ను కలిగివున్న వాడుకరులకు, "
+"విహారిణి కిటికీ నందు "
+"\"వెనుకకు\" ఆదేశమును ఏ బటన్ ద్వారా క్రియాశీలం చేయాలో ఈ కీ నిర్ణయిస్తుంది. "
+"సాధ్యమగు విలువలు 6 నుండి "
+"14 మధ్యన వుంటాయి."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr ""
+"విహారిణి కిటికీలో \"ముందుకు\" ఆదేశమును క్రియాశీల పర్చుటకు వాడే మౌస్ బటన్"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"\"ముందుకు\" మరియు \"వెనుకకు\" బటన్సు ఉన్న మౌస్‌ను కలిగివున్న వాడుకరులకు, "
+"విహారిణి కిటికీ నందు "
+"\"ముందుకు\" ఆదేశమును ఏ బటన్ ద్వారా క్రియాశీలం చేయాలో ఈ కీ నిర్ణయిస్తుంది. "
+"సాధ్యమగు విలువలు 6 నుండి "
+"14 మధ్యన వుంటాయి."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

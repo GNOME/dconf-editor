@@ -239,6 +239,36 @@ msgstr ""
 "de claus s'ordena distingint entre majúscules i minúscules, amb l'ordre "
 "usual de les carpetes en majúscula primer."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr ""
+"Botó del ratolí per activar l'ordre «Endarrere» a la finestra del navegador"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Per als usuaris amb ratolins que tenen els botons «Endavant» i «Endarrere» "
+"aquesta clau establirà quin botó activarà l'ordre «Endarrere» en una "
+"finestra del navegador. El rang de valors possibles és entre 6 i 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr ""
+"Botó del ratolí per activar l'ordre «Endavant» a la finestra del navegador"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Per als usuaris amb ratolins que tenen els botons «Endavant» i «Endarrere» "
+"aquesta clau establirà quin botó activarà l'ordre «Endavant» en una finestra "
+"del navegador. El rang de valors possibles és entre 6 i 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Un booleà, tipus «b»"

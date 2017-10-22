@@ -210,6 +210,32 @@ msgstr ""
 "explicit”值总是要求确认，但是如果您更改了路径，则前者会应用变更，反之，后者会"
 "解除它。 “always-delay”值将各个更改添加到延迟模式中，允许一次应用多个键。"
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "在浏览器窗口来激活 “后退”命令的鼠标键"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"对于使用有“前进”和“后退”键的鼠标的用户，这个键设置哪个按键激活浏览器窗口的“后"
+"退”命令。取值范围是 6 到 14。"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "在浏览器窗口来激活 “前进”命令的鼠标键"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"对于使用有“前进”和“后退”键的鼠标的用户，这个键设置哪个按键激活浏览器窗口的“前"
+"进”命令。取值范围是 6 到 14。"
+
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
 msgid "A boolean, type \"b\""
 msgstr "布尔值，类型 \"b\""

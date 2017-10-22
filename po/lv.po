@@ -235,6 +235,34 @@ msgstr ""
 " būt shēmu instalāciju ceļos. Ja “patiess”, atslēgu saraksts tiek kārtots,"
 " ņemot vērā burtu reģistru, kur parasti lielo burtu mapes ir pirmās."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Peles poga, ar ko aktivizēt “Atpakaļ” komandu pārlūka logā"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Lietotājiem ar pelēm, kurām ir “Uz priekšu” un “Atpakaļ” pogas, šī atslēga "
+"iestatīs, kura poga aktivizēs “Atpakaļ” komandu pārlūka logā. Iespējamās "
+"vērtības ir robežās no 6 līdz 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Peles poga, ar ko aktivizēt “Uz priekšu” komandu pārlūka logā"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Lietotājiem ar pelēm, kurām ir “Uz priekšu” un “Atpakaļ” pogas, šī atslēga "
+"iestatīs, kura poga aktivizēs “Uz priekšu” komandu pārlūka logā. Iespējamās "
+"vērtības ir robežās no 6 līdz 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Būla vērtība, tips “b”"

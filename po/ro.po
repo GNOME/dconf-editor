@@ -200,6 +200,34 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Buton maus pentru a activa comanda „Înapoi” în fereastra de navigare"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pentru utilizatorii a căror maus are butoanele „Înainte” și „Înapoi”, "
+"această cheie determină care buton activează comanda „Înapoi” în fereastra "
+"de navigare. Valorile posibile sunt între 6 și 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Buton maus pentru a activa comanda „Înainte” în fereastra de navigare"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pentru utilizatorii a căror maus are butoanele „Înainte” și „Înapoi”, "
+"această cheie determină care buton activează comanda „Înainte” în ferastra "
+"de navigare. Valorile posibile sunt între 6 și 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

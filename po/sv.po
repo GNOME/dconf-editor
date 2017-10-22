@@ -242,6 +242,34 @@ msgstr ""
 "nyckellistan att sorteras skiftlägeskänsligt, med mappar med versaler först "
 "i den vanliga ordningen."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Musknapp för att aktivera kommandot ”Bakåt” i ett bläddrarfönster"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"För användare med möss som har knapparna ”Framåt” och ”Bakåt”, denna nyckel "
+"kommer att ställa in vilken knapp som aktiverar kommandot ”Bakåt” i ett "
+"bläddrarfönster. Möjliga värden sträcker sig mellan 6 och 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Musknapp för att aktivera kommandot ”Framåt” i ett bläddrarfönster"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"För användare med möss som har knapparna ”Framåt” och ”Bakåt”, ställer denna "
+"nyckel in vilken knapp som aktiverar kommandot ”Framåt” i ett "
+"bläddrarfönster. Möjliga värden sträcker sig mellan 6 och 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "En boolesk variabel, typ ”b”."

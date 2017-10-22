@@ -256,6 +256,14 @@ msgstr ""
 "се ређа осетљив на величину слова, где је уобичајено да фасцикле са великим "
 "словима долазе на прво место."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Дугме миша за радњу „Назад“ у прегледнику"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Дугме миша за радњу „Напред“ у прегледнику"
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 #| msgid "A boolean, type \"b\""
 msgid "A boolean, type ‘b’"

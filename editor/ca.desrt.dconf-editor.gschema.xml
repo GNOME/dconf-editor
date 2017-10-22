@@ -74,6 +74,23 @@
       <description>GSettings doesn’t allow keys to use upper-case in their names, but installation paths of schemas can. If “true”, the keys list is sorted case-sensitively, with in usual order upper-case folders first.</description>
     </key>
     <!-- TODO sort-folder-first/last/mixed ; maybe also sort-reversed, but should that one be saved between sessions if the last path is not? -->
+    <key type="b" name="mouse-use-extra-buttons">
+      <default>true</default>
+      <summary>Use “Back” and “Forward” mouse button events</summary>
+      <description>For users with mice that have buttons for “Forward” and “Back”, this key will determine if any action is taken inside of a browser window when either is pressed.</description>
+    </key>
+    <key type="i" name="mouse-back-button">
+      <default>8</default>
+      <range min="6" max="14"/>
+      <summary>Mouse button to activate the “Back” command in browser window</summary>
+      <description>For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Back” command in a browser window. Possible values range between 6 and 14.</description>
+    </key>
+    <key type="i" name="mouse-forward-button">
+      <default>9</default>
+      <range min="6" max="14"/>
+      <summary>Mouse button to activate the “Forward” command in browser window</summary>
+      <description>For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Forward” command in a browser window. Possible values range between 6 and 14.</description>
+    </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
     <value value="0" nick="Red"/>

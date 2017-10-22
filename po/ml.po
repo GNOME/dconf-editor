@@ -214,6 +214,34 @@ msgid ""
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "പരതുന്ന ജാലകത്തില്‍ \"പുറകോട്ട്\" കമാന്‍ഡ് സജീവമാക്കുന്നതിനുള്ള മൌസ് ബട്ടണ്‍"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"\"മുമ്പോട്ട്\" , \"പുറകോട്ട്\" ബട്ടണുകള്‍ മൌസിലുള്ള ഉപയോക്താക്കള്‍ക്കു്, ഒരു പരതുന്ന ജാലകത്തില്‍, "
+"\"പുറകോട്ട്\" കമാന്‍ഡ് ഏതു് ബട്ടണ്‍ സജീവമാക്കുന്നു എന്നു് ഈ കീ സജ്ജമാക്കുന്നു. സാധ്യമായ മൂല്ല്യങ്ങള്‍ 6-നും "
+"14-നും ഇടയിലുള്ളവയാണു്."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "പരതുന്ന ജാലകത്തില്‍ \"മുമ്പോട്ട്\" കമാന്‍ഡ് സജീവമാക്കുന്നതിനുള്ള മൌസ് ബട്ടണ്‍"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"\"മുമ്പോട്ട്\" , \"പുറകോട്ട്\" ബട്ടണുകള്‍ മൌസിലുള്ള ഉപയോക്താക്കള്‍ക്കു്, ഒരു പരതുന്ന ജാലകത്തില്‍, "
+"\"മുമ്പോട്ട്\" കമാന്‍ഡ് ഏതു് ബട്ടണ്‍ സജീവമാക്കുന്നു എന്നു് ഈ കീ സജ്ജമാക്കുന്നു. സാധ്യമായ മൂല്ല്യങ്ങള്‍ 6-നും "
+"14-നും ഇടയിലുള്ളവയാണു്."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr ""

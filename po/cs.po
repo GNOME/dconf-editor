@@ -238,6 +238,34 @@ msgstr ""
 "cesty schémat ano. Když je „zapnuto“, jsou seznamy klíčů řazené s ohledem na "
 "velikost písmen s obvyklým řazením složek s velkými písmeny na začátek."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Tlačítko aktivující v okně prohlížeče funkci „Zpět“"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pro uživatele, kteří mají myš s tlačítky „Vpřed“ a „Zpět“, slouží tento klíč "
+"k určení, které tlačítko spouští v okně prohlížeče funkci „Zpět“. Možné "
+"hodnoty jsou mezi 6 a 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Tlačítko aktivující v okně prohlížeče funkci „Vpřed“"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pro uživatele, kteří mají myš s tlačítky „Vpřed“ a „Zpět“, slouží tento klíč "
+"k určení, které tlačítko spouští v okně prohlížeče funkci „Vpřed“. Možné "
+"hodnoty jsou mezi 6 a 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Pravdivostní hodnota, typ „b“"

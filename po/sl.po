@@ -237,6 +237,34 @@ msgstr ""
 "namestitvene poti shem pa to ni omejitev. Izbrana možnost omogoča, da bo "
 "seznam ključev razvrščen upoštevajoč velikost črk, z velikimi spredaj."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Gumb miške za izvršitev ukaza »nazaj« v brskalniku."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Za uporabnike, ki imajo na miški gumba »naprej« in »nazaj«, možnost določi, "
+"kateri gumb bo prevzel ukaz »nazaj« v oknu brskalnika. Mogoče vrednosti so "
+"med 6 in 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Gumb miške za izvršitev ukaza »naprej« v brskalniku."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Za uporabnike, ki imajo na miški gumba »naprej« in »nazaj«, možnost določi, "
+"kateri gumb bo prevzel ukaz »naprej« v oknu brskalnika. Mogoče vrednosti so "
+"med 6 in 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Boolova vrednost, vrste »b«"

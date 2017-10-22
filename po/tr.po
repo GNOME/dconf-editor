@@ -239,6 +239,34 @@ msgstr ""
 "listesi büyük harfli klasörler öncelikli olmak üzere büyük-küçük harf "
 "duyarlı sıralanır."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Tarayıcı penceresinde “Geri” komutunu etkinleştirecek fare düğmesi"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"“İleri” ve “Geri” tuşlarına sahip faresi olan kullanıcılar için, bu anahtar "
+"hangi düğmenin tarayıcı penceresinde “Geri” komutunu etkinleştireceğini "
+"belirtir. Geçerli değerler 6 ile 14 arasındadır."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Tarayıcı penceresinde “İleri” komutunu etkinleştirecek fare düğmesi"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"“İleri” ve “Geri” tuşlarına sahip faresi olan kullanıcılar için, bu anahtar "
+"hangi düğmenin tarayıcı penceresinde “İleri” komutunu etkinleştireceğini "
+"belirtir. Geçerli değerler 6 ile 14 arasındadır."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Mantıksal değer, türü ‘b’"

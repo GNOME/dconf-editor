@@ -242,6 +242,34 @@ msgstr ""
 "kis- és nagybetűket megkülönböztetve rendezett, a szokásos rend szerint, a "
 "nagybetűs mappák vannak előbb."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "A böngészőablakban a „Vissza” parancs aktiválására szolgáló egérgomb"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Az „Előre” és „Vissza” gombokat tartalmazó egerek használatakor ez a kulcs "
+"adja meg, hogy melyik gomb aktiválja a „Vissza” parancsot a "
+"böngészőablakban. A lehetséges értékek 6 és 14 között vannak."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "A böngészőablakban az „Előre” parancs aktiválására szolgáló egérgomb"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Az „Előre” és „Vissza” gombokat tartalmazó egerek használatakor ez a kulcs "
+"adja meg, hogy melyik gomb aktiválja az „Előre” parancsot a "
+"böngészőablakban. A lehetséges értékek 6 és 14 között vannak."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Egy logikai érték, típusa „b”"

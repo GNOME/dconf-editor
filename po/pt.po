@@ -227,6 +227,34 @@ msgstr ""
 "o segundo dispensa-a. O valor 'adiar-sempre' adiciona cada mudança em modo "
 "atrasado, permitindo a aplicação de múltiplas chaves de uma única vez."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Botão do rato para ativar o comando \"Recuar\" na janela de navegação"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Para utilizadores com ratos que têm botões \"Avançar\" e \"Recuar\", esta "
+"chave determina que botão ativa o comando \"Recuar\" numa janela de "
+"navegador. Valores possíveis estão no intervalo entre 6 e 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Botão do rato para ativar o comando \"Avançar\" na janela de navegação"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Para utilizadores com ratos que têm botões \"Avançar\" e \"Recuar\", esta "
+"chave determina que botão ativa o comando \"Avançar\" numa janela de "
+"navegador. Valores possíveis estão no intervalo entre 6 e 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr "Um booliano, tipo \"b\""

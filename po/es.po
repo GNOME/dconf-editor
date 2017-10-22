@@ -233,6 +233,37 @@ msgstr ""
 "claves se ordenan teniendo en cuenta las mayúsculas. con el orden habitual "
 "de las carpetas de mayúsculas primero."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr ""
+"Botón del ratón para activar el comando «Atrás» en la ventana del examinador"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Para usuarios con ratones que tienen botones «Adelante» y «Atrás», esta "
+"tecla establecerá qué botón activa el comando «Atrás» en una ventana del "
+"examinador. Los posibles rangos de valores están entre 6 y 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr ""
+"Botón del ratón para activar el comando «Adelante» en la ventana del "
+"examinador"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Para usuarios con ratones que tienen botones «Adelante» y «Atrás», esta "
+"tecla establecerá qué botón activa el comando «Adelante» en una ventana del "
+"examinador. Los posibles rangos de valores están entre 6 y 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Un valor booleano, escriba «b»"

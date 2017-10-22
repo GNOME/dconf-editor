@@ -242,6 +242,34 @@ msgstr ""
 "lista de chaves ordenarase tendo en conta a capitalización, poñendo os "
 "cartafoles con maiúsculas por diante na orde normal."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Botón do rato que activa a orde «Anterior» na xanela  de navegación"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Para os usuarios con rato que teñen botóns «Seguinte» e «Anterior», esta "
+"chave determinará que botón activa a orde «Anterior» nunha xanela de "
+"navegador. O intervalo de valores posíbeis está entre 6 e 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Botón do rato que activa a orde «Seguinte» na xanela de navegador"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Para os usuarios con rato que teñen botóns «Seguinte» e «Anterior», esta "
+"chave determinará  que botón activa a orde «Seguinte» nunha xanela de "
+"navegador. O intervalo de valores posíbeis está entre 6 e 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Un booleano, tipo «b»"

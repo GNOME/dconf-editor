@@ -199,6 +199,38 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "“Back” कमांड को ब्राउजर विंडो में सक्रिय करने के लिए माउस बटन"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"माउस रखने वाले उपयोक्ता के लिए जो “Forward” और “Back” बटन रखते हैं, यह "
+"कुंजी "
+"निर्धारित करेगा कि कौन बटन  “Back” कमांड को सक्रिय करता है किसी ब्राउजर "
+"विंडो में. "
+"कृपया 6 से 14 के बीच का मान दें."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "“Forward” कमांड को ब्राउजर विंडो में सक्रिय करने के लिए माउस बटन"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"माउस रखने वाले उपयोक्ता के लिए जो “Forward” और “Back” बटन रखते हैं, यह "
+"कुंजी "
+"निर्धारित करेगा कि कौन बटन  “Forward” कमांड को सक्रिय करता है किसी ब्राउजर "
+"विंडो "
+"में. कृपया 6 से 14 के बीच का मान दें."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

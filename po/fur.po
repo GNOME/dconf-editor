@@ -242,6 +242,34 @@ msgstr ""
 "je ordenade in base aes maiusculis/minusculis, cul solit ordin dulà che lis "
 "cartelis cun lis maiusculis a vegnin prime."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Boton mouse par ativâ il comant “indaûr” tal barcon di navigazion"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pai utents cui mouse che a àn botons par “indenant” e “indaûr”, cheste clâf "
+"e stabilìs cuâl boton al ative il comant “indaûr” intun barcon di "
+"navigazion. I valôrs pussibii a varin tra 6 e 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Boton mouse par ativâ il comant “indenant” tal barcon di navigazion"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Pai utents cui mouse che a àn botons par “indenant” e “indaûr”, cheste clâf "
+"e configure cuâl boton al ative il comant “indenant” intun barcon di "
+"navigazion. I valôrs pussibii a varin tra 6 e 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Un valôr boolean, scrîf “b”"

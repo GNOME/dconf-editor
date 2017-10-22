@@ -44,6 +44,10 @@ class DConfWindow : ApplicationWindow
     private bool window_is_maximized = false;
     private bool window_is_tiled = false;
 
+    public bool mouse_extra_buttons { private get; set; default = true; }
+    public int mouse_back_button { private get; set; default = 8; }
+    public int mouse_forward_button { private get; set; default = 9; }
+
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
     [GtkChild] private Bookmarks bookmarks_button;
@@ -101,6 +105,10 @@ class DConfWindow : ApplicationWindow
 
         registry_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
         settings.bind ("behaviour", registry_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+
+        settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+        settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+        settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         if (path == null)
             registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
@@ -302,6 +310,25 @@ class DConfWindow : ApplicationWindow
     \*/
 
     [GtkCallback]
+    private bool on_button_press_event (Widget widget, Gdk.EventButton event)
+    {
+        if (!mouse_extra_buttons)
+            return false;
+
+        if (event.button == mouse_back_button)
+        {
+            go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+            return true;
+        }
+        if (event.button == mouse_forward_button)
+        {
+            go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+            return true;
+        }
+        return false;
+    }
+
+    [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
         string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
@@ -381,22 +408,13 @@ class DConfWindow : ApplicationWindow
         {
             if (name == "Up")
             {
-                if (current_path == "/")
-                    return true;
-                if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
-                    request_path ("/");
-                else if (current_path.has_suffix ("/"))
-                    request_path (current_path.slice (0, current_path.slice (0, current_path.length - 1).last_index_of_char ('/') + 1));
-                else
-                    request_path (current_path.slice (0, current_path.last_index_of_char ('/') + 1));
+                go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
                 return true;
             }
-            else if (name == "Down")
+            if (name == "Down")
             {
-                if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
-                    return pathbar.open_child (null);
-                else
-                    return pathbar.open_child (current_path);
+                go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+                return true;
             }
         }
 
@@ -408,7 +426,7 @@ class DConfWindow : ApplicationWindow
                 bookmarks_button.active = false;
             return false;
         }
-        else if (name == "Menu")
+        if (name == "Menu")
         {
             if (registry_view.show_row_popover ())
             {
@@ -439,6 +457,26 @@ class DConfWindow : ApplicationWindow
     {
         registry_view.discard_row_popover ();
         registry_view.set_search_mode (false);
+    }
+
+    private void go_backward (bool shift)
+    {
+        if (current_path == "/")
+            return;
+        if (shift)
+            request_path ("/");
+        else if (current_path.has_suffix ("/"))
+            request_path (current_path.slice (0, current_path.slice (0, current_path.length - 1).last_index_of_char ('/') + 1));
+        else
+            request_path (current_path.slice (0, current_path.last_index_of_char ('/') + 1));
+    }
+    // TODO do something when open_child fails (returns false)?
+    private void go_forward (bool shift)
+    {
+        if (shift)
+            pathbar.open_child (null);
+        else
+            pathbar.open_child (current_path);
     }
 
     /*\

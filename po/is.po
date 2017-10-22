@@ -196,6 +196,34 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Músarhnappur sem virkjar \"Til baka\" skipunina í vafraglugga"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Fyrir þá notendur sem hafa mýs með \"Áfram\" og \"Afturábak\" hnöppum, þá "
+"virkjar þessi lykill hvaða hnappur það er sem gefur \"Afturábak\" skipunina "
+"í vafraglugga. Möguleg gildi eru 6 og 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Músarhnappur sem virkjar \"Áfram\" skipunina í vafraglugga"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Fyrir þá notendur sem hafa mýs með \"Áfram\" og \"Afturábak\" hnöppum, þá "
+"virkjar þessi lykill hvaða hnappur það er sem gefur \"Áfram\" skipunina í "
+"vafraglugga. Möguleg gildi eru 6 og 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

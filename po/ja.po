@@ -196,6 +196,34 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "ブラウザーウィンドウで「戻る」コマンドを実行するマウスのボタン"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"「進む」「戻る」ボタンのあるボタンを使う場合、ブラウザーウィンドウで「戻る」"
+"コマンドをどのボタンで実行するかを、このキーで設定します。可能な値は6と14の間"
+"です。"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "ブラウザーウィンドウで「進む」コマンドを実行するマウスのボタン"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"「進む」「戻る」ボタンのあるボタンを使う場合、ブラウザーウィンドウで「進む」"
+"コマンドをどのボタンで実行するかを、このキーで設定します。可能な値は6と14の間"
+"です。"
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

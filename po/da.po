@@ -242,6 +242,34 @@ msgstr ""
 "sorteret med forskel på store og små bogstaver, så store bogstaver som "
 "udgangspunkt kommer før små."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Museknap, der aktiverer “Tilbage”-kommandoen i browservinduet"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"For brugere med mus, der har “Fremad”- og “Tilbage”-knapper, bestemmer denne "
+"nøgle hvilken knap, der aktiverer “Tilbage”-kommandoen i et browservindue. "
+"Mulige værdier ligger i intervallet 6 til 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Museknap, der aktiverer “Fremad”-kommandoen i browservinduet"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"For brugere med mus, der har “Fremad”- og “Tilbage”-knapper, bestemmer denne "
+"nøgle hvilken knap, der aktiverer “Fremad”-kommandoen i et browservindue. "
+"Mulige værdier ligger i intervallet 6 til 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "En boolesk variabel, type “b”"

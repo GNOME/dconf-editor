@@ -196,6 +196,28 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "用來觸發瀏覽器視窗中「上一頁」指令的滑鼠按鈕"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr "用於使用者的滑鼠有「往前」和「往後」按鈕時，這個設定鍵會決定哪個按鈕會觸發瀏覽器視窗中的「上一頁」指令。可能的數值範圍在 6 到 14 之間。"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "用來觸發瀏覽器視窗中「下一頁」指令的滑鼠按鈕"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr "用於使用者的滑鼠有「往前」和「往後」按鈕時，這個設定鍵會決定哪個按鈕會觸發瀏覽器視窗中的「下一頁」指令。可能的數值範圍在 6 到 14 之間。"
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

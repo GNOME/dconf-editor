@@ -198,6 +198,38 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the \"Back\" command in browser window"
+msgstr "ब्राऊजर खिडकीत \"Back\" आदेश सक्रीय करण्यासाठी माऊस बटन"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for \"Forward\" and \"Back\", this key "
+"will set which button activates the \"Back\" command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"ही कि \"Forward\" व \"Back\" माऊसचे बटन सक्षम असणाऱ्या वापरकर्त्यांकरीता, "
+"ब्राऊजर "
+"खिडकीत \"Back\" आदेश कुठल्या बटन द्वारे सक्रीय केले जाते, ते सेट करते. "
+"संभाव्य मूल्यांची "
+"व्यप्ती 6 व 14 च्या अंतर्गत आहे."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the \"Forward\" command in browser window"
+msgstr "ब्राऊजर खिडकीत \"Forward\" आदेश सक्रीय करण्यासाठी माऊस बटन"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for \"Forward\" and \"Back\", this key "
+"will set which button activates the \"Forward\" command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"ही कि \"Forward\" व \"Back\" माऊसचे बटन सक्षम असणाऱ्या वापरकर्त्यांकरीता, "
+"ब्राऊजर "
+"खिडकीत \"Forward\" आदेश कुठल्या बटन द्वारे सक्रीय केले जाते, ते सेट करते. "
+"संभाव्य मूल्यांची "
+"व्यप्ती 6 व 14 च्या अंतर्गत आहे."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

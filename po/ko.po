@@ -227,6 +227,32 @@ msgstr ""
 "대문자를 사용할 수 있습니다. “참”이면, 키 목록을 대소문자를 구별해 정렬합니"
 "다. 그러면 대문자 폴더가 먼저 나타납니다."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "찾아보기 창에서 “뒤로” 명령이 동작할 마우스 단추."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"“앞으로” 및 “뒤로” 단추가 있는 마우스 사용자의 경우, 이 키는 “뒤로” 명령이 동"
+"작하는 단추를 지정합니다. 가능한 값은 6에서 14 사이입니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "찾아보기 창에서 “앞으로” 명령이 동작할 마우스 단추."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"“앞으로” 및 “뒤로” 단추가 있는 마우스 사용자의 경우, 이 키는 “앞으로” 명령이 "
+"동작하는 단추를 지정합니다. 가능한 값은 6에서 14 사이입니다."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "불리언, 타입 ‘b’"

@@ -242,6 +242,34 @@ msgstr ""
 "jest porządkowana rozróżniając małe i wielkie znaki, z katalogami o wielkich "
 "znakach jako pierwsze."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Przycisk myszy do aktywowania polecenia „Wstecz” w oknie przeglądarki"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Dla użytkowników myszy, które mają przyciski „Dalej” i „Wstecz”, ten klucz "
+"ustawia, który przycisk włącza polecenie „Wstecz” w oknie przeglądarki. "
+"Możliwe wartości mieszczą się w zakresie między 6 a 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Przycisk myszy do aktywowania polecenia „Dalej” w oknie przeglądarki"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Dla użytkowników myszy, które mają przyciski „Dalej” i „Wstecz”, ten klucz "
+"ustawia, który przycisk włącza polecenie „Dalej” w oknie przeglądarki. "
+"Możliwe wartości mieszczą się w zakresie między 6 a 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Zmienna logiczna, typ „b”"

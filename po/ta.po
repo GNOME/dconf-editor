@@ -197,6 +197,38 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "உலாவி சாளரத்தில் \"பின்னே\"  கட்டளையை செயல்படுத்த சுட்டி பொத்தான் "
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"சொடுக்கியில் \"முன்னே\" மற்றும்\"பின்னே\"  பொத்தான்கள் உள்ள பயனர்களுக்கு இந்த "
+"விசை இரண்டில் "
+"எந்த பொத்தானை அழுத்தினால் \"பின்னே\" கட்டளை உலாவி சாளரத்தில்  நிகழ வேண்டும் "
+"என "
+"நிர்ணயிக்கிறது. இருக்கக்கூடிய மதிப்புகள் 6 முதல் 14 வரை."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "உலாவி சாளரத்தில் \"முன்னே\"  கட்டளையை செயல்படுத்த சுட்டி பொத்தான் "
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"சொடுக்கியில் \"முன்னே\" மற்றும்\"பின்னே\"  பொத்தான்கள் உள்ள பயனர்களுக்கு இந்த "
+"விசை இரண்டில் "
+"எந்த பொத்தானை அழுத்தினால் \"முன்னே\" கட்டளை உலாவி சாளரத்தில்  நிகழ வேண்டும் "
+"என "
+"நிர்ணயிக்கிறது. இருக்கக்கூடிய மதிப்புகள் 6 முதல் 14 வரை."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid "A boolean, type \"b\""
 msgstr ""

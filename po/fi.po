@@ -213,6 +213,34 @@ msgid ""
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Selainikkunassa “Takaisin”-toiminnon käynnistävä hiiren nappi"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Jos käyttäjän hiiressä on ”Eteenpäin”- ja ”Taaksepäin”-napit, tämä avain "
+"määrittää mikä nappi käynnistää ”Takaisin”-komennon selainikkunassa. "
+"Mahdolliset arvot ovat väliltä 6-14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Selainikkunassa “Eteenpäin”-toiminnon käynnistävä hiiren nappi"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Jos käyttäjän hiiressä on “Eteenpäin”- ja “Taaksepäin”-napit, tämä avain "
+"määrittää mikä nappi käynnistää ”Eteenpäin”-komennon selainikkunassa. "
+"Mahdolliset arvot ovat väliltä 6-14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr ""

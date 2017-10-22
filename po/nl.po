@@ -238,6 +238,34 @@ msgstr ""
 "installatiepaden van schema's kunnen dit wel. Indien waar wordt rekening "
 "gehouden met hoofdletters bij sorteren, mappen met hoofdletters eerst."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:85
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "Muisknop die de opdracht ‘Terug’ activeert in het browservenster"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:86
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Back” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Voor gebruikers met een muis met een knop voor ‘Terug’ en ‘Verder’ geeft "
+"deze sleutel aan welke knop de ‘Terug’-actie in een browservenster "
+"activeert. Mogelijke waarden liggen tussen 6 en 14."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Mouse button to activate the “Forward” command in browser window"
+msgstr "Muisknop die de opdracht ‘Vooruit’ activeert in het browservenster"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:92
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will set which button activates the “Forward” command in a browser window. "
+"Possible values range between 6 and 14."
+msgstr ""
+"Voor gebruikers met een muis met een knop voor ‘Terug’ en ‘Verder’ geeft "
+"deze sleutel aan welke knop de ‘Verder’-actie in een browservenster "
+"activeert. Mogelijke waarden liggen tussen 6 en 14."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "A boolean, type ‘b’"
 msgstr "Een booleaanse waarde, type ‘b’"
