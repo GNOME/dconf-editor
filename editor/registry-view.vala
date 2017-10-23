@@ -81,7 +81,7 @@ class RegistryView : Grid, PathElement
     * * Stack switching
     \*/
 
-    private void show_browse_view (string path, string? selected, bool grab = true)
+    private void show_browse_view (string path, string? selected, bool grab_focus = true)
     {
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         need_reload_warning_revealer.set_reveal_child (false);
@@ -93,13 +93,13 @@ class RegistryView : Grid, PathElement
             ListBoxRow? row = key_list_box.get_row_at_index (get_row_position ((!) selected));
             if (row == null)
                 assert_not_reached ();
-            scroll_to_row ((!) row, grab);
+            scroll_to_row ((!) row, grab_focus);
         }
         else
         {
             ListBoxRow? row = key_list_box.get_row_at_index (0);
             if (row != null)
-                scroll_to_row ((!) row, grab);
+                scroll_to_row ((!) row, grab_focus);
         }
         properties_view.clean ();
     }
@@ -116,10 +116,10 @@ class RegistryView : Grid, PathElement
         }
         assert_not_reached ();
     }
-    private void scroll_to_row (ListBoxRow row, bool grab)
+    private void scroll_to_row (ListBoxRow row, bool grab_focus)
     {
         key_list_box.select_row (row);
-        if (grab)
+        if (grab_focus)
             row.grab_focus ();
 
         Allocation list_allocation, row_allocation;
@@ -197,7 +197,11 @@ class RegistryView : Grid, PathElement
         if ((object == null) || (((!) object) is Directory))
         {
             if ((object != null) && tolerant)
-                show_browse_view (folder_name + object_name + "/", null);
+            {
+                if (!select_folder (full_name + "/"))
+                    assert_not_reached ();
+                show_browse_view (full_name + "/", null);
+            }
             else
             {
                 show_browse_view (folder_name, null);
