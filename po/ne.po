@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: Gnome Nepali Translation Project\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-07-21 13:59+0000\n"
-"PO-Revision-Date: 2017-07-28 12:00+0545\n"
+"POT-Creation-Date: 2017-07-28 06:17+0000\n"
+"PO-Revision-Date: 2017-10-25 11:20+0545\n"
+"Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
 "Language-Team: Nepali Translation Team <chautari@gmail.com>\n"
+"Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.3\n"
-"Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
-"Language: ne\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -63,15 +63,20 @@ msgstr "dconf डेटाबेस सम्पादनको लागि ग
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
-"Dconf Editor is a tool to allow direct editing of the dconf configuration database. "
-"This is useful when developing applications that use these settings."
+"Dconf Editor is a tool to allow direct editing of the dconf configuration "
+"database. This is useful when developing applications that use these "
+"settings."
 msgstr ""
+"डिकन्फ सम्पादक एक डिकन्फ कन्फिगरेसन डाटाबेस को सीधा सम्पादन को लागी एक उपकरण हो। यी "
+"सेटिङ्गहरू प्रयोग गर्ने अनुप्रयोगहरू विकास गर्दा यो उपयोगी छ।"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
+"तपाईंको कन्फिगरेसन सम्पादन गर्दा सिधै एक उन्नत सुविधा हो र अनुप्रयोगहरूले सही काम गर्न "
+"सकेन।"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:25
 msgid "Browse the keys used by installed applications"
@@ -132,6 +137,7 @@ msgstr "पुस्तकचिनो मार्ग को सुची"
 #: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
+"प्रयोगकर्ताहरूको द्वारा स्ट्रिङ्गको array को रूपमा चिन्ह लगाइएको सबै मार्गहरू समावेश गर्दछ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:38
 msgid "A flag to restore the last view"
@@ -139,9 +145,11 @@ msgstr "अन्तिम दृश्य पुनर्स्थापना 
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in the "
-"“saved-view” key."
+"If “true”, Dconf Editor tries at launch to navigate to the path described in "
+"the “saved-view” key."
 msgstr ""
+"यदि \"साँचो\", डिकन्फ सम्पादकले \"सुरक्षित-दृश्य\" कुञ्जीमा वर्णन गरिएको मार्गमा नेभिगेट "
+"गर्न सुरु गर्न प्रयास गर्दछ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A path to restore the last view"
@@ -152,6 +160,8 @@ msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
+"यदि \"पुनर्स्थापना-दृश्य\" की कुञ्जी \"साँचो\" मा सेट गरिएको छ भने, डिकन्फ सम्पादकले यो "
+"बाटोमा नेभिगेट गर्न सुरू गर्न प्रयास गर्दछ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "Show initial warning"
@@ -162,6 +172,8 @@ msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"यदि \"साँचो\" भने, प्रयोगकर्तालाई सावधान रहन सम्झाउन सुरु गर्दा डिकन्फ सम्पादकले पपअप "
+"खोल्छ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:53
 msgid "A flag to enable small rows for keys list"
@@ -169,7 +181,7 @@ msgstr "कुञ्जीहरू सूची लागि सानो प�
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
 msgid "If “true”, the keys list use smaller rows."
-msgstr ""
+msgstr "यदि \"साँचो\" हो, कुञ्जी सूचीले साना पङ्क्तिहरू प्रयोग गर्दछ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for bookmarks list"
@@ -177,39 +189,38 @@ msgstr "पुस्तकचिनो सूची लागि सानो �
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
 msgid "If “true”, the bookmarks list use smaller rows."
-msgstr ""
+msgstr "यदि \"साँचो\" हो, पुस्तक चिन्ह सूचीले साना पङ्क्तिहरू प्रयोग गर्दछ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
 msgid "Change the behaviour of a key value change request"
-msgstr ""
+msgstr "कुञ्जी मान परिवर्तन व्यवहारको मान परिवर्तन गर्नुहोस्"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:69
 msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased type, it "
-"updates the key value each time something changes in the entry, so including "
-"intermediate states. The “safe” value asks for confirmation in these cases, but "
-"allows instant changes for booleans and nullable booleans, enums and flags. The "
-"“always-confirm-implicit” and “always-confirm-explicit” values always asks for "
-"confirmation, but the first applies the change if you change path whereas the "
-"second dismiss it. The “always-delay” value adds each change in delay mode, "
-"allowing to apply multiple keys at once."
+"The “unsafe” value is discouraged: for keys that have a non-special-cased "
+"type, it updates the key value each time something changes in the entry, so "
+"including intermediate states. The “safe” value asks for confirmation in "
+"these cases, but allows instant changes for booleans and nullable booleans, "
+"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
+"values always asks for confirmation, but the first applies the change if you "
+"change path whereas the second dismiss it. The “always-delay” value adds "
+"each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:73
 msgid "A flag to sort keys list case-sensitively"
-msgstr ""
+msgstr "कुञ्जी सूचीलाई क्रमशः क्रमबद्ध गर्न झण्डा"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:74
 msgid ""
-"GSettings doesn’t allow keys to use upper-case in their names, but installation "
-"paths of schemas can. If “true”, the keys list is sorted case-sensitively, with in "
-"usual order upper-case folders first."
+"GSettings doesn’t allow keys to use upper-case in their names, but "
+"installation paths of schemas can. If “true”, the keys list is sorted case-"
+"sensitively, with in usual order upper-case folders first."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
-#, fuzzy
 msgid "A boolean, type ‘b’"
-msgstr "खाली बुलिएन , 'mb' प्रकार"
+msgstr "बुलियन ,‘b’ प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:99
 msgid "Booleans can only take two values, “true” or “false”."
@@ -221,9 +232,9 @@ msgstr "खाली बुलिएन , 'mb' प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:104
 msgid ""
-"GSettings allows nullable types, that are similar to other types but could take a "
-"“nothing” value. A nullable boolean can only take three values, “true”, “false” and "
-"“nothing”."
+"GSettings allows nullable types, that are similar to other types but could "
+"take a “nothing” value. A nullable boolean can only take three values, "
+"“true”, “false” and “nothing”."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
@@ -237,15 +248,14 @@ msgid ""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
-#, fuzzy
 msgid "A bytestring, type ‘ay’"
-msgstr "  प्रकार: "
+msgstr "बाइट स्ट्रिंग , 'ay’ प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid ""
-"The bytestring type is commonly used to pass around strings that may not be valid "
-"utf8. In that case, the convention is that the nul terminator character should be "
-"included as the last character in the array."
+"The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8. In that case, the convention is that the nul terminator "
+"character should be included as the last character in the array."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:118
@@ -254,20 +264,21 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:119
 msgid ""
-"This is the type of an array of bytestrings. The bytestring type is commonly used "
-"to pass around strings that may not be valid utf8."
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:123
+#, fuzzy
 msgid "A D-Bus handle type, type ‘h’"
-msgstr ""
+msgstr "अपरिचित बाँणको प्रकार %d"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used as an "
-"index into an array of file descriptors that are sent alongside a D-Bus message. If "
-"you are not interacting with D-Bus, then there is no reason to make use of this "
-"type."
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message. If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
@@ -276,9 +287,9 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
-"An object path is used to identify D-Bus objects at a given destination on the bus. "
-"If you are not interacting with D-Bus, then there is no reason to make use of this "
-"type."
+"An object path is used to identify D-Bus objects at a given destination on "
+"the bus. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
@@ -287,39 +298,40 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
-"An object path array could contain any number of object paths (including none: "
-"“[]”). If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"An object path array could contain any number of object paths (including "
+"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
+#, fuzzy
 msgid "A D-Bus signature, type ‘g’"
-msgstr ""
+msgstr "अपरिचित बाँणको प्रकार %d"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
-"A D-Bus signature is a string used as type signature for a D-Bus method or message. "
-"If you are not interacting with D-Bus, then there is no reason to make use of this "
-"type."
+"A D-Bus signature is a string used as type signature for a D-Bus method or "
+"message. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 #, fuzzy
 msgid "A double, type ‘d’"
-msgstr "डबल"
+msgstr "अपरिचित बाँणको प्रकार %d"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A double value could represent any real number."
-msgstr ""
+msgstr "एक डबल मानले कुनै वास्तविक सङ्ख्याको प्रतिनिधित्व गर्न सक्छ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:156
 msgid "A 5-choices enumeration"
-msgstr ""
+msgstr "५-छनोट गणना"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:157
 msgid ""
-"Enumerations could be done either with the “enum” attribute, or with a “choices” "
-"tag."
+"Enumerations could be done either with the “enum” attribute, or with a "
+"“choices” tag."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
@@ -350,7 +362,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
 #, fuzzy
 msgid "An usual integer, type ‘i’"
-msgstr "टाइप गर्दा हिज्जे जाँच गर्नुहोस्"
+msgstr "गम्बेल (प्रकार १)"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
@@ -381,37 +393,46 @@ msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
+#, fuzzy
 msgid "A number with range"
-msgstr ""
+msgstr "सङ्ख्या दायरा भन्दा बाहिर"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:199
 msgid ""
-"Every numeral setting (integers and unsigned integers of every type, plus doubles) "
-"could be limited to a custom range of values. For example, this integer could only "
-"take a value between -2 and 10."
+"Every numeral setting (integers and unsigned integers of every type, plus "
+"doubles) could be limited to a custom range of values. For example, this "
+"integer could only take a value between -2 and 10."
 msgstr ""
+"प्रत्येक अङ्कले सेटिङ्ग (प्रत्येक प्रकारको पूर्णाङ्क र अज्ञात इन्टर्गरहरू, साथै युगलहरू) मानहरूको "
+"अनुकूल दायरामा सीमित हुन सक्छ। उदाहरणका लागि, यो पूर्णांक केवल -२ र १० को बीच एक मान "
+"लिन सक्दछ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
+#, fuzzy
 msgid "A custom type, here ‘(ii)’"
-msgstr ""
+msgstr "गम्बेल (प्रकार २)"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:204
 msgid ""
-"Dconf Editor lets you edit any settings type supported by GSettings, falling back "
-"on a string entry when it doesn’t have a better way to do. Here is a tuple of two "
-"32bit signed integers."
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn’t have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
 msgstr ""
+"डिकन्फ सम्पादकले तपाईंलाई जिसेटिङ्ग द्वारा समर्थित कुनै पनि सेटिङ्ग प्रकार टाइप गर्न दिन्छ, "
+"स्ट्रिङ्ग प्रविष्टिमा फिर्ता आउँछ जब यसमा राम्रो तरीका छैन। यहाँ दुई ३२ बिटमा हस्ताक्षर "
+"गरिएका पूर्णांकहरूको एक ट्यापल हो।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
-#, fuzzy
 msgid "A string, type ‘s’"
-msgstr "(%s) एउटा जोडा प्रकार स्ट्रिङ आवश्यक छ"
+msgstr "स्ट्रिङ्ग 's' प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''” is not "
-"the same as NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string “''” "
+"is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
+"स्ट्रिङ प्रकारले कुनै utf8 स्ट्रिंग स्वीकार गर्न सक्छ। ध्यान दिनुहोस् कि खाली स्ट्रिङ \"''\" "
+"NULL को रूपमा होइन (केहि पनि छैन); \"string-nullable\" कुञ्जी पनि हेर्नुहोस्।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 #, fuzzy
@@ -420,9 +441,11 @@ msgstr "(%s) एउटा जोडा प्रकार स्ट्रिङ 
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:214
 msgid ""
-"A string array contains any number of strings of whatever length. It may be an "
-"empty array, “[]”."
+"A string array contains any number of strings of whatever length. It may be "
+"an empty array, “[]”."
 msgstr ""
+"स्ट्रिङ्ग सरणीमा कुनै पनि लामो स्ट्रिङ्ग सङ्ख्या समावेश गर्दछ। यो खाली सरण पनि हुन सक्छ, "
+"\"[]\"।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
 #, fuzzy
@@ -431,10 +454,13 @@ msgstr "खाली बुलिएन , 'mb' प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
-"GSettings allows nullable types, that are similar to other types but could take a "
-"“nothing” value. A nullable string can take any string as value, including the "
-"empty string “''”, or can be NULL (nothing)."
+"GSettings allows nullable types, that are similar to other types but could "
+"take a “nothing” value. A nullable string can take any string as value, "
+"including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
+"जिसेटिङ्ग ले निस्क्रिय प्रकारको अनुमति दिन्छ, जुन अन्य प्रकारका जस्तै छन् तर \"केही\" मान "
+"लिन सक्दछ। एउटा शुन्य स्ट्रिङ्गले कुनै पनि स्ट्रिङ्गलाई मानको रूपमा मान्न सक्छ, खाली स्ट्रिङ "
+"सहित \"'', वा NULL (केही पनि) हुन सक्छ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:223
 #, fuzzy
@@ -443,9 +469,11 @@ msgstr "एक-विकल्प पूर्णांङ्क मान"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid ""
-"An enumeration could contain only one item, but that’s probably an error. Dconf "
-"Editor warns you in that case."
+"An enumeration could contain only one item, but that’s probably an error. "
+"Dconf Editor warns you in that case."
 msgstr ""
+"एक अङ्कले मात्र एक वस्तु समावेश गर्न सक्छ, तर यो शायद त्रुटि हो। डिकन्फ सम्पादकले तपाईंलाई "
+"यो अवस्थामा चेतावनी दिन्छ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:229
 msgid "A 1-choice integer value"
@@ -453,9 +481,11 @@ msgstr "एक-विकल्प पूर्णांङ्क मान"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:230
 msgid ""
-"A range could limit an integer key to only allow one value, but that’s probably an "
-"error. Dconf Editor warns you in that case."
+"A range could limit an integer key to only allow one value, but that’s "
+"probably an error. Dconf Editor warns you in that case."
 msgstr ""
+"दायराले एक मान मात्र अनुमति दिन पूर्णाङ्क कुञ्जी सीमित गर्न सक्छ, तर यो शायद त्रुटि हो। "
+"डिकन्फ सम्पादकले तपाईंलाई यो अवस्थामा चेतावनी दिन्छ।"
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -507,8 +537,8 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "pawan chitrakar <chautari@gmail.com>\n"
-"Laxmi Pd Khatiwada <laxmi@mpp.org.np>, Ganesh Bahadur Ghimire <gghimire@gmail.com>, "
-"Narayan Kumar Magar <narayan@mpp.org.np>\n"
+"Laxmi Pd Khatiwada <laxmi@mpp.org.np>, Ganesh Bahadur Ghimire "
+"<gghimire@gmail.com>, Narayan Kumar Magar <narayan@mpp.org.np>\n"
 "\n"
 "Launchpad Contributions:\n"
 "  Ganesh Ghimire https://launchpad.net/~gghimire\n"
@@ -525,13 +555,12 @@ msgid "String"
 msgstr "स्ट्रिङ"
 
 #: editor/dconf-model.vala:224
-#, fuzzy
 msgid "String array"
-msgstr "STRING"
+msgstr "स्ट्रिङ्ग सरणी"
 
 #: editor/dconf-model.vala:226
 msgid "Enumeration"
-msgstr ""
+msgstr "गणना"
 
 #: editor/dconf-model.vala:228
 msgid "Flags"
@@ -545,7 +574,7 @@ msgstr "डबल"
 #: editor/dconf-model.vala:233
 #, fuzzy
 msgid "D-Bus handle type"
-msgstr "अमान्य बस प्रकार: %1."
+msgstr "अपरिचित बाँणको प्रकार %d"
 
 #: editor/dconf-model.vala:235
 #, fuzzy
@@ -554,12 +583,12 @@ msgstr "बाटोमा वस्तु"
 
 #: editor/dconf-model.vala:237
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "डि-बस वस्तु पथ सरणी"
 
 #: editor/dconf-model.vala:239
 #, fuzzy
 msgid "D-Bus signature"
-msgstr "अमान्य बस प्रकार: %1."
+msgstr "अपरिचित बाँणको प्रकार %d"
 
 #: editor/dconf-model.vala:247
 msgid "Integer"
@@ -596,11 +625,11 @@ msgstr "यो मान प्रमुख प्रकार को लाग�
 
 #: editor/dconf-window.vala:132
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr ""
+msgstr "तपाइँको सेटिङ्ग सम्पादन गर्न को लागी डिकन्फ सम्पादक को उपयोग को लागि धन्यवाद!"
 
 #: editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
-msgstr ""
+msgstr "नबिर्सनुहोस् कि केहि विकल्प अनुप्रयोगहरू तोड्न सक्छ, त्यसैले सावधान रहनुहोस्।"
 
 #: editor/dconf-window.vala:134
 msgid "I’ll be careful."
@@ -682,12 +711,9 @@ msgstr ""
 "छवि संवाद खोल्न क्लिक गर्नुहोस्।"
 
 #: editor/help-overlay.ui:77
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
-"सक्रिय छवि\n"
-"छवि संवाद खोल्न क्लिक गर्नुहोस्।"
+msgstr "अन्तिम सक्रिय शाखा खोल्नुहोस्"
 
 #: editor/help-overlay.ui:86
 msgctxt "shortcut window"
@@ -749,19 +775,17 @@ msgid "No Schema Found"
 msgstr "स्किमा फेला परेन"
 
 #: editor/key-list-box-row.vala:202
-#, fuzzy
 msgid "Key erased."
-msgstr "no_key"
+msgstr "कुञ्जी मेटियो"
 
 #: editor/key-list-box-row.vala:224
-#, fuzzy, c-format
+#, c-format
 msgid "%s (key erased)"
-msgstr "\"%s\" कुञ्जीमा कुनै '/' छैन"
+msgstr "%s (कुञ्जी मेटियो)"
 
 #: editor/key-list-box-row.vala:310
-#, fuzzy
 msgid "No summary provided"
-msgstr "सारांश"
+msgstr "सारांश उपलब्ध छैन"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:465
@@ -775,9 +799,8 @@ msgstr "पूर्वनिर्धारितको रुपमा से�
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:473
-#, fuzzy
 msgid "Dismiss change"
-msgstr "खारेज"
+msgstr "परिवर्तन खारेज गर्नुहोस्"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:476
@@ -816,9 +839,8 @@ msgid "Apply"
 msgstr "लागू गर्नुहोस्"
 
 #: editor/modifications-revealer.vala:141
-#, fuzzy
 msgid "Nothing to reset."
-msgstr "_पुनः मिलाउ"
+msgstr "रिसिट गर्ने केही छैन"
 
 #: editor/modifications-revealer.vala:241
 msgid "The value is invalid."
@@ -826,15 +848,15 @@ msgstr "यो मान अवैध छ।."
 
 #: editor/modifications-revealer.vala:245
 msgid "The change will be dismissed if you quit this view without applying."
-msgstr ""
+msgstr "यदि तपाइँ यो दृश्य बिना आवेदन छोड्नु भयो भने परिवर्तन खारेज गरिनेछ।"
 
 #: editor/modifications-revealer.vala:247
 msgid "The change will be applied on such request or if you quit this view."
-msgstr ""
+msgstr "परिवर्तन यस्तो अनुरोधमा लागू हुनेछ वा यदि तपाईं यस दृश्यबाट निस्कनुभयो भने।"
 
 #: editor/modifications-revealer.vala:264
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "तपाईंले यसलाई अनुरोध नगरेसम्म परिवर्तनहरू ढिलाइ हुने छ।"
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:266
@@ -849,8 +871,8 @@ msgstr[1] "%u जि-सेटिङ्ग सञ्चालनमा ढिल
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "एक डिकन्फ कार्यमा ढिला भयो।"
+msgstr[1] "%u डिकन्फ कार्यमा ढिला भयो।"
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
@@ -874,26 +896,29 @@ msgstr[1] "%u जि-सेटिङ्ग सञ्चालन"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " र एक डिकन्फ कार्यमा ढिला भयो।"
+msgstr[1] " र %u डिकन्फ कार्यमा ढिला भयो।"
 
 #: editor/registry-info.ui:22
 msgid ""
-"No schema available. Dconf Editor can’t find a schema associated with this key. The "
-"application that installed this key may have been removed, may have stop the use of "
-"this key, or may use a relocatable schema for defining its keys."
+"No schema available. Dconf Editor can’t find a schema associated with this "
+"key. The application that installed this key may have been removed, may have "
+"stop the use of this key, or may use a relocatable schema for defining its "
+"keys."
 msgstr ""
 
 #: editor/registry-info.ui:56
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about it."
+"application that installed this schema. If possible, please open a bug about "
+"it."
 msgstr ""
 
 #: editor/registry-info.ui:65
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about it."
+"application that installed this schema. If possible, please open a bug about "
+"it."
 msgstr ""
 
 #: editor/registry-info.vala:82
@@ -940,19 +965,21 @@ msgstr "अनुकूल मान"
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:324
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty "
-"value. Strings, signatures and object paths should be surrounded by quotation marks."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value. Strings, signatures and object paths should be surrounded by "
+"quotation marks."
 msgstr ""
 
 #: editor/registry-info.vala:326
-msgid "Strings, signatures and object paths should be surrounded by quotation marks."
+msgid ""
+"Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:330
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty "
-"value."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
+"empty value."
 msgstr ""
 
 #: editor/registry-view.ui:32
@@ -964,9 +991,8 @@ msgid "Reload"
 msgstr "पुन:लोड गर्नुहोस्"
 
 #: editor/registry-view.ui:136
-#, fuzzy
 msgid "No keys in this path"
-msgstr "पाथ"
+msgstr "यस मार्गमा कुने कुञ्जी छैन"
 
 #: editor/registry-view.vala:182
 #, c-format
