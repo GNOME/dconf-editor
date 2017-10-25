@@ -45,6 +45,15 @@ class RegistryView : Grid, PathElement
     [GtkChild] private SearchEntry search_entry;
     [GtkChild] private Button search_next_button;
 
+    private DConfWindow? _window = null;
+    private DConfWindow window {
+        get {
+            if (_window == null)
+                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (this));
+            return (!) _window;
+        }
+    }
+
     construct
     {
         ulong revealer_reload_handler = revealer.reload.connect (invalidate_popovers);
@@ -140,7 +149,7 @@ class RegistryView : Grid, PathElement
     {
         revealer.path_changed ();
         current_path = path;
-        get_dconf_window ().update_path_elements ();
+        window.update_path_elements ();
         invalidate_popovers ();
     }
 
@@ -179,7 +188,7 @@ class RegistryView : Grid, PathElement
 
         if (!select_folder (folder_name))
         {
-            get_dconf_window ().show_notification (_("Cannot find folder “%s”.").printf (folder_name));
+            window.show_notification (_("Cannot find folder “%s”.").printf (folder_name));
             current_path = "/";
             show_browse_view ("/", null);
             return;
@@ -205,14 +214,14 @@ class RegistryView : Grid, PathElement
             else
             {
                 show_browse_view (folder_name, null);
-                get_dconf_window ().show_notification (_("Cannot find key “%s” here.").printf (object_name));
+                window.show_notification (_("Cannot find key “%s” here.").printf (object_name));
             }
             return;
         }
         if (((!) object) is DConfKey && ((DConfKey) ((!) object)).is_ghost)
         {
             show_browse_view (folder_name, folder_name + object_name);
-            get_dconf_window ().show_notification (_("Key “%s” has been removed.").printf (object_name));
+            window.show_notification (_("Key “%s” has been removed.").printf (object_name));
             return;
         }
 
@@ -274,11 +283,6 @@ class RegistryView : Grid, PathElement
             position++;
         }
         return directory_exists;
-    }
-
-    private DConfWindow get_dconf_window ()
-    {
-        return (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (this));
     }
 
     /*\
@@ -395,7 +399,7 @@ class RegistryView : Grid, PathElement
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
         }
         rows_possibly_with_popover.remove_all ();
-        get_dconf_window ().update_hamburger_menu ();
+        window.update_hamburger_menu ();
     }
 
     [GtkCallback]
