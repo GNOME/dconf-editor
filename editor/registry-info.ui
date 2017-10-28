@@ -69,7 +69,7 @@
         <child>
           <object class="GtkInfoBar">
             <property name="visible">True</property>
-            <property name="message-type">warning</property>
+            <property name="message-type">info</property>
             <child internal-child="content_area">
               <object class="GtkBox">
                 <child>
