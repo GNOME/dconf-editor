@@ -109,7 +109,7 @@
   <enum id="ca.desrt.dconf-editor.DemoWeirdEnum">
     <value value="0" nick="only-choice"/>
   </enum>
-  <schema id="ca.desrt.dconf-editor.Demo" path="/ca/desrt/dconf-editor/demo/">
+  <schema id="ca.desrt.dconf-editor.Demo" path="/ca/desrt/dconf-editor/Demo/">
     <key name="boolean" type="b">
       <default>true</default>
       <summary>A boolean, type ‘b’</summary>

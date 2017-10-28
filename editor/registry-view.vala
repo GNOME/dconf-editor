@@ -95,6 +95,7 @@ class RegistryView : Grid, PathElement
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         need_reload_warning_revealer.set_reveal_child (false);
         update_current_path (path);
+        get_selected_directory ().sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
         stack.set_visible_child_name ("browse-view");
         if (selected != null)
         {
@@ -140,6 +141,8 @@ class RegistryView : Grid, PathElement
 
     private void show_properties_view (string path)
     {
+        need_reload_warning_revealer.set_reveal_child (false);
+
         stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         update_current_path (path);
         stack.set_visible_child (properties_view);
@@ -414,7 +417,6 @@ class RegistryView : Grid, PathElement
             saved_selection = ((SettingObject) ((!) key_model).get_object (position)).full_name;
         }
 
-        get_selected_directory ().sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
         show_browse_view (current_path, saved_selection);
     }
 
