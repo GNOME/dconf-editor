@@ -20,6 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
 class RegistryInfo : Grid
 {
+    [GtkChild] private Revealer multiple_schemas_warning_revealer;
     [GtkChild] private Revealer no_schema_warning;
     [GtkChild] private Revealer one_choice_warning_revealer;
     [GtkChild] private Label one_choice_enum_warning;
@@ -67,6 +68,7 @@ class RegistryInfo : Grid
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
+        multiple_schemas_warning_revealer.set_reveal_child (has_schema && key.parent.warning_multiple_schemas);
         no_schema_warning.set_reveal_child (!has_schema);
 
         properties_list_box.@foreach ((widget) => widget.destroy ());

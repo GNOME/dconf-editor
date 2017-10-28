@@ -26,6 +26,8 @@ class RegistryView : Grid, PathElement
 
     private GLib.Settings application_settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     [GtkChild] private Revealer need_reload_warning_revealer;
+    [GtkChild] private Revealer multiple_schemas_warning_revealer;
+    private bool multiple_schemas_warning_needed;
 
     private SettingsModel model = new SettingsModel ();
     [GtkChild] private TreeView dir_tree_view;
@@ -94,6 +96,7 @@ class RegistryView : Grid, PathElement
     {
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         need_reload_warning_revealer.set_reveal_child (false);
+        multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
         update_current_path (path);
         get_selected_directory ().sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
         stack.set_visible_child_name ("browse-view");
@@ -142,6 +145,7 @@ class RegistryView : Grid, PathElement
     private void show_properties_view (string path)
     {
         need_reload_warning_revealer.set_reveal_child (false);
+        multiple_schemas_warning_revealer.set_reveal_child (false);
 
         stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         update_current_path (path);
@@ -167,6 +171,8 @@ class RegistryView : Grid, PathElement
         Directory dir = get_selected_directory ();
         dir.sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
         key_model = dir.key_model;
+
+        multiple_schemas_warning_needed = dir.warning_multiple_schemas;
 
         key_list_box.bind_model (key_model, new_list_box_row);
     }

@@ -4,6 +4,31 @@
   <template class="RegistryInfo" parent="GtkGrid">
     <property name="orientation">vertical</property>
     <child>
+      <object class="GtkRevealer" id="multiple_schemas_warning_revealer">
+        <property name="visible">True</property>
+        <property name="reveal-child">False</property>
+        <child>
+          <object class="GtkInfoBar">
+            <property name="visible">True</property>
+            <property name="message-type">warning</property>
+            <child internal-child="content_area">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="max-width-chars">40</property>
+                    <property name="wrap">True</property>
+                    <property name="label" translatable="yes">Multiple schemas are installed at the parent path. This key might be defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
       <object class="GtkRevealer" id="no_schema_warning"> <!-- TODO report bug: hiding and showing infobar fails to draw it the 2nd time -->
         <property name="visible">True</property>
         <property name="reveal-child">False</property>

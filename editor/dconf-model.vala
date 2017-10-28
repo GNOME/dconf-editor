@@ -37,6 +37,8 @@ public class Directory : SettingObject
     public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
     public List<Directory> children = new List<Directory> ();     // TODO remove
 
+    public bool warning_multiple_schemas = false;
+
     public Directory (Directory? parent, string name, DConf.Client client)
     {
         Object (nullable_parent: parent, name: name);
@@ -584,6 +586,8 @@ public class SettingsModel : Object, Gtk.TreeModel
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
 
+        HashTable<string, Directory> path_and_schema = new HashTable<string, Directory> (str_hash, str_equal);
+
         settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
         foreach (string schema_id in non_relocatable_schemas)
@@ -593,8 +597,18 @@ public class SettingsModel : Object, Gtk.TreeModel
                 continue;       // TODO better
 
             string schema_path = ((!) settings_schema).get_path ();
+
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
             view.init_gsettings_keys ((!) settings_schema);
+
+            Directory? schema_already_installed_there = path_and_schema.lookup (schema_path);
+            if (schema_already_installed_there != null)
+            {
+                ((!) schema_already_installed_there).warning_multiple_schemas = true;
+                view.warning_multiple_schemas = true;
+            }
+            else
+                path_and_schema.insert (schema_path, view);
         }
     }
 
