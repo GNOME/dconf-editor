@@ -29,8 +29,7 @@ class RegistryView : Grid, PathElement
     private bool multiple_schemas_warning_needed;
 
     private SettingsModel model = new SettingsModel ();
-    [GtkChild] private TreeView dir_tree_view;
-    [GtkChild] private TreeSelection dir_tree_selection;
+    private Directory current_directory;
 
     [GtkChild] private Stack stack;
     [GtkChild] private RegistryInfo properties_view;
@@ -86,14 +85,11 @@ class RegistryView : Grid, PathElement
 
     public void init (string path, bool restore_view)   // TODO check path format
     {
-        dir_tree_view.set_model (model);
-        dir_tree_view.expand_all ();
-
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
         path_requested (current_path, null, true);
 
         sorting_options.notify.connect (() => {
-                if (!is_not_browsing_view () && get_selected_directory ().need_sorting (sorting_options))
+                if (!is_not_browsing_view () && current_directory.need_sorting (sorting_options))
                     need_reload_warning_revealer.set_reveal_child (true);
             });
     }
@@ -108,7 +104,7 @@ class RegistryView : Grid, PathElement
         need_reload_warning_revealer.set_reveal_child (false);
         multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
         update_current_path (path);
-        get_selected_directory ().sort_key_model (sorting_options);
+        current_directory.sort_key_model (sorting_options);
         stack.set_visible_child_name ("browse-view");
         if (selected != null)
         {
@@ -171,28 +167,17 @@ class RegistryView : Grid, PathElement
     }
 
     /*\
-    * * Dir TreeView
+    * * Directories tree
     \*/
 
-    [GtkCallback]
     private void dir_selected_cb ()
     {
-        Directory dir = get_selected_directory ();
-        dir.sort_key_model (sorting_options);
-        key_model = dir.key_model;
+        current_directory.sort_key_model (sorting_options);
+        key_model = current_directory.key_model;
 
-        multiple_schemas_warning_needed = dir.warning_multiple_schemas;
+        multiple_schemas_warning_needed = current_directory.warning_multiple_schemas;
 
         key_list_box.bind_model (key_model, new_list_box_row);
-    }
-
-    private Directory get_selected_directory ()
-    {
-        TreeIter iter;
-        if (dir_tree_selection.get_selected (null, out iter))
-            return model.get_directory (iter);
-        else
-            return model.get_root_directory ();
     }
 
     public void path_requested (string _full_name, string? selected, bool tolerant = false)
@@ -208,6 +193,8 @@ class RegistryView : Grid, PathElement
         {
             window.show_notification (_("Cannot find folder “%s”.").printf (folder_name));
             current_path = "/";
+            current_directory = model.get_root_directory ();
+            dir_selected_cb ();
             show_browse_view ("/", null);
             return;
         }
@@ -250,37 +237,39 @@ class RegistryView : Grid, PathElement
     {
         if (full_name == "/")
         {
-            dir_tree_selection.unselect_all ();
+            current_directory = model.get_root_directory ();
+            dir_selected_cb ();
             return true;
         }
 
-        TreeIter iter;
-        Directory dir;
+        Directory? dir = model.get_root_directory ();
 
-        if (dir_tree_selection.get_selected (null, out iter))
+        string [] names = full_name.split ("/");
+        uint index = 1;
+        while (index < names.length - 1)
         {
-            dir = model.get_directory (iter);
-            if (dir.full_name == full_name)
-                return true;
+            ((!) dir).sort_key_model (sorting_options);
+            dir = get_directory (((!) dir).key_model, names [index]);
+            if (dir == null)
+                return false;
+            index++;
         }
 
-        if (model.get_iter_first (out iter))
+        current_directory = (!) dir;
+        dir_selected_cb ();
+        return true;
+    }
+    private Directory? get_directory (GLib.ListStore dir_key_model, string object_name)
+    {
+        uint position = 0;
+        while (position < dir_key_model.get_n_items ())
         {
-            do
-            {
-                dir = model.get_directory (iter);
-
-                if (dir.full_name == full_name)
-                {
-                    dir_tree_selection.select_iter (iter);
-                    return true;
-                }
-            }
-            while (get_next_iter (ref iter));
+            SettingObject object = (SettingObject) dir_key_model.get_object (position);
+            if ((object is Directory) && (object.name == object_name))
+                return (Directory) object;
+            position++;
         }
-        else
-            assert_not_reached ();
-        return false;
+        return null;
     }
     private SettingObject? get_object_from_name (string object_name)
         requires (key_model != null)
@@ -615,25 +604,5 @@ class RegistryView : Grid, PathElement
         if (is_not_browsing_view ())
             return null;
         return (ListBoxRow?) key_list_box.get_selected_row ();
-    }
-
-    private bool get_next_iter (ref TreeIter iter)
-    {
-        /* Search children next */
-        if (model.iter_has_child (iter))
-        {
-            model.iter_nth_child (out iter, iter, 0);
-            return true;
-        }
-
-        /* Move to the next branch */
-        while (!model.iter_next (ref iter))
-        {
-            /* Otherwise move to the parent and onto the next iter */
-            if (!model.iter_parent (out iter, iter))
-                return false;
-        }
-
-        return true;
     }
 }

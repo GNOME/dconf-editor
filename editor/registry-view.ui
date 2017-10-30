@@ -4,16 +4,6 @@
   <template class="RegistryView" parent="GtkGrid">
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkTreeView" id="dir_tree_view">
-        <property name="visible">False</property>
-        <child internal-child="selection">
-          <object class="GtkTreeSelection" id="dir_tree_selection">
-            <signal name="changed" handler="dir_selected_cb"/>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
       <object class="GtkRevealer" id="multiple_schemas_warning_revealer">
         <property name="visible">True</property>
         <property name="reveal-child">False</property>
