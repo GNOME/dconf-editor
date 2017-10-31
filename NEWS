@@ -1,3 +1,22 @@
+dconf-editor 3.24.3
+=====================
+
+Finally a stable release in this branch, to say it could be used if you want it.
+No new feature of course, just a rather small correction of the C generated code
+also posted in other branches.
+
+Translations updated:
+  Catalan: Jordi Mas
+  Czech: Marek Cernocky
+  Friulian: Fabio Tomat
+  German: Mario Blättermann
+  Indonesian: Kukuh Syafaat
+  Lithuanian: Aurimas Černius
+  Polish: Piotr Drąg
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Swedish: Anders Jonsson
+
 dconf-editor 3.23.4
 =====================
 
