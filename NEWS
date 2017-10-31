@@ -1,3 +1,20 @@
+dconf-editor 3.26.2
+=====================
+
+This stable release mainly contains a small correction of C generated code, that
+has been also backported in other branches. Also, some translations are updated.
+
+Translations updated:
+  Catalan (Valencian): Xavi Ivars
+  French: Charles Monzat
+  Friulian: Fabio Tomat
+  Indonesian: Kukuh Syafaat
+  Italian: Milo Casagrande
+  Lithuanian: Aurimas Černius
+  Nepali: Pawan Chitrakar
+  Brazilian Portuguese: Fábio Nogueira
+  Slovenian: Matej Urbančič
+
 dconf-editor 3.26.1
 =====================
 

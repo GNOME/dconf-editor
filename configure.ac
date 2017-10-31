@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([dconf-editor],[3.26.1],[https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],[dconf-editor])
+AC_INIT([dconf-editor],[3.26.2],[https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],[dconf-editor])
 
 # might be config.h.in
 AC_CONFIG_SRCDIR([configure.ac])
