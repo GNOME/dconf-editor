@@ -1,5 +1,5 @@
 AC_INIT([dconf-editor],
-        [3.22.3],
+        [3.22.4],
         [https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-editor],
         [dconf-editor])
 

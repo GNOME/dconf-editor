@@ -1,3 +1,15 @@
+dconf-editor 3.22.4
+=====================
+
+Finally, one more release for a rather small correction of the C generated code,
+revealed by a Coverity Scan ran by Andrej Nemec. With four translations updates.
+
+Translations updated:
+  Chinese (China): Mandy Wang
+  Icelandic: Sveinn í Felli
+  Occitan: Cédric Valmary
+  Slovenian: Matej Urbančič
+
 dconf-editor 3.22.3
 =====================
 
