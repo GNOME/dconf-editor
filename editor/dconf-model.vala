@@ -17,31 +17,25 @@
 
 public abstract class SettingObject : Object
 {
-    public Directory? nullable_parent { private get; construct; }
-    public Directory parent { get { return nullable_parent == null ? (Directory) this : (!) nullable_parent; }}   // TODO make protected or even remove
     public string name { get; construct; }
+    public string full_name { get; construct; }
 
-    public string casefolded_name { get; construct; }
-    public string full_name { get; private set; }
+    public string casefolded_name { get; private construct; }
     construct
     {
-        full_name = nullable_parent == null ? "/" : ((!) nullable_parent).full_name + name + ((this is Directory) ? "/" : "");
         casefolded_name = name.casefold ();
     }
 }
 
 public class Directory : SettingObject
 {
-    public int index { get { return parent.children.index (this); }}        // TODO remove
-
-    public HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
-    public List<Directory> children = new List<Directory> ();     // TODO remove
+    private HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
 
     public bool warning_multiple_schemas = false;
 
-    public Directory (Directory? parent, string name, DConf.Client client)
+    public Directory (string full_name, string name, DConf.Client client)
     {
-        Object (nullable_parent: parent, name: name);
+        Object (full_name: full_name, name: name);
 
         this.client = client;
     }
@@ -57,30 +51,39 @@ public class Directory : SettingObject
 
     private DConf.Client client;
 
-    private GLib.ListStore? _key_model = null;
+    private bool key_model_accessed = false;
+    private GLib.ListStore _key_model = new GLib.ListStore (typeof (SettingObject));
     public GLib.ListStore key_model
     {
         get
         {
-            if (_key_model == null)
+            if (!key_model_accessed)
             {
-                _key_model = new GLib.ListStore (typeof (SettingObject));
-                create_folders ();
+                key_model_accessed = true;
                 create_gsettings_keys ();
                 create_dconf_keys ();
             }
-            return (!) _key_model;
+            return _key_model;
         }
+    }
+
+    public void insert_directory (Directory dir)
+        requires (key_model_accessed == false)
+    {
+        child_map.insert (dir.name, dir);
+        _key_model.insert_sorted (dir, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
+    }
+
+    public Directory? lookup_directory (string name)
+    {
+        if (key_model_accessed)
+            assert_not_reached ();
+        return child_map.lookup (name);
     }
 
     /*\
     * * Folders creation
     \*/
-
-    private void create_folders ()
-    {
-        children.foreach ((dir) => ((!) _key_model).append ((SettingObject) dir));
-    }
 
     public bool need_sorting (SortingOptions sorting_options)
     {
@@ -433,7 +436,7 @@ public class DConfKey : Key
 
     public DConfKey (DConf.Client client, Directory parent, string name)
     {
-        Object (nullable_parent: parent, name: name);
+        Object (full_name: parent.full_name + name, name: name);
 
         this.client = client;
         this.type_string = value.get_type_string ();
@@ -489,7 +492,7 @@ public class GSettingsKey : Key
 
     public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
-        Object (nullable_parent: parent,
+        Object (full_name: parent.full_name + name,
                 name: name,
                 // schema infos
                 schema_id: schema_id,
@@ -548,7 +551,7 @@ public class SettingsModel : Object
     public SettingsModel ()
     {
         SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
-        root = new Directory (null, "/", client);
+        root = new Directory ("/", "/", client);
 
         if (settings_schema_source != null)
             parse_schemas ((!) settings_schema_source);
@@ -618,13 +621,12 @@ public class SettingsModel : Object
 
     private Directory get_child (Directory parent_view, string name)
     {
-        Directory? view = parent_view.child_map.lookup (name);
+        Directory? view = parent_view.lookup_directory (name);
         if (view != null)
             return (!) view;
 
-        Directory new_view = new Directory (parent_view, name, client);
-        parent_view.children.insert_sorted (new_view, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
-        parent_view.child_map.insert (name, new_view);
+        Directory new_view = new Directory (parent_view.full_name + name + "/", name, client);
+        parent_view.insert_directory (new_view);
         return new_view;
     }
 }
