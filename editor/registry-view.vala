@@ -28,7 +28,6 @@ class RegistryView : Grid, PathElement
     [GtkChild] private Revealer multiple_schemas_warning_revealer;
     private bool multiple_schemas_warning_needed;
 
-    private SettingsModel model = new SettingsModel ();
     private Directory current_directory;
 
     [GtkChild] private Stack stack;
@@ -86,7 +85,6 @@ class RegistryView : Grid, PathElement
     public void init (string path, bool restore_view)   // TODO check path format
     {
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
-        path_requested (current_path, null, true);
 
         sorting_options.notify.connect (() => {
                 if (!is_not_browsing_view () && current_directory.need_sorting (sorting_options))
@@ -97,6 +95,20 @@ class RegistryView : Grid, PathElement
     /*\
     * * Stack switching
     \*/
+
+    public void set_directory (Directory directory, string? selected)
+    {
+        current_directory = directory;
+
+        current_directory.sort_key_model (sorting_options);
+        key_model = current_directory.key_model;
+
+        multiple_schemas_warning_needed = current_directory.warning_multiple_schemas;
+
+        key_list_box.bind_model (key_model, new_list_box_row);
+
+        show_browse_view (directory.full_name, selected);
+    }
 
     private void show_browse_view (string path, string? selected, bool grab_focus = true)
     {
@@ -147,9 +159,10 @@ class RegistryView : Grid, PathElement
         key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
     }
 
-
-    private void show_properties_view (string path)
+    public void show_properties_view (Key key, string path, bool warning_multiple_schemas)
     {
+        properties_view.populate_properties_list_box (key, warning_multiple_schemas);
+
         need_reload_warning_revealer.set_reveal_child (false);
         multiple_schemas_warning_revealer.set_reveal_child (false);
 
@@ -164,132 +177,6 @@ class RegistryView : Grid, PathElement
         current_path = path;
         window.update_path_elements ();
         invalidate_popovers ();
-    }
-
-    /*\
-    * * Directories tree
-    \*/
-
-    private void dir_selected_cb ()
-    {
-        current_directory.sort_key_model (sorting_options);
-        key_model = current_directory.key_model;
-
-        multiple_schemas_warning_needed = current_directory.warning_multiple_schemas;
-
-        key_list_box.bind_model (key_model, new_list_box_row);
-    }
-
-    public void path_requested (string _full_name, string? selected, bool tolerant = false)
-    {
-        string full_name = _full_name.dup ();
-        string folder_name;
-        if (full_name.has_suffix ("/"))
-            folder_name = full_name;
-        else
-            folder_name = DConfWindow.stripped_path (full_name);
-
-        if (!select_folder (folder_name))
-        {
-            window.show_notification (_("Cannot find folder “%s”.").printf (folder_name));
-            current_path = "/";
-            current_directory = model.get_root_directory ();
-            dir_selected_cb ();
-            show_browse_view ("/", null);
-            return;
-        }
-
-        if (full_name == folder_name)
-        {
-            show_browse_view (full_name, selected);
-            return;
-        }
-
-        string [] names = full_name.split ("/");
-        string object_name = names [names.length - 1];
-        SettingObject? object = get_object_from_name (object_name);
-        if ((object == null) || (((!) object) is Directory))
-        {
-            if ((object != null) && tolerant)
-            {
-                if (!select_folder (full_name + "/"))
-                    assert_not_reached ();
-                show_browse_view (full_name + "/", null);
-            }
-            else
-            {
-                show_browse_view (folder_name, null);
-                window.show_notification (_("Cannot find key “%s” here.").printf (object_name));
-            }
-            return;
-        }
-        if (((!) object) is DConfKey && ((DConfKey) ((!) object)).is_ghost)
-        {
-            show_browse_view (folder_name, folder_name + object_name);
-            window.show_notification (_("Key “%s” has been removed.").printf (object_name));
-            return;
-        }
-
-        properties_view.populate_properties_list_box ((Key) ((!) object), current_directory.warning_multiple_schemas);
-        show_properties_view (full_name);
-    }
-    private bool select_folder (string full_name)
-    {
-        if (full_name == "/")
-        {
-            current_directory = model.get_root_directory ();
-            dir_selected_cb ();
-            return true;
-        }
-
-        Directory? dir = model.get_root_directory ();
-
-        string [] names = full_name.split ("/");
-        uint index = 1;
-        while (index < names.length - 1)
-        {
-            ((!) dir).sort_key_model (sorting_options);
-            dir = get_directory (((!) dir).key_model, names [index]);
-            if (dir == null)
-                return false;
-            index++;
-        }
-
-        current_directory = (!) dir;
-        dir_selected_cb ();
-        return true;
-    }
-    private Directory? get_directory (GLib.ListStore dir_key_model, string object_name)
-    {
-        uint position = 0;
-        while (position < dir_key_model.get_n_items ())
-        {
-            SettingObject object = (SettingObject) dir_key_model.get_object (position);
-            if ((object is Directory) && (object.name == object_name))
-                return (Directory) object;
-            position++;
-        }
-        return null;
-    }
-    private SettingObject? get_object_from_name (string object_name)
-        requires (key_model != null)
-    {
-        SettingObject? directory_exists = null;
-
-        uint position = 0;
-        while (position < ((!) key_model).get_n_items ())
-        {
-            SettingObject object = (SettingObject) ((!) key_model).get_object (position);
-            if (object.name == object_name)
-            {
-                if (object is Directory)
-                    directory_exists = object;
-                else
-                    return object;
-            }
-            position++;
-        }
-        return directory_exists;
     }
 
     /*\
