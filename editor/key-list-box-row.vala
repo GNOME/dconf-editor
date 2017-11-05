@@ -412,7 +412,7 @@ private class ContextPopover : Popover
     public void new_copy_action (string text)
     {
         /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
-        current_section.append (_("Copy"), "app.copy(\"" + text.escape ("") + "\")");
+        current_section.append (_("Copy"), "app.copy(\"" + text.escape (null).escape (null) + "\")");
     }
 
     public void set_group (string group_name)
