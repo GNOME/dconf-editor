@@ -160,7 +160,7 @@ class ConfigurationEditor : Gtk.Application
     {
         if (gvariant == null)
             return;
-        copy (((!) gvariant).get_string ());
+        copy (((!) gvariant).get_string ().compress ());
     }
 
     public void copy (string text)

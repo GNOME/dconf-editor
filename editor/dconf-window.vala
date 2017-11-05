@@ -257,7 +257,7 @@ class DConfWindow : ApplicationWindow
         GLib.Menu section;
 
         GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape ("") + "\")");
+        menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape (null).escape (null) + "\")");
 
         if (current_path.has_suffix ("/"))
         {
