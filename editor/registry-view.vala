@@ -21,7 +21,6 @@ using Gtk;
 class RegistryView : Grid, PathElement
 {
     public string current_path { get; private set; }
-    public bool show_search_bar { get; set; }
     public Behaviour behaviour { get; set; }
 
     private GLib.Settings application_settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
@@ -58,10 +57,6 @@ class RegistryView : Grid, PathElement
 
     [GtkChild] private ModificationsRevealer revealer;
 
-    [GtkChild] private SearchBar search_bar;
-    [GtkChild] private SearchEntry search_entry;
-    [GtkChild] private Button search_next_button;
-
     private DConfWindow? _window = null;
     private DConfWindow window {
         get {
@@ -75,10 +70,6 @@ class RegistryView : Grid, PathElement
     {
         ulong revealer_reload_handler = revealer.reload.connect (invalidate_popovers);
 
-        EntryBuffer buffer = search_entry.get_buffer ();
-        ulong search_entry_buffer_deleted_text_handler = buffer.deleted_text.connect (() => search_next_button.set_sensitive (true));
-        search_bar.connect_entry (search_entry);
-        bind_property ("show-search-bar", search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);   // TODO in UI file?
         bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
 
         sorting_options = new SortingOptions ();
@@ -89,8 +80,6 @@ class RegistryView : Grid, PathElement
 
         destroy.connect (() => {
                 revealer.disconnect (revealer_reload_handler);
-                buffer.disconnect (search_entry_buffer_deleted_text_handler);
-
                 base.destroy ();
             });
     }
@@ -188,7 +177,6 @@ class RegistryView : Grid, PathElement
     [GtkCallback]
     private void dir_selected_cb ()
     {
-        search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 1/2
         Directory dir = get_selected_directory ();
         dir.sort_key_model (sorting_options);
         key_model = dir.key_model;
@@ -434,8 +422,6 @@ class RegistryView : Grid, PathElement
     [GtkCallback]
     private void row_activated_cb (ListBoxRow list_box_row)
     {
-        search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 2/2
-
         ((ClickableListBoxRow) list_box_row.get_child ()).on_row_clicked ();
     }
 
@@ -548,7 +534,7 @@ class RegistryView : Grid, PathElement
     * * Keyboard calls
     \*/
 
-    public void set_search_mode (bool? mode)    // mode is never 'true'...
+/*    public void set_search_mode (bool? mode)    // mode is never 'true'...
     {
         if (mode == null)
             search_bar.set_search_mode (!search_bar.get_search_mode ());
@@ -562,7 +548,7 @@ class RegistryView : Grid, PathElement
             return false;
 
         return search_bar.handle_event (event);
-    }
+    } */
 
     public bool show_row_popover ()
     {
@@ -629,96 +615,6 @@ class RegistryView : Grid, PathElement
         if (is_not_browsing_view ())
             return null;
         return (ListBoxRow?) key_list_box.get_selected_row ();
-    }
-
-    /*\
-    * * Search box
-    \*/
-
-    [GtkCallback]
-    private void find_next_cb ()
-    {
-        if (!search_bar.get_search_mode ())     // TODO better; switches to next list_box_row when keyboard-activating an entry of the popover
-            return;
-
-        TreeIter iter;
-        bool on_first_directory;
-        int position = 0;
-        if (dir_tree_selection.get_selected (null, out iter))
-        {
-            ListBoxRow? selected_row = (ListBoxRow) key_list_box.get_selected_row ();
-            if (selected_row != null)
-                position = ((!) selected_row).get_index () + 1;
-
-            on_first_directory = true;
-        }
-        else if (model.get_iter_first (out iter))
-            on_first_directory = false;
-        else
-            return;     // TODO better
-
-        do
-        {
-            Directory dir = model.get_directory (iter);
-
-            if (!on_first_directory)
-            {
-                if (dir.name.index_of (search_entry.text) >= 0)
-                {
-                    dir_tree_selection.select_iter (iter);
-                    show_browse_view (dir.full_name, null, false);
-                    return;
-                }
-            }
-            else
-                on_first_directory = false;
-
-            /* Select next key that matches */
-            dir.sort_key_model (sorting_options);
-            GLib.ListStore key_model = dir.key_model;
-            while (position < key_model.get_n_items ())
-            {
-                SettingObject object = (SettingObject) key_model.get_object (position);
-                if (object.name.index_of (search_entry.text) >= 0)
-                {
-                    dir_tree_selection.select_iter (iter);
-                    key_list_box.select_row (key_list_box.get_row_at_index (position));
-                    show_browse_view (dir.full_name, object.full_name, false);
-                    return;
-                }
-                else if (object is Key)
-                {
-                    Key key = (Key) object;
-                    if ((key is GSettingsKey || !((DConfKey) key).is_ghost) && key_matches (key, search_entry.text))
-                    {   // TODO use request_path (object.full_name); problem with hiding or not the pathbar
-                        properties_view.populate_properties_list_box (key);
-                        dir_tree_selection.select_iter (iter);
-                        key_list_box.select_row (key_list_box.get_row_at_index (position));
-                        show_properties_view (object.full_name);
-                        return;
-                    }
-                }
-                position++;
-            }
-
-            position = 0;
-        }
-        while (get_next_iter (ref iter));
-
-        search_next_button.set_sensitive (false);
-    }
-
-    private bool key_matches (Key key, string text)
-    {
-        /* Check in key's metadata */
-        if (key is GSettingsKey && ((GSettingsKey) key).search_for (text))
-            return true;
-
-        /* Check key value */
-        if (key.value.is_of_type (VariantType.STRING) && key.value.get_string ().index_of (text) >= 0)
-            return true;
-
-        return false;
     }
 
     private bool get_next_iter (ref TreeIter iter)

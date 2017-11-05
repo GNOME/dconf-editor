@@ -239,7 +239,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void request_path (string full_name)
     {
-        registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
+//        registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
         highcontrast = ("HighContrast" in Gtk.Settings.get_default ().gtk_theme_name);
         registry_view.path_requested (full_name, pathbar.get_selected_child (full_name));
     }
@@ -353,14 +353,14 @@ class DConfWindow : ApplicationWindow
                     registry_view.discard_row_popover ();
                     bookmarks_button.set_bookmarked (false);
                     return true;
-                case "f":
-                    if (bookmarks_button.active)
-                        bookmarks_button.active = false;
-                    if (info_button.active)
-                        info_button.active = false;
-                    registry_view.discard_row_popover ();
-                    registry_view.set_search_mode (null);
-                    return true;
+//                case "f":
+//                    if (bookmarks_button.active)
+//                        bookmarks_button.active = false;
+//                    if (info_button.active)
+//                        info_button.active = false;
+//                    registry_view.discard_row_popover ();
+//                    registry_view.set_search_mode (null);
+//                    return true;
                 case "c":
                     registry_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
                     string? selected_row_text = registry_view.get_copy_text ();
@@ -381,7 +381,7 @@ class DConfWindow : ApplicationWindow
                 case "KP_Enter":
                     if (info_button.active || bookmarks_button.active)
                         return false;
-                    registry_view.set_search_mode (false);
+//                    registry_view.set_search_mode (false);
                     registry_view.discard_row_popover ();
                     registry_view.toggle_boolean_key ();
                     return true;
@@ -393,7 +393,7 @@ class DConfWindow : ApplicationWindow
                 case "KP_Decimal":
                     if (info_button.active || bookmarks_button.active)
                         return false;
-                    registry_view.set_search_mode (false);
+//                    registry_view.set_search_mode (false);
                     registry_view.discard_row_popover ();
                     registry_view.set_to_default ();
                     return true;
@@ -444,17 +444,17 @@ class DConfWindow : ApplicationWindow
             return true;
         }
 
-        if (bookmarks_button.active || info_button.active)      // TODO open bug about modal popovers and search_bar
+        if (bookmarks_button.active || info_button.active)
             return false;
 
-        return registry_view.handle_search_event (event);
+        return false;    // registry_view.handle_search_event (event);
     }
 
     [GtkCallback]
     private void on_menu_button_clicked ()
     {
         registry_view.discard_row_popover ();
-        registry_view.set_search_mode (false);
+//        registry_view.set_search_mode (false);
     }
 
     private void go_backward (bool shift)

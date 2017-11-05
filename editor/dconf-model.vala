@@ -533,11 +533,11 @@ public class GSettingsKey : Key
         properties = builder.end ();
     }
 
-    public bool search_for (string text)
+/*  public bool search_for (string text)
     {
         return summary.index_of (text) >= 0
             || description.index_of (text) >= 0;  // TODO use the "in" keyword
-    }
+    } */
 }
 
 public class SettingsModel : Object, Gtk.TreeModel

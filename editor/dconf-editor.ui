@@ -65,10 +65,9 @@
         </child>
         <child>
           <object class="GtkToggleButton">
-            <property name="visible">True</property>
+            <property name="visible">False</property>
             <property name="valign">center</property>
             <!-- TODO <property name="focus-on-click">False</property> does not work here because of explicit focus grab -->
-            <property name="active" bind-source="registry_view" bind-property="show-search-bar" bind-flags="bidirectional|sync-create"/>
             <!-- <accelerator key="F" signal="toggled" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>
               <class name="image-button"/>
