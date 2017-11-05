@@ -129,19 +129,47 @@ class DConfWindow : ApplicationWindow
         settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
+        /* init current_path */
         if (path == null)
             registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
         else
             registry_view.init ((!) path, true);
 
-        path_requested (current_path, null, true);
-    }
+        /* go to directory */
+        string folder_name = SettingsModel.get_base_path (current_path);
 
-    private static string stripped_path (string path)
-    {
-        if (path.length <= 1)
-            return "/";
-        return path.slice (0, path.last_index_of_char ('/') + 1);
+        Directory? dir = model.get_directory (folder_name);
+        if (dir == null)
+        {
+            cannot_find_folder (folder_name);
+            return;
+        }
+        if (folder_name == current_path)
+        {
+            registry_view.set_directory ((!) dir, null);
+            return;
+        }
+
+        /* go to key */
+        string [] names = current_path.split ("/");
+        string object_name = names [names.length - 1];
+
+        Key?       existing_key = SettingsModel.get_key_from_path_and_name    (((!) dir).key_model, object_name);
+        Directory? existing_dir = SettingsModel.get_folder_from_path_and_name (((!) dir).key_model, object_name);
+
+        if (existing_key != null)
+        {
+            if (existing_dir != null)
+                warning ("TODO: search (current_path)");
+            registry_view.show_properties_view ((Key) (!) existing_key, current_path, ((!) dir).warning_multiple_schemas);
+        }
+        else
+        {
+            if (existing_dir != null)
+                registry_view.set_directory ((!) existing_dir, null);
+            else
+                cannot_find_key (object_name, (!) dir);
+        }
     }
 
     public static Widget _get_parent (Widget widget)
@@ -245,104 +273,32 @@ class DConfWindow : ApplicationWindow
     {
 //        registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
         highcontrast = ("HighContrast" in Gtk.Settings.get_default ().gtk_theme_name);
-        path_requested (full_name, pathbar.get_selected_child (full_name));
-    }
-    private void path_requested (string _full_name, string? selected, bool tolerant = false)
-    {
-        string full_name = _full_name.dup ();
-        string folder_name;
-        if (full_name.has_suffix ("/"))
-            folder_name = full_name;
-        else
-            folder_name = stripped_path (full_name);
 
-        Directory? dir = get_folder (model, folder_name);
+        string folder_name = SettingsModel.get_base_path (full_name);
+
+        Directory? dir = model.get_directory (folder_name);
         if (dir == null)
         {
-            show_notification (_("Cannot find folder “%s”.").printf (folder_name));
-            current_path = "/";
-            registry_view.set_directory (model.get_root_directory (), null);
+            cannot_find_folder (folder_name);
             return;
         }
-
         if (full_name == folder_name)
         {
-            registry_view.set_directory ((!) dir, selected);
+            registry_view.set_directory ((!) dir, pathbar.get_selected_child (full_name));
             return;
         }
 
         string [] names = full_name.split ("/");
         string object_name = names [names.length - 1];
-        SettingObject? object = get_object_from_name (((!) dir).key_model, object_name, false);
-        if ((object == null) || (((!) object) is Directory))
-        {
-            if ((object != null) && tolerant)
-            {
-                dir = get_folder (model, full_name + "/");
-                if (dir == null)
-                    assert_not_reached ();
 
-                registry_view.set_directory ((!) dir, null);
-                return;
-            }
-            else
-            {
-                registry_view.set_directory ((!) dir, null);
-                show_notification (_("Cannot find key “%s” here.").printf (object_name));
-                return;
-            }
-        }
-        if (((!) object) is DConfKey && ((DConfKey) ((!) object)).is_ghost)
-        {
-            registry_view.set_directory ((!) dir, folder_name + object_name);
-            show_notification (_("Key “%s” has been removed.").printf (object_name));
-            return;
-        }
+        Key? existing_key = SettingsModel.get_key_from_path_and_name (((!) dir).key_model, object_name);
 
-        registry_view.show_properties_view ((Key) ((!) object), full_name, ((!) dir).warning_multiple_schemas);
-    }
-    private static Directory? get_folder (SettingsModel model, string full_name)
-    {
-        if (full_name == "/")
-            return model.get_root_directory ();
-
-        SettingObject? dir = model.get_root_directory ();
-
-        string [] names = full_name.split ("/");
-        uint index = 1;
-        while (index < names.length - 1)
-        {
-            dir = get_object_from_name (((Directory) (!) dir).key_model, names [index], true);
-            if (dir == null)
-                return null;
-            index++;
-        }
-
-        return (Directory) (!) dir;
-    }
-    private static SettingObject? get_object_from_name (GLib.ListStore key_model, string object_name, bool searching_a_directory)
-    {
-        SettingObject? existing_directory = null;
-
-        uint position = 0;
-        while (position < key_model.get_n_items ())
-        {
-            SettingObject object = (SettingObject) key_model.get_object (position);
-            if (object.name == object_name)
-            {
-                if (!searching_a_directory)
-                {
-                    if (object is Directory)
-                        existing_directory = object;
-                    else
-                        return object;
-                }
-                else if (object is Directory)
-                    return object;
-            }
-            position++;
-        }
-        return existing_directory;
+        if (existing_key == null)
+            cannot_find_key (object_name, (!) dir);
+        else if (((!) existing_key) is DConfKey && ((DConfKey) (!) existing_key).is_ghost)
+            key_has_been_removed (object_name, (!) dir);
+        else
+            registry_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
     }
 
     /*\
@@ -590,6 +546,22 @@ class DConfWindow : ApplicationWindow
     {
         notification_label.set_text (notification);
         notification_revealer.set_reveal_child (true);
+    }
+
+    private void cannot_find_folder (string folder_name)
+    {
+        registry_view.set_directory ((!) model.get_directory ("/"), null);
+        show_notification (_("Cannot find folder “%s”.").printf (folder_name));
+    }
+    private void cannot_find_key (string key_name, Directory fallback_dir)
+    {
+        registry_view.set_directory (fallback_dir, null);
+        show_notification (_("Cannot find key “%s” here.").printf (key_name));
+    }
+    private void key_has_been_removed (string key_name, Directory fallback_dir)
+    {
+        registry_view.set_directory (fallback_dir, fallback_dir.full_name + key_name);
+        show_notification (_("Key “%s” has been removed.").printf (key_name));
     }
 
     [GtkCallback]

@@ -561,11 +561,6 @@ public class SettingsModel : Object
         client.watch_sync ("/");
     }
 
-    public Directory get_root_directory ()
-    {
-        return root;
-    }
-
     private void parse_schemas (SettingsSchemaSource settings_schema_source)
     {
         string [] non_relocatable_schemas;
@@ -628,6 +623,75 @@ public class SettingsModel : Object
         Directory new_view = new Directory (parent_view.full_name + name + "/", name, client);
         parent_view.insert_directory (new_view);
         return new_view;
+    }
+
+    /*\
+    * * Path requests
+    \*/
+
+    public static string get_base_path (string path)
+    {
+        if (path.has_suffix ("/"))
+            return path;
+        else
+            return stripped_path (path);
+    }
+
+    public Directory? get_directory (string path)
+    {
+        if (path == "/")
+            return root;
+
+        SettingObject? dir = root;
+
+        string [] names = path.split ("/");
+        uint index = 1;
+        while (index < names.length - 1)
+        {
+            dir = get_folder_from_path_and_name (((Directory) (!) dir).key_model, names [index]);
+            if (dir == null)
+                return null;
+            index++;
+        }
+
+        return (Directory) (!) dir;
+    }
+
+    private static string stripped_path (string path)
+    {
+        if (path.length <= 1)
+            return "/";
+        return path.slice (0, path.last_index_of_char ('/') + 1);
+    }
+
+    public static Key? get_key_from_path_and_name (GLib.ListStore key_model, string key_name)
+    {
+        uint position = 0;
+        while (position < key_model.get_n_items ())
+        {
+            SettingObject? object = (SettingObject?) key_model.get_object (position);
+            if (object == null)
+                assert_not_reached ();
+            if ((!) object is Key && ((!) object).name == key_name)
+                return (Key) (!) object;
+            position++;
+        }
+        return null;
+    }
+
+    public static Directory? get_folder_from_path_and_name (GLib.ListStore key_model, string folder_name)
+    {
+        uint position = 0;
+        while (position < key_model.get_n_items ())
+        {
+            SettingObject? object = (SettingObject?) key_model.get_object (position);
+            if (object == null)
+                assert_not_reached ();
+            if ((!) object is Directory && ((!) object).name == folder_name)
+                return (Directory) (!) object;
+            position++;
+        }
+        return null;
     }
 }
 
