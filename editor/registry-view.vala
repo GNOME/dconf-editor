@@ -18,24 +18,16 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-class RegistryView : Grid, PathElement
+class RegistryView : Grid, PathElement, BrowsableView
 {
-    public string current_path { get; private set; }
-    public Behaviour behaviour { get; set; }
+    public Behaviour behaviour { private get; set; }
 
-    private GLib.Settings application_settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
-    [GtkChild] private Revealer need_reload_warning_revealer;
     [GtkChild] private Revealer multiple_schemas_warning_revealer;
-    private bool multiple_schemas_warning_needed;
 
-    private Directory current_directory;
-
-    [GtkChild] private Stack stack;
-    [GtkChild] private RegistryInfo properties_view;
+    [GtkChild] private ScrolledWindow scrolled;
 
     [GtkChild] private ListBox key_list_box;
     private GLib.ListStore? key_model = null;
-    private SortingOptions sorting_options;
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
@@ -53,86 +45,50 @@ class RegistryView : Grid, PathElement
         }
     }
 
-    [GtkChild] private ModificationsRevealer revealer;
+    public ModificationsRevealer revealer { private get; set; }
 
-    private DConfWindow? _window = null;
-    private DConfWindow window {
+    private BrowserView? _browser_view = null;
+    private BrowserView browser_view {
         get {
-            if (_window == null)
-                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (this));
-            return (!) _window;
+            if (_browser_view == null)
+                _browser_view = (BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this));
+            return (!) _browser_view;
         }
     }
 
     construct
     {
-        ulong revealer_reload_handler = revealer.reload.connect (invalidate_popovers);
-
-        bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
-
-        sorting_options = new SortingOptions ();
-        application_settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
-        application_settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
-
         key_list_box.set_header_func (update_row_header);
-
-        destroy.connect (() => {
-                revealer.disconnect (revealer_reload_handler);
-                base.destroy ();
-            });
-    }
-
-    public void init (string path, bool restore_view)   // TODO check path format
-    {
-        current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
-
-        sorting_options.notify.connect (() => {
-                if (!is_not_browsing_view () && current_directory.need_sorting (sorting_options))
-                    need_reload_warning_revealer.set_reveal_child (true);
-            });
     }
 
     /*\
-    * * Stack switching
+    * * Updating
     \*/
 
-    public void set_directory (Directory directory, string? selected)
+    public void set_key_model (GLib.ListStore _key_model)
     {
-        current_directory = directory;
-
-        current_directory.sort_key_model (sorting_options);
-        key_model = current_directory.key_model;
-
-        multiple_schemas_warning_needed = current_directory.warning_multiple_schemas;
-
+        key_model = _key_model;
         key_list_box.bind_model (key_model, new_list_box_row);
-
-        show_browse_view (directory.full_name, selected);
     }
 
-    private void show_browse_view (string path, string? selected, bool grab_focus = true)
+    public void show_multiple_schemas_warning (bool multiple_schemas_warning_needed)
     {
-        stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
-        need_reload_warning_revealer.set_reveal_child (false);
         multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
-        update_current_path (path);
-        current_directory.sort_key_model (sorting_options);
-        stack.set_visible_child_name ("browse-view");
-        if (selected != null)
-        {
-            check_resize ();
-            ListBoxRow? row = key_list_box.get_row_at_index (get_row_position ((!) selected));
-            if (row == null)
-                assert_not_reached ();
+    }
+
+    public void select_row_named (string selected, bool grab_focus)
+    {
+        check_resize ();
+        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected));
+        if (row == null)
+            assert_not_reached ();
+        scroll_to_row ((!) row, grab_focus);
+    }
+    public void select_first_row (bool grab_focus)
+    {
+        ListBoxRow? row = key_list_box.get_row_at_index (0);
+        if (row != null)
             scroll_to_row ((!) row, grab_focus);
-        }
-        else
-        {
-            ListBoxRow? row = key_list_box.get_row_at_index (0);
-            if (row != null)
-                scroll_to_row ((!) row, grab_focus);
-        }
-        properties_view.clean ();
     }
     private int get_row_position (string selected)
         requires (key_model != null)
@@ -154,29 +110,9 @@ class RegistryView : Grid, PathElement
             row.grab_focus ();
 
         Allocation list_allocation, row_allocation;
-        stack.get_allocation (out list_allocation);
+        scrolled.get_allocation (out list_allocation);
         row.get_allocation (out row_allocation);
         key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
-    }
-
-    public void show_properties_view (Key key, string path, bool warning_multiple_schemas)
-    {
-        properties_view.populate_properties_list_box (key, warning_multiple_schemas);
-
-        need_reload_warning_revealer.set_reveal_child (false);
-        multiple_schemas_warning_revealer.set_reveal_child (false);
-
-        stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
-        update_current_path (path);
-        stack.set_visible_child (properties_view);
-    }
-
-    private void update_current_path (string path)
-    {
-        revealer.path_changed ();
-        current_path = path;
-        window.update_path_elements ();
-        invalidate_popovers ();
     }
 
     /*\
@@ -203,7 +139,7 @@ class RegistryView : Grid, PathElement
         if (setting_object is Directory)
         {
             row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
-            on_delete_call_handler = row.on_delete_call.connect (() => reset_objects (((Directory) setting_object).key_model, true));
+            on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_objects (((Directory) setting_object).key_model, true));
         }
         else
         {
@@ -312,22 +248,18 @@ class RegistryView : Grid, PathElement
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
         }
         rows_possibly_with_popover.remove_all ();
-        window.update_hamburger_menu ();
     }
 
-    [GtkCallback]
-    private void reload ()
-        requires (!is_not_browsing_view ())
+    public string? get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        string? saved_selection = null;
         if (selected_row != null)
         {
             int position = ((!) selected_row).get_index ();
-            saved_selection = ((SettingObject) ((!) key_model).get_object (position)).full_name;
+            return ((SettingObject) ((!) key_model).get_object (position)).full_name;
         }
-
-        show_browse_view (current_path, saved_selection);
+        else
+            return null;
     }
 
     /*\
@@ -336,13 +268,7 @@ class RegistryView : Grid, PathElement
 
     public bool get_current_delay_mode ()
     {
-        return revealer.get_current_delay_mode ();
-    }
-
-    public void enter_delay_mode ()
-    {
-        revealer.enter_delay_mode ();
-        invalidate_popovers ();
+        return browser_view.get_current_delay_mode ();
     }
 
     private void set_key_value (Key key, Variant? new_value)
@@ -355,55 +281,11 @@ class RegistryView : Grid, PathElement
             ((GSettingsKey) key).set_to_default ();
         else if (behaviour != Behaviour.UNSAFE)
         {
-            enter_delay_mode ();
+            browser_view.enter_delay_mode ();
             revealer.add_delayed_setting (key, null);
         }
         else
             ((DConfKey) key).erase ();
-    }
-
-    /*\
-    * * Action entries
-    \*/
-
-    public void reset (bool recursively)
-    {
-        reset_objects (key_model, recursively);
-    }
-
-    private void reset_objects (GLib.ListStore? objects, bool recursively)
-    {
-        enter_delay_mode ();
-        reset_generic (objects, recursively);
-        revealer.warn_if_no_planned_changes ();
-    }
-
-    private void reset_generic (GLib.ListStore? objects, bool recursively)
-    {
-        if (objects == null)
-            return;
-
-        for (uint position = 0;; position++)
-        {
-            Object? object = ((!) objects).get_object (position);
-            if (object == null)
-                return;
-
-            SettingObject setting_object = (SettingObject) ((!) object);
-            if (setting_object is Directory)
-            {
-                if (recursively)
-                    reset_generic (((Directory) setting_object).key_model, true);
-                continue;
-            }
-            if (setting_object is DConfKey)
-            {
-                if (!((DConfKey) setting_object).is_ghost)
-                    revealer.add_delayed_setting ((Key) setting_object, null);
-            }
-            else if (!((GSettingsKey) setting_object).is_default)
-                revealer.add_delayed_setting ((Key) setting_object, null);
-        }
     }
 
     /*\
@@ -428,7 +310,7 @@ class RegistryView : Grid, PathElement
 
     public bool show_row_popover ()
     {
-        ListBoxRow? selected_row = get_key_row ();
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
             return false;
 
@@ -440,9 +322,6 @@ class RegistryView : Grid, PathElement
 
     public string? get_copy_text ()
     {
-        if (is_not_browsing_view ())
-            return properties_view.get_copy_text ();
-
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
             return null;
@@ -452,7 +331,7 @@ class RegistryView : Grid, PathElement
 
     public void toggle_boolean_key ()
     {
-        ListBoxRow? selected_row = get_key_row ();
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
             return;
 
@@ -464,7 +343,7 @@ class RegistryView : Grid, PathElement
 
     public void set_to_default ()
     {
-        ListBoxRow? selected_row = get_key_row ();
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
             return;
 
@@ -473,23 +352,10 @@ class RegistryView : Grid, PathElement
 
     public void discard_row_popover ()
     {
-        ListBoxRow? selected_row = get_key_row ();
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
             return;
 
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).hide_right_click_popover ();
-    }
-
-    private bool is_not_browsing_view ()
-    {
-        string? visible_child_name = stack.get_visible_child_name ();
-        return (visible_child_name == null || ((!) visible_child_name) != "browse-view");
-    }
-
-    private ListBoxRow? get_key_row ()
-    {
-        if (is_not_browsing_view ())
-            return null;
-        return (ListBoxRow?) key_list_box.get_selected_row ();
     }
 }

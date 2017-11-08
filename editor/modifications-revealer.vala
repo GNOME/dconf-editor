@@ -39,7 +39,7 @@ class ModificationsRevealer : Revealer
 
     public signal void reload ();
 
-    public Behaviour behaviour { get; set; }
+    public Behaviour behaviour { private get; set; }
 
     /*\
     * * Window management callbacks

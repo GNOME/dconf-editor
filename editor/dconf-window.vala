@@ -17,14 +17,6 @@
 
 using Gtk;
 
-public enum Behaviour {
-    UNSAFE,
-    SAFE,
-    ALWAYS_CONFIRM_IMPLICIT,
-    ALWAYS_CONFIRM_EXPLICIT,
-    ALWAYS_DELAY
-}
-
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
@@ -73,7 +65,6 @@ class DConfWindow : ApplicationWindow
         }
     }
 
-    private ulong behaviour_changed_handler = 0;
 /*    private ulong theme_changed_handler = 0; */
     private ulong small_keys_list_rows_handler = 0;
     private ulong small_bookmarks_rows_handler = 0;
@@ -81,8 +72,6 @@ class DConfWindow : ApplicationWindow
     public DConfWindow (string? path)
     {
         add_action_entries (action_entries, this);
-
-        behaviour_changed_handler = settings.changed ["behaviour"].connect (browser_view.invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-maximized"))
@@ -123,7 +112,6 @@ class DConfWindow : ApplicationWindow
             context.add_class ("small-bookmarks-rows");
 
         browser_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
-        settings.bind ("behaviour", browser_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -249,7 +237,6 @@ class DConfWindow : ApplicationWindow
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
-        settings.disconnect (behaviour_changed_handler);
 /*        settings.disconnect (theme_changed_handler); */
         settings.disconnect (small_keys_list_rows_handler);
         settings.disconnect (small_bookmarks_rows_handler);

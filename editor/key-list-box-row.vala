@@ -179,7 +179,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         name_context = key_name_label.get_style_context ();
         value_context = key_value_label.get_style_context ();
 
-        if (abstract_key.type_string == "b")
+        if (abstract_key.type_string == "b")    // TODO not with “always delay” behaviour, nor in “delay mode”
         {
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;

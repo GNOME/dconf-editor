@@ -17,39 +17,35 @@
 
 using Gtk;
 
+public enum Behaviour {
+    UNSAFE,
+    SAFE,
+    ALWAYS_CONFIRM_IMPLICIT,
+    ALWAYS_CONFIRM_EXPLICIT,
+    ALWAYS_DELAY
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid, PathElement
 {
     public string current_path { get; private set; }
-    public Behaviour behaviour { get; set; }
 
-    private GLib.Settings application_settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
-    [GtkChild] private Revealer need_reload_warning_revealer;
-    [GtkChild] private Revealer multiple_schemas_warning_revealer;
-    private bool multiple_schemas_warning_needed;
-
+    private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     private Directory current_directory;
 
+    [GtkChild] private Revealer need_reload_warning_revealer;
+
     [GtkChild] private Stack stack;
+    [GtkChild] private RegistryView browse_view;
     [GtkChild] private RegistryInfo properties_view;
 
-    [GtkChild] private ListBox key_list_box;
-    private GLib.ListStore? key_model = null;
     private SortingOptions sorting_options;
 
-    private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
-
-    private bool _small_keys_list_rows;
     public bool small_keys_list_rows
     {
         set
         {
-            _small_keys_list_rows = value;
-            key_list_box.foreach((row) => {
-                    Widget row_child = ((ListBoxRow) row).get_child ();
-                    if (row_child is KeyListBoxRow)
-                        ((KeyListBoxRow) row_child).small_keys_list_rows = value;
-                });
+            browse_view.small_keys_list_rows = value;
         }
     }
 
@@ -68,15 +64,21 @@ class BrowserView : Grid, PathElement
     {
         ulong revealer_reload_handler = revealer.reload.connect (invalidate_popovers);
 
-        bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
+        ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
+        settings.bind ("behaviour", revealer, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+        settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         sorting_options = new SortingOptions ();
-        application_settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
-        application_settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
+        settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
+        settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
 
-        key_list_box.set_header_func (update_row_header);
+        sorting_options.notify.connect (() => {
+                if (!is_not_browsing_view () && current_directory.need_sorting (sorting_options))
+                    need_reload_warning_revealer.set_reveal_child (true);
+            });
 
         destroy.connect (() => {
+                settings.disconnect (behaviour_changed_handler);
                 revealer.disconnect (revealer_reload_handler);
                 base.destroy ();
             });
@@ -85,78 +87,46 @@ class BrowserView : Grid, PathElement
     public void init (string path, bool restore_view)   // TODO check path format
     {
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
-
-        sorting_options.notify.connect (() => {
-                if (!is_not_browsing_view () && current_directory.need_sorting (sorting_options))
-                    need_reload_warning_revealer.set_reveal_child (true);
-            });
     }
 
-    /*\
-    * * Stack switching
-    \*/
+    [GtkCallback]
+    private void request_path_test (string test)
+    {
+        request_path (test);
+    }
 
     public void set_directory (Directory directory, string? selected)
     {
         current_directory = directory;
-
         current_directory.sort_key_model (sorting_options);
-        key_model = current_directory.key_model;
 
-        multiple_schemas_warning_needed = current_directory.warning_multiple_schemas;
-
-        key_list_box.bind_model (key_model, new_list_box_row);
+        browse_view.set_key_model (directory.key_model);
 
         show_browse_view (directory.full_name, selected);
+        properties_view.clean ();
     }
 
-    private void show_browse_view (string path, string? selected, bool grab_focus = true)
+    private void show_browse_view (string path, string? selected)
+    {
+        _show_browse_view (path);
+        select_row (selected);
+    }
+    private void _show_browse_view (string path)
     {
         stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         need_reload_warning_revealer.set_reveal_child (false);
-        multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
-        update_current_path (path);
-        current_directory.sort_key_model (sorting_options);
-        stack.set_visible_child_name ("browse-view");
-        if (selected != null)
-        {
-            check_resize ();
-            ListBoxRow? row = key_list_box.get_row_at_index (get_row_position ((!) selected));
-            if (row == null)
-                assert_not_reached ();
-            scroll_to_row ((!) row, grab_focus);
-        }
-        else
-        {
-            ListBoxRow? row = key_list_box.get_row_at_index (0);
-            if (row != null)
-                scroll_to_row ((!) row, grab_focus);
-        }
-        properties_view.clean ();
-    }
-    private int get_row_position (string selected)
-        requires (key_model != null)
-    {
-        uint position = 0;
-        while (position < ((!) key_model).get_n_items ())
-        {
-            SettingObject object = (SettingObject) ((!) key_model).get_object (position);
-            if (object.full_name == selected)
-                return (int) position;
-            position++;
-        }
-        assert_not_reached ();
-    }
-    private void scroll_to_row (ListBoxRow row, bool grab_focus)
-    {
-        key_list_box.select_row (row);
-        if (grab_focus)
-            row.grab_focus ();
+        browse_view.show_multiple_schemas_warning (current_directory.warning_multiple_schemas);
 
-        Allocation list_allocation, row_allocation;
-        stack.get_allocation (out list_allocation);
-        row.get_allocation (out row_allocation);
-        key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+        update_current_path (path);
+        stack.set_visible_child_name ("browse-view");
+    }
+    private void select_row (string? selected)
+    {
+        bool grab_focus = true;     // unused, for now
+        if (selected != null)
+            browse_view.select_row_named ((!) selected, grab_focus);
+        else
+            browse_view.select_first_row (grab_focus);
     }
 
     public void show_properties_view (Key key, string path, bool warning_multiple_schemas)
@@ -164,7 +134,7 @@ class BrowserView : Grid, PathElement
         properties_view.populate_properties_list_box (key, warning_multiple_schemas);
 
         need_reload_warning_revealer.set_reveal_child (false);
-        multiple_schemas_warning_revealer.set_reveal_child (false);
+        browse_view.show_multiple_schemas_warning (false);
 
         stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         update_current_path (path);
@@ -179,187 +149,54 @@ class BrowserView : Grid, PathElement
         invalidate_popovers ();
     }
 
-    /*\
-    * * Key ListBox
-    \*/
-
-    private void update_row_header (ListBoxRow row, ListBoxRow? before)
-    {
-        if (before != null)
-        {
-            ListBoxRowHeader header = new ListBoxRowHeader ();
-            header.set_halign (Align.CENTER);
-            header.show ();
-            row.set_header (header);
-        }
-    }
-
-    private Widget new_list_box_row (Object item)
-    {
-        ClickableListBoxRow row;
-        SettingObject setting_object = (SettingObject) item;
-        ulong on_delete_call_handler;
-
-        if (setting_object is Directory)
-        {
-            row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
-            on_delete_call_handler = row.on_delete_call.connect (() => reset_objects (((Directory) setting_object).key_model, true));
-        }
-        else
-        {
-            if (setting_object is GSettingsKey)
-                row = new KeyListBoxRowEditable ((GSettingsKey) setting_object);
-            else
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object);
-
-            Key key = (Key) setting_object;
-            KeyListBoxRow key_row = (KeyListBoxRow) row;
-            key_row.small_keys_list_rows = _small_keys_list_rows;
-
-            on_delete_call_handler = row.on_delete_call.connect (() => set_key_value (key, null));
-            ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
-            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => revealer.dismiss_change (key));
-
-            ulong key_planned_change_handler = key.notify ["planned-change"].connect (() => set_delayed_icon (row, key));
-            ulong key_planned_value_handler = key.notify ["planned-value"].connect (() => set_delayed_icon (row, key));
-            set_delayed_icon (row, key);
-
-            row.destroy.connect (() => {
-                    key_row.disconnect (set_key_value_handler);
-                    key_row.disconnect (change_dismissed_handler);
-                    key.disconnect (key_planned_change_handler);
-                    key.disconnect (key_planned_value_handler);
-                });
-        }
-
-        ulong on_row_clicked_handler = row.on_row_clicked.connect (() => request_path (setting_object.full_name));
-        ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
-
-        row.destroy.connect (() => {
-                row.disconnect (on_delete_call_handler);
-                row.disconnect (on_row_clicked_handler);
-                row.disconnect (button_press_event_handler);
-            });
-
-        /* Wrapper ensures max width for rows */
-        ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
-        wrapper.set_halign (Align.CENTER);
-        wrapper.add (row);
-        if (row is FolderListBoxRow)
-            wrapper.get_style_context ().add_class ("folder-row");
-        else
-            wrapper.get_style_context ().add_class ("key-row");
-        return wrapper;
-    }
-
-    private void set_delayed_icon (ClickableListBoxRow row, Key key)
-    {
-        if (key.planned_change)
-        {
-            StyleContext context = row.get_style_context ();
-            context.add_class ("delayed");
-            if (key is DConfKey)
-            {
-                if (key.planned_value == null)
-                    context.add_class ("erase");
-                else
-                    context.remove_class ("erase");
-            }
-        }
-        else
-            row.get_style_context ().remove_class ("delayed");
-    }
-
-    private bool on_button_pressed (Widget widget, Gdk.EventButton event)
-    {
-        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
-        key_list_box.select_row (list_box_row);
-        list_box_row.grab_focus ();
-
-        if (event.button == Gdk.BUTTON_SECONDARY)
-        {
-            ClickableListBoxRow row = (ClickableListBoxRow) widget;
-
-            int event_x = (int) event.x;
-            if (event.window != widget.get_window ())   // boolean value switch
-            {
-                int widget_x, unused;
-                event.window.get_position (out widget_x, out unused);
-                event_x += widget_x;
-            }
-
-            row.show_right_click_popover (get_current_delay_mode (), event_x);
-            rows_possibly_with_popover.append (row);
-        }
-
-        return false;
-    }
-
-    [GtkCallback]
-    private void row_activated_cb (ListBoxRow list_box_row)
-    {
-        ((ClickableListBoxRow) list_box_row.get_child ()).on_row_clicked ();
-    }
-
-    public void invalidate_popovers ()
-    {
-        uint position = 0;
-        ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
-        while (row != null)
-        {
-            ((!) row).destroy_popover ();
-            position++;
-            row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
-        }
-        rows_possibly_with_popover.remove_all ();
-        window.update_hamburger_menu ();
-    }
-
-    [GtkCallback]
-    private void reload ()
-        requires (!is_not_browsing_view ())
-    {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        string? saved_selection = null;
-        if (selected_row != null)
-        {
-            int position = ((!) selected_row).get_index ();
-            saved_selection = ((SettingObject) ((!) key_model).get_object (position)).full_name;
-        }
-
-        show_browse_view (current_path, saved_selection);
-    }
-
-    /*\
-    * * Revealer stuff
-    \*/
-
     public bool get_current_delay_mode ()
     {
         return revealer.get_current_delay_mode ();
     }
 
-    public void enter_delay_mode ()
+    public string? get_copy_text ()
     {
-        revealer.enter_delay_mode ();
-        invalidate_popovers ();
+        return ((BrowsableView) stack.get_visible_child ()).get_copy_text ();
     }
 
-    private void set_key_value (Key key, Variant? new_value)
+    public bool show_row_popover ()
     {
-        if (get_current_delay_mode ())
-            revealer.add_delayed_setting (key, new_value);
-        else if (new_value != null)
-            key.value = (!) new_value;
-        else if (key is GSettingsKey)
-            ((GSettingsKey) key).set_to_default ();
-        else if (behaviour != Behaviour.UNSAFE)
-        {
-            enter_delay_mode ();
-            revealer.add_delayed_setting (key, null);
-        }
-        else
-            ((DConfKey) key).erase ();
+        if (is_not_browsing_view ())
+            return false;
+        return browse_view.show_row_popover ();
+    }
+
+    public void toggle_boolean_key ()
+    {
+        if (is_not_browsing_view ())
+            return;                         // TODO something, probably
+        browse_view.toggle_boolean_key ();
+    }
+
+    public void set_to_default ()
+    {
+        if (is_not_browsing_view ())
+            return;
+        browse_view.set_to_default ();
+    }
+
+    public void discard_row_popover ()
+    {
+        if (is_not_browsing_view ())
+            return;
+        browse_view.discard_row_popover ();
+    }
+
+    private void invalidate_popovers ()
+    {
+        browse_view.invalidate_popovers ();
+        window.update_hamburger_menu ();
+    }
+
+    private bool is_not_browsing_view ()
+    {
+        string? visible_child_name = stack.get_visible_child_name ();
+        return (visible_child_name == null || ((!) visible_child_name) != "browse-view");
     }
 
     /*\
@@ -368,10 +205,10 @@ class BrowserView : Grid, PathElement
 
     public void reset (bool recursively)
     {
-        reset_objects (key_model, recursively);
+        reset_objects (current_directory.key_model, recursively);
     }
 
-    private void reset_objects (GLib.ListStore? objects, bool recursively)
+    public void reset_objects (GLib.ListStore? objects, bool recursively)
     {
         enter_delay_mode ();
         reset_generic (objects, recursively);
@@ -406,90 +243,22 @@ class BrowserView : Grid, PathElement
         }
     }
 
-    /*\
-    * * Keyboard calls
-    \*/
-
-/*    public void set_search_mode (bool? mode)    // mode is never 'true'...
+    public void enter_delay_mode ()
     {
-        if (mode == null)
-            search_bar.set_search_mode (!search_bar.get_search_mode ());
-        else
-            search_bar.set_search_mode ((!) mode);
+        revealer.enter_delay_mode ();
+        invalidate_popovers ();
     }
 
-    public bool handle_search_event (Gdk.EventKey event)
+    [GtkCallback]
+    private void reload ()
     {
-        if (is_not_browsing_view ())
-            return false;
-
-        return search_bar.handle_event (event);
-    } */
-
-    public bool show_row_popover ()
-    {
-        ListBoxRow? selected_row = get_key_row ();
-        if (selected_row == null)
-            return false;
-
-        ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-        row.show_right_click_popover (get_current_delay_mode ());
-        rows_possibly_with_popover.append (row);
-        return true;
+        string? saved_selection = browse_view.get_selected_row_name ();
+        current_directory.sort_key_model (sorting_options);    // TODO duplicate in set_directory
+        show_browse_view (current_path, saved_selection);
     }
+}
 
-    public string? get_copy_text ()
-    {
-        if (is_not_browsing_view ())
-            return properties_view.get_copy_text ();
-
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return null;
-        else
-            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
-    }
-
-    public void toggle_boolean_key ()
-    {
-        ListBoxRow? selected_row = get_key_row ();
-        if (selected_row == null)
-            return;
-
-        if (!(((!) selected_row).get_child () is KeyListBoxRow))
-            return;
-
-        ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
-    }
-
-    public void set_to_default ()
-    {
-        ListBoxRow? selected_row = get_key_row ();
-        if (selected_row == null)
-            return;
-
-        ((ClickableListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
-    }
-
-    public void discard_row_popover ()
-    {
-        ListBoxRow? selected_row = get_key_row ();
-        if (selected_row == null)
-            return;
-
-        ((ClickableListBoxRow) ((!) selected_row).get_child ()).hide_right_click_popover ();
-    }
-
-    private bool is_not_browsing_view ()
-    {
-        string? visible_child_name = stack.get_visible_child_name ();
-        return (visible_child_name == null || ((!) visible_child_name) != "browse-view");
-    }
-
-    private ListBoxRow? get_key_row ()
-    {
-        if (is_not_browsing_view ())
-            return null;
-        return (ListBoxRow?) key_list_box.get_selected_row ();
-    }
+public interface BrowsableView
+{
+    public abstract string? get_copy_text ();
 }

@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
-class RegistryInfo : Grid
+class RegistryInfo : Grid, BrowsableView
 {
     [GtkChild] private Revealer multiple_schemas_warning_revealer;
     [GtkChild] private Revealer no_schema_warning;
