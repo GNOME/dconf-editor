@@ -25,12 +25,37 @@
 \*/
 
 /* row height */
-                                                .keys-list          > row { transition:min-height 0.3s; } /* not for .bookmarks, as the transition will start at the popover opening */
+                                                .keys-list          > row         { transition:min-height 0.3s,
+                                                                                               margin-left 0.3s, margin-right 0.3s,
+                                                                                               padding-left 0.3s, padding-right 0.3s,
+                                                                                            /* margin 0.3s,
+                                                                                               padding 0.3s, these cause stuttering in the transition */
+                                                                                               border-radius 0.3s; } /* not for .bookmarks, as the transition will start at the popover opening */
+                                             /* .keys-list          > row:hover,
+                                                .keys-list          > row:selected{ transition:min-height 0.3s,
+                                                                                               margin 0.3s,
+                                                                                               padding 0.3s,
+                                                                                               border-radius 0.3s; } stuttering of a single row is almost bearable */
 
-                                                .keys-list          > row,
+                                                .keys-list          > .key-row    { min-height:4em; }
+                                                .keys-list          > .folder-row { min-height:2em; }
+                                                .keys-list          > row         { margin:0;      padding-top:0.25em; padding-bottom:0.25em; }
+.large-window                                   .keys-list          > row         { margin:0.25em; padding-top:0;      padding-bottom:0;      }
+
+             .small-keys-list-rows              .keys-list          > .key-row    { min-height:2.5em; }
+             .small-keys-list-rows              .keys-list          > .folder-row { min-height:1.5em; }
+             .small-keys-list-rows              .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
+.large-window.small-keys-list-rows              .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
+
                                                 .bookmarks     list > row { min-height:2.6rem; }
-                          .small-keys-list-rows .keys-list          > row { min-height:2.0rem; }
                           .small-bookmarks-rows .bookmarks     list > row { min-height:1.3rem; }
+
+/* round borders for large windows */
+
+.large-window                                   .keys-list          > row        { border-radius:0.5em;
+                                                                                   -gtk-outline-radius:calc(0.5em - 1px); }
+.large-window.small-keys-list-rows              .keys-list          > row        { border-radius:0;
+                                                                                   -gtk-outline-radius:2px; /* gtk+ defaults */ }
 
 /* bookmarks */
                           .small-bookmarks-rows .bookmarks     list > row > grid > button.circular.flat {
@@ -57,11 +82,15 @@
 /*             .non-symbolic                      .keys-list          > row:active > .folder > grid { background-image:-gtk-icontheme("folder-open"); } */
 
 /* visual padding */
-                                                .keys-list:dir(ltr) > row > .key    > grid { padding-left:  10px; } /* looks cool */
-                                                .keys-list:dir(rtl) > row > .key    > grid { padding-right: 10px; }
+                                                .keys-list:dir(ltr) > row > .key    > grid { padding-left: 10px; padding-right:20px; } /* looks cool */
+                                                .keys-list:dir(rtl) > row > .key    > grid { padding-right:10px; padding-left: 20px; }
+                                                .keys-list          > row > .key    > grid { transition:padding-left 0.3s, padding-right 0.3s; }
 
                                                 .keys-list:dir(ltr) > row > .folder > grid { background-position:            0.75rem  center; }
                                                 .keys-list:dir(rtl) > row > .folder > grid { background-position:calc(100% - 0.75rem) center; }
+
+                                                .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
+                                                .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
 
 /* icon sizing */
                                                 .keys-list          > row > .folder > grid { background-size:1.5rem; }
@@ -71,15 +100,20 @@
                                                                                            { background-size:1rem; }
 
 /* technical padding: icon visual padding + icon size + some padding */
-                                                .keys-list:dir(ltr) > row > .folder > grid { padding-left:  3rem; }
+                                                .keys-list:dir(ltr) > row > .folder > grid,
+                                                .keys-list:dir(ltr) > row > .key    > grid { padding-left:  3rem; }
+
 /*             .non-symbolic                      .keys-list:dir(ltr) > row > .folder > grid { padding-left:  3.25rem; }  */
-                          .small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid /*,
+                          .small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid,
+                          .small-keys-list-rows .keys-list:dir(ltr) > row > .key    > grid /*,
              .non-symbolic.small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid */
                                                                                            { padding-left:  2.25rem; }
 
-                                                .keys-list:dir(rtl) > row > .folder > grid { padding-right: 3rem; }
+                                                .keys-list:dir(rtl) > row > .folder > grid,
+                                                .keys-list:dir(rtl) > row > .key    > grid { padding-right: 3rem; }
 /*             .non-symbolic                      .keys-list:dir(rtl) > row > .folder > grid { padding-right: 3.25rem; }  */
-                          .small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid /*,
+                          .small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid,
+                          .small-keys-list-rows .keys-list:dir(rtl) > row > .key    > grid /*,
              .non-symbolic.small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid */
                                                                                            { padding-right: 2.25rem; }
 
@@ -99,11 +133,6 @@
 .large-window.non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name */
                                                                                                            { min-width:calc(250px + 10px - 2.25rem); }
 
-                                                .keys-list          > row > .key    > grid > grid          { min-width:400px; transition:min-width 0.3s; }
-.large-window                                   .keys-list          > row > .key    > grid > grid          { min-width:450px; }
-.large-window.xl                                .keys-list          > row > .key    > grid > grid          { min-width:474px; }
-.large-window.xl.xxl                            .keys-list          > row > .key    > grid > grid          { min-width:500px; }
-
 /* grid spacing and padding-end */
                                                 .keys-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
                                                 .keys-list:dir(rtl) > row  grid > label { padding-left:  0.5em; }
@@ -114,15 +143,13 @@
                                                 .keys-list          > row > .key.delayed { background-image:-gtk-icontheme("document-open-recent-symbolic"); background-repeat:no-repeat; }
                                                 .keys-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
 
-                                                .keys-list          > row > .key.delayed { background-size:16px; transition:background-size 0.3s; }
-                          .small-keys-list-rows .keys-list          > row > .key.delayed { background-size:12px; }
+                                                .keys-list          > row > .key.delayed { background-size:1.5rem; transition:background-size 0.3s; }
+                          .small-keys-list-rows .keys-list          > row > .key.delayed { background-size:1rem; }
 
-                                                .keys-list:dir(ltr) > row > .key.delayed { padding-right: 28px; }
-                                                .keys-list:dir(rtl) > row > .key.delayed { padding-left:  28px; }
-                                                .keys-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(1.3rem - 8px); }
-                                                .keys-list:dir(rtl) > row > .key         { background-position:            16px  calc(1.3rem - 8px); }
-                          .small-keys-list-rows .keys-list:dir(ltr) > row > .key         { background-position:calc(100% - 16px) calc(0.65rem - 5px); }
-                          .small-keys-list-rows .keys-list:dir(rtl) > row > .key         { background-position:            16px  calc(0.65rem - 5px); }
+                                                .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
+                                                .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }
+                          .small-keys-list-rows .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
+                          .small-keys-list-rows .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }
 
 /*\
 * * pathbar

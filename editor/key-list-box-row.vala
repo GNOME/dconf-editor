@@ -17,6 +17,26 @@
 
 using Gtk;
 
+const int MAX_ROW_WIDTH = 1000;
+
+private class ListBoxRowWrapper : ListBoxRow
+{
+    public override void get_preferred_width (out int minimum_width, out int natural_width)
+    {
+        base.get_preferred_width (out minimum_width, out natural_width);
+        natural_width = MAX_ROW_WIDTH;
+    }
+}
+
+private class ListBoxRowHeader : Separator
+{
+    public override void get_preferred_width (out int minimum_width, out int natural_width)
+    {
+        base.get_preferred_width (out minimum_width, out natural_width);
+        natural_width = MAX_ROW_WIDTH;
+    }
+}
+
 private abstract class ClickableListBoxRow : EventBox
 {
     public signal void on_row_clicked ();
@@ -126,6 +146,23 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     [GtkChild] protected Label key_info_label;
     protected Switch? boolean_switch = null;
 
+    public bool small_keys_list_rows
+    {
+        set
+        {
+            if (value)
+            {
+                key_value_label.set_lines (2);
+                key_info_label.set_lines (1);
+            }
+            else
+            {
+                key_value_label.set_lines (3);
+                key_info_label.set_lines (2);
+            }
+        }
+    }
+
     protected StyleContext name_context;
     protected StyleContext value_context;
 
@@ -149,7 +186,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             ((!) boolean_switch).valign = Align.CENTER;
             ((!) boolean_switch).show ();
             key_value_label.hide ();
-            key_name_and_value_grid.add ((!) boolean_switch);
+            key_name_and_value_grid.attach ((!) boolean_switch, 1, 0, 1, 2);
         }
 
         update ();

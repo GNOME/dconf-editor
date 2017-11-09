@@ -2,6 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <template class="FolderListBoxRow" parent="ClickableListBoxRow">
+    <property name="visible">True</property>
     <style>
       <class name="folder"/>
     </style>

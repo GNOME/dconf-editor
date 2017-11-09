@@ -42,6 +42,20 @@ class RegistryView : Grid, PathElement
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
+    private bool _small_keys_list_rows;
+    public bool small_keys_list_rows
+    {
+        set
+        {
+            _small_keys_list_rows = value;
+            key_list_box.foreach((row) => {
+                    Widget row_child = ((ListBoxRow) row).get_child ();
+                    if (row_child is KeyListBoxRow)
+                        ((KeyListBoxRow) row_child).small_keys_list_rows = value;
+                });
+        }
+    }
+
     [GtkChild] private ModificationsRevealer revealer;
 
     [GtkChild] private SearchBar search_bar;
@@ -70,6 +84,8 @@ class RegistryView : Grid, PathElement
         sorting_options = new SortingOptions ();
         application_settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
         application_settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
+
+        key_list_box.set_header_func (update_row_header);
 
         destroy.connect (() => {
                 revealer.disconnect (revealer_reload_handler);
@@ -303,6 +319,17 @@ class RegistryView : Grid, PathElement
     * * Key ListBox
     \*/
 
+    private void update_row_header (ListBoxRow row, ListBoxRow? before)
+    {
+        if (before != null)
+        {
+            ListBoxRowHeader header = new ListBoxRowHeader ();
+            header.set_halign (Align.CENTER);
+            header.show ();
+            row.set_header (header);
+        }
+    }
+
     private Widget new_list_box_row (Object item)
     {
         ClickableListBoxRow row;
@@ -323,6 +350,8 @@ class RegistryView : Grid, PathElement
 
             Key key = (Key) setting_object;
             KeyListBoxRow key_row = (KeyListBoxRow) row;
+            key_row.small_keys_list_rows = _small_keys_list_rows;
+
             on_delete_call_handler = row.on_delete_call.connect (() => set_key_value (key, null));
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => revealer.dismiss_change (key));
@@ -348,7 +377,15 @@ class RegistryView : Grid, PathElement
                 row.disconnect (button_press_event_handler);
             });
 
-        return row;
+        /* Wrapper ensures max width for rows */
+        ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
+        wrapper.set_halign (Align.CENTER);
+        wrapper.add (row);
+        if (row is FolderListBoxRow)
+            wrapper.get_style_context ().add_class ("folder-row");
+        else
+            wrapper.get_style_context ().add_class ("key-row");
+        return wrapper;
     }
 
     private void set_delayed_icon (ClickableListBoxRow row, Key key)

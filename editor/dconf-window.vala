@@ -83,11 +83,13 @@ class DConfWindow : ApplicationWindow
                 else if (context.has_class ("non-symbolic")) context.remove_class ("non-symbolic");
             }); */
         small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
-                if (settings.get_boolean ("small-keys-list-rows"))
+                bool small_rows = settings.get_boolean ("small-keys-list-rows");
+                if (small_rows)
                 {
                     if (!context.has_class ("small-keys-list-rows")) context.add_class ("small-keys-list-rows");
                 }
                 else if (context.has_class ("small-keys-list-rows")) context.remove_class ("small-keys-list-rows");
+                registry_view.small_keys_list_rows = small_rows;
             });
         small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
                 if (settings.get_boolean ("small-bookmarks-rows"))
@@ -98,8 +100,10 @@ class DConfWindow : ApplicationWindow
             });
 /*        if (settings.get_string ("theme") == "non-symbolic-keys-list")
             context.add_class ("non-symbolic"); */
-        if (settings.get_boolean ("small-keys-list-rows"))
+        bool small_rows = settings.get_boolean ("small-keys-list-rows");
+        if (small_rows)
             context.add_class ("small-keys-list-rows");
+        registry_view.small_keys_list_rows = small_rows;
         if (settings.get_boolean ("small-bookmarks-rows"))
             context.add_class ("small-bookmarks-rows");
 
@@ -177,30 +181,10 @@ class DConfWindow : ApplicationWindow
         /* responsive design */
 
         StyleContext context = get_style_context ();
-        if (allocation.width > 1200)
-        {
-            context.add_class ("xxl");
-            context.add_class ("xl");
+        if (allocation.width > MAX_ROW_WIDTH + 42)
             context.add_class ("large-window");
-        }
-        else if (allocation.width > 1100)
-        {
-            context.remove_class ("xxl");
-            context.add_class ("xl");
-            context.add_class ("large-window");
-        }
-        else if (allocation.width > 1000)
-        {
-            context.remove_class ("xxl");
-            context.remove_class ("xl");
-            context.add_class ("large-window");
-        }
         else
-        {
-            context.remove_class ("xxl");
-            context.remove_class ("xl");
             context.remove_class ("large-window");
-        }
 
         /* save size */
 
