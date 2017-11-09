@@ -66,33 +66,38 @@
 /* icon sizing */
                                                 .keys-list          > row > .folder > grid { background-size:1.5rem; }
 /*             .non-symbolic                      .keys-list          > row > .folder > grid { background-size:1.75rem; } */
-                          .small-keys-list-rows .keys-list          > row > .folder > grid,
-/*             .non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid { background-size:1rem; }    */
+                          .small-keys-list-rows .keys-list          > row > .folder > grid /*,
+             .non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid */
+                                                                                           { background-size:1rem; }
 
 /* technical padding: icon visual padding + icon size + some padding */
                                                 .keys-list:dir(ltr) > row > .folder > grid { padding-left:  3rem; }
 /*             .non-symbolic                      .keys-list:dir(ltr) > row > .folder > grid { padding-left:  3.25rem; }  */
-                          .small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid,
-/*             .non-symbolic.small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid { padding-left:  2.25rem; }  */
+                          .small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid /*,
+             .non-symbolic.small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid */
+                                                                                           { padding-left:  2.25rem; }
 
                                                 .keys-list:dir(rtl) > row > .folder > grid { padding-right: 3rem; }
 /*             .non-symbolic                      .keys-list:dir(rtl) > row > .folder > grid { padding-right: 3.25rem; }  */
-                          .small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid,
-/*             .non-symbolic.small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid { padding-right: 2.25rem; }  */
+                          .small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid /*,
+             .non-symbolic.small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid */
+                                                                                           { padding-right: 2.25rem; }
 
 /* technical labels placing */
                                                 .keys-list          > row                   label.key-name { transition:min-width 0.3s; }
                                                 .keys-list          > row > .key    > grid  label.key-name { min-width:     222px; }
                                                 .keys-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 3rem); }
 /*             .non-symbolic                      .keys-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 3.25rem); } */
-                          .small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name,
-/*             .non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name { min-width:calc(222px + 10px - 2.25rem); } */
+                          .small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name /*,
+             .non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name */
+                                                                                                           { min-width:calc(222px + 10px - 2.25rem); }
 
 .large-window                                   .keys-list          > row > .key    > grid  label.key-name { min-width:     250px; }
 .large-window                                   .keys-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 3rem); }
 /*.large-window.non-symbolic                      .keys-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 3.25rem); } */
-.large-window             .small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name,
-/*.large-window.non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name { min-width:calc(250px + 10px - 2.25rem); } */
+.large-window             .small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name /*,
+.large-window.non-symbolic.small-keys-list-rows .keys-list          > row > .folder > grid  label.key-name */
+                                                                                                           { min-width:calc(250px + 10px - 2.25rem); }
 
                                                 .keys-list          > row > .key    > grid > grid          { min-width:400px; transition:min-width 0.3s; }
 .large-window                                   .keys-list          > row > .key    > grid > grid          { min-width:450px; }
