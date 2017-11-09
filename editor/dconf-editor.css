@@ -29,7 +29,7 @@
 
                                                 .keys-list          > row,
                                                 .bookmarks     list > row { min-height:2.6rem; }
-                          .small-keys-list-rows .keys-list          > row,
+                          .small-keys-list-rows .keys-list          > row { min-height:2.0rem; }
                           .small-bookmarks-rows .bookmarks     list > row { min-height:1.3rem; }
 
 /* bookmarks */
