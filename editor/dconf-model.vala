@@ -57,9 +57,6 @@ public class Directory : SettingObject
 
     private DConf.Client client;
 
-    private bool? last_sort = null;
-    private bool? require_sorting = null;
-
     private GLib.ListStore? _key_model = null;
     public GLib.ListStore key_model
     {
@@ -82,36 +79,23 @@ public class Directory : SettingObject
 
     private void create_folders ()
     {
-        require_sorting = false;
         children.foreach ((dir) => {
                 SettingObject _dir = (SettingObject) dir;
                 ((!) _key_model).append (_dir);
-                if (_dir.name != _dir.casefolded_name)
-                    require_sorting = true;
             });
     }
 
-    public bool need_sorting (bool case_sensitive)
-        requires (require_sorting != null)
-        requires (last_sort != null)
+    public bool need_sorting (SortingOptions sorting_options)
     {
-        return ((!) require_sorting) && (case_sensitive != (!) last_sort);
+        return !sorting_options.is_key_model_sorted (key_model);
     }
 
-    public void sort_key_model (bool case_sensitive)
+    public void sort_key_model (SortingOptions sorting_options)
     {
-        if (require_sorting != null && !need_sorting (case_sensitive))
+        if (!need_sorting (sorting_options))
             return;
 
-        _sort_key_model (key_model, case_sensitive);
-        last_sort = case_sensitive;
-    }
-    private static void _sort_key_model (GLib.ListStore model, bool case_sensitive)
-    {
-        if (case_sensitive)
-            model.sort ((a, b) => { return strcmp (((SettingObject) a).name, ((SettingObject) b).name); });
-        else
-            model.sort ((a, b) => { return ((SettingObject) a).casefolded_name.collate (((SettingObject) b).casefolded_name); });
+        sorting_options.sort_key_model (key_model);
     }
 
     /*\
@@ -779,5 +763,139 @@ public class SettingsModel : Object, Gtk.TreeModel
     public void unref_node(Gtk.TreeIter iter)
     {
         get_directory(iter).unref();
+    }
+}
+
+/*\
+* * Sorting
+\*/
+
+public enum MergeType {
+    MIXED,
+    FIRST,
+    LAST
+}
+
+public class SortingOptions : Object
+{
+    public bool case_sensitive { get; set; default = false; }
+    public MergeType sort_folders { get; set; default = MergeType.MIXED; }
+
+    private SettingComparator get_comparator ()
+    {
+        if (sort_folders == MergeType.FIRST)
+        {
+            if (case_sensitive)
+                return new FoldersFirstCaseSensitive ();
+            else
+                return new FoldersFirstCaseInsensitive ();
+        }
+        else if (sort_folders == MergeType.LAST)
+        {
+            if (case_sensitive)
+                return new FoldersLastCaseSensitive ();
+            else
+                return new FoldersLastCaseInsensitive ();
+        }
+        else // if (sort_folders == MergeType.MIXED)
+        {
+            if (case_sensitive)
+                return new FoldersMixedCaseSensitive ();
+            else
+                return new FoldersMixedCaseInsensitive ();
+        }
+    }
+
+    public void sort_key_model (GLib.ListStore model)
+    {
+        SettingComparator comparator = get_comparator ();
+
+        model.sort ((a, b) => comparator.compare ((SettingObject) a, (SettingObject) b));
+    }
+
+    public bool is_key_model_sorted (GLib.ListStore model)
+    {
+        SettingComparator comparator = get_comparator ();
+
+        uint last = model.get_n_items () - 1;
+        for (int i = 0; i < last; i++)
+        {
+            SettingObject item = (SettingObject) model.get_item (i);
+            SettingObject next = (SettingObject) model.get_item (i + 1);
+            if (comparator.compare (item, next) > 0)
+                return false;
+        }
+        return true;
+    }
+}
+
+/* Comparison functions */
+
+interface SettingComparator : Object
+{
+    public abstract int compare (SettingObject a, SettingObject b);
+}
+
+class FoldersMixedCaseInsensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        return a.casefolded_name.collate (b.casefolded_name);
+    }
+}
+
+class FoldersMixedCaseSensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        return strcmp (a.name, b.name);
+    }
+}
+
+class FoldersFirstCaseInsensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return -1;
+        if (!(a is Directory) && b is Directory)
+            return 1;
+        return a.casefolded_name.collate (b.casefolded_name);
+    }
+}
+
+class FoldersFirstCaseSensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return -1;
+        if (!(a is Directory) && b is Directory)
+            return 1;
+        return strcmp (a.name, b.name);
+    }
+}
+
+class FoldersLastCaseInsensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return 1;
+        if (!(a is Directory) && b is Directory)
+            return -1;
+        return a.casefolded_name.collate (b.casefolded_name);
+    }
+}
+
+class FoldersLastCaseSensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return 1;
+        if (!(a is Directory) && b is Directory)
+            return -1;
+        return strcmp (a.name, b.name);
     }
 }

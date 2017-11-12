@@ -38,6 +38,7 @@ class RegistryView : Grid, PathElement
 
     [GtkChild] private ListBox key_list_box;
     private GLib.ListStore? key_model = null;
+    private SortingOptions sorting_options;
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
@@ -66,6 +67,10 @@ class RegistryView : Grid, PathElement
         bind_property ("show-search-bar", search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);   // TODO in UI file?
         bind_property ("behaviour", revealer, "behaviour", BindingFlags.BIDIRECTIONAL|BindingFlags.SYNC_CREATE);
 
+        sorting_options = new SortingOptions ();
+        application_settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
+        application_settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
+
         destroy.connect (() => {
                 revealer.disconnect (revealer_reload_handler);
                 buffer.disconnect (search_entry_buffer_deleted_text_handler);
@@ -82,8 +87,8 @@ class RegistryView : Grid, PathElement
         current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
         path_requested (current_path, null, true);
 
-        application_settings.changed ["sort-case-sensitive"].connect (() => {
-                if (get_selected_directory ().need_sorting (application_settings.get_boolean ("sort-case-sensitive")))
+        sorting_options.notify.connect (() => {
+                if (get_selected_directory ().need_sorting (sorting_options))
                     need_reload_warning_revealer.set_reveal_child (true);
             });
     }
@@ -98,7 +103,7 @@ class RegistryView : Grid, PathElement
         need_reload_warning_revealer.set_reveal_child (false);
         multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
         update_current_path (path);
-        get_selected_directory ().sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
+        get_selected_directory ().sort_key_model (sorting_options);
         stack.set_visible_child_name ("browse-view");
         if (selected != null)
         {
@@ -169,7 +174,7 @@ class RegistryView : Grid, PathElement
     {
         search_next_button.set_sensitive (true);        // TODO better, or maybe just hide search_bar 1/2
         Directory dir = get_selected_directory ();
-        dir.sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
+        dir.sort_key_model (sorting_options);
         key_model = dir.key_model;
 
         multiple_schemas_warning_needed = dir.warning_multiple_schemas;
@@ -632,7 +637,7 @@ class RegistryView : Grid, PathElement
                 on_first_directory = false;
 
             /* Select next key that matches */
-            dir.sort_key_model (application_settings.get_boolean ("sort-case-sensitive"));
+            dir.sort_key_model (sorting_options);
             GLib.ListStore key_model = dir.key_model;
             while (position < key_model.get_n_items ())
             {
