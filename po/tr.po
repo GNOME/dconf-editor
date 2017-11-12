@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-09 14:16+0000\n"
-"PO-Revision-Date: 2017-11-12 22:34+0300\n"
+"POT-Creation-Date: 2017-11-12 19:36+0000\n"
+"PO-Revision-Date: 2017-11-12 22:49+0300\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -98,7 +98,7 @@ msgid "The GNOME Project"
 msgstr "GNOME Projesi"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:207
 msgid "dconf Editor"
 msgstr "dconf Düzenleyici"
 
@@ -106,7 +106,7 @@ msgstr "dconf Düzenleyici"
 msgid "Configuration editor for dconf"
 msgstr "Dconf için yapılandırma düzenleyicisi"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Directly edit your entire configuration database"
 msgstr "Yapılandırma veri tabanınızın tamamını doğrudan düzenleyin"
 
@@ -117,8 +117,9 @@ msgstr "ayarlar;yapılandırma;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: editor/ca.desrt.dconf-editor.desktop.in:15
-msgid "dconf-editor"
-msgstr "dconf-editor"
+#| msgid "dconf-editor"
+msgid "ca.desrt.dconf-editor"
+msgstr "ca.desrt.dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -244,6 +245,24 @@ msgstr ""
 "listesi büyük harfli klasörler öncelikli olmak üzere büyük-küçük harf "
 "duyarlı sıralanır."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:79
+msgid "Use “Back” and “Forward” mouse button events"
+msgstr "“Geri” ve “İleri” fare düğmesi olaylarını kullan"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:80
+#| msgid ""
+#| "For users with mice that have buttons for “Forward” and “Back”, this key "
+#| "will set which button activates the “Back” command in a browser window. "
+#| "Possible values range between 6 and 14."
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will determine if any action is taken inside of a browser window when either "
+"is pressed."
+msgstr ""
+"“İleri” ve “Geri” tuşlarına sahip faresi olan kullanıcılar için bu anahtar, "
+"bu düğmelerden biri tıklandığında, tarayıcı penceresinde herhangi bir eylem "
+"gerçekleştirilip gerçekleştirilmeyeceğini belirler."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:85
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Tarayıcı penceresinde “Geri” komutunu etkinleştirecek fare düğmesi"
@@ -272,21 +291,21 @@ msgstr ""
 "hangi düğmenin tarayıcı penceresinde “İleri” komutunu etkinleştireceğini "
 "belirtir. Geçerli değerler 6 ile 14 arasındadır."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:98
+#: editor/ca.desrt.dconf-editor.gschema.xml:115
 msgid "A boolean, type ‘b’"
 msgstr "Mantıksal değer, türü ‘b’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:99
+#: editor/ca.desrt.dconf-editor.gschema.xml:116
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
 "Mantıksal değerler yalnızca “true” (doğru) ya da “false” (yanlış) "
 "değerlerini alabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#: editor/ca.desrt.dconf-editor.gschema.xml:120
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Boş bırakılabilen mantıksal değer, türü ‘mb’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:104
+#: editor/ca.desrt.dconf-editor.gschema.xml:121
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -297,11 +316,11 @@ msgstr ""
 "mantıksal değer; yalnızca “true” (doğru), “false” (yanlış) ve "
 "“nothing” (hiçbir şey) değerlerini alabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#: editor/ca.desrt.dconf-editor.gschema.xml:125
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Byte (işaretsiz), türü ‘y’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#: editor/ca.desrt.dconf-editor.gschema.xml:126
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -309,11 +328,11 @@ msgstr ""
 "Byte değeri 0 ile 255 arasındaki sayılarını alabilen tamsayıdır. Karakter "
 "yazmak içinde kullanılabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
+#: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A bytestring, type ‘ay’"
 msgstr "Bytestring, türü ‘ay’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -323,11 +342,11 @@ msgstr ""
 "durumda karakter dizisine son karakter olarak sonlandırıcı boş karakter "
 "eklenmesi gerekir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#: editor/ca.desrt.dconf-editor.gschema.xml:135
 msgid "A bytestring array, type ‘aay’"
 msgstr "Bytestring dizisi, türü ‘aay’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
+#: editor/ca.desrt.dconf-editor.gschema.xml:136
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -335,11 +354,11 @@ msgstr ""
 "Bu dizi bytestring’lerden oluşan dizi türüdür. Bytestring türü genellikle "
 "utf8’de olmayan karakterleri geçmek için kullanılır."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "D-Bus kulbu türü, türü ‘h’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#: editor/ca.desrt.dconf-editor.gschema.xml:141
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -350,11 +369,11 @@ msgstr ""
 "gönderilen dosya açıklamasındaki dizinin indeksi olarak kullanılır. Eğer D-"
 "Bus ile uğraşmıyorsanız bu türü kullanmanız için ortada bir neden yok."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:130
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid "A D-Bus object path, type ‘o’"
 msgstr "D-Bus nesne konumu, türü ‘o’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:148
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -364,11 +383,11 @@ msgstr ""
 "kullanılır. Eğer D-Bus ile uğraşmıyorsanız bu türü kullanmanız için ortada "
 "bir neden yoktur."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:137
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "D-Bus nesne konum dizisi, türü ‘ao’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:155
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -378,11 +397,11 @@ msgstr ""
 "dahil: “[]”). Eğer D-Bus ile uğraşmıyorsanız bu türü kullanmanız için ortada "
 "bir neden yok."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "A D-Bus signature, type ‘g’"
 msgstr "D-Bus imzası, türü ‘g’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:162
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -392,92 +411,92 @@ msgstr ""
 "dizgedir. Eğer D-Bus ile uğraşmıyorsanız bu türü kullanmanız için ortada bir "
 "neden yok."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:151
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "A double, type ‘d’"
 msgstr "Double, türü ‘d’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:169
 msgid "A double value could represent any real number."
 msgstr "Double değeri herhangi bir gerçel sayı olabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:156
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "A 5-choices enumeration"
 msgstr "5-seçimli numaralandırma"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#: editor/ca.desrt.dconf-editor.gschema.xml:174
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr ""
 "Numaralandırma “enum” özelliği veya “choices” etiketiyle birlikte olabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
+#: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "A short integer, type ‘n’"
 msgstr "Kısa tamsayı, türü ‘n’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:162
+#: editor/ca.desrt.dconf-editor.gschema.xml:179
 msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "16 bit işaretli tamsayı. Ayrıca “integer-16-unsigned” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:183
 msgid "Flags: choose-colors-you-love"
 msgstr "Bayraklar: beğendiğiniz-rengi-seçiniz"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:167
+#: editor/ca.desrt.dconf-editor.gschema.xml:184
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Bayraklar “enum” özelliği ile ayarlanabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid "An unsigned short integer, type ‘q’"
 msgstr "İşaretsiz kısa tamsayı, türü ‘q’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:172
+#: editor/ca.desrt.dconf-editor.gschema.xml:189
 msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16 bit işaretsiz tamsayı. Ayrıca “integer-16-signed” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#: editor/ca.desrt.dconf-editor.gschema.xml:193
 msgid "An usual integer, type ‘i’"
 msgstr "Normal tamsayı, türü ‘i’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:177
+#: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32 bit işaretli tamsayı. Ayrıca “integer-32-unsigned” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "İşaretsiz normal tamsayı, türü ‘u’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:182
+#: editor/ca.desrt.dconf-editor.gschema.xml:199
 msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32 bit işaretsiz tamsayı. Ayrıca “integer-32-signed” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "A long integer, type ‘x’"
 msgstr "Uzun tamsayı, türü ‘x’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:187
+#: editor/ca.desrt.dconf-editor.gschema.xml:204
 msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64 bit işaretli tamsayı. Ayrıca “integer-64-unsigned” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:191
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "An unsigned long integer, type ‘t’"
 msgstr "İşaretsiz uzun tamsayı, türü ‘t’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
+#: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64 bit işaretsiz tamsayı. Ayrıca “integer-64-signed” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#: editor/ca.desrt.dconf-editor.gschema.xml:215
 msgid "A number with range"
 msgstr "Sayı aralığı"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:199
+#: editor/ca.desrt.dconf-editor.gschema.xml:216
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -487,11 +506,11 @@ msgstr ""
 "türleri) öntanımlı sayı aralığına sahiptir. Örneğin, bu tamsayı yalnızca -2 "
 "ile 10 arasındaki değerleri alabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:220
 msgid "A custom type, here ‘(ii)’"
 msgstr "Özel tür, türü ‘(ii)’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:204
+#: editor/ca.desrt.dconf-editor.gschema.xml:221
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -501,11 +520,11 @@ msgstr ""
 "düzenlemenizi sağlar, daha iyi bir yolunu bulunamadığında dizgi geri döner. "
 "Burada 2 tane 32bit işaretli tamsayı tüpü var."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:225
 msgid "A string, type ‘s’"
 msgstr "Dizgi, türü ‘s’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:209
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -513,11 +532,11 @@ msgstr ""
 "Dizgi türü herhangi utf8 dizgiyi kabul eder. Boş dizgi “''” NULL (boş) "
 "değildir; Ayrıca “string-nullable” anahtarına bakınız."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:213
+#: editor/ca.desrt.dconf-editor.gschema.xml:230
 msgid "A string array, type ‘as’"
 msgstr "Dizgi dizisi, türü ‘as’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:214
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -525,11 +544,11 @@ msgstr ""
 "Dizgi dizisi herhangi uzunlukta herhangi sayıda dizgiyi alabilen bir "
 "dizidir. Boş bir dizi de olabilir “[]”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
+#: editor/ca.desrt.dconf-editor.gschema.xml:235
 msgid "A nullable string, type ‘ms’"
 msgstr "Boş bırakılabilir dizgi, türü ‘ms’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#: editor/ca.desrt.dconf-editor.gschema.xml:236
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -540,11 +559,11 @@ msgstr ""
 "olarak boş dizgi “''” de içeren herhangi bir dizgiyi, veya NULL (boş) "
 "değerlerini alabilir."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A 1-choice enumeration"
 msgstr "1-seçimli numaralandırma"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:241
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -552,11 +571,11 @@ msgstr ""
 "Numaralandırma yalnızca bir şey alabilir, ama bu genellikle hatadır. Dconf "
 "Düzenleyici bu durumda sizi uyarır."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:229
+#: editor/ca.desrt.dconf-editor.gschema.xml:246
 msgid "A 1-choice integer value"
 msgstr "1-seçimli tamsayı değeri"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:230
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -576,20 +595,20 @@ msgstr "_Hakkında"
 msgid "_Quit"
 msgstr "_Çık"
 
-#: editor/dconf-editor.ui:49
+#: editor/dconf-editor.ui:50
 msgid "Actions"
 msgstr "Eylemler"
 
 #. TODO 1/3 Informations
-#: editor/dconf-editor.ui:50
+#: editor/dconf-editor.ui:51
 msgid "Current view actions"
 msgstr "Geçerli görünüm eylemleri"
 
-#: editor/dconf-editor.ui:77
+#: editor/dconf-editor.ui:78
 msgid "Search"
 msgstr "Ara"
 
-#: editor/dconf-editor.ui:78
+#: editor/dconf-editor.ui:79
 msgid "Search keys"
 msgstr "Anahtarları ara"
 
@@ -597,92 +616,112 @@ msgstr "Anahtarları ara"
 msgid "Print release version and exit"
 msgstr "Yayım sürümünü yazdır ve çık"
 
+#: editor/dconf-editor.vala:118
+msgid "Path should start with a “/”.\n"
+msgstr "Dosya ya da dizin yolu, “/” ile başlamalıdır.\n"
+
+#: editor/dconf-editor.vala:129
+msgid "Only one window can be opened for now.\n"
+msgstr "Şimdilik sadece bir pencere açılabilir.\n"
+
+#: editor/dconf-editor.vala:136
+msgid "Only one argument is accepted for now.\n"
+msgstr "Şimdilik sadece bir değiştirge kabul ediliyor.\n"
+
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:96
+#. #: editor/dconf-editor.vala:156
 msgid "Copied to clipboard"
 msgstr "Panoya kopyalandı"
 
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:209
+msgid "A graphical viewer and editor of applications internal settings."
+msgstr ""
+"Uygulamaların iç ayarları için görsel bir görüntüleyici ve düzenleyici."
+
+#: editor/dconf-editor.vala:210
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015-2016 – Arnaud Bonatti"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2016 – Arnaud Bonatti"
+"Copyright © 2015-2017 – Arnaud Bonatti"
 msgstr ""
 "Telif Hakkı © 2010-2014 – Canonical Ltd\n"
-"Telif Hakkı © 2015-2016 – Arnaud Bonatti"
+"Telif Hakkı © 2015-2017 – Arnaud Bonatti"
 
-#: editor/dconf-editor.vala:154
+#: editor/dconf-editor.vala:214
 msgid "translator-credits"
 msgstr ""
 "Muhammet Kara <muhammetk@gmail.com>\n"
 "Osman Karagöz <osmank3@gmail.com>"
 
-#: editor/dconf-model.vala:220
+#: editor/dconf-model.vala:222
 msgid "Boolean"
 msgstr "Mantıksal Değer"
 
-#: editor/dconf-model.vala:222
+#: editor/dconf-model.vala:224
 msgid "String"
 msgstr "Dizgi"
 
-#: editor/dconf-model.vala:224
+#: editor/dconf-model.vala:226
 msgid "String array"
 msgstr "Dizgi dizisi"
 
-#: editor/dconf-model.vala:226
+#: editor/dconf-model.vala:228
 msgid "Enumeration"
 msgstr "Numaralandırma"
 
-#: editor/dconf-model.vala:228
+#: editor/dconf-model.vala:230
 msgid "Flags"
 msgstr "Bayraklar"
 
-#: editor/dconf-model.vala:230
+#: editor/dconf-model.vala:232
 msgid "Double"
 msgstr "Double"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:233
+#: editor/dconf-model.vala:235
 msgid "D-Bus handle type"
 msgstr "D-Bus kulp türü"
 
-#: editor/dconf-model.vala:235
+#: editor/dconf-model.vala:237
 msgid "D-Bus object path"
 msgstr "D-Bus nesne konumu"
 
-#: editor/dconf-model.vala:237
+#: editor/dconf-model.vala:239
 msgid "D-Bus object path array"
 msgstr "D-Bus nesne konumu dizisi"
 
-#: editor/dconf-model.vala:239
+#: editor/dconf-model.vala:241
 msgid "D-Bus signature"
 msgstr "D-Bus imzası"
 
-#: editor/dconf-model.vala:247
+#: editor/dconf-model.vala:249
 msgid "Integer"
 msgstr "Tamsayı"
 
-#: editor/dconf-model.vala:362
+#: editor/dconf-model.vala:364
 msgid "True"
 msgstr "Doğru"
 
-#: editor/dconf-model.vala:364
+#: editor/dconf-model.vala:366
 msgid "False"
 msgstr "Yanlış"
 
-#: editor/dconf-model.vala:365
+#: editor/dconf-model.vala:367
 msgid "Nothing"
 msgstr "Hiçbir Şey"
 
-#: editor/dconf-model.vala:370
+#: editor/dconf-model.vala:372
 msgid "true"
 msgstr "doğru"
 
-#: editor/dconf-model.vala:372
+#: editor/dconf-model.vala:374
 msgid "false"
 msgstr "yanlış"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:374
+#: editor/dconf-model.vala:376
 msgid "nothing"
 msgstr "hiçbir şey"
 
@@ -690,41 +729,41 @@ msgstr "hiçbir şey"
 msgid "This value is invalid for the key type."
 msgstr "Bu değer anahtar türü için geçersiz."
 
-#: editor/dconf-window.vala:132
+#: editor/dconf-window.vala:144
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Ayarlarınızı düzenlemek için Dconf Düzenleyici’yi kullandığınız için "
 "teşekkürler!"
 
-#: editor/dconf-window.vala:133
+#: editor/dconf-window.vala:145
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Unutmayınız! Bazı ayarları değiştirmek uygulamaların bozulmasına neden "
 "olabilir, öyleyse dikkatli olunuz."
 
-#: editor/dconf-window.vala:134
+#: editor/dconf-window.vala:146
 msgid "I’ll be careful."
 msgstr "Dikkatli olacağım."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:138
+#: editor/dconf-window.vala:150
 msgid "Show this dialog next time."
 msgstr "Bu pencereyi sonraki sefer göster."
 
-#: editor/dconf-window.vala:248
+#: editor/dconf-window.vala:260
 msgid "Copy current path"
 msgstr "Geçerli konumu kopyala"
 
-#: editor/dconf-window.vala:253
+#: editor/dconf-window.vala:265
 msgid "Reset visible keys"
 msgstr "Görülebilen anahtarları sıfırla"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/dconf-window.vala:254 editor/key-list-box-row.vala:485
+#: editor/dconf-window.vala:266 editor/key-list-box-row.vala:485
 msgid "Reset recursively"
 msgstr "Tekrarlı olarak sıfırla"
 
-#: editor/dconf-window.vala:262
+#: editor/dconf-window.vala:274
 msgid "Enter delay mode"
 msgstr "Gecikme kipine gir"
 
@@ -878,7 +917,7 @@ msgstr "Aç"
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
 #: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
-#: editor/registry-info.ui:28
+#: editor/registry-info.ui:53
 msgid "Erase key"
 msgstr "Anahtarı sil"
 
@@ -898,7 +937,7 @@ msgid "No change"
 msgstr "Değiştirme"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:674 editor/registry-info.vala:261
+#: editor/key-list-box-row.vala:674 editor/registry-info.vala:263
 msgid "Default value"
 msgstr "Öntanımlı değer"
 
@@ -966,6 +1005,16 @@ msgstr[0] "ve %u dconf işlemi geciktirildi."
 
 #: editor/registry-info.ui:22
 msgid ""
+"Multiple schemas are installed at the parent path. This key might be defined "
+"and used by more than one schema. This could lead to problems. Edit value at "
+"your own risk."
+msgstr ""
+"Üst dosya yolunda çoklu şema kurulu. Bu anahtar, birden fazla şema "
+"tarafından tanımlanabilir ve kullanılabilir. Bu, bazı sorunlara yol "
+"açabilir. Bu değeri düzenlemekte sorumluluk size aittir."
+
+#: editor/registry-info.ui:47
+msgid ""
 "No schema available. Dconf Editor can’t find a schema associated with this "
 "key. The application that installed this key may have been removed, may have "
 "stop the use of this key, or may use a relocatable schema for defining its "
@@ -976,7 +1025,7 @@ msgstr ""
 "anahtarı kullanmayı bırakmış olabilir veya değeri atamak için taşınabilir "
 "şema kullanıyor olabilir."
 
-#: editor/registry-info.ui:56
+#: editor/registry-info.ui:81
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -985,7 +1034,7 @@ msgstr ""
 "Bu numaralandırma yalnızca bir seçenek sağlıyor. Bu genellikle şemayı kuran "
 "uygulamada hataya neden olur. Mümkünse bununla ilgili hata kaydı açın."
 
-#: editor/registry-info.ui:65
+#: editor/registry-info.ui:90
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -994,49 +1043,49 @@ msgstr ""
 "Bu tamsayı anahtarı yalnızca tek değer alıyor. Bu genellikle şemayı kuran "
 "uygulamada hataya neden olur. Mümkünse bununla ilgili hata kaydı açın."
 
-#: editor/registry-info.vala:82
+#: editor/registry-info.vala:84
 msgid "Schema"
 msgstr "Şema"
 
-#: editor/registry-info.vala:83
+#: editor/registry-info.vala:85
 msgid "Summary"
 msgstr "Özet"
 
-#: editor/registry-info.vala:84
+#: editor/registry-info.vala:86
 msgid "Description"
 msgstr "Açıklama"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:86
+#: editor/registry-info.vala:88
 msgid "Type"
 msgstr "Tür"
 
-#: editor/registry-info.vala:88
+#: editor/registry-info.vala:90
 msgid "Minimum"
 msgstr "En Az"
 
-#: editor/registry-info.vala:89
+#: editor/registry-info.vala:91
 msgid "Maximum"
 msgstr "En Çok"
 
-#: editor/registry-info.vala:90
+#: editor/registry-info.vala:92
 msgid "Default"
 msgstr "Öntanımlı"
 
-#: editor/registry-info.vala:110
+#: editor/registry-info.vala:112
 msgid "Current value"
 msgstr "Geçerli değer"
 
-#: editor/registry-info.vala:143
+#: editor/registry-info.vala:145
 msgid "Use default value"
 msgstr "Öntanımlı değeri kullan"
 
-#: editor/registry-info.vala:201
+#: editor/registry-info.vala:203
 msgid "Custom value"
 msgstr "Özel değer"
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:324
+#: editor/registry-info.vala:326
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1046,14 +1095,14 @@ msgstr ""
 "türü (“m” ile başlayan) kullanın. Dizgeler, işaretler ve nesne konumları "
 "alıntı işaretleri içine alınabilir."
 
-#: editor/registry-info.vala:326
+#: editor/registry-info.vala:328
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Dizgeler, işaretler ve nesne konumları alıntı işaretleri içine alınabilir."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:330
+#: editor/registry-info.vala:332
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1062,28 +1111,38 @@ msgstr ""
 "türü (“m” ile başlayan) kullanın."
 
 #: editor/registry-view.ui:32
+msgid ""
+"Multiple schemas are installed at this path. This could lead to problems if "
+"it hasn’t been done carefully. Only one schema is displayed here. Edit "
+"values at your own risk."
+msgstr ""
+"Bu dosya yolunda çoklu şema kurulu. Eğer bu dikkatlice yapılmamışsa, bazı "
+"sorunlara yol açabilir. Burada sadece bir şema görüntüleniyor. Bu değerleri "
+"düzenlerseniz, sorumluluk size aittir."
+
+#: editor/registry-view.ui:57
 msgid "Sort preferences have changed. Do you want to reload the view?"
 msgstr "Sıralama seçenekleri değişti. Görünümün yenilenmesini ister misiniz?"
 
-#: editor/registry-view.ui:38
+#: editor/registry-view.ui:63
 msgid "Reload"
 msgstr "Yeniden Yükle"
 
-#: editor/registry-view.ui:136
+#: editor/registry-view.ui:161
 msgid "No keys in this path"
 msgstr "Bu yolda hiçbir anahtar yok"
 
-#: editor/registry-view.vala:182
+#: editor/registry-view.vala:200
 #, c-format
 msgid "Cannot find folder “%s”."
 msgstr "“%s” klasörü bulunamadı."
 
-#: editor/registry-view.vala:200
+#: editor/registry-view.vala:226
 #, c-format
 msgid "Cannot find key “%s” here."
 msgstr "“%s” anahtarı burada bulunamadı."
 
-#: editor/registry-view.vala:206
+#: editor/registry-view.vala:233
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "“%s” anahtarı silindi."
