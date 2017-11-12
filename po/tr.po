@@ -1,18 +1,18 @@
 # Turkish translation for dconf.
 # Copyright (C) 2013 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Muhammet Kara <muhammetk@gmail.com>, 2013, 2015, 2016.
 # Osman Karagöz <osmank3@gmail.com>, 2017.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2017.
+# Muhammet Kara <muhammetk@gmail.com>, 2013, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-28 17:18+0000\n"
-"PO-Revision-Date: 2017-08-29 14:06+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2017-11-09 14:16+0000\n"
+"PO-Revision-Date: 2017-11-12 22:34+0300\n"
+"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -114,6 +114,11 @@ msgstr "Yapılandırma veri tabanınızın tamamını doğrudan düzenleyin"
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "settings;configuration;"
 msgstr "ayarlar;yapılandırma;"
+
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "dconf-editor"
+msgstr "dconf-editor"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:18
 msgid "The width of the window"
@@ -1054,10 +1059,6 @@ msgstr "“%s” anahtarı burada bulunamadı."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "“%s” anahtarı silindi."
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "dconf Düzenleyici"
 
 #~| msgid "The width of the main window in pixels."
 #~ msgid "The theme of the navigation list"
