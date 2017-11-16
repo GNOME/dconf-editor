@@ -88,7 +88,7 @@ class RegistryView : Grid, PathElement
         path_requested (current_path, null, true);
 
         sorting_options.notify.connect (() => {
-                if (get_selected_directory ().need_sorting (sorting_options))
+                if (!is_not_browsing_view () && get_selected_directory ().need_sorting (sorting_options))
                     need_reload_warning_revealer.set_reveal_child (true);
             });
     }
