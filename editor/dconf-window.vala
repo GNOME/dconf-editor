@@ -55,7 +55,7 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Bookmarks bookmarks_button;
     [GtkChild] private MenuButton info_button;
     [GtkChild] private PathBar pathbar;
-    [GtkChild] private RegistryView registry_view;
+    [GtkChild] private BrowserView browser_view;
 
     [GtkChild] private Revealer notification_revealer;
     [GtkChild] private Label notification_label;
@@ -82,7 +82,7 @@ class DConfWindow : ApplicationWindow
     {
         add_action_entries (action_entries, this);
 
-        behaviour_changed_handler = settings.changed ["behaviour"].connect (registry_view.invalidate_popovers);
+        behaviour_changed_handler = settings.changed ["behaviour"].connect (browser_view.invalidate_popovers);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-maximized"))
@@ -104,7 +104,7 @@ class DConfWindow : ApplicationWindow
                     if (!context.has_class ("small-keys-list-rows")) context.add_class ("small-keys-list-rows");
                 }
                 else if (context.has_class ("small-keys-list-rows")) context.remove_class ("small-keys-list-rows");
-                registry_view.small_keys_list_rows = small_rows;
+                browser_view.small_keys_list_rows = small_rows;
             });
         small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
                 if (settings.get_boolean ("small-bookmarks-rows"))
@@ -118,12 +118,12 @@ class DConfWindow : ApplicationWindow
         bool small_rows = settings.get_boolean ("small-keys-list-rows");
         if (small_rows)
             context.add_class ("small-keys-list-rows");
-        registry_view.small_keys_list_rows = small_rows;
+        browser_view.small_keys_list_rows = small_rows;
         if (settings.get_boolean ("small-bookmarks-rows"))
             context.add_class ("small-bookmarks-rows");
 
-        registry_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
-        settings.bind ("behaviour", registry_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+        browser_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
+        settings.bind ("behaviour", browser_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -131,9 +131,9 @@ class DConfWindow : ApplicationWindow
 
         /* init current_path */
         if (path == null)
-            registry_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+            browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
         else
-            registry_view.init ((!) path, true);
+            browser_view.init ((!) path, true);
 
         /* go to directory */
         string folder_name = SettingsModel.get_base_path (current_path);
@@ -146,7 +146,7 @@ class DConfWindow : ApplicationWindow
         }
         if (folder_name == current_path)
         {
-            registry_view.set_directory ((!) dir, null);
+            browser_view.set_directory ((!) dir, null);
             return;
         }
 
@@ -161,12 +161,12 @@ class DConfWindow : ApplicationWindow
         {
             if (existing_dir != null)
                 warning ("TODO: search (current_path)");
-            registry_view.show_properties_view ((Key) (!) existing_key, current_path, ((!) dir).warning_multiple_schemas);
+            browser_view.show_properties_view ((Key) (!) existing_key, current_path, ((!) dir).warning_multiple_schemas);
         }
         else
         {
             if (existing_dir != null)
-                registry_view.set_directory ((!) existing_dir, null);
+                browser_view.set_directory ((!) existing_dir, null);
             else
                 cannot_find_key (object_name, (!) dir);
         }
@@ -271,7 +271,7 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void request_path (string full_name)
     {
-//        registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
+//        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
         highcontrast = ("HighContrast" in Gtk.Settings.get_default ().gtk_theme_name);
 
         string folder_name = SettingsModel.get_base_path (full_name);
@@ -284,7 +284,7 @@ class DConfWindow : ApplicationWindow
         }
         if (full_name == folder_name)
         {
-            registry_view.set_directory ((!) dir, pathbar.get_selected_child (full_name));
+            browser_view.set_directory ((!) dir, pathbar.get_selected_child (full_name));
             return;
         }
 
@@ -298,7 +298,7 @@ class DConfWindow : ApplicationWindow
         else if (((!) existing_key) is DConfKey && ((DConfKey) (!) existing_key).is_ghost)
             key_has_been_removed (object_name, (!) dir);
         else
-            registry_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
+            browser_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
     }
 
     /*\
@@ -327,7 +327,7 @@ class DConfWindow : ApplicationWindow
             menu.append_section (null, section);
         }
 
-        if (!registry_view.get_current_delay_mode ())
+        if (!browser_view.get_current_delay_mode ())
         {
             section = new GLib.Menu ();
             section.append (_("Enter delay mode"), "win.enter-delay-mode");
@@ -351,17 +351,17 @@ class DConfWindow : ApplicationWindow
 
     private void reset ()
     {
-        registry_view.reset (false);
+        browser_view.reset (false);
     }
 
     private void reset_recursively ()
     {
-        registry_view.reset (true);
+        browser_view.reset (true);
     }
 
     private void enter_delay_mode ()
     {
-        registry_view.enter_delay_mode ();
+        browser_view.enter_delay_mode ();
     }
 
     /*\
@@ -399,19 +399,19 @@ class DConfWindow : ApplicationWindow
                 case "b":
                     if (info_button.active)
                         info_button.active = false;
-                    registry_view.discard_row_popover ();
+                    browser_view.discard_row_popover ();
                     bookmarks_button.clicked ();
                     return true;
                 case "d":
                     if (info_button.active)
                         info_button.active = false;
-                    registry_view.discard_row_popover ();
+                    browser_view.discard_row_popover ();
                     bookmarks_button.set_bookmarked (true);
                     return true;
                 case "D":
                     if (info_button.active)
                         info_button.active = false;
-                    registry_view.discard_row_popover ();
+                    browser_view.discard_row_popover ();
                     bookmarks_button.set_bookmarked (false);
                     return true;
 //                case "f":
@@ -419,21 +419,21 @@ class DConfWindow : ApplicationWindow
 //                        bookmarks_button.active = false;
 //                    if (info_button.active)
 //                        info_button.active = false;
-//                    registry_view.discard_row_popover ();
-//                    registry_view.set_search_mode (null);
+//                    browser_view.discard_row_popover ();
+//                    browser_view.set_search_mode (null);
 //                    return true;
                 case "c":
-                    registry_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
-                    string? selected_row_text = registry_view.get_copy_text ();
+                    browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
+                    string? selected_row_text = browser_view.get_copy_text ();
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;
                 case "C":
-                    registry_view.discard_row_popover ();
+                    browser_view.discard_row_popover ();
                     ((ConfigurationEditor) get_application ()).copy (current_path);
                     return true;
                 case "F1":
-                    registry_view.discard_row_popover ();
+                    browser_view.discard_row_popover ();
                     if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
                         return false;   // help overlay
                     ((ConfigurationEditor) get_application ()).about_cb ();
@@ -442,9 +442,9 @@ class DConfWindow : ApplicationWindow
                 case "KP_Enter":
                     if (info_button.active || bookmarks_button.active)
                         return false;
-//                    registry_view.set_search_mode (false);
-                    registry_view.discard_row_popover ();
-                    registry_view.toggle_boolean_key ();
+//                    browser_view.set_search_mode (false);
+                    browser_view.discard_row_popover ();
+                    browser_view.toggle_boolean_key ();
                     return true;
                 // case "BackSpace":    // ?
                 case "Delete":
@@ -454,9 +454,9 @@ class DConfWindow : ApplicationWindow
                 case "KP_Decimal":
                     if (info_button.active || bookmarks_button.active)
                         return false;
-//                    registry_view.set_search_mode (false);
-                    registry_view.discard_row_popover ();
-                    registry_view.set_to_default ();
+//                    browser_view.set_search_mode (false);
+                    browser_view.discard_row_popover ();
+                    browser_view.set_to_default ();
                     return true;
                 default:
                     break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
@@ -480,14 +480,14 @@ class DConfWindow : ApplicationWindow
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
         if (name == "F10")
         {
-            registry_view.discard_row_popover ();
+            browser_view.discard_row_popover ();
             if (bookmarks_button.active)
                 bookmarks_button.active = false;
             return false;
         }
         if (name == "Menu")
         {
-            if (registry_view.show_row_popover ())
+            if (browser_view.show_row_popover ())
             {
                 if (bookmarks_button.active)
                     bookmarks_button.active = false;
@@ -508,14 +508,14 @@ class DConfWindow : ApplicationWindow
         if (bookmarks_button.active || info_button.active)
             return false;
 
-        return false;    // registry_view.handle_search_event (event);
+        return false;    // browser_view.handle_search_event (event);
     }
 
     [GtkCallback]
     private void on_menu_button_clicked ()
     {
-        registry_view.discard_row_popover ();
-//        registry_view.set_search_mode (false);
+        browser_view.discard_row_popover ();
+//        browser_view.set_search_mode (false);
     }
 
     private void go_backward (bool shift)
@@ -550,17 +550,17 @@ class DConfWindow : ApplicationWindow
 
     private void cannot_find_folder (string folder_name)
     {
-        registry_view.set_directory ((!) model.get_directory ("/"), null);
+        browser_view.set_directory ((!) model.get_directory ("/"), null);
         show_notification (_("Cannot find folder “%s”.").printf (folder_name));
     }
     private void cannot_find_key (string key_name, Directory fallback_dir)
     {
-        registry_view.set_directory (fallback_dir, null);
+        browser_view.set_directory (fallback_dir, null);
         show_notification (_("Cannot find key “%s” here.").printf (key_name));
     }
     private void key_has_been_removed (string key_name, Directory fallback_dir)
     {
-        registry_view.set_directory (fallback_dir, fallback_dir.full_name + key_name);
+        browser_view.set_directory (fallback_dir, fallback_dir.full_name + key_name);
         show_notification (_("Key “%s” has been removed.").printf (key_name));
     }
 

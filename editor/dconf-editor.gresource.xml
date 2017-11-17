@@ -3,6 +3,7 @@
   <gresource prefix="/ca/desrt/dconf-editor/ui">
     <file preprocess="xml-stripblanks">bookmark.ui</file>
     <file preprocess="xml-stripblanks">bookmarks.ui</file>
+    <file preprocess="xml-stripblanks">browser-view.ui</file>
     <file>dconf-editor.css</file>
     <file preprocess="xml-stripblanks">dconf-editor.ui</file>
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
