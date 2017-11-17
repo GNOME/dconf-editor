@@ -79,10 +79,7 @@ public class Directory : SettingObject
 
     private void create_folders ()
     {
-        children.foreach ((dir) => {
-                SettingObject _dir = (SettingObject) dir;
-                ((!) _key_model).append (_dir);
-            });
+        children.foreach ((dir) => ((!) _key_model).append ((SettingObject) dir));
     }
 
     public bool need_sorting (SortingOptions sorting_options)
@@ -92,10 +89,8 @@ public class Directory : SettingObject
 
     public void sort_key_model (SortingOptions sorting_options)
     {
-        if (!need_sorting (sorting_options))
-            return;
-
-        sorting_options.sort_key_model (key_model);
+        if (need_sorting (sorting_options))
+            sorting_options.sort_key_model (key_model);
     }
 
     /*\
