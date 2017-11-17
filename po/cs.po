@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-10-28 13:26+0000\n"
-"PO-Revision-Date: 2017-10-30 21:42+0100\n"
+"POT-Creation-Date: 2017-11-17 04:03+0000\n"
+"PO-Revision-Date: 2017-11-17 21:58+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -116,42 +116,42 @@ msgstr "nastavení;konfigurace;"
 msgid "ca.desrt.dconf-editor"
 msgstr "ca.desrt.dconf-editor"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#: editor/ca.desrt.dconf-editor.gschema.xml:23
 msgid "The width of the window"
 msgstr "Šířka okna"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#: editor/ca.desrt.dconf-editor.gschema.xml:24
 msgid "The width of the main window in pixels."
 msgstr "Šířka hlavního okna v pixelech."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#: editor/ca.desrt.dconf-editor.gschema.xml:28
 msgid "The height of the window"
 msgstr "Výška okna"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#: editor/ca.desrt.dconf-editor.gschema.xml:29
 msgid "The height of the main window in pixels."
 msgstr "Výška hlavního okna v pixelech."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#: editor/ca.desrt.dconf-editor.gschema.xml:33
+#: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "A flag to enable maximized mode"
 msgstr "Příznak zapnutého režimu maximalizace"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:33
+#: editor/ca.desrt.dconf-editor.gschema.xml:38
 msgid "A list of bookmarked paths"
 msgstr "Seznam cest v záložkách"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:34
+#: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Obsahuje v podobě pole textových řetězců všechny cesty, které si dal "
 "uživatel do záložek."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:38
+#: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A flag to restore the last view"
 msgstr "Příznak pro obnovení posledního zobrazení"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:39
+#: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -159,11 +159,11 @@ msgstr ""
 "Když je zapnuto, pokusí se Editor dconf rozbalit cestu popsanou v klíči "
 "„saved-view“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:43
+#: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "A path to restore the last view"
 msgstr "Cesta pro obnovení posledního zobrazení"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:44
+#: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -171,11 +171,11 @@ msgstr ""
 "Když je klíč „restore-view“ nastaven na „pravda“, pokusí se Editor dconf "
 "rozbalit tuto cestu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:48
+#: editor/ca.desrt.dconf-editor.gschema.xml:53
 msgid "Show initial warning"
 msgstr "Zobrazit úvodní varování"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:49
+#: editor/ca.desrt.dconf-editor.gschema.xml:54
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -183,27 +183,27 @@ msgstr ""
 "Když je zapnuto, otevře Editor dconf při spuštění vyskakovací okno, které "
 "upozorní uživatele, aby byl opatrný."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
+#: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for keys list"
 msgstr "Příznak menších řádků pro seznam klíčů"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:54
+#: editor/ca.desrt.dconf-editor.gschema.xml:59
 msgid "If “true”, the keys list use smaller rows."
 msgstr "Když je zapnuto, bude seznam klíčů používat menší řádky."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:58
+#: editor/ca.desrt.dconf-editor.gschema.xml:63
 msgid "A flag to enable small rows for bookmarks list"
 msgstr "Příznak menších řádků pro seznam záložek"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:59
+#: editor/ca.desrt.dconf-editor.gschema.xml:64
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "Když je zapnuto, bude seznam záložek používat menší řádky."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:68
+#: editor/ca.desrt.dconf-editor.gschema.xml:73
 msgid "Change the behaviour of a key value change request"
 msgstr "Změnit chování hodnoty klíče požadující změnu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:69
+#: editor/ca.desrt.dconf-editor.gschema.xml:74
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -224,11 +224,11 @@ msgstr ""
 "došlo ke ztrátě hodnoty. Hodnota „always-delay“ přidá každou změnu do režimu "
 "odkladu, takže pak můžete použít více změněných klíčů naráz."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:73
+#: editor/ca.desrt.dconf-editor.gschema.xml:78
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Příznak pro řazení seznamu klíčů s rozlišením velikosti písmen"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:74
+#: editor/ca.desrt.dconf-editor.gschema.xml:79
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -238,11 +238,23 @@ msgstr ""
 "cesty schémat ano. Když je „zapnuto“, jsou seznamy klíčů řazené s ohledem na "
 "velikost písmen s obvyklým řazením složek s velkými písmeny na začátek."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:79
+#: editor/ca.desrt.dconf-editor.gschema.xml:83
+msgid "A flag to sort folders before, after or mixed with keys"
+msgstr "Příznak pro řazení složek před klíče, po nich nebo společně"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:84
+msgid ""
+"If “mixed”, folders are sorted together with keys; if “first”, all folders "
+"are sorted before keys; if “last”, all folders are sorted after keys."
+msgstr ""
+"Při nastavení „mixed“ se budou složky řadit dohromady s klíči, při „first“ "
+"budou všechny složky řazené před klíči, při „last“ až za všemi klíči."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:88
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Používat události tlačítek myši „Zpět“ a „Vpřed“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:80
+#: editor/ca.desrt.dconf-editor.gschema.xml:89
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -252,11 +264,11 @@ msgstr ""
 "klíč, jestli se má provést nějaká akce uvnitř okna prohlížeče, když je jedno "
 "z těchto tlačítek zmáčknuto."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
+#: editor/ca.desrt.dconf-editor.gschema.xml:94
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Tlačítko aktivující v okně prohlížeče funkci „Zpět“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#: editor/ca.desrt.dconf-editor.gschema.xml:95
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -266,11 +278,11 @@ msgstr ""
 "k určení, které tlačítko spouští v okně prohlížeče funkci „Zpět“. Možné "
 "hodnoty jsou mezi 6 a 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Tlačítko aktivující v okně prohlížeče funkci „Vpřed“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#: editor/ca.desrt.dconf-editor.gschema.xml:101
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -280,20 +292,20 @@ msgstr ""
 "k určení, které tlačítko spouští v okně prohlížeče funkci „Vpřed“. Možné "
 "hodnoty jsou mezi 6 a 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:115
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A boolean, type ‘b’"
 msgstr "Pravdivostní hodnota, typ „b“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:116
+#: editor/ca.desrt.dconf-editor.gschema.xml:125
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
 "Pravdivostní hodnota může nabývat jen dvou hodnot: „pravda“ a „nepravda“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:120
+#: editor/ca.desrt.dconf-editor.gschema.xml:129
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Pravdivostní hodnota, může mít prázdnou hodnotu, typ „mb“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:121
+#: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -304,11 +316,11 @@ msgstr ""
 "Pravdivostní hodnota tak může nabývat tři typy hodnot: „pravda“, „nepravda“ "
 "a „nic“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:125
+#: editor/ca.desrt.dconf-editor.gschema.xml:134
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Bajt (bez znaménka), typ „y“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:126
+#: editor/ca.desrt.dconf-editor.gschema.xml:135
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -316,11 +328,11 @@ msgstr ""
 "Hodnota typu bajt je celé číslo v rozsahu 0 až 255. Může být použita i k "
 "předání znaku."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:130
+#: editor/ca.desrt.dconf-editor.gschema.xml:139
 msgid "A bytestring, type ‘ay’"
 msgstr "Řetězec bajtů, typ „ay“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -330,11 +342,11 @@ msgstr ""
 "z hlediska UTF-8. V takovémto případě je zavedeným pravidlem, že jako "
 "poslední znak řetězce by měl být nulový zakončovací znak."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:135
+#: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A bytestring array, type ‘aay’"
 msgstr "Pole řetězců bajtů, typ „aay“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:136
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -342,11 +354,11 @@ msgstr ""
 "Jedná se o typ pole složeného z řetězců bajtů. Řetězec bajtů se obvykle "
 "používá v situacích, kdy řetězec nemusí být platný z hlediska UTF-8."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:140
+#: editor/ca.desrt.dconf-editor.gschema.xml:149
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Obsluha D-Bus, typ „h“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:141
+#: editor/ca.desrt.dconf-editor.gschema.xml:150
 msgid ""
 "The handle type is a 32bit signed integer value that is, by convention, used "
 "as an index into an array of file descriptors that are sent alongside a D-"
@@ -358,11 +370,11 @@ msgstr ""
 "posílány společně se zprávami D-Bus. Pokud nekomunikujete se sběrnicí D-Bus, "
 "není žádný důvod k tomu, abyste tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:147
+#: editor/ca.desrt.dconf-editor.gschema.xml:156
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Cesta k objektu D-Bus, typ „o“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:148
+#: editor/ca.desrt.dconf-editor.gschema.xml:157
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -372,11 +384,11 @@ msgstr ""
 "Pokud nekomunikujete se sběrnicí D-Bus, není žádný důvod k tomu, abyste "
 "tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
+#: editor/ca.desrt.dconf-editor.gschema.xml:163
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Pole cest k objektům D-Bus, typ „ao“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:155
+#: editor/ca.desrt.dconf-editor.gschema.xml:164
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -386,11 +398,11 @@ msgstr ""
 "žádných cest: „[]“). Pokud nekomunikujete se sběrnicí D-Bus, není žádný "
 "důvod k tomu, abyste tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
+#: editor/ca.desrt.dconf-editor.gschema.xml:170
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Podpis D-Bus, typ „g“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:162
+#: editor/ca.desrt.dconf-editor.gschema.xml:171
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -400,85 +412,85 @@ msgstr ""
 "sběrnice D-Bus. Pokud nekomunikujete se sběrnicí D-Bus, není žádný důvod k "
 "tomu, abyste tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:168
+#: editor/ca.desrt.dconf-editor.gschema.xml:177
 msgid "A double, type ‘d’"
 msgstr "Dvojitá přesnost, typ „d“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:169
+#: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "A double value could represent any real number."
 msgstr "Hodnota s dvojitou přesností může vyjadřovat libovolné reálné číslo."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:173
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid "A 5-choices enumeration"
 msgstr "Výčet s 5 volbami"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:174
+#: editor/ca.desrt.dconf-editor.gschema.xml:183
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr "Výčty mohou být dány buď atributem „enum“ nebo značkou „choices“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:178
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "A short integer, type ‘n’"
 msgstr "Krátké celé číslo, typ „n“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:179
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16bitové celé číslo bez znaménka. Viz také klíč „integer-16-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:183
+#: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "Flags: choose-colors-you-love"
 msgstr "Příznaky: „vyberte si svoji oblíbenou barvu“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:184
+#: editor/ca.desrt.dconf-editor.gschema.xml:193
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Příznaky mohou být nastaveny atributem „enum“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:188
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Krátké celé nezáporné číslo, typ „q“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:189
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16bitové celé číslo bez znaménka. Viz také klíč „integer-16-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:193
+#: editor/ca.desrt.dconf-editor.gschema.xml:202
 msgid "An usual integer, type ‘i’"
 msgstr "Běžné celé číslo, typ „i“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:194
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "32bitové celé číslo se znaménkem. Viz také klíč „integer-32-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#: editor/ca.desrt.dconf-editor.gschema.xml:207
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Běžné celé nezáporné číslo, typ „u“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:199
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "32bitové celé číslo bez znaménka. Viz také klíč „integer-32-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid "A long integer, type ‘x’"
 msgstr "Dlouhé celé číslo, typ „x“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:204
+#: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "64bitové celé číslo se znaménkem. Viz také klíč „integer-64-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Dlouhé celé nezáporné číslo, typ „t“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:209
+#: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "64bitové celé číslo bez znaménka. Viz také klíč „integer-64-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:215
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid "A number with range"
 msgstr "Číslo s rozsahem"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:216
+#: editor/ca.desrt.dconf-editor.gschema.xml:225
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -488,11 +500,11 @@ msgstr ""
 "plus čísla s dvojitou přesností) může být omezeno jen na určitý rozsah "
 "hodnot. Například, celé číslo by mohlo nabývat jen hodnot mezi -2 a 10."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:220
+#: editor/ca.desrt.dconf-editor.gschema.xml:229
 msgid "A custom type, here ‘(ii)’"
 msgstr "Vlastní typ, zde „(ii)“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:221
+#: editor/ca.desrt.dconf-editor.gschema.xml:230
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -503,11 +515,11 @@ msgstr ""
 "variantu v podobě textového pole. Zde se jedná o dvojici 32bitových celých "
 "čísel."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:225
+#: editor/ca.desrt.dconf-editor.gschema.xml:234
 msgid "A string, type ‘s’"
 msgstr "Textový řetězec, typ „s“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:226
+#: editor/ca.desrt.dconf-editor.gschema.xml:235
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -516,11 +528,11 @@ msgstr ""
 "řetězec „''“ není to stejné co prázdná hodnota (nic, NULL). Viz také klíč "
 "„nullable-key“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:230
+#: editor/ca.desrt.dconf-editor.gschema.xml:239
 msgid "A string array, type ‘as’"
 msgstr "Pole textových řetězců, typ „as“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:231
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -528,11 +540,11 @@ msgstr ""
 "Pole textových řetězců může obsahovat libovolný počet řetězců jakékoliv "
 "délky. Pole může být i prázdné: „[]“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:235
+#: editor/ca.desrt.dconf-editor.gschema.xml:244
 msgid "A nullable string, type ‘ms’"
 msgstr "Textový řetězec, může mít prázdnou hodnotu, typ „ms“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:236
+#: editor/ca.desrt.dconf-editor.gschema.xml:245
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -544,11 +556,11 @@ msgstr ""
 "řetězce „''“, nebo může mít prázdnou hodnotu „nic“ (NULL). Prázdný řetězec a "
 "prázdná hodnota jsou dvě rozdílné věci."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:240
+#: editor/ca.desrt.dconf-editor.gschema.xml:249
 msgid "A 1-choice enumeration"
 msgstr "Výčet s 1 volbou"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:241
+#: editor/ca.desrt.dconf-editor.gschema.xml:250
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -556,11 +568,11 @@ msgstr ""
 "Výčet sice může obsahovat jen jednu hodnotu, ale nejspíše jde chybu. Proto "
 "vás v takovém případě bud Editor Dconf varovat."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:246
+#: editor/ca.desrt.dconf-editor.gschema.xml:255
 msgid "A 1-choice integer value"
 msgstr "Celočíselná hodnota s 1 volbou"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:247
+#: editor/ca.desrt.dconf-editor.gschema.xml:256
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -634,73 +646,73 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Marek Černocký <marek@manet.cz>"
 
-#: editor/dconf-model.vala:222
+#: editor/dconf-model.vala:201
 msgid "Boolean"
 msgstr "Pravdivostní hodnota"
 
-#: editor/dconf-model.vala:224
+#: editor/dconf-model.vala:203
 msgid "String"
 msgstr "Řetězec"
 
-#: editor/dconf-model.vala:226
+#: editor/dconf-model.vala:205
 msgid "String array"
 msgstr "Pole řetězců"
 
-#: editor/dconf-model.vala:228
+#: editor/dconf-model.vala:207
 msgid "Enumeration"
 msgstr "Výčet"
 
-#: editor/dconf-model.vala:230
+#: editor/dconf-model.vala:209
 msgid "Flags"
 msgstr "Příznaky"
 
-#: editor/dconf-model.vala:232
+#: editor/dconf-model.vala:211
 msgid "Double"
 msgstr "Desetinné číslo s dvojitou přesností"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:235
+#: editor/dconf-model.vala:214
 msgid "D-Bus handle type"
 msgstr "Obsluha D-Bus"
 
-#: editor/dconf-model.vala:237
+#: editor/dconf-model.vala:216
 msgid "D-Bus object path"
 msgstr "Cesta k objektu D-Bus"
 
-#: editor/dconf-model.vala:239
+#: editor/dconf-model.vala:218
 msgid "D-Bus object path array"
 msgstr "Pole cest k objektům D-Bus"
 
-#: editor/dconf-model.vala:241
+#: editor/dconf-model.vala:220
 msgid "D-Bus signature"
 msgstr "Podpis D-Bus"
 
-#: editor/dconf-model.vala:249
+#: editor/dconf-model.vala:228
 msgid "Integer"
 msgstr "Celé číslo"
 
-#: editor/dconf-model.vala:364
+#: editor/dconf-model.vala:343
 msgid "True"
 msgstr "Pravda"
 
-#: editor/dconf-model.vala:366
+#: editor/dconf-model.vala:345
 msgid "False"
 msgstr "Nepravda"
 
-#: editor/dconf-model.vala:367
+#: editor/dconf-model.vala:346
 msgid "Nothing"
 msgstr "Nic"
 
-#: editor/dconf-model.vala:372
+#: editor/dconf-model.vala:351
 msgid "true"
 msgstr "pravda"
 
-#: editor/dconf-model.vala:374
+#: editor/dconf-model.vala:353
 msgid "false"
 msgstr "nepravda"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:376
+#: editor/dconf-model.vala:355
 msgid "nothing"
 msgstr "nic"
 
@@ -1116,17 +1128,17 @@ msgstr "Znovu načíst"
 msgid "No keys in this path"
 msgstr "V této cestě nejsou žádné klíče"
 
-#: editor/registry-view.vala:200
+#: editor/registry-view.vala:205
 #, c-format
 msgid "Cannot find folder “%s”."
 msgstr "Nelze najít složku „%s“."
 
-#: editor/registry-view.vala:226
+#: editor/registry-view.vala:231
 #, c-format
 msgid "Cannot find key “%s” here."
 msgstr "Zde nelze najít klíč „%s“."
 
-#: editor/registry-view.vala:233
+#: editor/registry-view.vala:238
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "Klíč „%s“ byl odstraněn."
