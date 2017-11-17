@@ -134,37 +134,10 @@
                   <class name="keys-list"/>
                 </style>
                 <signal name="row-activated" handler="row_activated_cb"/>
-                <child type="placeholder">      <!-- see nautilus/src/resources/ui/nautilus-folder-is-empty.ui -->
-                  <object class="GtkGrid">
+                <child type="placeholder">
+                  <object class="RegistryPlaceholder">
                     <property name="visible">True</property>
-                    <property name="row-spacing">12</property>
-                    <property name="expand">True</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="orientation">vertical</property>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="icon-name">dconf-editor-symbolic</property>
-                        <property name="pixel-size">72</property>
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">No keys in this path</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                          <attribute name="scale" value="1.44"/>
-                        </attributes>
-                      </object>
-                    </child>
+                    <property name="label" translatable="yes">No keys in this path</property>
                   </object>
                 </child>
               </object>

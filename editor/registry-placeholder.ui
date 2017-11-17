@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="RegistryPlaceholder" parent="GtkGrid"> <!-- see nautilus/src/resources/ui/nautilus-folder-is-empty.ui -->
+    <property name="visible">True</property>
+    <property name="row-spacing">12</property>
+    <property name="expand">True</property>
+    <property name="halign">center</property>
+    <property name="valign">center</property>
+    <property name="orientation">vertical</property>
+    <style>
+      <class name="dim-label"/>
+    </style>
+    <child>
+      <object class="GtkImage">
+        <property name="visible">True</property>
+        <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
+        <property name="pixel-size">72</property>
+        <style>
+          <class name="dim-label"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="placeholder_label">
+        <property name="visible">True</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+          <attribute name="scale" value="1.44"/>
+        </attributes>
+      </object>
+    </child>
+  </template>
+</interface>
