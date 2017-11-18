@@ -105,8 +105,6 @@ class RegistryInfo : Grid
         label.xalign = 0;
         label.yalign = 0;
         label.wrap = true;
-        label.max_width_chars = 42;
-        label.width_chars = 42;
         label.hexpand = true;
         label.show ();
         add_row_from_widget (_("Current value"), label, null);
@@ -303,13 +301,13 @@ class RegistryInfo : Grid
     private void add_separator ()
     {
         Separator separator = new Separator (Orientation.HORIZONTAL);
-        separator.halign = Align.CENTER;
-        separator.width_request = 620;
+        separator.halign = Align.FILL;
         separator.margin_bottom = 5;
         separator.margin_top = 5;
         separator.show ();
 
-        ListBoxRow row = new ListBoxRow ();
+        ListBoxRowWrapper row = new ListBoxRowWrapper ();
+        row.halign = Align.CENTER;
         row.add (separator);
         row.set_sensitive (false);
 /* TODO could be selected by down arrow        row.focus.connect ((direction) => { row.move_focus (direction); return false; }); */
@@ -335,7 +333,6 @@ class RegistryInfo : Grid
     private static Widget warning_label (string text)
     {
         Label label = new Label (text);
-        label.max_width_chars = 59;
         label.wrap = true;
         StyleContext context = label.get_style_context ();
         context.add_class ("italic-label");
@@ -345,7 +342,7 @@ class RegistryInfo : Grid
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
-private class PropertyRow : ListBoxRow
+private class PropertyRow : ListBoxRowWrapper
 {
     [GtkChild] private Grid grid;
     [GtkChild] private Label name_label;
@@ -362,8 +359,6 @@ private class PropertyRow : ListBoxRow
         value_label.xalign = 0;
         value_label.yalign = 0;
         value_label.wrap = true;
-        value_label.max_width_chars = 42;
-        value_label.width_chars = 42;
         value_label.show ();
         grid.attach (value_label, 1, 0, 1, 1);
     }

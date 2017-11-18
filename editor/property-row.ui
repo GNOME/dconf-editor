@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="PropertyRow" parent="GtkListBoxRow">
+  <template class="PropertyRow" parent="ListBoxRowWrapper">
     <property name="visible">True</property>
+    <property name="halign">center</property>
     <child>
       <object class="GtkGrid" id="grid">
         <property name="visible">True</property>
-        <property name="halign">center</property>
-        <property name="width-request">700</property>
         <property name="orientation">horizontal</property>
         <child>
           <object class="GtkLabel" id="name_label">
