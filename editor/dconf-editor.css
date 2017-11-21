@@ -265,3 +265,7 @@
 .greyed-label:disabled:backdrop {
   color:@unfocused_insensitive_color;
 }
+
+.big-popover {
+  font-size:144%;
+}

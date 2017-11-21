@@ -136,8 +136,9 @@
                 <signal name="row-activated" handler="row_activated_cb"/>
                 <child type="placeholder">
                   <object class="RegistryPlaceholder">
-                    <property name="visible">True</property>
                     <property name="label" translatable="yes">No keys in this path</property>
+                    <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
+                    <property name="big">True</property>
                   </object>
                 </child>
               </object>

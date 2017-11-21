@@ -21,11 +21,23 @@ using Gtk;
 class RegistryPlaceholder : Grid
 {
     [GtkChild] private Label placeholder_label;
+    [GtkChild] private Image placeholder_image;
 
     public string label { private get; construct; }
+    public string icon_name { private get; construct; }
+    public bool big { private get; construct; default = false; }
 
     construct
     {
+        if (big)
+        {
+            placeholder_image.pixel_size = 72;
+            get_style_context ().add_class ("big-popover");
+        }
+        else
+            placeholder_image.pixel_size = 36;
+
         placeholder_label.label = label;
+        placeholder_image.icon_name = icon_name;
     }
 }

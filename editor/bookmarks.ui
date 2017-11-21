@@ -57,37 +57,11 @@
                 <property name="activate-on-single-click">True</property>
                 <signal name="row-activated" handler="bookmark_activated_cb"/>
                 <child type="placeholder">
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="row-spacing">12</property>
-                    <property name="expand">True</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="orientation">vertical</property>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="icon-name">starred-symbolic</property> <!-- or starred-symbolic? or dconf-editor-symbolic? -->
-                        <property name="pixel-size">36</property>
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="justify">center</property>
-                        <property name="label" translatable="yes">Bookmarks will
+                  <object class="RegistryPlaceholder">
+                    <property name="label" translatable="yes">Bookmarks will
 be added here</property> <!-- line wrap wanted -->
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                        </attributes>
-                      </object>
-                    </child>
+                    <property name="icon-name">starred-symbolic</property> <!-- or starred-symbolic? or dconf-editor-symbolic? -->
+                    <property name="big">False</property>
                   </object>
                 </child>
               </object>

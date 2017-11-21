@@ -12,10 +12,8 @@
       <class name="dim-label"/>
     </style>
     <child>
-      <object class="GtkImage">
+      <object class="GtkImage" id="placeholder_image">
         <property name="visible">True</property>
-        <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
-        <property name="pixel-size">72</property>
         <style>
           <class name="dim-label"/>
         </style>
@@ -24,9 +22,9 @@
     <child>
       <object class="GtkLabel" id="placeholder_label">
         <property name="visible">True</property>
+        <property name="justify">center</property>
         <attributes>
           <attribute name="weight" value="bold"/>
-          <attribute name="scale" value="1.44"/>
         </attributes>
       </object>
     </child>
