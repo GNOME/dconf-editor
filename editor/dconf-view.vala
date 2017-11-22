@@ -434,6 +434,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
+        this.margin_right = 6;
         this.secondary_icon_activatable = false;
         this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type."));    // TODO report bug, not displayed, neither like that nor by setting secondary_icon_tooltip_text
 
