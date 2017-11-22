@@ -80,6 +80,24 @@ class ConfigurationEditor : Gtk.Application
         Gdk.Screen? screen = Gdk.Screen.get_default ();
         return_if_fail (screen != null);
         Gtk.StyleContext.add_provider_for_screen ((!) screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        test_backend ();
+    }
+
+    private static void test_backend ()
+    {
+        SettingsBackend? backend1 = SettingsBackend.get_default ();
+        if (backend1 == null)
+            return; // TODO something, probably
+        string backend_name = ((!) backend1).get_type ().name ();
+        if (backend_name == "GMemorySettingsBackend")       // called with GSETTINGS_BACKEND=memory
+            warning (_("The Memory settings backend is used, no change will be saved on quit."));
+        else if (backend_name == "GNullSettingsBackend")    // called with GSETTINGS_BACKEND=null
+            warning (_("The Null settings backend is used, changes will not be saved."));
+        else if (backend_name != "DConfSettingsBackend")
+            warning (_("The backend used is unknown, bad thing might happen."));
+        else                                                // called by default or with GSETTINGS_BACKEND=dconf
+            info (_("Looks like the DConf settings backend is used, all looks good."));
     }
 
     /*\
