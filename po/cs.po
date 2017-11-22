@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-17 04:03+0000\n"
-"PO-Revision-Date: 2017-11-17 21:58+0100\n"
+"POT-Creation-Date: 2017-11-22 04:21+0000\n"
+"PO-Revision-Date: 2017-11-22 11:24+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -31,7 +31,7 @@ msgstr "Umístění v záložkách"
 msgid "Toggle to bookmark this location"
 msgstr "Přepnout toto umístění v záložkách"
 
-#: editor/bookmarks.ui:84
+#: editor/bookmarks.ui:61
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -39,11 +39,11 @@ msgstr ""
 "V tomto místě byly\n"
 "přidány záložky"
 
-#: editor/bookmarks.ui:113
+#: editor/bookmarks.ui:87
 msgid "Bookmarks"
 msgstr "Záložky"
 
-#: editor/bookmarks.ui:114
+#: editor/bookmarks.ui:88
 msgid "Manage your bookmarks"
 msgstr "Spravujte své záložky"
 
@@ -94,7 +94,7 @@ msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:207
+#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:225
 msgid "dconf Editor"
 msgstr "Editor dconf"
 
@@ -613,28 +613,53 @@ msgstr "Hledat klíče"
 msgid "Print release version and exit"
 msgstr "Vypsat verzi vydání a skončit"
 
-#: editor/dconf-editor.vala:118
+#. TODO something, probably
+#. called with GSETTINGS_BACKEND=memory
+#: editor/dconf-editor.vala:94
+msgid "The Memory settings backend is used, no change will be saved on quit."
+msgstr ""
+"Jako výkonná část nastavení je používaná Memory, při ukončení nebudou uloženy "
+"žádné změny."
+
+#. called with GSETTINGS_BACKEND=null
+#: editor/dconf-editor.vala:96
+msgid "The Null settings backend is used, changes will not be saved."
+msgstr "Jako výkonná část nastavení je používaná Null, změny nebudou uloženy."
+
+#: editor/dconf-editor.vala:98
+#, c-format
+msgid "The backend used is unknown [%s], bad thing might happen."
+msgstr ""
+"Používaná výkonná část nastavení je neznámá [%s], mohou se stát "
+"nepředvídatelné věci."
+
+#. called by default or with GSETTINGS_BACKEND=dconf
+#: editor/dconf-editor.vala:100
+msgid "Looks like the DConf settings backend is used, all looks good."
+msgstr "Jako výkonná část nastavení je používaná DConf, vše vypadá v pořádku."
+
+#: editor/dconf-editor.vala:136
 msgid "Path should start with a “/”.\n"
 msgstr "Cesta by měla začínat znakem „/“.\n"
 
-#: editor/dconf-editor.vala:129
+#: editor/dconf-editor.vala:147
 msgid "Only one window can be opened for now.\n"
 msgstr "V tuto chvíli může být otevřené jen jedno okno.\n"
 
-#: editor/dconf-editor.vala:136
+#: editor/dconf-editor.vala:154
 msgid "Only one argument is accepted for now.\n"
 msgstr "V tuto chvíli je přijímán jen jeden argument.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:156
+#. #: editor/dconf-editor.vala:174
 msgid "Copied to clipboard"
 msgstr "Zkopírováno do schránky"
 
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:227
 msgid "A graphical viewer and editor of applications internal settings."
 msgstr "Grafický prohlížeč a editor interních nastavení aplikací."
 
-#: editor/dconf-editor.vala:210
+#: editor/dconf-editor.vala:228
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2017 – Arnaud Bonatti"
@@ -642,7 +667,7 @@ msgstr ""
 "Copyright © 2010 – 2014 – Canonical Ltd\n"
 "Copyright © 2015 – 2017 – Arnaud Bonatti"
 
-#: editor/dconf-editor.vala:214
+#: editor/dconf-editor.vala:232
 msgid "translator-credits"
 msgstr "Marek Černocký <marek@manet.cz>"
 
@@ -720,39 +745,39 @@ msgstr "nic"
 msgid "This value is invalid for the key type."
 msgstr "Tato hodnota není pro typ klíče platná."
 
-#: editor/dconf-window.vala:144
+#: editor/dconf-window.vala:148
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Děkujeme za použití Editoru dconf k úpravám vašeho nastavení."
 
-#: editor/dconf-window.vala:145
+#: editor/dconf-window.vala:149
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Nezapomeňte, že některé volby mohou narušit fungování aplikací, takže buďte "
 "opatrní."
 
-#: editor/dconf-window.vala:146
+#: editor/dconf-window.vala:150
 msgid "I’ll be careful."
 msgstr "Budu opatrný"
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:150
+#: editor/dconf-window.vala:154
 msgid "Show this dialog next time."
 msgstr "Zobrazit toto varování i příště."
 
-#: editor/dconf-window.vala:260
+#: editor/dconf-window.vala:244
 msgid "Copy current path"
 msgstr "Kopírovat aktuální cestu"
 
-#: editor/dconf-window.vala:265
+#: editor/dconf-window.vala:249
 msgid "Reset visible keys"
 msgstr "Resetovat viditelné klíče"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/dconf-window.vala:266 editor/key-list-box-row.vala:485
+#: editor/dconf-window.vala:250 editor/key-list-box-row.vala:522
 msgid "Reset recursively"
 msgstr "Resetovat rekurzivně"
 
-#: editor/dconf-window.vala:274
+#: editor/dconf-window.vala:258
 msgid "Enter delay mode"
 msgstr "Vstoupit do režimu odkladu"
 
@@ -866,67 +891,67 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončit"
 
-#: editor/key-list-box-row.vala:188
+#: editor/key-list-box-row.vala:225
 msgid "No Schema Found"
 msgstr "Nenalezeno žádné schéma"
 
-#: editor/key-list-box-row.vala:202
+#: editor/key-list-box-row.vala:239
 msgid "Key erased."
 msgstr "Klíč byl smazán."
 
-#: editor/key-list-box-row.vala:224
+#: editor/key-list-box-row.vala:261
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (klíč smazán)"
 
-#: editor/key-list-box-row.vala:310
+#: editor/key-list-box-row.vala:347
 msgid "No summary provided"
 msgstr "Není uveden žádný souhrn"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:465
+#: editor/key-list-box-row.vala:502
 msgid "Customize…"
 msgstr "Přizpůsobit…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:468
+#: editor/key-list-box-row.vala:505
 msgid "Set to default"
 msgstr "Nastavit na výchozí"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:473
+#: editor/key-list-box-row.vala:510
 msgid "Dismiss change"
 msgstr "Zahodit změnu"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:476
+#: editor/key-list-box-row.vala:513
 msgid "Open"
 msgstr "Otevřít"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
+#: editor/key-list-box-row.vala:516 editor/key-list-box-row.vala:647
 #: editor/registry-info.ui:53
 msgid "Erase key"
 msgstr "Smazat klíč"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:482
+#: editor/key-list-box-row.vala:519
 msgid "Do not erase"
 msgstr "Nemazat"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:494
+#: editor/key-list-box-row.vala:531
 msgid "Copy"
 msgstr "Kopírovat"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:604
+#: editor/key-list-box-row.vala:641
 msgid "No change"
 msgstr "Žádná změna"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:674 editor/registry-info.vala:263
+#: editor/key-list-box-row.vala:711 editor/registry-info.vala:263
 msgid "Default value"
 msgstr "Výchozí hodnota"
 
@@ -1124,21 +1149,21 @@ msgstr "Změnily se předvolby řazení. Chcete zobrazení znovu načíst?"
 msgid "Reload"
 msgstr "Znovu načíst"
 
-#: editor/registry-view.ui:161
+#: editor/registry-view.ui:139
 msgid "No keys in this path"
 msgstr "V této cestě nejsou žádné klíče"
 
-#: editor/registry-view.vala:205
+#: editor/registry-view.vala:221
 #, c-format
 msgid "Cannot find folder “%s”."
 msgstr "Nelze najít složku „%s“."
 
-#: editor/registry-view.vala:231
+#: editor/registry-view.vala:247
 #, c-format
 msgid "Cannot find key “%s” here."
 msgstr "Zde nelze najít klíč „%s“."
 
-#: editor/registry-view.vala:238
+#: editor/registry-view.vala:254
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "Klíč „%s“ byl odstraněn."
