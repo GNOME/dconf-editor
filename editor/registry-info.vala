@@ -58,7 +58,7 @@ class RegistryInfo : Grid
     * * Populating
     \*/
 
-    public void populate_properties_list_box (Key key)
+    public void populate_properties_list_box (Key key, bool warning_multiple_schemas)
     {
         if (key is DConfKey && ((DConfKey) key).is_ghost)   // TODO place in "requires"
             assert_not_reached ();
@@ -68,7 +68,7 @@ class RegistryInfo : Grid
         unowned Variant [] dict_container;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
-        multiple_schemas_warning_revealer.set_reveal_child (has_schema && key.parent.warning_multiple_schemas);
+        multiple_schemas_warning_revealer.set_reveal_child (has_schema && warning_multiple_schemas);
         no_schema_warning.set_reveal_child (!has_schema);
 
         properties_list_box.@foreach ((widget) => widget.destroy ());

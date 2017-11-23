@@ -230,7 +230,7 @@ class RegistryView : Grid, PathElement
             return;
         }
 
-        properties_view.populate_properties_list_box ((Key) ((!) object));
+        properties_view.populate_properties_list_box ((Key) ((!) object), current_directory.warning_multiple_schemas);
         show_properties_view (full_name);
     }
     private bool select_folder (string full_name)
