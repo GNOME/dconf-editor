@@ -29,9 +29,9 @@ class DConfWindow : ApplicationWindow
         { "enter-delay-mode", enter_delay_mode }
     };
 
-    public string current_path { private get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
+    public string current_path { get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
 
-    private SettingsModel model = new SettingsModel ();
+    public SettingsModel model { get; private set; default=new SettingsModel (); }
 
     private int window_width = 0;
     private int window_height = 0;
@@ -47,6 +47,9 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Bookmarks bookmarks_button;
     [GtkChild] private MenuButton info_button;
     [GtkChild] private PathBar pathbar;
+    [GtkChild] private SearchBar search_bar;
+    [GtkChild] private SearchEntry search_entry;
+
     [GtkChild] private BrowserView browser_view;
 
     [GtkChild] private Revealer notification_revealer;
@@ -111,6 +114,9 @@ class DConfWindow : ApplicationWindow
         if (settings.get_boolean ("small-bookmarks-rows"))
             context.add_class ("small-bookmarks-rows");
 
+        search_bar.connect_entry (search_entry);
+        search_bar.notify ["search-mode-enabled"].connect (search_changed);
+
         browser_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
 
         settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -166,6 +172,11 @@ class DConfWindow : ApplicationWindow
         if (parent == null)
             assert_not_reached ();
         return (!) parent;
+    }
+
+    public string[] get_bookmarks ()
+    {
+        return settings.get_strv ("bookmarks");
     }
 
     /*\
@@ -265,27 +276,25 @@ class DConfWindow : ApplicationWindow
 
         Directory? dir = model.get_directory (folder_name);
         if (dir == null)
-        {
             cannot_find_folder (folder_name);
-            return;
-        }
-        if (full_name == folder_name)
-        {
+        else if (full_name == folder_name)
             browser_view.set_directory ((!) dir, pathbar.get_selected_child (full_name));
-            return;
+        else
+        {
+            string [] names = full_name.split ("/");
+            string object_name = names [names.length - 1];
+
+            Key? existing_key = SettingsModel.get_key_from_path_and_name (((!) dir).key_model, object_name);
+
+            if (existing_key == null)
+                cannot_find_key (object_name, (!) dir);
+            else if (((!) existing_key) is DConfKey && ((DConfKey) (!) existing_key).is_ghost)
+                key_has_been_removed (object_name, (!) dir);
+            else
+                browser_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
         }
 
-        string [] names = full_name.split ("/");
-        string object_name = names [names.length - 1];
-
-        Key? existing_key = SettingsModel.get_key_from_path_and_name (((!) dir).key_model, object_name);
-
-        if (existing_key == null)
-            cannot_find_key (object_name, (!) dir);
-        else if (((!) existing_key) is DConfKey && ((DConfKey) (!) existing_key).is_ghost)
-            key_has_been_removed (object_name, (!) dir);
-        else
-            browser_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
+        search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
     /*\
@@ -352,6 +361,25 @@ class DConfWindow : ApplicationWindow
     }
 
     /*\
+    * * Search
+    \*/
+
+    [GtkCallback]
+    private void search_changed ()
+    {
+        if (search_bar.search_mode_enabled)
+            browser_view.show_search_view (search_entry.text);
+        else
+            browser_view.hide_search_view ();
+    }
+
+    [GtkCallback]
+    private void search_cancelled ()
+    {
+        browser_view.hide_search_view ();
+    }
+
+    /*\
     * * Other callbacks
     \*/
 
@@ -377,6 +405,11 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
+        Widget? focus = get_focus ();
+        if (!(focus is Entry) && !(focus is TextView)) // why is this needed?
+            if (search_bar.handle_event (event))
+                return true;
+
         string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
 
         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
@@ -401,14 +434,19 @@ class DConfWindow : ApplicationWindow
                     browser_view.discard_row_popover ();
                     bookmarks_button.set_bookmarked (false);
                     return true;
-//                case "f":
-//                    if (bookmarks_button.active)
-//                        bookmarks_button.active = false;
-//                    if (info_button.active)
-//                        info_button.active = false;
-//                    browser_view.discard_row_popover ();
-//                    browser_view.set_search_mode (null);
-//                    return true;
+                case "f":
+                    if (bookmarks_button.active)
+                        bookmarks_button.active = false;
+                    if (info_button.active)
+                        info_button.active = false;
+                    browser_view.discard_row_popover ();
+                    if (!search_bar.search_mode_enabled)
+                        search_bar.search_mode_enabled = true;
+                    else if (!search_entry.has_focus)
+                        search_entry.grab_focus ();
+                    else
+                        search_bar.search_mode_enabled = false;
+                    return true;
                 case "c":
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
                     string? selected_row_text = browser_view.get_copy_text ();
@@ -429,7 +467,6 @@ class DConfWindow : ApplicationWindow
                 case "KP_Enter":
                     if (info_button.active || bookmarks_button.active)
                         return false;
-//                    browser_view.set_search_mode (false);
                     browser_view.discard_row_popover ();
                     browser_view.toggle_boolean_key ();
                     return true;
@@ -441,7 +478,6 @@ class DConfWindow : ApplicationWindow
                 case "KP_Decimal":
                     if (info_button.active || bookmarks_button.active)
                         return false;
-//                    browser_view.set_search_mode (false);
                     browser_view.discard_row_popover ();
                     browser_view.set_to_default ();
                     return true;

@@ -728,7 +728,7 @@ public class SortingOptions : Object
     public bool case_sensitive { get; set; default = false; }
     public MergeType sort_folders { get; set; default = MergeType.MIXED; }
 
-    private SettingComparator get_comparator ()
+    public SettingComparator get_comparator ()
     {
         if (sort_folders == MergeType.FIRST)
         {
@@ -778,7 +778,7 @@ public class SortingOptions : Object
 
 /* Comparison functions */
 
-interface SettingComparator : Object
+public interface SettingComparator : Object
 {
     public abstract int compare (SettingObject a, SettingObject b);
 }

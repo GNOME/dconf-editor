@@ -63,6 +63,16 @@
             <property name="name">properties-view</property>
           </packing>
         </child>
+        <child>
+          <object class="RegistrySearch"  id="search_results_view">
+            <property name="visible">True</property>
+            <property name="revealer">revealer</property>
+            <signal name="request_path" handler="request_path_test"/>
+          </object>
+          <packing>
+            <property name="name">search-results-view</property>
+          </packing>
+        </child>
       </object>
     </child>
     <child>

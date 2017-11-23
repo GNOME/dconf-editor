@@ -28,7 +28,7 @@ private class ListBoxRowWrapper : ListBoxRow
     }
 }
 
-private class ListBoxRowHeader : Separator
+private class ListBoxRowHeader : Grid
 {
     public override void get_preferred_width (out int minimum_width, out int natural_width)
     {
@@ -40,9 +40,12 @@ private class ListBoxRowHeader : Separator
 private abstract class ClickableListBoxRow : EventBox
 {
     public signal void on_row_clicked ();
+    public signal void on_open_parent ();
     public signal void on_delete_call ();
 
     public abstract string get_text ();
+
+    public bool search_result_mode { protected get; construct; default=false; }
 
     /*\
     * * Dismiss popover on window resize
@@ -112,11 +115,12 @@ private abstract class ClickableListBoxRow : EventBox
 private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
-    private string full_name;
+    public string full_name;
 
-    public FolderListBoxRow (string label, string path)
+    public FolderListBoxRow (string label, string path, bool search_result_mode=false)
     {
-        folder_name_label.set_text (label);
+        Object (search_result_mode: search_result_mode);
+        folder_name_label.set_text (search_result_mode ? path : label);
         full_name = path;
     }
 
@@ -127,6 +131,12 @@ private class FolderListBoxRow : ClickableListBoxRow
 
     protected override bool generate_popover (ContextPopover popover, bool unused)  // TODO better
     {
+        if (search_result_mode)
+        {
+            popover.new_action ("open_parent", () => on_open_parent ());
+            popover.new_section ();
+        }
+
         popover.new_action ("open", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
@@ -190,7 +200,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
 
         update ();
-        key_name_label.set_label (abstract_key.name);
+        key_name_label.set_label (search_result_mode ? abstract_key.full_name : abstract_key.name);
 
         ulong key_value_changed_handler = abstract_key.value_changed.connect (() => {
                 update ();
@@ -214,9 +224,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     public DConfKey key { get; construct; }
     private override Key abstract_key { get { return (Key) key; }}
 
-    public KeyListBoxRowEditableNoSchema (DConfKey _key)
+    public KeyListBoxRowEditableNoSchema (DConfKey _key, bool search_result_mode=false)
     {
-        Object (key: _key);
+        Object (key: _key, search_result_mode : search_result_mode);
 
         if (boolean_switch != null)
             ((!) boolean_switch).notify ["active"].connect (() => key.value = new Variant.boolean (((!) boolean_switch).get_active ()));
@@ -267,6 +277,12 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         {
             popover.new_copy_action (get_text ());
             return true;
+        }
+
+        if (search_result_mode)
+        {
+            popover.new_action ("open_parent", () => on_open_parent ());
+            popover.new_section ();
         }
 
         popover.new_action ("customize", () => on_row_clicked ());
@@ -326,9 +342,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     private override Key abstract_key { get { return (Key) key; }}
     private ulong boolean_switch_toggled_handler = 0;
 
-    public KeyListBoxRowEditable (GSettingsKey _key)
+    public KeyListBoxRowEditable (GSettingsKey _key, bool search_result_mode=false)
     {
-        Object (key: _key);
+        Object (key: _key, search_result_mode : search_result_mode);
 
         if (boolean_switch != null)
             boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
@@ -385,6 +401,12 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)
     {
+        if (search_result_mode)
+        {
+            popover.new_action ("open_parent", () => on_open_parent ());
+            popover.new_section ();
+        }
+
         popover.new_action ("customize", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
@@ -511,6 +533,9 @@ private class ContextPopover : Popover
             case "open":
                 /* Translators: "open folder" action in the right-click menu on a folder */
                 current_section.append (_("Open"), group_dot_action);               return;
+            case "open_parent":
+                /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
+                current_section.append (_("Open parent folder"), group_dot_action);               return;
             case "erase":
                 /* Translators: "erase key" action in the right-click menu on a key without schema */
                 current_section.append (_("Erase key"), group_dot_action);          return;

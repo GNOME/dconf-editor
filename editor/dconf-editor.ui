@@ -65,9 +65,10 @@
         </child>
         <child>
           <object class="GtkToggleButton">
-            <property name="visible">False</property>
+            <property name="visible">True</property>
             <property name="valign">center</property>
-            <!-- TODO <property name="focus-on-click">False</property> does not work here because of explicit focus grab -->
+            <property name="active" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional">False</property>
+            <property name="focus-on-click">False</property>
             <!-- <accelerator key="F" signal="toggled" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>
               <class name="image-button"/>
@@ -113,9 +114,58 @@
       <object class="GtkOverlay">
         <property name="visible">True</property>
         <child>
-          <object class="BrowserView" id="browser_view">
+          <object class="GtkGrid">
             <property name="visible">True</property>
-            <signal name="request_path" handler="request_path"/>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkRevealer">
+                <property name="visible">True</property>
+                <property name="reveal-child" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional">False</property>
+                <child>
+                  <object class="GtkSearchBar" id="search_bar">
+                    <property name="visible">True</property>
+                    <property name="search-mode-enabled">False</property>
+                    <property name="show-close-button">False</property>
+                    <child>
+                      <object class="GtkBox"> <!-- https://bugzilla.gnome.org/show_bug.cgi?id=769876 -->
+                        <property name="visible">True</property>
+                        <property name="orientation">horizontal</property>
+                        <style>
+                          <class name="linked"/>
+                        </style>
+                        <child>
+                          <object class="GtkSearchEntry" id="search_entry">
+                            <property name="visible">True</property>
+                            <property name="width-request">350</property>
+                            <signal name="search-changed" handler="search_changed"/>
+                            <signal name="stop-search" handler="search_cancelled"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="search_options_button">
+                            <property name="visible">False</property>
+                            <property name="sensitive" bind-source="search_bar" bind-property="search-mode-enabled"/>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="icon-name">pan-down-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+             </object>
+            </child>
+            <child>
+              <object class="BrowserView" id="browser_view">
+                <property name="visible">True</property>
+                <property name="vexpand">True</property>
+                <signal name="request_path" handler="request_path"/>
+              </object>
+            </child>
           </object>
         </child>
         <child type="overlay">

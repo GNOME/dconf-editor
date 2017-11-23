@@ -38,8 +38,10 @@ class BrowserView : Grid, PathElement
     [GtkChild] private Stack stack;
     [GtkChild] private RegistryView browse_view;
     [GtkChild] private RegistryInfo properties_view;
+    [GtkChild] private RegistrySearch search_results_view;
+    private Widget? pre_search_view = null;
 
-    private SortingOptions sorting_options;
+    public SortingOptions sorting_options { get; private set; }
 
     public bool small_keys_list_rows
     {
@@ -55,7 +57,7 @@ class BrowserView : Grid, PathElement
     private DConfWindow window {
         get {
             if (_window == null)
-                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (this));
+                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (this)));
             return (!) _window;
         }
     }
@@ -73,8 +75,9 @@ class BrowserView : Grid, PathElement
         settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
 
         sorting_options.notify.connect (() => {
-                if (!is_not_browsing_view () && current_directory.need_sorting (sorting_options))
+                if (current_view_is_browse_view () && current_directory.need_sorting (sorting_options))
                     need_reload_warning_revealer.set_reveal_child (true);
+                // TODO reload search results too
             });
 
         destroy.connect (() => {
@@ -113,7 +116,8 @@ class BrowserView : Grid, PathElement
     }
     private void _show_browse_view (string path)
     {
-        stack.set_transition_type (current_path.has_prefix (path) ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        stack.set_transition_type (current_path.has_prefix (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        pre_search_view = null;
         need_reload_warning_revealer.set_reveal_child (false);
         browse_view.show_multiple_schemas_warning (current_directory.warning_multiple_schemas);
 
@@ -136,9 +140,32 @@ class BrowserView : Grid, PathElement
         need_reload_warning_revealer.set_reveal_child (false);
         browse_view.show_multiple_schemas_warning (false);
 
-        stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        pre_search_view = null;
         update_current_path (path);
         stack.set_visible_child (properties_view);
+    }
+
+    public void show_search_view (string term)
+    {
+        search_results_view.start_search (term);
+        if (pre_search_view == null)
+        {
+            pre_search_view = stack.visible_child;
+            stack.set_transition_type (StackTransitionType.NONE);
+            stack.visible_child = search_results_view;
+        }
+    }
+
+    public void hide_search_view ()
+    {
+        if (pre_search_view != null)
+        {
+            stack.set_transition_type (StackTransitionType.NONE);
+            stack.visible_child = (!) pre_search_view;
+            pre_search_view = null;
+        }
+        search_results_view.stop_search ();
     }
 
     private void update_current_path (string path)
@@ -161,42 +188,57 @@ class BrowserView : Grid, PathElement
 
     public bool show_row_popover ()
     {
-        if (is_not_browsing_view ())
-            return false;
-        return browse_view.show_row_popover ();
+        if (current_view_is_browse_view ())
+            return browse_view.show_row_popover ();
+        if (current_view_is_search_results_view ())
+            return search_results_view.show_row_popover ();
+        return false;
     }
 
     public void toggle_boolean_key ()
     {
-        if (is_not_browsing_view ())
-            return;                         // TODO something, probably
-        browse_view.toggle_boolean_key ();
+        if (current_view_is_browse_view ())
+            browse_view.toggle_boolean_key ();
+        else if (current_view_is_search_results_view ())
+            search_results_view.toggle_boolean_key ();
     }
 
     public void set_to_default ()
     {
-        if (is_not_browsing_view ())
-            return;
-        browse_view.set_to_default ();
+        if (current_view_is_browse_view ())
+            browse_view.set_to_default ();
+        else if (current_view_is_search_results_view ())
+            search_results_view.set_to_default ();
     }
 
     public void discard_row_popover ()
     {
-        if (is_not_browsing_view ())
-            return;
-        browse_view.discard_row_popover ();
+        if (current_view_is_browse_view ())
+            browse_view.discard_row_popover ();
+        else if (current_view_is_search_results_view ())
+            search_results_view.discard_row_popover ();
     }
 
     private void invalidate_popovers ()
     {
         browse_view.invalidate_popovers ();
+        search_results_view.invalidate_popovers ();
         window.update_hamburger_menu ();
     }
 
-    private bool is_not_browsing_view ()
+    public bool current_view_is_browse_view ()
     {
-        string? visible_child_name = stack.get_visible_child_name ();
-        return (visible_child_name == null || ((!) visible_child_name) != "browse-view");
+        return stack.get_visible_child () == browse_view;
+    }
+
+    public bool current_view_is_properties_view ()
+    {
+        return stack.get_visible_child () == properties_view;
+    }
+
+    public bool current_view_is_search_results_view ()
+    {
+        return stack.get_visible_child () == search_results_view;
     }
 
     /*\

@@ -61,6 +61,7 @@ sources = files(
   'pathbar.vala',
   'registry-info.vala',
   'registry-placeholder.vala',
+  'registry-search.vala',
   'registry-view.vala'
 )
 
@@ -80,6 +81,7 @@ resource_data = files(
   'property-row.ui',
   'registry-info.ui',
   'registry-placeholder.ui',
+  'registry-search.ui',
   'registry-view.ui'
 )
 

@@ -17,17 +17,14 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-class RegistryView : Grid, PathElement, BrowsableView
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-search.ui")]
+class RegistrySearch : Grid, PathElement, BrowsableView
 {
     public Behaviour behaviour { private get; set; }
 
-    [GtkChild] private Revealer multiple_schemas_warning_revealer;
-
-    [GtkChild] private ScrolledWindow scrolled;
+    //[GtkChild] private ScrolledWindow scrolled;
 
     [GtkChild] private ListBox key_list_box;
-    private GLib.ListStore? key_model = null;
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
@@ -56,26 +53,26 @@ class RegistryView : Grid, PathElement, BrowsableView
         }
     }
 
+    private DConfWindow? _window = null;
+    private DConfWindow window {
+        get {
+            if (_window == null)
+                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (browser_view)));
+            return (!) _window;
+        }
+    }
+
+    private GLib.ListStore search_results_model = new GLib.ListStore (typeof (SettingObject));
+
     construct
     {
-        key_list_box.set_header_func (update_row_header);
+        key_list_box.set_header_func (update_search_results_header);
     }
 
     /*\
     * * Updating
     \*/
-
-    public void set_key_model (GLib.ListStore _key_model)
-    {
-        key_model = _key_model;
-        key_list_box.bind_model (key_model, new_list_box_row);
-    }
-
-    public void show_multiple_schemas_warning (bool multiple_schemas_warning_needed)
-    {
-        multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
-    }
-
+/*
     public void select_row_named (string selected, bool grab_focus)
     {
         check_resize ();
@@ -114,44 +111,35 @@ class RegistryView : Grid, PathElement, BrowsableView
         row.get_allocation (out row_allocation);
         key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
     }
-
+/*
     /*\
     * * Key ListBox
     \*/
-
-    private void update_row_header (ListBoxRow row, ListBoxRow? before)
-    {
-        if (before != null)
-        {
-            ListBoxRowHeader header = new ListBoxRowHeader ();
-            header.set_halign (Align.CENTER);
-            header.show ();
-
-            Separator separator = new Separator (Orientation.HORIZONTAL);
-            separator.show ();
-            separator.set_hexpand (true);
-            header.add (separator);
-            row.set_header (header);
-        }
-    }
 
     private Widget new_list_box_row (Object item)
     {
         ClickableListBoxRow row;
         SettingObject setting_object = (SettingObject) item;
+        string full_name = setting_object.full_name;
+        string parent_path;
+        if (full_name.has_suffix ("/"))
+            parent_path = SettingsModel.get_base_path (full_name [0:full_name.length - 1]);
+        else
+            parent_path = SettingsModel.get_base_path (full_name);
+        bool is_local_result = parent_path == window.current_path;
         ulong on_delete_call_handler;
 
         if (setting_object is Directory)
         {
-            row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
+            row = new FolderListBoxRow (setting_object.name, setting_object.full_name, !is_local_result);
             on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_objects (((Directory) setting_object).key_model, true));
         }
         else
         {
             if (setting_object is GSettingsKey)
-                row = new KeyListBoxRowEditable ((GSettingsKey) setting_object);
+                row = new KeyListBoxRowEditable ((GSettingsKey) setting_object, !is_local_result);
             else
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object);
+                row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object, !is_local_result);
 
             Key key = (Key) setting_object;
             KeyListBoxRow key_row = (KeyListBoxRow) row;
@@ -174,11 +162,15 @@ class RegistryView : Grid, PathElement, BrowsableView
         }
 
         ulong on_row_clicked_handler = row.on_row_clicked.connect (() => request_path (setting_object.full_name));
+        ulong on_row_open_parent_handler = row.on_open_parent.connect (() => {
+                request_path (parent_path); // TODO selected
+            });
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
 
         row.destroy.connect (() => {
                 row.disconnect (on_delete_call_handler);
                 row.disconnect (on_row_clicked_handler);
+                row.disconnect (on_row_open_parent_handler);
                 row.disconnect (button_press_event_handler);
             });
 
@@ -255,7 +247,7 @@ class RegistryView : Grid, PathElement, BrowsableView
         rows_possibly_with_popover.remove_all ();
     }
 
-    public string? get_selected_row_name ()
+    /*public string? get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row != null)
@@ -265,7 +257,7 @@ class RegistryView : Grid, PathElement, BrowsableView
         }
         else
             return null;
-    }
+    }*/
 
     /*\
     * * Revealer stuff
@@ -296,22 +288,6 @@ class RegistryView : Grid, PathElement, BrowsableView
     /*\
     * * Keyboard calls
     \*/
-
-/*    public void set_search_mode (bool? mode)    // mode is never 'true'...
-    {
-        if (mode == null)
-            search_bar.set_search_mode (!search_bar.get_search_mode ());
-        else
-            search_bar.set_search_mode ((!) mode);
-    }
-
-    public bool handle_search_event (Gdk.EventKey event)
-    {
-        if (is_not_browsing_view ())
-            return false;
-
-        return search_bar.handle_event (event);
-    } */
 
     public bool show_row_popover ()
     {
@@ -362,5 +338,262 @@ class RegistryView : Grid, PathElement, BrowsableView
             return;
 
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).hide_right_click_popover ();
+    }
+
+    /*\
+    * * Search
+    \*/
+
+    private string? old_term;
+    // indices for the start of each section. used to know where to insert search hits and to update the headers
+    // must be updated before changing the list model, so that the header function works correctly
+    private int post_local;
+    private int post_bookmarks;
+    private int post_folders;
+    private uint? search_source = null;
+    private GLib.Queue<Directory> search_nodes = new GLib.Queue<Directory> ();
+
+    public void stop_search ()
+    {
+        key_list_box.bind_model (null, null);
+        stop_global_search ();
+        search_results_model.remove_all ();
+        post_local = -1;
+        post_bookmarks = -1;
+        post_folders = -1;
+        old_term = null;
+    }
+
+    public void start_search (string term)
+    {
+        if (old_term == null || term != (!) old_term)
+        {
+            SettingsModel model = window.model;
+            string current_path = window.current_path;
+            if (old_term != null && term.has_prefix((!) old_term))
+            {
+                pause_global_search ();
+                refine_local_results (term);
+                refine_bookmarks_results (term);
+                if ((!) old_term == "")
+                    start_global_search (model, current_path, term);
+                else
+                {
+                    refine_global_results (term);
+                    resume_global_search (current_path, term); // update search term
+                }
+            }
+            else
+            {
+                stop_global_search ();
+                search_results_model.remove_all ();
+                post_local = -1;
+                post_folders = -1;
+
+                local_search (model, current_path, term);
+                bookmark_search (model, current_path, term);
+                key_list_box.bind_model (search_results_model, new_list_box_row);
+                if (term != "")
+                    start_global_search (model, current_path, term);
+            }
+            old_term = term;
+        }
+    }
+
+    private void refine_local_results (string term)
+    {
+        for (int i = post_local - 1; i >= 0; i--)
+        {
+            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            if (!(term in item.name))
+            {
+                post_local--;
+                post_bookmarks--;
+                post_folders--;
+                search_results_model.remove (i);
+            }
+        }
+    }
+
+    private void refine_bookmarks_results (string term)
+    {
+        for (int i = post_bookmarks - 1; i >= post_local; i--)
+        {
+            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            if (!(term in item.name))
+            {
+                post_bookmarks--;
+                post_folders--;
+                search_results_model.remove (i);
+            }
+        }
+    }
+
+    private void refine_global_results (string term)
+    {
+        for (int i = (int) search_results_model.get_n_items () - 1; i >= post_folders; i--)
+        {
+            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            if (!(term in item.name))
+                search_results_model.remove (i);
+        }
+        for (int i = post_folders - 1; i >= post_local; i--)
+        {
+            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            if (!(term in item.name))
+            {
+                post_folders--;
+                search_results_model.remove (i);
+            }
+        }
+    }
+
+    private bool local_search (SettingsModel model, string current_path, string term)
+    {
+        SettingComparator comparator = browser_view.sorting_options.get_comparator ();
+        GLib.CompareDataFunc compare = (a, b) => comparator.compare((SettingObject) a, (SettingObject) b);
+
+        if (current_path.has_suffix ("/"))
+        {
+            Directory? local = model.get_directory (current_path);
+            if (local != null)
+            {
+                GLib.ListStore key_model = ((!) local).key_model;
+                for (int i = 0; i < key_model.get_n_items (); i++)
+                {
+                    SettingObject item = (SettingObject) key_model.get_item (i);
+                    if (term in item.name)
+                        search_results_model.insert_sorted (item, compare);
+                }
+            }
+        }
+        post_local = (int) search_results_model.get_n_items ();
+        post_bookmarks = post_local;
+        post_folders = post_local;
+
+        if (term == "")
+            return false;
+        return true;
+    }
+
+    private bool bookmark_search (SettingsModel model, string current_path, string term)
+    {
+        foreach (string bookmark in window.get_bookmarks ())
+        {
+            bool local_again = model.get_parent_path (bookmark) == current_path;
+            if (local_again)
+                continue;
+            SettingObject? setting_object = model.get_object (bookmark);
+            if (setting_object == null)
+                continue;
+            if (term in ((!) setting_object).name)
+            {
+                post_bookmarks++;
+                post_folders++;
+                search_results_model.insert (post_bookmarks - 1, (!) setting_object);
+            }
+        }
+
+        return true;
+    }
+
+    private void stop_global_search ()
+    {
+        pause_global_search ();
+        search_nodes.clear ();
+    }
+
+    private void start_global_search (SettingsModel model, string current_path, string term)
+    {
+        search_nodes.push_head ((!) model.get_directory ("/"));
+        resume_global_search (current_path, term);
+    }
+
+    private void pause_global_search ()
+    {
+        if (search_source != null)
+        {
+            Source.remove ((!) search_source);
+            search_source = null;
+        }
+    }
+
+    private void resume_global_search (string current_path, string term)
+    {
+        search_source = Idle.add (() => {
+                if (global_search_step (current_path, term))
+                    return true;
+                search_source = null;
+                return false;
+            });
+    }
+
+    private bool global_search_step (string current_path, string term)
+    {
+        if (!search_nodes.is_empty ())
+        {
+            Directory next = (!) search_nodes.pop_head ();
+            bool local_again = next.full_name == current_path;
+
+            GLib.ListStore next_key_model = next.key_model;
+            for (int i = 0; i < next_key_model.get_n_items (); i++)
+            {
+                SettingObject item = (SettingObject) next_key_model.get_item (i);
+                if (item is Directory)
+                {
+                    if (!local_again && term in item.name)
+                        search_results_model.insert (post_folders++, item);
+                    search_nodes.push_tail ((Directory) item); // we still search local children
+                }
+                else
+                {
+                    if (!local_again && term in item.name)
+                        search_results_model.append (item);
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    private void update_search_results_header (ListBoxRow row, ListBoxRow? before)
+    {
+        ListBoxRowHeader header = new ListBoxRowHeader ();
+        header.visible = true;
+        header.orientation = Orientation.VERTICAL;
+        header.halign = Align.CENTER;
+
+        string? label_text = null;
+        if (before == null && post_local > 0)
+            label_text = _("Current folder");
+        else if (row.get_index () == post_local && post_local != post_bookmarks)
+            label_text = _("Bookmarks");
+        else if (row.get_index () == post_bookmarks && post_bookmarks != post_folders)
+            label_text = _("Folders");
+        else if (row.get_index () == post_folders)
+            label_text = _("Keys");
+
+        if (label_text != null)
+        {
+            Label label = new Label ((!) label_text);
+            label.visible = true;
+            label.halign = Align.START;
+            label.margin_top = 10; // TODO CSS
+            label.margin_left = 10; // TODO CSS
+            label.get_style_context ().add_class ("dim-label");
+            label.get_style_context ().add_class ("bold-label");
+            header.add (label);
+        }
+
+        if (before != null || label_text != null)
+        {
+            Separator separator = new Separator (Orientation.HORIZONTAL);
+            separator.visible = true;
+            separator.hexpand = true;
+            header.add (separator);
+        }
+
+        row.set_header (header);
     }
 }

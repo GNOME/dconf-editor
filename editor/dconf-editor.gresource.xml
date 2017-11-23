@@ -14,6 +14,7 @@
     <file preprocess="xml-stripblanks">property-row.ui</file>
     <file preprocess="xml-stripblanks">registry-info.ui</file>
     <file preprocess="xml-stripblanks">registry-placeholder.ui</file>
+    <file preprocess="xml-stripblanks">registry-search.ui</file>
     <file preprocess="xml-stripblanks">registry-view.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
