@@ -58,6 +58,19 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Revealer notification_revealer;
     [GtkChild] private Label notification_label;
 
+    private bool _highcontrast = false;
+    private bool highcontrast {
+        set {
+            if (_highcontrast == value)
+                return;
+            _highcontrast = value;
+            if (value)
+                get_style_context ().add_class ("hc-theme");
+            else
+                get_style_context ().remove_class ("hc-theme");
+        }
+    }
+
     private ulong behaviour_changed_handler = 0;
 /*    private ulong theme_changed_handler = 0; */
     private ulong small_keys_list_rows_handler = 0;
@@ -227,6 +240,7 @@ class DConfWindow : ApplicationWindow
     private void request_path (string full_name)
     {
         registry_view.set_search_mode (false);  // TODO not useful when called from bookmark
+        highcontrast = ("HighContrast" in Gtk.Settings.get_default ().gtk_theme_name);
         registry_view.path_requested (full_name, pathbar.get_selected_child (full_name));
     }
 

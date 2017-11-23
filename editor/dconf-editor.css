@@ -47,6 +47,9 @@
              .small-keys-list-rows              .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 .large-window.small-keys-list-rows              .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 
+                                  .hc-theme     .keys-list          > row         { padding-top:0.5em; padding-bottom:0.5em; }
+             .small-keys-list-rows.hc-theme     .keys-list          > row         { padding-top:0.4em; padding-bottom:0.4em; }
+
                                                 .bookmarks     list > row { min-height:2.6rem; }
                           .small-bookmarks-rows .bookmarks     list > row { min-height:1.3rem; }
 
