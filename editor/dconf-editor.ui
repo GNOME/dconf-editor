@@ -83,7 +83,6 @@
             <property name="focus-on-click">False</property>
             <property name="schema-id">ca.desrt.dconf-editor.Settings</property>
             <property name="sensitive" bind-source="search-toggle" bind-property="active" bind-flags="sync-create|invert-boolean"/>
-            <signal name="request_path" handler="request_path"/>
             <!-- <accelerator key="B" signal="activate" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>
               <class name="image-button"/> <!-- TODO https://bugzilla.gnome.org/show_bug.cgi?id=756731 -->

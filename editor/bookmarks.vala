@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
-public class Bookmarks : MenuButton, PathElement
+public class Bookmarks : MenuButton
 {
     [GtkChild] private ListBox bookmarks_list_box;
     [GtkChild] private Popover bookmarks_popover;
@@ -94,6 +94,7 @@ public class Bookmarks : MenuButton, PathElement
             unduplicated_bookmarks += bookmark;
 
             Bookmark bookmark_row = new Bookmark (bookmark);
+            bookmark_row.action_target = bookmark;
             ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => remove_bookmark (bookmark));
             bookmark_row.destroy_button.destroy.connect (() => bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler));
             bookmark_row.show ();
@@ -127,14 +128,6 @@ public class Bookmarks : MenuButton, PathElement
             bookmarked_switch.set_active (new_state);
     }
 
-    [GtkCallback]
-    private void bookmark_activated_cb (ListBoxRow list_box_row)
-    {
-        bookmarks_popover.closed ();
-        string bookmark = ((Bookmark) list_box_row.get_child ()).bookmark_name;
-        request_path (bookmark);
-    }
-
     private void remove_bookmark (string bookmark_name)
     {
         bookmarks_popover.closed ();
@@ -150,7 +143,7 @@ public class Bookmarks : MenuButton, PathElement
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
-private class Bookmark : Grid
+private class Bookmark : ListBoxRow
 {
     public string bookmark_name { get; construct; }
 

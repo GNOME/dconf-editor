@@ -372,6 +372,8 @@ class DConfWindow : ApplicationWindow
     private void open_path (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
         request_path (((!) path_variant).get_string ());
     }
 

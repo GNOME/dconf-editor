@@ -55,7 +55,6 @@
               <object class="GtkListBox" id="bookmarks_list_box">
                 <property name="visible">True</property>
                 <property name="activate-on-single-click">True</property>
-                <signal name="row-activated" handler="bookmark_activated_cb"/>
                 <child type="placeholder">
                   <object class="RegistryPlaceholder">
                     <property name="label" translatable="yes">Bookmarks will
