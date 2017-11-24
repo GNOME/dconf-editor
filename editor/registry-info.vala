@@ -249,7 +249,10 @@ class RegistryInfo : Grid, BrowsableView
             case "mb":
                 return (KeyEditorChild) new KeyEditorChildNullableBool (key);
             default:
-                return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+                if ("a" in key.type_string)
+                    return (KeyEditorChild) new KeyEditorChildArray (key.type_string, key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+                else
+                    return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
         }
     }
 

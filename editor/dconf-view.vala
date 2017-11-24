@@ -433,6 +433,136 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     }
 }
 
+private class KeyEditorChildArray : Frame, KeyEditorChild
+{
+    private TextView text_view;
+    private Revealer error_revealer;
+    private string variant_type;
+    private Variant variant;
+
+    private ulong deleted_text_handler = 0;
+    private ulong inserted_text_handler = 0;
+
+    public KeyEditorChildArray (string type, Variant initial_value)
+    {
+        this.visible = true;
+        this.hexpand = true;
+        this.vexpand = false;
+        this.margin_right = 6;
+        this.height_request = 200;
+
+        this.variant_type = type;
+        this.variant = initial_value;
+
+        Grid grid = new Grid ();
+        grid.visible = true;
+        grid.orientation = Orientation.VERTICAL;
+        this.add (grid);
+
+        ScrolledWindow scrolled_window = new ScrolledWindow (null, null);
+        scrolled_window.visible = true;
+        grid.add (scrolled_window);
+
+        text_view = new TextView ();
+        text_view.visible = true;
+        text_view.expand = true;
+        text_view.wrap_mode = WrapMode.WORD;
+        text_view.monospace = true;
+        text_view.button_press_event.connect_after (() => Gdk.EVENT_STOP);
+        text_view.button_release_event.connect_after (() => Gdk.EVENT_STOP);
+        scrolled_window.add (text_view);
+
+        error_revealer = new Revealer ();
+        error_revealer.visible = true;
+        error_revealer.transition_type = RevealerTransitionType.SLIDE_UP;
+        error_revealer.reveal_child = false;
+        grid.add (error_revealer);
+
+        ActionBar error_bar = new ActionBar ();
+        error_bar.visible = true;
+        error_revealer.add (error_bar);
+
+        Image error_icon = new Image.from_icon_name ("dialog-error-symbolic", IconSize.BUTTON);
+        error_icon.visible = true;
+        error_bar.pack_start (error_icon);
+
+        Label error_label = new Label (_("This value is invalid for the key type."));
+        error_label.visible = true;
+        error_bar.pack_start (error_label);
+
+        text_view.buffer.text = initial_value.print (false);
+
+        TextBuffer ref_buffer = text_view.buffer;    // an TextBuffer doesn't emit a "destroy" signal
+        deleted_text_handler = ref_buffer.delete_range.connect_after (() => value_has_changed (test_value ()));
+        inserted_text_handler = ref_buffer.insert_text.connect_after (() => value_has_changed (test_value ()));
+        destroy.connect (() => {
+                ref_buffer.disconnect (deleted_text_handler);
+                ref_buffer.disconnect (inserted_text_handler);
+            });
+    }
+
+    private bool test_value ()
+    {
+        if (variant_type == "s")
+        {
+            variant = new Variant.string (text_view.buffer.text);
+            return true;
+        }
+
+        string tmp_text = text_view.buffer.text; // don't put in the try{} for correct C code
+        try
+        {
+            Variant? tmp_variant = Variant.parse (new VariantType (variant_type), tmp_text);
+            variant = (!) tmp_variant;
+
+            StyleContext context = get_style_context ();
+            if (context.has_class ("error"))
+                context.remove_class ("error");
+            error_revealer.reveal_child = false;
+
+            return true;
+        }
+        catch (VariantParseError e)
+        {
+            StyleContext context = get_style_context ();
+            if (!context.has_class ("error"))
+                context.add_class ("error");
+            error_revealer.reveal_child = true;
+
+            return false;
+        }
+    }
+
+    public Variant get_variant ()
+    {
+        return variant;
+    }
+
+    private void set_lock (bool state)
+        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
+    {
+        if (state)
+        {
+            SignalHandler.block (text_view.buffer, deleted_text_handler);
+            SignalHandler.block (text_view.buffer, inserted_text_handler);
+        }
+        else
+        {
+            SignalHandler.unblock (text_view.buffer, deleted_text_handler);
+            SignalHandler.unblock (text_view.buffer, inserted_text_handler);
+        }
+    }
+
+    public void reload (Variant gvariant)
+    {
+        set_lock (true);
+        text_view.buffer.text = gvariant.print (false);
+        if (!test_value ())
+            assert_not_reached ();
+        set_lock (false);
+    }
+}
+
 private class KeyEditorChildDefault : Entry, KeyEditorChild
 {
     private string variant_type;
