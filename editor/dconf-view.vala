@@ -231,42 +231,29 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
     }
 }
 
-private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
+private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
 {
+    private Variant variant;
+
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
-    public KeyEditorChildNumberDouble (Key key)
-        requires (key.type_string == "d")
+    public KeyEditorChildNumberDouble (Variant initial_value)
     {
+        this.variant = initial_value;
+
         this.visible = true;
         this.hexpand = true;
-        this.halign = Align.START;
+        this.margin_right = 6;
+        this.secondary_icon_activatable = false;
+        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));    // TODO report bug, not displayed, neither like that nor by setting secondary_icon_tooltip_text
 
-        double min, max;
-        if (key is GSettingsKey && ((GSettingsKey) key).range_type == "range")
-        {
-            min = (((GSettingsKey) key).range_content.get_child_value (0)).get_double ();
-            max = (((GSettingsKey) key).range_content.get_child_value (1)).get_double ();
-        }
-        else
-        {
-            min = double.MIN;
-            max = double.MAX;
-        }
-
-        Adjustment adjustment = new Adjustment (key.planned_change && (key.planned_value != null) ? ((!) key.planned_value).get_double () : key.value.get_double (), min, max, 0.01, 0.1, 0.0);
-        this.configure (adjustment, 0.01, 2);
-
-        this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
-        this.snap_to_ticks = false;
-        this.input_purpose = InputPurpose.NUMBER;
-        this.width_chars = 30;
+        this.text = initial_value.print (false);
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
-        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed ());     // TODO test value for
-        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed ());   //   non-numeric chars
-        ulong entry_activate_handler = activate.connect (() => { update (); child_activated (); });
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
+        ulong entry_activate_handler = activate.connect (() => { if (test_value ()) child_activated (); });
 
         destroy.connect (() => {
                 ref_buffer.disconnect (deleted_text_handler);
@@ -275,9 +262,35 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
             });
     }
 
-    public Variant get_variant ()   // TODO test_value against range
+    private bool test_value ()
     {
-        return new Variant.double (this.get_value ());  // TODO parse the text instead of getting the value, or updates when editing manually are buggy
+        string tmp_text = this.text; // don't put in the try{} for correct C code
+        try
+        {
+            Variant? tmp_variant = Variant.parse (VariantType.DOUBLE, tmp_text);
+            variant = (!) tmp_variant;
+
+            StyleContext context = get_style_context ();
+            if (context.has_class ("error"))
+                context.remove_class ("error");
+            set_icon_from_icon_name (EntryIconPosition.SECONDARY, null);
+
+            return true;
+        }
+        catch (VariantParseError e)
+        {
+            StyleContext context = get_style_context ();
+            if (!context.has_class ("error"))
+                context.add_class ("error");
+            secondary_icon_name = "dialog-error-symbolic";
+
+            return false;
+        }
+    }
+
+    public Variant get_variant ()
+    {
+        return variant;
     }
 
     private void set_lock (bool state)
@@ -298,7 +311,9 @@ private class KeyEditorChildNumberDouble : SpinButton, KeyEditorChild
     public void reload (Variant gvariant)
     {
         set_lock (true);
-        this.set_value (gvariant.get_double ());
+        this.text = gvariant.print (false);
+        if (!test_value ())
+            assert_not_reached ();
         set_lock (false);
     }
 }

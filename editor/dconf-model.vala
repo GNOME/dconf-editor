@@ -277,9 +277,11 @@ public abstract class Key : SettingObject
                 max = (!) (nullable_max ?? "%llu".printf (uint64.MAX));
                 return;
             case "d":
-                min = double.MIN.to_string ();
-                max = double.MAX.to_string ();
-                return;     // TODO something
+                string? nullable_min = "%'g".printf (double.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_max = "%'g".printf (double.MAX).locale_to_utf8 (-1, null, null, null);
+                min = (!) (nullable_min ?? "%g".printf (double.MIN));
+                max = (!) (nullable_max ?? "%g".printf (double.MAX));
+                return;
             case "h":
                 string? nullable_min = "%'i".printf (int32.MIN).locale_to_utf8 (-1, null, null, null);
                 string? nullable_max = "%'i".printf (int32.MAX).locale_to_utf8 (-1, null, null, null);
@@ -318,7 +320,8 @@ public abstract class Key : SettingObject
                 string? nullable_text = "%'llu".printf (variant.get_uint64 ()).locale_to_utf8 (-1, null, null, null);
                 return (!) (nullable_text ?? "%llu".printf (variant.get_uint64 ()));
             case "d":
-                return variant.get_double ().to_string ();                                  // TODO something; notably, number of chars after coma
+                string? nullable_text = "%'.12g".printf (variant.get_double ()).locale_to_utf8 (-1, null, null, null);
+                return (!) (nullable_text ?? "%g".printf (variant.get_double ()));
             case "h":
                 string? nullable_text = "%'i".printf (variant.get_handle ()).locale_to_utf8 (-1, null, null, null);
                 return (!) (nullable_text ?? "%i".printf (variant.get_int32 ()));

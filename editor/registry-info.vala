@@ -247,7 +247,7 @@ class RegistryInfo : Grid
                 else
                     return (KeyEditorChild) new KeyEditorChildNumberInt (key);
             case "d":
-                return (KeyEditorChild) new KeyEditorChildNumberDouble (key);
+                return (KeyEditorChild) new KeyEditorChildNumberDouble (key.value);
             case "mb":
                 return (KeyEditorChild) new KeyEditorChildNullableBool (key);
             default:
@@ -317,6 +317,9 @@ class RegistryInfo : Grid
 
     private static Widget? add_warning (string type)
     {
+        if (type == "d")    // TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
+            return warning_label (_("Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z notation."));
+
         if (type != "<flags>" && ((type != "s" && "s" in type) || (type != "g" && "g" in type)) || (type != "o" && "o" in type))
         {
             if ("m" in type)
