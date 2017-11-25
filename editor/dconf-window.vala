@@ -261,7 +261,7 @@ class DConfWindow : ApplicationWindow
         {
             section = new GLib.Menu ();
             section.append (_("Reset visible keys"), "win.reset-visible");
-            section.append (_("Reset recursively"), "win.reset-recursive");
+            section.append (_("Reset view recursively"), "win.reset-recursive");
             section.freeze ();
             menu.append_section (null, section);
         }
