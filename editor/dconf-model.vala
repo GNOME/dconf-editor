@@ -657,6 +657,24 @@ public class SettingsModel : Object
         return (Directory) (!) dir;
     }
 
+    public SettingObject? get_object (string path)
+    {
+        if (path.has_suffix ("/"))
+            return get_directory (path);
+        Directory? parent = get_directory (get_base_path (path));
+        if (parent == null)
+            return null;
+        string name = path [path.last_index_of_char ('/') + 1:path.length];
+        return get_key_from_path_and_name (((!) parent).key_model, name);
+    }
+
+    public string get_parent_path (string path)
+    {
+        if (path == "/")
+            return path;
+        return get_base_path (path.has_suffix ("/") ? path [0:-1] : path);
+    }
+
     private static string stripped_path (string path)
     {
         if (path.length <= 1)
