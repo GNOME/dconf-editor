@@ -31,7 +31,7 @@ class DConfWindow : ApplicationWindow
 
     public string current_path { get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
 
-    public SettingsModel model { get; private set; default=new SettingsModel (); }
+    public SettingsModel model { get; private set; }
 
     private int window_width = 0;
     private int window_height = 0;
@@ -74,6 +74,8 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow (string? path)
     {
+        model = new SettingsModel (settings);
+
         add_action_entries (action_entries, this);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));

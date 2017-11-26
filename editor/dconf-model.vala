@@ -81,6 +81,16 @@ public class Directory : SettingObject
         return child_map.lookup (name);
     }
 
+    public string[] get_children ()
+    {
+        if (key_model_accessed)
+            assert_not_reached ();
+        string[] names = new string [child_map.size ()];
+        int i = 0;
+        child_map.get_values ().foreach ((dir) => names [i++] = dir.name);
+        return names;
+    }
+
     /*\
     * * Folders creation
     \*/
@@ -556,13 +566,31 @@ public class GSettingsKey : Key
     } */
 }
 
+class ManualSchemaInfo
+{
+    public SettingsSchema? schema;
+    public List<PathSpec> path_specs; // FIXME? cannot have a List<string[]>
+}
+
+class PathSpec
+{
+    public string[] segments;
+    public PathSpec (string[] segs)
+    {
+        segments = segs;
+    }
+}
+
 public class SettingsModel : Object
 {
+    private Settings application_settings;
     private DConf.Client client = new DConf.Client ();
     private Directory root;
 
-    public SettingsModel ()
+    public SettingsModel (Settings application_settings)
     {
+        this.application_settings = application_settings;
+
         SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
         root = new Directory ("/", "/", client);
 
@@ -570,6 +598,9 @@ public class SettingsModel : Object
             parse_schemas ((!) settings_schema_source);
 
         create_dconf_views (root);
+
+        if (settings_schema_source != null)
+            create_manual_schemas_views (parse_manual_schemas ((!) settings_schema_source));
 
         client.watch_sync ("/");
     }
@@ -594,6 +625,54 @@ public class SettingsModel : Object
         }
     }
 
+    private HashTable<string, ManualSchemaInfo> parse_manual_schemas (SettingsSchemaSource settings_schema_source)
+    {
+        HashTable<string, ManualSchemaInfo> manual_schemas = new HashTable<string, ManualSchemaInfo> (str_hash, str_equal);
+
+        Variant manual_schemas_variant = application_settings.get_value ("manual-schemas");
+        VariantIter entries_iter;
+        manual_schemas_variant.get ("a{ss}", out entries_iter);
+        string schema_id;
+        string path_spec;
+        while (entries_iter.next ("{ss}", out schema_id, out path_spec))
+        {
+            SettingsSchema? settings_schema;
+            ManualSchemaInfo? schema_info = manual_schemas.lookup (schema_id);
+            if (schema_info == null)
+            {
+                schema_info = new ManualSchemaInfo ();
+                settings_schema = settings_schema_source.lookup (schema_id, true);
+                ((!) schema_info).schema = settings_schema;
+                ((!) schema_info).path_specs = new List<PathSpec> ();
+                manual_schemas.insert (schema_id, (!) schema_info);
+            }
+            else
+                settings_schema = ((!) schema_info).schema;
+            if (settings_schema == null || ((string?) ((!) settings_schema).get_path ()) != null) // TODO report bug, get_path () should be string? (this is not a question :)
+                continue;
+
+            if (path_spec == "")
+                continue;
+            if (!path_spec.has_prefix ("/"))
+                path_spec = "/" + path_spec;
+            if (!path_spec.has_suffix ("/"))
+                path_spec += "/"; // TODO proper validation
+
+            if (!("//" in path_spec)) // no wild cards, just create the views
+            {
+                Directory view = create_gsettings_views (root, path_spec [1:path_spec.length]);
+                view.init_gsettings_keys ((!) settings_schema);
+            }
+            else // try to fill the holes later in create_manual_schemas_views
+                ((!) schema_info).path_specs.append (new PathSpec (path_spec [1:-1].split ("/")));
+        }
+        // remove useless entries
+        manual_schemas.foreach_remove ((schema_id, info) => {
+                return info.schema == null || info.path_specs.length () == 0;
+            });
+        return manual_schemas;
+    }
+
     /*\
     * * Recursive creation of views (directories)
     \*/
@@ -614,6 +693,75 @@ public class SettingsModel : Object
         foreach (string item in client.list (view.full_name))
             if (DConf.is_dir (view.full_name + item))
                 create_dconf_views (get_child (view, item [0:-1]));
+    }
+
+    private Queue<Directory> search_nodes = new Queue<Directory> ();
+
+    private void create_manual_schemas_views (HashTable<string, ManualSchemaInfo> manual_schemas)
+    {
+        search_nodes.clear (); // subtrees that need yet to be matched against the path specs
+        search_nodes.push_head (root); // start with the whole known tree
+        while (!search_nodes.is_empty ())
+        {
+            Directory subtree = search_nodes.pop_tail ();
+            string subtree_path = subtree.full_name;
+            string[] subtree_segments = subtree_path == "/" ? new string [0] : subtree_path [1:-1].split ("/");
+            manual_schemas.get_values ().foreach ((schema_info) => {
+                    schema_info.path_specs.foreach ((spec) => {
+                            string[] spec_segments = spec.segments;
+                            if (subtree_segments.length > spec_segments.length)
+                                return; // spec too short, cannot match anything below the subtree
+                            int matched_prefix_length = 0;
+                            while (matched_prefix_length < subtree_segments.length)
+                            {
+                                if (spec_segments [matched_prefix_length] != ""
+                                        && spec_segments [matched_prefix_length] != subtree_segments [matched_prefix_length])
+                                    return; // mismatch in one of the subtree ancestors, spec incompatible with subtree
+                                matched_prefix_length++;
+                            }
+                            // search subtree recursively for matches with spec. the search may queue new paths for further iterations
+                            create_manual_schemas_views_in_subtree (subtree, spec_segments, matched_prefix_length, (!) schema_info.schema);
+                        });
+                });
+        }
+    }
+
+    private void create_manual_schemas_views_in_subtree (Directory view, string[] spec_segments, int matched_prefix_length, SettingsSchema schema)
+    {
+        Directory parent = view;
+        Directory? child = null;
+        while (matched_prefix_length < spec_segments.length
+                && spec_segments [matched_prefix_length] != ""
+                && (child = parent.lookup_directory (spec_segments [matched_prefix_length])) != null)
+        {
+            matched_prefix_length++;
+            parent = (!) child;
+        }
+
+        if (matched_prefix_length == spec_segments.length)
+            parent.init_gsettings_keys (schema); // matched the whole spec to an already existing path
+        else if (spec_segments [matched_prefix_length] == "")
+        {
+            // wild card found, must branch out and match against existing children (there might be none)
+            foreach (string name in parent.get_children ())
+                create_manual_schemas_views_in_subtree ((!) parent.lookup_directory (name), spec_segments, matched_prefix_length + 1, schema);
+        }
+        else if (child == null)
+        {
+            // reached a dead end, if the rest of the spec has no wild cards, we add this branch to the tree
+            for (int i = matched_prefix_length; i < spec_segments.length; i++) // must test this before creating
+                if (spec_segments [i] == "")
+                    return; // further wild cards can only be matched by existing folders, but we already reached a dead end, abort
+            // the spec contains all the final folder names, so we can create them
+            for (int i = matched_prefix_length; i < spec_segments.length; i++)
+            {
+                parent = get_child (parent, spec_segments [i]);
+                search_nodes.push_head (parent); // a created node may be matched by a wild card in another spec, so we push it into the queue
+            }
+            parent.init_gsettings_keys (schema);
+        }
+        else
+            assert_not_reached ();
     }
 
     private Directory get_child (Directory parent_view, string name)
