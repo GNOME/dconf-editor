@@ -102,7 +102,10 @@ public class Directory : SettingObject
 
     public void init_gsettings_keys (SettingsSchema _settings_schema)
     {
-        settings_schema = _settings_schema;
+        if (settings_schema == null)
+            settings_schema = _settings_schema;
+        else if (_settings_schema.get_id () != ((!) settings_schema).get_id ())
+            warning_multiple_schemas = true;
     }
 
     private void create_gsettings_keys ()
@@ -576,8 +579,6 @@ public class SettingsModel : Object
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
 
-        HashTable<string, Directory> path_and_schema = new HashTable<string, Directory> (str_hash, str_equal);
-
         settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
         foreach (string schema_id in non_relocatable_schemas)
@@ -590,15 +591,6 @@ public class SettingsModel : Object
 
             Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
             view.init_gsettings_keys ((!) settings_schema);
-
-            Directory? schema_already_installed_there = path_and_schema.lookup (schema_path);
-            if (schema_already_installed_there != null)
-            {
-                ((!) schema_already_installed_there).warning_multiple_schemas = true;
-                view.warning_multiple_schemas = true;
-            }
-            else
-                path_and_schema.insert (schema_path, view);
         }
     }
 
