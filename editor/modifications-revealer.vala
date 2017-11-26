@@ -158,7 +158,7 @@ class ModificationsRevealer : Revealer
                 GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
                 if (settings == null)
                 {
-                    settings = new GLib.Settings (key.schema_id);
+                    settings = key.settings;
                     ((!) settings).delay ();
                     delayed_settings_hashtable.insert (key.schema_id, (!) settings);
                 }

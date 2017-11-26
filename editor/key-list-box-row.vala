@@ -616,7 +616,7 @@ private class ContextPopover : Popover
         set_group ("flags");
         string group_dot = "flags.";
 
-        GLib.Settings settings = new GLib.Settings (key.schema_id);
+        GLib.Settings settings = key.settings;
         string [] active_flags = settings.get_strv (key.name);
         string [] all_flags = key.range_content.get_strv ();
         SimpleAction [] flags_actions = new SimpleAction [0];

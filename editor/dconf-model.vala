@@ -111,7 +111,11 @@ public class Directory : SettingObject
             return;
 
         gsettings_key_map = ((!) settings_schema).list_keys ();
-        settings = new GLib.Settings (((!) settings_schema).get_id ());
+        string? path = ((!) settings_schema).get_path ();
+        if (path == null) // relocatable
+            settings = new GLib.Settings.with_path (((!) settings_schema).get_id (), full_name);
+        else
+            settings = new GLib.Settings (((!) settings_schema).get_id ());
 
         foreach (string key_id in (!) gsettings_key_map)
             create_gsettings_key (key_id, ((!) settings_schema).get_key (key_id));
@@ -472,7 +476,7 @@ public class GSettingsKey : Key
 
     public override string descriptor { owned get { return @"$schema_id $name"; } }
 
-    private GLib.Settings settings;
+    public GLib.Settings settings { get; construct; }
 
     public override Variant value
     {
@@ -500,6 +504,7 @@ public class GSettingsKey : Key
 
         Object (full_name: parent.full_name + name,
                 name: name,
+                settings : settings,
                 // schema infos
                 schema_id: schema_id,
                 summary: summary,
@@ -508,7 +513,6 @@ public class GSettingsKey : Key
                 range_type: range_type,
                 range_content: range_content);
 
-        this.settings = settings;
         settings.changed [name].connect (() => value_changed ());
 
         this.type_string = type_string;
