@@ -96,7 +96,7 @@ class RegistryInfo : Grid, BrowsableView
         Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
                 if (!has_schema && ((DConfKey) key).is_ghost)
-                    ((RegistryView) DConfWindow._get_parent (DConfWindow._get_parent (this))).request_path (parent_path);
+                    ((BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this))).request_path (parent_path);
                 else
                     label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
             });
