@@ -226,14 +226,13 @@ class RegistryInfo : Grid
             case "i":
             case "h":
             // TODO "x" is not working in spinbuttons (double-based)
-                Variant range = ((GSettingsKey) key).range_content;
-                if (has_schema
-                    && (((GSettingsKey) key).range_type == "range")
-                    && (Key.get_variant_as_int64 (range.get_child_value (0)) == Key.get_variant_as_int64 (range.get_child_value (1)))
-                   )
-                    return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
-                else
-                    return (KeyEditorChild) new KeyEditorChildNumberInt (key);
+                if (has_schema && (((GSettingsKey) key).range_type == "range"))
+                {
+                    Variant range = ((GSettingsKey) key).range_content;
+                    if (Key.get_variant_as_int64 (range.get_child_value (0)) == Key.get_variant_as_int64 (range.get_child_value (1)))
+                        return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
+                }
+                return (KeyEditorChild) new KeyEditorChildNumberInt (key);
             case "y":
             case "q":
             case "u":
