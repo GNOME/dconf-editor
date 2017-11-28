@@ -86,8 +86,13 @@ public class Bookmarks : MenuButton, PathElement
         bookmarks_list_box.@foreach ((widget) => widget.destroy ());
 
         string [] bookmarks = settings.get_strv ("bookmarks");
+        string [] unduplicated_bookmarks = new string [0];
         foreach (string bookmark in bookmarks)
         {
+            if (bookmark in unduplicated_bookmarks)
+                continue;
+            unduplicated_bookmarks += bookmark;
+
             Bookmark bookmark_row = new Bookmark (bookmark);
             ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => remove_bookmark (bookmark));
             bookmark_row.destroy_button.destroy.connect (() => bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler));
@@ -100,11 +105,16 @@ public class Bookmarks : MenuButton, PathElement
     {
         bookmarks_popover.closed ();
 
-        string [] bookmarks = settings.get_strv ("bookmarks");
-
         if (!bookmarked_switch.get_active ())
             remove_bookmark (current_path);
-        else if (!(current_path in bookmarks))
+        else
+            bookmark_current_path ();
+    }
+
+    private void bookmark_current_path ()
+    {
+        string [] bookmarks = settings.get_strv ("bookmarks");
+        if (!(current_path in bookmarks))
         {
             bookmarks += current_path;
             settings.set_strv ("bookmarks", bookmarks);
@@ -133,7 +143,7 @@ public class Bookmarks : MenuButton, PathElement
             return;
         string [] new_bookmarks = new string [0];
         foreach (string bookmark in old_bookmarks)
-            if (bookmark != bookmark_name)
+            if (bookmark != bookmark_name && !(bookmark in new_bookmarks))
                 new_bookmarks += bookmark;
         settings.set_strv ("bookmarks", new_bookmarks);
     }
