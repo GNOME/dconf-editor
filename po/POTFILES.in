@@ -1,5 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
 editor/bookmarks.ui
 editor/bookmark.ui
+editor/browser-view.ui
 editor/ca.desrt.dconf-editor.appdata.xml.in
 editor/ca.desrt.dconf-editor.desktop.in
 editor/ca.desrt.dconf-editor.gschema.xml
@@ -15,5 +18,7 @@ editor/modifications-revealer.ui
 editor/modifications-revealer.vala
 editor/registry-info.ui
 editor/registry-info.vala
+editor/registry-search.ui
+editor/registry-search.vala
 editor/registry-view.ui
 editor/registry-view.vala
