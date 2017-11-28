@@ -478,14 +478,22 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
     private bool bookmark_search (SettingsModel model, string current_path, string term)
     {
+        string [] installed_bookmarks = {}; // TODO move check in Bookmarks
         foreach (string bookmark in window.get_bookmarks ())
         {
-            bool local_again = model.get_parent_path (bookmark) == current_path;
-            if (local_again)
+            if (bookmark in installed_bookmarks)
                 continue;
+            installed_bookmarks += bookmark;
+
+            if (bookmark == current_path)
+                continue;
+            if (model.get_parent_path (bookmark) == current_path)
+                continue;
+
             SettingObject? setting_object = model.get_object (bookmark);
             if (setting_object == null)
                 continue;
+
             if (term in ((!) setting_object).name)
             {
                 post_bookmarks++;
