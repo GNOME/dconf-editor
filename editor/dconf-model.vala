@@ -492,6 +492,12 @@ public class GSettingsKey : Key
 
     public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
+        string? summary_nullable = summary.locale_to_utf8 (-1, null, null, null);
+        summary = summary_nullable ?? summary;
+
+        string? description_nullable = description.locale_to_utf8 (-1, null, null, null);
+        description = description_nullable ?? description;
+
         Object (full_name: parent.full_name + name,
                 name: name,
                 // schema infos
