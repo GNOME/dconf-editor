@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain='dconf'>
+<schemalist gettext-domain='dconf-editor'>
   <!-- enum id="ca.desrt.dconf-editor.Themes">
     <value value="0" nick="three-twenty-two"/>
     <value value="1" nick="non-symbolic-keys-list"/>

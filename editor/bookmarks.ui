@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface>
+<interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkPopover" id="bookmarks_popover">
     <property name="width-request">350</property>

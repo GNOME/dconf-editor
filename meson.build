@@ -20,7 +20,7 @@ dconf_editor_mandir = join_paths(dconf_editor_prefix, get_option('mandir'))
 
 dconf_editor_pkgdatadir = join_paths(dconf_editor_datadir, dconf_editor_name)
 
-dconf_editor_gettext = 'dconf'
+dconf_editor_gettext = 'dconf-editor'
 dconf_editor_namespace = 'ca.desrt.dconf-editor'
 
 cc = meson.get_compiler('c')

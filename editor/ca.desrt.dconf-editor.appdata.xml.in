@@ -49,6 +49,6 @@
   <provides>
     <binary>dconf-editor</binary>
   </provides>
-  <translation type="gettext">dconf</translation>
+  <translation type="gettext">dconf-editor</translation>
   <url type="translate">https://wiki.gnome.org/TranslationProject</url>
 </component>
