@@ -30,6 +30,7 @@
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="focus-on-click">False</property>
+            <property name="sensitive" bind-source="search-toggle" bind-property="active" bind-flags="sync-create|invert-boolean"/>
             <accelerator key="F10" signal="clicked"/> <!-- TODO report bug: property binding has to be defined before accelerator -->
             <signal name="clicked" handler="on_menu_button_clicked"/>
             <style>
@@ -54,7 +55,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToggleButton">
+          <object class="GtkToggleButton" id="search-toggle">
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="active" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional">False</property>
@@ -88,6 +89,7 @@
             <property name="valign">center</property>
             <property name="focus-on-click">False</property>
             <property name="schema-id">ca.desrt.dconf-editor.Settings</property>
+            <property name="sensitive" bind-source="search-toggle" bind-property="active" bind-flags="sync-create|invert-boolean"/>
             <signal name="clicked" handler="on_menu_button_clicked"/>
             <signal name="request_path" handler="request_path"/>
             <!-- <accelerator key="B" signal="activate" modifiers="GDK_CONTROL_MASK"/> TODO -->
