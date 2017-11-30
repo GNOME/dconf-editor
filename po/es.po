@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-17 04:03+0000\n"
-"PO-Revision-Date: 2017-11-20 09:33+0100\n"
+"POT-Creation-Date: 2017-11-29 16:40+0000\n"
+"PO-Revision-Date: 2017-11-30 11:48+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -31,7 +31,7 @@ msgstr "Ubicación añadida a marcadores"
 msgid "Toggle to bookmark this location"
 msgstr "Añadir o quitar de marcadores esta ubicación"
 
-#: editor/bookmarks.ui:84
+#: editor/bookmarks.ui:61
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -39,11 +39,11 @@ msgstr ""
 "Los marcadores se\n"
 "añadirán aquí"
 
-#: editor/bookmarks.ui:113
+#: editor/bookmarks.ui:87 editor/registry-search.vala:579
 msgid "Bookmarks"
 msgstr "Marcadores"
 
-#: editor/bookmarks.ui:114
+#: editor/bookmarks.ui:88
 msgid "Manage your bookmarks"
 msgstr "Gestionar sus marcadores"
 
@@ -54,6 +54,16 @@ msgstr "Quitar"
 #: editor/bookmark.ui:31
 msgid "Remove this bookmark"
 msgstr "Quitar este marcador"
+
+#: editor/browser-view.ui:22
+msgid "Sort preferences have changed. Do you want to reload the view?"
+msgstr ""
+"La ordenación de las preferencias ha cambiado. ¿Quiere volver a cargar la "
+"vista?"
+
+#: editor/browser-view.ui:28
+msgid "Reload"
+msgstr "Recargar"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -95,7 +105,7 @@ msgid "The GNOME Project"
 msgstr "El proyecto GNOME"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:207
+#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:225
 msgid "dconf Editor"
 msgstr "Editor de dconf"
 
@@ -114,7 +124,6 @@ msgstr "configuración;ajustes;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: editor/ca.desrt.dconf-editor.desktop.in:15
-#| msgid "dconf-editor"
 msgid "ca.desrt.dconf-editor"
 msgstr "ca.desrt.dconf-editor"
 
@@ -263,10 +272,6 @@ msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Usar los botones de eventos del ratón «Atrás» y «Adelante»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:89
-#| msgid ""
-#| "For users with mice that have buttons for “Forward” and “Back”, this key "
-#| "will set which button activates the “Back” command in a browser window. "
-#| "Possible values range between 6 and 14."
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -633,31 +638,54 @@ msgstr "Buscar claves"
 msgid "Print release version and exit"
 msgstr "Mostrar información de la versión y salir"
 
-#: editor/dconf-editor.vala:118
+#. TODO something, probably
+#. called with GSETTINGS_BACKEND=memory
+#: editor/dconf-editor.vala:94
+msgid "The Memory settings backend is used, no change will be saved on quit."
+msgstr ""
+"Se está usando la configuración de memoria del «backend» no se guardarán los "
+"cambios al salir."
+
+#. called with GSETTINGS_BACKEND=null
+#: editor/dconf-editor.vala:96
+msgid "The Null settings backend is used, changes will not be saved."
+msgstr ""
+"Se está usando la configuración Null del «backend» no se guardarán los "
+"cambios al salir."
+
+#: editor/dconf-editor.vala:98
+#, c-format
+msgid "The backend used is unknown [%s], bad thing might happen."
+msgstr "No se sabe qué «backend» se está usando [%s], puede haber problemas."
+
+#. called by default or with GSETTINGS_BACKEND=dconf
+#: editor/dconf-editor.vala:100
+msgid "Looks like the DConf settings backend is used, all looks good."
+msgstr ""
+"Parece que se usa el «backend» de configuración DConf, todo está correcto."
+
+#: editor/dconf-editor.vala:136
 msgid "Path should start with a “/”.\n"
 msgstr "La ruta debe empezar por «/».\n"
 
-#: editor/dconf-editor.vala:129
+#: editor/dconf-editor.vala:147
 msgid "Only one window can be opened for now.\n"
 msgstr "Por el momento sólo se puede abrir una ventana.\n"
 
-#: editor/dconf-editor.vala:136
+#: editor/dconf-editor.vala:154
 msgid "Only one argument is accepted for now.\n"
 msgstr "Por el momento sólo se acepta un argumento.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:156
+#. #: editor/dconf-editor.vala:174
 msgid "Copied to clipboard"
 msgstr "Copiado al portapapeles"
 
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:227
 msgid "A graphical viewer and editor of applications internal settings."
 msgstr "Un visor gráfico y editor de configuración interna de aplicaciones."
 
-#: editor/dconf-editor.vala:210
-#| msgid ""
-#| "Copyright © 2010-2014 – Canonical Ltd\n"
-#| "Copyright © 2015-2016 – Arnaud Bonatti"
+#: editor/dconf-editor.vala:228
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2017 – Arnaud Bonatti"
@@ -665,119 +693,138 @@ msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2017 – Arnaud Bonatti"
 
-#: editor/dconf-editor.vala:214
+#: editor/dconf-editor.vala:232
 msgid "translator-credits"
 msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2016"
 
-#: editor/dconf-model.vala:201
+#: editor/dconf-model.vala:204
 msgid "Boolean"
 msgstr "Booleano"
 
-#: editor/dconf-model.vala:203
+#: editor/dconf-model.vala:206
 msgid "String"
 msgstr "Cadena"
 
-#: editor/dconf-model.vala:205
+#: editor/dconf-model.vala:208
 msgid "String array"
 msgstr "Vector de cadena"
 
-#: editor/dconf-model.vala:207
+#: editor/dconf-model.vala:210
 msgid "Enumeration"
 msgstr "Enumeración"
 
-#: editor/dconf-model.vala:209
+#: editor/dconf-model.vala:212
 msgid "Flags"
 msgstr "Opciones"
 
-#: editor/dconf-model.vala:211
+#: editor/dconf-model.vala:214
 msgid "Double"
 msgstr "Doble"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:214
+#: editor/dconf-model.vala:217
 msgid "D-Bus handle type"
 msgstr "Tipo de manejador D-Bus"
 
-#: editor/dconf-model.vala:216
+#: editor/dconf-model.vala:219
 msgid "D-Bus object path"
 msgstr "Ruta al objeto de D-Bus"
 
-#: editor/dconf-model.vala:218
+#: editor/dconf-model.vala:221
 msgid "D-Bus object path array"
 msgstr "Vector de la ruta del objeto de D-Bus"
 
-#: editor/dconf-model.vala:220
+#: editor/dconf-model.vala:223
 msgid "D-Bus signature"
 msgstr "Firma de D-Bus"
 
-#: editor/dconf-model.vala:228
+#: editor/dconf-model.vala:231
 msgid "Integer"
 msgstr "Entero"
 
-#: editor/dconf-model.vala:343
+#: editor/dconf-model.vala:349
 msgid "True"
 msgstr "Cierto"
 
-#: editor/dconf-model.vala:345
+#: editor/dconf-model.vala:351
 msgid "False"
 msgstr "Falso"
 
-#: editor/dconf-model.vala:346
+#: editor/dconf-model.vala:352
 msgid "Nothing"
 msgstr "Nada"
 
-#: editor/dconf-model.vala:351
+#: editor/dconf-model.vala:357
 msgid "true"
 msgstr "cierto"
 
-#: editor/dconf-model.vala:353
+#: editor/dconf-model.vala:359
 msgid "false"
 msgstr "falso"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:355
+#: editor/dconf-model.vala:361
 msgid "nothing"
 msgstr "nada (nothing)"
 
-#: editor/dconf-view.vala:438
+#: editor/dconf-view.vala:249
+msgid "Failed to parse as double."
+msgstr "Falló al analizar como doble."
+
+#: editor/dconf-view.vala:454
 msgid "This value is invalid for the key type."
 msgstr "Este valor no es válido para este tipo de clave."
 
-#: editor/dconf-window.vala:144
+#: editor/dconf-window.vala:192
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Gracias por usar el editor de dconf para editar su configuración."
 
-#: editor/dconf-window.vala:145
+#: editor/dconf-window.vala:193
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "No olvide que algunas opciones pueden hacer que las aplicaciones fallen, por "
 "lo que debe tener cuidado."
 
-#: editor/dconf-window.vala:146
+#: editor/dconf-window.vala:194
 msgid "I’ll be careful."
 msgstr "Tendré cuidado."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:150
+#: editor/dconf-window.vala:198
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo la próxima vez."
 
-#: editor/dconf-window.vala:260
+#: editor/dconf-window.vala:315
 msgid "Copy current path"
 msgstr "Copiar la ruta actual"
 
-#: editor/dconf-window.vala:265
+#: editor/dconf-window.vala:320
 msgid "Reset visible keys"
 msgstr "Restablecer las teclas visibles"
 
-#. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/dconf-window.vala:266 editor/key-list-box-row.vala:485
-msgid "Reset recursively"
-msgstr "Restablecer recursivamente"
+#: editor/dconf-window.vala:321
+#| msgid "Reset recursively"
+msgid "Reset view recursively"
+msgstr "Restablecer la vista recursivamente"
 
-#: editor/dconf-window.vala:274
+#: editor/dconf-window.vala:329
 msgid "Enter delay mode"
 msgstr "Introducir modo de retardo"
+
+#: editor/dconf-window.vala:577
+#, c-format
+msgid "Cannot find folder “%s”."
+msgstr "No se puede encontrar la carpeta «%s»."
+
+#: editor/dconf-window.vala:582
+#, c-format
+msgid "Cannot find key “%s” here."
+msgstr "No se puede encontrar aquí la clave «%s»."
+
+#: editor/dconf-window.vala:587
+#, c-format
+msgid "Key “%s” has been removed."
+msgstr "Se ha eliminado la clave «%s»."
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
@@ -889,67 +936,79 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Salir"
 
-#: editor/key-list-box-row.vala:188
+#: editor/key-list-box-row.vala:235
 msgid "No Schema Found"
 msgstr "No se ha encontrado el esquema"
 
-#: editor/key-list-box-row.vala:202
+#: editor/key-list-box-row.vala:249
 msgid "Key erased."
 msgstr "Clave borrada."
 
-#: editor/key-list-box-row.vala:224
+#: editor/key-list-box-row.vala:271
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (clave borrada)"
 
-#: editor/key-list-box-row.vala:310
+#: editor/key-list-box-row.vala:363
 msgid "No summary provided"
 msgstr "No hay resumen disponible"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:465
+#: editor/key-list-box-row.vala:524
 msgid "Customize…"
 msgstr "Personalizar…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:468
+#: editor/key-list-box-row.vala:527
 msgid "Set to default"
 msgstr "Establecer el predeterminado"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:473
+#: editor/key-list-box-row.vala:532
 msgid "Dismiss change"
 msgstr "Descartar cambio"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:476
+#: editor/key-list-box-row.vala:535
 msgid "Open"
 msgstr "Abrir"
 
+#. Translators: "open parent folder" action in the right-click menu on a folder in a search result
+#: editor/key-list-box-row.vala:538
+#| msgctxt "shortcut window"
+#| msgid "Open parent folder"
+msgid "Open parent folder"
+msgstr "Abrir carpeta padre"
+
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
+#: editor/key-list-box-row.vala:541 editor/key-list-box-row.vala:672
 #: editor/registry-info.ui:53
 msgid "Erase key"
 msgstr "Eliminar clave"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:482
+#: editor/key-list-box-row.vala:544
 msgid "Do not erase"
 msgstr "No borrar"
 
+#. Translators: "reset recursively" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:547
+msgid "Reset recursively"
+msgstr "Restablecer recursivamente"
+
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:494
+#: editor/key-list-box-row.vala:556
 msgid "Copy"
 msgstr "Copiar"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:604
+#: editor/key-list-box-row.vala:666
 msgid "No change"
 msgstr "Sin cambio"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:674 editor/registry-info.vala:263
+#: editor/key-list-box-row.vala:736 editor/registry-info.vala:259
 msgid "Default value"
 msgstr "Valor predeterminado"
 
@@ -1089,20 +1148,29 @@ msgstr "Máximo"
 msgid "Default"
 msgstr "Predeterminado"
 
-#: editor/registry-info.vala:112
+#: editor/registry-info.vala:110
 msgid "Current value"
 msgstr "Valor actual"
 
-#: editor/registry-info.vala:145
+#: editor/registry-info.vala:143
 msgid "Use default value"
 msgstr "Usar el valor predeterminado"
 
-#: editor/registry-info.vala:203
+#: editor/registry-info.vala:201
 msgid "Custom value"
 msgstr "Valor personalizado"
 
+#. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
+#: editor/registry-info.vala:319
+msgid ""
+"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
+"notation."
+msgstr ""
+"Usar un punto como marca decimal y no usar separador de miles. Puede usar la "
+"notación X.Ye+Z."
+
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:326
+#: editor/registry-info.vala:325
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1112,13 +1180,13 @@ msgstr ""
 "por «m») para su valor vacío. Cadenas, firmas y rutas a objetos se deben "
 "encerrar entre comillas."
 
-#: editor/registry-info.vala:328
+#: editor/registry-info.vala:327
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Cadenas, firmas y rutas a objetos se deben encerrar entre comillas."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:332
+#: editor/registry-info.vala:331
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1126,7 +1194,24 @@ msgstr ""
 "Use la palabra clave «nothing» para establecer un valor posible (empezando "
 "por «m») para su valor vacío."
 
-#: editor/registry-view.ui:32
+#: editor/registry-search.ui:22
+msgid "No matches"
+msgstr "No hay coincidencias"
+
+#: editor/registry-search.vala:577
+#| msgid "Current value"
+msgid "Current folder"
+msgstr "Carpeta actual"
+
+#: editor/registry-search.vala:581
+msgid "Folders"
+msgstr "Carpetas"
+
+#: editor/registry-search.vala:583
+msgid "Keys"
+msgstr "Claves"
+
+#: editor/registry-view.ui:22
 msgid ""
 "Multiple schemas are installed at this path. This could lead to problems if "
 "it hasn’t been done carefully. Only one schema is displayed here. Edit "
@@ -1136,34 +1221,9 @@ msgstr ""
 "si no se gestiona con cuidado. Aquí sólo se muestra un esquema. Edite los "
 "valores bajo su responsabilidad."
 
-#: editor/registry-view.ui:57
-msgid "Sort preferences have changed. Do you want to reload the view?"
-msgstr ""
-"La ordenación de las preferencias ha cambiado. ¿Quiere volver a cargar la "
-"vista?"
-
-#: editor/registry-view.ui:63
-msgid "Reload"
-msgstr "Recargar"
-
-#: editor/registry-view.ui:161
+#: editor/registry-view.ui:46
 msgid "No keys in this path"
 msgstr "No hay claves en esta ruta"
-
-#: editor/registry-view.vala:205
-#, c-format
-msgid "Cannot find folder “%s”."
-msgstr "No se puede encontrar la carpeta «%s»."
-
-#: editor/registry-view.vala:231
-#, c-format
-msgid "Cannot find key “%s” here."
-msgstr "No se puede encontrar aquí la clave «%s»."
-
-#: editor/registry-view.vala:238
-#, c-format
-msgid "Key “%s” has been removed."
-msgstr "Se ha eliminado la clave «%s»."
 
 #~ msgid "The theme of the navigation list"
 #~ msgstr "El tema de la lista de navegación"
