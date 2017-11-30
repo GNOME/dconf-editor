@@ -212,6 +212,21 @@
   border-bottom-color:@theme_selected_bg_color;
 }
 
+/* search changes */
+#search-toggle:checked ~ .pathbar {
+  color:@insensitive_fg_color;
+}
+
+#search-toggle:checked ~ .pathbar          > button.active       > .item,
+#search-toggle:checked ~ .pathbar          > button.active:hover > .item {
+  border-bottom-color:alpha(currentColor,0.6);
+}
+
+#search-toggle:checked ~ .pathbar:backdrop > button.active       > .item,
+#search-toggle:checked ~ .pathbar:backdrop > button.active:hover > .item {
+  border-bottom-color:alpha(currentColor,0.4);
+}
+
 /*\
 * * properties list
 \*/

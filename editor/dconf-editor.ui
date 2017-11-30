@@ -20,16 +20,6 @@
         <property name="visible">True</property>
         <property name="show-close-button">True</property>
         <property name="has-subtitle">False</property>
-        <child>
-          <object class="PathBar" id="pathbar">
-            <property name="visible">True</property>
-            <property name="valign">center</property>
-            <signal name="request_path" handler="request_path"/>
-          </object>
-          <packing>
-            <property name="pack-type">start</property>
-          </packing>
-        </child>
         <child type="title">
           <object class="GtkBox">
             <property name="visible">False</property>
@@ -40,7 +30,7 @@
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="focus-on-click">False</property>
-            <accelerator key="F10" signal="clicked"/>
+            <accelerator key="F10" signal="clicked"/> <!-- TODO report bug: property binding has to be defined before accelerator -->
             <signal name="clicked" handler="on_menu_button_clicked"/>
             <style>
               <class name="image-button"/>
@@ -69,6 +59,7 @@
             <property name="valign">center</property>
             <property name="active" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="bidirectional">False</property>
             <property name="focus-on-click">False</property>
+            <property name="name">search-toggle</property>
             <!-- <accelerator key="F" signal="toggled" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>
               <class name="image-button"/>
@@ -106,6 +97,16 @@
           </object>
           <packing>
             <property name="pack-type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="PathBar" id="pathbar">
+            <property name="visible">True</property>
+            <property name="valign">center</property>
+            <signal name="request_path" handler="request_path"/>
+          </object>
+          <packing>
+            <property name="pack-type">start</property>
           </packing>
         </child>
       </object>
