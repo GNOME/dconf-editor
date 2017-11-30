@@ -121,18 +121,8 @@ class RegistryView : Grid, PathElement, BrowsableView
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
-        if (before != null)
-        {
-            ListBoxRowHeader header = new ListBoxRowHeader ();
-            header.set_halign (Align.CENTER);
-            header.show ();
-
-            Separator separator = new Separator (Orientation.HORIZONTAL);
-            separator.show ();
-            separator.set_hexpand (true);
-            header.add (separator);
-            row.set_header (header);
-        }
+        ListBoxRowHeader header = new ListBoxRowHeader (before == null);
+        row.set_header (header);
     }
 
     private Widget new_list_box_row (Object item)

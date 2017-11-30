@@ -567,11 +567,6 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
     private void update_search_results_header (ListBoxRow row, ListBoxRow? before)
     {
-        ListBoxRowHeader header = new ListBoxRowHeader ();
-        header.visible = true;
-        header.orientation = Orientation.VERTICAL;
-        header.halign = Align.CENTER;
-
         string? label_text = null;
         if (before == null && post_local > 0)
             label_text = _("Current folder");
@@ -582,26 +577,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         else if (row.get_index () == post_folders)
             label_text = _("Keys");
 
-        if (label_text != null)
-        {
-            Label label = new Label ((!) label_text);
-            label.visible = true;
-            label.halign = Align.START;
-            label.margin_top = 10; // TODO CSS
-            label.margin_left = 10; // TODO CSS
-            label.get_style_context ().add_class ("dim-label");
-            label.get_style_context ().add_class ("bold-label");
-            header.add (label);
-        }
-
-        if (before != null || label_text != null)
-        {
-            Separator separator = new Separator (Orientation.HORIZONTAL);
-            separator.visible = true;
-            separator.hexpand = true;
-            header.add (separator);
-        }
-
+        ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
         row.set_header (header);
     }
 }

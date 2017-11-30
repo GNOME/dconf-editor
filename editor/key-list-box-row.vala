@@ -35,6 +35,34 @@ private class ListBoxRowHeader : Grid
         base.get_preferred_width (out minimum_width, out natural_width);
         natural_width = MAX_ROW_WIDTH;
     }
+
+    public ListBoxRowHeader (bool is_first_row, string? header_text = null)
+    {
+        if (header_text == null)
+        {
+            if (is_first_row)
+                return;
+        }
+        else
+        {
+            Label label = new Label ((!) header_text);
+            label.visible = true;
+            label.halign = Align.START;
+            label.margin_top = 10; // TODO CSS
+            label.margin_left = 10; // TODO CSS
+            label.get_style_context ().add_class ("dim-label");
+            label.get_style_context ().add_class ("bold-label");
+            add (label);
+        }
+
+        orientation = Orientation.VERTICAL;
+        halign = Align.CENTER;
+
+        Separator separator = new Separator (Orientation.HORIZONTAL);
+        separator.visible = true;
+        separator.hexpand = true;
+        add (separator);
+    }
 }
 
 private abstract class ClickableListBoxRow : EventBox
