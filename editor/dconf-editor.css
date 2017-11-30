@@ -228,6 +228,12 @@
 }
 
 /*\
+* * lists headers
+\*/
+
+.header-label { margin:0.45em 0.75em 0.2em; font-weight:bold; }
+
+/*\
 * * properties list
 \*/
 

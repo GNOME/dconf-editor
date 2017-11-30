@@ -45,17 +45,17 @@ private class ListBoxRowHeader : Grid
         }
         else
         {
+            orientation = Orientation.VERTICAL;
+
             Label label = new Label ((!) header_text);
             label.visible = true;
             label.halign = Align.START;
-            label.margin_top = 10; // TODO CSS
-            label.margin_left = 10; // TODO CSS
-            label.get_style_context ().add_class ("dim-label");
-            label.get_style_context ().add_class ("bold-label");
+            StyleContext context = label.get_style_context ();
+            context.add_class ("dim-label");
+            context.add_class ("header-label");
             add (label);
         }
 
-        orientation = Orientation.VERTICAL;
         halign = Align.CENTER;
 
         Separator separator = new Separator (Orientation.HORIZONTAL);
