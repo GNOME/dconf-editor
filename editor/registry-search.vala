@@ -391,7 +391,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             post_local = -1;
             post_folders = -1;
 
-            local_search (model, current_path, term);
+            local_search (model, SettingsModel.get_base_path (current_path), term);
             bookmark_search (model, current_path, term);
             key_list_box.bind_model (search_results_model, new_list_box_row);
             if (term != "")
