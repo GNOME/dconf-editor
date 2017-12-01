@@ -459,7 +459,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             if (local != null)
             {
                 GLib.ListStore key_model = ((!) local).key_model;
-                for (int i = 0; i < key_model.get_n_items (); i++)
+                for (uint i = 0; i < key_model.get_n_items (); i++)
                 {
                     SettingObject item = (SettingObject) key_model.get_item (i);
                     if (term in item.name)
@@ -544,7 +544,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             bool local_again = next.full_name == current_path;
 
             GLib.ListStore next_key_model = next.key_model;
-            for (int i = 0; i < next_key_model.get_n_items (); i++)
+            for (uint i = 0; i < next_key_model.get_n_items (); i++)
             {
                 SettingObject item = (SettingObject) next_key_model.get_item (i);
                 if (item is Directory)
