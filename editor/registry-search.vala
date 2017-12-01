@@ -519,11 +519,10 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
     private void pause_global_search ()
     {
-        if (search_source != null)
-        {
-            Source.remove ((!) search_source);
-            search_source = null;
-        }
+        if (search_source == null)
+            return;
+        Source.remove ((!) search_source);
+        search_source = null;
     }
 
     private void resume_global_search (string current_path, string term)
