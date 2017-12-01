@@ -366,38 +366,38 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
     public void start_search (string term)
     {
-        if (old_term == null || term != (!) old_term)
+        if (old_term != null && term == (!) old_term)
+            return;
+
+        SettingsModel model = window.model;
+        string current_path = window.current_path;
+        if (old_term != null && term.has_prefix ((!) old_term))
         {
-            SettingsModel model = window.model;
-            string current_path = window.current_path;
-            if (old_term != null && term.has_prefix((!) old_term))
-            {
-                pause_global_search ();
-                refine_local_results (term);
-                refine_bookmarks_results (term);
-                if ((!) old_term == "")
-                    start_global_search (model, current_path, term);
-                else
-                {
-                    refine_global_results (term);
-                    resume_global_search (current_path, term); // update search term
-                }
-            }
+            pause_global_search ();
+            refine_local_results (term);
+            refine_bookmarks_results (term);
+            if ((!) old_term == "")
+                start_global_search (model, current_path, term);
             else
             {
-                stop_global_search ();
-                search_results_model.remove_all ();
-                post_local = -1;
-                post_folders = -1;
-
-                local_search (model, current_path, term);
-                bookmark_search (model, current_path, term);
-                key_list_box.bind_model (search_results_model, new_list_box_row);
-                if (term != "")
-                    start_global_search (model, current_path, term);
+                refine_global_results (term);
+                resume_global_search (current_path, term); // update search term
             }
-            old_term = term;
         }
+        else
+        {
+            stop_global_search ();
+            search_results_model.remove_all ();
+            post_local = -1;
+            post_folders = -1;
+
+            local_search (model, current_path, term);
+            bookmark_search (model, current_path, term);
+            key_list_box.bind_model (search_results_model, new_list_box_row);
+            if (term != "")
+                start_global_search (model, current_path, term);
+        }
+        old_term = term;
     }
 
     private void refine_local_results (string term)
