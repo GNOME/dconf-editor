@@ -164,6 +164,9 @@ class BrowserView : Grid, PathElement
             stack.set_transition_type (StackTransitionType.NONE);
             stack.visible_child = (!) pre_search_view;
             pre_search_view = null;
+
+            if (stack.get_visible_child () == browse_view)
+                browse_view.focus_selected_row ();
         }
         search_results_view.stop_search ();
     }

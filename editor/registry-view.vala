@@ -76,6 +76,12 @@ class RegistryView : Grid, PathElement, BrowsableView
         multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
     }
 
+    public void focus_selected_row ()
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        if (selected_row != null)
+            ((!) selected_row).grab_focus ();
+    }
     public void select_row_named (string selected, bool grab_focus)
     {
         check_resize ();
