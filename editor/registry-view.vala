@@ -323,22 +323,6 @@ class RegistryView : Grid, PathElement, BrowsableView
     * * Keyboard calls
     \*/
 
-/*    public void set_search_mode (bool? mode)    // mode is never 'true'...
-    {
-        if (mode == null)
-            search_bar.set_search_mode (!search_bar.get_search_mode ());
-        else
-            search_bar.set_search_mode ((!) mode);
-    }
-
-    public bool handle_search_event (Gdk.EventKey event)
-    {
-        if (is_not_browsing_view ())
-            return false;
-
-        return search_bar.handle_event (event);
-    } */
-
     public bool show_row_popover ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
