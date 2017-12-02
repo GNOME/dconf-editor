@@ -510,6 +510,12 @@ class DConfWindow : ApplicationWindow
                 bookmarks_button.active = false;
             return false;
         }
+
+        if (name == "Up")
+            return browser_view.up_pressed (!search_bar.get_search_mode ());
+        if (name == "Down")
+            return browser_view.down_pressed (!search_bar.get_search_mode ());
+
         if (name == "Menu")
         {
             if (browser_view.show_row_popover ())

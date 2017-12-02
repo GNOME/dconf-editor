@@ -22,7 +22,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 {
     public Behaviour behaviour { private get; set; }
 
-    //[GtkChild] private ScrolledWindow scrolled;
+    [GtkChild] private ScrolledWindow scrolled;
 
     [GtkChild] private ListBox key_list_box;
 
@@ -99,7 +99,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             position++;
         }
         assert_not_reached ();
-    }
+    } */
     private void scroll_to_row (ListBoxRow row, bool grab_focus)
     {
         key_list_box.select_row (row);
@@ -111,7 +111,22 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         row.get_allocation (out row_allocation);
         key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
     }
-/*
+
+    private void ensure_selection ()
+    {
+        ListBoxRow? row = key_list_box.get_selected_row ();
+        if (row == null)
+            select_first_row ();
+    }
+
+    private void select_first_row ()
+    {
+        ListBoxRow? row = key_list_box.get_row_at_index (0);
+        if (row != null)
+            key_list_box.select_row ((!) row);
+        key_list_box.get_adjustment ().set_value (0);
+    }
+
     /*\
     * * Key ListBox
     \*/
@@ -225,6 +240,33 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             rows_possibly_with_popover.append (row);
         }
 
+        return false;
+    }
+
+    public bool up_or_down_pressed (bool grab_focus, bool is_down)
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        uint n_items = search_results_model.get_n_items ();
+
+        if (selected_row != null)
+        {
+            int position = ((!) selected_row).get_index ();
+            ListBoxRow? row = null;
+            if (!is_down && (position >= 1))
+                row = key_list_box.get_row_at_index (position - 1);
+            if (is_down && (position < n_items - 1))
+                row = key_list_box.get_row_at_index (position + 1);
+
+            if (row != null)
+                scroll_to_row ((!) row, grab_focus);
+
+            return true;
+        }
+        else if (n_items >= 1)
+        {
+            key_list_box.select_row (key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1));
+            return true;
+        }
         return false;
     }
 
@@ -367,7 +409,10 @@ class RegistrySearch : Grid, PathElement, BrowsableView
     public void start_search (string term)
     {
         if (old_term != null && term == (!) old_term)
+        {
+            ensure_selection ();
             return;
+        }
 
         SettingsModel model = window.model;
         string current_path = window.current_path;
@@ -383,6 +428,8 @@ class RegistrySearch : Grid, PathElement, BrowsableView
                 refine_global_results (term);
                 resume_global_search (current_path, term); // update search term
             }
+
+            ensure_selection ();
         }
         else
         {
@@ -394,6 +441,9 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             local_search (model, SettingsModel.get_base_path (current_path), term);
             bookmark_search (model, current_path, term);
             key_list_box.bind_model (search_results_model, new_list_box_row);
+
+            select_first_row ();
+
             if (term != "")
                 start_global_search (model, current_path, term);
         }
@@ -558,6 +608,9 @@ class RegistrySearch : Grid, PathElement, BrowsableView
                         search_results_model.append (item);
                 }
             }
+
+            ensure_selection ();
+
             return true;
         }
 

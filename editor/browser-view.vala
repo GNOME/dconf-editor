@@ -242,6 +242,28 @@ class BrowserView : Grid, PathElement
     }
 
     /*\
+    * * Keyboard calls
+    \*/
+
+    public bool up_pressed (bool grab_focus)
+    {
+        if (current_view_is_browse_view ())
+            return browse_view.up_or_down_pressed (grab_focus, false);
+        else if (current_view_is_search_results_view ())
+            return search_results_view.up_or_down_pressed (grab_focus, false);
+        return false;
+    }
+
+    public bool down_pressed (bool grab_focus)
+    {
+        if (current_view_is_browse_view ())
+            return browse_view.up_or_down_pressed (grab_focus, true);
+        else if (current_view_is_search_results_view ())
+            return search_results_view.up_or_down_pressed (grab_focus, true);
+        return false;
+    }
+
+    /*\
     * * Action entries
     \*/
 

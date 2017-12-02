@@ -226,6 +226,36 @@ class RegistryView : Grid, PathElement, BrowsableView
         return false;
     }
 
+    public bool up_or_down_pressed (bool grab_focus, bool is_down)
+    {
+        if (key_model == null)
+            return false;
+
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        uint n_items = ((!) key_model).get_n_items ();
+
+        if (selected_row != null)
+        {
+            int position = ((!) selected_row).get_index ();
+            ListBoxRow? row = null;
+            if (!is_down && (position >= 1))
+                row = key_list_box.get_row_at_index (position - 1);
+            if (is_down && (position < n_items - 1))
+                row = key_list_box.get_row_at_index (position + 1);
+
+            if (row != null)
+                scroll_to_row ((!) row, grab_focus);
+
+            return true;
+        }
+        else if (n_items >= 1)
+        {
+            key_list_box.select_row (key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1));
+            return true;
+        }
+        return false;
+    }
+
     [GtkCallback]
     private void row_activated_cb (ListBoxRow list_box_row)
     {
