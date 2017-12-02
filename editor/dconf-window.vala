@@ -516,6 +516,15 @@ class DConfWindow : ApplicationWindow
         if (name == "Down")
             return browser_view.down_pressed (!search_bar.get_search_mode ());
 
+        if ((name == "Return" || name == "KP_Enter")
+         && browser_view.current_view_is_search_results_view ()
+         && search_entry.has_focus
+         && browser_view.return_pressed ())
+        {
+            search_bar.set_search_mode (false);
+            return true;
+        }
+
         if (name == "Menu")
         {
             if (browser_view.show_row_popover ())

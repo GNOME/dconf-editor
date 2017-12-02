@@ -245,6 +245,14 @@ class BrowserView : Grid, PathElement
     * * Keyboard calls
     \*/
 
+    public bool return_pressed ()
+    {
+        if (!current_view_is_search_results_view ())
+            assert_not_reached ();
+
+        return search_results_view.return_pressed ();
+    }
+
     public bool up_pressed (bool grab_focus)
     {
         if (current_view_is_browse_view ())

@@ -243,6 +243,17 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         return false;
     }
 
+    public bool return_pressed ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return false;
+
+        ((ClickableListBoxRow) ((!) selected_row).get_child ()).on_row_clicked ();
+
+        return true;
+    }
+
     public bool up_or_down_pressed (bool grab_focus, bool is_down)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
