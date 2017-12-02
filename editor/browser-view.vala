@@ -122,7 +122,7 @@ class BrowserView : Grid, PathElement
         browse_view.show_multiple_schemas_warning (current_directory.warning_multiple_schemas);
 
         update_current_path (path);
-        stack.set_visible_child_name ("browse-view");
+        stack.set_visible_child (browse_view);
     }
     private void select_row (string? selected)
     {
