@@ -114,7 +114,7 @@
     <value value="1" nick="Green"/>
   </enum>
   <flags id="ca.desrt.dconf-editor.DemoFlags">
-    <value value="16" nick="Red"/>      <!-- TODO report bug: 0 validates... -->
+    <value value="16" nick="Red"/>      <!-- 0 validates, multiple times; https://bugzilla.gnome.org/show_bug.cgi?id=756735 -->
     <value value="4" nick="White"/>
     <value value="2" nick="Blue"/>
     <value value="8" nick="Yellow"/>
