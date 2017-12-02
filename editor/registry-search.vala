@@ -548,7 +548,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
             if (bookmark == current_path)
                 continue;
-            if (model.get_parent_path (bookmark) == current_path)
+            if (SettingsModel.get_parent_path (bookmark) == current_path)
                 continue;
 
             SettingObject? setting_object = model.get_object (bookmark);

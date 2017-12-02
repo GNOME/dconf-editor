@@ -818,7 +818,7 @@ public class SettingsModel : Object
         return get_key_from_path_and_name (((!) parent).key_model, name);
     }
 
-    public string get_parent_path (string path)
+    public static string get_parent_path (string path)
     {
         if (path == "/")
             return path;
