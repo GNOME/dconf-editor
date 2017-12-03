@@ -437,7 +437,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     }
 }
 
-private class KeyEditorChildArray : Frame, KeyEditorChild
+private class KeyEditorChildArray : Grid, KeyEditorChild
 {
     private TextView text_view;
     private Revealer error_revealer;
@@ -457,18 +457,14 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
         this.visible = true;
         this.hexpand = true;
         this.vexpand = false;
+        orientation = Orientation.VERTICAL;
+        get_style_context ().add_class ("frame");
 
         this.variant_type = type;
         this.variant = initial_value;
 
-        Grid grid = new Grid ();
-        grid.visible = true;
-        grid.orientation = Orientation.VERTICAL;
-        this.add (grid);
-
         ScrolledWindow scrolled_window = new ScrolledWindow (null, null);
         scrolled_window.visible = true;
-        grid.add (scrolled_window);
 
         text_view = new TextView ();
         text_view.visible = true;
@@ -489,13 +485,15 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
         // https://bugzilla.gnome.org/show_bug.cgi?id=789676
         text_view.button_press_event.connect_after (() => Gdk.EVENT_STOP);
         text_view.button_release_event.connect_after (() => Gdk.EVENT_STOP);
+
         scrolled_window.add (text_view);
+        add (scrolled_window);
 
         error_revealer = new Revealer ();
         error_revealer.visible = true;
         error_revealer.transition_type = RevealerTransitionType.SLIDE_UP;
         error_revealer.reveal_child = false;
-        grid.add (error_revealer);
+        add (error_revealer);
 
         ActionBar error_bar = new ActionBar ();
         error_bar.visible = true;
