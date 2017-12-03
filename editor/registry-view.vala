@@ -154,18 +154,12 @@ class RegistryView : Grid, PathElement, BrowsableView
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
             on_delete_call_handler = row.on_delete_call.connect (() => set_key_value (key, null));
-            ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); set_delayed_icon (row, key); });
+            ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => revealer.dismiss_change (key));
-
-            ulong key_planned_change_handler = key.notify ["planned-change"].connect (() => set_delayed_icon (row, key));
-            ulong key_planned_value_handler = key.notify ["planned-value"].connect (() => set_delayed_icon (row, key));
-            set_delayed_icon (row, key);
 
             row.destroy.connect (() => {
                     key_row.disconnect (set_key_value_handler);
                     key_row.disconnect (change_dismissed_handler);
-                    key.disconnect (key_planned_change_handler);
-                    key.disconnect (key_planned_value_handler);
                 });
         }
 
@@ -187,30 +181,6 @@ class RegistryView : Grid, PathElement, BrowsableView
         else
             wrapper.get_style_context ().add_class ("key-row");
         return wrapper;
-    }
-
-    private void set_delayed_icon (ClickableListBoxRow row, Key key)
-    {
-        StyleContext context = row.get_style_context ();
-        if (key.planned_change)
-        {
-            context.add_class ("delayed");
-            if (key is DConfKey)
-            {
-                if (key.planned_value == null)
-                    context.add_class ("erase");
-                else
-                    context.remove_class ("erase");
-            }
-        }
-        else
-        {
-            context.remove_class ("delayed");
-            if (key is DConfKey && ((DConfKey) key).is_ghost)
-                context.add_class ("erase");
-            else
-                context.remove_class ("erase");
-        }
     }
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)

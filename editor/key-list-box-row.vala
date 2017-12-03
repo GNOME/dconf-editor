@@ -230,11 +230,19 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         update ();
         key_name_label.set_label (search_result_mode ? abstract_key.full_name : abstract_key.name);
 
+        ulong key_planned_change_handler = abstract_key.notify ["planned-change"].connect (() => set_delayed_icon ());
+        ulong key_planned_value_handler = abstract_key.notify ["planned-value"].connect (() => set_delayed_icon ());
+        set_delayed_icon ();
+
         ulong key_value_changed_handler = abstract_key.value_changed.connect (() => {
                 update ();
                 destroy_popover ();
             });
-        destroy.connect (() => abstract_key.disconnect (key_value_changed_handler));
+        destroy.connect (() => {
+                abstract_key.disconnect (key_planned_change_handler);
+                abstract_key.disconnect (key_planned_value_handler);
+                abstract_key.disconnect (key_value_changed_handler);
+            });
     }
     private abstract Key abstract_key { get; }
     protected abstract void update ();
@@ -244,6 +252,31 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         if (boolean_switch == null)
             return;
         ((!) boolean_switch).set_active (!((!) boolean_switch).get_active ());
+    }
+
+    private void set_delayed_icon ()
+    {
+        Key key = abstract_key;
+        StyleContext context = get_style_context ();
+        if (key.planned_change)
+        {
+            context.add_class ("delayed");
+            if (key is DConfKey)
+            {
+                if (key.planned_value == null)
+                    context.add_class ("erase");
+                else
+                    context.remove_class ("erase");
+            }
+        }
+        else
+        {
+            context.remove_class ("delayed");
+            if (key is DConfKey && ((DConfKey) key).is_ghost)
+                context.add_class ("erase");
+            else
+                context.remove_class ("erase");
+        }
     }
 }
 
