@@ -268,8 +268,21 @@
 
 /* key-editor-child properties */
 
+.key-editor-child-array {
+  min-height:10em;
+}
+
 .key-editor-child-array textview.view {
   padding:0.2em 0.3em;
+}
+
+.key-editor-child-array:dir(ltr),
+.key-editor-child-entry:dir(ltr) {
+  margin-right:1em;
+}
+.key-editor-child-array:dir(rtl),
+.key-editor-child-entry:dir(rtl) {
+  margin-left:1em;
 }
 
 /*\

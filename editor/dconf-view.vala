@@ -238,13 +238,17 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
+    construct
+    {
+        get_style_context ().add_class ("key-editor-child-entry");
+    }
+
     public KeyEditorChildNumberDouble (Variant initial_value)
     {
         this.variant = initial_value;
 
         this.visible = true;
         this.hexpand = true;
-        this.margin_right = 6;
         this.secondary_icon_activatable = false;
         this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));    // TODO report bug, not displayed, neither like that nor by setting secondary_icon_tooltip_text
 
@@ -453,8 +457,6 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
         this.visible = true;
         this.hexpand = true;
         this.vexpand = false;
-        this.margin_right = 6;
-        this.height_request = 200;
 
         this.variant_type = type;
         this.variant = initial_value;
@@ -583,6 +585,11 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
+    construct
+    {
+        get_style_context ().add_class ("key-editor-child-entry");
+    }
+
     public KeyEditorChildDefault (string type, Variant initial_value)
     {
         this.variant_type = type;
@@ -590,7 +597,6 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
 
         this.visible = true;
         this.hexpand = true;
-        this.margin_right = 6;
         this.secondary_icon_activatable = false;
         this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type."));    // TODO report bug, not displayed, neither like that nor by setting secondary_icon_tooltip_text
 
