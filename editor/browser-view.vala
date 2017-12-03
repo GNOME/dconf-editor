@@ -75,7 +75,7 @@ class BrowserView : Grid, PathElement
         settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
 
         sorting_options.notify.connect (() => {
-                if (current_view_is_browse_view () && current_directory.need_sorting (sorting_options))
+                if (current_view_is_browse_view () && !sorting_options.is_key_model_sorted (current_directory.key_model))
                     need_reload_warning_revealer.set_reveal_child (true);
                 // TODO reload search results too
             });
@@ -101,7 +101,7 @@ class BrowserView : Grid, PathElement
     public void set_directory (Directory directory, string? selected)
     {
         current_directory = directory;
-        current_directory.sort_key_model (sorting_options);
+        sorting_options.sort_key_model (current_directory.key_model);
 
         browse_view.set_key_model (directory.key_model);
 
@@ -328,7 +328,7 @@ class BrowserView : Grid, PathElement
     private void reload ()
     {
         string? saved_selection = browse_view.get_selected_row_name ();
-        current_directory.sort_key_model (sorting_options);    // TODO duplicate in set_directory
+        sorting_options.sort_key_model (current_directory.key_model);    // TODO duplicate in set_directory
         show_browse_view (current_path, saved_selection);
     }
 }
@@ -336,4 +336,138 @@ class BrowserView : Grid, PathElement
 public interface BrowsableView
 {
     public abstract string? get_copy_text ();
+}
+
+/*\
+* * Sorting
+\*/
+
+public enum MergeType {
+    MIXED,
+    FIRST,
+    LAST
+}
+
+public class SortingOptions : Object
+{
+    public bool case_sensitive { get; set; default = false; }
+    public MergeType sort_folders { get; set; default = MergeType.MIXED; }
+
+    public SettingComparator get_comparator ()
+    {
+        if (sort_folders == MergeType.FIRST)
+        {
+            if (case_sensitive)
+                return new FoldersFirstCaseSensitive ();
+            else
+                return new FoldersFirstCaseInsensitive ();
+        }
+        else if (sort_folders == MergeType.LAST)
+        {
+            if (case_sensitive)
+                return new FoldersLastCaseSensitive ();
+            else
+                return new FoldersLastCaseInsensitive ();
+        }
+        else // if (sort_folders == MergeType.MIXED)
+        {
+            if (case_sensitive)
+                return new FoldersMixedCaseSensitive ();
+            else
+                return new FoldersMixedCaseInsensitive ();
+        }
+    }
+
+    public void sort_key_model (GLib.ListStore model)
+    {
+        SettingComparator comparator = get_comparator ();
+
+        model.sort ((a, b) => comparator.compare ((SettingObject) a, (SettingObject) b));
+    }
+
+    public bool is_key_model_sorted (GLib.ListStore model)
+    {
+        SettingComparator comparator = get_comparator ();
+
+        uint last = model.get_n_items () - 1;
+        for (int i = 0; i < last; i++)
+        {
+            SettingObject item = (SettingObject) model.get_item (i);
+            SettingObject next = (SettingObject) model.get_item (i + 1);
+            if (comparator.compare (item, next) > 0)
+                return false;
+        }
+        return true;
+    }
+}
+
+/* Comparison functions */
+
+public interface SettingComparator : Object
+{
+    public abstract int compare (SettingObject a, SettingObject b);
+}
+
+class FoldersMixedCaseInsensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        return a.casefolded_name.collate (b.casefolded_name);
+    }
+}
+
+class FoldersMixedCaseSensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        return strcmp (a.name, b.name);
+    }
+}
+
+class FoldersFirstCaseInsensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return -1;
+        if (!(a is Directory) && b is Directory)
+            return 1;
+        return a.casefolded_name.collate (b.casefolded_name);
+    }
+}
+
+class FoldersFirstCaseSensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return -1;
+        if (!(a is Directory) && b is Directory)
+            return 1;
+        return strcmp (a.name, b.name);
+    }
+}
+
+class FoldersLastCaseInsensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return 1;
+        if (!(a is Directory) && b is Directory)
+            return -1;
+        return a.casefolded_name.collate (b.casefolded_name);
+    }
+}
+
+class FoldersLastCaseSensitive : Object, SettingComparator
+{
+    public int compare (SettingObject a, SettingObject b)
+    {
+        if (a is Directory && !(b is Directory))
+            return 1;
+        if (!(a is Directory) && b is Directory)
+            return -1;
+        return strcmp (a.name, b.name);
+    }
 }
