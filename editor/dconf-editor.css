@@ -266,6 +266,12 @@
             list.properties-list:dir(ltr) > row > grid > label { padding-right:1em; }
             list.properties-list:dir(rtl) > row > grid > label { padding-left:1em; }
 
+/* key-editor-child properties */
+
+.key-editor-child-array textview.view {
+  padding:0.2em 0.3em;
+}
+
 /*\
 * * text formating
 \*/

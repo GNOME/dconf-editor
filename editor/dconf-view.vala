@@ -443,6 +443,11 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
+    construct
+    {
+        get_style_context ().add_class ("key-editor-child-array");
+    }
+
     public KeyEditorChildArray (string type, Variant initial_value)
     {
         this.visible = true;
