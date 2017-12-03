@@ -468,6 +468,17 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
         text_view.expand = true;
         text_view.wrap_mode = WrapMode.WORD;
         text_view.monospace = true;
+        text_view.key_press_event.connect ((event) => {
+                string keyval_name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+                if ((keyval_name == "Return" || keyval_name == "KP_Enter")
+                && ((event.state & Gdk.ModifierType.MODIFIER_MASK) == 0)
+                && (test_value ()))
+                {
+                    child_activated ();
+                    return true;
+                }
+                return base.key_press_event (event);
+            });
         // https://bugzilla.gnome.org/show_bug.cgi?id=789676
         text_view.button_press_event.connect_after (() => Gdk.EVENT_STOP);
         text_view.button_release_event.connect_after (() => Gdk.EVENT_STOP);
@@ -504,12 +515,6 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
 
     private bool test_value ()
     {
-        if (variant_type == "s")
-        {
-            variant = new Variant.string (text_view.buffer.text);
-            return true;
-        }
-
         string tmp_text = text_view.buffer.text; // don't put in the try{} for correct C code
         try
         {
