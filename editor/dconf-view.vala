@@ -468,6 +468,7 @@ private class KeyEditorChildArray : Frame, KeyEditorChild
         text_view.expand = true;
         text_view.wrap_mode = WrapMode.WORD;
         text_view.monospace = true;
+        // https://bugzilla.gnome.org/show_bug.cgi?id=789676
         text_view.button_press_event.connect_after (() => Gdk.EVENT_STOP);
         text_view.button_release_event.connect_after (() => Gdk.EVENT_STOP);
         scrolled_window.add (text_view);
