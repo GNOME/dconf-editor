@@ -72,9 +72,12 @@ class DConfWindow : ApplicationWindow
     private ulong small_keys_list_rows_handler = 0;
     private ulong small_bookmarks_rows_handler = 0;
 
-    public DConfWindow (string? path)
+    public DConfWindow (bool disable_warning, string? path)
     {
         model = new SettingsModel (settings);
+
+        if (!disable_warning && settings.get_boolean ("show-warning"))
+            show.connect (show_initial_warning);
 
         add_action_entries (action_entries, this);
 
@@ -185,12 +188,8 @@ class DConfWindow : ApplicationWindow
     * * Window management callbacks
     \*/
 
-    [GtkCallback]
-    private void on_show ()
+    private void show_initial_warning ()
     {
-        if (!settings.get_boolean ("show-warning"))
-            return;
-
         Gtk.MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.INFO, ButtonsType.NONE, _("Thanks for using Dconf Editor for editing your settings!"));
         dialog.format_secondary_text (_("Don’t forget that some options may break applications, so be careful."));
         dialog.add_buttons (_("I’ll be careful."), ResponseType.ACCEPT);

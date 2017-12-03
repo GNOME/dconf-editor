@@ -17,9 +17,12 @@
 
 class ConfigurationEditor : Gtk.Application
 {
+    private bool disable_warning = false;
+
     private const OptionEntry [] option_entries =
     {
         { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
+        { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, null, N_("Do not show initial warning"), null },
         {}
     };
 
@@ -63,6 +66,8 @@ class ConfigurationEditor : Gtk.Application
             stdout.printf ("%1$s %2$s\n", "dconf-editor", Config.VERSION);
             return Posix.EXIT_SUCCESS;
         }
+        if (options.contains ("I-understand-that-changing-options-can-break-applications"))
+            disable_warning = true;
         return -1;
     }
 
@@ -139,7 +144,7 @@ class ConfigurationEditor : Gtk.Application
                     }
                     // TODO more tests
 
-                    add_window (new DConfWindow (path));
+                    add_window (new DConfWindow (disable_warning, path));
                     first_window = false;
                 }
                 else
@@ -161,7 +166,7 @@ class ConfigurationEditor : Gtk.Application
     {
         if (first_window)
         {
-            add_window (new DConfWindow (null));
+            add_window (new DConfWindow (disable_warning, null));
             first_window = false;
         }
         get_active_window ().present ();

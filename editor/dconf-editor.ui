@@ -6,7 +6,6 @@
     <property name="title" translatable="yes">dconf Editor</property>
     <property name="height-request">550</property>
     <property name="width-request">770</property>
-    <signal name="show" handler="on_show"/>
     <signal name="key-press-event" handler="on_key_press_event"/>
     <signal name="button-press-event" handler="on_button_press_event"/>
     <signal name="window-state-event" handler="on_window_state_event"/>
