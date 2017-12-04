@@ -101,7 +101,7 @@
       <description>For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Forward” command in a browser window. Possible values range between 6 and 14.</description>
     </key>
     <key name="manual-schemas" type="a{ss}">
-      <default>{}</default>
+      <default>{'ca.desrt.dconf-editor.Demo.Relocatable':'/ca/desrt/dconf-editor/Demo/relocatable/'}</default>
       <summary>Mapping of paths to manually associated schemas</summary>
       <description>A dictionary that maps schema IDs with path specifications. It is used to allow the user to associate a relocatable schema to certain paths. Path specifications may contain wildcards in the form of empty segments (e.g /ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema ID may be associated with multiple path specifications.</description>
     </key>
@@ -259,6 +259,23 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <range min="5" max="5"/>
       <summary>A 1-choice integer value</summary>
       <description>A range could limit an integer key to only allow one value, but that’s probably an error. Dconf Editor warns you in that case.</description>
+    </key>
+  </schema>
+  <schema id="ca.desrt.dconf-editor.Demo.Relocatable">
+    <key name="boolean" type="b">
+      <default>false</default>
+      <summary>A boolean, type ‘b’</summary>
+      <description>An usual boolean value, defined by a relocatable schema.</description>
+    </key>
+    <key name="integer" type="i">
+      <default>4</default>
+      <summary>An usual integer, type ‘i’</summary>
+      <description>A 32bit signed integer, defined by a relocatable schema.</description>
+    </key>
+    <key name="flags" flags="ca.desrt.dconf-editor.DemoFlags">
+      <default>["Blue", "White", "Red"]</default>
+      <summary>Flags: choose-colors-you-love</summary>
+      <description>Flags could be set by the “enum” attribute.</description>
     </key>
   </schema>
 </schemalist>
