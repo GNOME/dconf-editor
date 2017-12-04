@@ -154,7 +154,7 @@ public class Directory : SettingObject
         if (default_value == null)
             assert_not_reached ();  // TODO report bug, shouldn't be nullable
         GSettingsKey new_key = new GSettingsKey (
-                this,
+                full_name,
                 key_id,
                 settings,
                 settings_schema.get_id (),
@@ -190,7 +190,7 @@ public class Directory : SettingObject
 
     private void create_dconf_key (string key_id)
     {
-        DConfKey new_key = new DConfKey (client, this, key_id);
+        DConfKey new_key = new DConfKey (client, full_name, key_id);
         item_changed.connect ((item) => {
                 if ((item.has_suffix ("/") && new_key.full_name.has_prefix (item)) || item == new_key.full_name)    // TODO better
                 {
@@ -454,9 +454,9 @@ public class DConfKey : Key
         }
     }
 
-    public DConfKey (DConf.Client client, Directory parent, string name)
+    public DConfKey (DConf.Client client, string parent_full_name, string name)
     {
-        Object (full_name: parent.full_name + name, name: name);
+        Object (full_name: parent_full_name + name, name: name);
 
         this.client = client;
         this.type_string = value.get_type_string ();
@@ -465,7 +465,8 @@ public class DConfKey : Key
         builder.add ("b",    false);
         builder.open (new VariantType ("a{ss}"));
         builder.add ("{ss}", "key-name",    name);
-        builder.add ("{ss}", "parent-path", parent.full_name);
+        builder.add ("{ss}", "defined-by",  _("DConf backend"));
+        builder.add ("{ss}", "parent-path", parent_full_name);
         builder.add ("{ss}", "type-code",   type_string);
         builder.add ("{ss}", "type-name",   key_to_description (type_string));
         if (show_min_and_max (type_string))
@@ -520,7 +521,7 @@ public class GSettingsKey : Key
         settings.reset (name);
     }
 
-    public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
+    public GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
         string? summary_nullable = summary.locale_to_utf8 (-1, null, null, null);
         summary = summary_nullable ?? summary;
@@ -528,7 +529,7 @@ public class GSettingsKey : Key
         string? description_nullable = description.locale_to_utf8 (-1, null, null, null);
         description = description_nullable ?? description;
 
-        Object (full_name: parent.full_name + name,
+        Object (full_name: parent_full_name + name,
                 name: name,
                 settings : settings,
                 // schema infos
@@ -544,11 +545,14 @@ public class GSettingsKey : Key
 
         this.type_string = type_string;
 
+        string defined_by = schema_path == null ? _("Relocatable schema") : _("Schema with path");
+
         VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));
         builder.add ("b",    true);
         builder.open (new VariantType ("a{ss}"));
         builder.add ("{ss}", "key-name",    name);
-        builder.add ("{ss}", "parent-path", parent.full_name);
+        builder.add ("{ss}", "defined-by",  defined_by);
+        builder.add ("{ss}", "parent-path", parent_full_name);
         builder.add ("{ss}", "type-code",   type_string);
         builder.add ("{ss}", "type-name",   key_to_description (type_string));
         builder.add ("{ss}", "schema-id",   schema_id);

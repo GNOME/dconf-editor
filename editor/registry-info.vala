@@ -81,6 +81,8 @@ class RegistryInfo : Grid, BrowsableView
         if (!dict.lookup ("key-name",     "s", out key_name))    assert_not_reached ();
         if (!dict.lookup ("parent-path",  "s", out parent_path)) assert_not_reached ();
 
+        if (dict.lookup ("defined-by",    "s", out tmp_string))  add_row_from_label (_("Defined by"),  tmp_string);
+        else assert_not_reached ();
         if (dict.lookup ("schema-id",     "s", out tmp_string))  add_row_from_label (_("Schema"),      tmp_string);
         if (dict.lookup ("summary",       "s", out tmp_string))  add_row_from_label (_("Summary"),     tmp_string);
         if (dict.lookup ("description",   "s", out tmp_string))  add_row_from_label (_("Description"), tmp_string);
