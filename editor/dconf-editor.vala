@@ -154,7 +154,7 @@ class ConfigurationEditor : Gtk.Application
 
         if (args.length > 2)
         {
-            commands.print (_("Cannot understand: too much arguments.\n"));
+            commands.print (_("Cannot understand: too many arguments.\n"));
             simple_activation ();
             return Posix.EXIT_FAILURE;
         }
@@ -293,7 +293,7 @@ class ConfigurationEditor : Gtk.Application
         Gtk.show_about_dialog (get_active_window (),
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
-                               "comments", _("A graphical viewer and editor of applications internal settings."),
+                               "comments", _("A graphical viewer and editor of applications’ internal settings."),
                                "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2017 – Arnaud Bonatti"),
                                "license-type", Gtk.License.GPL_3_0,
                                "wrap-license", true,

@@ -103,7 +103,7 @@
     <key name="manual-schemas" type="a{ss}">
       <default>{'ca.desrt.dconf-editor.Demo.Relocatable':'/ca/desrt/dconf-editor/Demo/relocatable/'}</default>
       <summary>Mapping of paths to manually associated schemas</summary>
-      <description>A dictionary that maps schema IDs with path specifications. It is used to allow the user to associate a relocatable schema to certain paths. Path specifications may contain wildcards in the form of empty segments (e.g /ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema ID may be associated with multiple path specifications.</description>
+      <description>A dictionary that maps schema IDs with path specifications. It is used to allow the user to associate a relocatable schema to certain paths. Path specifications may contain wildcards in the form of empty segments (e.g. /ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema ID may be associated with multiple path specifications.</description>
     </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
@@ -152,7 +152,7 @@
     <key name="dbus-handle" type="h">
       <default>0</default>
       <summary>A D-Bus handle type, type ‘h’</summary>
-      <description>The handle type is a 32bit signed integer value that is, by convention, used as an index into an array of file descriptors that are sent alongside a D-Bus message.
+      <description>The handle type is a 32-bit signed integer value that is, by convention, used as an index into an array of file descriptors that are sent alongside a D-Bus message.
 
 If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
@@ -190,7 +190,7 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     <key name="integer-16-signed" type="n">
       <default>-32768</default>
       <summary>A short integer, type ‘n’</summary>
-      <description>A 16bit signed integer. See also the “integer-16-unsigned” key.</description>
+      <description>A 16-bit signed integer. See also the “integer-16-unsigned” key.</description>
     </key>
     <key name="flags" flags="ca.desrt.dconf-editor.DemoFlags">
       <default>["Blue", "White", "Red"]</default>
@@ -200,27 +200,27 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     <key name="integer-16-unsigned" type="q">
       <default>65535</default>
       <summary>An unsigned short integer, type ‘q’</summary>
-      <description>A 16bit unsigned integer. See also the “integer-16-signed” key.</description>
+      <description>A 16-bit unsigned integer. See also the “integer-16-signed” key.</description>
     </key>
     <key name="integer-32-signed" type="i">
       <default>-2147483648</default>
       <summary>An usual integer, type ‘i’</summary>
-      <description>A 32bit signed integer. See also the “integer-32-unsigned” key.</description>
+      <description>A 32-bit signed integer. See also the “integer-32-unsigned” key.</description>
     </key>
     <key name="integer-32-unsigned" type="u">
       <default>4294967295</default>
       <summary>An unsigned usual integer, type ‘u’</summary>
-      <description>A 32bit unsigned integer. See also the “integer-32-signed” key.</description>
+      <description>A 32-bit unsigned integer. See also the “integer-32-signed” key.</description>
     </key>
     <key name="integer-64-signed" type="x">
       <default>-9223372036854775808</default>
       <summary>A long integer, type ‘x’</summary>
-      <description>A 64bit signed integer. See also the “integer-64-unsigned” key.</description>
+      <description>A 64-bit signed integer. See also the “integer-64-unsigned” key.</description>
     </key>
     <key name="integer-64-unsigned" type="t">
       <default>18446744073709551615</default>
       <summary>An unsigned long integer, type ‘t’</summary>
-      <description>A 64bit unsigned integer. See also the “integer-64-signed” key.</description>
+      <description>A 64-bit unsigned integer. See also the “integer-64-signed” key.</description>
     </key>
     <!-- TODO add a nullable-(unsigned-)integer -->
     <key name="number-with-range" type="i">
@@ -232,7 +232,7 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     <key name="pair-of-integers" type="(ii)">
       <default>(800, 600)</default>
       <summary>A custom type, here ‘(ii)’</summary>
-      <description>Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn’t have a better way to do. Here is a tuple of two 32bit signed integers.</description>
+      <description>Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn’t have a better way to do. Here is a tuple of two 32-bit signed integers.</description>
     </key>
     <key name="string" type="s">
       <default>'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'</default>
@@ -270,7 +270,7 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     <key name="integer" type="i">
       <default>4</default>
       <summary>An usual integer, type ‘i’</summary>
-      <description>A 32bit signed integer, defined by a relocatable schema.</description>
+      <description>A 32-bit signed integer, defined by a relocatable schema.</description>
     </key>
     <key name="flags" flags="ca.desrt.dconf-editor.DemoFlags">
       <default>["Blue", "White", "Red"]</default>
