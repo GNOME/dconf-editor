@@ -28,7 +28,7 @@ class RegistryInfo : Grid, BrowsableView
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
-    public ModificationsRevealer revealer { get; set; }
+    public ModificationsHandler modifications_handler { get; set; }
 
     /*\
     * * Cleaning
@@ -41,16 +41,16 @@ class RegistryInfo : Grid, BrowsableView
     public void clean ()
     {
         disconnect_handler (erase_button, ref erase_button_handler);
-        disconnect_handler (revealer, ref revealer_reload_1_handler);
-        disconnect_handler (revealer, ref revealer_reload_2_handler);
+        disconnect_handler (modifications_handler, ref revealer_reload_1_handler);
+        disconnect_handler (modifications_handler, ref revealer_reload_2_handler);
         properties_list_box.@foreach ((widget) => widget.destroy ());
     }
 
-    private void disconnect_handler (Widget widget, ref ulong handler)
+    private void disconnect_handler (Object object, ref ulong handler)
     {
         if (handler == 0)   // erase_button_handler & revealer_reload_1_handler depend of the key's type
             return;
-        widget.disconnect (handler);
+        object.disconnect (handler);
         handler = 0;
     }
 
@@ -125,12 +125,12 @@ class RegistryInfo : Grid, BrowsableView
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
-                if (revealer.should_delay_apply (tmp_string))
+                if (modifications_handler.should_delay_apply (tmp_string))
                 {
                     if (is_valid)
-                        revealer.add_delayed_setting (key, key_editor_child.get_variant ());
+                        modifications_handler.add_delayed_setting (key, key_editor_child.get_variant ());
                     else
-                        revealer.dismiss_change (key);
+                        modifications_handler.dismiss_change (key);
                 }
                 else
                     key.value = key_editor_child.get_variant ();
@@ -150,14 +150,14 @@ class RegistryInfo : Grid, BrowsableView
             GSettingsKey gkey = (GSettingsKey) key;
             custom_value_switch.set_active (key.planned_change ? key.planned_value == null : gkey.is_default);
             ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
-                    if (revealer.should_delay_apply (tmp_string))
+                    if (modifications_handler.should_delay_apply (tmp_string))
                     {
                         if (custom_value_switch.get_active ())
-                            revealer.add_delayed_setting (key, null);
+                            modifications_handler.add_delayed_setting (key, null);
                         else
                         {
                             Variant tmp_variant = key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value;
-                            revealer.add_delayed_setting (key, tmp_variant);
+                            modifications_handler.add_delayed_setting (key, tmp_variant);
                             key_editor_child.reload (tmp_variant);
                         }
                     }
@@ -176,7 +176,7 @@ class RegistryInfo : Grid, BrowsableView
                             key.value = key.value;  // TODO that hurts...
                     }
                 });
-            revealer_reload_1_handler = revealer.reload.connect (() => {
+            revealer_reload_1_handler = modifications_handler.reload.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
                     custom_value_switch.set_active (gkey.is_default);
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
@@ -186,13 +186,13 @@ class RegistryInfo : Grid, BrowsableView
         else
         {
             erase_button_handler = erase_button.clicked.connect (() => {
-                    revealer.enter_delay_mode ();
-                    revealer.add_delayed_setting (key, null);
+                    modifications_handler.enter_delay_mode ();
+                    modifications_handler.add_delayed_setting (key, null);
                 });
         }
 
-        ulong child_activated_handler = key_editor_child.child_activated.connect (() => revealer.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
-        revealer_reload_2_handler = revealer.reload.connect (() => {
+        ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
+        revealer_reload_2_handler = modifications_handler.reload.connect (() => {
                 if (key is DConfKey && ((DConfKey) key).is_ghost)
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);

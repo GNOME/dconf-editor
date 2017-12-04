@@ -53,6 +53,8 @@ class BrowserView : Grid, PathElement
 
     [GtkChild] private ModificationsRevealer revealer;
 
+    private ModificationsHandler modifications_handler;
+
     private DConfWindow? _window = null;
     private DConfWindow window {
         get {
@@ -64,10 +66,16 @@ class BrowserView : Grid, PathElement
 
     construct
     {
-        ulong revealer_reload_handler = revealer.reload.connect (invalidate_popovers);
+        modifications_handler = new ModificationsHandler ();
+        revealer.modifications_handler = modifications_handler;
+        browse_view.modifications_handler = modifications_handler;
+        properties_view.modifications_handler = modifications_handler;
+        search_results_view.modifications_handler = modifications_handler;
+
+        ulong modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
 
         ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
-        settings.bind ("behaviour", revealer, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+        settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         sorting_options = new SortingOptions ();
@@ -82,7 +90,7 @@ class BrowserView : Grid, PathElement
 
         destroy.connect (() => {
                 settings.disconnect (behaviour_changed_handler);
-                revealer.disconnect (revealer_reload_handler);
+                modifications_handler.disconnect (modifications_handler_reload_handler);
                 base.destroy ();
             });
     }
@@ -173,7 +181,7 @@ class BrowserView : Grid, PathElement
 
     private void update_current_path (string path)
     {
-        revealer.path_changed ();
+        modifications_handler.path_changed ();
         current_path = path;
         window.update_path_elements ();
         invalidate_popovers ();
@@ -181,7 +189,7 @@ class BrowserView : Grid, PathElement
 
     public bool get_current_delay_mode ()
     {
-        return revealer.get_current_delay_mode ();
+        return modifications_handler.get_current_delay_mode ();
     }
 
     public string? get_copy_text ()
@@ -311,16 +319,16 @@ class BrowserView : Grid, PathElement
             if (setting_object is DConfKey)
             {
                 if (!((DConfKey) setting_object).is_ghost)
-                    revealer.add_delayed_setting ((Key) setting_object, null);
+                    modifications_handler.add_delayed_setting ((Key) setting_object, null);
             }
             else if (!((GSettingsKey) setting_object).is_default)
-                revealer.add_delayed_setting ((Key) setting_object, null);
+                modifications_handler.add_delayed_setting ((Key) setting_object, null);
         }
     }
 
     public void enter_delay_mode ()
     {
-        revealer.enter_delay_mode ();
+        modifications_handler.enter_delay_mode ();
         invalidate_popovers ();
     }
 

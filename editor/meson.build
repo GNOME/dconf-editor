@@ -57,6 +57,7 @@ sources = files(
   'dconf-view.vala',
   'dconf-window.vala',
   'key-list-box-row.vala',
+  'modifications-handler.vala',
   'modifications-revealer.vala',
   'pathbar.vala',
   'registry-info.vala',

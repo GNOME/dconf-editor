@@ -20,26 +20,30 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
 class ModificationsRevealer : Revealer
 {
-    private enum Mode {
-        NONE,
-        TEMPORARY,
-        DELAYED
+    private ModificationsHandler _modifications_handler;
+    public ModificationsHandler modifications_handler
+    {
+        private get { return _modifications_handler; }
+        set
+        {
+            _modifications_handler = value;
+            _modifications_handler.delayed_changes_changed.connect (() => {
+                    update ();
+                });
+            _modifications_handler.reload.connect (() => {
+                    reload ();
+                });
+        }
     }
-    private Mode mode = Mode.NONE;
 
     [GtkChild] private Label label;
     [GtkChild] private ModelButton apply_button;
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 
-    private DConf.Client dconf_client = new DConf.Client ();
-
-    private HashTable<string, DConfKey>         dconf_keys_awaiting_hashtable = new HashTable<string, DConfKey>     (str_hash, str_equal);
-    private HashTable<string, GSettingsKey> gsettings_keys_awaiting_hashtable = new HashTable<string, GSettingsKey> (str_hash, str_equal);
-
     public signal void reload ();
 
-    public Behaviour behaviour { private get; set; }
+    public Behaviour behaviour { set { modifications_handler.behaviour = value; } }
 
     /*\
     * * Window management callbacks
@@ -63,166 +67,24 @@ class ModificationsRevealer : Revealer
         }
     }
 
-    /*\
-    * * Public calls
-    \*/
-
-    public bool get_current_delay_mode ()
-    {
-        return mode == Mode.DELAYED || behaviour == Behaviour.ALWAYS_DELAY;
-    }
-
-    public bool should_delay_apply (string type_string)
-    {
-        if (get_current_delay_mode () || behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
-            return true;
-        if (behaviour == Behaviour.UNSAFE)
-            return false;
-        if (behaviour == Behaviour.SAFE)
-            return type_string != "b" && type_string != "mb" && type_string != "<enum>" && type_string != "<flags>";
-        assert_not_reached ();
-    }
-
-    public void enter_delay_mode ()
-    {
-        mode = Mode.DELAYED;
-        apply_button.sensitive = dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length != 0;
-        update ();
-    }
-
-    public void add_delayed_setting (Key key, Variant? new_value)
-    {
-        key.planned_change = true;
-        key.planned_value = new_value;
-
-        if (key is GSettingsKey)
-            gsettings_keys_awaiting_hashtable.insert (key.descriptor, (GSettingsKey) key);
-        else
-            dconf_keys_awaiting_hashtable.insert (key.descriptor, (DConfKey) key);
-
-        mode = get_current_delay_mode () ? Mode.DELAYED : Mode.TEMPORARY;
-
-        apply_button.sensitive = true;
-        update ();
-    }
-
-    public void dismiss_change (Key key)
-    {
-        if (mode == Mode.NONE)
-            mode = behaviour == Behaviour.ALWAYS_DELAY ? Mode.DELAYED : Mode.TEMPORARY;
-
-        key.planned_change = false;
-        key.planned_value = null;
-
-        if (key is GSettingsKey)
-            gsettings_keys_awaiting_hashtable.remove (key.descriptor);
-        else
-            dconf_keys_awaiting_hashtable.remove (key.descriptor);
-
-        apply_button.sensitive = (mode != Mode.TEMPORARY) && (dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length != 0);
-        update ();
-    }
-
-    public void path_changed ()
-    {
-        if (mode != Mode.TEMPORARY)
-            return;
-        if (behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.SAFE)
-            apply_delayed_settings ();
-        else if (behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
-            dismiss_delayed_settings ();
-        else
-            assert_not_reached ();
-    }
-
-    public void warn_if_no_planned_changes ()
-    {
-        if (dconf_keys_awaiting_hashtable.length == 0 && gsettings_keys_awaiting_hashtable.length == 0)
-            label.set_text (_("Nothing to reset."));
-    }
-
-    /*\
-    * * Buttons callbacks
-    \*/
-
     [GtkCallback]
-    public void apply_delayed_settings ()
+    private void apply_delayed_settings ()
     {
-        mode = Mode.NONE;
-        update ();
-
-        /* GSettings stuff */
-
-        HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
-        gsettings_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
-                string settings_descriptor = descriptor [0:descriptor.last_index_of_char (' ')]; // strip the key name
-                GLib.Settings? settings = delayed_settings_hashtable.lookup (settings_descriptor);
-                if (settings == null)
-                {
-                    settings = key.settings;
-                    ((!) settings).delay ();
-                    delayed_settings_hashtable.insert (settings_descriptor, (!) settings);
-                }
-
-                if (key.planned_value == null)
-                    ((!) settings).reset (key.name);
-                else
-                    ((!) settings).set_value (key.name, (!) key.planned_value);
-                key.planned_change = false;
-
-                return true;
-            });
-
-        delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
-
-        /* DConf stuff */
-
-        DConf.Changeset dconf_changeset = new DConf.Changeset ();
-        dconf_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
-                dconf_changeset.set (key.full_name, key.planned_value);
-
-                if (key.planned_value == null)
-                    key.is_ghost = true;
-                key.planned_change = false;
-
-                return true;
-            });
-
-        try {
-            dconf_client.change_sync (dconf_changeset);
-        } catch (Error error) {
-            warning (error.message);
-        }
-
-        /* reload the hamburger menu */
-
-        reload ();
+        modifications_handler.apply_delayed_settings ();
     }
 
     [GtkCallback]
     private void dismiss_delayed_settings ()
     {
-        mode = Mode.NONE;
-        update ();
-
-        /* GSettings stuff */
-
-        gsettings_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
-                key.planned_change = false;
-                return true;
-            });
-
-        /* DConf stuff */
-
-        dconf_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
-                key.planned_change = false;
-                return true;
-            });
-
-        /* reload notably key_editor_child */
-
-        reload ();
+        modifications_handler.dismiss_delayed_settings ();
     }
+
+    public void warn_if_no_planned_changes ()
+    {
+        if (modifications_handler.dconf_changes_count == 0 && modifications_handler.gsettings_changes_count == 0)
+            label.set_text (_("Nothing to reset."));
+    }
+
 
     /*\
     * * Utilities
@@ -230,21 +92,22 @@ class ModificationsRevealer : Revealer
 
     private void update ()
     {
-        if (mode == Mode.NONE)
+        if (modifications_handler.mode == ModificationsMode.NONE)
         {
             set_reveal_child (false);
             label.set_text ("");
+            return;
         }
-        else if (mode == Mode.TEMPORARY)
+        uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
+        if (modifications_handler.mode == ModificationsMode.TEMPORARY)
         {
-            uint length = dconf_keys_awaiting_hashtable.length + gsettings_keys_awaiting_hashtable.length;
-            if (length == 0)
+            if (total_changes_count == 0)
                 label.set_text (_("The value is invalid."));
-            else if (length != 1)
+            else if (total_changes_count != 1)
                 assert_not_reached ();
-            else if (behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
+            else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
                 label.set_text (_("The change will be dismissed if you quit this view without applying."));
-            else if (behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.SAFE)
+            else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || modifications_handler.behaviour == Behaviour.SAFE)
                 label.set_text (_("The change will be applied on such request or if you quit this view."));
             else
                 assert_not_reached ();
@@ -252,7 +115,10 @@ class ModificationsRevealer : Revealer
         }
         else // if (mode == Mode.DELAYED)
         {
-            label.set_text (get_text (dconf_keys_awaiting_hashtable.length, gsettings_keys_awaiting_hashtable.length));
+            if (total_changes_count == 0)
+                label.set_text (_("Nothing to reset."));
+            apply_button.sensitive = total_changes_count > 0;
+            label.set_text (get_text (modifications_handler.dconf_changes_count, modifications_handler.gsettings_changes_count));
             set_reveal_child (true);
         }
     }

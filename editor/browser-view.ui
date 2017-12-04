@@ -47,7 +47,6 @@
         <child>
           <object class="RegistryView"  id="browse_view">
             <property name="visible">True</property>
-            <property name="revealer">revealer</property>
             <signal name="request_path" handler="request_path_test"/>
           </object>
           <packing>
@@ -57,7 +56,6 @@
         <child>
           <object class="RegistryInfo" id="properties_view">
             <property name="visible">True</property>
-            <property name="revealer">revealer</property>
           </object>
           <packing>
             <property name="name">properties-view</property>
@@ -66,7 +64,6 @@
         <child>
           <object class="RegistrySearch"  id="search_results_view">
             <property name="visible">True</property>
-            <property name="revealer">revealer</property>
             <signal name="request_path" handler="request_path_test"/>
           </object>
           <packing>

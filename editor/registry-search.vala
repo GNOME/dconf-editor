@@ -42,7 +42,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         }
     }
 
-    public ModificationsRevealer revealer { private get; set; }
+    public ModificationsHandler modifications_handler { private get; set; }
 
     private BrowserView? _browser_view = null;
     private BrowserView browser_view {
@@ -162,7 +162,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
             on_delete_call_handler = row.on_delete_call.connect (() => set_key_value (key, null));
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); });
-            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => revealer.dismiss_change (key));
+            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key));
 
             row.destroy.connect (() => {
                     key_row.disconnect (set_key_value_handler);
@@ -289,7 +289,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
     }*/
 
     /*\
-    * * Revealer stuff
+    * * Modifications stuff
     \*/
 
     public bool get_current_delay_mode ()
@@ -300,7 +300,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
     private void set_key_value (Key key, Variant? new_value)
     {
         if (get_current_delay_mode ())
-            revealer.add_delayed_setting (key, new_value);
+            modifications_handler.add_delayed_setting (key, new_value);
         else if (new_value != null)
             key.value = (!) new_value;
         else if (key is GSettingsKey)
@@ -308,7 +308,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         else if (behaviour != Behaviour.UNSAFE)
         {
             browser_view.enter_delay_mode ();
-            revealer.add_delayed_setting (key, null);
+            modifications_handler.add_delayed_setting (key, null);
         }
         else
             ((DConfKey) key).erase ();
