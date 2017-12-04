@@ -32,6 +32,7 @@ class DConfWindow : ApplicationWindow
     public string current_path { get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
 
     public SettingsModel model { get; private set; }
+    public ModificationsHandler modifications_handler { get; private set; }
 
     private int window_width = 0;
     private int window_height = 0;
@@ -74,6 +75,8 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
+        modifications_handler = new ModificationsHandler ();
+        browser_view.modifications_handler = modifications_handler;
         model = new SettingsModel (settings);
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
@@ -367,7 +370,7 @@ class DConfWindow : ApplicationWindow
             menu.append_section (null, section);
         }
 
-        if (!browser_view.get_current_delay_mode ())
+        if (!modifications_handler.get_current_delay_mode ())
         {
             section = new GLib.Menu ();
             section.append (_("Enter delay mode"), "win.enter-delay-mode");

@@ -53,7 +53,24 @@ class BrowserView : Grid, PathElement
 
     [GtkChild] private ModificationsRevealer revealer;
 
-    private ModificationsHandler modifications_handler;
+    private ModificationsHandler _modifications_handler;
+    public ModificationsHandler modifications_handler
+    {
+        private get { return _modifications_handler; }
+        set {
+            _modifications_handler = value;
+            revealer.modifications_handler = value;
+            browse_view.modifications_handler = value;
+            properties_view.modifications_handler = value;
+            search_results_view.modifications_handler = value;
+
+            settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
+            ulong modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
+            destroy.connect (() => {
+                modifications_handler.disconnect (modifications_handler_reload_handler);
+            });
+        }
+    }
 
     private DConfWindow? _window = null;
     private DConfWindow window {
@@ -66,16 +83,7 @@ class BrowserView : Grid, PathElement
 
     construct
     {
-        modifications_handler = new ModificationsHandler ();
-        revealer.modifications_handler = modifications_handler;
-        browse_view.modifications_handler = modifications_handler;
-        properties_view.modifications_handler = modifications_handler;
-        search_results_view.modifications_handler = modifications_handler;
-
-        ulong modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
-
         ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
-        settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         sorting_options = new SortingOptions ();
@@ -90,7 +98,6 @@ class BrowserView : Grid, PathElement
 
         destroy.connect (() => {
                 settings.disconnect (behaviour_changed_handler);
-                modifications_handler.disconnect (modifications_handler_reload_handler);
                 base.destroy ();
             });
     }
@@ -185,11 +192,6 @@ class BrowserView : Grid, PathElement
         current_path = path;
         window.update_path_elements ();
         invalidate_popovers ();
-    }
-
-    public bool get_current_delay_mode ()
-    {
-        return modifications_handler.get_current_delay_mode ();
     }
 
     public string? get_copy_text ()
