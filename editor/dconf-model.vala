@@ -776,6 +776,51 @@ public class SettingsModel : Object
     }
 
     /*\
+    * * Schemas manipulation
+    \*/
+
+    public bool is_relocatable_schema (string id)
+    {
+        string [] non_relocatable_schemas;
+        string [] relocatable_schemas;
+
+        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+        if (settings_schema_source == null)
+            return false;   // TODO better
+
+        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
+
+        return (id in relocatable_schemas);
+    }
+
+    public bool is_non_relocatable_schema (string id)
+    {
+        string [] non_relocatable_schemas;
+        string [] relocatable_schemas;
+
+        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+        if (settings_schema_source == null)
+            return false;   // TODO better
+
+        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
+
+        return (id in non_relocatable_schemas);
+    }
+
+    public string? get_schema_path (string id)
+    {
+        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+        if (settings_schema_source == null)
+            return null;   // TODO better
+
+        SettingsSchema? schema = ((!) settings_schema_source).lookup (id, true);
+        if (schema == null)
+            return null;
+
+        return ((!) schema).get_path ();
+    }
+
+    /*\
     * * Path requests
     \*/
 

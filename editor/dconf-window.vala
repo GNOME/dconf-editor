@@ -72,7 +72,7 @@ class DConfWindow : ApplicationWindow
     private ulong small_keys_list_rows_handler = 0;
     private ulong small_bookmarks_rows_handler = 0;
 
-    public DConfWindow (bool disable_warning, string? path)
+    public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
         model = new SettingsModel (settings);
 
@@ -129,10 +129,53 @@ class DConfWindow : ApplicationWindow
         settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         /* init current_path */
-        if (path == null)
-            browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+        bool strict = false;
+        if (schema == null)
+        {
+            if (key_name != null)
+                assert_not_reached ();
+
+            if (path == null)
+                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+            else
+                browser_view.init ((!) path, true);
+        }
+        else if (model.is_relocatable_schema ((!) schema))
+        {
+            if (path == null)
+            {
+                warning (_("Schema is relocatable, a path is needed."));
+                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+            }
+            // TODO automatically map schema to path
+            else if (key_name == null)
+                browser_view.init ((!) path, true);
+            else
+                browser_view.init ((!) path + (!) key_name, true);
+        }
+        else if (model.is_non_relocatable_schema ((!) schema))
+        {
+            string? schema_path = model.get_schema_path ((!) schema);
+            if (schema_path == null)    // something wrong is happening
+                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+            else if (path != null && path != schema_path)
+            {
+                warning (_("Schema is not installed on given path."));
+                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+            }
+            else if (key_name == null)
+                browser_view.init ((!) schema_path, true);
+            else
+            {
+                strict = true;
+                browser_view.init ((!) schema_path + (!) key_name, true);
+            }
+        }
         else
-            browser_view.init ((!) path, true);
+        {
+            warning ("Unknown schema %s.".printf ((!) schema));
+            browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+        }
 
         /* go to directory */
         string folder_name = SettingsModel.get_base_path (current_path);
@@ -164,7 +207,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            if (existing_dir != null)
+            if (!strict && existing_dir != null)
                 browser_view.set_directory ((!) existing_dir, null);
             else
                 cannot_find_key (object_name, (!) dir);

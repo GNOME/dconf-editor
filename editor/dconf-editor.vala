@@ -120,53 +120,117 @@ class ConfigurationEditor : Gtk.Application
     {
         string [] args = commands.get_arguments ();
 
-        switch (args.length)
+        if (args.length == 0)
         {
-            case 0 :
-                assert_not_reached ();
+            assert_not_reached ();
+            simple_activation ();
+            return Posix.EXIT_FAILURE;
+        }
+        if (args.length == 1)   // ['dconf-editor']
+        {
+            simple_activation ();
+            return Posix.EXIT_SUCCESS;
+        }
+        if (args.length > 1 && !first_window)
+        {
+            commands.print (_("Only one window can be opened for now.\n"));
+            get_active_window ().present ();
+            return Posix.EXIT_FAILURE;
+        }
 
-            case 1 : // ['dconf-editor']
-                simple_activation ();
-                return Posix.EXIT_SUCCESS;
+        args = args [1:args.length];
 
-            case 2 :
-                int ret = Posix.EXIT_SUCCESS;
-                if (first_window)
-                {
-                    string arg = args [1];
-                    string? path = arg;
+        string arg0 = args [0];
+        if (" " in arg0)
+        {
+            if (args.length == 1)
+            {
+                args = arg0.split (" ");
+                arg0 = args [0];
+            }
+            else
+                return failure_space (commands);
+        }
 
-                    if (!arg.has_prefix ("/"))
-                    {
-                        commands.print (_("Path should start with a “/”.\n"));
-                        path = null;
-                        ret = Posix.EXIT_FAILURE;
-                    }
-                    // TODO more tests
+        if (args.length > 2)
+        {
+            commands.print (_("Cannot understand: too much arguments.\n"));
+            simple_activation ();
+            return Posix.EXIT_FAILURE;
+        }
 
-                    add_window (new DConfWindow (disable_warning, path));
-                    first_window = false;
-                }
-                else
-                {
-                    commands.print (_("Only one window can be opened for now.\n"));
-                    ret = Posix.EXIT_FAILURE;
-                }
-                get_active_window ().present ();
-                return ret;
+        int ret = Posix.EXIT_SUCCESS;
 
-            default:
-                commands.print (_("Only one argument is accepted for now.\n"));
+        if (arg0.has_prefix ("/"))
+        {
+            if (args.length == 2)
+            {
+                commands.print (_("Cannot understand second argument in this context.\n"));
+                ret = Posix.EXIT_FAILURE;
+            }
+            DConfWindow window = new DConfWindow (disable_warning, null, arg0, null);
+            add_window (window);
+            first_window = false;
+            window.present ();
+            return ret;
+        }
+
+        string? key_name = null;
+
+        if (args.length == 2)
+        {
+            key_name = args [1];
+            if (" " in (!) key_name)
+                return failure_space (commands);
+            if ("/" in (!) key_name)
+            {
+                commands.print (_("Cannot understand: slash character in second argument.\n"));
                 simple_activation ();
                 return Posix.EXIT_FAILURE;
+            }
         }
+
+        string [] test_format = arg0.split (":");
+
+        if (test_format.length > 2)
+        {
+            commands.print (_("Cannot understand: too many colons.\n"));
+            simple_activation ();
+            return Posix.EXIT_FAILURE;
+        }
+
+        string? path = null;
+
+        if (test_format.length == 2)
+        {
+            path = test_format [1];
+            if (!((!) path).has_prefix ("/") || !((!) path).has_suffix ("/"))
+            {
+                commands.print (_("Schema path should start and end with a “/”.\n"));
+                simple_activation ();
+                return Posix.EXIT_FAILURE;
+            }
+        }
+
+        DConfWindow window = new DConfWindow (disable_warning, test_format [0], path, key_name);
+        add_window (window);
+        first_window = false;
+        window.present ();
+        return ret;
+    }
+
+    private int failure_space (ApplicationCommandLine commands)
+    {
+        commands.print (_("Cannot understand: space character in argument.\n"));
+        simple_activation ();
+        return Posix.EXIT_FAILURE;
     }
 
     private void simple_activation ()
     {
         if (first_window)
         {
-            add_window (new DConfWindow (disable_warning, null));
+            add_window (new DConfWindow (disable_warning, null, null, null));
             first_window = false;
         }
         get_active_window ().present ();
