@@ -155,12 +155,13 @@ class ModificationsRevealer : Revealer
 
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
         gsettings_keys_awaiting_hashtable.foreach_remove ((descriptor, key) => {
-                GLib.Settings? settings = delayed_settings_hashtable.lookup (key.schema_id);
+                string settings_descriptor = descriptor [0:descriptor.last_index_of_char (' ')]; // strip the key name
+                GLib.Settings? settings = delayed_settings_hashtable.lookup (settings_descriptor);
                 if (settings == null)
                 {
                     settings = key.settings;
                     ((!) settings).delay ();
-                    delayed_settings_hashtable.insert (key.schema_id, (!) settings);
+                    delayed_settings_hashtable.insert (settings_descriptor, (!) settings);
                 }
 
                 if (key.planned_value == null)
@@ -172,7 +173,7 @@ class ModificationsRevealer : Revealer
                 return true;
             });
 
-        delayed_settings_hashtable.foreach_remove ((schema_id, schema_settings) => { schema_settings.apply (); return true; });
+        delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
 
         /* DConf stuff */
 

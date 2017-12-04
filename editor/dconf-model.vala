@@ -131,11 +131,13 @@ public class Directory : SettingObject
             settings = new GLib.Settings (((!) settings_schema).get_id ());
 
         foreach (string key_id in (!) gsettings_key_map)
-            create_gsettings_key (key_id, ((!) settings_schema).get_key (key_id));
+            create_gsettings_key (key_id, (!) settings_schema);
     }
 
-    private void create_gsettings_key (string key_id, SettingsSchemaKey settings_schema_key)
+    private void create_gsettings_key (string key_id, SettingsSchema settings_schema)
     {
+        SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
+
         string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
         string type_string;
         switch (range_type)
@@ -155,7 +157,8 @@ public class Directory : SettingObject
                 this,
                 key_id,
                 settings,
-                settings.schema_id,
+                settings_schema.get_id (),
+                settings_schema.get_path (),
                 ((!) (nullable_summary ?? "")).strip (),
                 ((!) (nullable_description ?? "")).strip (),
                 type_string,
@@ -481,13 +484,23 @@ public class DConfKey : Key
 public class GSettingsKey : Key
 {
     public string schema_id              { get; construct; }
+    public string? schema_path           { get; construct; }
     public string summary                { get; construct; }
     public string description    { private get; construct; }
     public Variant default_value         { get; construct; }
     public string range_type             { get; construct; }
     public Variant range_content         { get; construct; }
 
-    public override string descriptor { owned get { return @"$schema_id $name"; } }
+    public override string descriptor {
+        owned get {
+            if (schema_path == null)
+            {
+                string schema_path = SettingsModel.get_parent_path (full_name);
+                return @"$schema_id:$schema_path $name";
+            }
+            return @"$schema_id $name";
+        }
+    }
 
     public GLib.Settings settings { get; construct; }
 
@@ -507,7 +520,7 @@ public class GSettingsKey : Key
         settings.reset (name);
     }
 
-    public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
+    public GSettingsKey (Directory parent, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
         string? summary_nullable = summary.locale_to_utf8 (-1, null, null, null);
         summary = summary_nullable ?? summary;
@@ -520,6 +533,7 @@ public class GSettingsKey : Key
                 settings : settings,
                 // schema infos
                 schema_id: schema_id,
+                schema_path: schema_path,
                 summary: summary,
                 description: description,
                 default_value: default_value,       // TODO devel default/admin default
