@@ -194,9 +194,6 @@ public abstract class Key : SettingObject
     public string type_string { get; protected set; default = "*"; }
     public Variant properties { owned get; protected set; }
 
-    public bool planned_change { get; set; default = false; }
-    public Variant? planned_value { get; set; default = null; }
-
     public abstract Variant value { owned get; set; }
 
     public signal void value_changed ();
@@ -415,7 +412,6 @@ public class DConfKey : Key
             warning (error.message);
         }
         is_ghost = true;
-        planned_change = false;
         value_changed ();
     }
 
