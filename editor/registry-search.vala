@@ -160,8 +160,8 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            on_delete_call_handler = row.on_delete_call.connect (() => set_key_value (key, null));
-            ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { set_key_value (key, variant); });
+            on_delete_call_handler = row.on_delete_call.connect (() => modifications_handler.set_key_value (key, null));
+            ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { modifications_handler.set_key_value (key, variant); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key));
 
             row.destroy.connect (() => {
@@ -212,7 +212,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
                 event_x += widget_x;
             }
 
-            row.show_right_click_popover (get_current_delay_mode (), event_x);
+            row.show_right_click_popover (modifications_handler.get_current_delay_mode (), event_x);
             rows_possibly_with_popover.append (row);
         }
 
@@ -289,32 +289,6 @@ class RegistrySearch : Grid, PathElement, BrowsableView
     }*/
 
     /*\
-    * * Modifications stuff
-    \*/
-
-    public bool get_current_delay_mode ()
-    {
-        return browser_view.get_current_delay_mode ();
-    }
-
-    private void set_key_value (Key key, Variant? new_value)
-    {
-        if (get_current_delay_mode ())
-            modifications_handler.add_delayed_setting (key, new_value);
-        else if (new_value != null)
-            key.value = (!) new_value;
-        else if (key is GSettingsKey)
-            ((GSettingsKey) key).set_to_default ();
-        else if (behaviour != Behaviour.UNSAFE)
-        {
-            browser_view.enter_delay_mode ();
-            modifications_handler.add_delayed_setting (key, null);
-        }
-        else
-            ((DConfKey) key).erase ();
-    }
-
-    /*\
     * * Keyboard calls
     \*/
 
@@ -325,7 +299,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             return false;
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-        row.show_right_click_popover (get_current_delay_mode ());
+        row.show_right_click_popover (modifications_handler.get_current_delay_mode ());
         rows_possibly_with_popover.append (row);
         return true;
     }

@@ -184,4 +184,21 @@ class ModificationsHandler : Object
         reload ();
     }
 
+    public void set_key_value (Key key, Variant? new_value)
+    {
+        if (get_current_delay_mode ())
+            add_delayed_setting (key, new_value);
+        else if (new_value != null)
+            key.value = (!) new_value;
+        else if (key is GSettingsKey)
+            ((GSettingsKey) key).set_to_default ();
+        else if (behaviour != Behaviour.UNSAFE)
+        {
+            enter_delay_mode ();
+            add_delayed_setting (key, null);
+        }
+        else
+            ((DConfKey) key).erase ();
+    }
+
 }
