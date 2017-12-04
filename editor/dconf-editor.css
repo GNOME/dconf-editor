@@ -142,12 +142,15 @@
 
 /* pending change icon */
 
-                                                .keys-list          > row > .key         { transition:background-position 0.3s; }
-                                                .keys-list          > row > .key.delayed { background-image:-gtk-icontheme("document-open-recent-symbolic"); background-repeat:no-repeat; }
-                                                .keys-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
+                                                .keys-list          > row > .key         { transition:background-position 0.3s,
+                                                                                                      background-size     0.3s;
+                                                                                           background-repeat:no-repeat;
+                                                                                           background-size:1.5rem; }
+                          .small-keys-list-rows .keys-list          > row > .key         { background-size:1rem; }
 
-                                                .keys-list          > row > .key.delayed { background-size:1.5rem; transition:background-size 0.3s; }
-                          .small-keys-list-rows .keys-list          > row > .key.delayed { background-size:1rem; }
+                                                .keys-list          > row > .key.delayed       { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
+                                                .keys-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
+                                                .keys-list          > row > .key.erase         { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
 
                                                 .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
                                                 .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }

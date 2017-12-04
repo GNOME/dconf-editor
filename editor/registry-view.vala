@@ -191,9 +191,9 @@ class RegistryView : Grid, PathElement, BrowsableView
 
     private void set_delayed_icon (ClickableListBoxRow row, Key key)
     {
+        StyleContext context = row.get_style_context ();
         if (key.planned_change)
         {
-            StyleContext context = row.get_style_context ();
             context.add_class ("delayed");
             if (key is DConfKey)
             {
@@ -204,7 +204,13 @@ class RegistryView : Grid, PathElement, BrowsableView
             }
         }
         else
-            row.get_style_context ().remove_class ("delayed");
+        {
+            context.remove_class ("delayed");
+            if (key is DConfKey && ((DConfKey) key).is_ghost)
+                context.add_class ("erase");
+            else
+                context.remove_class ("erase");
+        }
     }
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)
