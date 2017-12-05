@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-10-02 13:12+0000\n"
-"PO-Revision-Date: 2017-10-03 14:53+0700\n"
+"POT-Creation-Date: 2017-12-05 06:26+0000\n"
+"PO-Revision-Date: 2017-12-05 14:23+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -32,7 +32,7 @@ msgstr "Lokasi telah ditandai"
 msgid "Toggle to bookmark this location"
 msgstr "Jungkitkan untuk menandai lokasi Ini"
 
-#: editor/bookmarks.ui:84
+#: editor/bookmarks.ui:61
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -40,11 +40,11 @@ msgstr ""
 "Penanda akan\n"
 "ditambahkan disini"
 
-#: editor/bookmarks.ui:113
+#: editor/bookmarks.ui:87 editor/registry-search.vala:613
 msgid "Bookmarks"
 msgstr "Penanda Tautan"
 
-#: editor/bookmarks.ui:114
+#: editor/bookmarks.ui:88
 msgid "Manage your bookmarks"
 msgstr "Kelola penanda taut"
 
@@ -55,6 +55,15 @@ msgstr "Hapus"
 #: editor/bookmark.ui:31
 msgid "Remove this bookmark"
 msgstr "Buang penanda taut ini"
+
+#: editor/browser-view.ui:22
+msgid "Sort preferences have changed. Do you want to reload the view?"
+msgstr ""
+"Preferensi pengurutan telah berubah. Apakah Anda hendak memuat ulang tilikan?"
+
+#: editor/browser-view.ui:28
+msgid "Reload"
+msgstr "Muat ulang"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -96,7 +105,7 @@ msgid "The GNOME Project"
 msgstr "Projek GNOME"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:78 editor/dconf-editor.vala:294
 msgid "dconf Editor"
 msgstr "Penyunting dconf"
 
@@ -104,7 +113,7 @@ msgstr "Penyunting dconf"
 msgid "Configuration editor for dconf"
 msgstr "Penyunting konfigurasi bagi dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Directly edit your entire configuration database"
 msgstr "Menyunting langsung seluruh basis data konfigurasi Anda"
 
@@ -115,44 +124,44 @@ msgstr "pengaturan;konfigurasi;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: editor/ca.desrt.dconf-editor.desktop.in:15
-msgid "dconf-editor"
-msgstr "dconf-editor"
+msgid "ca.desrt.dconf-editor"
+msgstr "ca.desrt.dconf-editor"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#: editor/ca.desrt.dconf-editor.gschema.xml:23
 msgid "The width of the window"
 msgstr "Lebar jendela"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#: editor/ca.desrt.dconf-editor.gschema.xml:24
 msgid "The width of the main window in pixels."
 msgstr "Lebar jendela utama dalam piksel."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#: editor/ca.desrt.dconf-editor.gschema.xml:28
 msgid "The height of the window"
 msgstr "Tinggi jendela"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#: editor/ca.desrt.dconf-editor.gschema.xml:29
 msgid "The height of the main window in pixels."
 msgstr "Tinggi dari jendela utama dalam piksel."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#: editor/ca.desrt.dconf-editor.gschema.xml:33
+#: editor/ca.desrt.dconf-editor.gschema.xml:34
 msgid "A flag to enable maximized mode"
 msgstr "Tanda untuk mengaktifkan mode pemaksimalan"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:33
+#: editor/ca.desrt.dconf-editor.gschema.xml:38
 msgid "A list of bookmarked paths"
 msgstr "Daftar path yang ditandatauti"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:34
+#: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Memuat semua path yang ditanda tauti oleh pengguna sebagai larik string."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:38
+#: editor/ca.desrt.dconf-editor.gschema.xml:43
 msgid "A flag to restore the last view"
 msgstr "Flag untuk memulihkan tilikan terakhir"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:39
+#: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -160,11 +169,11 @@ msgstr ""
 "Jika bernilai \"true\", Penyunting Dconf mencoba saat diluncurkan untuk "
 "menavigasi ke lokasi yang dideskripsikan di kunci \"saved-view\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:43
+#: editor/ca.desrt.dconf-editor.gschema.xml:48
 msgid "A path to restore the last view"
 msgstr "Path untuk memulihkan tilikan terakhir"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:44
+#: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -172,11 +181,11 @@ msgstr ""
 "Jika kunci \"restore-view\" bernilai \"true\", Penyunting Dconf mencoba saat "
 "diluncurkan untuk menavigasi ke lokasi ini."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:48
+#: editor/ca.desrt.dconf-editor.gschema.xml:53
 msgid "Show initial warning"
 msgstr "Tmpilkan peringatan awal mula"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:49
+#: editor/ca.desrt.dconf-editor.gschema.xml:54
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -184,27 +193,27 @@ msgstr ""
 "Bila berisi \"true\", Penyunting Dconf membuka popup ketika diluncurkan, "
 "mengingatkan pengguna agar berhati-hati."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
+#: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for keys list"
 msgstr "Tanda untuk memfungsikan baris kecil bagi daftar kunci"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:54
+#: editor/ca.desrt.dconf-editor.gschema.xml:59
 msgid "If “true”, the keys list use smaller rows."
 msgstr "Bila \"true\", daftar kunci memakai baris yang lebih kecil."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:58
+#: editor/ca.desrt.dconf-editor.gschema.xml:63
 msgid "A flag to enable small rows for bookmarks list"
 msgstr "Flag untuk memfungsikan baris kecil bagi daftar markah."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:59
+#: editor/ca.desrt.dconf-editor.gschema.xml:64
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "Bila \"true\", daftar markah memakai baris lebih kecil."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:68
+#: editor/ca.desrt.dconf-editor.gschema.xml:73
 msgid "Change the behaviour of a key value change request"
 msgstr "Ubah perilaku dari permintaan perubahan nilai kunci"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:69
+#: editor/ca.desrt.dconf-editor.gschema.xml:74
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -226,11 +235,11 @@ msgstr ""
 "perubahan dalam mode tunda, yang memungkinkan untuk menerapkan beberapa "
 "kunci sekaligus."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:73
+#: editor/ca.desrt.dconf-editor.gschema.xml:78
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Flag untuk mengurutkan daftar kunci yang peka besar kecil huruf"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:74
+#: editor/ca.desrt.dconf-editor.gschema.xml:79
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -241,12 +250,40 @@ msgstr ""
 "diurutkan peka besar kecil huruf, dengan urutan biasa folder huruf besar di "
 "awal."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
+#: editor/ca.desrt.dconf-editor.gschema.xml:83
+msgid "A flag to sort folders before, after or mixed with keys"
+msgstr ""
+"Flag untuk mengurutkan folder sebelum, setelah atau dicampur dengan kunci"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:84
+msgid ""
+"If “mixed”, folders are sorted together with keys; if “first”, all folders "
+"are sorted before keys; if “last”, all folders are sorted after keys."
+msgstr ""
+"Jika \"dicampur\", folder diurutkan bersamaan dengan kunci; jika \"pertama"
+"\", semua folder diurutkan sebelum kunci; jika \"terakhir\", semua folder "
+"diurutkan setelah kunco."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:88
+msgid "Use “Back” and “Forward” mouse button events"
+msgstr "Gunakan tombol tetikus \"Mundur\" dan \"Maju\""
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:89
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will determine if any action is taken inside of a browser window when either "
+"is pressed."
+msgstr ""
+"Bagi pengguna dengan tetikus yang memiliki tombol \"Maju\" serta \"Mundur\", "
+"kunci ini akan menentukan apakah ada tindakan yang diambil di dalam jendela "
+"peramban saat ditekan."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:94
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr ""
 "Tombol tetikus untuk mengaktifkan fungsi \"Balik\" pada jendela peramban"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#: editor/ca.desrt.dconf-editor.gschema.xml:95
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -256,12 +293,12 @@ msgstr ""
 "kunci ini akan menentukan tombol mana yang membuat perintah \"Mundur\" "
 "menjadi aktif dalam jendela peramban. Nilai yang mungkin antara 6 dan 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr ""
 "Tombol tetikus untuk mengaktifkan fungsi \"Maju\" pada jendela peramban"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#: editor/ca.desrt.dconf-editor.gschema.xml:101
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -271,19 +308,38 @@ msgstr ""
 "kunci ini akan menentukan tombol mana yang membuat perintah \"Maju\" menjadi "
 "aktif dalam jendela peramban. Nilai yang mungkin antara 6 dan 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:98
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
+msgid "Mapping of paths to manually associated schemas"
+msgstr "Pemetaan path ke skema yang terkait secara manual"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:106
+msgid ""
+"A dictionary that maps schema IDs with path specifications. It is used to "
+"allow the user to associate a relocatable schema to certain paths. Path "
+"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
+"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
+"may be associated with multiple path specifications."
+msgstr ""
+"Kamus yang memetakan ID skema dengan spesifikasi path. Ini digunakan untuk "
+"memungkinkan pengguna mengaitkan skema yang dapat direlokasi ke path "
+"tertentu. Spesifikasi path mungkin berisi wildcard dalam bentuk segmen "
+"kosong (mis. /ca/desrt/dconf-editor//), yang menentukan beberapa path. ID "
+"skema yang sama dapat dikaitkan dengan beberapa spesifikasi path."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#: editor/ca.desrt.dconf-editor.gschema.xml:267
 msgid "A boolean, type ‘b’"
 msgstr "Suatu bool, tipe \"b\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:99
+#: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Boolean hanya dapat memiliki dua nilai. \"true\" atau \"false\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#: editor/ca.desrt.dconf-editor.gschema.xml:134
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Suatu bool nullable, tipe \"mb\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:104
+#: editor/ca.desrt.dconf-editor.gschema.xml:135
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -293,11 +349,11 @@ msgstr ""
 "lain tapi bisa menerima nilai \"nothing\". Suatu boolean yang dapat di-null-"
 "kan bisa menerima tiga nilai, \"true\", \"false\", dan \"nothing\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#: editor/ca.desrt.dconf-editor.gschema.xml:139
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Suatu byte (tanpa tanda), tipe \"y\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -305,11 +361,11 @@ msgstr ""
 "Suatu nilai byte adalah bilangan bulat antara 0 dan 255. Ini dapat dipakai "
 "untuk mengangsurkan karakter."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
+#: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A bytestring, type ‘ay’"
 msgstr "Suatu bytestring, tipe \"ay\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -319,11 +375,11 @@ msgstr ""
 "bukan utf8 yang valid. Dalam hal itu, konvensinya adalah bahwa karakter "
 "berakhiran null mesti disertakan sebagai karakter terakhir dalam larik."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#: editor/ca.desrt.dconf-editor.gschema.xml:149
 msgid "A bytestring array, type ‘aay’"
 msgstr "Suatu larik bytestring, tipe \"aay\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
+#: editor/ca.desrt.dconf-editor.gschema.xml:150
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -331,27 +387,27 @@ msgstr ""
 "Ini adalah tipe larik bytestring. Tipe bytestring biasanya dipakai untuk "
 "mengangsurkan string yang mungkin bukan utf8 yang valid."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Suatu tipe handle D-Bus, tipe \"h\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#: editor/ca.desrt.dconf-editor.gschema.xml:155
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message. If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
-"Tipe handle adalah nilai bulat bertanda 32 bit yang, sesuai konvensi, "
+"Tipe handle adalah nilai bulat bertanda 32-bit yang, sesuai konvensi, "
 "dipakai sebagai indeks ke larik deskriptor berkas yang dikirim bersamaan "
 "dengan suatu pesan D-Bus. Bila Anda tidak berinteraksi dengan D-Bus, maka "
 "tidak ada alasan untuk memakai tipe ini."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:130
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Suatu path objek D-Bus, tipe \"o\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:162
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -361,11 +417,11 @@ msgstr ""
 "diberikan pada bus. Bila Anda tidak berinteraksi dengan D-Bus, maka tidak "
 "ada alasan untuk memakai tipe ini."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:137
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Larik path objek D-Bus, bertipe \"ao\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:169
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -375,11 +431,11 @@ msgstr ""
 "\"[]\"). Bila Anda tidak berinteraksi dengan D-Bus, maka tidak ada alasan "
 "untuk memakai tipe ini."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Suatu tanda tangan D-Bus, tipe \"g\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:176
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -389,19 +445,19 @@ msgstr ""
 "tangan bagi pesan atau metoda D-Bus. Bila Anda tidak berinteraksi dengan D-"
 "Bus, maka tidak ada alasan untuk memakai tipe ini."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:151
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid "A double, type ‘d’"
 msgstr "Suatu double, tipe \"d\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:183
 msgid "A double value could represent any real number."
 msgstr "Nilai double dapat merepresentasikan sebarang bilangan riil."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:156
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "A 5-choices enumeration"
 msgstr "Suatu enumerasi 5-pilihan"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -409,73 +465,76 @@ msgstr ""
 "Enumerasi dapat dilakukan dengan atribut \"enum\", atau dengan tag \"choices"
 "\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
+#: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A short integer, type ‘n’"
 msgstr "Suatu short integer, tipe \"n\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:193
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
-"Bilangan bulat bertanda 16 bit. Lihat juga kunci \"integer-16-unsigned\"."
+"Bilangan bulat bertanda 16-bit. Lihat juga kunci \"integer-16-unsigned\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "Flags: choose-colors-you-love"
 msgstr "Flag: choose-colors-you-love"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:167
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#: editor/ca.desrt.dconf-editor.gschema.xml:278
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Flag dapat ditata oleh atribut \"enum\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:202
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Suatu short integer tanpa tanda (unsigned), tipe \"q\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
-"Bilangan bulat tak bertanda 16 bit. Lihat juga kunci \"integer-16-signed\"."
+"Bilangan bulat tak bertanda 16-bit. Lihat juga kunci \"integer-16-signed\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#: editor/ca.desrt.dconf-editor.gschema.xml:207
+#: editor/ca.desrt.dconf-editor.gschema.xml:272
 msgid "An usual integer, type ‘i’"
 msgstr "Suatu integer biasa, tipe \"i\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
-"Bilangan bulat bertanda 32 bit. Lihat juga kunci \"integer-32-unsigned\"."
+"Bilangan bulat bertanda 32-bit. Lihat juga kunci \"integer-32-unsigned\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Suatu integer biasa tanpa tanda (unsigned), tipe \"u\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:213
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
-"Bilangan bulat tak bertanda 32 bit. Lihat juga kunci \"integer-32-signed\"."
+"Bilangan bulat tak bertanda 32-bit. Lihat juga kunci \"integer-32-signed\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "A long integer, type ‘x’"
 msgstr "Suatu long integer, tipe \"x\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:218
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
-"Bilangan bulat bertanda 64 bit. Lihat juga kunci \"integer-64-unsigned\"."
+"Bilangan bulat bertanda 64-bit. Lihat juga kunci \"integer-64-unsigned\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:191
+#: editor/ca.desrt.dconf-editor.gschema.xml:222
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Suatu long integer tanpa tanda (unsigned), tipe \"t\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:223
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
-"Bilangan bulat tak bertanda 64 bit. Lihat juga kunci \"integer-64-signed\"."
+"Bilangan bulat tak bertanda 64-bit. Lihat juga kunci \"integer-64-signed\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#: editor/ca.desrt.dconf-editor.gschema.xml:229
 msgid "A number with range"
 msgstr "Sebuah bilangan dengan rentang"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:199
+#: editor/ca.desrt.dconf-editor.gschema.xml:230
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -486,26 +545,26 @@ msgstr ""
 "Sebagai contoh, bilangan bulat ini hanya bisa menyimpan nilai antara -2 dan "
 "10."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:234
 msgid "A custom type, here ‘(ii)’"
 msgstr "Sebuah tipe ubahan, di sini \"ii\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:204
+#: editor/ca.desrt.dconf-editor.gschema.xml:235
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "Penyunting Dconf memungkinkan Anda menyunting sebarang tipe pengaturan yang "
 "didukung oleh GSettings, kembali ke suatu entri string ketika tidak punya "
 "cara lain yang lebih baik. Berikut adalah tupel dari dua bilangan bulat 32 "
 "bit bertanda."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:239
 msgid "A string, type ‘s’"
 msgstr "Sebuah string, tipe \"s\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:209
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -514,11 +573,11 @@ msgstr ""
 "string kosong \"''\" tidak sama dengan NULL (nihil); lihat juga kunci "
 "\"string-nullable\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:213
+#: editor/ca.desrt.dconf-editor.gschema.xml:244
 msgid "A string array, type ‘as’"
 msgstr "Sebuah larik string, tipe \"as\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:214
+#: editor/ca.desrt.dconf-editor.gschema.xml:245
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -526,11 +585,11 @@ msgstr ""
 "Larik string memuat seberapapun banyaknya string dengan panjang sebarang. "
 "Dapat juga berisi laring kosong, \"[]\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
+#: editor/ca.desrt.dconf-editor.gschema.xml:249
 msgid "A nullable string, type ‘ms’"
 msgstr "Suatu string nullable, tipe \"ms\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#: editor/ca.desrt.dconf-editor.gschema.xml:250
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -541,11 +600,11 @@ msgstr ""
 "kan dapat menerima sebarang string sebagai nilai, termasuk string kosong "
 "\"''\", atau bisa NULL (nihil)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#: editor/ca.desrt.dconf-editor.gschema.xml:254
 msgid "A 1-choice enumeration"
 msgstr "Suatu enumerasi 1-pilihan"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:255
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -553,11 +612,11 @@ msgstr ""
 "Suatu enumerasi hanya dapat memuat satu butir, tapi itu mungkin kesalahan. "
 "Penyunting Dconf memperingatkan Anda dalam kasus itu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:229
+#: editor/ca.desrt.dconf-editor.gschema.xml:260
 msgid "A 1-choice integer value"
 msgstr "Suatu nilai bulat 1-pilihan"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:230
+#: editor/ca.desrt.dconf-editor.gschema.xml:261
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -565,6 +624,17 @@ msgstr ""
 "Suatu rentang dapat membatasi suatu bilangan bulat sehingga hanya "
 "mengizinkan satu nilai, tapi itu mungkin kesalahan. Penyunting Dconf "
 "memperingatkan Anda dalam kasus itu."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:268
+msgid "An usual boolean value, defined by a relocatable schema."
+msgstr ""
+"Nilai boolean biasa, yang didefinisikan oleh skema yang dapat direlokasi."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:273
+msgid "A 32-bit signed integer, defined by a relocatable schema."
+msgstr ""
+"Bilangan bulat bertanda 32-bit, didefinisikan oleh skema yang dapat "
+"direlokasi."
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -578,157 +648,256 @@ msgstr "Tent_ang"
 msgid "_Quit"
 msgstr "_Keluar"
 
-#: editor/dconf-editor.ui:49
+#: editor/dconf-editor.ui:40
 msgid "Actions"
 msgstr "Aksi"
 
 #. TODO 1/3 Informations
-#: editor/dconf-editor.ui:50
+#: editor/dconf-editor.ui:41
 msgid "Current view actions"
 msgstr "Aksi tilikan kini"
 
-#: editor/dconf-editor.ui:77
+#: editor/dconf-editor.ui:69
 msgid "Search"
 msgstr "Cari"
 
-#: editor/dconf-editor.ui:78
+#: editor/dconf-editor.ui:70
 msgid "Search keys"
 msgstr "Cari kunci"
 
-#: editor/dconf-editor.vala:22
+#: editor/dconf-editor.vala:24
 msgid "Print release version and exit"
 msgstr "Cetak versi rilis dan keluar"
 
+#: editor/dconf-editor.vala:25
+msgid "Do not show initial warning"
+msgstr "Jangan tampilkan peringatan awal mula"
+
+#. TODO something, probably
+#. called with GSETTINGS_BACKEND=memory
+#: editor/dconf-editor.vala:99
+msgid "The Memory settings backend is used, no change will be saved on quit."
+msgstr ""
+"Pengaturan Memori backend digunakan, tidak ada perubahan yang akan disimpan "
+"saat keluar."
+
+#. called with GSETTINGS_BACKEND=null
+#: editor/dconf-editor.vala:101
+msgid "The Null settings backend is used, changes will not be saved."
+msgstr "Pengaturan Null backend digunakan, perubahan tidak akan disimpan."
+
+#: editor/dconf-editor.vala:103
+#, c-format
+msgid "The backend used is unknown [%s], bad thing might happen."
+msgstr ""
+"Backend yang digunakan tidak diketahui [%s], hal buruk mungkin terjadi."
+
+#. called by default or with GSETTINGS_BACKEND=dconf
+#: editor/dconf-editor.vala:105
+msgid "Looks like the DConf settings backend is used, all looks good."
+msgstr ""
+"Sepertinya pengaturan backend DConf digunakan, semuanya terlihat bagus."
+
+#: editor/dconf-editor.vala:136
+msgid "Only one window can be opened for now.\n"
+msgstr "Hanya satu jendela yang bisa dibuka untuk saat ini.\n"
+
+#: editor/dconf-editor.vala:157
+msgid "Cannot understand: too many arguments.\n"
+msgstr "Tidak dapat memahami: terlalu banyak argumen.\n"
+
+#: editor/dconf-editor.vala:168
+msgid "Cannot understand second argument in this context.\n"
+msgstr "Tidak dapat memahami argumen kedua dalam konteks ini.\n"
+
+#: editor/dconf-editor.vala:187
+msgid "Cannot understand: slash character in second argument.\n"
+msgstr "Tidak dapat memahami: karakter slash dalam argumen kedua.\n"
+
+#: editor/dconf-editor.vala:197
+msgid "Cannot understand: too many colons.\n"
+msgstr "Tidak dapat memahami: terlalu banyak titik dua.\n"
+
+#: editor/dconf-editor.vala:209
+msgid "Schema path should start and end with a “/”.\n"
+msgstr "Path skema harus dimulai dan diakhiri dengan \"/\".\n"
+
+#: editor/dconf-editor.vala:224
+msgid "Cannot understand: space character in argument.\n"
+msgstr "Tidak dapat memahami: karakter spasi dalam argumen.\n"
+
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:96
+#. #: editor/dconf-editor.vala:243
 msgid "Copied to clipboard"
 msgstr "Disalin ke papan klip."
 
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:296
+msgid "A graphical viewer and editor of applications’ internal settings."
+msgstr "Penampil grafis dan penyunting pengaturan internal aplikasi."
+
+#: editor/dconf-editor.vala:297
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2016 – Arnaud Bonatti"
+"Copyright © 2015-2017 – Arnaud Bonatti"
 msgstr ""
 "Hak Cipta © 2010-2014 – Canonical Ltd\n"
-"Hak Cipta © 2015-2016 – Arnaud Bonatti"
+"Hak Cipta © 2015-2017 – Arnaud Bonatti"
 
-#: editor/dconf-editor.vala:154
+#: editor/dconf-editor.vala:301
 msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
 "Andika Triwidada <andika@gmail.com>, 2012, 2013."
 
-#: editor/dconf-model.vala:220
+#: editor/dconf-model.vala:209
 msgid "Boolean"
 msgstr "Boolean"
 
-#: editor/dconf-model.vala:222
+#: editor/dconf-model.vala:211
 msgid "String"
 msgstr "String"
 
-#: editor/dconf-model.vala:224
+#: editor/dconf-model.vala:213
 msgid "String array"
 msgstr "Larik string"
 
-#: editor/dconf-model.vala:226
+#: editor/dconf-model.vala:215
 msgid "Enumeration"
 msgstr "Enumerasi"
 
-#: editor/dconf-model.vala:228
+#: editor/dconf-model.vala:217
 msgid "Flags"
 msgstr "Flag"
 
-#: editor/dconf-model.vala:230
+#: editor/dconf-model.vala:219
 msgid "Double"
 msgstr "Double"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:233
+#: editor/dconf-model.vala:222
 msgid "D-Bus handle type"
 msgstr "Tipe handle D-Bus"
 
-#: editor/dconf-model.vala:235
+#: editor/dconf-model.vala:224
 msgid "D-Bus object path"
 msgstr "Path objek D-Bus"
 
-#: editor/dconf-model.vala:237
+#: editor/dconf-model.vala:226
 msgid "D-Bus object path array"
 msgstr "Larik path objek D-Bus"
 
-#: editor/dconf-model.vala:239
+#: editor/dconf-model.vala:228
 msgid "D-Bus signature"
 msgstr "Tanda tangan D-Bus"
 
-#: editor/dconf-model.vala:247
+#: editor/dconf-model.vala:236
 msgid "Integer"
 msgstr "Bilangan bulat"
 
-#: editor/dconf-model.vala:362
+#: editor/dconf-model.vala:354
 msgid "True"
 msgstr "True"
 
-#: editor/dconf-model.vala:364
+#: editor/dconf-model.vala:356
 msgid "False"
 msgstr "False"
 
-#: editor/dconf-model.vala:365
+#: editor/dconf-model.vala:357
 msgid "Nothing"
 msgstr "Nihil"
 
-#: editor/dconf-model.vala:370
+#: editor/dconf-model.vala:362
 msgid "true"
 msgstr "true"
 
-#: editor/dconf-model.vala:372
+#: editor/dconf-model.vala:364
 msgid "false"
 msgstr "false"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:374
+#: editor/dconf-model.vala:366
 msgid "nothing"
 msgstr "hampa"
 
-#: editor/dconf-view.vala:438
+#: editor/dconf-model.vala:453
+msgid "DConf backend"
+msgstr "Backend DConf"
+
+#: editor/dconf-model.vala:533
+msgid "Relocatable schema"
+msgstr "Skema yang dapat direlokasi"
+
+#: editor/dconf-model.vala:533
+msgid "Schema with path"
+msgstr "Skema dengan path"
+
+#: editor/dconf-view.vala:253
+msgid "Failed to parse as double."
+msgstr "Gagal mengurai sebagai dua kali lipat."
+
+#: editor/dconf-view.vala:506 editor/dconf-view.vala:599
 msgid "This value is invalid for the key type."
 msgstr "Nilai ini tak valid bagi tipe kunci tersebut."
 
-#: editor/dconf-window.vala:132
+#: editor/dconf-window.vala:147
+msgid "Schema is relocatable, a path is needed."
+msgstr "Skema direlokasi, dibutuhkan path."
+
+#: editor/dconf-window.vala:163
+msgid "Schema is not installed on given path."
+msgstr "Skema tidak dipasang pada path yang diberikan."
+
+#: editor/dconf-window.vala:236
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Terimakasih telah menggunakan Penyunting Dconf untuk menyunting pengaturan "
 "Anda!"
 
-#: editor/dconf-window.vala:133
+#: editor/dconf-window.vala:237
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Jangan lupa bahwa beberapa pilihan dapat membuat aplikasi rusak, jadi "
 "berhati-hatilah."
 
-#: editor/dconf-window.vala:134
+#: editor/dconf-window.vala:238
 msgid "I’ll be careful."
 msgstr "Saya akan berhati-hati."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:138
+#: editor/dconf-window.vala:242
 msgid "Show this dialog next time."
 msgstr "Tampilkan dialog ini saat selanjutnya."
 
-#: editor/dconf-window.vala:248
+#: editor/dconf-window.vala:359
 msgid "Copy current path"
 msgstr "Salin path saat ini"
 
-#: editor/dconf-window.vala:253
+#: editor/dconf-window.vala:364
 msgid "Reset visible keys"
 msgstr "Reset kunci yang tampak"
 
-#. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/dconf-window.vala:254 editor/key-list-box-row.vala:485
-msgid "Reset recursively"
-msgstr "Reset secara rekursif"
+#: editor/dconf-window.vala:365
+msgid "Reset view recursively"
+msgstr "Reset tampilan secara rekursif"
 
-#: editor/dconf-window.vala:262
+#: editor/dconf-window.vala:373
 msgid "Enter delay mode"
 msgstr "Masuk mode tunda"
+
+#: editor/dconf-window.vala:636
+#, c-format
+msgid "Cannot find folder “%s”."
+msgstr "Tidak bisa menemukan folder \"%s\"."
+
+#: editor/dconf-window.vala:641
+#, c-format
+msgid "Cannot find key “%s” here."
+msgstr "Tidak bisa menemukan kunci \"%s\" di sini."
+
+#: editor/dconf-window.vala:646
+#, c-format
+msgid "Key “%s” has been removed."
+msgstr "Kunci \"%s\" telah dihapus."
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
@@ -840,67 +1009,77 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Keluar"
 
-#: editor/key-list-box-row.vala:188
+#: editor/key-list-box-row.vala:296
 msgid "No Schema Found"
 msgstr "Tak Ada Skema Yang Ditemukan"
 
-#: editor/key-list-box-row.vala:202
+#: editor/key-list-box-row.vala:310
 msgid "Key erased."
 msgstr "Kunci dihapus."
 
-#: editor/key-list-box-row.vala:224
+#: editor/key-list-box-row.vala:332
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (kunci dihapus)"
 
-#: editor/key-list-box-row.vala:310
+#: editor/key-list-box-row.vala:424
 msgid "No summary provided"
 msgstr "Tidak disediakan ringkasan"
 
 #. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:465
+#: editor/key-list-box-row.vala:585
 msgid "Customize…"
 msgstr "Suai…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:468
+#: editor/key-list-box-row.vala:588
 msgid "Set to default"
 msgstr "Jadikan baku"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:473
+#: editor/key-list-box-row.vala:593
 msgid "Dismiss change"
 msgstr "Buang perubahan"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:476
+#: editor/key-list-box-row.vala:596
 msgid "Open"
 msgstr "Buka"
 
+#. Translators: "open parent folder" action in the right-click menu on a folder in a search result
+#: editor/key-list-box-row.vala:599
+msgid "Open parent folder"
+msgstr "Buka folder induk"
+
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
-#: editor/registry-info.ui:28
+#: editor/key-list-box-row.vala:602 editor/key-list-box-row.vala:733
+#: editor/registry-info.ui:53
 msgid "Erase key"
 msgstr "Hapus kunci"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:482
+#: editor/key-list-box-row.vala:605
 msgid "Do not erase"
 msgstr "Jangan hapus"
 
+#. Translators: "reset recursively" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:608
+msgid "Reset recursively"
+msgstr "Reset secara rekursif"
+
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:494
+#: editor/key-list-box-row.vala:617
 msgid "Copy"
 msgstr "Salin"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:604
+#: editor/key-list-box-row.vala:727
 msgid "No change"
 msgstr "Tidak berubah"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:674 editor/registry-info.vala:261
+#: editor/key-list-box-row.vala:797 editor/registry-info.vala:265
 msgid "Default value"
 msgstr "Nilai baku"
 
@@ -912,33 +1091,33 @@ msgstr "Terapkan"
 msgid "Nothing to reset."
 msgstr "Tidak ada yang direset."
 
-#: editor/modifications-revealer.vala:241
+#: editor/modifications-revealer.vala:242
 msgid "The value is invalid."
 msgstr "Nilai tak valid."
 
-#: editor/modifications-revealer.vala:245
+#: editor/modifications-revealer.vala:246
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
 "Perubahan akan dibuang bila Anda keluar dari tilikan ini tanpa menerapkan."
 
-#: editor/modifications-revealer.vala:247
+#: editor/modifications-revealer.vala:248
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
 "Perubahan akan diterapkan bila diminta atau Anda keluar dari tilikan ini."
 
-#: editor/modifications-revealer.vala:264
+#: editor/modifications-revealer.vala:265
 msgid "Changes will be delayed until you request it."
 msgstr "Perubahan akan ditunda sampai Anda memintanya."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:266
+#: editor/modifications-revealer.vala:267
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
 msgstr[0] "%u operasi gsettings ditunda."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:270
+#: editor/modifications-revealer.vala:271
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -946,12 +1125,12 @@ msgstr[0] "%u operasi dconf ditunda."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:273
+#: editor/modifications-revealer.vala:274
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:273
+#: editor/modifications-revealer.vala:274
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -961,13 +1140,23 @@ msgstr[0] "%u operasi gsettings"
 #. * the space before the "and" is probably wanted, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:278
+#: editor/modifications-revealer.vala:279
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
 msgstr[0] "dan %u operasi dconf ditunda."
 
 #: editor/registry-info.ui:22
+msgid ""
+"Multiple schemas are installed at the parent path. This key might be defined "
+"and used by more than one schema. This could lead to problems. Edit value at "
+"your own risk."
+msgstr ""
+"Beberapa skema dipasang pada path induk. Kunci ini bisa didefinisikan dan "
+"digunakan oleh lebih dari satu skema. Hal ini bisa menimbulkan masalah. "
+"Sunting nilai dengan risiko Anda sendiri."
+
+#: editor/registry-info.ui:47
 msgid ""
 "No schema available. Dconf Editor can’t find a schema associated with this "
 "key. The application that installed this key may have been removed, may have "
@@ -979,7 +1168,7 @@ msgstr ""
 "dihapus, tidak memakai kunci ini lagi, atau mungkin memakai skema yang dapat "
 "direlokasi untuk mendefinisikan kunci-kuncinya."
 
-#: editor/registry-info.ui:56
+#: editor/registry-info.ui:81
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -988,7 +1177,7 @@ msgstr ""
 "Enumerasi ini hanya menawarkan satu pilihan. Itu mungkin kesalahan aplikasi "
 "yang memasang skema ini. Bila mungkin, bukalah suatu kutu tentang itu."
 
-#: editor/registry-info.ui:65
+#: editor/registry-info.ui:90
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -998,49 +1187,62 @@ msgstr ""
 "aplikasi yang memasang skema ini. Bila mungkin, bukalah suatu kutu tentang "
 "itu."
 
-#: editor/registry-info.vala:82
+#: editor/registry-info.vala:84
+msgid "Defined by"
+msgstr "Didefinisikan oleh"
+
+#: editor/registry-info.vala:86
 msgid "Schema"
 msgstr "Skema"
 
-#: editor/registry-info.vala:83
+#: editor/registry-info.vala:88
 msgid "Summary"
 msgstr "Ringkasan"
 
-#: editor/registry-info.vala:84
+#: editor/registry-info.vala:89
 msgid "Description"
 msgstr "Keterangan"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:86
+#: editor/registry-info.vala:91
 msgid "Type"
 msgstr "Tipe"
 
-#: editor/registry-info.vala:88
+#: editor/registry-info.vala:93
 msgid "Minimum"
 msgstr "Minimum"
 
-#: editor/registry-info.vala:89
+#: editor/registry-info.vala:94
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: editor/registry-info.vala:90
+#: editor/registry-info.vala:95
 msgid "Default"
 msgstr "Baku"
 
-#: editor/registry-info.vala:110
+#: editor/registry-info.vala:113
 msgid "Current value"
 msgstr "Nilai saat ini"
 
-#: editor/registry-info.vala:143
+#: editor/registry-info.vala:146
 msgid "Use default value"
 msgstr "Pakai nilai baku"
 
-#: editor/registry-info.vala:201
+#: editor/registry-info.vala:204
 msgid "Custom value"
 msgstr "Nilai ubahan"
 
+#. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
+#: editor/registry-info.vala:325
+msgid ""
+"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
+"notation."
+msgstr ""
+"Gunakan titik sebagai tanda desimal dan tidak ada pemisah ribuan. Anda bisa "
+"menggunakan notasi X.Ye+Z."
+
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:324
+#: editor/registry-info.vala:331
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1050,13 +1252,13 @@ msgstr ""
 "dengan \"m\") ke nilai kosongnya. String, tanda tangan, dan path objek mesti "
 "diapit dengan tanda kutip."
 
-#: editor/registry-info.vala:326
+#: editor/registry-info.vala:333
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "String, tanda tangan, dan path objek mesti diapit oleh tanda kutip."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:330
+#: editor/registry-info.vala:337
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1064,30 +1266,35 @@ msgstr ""
 "Gunakan kata kunci \"nothing\" untuk menata suatu tipe mungkin (diawali "
 "dengan \"m\") ke nilai kosongnya."
 
-#: editor/registry-view.ui:32
-msgid "Sort preferences have changed. Do you want to reload the view?"
+#: editor/registry-search.ui:22
+msgid "No matches"
+msgstr "Tidak ada yang cocok"
+
+#: editor/registry-search.vala:611
+msgid "Current folder"
+msgstr "Folder saat ini"
+
+#: editor/registry-search.vala:615
+msgid "Folders"
+msgstr "Folder"
+
+#: editor/registry-search.vala:617
+msgid "Keys"
+msgstr "Kunci"
+
+#: editor/registry-view.ui:22
+msgid ""
+"Multiple schemas are installed at this path. This could lead to problems if "
+"it hasn’t been done carefully. Only one schema is displayed here. Edit "
+"values at your own risk."
 msgstr ""
-"Preferensi pengurutan telah berubah. Apakah Anda hendak memuat ulang tilikan?"
+"Beberapa skema dipasang pada path ini. Hal ini bisa menimbulkan masalah jika "
+"belum dilakukan dengan hati-hati. Hanya satu skema yang ditampilkan di sini. "
+"Sunting nilai dengan risiko Anda sendiri."
 
-#: editor/registry-view.ui:38
-msgid "Reload"
-msgstr "Muat ulang"
-
-#: editor/registry-view.ui:136
+#: editor/registry-view.ui:46
 msgid "No keys in this path"
 msgstr "Tak ada kunci dalam path ini"
 
-#: editor/registry-view.vala:182
-#, c-format
-msgid "Cannot find folder “%s”."
-msgstr "Tidak bisa menemukan folder \"%s\"."
-
-#: editor/registry-view.vala:200
-#, c-format
-msgid "Cannot find key “%s” here."
-msgstr "Tidak bisa menemukan kunci \"%s\" di sini."
-
-#: editor/registry-view.vala:206
-#, c-format
-msgid "Key “%s” has been removed."
-msgstr "Kunci \"%s\" telah dihapus."
+#~ msgid "Only one argument is accepted for now.\n"
+#~ msgstr "Hanya satu argumen yang diterima untuk saat ini.\n"
