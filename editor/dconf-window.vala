@@ -202,8 +202,9 @@ class DConfWindow : ApplicationWindow
         string [] names = current_path.split ("/");
         string object_name = names [names.length - 1];
 
-        Key?       existing_key = SettingsModel.get_key_from_path_and_name    (((!) dir).key_model, object_name);
-        Directory? existing_dir = SettingsModel.get_folder_from_path_and_name (((!) dir).key_model, object_name);
+        GLib.ListStore key_model = model.get_children ((!) dir);
+        Key?       existing_key = SettingsModel.get_key_from_path_and_name    (key_model, object_name);
+        Directory? existing_dir = SettingsModel.get_folder_from_path_and_name (key_model, object_name);
 
         if (existing_key != null)
         {
@@ -336,7 +337,7 @@ class DConfWindow : ApplicationWindow
             string [] names = full_name.split ("/");
             string object_name = names [names.length - 1];
 
-            Key? existing_key = SettingsModel.get_key_from_path_and_name (((!) dir).key_model, object_name);
+            Key? existing_key = SettingsModel.get_key_from_path_and_name (model.get_children ((!) dir), object_name);
 
             if (existing_key == null)
                 cannot_find_key (object_name, (!) dir);

@@ -147,7 +147,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         if (setting_object is Directory)
         {
             row = new FolderListBoxRow (setting_object.name, setting_object.full_name, !is_local_result);
-            on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_objects (((Directory) setting_object).key_model, true));
+            on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_directory ((Directory) setting_object, true));
         }
         else
         {
@@ -487,7 +487,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             Directory? local = model.get_directory (current_path);
             if (local != null)
             {
-                GLib.ListStore key_model = ((!) local).key_model;
+                GLib.ListStore key_model = model.get_children ((!) local);
                 for (uint i = 0; i < key_model.get_n_items (); i++)
                 {
                     SettingObject item = (SettingObject) key_model.get_item (i);
@@ -571,7 +571,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             Directory next = (!) search_nodes.pop_head ();
             bool local_again = next.full_name == current_path;
 
-            GLib.ListStore next_key_model = next.key_model;
+            GLib.ListStore next_key_model = window.model.get_children (next);
             for (uint i = 0; i < next_key_model.get_n_items (); i++)
             {
                 SettingObject item = (SettingObject) next_key_model.get_item (i);

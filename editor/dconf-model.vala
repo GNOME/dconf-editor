@@ -899,13 +899,18 @@ public class SettingsModel : Object
         uint index = 1;
         while (index < names.length - 1)
         {
-            dir = get_folder_from_path_and_name (((Directory) (!) dir).key_model, names [index]);
+            dir = get_folder_from_path_and_name (get_children ((Directory) dir), names [index]);
             if (dir == null)
                 return null;
             index++;
         }
 
         return (Directory) (!) dir;
+    }
+
+    public ListStore get_children (Directory parent)
+    {
+        return parent.key_model;
     }
 
     public SettingObject? get_object (string path)
@@ -916,7 +921,7 @@ public class SettingsModel : Object
         if (parent == null)
             return null;
         string name = path [path.last_index_of_char ('/') + 1:path.length];
-        return get_key_from_path_and_name (((!) parent).key_model, name);
+        return get_key_from_path_and_name (get_children ((!) parent), name);
     }
 
     public static string get_parent_path (string path)

@@ -140,7 +140,7 @@ class RegistryView : Grid, PathElement, BrowsableView
         if (setting_object is Directory)
         {
             row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
-            on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_objects (((Directory) setting_object).key_model, true));
+            on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_directory ((Directory) setting_object, true));
         }
         else
         {
