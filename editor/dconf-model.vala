@@ -570,16 +570,28 @@ public class GSettingsKey : Key
 
 class RelocatableSchemaInfo
 {
-    public SettingsSchema? schema;
+    public SettingsSchema schema;
     public List<PathSpec> path_specs; // FIXME? cannot have a List<string[]>
+
+    public RelocatableSchemaInfo (SettingsSchema schema)
+    {
+        this.schema = schema;
+        this.path_specs = new List<PathSpec> ();
+    }
 }
 
 class PathSpec
 {
     public string[] segments;
+
     public PathSpec (string[] segs)
     {
         segments = segs;
+    }
+
+    public PathSpec.from_path (string path)
+    {
+        segments = path [1:-1].split ("/");
     }
 }
 
@@ -599,7 +611,11 @@ public class SettingsModel : Object
 
         parse_schemas ();
         create_dconf_views (root);
-        create_relocatable_schemas_views (parse_relocatable_schemas_user_paths ());
+
+        HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
+        parse_relocatable_schemas_user_paths (relocatable_schema_paths);
+
+        create_relocatable_schemas_views (relocatable_schema_paths);
 
         client.watch_sync ("/");
     }
@@ -627,12 +643,10 @@ public class SettingsModel : Object
         }
     }
 
-    private HashTable<string, RelocatableSchemaInfo> parse_relocatable_schemas_user_paths ()
+    private void parse_relocatable_schemas_user_paths (HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths)
     {
-        HashTable<string, RelocatableSchemaInfo> user_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
-
         if (settings_schema_source == null)
-            return user_paths;
+            return;
 
         Variant user_paths_variant = application_settings.get_value ("relocatable-schemas-user-paths");
         VariantIter entries_iter;
@@ -640,42 +654,40 @@ public class SettingsModel : Object
         string schema_id;
         string path_spec;
         while (entries_iter.next ("{ss}", out schema_id, out path_spec))
-        {
-            SettingsSchema? settings_schema;
-            RelocatableSchemaInfo? schema_info = user_paths.lookup (schema_id);
-            if (schema_info == null)
-            {
-                schema_info = new RelocatableSchemaInfo ();
-                settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
-                ((!) schema_info).schema = settings_schema;
-                ((!) schema_info).path_specs = new List<PathSpec> ();
-                user_paths.insert (schema_id, (!) schema_info);
-            }
-            else
-                settings_schema = ((!) schema_info).schema;
-            if (settings_schema == null || ((string?) ((!) settings_schema).get_path ()) != null) // TODO report bug, get_path () should be string? (this is not a question :)
-                continue;
+            add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
+    }
 
+    private void add_relocatable_schema_info (HashTable<string, RelocatableSchemaInfo> info_map, string schema_id, ...)
+    {
+        RelocatableSchemaInfo? schema_info = info_map.lookup (schema_id);
+        if (schema_info == null)
+        {
+            SettingsSchema? schema = ((!) settings_schema_source).lookup (schema_id, true);
+            if (schema == null || ((string?) ((!) schema).get_path ()) != null) // TODO report bug, get_path () should be string? (this is not a question :)
+                return;
+            schema_info = new RelocatableSchemaInfo ((!) schema);
+        }
+        var args = va_list ();
+        var next_arg = null;
+        while ((next_arg = args.arg ()) != null)
+        {
+            string path_spec = (string) next_arg;
             if (path_spec == "")
                 continue;
             if (!path_spec.has_prefix ("/"))
                 path_spec = "/" + path_spec;
             if (!path_spec.has_suffix ("/"))
                 path_spec += "/"; // TODO proper validation
-
             if (!("//" in path_spec)) // no wild cards, just create the views
             {
                 Directory view = create_gsettings_views (root, path_spec [1:path_spec.length]);
-                view.init_gsettings_keys ((!) settings_schema);
+                view.init_gsettings_keys (((!) schema_info).schema);
             }
             else // try to fill the holes later in create_relocatable_schemas_views
-                ((!) schema_info).path_specs.append (new PathSpec (path_spec [1:-1].split ("/")));
+                ((!) schema_info).path_specs.append (new PathSpec.from_path ((string) path_spec));
         }
-        // remove useless entries
-        user_paths.foreach_remove ((schema_id, info) => {
-                return info.schema == null || info.path_specs.length () == 0;
-            });
-        return user_paths;
+        if (((!) schema_info).path_specs.length () > 0)
+            info_map.insert (schema_id, (!) schema_info);
     }
 
     /*\
