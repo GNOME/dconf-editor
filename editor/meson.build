@@ -34,10 +34,21 @@ i18n.merge_file(
   install_dir: join_paths(dconf_editor_datadir, 'metainfo')
 )
 
+gschema = dconf_editor_namespace + '.gschema.xml'
+dconf_editor_schemadir = join_paths(dconf_editor_datadir, 'glib-2.0', 'schemas')
 install_data(
-  dconf_editor_namespace + '.gschema.xml',
-  install_dir: join_paths(dconf_editor_datadir, 'glib-2.0', 'schemas')
+  gschema,
+  install_dir: dconf_editor_schemadir
 )
+
+xmllint = find_program('xmllint', required : false)
+if xmllint.found()
+  test('test_dtd', xmllint, args: ['--valid',
+                                   '--noout', '--nowarning',
+                                   join_paths(dconf_editor_schemadir, gschema)])
+else
+  message('xmllint not found, no gschema DTD verification')
+endif
 
 install_subdir(
   'icons',
