@@ -568,7 +568,7 @@ public class GSettingsKey : Key
     } */
 }
 
-class ManualSchemaInfo
+class RelocatableSchemaInfo
 {
     public SettingsSchema? schema;
     public List<PathSpec> path_specs; // FIXME? cannot have a List<string[]>
@@ -602,7 +602,7 @@ public class SettingsModel : Object
         create_dconf_views (root);
 
         if (settings_schema_source != null)
-            create_manual_schemas_views (parse_manual_schemas ((!) settings_schema_source));
+            create_relocatable_schemas_views (parse_relocatable_schemas_user_paths ((!) settings_schema_source));
 
         client.watch_sync ("/");
     }
@@ -627,26 +627,26 @@ public class SettingsModel : Object
         }
     }
 
-    private HashTable<string, ManualSchemaInfo> parse_manual_schemas (SettingsSchemaSource settings_schema_source)
+    private HashTable<string, RelocatableSchemaInfo> parse_relocatable_schemas_user_paths (SettingsSchemaSource settings_schema_source)
     {
-        HashTable<string, ManualSchemaInfo> manual_schemas = new HashTable<string, ManualSchemaInfo> (str_hash, str_equal);
+        HashTable<string, RelocatableSchemaInfo> user_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
 
-        Variant manual_schemas_variant = application_settings.get_value ("manual-schemas");
+        Variant user_paths_variant = application_settings.get_value ("relocatable-schemas-user-paths");
         VariantIter entries_iter;
-        manual_schemas_variant.get ("a{ss}", out entries_iter);
+        user_paths_variant.get ("a{ss}", out entries_iter);
         string schema_id;
         string path_spec;
         while (entries_iter.next ("{ss}", out schema_id, out path_spec))
         {
             SettingsSchema? settings_schema;
-            ManualSchemaInfo? schema_info = manual_schemas.lookup (schema_id);
+            RelocatableSchemaInfo? schema_info = user_paths.lookup (schema_id);
             if (schema_info == null)
             {
-                schema_info = new ManualSchemaInfo ();
+                schema_info = new RelocatableSchemaInfo ();
                 settings_schema = settings_schema_source.lookup (schema_id, true);
                 ((!) schema_info).schema = settings_schema;
                 ((!) schema_info).path_specs = new List<PathSpec> ();
-                manual_schemas.insert (schema_id, (!) schema_info);
+                user_paths.insert (schema_id, (!) schema_info);
             }
             else
                 settings_schema = ((!) schema_info).schema;
@@ -665,14 +665,14 @@ public class SettingsModel : Object
                 Directory view = create_gsettings_views (root, path_spec [1:path_spec.length]);
                 view.init_gsettings_keys ((!) settings_schema);
             }
-            else // try to fill the holes later in create_manual_schemas_views
+            else // try to fill the holes later in create_relocatable_schemas_views
                 ((!) schema_info).path_specs.append (new PathSpec (path_spec [1:-1].split ("/")));
         }
         // remove useless entries
-        manual_schemas.foreach_remove ((schema_id, info) => {
+        user_paths.foreach_remove ((schema_id, info) => {
                 return info.schema == null || info.path_specs.length () == 0;
             });
-        return manual_schemas;
+        return user_paths;
     }
 
     /*\
@@ -699,7 +699,7 @@ public class SettingsModel : Object
 
     private Queue<Directory> search_nodes = new Queue<Directory> ();
 
-    private void create_manual_schemas_views (HashTable<string, ManualSchemaInfo> manual_schemas)
+    private void create_relocatable_schemas_views (HashTable<string, RelocatableSchemaInfo> relocatable_schemas_paths)
     {
         search_nodes.clear (); // subtrees that need yet to be matched against the path specs
         search_nodes.push_head (root); // start with the whole known tree
@@ -708,7 +708,7 @@ public class SettingsModel : Object
             Directory subtree = search_nodes.pop_tail ();
             string subtree_path = subtree.full_name;
             string[] subtree_segments = subtree_path == "/" ? new string [0] : subtree_path [1:-1].split ("/");
-            manual_schemas.get_values ().foreach ((schema_info) => {
+            relocatable_schemas_paths.get_values ().foreach ((schema_info) => {
                     schema_info.path_specs.foreach ((spec) => {
                             string[] spec_segments = spec.segments;
                             if (subtree_segments.length > spec_segments.length)
@@ -722,13 +722,13 @@ public class SettingsModel : Object
                                 matched_prefix_length++;
                             }
                             // search subtree recursively for matches with spec. the search may queue new paths for further iterations
-                            create_manual_schemas_views_in_subtree (subtree, spec_segments, matched_prefix_length, (!) schema_info.schema);
+                            create_relocatable_schemas_views_in_subtree (subtree, spec_segments, matched_prefix_length, (!) schema_info.schema);
                         });
                 });
         }
     }
 
-    private void create_manual_schemas_views_in_subtree (Directory view, string[] spec_segments, int matched_prefix_length, SettingsSchema schema)
+    private void create_relocatable_schemas_views_in_subtree (Directory view, string[] spec_segments, int matched_prefix_length, SettingsSchema schema)
     {
         Directory parent = view;
         Directory? child = null;
@@ -746,7 +746,7 @@ public class SettingsModel : Object
         {
             // wild card found, must branch out and match against existing children (there might be none)
             foreach (string name in parent.get_children ())
-                create_manual_schemas_views_in_subtree ((!) parent.lookup_directory (name), spec_segments, matched_prefix_length + 1, schema);
+                create_relocatable_schemas_views_in_subtree ((!) parent.lookup_directory (name), spec_segments, matched_prefix_length + 1, schema);
         }
         else if (child == null)
         {
