@@ -614,6 +614,7 @@ public class SettingsModel : Object
 
         HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
         parse_relocatable_schemas_user_paths (relocatable_schema_paths);
+        create_relocatable_schemas_built_in_paths (relocatable_schema_paths);
 
         create_relocatable_schemas_views (relocatable_schema_paths);
 
@@ -655,6 +656,16 @@ public class SettingsModel : Object
         string path_spec;
         while (entries_iter.next ("{ss}", out schema_id, out path_spec))
             add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
+    }
+
+    private void create_relocatable_schemas_built_in_paths (HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths)
+    {
+        if (settings_schema_source == null)
+            return;
+
+        add_relocatable_schema_info (relocatable_schema_paths, "org.gnome.desktop.app-folders.folder", "/org/gnome/desktop/app-folders/folders//");
+        add_relocatable_schema_info (relocatable_schema_paths, "org.gnome.Terminal.Legacy.Profile", "/org/gnome/terminal/legacy/profiles://");
+        // TODO add more well-known mappings
     }
 
     private void add_relocatable_schema_info (HashTable<string, RelocatableSchemaInfo> info_map, string schema_id, ...)
