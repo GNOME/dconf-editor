@@ -125,7 +125,12 @@ class ModificationsHandler : Object
                 }
 
                 if (key.planned_value == null)
+                {
                     ((!) settings).reset (key.name);
+                    if (((!) settings).backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
+                        ((!) settings).backend.changed (key.full_name, null);
+                    // Alternative workaround: key.value_changed ();
+                }
                 else
                     ((!) settings).set_value (key.name, (!) key.planned_value);
                 key.planned_change = false;

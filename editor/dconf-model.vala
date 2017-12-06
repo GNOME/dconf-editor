@@ -504,6 +504,9 @@ public class GSettingsKey : Key
     public void set_to_default ()
     {
         settings.reset (name);
+        if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
+            settings.backend.changed (full_name, null);
+        // Alternative workaround: value_changed ();
     }
 
     public GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
