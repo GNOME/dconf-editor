@@ -99,7 +99,7 @@ private abstract class ClickableListBoxRow : EventBox
     \*/
 
     private ContextPopover? nullable_popover = null;
-    protected virtual bool generate_popover (ContextPopover popover, bool delayed_apply_menu) { return false; }      // no popover should be created
+    protected virtual bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler) { return false; }      // no popover should be created
 
     public void destroy_popover ()
     {
@@ -113,12 +113,12 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).popdown ();
     }
 
-    public void show_right_click_popover (bool delayed_apply_menu, int event_x = (int) (get_allocated_width () / 2.0))
+    public void show_right_click_popover (ModificationsHandler modifications_handler, int event_x = (int) (get_allocated_width () / 2.0))
     {
         if (nullable_popover == null)
         {
             nullable_popover = new ContextPopover ();
-            if (!generate_popover ((!) nullable_popover, delayed_apply_menu))
+            if (!generate_popover ((!) nullable_popover, modifications_handler))
             {
                 ((!) nullable_popover).destroy ();  // TODO better, again
                 nullable_popover = null;
@@ -157,7 +157,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         return full_name;
     }
 
-    protected override bool generate_popover (ContextPopover popover, bool unused)  // TODO better
+    protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)  // TODO better
     {
         if (search_result_mode)
         {
@@ -230,17 +230,11 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         update ();
         key_name_label.set_label (search_result_mode ? abstract_key.full_name : abstract_key.name);
 
-        ulong key_planned_change_handler = abstract_key.notify ["planned-change"].connect (() => set_delayed_icon ());
-        ulong key_planned_value_handler = abstract_key.notify ["planned-value"].connect (() => set_delayed_icon ());
-        set_delayed_icon ();
-
         ulong key_value_changed_handler = abstract_key.value_changed.connect (() => {
                 update ();
                 destroy_popover ();
             });
         destroy.connect (() => {
-                abstract_key.disconnect (key_planned_change_handler);
-                abstract_key.disconnect (key_planned_value_handler);
                 abstract_key.disconnect (key_value_changed_handler);
             });
     }
@@ -254,16 +248,16 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         ((!) boolean_switch).set_active (!((!) boolean_switch).get_active ());
     }
 
-    private void set_delayed_icon ()
+    public void set_delayed_icon (ModificationsHandler modifications_handler)
     {
         Key key = abstract_key;
         StyleContext context = get_style_context ();
-        if (key.planned_change)
+        if (modifications_handler.key_has_planned_change (key))
         {
             context.add_class ("delayed");
             if (key is DConfKey)
             {
-                if (key.planned_value == null)
+                if (modifications_handler.get_key_planned_value (key) == null)
                     context.add_class ("erase");
                 else
                     context.remove_class ("erase");
@@ -332,7 +326,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         return key.is_ghost ? _("%s (key erased)").printf (key.full_name) : key.descriptor + " " + key.value.print (false);
     }
 
-    protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)
+    protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)
     {
         if (key.is_ghost)
         {
@@ -349,10 +343,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         popover.new_action ("customize", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
 
+
         if (key.type_string == "b" || key.type_string == "mb")
         {
             popover.new_section ();
-            GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
+            GLib.Action action = popover.create_buttons_list (key, true, modifications_handler);
 
             popover.change_dismissed.connect (() => {
                     destroy_popover ();
@@ -364,6 +359,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                     set_key_value (gvariant);
                 });
 
+            bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
             if (!delayed_apply_menu)
             {
                 popover.new_section ();
@@ -375,16 +371,17 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
         else
         {
-            if (key.planned_change)
+            bool planned_change = modifications_handler.key_has_planned_change (key);
+            Variant? planned_value = modifications_handler.get_key_planned_value (key);
+            if (planned_change)
             {
                 popover.new_section ();
-                popover.new_action (key.planned_value == null ? "unerase" : "dismiss", () => {
+                popover.new_action (planned_value == null ? "unerase" : "dismiss", () => {
                         destroy_popover ();
                         change_dismissed ();
                     });
             }
-
-            if (!key.planned_change || key.planned_value != null)
+            else if (planned_value != null)
             {
                 popover.new_section ();
                 popover.new_action ("erase", () => {
@@ -460,13 +457,17 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         return key.descriptor + " " + key.value.print (false);
     }
 
-    protected override bool generate_popover (ContextPopover popover, bool delayed_apply_menu)
+    protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)
     {
         if (search_result_mode)
         {
             popover.new_action ("open_parent", () => on_open_parent ());
             popover.new_section ();
         }
+
+        bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
+        bool planned_change = modifications_handler.key_has_planned_change (key);
+        Variant? planned_value = modifications_handler.get_key_planned_value (key);
 
         popover.new_action ("customize", () => on_row_clicked ());
         popover.new_copy_action (get_text ());
@@ -484,7 +485,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                ))
         {
             popover.new_section ();
-            GLib.Action action = popover.create_buttons_list (key, true, delayed_apply_menu);
+            GLib.Action action = popover.create_buttons_list (key, true, modifications_handler);
 
             popover.change_dismissed.connect (() => {
                     destroy_popover ();
@@ -496,7 +497,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     set_key_value (gvariant);
                 });
         }
-        else if (!delayed_apply_menu && !key.planned_change && key.type_string == "<flags>")
+        else if (!delayed_apply_menu && !planned_change && key.type_string == "<flags>")
         {
             popover.new_section ();
 
@@ -507,18 +508,18 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     });
             popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
 
-            popover.create_flags_list ((GSettingsKey) key);
+            popover.create_flags_list ((GSettingsKey) key, modifications_handler);
 
             popover.value_changed.connect ((gvariant) => set_key_value (gvariant));
         }
-        else if (key.planned_change)
+        else if (planned_change)
         {
             popover.new_section ();
             popover.new_action ("dismiss", () => {
                     destroy_popover ();
                     change_dismissed ();
                 });
-            if (key.planned_value != null)
+            if (planned_value != null)
                 popover.new_action ("default1", () => {
                         destroy_popover ();
                         set_key_value (null);
@@ -644,7 +645,7 @@ private class ContextPopover : Popover
     * * Flags
     \*/
 
-    public void create_flags_list (GSettingsKey key)
+    public void create_flags_list (GSettingsKey key, ModificationsHandler modifications_handler)
     {
         set_group ("flags");
         string group_dot = "flags.";
@@ -673,12 +674,14 @@ private class ContextPopover : Popover
                     value_changed (variant);
                 });
 
-            key.notify ["planned-value"].connect (() => {
-                    active_flags = key.planned_value != null ? ((!) key.planned_value).get_strv () : key.value.get_strv ();
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
+                    active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
                     bool active = flag in active_flags;
                     if (active != simple_action.get_state ())
                         simple_action.set_state (new Variant.boolean (active));
                 });
+
+            destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
         }
 
         finalize_menu ();
@@ -688,7 +691,7 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    public GLib.Action create_buttons_list (Key key, bool has_default_value, bool delayed_apply_menu)
+    public GLib.Action create_buttons_list (Key key, bool has_default_value, ModificationsHandler modifications_handler)
     {
         set_group ("enum");
         const string ACTION_NAME = "choice";
@@ -699,18 +702,22 @@ private class ContextPopover : Popover
         VariantType nullable_nullable_type = new VariantType.maybe (nullable_type);
         string type_string = original_type.dup_string ();
 
+        bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
+        bool planned_change = modifications_handler.key_has_planned_change (key);
+        Variant? planned_value = modifications_handler.get_key_planned_value (key);
+
         Variant? value_variant;
         if (!has_default_value) // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
-            value_variant = key.planned_change && (key.planned_value != null) ? key.planned_value : key.value;
-        else if (key.planned_change)
-            value_variant = key.planned_value;
+            value_variant = modifications_handler.get_key_custom_value (key);
+        else if (planned_change)
+            value_variant = planned_value;
         else if (key is GSettingsKey && ((GSettingsKey) key).is_default)
             value_variant = null;
         else
             value_variant = key.value;
         Variant variant = new Variant.maybe (original_type, value_variant);
         Variant nullable_variant;
-        if (delayed_apply_menu && !key.planned_change)
+        if (delayed_apply_menu && !planned_change)
             nullable_variant = new Variant.maybe (nullable_type, null);
         else
             nullable_variant = new Variant.maybe (nullable_type, variant);
@@ -720,7 +727,7 @@ private class ContextPopover : Popover
 
         if (has_default_value)
         {
-            bool complete_menu = delayed_apply_menu || key.planned_change;
+            bool complete_menu = delayed_apply_menu || planned_change;
 
             if (complete_menu)
                 /* Translators: "no change" option in the right-click menu on a key when on delayed mode */

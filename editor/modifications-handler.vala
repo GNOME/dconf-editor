@@ -189,6 +189,16 @@ class ModificationsHandler : Object
         reload ();
     }
 
+    public Variant get_key_custom_value (Key key)
+    {
+        return key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value;
+    }
+
+    public bool key_value_is_default (GSettingsKey key) // doesn't make sense for DConfKey?
+    {
+        return key.planned_change ? key.planned_value == null : key.is_default;
+    }
+
     public void set_key_value (Key key, Variant? new_value)
     {
         if (get_current_delay_mode ())
@@ -204,6 +214,16 @@ class ModificationsHandler : Object
         }
         else
             ((DConfKey) key).erase ();
+    }
+
+    public bool key_has_planned_change (Key key)
+    {
+        return key.planned_change;
+    }
+
+    public Variant? get_key_planned_value (Key key)
+    {
+        return key.planned_value;
     }
 
 }

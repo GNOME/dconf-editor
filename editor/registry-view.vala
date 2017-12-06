@@ -157,7 +157,12 @@ class RegistryView : Grid, PathElement, BrowsableView
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { modifications_handler.set_key_value (key, variant); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key));
 
+            ulong delayed_modifications_changed_handler =
+                    modifications_handler.delayed_changes_changed.connect (() => key_row.set_delayed_icon (modifications_handler));
+            key_row.set_delayed_icon (modifications_handler);
+
             row.destroy.connect (() => {
+                    modifications_handler.disconnect (delayed_modifications_changed_handler);
                     key_row.disconnect (set_key_value_handler);
                     key_row.disconnect (change_dismissed_handler);
                 });
@@ -201,7 +206,7 @@ class RegistryView : Grid, PathElement, BrowsableView
                 event_x += widget_x;
             }
 
-            row.show_right_click_popover (modifications_handler.get_current_delay_mode (), event_x);
+            row.show_right_click_popover (modifications_handler, event_x);
             rows_possibly_with_popover.append (row);
         }
 
@@ -280,7 +285,7 @@ class RegistryView : Grid, PathElement, BrowsableView
             return false;
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-        row.show_right_click_popover (modifications_handler.get_current_delay_mode ());
+        row.show_right_click_popover (modifications_handler);
         rows_possibly_with_popover.append (row);
         return true;
     }

@@ -28,7 +28,7 @@ class RegistryInfo : Grid, BrowsableView
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
-    public ModificationsHandler modifications_handler { get; set; }
+    public ModificationsHandler modifications_handler { private get; set; }
 
     /*\
     * * Cleaning
@@ -148,7 +148,7 @@ class RegistryInfo : Grid, BrowsableView
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
             GSettingsKey gkey = (GSettingsKey) key;
-            custom_value_switch.set_active (key.planned_change ? key.planned_value == null : gkey.is_default);
+            custom_value_switch.set_active (modifications_handler.key_value_is_default (gkey));
             ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
                     if (modifications_handler.should_delay_apply (tmp_string))
                     {
@@ -156,7 +156,7 @@ class RegistryInfo : Grid, BrowsableView
                             modifications_handler.add_delayed_setting (key, null);
                         else
                         {
-                            Variant tmp_variant = key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value;
+                            Variant tmp_variant = modifications_handler.get_key_custom_value (key);
                             modifications_handler.add_delayed_setting (key, tmp_variant);
                             key_editor_child.reload (tmp_variant);
                         }
@@ -168,8 +168,8 @@ class RegistryInfo : Grid, BrowsableView
                             ((GSettingsKey) key).set_to_default ();
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
                             key_editor_child.reload (key.value);
-                            if (tmp_string == "<flags>")
-                                key.planned_value = key.value;
+                            //if (tmp_string == "<flags>")                      let's try to live without this...
+                            //    key.planned_value = key.value;
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
@@ -197,8 +197,8 @@ class RegistryInfo : Grid, BrowsableView
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
                 key_editor_child.reload (key.value);
-                if (tmp_string == "<flags>")
-                    key.planned_value = key.value;
+                //if (tmp_string == "<flags>")                      let's try to live without this...
+                //    key.planned_value = key.value;
                 SignalHandler.unblock (key_editor_child, value_has_changed_handler);
             });
         add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
@@ -210,8 +210,9 @@ class RegistryInfo : Grid, BrowsableView
             });
     }
 
-    private static KeyEditorChild create_child (Key key, bool has_schema)
+    private KeyEditorChild create_child (Key key, bool has_schema)
     {
+        Variant initial_value = modifications_handler.get_key_custom_value (key);
         switch (key.type_string)
         {
             case "<enum>":
@@ -219,12 +220,12 @@ class RegistryInfo : Grid, BrowsableView
                 {
                     case 0:  assert_not_reached ();
                     case 1:  return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.get_string ());
-                    default: return (KeyEditorChild) new KeyEditorChildEnum (key);
+                    default: return (KeyEditorChild) new KeyEditorChildEnum (key, initial_value, modifications_handler);
                 }
             case "<flags>":
-                return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key);
+                return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key, initial_value, modifications_handler);
             case "b":
-                return (KeyEditorChild) new KeyEditorChildBool (key.planned_change && (key.planned_value != null) ? ((!) key.planned_value).get_boolean () : key.value.get_boolean ());
+                return (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());
             case "n":
             case "i":
             case "h":
@@ -235,7 +236,7 @@ class RegistryInfo : Grid, BrowsableView
                     if (Key.get_variant_as_int64 (range.get_child_value (0)) == Key.get_variant_as_int64 (range.get_child_value (1)))
                         return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
                 }
-                return (KeyEditorChild) new KeyEditorChildNumberInt (key);
+                return (KeyEditorChild) new KeyEditorChildNumberInt (key, initial_value);
             case "y":
             case "q":
             case "u":
@@ -246,16 +247,16 @@ class RegistryInfo : Grid, BrowsableView
                     if (Key.get_variant_as_uint64 (range.get_child_value (0)) == Key.get_variant_as_uint64 (range.get_child_value (1)))
                         return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
                 }
-                return (KeyEditorChild) new KeyEditorChildNumberInt (key);
+                return (KeyEditorChild) new KeyEditorChildNumberInt (key, initial_value);
             case "d":
-                return (KeyEditorChild) new KeyEditorChildNumberDouble (key.value);
+                return (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);
             case "mb":
-                return (KeyEditorChild) new KeyEditorChildNullableBool (key);
+                return (KeyEditorChild) new KeyEditorChildNullableBool (key, initial_value, modifications_handler);
             default:
                 if ("a" in key.type_string)
-                    return (KeyEditorChild) new KeyEditorChildArray (key.type_string, key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+                    return (KeyEditorChild) new KeyEditorChildArray (key.type_string, initial_value);
                 else
-                    return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+                    return (KeyEditorChild) new KeyEditorChildDefault (key.type_string, initial_value);
         }
     }
 

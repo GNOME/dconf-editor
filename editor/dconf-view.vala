@@ -51,7 +51,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
     private Variant variant;
     private GLib.Action action;
 
-    public KeyEditorChildEnum (Key key)
+    public KeyEditorChildEnum (Key key, Variant initial_value, ModificationsHandler modifications_handler)
         requires (key.type_string == "<enum>")
     {
         this.visible = true;
@@ -61,7 +61,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
-        action = popover.create_buttons_list (key, false, false);
+        action = popover.create_buttons_list (key, false, modifications_handler);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
@@ -72,7 +72,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
 
                 value_has_changed ();
             });
-        reload (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+        reload (initial_value);
         this.set_popover ((Popover) popover);
     }
 
@@ -95,7 +95,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     private Variant variant;
     private Label label = new Label ("");
 
-    public KeyEditorChildFlags (GSettingsKey key)
+    public KeyEditorChildFlags (GSettingsKey key, Variant initial_value, ModificationsHandler modifications_handler)
         requires (key.type_string == "<flags>")
     {
         this.visible = true;
@@ -116,7 +116,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         this.add (label);
 
         ContextPopover popover = new ContextPopover ();
-        popover.create_flags_list (key);
+        popover.create_flags_list (key, modifications_handler);
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
                 if (gvariant == null)   // TODO better (2/3)
@@ -124,7 +124,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
                 reload ((!) gvariant);
                 value_has_changed ();
             });
-        reload (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+        reload (initial_value);
         button.set_popover ((Popover) popover);
     }
 
@@ -146,7 +146,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
     private Variant? maybe_variant;
     private GLib.Action action;
 
-    public KeyEditorChildNullableBool (Key key)
+    public KeyEditorChildNullableBool (Key key, Variant initial_value, ModificationsHandler modifications_handler)
         requires (key.type_string == "mb")
     {
         this.visible = true;
@@ -156,7 +156,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
-        action = popover.create_buttons_list (key, false, false);
+        action = popover.create_buttons_list (key, false, modifications_handler);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
@@ -167,7 +167,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
 
                 value_has_changed ();
             });
-        reload (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value);
+        reload (initial_value);
         this.set_popover ((Popover) popover);
     }
 
@@ -329,7 +329,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
-    public KeyEditorChildNumberInt (Key key)
+    public KeyEditorChildNumberInt (Key key, Variant initial_value)
         requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "h")     // TODO key.type_string == "x" || key.type_string == "t" ||
     {
         this.key_type = key.type_string;
@@ -347,7 +347,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         else
             get_min_and_max_double (out min, out max, key.type_string);
 
-        Adjustment adjustment = new Adjustment (get_variant_as_double (key.planned_change && (key.planned_value != null) ? (!) key.planned_value : key.value), min, max, 1.0, 5.0, 0.0);
+        Adjustment adjustment = new Adjustment (get_variant_as_double (initial_value), min, max, 1.0, 5.0, 0.0);
         this.configure (adjustment, 1.0, 0);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
