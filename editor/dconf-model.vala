@@ -586,6 +586,7 @@ class PathSpec
 public class SettingsModel : Object
 {
     private Settings application_settings;
+    private SettingsSchemaSource? settings_schema_source;
     private DConf.Client client = new DConf.Client ();
     private Directory root;
 
@@ -593,30 +594,29 @@ public class SettingsModel : Object
     {
         this.application_settings = application_settings;
 
-        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+        settings_schema_source = SettingsSchemaSource.get_default ();
         root = new Directory ("/", "/", client);
 
-        if (settings_schema_source != null)
-            parse_schemas ((!) settings_schema_source);
-
+        parse_schemas ();
         create_dconf_views (root);
-
-        if (settings_schema_source != null)
-            create_relocatable_schemas_views (parse_relocatable_schemas_user_paths ((!) settings_schema_source));
+        create_relocatable_schemas_views (parse_relocatable_schemas_user_paths ());
 
         client.watch_sync ("/");
     }
 
-    private void parse_schemas (SettingsSchemaSource settings_schema_source)
+    private void parse_schemas ()
     {
+        if (settings_schema_source == null)
+            return;
+
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
 
-        settings_schema_source.list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
+        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
         foreach (string schema_id in non_relocatable_schemas)
         {
-            SettingsSchema? settings_schema = settings_schema_source.lookup (schema_id, true);
+            SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
             if (settings_schema == null)
                 continue;       // TODO better
 
@@ -627,9 +627,12 @@ public class SettingsModel : Object
         }
     }
 
-    private HashTable<string, RelocatableSchemaInfo> parse_relocatable_schemas_user_paths (SettingsSchemaSource settings_schema_source)
+    private HashTable<string, RelocatableSchemaInfo> parse_relocatable_schemas_user_paths ()
     {
         HashTable<string, RelocatableSchemaInfo> user_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
+
+        if (settings_schema_source == null)
+            return user_paths;
 
         Variant user_paths_variant = application_settings.get_value ("relocatable-schemas-user-paths");
         VariantIter entries_iter;
@@ -643,7 +646,7 @@ public class SettingsModel : Object
             if (schema_info == null)
             {
                 schema_info = new RelocatableSchemaInfo ();
-                settings_schema = settings_schema_source.lookup (schema_id, true);
+                settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
                 ((!) schema_info).schema = settings_schema;
                 ((!) schema_info).path_specs = new List<PathSpec> ();
                 user_paths.insert (schema_id, (!) schema_info);
@@ -786,7 +789,6 @@ public class SettingsModel : Object
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
 
-        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
         if (settings_schema_source == null)
             return false;   // TODO better
 
@@ -800,7 +802,6 @@ public class SettingsModel : Object
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
 
-        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
         if (settings_schema_source == null)
             return false;   // TODO better
 
@@ -811,7 +812,6 @@ public class SettingsModel : Object
 
     public string? get_schema_path (string id)
     {
-        SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
         if (settings_schema_source == null)
             return null;   // TODO better
 
