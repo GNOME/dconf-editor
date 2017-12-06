@@ -568,6 +568,14 @@ public class GSettingsKey : Key
     } */
 }
 
+[Flags]
+enum RelocatableSchemasEnabledMappings
+{
+    USER,
+    BUILT_IN,
+    INTERNAL
+}
+
 class RelocatableSchemaInfo
 {
     public SettingsSchema schema;
@@ -646,6 +654,10 @@ public class SettingsModel : Object
 
     private void parse_relocatable_schemas_user_paths (HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths)
     {
+        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
+        if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
+            return;
+
         if (settings_schema_source == null)
             return;
 
@@ -660,6 +672,10 @@ public class SettingsModel : Object
 
     private void create_relocatable_schemas_built_in_paths (HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths)
     {
+        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
+        if (!(RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags))
+            return;
+
         if (settings_schema_source == null)
             return;
 

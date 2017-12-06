@@ -97,6 +97,11 @@
     <value value="1" nick="first"/>
     <value value="2" nick="last"/>
   </enum>
+  <flags id="ca.desrt.dconf-editor.RelocatableSchemasEnabledMappings">
+    <value value="1" nick="User"/>
+    <value value="2" nick="Built-in"/>
+    <value value="4" nick="Internal"/>
+  </flags>
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
@@ -180,6 +185,11 @@
       <range min="6" max="14"/>
       <summary>Mouse button to activate the “Forward” command in browser window</summary>
       <description>For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Forward” command in a browser window. Possible values range between 6 and 14.</description>
+    </key>
+    <key name="relocatable-schemas-enabled-mappings" flags="ca.desrt.dconf-editor.RelocatableSchemasEnabledMappings">
+      <default>['User', 'Built-in', 'Internal']</default>
+      <summary>Enabled relocatable schema mapping facilities</summary>
+      <description>Flags for the relocatable schemas mapping facilities. 'User' enables mappings from setting 'relocatable-schemas-user-paths'; 'Built-in' enables well-known mappings hardcoded into Dconf Editor; 'Internal' is reserved for future use of Dconf Editor.</description>
     </key>
     <key name="relocatable-schemas-user-paths" type="a{ss}">
       <default>{'ca.desrt.dconf-editor.Demo.Relocatable':'/ca/desrt/dconf-editor/Demo/relocatable/'}</default>
