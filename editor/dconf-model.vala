@@ -611,6 +611,8 @@ public class SettingsModel : Object
     private DConf.Client client = new DConf.Client ();
     private Directory root;
 
+    private HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
+
     public SettingsModel (Settings application_settings)
     {
         this.application_settings = application_settings;
@@ -621,11 +623,22 @@ public class SettingsModel : Object
         parse_schemas ();
         create_dconf_views (root);
 
-        HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
-        parse_relocatable_schemas_user_paths (relocatable_schema_paths);
-        create_relocatable_schemas_built_in_paths (relocatable_schema_paths);
+        parse_relocatable_schemas_user_paths ();
+        create_relocatable_schemas_built_in_paths ();
+    }
 
-        create_relocatable_schemas_views (relocatable_schema_paths);
+    public void add_mapping (string schema, string path)
+    {
+        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
+        if (!(RelocatableSchemasEnabledMappings.STARTUP in enabled_mappings_flags))
+            return;
+
+        add_relocatable_schema_info (schema, path);
+    }
+
+    public void finalize_model ()
+    {
+        create_relocatable_schemas_views ();
 
         client.watch_sync ("/");
     }
@@ -653,7 +666,7 @@ public class SettingsModel : Object
         }
     }
 
-    private void parse_relocatable_schemas_user_paths (HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths)
+    private void parse_relocatable_schemas_user_paths ()
     {
         RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
         if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
@@ -668,10 +681,10 @@ public class SettingsModel : Object
         string schema_id;
         string path_spec;
         while (entries_iter.next ("{ss}", out schema_id, out path_spec))
-            add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
+            add_relocatable_schema_info (schema_id, path_spec);
     }
 
-    private void create_relocatable_schemas_built_in_paths (HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths)
+    private void create_relocatable_schemas_built_in_paths ()
     {
         RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
         if (!(RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags))
@@ -680,14 +693,14 @@ public class SettingsModel : Object
         if (settings_schema_source == null)
             return;
 
-        add_relocatable_schema_info (relocatable_schema_paths, "org.gnome.desktop.app-folders.folder", "/org/gnome/desktop/app-folders/folders//");
-        add_relocatable_schema_info (relocatable_schema_paths, "org.gnome.Terminal.Legacy.Profile", "/org/gnome/terminal/legacy/profiles://");
+        add_relocatable_schema_info ("org.gnome.desktop.app-folders.folder", "/org/gnome/desktop/app-folders/folders//");
+        add_relocatable_schema_info ("org.gnome.Terminal.Legacy.Profile", "/org/gnome/terminal/legacy/profiles://");
         // TODO add more well-known mappings
     }
 
-    private void add_relocatable_schema_info (HashTable<string, RelocatableSchemaInfo> info_map, string schema_id, ...)
+    private void add_relocatable_schema_info (string schema_id, ...)
     {
-        RelocatableSchemaInfo? schema_info = info_map.lookup (schema_id);
+        RelocatableSchemaInfo? schema_info = relocatable_schema_paths.lookup (schema_id);
         if (schema_info == null)
         {
             SettingsSchema? schema = ((!) settings_schema_source).lookup (schema_id, true);
@@ -695,6 +708,7 @@ public class SettingsModel : Object
                 return;
             schema_info = new RelocatableSchemaInfo ((!) schema);
         }
+
         var args = va_list ();
         var next_arg = null;
         while ((next_arg = args.arg ()) != null)
@@ -715,7 +729,7 @@ public class SettingsModel : Object
                 ((!) schema_info).path_specs.append (new PathSpec.from_path ((string) path_spec));
         }
         if (((!) schema_info).path_specs.length () > 0)
-            info_map.insert (schema_id, (!) schema_info);
+            relocatable_schema_paths.insert (schema_id, (!) schema_info);
     }
 
     /*\
@@ -742,7 +756,7 @@ public class SettingsModel : Object
 
     private Queue<Directory> search_nodes = new Queue<Directory> ();
 
-    private void create_relocatable_schemas_views (HashTable<string, RelocatableSchemaInfo> relocatable_schemas_paths)
+    private void create_relocatable_schemas_views ()
     {
         search_nodes.clear (); // subtrees that need yet to be matched against the path specs
         search_nodes.push_head (root); // start with the whole known tree
@@ -751,7 +765,7 @@ public class SettingsModel : Object
             Directory subtree = search_nodes.pop_tail ();
             string subtree_path = subtree.full_name;
             string[] subtree_segments = subtree_path == "/" ? new string [0] : subtree_path [1:-1].split ("/");
-            relocatable_schemas_paths.get_values ().foreach ((schema_info) => {
+            relocatable_schema_paths.get_values ().foreach ((schema_info) => {
                     schema_info.path_specs.foreach ((spec) => {
                             string[] spec_segments = spec.segments;
                             if (subtree_segments.length > spec_segments.length)
