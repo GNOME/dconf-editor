@@ -573,7 +573,8 @@ enum RelocatableSchemasEnabledMappings
 {
     USER,
     BUILT_IN,
-    INTERNAL
+    INTERNAL,
+    STARTUP
 }
 
 class RelocatableSchemaInfo
