@@ -107,8 +107,6 @@ class ConfigurationEditor : Gtk.Application
     * * Window activation
     \*/
 
-    private bool first_window = true;
-
     protected override void activate ()
     {
         simple_activation ();
@@ -129,10 +127,11 @@ class ConfigurationEditor : Gtk.Application
             simple_activation ();
             return Posix.EXIT_SUCCESS;
         }
-        if (args.length > 1 && !first_window)
+        Gtk.Window? test_window = get_active_window ();
+        if (args.length > 1 && test_window != null)
         {
             commands.print (_("Only one window can be opened for now.\n"));
-            get_active_window ().present ();
+            ((!) test_window).present ();
             return Posix.EXIT_FAILURE;
         }
 
@@ -168,7 +167,6 @@ class ConfigurationEditor : Gtk.Application
             }
             DConfWindow window = new DConfWindow (disable_warning, null, arg0, null);
             add_window (window);
-            first_window = false;
             window.present ();
             return ret;
         }
@@ -212,7 +210,6 @@ class ConfigurationEditor : Gtk.Application
 
         DConfWindow window = new DConfWindow (disable_warning, test_format [0], path, key_name);
         add_window (window);
-        first_window = false;
         window.present ();
         return ret;
     }
@@ -226,12 +223,13 @@ class ConfigurationEditor : Gtk.Application
 
     private void simple_activation ()
     {
-        if (first_window)
+        Gtk.Window? window = get_active_window ();
+        if (window == null)
         {
-            add_window (new DConfWindow (disable_warning, null, null, null));
-            first_window = false;
+            window = new DConfWindow (disable_warning, null, null, null);
+            add_window ((!) window);
         }
-        get_active_window ().present ();
+        ((!) window).present ();
     }
 
     /*\
@@ -288,7 +286,10 @@ class ConfigurationEditor : Gtk.Application
     public void about_cb ()
     {
         string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
-        Gtk.show_about_dialog (get_active_window (),
+        Gtk.Window? window = get_active_window ();
+        if (window == null)
+            return;
+        Gtk.show_about_dialog ((!) window,
                                "program-name", _("dconf Editor"),
                                "version", Config.VERSION,
                                "comments", _("A graphical viewer and editor of applications’ internal settings."),
@@ -304,7 +305,9 @@ class ConfigurationEditor : Gtk.Application
 
     private void quit_cb ()
     {
-        get_active_window ().destroy ();
+        Gtk.Window? window = get_active_window ();
+        if (window != null)
+            ((!) window).destroy ();
 
         base.quit ();
     }
