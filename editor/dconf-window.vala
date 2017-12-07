@@ -317,7 +317,9 @@ class DConfWindow : ApplicationWindow
     private void request_path (string full_name)
     {
 //        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
-        highcontrast = ("HighContrast" in Gtk.Settings.get_default ().gtk_theme_name);
+        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
+        if (gtk_settings != null)
+            highcontrast = ("HighContrast" in ((!) gtk_settings).gtk_theme_name);
 
         string folder_name = SettingsModel.get_base_path (full_name);
 
