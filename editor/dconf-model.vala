@@ -668,11 +668,11 @@ public class SettingsModel : Object
 
     private void parse_relocatable_schemas_user_paths ()
     {
-        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
-        if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
+        if (settings_schema_source == null)
             return;
 
-        if (settings_schema_source == null)
+        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
+        if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
             return;
 
         Variant user_paths_variant = application_settings.get_value ("relocatable-schemas-user-paths");
@@ -686,16 +686,16 @@ public class SettingsModel : Object
 
     private void create_relocatable_schemas_built_in_paths ()
     {
+        if (settings_schema_source == null)
+            return;
+
         RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
         if (!(RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags))
             return;
 
-        if (settings_schema_source == null)
-            return;
-
-        add_relocatable_schema_info ("org.gnome.desktop.app-folders.folder", "/org/gnome/desktop/app-folders/folders//");
-        add_relocatable_schema_info ("org.gnome.Terminal.Legacy.Profile", "/org/gnome/terminal/legacy/profiles://");
-        // TODO add more well-known mappings
+        string [,] known_mappings = ConfigurationEditor.known_mappings;
+        for (int i = 0; i < known_mappings.length [0]; i++)
+            add_relocatable_schema_info (known_mappings [i,0], known_mappings [i,1]);
     }
 
     private void add_relocatable_schema_info (string schema_id, ...)

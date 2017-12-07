@@ -17,11 +17,18 @@
 
 class ConfigurationEditor : Gtk.Application
 {
+    public static string [,] known_mappings = {
+            {"org.gnome.desktop.app-folders.folder", "/org/gnome/desktop/app-folders/folders//"},
+            {"org.gnome.Terminal.Legacy.Profile", "/org/gnome/terminal/legacy/profiles://"}
+        };  // TODO add more well-known mappings
+
     private static bool disable_warning = false;
 
     private const OptionEntry [] option_entries =
     {
         { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
+        { "list-relocatable-schemas", 0, 0, OptionArg.NONE, null, N_("Print relocatable schemas and exit"), null },
+
         { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
         {}
     };
@@ -64,6 +71,57 @@ class ConfigurationEditor : Gtk.Application
         {
             /* NOTE: Is not translated so can be easily parsed */
             stdout.printf ("%1$s %2$s\n", "dconf-editor", Config.VERSION);
+            return Posix.EXIT_SUCCESS;
+        }
+        if (options.contains ("list-relocatable-schemas"))
+        {
+            // get installed schemas
+
+            string [] non_relocatable_schemas;
+            string [] relocatable_schemas;
+
+            SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+            if (settings_schema_source == null)
+            {
+                warning ("No schema source!");
+                return Posix.EXIT_FAILURE;
+            }
+            ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
+
+            // sort out schemas ids
+
+            string [] known_schemas_installed = {};
+            string [] unknown_schemas = {};
+
+            string [] schemas_ids = {};
+            for (int i = 0; i < known_mappings.length [0]; i++)
+                schemas_ids += known_mappings [i,0];
+
+            foreach (string schema_id in relocatable_schemas)
+            {
+                if (schema_id in schemas_ids)
+                    known_schemas_installed += schema_id;
+                else
+                    unknown_schemas += schema_id;
+            }
+
+            // print
+
+            if (known_schemas_installed.length > 0)
+            {
+                stdout.printf (_("Known schemas installed:") + "\n");
+                foreach (string schema_id in known_schemas_installed)
+                    stdout.printf (@"  $schema_id\n");
+            }
+            else
+                stdout.printf (_("No known schemas installed.") + "\n");
+            stdout.printf ("\n");
+            if (unknown_schemas.length > 0)
+            {
+                stdout.printf (_("Unknown schemas:") + "\n");
+                foreach (string schema_id in unknown_schemas)
+                    stdout.printf (@"  $schema_id\n");
+            }
             return Posix.EXIT_SUCCESS;
         }
         return -1;
