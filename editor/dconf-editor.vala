@@ -24,6 +24,14 @@ class ConfigurationEditor : Gtk.Application
                 "/org/gnome/desktop/app-folders/folders//"},
             {"org.gnome.desktop.notifications.application",
                 "/org/gnome/desktop/notifications/application//"},
+            {"org.gnome.Epiphany.state",
+                "/org/gnome/epiphany/state/"},
+            {"org.gnome.Epiphany.state",
+                "/org/gnome/epiphany/web-apps//state/"},
+            {"org.gnome.Epiphany.web",
+                "/org/gnome/epiphany/web/"},
+            {"org.gnome.Epiphany.web",
+                "/org/gnome/epiphany/web-apps//web/"},
             {"org.gnome.nm-applet.eap",
                 "/org/gnome/nm-applet/eap//"},
             {"org.gnome.Terminal.Legacy.Profile",
@@ -34,10 +42,6 @@ class ConfigurationEditor : Gtk.Application
                 "/org/gnome/settings-daemon/plugins/sharing//"},
 
             // TODO why a relocatable schema?
-            {"org.gnome.Epiphany.state",
-                "/org/gnome/epiphany/state/"},
-            {"org.gnome.Epiphany.web",
-                "/org/gnome/epiphany/web/"},
             {"org.gnome.Terminal.Legacy.Keybindings",
                 "/org/gnome/terminal/legacy/keybindings/"}
         };  // TODO add more well-known mappings
