@@ -772,7 +772,7 @@ public class SettingsModel : Object
 
     public static string get_base_path (string path)
     {
-        if (path.has_suffix ("/"))
+        if (!is_key_path (path))
             return path;
         else
             return stripped_path (path);
@@ -893,7 +893,7 @@ public class SettingsModel : Object
                 foreach (string item in items)
                 {
                     string full_name = path + item;
-                    if ((full_name.has_suffix ("/") && new_key.full_name.has_prefix (full_name)) || full_name == new_key.full_name)    // TODO better
+                    if ((!is_key_path (full_name) && new_key.full_name.has_prefix (full_name)) || full_name == new_key.full_name)    // TODO better
                     {
                         new_key.is_ghost = client.read (new_key.full_name) == null;
                         new_key.value_changed ();
@@ -905,20 +905,34 @@ public class SettingsModel : Object
 
     public SettingObject? get_object (string path)
     {
-        if (path.has_suffix ("/"))
+        if (!is_key_path (path))
             return get_directory (path);
         Directory? parent = get_directory (get_base_path (path));
         if (parent == null)
             return null;
-        string name = path [path.last_index_of_char ('/') + 1:path.length];
-        return get_key_from_path_and_name (get_children ((!) parent), name);
+        return get_key_from_path_and_name (get_children ((!) parent), get_name (path));
+    }
+
+    public static bool is_key_path (string path)
+    {
+        return !path.has_suffix ("/");
+    }
+
+    public static string get_name (string path)
+    {
+        if (path == "/")
+            return "/";
+        if (is_key_path (path))
+            return path [path.last_index_of_char ('/') + 1:path.length];
+        string tmp = path[0:-1];
+        return tmp [tmp.last_index_of_char ('/') + 1:tmp.length];
     }
 
     public static string get_parent_path (string path)
     {
         if (path == "/")
             return path;
-        return get_base_path (path.has_suffix ("/") ? path [0:-1] : path);
+        return get_base_path (!is_key_path (path) ? path [0:-1] : path);
     }
 
     private static string stripped_path (string path)

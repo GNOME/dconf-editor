@@ -137,7 +137,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         SettingObject setting_object = (SettingObject) item;
         string full_name = setting_object.full_name;
         string parent_path;
-        if (full_name.has_suffix ("/"))
+        if (!SettingsModel.is_key_path (full_name))
             parent_path = SettingsModel.get_base_path (full_name [0:full_name.length - 1]);
         else
             parent_path = SettingsModel.get_base_path (full_name);
@@ -482,7 +482,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         SettingComparator comparator = browser_view.sorting_options.get_comparator ();
         GLib.CompareDataFunc compare = (a, b) => comparator.compare((SettingObject) a, (SettingObject) b);
 
-        if (current_path.has_suffix ("/"))
+        if (!SettingsModel.is_key_path (current_path))
         {
             Directory? local = model.get_directory (current_path);
             if (local != null)

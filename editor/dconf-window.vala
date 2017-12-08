@@ -367,7 +367,7 @@ class DConfWindow : ApplicationWindow
         GLib.Menu menu = new GLib.Menu ();
         menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape (null).escape (null) + "\")");
 
-        if (current_path.has_suffix ("/"))
+        if (!SettingsModel.is_key_path (current_path))
         {
             section = new GLib.Menu ();
             section.append (_("Reset visible keys"), "win.reset-visible");
@@ -629,10 +629,8 @@ class DConfWindow : ApplicationWindow
             return;
         if (shift)
             request_path ("/");
-        else if (current_path.has_suffix ("/"))
-            request_path (current_path.slice (0, current_path.slice (0, current_path.length - 1).last_index_of_char ('/') + 1));
         else
-            request_path (current_path.slice (0, current_path.last_index_of_char ('/') + 1));
+            request_path (SettingsModel.get_parent_path (current_path));
     }
     // TODO do something when open_child fails (returns false)?
     private void go_forward (bool shift)

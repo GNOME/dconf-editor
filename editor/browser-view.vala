@@ -159,7 +159,7 @@ class BrowserView : Grid, PathElement
         need_reload_warning_revealer.set_reveal_child (false);
         browse_view.show_multiple_schemas_warning (false);
 
-        stack.set_transition_type (path.has_prefix (current_path) && current_path.length == path.last_index_of_char ('/') + 1 && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        stack.set_transition_type (current_path == SettingsModel.get_parent_path (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
         update_current_path (path);
         stack.set_visible_child (properties_view);
