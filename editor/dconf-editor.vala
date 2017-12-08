@@ -45,6 +45,10 @@ class ConfigurationEditor : Gtk.Application
             {"org.gnome.settings-daemon.plugins.sharing.service",
                 "/org/gnome/settings-daemon/plugins/sharing//"},
 
+            // TODO why a relocatable schema?
+            {"org.gnome.Terminal.Legacy.Keybindings",
+                "/org/gnome/terminal/legacy/keybindings/"}
+
             /* TODO https://bugzilla.gnome.org/show_bug.cgi?id=791387
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/beautifier_plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/cargo_plugin/"},
@@ -91,15 +95,12 @@ class ConfigurationEditor : Gtk.Application
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/vala-pack-plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/valgrind_plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/xml-pack-plugin/"}, */
-
-            // TODO why a relocatable schema?
-            {"org.gnome.Terminal.Legacy.Keybindings",
-                "/org/gnome/terminal/legacy/keybindings/"}
         };  // TODO add more well-known mappings
 
     private static string [] skipped_schemas = {
+            "org.gnome.Epiphany.permissions",   // keyfile backend ~/.config/epiphany/permissions.ini && ~/.config/epiphany/app-epiphany-*/permissions.ini
             "ca.desrt.dconf-editor.Demo.Relocatable",
-            "org.gnome.builder.plugin",
+            "org.gnome.builder.plugin",         // see commented block
             // TODO don't skip?
             "org.gnome.settings-daemon.peripherals.keyboard.deprecated",
             "org.gnome.settings-daemon.peripherals.mouse.deprecated",
