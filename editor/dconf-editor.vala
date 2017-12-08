@@ -20,6 +20,10 @@ class ConfigurationEditor : Gtk.Application
     public static string [,] known_mappings = {
             {"com.gexperts.Tilix.Profile",
                 "/com/gexperts/Tilix/profiles//"},
+            {"org.gnome.builder.editor.language",
+                "/org/gnome/builder/editor/language//"},
+            {"org.gnome.builder.extension-type",
+                "/org/gnome/builder/extension-types///"},
             {"org.gnome.desktop.app-folders.folder",
                 "/org/gnome/desktop/app-folders/folders//"},
             {"org.gnome.desktop.notifications.application",
@@ -41,11 +45,61 @@ class ConfigurationEditor : Gtk.Application
             {"org.gnome.settings-daemon.plugins.sharing.service",
                 "/org/gnome/settings-daemon/plugins/sharing//"},
 
+            /* TODO https://bugzilla.gnome.org/show_bug.cgi?id=791387
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/beautifier_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/cargo_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/clang-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/cmake_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/code-index-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/color-picker-plugin/"},    // that's not color_picker_plugin
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/comment-code-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/c-pack-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/ctags-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/devhelp-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/documentation-card-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/eslint_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/find_other_file/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/flatpak-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/gcc-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/gdb-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/gettext-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/gnome-code-assistance-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/history-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/html-completion-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/html_preview_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/jedi_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/jhbuild_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/make_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/meson_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/mingw-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/mono_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/notification-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/npm_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/phpize_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/python_gi_imports_completion/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/python-pack-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/quick-highlight-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/retab-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/rust_langserv_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/rustup_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/spellcheck-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/symbol-tree-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/sysmon/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/sysprof-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/terminal/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/todo-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/vala-pack-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/valgrind_plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/xml-pack-plugin/"}, */
+
             // TODO why a relocatable schema?
             {"org.gnome.Terminal.Legacy.Keybindings",
                 "/org/gnome/terminal/legacy/keybindings/"}
         };  // TODO add more well-known mappings
+
     private static string [] skipped_schemas = {
+            "ca.desrt.dconf-editor.Demo.Relocatable",
+            "org.gnome.builder.plugin",
             // TODO don't skip?
             "org.gnome.settings-daemon.peripherals.keyboard.deprecated",
             "org.gnome.settings-daemon.peripherals.mouse.deprecated",
@@ -138,7 +192,7 @@ class ConfigurationEditor : Gtk.Application
 
             foreach (string schema_id in relocatable_schemas)
             {
-                if (schema_id == "ca.desrt.dconf-editor.Demo.Relocatable" || schema_id in schemas_ids)
+                if (schema_id in schemas_ids)
                     known_schemas_installed += schema_id;
                 else if (schema_id in skipped_schemas)
                     known_schemas_skipped += schema_id;
