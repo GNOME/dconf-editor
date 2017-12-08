@@ -33,57 +33,34 @@ public class Directory : SettingObject
 
     public bool warning_multiple_schemas = false;
 
-    public Directory (string full_name, string name, DConf.Client client)
+    public Directory (string full_name, string name)
     {
         Object (full_name: full_name, name: name);
-
-        this.client = client;
     }
 
     /*\
     * * Keys management
     \*/
 
-    private SettingsSchema? settings_schema = null;
-    private string []? gsettings_key_map = null;
-
-    private GLib.Settings settings;
-
-    private DConf.Client client;
-
-    private bool key_model_accessed = false;
-    private GLib.ListStore _key_model = new GLib.ListStore (typeof (SettingObject));
-    public GLib.ListStore key_model
-    {
-        get
-        {
-            if (!key_model_accessed)
-            {
-                key_model_accessed = true;
-                create_gsettings_keys ();
-                create_dconf_keys ();
-            }
-            return _key_model;
-        }
-    }
+    public SettingsSchema? settings_schema { get; set; default=null; }
+    public GLib.ListStore? key_model { get; set; default=null; }
 
     public void insert_directory (Directory dir)
-        requires (key_model_accessed == false)
+        requires (key_model == null)
     {
         child_map.insert (dir.name, dir);
-        _key_model.insert_sorted (dir, (a, b) => { return strcmp (((Directory) a).name, ((Directory) b).name); });
     }
 
     public Directory? lookup_directory (string name)
     {
-        if (key_model_accessed)
+        if (key_model != null)
             assert_not_reached ();
         return child_map.lookup (name);
     }
 
     public string[] get_children ()
     {
-        if (key_model_accessed)
+        if (key_model != null)
             assert_not_reached ();
         string[] names = new string [child_map.size ()];
         int i = 0;
@@ -91,99 +68,12 @@ public class Directory : SettingObject
         return names;
     }
 
-    /*\
-    * * GSettings keys creation
-    \*/
-
     public void init_gsettings_keys (SettingsSchema _settings_schema)
     {
         if (settings_schema == null)
             settings_schema = _settings_schema;
         else if (_settings_schema.get_id () != ((!) settings_schema).get_id ())
             warning_multiple_schemas = true;
-    }
-
-    private void create_gsettings_keys ()
-    {
-        if (settings_schema == null)
-            return;
-
-        gsettings_key_map = ((!) settings_schema).list_keys ();
-        string? path = ((!) settings_schema).get_path ();
-        if (path == null) // relocatable
-            settings = new GLib.Settings.with_path (((!) settings_schema).get_id (), full_name);
-        else
-            settings = new GLib.Settings (((!) settings_schema).get_id ());
-
-        foreach (string key_id in (!) gsettings_key_map)
-            create_gsettings_key (key_id, (!) settings_schema);
-    }
-
-    private void create_gsettings_key (string key_id, SettingsSchema settings_schema)
-    {
-        SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
-
-        string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
-        string type_string;
-        switch (range_type)
-        {
-            case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
-            case "flags":   type_string = "<flags>"; break; // flags=""
-            default:
-            case "type":    type_string = settings_schema_key.get_value_type ().dup_string (); break;
-        }
-
-        string? nullable_summary = settings_schema_key.get_summary ();
-        string? nullable_description = settings_schema_key.get_description ();
-        Variant? default_value = settings.get_default_value (key_id);       /* TODO present also settings_schema_key.get_default_value () */
-        if (default_value == null)
-            assert_not_reached ();  // TODO report bug, shouldn't be nullable
-        GSettingsKey new_key = new GSettingsKey (
-                full_name,
-                key_id,
-                settings,
-                settings_schema.get_id (),
-                settings_schema.get_path (),
-                ((!) (nullable_summary ?? "")).strip (),
-                ((!) (nullable_description ?? "")).strip (),
-                type_string,
-                (!) default_value,
-                range_type,
-                settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
-            );
-        ((!) _key_model).append (new_key);
-    }
-
-    /*\
-    * * DConf keys creation
-    \*/
-
-    private signal void item_changed (string item);
-    private void dconf_client_change (DConf.Client client, string path, string [] items, string? tag)
-    {
-        foreach (string item in items)
-            item_changed (path + item);
-    }
-
-    private void create_dconf_keys ()
-    {
-        foreach (string item in client.list (full_name))
-            if (DConf.is_key (full_name + item) && (settings_schema == null || !(item in gsettings_key_map)))
-                create_dconf_key (item);
-        client.changed.connect (dconf_client_change);       // TODO better
-    }
-
-    private void create_dconf_key (string key_id)
-    {
-        DConfKey new_key = new DConfKey (client, full_name, key_id);
-        item_changed.connect ((item) => {
-                if ((item.has_suffix ("/") && new_key.full_name.has_prefix (item)) || item == new_key.full_name)    // TODO better
-                {
-                    new_key.is_ghost = client.read (new_key.full_name) == null;
-                    new_key.value_changed ();
-                }
-            });
-        ((!) _key_model).append ((Key) new_key);
     }
 }
 
@@ -618,7 +508,7 @@ public class SettingsModel : Object
         this.application_settings = application_settings;
 
         settings_schema_source = SettingsSchemaSource.get_default ();
-        root = new Directory ("/", "/", client);
+        root = new Directory ("/", "/");
 
         parse_schemas ();
         create_dconf_views (root);
@@ -829,7 +719,7 @@ public class SettingsModel : Object
         if (view != null)
             return (!) view;
 
-        Directory new_view = new Directory (parent_view.full_name + name + "/", name, client);
+        Directory new_view = new Directory (parent_view.full_name + name + "/", name);
         parent_view.insert_directory (new_view);
         return new_view;
     }
@@ -910,7 +800,107 @@ public class SettingsModel : Object
 
     public ListStore get_children (Directory parent)
     {
-        return parent.key_model;
+        if (parent.key_model == null)
+        {
+            GLib.ListStore key_model = new GLib.ListStore (typeof (SettingObject));
+            create_child_folders (parent, key_model);
+            if (parent.settings_schema != null)
+                create_gsettings_keys (parent.full_name, (!) parent.settings_schema, key_model);
+            create_dconf_keys (parent.full_name, key_model);
+            parent.key_model = key_model;
+        }
+        return (!) parent.key_model;
+    }
+
+    /*\
+    * * Child folders creation
+    \*/
+
+    private void create_child_folders (Directory parent, GLib.ListStore key_model)
+    {
+        foreach (string child in parent.get_children ())
+            key_model.append ((!) parent.lookup_directory (child));
+    }
+
+    /*\
+    * * GSettings keys creation
+    \*/
+
+    private void create_gsettings_keys (string parent_path, GLib.SettingsSchema settings_schema, GLib.ListStore key_model)
+    {
+        string[] gsettings_key_map = settings_schema.list_keys ();
+        string? path = settings_schema.get_path ();
+        GLib.Settings settings;
+        if (path == null) // relocatable
+            settings = new GLib.Settings.with_path (settings_schema.get_id (), parent_path);
+        else
+            settings = new GLib.Settings (settings_schema.get_id ());
+
+        foreach (string key_id in gsettings_key_map)
+            create_gsettings_key (parent_path, key_id, settings_schema, settings, key_model);
+    }
+
+    private void create_gsettings_key (string parent_path, string key_id, GLib.SettingsSchema settings_schema, GLib.Settings settings, GLib.ListStore key_model)
+    {
+        SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
+
+        string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
+        string type_string;
+        switch (range_type)
+        {
+            case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
+            case "flags":   type_string = "<flags>"; break; // flags=""
+            default:
+            case "type":    type_string = settings_schema_key.get_value_type ().dup_string (); break;
+        }
+
+        string? nullable_summary = settings_schema_key.get_summary ();
+        string? nullable_description = settings_schema_key.get_description ();
+        Variant? default_value = settings.get_default_value (key_id);       /* TODO present also settings_schema_key.get_default_value () */
+        if (default_value == null)
+            assert_not_reached ();  // TODO report bug, shouldn't be nullable
+        GSettingsKey new_key = new GSettingsKey (
+                parent_path,
+                key_id,
+                settings,
+                settings_schema.get_id (),
+                settings_schema.get_path (),
+                ((!) (nullable_summary ?? "")).strip (),
+                ((!) (nullable_description ?? "")).strip (),
+                type_string,
+                (!) default_value,
+                range_type,
+                settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
+            );
+        key_model.append (new_key);
+    }
+
+    /*\
+    * * DConf keys creation
+    \*/
+
+    private void create_dconf_keys (string parent_path, GLib.ListStore key_model)
+    {
+        foreach (string item in client.list (parent_path))
+            if (DConf.is_key (parent_path + item) && get_key_from_path_and_name (key_model, item) == null)
+                create_dconf_key (parent_path, item, key_model);
+    }
+
+    private void create_dconf_key (string parent_path, string key_id, GLib.ListStore key_model)
+    {
+        DConfKey new_key = new DConfKey (client, parent_path, key_id);
+        client.changed.connect((client, path, items, tag) => {
+                foreach (string item in items)
+                {
+                    string full_name = path + item;
+                    if ((full_name.has_suffix ("/") && new_key.full_name.has_prefix (full_name)) || full_name == new_key.full_name)    // TODO better
+                    {
+                        new_key.is_ghost = client.read (new_key.full_name) == null;
+                        new_key.value_changed ();
+                    }
+                }
+            });
+        key_model.append (new_key);
     }
 
     public SettingObject? get_object (string path)
