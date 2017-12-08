@@ -18,9 +18,43 @@
 class ConfigurationEditor : Gtk.Application
 {
     public static string [,] known_mappings = {
-            {"org.gnome.desktop.app-folders.folder", "/org/gnome/desktop/app-folders/folders//"},
-            {"org.gnome.Terminal.Legacy.Profile", "/org/gnome/terminal/legacy/profiles://"}
+            {"com.gexperts.Tilix.Profile",
+                "/com/gexperts/Tilix/profiles//"},
+            {"org.gnome.desktop.app-folders.folder",
+                "/org/gnome/desktop/app-folders/folders//"},
+            {"org.gnome.desktop.notifications.application",
+                "/org/gnome/desktop/notifications/application//"},
+            {"org.gnome.nm-applet.eap",
+                "/org/gnome/nm-applet/eap//"},
+            {"org.gnome.Terminal.Legacy.Profile",
+                "/org/gnome/terminal/legacy/profiles://"},
+            {"org.gnome.settings-daemon.plugins.media-keys.custom-keybinding",
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings//"},
+            {"org.gnome.settings-daemon.plugins.sharing.service",
+                "/org/gnome/settings-daemon/plugins/sharing//"},
+
+            // TODO why a relocatable schema?
+            {"org.gnome.Epiphany.state",
+                "/org/gnome/epiphany/state/"},
+            {"org.gnome.Epiphany.web",
+                "/org/gnome/epiphany/web/"},
+            {"org.gnome.Terminal.Legacy.Keybindings",
+                "/org/gnome/terminal/legacy/keybindings/"}
         };  // TODO add more well-known mappings
+    private static string [] skipped_schemas = {
+            // TODO don't skip?
+            "org.gnome.settings-daemon.peripherals.keyboard.deprecated",
+            "org.gnome.settings-daemon.peripherals.mouse.deprecated",
+            "org.gnome.settings-daemon.peripherals.touchpad.deprecated",
+            "org.gnome.settings-daemon.peripherals.trackball.deprecated",
+            "org.gnome.settings-daemon.peripherals.wacom.deprecated",
+            "org.gnome.settings-daemon.peripherals.wacom.eraser.deprecated",
+            "org.gnome.settings-daemon.peripherals.wacom.stylus.deprecated",
+            "org.gnome.settings-daemon.peripherals.wacom.tablet-button.deprecated",
+            // TODO disable such schemas automatically?
+            "com.gexperts.Tilix.SettingsList",
+            "org.gnome.Terminal.SettingsList"
+        };
 
     private static bool disable_warning = false;
 
@@ -91,6 +125,7 @@ class ConfigurationEditor : Gtk.Application
             // sort out schemas ids
 
             string [] known_schemas_installed = {};
+            string [] known_schemas_skipped = {};
             string [] unknown_schemas = {};
 
             string [] schemas_ids = {};
@@ -99,8 +134,10 @@ class ConfigurationEditor : Gtk.Application
 
             foreach (string schema_id in relocatable_schemas)
             {
-                if (schema_id in schemas_ids)
+                if (schema_id == "ca.desrt.dconf-editor.Demo.Relocatable" || schema_id in schemas_ids)
                     known_schemas_installed += schema_id;
+                else if (schema_id in skipped_schemas)
+                    known_schemas_skipped += schema_id;
                 else
                     unknown_schemas += schema_id;
             }
@@ -116,12 +153,23 @@ class ConfigurationEditor : Gtk.Application
             else
                 stdout.printf (_("No known schemas installed.") + "\n");
             stdout.printf ("\n");
+            if (known_schemas_skipped.length > 0)
+            {
+                stdout.printf (_("Known schemas skipped:") + "\n");
+                foreach (string schema_id in known_schemas_skipped)
+                    stdout.printf (@"  $schema_id\n");
+            }
+            else
+                stdout.printf (_("No known schemas skipped.") + "\n");
+            stdout.printf ("\n");
             if (unknown_schemas.length > 0)
             {
                 stdout.printf (_("Unknown schemas:") + "\n");
                 foreach (string schema_id in unknown_schemas)
                     stdout.printf (@"  $schema_id\n");
             }
+            else
+                stdout.printf (_("No unknown schemas.") + "\n");
             return Posix.EXIT_SUCCESS;
         }
         return -1;
