@@ -150,9 +150,11 @@ class DConfWindow : ApplicationWindow
                 warning (_("Schema is relocatable, a path is needed."));
                 browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
             }
-            model.add_mapping ((!) schema, (!) path);
-
-            browser_view.init (key_name == null ? (!) path : (!) path + (!) key_name, true);
+            else
+            {
+                model.add_mapping ((!) schema, (!) path);
+                browser_view.init (key_name == null ? (!) path : (!) path + (!) key_name, true);
+            }
         }
         else if (model.is_non_relocatable_schema ((!) schema))
         {

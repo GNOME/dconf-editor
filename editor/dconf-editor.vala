@@ -17,6 +17,9 @@
 
 class ConfigurationEditor : Gtk.Application
 {
+    [CCode (cname = "G_OPTION_REMAINING")]
+    extern const string OPTION_REMAINING;
+
     public static string [,] known_mappings = {
             {"com.gexperts.Tilix.Profile",
                 "/com/gexperts/Tilix/profiles//"},
@@ -116,6 +119,7 @@ class ConfigurationEditor : Gtk.Application
         };
 
     private static bool disable_warning = false;
+    private static string [] remaining = new string [3];
 
     private const OptionEntry [] option_entries =
     {
@@ -123,6 +127,8 @@ class ConfigurationEditor : Gtk.Application
         { "list-relocatable-schemas", 0, 0, OptionArg.NONE, null, N_("Print relocatable schemas and exit"), null },
 
         { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
+
+        { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, ref remaining, "args", N_("[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]") },
         {}
     };
 
@@ -279,28 +285,23 @@ class ConfigurationEditor : Gtk.Application
 
     protected override int command_line (ApplicationCommandLine commands)
     {
-        string [] args = commands.get_arguments ();
+        string [] args = {};
+        foreach (string? i in remaining)
+            if (i != null)
+                args += (!) i;
 
         if (args.length == 0)
-        {
-            assert_not_reached ();
-            simple_activation ();
-            return Posix.EXIT_FAILURE;
-        }
-        if (args.length == 1)   // ['dconf-editor']
         {
             simple_activation ();
             return Posix.EXIT_SUCCESS;
         }
         Gtk.Window? test_window = get_active_window ();
-        if (args.length > 1 && test_window != null)
+        if (test_window != null)
         {
             commands.print (_("Only one window can be opened for now.\n"));
             ((!) test_window).present ();
             return Posix.EXIT_FAILURE;
         }
-
-        args = args [1:args.length];
 
         string arg0 = args [0];
         if (" " in arg0)
