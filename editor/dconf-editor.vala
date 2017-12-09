@@ -47,7 +47,7 @@ class ConfigurationEditor : Gtk.Application
 
             // TODO why a relocatable schema?
             {"org.gnome.Terminal.Legacy.Keybindings",
-                "/org/gnome/terminal/legacy/keybindings/"}
+                "/org/gnome/terminal/legacy/keybindings/"},
 
             // https://bugzilla.gnome.org/show_bug.cgi?id=791387
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/beautifier_plugin/"},
@@ -94,7 +94,7 @@ class ConfigurationEditor : Gtk.Application
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/todo-plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/vala-pack-plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/valgrind_plugin/"},
-            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/xml-pack-plugin/"},
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/xml-pack-plugin/"}
         };  // TODO add more well-known mappings
 
     private static string [] skipped_schemas = {
