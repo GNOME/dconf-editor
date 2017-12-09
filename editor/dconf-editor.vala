@@ -330,8 +330,7 @@ class ConfigurationEditor : Gtk.Application
                 commands.print (_("Cannot understand second argument in this context.\n"));
                 ret = Posix.EXIT_FAILURE;
             }
-            DConfWindow window = new DConfWindow (disable_warning, null, arg0, null);
-            add_window (window);
+            Gtk.Window window = get_new_window (null, arg0, null);
             window.present ();
             return ret;
         }
@@ -373,8 +372,7 @@ class ConfigurationEditor : Gtk.Application
             }
         }
 
-        DConfWindow window = new DConfWindow (disable_warning, test_format [0], path, key_name);
-        add_window (window);
+        Gtk.Window window = get_new_window (test_format [0], path, key_name);
         window.present ();
         return ret;
     }
@@ -390,11 +388,15 @@ class ConfigurationEditor : Gtk.Application
     {
         Gtk.Window? window = get_active_window ();
         if (window == null)
-        {
-            window = new DConfWindow (disable_warning, null, null, null);
-            add_window ((!) window);
-        }
+            window = get_new_window (null, null, null);
         ((!) window).present ();
+    }
+
+    private Gtk.Window get_new_window (string? schema, string? path, string? key_name)
+    {
+        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name);
+        add_window (window);
+        return (Gtk.Window) window;
     }
 
     /*\
