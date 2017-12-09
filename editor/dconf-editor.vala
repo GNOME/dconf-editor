@@ -98,8 +98,9 @@ class ConfigurationEditor : Gtk.Application
         };  // TODO add more well-known mappings
 
     private static string [] skipped_schemas = {
-            "org.gnome.Epiphany.permissions",   // keyfile backend ~/.config/epiphany/permissions.ini && ~/.config/epiphany/app-epiphany-*/permissions.ini
             "ca.desrt.dconf-editor.Demo.Relocatable",
+            "org.gnome.Epiphany.permissions",   // keyfile backend ~/.config/epiphany/permissions.ini && ~/.config/epiphany/app-epiphany-*/permissions.ini
+            "org.gnome.yelp.documents",         // keyfile backend ~/.config/yelp/yelp.cfg even if there's a dconf fallback (!)
             // TODO don't skip?
             "org.gnome.settings-daemon.peripherals.keyboard.deprecated",
             "org.gnome.settings-daemon.peripherals.mouse.deprecated",
