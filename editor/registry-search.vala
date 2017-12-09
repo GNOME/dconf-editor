@@ -485,15 +485,12 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         if (!SettingsModel.is_key_path (current_path))
         {
             Directory? local = model.get_directory (current_path);
-            if (local != null)
+            GLib.ListStore? key_model = model.get_children (local);
+            for (uint i = 0; i < ((!) key_model).get_n_items (); i++)
             {
-                GLib.ListStore key_model = model.get_children ((!) local);
-                for (uint i = 0; i < key_model.get_n_items (); i++)
-                {
-                    SettingObject item = (SettingObject) key_model.get_item (i);
-                    if (term in item.name)
-                        search_results_model.insert_sorted (item, compare);
-                }
+                SettingObject item = (SettingObject) ((!) key_model).get_item (i);
+                if (term in item.name)
+                    search_results_model.insert_sorted (item, compare);
             }
         }
         post_local = (int) search_results_model.get_n_items ();
@@ -571,10 +568,13 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             Directory next = (!) search_nodes.pop_head ();
             bool local_again = next.full_name == current_path;
 
-            GLib.ListStore next_key_model = window.model.get_children (next);
-            for (uint i = 0; i < next_key_model.get_n_items (); i++)
+            GLib.ListStore? next_key_model = window.model.get_children (next);
+            if (next_key_model == null)
+                return true;
+
+            for (uint i = 0; i < ((!) next_key_model).get_n_items (); i++)
             {
-                SettingObject item = (SettingObject) next_key_model.get_item (i);
+                SettingObject item = (SettingObject) ((!) next_key_model).get_item (i);
                 if (item is Directory)
                 {
                     if (!local_again && term in item.name)

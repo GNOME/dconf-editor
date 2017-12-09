@@ -29,51 +29,11 @@ public abstract class SettingObject : Object
 
 public class Directory : SettingObject
 {
-    private HashTable<string, Directory> child_map = new HashTable<string, Directory> (str_hash, str_equal);
-
     public bool warning_multiple_schemas = false;
 
     public Directory (string full_name, string name)
     {
         Object (full_name: full_name, name: name);
-    }
-
-    /*\
-    * * Keys management
-    \*/
-
-    public SettingsSchema? settings_schema { get; set; default=null; }
-    public GLib.ListStore? key_model { get; set; default=null; }
-
-    public void insert_directory (Directory dir)
-        requires (key_model == null)
-    {
-        child_map.insert (dir.name, dir);
-    }
-
-    public Directory? lookup_directory (string name)
-    {
-        if (key_model != null)
-            assert_not_reached ();
-        return child_map.lookup (name);
-    }
-
-    public string[] get_children ()
-    {
-        if (key_model != null)
-            assert_not_reached ();
-        string[] names = new string [child_map.size ()];
-        int i = 0;
-        child_map.get_values ().foreach ((dir) => names [i++] = dir.name);
-        return names;
-    }
-
-    public void init_gsettings_keys (SettingsSchema _settings_schema)
-    {
-        if (settings_schema == null)
-            settings_schema = _settings_schema;
-        else if (_settings_schema.get_id () != ((!) settings_schema).get_id ())
-            warning_multiple_schemas = true;
     }
 }
 
@@ -467,80 +427,90 @@ enum RelocatableSchemasEnabledMappings
     STARTUP
 }
 
-class RelocatableSchemaInfo
-{
-    public SettingsSchema schema;
-    public List<PathSpec> path_specs; // FIXME? cannot have a List<string[]>
-
-    public RelocatableSchemaInfo (SettingsSchema schema)
-    {
-        this.schema = schema;
-        this.path_specs = new List<PathSpec> ();
-    }
-}
-
-class PathSpec
-{
-    public string[] segments;
-
-    public PathSpec (string[] segs)
-    {
-        segments = segs;
-    }
-
-    public PathSpec.from_path (string path)
-    {
-        segments = path [1:-1].split ("/");
-    }
-}
-
 public class SettingsModel : Object
 {
     private Settings application_settings;
-    private SettingsSchemaSource? settings_schema_source;
-    private DConf.Client client = new DConf.Client ();
-    private Directory root;
 
-    private HashTable<string, RelocatableSchemaInfo> relocatable_schema_paths = new HashTable<string, RelocatableSchemaInfo> (str_hash, str_equal);
+    private SettingsSchemaSource? settings_schema_source = null;
+    private HashTable<string, GenericSet<string>> relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
+    private HashTable<string, GenericSet<string>> startup_relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
+    private SchemaPathTree cached_schemas = new SchemaPathTree ("/"); // prefix tree for quick lookup and diff'ing on changes
+
+    private DConf.Client client = new DConf.Client ();
+
+    public signal void paths_changed (GenericSet<string> modified_path_specs);
 
     public SettingsModel (Settings application_settings)
     {
         this.application_settings = application_settings;
+    }
 
-        settings_schema_source = SettingsSchemaSource.get_default ();
-        root = new Directory ("/", "/");
-
-        parse_schemas ();
-        create_dconf_views (root);
-
+    private void refresh_relocatable_schema_paths ()
+    {
+        relocatable_schema_paths.remove_all ();
         parse_relocatable_schemas_user_paths ();
         create_relocatable_schemas_built_in_paths ();
+        parse_relocatable_schemas_startup_paths ();
     }
 
     public void add_mapping (string schema, string path)
     {
-        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
-        if (!(RelocatableSchemasEnabledMappings.STARTUP in enabled_mappings_flags))
-            return;
-
-        add_relocatable_schema_info (schema, path);
+        add_relocatable_schema_info (startup_relocatable_schema_paths, schema, path);
     }
 
     public void finalize_model ()
     {
-        create_relocatable_schemas_views ();
+        refresh_relocatable_schema_paths ();
+        application_settings.changed ["relocatable-schemas-user-paths"].connect (() => {
+                RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
+                if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
+                    return;
 
+                refresh_relocatable_schema_paths ();
+            });
+        application_settings.changed ["relocatable-schemas-enabled-mappings"].connect (() => {
+                refresh_relocatable_schema_paths ();
+            });
+
+        refresh_schema_source ();
+        Timeout.add (3000, () => {
+                refresh_schema_source ();
+                return true;
+            });
+
+        client.changed.connect ((client, prefix, changes, tag) => {
+                GenericSet<string> modified_path_specs = new GenericSet<string> (str_hash, str_equal);
+                modified_path_specs.add (prefix);
+                foreach (string change in changes)
+                {
+                    string item_path = prefix + change;
+                    if (is_key_path (item_path))
+                        modified_path_specs.add (get_parent_path (item_path));
+                    else
+                        modified_path_specs.add (item_path);
+                }
+                GenericSetIter<string> iter = modified_path_specs.iterator ();
+                string? path_spec;
+                while ((path_spec = iter.next_value ()) != null)
+                {
+                    if (cached_schemas.get_schema_count ((!) path_spec) > 0)
+                        iter.remove ();
+                }
+                paths_changed (modified_path_specs);
+            });
         client.watch_sync ("/");
     }
 
-    private void parse_schemas ()
+    private void refresh_schema_source ()
     {
+        SettingsSchemaSource? settings_schema_source = create_schema_source ();
         if (settings_schema_source == null)
             return;
 
+        GenericSet<string> modified_path_specs = new GenericSet<string> (str_hash, str_equal);
+
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
-
         ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
         foreach (string schema_id in non_relocatable_schemas)
@@ -549,18 +519,32 @@ public class SettingsModel : Object
             if (settings_schema == null)
                 continue;       // TODO better
 
-            string schema_path = ((!) settings_schema).get_path ();
-
-            Directory view = create_gsettings_views (root, schema_path [1:schema_path.length]);
-            view.init_gsettings_keys ((!) settings_schema);
+            cached_schemas.add_schema ((!) settings_schema, modified_path_specs);
         }
+
+        foreach (string schema_id in relocatable_schemas)
+        {
+            GenericSet<string>? path_specs = relocatable_schema_paths.lookup (schema_id);
+            if (path_specs == null)
+                continue;
+
+            SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
+            if (settings_schema == null || ((string?) ((!) settings_schema).get_path ()) != null)
+                continue;       // TODO better
+
+            cached_schemas.add_schema_with_path_specs ((!) settings_schema, (!) path_specs, modified_path_specs);
+        }
+
+        cached_schemas.remove_unmarked (modified_path_specs);
+
+        this.settings_schema_source = settings_schema_source;
+
+        if (modified_path_specs.length > 0)
+            paths_changed (modified_path_specs);
     }
 
     private void parse_relocatable_schemas_user_paths ()
     {
-        if (settings_schema_source == null)
-            return;
-
         RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
         if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
             return;
@@ -571,33 +555,36 @@ public class SettingsModel : Object
         string schema_id;
         string path_spec;
         while (entries_iter.next ("{ss}", out schema_id, out path_spec))
-            add_relocatable_schema_info (schema_id, path_spec);
+            add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
     }
 
     private void create_relocatable_schemas_built_in_paths ()
     {
-        if (settings_schema_source == null)
-            return;
-
         RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
         if (!(RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags))
             return;
 
         string [,] known_mappings = ConfigurationEditor.known_mappings;
         for (int i = 0; i < known_mappings.length [0]; i++)
-            add_relocatable_schema_info (known_mappings [i,0], known_mappings [i,1]);
+            add_relocatable_schema_info (relocatable_schema_paths, known_mappings [i,0], known_mappings [i,1]);
     }
 
-    private void add_relocatable_schema_info (string schema_id, ...)
+    private void parse_relocatable_schemas_startup_paths ()
     {
-        RelocatableSchemaInfo? schema_info = relocatable_schema_paths.lookup (schema_id);
+        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
+        if (!(RelocatableSchemasEnabledMappings.STARTUP in enabled_mappings_flags))
+            return;
+
+        startup_relocatable_schema_paths.foreach ((schema_id, paths) => {
+                paths.foreach ((path_spec) => add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec));
+            });
+    }
+
+    private void add_relocatable_schema_info (HashTable<string, GenericSet<string>> map, string schema_id, ...)
+    {
+        GenericSet<string>? schema_info = map.lookup (schema_id);
         if (schema_info == null)
-        {
-            SettingsSchema? schema = ((!) settings_schema_source).lookup (schema_id, true);
-            if (schema == null || ((string?) ((!) schema).get_path ()) != null) // TODO report bug, get_path () should be string? (this is not a question :)
-                return;
-            schema_info = new RelocatableSchemaInfo ((!) schema);
-        }
+            schema_info = new GenericSet<string> (str_hash, str_equal);
 
         var args = va_list ();
         var next_arg = null;
@@ -610,118 +597,125 @@ public class SettingsModel : Object
                 path_spec = "/" + path_spec;
             if (!path_spec.has_suffix ("/"))
                 path_spec += "/"; // TODO proper validation
-            if (!("//" in path_spec)) // no wild cards, just create the views
-            {
-                Directory view = create_gsettings_views (root, path_spec [1:path_spec.length]);
-                view.init_gsettings_keys (((!) schema_info).schema);
-            }
-            else // try to fill the holes later in create_relocatable_schemas_views
-                ((!) schema_info).path_specs.append (new PathSpec.from_path ((string) path_spec));
+            ((!) schema_info).add (path_spec);
         }
-        if (((!) schema_info).path_specs.length () > 0)
-            relocatable_schema_paths.insert (schema_id, (!) schema_info);
+        if (((!) schema_info).length > 0)
+            map.insert (schema_id, (!) schema_info);
+    }
+
+
+
+    public static ulong compute_schema_fingerprint (SettingsSchema? schema)
+    {
+        return 0; // TODO do not take path into consideration, only keys
+    }
+
+    // We need to create new schema sources in order to detect schema changes, since schema sources cache the info and the default schema source is also a cached instance
+    // This code is adapted from GLib (https://git.gnome.org/browse/glib/tree/gio/gsettingsschema.c#n332)
+    private SettingsSchemaSource? create_schema_source ()
+    {
+        SettingsSchemaSource? source = null;
+        string[] system_data_dirs = GLib.Environment.get_system_data_dirs ();
+        for (int i = system_data_dirs.length - 1; i >= 0; i--)
+            source = try_prepend_dir (source, Path.build_filename (system_data_dirs [i], "glib-2.0", "schemas"));
+        string user_data_dir = GLib.Environment.get_user_data_dir ();
+        source = try_prepend_dir (source, Path.build_filename (user_data_dir, "glib-2.0", "schemas"));
+        string? var_schema_dir = GLib.Environment.get_variable ("GSETTINGS_SCHEMA_DIR");
+        if (var_schema_dir != null)
+            source = try_prepend_dir (source, (!) var_schema_dir);
+        return source;
+    }
+
+    private SettingsSchemaSource? try_prepend_dir (SettingsSchemaSource? source, string schemas_dir)
+    {
+        try {
+            return new SettingsSchemaSource.from_directory (schemas_dir, source, true);
+        } catch (GLib.Error e) {
+        }
+        return source;
     }
 
     /*\
-    * * Recursive creation of views (directories)
+    * * Content lookup
     \*/
 
-    private Directory create_gsettings_views (Directory parent_view, string remaining)
+    private LookupResultType lookup (string path, out GLib.ListStore? key_model, out bool multiple_schemas)
     {
-        if (remaining == "")
-            return parent_view;
-
-        string [] tokens = remaining.split ("/", 2);
-
-        Directory view = get_child (parent_view, tokens [0]);
-        return create_gsettings_views (view, tokens [1]);
-    }
-
-    private void create_dconf_views (Directory view)
-    {
-        foreach (string item in client.list (view.full_name))
-            if (DConf.is_dir (view.full_name + item))
-                create_dconf_views (get_child (view, item [0:-1]));
-    }
-
-    private Queue<Directory> search_nodes = new Queue<Directory> ();
-
-    private void create_relocatable_schemas_views ()
-    {
-        search_nodes.clear (); // subtrees that need yet to be matched against the path specs
-        search_nodes.push_head (root); // start with the whole known tree
-        while (!search_nodes.is_empty ())
+        key_model = null;
+        if (is_key_path (path))
         {
-            Directory subtree = search_nodes.pop_tail ();
-            string subtree_path = subtree.full_name;
-            string[] subtree_segments = subtree_path == "/" ? new string [0] : subtree_path [1:-1].split ("/");
-            relocatable_schema_paths.get_values ().foreach ((schema_info) => {
-                    schema_info.path_specs.foreach ((spec) => {
-                            string[] spec_segments = spec.segments;
-                            if (subtree_segments.length > spec_segments.length)
-                                return; // spec too short, cannot match anything below the subtree
-                            int matched_prefix_length = 0;
-                            while (matched_prefix_length < subtree_segments.length)
-                            {
-                                if (spec_segments [matched_prefix_length] != ""
-                                        && spec_segments [matched_prefix_length] != subtree_segments [matched_prefix_length])
-                                    return; // mismatch in one of the subtree ancestors, spec incompatible with subtree
-                                matched_prefix_length++;
-                            }
-                            // search subtree recursively for matches with spec. the search may queue new paths for further iterations
-                            create_relocatable_schemas_views_in_subtree (subtree, spec_segments, matched_prefix_length, (!) schema_info.schema);
-                        });
-                });
-        }
-    }
-
-    private void create_relocatable_schemas_views_in_subtree (Directory view, string[] spec_segments, int matched_prefix_length, SettingsSchema schema)
-    {
-        Directory parent = view;
-        Directory? child = null;
-        while (matched_prefix_length < spec_segments.length
-                && spec_segments [matched_prefix_length] != ""
-                && (child = parent.lookup_directory (spec_segments [matched_prefix_length])) != null)
-        {
-            matched_prefix_length++;
-            parent = (!) child;
-        }
-
-        if (matched_prefix_length == spec_segments.length)
-            parent.init_gsettings_keys (schema); // matched the whole spec to an already existing path
-        else if (spec_segments [matched_prefix_length] == "")
-        {
-            // wild card found, must branch out and match against existing children (there might be none)
-            foreach (string name in parent.get_children ())
-                create_relocatable_schemas_views_in_subtree ((!) parent.lookup_directory (name), spec_segments, matched_prefix_length + 1, schema);
-        }
-        else if (child == null)
-        {
-            // reached a dead end, if the rest of the spec has no wild cards, we add this branch to the tree
-            for (int i = matched_prefix_length; i < spec_segments.length; i++) // must test this before creating
-                if (spec_segments [i] == "")
-                    return; // further wild cards can only be matched by existing folders, but we already reached a dead end, abort
-            // the spec contains all the final folder names, so we can create them
-            for (int i = matched_prefix_length; i < spec_segments.length; i++)
+            string name = get_name (path);
+            string parent_path = get_parent_path (path);
+            GLib.ListStore? parent_key_model = null;
+            switch (lookup (parent_path, out parent_key_model, out multiple_schemas))
             {
-                parent = get_child (parent, spec_segments [i]);
-                search_nodes.push_head (parent); // a created node may be matched by a wild card in another spec, so we push it into the queue
+            case LookupResultType.FOLDER:
+                Key? key = get_key_from_path_and_name ((!) parent_key_model, name);
+                if (key != null)
+                {
+                    key_model = new ListStore (typeof (SettingObject));
+                    ((!) key_model).append ((!) key);
+                    return LookupResultType.KEY;
+                }
+                return LookupResultType.NOT_FOUND;
+            default:
+                return LookupResultType.NOT_FOUND;
             }
-            parent.init_gsettings_keys (schema);
         }
         else
-            assert_not_reached ();
+        {
+            GLib.ListStore _key_model = new GLib.ListStore (typeof (SettingObject));
+            lookup_gsettings (path, _key_model, out multiple_schemas);
+            create_dconf_keys (path, _key_model);
+            if (_key_model.get_n_items () > 0)
+            {
+                key_model = _key_model;
+                return LookupResultType.FOLDER;
+            }
+            return LookupResultType.NOT_FOUND;
+        }
     }
 
-    private Directory get_child (Directory parent_view, string name)
-    {
-        Directory? view = parent_view.lookup_directory (name);
-        if (view != null)
-            return (!) view;
+    /*\
+    * * GSettings content creation
+    \*/
 
-        Directory new_view = new Directory (parent_view.full_name + name + "/", name);
-        parent_view.insert_directory (new_view);
-        return new_view;
+    private void lookup_gsettings (string path, GLib.ListStore key_model, out bool multiple_schemas)
+    {
+        multiple_schemas = false;
+        if (settings_schema_source == null)
+            return;
+
+        List<SettingsSchema> schemas;
+        List<string> folders;
+        cached_schemas.lookup (path, out schemas, out folders);
+        if (schemas.length () > 0)
+        {
+            bool content_found = false;
+            // prefer non-relocatable schema
+            foreach (SettingsSchema schema in schemas)
+            {
+                if (((string?) schema.get_path ()) == null)
+                    continue;
+                create_gsettings_keys (path, (!) schema, key_model);
+                content_found = true;
+                break;
+            }
+            // otherwise any will do
+            if (!content_found)
+            {
+                create_gsettings_keys (path, (!) schemas.data, key_model);
+                content_found = true;
+            }
+        }
+        foreach (string folder in folders)
+        {
+            if (get_folder_from_path_and_name (key_model, folder) == null)
+            {
+                Directory child = new Directory (path + folder + "/", folder);
+                key_model.append (child);
+            }
+        }
     }
 
     /*\
@@ -780,46 +774,32 @@ public class SettingsModel : Object
 
     public Directory? get_directory (string path)
     {
-        if (path == "/")
-            return root;
-
-        SettingObject? dir = root;
-
-        string [] names = path.split ("/");
-        uint index = 1;
-        while (index < names.length - 1)
+        Directory? dir = null;
+        uint schemas_count = 0;
+        uint subpaths_count = 0;
+        cached_schemas.get_content_count (path, ref schemas_count, ref subpaths_count);
+        if (schemas_count + subpaths_count > 0 || client.list (path).length > 0)
         {
-            dir = get_folder_from_path_and_name (get_children ((Directory) dir), names [index]);
-            if (dir == null)
-                return null;
-            index++;
+            dir = new Directory (path, get_name (path));
+            if (schemas_count > 1)
+                ((!) dir).warning_multiple_schemas = true;
         }
-
-        return (Directory) (!) dir;
+        return dir;
     }
 
-    public ListStore get_children (Directory parent)
+    public GLib.ListStore? get_children (Directory? parent)
     {
-        if (parent.key_model == null)
+        if (parent == null)
+            return null;
+        GLib.ListStore? key_model = null;
+        bool multiple_schemas;
+        switch (lookup (((!) parent).full_name, out key_model, out multiple_schemas))
         {
-            GLib.ListStore key_model = new GLib.ListStore (typeof (SettingObject));
-            create_child_folders (parent, key_model);
-            if (parent.settings_schema != null)
-                create_gsettings_keys (parent.full_name, (!) parent.settings_schema, key_model);
-            create_dconf_keys (parent.full_name, key_model);
-            parent.key_model = key_model;
+        case LookupResultType.FOLDER:
+            return key_model;
+        default:
+            return null;
         }
-        return (!) parent.key_model;
-    }
-
-    /*\
-    * * Child folders creation
-    \*/
-
-    private void create_child_folders (Directory parent, GLib.ListStore key_model)
-    {
-        foreach (string child in parent.get_children ())
-            key_model.append ((!) parent.lookup_directory (child));
     }
 
     /*\
@@ -832,9 +812,9 @@ public class SettingsModel : Object
         string? path = settings_schema.get_path ();
         GLib.Settings settings;
         if (path == null) // relocatable
-            settings = new GLib.Settings.with_path (settings_schema.get_id (), parent_path);
+            settings = new Settings.full (settings_schema, null, parent_path);
         else
-            settings = new GLib.Settings (settings_schema.get_id ());
+            settings = new Settings.full (settings_schema, null, null);
 
         foreach (string key_id in gsettings_key_map)
             create_gsettings_key (parent_path, key_id, settings_schema, settings, key_model);
@@ -882,24 +862,22 @@ public class SettingsModel : Object
     private void create_dconf_keys (string parent_path, GLib.ListStore key_model)
     {
         foreach (string item in client.list (parent_path))
-            if (DConf.is_key (parent_path + item) && get_key_from_path_and_name (key_model, item) == null)
+        {
+            string item_path = parent_path + item;
+            if (DConf.is_dir (item_path))
+            {
+                string item_name = item [0:-1];
+                if (get_folder_from_path_and_name (key_model, item_name) == null)
+                    key_model.append (new Directory (item_path, item_name));
+            }
+            else if (DConf.is_key (item_path) && get_key_from_path_and_name (key_model, item) == null)
                 create_dconf_key (parent_path, item, key_model);
+        }
     }
 
     private void create_dconf_key (string parent_path, string key_id, GLib.ListStore key_model)
     {
         DConfKey new_key = new DConfKey (client, parent_path, key_id);
-        client.changed.connect((client, path, items, tag) => {
-                foreach (string item in items)
-                {
-                    string full_name = path + item;
-                    if ((!is_key_path (full_name) && new_key.full_name.has_prefix (full_name)) || full_name == new_key.full_name)    // TODO better
-                    {
-                        new_key.is_ghost = client.read (new_key.full_name) == null;
-                        new_key.value_changed ();
-                    }
-                }
-            });
         key_model.append (new_key);
     }
 
@@ -907,10 +885,34 @@ public class SettingsModel : Object
     {
         if (!is_key_path (path))
             return get_directory (path);
-        Directory? parent = get_directory (get_base_path (path));
-        if (parent == null)
-            return null;
-        return get_key_from_path_and_name (get_children ((!) parent), get_name (path));
+        GLib.ListStore? key_model = get_children (get_directory (get_parent_path (path)));
+        return get_key_from_path_and_name (key_model, get_name (path));
+    }
+
+    public static string[] to_segments (string path)
+    {
+        if (path == "/")
+            return new string [0];
+        int from = path.has_prefix ("/") ? 1 : 0;
+        int to = path.has_suffix ("/") ? -1 : path.length;
+        return path [from:to].split ("/");
+    }
+
+    public static string to_path (string[] segments)
+    {
+        if (segments.length == 0)
+            return "/";
+        return "/" + string.joinv ("/", (string?[]?) segments) + "/";
+    }
+
+    public static bool match_prefix (string[] spec_segments, string[] path_segments)
+    {
+        if (path_segments.length < spec_segments.length)
+            return false;
+        for (uint i = 0; i < path_segments.length; i++)
+            if (spec_segments [i] != "" && spec_segments [i] != path_segments [i])
+                return false;
+        return true;
     }
 
     public static bool is_key_path (string path)
@@ -942,12 +944,14 @@ public class SettingsModel : Object
         return path.slice (0, path.last_index_of_char ('/') + 1);
     }
 
-    public static Key? get_key_from_path_and_name (GLib.ListStore key_model, string key_name)
+    public static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
     {
+        if (key_model == null)
+            return null;
         uint position = 0;
-        while (position < key_model.get_n_items ())
+        while (position < ((!) key_model).get_n_items ())
         {
-            SettingObject? object = (SettingObject?) key_model.get_object (position);
+            SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
             if (object == null)
                 assert_not_reached ();
             if ((!) object is Key && ((!) object).name == key_name)
@@ -957,12 +961,14 @@ public class SettingsModel : Object
         return null;
     }
 
-    public static Directory? get_folder_from_path_and_name (GLib.ListStore key_model, string folder_name)
+    public static Directory? get_folder_from_path_and_name (GLib.ListStore? key_model, string folder_name)
     {
+        if (key_model == null)
+            return null;
         uint position = 0;
-        while (position < key_model.get_n_items ())
+        while (position < ((!) key_model).get_n_items ())
         {
-            SettingObject? object = (SettingObject?) key_model.get_object (position);
+            SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
             if (object == null)
                 assert_not_reached ();
             if ((!) object is Directory && ((!) object).name == folder_name)
@@ -973,3 +979,192 @@ public class SettingsModel : Object
     }
 }
 
+public enum LookupResultType
+{
+    KEY,
+    FOLDER,
+    NOT_FOUND
+}
+
+class CachedSchemaInfo
+{
+    public SettingsSchema schema;
+    public ulong fingerprint;
+    public bool marked;
+
+    public CachedSchemaInfo (SettingsSchema schema, ulong? fingerprint=null)
+    {
+        this.schema = schema;
+        if (fingerprint != null)
+            this.fingerprint = (!) fingerprint;
+        else
+            this.fingerprint = SettingsModel.compute_schema_fingerprint (schema);
+        marked = true;
+    }
+}
+
+class SchemaPathTree
+{
+    private string path_segment;
+    private HashTable<string, CachedSchemaInfo> schemas = new HashTable<string, CachedSchemaInfo> (str_hash, str_equal);
+    private HashTable<string, SchemaPathTree> subtrees = new HashTable<string, SchemaPathTree> (str_hash, str_equal);
+    private SchemaPathTree? wildcard_subtree = null;
+
+    public SchemaPathTree (string path_segment)
+    {
+        this.path_segment = path_segment;
+    }
+
+    public uint get_schema_count (string path)
+    {
+        uint schemas_count = 0;
+        uint subpaths_count = 0;
+        get_content_count (path, ref schemas_count, ref subpaths_count);
+        return schemas_count;
+    }
+
+    public void get_content_count (string path, ref uint schemas_count, ref uint subpaths_count)
+    {
+        List<SettingsSchema> path_schemas;
+        List<string> subpaths;
+        lookup (path, out path_schemas, out subpaths);
+        schemas_count = path_schemas.length ();
+        subpaths_count = subpaths.length ();
+    }
+
+    public bool lookup (string path, out List<SettingsSchema> path_schemas, out List<string> subpaths)
+    {
+        path_schemas = new List<SettingsSchema> ();
+        subpaths = new List<string> ();
+        return lookup_segments (SettingsModel.to_segments (path), 0, ref path_schemas, ref subpaths);
+    }
+
+    private bool lookup_segments (string[] path_segments, int matched_prefix_length, ref List<SettingsSchema> path_schemas, ref List<string> subpaths)
+    {
+        if (matched_prefix_length == path_segments.length)
+        {
+            foreach (CachedSchemaInfo schema_info in schemas.get_values ())
+                path_schemas.append (schema_info.schema);
+            foreach (SchemaPathTree subtree in subtrees.get_values ())
+                if (subtree.has_non_wildcard_content ())
+                    subpaths.append (subtree.path_segment);
+            return true;
+        }
+        bool found = false;
+        if (wildcard_subtree != null)
+            if (((!) wildcard_subtree).lookup_segments (path_segments, matched_prefix_length + 1, ref path_schemas, ref subpaths))
+                found = true;
+        SchemaPathTree? existing_subtree = subtrees.lookup (path_segments [matched_prefix_length]);
+        if (existing_subtree != null)
+            if (((!) existing_subtree).lookup_segments (path_segments, matched_prefix_length + 1, ref path_schemas, ref subpaths))
+                found = true;
+        return found;
+    }
+
+    public void add_schema (SettingsSchema schema, GenericSet<string> modified_path_specs)
+    {
+        string? schema_path = schema.get_path ();
+        if (schema_path == null)
+            return;
+        add_schema_to_path_spec (new CachedSchemaInfo (schema), SettingsModel.to_segments ((!) schema_path), 0, modified_path_specs);
+    }
+
+    public void add_schema_with_path_specs (SettingsSchema schema, GenericSet<string> path_specs, GenericSet<string> modified_path_specs)
+    {
+        ulong fingerprint = SettingsModel.compute_schema_fingerprint (schema);
+        path_specs.foreach ((path_spec) => {
+                add_schema_to_path_spec (new CachedSchemaInfo (schema, fingerprint), SettingsModel.to_segments (path_spec), 0, modified_path_specs);
+            });
+    }
+
+    private bool add_schema_to_path_spec (CachedSchemaInfo schema_info, string[] path_spec, int matched_prefix_length, GenericSet<string> modified_path_specs)
+    {
+        if (matched_prefix_length == path_spec.length)
+        {
+            CachedSchemaInfo? existing_schema_info = schemas.lookup (schema_info.schema.get_id ());
+            if (existing_schema_info != null && ((!) existing_schema_info).fingerprint == schema_info.fingerprint)
+            {
+                ((!) existing_schema_info).schema = schema_info.schema; // drop old schemas to avoid keeping more than one schema source in memory
+                ((!) existing_schema_info).marked = true;
+                return false;
+            }
+            schemas.insert (schema_info.schema.get_id (), schema_info);
+            modified_path_specs.add (SettingsModel.to_path (path_spec));
+            return true;
+        }
+        string segment = path_spec [matched_prefix_length];
+        if (segment == "")
+        {
+            if (wildcard_subtree == null)
+                wildcard_subtree = new SchemaPathTree (""); // doesn't add an immediate subtree, so doesn't count as modification for this node
+            return ((!) wildcard_subtree).add_schema_to_path_spec (schema_info, path_spec, matched_prefix_length + 1, modified_path_specs);
+        }
+        else
+        {
+            SchemaPathTree? existing_subtree = subtrees.lookup (segment);
+            if (existing_subtree == null)
+            {
+                SchemaPathTree new_subtree = new SchemaPathTree (segment);
+                subtrees.insert (segment, new_subtree);
+                existing_subtree = new_subtree;
+                modified_path_specs.add (SettingsModel.to_path (path_spec [0:matched_prefix_length]));
+            }
+            return ((!) existing_subtree).add_schema_to_path_spec (schema_info, path_spec, matched_prefix_length + 1, modified_path_specs);
+        }
+    }
+
+    public void remove_unmarked (GenericSet<string> modified_path_specs)
+    {
+        remove_unmarked_from_path ("/", modified_path_specs);
+    }
+
+    private void remove_unmarked_from_path (string path_spec, GenericSet<string> modified_path_specs)
+    {
+        bool modified = false;
+        schemas.foreach_remove ((schema_id, cached_schema_info) => {
+                if (!cached_schema_info.marked)
+                {
+                    modified = true;
+                    return true;
+                }
+                cached_schema_info.marked = false;
+                return false;
+            });
+
+        if (wildcard_subtree != null)
+        {
+            ((!) wildcard_subtree).remove_unmarked_from_path (path_spec + "/", modified_path_specs);
+            if (((!) wildcard_subtree).is_empty ())
+            {
+                wildcard_subtree = null; // doesn't remove an immediate subtree, so doesn't count as modification for this node
+            }
+        }
+
+        string [] empty_subtrees = {};
+        foreach (SchemaPathTree subtree in subtrees.get_values ())
+        {
+            subtree.remove_unmarked_from_path (path_spec + subtree.path_segment + "/", modified_path_specs);
+            if (subtree.is_empty ())
+                empty_subtrees += subtree.path_segment;
+        }
+        if (empty_subtrees.length > 0)
+        {
+            foreach (string empty_subtree_segment in empty_subtrees)
+                subtrees.remove (empty_subtree_segment);
+            modified = true;
+        }
+
+        if (modified)
+            modified_path_specs.add (path_spec);
+    }
+
+    private bool has_non_wildcard_content ()
+    {
+        return schemas.size() > 0 || subtrees.size () > 0;
+    }
+
+    private bool is_empty ()
+    {
+        return schemas.size () == 0 && wildcard_subtree == null && subtrees.size () == 0;
+    }
+}

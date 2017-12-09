@@ -19,7 +19,7 @@
                     <property name="hexpand">True</property>
                     <property name="max-width-chars">40</property>
                     <property name="wrap">True</property>
-                    <property name="label" translatable="yes">Sort preferences have changed. Do you want to reload the view?</property>
+                    <property name="label" translatable="yes">This content has changed. Do you want to reload the view?</property>
                   </object>
                 </child>
                 <child>

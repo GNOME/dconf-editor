@@ -78,6 +78,18 @@ class DConfWindow : ApplicationWindow
         modifications_handler = new ModificationsHandler ();
         browser_view.modifications_handler = modifications_handler;
         model = new SettingsModel (settings);
+        model.paths_changed.connect ((_model, modified_path_specs) => {
+                bool current_path_modified = false;
+                bool is_key_path = SettingsModel.is_key_path (current_path);
+                string[] current_path_segments = is_key_path ? SettingsModel.to_segments (SettingsModel.get_parent_path (current_path)) : SettingsModel.to_segments (current_path);
+                modified_path_specs.foreach ((path_spec) => {
+                        string[] spec_segments = SettingsModel.to_segments (path_spec);
+                        if (SettingsModel.match_prefix (spec_segments, current_path_segments) && spec_segments.length == current_path_segments.length)
+                            current_path_modified = true;
+                    });
+                if (current_path_modified)
+                    browser_view.show_reload_warning ();
+            });
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
@@ -202,7 +214,7 @@ class DConfWindow : ApplicationWindow
         string [] names = current_path.split ("/");
         string object_name = names [names.length - 1];
 
-        GLib.ListStore key_model = model.get_children ((!) dir);
+        GLib.ListStore? key_model = model.get_children ((!) dir);
         Key?       existing_key = SettingsModel.get_key_from_path_and_name    (key_model, object_name);
         Directory? existing_dir = SettingsModel.get_folder_from_path_and_name (key_model, object_name);
 

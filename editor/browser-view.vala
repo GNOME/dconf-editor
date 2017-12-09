@@ -93,8 +93,8 @@ class BrowserView : Grid, PathElement
         sorting_options.notify.connect (() => {
                 if (!current_view_is_browse_view ())
                     return;
-                GLib.ListStore key_model = window.model.get_children (current_directory);
-                if (!sorting_options.is_key_model_sorted (key_model))
+                GLib.ListStore? key_model = browse_view.get_key_model ();
+                if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
                     need_reload_warning_revealer.set_reveal_child (true);
                 // TODO reload search results too
             });
@@ -118,14 +118,22 @@ class BrowserView : Grid, PathElement
 
     public void set_directory (Directory directory, string? selected)
     {
-        current_directory = directory;
-        GLib.ListStore key_model = window.model.get_children (current_directory);
-        sorting_options.sort_key_model (key_model);
+        GLib.ListStore? key_model = window.model.get_children (directory);
+        if (key_model != null)
+        {
+            current_directory = directory;
+            sorting_options.sort_key_model ((!) key_model);
 
-        browse_view.set_key_model (key_model);
+            browse_view.set_key_model ((!) key_model);
 
-        show_browse_view (directory.full_name, selected);
-        properties_view.clean ();
+            show_browse_view (directory.full_name, selected);
+            properties_view.clean ();
+        }
+    }
+
+    public void show_reload_warning ()
+    {
+        need_reload_warning_revealer.set_reveal_child (true);
     }
 
     private void show_browse_view (string path, string? selected)
@@ -300,9 +308,12 @@ class BrowserView : Grid, PathElement
     public void reset_directory (Directory parent, bool recursively)
     {
         enter_delay_mode ();
-        GLib.ListStore objects = window.model.get_children (parent);
-        reset_generic (objects, recursively);
-        revealer.warn_if_no_planned_changes ();
+        GLib.ListStore? objects = window.model.get_children (parent);
+        if (objects != null)
+        {
+            reset_generic ((!) objects, recursively);
+            revealer.warn_if_no_planned_changes ();
+        }
     }
 
     public void reset_objects (GLib.ListStore? objects, bool recursively)
@@ -327,8 +338,9 @@ class BrowserView : Grid, PathElement
             if (setting_object is Directory)
             {
                 if (recursively) {
-                    GLib.ListStore children = window.model.get_children ((Directory) setting_object);
-                    reset_generic (children, true);
+                    GLib.ListStore? children = window.model.get_children ((Directory) setting_object);
+                    if (children != null)
+                        reset_generic ((!) children, true);
                 }
                 continue;
             }
@@ -352,8 +364,11 @@ class BrowserView : Grid, PathElement
     private void reload ()
     {
         string? saved_selection = browse_view.get_selected_row_name ();
-        sorting_options.sort_key_model (window.model.get_children (current_directory));    // TODO duplicate in set_directory
-        show_browse_view (current_path, saved_selection);
+        Directory? directory = window.model.get_directory (current_path);
+        if (directory == null)
+            request_path (current_path); // rely on fallback detection
+        else
+            set_directory ((!) directory, saved_selection);
     }
 }
 

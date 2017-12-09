@@ -65,6 +65,11 @@ class RegistryView : Grid, PathElement, BrowsableView
     * * Updating
     \*/
 
+    public GLib.ListStore? get_key_model ()
+    {
+        return key_model;
+    }
+
     public void set_key_model (GLib.ListStore _key_model)
     {
         key_model = _key_model;
@@ -107,7 +112,7 @@ class RegistryView : Grid, PathElement, BrowsableView
                 return (int) position;
             position++;
         }
-        assert_not_reached ();
+        return 0; // selected row may have been removed
     }
     private void scroll_to_row (ListBoxRow row, bool grab_focus)
     {
