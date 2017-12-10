@@ -322,10 +322,9 @@ class ConfigurationEditor : Gtk.Application
             return Posix.EXIT_FAILURE;
         }
 
-        int ret = Posix.EXIT_SUCCESS;
-
         if (arg0.has_prefix ("/"))
         {
+            int ret = Posix.EXIT_SUCCESS;
             if (args.length == 2)
             {
                 commands.print (_("Cannot understand second argument in this context.\n"));
@@ -375,7 +374,7 @@ class ConfigurationEditor : Gtk.Application
 
         Gtk.Window window = get_new_window (test_format [0], path, key_name);
         window.present ();
-        return ret;
+        return Posix.EXIT_SUCCESS;
     }
 
     private int failure_space (ApplicationCommandLine commands)
