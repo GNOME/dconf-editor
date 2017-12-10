@@ -380,7 +380,7 @@ class BrowserView : Grid, PathElement
     }
 
     [GtkCallback]
-    private void reload ()
+    public void reload ()
     {
         string? saved_selection = browse_view.get_selected_row_name ();
         Directory? directory = window.model.get_directory (current_path);

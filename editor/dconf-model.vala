@@ -376,8 +376,9 @@ public class SettingsModel : Object
     private SchemaPathTree cached_schemas = new SchemaPathTree ("/"); // prefix tree for quick lookup and diff'ing on changes
 
     private DConf.Client client = new DConf.Client ();
+    private string? last_change_tag = null;
 
-    public signal void paths_changed (GenericSet<string> modified_path_specs);
+    public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
 
     public SettingsModel (Settings application_settings)
     {
@@ -418,6 +419,13 @@ public class SettingsModel : Object
             });
 
         client.changed.connect ((client, prefix, changes, tag) => {
+                bool internal_changes = false;
+                if (last_change_tag != null && tag != null && (!) last_change_tag == (!) tag)
+                {
+                    last_change_tag = null;
+                    internal_changes = true;
+                }
+
                 GenericSet<string> modified_path_specs = new GenericSet<string> (str_hash, str_equal);
                 modified_path_specs.add (prefix);
                 foreach (string change in changes)
@@ -435,7 +443,7 @@ public class SettingsModel : Object
                     if (cached_schemas.get_schema_count ((!) path_spec) > 0)
                         iter.remove ();
                 }
-                paths_changed (modified_path_specs);
+                paths_changed (modified_path_specs, internal_changes);
             });
         client.watch_sync ("/");
     }
@@ -479,7 +487,7 @@ public class SettingsModel : Object
         this.settings_schema_source = settings_schema_source;
 
         if (modified_path_specs.length > 0)
-            paths_changed (modified_path_specs);
+            paths_changed (modified_path_specs, false);
     }
 
     private void parse_relocatable_schemas_user_paths ()
@@ -945,7 +953,7 @@ public class SettingsModel : Object
         {
             try
             {
-                client.write_sync (key.full_name, value);
+                client.write_sync (key.full_name, value, out last_change_tag);
             }
             catch (Error error)
             {
@@ -1022,7 +1030,7 @@ public class SettingsModel : Object
         delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
 
         try {
-            client.change_sync (dconf_changeset);
+            client.change_sync (dconf_changeset, out last_change_tag);
         } catch (Error error) {
             warning (error.message);
         }
