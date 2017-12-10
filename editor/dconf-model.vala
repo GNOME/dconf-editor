@@ -992,6 +992,46 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
+    public string get_key_copy_text (Key key)
+    {
+        return key.get_copy_text ();
+    }
+
+    public Variant get_key_value (Key key)
+    {
+        return key.value;
+    }
+
+    public void set_key_value (Key key, Variant value)
+    {
+        key.value = value;
+    }
+
+    public void set_key_to_default (GSettingsKey key)
+    {
+        key.set_to_default ();
+    }
+
+    public void erase_key (DConfKey key)
+    {
+        key.erase ();
+    }
+
+    public bool is_key_default (GSettingsKey key)
+    {
+        return key.is_default;
+    }
+
+    public bool is_key_ghost (DConfKey key)
+    {
+        return key.is_ghost;
+    }
+
+    public void set_key_is_ghost (DConfKey key, bool is_ghost)
+    {
+        key.is_ghost = is_ghost;
+    }
+
     public void apply_key_value_changes (HashTable<Key, Variant?> changes)
     {
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
@@ -1024,7 +1064,7 @@ public class SettingsModel : Object
                     dconf_changeset.set (key.full_name, planned_value);
 
                     if (planned_value == null)
-                        ((DConfKey) key).is_ghost = true;
+                        set_key_is_ghost ((DConfKey) key, true);
                 }
             });
 

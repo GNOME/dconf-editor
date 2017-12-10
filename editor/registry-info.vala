@@ -60,7 +60,7 @@ class RegistryInfo : Grid, BrowsableView
 
     public void populate_properties_list_box (Key key, bool warning_multiple_schemas)
     {
-        if (key is DConfKey && ((DConfKey) key).is_ghost)   // TODO place in "requires"
+        if (key is DConfKey && modifications_handler.model.is_key_ghost ((DConfKey) key))   // TODO place in "requires"
             assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
@@ -96,12 +96,12 @@ class RegistryInfo : Grid, BrowsableView
 
         if (!dict.lookup ("type-code",    "s", out tmp_string))  assert_not_reached ();
 
-        Label label = new Label (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
+        Label label = new Label (get_current_value_text (has_schema && modifications_handler.model.is_key_default ((GSettingsKey) key), key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
-                if (!has_schema && ((DConfKey) key).is_ghost)
+                if (!has_schema && modifications_handler.model.is_key_ghost ((DConfKey) key))
                     ((BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this))).request_path (parent_path);
                 else
-                    label.set_text (get_current_value_text (has_schema && ((GSettingsKey) key).is_default, key));
+                    label.set_text (get_current_value_text (has_schema && modifications_handler.model.is_key_default ((GSettingsKey) key), key));
             });
         label.halign = Align.START;
         label.valign = Align.START;
@@ -133,7 +133,7 @@ class RegistryInfo : Grid, BrowsableView
                         modifications_handler.dismiss_change (key);
                 }
                 else
-                    key.value = key_editor_child.get_variant ();
+                    modifications_handler.model.set_key_value (key, key_editor_child.get_variant ());
             });
 
         if (has_schema)
@@ -165,20 +165,20 @@ class RegistryInfo : Grid, BrowsableView
                     {
                         if (custom_value_switch.get_active ())
                         {
-                            ((GSettingsKey) key).set_to_default ();
+                            modifications_handler.model.set_key_to_default ((GSettingsKey) key);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
-                            key_editor_child.reload (key.value);
+                            key_editor_child.reload (modifications_handler.model.get_key_value (key));
                             //if (tmp_string == "<flags>")                      let's try to live without this...
                             //    key.planned_value = key.value;
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
-                            key.value = key.value;  // TODO that hurts...
+                            modifications_handler.model.set_key_value (key, modifications_handler.model.get_key_value (key));  // TODO that hurts...
                     }
                 });
             revealer_reload_1_handler = modifications_handler.reload.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
-                    custom_value_switch.set_active (gkey.is_default);
+                    custom_value_switch.set_active (modifications_handler.model.is_key_default (gkey));
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
                 });
             custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
@@ -193,10 +193,10 @@ class RegistryInfo : Grid, BrowsableView
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.reload.connect (() => {
-                if (key is DConfKey && ((DConfKey) key).is_ghost)
+                if (key is DConfKey && modifications_handler.model.is_key_ghost ((DConfKey) key))
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
-                key_editor_child.reload (key.value);
+                key_editor_child.reload (modifications_handler.model.get_key_value (key));
                 //if (tmp_string == "<flags>")                      let's try to live without this...
                 //    key.planned_value = key.value;
                 SignalHandler.unblock (key_editor_child, value_has_changed_handler);
@@ -219,7 +219,7 @@ class RegistryInfo : Grid, BrowsableView
                 switch (((GSettingsKey) key).range_content.n_children ())
                 {
                     case 0:  assert_not_reached ();
-                    case 1:  return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.get_string ());
+                    case 1:  return (KeyEditorChild) new KeyEditorChildSingle (modifications_handler.model.get_key_value (key), modifications_handler.model.get_key_value (key).get_string ());
                     default: return (KeyEditorChild) new KeyEditorChildEnum (key, initial_value, modifications_handler);
                 }
             case "<flags>":
@@ -234,7 +234,7 @@ class RegistryInfo : Grid, BrowsableView
                 {
                     Variant range = ((GSettingsKey) key).range_content;
                     if (Key.get_variant_as_int64 (range.get_child_value (0)) == Key.get_variant_as_int64 (range.get_child_value (1)))
-                        return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
+                        return (KeyEditorChild) new KeyEditorChildSingle (modifications_handler.model.get_key_value (key), modifications_handler.model.get_key_value (key).print (false));
                 }
                 return (KeyEditorChild) new KeyEditorChildNumberInt (key, initial_value);
             case "y":
@@ -245,7 +245,7 @@ class RegistryInfo : Grid, BrowsableView
                 {
                     Variant range = ((GSettingsKey) key).range_content;
                     if (Key.get_variant_as_uint64 (range.get_child_value (0)) == Key.get_variant_as_uint64 (range.get_child_value (1)))
-                        return (KeyEditorChild) new KeyEditorChildSingle (key.value, key.value.print (false));
+                        return (KeyEditorChild) new KeyEditorChildSingle (modifications_handler.model.get_key_value (key), modifications_handler.model.get_key_value (key).print (false));
                 }
                 return (KeyEditorChild) new KeyEditorChildNumberInt (key, initial_value);
             case "d":
@@ -260,12 +260,12 @@ class RegistryInfo : Grid, BrowsableView
         }
     }
 
-    private static string get_current_value_text (bool is_default, Key key)
+    private string get_current_value_text (bool is_default, Key key)
     {
         if (is_default)
             return _("Default value");
         else
-            return Key.cool_text_value_from_variant (key.value, key.type_string);
+            return Key.cool_text_value_from_variant (modifications_handler.model.get_key_value (key), key.type_string);
     }
 
     public string? get_copy_text ()

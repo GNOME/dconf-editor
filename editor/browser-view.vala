@@ -365,10 +365,10 @@ class BrowserView : Grid, PathElement
             }
             if (setting_object is DConfKey)
             {
-                if (!((DConfKey) setting_object).is_ghost)
+                if (!modifications_handler.model.is_key_ghost ((DConfKey) setting_object))
                     modifications_handler.add_delayed_setting ((Key) setting_object, null);
             }
-            else if (!((GSettingsKey) setting_object).is_default)
+            else if (!modifications_handler.model.is_key_default ((GSettingsKey) setting_object))
                 modifications_handler.add_delayed_setting ((Key) setting_object, null);
         }
     }

@@ -156,14 +156,14 @@ class ModificationsHandler : Object
     {
         bool planned_change = key_has_planned_change (key);
         Variant? planned_value = get_key_planned_value (key);
-        return planned_change && (planned_value != null) ? (!) planned_value : key.value;
+        return planned_change && (planned_value != null) ? (!) planned_value : model.get_key_value (key);
     }
 
     public bool key_value_is_default (GSettingsKey key) // doesn't make sense for DConfKey?
     {
         bool planned_change = key_has_planned_change (key);
         Variant? planned_value = get_key_planned_value (key);
-        return planned_change ? planned_value == null : key.is_default;
+        return planned_change ? planned_value == null : model.is_key_default (key);
     }
 
     public void set_key_value (Key key, Variant? new_value)
@@ -171,16 +171,16 @@ class ModificationsHandler : Object
         if (get_current_delay_mode ())
             add_delayed_setting (key, new_value);
         else if (new_value != null)
-            key.value = (!) new_value;
+            model.set_key_value (key, (!) new_value);
         else if (key is GSettingsKey)
-            ((GSettingsKey) key).set_to_default ();
+            model.set_key_to_default ((GSettingsKey) key);
         else if (behaviour != Behaviour.UNSAFE)
         {
             enter_delay_mode ();
             add_delayed_setting (key, null);
         }
         else
-            ((DConfKey) key).erase ();
+            model.erase_key ((DConfKey) key);
     }
 
     public bool key_has_planned_change (Key key)

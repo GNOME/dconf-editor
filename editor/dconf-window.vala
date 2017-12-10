@@ -343,7 +343,7 @@ class DConfWindow : ApplicationWindow
 
             if (existing_key == null)
                 cannot_find_key (object_name, (!) dir);
-            else if (((!) existing_key) is DConfKey && ((DConfKey) (!) existing_key).is_ghost)
+            else if (((!) existing_key) is DConfKey && model.is_key_ghost ((DConfKey) existing_key))
                 key_has_been_removed (object_name, (!) dir);
             else
                 browser_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
@@ -372,7 +372,7 @@ class DConfWindow : ApplicationWindow
         {
             SettingObject? object = model.get_object (current_path);
             if (object != null && (!) object is Key)
-                menu.append (_("Copy descriptor"), "app.copy(\"" + ((Key) (!) object).get_copy_text () + "\")");   // TODO what happens on multiple schemas defining one key?..
+                menu.append (_("Copy descriptor"), "app.copy(\"" + model.get_key_copy_text ((Key) (!) object) + "\")");   // TODO what happens on multiple schemas defining one key?..
             else    // fallback that should never be reached
                 menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape (null).escape (null) + "\")");
         }
@@ -529,7 +529,7 @@ class DConfWindow : ApplicationWindow
                     {
                         SettingObject? setting_object = model.get_object (current_path);
                         if (setting_object != null && (!) setting_object is Key)
-                            selected_row_text = ((Key) (!) setting_object).get_copy_text ();
+                            selected_row_text = model.get_key_copy_text ((Key) (!) setting_object);
                     }
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
