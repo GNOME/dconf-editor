@@ -345,6 +345,7 @@ class RegistryInfo : Grid, BrowsableView
         StyleContext context = label.get_style_context ();
         context.add_class ("italic-label");
         context.add_class ("greyed-label");
+        context.add_class ("warning-label");
         return (Widget) label;
     }
 }

@@ -313,6 +313,11 @@
   color:@unfocused_insensitive_color;
 }
 
+.warning-label {
+  margin-right:8em;
+  margin-left:8em;
+}
+
 .big-popover {
   font-size:144%;
 }
