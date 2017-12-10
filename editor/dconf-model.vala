@@ -40,12 +40,9 @@ public class Directory : SettingObject
 public abstract class Key : SettingObject
 {
     public abstract string descriptor { owned get; }
-    public abstract string get_copy_text ();
 
     public string type_string { get; protected set; default = "*"; }
     public Variant properties { owned get; protected set; }
-
-    public abstract Variant value { owned get; set; }
 
     public signal void value_changed ();
 
@@ -248,54 +245,10 @@ public abstract class Key : SettingObject
 public class DConfKey : Key
 {
     public override string descriptor { owned get { return full_name; } }
-    public override string get_copy_text ()
+
+    public DConfKey (string parent_full_name, string name, string type_string)
     {
-        return is_ghost ? _("%s (key erased)").printf (full_name) : descriptor + " " + value.print (false);
-    }
-
-    private DConf.Client client;
-
-    public bool is_ghost { get; set; default = false; }
-    public void erase ()
-    {
-        try
-        {
-            client.write_sync (full_name, null);
-        }
-        catch (Error error)
-        {
-            warning (error.message);
-        }
-        is_ghost = true;
-        value_changed ();
-    }
-
-    public override Variant value
-    {
-        owned get
-        {
-            return (!) client.read (full_name);
-        }
-        set
-        {
-            try
-            {
-                client.write_sync (full_name, value);
-            }
-            catch (Error error)
-            {
-                warning (error.message);
-            }
-            value_changed ();
-        }
-    }
-
-    public DConfKey (DConf.Client client, string parent_full_name, string name)
-    {
-        Object (full_name: parent_full_name + name, name: name);
-
-        this.client = client;
-        this.type_string = value.get_type_string ();
+        Object (full_name: parent_full_name + name, name: name, type_string: type_string);
 
         VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));     // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
         builder.add ("b",    false);
@@ -338,31 +291,8 @@ public class GSettingsKey : Key
             return @"$schema_id $name";
         }
     }
-    public override string get_copy_text ()
-    {
-        return descriptor + " " + value.print (false);
-    }
 
     public GLib.Settings settings { get; construct; }
-
-    public override Variant value
-    {
-        owned get { return settings.get_value (name); }
-        set { settings.set_value (name, value); }
-    }
-
-    public bool is_default
-    {
-        get { return settings.get_user_value (name) == null; }
-    }
-
-    public void set_to_default ()
-    {
-        settings.reset (name);
-        if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
-            settings.backend.changed (full_name, null);
-        // Alternative workaround: value_changed ();
-    }
 
     public GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
@@ -887,7 +817,8 @@ public class SettingsModel : Object
 
     private void create_dconf_key (string parent_path, string key_id, GLib.ListStore key_model)
     {
-        DConfKey new_key = new DConfKey (client, parent_path, key_id);
+        Variant value = (!) client.read (parent_path + key_id);
+        DConfKey new_key = new DConfKey (parent_path, key_id, value.get_type_string ());
         key_model.append (new_key);
     }
 
@@ -994,42 +925,67 @@ public class SettingsModel : Object
 
     public string get_key_copy_text (Key key)
     {
-        return key.get_copy_text ();
+        if (key is GSettingsKey)
+            return key.descriptor + " " + get_key_value (key).print (false);
+        return is_key_ghost ((DConfKey) key) ? _("%s (key erased)").printf (key.full_name) : key.descriptor + " " + get_key_value (key).print (false);
     }
 
     public Variant get_key_value (Key key)
     {
-        return key.value;
+        if (key is GSettingsKey)
+            return ((GSettingsKey) key).settings.get_value (key.name);
+        return (!) client.read (key.full_name);
     }
 
     public void set_key_value (Key key, Variant value)
     {
-        key.value = value;
+        if (key is GSettingsKey)
+            ((GSettingsKey) key).settings.set_value (key.name, value);
+        else
+        {
+            try
+            {
+                client.write_sync (key.full_name, value);
+            }
+            catch (Error error)
+            {
+                warning (error.message);
+            }
+            key.value_changed ();
+        }
     }
 
     public void set_key_to_default (GSettingsKey key)
     {
-        key.set_to_default ();
+        GLib.Settings settings = key.settings;
+        settings.reset (key.name);
+        if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
+            settings.backend.changed (key.full_name, null);
+        // Alternative workaround: key.value_changed ();
     }
 
     public void erase_key (DConfKey key)
     {
-        key.erase ();
+        try
+        {
+            client.write_sync (key.full_name, null);
+        }
+        catch (Error error)
+        {
+            warning (error.message);
+        }
+        key.value_changed ();
     }
 
     public bool is_key_default (GSettingsKey key)
     {
-        return key.is_default;
+        GLib.Settings settings = key.settings;
+        return settings.get_user_value (key.name) == null;
     }
 
     public bool is_key_ghost (DConfKey key)
     {
-        return key.is_ghost;
-    }
-
-    public void set_key_is_ghost (DConfKey key, bool is_ghost)
-    {
-        key.is_ghost = is_ghost;
+        return client.read (key.full_name) == null;
     }
 
     public void apply_key_value_changes (HashTable<Key, Variant?> changes)
@@ -1060,12 +1016,7 @@ public class SettingsModel : Object
                         ((!) settings).set_value (key.name, (!) planned_value);
                 }
                 else
-                {
                     dconf_changeset.set (key.full_name, planned_value);
-
-                    if (planned_value == null)
-                        set_key_is_ghost ((DConfKey) key, true);
-                }
             });
 
         delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
