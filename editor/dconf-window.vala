@@ -78,9 +78,9 @@ class DConfWindow : ApplicationWindow
         action_group.add_action_entries (action_entries, this);
         insert_action_group ("ui", action_group);
 
-        modifications_handler = new ModificationsHandler ();
-        browser_view.modifications_handler = modifications_handler;
         model = new SettingsModel (settings);
+        modifications_handler = new ModificationsHandler (model);
+        browser_view.modifications_handler = modifications_handler;
         model.paths_changed.connect ((_model, modified_path_specs) => {
                 bool current_path_modified = false;
                 bool is_key_path = SettingsModel.is_key_path (current_path);

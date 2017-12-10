@@ -35,17 +35,43 @@ class ModificationsHandler : Object
 {
     public ModificationsMode mode { get; set; default=ModificationsMode.NONE; }
 
-    private DConf.Client dconf_client = new DConf.Client ();
+    private HashTable<Key, Variant?> keys_awaiting_hashtable = new HashTable<Key, Variant?> (key_hash, key_equal);
+    public uint dconf_changes_count
+    {
+        get
+        {
+            uint count = 0;
+            keys_awaiting_hashtable .foreach ((key, planned_value) => {
+                    if (key is DConfKey)
+                        count++;
+                });
+            return count;
+        }
+    }
+    public uint gsettings_changes_count
+    {
+        get
+        {
+            uint count = 0;
+            keys_awaiting_hashtable .foreach ((key, planned_value) => {
+                    if (key is GSettingsKey)
+                        count++;
+                });
+            return count;
+        }
+    }
 
-    private HashTable<DConfKey, Variant?>         dconf_keys_awaiting_hashtable = new HashTable<DConfKey, Variant?>     (key_hash, key_equal);
-    private HashTable<GSettingsKey, Variant?> gsettings_keys_awaiting_hashtable = new HashTable<GSettingsKey, Variant?> (key_hash, key_equal);
-    public uint dconf_changes_count     { get { return dconf_keys_awaiting_hashtable.length; } }
-    public uint gsettings_changes_count { get { return gsettings_keys_awaiting_hashtable.length; } }
+    public SettingsModel model { get; construct; }
 
     public signal void reload ();
     public signal void delayed_changes_changed ();
 
     public Behaviour behaviour { get; set; }
+
+    public ModificationsHandler (SettingsModel model)
+    {
+        Object (model: model);
+    }
 
     /*\
     * * Public calls
@@ -76,10 +102,7 @@ class ModificationsHandler : Object
 
     public void add_delayed_setting (Key key, Variant? new_value)
     {
-        if (key is GSettingsKey)
-            gsettings_keys_awaiting_hashtable.insert ((GSettingsKey) key, new_value);
-        else
-            dconf_keys_awaiting_hashtable.insert ((DConfKey) key, new_value);
+        keys_awaiting_hashtable.insert (key, new_value);
 
         mode = get_current_delay_mode () ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
 
@@ -91,10 +114,7 @@ class ModificationsHandler : Object
         if (mode == ModificationsMode.NONE)
             mode = behaviour == Behaviour.ALWAYS_DELAY ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
 
-        if (key is GSettingsKey)
-            gsettings_keys_awaiting_hashtable.remove ((GSettingsKey) key);
-        else
-            dconf_keys_awaiting_hashtable.remove ((DConfKey) key);
+        keys_awaiting_hashtable.remove (key);
 
         delayed_changes_changed ();
     }
@@ -115,54 +135,8 @@ class ModificationsHandler : Object
     {
         mode = ModificationsMode.NONE;
 
-        /* GSettings stuff */
-
-        HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
-        gsettings_keys_awaiting_hashtable.foreach_remove ((key, planned_value) => {
-                string key_descriptor = key.descriptor;
-                string settings_descriptor = key_descriptor [0:key_descriptor.last_index_of_char (' ')]; // strip the key name
-                GLib.Settings? settings = delayed_settings_hashtable.lookup (settings_descriptor);
-                if (settings == null)
-                {
-                    settings = key.settings;
-                    ((!) settings).delay ();
-                    delayed_settings_hashtable.insert (settings_descriptor, (!) settings);
-                }
-
-                if (planned_value == null)
-                {
-                    ((!) settings).reset (key.name);
-                    if (((!) settings).backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
-                        ((!) settings).backend.changed (key.full_name, null);
-                    // Alternative workaround: key.value_changed ();
-                }
-                else
-                    ((!) settings).set_value (key.name, (!) planned_value);
-
-                return true;
-            });
-
-        delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
-
-        /* DConf stuff */
-
-        DConf.Changeset dconf_changeset = new DConf.Changeset ();
-        dconf_keys_awaiting_hashtable.foreach_remove ((key, planned_value) => {
-                dconf_changeset.set (key.full_name, planned_value);
-
-                if (planned_value == null)
-                    key.is_ghost = true;
-
-                return true;
-            });
-
-        try {
-            dconf_client.change_sync (dconf_changeset);
-        } catch (Error error) {
-            warning (error.message);
-        }
-
-        /* reload the hamburger menu */
+        model.apply_key_value_changes (keys_awaiting_hashtable);
+        keys_awaiting_hashtable.remove_all ();
 
         delayed_changes_changed ();
         reload ();
@@ -172,10 +146,7 @@ class ModificationsHandler : Object
     {
         mode = ModificationsMode.NONE;
 
-        gsettings_keys_awaiting_hashtable.remove_all ();
-        dconf_keys_awaiting_hashtable.remove_all ();
-
-        /* reload notably key_editor_child */
+        keys_awaiting_hashtable.remove_all ();
 
         delayed_changes_changed ();
         reload ();
@@ -214,16 +185,12 @@ class ModificationsHandler : Object
 
     public bool key_has_planned_change (Key key)
     {
-        if (key is GSettingsKey)
-            return gsettings_keys_awaiting_hashtable.contains ((GSettingsKey) key);
-        return dconf_keys_awaiting_hashtable.contains ((DConfKey) key);
+        return keys_awaiting_hashtable.contains (key);
     }
 
     public Variant? get_key_planned_value (Key key)
     {
-        if (key is GSettingsKey)
-            return gsettings_keys_awaiting_hashtable.lookup ((GSettingsKey) key);
-        return dconf_keys_awaiting_hashtable.lookup ((DConfKey) key);
+        return keys_awaiting_hashtable.lookup (key);
     }
 
 }

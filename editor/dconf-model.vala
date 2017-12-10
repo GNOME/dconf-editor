@@ -987,6 +987,55 @@ public class SettingsModel : Object
         }
         return null;
     }
+
+    /*\
+    * * Key value methods
+    \*/
+
+    public void apply_key_value_changes (HashTable<Key, Variant?> changes)
+    {
+        HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
+        DConf.Changeset dconf_changeset = new DConf.Changeset ();
+        changes.foreach ((key, planned_value) => {
+                if (key is GSettingsKey)
+                {
+                    string key_descriptor = key.descriptor;
+                    string settings_descriptor = key_descriptor [0:key_descriptor.last_index_of_char (' ')]; // strip the key name
+                    GLib.Settings? settings = delayed_settings_hashtable.lookup (settings_descriptor);
+                    if (settings == null)
+                    {
+                        settings = ((GSettingsKey) key).settings;
+                        ((!) settings).delay ();
+                        delayed_settings_hashtable.insert (settings_descriptor, (!) settings);
+                    }
+
+                    if (planned_value == null)
+                    {
+                        ((!) settings).reset (key.name);
+                        if (((!) settings).backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
+                            ((!) settings).backend.changed (key.full_name, null);
+                        // Alternative workaround: key.value_changed ();
+                    }
+                    else
+                        ((!) settings).set_value (key.name, (!) planned_value);
+                }
+                else
+                {
+                    dconf_changeset.set (key.full_name, planned_value);
+
+                    if (planned_value == null)
+                        ((DConfKey) key).is_ghost = true;
+                }
+            });
+
+        delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
+
+        try {
+            client.change_sync (dconf_changeset);
+        } catch (Error error) {
+            warning (error.message);
+        }
+    }
 }
 
 public enum LookupResultType
