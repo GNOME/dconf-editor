@@ -218,7 +218,8 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             }
 
             row.show_right_click_popover (modifications_handler, event_x);
-            row.on_popover_disappear.connect (window.select_search_entry);
+            if (row.on_popover_disappear_handler == 0)
+                row.on_popover_disappear_handler = row.on_popover_disappear.connect (window.select_search_entry);
             rows_possibly_with_popover.append (row);
         }
 
@@ -279,6 +280,11 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
         while (row != null)
         {
+            if (((!) row).on_popover_disappear_handler != 0)
+            {
+                disconnect (((!) row).on_popover_disappear_handler);
+                ((!) row).on_popover_disappear_handler = 0;
+            }
             ((!) row).destroy_popover ();
             position++;
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
@@ -310,7 +316,8 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
         row.show_right_click_popover (modifications_handler);
-        row.on_popover_disappear.connect (window.select_search_entry);
+        if (row.on_popover_disappear_handler == 0)
+            row.on_popover_disappear_handler = row.on_popover_disappear.connect (window.select_search_entry);
         rows_possibly_with_popover.append (row);
         return true;
     }

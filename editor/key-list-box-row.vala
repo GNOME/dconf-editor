@@ -70,7 +70,9 @@ private abstract class ClickableListBoxRow : EventBox
     public signal void on_row_clicked ();
     public signal void on_open_parent ();
     public signal void on_delete_call ();
+
     public signal void on_popover_disappear ();
+    public ulong on_popover_disappear_handler = 0;
 
     public abstract string get_text ();
 
