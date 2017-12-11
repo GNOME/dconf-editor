@@ -464,12 +464,13 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
+        string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+
         Widget? focus = get_focus ();
         if (!(focus is Entry) && !(focus is TextView)) // why is this needed?
-            if (search_bar.handle_event (event))
-                return true;
-
-        string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+            if (name != "F10")                         // else <Shift>F10 toggles the search_entry popup
+                if (search_bar.handle_event (event))
+                    return true;
 
         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
         {
