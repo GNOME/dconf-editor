@@ -560,9 +560,13 @@ class DConfWindow : ApplicationWindow
             return false;
         }
 
-        if (name == "Up")
+        if (name == "Up"
+         && bookmarks_button.active == false
+         && info_button.active == false)
             return browser_view.up_pressed (!search_bar.get_search_mode ());
-        if (name == "Down")
+        if (name == "Down"
+         && bookmarks_button.active == false
+         && info_button.active == false)
             return browser_view.down_pressed (!search_bar.get_search_mode ());
 
         if ((name == "Return" || name == "KP_Enter")
@@ -587,6 +591,7 @@ class DConfWindow : ApplicationWindow
             {
                 if (bookmarks_button.active)
                     bookmarks_button.active = false;
+                browser_view.discard_row_popover ();
                 info_button.active = true;
             }
             else
@@ -598,13 +603,6 @@ class DConfWindow : ApplicationWindow
             return false;
 
         return false;    // browser_view.handle_search_event (event);
-    }
-
-    [GtkCallback]
-    private void on_menu_button_clicked ()
-    {
-        browser_view.discard_row_popover ();
-//        browser_view.set_search_mode (false);
     }
 
     private void go_backward (bool shift)

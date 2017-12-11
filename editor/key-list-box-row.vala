@@ -113,6 +113,11 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).popdown ();
     }
 
+    public bool right_click_popover_visible ()
+    {
+        return (nullable_popover != null) && (((!) nullable_popover).visible);
+    }
+
     public void show_right_click_popover (ModificationsHandler modifications_handler, int event_x = (int) (get_allocated_width () / 2.0))
     {
         if (nullable_popover == null)

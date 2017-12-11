@@ -223,6 +223,10 @@ class RegistryView : Grid, PathElement, BrowsableView
 
         if (selected_row != null)
         {
+            Widget? row_content = ((!) selected_row).get_child ();
+            if (row_content != null && ((ClickableListBoxRow) (!) row_content).right_click_popover_visible ())
+                return false;
+
             int position = ((!) selected_row).get_index ();
             ListBoxRow? row = null;
             if (!is_down && (position >= 1))
