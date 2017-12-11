@@ -44,7 +44,7 @@
                     <property name="hexpand">True</property>
                     <property name="max-width-chars">40</property>
                     <property name="wrap">True</property>
-                    <property name="label" translatable="yes">No schema available. Dconf Editor can’t find a schema associated with this key. The application that installed this key may have been removed, may have stop the use of this key, or may use a relocatable schema for defining its keys.</property>
+                    <property name="label" translatable="yes">No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one associated with this key. If the application that was using this key has been uninstalled, or if this key is obsolete, you may want to erase it.</property>
                   </object>
                 </child>
                 <child>
