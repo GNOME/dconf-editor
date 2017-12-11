@@ -358,7 +358,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         if (selected_row == null)
             return;
 
-        ((ClickableListBoxRow) ((!) selected_row).get_child ()).hide_right_click_popover ();
+        ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
     }
 
     /*\

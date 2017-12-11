@@ -614,6 +614,7 @@ class DConfWindow : ApplicationWindow
 
     private void go_backward (bool shift)
     {
+        browser_view.discard_row_popover ();
         if (current_path == "/")
             return;
         if (shift)
@@ -626,6 +627,7 @@ class DConfWindow : ApplicationWindow
     // TODO do something when open_child fails (returns false)?
     private void go_forward (bool shift)
     {
+        browser_view.discard_row_popover ();
         if (shift)
             pathbar.open_child (null);
         else

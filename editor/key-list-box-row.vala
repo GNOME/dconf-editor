@@ -110,7 +110,7 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).destroy ();
     }
 
-    public void hide_right_click_popover ()
+    protected void hide_right_click_popover ()
     {
         if (nullable_popover != null)
             ((!) nullable_popover).popdown ();
