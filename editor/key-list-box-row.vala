@@ -72,7 +72,7 @@ private abstract class ClickableListBoxRow : EventBox
     public signal void on_delete_call ();
 
     public signal void on_popover_disappear ();
-    public ulong on_popover_disappear_handler = 0;
+    public ulong on_popover_disappear_handler = 0;  // used by registry-search
 
     public abstract string get_text ();
 
@@ -108,7 +108,6 @@ private abstract class ClickableListBoxRow : EventBox
     {
         if (nullable_popover != null)       // check sometimes not useful
             ((!) nullable_popover).destroy ();
-        on_popover_disappear ();
     }
 
     public void hide_right_click_popover ()
@@ -134,8 +133,12 @@ private abstract class ClickableListBoxRow : EventBox
                 return;
             }
 
-            ((!) nullable_popover).closed.connect (() => on_popover_disappear ());
-            ((!) nullable_popover).destroy.connect (() => nullable_popover = null);
+            ulong popover_closed_handler = ((!) nullable_popover).closed.connect (() => on_popover_disappear ());
+            ((!) nullable_popover).destroy.connect ((widget) => {
+                    widget.disconnect (popover_closed_handler);
+                    on_popover_disappear ();
+                    nullable_popover = null;
+                });
 
             ((!) nullable_popover).set_relative_to (this);
             ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
