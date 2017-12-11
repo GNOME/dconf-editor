@@ -282,7 +282,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         {
             if (((!) row).on_popover_disappear_handler != 0)
             {
-                disconnect (((!) row).on_popover_disappear_handler);
+                ((!) row).disconnect (((!) row).on_popover_disappear_handler);
                 ((!) row).on_popover_disappear_handler = 0;
             }
             ((!) row).destroy_popover ();
