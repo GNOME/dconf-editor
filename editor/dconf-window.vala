@@ -595,6 +595,8 @@ class DConfWindow : ApplicationWindow
                 if (info_button.active)
                     info_button.active = false;
             }
+            else if (info_button.sensitive == false)
+                return true;
             else if (info_button.active == false)
             {
                 if (bookmarks_button.active)
