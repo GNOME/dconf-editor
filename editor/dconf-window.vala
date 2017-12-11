@@ -152,6 +152,7 @@ class DConfWindow : ApplicationWindow
             }
             else
             {
+                strict = true;
                 model.add_mapping ((!) schema, (!) path);
                 browser_view.init (key_name == null ? (!) path : (!) path + (!) key_name, true);
             }
