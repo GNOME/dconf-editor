@@ -24,4 +24,11 @@
     </foaf:Person>
   </maintainer>
 
+  <developer>
+    <foaf:Person>
+      <foaf:name>Davi da Silva Böger</foaf:name>
+      <foaf:mbox rdf:resource="mailto:dsboger@gmail.com" />
+    </foaf:Person>
+  </developer>
+
 </Project>
