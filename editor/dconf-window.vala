@@ -482,12 +482,16 @@ class DConfWindow : ApplicationWindow
                         bookmarks_button.clicked ();
                     return true;
                 case "d":
+                    if (bookmarks_button.sensitive == false)
+                        return true;
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
                     bookmarks_button.set_bookmarked (true);
                     return true;
                 case "D":
+                    if (bookmarks_button.sensitive == false)
+                        return true;
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
