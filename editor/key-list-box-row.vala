@@ -70,6 +70,7 @@ private abstract class ClickableListBoxRow : EventBox
     public signal void on_row_clicked ();
     public signal void on_open_parent ();
     public signal void on_delete_call ();
+    public signal void on_popover_disappear ();
 
     public abstract string get_text ();
 
@@ -105,6 +106,7 @@ private abstract class ClickableListBoxRow : EventBox
     {
         if (nullable_popover != null)       // check sometimes not useful
             ((!) nullable_popover).destroy ();
+        on_popover_disappear ();
     }
 
     public void hide_right_click_popover ()
@@ -130,6 +132,7 @@ private abstract class ClickableListBoxRow : EventBox
                 return;
             }
 
+            ((!) nullable_popover).closed.connect (() => on_popover_disappear ());
             ((!) nullable_popover).destroy.connect (() => nullable_popover = null);
 
             ((!) nullable_popover).set_relative_to (this);

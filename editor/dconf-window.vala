@@ -415,6 +415,13 @@ class DConfWindow : ApplicationWindow
     * * Search
     \*/
 
+    public void select_search_entry ()
+    {
+        if (!browser_view.current_view_is_search_results_view ())
+            return;
+        search_entry.grab_focus_without_selecting ();
+    }
+
     [GtkCallback]
     private void search_changed ()
     {
