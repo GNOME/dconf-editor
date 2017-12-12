@@ -292,15 +292,18 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     public DConfKey key { get; construct; }
     private override Key abstract_key { get { return (Key) key; }}
 
-    public KeyListBoxRowEditableNoSchema (DConfKey _key, bool search_result_mode=false)
+    construct
     {
-        Object (key: _key, search_result_mode : search_result_mode);
-
         if (boolean_switch != null)
             ((!) boolean_switch).notify ["active"].connect (() => key.value = new Variant.boolean (((!) boolean_switch).get_active ()));
 
         key_info_label.get_style_context ().add_class ("italic-label");
         key_info_label.set_label (_("No Schema Found"));
+    }
+
+    public KeyListBoxRowEditableNoSchema (DConfKey _key, bool search_result_mode = false)
+    {
+        Object (key: _key, search_result_mode: search_result_mode);
     }
 
     protected override void update ()
@@ -413,10 +416,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     private override Key abstract_key { get { return (Key) key; }}
     private ulong boolean_switch_toggled_handler = 0;
 
-    public KeyListBoxRowEditable (GSettingsKey _key, bool search_result_mode=false)
+    construct
     {
-        Object (key: _key, search_result_mode : search_result_mode);
-
         if (boolean_switch != null)
             boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
                     bool boolean = ((!) boolean_switch).get_active ();
@@ -433,6 +434,11 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             key_info_label.get_style_context ().add_class ("italic-label");
             key_info_label.set_label (_("No summary provided"));
         }
+    }
+
+    public KeyListBoxRowEditable (GSettingsKey _key, bool search_result_mode = false)
+    {
+        Object (key: _key, search_result_mode: search_result_mode);
     }
 
     protected override void update ()
