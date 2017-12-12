@@ -69,7 +69,6 @@ class DConfWindow : ApplicationWindow
         }
     }
 
-/*    private ulong theme_changed_handler = 0; */
     private ulong small_keys_list_rows_handler = 0;
     private ulong small_bookmarks_rows_handler = 0;
 
@@ -101,14 +100,6 @@ class DConfWindow : ApplicationWindow
             maximize ();
 
         StyleContext context = get_style_context ();
-/*        theme_changed_handler = settings.changed ["theme"].connect (() => {
-                string theme = settings.get_string ("theme");
-                if (theme == "non-symbolic-keys-list")
-                {
-                    if (!context.has_class ("non-symbolic")) context.add_class ("non-symbolic");
-                }
-                else if (context.has_class ("non-symbolic")) context.remove_class ("non-symbolic");
-            }); */
         small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
                 bool small_rows = settings.get_boolean ("small-keys-list-rows");
                 if (small_rows)
@@ -125,8 +116,6 @@ class DConfWindow : ApplicationWindow
                 }
                 else if (context.has_class ("small-bookmarks-rows")) context.remove_class ("small-bookmarks-rows");
             });
-/*        if (settings.get_string ("theme") == "non-symbolic-keys-list")
-            context.add_class ("non-symbolic"); */
         bool small_rows = settings.get_boolean ("small-keys-list-rows");
         if (small_rows)
             context.add_class ("small-keys-list-rows");
@@ -311,7 +300,6 @@ class DConfWindow : ApplicationWindow
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
-/*        settings.disconnect (theme_changed_handler); */
         settings.disconnect (small_keys_list_rows_handler);
         settings.disconnect (small_bookmarks_rows_handler);
 
