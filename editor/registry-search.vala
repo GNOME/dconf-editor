@@ -611,4 +611,11 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
         row.set_header (header);
     }
+
+    public void reload_search ()
+    {
+        string term = old_term ?? "";
+        stop_search ();
+        start_search (term);
+    }
 }

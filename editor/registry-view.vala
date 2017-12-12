@@ -76,6 +76,25 @@ class RegistryView : Grid, PathElement, BrowsableView
         key_list_box.bind_model (key_model, new_list_box_row);
     }
 
+    public bool check_reload (Directory fresh_dir, GLib.ListStore fresh_key_model)
+    {
+        if (key_model == null) // should not happen?
+            return true;
+        if (((!) key_model).get_n_items () != fresh_key_model.get_n_items ())
+            return true;
+        for (uint i = 0; i < ((!) key_model).get_n_items (); i++)
+        {
+            SettingObject setting_object = (SettingObject) ((!) key_model).get_item (i);
+            SettingObject fresh_setting_object = (SettingObject) fresh_key_model.get_item (i);
+            if (setting_object.get_type () != fresh_setting_object.get_type ())
+                return true;
+            if (setting_object.name != fresh_setting_object.name)
+                return true;
+            // TODO compare other visible info (i.e. key summary and value)
+        }
+        return false;
+    }
+
     public void show_multiple_schemas_warning (bool multiple_schemas_warning_needed)
     {
         multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);

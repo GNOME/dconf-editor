@@ -82,21 +82,7 @@ class DConfWindow : ApplicationWindow
         modifications_handler = new ModificationsHandler (model);
         browser_view.modifications_handler = modifications_handler;
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                bool current_path_modified = false;
-                bool is_key_path = SettingsModel.is_key_path (current_path);
-                string[] current_path_segments = is_key_path ? SettingsModel.to_segments (SettingsModel.get_parent_path (current_path)) : SettingsModel.to_segments (current_path);
-                modified_path_specs.foreach ((path_spec) => {
-                        string[] spec_segments = SettingsModel.to_segments (path_spec);
-                        if (SettingsModel.match_prefix (spec_segments, current_path_segments) && spec_segments.length == current_path_segments.length)
-                            current_path_modified = true;
-                    });
-                if (current_path_modified)
-                {
-                    if (internal_changes)
-                        browser_view.reload ();
-                    else
-                        browser_view.show_hard_reload_warning ();
-                }
+                browser_view.check_reload (internal_changes);
             });
 
         if (!disable_warning && settings.get_boolean ("show-warning"))

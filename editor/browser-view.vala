@@ -380,14 +380,50 @@ class BrowserView : Grid, PathElement
     }
 
     [GtkCallback]
-    public void reload ()
+    private void reload ()
     {
-        string? saved_selection = browse_view.get_selected_row_name ();
-        Directory? directory = window.model.get_directory (current_path);
-        if (directory == null)
-            request_path (current_path); // rely on fallback detection
+        if (current_view_is_browse_view ())
+        {
+            string? saved_selection = browse_view.get_selected_row_name ();
+            Directory? directory = window.model.get_directory (current_path);
+            if (directory == null)
+                request_path (current_path); // rely on fallback detection
+            else
+                set_directory ((!) directory, saved_selection);
+        }
+        else if (current_view_is_properties_view ())
+            request_path (current_path); // TODO better
+        else if (current_view_is_search_results_view ())
+        {
+            hide_reload_warning ();
+            search_results_view.reload_search ();
+        }
+    }
+
+    public void check_reload (bool internal_changes)
+    {
+        if (current_view_is_properties_view ())
+        {
+            Key? fresh_key = (Key?) modifications_handler.model.get_object (current_path);
+            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, modifications_handler.model.get_key_value ((!) fresh_key)))
+                return;
+        }
+        else if (current_view_is_browse_view ())
+        {
+            Directory? fresh_dir = (Directory?) modifications_handler.model.get_directory (current_path);
+            GLib.ListStore? fresh_key_model = modifications_handler.model.get_children (fresh_dir);
+            if (fresh_key_model != null)
+            {
+                sorting_options.sort_key_model ((!) fresh_key_model); // RegistryView.check_reload assumes the same order as the current view for faster comparison
+                if (!browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
+                    return;
+            }
+        } // search_results_view always reloads
+
+        if (internal_changes)
+            reload ();
         else
-            set_directory ((!) directory, saved_selection);
+            show_hard_reload_warning ();
     }
 }
 

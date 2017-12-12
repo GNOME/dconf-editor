@@ -30,6 +30,8 @@ class RegistryInfo : Grid, BrowsableView
 
     public ModificationsHandler modifications_handler { private get; set; }
 
+    private Variant? current_key_info;
+
     /*\
     * * Cleaning
     \*/
@@ -66,6 +68,7 @@ class RegistryInfo : Grid, BrowsableView
 
         bool has_schema;
         unowned Variant [] dict_container;
+        current_key_info = key.properties;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
         multiple_schemas_warning_revealer.set_reveal_child (has_schema && warning_multiple_schemas);
@@ -99,7 +102,7 @@ class RegistryInfo : Grid, BrowsableView
         Label label = new Label (get_current_value_text (has_schema && modifications_handler.model.is_key_default ((GSettingsKey) key), key));
         ulong key_value_changed_handler = key.value_changed.connect (() => {
                 if (!has_schema && modifications_handler.model.is_key_ghost ((DConfKey) key))
-                    ((BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this))).request_path (parent_path);
+                    label.set_text (_("Key erased."));
                 else
                     label.set_text (get_current_value_text (has_schema && modifications_handler.model.is_key_default ((GSettingsKey) key), key));
             });
@@ -347,6 +350,13 @@ class RegistryInfo : Grid, BrowsableView
         context.add_class ("greyed-label");
         context.add_class ("warning-label");
         return (Widget) label;
+    }
+
+    public bool check_reload (Key fresh_key, Variant fresh_value)
+    {
+        if (current_key_info == null) // should not happen?
+            return true;
+        return !((!) current_key_info).equal (fresh_key.properties); // TODO compare fresh_value with editor value?
     }
 }
 
