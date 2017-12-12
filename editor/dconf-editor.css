@@ -140,7 +140,7 @@
                                                 .keys-list:dir(ltr) > row  grid > label { padding-right: 0.5em; }
                                                 .keys-list:dir(rtl) > row  grid > label { padding-left:  0.5em; }
 
-/* pending change icon */
+/* key icons */
 
                                                 .keys-list          > row > .key         { transition:background-position 0.3s,
                                                                                                       background-size     0.3s;
@@ -148,14 +148,16 @@
                                                                                            background-size:1.5rem; }
                           .small-keys-list-rows .keys-list          > row > .key         { background-size:1rem; }
 
-                                                .keys-list          > row > .key.delayed       { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
-                                                .keys-list          > row > .key.delayed.erase { background-image:-gtk-icontheme("user-trash-symbolic"); }
-                                                .keys-list          > row > .key.erase         { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
-
                                                 .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
                                                 .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }
                           .small-keys-list-rows .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
                           .small-keys-list-rows .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }
+
+/* icons */
+.keys-list > row >                 .key.delayed { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
+.keys-list > row >       .dconf-key.key         { background-image:-gtk-icontheme("dialog-question-symbolic"); }
+.keys-list > row > .erase.dconf-key.key.delayed { background-image:-gtk-icontheme("user-trash-symbolic"); }
+.keys-list > row > .erase.dconf-key.key         { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
 
 /*\
 * * pathbar

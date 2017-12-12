@@ -294,6 +294,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     construct
     {
+        StyleContext main_context = get_style_context ();
+        main_context.add_class ("dconf-key");
+
         if (boolean_switch != null)
             ((!) boolean_switch).notify ["active"].connect (() => key.value = new Variant.boolean (((!) boolean_switch).get_active ()));
 
@@ -418,6 +421,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     construct
     {
+//        StyleContext main_context = get_style_context ();
+//        main_context.add_class ("gsettings-key");
+
         if (boolean_switch != null)
             boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
                     bool boolean = ((!) boolean_switch).get_active ();
