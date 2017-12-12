@@ -87,6 +87,8 @@ private abstract class ClickableListBoxRow : EventBox
 
     public bool search_result_mode { protected get; construct; default=false; }
 
+    public ModificationsHandler modifications_handler { protected get; construct; }
+
     /*\
     * * Dismiss popover on window resize
     \*/
@@ -111,7 +113,7 @@ private abstract class ClickableListBoxRow : EventBox
     \*/
 
     private ContextPopover? nullable_popover = null;
-    protected virtual bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler) { return false; }      // no popover should be created
+    protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
 
     public void destroy_popover ()
     {
@@ -130,12 +132,12 @@ private abstract class ClickableListBoxRow : EventBox
         return (nullable_popover != null) && (((!) nullable_popover).visible);
     }
 
-    public void show_right_click_popover (ModificationsHandler modifications_handler, int event_x = (int) (get_allocated_width () / 2.0))
+    public void show_right_click_popover (int event_x = (int) (get_allocated_width () / 2.0))
     {
         if (nullable_popover == null)
         {
             nullable_popover = new ContextPopover ();
-            if (!generate_popover ((!) nullable_popover, modifications_handler))
+            if (!generate_popover ((!) nullable_popover))
             {
                 ((!) nullable_popover).destroy ();  // TODO better, again
                 nullable_popover = null;
@@ -178,7 +180,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         return full_name;
     }
 
-    protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)  // TODO better
+    protected override bool generate_popover (ContextPopover popover)  // TODO better
     {
         if (search_result_mode)
         {
@@ -263,7 +265,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         ((!) boolean_switch).set_active (!((!) boolean_switch).get_active ());
     }
 
-    public void set_delayed_icon (ModificationsHandler modifications_handler)
+    public void set_delayed_icon ()
     {
         Key key = abstract_key;
         StyleContext context = get_style_context ();
@@ -305,9 +307,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_info_label.set_label (_("No Schema Found"));
     }
 
-    public KeyListBoxRowEditableNoSchema (DConfKey _key, bool search_result_mode = false)
+    public KeyListBoxRowEditableNoSchema (DConfKey _key, ModificationsHandler modifications_handler, bool search_result_mode=false)
     {
-        Object (key: _key, search_result_mode: search_result_mode);
+        Object (key: _key, modifications_handler: modifications_handler, search_result_mode : search_result_mode);
     }
 
     protected override void update ()
@@ -338,7 +340,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         return key.get_copy_text ();
     }
 
-    protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)
+    protected override bool generate_popover (ContextPopover popover)
     {
         if (key.is_ghost)
         {
@@ -434,9 +436,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
     }
 
-    public KeyListBoxRowEditable (GSettingsKey _key, bool search_result_mode = false)
+    public KeyListBoxRowEditable (GSettingsKey _key, ModificationsHandler modifications_handler, bool search_result_mode=false)
     {
-        Object (key: _key, search_result_mode: search_result_mode);
+        Object (key: _key, modifications_handler: modifications_handler, search_result_mode : search_result_mode);
     }
 
     protected override void update ()
@@ -471,7 +473,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         return key.get_copy_text ();
     }
 
-    protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)
+    protected override bool generate_popover (ContextPopover popover)
     {
         if (search_result_mode)
         {
