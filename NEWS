@@ -1,3 +1,41 @@
+dconf-editor 3.27.3
+=====================
+
+Big release. There’s a new developer, Davi da Silva Böger, and things are moving
+faster, finally. Great. :)
+
+The main UI has been redesigned. The search is now dynamic and looks great; even
+if search results could be improved, this function will probably already be more
+useful than what was there previously. Relocatable schemas are now handled; that
+has been possible by adding an internal list of known mappings, and offering the
+user a settings to add custom ones. Please, test.
+
+Some little more things for users: the “back” and “forward” buttons of mice that
+have some could now be used; you can now open dconf-editor to a given path or to
+the path where a given schema is mapped using command-line; there’s an option to
+sort folder first (or last); HighContrast theme has been tested with new design;
+edition of values of type “double” is fixed; keys of the “string array” type are
+not anymore edited with a single-line entry; etc.
+
+As you can imagine, many things have changed internally. This release includes a
+(recently pushed) patch known to break the handling of some corner-cases; if you
+hit one of these, please report bug, it will help. And other changes are coming.
+
+Packagers should be aware also that the gettext domain changed, and that there’s
+a patch included that has been reported to make the build in some quite specific
+conditions crashy; if you are in this situation, please comment on the bugzilla.
+
+Translations updated:
+  Czech: Marek Cernocky
+  French: Charles Monzat
+  Friulian: Fabio Tomat
+  German: Mario Blättermann
+  Indonesian: Kukuh Syafaat
+  Nepali: Pawan Chitrakar
+  Norwegian bokmål: Kjartan Maraas
+  Spanish: Daniel Mustieles
+  Turkish: Muhammet Kara
+
 dconf-editor 3.27.1
 =====================
 
