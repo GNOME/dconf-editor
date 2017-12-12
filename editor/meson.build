@@ -45,7 +45,7 @@ xmllint = find_program('xmllint', required : false)
 if xmllint.found()
   test('test_dtd', xmllint, args: ['--valid',
                                    '--noout', '--nowarning',
-                                   join_paths(dconf_editor_schemadir, gschema)])
+                                   join_paths(meson.current_source_dir(), gschema)])
 else
   message('xmllint not found, no gschema DTD verification')
 endif
