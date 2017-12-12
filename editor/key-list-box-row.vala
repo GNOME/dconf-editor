@@ -294,8 +294,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     construct
     {
-        StyleContext main_context = get_style_context ();
-        main_context.add_class ("dconf-key");
+        get_style_context ().add_class ("dconf-key");
 
         if (boolean_switch != null)
             ((!) boolean_switch).notify ["active"].connect (() => key.value = new Variant.boolean (((!) boolean_switch).get_active ()));
@@ -421,8 +420,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     construct
     {
-//        StyleContext main_context = get_style_context ();
-//        main_context.add_class ("gsettings-key");
+        get_style_context ().add_class ("gsettings-key");
 
         if (boolean_switch != null)
             boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
@@ -464,13 +462,18 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     ((!) boolean_switch).set_active (boolean);
             }
         }
+        StyleContext css_context = get_style_context ();
         if (key.is_default)
         {
+            css_context.remove_class ("edited");
+
             if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
             if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
         }
         else
         {
+            css_context.add_class ("edited");
+
             if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
             if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
         }
