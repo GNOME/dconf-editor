@@ -21,6 +21,23 @@
 */
 
 /*\
+* * bookmarks
+\*/
+
+/* no transition as it would start at popover's opening */
+
+                      .bookmarks list > row { min-height:2.6rem; }
+.small-bookmarks-rows .bookmarks list > row { min-height:1.3rem; }
+
+.small-bookmarks-rows .bookmarks list > row > grid > button.circular.flat {
+  min-height:0;
+  padding-bottom:1px;
+  padding-top:1px;
+  margin-top:-2px;
+  margin-bottom:-2px;
+}
+
+/*\
 * * lists rows height and icon
 \*/
 
@@ -30,7 +47,7 @@
                                                                                   padding-left 0.3s, padding-right 0.3s,
                                                                                /* margin 0.3s,
                                                                                   padding 0.3s, cause stuttering in the transition */
-                                                                                  border-radius 0.3s; } /* not for .bookmarks, as the transition will start at the popover opening */
+                                                                                  border-radius 0.3s; }
                                 /* .keys-list          > row:hover,
                                    .keys-list          > row:selected{ transition:min-height 0.3s,
                                                                                   margin 0.3s,
@@ -50,24 +67,12 @@
     .hc-theme                      .keys-list          > row         { padding-top:0.5em; padding-bottom:0.5em; }
     .hc-theme.small-keys-list-rows .keys-list          > row         { padding-top:0.4em; padding-bottom:0.4em; }
 
-                                   .bookmarks     list > row { min-height:2.6rem; }
-             .small-bookmarks-rows .bookmarks     list > row { min-height:1.3rem; }
-
 /* round borders for large windows */
 
 .large-window                      .keys-list          > row        { border-radius:0.5em;
                                                                       -gtk-outline-radius:calc(0.5em - 1px); }
 .large-window.small-keys-list-rows .keys-list          > row        { border-radius:0;
                                                                       -gtk-outline-radius:2px; /* gtk+ defaults */ }
-
-/* bookmarks */
-             .small-bookmarks-rows .bookmarks     list > row > grid > button.circular.flat {
-                            min-height:0;
-                            padding-bottom:1px;
-                            padding-top:1px;
-                            margin-top:-2px;
-                            margin-bottom:-2px;
-                          }
 
 /* folder icon */
                                    .keys-list          > row        > .folder > grid {
