@@ -40,6 +40,7 @@ public class Directory : SettingObject
 public abstract class Key : SettingObject
 {
     public abstract string descriptor { owned get; }
+    public abstract string get_copy_text ();
 
     public string type_string { get; protected set; default = "*"; }
     public Variant properties { owned get; protected set; }
@@ -247,6 +248,10 @@ public abstract class Key : SettingObject
 public class DConfKey : Key
 {
     public override string descriptor { owned get { return full_name; } }
+    public override string get_copy_text ()
+    {
+        return is_ghost ? _("%s (key erased)").printf (full_name) : descriptor + " " + value.print (false);
+    }
 
     private DConf.Client client;
 
@@ -332,6 +337,10 @@ public class GSettingsKey : Key
             }
             return @"$schema_id $name";
         }
+    }
+    public override string get_copy_text ()
+    {
+        return descriptor + " " + value.print (false);
     }
 
     public GLib.Settings settings { get; construct; }

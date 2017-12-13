@@ -342,7 +342,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     protected override string get_text ()
     {
-        return key.is_ghost ? _("%s (key erased)").printf (key.full_name) : key.descriptor + " " + key.value.print (false);
+        return key.get_copy_text ();
     }
 
     protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)
@@ -479,7 +479,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
     protected override string get_text ()
     {
-        return key.descriptor + " " + key.value.print (false);
+        return key.get_copy_text ();
     }
 
     protected override bool generate_popover (ContextPopover popover, ModificationsHandler modifications_handler)

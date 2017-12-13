@@ -151,7 +151,7 @@
 * * pathbar
 \*/
 
-.root-button {
+.root-button > label {
   background-image:-gtk-icontheme("ca.desrt.dconf-editor-symbolic");
   background-position:center;
   background-size:1.1rem;

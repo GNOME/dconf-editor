@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar.ui")]
 public class PathBar : Box, PathElement
 {
-    [GtkChild] private Button root_button;
+    [GtkChild] private PathBarItem root_button;
 
     private string complete_path = "";
 
@@ -55,24 +55,26 @@ public class PathBar : Box, PathElement
                     return;
                 }
 
+                PathBarItem item = (PathBarItem) child;
+
                 if (maintain_all)
                 {
-                    complete_path += ((PathBarItem) child).text_string;
-                    activate_item (child, false);
+                    complete_path += item.text_string;
+                    activate_item (item, false);
                     return;
                 }
 
-                if (child == root_button || (!destroy_all && ((PathBarItem) child).text_string == split [0]))
+                if (item == root_button || (!destroy_all && item.text_string == split [0]))
                 {
                     complete_path += split [0];
                     split = split [1:split.length];
                     if (split.length == 0 || (split.length == 1 && !is_key_path))
                     {
-                        activate_item (child, true);
+                        activate_item (item, true);
                         maintain_all = true;
                     }
                     else
-                        activate_item (child, false);
+                        activate_item (item, false);
                     return;
                 }
 
@@ -146,15 +148,24 @@ public class PathBar : Box, PathElement
         activate_item (path_bar_item, block);   // has to be after add()
     }
 
-    private void activate_item (Widget item, bool state)
+    private void activate_item (PathBarItem item, bool state)
     {
         StyleContext context = item.get_style_context ();
         if (state == context.has_class ("active"))
             return;
         if (state)
+        {
+            item.cursor_type = PathBarItem.CursorType.CONTEXT;
+            item.set_action_name (null);
+            item.set_sensitive (true);  // GAction do not play well with other kind of... reactions
             context.add_class ("active");
+        }
         else
+        {
+            item.cursor_type = PathBarItem.CursorType.POINTER;
+            item.set_action_name ("win.open-path");
             context.remove_class ("active");
+        }
     }
 }
 
@@ -163,6 +174,54 @@ private class PathBarItem : Button
 {
     public string text_string { get; construct; }
     [GtkChild] private Label text_label;
+
+    public enum CursorType {
+        DEFAULT,
+        POINTER,
+        CONTEXT
+    }
+    public CursorType cursor_type { get; set; default = CursorType.POINTER; }
+
+    construct
+    {
+        enter_notify_event.connect (() => { set_new_cursor_type (cursor_type); });
+        leave_notify_event.connect (() => { set_new_cursor_type (CursorType.DEFAULT); });
+    }
+
+    private void set_new_cursor_type (CursorType new_cursor_type)
+    {
+        Gdk.Window? gdk_window = get_window ();
+        Gdk.Display? display = Gdk.Display.get_default ();
+        if (gdk_window == null || display == null)
+            return;
+
+        Gdk.Cursor? cursor = null;
+        switch (new_cursor_type)
+        {
+            case CursorType.DEFAULT: cursor = null; break;
+            case CursorType.POINTER: cursor = new Gdk.Cursor.from_name ((!) display, "pointer"); break;
+            case CursorType.CONTEXT: cursor = new Gdk.Cursor.from_name ((!) display, "context-menu"); break;
+        }
+        ((!) gdk_window).set_cursor (cursor);
+    }
+
+    [GtkCallback]
+    private void update_cursor ()
+    {
+        if (cursor_type != CursorType.CONTEXT)
+        {
+            cursor_type = CursorType.CONTEXT;
+            set_new_cursor_type (cursor_type);
+            return;
+        }
+
+        GLib.Menu menu = new GLib.Menu ();
+        menu.append (_("Copy current path"), "app.copy(\"" + get_action_target_value ().get_string () + "\")");
+        menu.freeze ();
+
+        Popover popover_test = new Popover.from_model (this, (MenuModel) menu);
+        popover_test.popup ();
+    }
 
     public PathBarItem (string label)
     {

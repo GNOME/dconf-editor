@@ -365,9 +365,16 @@ class DConfWindow : ApplicationWindow
         GLib.Menu section;
 
         GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape (null).escape (null) + "\")");
 
-        if (!SettingsModel.is_key_path (current_path))
+        if (SettingsModel.is_key_path (current_path))   // mainly here for ensuring menu is never empty
+        {
+            SettingObject? object = model.get_object (current_path);
+            if (object != null && (!) object is Key)
+                menu.append (_("Copy descriptor"), "app.copy(\"" + ((Key) (!) object).get_copy_text () + "\")");   // TODO what happens on multiple schemas defining one key?..
+            else    // fallback that should never be reached
+                menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape (null).escape (null) + "\")");
+        }
+        else
         {
             section = new GLib.Menu ();
             section.append (_("Reset visible keys"), "win.reset-visible");
@@ -516,6 +523,12 @@ class DConfWindow : ApplicationWindow
                 case "c":
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
                     string? selected_row_text = browser_view.get_copy_text ();
+                    if (selected_row_text == null)
+                    {
+                        SettingObject? setting_object = model.get_object (current_path);
+                        if (setting_object != null && (!) setting_object is Key)
+                            selected_row_text = ((Key) (!) setting_object).get_copy_text ();
+                    }
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;

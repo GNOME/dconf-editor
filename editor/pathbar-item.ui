@@ -4,6 +4,7 @@
   <template class="PathBarItem" parent="GtkButton">
     <property name="focus-on-click">False</property>
     <property name="action-name">win.open-path</property>
+    <signal name="clicked" handler="update_cursor"/>
     <child>
       <object class="GtkLabel" id="text_label">
         <property name="visible">True</property>

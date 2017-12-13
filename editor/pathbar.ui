@@ -7,19 +7,13 @@
       <class name="pathbar"/>
     </style>
     <child>
-      <object class="GtkButton" id="root_button">
+      <object class="PathBarItem" id="root_button">
         <property name="visible">True</property>
-        <property name="focus-on-click">False</property>
         <property name="action-name">win.open-path</property>
         <property name="action-target">'/'</property>
-        <child>
-          <object class="GtkLabel">
-            <style>
-              <class name="item"/>
-              <class name="root-button"/>
-            </style>
-          </object>
-        </child>
+        <style>
+          <class name="root-button"/>
+        </style>
       </object>
     </child>
   </template>
