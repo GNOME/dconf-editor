@@ -246,7 +246,7 @@ public class DConfKey : Key
 {
     public override string descriptor { owned get { return full_name; } }
 
-    public DConfKey (string parent_full_name, string name, string type_string)
+    public DConfKey (DConf.Client client, string parent_full_name, string name, string type_string)
     {
         Object (full_name: parent_full_name + name, name: name, type_string: type_string);
 
@@ -268,6 +268,15 @@ public class DConfKey : Key
         }
         builder.close ();
         properties = builder.end ();
+
+        client.changed.connect ((client, prefix, changes, tag) => {
+                foreach (string item in changes)
+                    if (prefix + item == full_name)
+                    {
+                        value_changed ();
+                        return;
+                    }
+            });
     }
 }
 
@@ -826,7 +835,7 @@ public class SettingsModel : Object
     private void create_dconf_key (string parent_path, string key_id, GLib.ListStore key_model)
     {
         Variant value = (!) client.read (parent_path + key_id);
-        DConfKey new_key = new DConfKey (parent_path, key_id, value.get_type_string ());
+        DConfKey new_key = new DConfKey (client, parent_path, key_id, value.get_type_string ());
         key_model.append (new_key);
     }
 
