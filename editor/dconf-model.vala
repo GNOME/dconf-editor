@@ -736,6 +736,7 @@ public class SettingsModel : Object
         string [] non_relocatable_schemas;
         string [] relocatable_schemas;
 
+        refresh_schema_source ();   // first call
         if (settings_schema_source == null)
             return false;   // TODO better
 

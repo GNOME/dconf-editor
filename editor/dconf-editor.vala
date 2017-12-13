@@ -17,9 +17,6 @@
 
 class ConfigurationEditor : Gtk.Application
 {
-    [CCode (cname = "G_OPTION_REMAINING")]
-    extern const string OPTION_REMAINING;
-
     public static string [,] known_mappings = {
             {"com.gexperts.Tilix.Profile",
                 "/com/gexperts/Tilix/profiles//"},
