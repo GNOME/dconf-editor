@@ -214,9 +214,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    protected StyleContext name_context;
-    protected StyleContext value_context;
-
     public signal void set_key_value (Variant? new_value);
     public signal void change_dismissed ();
 
@@ -227,9 +224,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     construct
     {
-        name_context = key_name_label.get_style_context ();
-        value_context = key_value_label.get_style_context ();
-
         if (abstract_key.type_string == "b")    // TODO not with “always delay” behaviour, nor in “delay mode”
         {
             boolean_switch = new Switch ();
@@ -317,11 +311,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 ((!) boolean_switch).hide ();
                 key_value_label.show ();
             }
-            if (!value_context.has_class ("italic-label")) value_context.add_class ("italic-label");
-            if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
             key_value_label.set_label (_("Key erased."));
-
-            if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
         }
         else
         {
@@ -331,11 +321,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 ((!) boolean_switch).show ();
                 ((!) boolean_switch).set_active (key.value.get_boolean ());
             }
-            if (value_context.has_class ("italic-label")) value_context.remove_class ("italic-label");
-            if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
             key_value_label.set_label (cool_text_value (key));
-
-            if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
         }
     }
 
@@ -462,21 +448,13 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     ((!) boolean_switch).set_active (boolean);
             }
         }
+
         StyleContext css_context = get_style_context ();
         if (key.is_default)
-        {
             css_context.remove_class ("edited");
-
-            if (name_context.has_class ("bold-label")) name_context.remove_class ("bold-label");
-            if (value_context.has_class ("bold-label")) value_context.remove_class ("bold-label");
-        }
         else
-        {
             css_context.add_class ("edited");
 
-            if (!name_context.has_class ("bold-label")) name_context.add_class ("bold-label");
-            if (!value_context.has_class ("bold-label")) value_context.add_class ("bold-label");
-        }
         key_value_label.set_label (cool_text_value (key));
     }
 

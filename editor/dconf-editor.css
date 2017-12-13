@@ -151,6 +151,11 @@
 .keys-list > row >      .erase.dconf-key.key.delayed { background-image:-gtk-icontheme("user-trash-symbolic"); }
 .keys-list > row >      .erase.dconf-key.key         { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
 
+.keys-list > row >      .erase.dconf-key.key    label.key-value { font-style:italic; }
+
+.keys-list > row > :not(erase).dconf-key.key    label.key-name,
+.keys-list > row > .edited.gsettings-key.key    label.key-name  { font-weight:bold; }
+
 /*\
 * * pathbar
 \*/
@@ -288,10 +293,6 @@
 
 .italic-label {
   font-style:italic;
-}
-
-.bold-label {
-  font-weight:bold;
 }
 
 .greyed-label {

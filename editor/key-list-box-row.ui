@@ -59,6 +59,9 @@
             <property name="lines">3</property>
             <property name="ellipsize">end</property>
             <property name="single-line-mode">True</property>
+            <style>
+              <class name="key-value"/>
+            </style>
           </object>
           <packing>
             <property name="left-attach">1</property>
