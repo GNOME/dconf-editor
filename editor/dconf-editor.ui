@@ -19,11 +19,6 @@
         <property name="visible">True</property>
         <property name="show-close-button">True</property>
         <property name="has-subtitle">False</property>
-        <child type="title">
-          <object class="GtkBox">
-            <property name="visible">False</property>
-          </object>
-        </child>
         <child>
           <object class="GtkMenuButton" id="info_button">
             <property name="visible">True</property>
@@ -98,9 +93,10 @@
             <property name="pack-type">end</property>
           </packing>
         </child>
-        <child>
+        <child type="title">
           <object class="PathBar" id="pathbar">
             <property name="visible">True</property>
+            <property name="hexpand">True</property>
             <property name="valign">center</property>
             <signal name="request_path" handler="request_path"/>
           </object>
