@@ -16,6 +16,7 @@ editor/help-overlay.ui
 editor/key-list-box-row.vala
 editor/modifications-revealer.ui
 editor/modifications-revealer.vala
+editor/pathbar.vala
 editor/registry-info.ui
 editor/registry-info.vala
 editor/registry-search.ui

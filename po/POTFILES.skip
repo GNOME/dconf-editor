@@ -6,6 +6,7 @@ editor/dconf-view.c
 editor/dconf-window.c
 editor/key-list-box-row.c
 editor/modifications-revealer.c
+editor/pathbar.c
 editor/registry-info.c
 editor/registry-search.c
 editor/registry-view.c
