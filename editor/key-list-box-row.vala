@@ -133,9 +133,8 @@ private abstract class ClickableListBoxRow : EventBox
                 return;
             }
 
-            ulong popover_closed_handler = ((!) nullable_popover).closed.connect (() => on_popover_disappear ());
-            ((!) nullable_popover).destroy.connect ((widget) => {
-                    widget.disconnect (popover_closed_handler);
+            ((!) nullable_popover).closed.connect (() => on_popover_disappear ());
+            ((!) nullable_popover).destroy.connect (() => {
                     on_popover_disappear ();
                     nullable_popover = null;
                 });
