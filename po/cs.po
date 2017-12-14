@@ -946,14 +946,14 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Klíčové slovo „nic“ použijte k nastavené prázdné hodnoty u typů začínajících "
-"„m“ (z anglického „maybe“ – „možná“). Řetězce, podpisy a cesty by měli být "
-"uzavřené do uvozovek."
+"Klíčové slovo „nothing“ (nic) použijte k nastavení prázdné hodnoty u typů "
+"začínajících „m“ (z anglického „maybe“ – „možná“). Řetězce, podpisy a cesty "
+"by měly být uzavřené do uvozovek."
 
 #: editor/registry-info.vala:300
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr "Řetězce, podpisy a cesty by měli být uzavřené do uvozovek."
+msgstr "Řetězce, podpisy a cesty by měly být uzavřené do uvozovek."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:304
@@ -961,8 +961,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Klíčové slovo „nic“ použijte k nastavené prázdné hodnoty u typů začínajících "
-"„m“ (z anglického „maybe“ – „možná“)."
+"Klíčové slovo „nothing“ (nic) použijte k nastavení prázdné hodnoty u typů "
+"začínajících „m“ (z anglického „maybe“ – „možná“)."
 
 #: editor/registry-view.ui:101
 msgid "No keys in this path"
