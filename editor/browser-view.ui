@@ -11,12 +11,22 @@
           <object class="GtkInfoBar">
             <property name="visible">True</property>
             <property name="message-type">info</property>
+            <child internal-child="action_area">
+              <object class="GtkBox">
+                <property name="visible">False</property>
+              </object>
+            </child>
             <child internal-child="content_area">
               <object class="GtkBox">
+                <child>
+                  <object class="RegistryWarning">
+                    <property name="visible">True</property>
+                    <property name="halign">center</property>
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="hexpand">True</property>
+                    <property name="xalign">0</property>
                     <property name="max-width-chars">40</property>
                     <property name="wrap">True</property>
                     <property name="label" translatable="yes">This content has changed. Do you want to reload the view?</property>
@@ -28,9 +38,8 @@
                     <property name="label" translatable="yes">Reload</property>
                     <signal name="clicked" handler="reload"/>
                   </object>
-                  <packing>
-                    <property name="pack-type">end</property>
-                  </packing>
+                </child>
+                  </object>
                 </child>
               </object>
             </child>
