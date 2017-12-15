@@ -22,16 +22,16 @@
                   <object class="RegistryWarning">
                     <property name="visible">True</property>
                     <property name="halign">center</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="hexpand">True</property>
-                    <property name="xalign">0.5</property>
-                    <property name="max-width-chars">40</property>
-                    <property name="wrap">True</property>
-                    <property name="label" translatable="yes">Multiple schemas are installed at this path. This could lead to problems if it hasn’t been done carefully. Only one schema is displayed here. Edit values at your own risk.</property>
-                  </object>
-                </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="xalign">0.5</property>
+                        <property name="max-width-chars">40</property>
+                        <property name="wrap">True</property>
+                        <property name="label" translatable="yes">Multiple schemas are installed at this path. This could lead to problems if it hasn’t been done carefully. Only one schema is displayed here. Edit values at your own risk.</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
