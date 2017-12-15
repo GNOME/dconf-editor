@@ -3,7 +3,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="PathBarItem" parent="GtkButton">
     <property name="focus-on-click">False</property>
-    <property name="action-name">win.open-path</property>
+    <property name="action-name">ui.open-path</property>
     <signal name="clicked" handler="update_cursor"/>
     <child>
       <object class="GtkLabel" id="text_label">

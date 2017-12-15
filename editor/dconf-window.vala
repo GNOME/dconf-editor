@@ -74,6 +74,10 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("ui", action_group);
+
         modifications_handler = new ModificationsHandler ();
         browser_view.modifications_handler = modifications_handler;
         model = new SettingsModel (settings);
@@ -92,8 +96,6 @@ class DConfWindow : ApplicationWindow
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
-
-        add_action_entries (action_entries, this);
 
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
         if (settings.get_boolean ("window-is-maximized"))
@@ -377,8 +379,8 @@ class DConfWindow : ApplicationWindow
         else
         {
             section = new GLib.Menu ();
-            section.append (_("Reset visible keys"), "win.reset-visible");
-            section.append (_("Reset view recursively"), "win.reset-recursive");
+            section.append (_("Reset visible keys"), "ui.reset-visible");
+            section.append (_("Reset view recursively"), "ui.reset-recursive");
             section.freeze ();
             menu.append_section (null, section);
         }
@@ -386,7 +388,7 @@ class DConfWindow : ApplicationWindow
         if (!modifications_handler.get_current_delay_mode ())
         {
             section = new GLib.Menu ();
-            section.append (_("Enter delay mode"), "win.enter-delay-mode");
+            section.append (_("Enter delay mode"), "ui.enter-delay-mode");
             section.freeze ();
             menu.append_section (null, section);
         }

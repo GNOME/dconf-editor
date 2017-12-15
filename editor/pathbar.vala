@@ -163,7 +163,7 @@ public class PathBar : Box, PathElement
         else
         {
             item.cursor_type = PathBarItem.CursorType.POINTER;
-            item.set_action_name ("win.open-path");
+            item.set_action_name ("ui.open-path");
             context.remove_class ("active");
         }
     }
