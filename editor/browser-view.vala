@@ -382,17 +382,22 @@ class BrowserView : Grid, PathElement
     [GtkCallback]
     private void reload ()
     {
+        reload_view (true);
+    }
+
+    private void reload_view (bool notify_missing)
+    {
         if (current_view_is_browse_view ())
         {
             string? saved_selection = browse_view.get_selected_row_name ();
             Directory? directory = window.model.get_directory (current_path);
             if (directory == null)
-                request_path (current_path); // rely on fallback detection
+                request_path (current_path, notify_missing); // rely on fallback detection
             else
                 set_directory ((!) directory, saved_selection);
         }
         else if (current_view_is_properties_view ())
-            request_path (current_path); // TODO better
+            request_path (current_path, notify_missing);
         else if (current_view_is_search_results_view ())
         {
             hide_reload_warning ();
@@ -421,7 +426,7 @@ class BrowserView : Grid, PathElement
         } // search_results_view always reloads
 
         if (internal_changes)
-            reload ();
+            reload_view (false);
         else
             show_hard_reload_warning ();
     }
