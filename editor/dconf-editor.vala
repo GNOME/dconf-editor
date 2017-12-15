@@ -251,10 +251,10 @@ class ConfigurationEditor : Gtk.Application
         Gdk.Screen? screen = Gdk.Screen.get_default ();
         return_if_fail (screen != null);
         Gtk.StyleContext.add_provider_for_screen ((!) screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-        test_backend ();
     }
 
+/*  TODO why calling this function makes the app crashy, even with '-DG_SETTINGS_ENABLE_BACKEND=1' (and even '-DGIO_COMPILATION=1') given?
+    https://bugzilla.gnome.org/show_bug.cgi?id=791597
     private static void test_backend ()
     {
         SettingsBackend? backend1 = SettingsBackend.get_default ();
@@ -269,7 +269,7 @@ class ConfigurationEditor : Gtk.Application
             warning (_("The backend used is unknown [%s], bad thing might happen.").printf (backend_name));
         else                                                // called by default or with GSETTINGS_BACKEND=dconf
             info (_("Looks like the DConf settings backend is used, all looks good."));
-    }
+    } */
 
     /*\
     * * Window activation

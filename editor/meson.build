@@ -118,7 +118,6 @@ cflags = [
   '-DVERSION="@0@"'.format(dconf_editor_version),
   '-DLOCALEDIR="@0@"'.format(dconf_editor_localedir),
   '-DGETTEXT_PACKAGE="@0@"'.format(dconf_editor_gettext),
-  '-DG_SETTINGS_ENABLE_BACKEND=1', '-DGIO_COMPILATION=1',
   '-w'
 ]
 
