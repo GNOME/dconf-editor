@@ -55,8 +55,13 @@ msgstr "Quitar"
 msgid "Remove this bookmark"
 msgstr "Quitar este marcador"
 
-#: editor/browser-view.ui:22
-#| msgid "Sort preferences have changed. Do you want to reload the view?"
+#: editor/browser-view.ui:32
+msgid "Sort preferences have changed. Do you want to reload the view?"
+msgstr ""
+"La ordenación de las preferencias ha cambiado. ¿Quiere volver a cargar la "
+"vista?"
+
+#: editor/browser-view.ui:76
 msgid "This content has changed. Do you want to reload the view?"
 msgstr "El contenido ha cambiado. ¿Quiere volver a cargar la vista?"
 

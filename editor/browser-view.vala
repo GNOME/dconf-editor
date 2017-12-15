@@ -33,7 +33,8 @@ class BrowserView : Grid, PathElement
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     private Directory current_directory;
 
-    [GtkChild] private Revealer need_reload_warning_revealer;
+    [GtkChild] private Revealer need_soft_reload_warning_revealer;
+    [GtkChild] private Revealer need_hard_reload_warning_revealer;
 
     [GtkChild] private Stack stack;
     [GtkChild] private RegistryView browse_view;
@@ -95,7 +96,7 @@ class BrowserView : Grid, PathElement
                     return;
                 GLib.ListStore? key_model = browse_view.get_key_model ();
                 if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
-                    need_reload_warning_revealer.set_reveal_child (true);
+                    show_soft_reload_warning ();
                 // TODO reload search results too
             });
 
@@ -131,11 +132,6 @@ class BrowserView : Grid, PathElement
         }
     }
 
-    public void show_reload_warning ()
-    {
-        need_reload_warning_revealer.set_reveal_child (true);
-    }
-
     private void show_browse_view (string path, string? selected)
     {
         _show_browse_view (path);
@@ -145,7 +141,7 @@ class BrowserView : Grid, PathElement
     {
         stack.set_transition_type (current_path.has_prefix (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
-        need_reload_warning_revealer.set_reveal_child (false);
+        hide_reload_warning ();
         browse_view.show_multiple_schemas_warning (current_directory.warning_multiple_schemas);
 
         update_current_path (path);
@@ -164,7 +160,7 @@ class BrowserView : Grid, PathElement
     {
         properties_view.populate_properties_list_box (key, warning_multiple_schemas);
 
-        need_reload_warning_revealer.set_reveal_child (false);
+        hide_reload_warning ();
         browse_view.show_multiple_schemas_warning (false);
 
         stack.set_transition_type (current_path == SettingsModel.get_parent_path (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
@@ -264,6 +260,29 @@ class BrowserView : Grid, PathElement
     public bool current_view_is_search_results_view ()
     {
         return stack.get_visible_child () == search_results_view;
+    }
+
+    /*\
+    * * Reload warnings
+    \*/
+
+    private void hide_reload_warning ()
+    {
+        need_soft_reload_warning_revealer.set_reveal_child (false);
+        need_hard_reload_warning_revealer.set_reveal_child (false);
+    }
+
+    private void show_soft_reload_warning ()
+    {
+        if (!need_hard_reload_warning_revealer.get_reveal_child ())
+            need_soft_reload_warning_revealer.set_reveal_child (true);
+    }
+
+    public void show_hard_reload_warning ()
+    {
+        if (need_soft_reload_warning_revealer.get_reveal_child ())
+            need_soft_reload_warning_revealer.set_reveal_child (false);
+        need_hard_reload_warning_revealer.set_reveal_child (true);
     }
 
     /*\

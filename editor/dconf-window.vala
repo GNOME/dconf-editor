@@ -87,7 +87,7 @@ class DConfWindow : ApplicationWindow
                             current_path_modified = true;
                     });
                 if (current_path_modified)
-                    browser_view.show_reload_warning ();
+                    browser_view.show_hard_reload_warning ();
             });
 
         if (!disable_warning && settings.get_boolean ("show-warning"))

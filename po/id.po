@@ -56,7 +56,12 @@ msgstr "Hapus"
 msgid "Remove this bookmark"
 msgstr "Buang penanda taut ini"
 
-#: editor/browser-view.ui:22
+#: editor/browser-view.ui:32
+msgid "Sort preferences have changed. Do you want to reload the view?"
+msgstr ""
+"Preferensi pengurutan telah berubah. Apakah Anda hendak memuat ulang tilikan?"
+
+#: editor/browser-view.ui:76
 msgid "This content has changed. Do you want to reload the view?"
 msgstr "Isi ini telah berubah. Apakah Anda hendak memuat ulang tilikan?"
 
