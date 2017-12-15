@@ -311,33 +311,37 @@ class DConfWindow : ApplicationWindow
     \*/
 
     [GtkCallback]
-    private void request_path (string full_name)
+    private void request_path (string full_name, bool notify_missing=true)
     {
 //        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
         Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
         if (gtk_settings != null)
             highcontrast = ("HighContrast" in ((!) gtk_settings).gtk_theme_name);
 
-        string folder_name = SettingsModel.get_base_path (full_name);
+        SettingObject? found_object = model.get_object (full_name);
+        bool not_found = found_object == null;
 
-        Directory? dir = model.get_directory (folder_name);
-        if (dir == null)
-            cannot_find_folder (folder_name);
-        else if (full_name == folder_name)
-            browser_view.set_directory ((!) dir, pathbar.get_selected_child (full_name));
-        else
+        string fallback_path = full_name;
+        while (found_object == null)
         {
-            string [] names = full_name.split ("/");
-            string object_name = names [names.length - 1];
+            fallback_path = SettingsModel.get_parent_path (fallback_path);
+            found_object = model.get_object (fallback_path);
+        }
 
-            Key? existing_key = SettingsModel.get_key_from_path_and_name (model.get_children ((!) dir), object_name);
+        if (found_object is Key)
+        {
+            Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
+            browser_view.show_properties_view ((Key) found_object, full_name, parent_directory.warning_multiple_schemas);
+        }
+        else
+            browser_view.set_directory ((Directory) found_object, pathbar.get_selected_child (full_name));
 
-            if (existing_key == null)
-                cannot_find_key (object_name, (!) dir);
-            else if (((!) existing_key) is DConfKey && model.is_key_ghost ((DConfKey) existing_key))
-                key_has_been_removed (object_name, (!) dir);
+        if (not_found && notify_missing)
+        {
+            if (SettingsModel.is_key_path (full_name))
+                show_notification (_("Cannot find key “%s”.").printf (full_name));
             else
-                browser_view.show_properties_view ((Key) (!) existing_key, full_name, ((!) dir).warning_multiple_schemas);
+                show_notification (_("Cannot find folder “%s”.").printf (full_name));
         }
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
@@ -668,11 +672,6 @@ class DConfWindow : ApplicationWindow
         browser_view.set_directory (fallback_dir, null);
         show_notification (_("Cannot find key “%s” here.").printf (key_name));
     }
-    private void key_has_been_removed (string key_name, Directory fallback_dir)
-    {
-        browser_view.set_directory (fallback_dir, fallback_dir.full_name + key_name);
-        show_notification (_("Key “%s” has been removed.").printf (key_name));
-    }
 
     [GtkCallback]
     private void hide_notification ()
@@ -683,5 +682,5 @@ class DConfWindow : ApplicationWindow
 
 public interface PathElement
 {
-    public signal void request_path (string path);
+    public signal void request_path (string path, bool notify_missing=true);
 }
