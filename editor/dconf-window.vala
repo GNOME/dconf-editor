@@ -31,8 +31,8 @@ class DConfWindow : ApplicationWindow
 
     public string current_path { get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
 
-    public SettingsModel model { get; private set; }
-    public ModificationsHandler modifications_handler { get; private set; }
+    private SettingsModel model;
+    private ModificationsHandler modifications_handler;
 
     private int window_width = 0;
     private int window_height = 0;

@@ -119,7 +119,8 @@ class BrowserView : Grid, PathElement
 
     public void set_directory (Directory directory, string? selected)
     {
-        GLib.ListStore? key_model = window.model.get_children (directory);
+        SettingsModel model = modifications_handler.model;
+        GLib.ListStore? key_model = model.get_children (directory);
         if (key_model != null)
         {
             current_directory = directory;
@@ -321,13 +322,15 @@ class BrowserView : Grid, PathElement
 
     public void reset (bool recursively)
     {
-        reset_objects (window.model.get_children (current_directory), recursively);
+        SettingsModel model = modifications_handler.model;
+        reset_objects (model.get_children (current_directory), recursively);
     }
 
     public void reset_directory (Directory parent, bool recursively)
     {
+        SettingsModel model = modifications_handler.model;
         enter_delay_mode ();
-        GLib.ListStore? objects = window.model.get_children (parent);
+        GLib.ListStore? objects = model.get_children (parent);
         if (objects != null)
         {
             reset_generic ((!) objects, recursively);
@@ -344,6 +347,7 @@ class BrowserView : Grid, PathElement
 
     private void reset_generic (GLib.ListStore? objects, bool recursively)
     {
+        SettingsModel model = modifications_handler.model;
         if (objects == null)
             return;
 
@@ -357,7 +361,7 @@ class BrowserView : Grid, PathElement
             if (setting_object is Directory)
             {
                 if (recursively) {
-                    GLib.ListStore? children = window.model.get_children ((Directory) setting_object);
+                    GLib.ListStore? children = model.get_children ((Directory) setting_object);
                     if (children != null)
                         reset_generic ((!) children, true);
                 }
@@ -365,10 +369,10 @@ class BrowserView : Grid, PathElement
             }
             if (setting_object is DConfKey)
             {
-                if (!modifications_handler.model.is_key_ghost ((DConfKey) setting_object))
+                if (!model.is_key_ghost ((DConfKey) setting_object))
                     modifications_handler.add_delayed_setting ((Key) setting_object, null);
             }
-            else if (!modifications_handler.model.is_key_default ((GSettingsKey) setting_object))
+            else if (!model.is_key_default ((GSettingsKey) setting_object))
                 modifications_handler.add_delayed_setting ((Key) setting_object, null);
         }
     }
@@ -387,10 +391,11 @@ class BrowserView : Grid, PathElement
 
     private void reload_view (bool notify_missing)
     {
+        SettingsModel model = modifications_handler.model;
         if (current_view_is_browse_view ())
         {
             string? saved_selection = browse_view.get_selected_row_name ();
-            Directory? directory = window.model.get_directory (current_path);
+            Directory? directory = model.get_directory (current_path);
             if (directory == null)
                 request_path (current_path, notify_missing); // rely on fallback detection
             else
@@ -407,16 +412,17 @@ class BrowserView : Grid, PathElement
 
     public void check_reload (bool internal_changes)
     {
+        SettingsModel model = modifications_handler.model;
         if (current_view_is_properties_view ())
         {
-            Key? fresh_key = (Key?) modifications_handler.model.get_object (current_path);
-            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, modifications_handler.model.get_key_value ((!) fresh_key)))
+            Key? fresh_key = (Key?) model.get_object (current_path);
+            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
                 return;
         }
         else if (current_view_is_browse_view ())
         {
-            Directory? fresh_dir = (Directory?) modifications_handler.model.get_directory (current_path);
-            GLib.ListStore? fresh_key_model = modifications_handler.model.get_children (fresh_dir);
+            Directory? fresh_dir = (Directory?) model.get_directory (current_path);
+            GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
             if (fresh_key_model != null)
             {
                 sorting_options.sort_key_model ((!) fresh_key_model); // RegistryView.check_reload assumes the same order as the current view for faster comparison

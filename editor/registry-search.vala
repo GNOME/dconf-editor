@@ -393,7 +393,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             return;
         }
 
-        SettingsModel model = window.model;
+        SettingsModel model = modifications_handler.model;
         string current_path = window.current_path;
         if (old_term != null && term.has_prefix ((!) old_term))
         {
@@ -563,12 +563,13 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
     private bool global_search_step (string current_path, string term)
     {
+        SettingsModel model = modifications_handler.model;
         if (!search_nodes.is_empty ())
         {
             Directory next = (!) search_nodes.pop_head ();
             bool local_again = next.full_name == current_path;
 
-            GLib.ListStore? next_key_model = window.model.get_children (next);
+            GLib.ListStore? next_key_model = model.get_children (next);
             if (next_key_model == null)
                 return true;
 
