@@ -22,6 +22,8 @@ public class PathBar : Box, PathElement
 {
     [GtkChild] private PathBarItem root_button;
 
+    public SettingsModel model { private get; set; }
+
     private string complete_path = "";
 
     construct
@@ -43,6 +45,7 @@ public class PathBar : Box, PathElement
         string last = split [split.length - 1];
         bool is_key_path = last != "";
 
+        PathBarItem? last_item = null;
         bool destroy_all = false;
         bool maintain_all = false;
         @foreach ((child) => {
@@ -51,11 +54,21 @@ public class PathBar : Box, PathElement
                     if (destroy_all)
                         child.destroy ();
                     else
+                    {
                         complete_path += "/";
+                        if (last_item != null)
+                        {
+                            bool is_ghost = model.get_directory (complete_path) == null;
+                            set_is_ghost ((!) last_item, is_ghost);
+                            last_item = null;
+                            set_is_ghost (child, is_ghost);
+                        }
+                    }
                     return;
                 }
 
                 PathBarItem item = (PathBarItem) child;
+                last_item = item;
 
                 if (maintain_all)
                 {
@@ -82,6 +95,13 @@ public class PathBar : Box, PathElement
                 destroy_all = true;
             });
 
+        if (last_item != null)
+        {
+            bool is_ghost = !(model.get_object (complete_path) is Key);
+            set_is_ghost ((!) last_item, is_ghost);
+            last_item = null;
+        }
+
         if (split.length > 0)
         {
             /* add one item per folder */
@@ -91,8 +111,9 @@ public class PathBar : Box, PathElement
                 foreach (string item in split [0:split.length - 1])
                 {
                     complete_path += item + "/";
-                    add_path_bar_item (item, complete_path, !is_key_path && (index == split.length - 2));
-                    add_slash_label ();
+                    bool is_ghost = model.get_directory (complete_path) == null;
+                    set_is_ghost (add_path_bar_item (item, complete_path, !is_key_path && (index == split.length - 2)), is_ghost);
+                    set_is_ghost (add_slash_label (), is_ghost);
                     index++;
                 }
             }
@@ -101,7 +122,8 @@ public class PathBar : Box, PathElement
             if (is_key_path)
             {
                 complete_path += last;
-                add_path_bar_item (last, complete_path, true);
+                bool is_ghost = !(model.get_object (complete_path) is Key);
+                set_is_ghost (add_path_bar_item (last, complete_path, true), is_ghost);
             }
         }
 
@@ -134,25 +156,34 @@ public class PathBar : Box, PathElement
     * * widgets management
     \*/
 
-    private void add_slash_label ()
+    private Label add_slash_label ()
     {
-        add (new Label ("/"));
+        Label slash_label = new Label ("/");
+        add (slash_label);
+        return slash_label;
     }
 
-    private void add_path_bar_item (string label, string complete_path, bool block)
+    private PathBarItem add_path_bar_item (string label, string complete_path, bool block)
     {
         PathBarItem path_bar_item = new PathBarItem (label);
         path_bar_item.action_target = new Variant.string (complete_path);
 
         add (path_bar_item);
         activate_item (path_bar_item, block);   // has to be after add()
+        return path_bar_item;
+    }
+
+    private void set_is_ghost (Widget child, bool is_ghost)
+    {
+        if (is_ghost)
+            child.get_style_context ().add_class ("dim-label");
+        else
+            child.get_style_context ().remove_class ("dim-label");
     }
 
     private void activate_item (PathBarItem item, bool state)
     {
         StyleContext context = item.get_style_context ();
-        if (state == context.has_class ("active"))
-            return;
         if (state)
         {
             item.cursor_type = PathBarItem.CursorType.CONTEXT;
@@ -209,11 +240,7 @@ private class PathBarItem : Button
     private void update_cursor ()
     {
         if (cursor_type != CursorType.CONTEXT)
-        {
-            cursor_type = CursorType.CONTEXT;
-            set_new_cursor_type (cursor_type);
             return;
-        }
 
         GLib.Menu menu = new GLib.Menu ();
         menu.append (_("Copy current path"), "app.copy(\"" + get_action_target_value ().get_string () + "\")");

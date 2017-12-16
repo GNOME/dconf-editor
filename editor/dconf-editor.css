@@ -215,6 +215,11 @@
   border-bottom-color:@theme_selected_bg_color;
 }
 
+.pathbar > button.dim-label:backdrop,
+.pathbar > label.dim-label:backdrop {
+  opacity: 1;
+}
+
 /* search changes */
 #search-toggle:checked ~ .pathbar {
   color:@insensitive_fg_color;

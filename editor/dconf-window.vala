@@ -79,10 +79,12 @@ class DConfWindow : ApplicationWindow
         insert_action_group ("ui", action_group);
 
         model = new SettingsModel (settings);
+        pathbar.model = model;
         modifications_handler = new ModificationsHandler (model);
         browser_view.modifications_handler = modifications_handler;
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
                 browser_view.check_reload (internal_changes);
+                pathbar.set_path (current_path); // update "ghost" status
             });
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
