@@ -14,20 +14,41 @@
 .\" along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 .TH "DCONF\-EDITOR" "1"
 .SH "NAME"
-dconf-editor \- Graphical editor for dconf
+dconf-editor \- Graphical editor for gsettings and dconf
 .SH "SYNOPSIS"
-.B dconf\-editor
+.B dconf\-editor [OPTIONS...]
+.RE
+.B dconf\-editor [OPTIONS...] [PATH]
+.RE
+.B dconf\-editor [OPTIONS...] [FIXED_SCHEMA | RELOCATABLE:PATH] [KEY]
 .SH "DESCRIPTION"
-.PP
 The
 .B dconf\-editor
-program provides a graphical interface for editing settings that are stored in the dconf database. The
+program provides a graphical interface for editing settings that are stored by other applications using the
+.I gsettings
+functions of the
+.I glib
+library, or in the
+.I dconf
+database. The
 .BR gsettings (1)
-utility provides similar functionality on the commandline.
-.PP
-dconf\-editor reads gsettings schemas from
-$XDG_DATA_DIRS/glib\-2.0/schemas
-to obtain descriptions, default values and allowed values for keys.
+and
+.BR dconf (1)
+utilities provides similar functionality on the commandline.
+.SH "OPTIONS"
+.TP
+.BR \-h , \ \-\-help
+Prints the command-line options and exits.
+.TP
+.BR \-v , \ \-\-version
+Prints the release version and exits.
+.TP
+.BR \-\-list\-relocatable\-schemas
+Prints the list of relocatable schemas and exits.
+.TP
+.BR \--I-understand-that-changing-options-can-break-applications
+Launchs application without showing initial warning.
 .SH "SEE ALSO"
 .BR dconf (7)
+.BR dconf (1)
 .BR gsettings (1)
