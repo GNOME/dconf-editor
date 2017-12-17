@@ -3,6 +3,7 @@
 editor/bookmarks.ui
 editor/bookmark.ui
 editor/browser-view.ui
+editor/browser-view.vala
 editor/ca.desrt.dconf-editor.appdata.xml.in
 editor/ca.desrt.dconf-editor.desktop.in
 editor/ca.desrt.dconf-editor.gschema.xml
