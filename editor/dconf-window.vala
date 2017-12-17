@@ -25,7 +25,7 @@ class DConfWindow : ApplicationWindow
         { "open-path", open_path, "s" },
 
         { "reset-recursive", reset_recursively },
-        { "reset-visible", reset },
+        { "reset-visible", reset_visible },
         { "enter-delay-mode", enter_delay_mode }
     };
 
@@ -402,7 +402,7 @@ class DConfWindow : ApplicationWindow
         request_path (((!) path_variant).get_string ());
     }
 
-    private void reset ()
+    private void reset_visible ()
     {
         browser_view.reset (false);
     }
