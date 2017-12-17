@@ -38,8 +38,7 @@ class BrowserView : Grid, PathElement
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     private Directory current_directory;
 
-    [GtkChild] private Revealer need_soft_reload_warning_revealer;
-    [GtkChild] private Revealer need_hard_reload_warning_revealer;
+    [GtkChild] private BrowserInfoBar info_bar;
 
     [GtkChild] private Stack stack;
     [GtkChild] private RegistryView browse_view;
@@ -92,6 +91,11 @@ class BrowserView : Grid, PathElement
         SimpleActionGroup action_group = new SimpleActionGroup ();
         action_group.add_action_entries (action_entries, this);
         insert_action_group ("browser", action_group);
+
+        info_bar.add_label ("soft-reload", _("Sort preferences have changed. Do you want to reload the view?"),
+                                           _("Refresh"), "browser.reload");
+        info_bar.add_label ("hard-reload", _("This content has changed. Do you want to reload the view?"),
+                                           _("Reload"), "browser.reload");
 
         ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -278,21 +282,18 @@ class BrowserView : Grid, PathElement
 
     private void hide_reload_warning ()
     {
-        need_soft_reload_warning_revealer.set_reveal_child (false);
-        need_hard_reload_warning_revealer.set_reveal_child (false);
+        info_bar.hide_warning ();
     }
 
     private void show_soft_reload_warning ()
     {
-        if (!need_hard_reload_warning_revealer.get_reveal_child ())
-            need_soft_reload_warning_revealer.set_reveal_child (true);
+        if (!info_bar.is_shown ("hard-reload"))
+            info_bar.show_warning ("soft-reload");
     }
 
     public void show_hard_reload_warning ()
     {
-        if (need_soft_reload_warning_revealer.get_reveal_child ())
-            need_soft_reload_warning_revealer.set_reveal_child (false);
-        need_hard_reload_warning_revealer.set_reveal_child (true);
+        info_bar.show_warning ("hard-reload");
     }
 
     private void reload (/* SimpleAction action, Variant? path_variant */)

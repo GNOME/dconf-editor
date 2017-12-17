@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="dconf-editor">
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="BrowserInfoBar" parent="GtkRevealer">
+    <property name="visible">True</property>
+    <property name="reveal-child">False</property>
+    <child>
+      <object class="GtkInfoBar">
+        <property name="visible">True</property>
+        <property name="message-type">warning</property>
+        <child internal-child="action_area">
+          <object class="GtkBox">
+            <property name="visible">False</property>
+          </object>
+        </child>
+        <child internal-child="content_area">
+          <object class="GtkBox">
+            <child>
+              <object class="GtkStack" id="content">
+                <property name="visible">True</property>
+                <property name="halign">center</property>
+                <property name="transition-duration">400</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -22,7 +22,7 @@ class RegistryView : Grid, PathElement, BrowsableView
 {
     public Behaviour behaviour { private get; set; }
 
-    [GtkChild] private Revealer multiple_schemas_warning_revealer;
+    [GtkChild] private BrowserInfoBar info_bar;
 
     [GtkChild] private ScrolledWindow scrolled;
 
@@ -58,6 +58,8 @@ class RegistryView : Grid, PathElement, BrowsableView
 
     construct
     {
+        info_bar.add_label ("multiple-schemas-folder", _("Multiple schemas are installed at this path. This could lead to problems if it hasn’t been done carefully. Only one schema is displayed here. Edit values at your own risk."));
+
         key_list_box.set_header_func (update_row_header);
     }
 
@@ -97,7 +99,10 @@ class RegistryView : Grid, PathElement, BrowsableView
 
     public void show_multiple_schemas_warning (bool multiple_schemas_warning_needed)
     {
-        multiple_schemas_warning_revealer.set_reveal_child (multiple_schemas_warning_needed);
+        if (multiple_schemas_warning_needed)
+            info_bar.show_warning ("multiple-schemas-folder");
+        else
+            info_bar.hide_warning ();
     }
 
     public void focus_selected_row ()
