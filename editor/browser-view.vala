@@ -291,7 +291,7 @@ class BrowserView : Grid, PathElement
             info_bar.show_warning ("soft-reload");
     }
 
-    public void show_hard_reload_warning ()
+    private void show_hard_reload_warning ()
     {
         info_bar.show_warning ("hard-reload");
     }
@@ -401,7 +401,7 @@ class BrowserView : Grid, PathElement
         }
     }
 
-    public void reset_objects (GLib.ListStore? objects, bool recursively)
+    private void reset_objects (GLib.ListStore? objects, bool recursively)
     {
         enter_delay_mode ();
         reset_generic (objects, recursively);
