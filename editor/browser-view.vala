@@ -28,6 +28,11 @@ public enum Behaviour {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid, PathElement
 {
+    private const GLib.ActionEntry [] action_entries =
+    {
+        { "reload", reload }
+    };
+
     public string current_path { get; private set; }
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
@@ -84,6 +89,10 @@ class BrowserView : Grid, PathElement
 
     construct
     {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("browser", action_group);
+
         ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
@@ -264,7 +273,7 @@ class BrowserView : Grid, PathElement
     }
 
     /*\
-    * * Reload warnings
+    * * Reload
     \*/
 
     private void hide_reload_warning ()
@@ -284,6 +293,59 @@ class BrowserView : Grid, PathElement
         if (need_soft_reload_warning_revealer.get_reveal_child ())
             need_soft_reload_warning_revealer.set_reveal_child (false);
         need_hard_reload_warning_revealer.set_reveal_child (true);
+    }
+
+    private void reload (/* SimpleAction action, Variant? path_variant */)
+    {
+        reload_view (true);
+    }
+
+    private void reload_view (bool notify_missing)
+    {
+        SettingsModel model = modifications_handler.model;
+        if (current_view_is_browse_view ())
+        {
+            string? saved_selection = browse_view.get_selected_row_name ();
+            Directory? directory = model.get_directory (current_path);
+            if (directory == null)
+                request_path (current_path, notify_missing); // rely on fallback detection
+            else
+                set_directory ((!) directory, saved_selection);
+        }
+        else if (current_view_is_properties_view ())
+            request_path (current_path, notify_missing);
+        else if (current_view_is_search_results_view ())
+        {
+            hide_reload_warning ();
+            search_results_view.reload_search ();
+        }
+    }
+
+    public void check_reload (bool internal_changes)
+    {
+        SettingsModel model = modifications_handler.model;
+        if (current_view_is_properties_view ())
+        {
+            Key? fresh_key = (Key?) model.get_object (current_path);
+            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
+                return;
+        }
+        else if (current_view_is_browse_view ())
+        {
+            Directory? fresh_dir = (Directory?) model.get_directory (current_path);
+            GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
+            if (fresh_key_model != null)
+            {
+                sorting_options.sort_key_model ((!) fresh_key_model); // RegistryView.check_reload assumes the same order as the current view for faster comparison
+                if (!browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
+                    return;
+            }
+        } // search_results_view always reloads
+
+        if (internal_changes)
+            reload_view (false);
+        else
+            show_hard_reload_warning ();
     }
 
     /*\
@@ -317,7 +379,7 @@ class BrowserView : Grid, PathElement
     }
 
     /*\
-    * * Action entries
+    * * Delay mode actions
     \*/
 
     public void reset (bool recursively)
@@ -381,60 +443,6 @@ class BrowserView : Grid, PathElement
     {
         modifications_handler.enter_delay_mode ();
         invalidate_popovers ();
-    }
-
-    [GtkCallback]
-    private void reload ()
-    {
-        reload_view (true);
-    }
-
-    private void reload_view (bool notify_missing)
-    {
-        SettingsModel model = modifications_handler.model;
-        if (current_view_is_browse_view ())
-        {
-            string? saved_selection = browse_view.get_selected_row_name ();
-            Directory? directory = model.get_directory (current_path);
-            if (directory == null)
-                request_path (current_path, notify_missing); // rely on fallback detection
-            else
-                set_directory ((!) directory, saved_selection);
-        }
-        else if (current_view_is_properties_view ())
-            request_path (current_path, notify_missing);
-        else if (current_view_is_search_results_view ())
-        {
-            hide_reload_warning ();
-            search_results_view.reload_search ();
-        }
-    }
-
-    public void check_reload (bool internal_changes)
-    {
-        SettingsModel model = modifications_handler.model;
-        if (current_view_is_properties_view ())
-        {
-            Key? fresh_key = (Key?) model.get_object (current_path);
-            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
-                return;
-        }
-        else if (current_view_is_browse_view ())
-        {
-            Directory? fresh_dir = (Directory?) model.get_directory (current_path);
-            GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
-            if (fresh_key_model != null)
-            {
-                sorting_options.sort_key_model ((!) fresh_key_model); // RegistryView.check_reload assumes the same order as the current view for faster comparison
-                if (!browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
-                    return;
-            }
-        } // search_results_view always reloads
-
-        if (internal_changes)
-            reload_view (false);
-        else
-            show_hard_reload_warning ();
     }
 }
 

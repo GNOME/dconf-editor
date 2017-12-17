@@ -36,7 +36,7 @@
                       <object class="GtkButton">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Refresh</property>
-                        <signal name="clicked" handler="reload"/>
+                        <property name="action-name">browser.reload</property>
                       </object>
                     </child>
                   </object>
@@ -80,7 +80,7 @@
                       <object class="GtkButton">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Reload</property>
-                        <signal name="clicked" handler="reload"/>
+                        <property name="action-name">browser.reload</property>
                       </object>
                     </child>
                   </object>
