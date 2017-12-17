@@ -33,7 +33,7 @@ class BrowserView : Grid, PathElement
         { "reload", reload }
     };
 
-    public string current_path { get; private set; }
+    public string current_path { get; private set; default = "/"; }
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
     private Directory current_directory;
@@ -117,11 +117,6 @@ class BrowserView : Grid, PathElement
                 settings.disconnect (behaviour_changed_handler);
                 base.destroy ();
             });
-    }
-
-    public void init (string path, bool restore_view)   // TODO check path format
-    {
-        current_path = (restore_view && path != "" && path [0] == '/') ? path : "/";
     }
 
     [GtkCallback]

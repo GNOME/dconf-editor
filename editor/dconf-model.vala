@@ -839,12 +839,16 @@ public class SettingsModel : Object
         key_model.append (new_key);
     }
 
-    public SettingObject? get_object (string path)
+    public SettingObject? get_object (string path, bool strict = true)
     {
         if (!is_key_path (path))
             return get_directory (path);
         GLib.ListStore? key_model = get_children (get_directory (get_parent_path (path)));
-        return get_key_from_path_and_name (key_model, get_name (path));
+        string name = get_name (path);
+        SettingObject? key = get_key_from_path_and_name (key_model, name);
+        if (key != null || strict)
+            return key;
+        return get_folder_from_path_and_name (key_model, name);
     }
 
     public static string[] to_segments (string path)

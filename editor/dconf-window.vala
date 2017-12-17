@@ -129,92 +129,63 @@ class DConfWindow : ApplicationWindow
 
         /* init current_path */
         bool strict = false;
+        string? first_path = path;
         if (schema == null)
         {
             if (key_name != null)
                 assert_not_reached ();
 
-            if (path == null)
-                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
-            else
-                browser_view.init ((!) path, true);
+            if (first_path == null && settings.get_boolean ("restore-view"))
+                first_path = settings.get_string ("saved-view");
         }
         else if (model.is_relocatable_schema ((!) schema))
         {
-            if (path == null)
+            if (first_path == null)
             {
                 warning (_("Schema is relocatable, a path is needed."));
-                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+                if (settings.get_boolean ("restore-view"))
+                    first_path = settings.get_string ("saved-view");
             }
             else
             {
                 strict = true;
-                model.add_mapping ((!) schema, (!) path);
-                browser_view.init (key_name == null ? (!) path : (!) path + (!) key_name, true);
+                model.add_mapping ((!) schema, (!) first_path);
+                if (key_name != null)
+                    first_path = (!) first_path + (!) key_name;
             }
         }
         else if (model.is_non_relocatable_schema ((!) schema))
         {
             string? schema_path = model.get_schema_path ((!) schema);
             if (schema_path == null)    // something wrong is happening
-                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
-            else if (path != null && path != schema_path)
+                assert_not_reached (); // TODO warning?
+            else if (first_path != null && first_path != schema_path)
             {
                 warning (_("Schema is not installed on given path."));
-                browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+                if (settings.get_boolean ("restore-view"))
+                    first_path = settings.get_string ("saved-view");
             }
             else if (key_name == null)
-                browser_view.init ((!) schema_path, true);
+                first_path = schema_path;
             else
             {
                 strict = true;
-                browser_view.init ((!) schema_path + (!) key_name, true);
+                first_path = (!) schema_path + (!) key_name;
             }
         }
         else
         {
             warning ("Unknown schema %s.".printf ((!) schema));
-            browser_view.init (settings.get_string ("saved-view"), settings.get_boolean ("restore-view"));  // TODO better?
+            if (settings.get_boolean ("restore-view"))
+                first_path = settings.get_string ("saved-view");
         }
 
         model.finalize_model ();
 
-        /* go to directory */
-        string folder_name = SettingsModel.get_base_path (current_path);
+        if (first_path == null)
+            first_path = "/";
 
-        Directory? dir = model.get_directory (folder_name);
-        if (dir == null)
-        {
-            cannot_find_folder (folder_name);
-            return;
-        }
-        if (folder_name == current_path)
-        {
-            browser_view.set_directory ((!) dir, null);
-            return;
-        }
-
-        /* go to key */
-        string [] names = current_path.split ("/");
-        string object_name = names [names.length - 1];
-
-        GLib.ListStore? key_model = model.get_children ((!) dir);
-        Key?       existing_key = SettingsModel.get_key_from_path_and_name    (key_model, object_name);
-        Directory? existing_dir = SettingsModel.get_folder_from_path_and_name (key_model, object_name);
-
-        if (existing_key != null)
-        {
-            if (existing_dir != null)
-                warning ("TODO: search (current_path)");
-            browser_view.show_properties_view ((Key) (!) existing_key, current_path, ((!) dir).warning_multiple_schemas);
-        }
-        else
-        {
-            if (!strict && existing_dir != null)
-                browser_view.set_directory ((!) existing_dir, null);
-            else
-                cannot_find_key (object_name, (!) dir);
-        }
+        request_path ((!) first_path, true, strict);
     }
 
     public static Widget _get_parent (Widget widget)
@@ -313,14 +284,14 @@ class DConfWindow : ApplicationWindow
     \*/
 
     [GtkCallback]
-    private void request_path (string full_name, bool notify_missing=true)
+    private void request_path (string full_name, bool notify_missing=true, bool strict=true)
     {
 //        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
         Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
         if (gtk_settings != null)
             highcontrast = ("HighContrast" in ((!) gtk_settings).gtk_theme_name);
 
-        SettingObject? found_object = model.get_object (full_name);
+        SettingObject? found_object = model.get_object (full_name, strict);
         bool not_found = found_object == null;
 
         string fallback_path = full_name;
@@ -684,5 +655,5 @@ class DConfWindow : ApplicationWindow
 
 public interface PathElement
 {
-    public signal void request_path (string path, bool notify_missing=true);
+    public signal void request_path (string path, bool notify_missing=true, bool strict=true);
 }
