@@ -642,14 +642,14 @@ public class SettingsModel : Object
         if (settings_schema_source == null)
             return;
 
-        List<SettingsSchema> schemas;
-        List<string> folders;
+        GenericSet<SettingsSchema> schemas;
+        GenericSet<string> folders;
         cached_schemas.lookup (path, out schemas, out folders);
-        if (schemas.length () > 0)
+        if (schemas.length > 0)
         {
             bool content_found = false;
             // prefer non-relocatable schema
-            foreach (SettingsSchema schema in schemas)
+            foreach (SettingsSchema schema in schemas.get_values ())
             {
                 if (((string?) schema.get_path ()) == null)
                     continue;
@@ -660,11 +660,11 @@ public class SettingsModel : Object
             // otherwise any will do
             if (!content_found)
             {
-                create_gsettings_keys (path, (!) schemas.data, key_model);
+                create_gsettings_keys (path, (!) schemas.iterator ().next_value (), key_model);
                 content_found = true;
             }
         }
-        foreach (string folder in folders)
+        foreach (string folder in folders.get_values ())
         {
             if (get_folder_from_path_and_name (key_model, folder) == null)
             {
@@ -734,7 +734,7 @@ public class SettingsModel : Object
         Directory? dir = null;
         uint schemas_count = 0;
         uint subpaths_count = 0;
-        cached_schemas.get_content_count (path, ref schemas_count, ref subpaths_count);
+        cached_schemas.get_content_count (path, out schemas_count, out subpaths_count);
         if (schemas_count + subpaths_count > 0 || client.list (path).length > 0)
         {
             dir = new Directory (path, get_name (path));
@@ -1090,35 +1090,35 @@ class SchemaPathTree
     {
         uint schemas_count = 0;
         uint subpaths_count = 0;
-        get_content_count (path, ref schemas_count, ref subpaths_count);
+        get_content_count (path, out schemas_count, out subpaths_count);
         return schemas_count;
     }
 
-    public void get_content_count (string path, ref uint schemas_count, ref uint subpaths_count)
+    public void get_content_count (string path, out uint schemas_count, out uint subpaths_count)
     {
-        List<SettingsSchema> path_schemas;
-        List<string> subpaths;
+        GenericSet<SettingsSchema> path_schemas;
+        GenericSet<string> subpaths;
         lookup (path, out path_schemas, out subpaths);
-        schemas_count = path_schemas.length ();
-        subpaths_count = subpaths.length ();
+        schemas_count = path_schemas.length;
+        subpaths_count = subpaths.length;
     }
 
-    public bool lookup (string path, out List<SettingsSchema> path_schemas, out List<string> subpaths)
+    public bool lookup (string path, out GenericSet<SettingsSchema> path_schemas, out GenericSet<string> subpaths)
     {
-        path_schemas = new List<SettingsSchema> ();
-        subpaths = new List<string> ();
+        path_schemas = new GenericSet<SettingsSchema> (schema_hash, schema_equal);
+        subpaths = new GenericSet<string> (str_hash, str_equal);
         return lookup_segments (SettingsModel.to_segments (path), 0, ref path_schemas, ref subpaths);
     }
 
-    private bool lookup_segments (string[] path_segments, int matched_prefix_length, ref List<SettingsSchema> path_schemas, ref List<string> subpaths)
+    private bool lookup_segments (string[] path_segments, int matched_prefix_length, ref GenericSet<SettingsSchema> path_schemas, ref GenericSet<string> subpaths)
     {
         if (matched_prefix_length == path_segments.length)
         {
             foreach (CachedSchemaInfo schema_info in schemas.get_values ())
-                path_schemas.append (schema_info.schema);
+                path_schemas.add (schema_info.schema);
             foreach (SchemaPathTree subtree in subtrees.get_values ())
                 if (subtree.has_non_wildcard_content ())
-                    subpaths.append (subtree.path_segment);
+                    subpaths.add (subtree.path_segment);
             return true;
         }
         bool found = false;
@@ -1238,4 +1238,14 @@ class SchemaPathTree
     {
         return schemas.size () == 0 && wildcard_subtree == null && subtrees.size () == 0;
     }
+}
+
+public uint schema_hash (GLib.SettingsSchema schema)
+{
+    return str_hash (schema.get_id ());
+}
+
+public bool schema_equal (GLib.SettingsSchema schema1, GLib.SettingsSchema schema2)
+{
+    return str_equal (schema1.get_id (), schema2.get_id ());
 }
