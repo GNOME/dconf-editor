@@ -347,15 +347,7 @@ class ConfigurationEditor : Gtk.Application
             }
         }
 
-        string [] test_format = arg0.split (":");
-
-        if (test_format.length > 2)
-        {
-            commands.print (_("Cannot understand: too many colons.\n"));
-            simple_activation ();
-            return Posix.EXIT_FAILURE;
-        }
-
+        string [] test_format = arg0.split (":", 2);
         string? path = null;
 
         if (test_format.length == 2)
