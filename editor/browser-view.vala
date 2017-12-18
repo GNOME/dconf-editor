@@ -77,12 +77,12 @@ class BrowserView : Grid, PathElement
         }
     }
 
-    private DConfWindow? _window = null;
-    private DConfWindow window {
+    private DConfWindow? _main_window = null;
+    private DConfWindow main_window {
         get {
-            if (_window == null)
-                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (this)));
-            return (!) _window;
+            if (_main_window == null)
+                _main_window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (this)));
+            return (!) _main_window;
         }
     }
 
@@ -207,7 +207,7 @@ class BrowserView : Grid, PathElement
     {
         modifications_handler.path_changed ();
         current_path = path;
-        window.update_path_elements ();
+        main_window.update_path_elements ();
         invalidate_popovers ();
     }
 
@@ -253,7 +253,7 @@ class BrowserView : Grid, PathElement
     {
         browse_view.invalidate_popovers ();
         search_results_view.invalidate_popovers ();
-        window.update_hamburger_menu ();
+        main_window.update_hamburger_menu ();
     }
 
     public bool current_view_is_browse_view ()

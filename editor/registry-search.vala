@@ -53,12 +53,12 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         }
     }
 
-    private DConfWindow? _window = null;
-    private DConfWindow window {
+    private DConfWindow? _main_window = null;
+    private DConfWindow main_window {
         get {
-            if (_window == null)
-                _window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (browser_view)));
-            return (!) _window;
+            if (_main_window == null)
+                _main_window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (browser_view)));
+            return (!) _main_window;
         }
     }
 
@@ -141,7 +141,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
             parent_path = SettingsModel.get_base_path (full_name [0:full_name.length - 1]);
         else
             parent_path = SettingsModel.get_base_path (full_name);
-        bool is_local_result = parent_path == window.current_path;
+        bool is_local_result = parent_path == main_window.current_path;
         ulong on_delete_call_handler;
 
         if (setting_object is Directory)
@@ -219,7 +219,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
 
             row.show_right_click_popover (event_x);
             if (row.on_popover_disappear_handler == 0)
-                row.on_popover_disappear_handler = row.on_popover_disappear.connect (window.select_search_entry);
+                row.on_popover_disappear_handler = row.on_popover_disappear.connect (main_window.select_search_entry);
             rows_possibly_with_popover.append (row);
         }
 
@@ -317,7 +317,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
         row.show_right_click_popover ();
         if (row.on_popover_disappear_handler == 0)
-            row.on_popover_disappear_handler = row.on_popover_disappear.connect (window.select_search_entry);
+            row.on_popover_disappear_handler = row.on_popover_disappear.connect (main_window.select_search_entry);
         rows_possibly_with_popover.append (row);
         return true;
     }
@@ -394,7 +394,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
         }
 
         SettingsModel model = modifications_handler.model;
-        string current_path = window.current_path;
+        string current_path = main_window.current_path;
         if (old_term != null && term.has_prefix ((!) old_term))
         {
             pause_global_search ();
@@ -505,7 +505,7 @@ class RegistrySearch : Grid, PathElement, BrowsableView
     private bool bookmark_search (SettingsModel model, string current_path, string term)
     {
         string [] installed_bookmarks = {}; // TODO move check in Bookmarks
-        foreach (string bookmark in window.get_bookmarks ())
+        foreach (string bookmark in main_window.get_bookmarks ())
         {
             if (bookmark in installed_bookmarks)
                 continue;
