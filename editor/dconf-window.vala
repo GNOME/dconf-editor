@@ -428,6 +428,12 @@ class DConfWindow : ApplicationWindow
 
         if (event.button == mouse_back_button)
         {
+            if (mouse_back_button == mouse_forward_button)
+            {
+                warning (_("The same mouse button is set for going backward and forward. Doing nothing."));
+                return false;
+            }
+
             go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
             return true;
         }
