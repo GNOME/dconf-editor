@@ -330,12 +330,8 @@ class BrowserView : Grid, PathElement
         {
             Directory? fresh_dir = (Directory?) model.get_directory (current_path);
             GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
-            if (fresh_key_model != null)
-            {
-                sorting_options.sort_key_model ((!) fresh_key_model); // RegistryView.check_reload assumes the same order as the current view for faster comparison
-                if (!browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
-                    return;
-            }
+            if (fresh_key_model != null && !browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
+                return;
         } // search_results_view always reloads
 
         if (internal_changes)

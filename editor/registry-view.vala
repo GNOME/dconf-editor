@@ -87,13 +87,24 @@ class RegistryView : Grid, PathElement, BrowsableView
         for (uint i = 0; i < ((!) key_model).get_n_items (); i++)
         {
             SettingObject setting_object = (SettingObject) ((!) key_model).get_item (i);
-            SettingObject fresh_setting_object = (SettingObject) fresh_key_model.get_item (i);
-            if (setting_object.get_type () != fresh_setting_object.get_type ())
+            bool found = false;
+            for (uint j = 0; j < ((!) fresh_key_model).get_n_items (); j++)
+            {
+                SettingObject fresh_setting_object = (SettingObject) fresh_key_model.get_item (j);
+                if (setting_object.get_type () != fresh_setting_object.get_type ())
+                    continue;
+                if (setting_object.name != fresh_setting_object.name)
+                    continue;
+                // TODO compare other visible info (i.e. key summary and value)
+                found = true;
+                fresh_key_model.remove (j);
+                break;
+            }
+            if (!found)
                 return true;
-            if (setting_object.name != fresh_setting_object.name)
-                return true;
-            // TODO compare other visible info (i.e. key summary and value)
         }
+        if (((!) fresh_key_model).get_n_items () > 0)
+            return true;
         return false;
     }
 
