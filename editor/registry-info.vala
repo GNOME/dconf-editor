@@ -81,6 +81,7 @@ class RegistryInfo : Grid, BrowsableView
 
         // TODO use VariantDict
         string key_name, parent_path, tmp_string;
+        bool test;
 
         if (!dict.lookup ("key-name",     "s", out key_name))    assert_not_reached ();
         if (!dict.lookup ("parent-path",  "s", out parent_path)) assert_not_reached ();
@@ -89,8 +90,16 @@ class RegistryInfo : Grid, BrowsableView
         else assert_not_reached ();
         if (dict.lookup ("schema-id",     "s", out tmp_string))  add_row_from_label (_("Schema"),      tmp_string);
         add_separator ();
-        if (dict.lookup ("summary",       "s", out tmp_string))  add_row_from_label (_("Summary"),     tmp_string);
-        if (dict.lookup ("description",   "s", out tmp_string))  add_row_from_label (_("Description"), tmp_string);
+        if (dict.lookup ("summary",       "s", out tmp_string))
+        {
+            test = tmp_string == "";
+            add_row_from_label (_("Summary"),                    test ? _("No summary provided")     : tmp_string, test);
+        }
+        if (dict.lookup ("description",   "s", out tmp_string))
+        {
+            test = tmp_string == "";
+            add_row_from_label (_("Description"),                test ? _("No description provided") : tmp_string, test);
+        }
         /* Translators: as in datatype (integer, boolean, string, etc.) */
         if (dict.lookup ("type-name",     "s", out tmp_string))  add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
@@ -289,9 +298,9 @@ class RegistryInfo : Grid, BrowsableView
     * * Rows creation
     \*/
 
-    private void add_row_from_label (string property_name, string property_value)
+    private void add_row_from_label (string property_name, string property_value, bool use_italic = false)
     {
-        properties_list_box.add (new PropertyRow.from_label (property_name, property_value));
+        properties_list_box.add (new PropertyRow.from_label (property_name, property_value, use_italic));
     }
 
     private void add_switch_row (string property_name, Switch custom_value_switch)
@@ -371,7 +380,7 @@ private class PropertyRow : ListBoxRowWrapper
 
     private Widget? value_widget = null;
 
-    public PropertyRow.from_label (string property_name, string property_value)
+    public PropertyRow.from_label (string property_name, string property_value, bool use_italic)
     {
         name_label.set_text (property_name);
 
@@ -381,6 +390,8 @@ private class PropertyRow : ListBoxRowWrapper
         value_label.xalign = 0;
         value_label.yalign = 0;
         value_label.wrap = true;
+        if (use_italic)
+            value_label.get_style_context ().add_class ("italic-label");
         value_label.show ();
         grid.attach (value_label, 1, 0, 1, 1);
     }
