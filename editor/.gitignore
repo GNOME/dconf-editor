@@ -1,7 +1,0 @@
-*.c
-*.stamp
-dconf-editor
-ca.desrt.dconf-editor.appdata.xml
-ca.desrt.dconf-editor.desktop
-ca.desrt.dconf-editor.service
-ca.desrt.dconf-editor.gschema.valid
