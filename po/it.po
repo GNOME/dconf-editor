@@ -5,23 +5,23 @@
 # Alessio Frusciante <algol@firenze.linux.it>, 2003-2006.
 # Luca Ferretti <elle.uca@libero.it>, 2006-2008.
 # Milo Casagrande <milo@milo.name>, 2009, 2012, 2013, 2014, 2015, 2016, 2017.
-# Gianvito Cavasoli <gianvito@gmx.it>, 2016.
+# Gianvito Cavasoli <gianvito@gmx.it>, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-10-02 13:12+0000\n"
-"PO-Revision-Date: 2017-10-03 15:43+0200\n"
-"Last-Translator: Milo Casagrande <milo@milo.name>\n"
+"POT-Creation-Date: 2017-12-14 17:10+0000\n"
+"PO-Revision-Date: 2017-12-30 14:34+0100\n"
+"Last-Translator: Gianvito Cavasoli <gianvito@gmx.it>\n"
 "Language-Team: Italiano <gnome-it-list@gnome.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -708,7 +708,7 @@ msgstr "Questo valore non è valido per il tipo di chiave."
 #: editor/dconf-window.vala:132
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
-"Grazie per usare Editor dconf per modificare la proprio configurazione."
+"Grazie per star usando Editor Dconf per modificare le proprie impostazioni."
 
 #: editor/dconf-window.vala:133
 msgid "Don’t forget that some options may break applications, so be careful."
@@ -1110,8 +1110,3 @@ msgstr "Impossibile trovare qui la chiave «%s»."
 #, c-format
 msgid "Key “%s” has been removed."
 msgstr "La chiave «%s» è stata rimossa."
-
-#~| msgid "Current view actions"
-#~ msgctxt "shortcut window"
-#~ msgid "Current row menu"
-#~ msgstr "Attuale menù della riga"
