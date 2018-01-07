@@ -358,7 +358,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant.string (SettingsModel.get_parent_path (key.full_name));
+            variant = new Variant.string (key.parent_path);
             popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 2/3
             popover.new_section ();
         }
@@ -492,7 +492,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant.string (SettingsModel.get_parent_path (key.full_name));
+            variant = new Variant.string (key.parent_path);
             popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 3/3
             popover.new_section ();
         }

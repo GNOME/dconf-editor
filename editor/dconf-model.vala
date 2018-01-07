@@ -21,9 +21,22 @@ public abstract class SettingObject : Object
     public string full_name { get; construct; }
 
     public string casefolded_name { get; private construct; }
+    public string parent_path { get; private construct; }
     construct
     {
         casefolded_name = name.casefold ();
+
+        if (full_name.length < 2)
+            parent_path = "/";
+        else
+        {
+            string tmp_string = full_name.slice (0, full_name.last_index_of_char ('/'));
+
+            if (full_name.has_suffix ("/"))
+                parent_path = full_name.slice (0, tmp_string.last_index_of_char ('/') + 1);
+            else
+                parent_path = tmp_string + "/";
+        }
     }
 }
 
@@ -293,10 +306,7 @@ public class GSettingsKey : Key
     public override string descriptor {
         owned get {
             if (schema_path == null)
-            {
-                string schema_path = SettingsModel.get_parent_path (full_name);
-                return @"$schema_id:$schema_path $name";
-            }
+                return @"$schema_id:$parent_path $name";
             return @"$schema_id $name";
         }
     }
