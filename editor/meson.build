@@ -60,6 +60,11 @@ install_data(
   install_dir: join_paths(dconf_editor_mandir, 'man1')
 )
 
+install_data(
+  'completion/dconf-editor',
+  install_dir: join_paths(dconf_editor_datadir, 'bash-completion', 'completions')
+)
+
 sources = files(
   'bookmarks.vala',
   'browser-infobar.vala',

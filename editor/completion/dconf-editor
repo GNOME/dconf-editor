@@ -1,0 +1,121 @@
+
+# Check for bash
+[ -z "$BASH_VERSION" ] && return
+
+####################################################################################################
+
+__dconf-editor() {
+  function gen_paths() {
+    local _cur=$1
+    local _prefix=$2
+
+    local dconf_choices="$(dconf _complete '' "${_cur}")"
+    local gsettings_current_path=""
+    local gsettings_choices="$(gsettings list-schemas --print-paths |
+                               cut -f2 -d" " |
+                               grep ^${_cur} |
+                               sed -e 's,^'"${_cur}"',,' |
+                               awk '{if($0 != "") {print $1} else if ("'"${_cur:0-1}"'" == "/") {print ""}}' |
+                               awk -F'/' '{if ($0 == "") {print ""} else if(($1 != "") AND ("'"${_cur:0-1}"'" != "/")) {print $1 "/"}}' |
+                               sed -e 's,.*,'"${_prefix} ${_cur}"'&,' )"
+    local keys_choices="$(gsettings list-schemas --print-paths |
+                          awk -F' ' '{if ("'"${_cur%/*}/"'" == $2) {system("gsettings list-keys "$1)}}' |
+                          sed -e 's,.*,'"${_prefix} ${_cur%/*}/"'&,' )"
+
+    echo "$(echo "$dconf_choices" "
+               " "$gsettings_current_path" "
+               " "$gsettings_choices" "
+               " "$keys_choices" |
+            sort | uniq)"
+  }
+  function gen_fixed() {
+    local _cur=$1
+    local _prefix=$2
+
+    echo "$(gsettings list-schemas |
+            grep ^${_cur} |
+            sed -e 's,^'"${_cur}"',,' |
+            awk -F'.' '{if ($2 != "") {print $1 "."} else {print $1}}' |
+            sed -e 's,.*,'"${_prefix} ${_cur}"'&,' |
+            sort | uniq)"
+  }
+  function gen_reloc() {
+    local _cur=$1
+    local _prefix=$2
+
+    echo "$(gsettings list-relocatable-schemas |
+            grep ^${_cur} |
+            sed -e 's,^'"${_cur}"',,' |
+            awk -F'.' '{if ($2 != "") {print $1 "."} else {print $1 "\\\\:/"}}' |
+            sed -e 's,.*,'"${_prefix} ${_cur}"'&,' |
+            sort | uniq)"
+  }
+  function gen_schemas() {
+    local _cur=$1
+    local _prefix=$2
+
+    echo "$(echo "$(gen_fixed $1 $2)" "
+               " "$(gen_reloc $1 $2)" | sort | uniq)"
+  }
+  function gen_keys() {
+    local _schema=$1
+
+    echo "$(gsettings list-keys "${_schema}" |
+            sort)"
+  }
+
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  local complist=""
+  local nosoloopt="--I-understand-that-changing-options-can-break-applications"
+
+  if [[ "${COMP_CWORD}" == "1" ]]; then
+    if [[ "${cur}" == "${nosoloopt}" ]]; then
+      local IFS=$'\n'
+      complist="$(gen_paths "/" "${nosoloopt}") $(gen_schemas "" "${nosoloopt}")"
+
+    else
+      local soloopts="--help
+                      --list-relocatable-schemas
+                      --version"
+
+      if   [[ "${cur}" == -* ]]; then complist="${soloopts} ${nosoloopt}"
+      elif [[ "${cur}" == "" ]]; then complist="${soloopts} ${nosoloopt} $(gen_paths "/"     ) $(gen_schemas ""      )"
+      elif [[ "${cur}" == /* ]]; then complist="                         $(gen_paths "${cur}")                        "
+      else                            complist="                                               $(gen_schemas "${cur}")"
+      fi
+    fi
+
+  elif [[ "${COMP_CWORD}" == "2" ]]; then
+    local prim="${COMP_WORDS[1]}"
+
+    if [[ "${prim:0:1}" == "/" ]]; then
+      complist="${nosoloopt}"
+    elif [[ ("$(gsettings list-schemas             | grep ^"${prim}"                                   )" != "") ||
+            ("$(gsettings list-relocatable-schemas | grep ^"$(echo "${prim}" | awk -F':' '{print substr($1, 1, length($1)-1)}')")" != "") ]]; then
+      complist="${nosoloopt} $(gen_keys "$(echo "${prim}" | awk -F':' '{if (substr($1, length($1)) == "\\") {print substr($1, 1, length($1)-1)} else {print $1}}')")"
+
+    elif [[ "${prim}" == "${nosoloopt}" ]]; then
+      if   [[ "${cur}" == "" ]]; then complist="                         $(gen_paths "/"     ) $(gen_schemas ""      )"
+      elif [[ "${cur}" == /* ]]; then complist="                         $(gen_paths "${cur}")                        "
+      else                            complist="                                               $(gen_schemas "${cur}")"
+      fi
+    fi
+
+  elif [[ "${COMP_CWORD}" == "3" ]]; then
+    local prim="${COMP_WORDS[1]}"
+
+    if   [[ "${prim}" == "${nosoloopt}" ]]; then
+      complist="$(gen_keys "${COMP_WORDS[2]}")"
+    elif [[ ("$(gsettings list-schemas | grep ^"${prim}")" != "") && ("${COMP_WORDS[2]}" != "${nosoloopt}") ]]; then
+      complist="${nosoloopt}"
+    fi
+
+# problem with paths containing a ':', considered having four words or more
+  fi
+  COMPREPLY=($(compgen -o nosort -W "${complist}" -- "${cur}"))
+  return 0
+}
+
+####################################################################################################
+
+complete -o nospace -o nosort -F __dconf-editor dconf-editor
