@@ -18,13 +18,12 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar.ui")]
-public class PathBar : Box, PathElement
+public class PathBar : Box
 {
     [GtkChild] private PathBarItem root_button;
 
     public SettingsModel model { private get; set; }
-
-    private string complete_path = "";
+    public string complete_path { get; private set; default = ""; }
 
     construct
     {
@@ -128,20 +127,6 @@ public class PathBar : Box, PathElement
         }
 
         show_all ();
-    }
-
-    public bool open_child (string? current_path)
-    {
-        if (current_path == null)
-        {
-            request_path (complete_path);
-            return true;
-        }
-        if (current_path == complete_path)
-            return false;
-        int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
-        request_path (index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1));
-        return true;
     }
 
     public string? get_selected_child (string current_path)

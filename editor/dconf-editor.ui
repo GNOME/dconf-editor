@@ -97,7 +97,6 @@
             <property name="visible">True</property>
             <property name="hexpand">True</property>
             <property name="valign">center</property>
-            <signal name="request_path" handler="request_path"/>
           </object>
           <packing>
             <property name="pack-type">start</property>

@@ -623,14 +623,21 @@ class DConfWindow : ApplicationWindow
         else
             request_path (SettingsModel.get_parent_path (current_path));
     }
-    // TODO do something when open_child fails (returns false)?
     private void go_forward (bool shift)
     {
+        string complete_path = pathbar.complete_path;
+
         browser_view.discard_row_popover ();
         if (shift)
-            pathbar.open_child (null);
-        else
-            pathbar.open_child (current_path);
+        {
+            request_path (complete_path);
+            return;
+        }
+        if (current_path == complete_path)
+            return;
+
+        int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
+        request_path (index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1));
     }
 
     /*\
