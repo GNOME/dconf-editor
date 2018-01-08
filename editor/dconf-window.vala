@@ -284,7 +284,7 @@ class DConfWindow : ApplicationWindow
     \*/
 
     [GtkCallback]
-    private void request_path (string full_name, bool notify_missing=true, bool strict=true)
+    private void request_path (string full_name, bool notify_missing = true, bool strict = true)
     {
 //        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
         Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
@@ -666,9 +666,4 @@ class DConfWindow : ApplicationWindow
     {
         notification_revealer.set_reveal_child (false);
     }
-}
-
-public interface PathElement
-{
-    public signal void request_path (string path, bool notify_missing=true, bool strict=true);
 }

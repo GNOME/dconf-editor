@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-class RegistryView : Grid, PathElement, BrowsableView
+class RegistryView : Grid, BrowsableView
 {
     public Behaviour behaviour { private get; set; }
 
@@ -179,7 +179,7 @@ class RegistryView : Grid, PathElement, BrowsableView
 
         if (setting_object is Directory)
         {
-            row = new FolderListBoxRow (setting_object.name, setting_object.full_name);
+            row = new FolderListBoxRow (setting_object.name, setting_object.full_name, SettingsModel.get_parent_path (setting_object.full_name));
             on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_directory ((Directory) setting_object, true));
         }
         else
@@ -208,23 +208,26 @@ class RegistryView : Grid, PathElement, BrowsableView
                 });
         }
 
-        ulong on_row_clicked_handler = row.on_row_clicked.connect (() => request_path (setting_object.full_name));
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
 
         row.destroy.connect (() => {
                 row.disconnect (on_delete_call_handler);
-                row.disconnect (on_row_clicked_handler);
                 row.disconnect (button_press_event_handler);
             });
 
         /* Wrapper ensures max width for rows */
         ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
+
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
         if (row is FolderListBoxRow)
             wrapper.get_style_context ().add_class ("folder-row");
         else
             wrapper.get_style_context ().add_class ("key-row");
+
+        wrapper.action_name = "ui.open-path";
+        wrapper.action_target = setting_object.full_name;
+
         return wrapper;
     }
 
@@ -285,12 +288,6 @@ class RegistryView : Grid, PathElement, BrowsableView
             return true;
         }
         return false;
-    }
-
-    [GtkCallback]
-    private void row_activated_cb (ListBoxRow list_box_row)
-    {
-        ((ClickableListBoxRow) list_box_row.get_child ()).on_row_clicked ();
     }
 
     public void invalidate_popovers ()

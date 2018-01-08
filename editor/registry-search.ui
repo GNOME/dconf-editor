@@ -16,7 +16,6 @@
               <class name="keys-list"/>
               <class name="search-results-list"/>
             </style>
-            <signal name="row-activated" handler="row_activated_cb"/>
             <child type="placeholder">
               <object class="RegistryPlaceholder">
                 <property name="label" translatable="yes">No matches</property>

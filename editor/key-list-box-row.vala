@@ -76,8 +76,6 @@ private class ListBoxRowHeader : Grid
 
 private abstract class ClickableListBoxRow : EventBox
 {
-    public signal void on_row_clicked ();
-    public signal void on_open_parent ();
     public signal void on_delete_call ();
 
     public signal void on_popover_disappear ();
@@ -85,7 +83,7 @@ private abstract class ClickableListBoxRow : EventBox
 
     public abstract string get_text ();
 
-    public bool search_result_mode { protected get; construct; default=false; }
+    public bool search_result_mode { protected get; construct; default = false; }
 
     public ModificationsHandler modifications_handler { protected get; construct; }
 
@@ -167,12 +165,14 @@ private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
     public string full_name;
+    private string parent_path;
 
-    public FolderListBoxRow (string label, string path, bool search_result_mode=false)
+    public FolderListBoxRow (string label, string path, string _parent_path, bool search_result_mode = false)
     {
         Object (search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
         full_name = path;
+        parent_path = _parent_path;
     }
 
     public override string get_text ()
@@ -182,13 +182,17 @@ private class FolderListBoxRow : ClickableListBoxRow
 
     protected override bool generate_popover (ContextPopover popover)  // TODO better
     {
+        Variant variant;
+
         if (search_result_mode)
         {
-            popover.new_action ("open_parent", () => on_open_parent ());
+            variant = new Variant.string (parent_path);
+            popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 1/3
             popover.new_section ();
         }
 
-        popover.new_action ("open", () => on_row_clicked ());
+        variant = new Variant.string (full_name);
+        popover.new_gaction ("open", "ui.open-path(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
         popover.new_section ();
@@ -305,7 +309,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_info_label.set_label (_("No Schema Found"));
     }
 
-    public KeyListBoxRowEditableNoSchema (DConfKey _key, ModificationsHandler modifications_handler, bool search_result_mode=false)
+    public KeyListBoxRowEditableNoSchema (DConfKey _key, ModificationsHandler modifications_handler, bool search_result_mode = false)
     {
         Object (key: _key, modifications_handler: modifications_handler, search_result_mode : search_result_mode);
     }
@@ -344,6 +348,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         SettingsModel model = modifications_handler.model;
+        Variant variant;
+
         if (model.is_key_ghost (key))
         {
             popover.new_copy_action (get_text ());
@@ -352,11 +358,13 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (search_result_mode)
         {
-            popover.new_action ("open_parent", () => on_open_parent ());
+            variant = new Variant.string (SettingsModel.get_parent_path (key.full_name));
+            popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 2/3
             popover.new_section ();
         }
 
-        popover.new_action ("customize", () => on_row_clicked ());
+        variant = new Variant.string (key.full_name);
+        popover.new_gaction ("customize", "ui.open-path(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
 
@@ -439,7 +447,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
     }
 
-    public KeyListBoxRowEditable (GSettingsKey _key, ModificationsHandler modifications_handler, bool search_result_mode=false)
+    public KeyListBoxRowEditable (GSettingsKey _key, ModificationsHandler modifications_handler, bool search_result_mode = false)
     {
         Object (key: _key, modifications_handler: modifications_handler, search_result_mode : search_result_mode);
     }
@@ -480,9 +488,12 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         SettingsModel model = modifications_handler.model;
+        Variant variant;
+
         if (search_result_mode)
         {
-            popover.new_action ("open_parent", () => on_open_parent ());
+            variant = new Variant.string (SettingsModel.get_parent_path (key.full_name));
+            popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 3/3
             popover.new_section ();
         }
 
@@ -490,7 +501,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         bool planned_change = modifications_handler.key_has_planned_change (key);
         Variant? planned_value = modifications_handler.get_key_planned_value (key);
 
-        popover.new_action ("customize", () => on_row_clicked ());
+        variant = new Variant.string (key.full_name);
+        popover.new_gaction ("customize", "ui.open-path(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"
@@ -603,9 +615,6 @@ private class ContextPopover : Popover
 
         switch (action_action)
         {
-            case "customize":
-                /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-                current_section.append (_("Customize…"), group_dot_action);         return;
             case "default1":
                 /* Translators: "reset key value" action in the right-click menu on the list of keys */
                 current_section.append (_("Set to default"), group_dot_action);     return;
@@ -614,12 +623,6 @@ private class ContextPopover : Popover
             case "dismiss":
                 /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
                 current_section.append (_("Dismiss change"), group_dot_action);     return;
-            case "open":
-                /* Translators: "open folder" action in the right-click menu on a folder */
-                current_section.append (_("Open"), group_dot_action);               return;
-            case "open_parent":
-                /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
-                current_section.append (_("Open parent folder"), group_dot_action);               return;
             case "erase":
                 /* Translators: "erase key" action in the right-click menu on a key without schema */
                 current_section.append (_("Erase key"), group_dot_action);          return;
@@ -629,6 +632,24 @@ private class ContextPopover : Popover
             case "recursivereset":
                 /* Translators: "reset recursively" action in the right-click menu on a folder */
                 current_section.append (_("Reset recursively"), group_dot_action);  return;
+            default:
+                assert_not_reached ();
+        }
+    }
+
+    public void new_gaction (string action_name, string action_action)
+    {
+        switch (action_name)
+        {
+            case "customize":
+                /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
+                current_section.append (_("Customize…"), action_action);            return;
+            case "open":
+                /* Translators: "open folder" action in the right-click menu on a folder */
+                current_section.append (_("Open"), action_action);                  return;
+            case "open_parent":
+                /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
+                current_section.append (_("Open parent folder"), action_action);    return;
             default:
                 assert_not_reached ();
         }

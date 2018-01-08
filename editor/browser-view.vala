@@ -26,8 +26,10 @@ public enum Behaviour {
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
-class BrowserView : Grid, PathElement
+class BrowserView : Grid
 {
+    public signal void request_path (string path, bool notify_missing = true, bool strict = true);
+
     private const GLib.ActionEntry [] action_entries =
     {
         { "reload", reload }
@@ -117,12 +119,6 @@ class BrowserView : Grid, PathElement
                 settings.disconnect (behaviour_changed_handler);
                 base.destroy ();
             });
-    }
-
-    [GtkCallback]
-    private void request_path_test (string test)
-    {
-        request_path (test);
     }
 
     public void set_directory (Directory directory, string? selected)

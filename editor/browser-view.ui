@@ -17,7 +17,6 @@
         <child>
           <object class="RegistryView"  id="browse_view">
             <property name="visible">True</property>
-            <signal name="request_path" handler="request_path_test"/>
           </object>
           <packing>
             <property name="name">browse-view</property>
@@ -34,7 +33,6 @@
         <child>
           <object class="RegistrySearch"  id="search_results_view">
             <property name="visible">True</property>
-            <signal name="request_path" handler="request_path_test"/>
           </object>
           <packing>
             <property name="name">search-results-view</property>
