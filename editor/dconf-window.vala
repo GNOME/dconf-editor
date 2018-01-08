@@ -23,6 +23,7 @@ class DConfWindow : ApplicationWindow
     private const GLib.ActionEntry [] action_entries =
     {
         { "open-path", open_path, "s" },
+        { "open-path-with-selection", open_path_with_selection, "(ss)" },
 
         { "reset-recursive", reset_recursively },
         { "reset-visible", reset_visible },
@@ -375,6 +376,16 @@ class DConfWindow : ApplicationWindow
         if (bookmarks_button.active)
             bookmarks_button.active = false;
         request_path (((!) path_variant).get_string ());
+    }
+
+    private void open_path_with_selection (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name;
+        string selection;
+        ((!) path_variant).@get ("(ss)", out full_name, out selection);
+        request_path (selection);   // TODO better
+        request_path (full_name);
     }
 
     private void reset_visible ()

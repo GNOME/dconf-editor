@@ -186,8 +186,8 @@ private class FolderListBoxRow : ClickableListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant.string (parent_path);
-            popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 1/3
+            variant = new Variant ("(ss)", parent_path, full_name);
+            popover.new_gaction ("open_parent", "ui.open-path-with-selection(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
@@ -358,8 +358,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant.string (key.parent_path);
-            popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 2/3
+            variant = new Variant ("(ss)", key.parent_path, key.full_name);
+            popover.new_gaction ("open_parent", "ui.open-path-with-selection(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
@@ -492,8 +492,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant.string (key.parent_path);
-            popover.new_gaction ("open_parent", "ui.open-path(" + variant.print (false) + ")");    // TODO selection 3/3
+            variant = new Variant ("(ss)", key.parent_path, key.full_name);
+            popover.new_gaction ("open_parent", "ui.open-path-with-selection(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
