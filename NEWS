@@ -1,3 +1,21 @@
+dconf-editor 3.27.4
+=====================
+
+Various UI improvements, including icons next to edited keys, and the limitation
+of the content in infobar. The underlying model has also been improved a little.
+The experimental code that was causing crashes in some build conditions has been
+removed. Also, the actions that were accessible via dbus have been made private.
+The command-line has been a little bit reworked, with an experimental completion
+available, and the manpage updated.
+
+Translations updated:
+  Czech: Marek Černocký
+  Friulian: Fabio Tomat
+  German: Tim Sabsch
+  Indonesian: Kukuh Syafaat
+  Italian: Gianvito Cavasoli
+  Spanish: Daniel Mustieles
+
 dconf-editor 3.27.3
 =====================
 
