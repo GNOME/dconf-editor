@@ -26,7 +26,7 @@ dconf_editor_namespace = 'ca.desrt.dconf-editor'
 cc = meson.get_compiler('c')
 valac = meson.get_compiler('vala')
 
-vala_req_version = '>= 0.33.1'
+vala_req_version = '>= 0.39.4'
 
 assert(valac.version().version_compare(vala_req_version),
        'vala ' + vala_req_version + ' is required')
