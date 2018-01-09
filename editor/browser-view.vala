@@ -28,13 +28,6 @@ public enum Behaviour {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid
 {
-    public signal void request_path (string path, bool notify_missing = true, bool strict = true);
-
-    private const GLib.ActionEntry [] action_entries =
-    {
-        { "reload", reload }
-    };
-
     public string current_path { get; private set; default = "/"; }
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
@@ -90,14 +83,10 @@ class BrowserView : Grid
 
     construct
     {
-        SimpleActionGroup action_group = new SimpleActionGroup ();
-        action_group.add_action_entries (action_entries, this);
-        insert_action_group ("browser", action_group);
-
         info_bar.add_label ("soft-reload", _("Sort preferences have changed. Do you want to reload the view?"),
-                                           _("Refresh"), "browser.reload");
+                                           _("Refresh"), "ui.reload");
         info_bar.add_label ("hard-reload", _("This content has changed. Do you want to reload the view?"),
-                                           _("Reload"), "browser.reload");
+                                           _("Reload"), "ui.reload");
 
         ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -119,6 +108,15 @@ class BrowserView : Grid
                 settings.disconnect (behaviour_changed_handler);
                 base.destroy ();
             });
+    }
+
+    public string? get_selected_row_name ()
+    {
+        if (current_view_is_browse_view ())
+            return browse_view.get_selected_row_name ();
+        if (current_view_is_search_results_view ())
+            return search_results_view.get_selected_row_name ();
+        return null;
     }
 
     public void set_directory (Directory directory, string? selected)
@@ -282,58 +280,34 @@ class BrowserView : Grid
             info_bar.show_warning ("soft-reload");
     }
 
-    private void show_hard_reload_warning ()
+    public void show_hard_reload_warning ()
     {
         info_bar.show_warning ("hard-reload");
     }
 
-    private void reload (/* SimpleAction action, Variant? path_variant */)
+    public void reload_search ()
     {
-        reload_view (true);
+        hide_reload_warning ();
+        search_results_view.reload_search ();
     }
 
-    private void reload_view (bool notify_missing)
-    {
-        SettingsModel model = modifications_handler.model;
-        if (current_view_is_browse_view ())
-        {
-            string? saved_selection = browse_view.get_selected_row_name ();
-            Directory? directory = model.get_directory (current_path);
-            if (directory == null)
-                request_path (current_path, notify_missing); // rely on fallback detection
-            else
-                set_directory ((!) directory, saved_selection);
-        }
-        else if (current_view_is_properties_view ())
-            request_path (current_path, notify_missing);
-        else if (current_view_is_search_results_view ())
-        {
-            hide_reload_warning ();
-            search_results_view.reload_search ();
-        }
-    }
-
-    public void check_reload (bool internal_changes)
+    public bool check_reload ()
     {
         SettingsModel model = modifications_handler.model;
         if (current_view_is_properties_view ())
         {
             Key? fresh_key = (Key?) model.get_object (current_path);
             if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
-                return;
+                return false;
         }
         else if (current_view_is_browse_view ())
         {
             Directory? fresh_dir = (Directory?) model.get_directory (current_path);
             GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
             if (fresh_key_model != null && !browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
-                return;
+                return false;
         } // search_results_view always reloads
-
-        if (internal_changes)
-            reload_view (false);
-        else
-            show_hard_reload_warning ();
+        return true;
     }
 
     /*\

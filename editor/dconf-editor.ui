@@ -157,7 +157,6 @@
               <object class="BrowserView" id="browser_view">
                 <property name="visible">True</property>
                 <property name="vexpand">True</property>
-                <signal name="request_path" handler="request_path"/>
               </object>
             </child>
           </object>

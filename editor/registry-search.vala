@@ -285,17 +285,17 @@ class RegistrySearch : Grid, BrowsableView
         rows_possibly_with_popover.remove_all ();
     }
 
-    /*public string? get_selected_row_name ()
+    public string? get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row != null)
         {
             int position = ((!) selected_row).get_index ();
-            return ((SettingObject) ((!) key_model).get_object (position)).full_name;
+            return ((SettingObject) ((!) search_results_model).get_object (position)).full_name;
         }
         else
             return null;
-    }*/
+    }
 
     /*\
     * * Keyboard calls

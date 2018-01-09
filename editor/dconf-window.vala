@@ -24,6 +24,7 @@ class DConfWindow : ApplicationWindow
     {
         { "open-path", open_path, "s" },
         { "open-path-with-selection", open_path_with_selection, "(ss)" },
+        { "reload", reload },
 
         { "reset-recursive", reset_recursively },
         { "reset-visible", reset_visible },
@@ -84,7 +85,14 @@ class DConfWindow : ApplicationWindow
         modifications_handler = new ModificationsHandler (model);
         browser_view.modifications_handler = modifications_handler;
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                browser_view.check_reload (internal_changes);
+                bool need_reload = browser_view.check_reload ();
+                if (need_reload)
+                {
+                    if (internal_changes)
+                        reload_view (false);
+                    else
+                        browser_view.show_hard_reload_warning ();
+                }
                 pathbar.set_path (current_path); // update "ghost" status
             });
 
@@ -284,7 +292,6 @@ class DConfWindow : ApplicationWindow
     * * Directories tree
     \*/
 
-    [GtkCallback]
     private void request_path (string full_name, bool notify_missing = true, bool strict = true)
     {
 //        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
@@ -319,6 +326,25 @@ class DConfWindow : ApplicationWindow
         }
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+    }
+
+    private void reload_view (bool notify_missing)
+    {
+        if (browser_view.current_view_is_browse_view ())
+        {
+            Directory? directory = model.get_directory (current_path);
+            if (directory == null)
+                request_path (current_path, notify_missing); // rely on fallback detection
+            else
+            {
+                string? saved_selection = browser_view.get_selected_row_name ();
+                browser_view.set_directory ((!) directory, saved_selection);
+            }
+        }
+        else if (browser_view.current_view_is_properties_view ())
+            request_path (current_path, notify_missing);
+        else if (browser_view.current_view_is_search_results_view ())
+            browser_view.reload_search ();
     }
 
     /*\
@@ -388,17 +414,22 @@ class DConfWindow : ApplicationWindow
         request_path (full_name);
     }
 
-    private void reset_visible ()
+    private void reload (/* SimpleAction action, Variant? path_variant */)
     {
-        browser_view.reset (false);
+        reload_view (true);
     }
 
-    private void reset_recursively ()
+    private void reset_recursively (/* SimpleAction action, Variant? path_variant */)
     {
         browser_view.reset (true);
     }
 
-    private void enter_delay_mode ()
+    private void reset_visible (/* SimpleAction action, Variant? path_variant */)
+    {
+        browser_view.reset (false);
+    }
+
+    private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
     {
         browser_view.enter_delay_mode ();
     }
