@@ -405,7 +405,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                         change_dismissed ();
                     });
             }
-            else if (planned_value != null)
+
+            if (!planned_change || planned_value != null) // not &&
             {
                 popover.new_section ();
                 popover.new_action ("erase", () => {
