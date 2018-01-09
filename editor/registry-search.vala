@@ -142,12 +142,10 @@ class RegistrySearch : Grid, BrowsableView
         else
             parent_path = SettingsModel.get_base_path (full_name);
         bool is_local_result = parent_path == main_window.current_path;
-        ulong on_delete_call_handler;
 
         if (setting_object is Directory)
         {
             row = new FolderListBoxRow (setting_object.name, setting_object.full_name, setting_object.parent_path, !is_local_result);
-            on_delete_call_handler = row.on_delete_call.connect (() => browser_view.reset_directory ((Directory) setting_object, true));
         }
         else
         {
@@ -160,7 +158,7 @@ class RegistrySearch : Grid, BrowsableView
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            on_delete_call_handler = row.on_delete_call.connect (() => modifications_handler.set_key_value (key, null));
+            ulong on_delete_call_handler = key_row.on_delete_call.connect (() => modifications_handler.set_key_value (key, null));
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { modifications_handler.set_key_value (key, variant); });
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key));
 
@@ -171,6 +169,7 @@ class RegistrySearch : Grid, BrowsableView
             row.destroy.connect (() => {
                     modifications_handler.disconnect (delayed_modifications_changed_handler);
                     key_row.disconnect (set_key_value_handler);
+                    key_row.disconnect (on_delete_call_handler);
                     key_row.disconnect (change_dismissed_handler);
                 });
         }
@@ -178,7 +177,6 @@ class RegistrySearch : Grid, BrowsableView
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
 
         row.destroy.connect (() => {
-                row.disconnect (on_delete_call_handler);
                 row.disconnect (button_press_event_handler);
             });
 
@@ -342,7 +340,10 @@ class RegistrySearch : Grid, BrowsableView
         if (selected_row == null)
             return;
 
-        ((ClickableListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
+        if (!(((!) selected_row).get_child () is KeyListBoxRow))
+            assert_not_reached ();
+
+        ((KeyListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
     }
 
     public void discard_row_popover ()

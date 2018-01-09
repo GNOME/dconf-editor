@@ -76,8 +76,6 @@ private class ListBoxRowHeader : Grid
 
 private abstract class ClickableListBoxRow : EventBox
 {
-    public signal void on_delete_call ();
-
     public signal void on_popover_disappear ();
     public ulong on_popover_disappear_handler = 0;  // used by registry-search
 
@@ -196,7 +194,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         popover.new_copy_action (get_text ());
 
         popover.new_section ();
-        popover.new_action ("recursivereset", () => on_delete_call ());
+        popover.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
 
         return true;
     }
@@ -205,6 +203,8 @@ private class FolderListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : ClickableListBoxRow
 {
+    public signal void on_delete_call ();
+
     [GtkChild] private Grid key_name_and_value_grid;
     [GtkChild] private Label key_name_label;
     [GtkChild] protected Label key_value_label;
@@ -629,9 +629,6 @@ private class ContextPopover : Popover
             case "unerase":
                 /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
                 current_section.append (_("Do not erase"), group_dot_action);       return;
-            case "recursivereset":
-                /* Translators: "reset recursively" action in the right-click menu on a folder */
-                current_section.append (_("Reset recursively"), group_dot_action);  return;
             default:
                 assert_not_reached ();
         }
@@ -639,20 +636,24 @@ private class ContextPopover : Popover
 
     public void new_gaction (string action_name, string action_action)
     {
+        string action_text;
         switch (action_name)
         {
-            case "customize":
-                /* Translators: "open key-editor dialog" action in the right-click menu on the list of keys */
-                current_section.append (_("Customize…"), action_action);            return;
-            case "open":
-                /* Translators: "open folder" action in the right-click menu on a folder */
-                current_section.append (_("Open"), action_action);                  return;
-            case "open_parent":
-                /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
-                current_section.append (_("Open parent folder"), action_action);    return;
-            default:
-                assert_not_reached ();
+            /* Translators: "open key-editor page" action in the right-click menu on the list of keys */
+            case "customize":       action_text = _("Customize…");          break;
+
+            /* Translators: "open folder" action in the right-click menu on a folder */
+            case "open":            action_text = _("Open");                break;
+
+            /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
+            case "open_parent":     action_text = _("Open parent folder");  break;
+
+            /* Translators: "reset recursively" action in the right-click menu on a folder */
+            case "recursivereset":  action_text = _("Reset recursively");   break;
+
+            default: assert_not_reached ();
         }
+        current_section.append (action_text, action_action);
     }
 
     public void new_copy_action (string text)

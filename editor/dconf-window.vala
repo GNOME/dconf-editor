@@ -26,7 +26,7 @@ class DConfWindow : ApplicationWindow
         { "open-path-with-selection", open_path_with_selection, "(ss)" },
         { "reload", reload },
 
-        { "reset-recursive", reset_recursively },
+        { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible },
         { "enter-delay-mode", enter_delay_mode }
     };
@@ -374,8 +374,9 @@ class DConfWindow : ApplicationWindow
         else
         {
             section = new GLib.Menu ();
+            Variant variant = new Variant.string (current_path);
             section.append (_("Reset visible keys"), "ui.reset-visible");
-            section.append (_("Reset view recursively"), "ui.reset-recursive");
+            section.append (_("Reset view recursively"), "ui.reset-recursive(" + variant.print (false) + ")");
             section.freeze ();
             menu.append_section (null, section);
         }
@@ -419,14 +420,20 @@ class DConfWindow : ApplicationWindow
         reload_view (true);
     }
 
-    private void reset_recursively (/* SimpleAction action, Variant? path_variant */)
+    private void reset_recursively (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
     {
-        browser_view.reset (true);
+        reset_path (((!) path_variant).get_string (), true);
     }
 
     private void reset_visible (/* SimpleAction action, Variant? path_variant */)
     {
-        browser_view.reset (false);
+        reset_path (current_path, false);
+    }
+
+    private void reset_path (string path, bool recursively)
+    {
+        browser_view.reset_objects (model.get_children (model.get_directory (path)), recursively);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
@@ -578,7 +585,11 @@ class DConfWindow : ApplicationWindow
                     if (info_button.active || bookmarks_button.active)
                         return false;
                     browser_view.discard_row_popover ();
-                    browser_view.set_to_default ();
+                    string? selected_row = browser_view.get_selected_row_name ();
+                    if (selected_row != null && ((!) selected_row).has_suffix ("/"))
+                        reset_path ((!) selected_row, true);
+                    else
+                        browser_view.set_to_default ();
                     return true;
                 default:
                     break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX

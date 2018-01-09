@@ -344,25 +344,7 @@ class BrowserView : Grid
     * * Delay mode actions
     \*/
 
-    public void reset (bool recursively)
-    {
-        SettingsModel model = modifications_handler.model;
-        reset_objects (model.get_children (current_directory), recursively);
-    }
-
-    public void reset_directory (Directory parent, bool recursively)
-    {
-        SettingsModel model = modifications_handler.model;
-        enter_delay_mode ();
-        GLib.ListStore? objects = model.get_children (parent);
-        if (objects != null)
-        {
-            reset_generic ((!) objects, recursively);
-            revealer.warn_if_no_planned_changes ();
-        }
-    }
-
-    private void reset_objects (GLib.ListStore? objects, bool recursively)
+    public void reset_objects (GLib.ListStore? objects, bool recursively)
     {
         enter_delay_mode ();
         reset_generic (objects, recursively);
