@@ -312,10 +312,11 @@ class DConfWindow : ApplicationWindow
         if (found_object is Key)
         {
             Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
-            browser_view.show_properties_view ((Key) found_object, full_name, parent_directory.warning_multiple_schemas);
+            browser_view.prepare_properties_view ((Key) found_object, full_name, parent_directory.warning_multiple_schemas);
+            update_current_path (full_name);
         }
         else
-            browser_view.set_directory ((Directory) found_object, pathbar.get_selected_child (full_name));
+            set_directory ((Directory) found_object, pathbar.get_selected_child (full_name));
 
         if (not_found && notify_missing)
         {
@@ -328,6 +329,16 @@ class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
+    private void set_directory (Directory directory, string? selected)
+    {
+        GLib.ListStore? key_model = model.get_children (directory);
+        if (key_model == null)
+            return;
+        browser_view.prepare_browse_view ((!) key_model, directory.full_name, directory.warning_multiple_schemas);
+        update_current_path (directory.full_name);
+        browser_view.select_row (selected);
+    }
+
     private void reload_view (bool notify_missing)
     {
         if (browser_view.current_view_is_browse_view ())
@@ -338,7 +349,7 @@ class DConfWindow : ApplicationWindow
             else
             {
                 string? saved_selection = browser_view.get_selected_row_name ();
-                browser_view.set_directory ((!) directory, saved_selection);
+                set_directory ((!) directory, saved_selection);
             }
         }
         else if (browser_view.current_view_is_properties_view ())
@@ -351,10 +362,11 @@ class DConfWindow : ApplicationWindow
     * * Path changing
     \*/
 
-    public void update_path_elements ()
+    private void update_current_path (string path)
     {
-        bookmarks_button.set_path (current_path);
-        pathbar.set_path (current_path);
+        browser_view.set_path (path);
+        bookmarks_button.set_path (path);
+        pathbar.set_path (path);
     }
 
     public void update_hamburger_menu ()
@@ -705,12 +717,12 @@ class DConfWindow : ApplicationWindow
 
     private void cannot_find_folder (string folder_name)
     {
-        browser_view.set_directory ((!) model.get_directory ("/"), null);
+        set_directory ((!) model.get_directory ("/"), null);
         show_notification (_("Cannot find folder “%s”.").printf (folder_name));
     }
     private void cannot_find_key (string key_name, Directory fallback_dir)
     {
-        browser_view.set_directory (fallback_dir, null);
+        set_directory (fallback_dir, null);
         show_notification (_("Cannot find key “%s” here.").printf (key_name));
     }
 

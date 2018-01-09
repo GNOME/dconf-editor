@@ -31,7 +31,6 @@ class BrowserView : Grid
     public string current_path { get; private set; default = "/"; }
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
-    private Directory current_directory;
 
     [GtkChild] private BrowserInfoBar info_bar;
 
@@ -119,47 +118,28 @@ class BrowserView : Grid
         return null;
     }
 
-    public void set_directory (Directory directory, string? selected)
+    public void prepare_browse_view (GLib.ListStore key_model, string full_name, bool warning_multiple_schemas)
     {
-        SettingsModel model = modifications_handler.model;
-        GLib.ListStore? key_model = model.get_children (directory);
-        if (key_model != null)
-        {
-            current_directory = directory;
-            sorting_options.sort_key_model ((!) key_model);
+        sorting_options.sort_key_model (key_model);
+        browse_view.set_key_model (key_model);
 
-            browse_view.set_key_model ((!) key_model);
-
-            show_browse_view (directory.full_name, selected);
-            properties_view.clean ();
-        }
-    }
-
-    private void show_browse_view (string path, string? selected)
-    {
-        _show_browse_view (path);
-        select_row (selected);
-    }
-    private void _show_browse_view (string path)
-    {
-        stack.set_transition_type (current_path.has_prefix (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        stack.set_transition_type (current_path.has_prefix (full_name) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
         hide_reload_warning ();
-        browse_view.show_multiple_schemas_warning (current_directory.warning_multiple_schemas);
-
-        update_current_path (path);
-        stack.set_visible_child (browse_view);
+        browse_view.show_multiple_schemas_warning (warning_multiple_schemas);
     }
-    private void select_row (string? selected)
+
+    public void select_row (string? selected)
     {
         bool grab_focus = true;     // unused, for now
         if (selected != null)
             browse_view.select_row_named ((!) selected, grab_focus);
         else
             browse_view.select_first_row (grab_focus);
+        properties_view.clean ();
     }
 
-    public void show_properties_view (Key key, string path, bool warning_multiple_schemas)
+    public void prepare_properties_view (Key key, string path, bool warning_multiple_schemas)
     {
         properties_view.populate_properties_list_box (key, warning_multiple_schemas);
 
@@ -168,8 +148,6 @@ class BrowserView : Grid
 
         stack.set_transition_type (current_path == SettingsModel.get_parent_path (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
-        update_current_path (path);
-        stack.set_visible_child (properties_view);
     }
 
     public void show_search_view (string term)
@@ -197,11 +175,15 @@ class BrowserView : Grid
         search_results_view.stop_search ();
     }
 
-    private void update_current_path (string path)
+    public void set_path (string path)
     {
+        if (path.has_suffix ("/"))
+            stack.set_visible_child (browse_view);
+        else
+            stack.set_visible_child (properties_view);
+
         modifications_handler.path_changed ();
         current_path = path;
-        main_window.update_path_elements ();
         invalidate_popovers ();
     }
 
