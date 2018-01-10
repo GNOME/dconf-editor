@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
-    public string current_path { get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
+    public string current_path { get; private set; default = "/"; }
 
     private SettingsModel model;
     private ModificationsHandler modifications_handler;
@@ -76,7 +76,7 @@ class DConfWindow : ApplicationWindow
         modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
 
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                bool need_reload = browser_view.check_reload ();
+                bool need_reload = browser_view.check_reload (current_path);
                 if (need_reload)
                 {
                     if (internal_changes)
@@ -122,8 +122,6 @@ class DConfWindow : ApplicationWindow
 
         search_bar.connect_entry (search_entry);
         search_bar.notify ["search-mode-enabled"].connect (search_changed);
-
-        browser_view.bind_property ("current-path", this, "current-path");    // TODO in UI file?
 
         settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -376,7 +374,7 @@ class DConfWindow : ApplicationWindow
         if (found_object is Key)
         {
             Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
-            browser_view.prepare_properties_view ((Key) found_object, full_name, parent_directory.warning_multiple_schemas);
+            browser_view.prepare_properties_view ((Key) found_object, current_path == SettingsModel.get_parent_path (full_name), parent_directory.warning_multiple_schemas);
             update_current_path (full_name);
         }
         else
@@ -398,7 +396,7 @@ class DConfWindow : ApplicationWindow
         GLib.ListStore? key_model = model.get_children (directory);
         if (key_model == null)
             return;
-        browser_view.prepare_browse_view ((!) key_model, directory.full_name, directory.warning_multiple_schemas);
+        browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (directory.full_name), directory.warning_multiple_schemas);
         update_current_path (directory.full_name);
         browser_view.select_row (selected);
     }
@@ -428,6 +426,7 @@ class DConfWindow : ApplicationWindow
 
     private void update_current_path (string path)
     {
+        current_path = path;
         browser_view.set_path (path);
         bookmarks_button.set_path (path);
         pathbar.set_path (path);

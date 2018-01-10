@@ -28,8 +28,6 @@ public enum Behaviour {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid
 {
-    public string current_path { get; private set; default = "/"; }
-
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
     [GtkChild] private BrowserInfoBar info_bar;
@@ -99,12 +97,12 @@ class BrowserView : Grid
         return null;
     }
 
-    public void prepare_browse_view (GLib.ListStore key_model, string full_name, bool warning_multiple_schemas)
+    public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor, bool warning_multiple_schemas)
     {
         sorting_options.sort_key_model (key_model);
         browse_view.set_key_model (key_model);
 
-        stack.set_transition_type (current_path.has_prefix (full_name) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        stack.set_transition_type (is_ancestor && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
         hide_reload_warning ();
         browse_view.show_multiple_schemas_warning (warning_multiple_schemas);
@@ -120,14 +118,14 @@ class BrowserView : Grid
         properties_view.clean ();
     }
 
-    public void prepare_properties_view (Key key, string path, bool warning_multiple_schemas)
+    public void prepare_properties_view (Key key, bool is_parent, bool warning_multiple_schemas)
     {
         properties_view.populate_properties_list_box (key, warning_multiple_schemas);
 
         hide_reload_warning ();
         browse_view.show_multiple_schemas_warning (false);
 
-        stack.set_transition_type (current_path == SettingsModel.get_parent_path (path) && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        stack.set_transition_type (is_parent && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
     }
 
@@ -164,7 +162,6 @@ class BrowserView : Grid
             stack.set_visible_child (properties_view);
 
         modifications_handler.path_changed ();
-        current_path = path;
     }
 
     public string? get_copy_text ()
@@ -252,18 +249,18 @@ class BrowserView : Grid
         search_results_view.reload_search ();
     }
 
-    public bool check_reload ()
+    public bool check_reload (string path)
     {
         SettingsModel model = modifications_handler.model;
         if (current_view_is_properties_view ())
         {
-            Key? fresh_key = (Key?) model.get_object (current_path);
+            Key? fresh_key = (Key?) model.get_object (path);
             if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
                 return false;
         }
         else if (current_view_is_browse_view ())
         {
-            Directory? fresh_dir = (Directory?) model.get_directory (current_path);
+            Directory? fresh_dir = (Directory?) model.get_directory (path);
             GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
             if (fresh_key_model != null && !browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
                 return false;
