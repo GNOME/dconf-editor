@@ -20,6 +20,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-search.ui")]
 class RegistrySearch : Grid, BrowsableView
 {
+    private string current_path;
+
     public Behaviour behaviour { private get; set; }
 
     [GtkChild] private ScrolledWindow scrolled;
@@ -50,15 +52,6 @@ class RegistrySearch : Grid, BrowsableView
             if (_browser_view == null)
                 _browser_view = (BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this));
             return (!) _browser_view;
-        }
-    }
-
-    private DConfWindow? _main_window = null;
-    private DConfWindow main_window {
-        get {
-            if (_main_window == null)
-                _main_window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (browser_view)));
-            return (!) _main_window;
         }
     }
 
@@ -141,7 +134,7 @@ class RegistrySearch : Grid, BrowsableView
             parent_path = SettingsModel.get_base_path (full_name [0:full_name.length - 1]);
         else
             parent_path = SettingsModel.get_base_path (full_name);
-        bool is_local_result = parent_path == main_window.current_path;
+        bool is_local_result = parent_path == current_path;
 
         if (setting_object is Directory)
         {
@@ -199,11 +192,14 @@ class RegistrySearch : Grid, BrowsableView
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)
     {
         ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
+        Container list_box = (Container) list_box_row.get_parent ();
         key_list_box.select_row (list_box_row);
-        list_box_row.grab_focus ();
 
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
+            if (list_box.get_focus_child () != null)
+                list_box_row.grab_focus ();
+
             ClickableListBoxRow row = (ClickableListBoxRow) widget;
 
             int event_x = (int) event.x;
@@ -215,10 +211,10 @@ class RegistrySearch : Grid, BrowsableView
             }
 
             row.show_right_click_popover (event_x);
-            if (row.on_popover_disappear_handler == 0)
-                row.on_popover_disappear_handler = row.on_popover_disappear.connect (main_window.select_search_entry);
             rows_possibly_with_popover.append (row);
         }
+        else
+            list_box_row.grab_focus ();
 
         return false;
     }
@@ -234,7 +230,7 @@ class RegistrySearch : Grid, BrowsableView
         return true;
     }
 
-    public bool up_or_down_pressed (bool grab_focus, bool is_down)
+    public bool up_or_down_pressed (bool is_down)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         uint n_items = search_results_model.get_n_items ();
@@ -253,7 +249,10 @@ class RegistrySearch : Grid, BrowsableView
                 row = key_list_box.get_row_at_index (position + 1);
 
             if (row != null)
-                scroll_to_row ((!) row, grab_focus);
+            {
+                Container list_box = (Container) ((!) selected_row).get_parent ();
+                scroll_to_row ((!) row, list_box.get_focus_child () != null);
+            }
 
             return true;
         }
@@ -271,11 +270,6 @@ class RegistrySearch : Grid, BrowsableView
         ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
         while (row != null)
         {
-            if (((!) row).on_popover_disappear_handler != 0)
-            {
-                ((!) row).disconnect (((!) row).on_popover_disappear_handler);
-                ((!) row).on_popover_disappear_handler = 0;
-            }
             ((!) row).destroy_popover ();
             position++;
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
@@ -307,8 +301,6 @@ class RegistrySearch : Grid, BrowsableView
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
         row.show_right_click_popover ();
-        if (row.on_popover_disappear_handler == 0)
-            row.on_popover_disappear_handler = row.on_popover_disappear.connect (main_window.select_search_entry);
         rows_possibly_with_popover.append (row);
         return true;
     }
@@ -379,8 +371,10 @@ class RegistrySearch : Grid, BrowsableView
         old_term = null;
     }
 
-    public void start_search (string term)
+    public void start_search (string term, string _current_path, string [] bookmarks)
     {
+        current_path = _current_path;
+
         if (old_term != null && term == (!) old_term)
         {
             ensure_selection ();
@@ -388,7 +382,6 @@ class RegistrySearch : Grid, BrowsableView
         }
 
         SettingsModel model = modifications_handler.model;
-        string current_path = main_window.current_path;
         if (old_term != null && term.has_prefix ((!) old_term))
         {
             pause_global_search ();
@@ -412,7 +405,7 @@ class RegistrySearch : Grid, BrowsableView
             post_folders = -1;
 
             local_search (model, SettingsModel.get_base_path (current_path), term);
-            bookmark_search (model, current_path, term);
+            bookmark_search (model, current_path, term, bookmarks);
             key_list_box.bind_model (search_results_model, new_list_box_row);
 
             select_first_row ();
@@ -496,10 +489,10 @@ class RegistrySearch : Grid, BrowsableView
         return true;
     }
 
-    private bool bookmark_search (SettingsModel model, string current_path, string term)
+    private bool bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks)
     {
         string [] installed_bookmarks = {}; // TODO move check in Bookmarks
-        foreach (string bookmark in main_window.get_bookmarks ())
+        foreach (string bookmark in bookmarks)
         {
             if (bookmark in installed_bookmarks)
                 continue;
@@ -607,10 +600,10 @@ class RegistrySearch : Grid, BrowsableView
         row.set_header (header);
     }
 
-    public void reload_search ()
+    public void reload_search (string current_path, string [] bookmarks)
     {
         string term = old_term ?? "";
         stop_search ();
-        start_search (term);
+        start_search (term, current_path, bookmarks);
     }
 }

@@ -77,7 +77,6 @@ private class ListBoxRowHeader : Grid
 private abstract class ClickableListBoxRow : EventBox
 {
     public signal void on_popover_disappear ();
-    public ulong on_popover_disappear_handler = 0;  // used by registry-search
 
     public abstract string get_text ();
 

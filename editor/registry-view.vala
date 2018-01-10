@@ -254,7 +254,7 @@ class RegistryView : Grid, BrowsableView
         return false;
     }
 
-    public bool up_or_down_pressed (bool grab_focus, bool is_down)
+    public bool up_or_down_pressed (bool is_down)
     {
         if (key_model == null)
             return false;
@@ -276,7 +276,7 @@ class RegistryView : Grid, BrowsableView
                 row = key_list_box.get_row_at_index (position + 1);
 
             if (row != null)
-                scroll_to_row ((!) row, grab_focus);
+                scroll_to_row ((!) row, true);
 
             return true;
         }

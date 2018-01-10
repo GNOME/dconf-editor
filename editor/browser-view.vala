@@ -129,9 +129,9 @@ class BrowserView : Grid
         pre_search_view = null;
     }
 
-    public void show_search_view (string term)
+    public void show_search_view (string term, string current_path, string [] bookmarks)
     {
-        search_results_view.start_search (term);
+        search_results_view.start_search (term, current_path, bookmarks);
         if (pre_search_view == null)
         {
             pre_search_view = stack.visible_child;
@@ -243,10 +243,10 @@ class BrowserView : Grid
         info_bar.show_warning ("hard-reload");
     }
 
-    public void reload_search ()
+    public void reload_search (string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
-        search_results_view.reload_search ();
+        search_results_view.reload_search (current_path, bookmarks);
     }
 
     public bool check_reload (string path)
@@ -280,21 +280,21 @@ class BrowserView : Grid
         return search_results_view.return_pressed ();
     }
 
-    public bool up_pressed (bool grab_focus)
+    public bool up_pressed ()
     {
         if (current_view_is_browse_view ())
-            return browse_view.up_or_down_pressed (grab_focus, false);
+            return browse_view.up_or_down_pressed (false);
         else if (current_view_is_search_results_view ())
-            return search_results_view.up_or_down_pressed (grab_focus, false);
+            return search_results_view.up_or_down_pressed (false);
         return false;
     }
 
-    public bool down_pressed (bool grab_focus)
+    public bool down_pressed ()
     {
         if (current_view_is_browse_view ())
-            return browse_view.up_or_down_pressed (grab_focus, true);
+            return browse_view.up_or_down_pressed (true);
         else if (current_view_is_search_results_view ())
-            return search_results_view.up_or_down_pressed (grab_focus, true);
+            return search_results_view.up_or_down_pressed (true);
         return false;
     }
 

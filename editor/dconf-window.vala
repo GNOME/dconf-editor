@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
-    public string current_path { get; private set; default = "/"; }
+    private string current_path = "/";
 
     private SettingsModel model;
     private ModificationsHandler modifications_handler;
@@ -194,11 +194,6 @@ class DConfWindow : ApplicationWindow
         if (parent == null)
             assert_not_reached ();
         return (!) parent;
-    }
-
-    public string[] get_bookmarks ()
-    {
-        return settings.get_strv ("bookmarks");
     }
 
     /*\
@@ -417,7 +412,7 @@ class DConfWindow : ApplicationWindow
         else if (browser_view.current_view_is_properties_view ())
             request_path (current_path, notify_missing);
         else if (browser_view.current_view_is_search_results_view ())
-            browser_view.reload_search ();
+            browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
     }
 
     /*\
@@ -484,18 +479,11 @@ class DConfWindow : ApplicationWindow
     * * Search
     \*/
 
-    public void select_search_entry ()
-    {
-        if (!browser_view.current_view_is_search_results_view ())
-            return;
-        search_entry.grab_focus_without_selecting ();
-    }
-
     [GtkCallback]
     private void search_changed ()
     {
         if (search_bar.search_mode_enabled)
-            browser_view.show_search_view (search_entry.text);
+            browser_view.show_search_view (search_entry.text, current_path, settings.get_strv ("bookmarks"));
         else
             browser_view.hide_search_view ();
     }
@@ -661,11 +649,11 @@ class DConfWindow : ApplicationWindow
         if (name == "Up"
          && bookmarks_button.active == false
          && info_button.active == false)
-            return browser_view.up_pressed (!search_bar.get_search_mode ());
+            return browser_view.up_pressed ();
         if (name == "Down"
          && bookmarks_button.active == false
          && info_button.active == false)
-            return browser_view.down_pressed (!search_bar.get_search_mode ());
+            return browser_view.down_pressed ();
 
         if ((name == "Return" || name == "KP_Enter")
          && browser_view.current_view_is_search_results_view ()
