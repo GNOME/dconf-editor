@@ -20,17 +20,6 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
-    private const GLib.ActionEntry [] action_entries =
-    {
-        { "open-path", open_path, "s" },
-        { "open-path-with-selection", open_path_with_selection, "(ss)" },
-        { "reload", reload },
-
-        { "reset-recursive", reset_recursively, "s" },
-        { "reset-visible", reset_visible },
-        { "enter-delay-mode", enter_delay_mode }
-    };
-
     public string current_path { get; set; default = "/"; } // not synced bidi, needed for saving on destroy, even after child destruction
 
     private SettingsModel model;
@@ -78,9 +67,7 @@ class DConfWindow : ApplicationWindow
 
     public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
-        SimpleActionGroup action_group = new SimpleActionGroup ();
-        action_group.add_action_entries (action_entries, this);
-        insert_action_group ("ui", action_group);
+        install_action_entries ();
 
         model = new SettingsModel (settings);
         pathbar.model = model;
@@ -298,6 +285,74 @@ class DConfWindow : ApplicationWindow
     }
 
     /*\
+    * * Action entries
+    \*/
+
+    private void install_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("ui", action_group);
+    }
+
+    private const GLib.ActionEntry [] action_entries =
+    {
+        { "open-path", open_path, "s" },
+        { "open-path-with-selection", open_path_with_selection, "(ss)" },
+        { "reload", reload },
+
+        { "reset-recursive", reset_recursively, "s" },
+        { "reset-visible", reset_visible },
+        { "enter-delay-mode", enter_delay_mode }
+    };
+
+    private void open_path (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
+        request_path (((!) path_variant).get_string ());
+    }
+
+    private void open_path_with_selection (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name;
+        string selection;
+        ((!) path_variant).@get ("(ss)", out full_name, out selection);
+        request_path (selection);   // TODO better
+        request_path (full_name);
+    }
+
+    private void reload (/* SimpleAction action, Variant? path_variant */)
+    {
+        reload_view (true);
+    }
+
+    private void reset_recursively (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        reset_path (((!) path_variant).get_string (), true);
+    }
+
+    private void reset_visible (/* SimpleAction action, Variant? path_variant */)
+    {
+        reset_path (current_path, false);
+    }
+
+    private void reset_path (string path, bool recursively)
+    {
+        enter_delay_mode ();
+        browser_view.reset_objects (model.get_children (model.get_directory (path)), recursively);
+    }
+
+    private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
+    {
+        modifications_handler.enter_delay_mode ();
+        invalidate_popovers ();
+    }
+
+    /*\
     * * Directories tree
     \*/
 
@@ -424,56 +479,6 @@ class DConfWindow : ApplicationWindow
     {
         browser_view.invalidate_popovers ();
         update_hamburger_menu ();
-    }
-
-    /*\
-    * * Action entries
-    \*/
-
-    private void open_path (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
-        request_path (((!) path_variant).get_string ());
-    }
-
-    private void open_path_with_selection (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        string full_name;
-        string selection;
-        ((!) path_variant).@get ("(ss)", out full_name, out selection);
-        request_path (selection);   // TODO better
-        request_path (full_name);
-    }
-
-    private void reload (/* SimpleAction action, Variant? path_variant */)
-    {
-        reload_view (true);
-    }
-
-    private void reset_recursively (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        reset_path (((!) path_variant).get_string (), true);
-    }
-
-    private void reset_visible (/* SimpleAction action, Variant? path_variant */)
-    {
-        reset_path (current_path, false);
-    }
-
-    private void reset_path (string path, bool recursively)
-    {
-        enter_delay_mode ();
-        browser_view.reset_objects (model.get_children (model.get_directory (path)), recursively);
-    }
-
-    private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
-    {
-        modifications_handler.enter_delay_mode ();
-        invalidate_popovers ();
     }
 
     /*\
@@ -736,17 +741,6 @@ class DConfWindow : ApplicationWindow
     {
         notification_label.set_text (notification);
         notification_revealer.set_reveal_child (true);
-    }
-
-    private void cannot_find_folder (string folder_name)
-    {
-        set_directory ((!) model.get_directory ("/"), null);
-        show_notification (_("Cannot find folder “%s”.").printf (folder_name));
-    }
-    private void cannot_find_key (string key_name, Directory fallback_dir)
-    {
-        set_directory (fallback_dir, null);
-        show_notification (_("Cannot find key “%s” here.").printf (key_name));
     }
 
     [GtkCallback]
