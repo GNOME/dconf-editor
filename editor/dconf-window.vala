@@ -71,6 +71,8 @@ class DConfWindow : ApplicationWindow
         }
     }
 
+    private ulong behaviour_changed_handler = 0;
+    private ulong modifications_handler_reload_handler = 0;
     private ulong small_keys_list_rows_handler = 0;
     private ulong small_bookmarks_rows_handler = 0;
 
@@ -84,6 +86,8 @@ class DConfWindow : ApplicationWindow
         pathbar.model = model;
         modifications_handler = new ModificationsHandler (model);
         browser_view.modifications_handler = modifications_handler;
+        modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
+
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
                 bool need_reload = browser_view.check_reload ();
                 if (need_reload)
@@ -95,6 +99,8 @@ class DConfWindow : ApplicationWindow
                 }
                 pathbar.set_path (current_path); // update "ghost" status
             });
+
+        behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
@@ -275,6 +281,9 @@ class DConfWindow : ApplicationWindow
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
+        modifications_handler.disconnect (modifications_handler_reload_handler);
+
+        settings.disconnect (behaviour_changed_handler);
         settings.disconnect (small_keys_list_rows_handler);
         settings.disconnect (small_bookmarks_rows_handler);
 
@@ -367,9 +376,10 @@ class DConfWindow : ApplicationWindow
         browser_view.set_path (path);
         bookmarks_button.set_path (path);
         pathbar.set_path (path);
+        invalidate_popovers_without_reload ();
     }
 
-    public void update_hamburger_menu ()
+    private void update_hamburger_menu ()
     {
         GLib.Menu section;
 
@@ -403,6 +413,17 @@ class DConfWindow : ApplicationWindow
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
+    }
+
+    private void invalidate_popovers ()
+    {
+        invalidate_popovers_without_reload ();
+        reload_view (false);    // TODO better
+    }
+    private void invalidate_popovers_without_reload ()
+    {
+        browser_view.invalidate_popovers ();
+        update_hamburger_menu ();
     }
 
     /*\
@@ -445,12 +466,14 @@ class DConfWindow : ApplicationWindow
 
     private void reset_path (string path, bool recursively)
     {
+        enter_delay_mode ();
         browser_view.reset_objects (model.get_children (model.get_directory (path)), recursively);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
     {
-        browser_view.enter_delay_mode ();
+        modifications_handler.enter_delay_mode ();
+        invalidate_popovers ();
     }
 
     /*\

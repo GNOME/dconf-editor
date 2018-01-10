@@ -64,19 +64,6 @@ class BrowserView : Grid
             search_results_view.modifications_handler = value;
 
             settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
-            ulong modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
-            destroy.connect (() => {
-                modifications_handler.disconnect (modifications_handler_reload_handler);
-            });
-        }
-    }
-
-    private DConfWindow? _main_window = null;
-    private DConfWindow main_window {
-        get {
-            if (_main_window == null)
-                _main_window = (DConfWindow) DConfWindow._get_parent (DConfWindow._get_parent (DConfWindow._get_parent (this)));
-            return (!) _main_window;
         }
     }
 
@@ -87,7 +74,6 @@ class BrowserView : Grid
         info_bar.add_label ("hard-reload", _("This content has changed. Do you want to reload the view?"),
                                            _("Reload"), "ui.reload");
 
-        ulong behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         sorting_options = new SortingOptions ();
@@ -101,11 +87,6 @@ class BrowserView : Grid
                 if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
                     show_soft_reload_warning ();
                 // TODO reload search results too
-            });
-
-        destroy.connect (() => {
-                settings.disconnect (behaviour_changed_handler);
-                base.destroy ();
             });
     }
 
@@ -184,7 +165,6 @@ class BrowserView : Grid
 
         modifications_handler.path_changed ();
         current_path = path;
-        invalidate_popovers ();
     }
 
     public string? get_copy_text ()
@@ -225,11 +205,10 @@ class BrowserView : Grid
             search_results_view.discard_row_popover ();
     }
 
-    private void invalidate_popovers ()
+    public void invalidate_popovers ()
     {
         browse_view.invalidate_popovers ();
         search_results_view.invalidate_popovers ();
-        main_window.update_hamburger_menu ();
     }
 
     public bool current_view_is_browse_view ()
@@ -328,7 +307,6 @@ class BrowserView : Grid
 
     public void reset_objects (GLib.ListStore? objects, bool recursively)
     {
-        enter_delay_mode ();
         reset_generic (objects, recursively);
         revealer.warn_if_no_planned_changes ();
     }
@@ -363,12 +341,6 @@ class BrowserView : Grid
             else if (!model.is_key_default ((GSettingsKey) setting_object))
                 modifications_handler.add_delayed_setting ((Key) setting_object, null);
         }
-    }
-
-    public void enter_delay_mode ()
-    {
-        modifications_handler.enter_delay_mode ();
-        invalidate_popovers ();
     }
 }
 

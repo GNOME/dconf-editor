@@ -233,7 +233,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     construct
     {
-        if (abstract_key.type_string == "b")    // TODO not with “always delay” behaviour, nor in “delay mode”
+        if (abstract_key.type_string == "b" && !modifications_handler.get_current_delay_mode ())
         {
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
