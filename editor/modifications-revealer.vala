@@ -67,13 +67,28 @@ class ModificationsRevealer : Revealer
         }
     }
 
-    [GtkCallback]
+    /*\
+    * * Action entries
+    \*/
+
+    construct
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("mod", action_group);
+    }
+
+    private const GLib.ActionEntry [] action_entries =
+    {
+        { "apply-delayed-settings", apply_delayed_settings },
+        { "dismiss-delayed-settings", dismiss_delayed_settings }
+    };
+
     private void apply_delayed_settings ()
     {
         modifications_handler.apply_delayed_settings ();
     }
 
-    [GtkCallback]
     private void dismiss_delayed_settings ()
     {
         modifications_handler.dismiss_delayed_settings ();
