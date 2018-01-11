@@ -294,42 +294,6 @@ class BrowserView : Grid
             return search_results_view.up_or_down_pressed (true);
         return false;
     }
-
-    /*\
-    * * Delay mode actions
-    \*/
-
-    public void reset_objects (GLib.ListStore? objects, bool recursively)
-    {
-        SettingsModel model = modifications_handler.model;
-        if (objects == null)
-            return;
-
-        for (uint position = 0;; position++)
-        {
-            Object? object = ((!) objects).get_object (position);
-            if (object == null)
-                return;
-
-            SettingObject setting_object = (SettingObject) ((!) object);
-            if (setting_object is Directory)
-            {
-                if (recursively) {
-                    GLib.ListStore? children = model.get_children ((Directory) setting_object);
-                    if (children != null)
-                        reset_objects ((!) children, true);
-                }
-                continue;
-            }
-            if (setting_object is DConfKey)
-            {
-                if (!model.is_key_ghost ((DConfKey) setting_object))
-                    modifications_handler.add_delayed_setting ((Key) setting_object, null);
-            }
-            else if (!model.is_key_default ((GSettingsKey) setting_object))
-                modifications_handler.add_delayed_setting ((Key) setting_object, null);
-        }
-    }
 }
 
 public interface BrowsableView

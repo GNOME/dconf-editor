@@ -79,12 +79,53 @@ class ModificationsRevealer : Revealer
         modifications_handler.dismiss_delayed_settings ();
     }
 
-    public void warn_if_no_planned_changes ()
+    /*\
+    * * Reseting objects
+    \*/
+
+    public void reset_objects (GLib.ListStore? objects, bool recursively)
+    {
+        _reset_objects (objects, recursively);
+        warn_if_no_planned_changes ();
+    }
+
+    private void _reset_objects (GLib.ListStore? objects, bool recursively)
+    {
+        SettingsModel model = modifications_handler.model;
+        if (objects == null)
+            return;
+
+        for (uint position = 0;; position++)
+        {
+            Object? object = ((!) objects).get_object (position);
+            if (object == null)
+                return;
+
+            SettingObject setting_object = (SettingObject) ((!) object);
+            if (setting_object is Directory)
+            {
+                if (recursively) {
+                    GLib.ListStore? children = model.get_children ((Directory) setting_object);
+                    if (children != null)
+                        _reset_objects ((!) children, true);
+                }
+                continue;
+            }
+            if (setting_object is DConfKey)
+            {
+                if (!model.is_key_ghost ((DConfKey) setting_object))
+                    modifications_handler.add_delayed_setting ((Key) setting_object, null);
+            }
+            else if (!model.is_key_default ((GSettingsKey) setting_object))
+                modifications_handler.add_delayed_setting ((Key) setting_object, null);
+        }
+    }
+
+    private void warn_if_no_planned_changes ()
     {
         if (modifications_handler.dconf_changes_count == 0 && modifications_handler.gsettings_changes_count == 0)
             label.set_text (_("Nothing to reset."));
     }
-
 
     /*\
     * * Utilities

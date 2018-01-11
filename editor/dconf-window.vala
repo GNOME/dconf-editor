@@ -330,8 +330,7 @@ class DConfWindow : ApplicationWindow
     private void reset_path (string path, bool recursively)
     {
         enter_delay_mode ();
-        browser_view.reset_objects (model.get_children (model.get_directory (path)), recursively);
-        revealer.warn_if_no_planned_changes ();
+        revealer.reset_objects (model.get_children (model.get_directory (path)), recursively);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
