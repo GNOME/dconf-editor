@@ -20,8 +20,6 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
 class RegistryView : Grid, BrowsableView
 {
-    public Behaviour behaviour { private get; set; }
-
     [GtkChild] private BrowserInfoBar info_bar;
 
     [GtkChild] private ScrolledWindow scrolled;

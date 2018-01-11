@@ -89,7 +89,8 @@ class DConfWindow : ApplicationWindow
                 pathbar.set_path (current_path); // update "ghost" status
             });
 
-        behaviour_changed_handler = settings.changed ["behaviour"].connect (invalidate_popovers);
+        behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers);
+        settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);

@@ -28,8 +28,6 @@ public enum Behaviour {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid
 {
-    private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
-
     [GtkChild] private BrowserInfoBar info_bar;
 
     [GtkChild] private Stack stack;
@@ -58,8 +56,6 @@ class BrowserView : Grid
             browse_view.modifications_handler = value;
             properties_view.modifications_handler = value;
             search_results_view.modifications_handler = value;
-
-            settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         }
     }
 
@@ -69,11 +65,6 @@ class BrowserView : Grid
                                            _("Refresh"), "ui.reload");
         info_bar.add_label ("hard-reload", _("This content has changed. Do you want to reload the view?"),
                                            _("Reload"), "ui.reload");
-
-        settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
-
-        settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
-        settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
 
         sorting_options.notify.connect (() => {
                 if (!current_view_is_browse_view ())
@@ -313,8 +304,16 @@ public enum MergeType {
 
 public class SortingOptions : Object
 {
+    private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+
     public bool case_sensitive { get; set; default = false; }
     public MergeType sort_folders { get; set; default = MergeType.MIXED; }
+
+    construct
+    {
+        settings.bind ("sort-case-sensitive", this, "case-sensitive", GLib.SettingsBindFlags.GET);
+        settings.bind ("sort-folders", this, "sort-folders", GLib.SettingsBindFlags.GET);
+    }
 
     public SettingComparator get_comparator ()
     {

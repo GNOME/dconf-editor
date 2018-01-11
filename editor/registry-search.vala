@@ -22,8 +22,6 @@ class RegistrySearch : Grid, BrowsableView
 {
     private string current_path;
 
-    public Behaviour behaviour { private get; set; }
-
     [GtkChild] private ScrolledWindow scrolled;
 
     [GtkChild] private ListBox key_list_box;

@@ -38,8 +38,6 @@ class ModificationsRevealer : Revealer
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 
-    public Behaviour behaviour { set { modifications_handler.behaviour = value; } }
-
     /*\
     * * Window management callbacks
     \*/
