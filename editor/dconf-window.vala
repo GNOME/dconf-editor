@@ -289,7 +289,7 @@ class DConfWindow : ApplicationWindow
         { "reload", reload },
 
         { "reset-recursive", reset_recursively, "s" },
-        { "reset-visible", reset_visible },
+        { "reset-visible", reset_visible, "s" },
         { "enter-delay-mode", enter_delay_mode }
     };
 
@@ -322,9 +322,10 @@ class DConfWindow : ApplicationWindow
         reset_path (((!) path_variant).get_string (), true);
     }
 
-    private void reset_visible (/* SimpleAction action, Variant? path_variant */)
+    private void reset_visible (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
     {
-        reset_path (current_path, false);
+        reset_path (((!) path_variant).get_string (), false);
     }
 
     private void reset_path (string path, bool recursively)
@@ -440,7 +441,7 @@ class DConfWindow : ApplicationWindow
         {
             section = new GLib.Menu ();
             Variant variant = new Variant.string (current_path);
-            section.append (_("Reset visible keys"), "ui.reset-visible");
+            section.append (_("Reset visible keys"), "ui.reset-visible(" + variant.print (false) + ")");
             section.append (_("Reset view recursively"), "ui.reset-recursive(" + variant.print (false) + ")");
             section.freeze ();
             menu.append_section (null, section);
