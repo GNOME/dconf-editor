@@ -37,7 +37,7 @@ class RegistryView : Grid, BrowsableView
         set
         {
             _small_keys_list_rows = value;
-            key_list_box.foreach((row) => {
+            key_list_box.foreach ((row) => {
                     Widget? row_child = ((ListBoxRow) row).get_child ();
                     if (row_child != null && (!) row_child is KeyListBoxRow)
                         ((KeyListBoxRow) (!) row_child).small_keys_list_rows = value;

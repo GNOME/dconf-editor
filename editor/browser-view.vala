@@ -38,13 +38,14 @@ class BrowserView : Grid
     [GtkChild] private RegistrySearch search_results_view;
     private Widget? pre_search_view = null;
 
-    public SortingOptions sorting_options { get; private set; }
+    private SortingOptions sorting_options = new SortingOptions ();
 
     public bool small_keys_list_rows
     {
         set
         {
             browse_view.small_keys_list_rows = value;
+            search_results_view.small_keys_list_rows = value;
         }
     }
 
@@ -74,7 +75,6 @@ class BrowserView : Grid
 
         settings.bind ("behaviour", browse_view, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
-        sorting_options = new SortingOptions ();
         settings.bind ("sort-case-sensitive", sorting_options, "case-sensitive", GLib.SettingsBindFlags.GET);
         settings.bind ("sort-folders", sorting_options, "sort-folders", GLib.SettingsBindFlags.GET);
 
