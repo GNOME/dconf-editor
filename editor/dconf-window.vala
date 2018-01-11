@@ -365,7 +365,7 @@ class DConfWindow : ApplicationWindow
         {
             Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
             browser_view.prepare_properties_view ((Key) found_object, current_path == SettingsModel.get_parent_path (full_name), parent_directory.warning_multiple_schemas);
-            update_current_path (full_name);
+            update_current_path (strdup (full_name));
         }
         else
             set_directory ((Directory) found_object, pathbar.get_selected_child (full_name));
