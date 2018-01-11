@@ -22,7 +22,7 @@ class DConfWindow : ApplicationWindow
 {
     private string current_path = "/";
 
-    private SettingsModel model;
+    private SettingsModel model = new SettingsModel ();
     private ModificationsHandler modifications_handler;
 
     private int window_width = 0;
@@ -70,24 +70,10 @@ class DConfWindow : ApplicationWindow
     {
         install_action_entries ();
 
-        model = new SettingsModel (settings);
-        pathbar.model = model;
         modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
         modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
-
-        model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                bool need_reload = browser_view.check_reload (current_path);
-                if (need_reload)
-                {
-                    if (internal_changes)
-                        reload_view (false);
-                    else
-                        browser_view.show_hard_reload_warning ();
-                }
-                pathbar.set_path (current_path); // update "ghost" status
-            });
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -183,12 +169,56 @@ class DConfWindow : ApplicationWindow
                 first_path = settings.get_string ("saved-view");
         }
 
-        model.finalize_model ();
+        pathbar.model = model;
+        prepare_model ();
 
         if (first_path == null)
             first_path = "/";
 
         request_path ((!) first_path, true, strict);
+    }
+
+    private void prepare_model ()
+    {
+        settings.changed ["relocatable-schemas-user-paths"].connect (() => {
+                RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
+                if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
+                    return;
+
+                model.refresh_relocatable_schema_paths (true,
+                                                        RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags,
+                                                        RelocatableSchemasEnabledMappings.INTERNAL in enabled_mappings_flags,
+                                                        RelocatableSchemasEnabledMappings.STARTUP  in enabled_mappings_flags,
+                                                        settings.get_value ("relocatable-schemas-user-paths"));
+            });
+        settings.changed ["relocatable-schemas-enabled-mappings"].connect (() => {
+                RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
+                model.refresh_relocatable_schema_paths (RelocatableSchemasEnabledMappings.USER     in enabled_mappings_flags,
+                                                        RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags,
+                                                        RelocatableSchemasEnabledMappings.INTERNAL in enabled_mappings_flags,
+                                                        RelocatableSchemasEnabledMappings.STARTUP  in enabled_mappings_flags,
+                                                        settings.get_value ("relocatable-schemas-user-paths"));
+            });
+
+        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
+        model.refresh_relocatable_schema_paths (RelocatableSchemasEnabledMappings.USER     in enabled_mappings_flags,
+                                                RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags,
+                                                RelocatableSchemasEnabledMappings.INTERNAL in enabled_mappings_flags,
+                                                RelocatableSchemasEnabledMappings.STARTUP  in enabled_mappings_flags,
+                                                settings.get_value ("relocatable-schemas-user-paths"));
+        model.finalize_model ();
+
+        model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
+                bool need_reload = browser_view.check_reload (current_path);
+                if (need_reload)
+                {
+                    if (internal_changes)
+                        reload_view (false);
+                    else
+                        browser_view.show_hard_reload_warning ();
+                }
+                pathbar.set_path (current_path); // update "ghost" status
+            });
     }
 
     /*\

@@ -387,8 +387,6 @@ enum RelocatableSchemasEnabledMappings
 
 public class SettingsModel : Object
 {
-    private Settings application_settings;
-
     private SettingsSchemaSource? settings_schema_source = null;
     private HashTable<string, GenericSet<string>> relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
     private HashTable<string, GenericSet<string>> startup_relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
@@ -399,17 +397,34 @@ public class SettingsModel : Object
 
     public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
 
-    public SettingsModel (Settings application_settings)
-    {
-        this.application_settings = application_settings;
-    }
-
-    private void refresh_relocatable_schema_paths ()
+    public void refresh_relocatable_schema_paths (bool user_schemas,
+                                                  bool built_in_schemas,
+                                                  bool internal_schemas,
+                                                  bool startup_schemas,
+                                                  Variant user_paths_variant)
     {
         relocatable_schema_paths.remove_all ();
-        parse_relocatable_schemas_user_paths ();
-        create_relocatable_schemas_built_in_paths ();
-        parse_relocatable_schemas_startup_paths ();
+        if (user_schemas)
+        {
+            VariantIter entries_iter;
+            user_paths_variant.get ("a{ss}", out entries_iter);
+            string schema_id;
+            string path_spec;
+            while (entries_iter.next ("{ss}", out schema_id, out path_spec))
+                add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
+        }
+        if (built_in_schemas)
+        {
+            string [,] known_mappings = ConfigurationEditor.known_mappings;
+            for (int i = 0; i < known_mappings.length [0]; i++)
+                add_relocatable_schema_info (relocatable_schema_paths, known_mappings [i,0], known_mappings [i,1]);
+        }
+        if (startup_schemas)
+        {
+            startup_relocatable_schema_paths.foreach ((schema_id, paths) => {
+                    paths.foreach ((path_spec) => add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec));
+                });
+        }
     }
 
     public void add_mapping (string schema, string path)
@@ -419,18 +434,6 @@ public class SettingsModel : Object
 
     public void finalize_model ()
     {
-        refresh_relocatable_schema_paths ();
-        application_settings.changed ["relocatable-schemas-user-paths"].connect (() => {
-                RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
-                if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
-                    return;
-
-                refresh_relocatable_schema_paths ();
-            });
-        application_settings.changed ["relocatable-schemas-enabled-mappings"].connect (() => {
-                refresh_relocatable_schema_paths ();
-            });
-
         refresh_schema_source ();
         Timeout.add (3000, () => {
                 refresh_schema_source ();
@@ -507,43 +510,6 @@ public class SettingsModel : Object
 
         if (modified_path_specs.length > 0)
             paths_changed (modified_path_specs, false);
-    }
-
-    private void parse_relocatable_schemas_user_paths ()
-    {
-        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
-        if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
-            return;
-
-        Variant user_paths_variant = application_settings.get_value ("relocatable-schemas-user-paths");
-        VariantIter entries_iter;
-        user_paths_variant.get ("a{ss}", out entries_iter);
-        string schema_id;
-        string path_spec;
-        while (entries_iter.next ("{ss}", out schema_id, out path_spec))
-            add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
-    }
-
-    private void create_relocatable_schemas_built_in_paths ()
-    {
-        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
-        if (!(RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags))
-            return;
-
-        string [,] known_mappings = ConfigurationEditor.known_mappings;
-        for (int i = 0; i < known_mappings.length [0]; i++)
-            add_relocatable_schema_info (relocatable_schema_paths, known_mappings [i,0], known_mappings [i,1]);
-    }
-
-    private void parse_relocatable_schemas_startup_paths ()
-    {
-        RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) application_settings.get_flags ("relocatable-schemas-enabled-mappings");
-        if (!(RelocatableSchemasEnabledMappings.STARTUP in enabled_mappings_flags))
-            return;
-
-        startup_relocatable_schema_paths.foreach ((schema_id, paths) => {
-                paths.foreach ((path_spec) => add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec));
-            });
     }
 
     private void add_relocatable_schema_info (HashTable<string, GenericSet<string>> map, string schema_id, ...)
