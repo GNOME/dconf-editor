@@ -159,6 +159,11 @@
                 <property name="vexpand">True</property>
               </object>
             </child>
+            <child>
+              <object class="ModificationsRevealer" id="revealer">
+                <property name="visible">True</property>
+              </object>
+            </child>
           </object>
         </child>
         <child type="overlay">

@@ -49,15 +49,12 @@ class BrowserView : Grid
         }
     }
 
-    [GtkChild] private ModificationsRevealer revealer;
-
     private ModificationsHandler _modifications_handler;
     public ModificationsHandler modifications_handler
     {
         private get { return _modifications_handler; }
         set {
             _modifications_handler = value;
-            revealer.modifications_handler = value;
             browse_view.modifications_handler = value;
             properties_view.modifications_handler = value;
             search_results_view.modifications_handler = value;
@@ -304,12 +301,6 @@ class BrowserView : Grid
 
     public void reset_objects (GLib.ListStore? objects, bool recursively)
     {
-        reset_generic (objects, recursively);
-        revealer.warn_if_no_planned_changes ();
-    }
-
-    private void reset_generic (GLib.ListStore? objects, bool recursively)
-    {
         SettingsModel model = modifications_handler.model;
         if (objects == null)
             return;
@@ -326,7 +317,7 @@ class BrowserView : Grid
                 if (recursively) {
                     GLib.ListStore? children = model.get_children ((Directory) setting_object);
                     if (children != null)
-                        reset_generic ((!) children, true);
+                        reset_objects ((!) children, true);
                 }
                 continue;
             }

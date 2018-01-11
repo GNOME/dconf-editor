@@ -43,6 +43,7 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private SearchEntry search_entry;
 
     [GtkChild] private BrowserView browser_view;
+    [GtkChild] private ModificationsRevealer revealer;
 
     [GtkChild] private Revealer notification_revealer;
     [GtkChild] private Label notification_label;
@@ -72,6 +73,7 @@ class DConfWindow : ApplicationWindow
         model = new SettingsModel (settings);
         pathbar.model = model;
         modifications_handler = new ModificationsHandler (model);
+        revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
         modifications_handler_reload_handler = modifications_handler.reload.connect (invalidate_popovers);
 
@@ -329,6 +331,7 @@ class DConfWindow : ApplicationWindow
     {
         enter_delay_mode ();
         browser_view.reset_objects (model.get_children (model.get_directory (path)), recursively);
+        revealer.warn_if_no_planned_changes ();
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
