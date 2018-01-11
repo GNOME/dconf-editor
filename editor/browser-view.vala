@@ -131,7 +131,7 @@ class BrowserView : Grid
 
     public void show_search_view (string term, string current_path, string [] bookmarks)
     {
-        search_results_view.start_search (term, current_path, bookmarks);
+        search_results_view.start_search (term, current_path, bookmarks, sorting_options);
         if (pre_search_view == null)
         {
             pre_search_view = stack.visible_child;
@@ -246,7 +246,7 @@ class BrowserView : Grid
     public void reload_search (string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
-        search_results_view.reload_search (current_path, bookmarks);
+        search_results_view.reload_search (current_path, bookmarks, sorting_options);
     }
 
     public bool check_reload (string path)

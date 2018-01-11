@@ -46,15 +46,6 @@ class RegistrySearch : Grid, BrowsableView
 
     public ModificationsHandler modifications_handler { private get; set; }
 
-    private BrowserView? _browser_view = null;
-    private BrowserView browser_view {
-        get {
-            if (_browser_view == null)
-                _browser_view = (BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this));
-            return (!) _browser_view;
-        }
-    }
-
     private GLib.ListStore search_results_model = new GLib.ListStore (typeof (SettingObject));
 
     construct
@@ -371,7 +362,7 @@ class RegistrySearch : Grid, BrowsableView
         old_term = null;
     }
 
-    public void start_search (string term, string _current_path, string [] bookmarks)
+    public void start_search (string term, string _current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         current_path = _current_path;
 
@@ -404,7 +395,7 @@ class RegistrySearch : Grid, BrowsableView
             post_local = -1;
             post_folders = -1;
 
-            local_search (model, SettingsModel.get_base_path (current_path), term);
+            local_search (model, sorting_options, SettingsModel.get_base_path (current_path), term);
             bookmark_search (model, current_path, term, bookmarks);
             key_list_box.bind_model (search_results_model, new_list_box_row);
 
@@ -464,9 +455,9 @@ class RegistrySearch : Grid, BrowsableView
         }
     }
 
-    private bool local_search (SettingsModel model, string current_path, string term)
+    private bool local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term)
     {
-        SettingComparator comparator = browser_view.sorting_options.get_comparator ();
+        SettingComparator comparator = sorting_options.get_comparator ();
         GLib.CompareDataFunc compare = (a, b) => comparator.compare((SettingObject) a, (SettingObject) b);
 
         if (!SettingsModel.is_key_path (current_path))
@@ -600,10 +591,10 @@ class RegistrySearch : Grid, BrowsableView
         row.set_header (header);
     }
 
-    public void reload_search (string current_path, string [] bookmarks)
+    public void reload_search (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         string term = old_term ?? "";
         stop_search ();
-        start_search (term, current_path, bookmarks);
+        start_search (term, current_path, bookmarks, sorting_options);
     }
 }

@@ -47,15 +47,6 @@ class RegistryView : Grid, BrowsableView
 
     public ModificationsHandler modifications_handler { private get; set; }
 
-    private BrowserView? _browser_view = null;
-    private BrowserView browser_view {
-        get {
-            if (_browser_view == null)
-                _browser_view = (BrowserView) DConfWindow._get_parent (DConfWindow._get_parent (this));
-            return (!) _browser_view;
-        }
-    }
-
     construct
     {
         info_bar.add_label ("multiple-schemas-folder", _("Multiple schemas are installed at this path. This could lead to problems if it hasn’t been done carefully. Only one schema is displayed here. Edit values at your own risk."));

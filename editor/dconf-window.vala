@@ -188,14 +188,6 @@ class DConfWindow : ApplicationWindow
         request_path ((!) first_path, true, strict);
     }
 
-    public static Widget _get_parent (Widget widget)
-    {
-        Widget? parent = widget.get_parent ();
-        if (parent == null)
-            assert_not_reached ();
-        return (!) parent;
-    }
-
     /*\
     * * Window management callbacks
     \*/
