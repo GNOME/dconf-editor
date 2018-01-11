@@ -17,14 +17,6 @@
 
 using Gtk;
 
-public enum Behaviour {
-    UNSAFE,
-    SAFE,
-    ALWAYS_CONFIRM_IMPLICIT,
-    ALWAYS_CONFIRM_EXPLICIT,
-    ALWAYS_DELAY
-}
-
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid
 {

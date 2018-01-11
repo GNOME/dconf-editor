@@ -15,6 +15,13 @@
   along with Dconf Editor.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+public enum Behaviour {
+    UNSAFE,
+    SAFE,
+    ALWAYS_CONFIRM_IMPLICIT,
+    ALWAYS_CONFIRM_EXPLICIT,
+    ALWAYS_DELAY
+}
 public enum ModificationsMode {
     NONE,
     TEMPORARY,
