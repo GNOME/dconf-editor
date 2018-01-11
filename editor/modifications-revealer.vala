@@ -30,9 +30,6 @@ class ModificationsRevealer : Revealer
             _modifications_handler.delayed_changes_changed.connect (() => {
                     update ();
                 });
-            _modifications_handler.reload.connect (() => {
-                    reload ();
-                });
         }
     }
 
@@ -40,8 +37,6 @@ class ModificationsRevealer : Revealer
     [GtkChild] private ModelButton apply_button;
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
-
-    public signal void reload ();
 
     public Behaviour behaviour { set { modifications_handler.behaviour = value; } }
 
