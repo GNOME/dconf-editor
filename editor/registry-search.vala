@@ -142,7 +142,7 @@ class RegistrySearch : Grid, BrowsableView
 
             ulong on_delete_call_handler = key_row.on_delete_call.connect (() => modifications_handler.set_key_value (key, null));
             ulong set_key_value_handler = key_row.set_key_value.connect ((variant) => { modifications_handler.set_key_value (key, variant); });
-            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key));
+            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key.full_name));
 
             ulong delayed_modifications_changed_handler =
                     modifications_handler.delayed_changes_changed.connect (() => key_row.set_delayed_icon ());

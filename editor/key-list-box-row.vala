@@ -266,12 +266,12 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         SettingsModel model = modifications_handler.model;
         Key key = abstract_key;
         StyleContext context = get_style_context ();
-        if (modifications_handler.key_has_planned_change (key))
+        if (modifications_handler.key_has_planned_change (key.full_name))
         {
             context.add_class ("delayed");
             if (key is DConfKey)
             {
-                if (modifications_handler.get_key_planned_value (key) == null)
+                if (modifications_handler.get_key_planned_value (key.full_name) == null)
                     context.add_class ("erase");
                 else
                     context.remove_class ("erase");
@@ -391,8 +391,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
         else
         {
-            bool planned_change = modifications_handler.key_has_planned_change (key);
-            Variant? planned_value = modifications_handler.get_key_planned_value (key);
+            bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
+            Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
             if (planned_change)
             {
                 popover.new_section ();
@@ -520,8 +520,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
 
         bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-        bool planned_change = modifications_handler.key_has_planned_change (key);
-        Variant? planned_value = modifications_handler.get_key_planned_value (key);
+        bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
 
         variant = new Variant ("(ss)", key.full_name, key.schema_id);
         popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
@@ -775,8 +775,8 @@ private class ContextPopover : Popover
         string type_string = original_type.dup_string ();
 
         bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-        bool planned_change = modifications_handler.key_has_planned_change (key);
-        Variant? planned_value = modifications_handler.get_key_planned_value (key);
+        bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
 
         Variant? value_variant;
         if (!has_default_value) // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"

@@ -94,10 +94,10 @@ class ModificationsRevealer : Revealer
             if (setting_object is DConfKey)
             {
                 if (!model.is_key_ghost ((DConfKey) setting_object))
-                    modifications_handler.add_delayed_setting ((Key) setting_object, null);
+                    modifications_handler.add_delayed_setting (setting_object.full_name, null);
             }
             else if (!model.is_key_default ((GSettingsKey) setting_object))
-                modifications_handler.add_delayed_setting ((Key) setting_object, null);
+                modifications_handler.add_delayed_setting (setting_object.full_name, null);
         }
     }
 

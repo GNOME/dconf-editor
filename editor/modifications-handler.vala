@@ -32,17 +32,16 @@ class ModificationsHandler : Object
 {
     public ModificationsMode mode { get; set; default=ModificationsMode.NONE; }
 
-    private HashTable<Key, Variant?> keys_awaiting_hashtable = new HashTable<Key, Variant?> (
-            (key)        => { return str_hash (key.descriptor); },
-            (key1, key2) => { return str_equal (key1.descriptor, key2.descriptor); }
-        );
+    private HashTable<string, Variant?> keys_awaiting_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
+
     public uint dconf_changes_count
     {
         get
         {
             uint count = 0;
-            keys_awaiting_hashtable .foreach ((key, planned_value) => {
-                    if (key is DConfKey)
+            keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
+                    SettingObject? key = model.get_key (key_path);
+                    if (key != null && (!) key is DConfKey)
                         count++;
                 });
             return count;
@@ -53,8 +52,9 @@ class ModificationsHandler : Object
         get
         {
             uint count = 0;
-            keys_awaiting_hashtable .foreach ((key, planned_value) => {
-                    if (key is GSettingsKey)
+            keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
+                    SettingObject? key = model.get_key (key_path);
+                    if (key != null && (!) key is GSettingsKey)
                         count++;
                 });
             return count;
@@ -100,21 +100,21 @@ class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    public void add_delayed_setting (Key key, Variant? new_value)
+    public void add_delayed_setting (string key_path, Variant? new_value)
     {
-        keys_awaiting_hashtable.insert (key, new_value);
+        keys_awaiting_hashtable.insert (key_path, new_value);
 
         mode = get_current_delay_mode () ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
 
         delayed_changes_changed ();
     }
 
-    public void dismiss_change (Key key)
+    public void dismiss_change (string key_path)
     {
         if (mode == ModificationsMode.NONE)
             mode = behaviour == Behaviour.ALWAYS_DELAY ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
 
-        keys_awaiting_hashtable.remove (key);
+        keys_awaiting_hashtable.remove (key_path);
 
         delayed_changes_changed ();
     }
@@ -154,22 +154,22 @@ class ModificationsHandler : Object
 
     public Variant get_key_custom_value (Key key)
     {
-        bool planned_change = key_has_planned_change (key);
-        Variant? planned_value = get_key_planned_value (key);
+        bool planned_change = key_has_planned_change (key.full_name);
+        Variant? planned_value = get_key_planned_value (key.full_name);
         return planned_change && (planned_value != null) ? (!) planned_value : model.get_key_value (key);
     }
 
     public bool key_value_is_default (GSettingsKey key) // doesn't make sense for DConfKey?
     {
-        bool planned_change = key_has_planned_change (key);
-        Variant? planned_value = get_key_planned_value (key);
+        bool planned_change = key_has_planned_change (key.full_name);
+        Variant? planned_value = get_key_planned_value (key.full_name);
         return planned_change ? planned_value == null : model.is_key_default (key);
     }
 
     public void set_key_value (Key key, Variant? new_value)
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (key, new_value);
+            add_delayed_setting (key.full_name, new_value);
         else if (new_value != null)
             model.set_key_value (key, (!) new_value);
         else if (key is GSettingsKey)
@@ -177,33 +177,33 @@ class ModificationsHandler : Object
         else if (behaviour != Behaviour.UNSAFE)
         {
             enter_delay_mode ();
-            add_delayed_setting (key, null);
+            add_delayed_setting (key.full_name, null);
         }
         else
             model.erase_key ((DConfKey) key);
     }
 
-    public bool key_has_planned_change (Key key)
+    public bool key_has_planned_change (string key_path)
     {
-        if (keys_awaiting_hashtable.contains (key))
+        if (keys_awaiting_hashtable.contains (key_path))
             return true;
 
         bool has_planned_changed = false;
         keys_awaiting_hashtable.@foreach ((key_awaiting, planned_value) => {
-                if (key.full_name == key_awaiting.full_name)
+                if (key_path == key_awaiting)
                     has_planned_changed = true;
             });
         return has_planned_changed;
     }
 
-    public Variant? get_key_planned_value (Key key)
+    public Variant? get_key_planned_value (string key_path)
     {
-        if (keys_awaiting_hashtable.contains (key))
-            return keys_awaiting_hashtable.lookup (key);
+        if (keys_awaiting_hashtable.contains (key_path))
+            return keys_awaiting_hashtable.lookup (key_path);
 
         Variant? planned_changed = null;
         keys_awaiting_hashtable.@foreach ((key_awaiting, planned_value) => {
-                if (key.full_name == key_awaiting.full_name)
+                if (key_path == key_awaiting)
                     planned_changed = planned_value;
             });
         return planned_changed;
