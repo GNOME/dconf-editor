@@ -48,23 +48,8 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Revealer notification_revealer;
     [GtkChild] private Label notification_label;
 
-    private bool _highcontrast = false;
-    private bool highcontrast {
-        set {
-            if (_highcontrast == value)
-                return;
-            _highcontrast = value;
-            if (value)
-                get_style_context ().add_class ("hc-theme");
-            else
-                get_style_context ().remove_class ("hc-theme");
-        }
-    }
-
     private ulong behaviour_changed_handler = 0;
     private ulong modifications_handler_reload_handler = 0;
-    private ulong small_keys_list_rows_handler = 0;
-    private ulong small_bookmarks_rows_handler = 0;
 
     public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
@@ -85,29 +70,7 @@ class DConfWindow : ApplicationWindow
         if (settings.get_boolean ("window-is-maximized"))
             maximize ();
 
-        StyleContext context = get_style_context ();
-        small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
-                bool small_rows = settings.get_boolean ("small-keys-list-rows");
-                if (small_rows)
-                {
-                    if (!context.has_class ("small-keys-list-rows")) context.add_class ("small-keys-list-rows");
-                }
-                else if (context.has_class ("small-keys-list-rows")) context.remove_class ("small-keys-list-rows");
-                browser_view.small_keys_list_rows = small_rows;
-            });
-        small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
-                if (settings.get_boolean ("small-bookmarks-rows"))
-                {
-                    if (!context.has_class ("small-bookmarks-rows")) context.add_class ("small-bookmarks-rows");
-                }
-                else if (context.has_class ("small-bookmarks-rows")) context.remove_class ("small-bookmarks-rows");
-            });
-        bool small_rows = settings.get_boolean ("small-keys-list-rows");
-        if (small_rows)
-            context.add_class ("small-keys-list-rows");
-        browser_view.small_keys_list_rows = small_rows;
-        if (settings.get_boolean ("small-bookmarks-rows"))
-            context.add_class ("small-bookmarks-rows");
+        set_css_styles ();
 
         search_bar.connect_entry (search_entry);
         search_bar.notify ["search-mode-enabled"].connect (search_changed);
@@ -219,6 +182,63 @@ class DConfWindow : ApplicationWindow
                 }
                 pathbar.set_path (current_path); // update "ghost" status
             });
+    }
+
+    /*\
+    * * CSS styles
+    \*/
+
+    private ulong small_keys_list_rows_handler = 0;
+    private ulong small_bookmarks_rows_handler = 0;
+
+    private void set_css_styles ()
+    {
+        StyleContext context = get_style_context ();
+        small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
+                bool small_rows = settings.get_boolean ("small-keys-list-rows");
+                if (small_rows)
+                {
+                    if (!context.has_class ("small-keys-list-rows")) context.add_class ("small-keys-list-rows");
+                }
+                else if (context.has_class ("small-keys-list-rows")) context.remove_class ("small-keys-list-rows");
+                browser_view.small_keys_list_rows = small_rows;
+            });
+        small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
+                if (settings.get_boolean ("small-bookmarks-rows"))
+                {
+                    if (!context.has_class ("small-bookmarks-rows")) context.add_class ("small-bookmarks-rows");
+                }
+                else if (context.has_class ("small-bookmarks-rows")) context.remove_class ("small-bookmarks-rows");
+            });
+        bool small_rows = settings.get_boolean ("small-keys-list-rows");
+        if (small_rows)
+            context.add_class ("small-keys-list-rows");
+        browser_view.small_keys_list_rows = small_rows;
+        if (settings.get_boolean ("small-bookmarks-rows"))
+            context.add_class ("small-bookmarks-rows");
+
+        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
+        if (gtk_settings == null)
+            return;
+        ((!) gtk_settings).notify ["gtk-theme-name"].connect (update_highcontrast_state);
+        update_highcontrast_state ();
+    }
+
+    private bool highcontrast_state = false;
+    private void update_highcontrast_state ()
+    {
+        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
+        if (gtk_settings == null)
+            return;
+
+        bool highcontrast_new_state = "HighContrast" in ((!) gtk_settings).gtk_theme_name;
+        if (highcontrast_new_state == highcontrast_state)
+            return;
+        highcontrast_state = highcontrast_new_state;
+        if (highcontrast_state)
+            get_style_context ().add_class ("hc-theme");
+        else
+            get_style_context ().remove_class ("hc-theme");
     }
 
     /*\
@@ -377,11 +397,6 @@ class DConfWindow : ApplicationWindow
 
     private void request_path (string full_name, bool notify_missing = true, bool strict = true)
     {
-//        browser_view.set_search_mode (false);  // TODO not useful when called from bookmark
-        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
-        if (gtk_settings != null)
-            highcontrast = ("HighContrast" in ((!) gtk_settings).gtk_theme_name);
-
         SettingObject? found_object = model.get_object (full_name, strict);
         bool not_found = found_object == null;
 
