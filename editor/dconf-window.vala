@@ -102,7 +102,14 @@ class DConfWindow : ApplicationWindow
             {
                 strict = true;
                 model.add_mapping ((!) schema, (!) first_path);
-                if (key_name != null)
+
+                RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
+                if (!(RelocatableSchemasEnabledMappings.STARTUP in enabled_mappings_flags))
+                {
+                    warning (_("Startup mappings are disabled."));
+                    first_path = "/";
+                }
+                else if (key_name != null)
                     first_path = (!) first_path + (!) key_name;
             }
         }
