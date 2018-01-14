@@ -819,12 +819,23 @@ public class SettingsModel : Object
     {
         if (!is_key_path (path))
             return get_directory (path);
+        else if (strict)
+            return get_key (path);
+        else
+        {
+            GLib.ListStore? key_model = get_children (get_directory (get_parent_path (path)));
+            string name = get_name (path);
+            SettingObject? key = get_key_from_path_and_name (key_model, name);
+            if (key != null || strict)
+                return key;
+            return get_folder_from_path_and_name (key_model, name);
+        }
+    }
+
+    public Key? get_key (string path)
+    {
         GLib.ListStore? key_model = get_children (get_directory (get_parent_path (path)));
-        string name = get_name (path);
-        SettingObject? key = get_key_from_path_and_name (key_model, name);
-        if (key != null || strict)
-            return key;
-        return get_folder_from_path_and_name (key_model, name);
+        return get_key_from_path_and_name (key_model, get_name (path));
     }
 
     public static string[] to_segments (string path)

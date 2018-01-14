@@ -145,7 +145,11 @@ class DConfWindow : ApplicationWindow
         if (first_path == null)
             first_path = "/";
 
-        request_path ((!) first_path, true, strict);
+        SettingObject? found_object = model.get_object ((!) first_path, false);
+        if (found_object == null || (!) found_object is Key)
+            request_object_path ((!) first_path);
+        else
+            request_folder_path (((!) found_object).full_name);
     }
 
     private void prepare_model ()
@@ -342,8 +346,9 @@ class DConfWindow : ApplicationWindow
 
     private const GLib.ActionEntry [] action_entries =
     {
-        { "open-path", open_path, "s" },
-        { "open-path-with-selection", open_path_with_selection, "(ss)" },
+        { "open-folder", open_folder, "s" },
+        { "open-object", open_object, "s" },
+        { "open-parent", open_parent, "s" },
         { "reload", reload },
 
         { "reset-recursive", reset_recursively, "s" },
@@ -351,22 +356,29 @@ class DConfWindow : ApplicationWindow
         { "enter-delay-mode", enter_delay_mode }
     };
 
-    private void open_path (SimpleAction action, Variant? path_variant)
+    private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
         if (bookmarks_button.active)
             bookmarks_button.active = false;
-        request_path (((!) path_variant).get_string ());
+        string full_name = ((!) path_variant).get_string ();
+        request_folder_path (full_name);
     }
 
-    private void open_path_with_selection (SimpleAction action, Variant? path_variant)
+    private void open_object (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        string full_name;
-        string selection;
-        ((!) path_variant).@get ("(ss)", out full_name, out selection);
-        request_path (selection);   // TODO better
-        request_path (full_name);
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
+        string full_name = ((!) path_variant).get_string ();
+        request_object_path (full_name);
+    }
+
+    private void open_parent (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name = ((!) path_variant).get_string ();
+        request_folder_path (SettingsModel.get_parent_path (full_name), full_name);
     }
 
     private void reload (/* SimpleAction action, Variant? path_variant */)
@@ -402,46 +414,61 @@ class DConfWindow : ApplicationWindow
     * * Directories tree
     \*/
 
-    private void request_path (string full_name, bool notify_missing = true, bool strict = true)
+    private void request_folder_path (string full_name, string selected_or_empty = "")
     {
-        SettingObject? found_object = model.get_object (full_name, strict);
+        Directory? found_object = model.get_directory (full_name);
         bool not_found = found_object == null;
 
         string fallback_path = full_name;
         while (found_object == null)
         {
             fallback_path = SettingsModel.get_parent_path (fallback_path);
-            found_object = model.get_object (fallback_path);
+            found_object = model.get_directory (fallback_path);
         }
+        if (selected_or_empty == "")
+            set_directory ((!) found_object, pathbar.get_selected_child (fallback_path));
+        else
+            set_directory ((!) found_object, selected_or_empty);
 
-        if (found_object is Key)
+        if (not_found)
+            cannot_find_folder (full_name);
+
+        search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+    }
+
+    private void request_object_path (string full_name, bool notify_missing = true)
+    {
+        SettingObject? found_object = model.get_key (full_name);
+        bool not_found = found_object == null;
+        if (not_found)
+            request_folder_path (SettingsModel.get_parent_path (full_name), full_name);
+        else
         {
             Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
             browser_view.prepare_properties_view ((Key) found_object, current_path == SettingsModel.get_parent_path (full_name), parent_directory.warning_multiple_schemas);
             update_current_path (strdup (full_name));
         }
-        else
-            set_directory ((Directory) found_object, pathbar.get_selected_child (full_name));
 
         if (not_found && notify_missing)
         {
             if (SettingsModel.is_key_path (full_name))
-                show_notification (_("Cannot find key “%s”.").printf (full_name));
+                cannot_find_key (full_name);
             else
-                show_notification (_("Cannot find folder “%s”.").printf (full_name));
+                cannot_find_folder (full_name);
         }
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void set_directory (Directory directory, string? selected)
+    private void set_directory (Directory directory, string selected_or_empty)
     {
         GLib.ListStore? key_model = model.get_children (directory);
         if (key_model == null)
             return;
         browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (directory.full_name), directory.warning_multiple_schemas);
         update_current_path (directory.full_name);
-        browser_view.select_row (selected);
+
+        browser_view.select_row (selected_or_empty);
     }
 
     private void reload_view (bool notify_missing)
@@ -450,15 +477,15 @@ class DConfWindow : ApplicationWindow
         {
             Directory? directory = model.get_directory (current_path);
             if (directory == null)
-                request_path (current_path, notify_missing); // rely on fallback detection
+                request_folder_path (current_path); // rely on fallback detection
             else
             {
-                string? saved_selection = browser_view.get_selected_row_name ();
+                string saved_selection = browser_view.get_selected_row_name ();
                 set_directory ((!) directory, saved_selection);
             }
         }
         else if (browser_view.current_view_is_properties_view ())
-            request_path (current_path, notify_missing);
+            request_object_path (current_path, notify_missing);
         else if (browser_view.current_view_is_search_results_view ())
             browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
     }
@@ -747,35 +774,52 @@ class DConfWindow : ApplicationWindow
         if (current_path == "/")
             return;
         if (shift)
-            request_path ("/");
+            request_folder_path ("/");
         else
-            request_path (SettingsModel.get_parent_path (current_path));
+            request_folder_path (SettingsModel.get_parent_path (current_path), current_path.dup ());
     }
     private void go_forward (bool shift)
     {
         string complete_path = pathbar.complete_path;
 
         browser_view.discard_row_popover ();
-        if (shift)
-        {
-            request_path (complete_path);
-            return;
-        }
         if (current_path == complete_path)
             return;
 
+        if (shift)
+        {
+            if (SettingsModel.is_key_path (complete_path))
+                request_object_path (complete_path);
+            else
+                request_folder_path (complete_path);
+            return;
+        }
+
         int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
-        request_path (index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1));
+        if (index_of_last_slash != -1)
+            request_folder_path (complete_path.slice (0, index_of_last_slash + 1));
+        else if (SettingsModel.is_key_path (complete_path))
+            request_object_path (complete_path);
+        else
+            request_folder_path (complete_path);
     }
 
     /*\
     * * Non-existant path notifications
     \*/
-
     private void show_notification (string notification)
     {
         notification_label.set_text (notification);
         notification_revealer.set_reveal_child (true);
+    }
+
+    private void cannot_find_key (string full_name)
+    {
+        show_notification (_("Cannot find key “%s”.").printf (full_name));
+    }
+    private void cannot_find_folder (string full_name)
+    {
+        show_notification (_("Cannot find folder “%s”.").printf (full_name));
     }
 
     [GtkCallback]

@@ -2,7 +2,6 @@
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
   <template class="Bookmark" parent="GtkListBoxRow">
-    <property name="action-name">ui.open-path</property>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>

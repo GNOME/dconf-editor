@@ -111,7 +111,7 @@ public class PathBar : Box
                 {
                     complete_path += item + "/";
                     bool is_ghost = model.get_directory (complete_path) == null;
-                    set_is_ghost (add_path_bar_item (item, complete_path, !is_key_path && (index == split.length - 2)), is_ghost);
+                    set_is_ghost (add_path_bar_item (item, complete_path, true, !is_key_path && (index == split.length - 2)), is_ghost);
                     set_is_ghost (add_slash_label (), is_ghost);
                     index++;
                 }
@@ -122,17 +122,17 @@ public class PathBar : Box
             {
                 complete_path += last;
                 bool is_ghost = !(model.get_object (complete_path) is Key);
-                set_is_ghost (add_path_bar_item (last, complete_path, true), is_ghost);
+                set_is_ghost (add_path_bar_item (last, complete_path, false, true), is_ghost);
             }
         }
 
         show_all ();
     }
 
-    public string? get_selected_child (string current_path)
+    public string get_selected_child (string current_path)
     {
         if (!complete_path.has_prefix (current_path) || complete_path == current_path)
-            return null;
+            return "";
         int index_of_last_slash = complete_path.index_of ("/", current_path.length);
         return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
     }
@@ -148,9 +148,9 @@ public class PathBar : Box
         return slash_label;
     }
 
-    private PathBarItem add_path_bar_item (string label, string complete_path, bool block)
+    private PathBarItem add_path_bar_item (string label, string complete_path, bool is_folder, bool block)
     {
-        PathBarItem path_bar_item = new PathBarItem (label);
+        PathBarItem path_bar_item = new PathBarItem (label, is_folder ? "ui.open-folder" : "ui.open-object");
         path_bar_item.action_target = new Variant.string (complete_path);
 
         add (path_bar_item);
@@ -179,7 +179,7 @@ public class PathBar : Box
         else
         {
             item.cursor_type = PathBarItem.CursorType.POINTER;
-            item.set_action_name ("ui.open-path");
+            item.set_action_name (item.default_action);
             context.remove_class ("active");
         }
     }
@@ -188,6 +188,7 @@ public class PathBar : Box
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
 private class PathBarItem : Button
 {
+    public string default_action { get; construct; }
     public string text_string { get; construct; }
     [GtkChild] private Label text_label;
 
@@ -235,9 +236,10 @@ private class PathBarItem : Button
         popover_test.popup ();
     }
 
-    public PathBarItem (string label)
+    public PathBarItem (string label, string action)
     {
-        Object (text_string: label);
+        Object (text_string: label, default_action: action);
         text_label.set_text (label);
+        set_action_name (action);
     }
 }

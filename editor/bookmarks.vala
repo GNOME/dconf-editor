@@ -94,6 +94,10 @@ public class Bookmarks : MenuButton
             unduplicated_bookmarks += bookmark;
 
             Bookmark bookmark_row = new Bookmark (bookmark);
+            if (SettingsModel.is_key_path (bookmark))
+                bookmark_row.action_name = "ui.open-object";
+            else
+                bookmark_row.action_name = "ui.open-folder";
             bookmark_row.action_target = bookmark;
             ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => remove_bookmark (bookmark));
             bookmark_row.destroy_button.destroy.connect (() => bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler));

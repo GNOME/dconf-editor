@@ -183,13 +183,13 @@ private class FolderListBoxRow : ClickableListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant ("(ss)", parent_path, full_name);
-            popover.new_gaction ("open_parent", "ui.open-path-with-selection(" + variant.print (false) + ")");
+            variant = new Variant.string (full_name);
+            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
         variant = new Variant.string (full_name);
-        popover.new_gaction ("open", "ui.open-path(" + variant.print (false) + ")");
+        popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
         popover.new_section ();
@@ -357,13 +357,13 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant ("(ss)", key.parent_path, key.full_name);
-            popover.new_gaction ("open_parent", "ui.open-path-with-selection(" + variant.print (false) + ")");
+            variant = new Variant.string (key.full_name);
+            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
         variant = new Variant.string (key.full_name);
-        popover.new_gaction ("customize", "ui.open-path(" + variant.print (false) + ")");
+        popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
 
@@ -492,8 +492,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant ("(ss)", key.parent_path, key.full_name);
-            popover.new_gaction ("open_parent", "ui.open-path-with-selection(" + variant.print (false) + ")");
+            variant = new Variant.string (key.full_name);
+            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
@@ -502,7 +502,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         Variant? planned_value = modifications_handler.get_key_planned_value (key);
 
         variant = new Variant.string (key.full_name);
-        popover.new_gaction ("customize", "ui.open-path(" + variant.print (false) + ")");
+        popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"

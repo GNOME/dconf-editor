@@ -68,13 +68,13 @@ class BrowserView : Grid
             });
     }
 
-    public string? get_selected_row_name ()
+    public string get_selected_row_name ()
     {
         if (current_view_is_browse_view ())
             return browse_view.get_selected_row_name ();
         if (current_view_is_search_results_view ())
             return search_results_view.get_selected_row_name ();
-        return null;
+        return "";
     }
 
     public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor, bool warning_multiple_schemas)
@@ -88,10 +88,10 @@ class BrowserView : Grid
         browse_view.show_multiple_schemas_warning (warning_multiple_schemas);
     }
 
-    public void select_row (string? selected)
+    public void select_row (string selected)
     {
         bool grab_focus = true;     // unused, for now
-        if (selected != null)
+        if (selected != "")
             browse_view.select_row_named ((!) selected, grab_focus);
         else
             browse_view.select_first_row (grab_focus);

@@ -208,11 +208,15 @@ class RegistryView : Grid, BrowsableView
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
         if (row is FolderListBoxRow)
+        {
             wrapper.get_style_context ().add_class ("folder-row");
+            wrapper.action_name = "ui.open-folder";
+        }
         else
+        {
             wrapper.get_style_context ().add_class ("key-row");
-
-        wrapper.action_name = "ui.open-path";
+            wrapper.action_name = "ui.open-object";
+        }
         wrapper.action_target = setting_object.full_name;
 
         return wrapper;
@@ -290,7 +294,7 @@ class RegistryView : Grid, BrowsableView
         rows_possibly_with_popover.remove_all ();
     }
 
-    public string? get_selected_row_name ()
+    public string get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row != null)
@@ -299,7 +303,7 @@ class RegistryView : Grid, BrowsableView
             return ((SettingObject) ((!) key_model).get_object (position)).full_name;
         }
         else
-            return null;
+            return "";
     }
 
     /*\

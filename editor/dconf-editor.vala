@@ -250,6 +250,7 @@ class ConfigurationEditor : Gtk.Application
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
+//        set_accels_for_action ("win.", { "<Primary><Shift>x" });
 
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
