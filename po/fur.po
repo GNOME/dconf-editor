@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-12-15 05:49+0000\n"
-"PO-Revision-Date: 2017-12-24 15:28+0100\n"
+"POT-Creation-Date: 2018-01-10 10:06+0000\n"
+"PO-Revision-Date: 2018-01-11 23:28+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -32,7 +32,7 @@ msgstr "Posizion salvade tai segnelibris"
 msgid "Toggle to bookmark this location"
 msgstr "Salve/gjave segnelibri di cheste posizion"
 
-#: editor/bookmarks.ui:61
+#: editor/bookmarks.ui:60
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -40,34 +40,38 @@ msgstr ""
 "I segnelibris a vegnin\n"
 "zontâts chi"
 
-#: editor/bookmarks.ui:87 editor/registry-search.vala:605
+#: editor/bookmarks.ui:86 editor/registry-search.vala:600
 msgid "Bookmarks"
 msgstr "Segnelibris"
 
-#: editor/bookmarks.ui:88
+#: editor/bookmarks.ui:87
 msgid "Manage your bookmarks"
 msgstr "Ministre i tiei segnelibris"
 
-#: editor/bookmark.ui:30
+#: editor/bookmark.ui:34
 msgid "Remove"
 msgstr "Gjave"
 
-#: editor/bookmark.ui:31
+#: editor/bookmark.ui:35
 msgid "Remove this bookmark"
 msgstr "Gjave chest segnelibri"
 
-#: editor/browser-view.ui:32
+#: editor/browser-view.vala:72
 msgid "Sort preferences have changed. Do you want to reload the view?"
 msgstr ""
 "Lis preferencis di ordenament a son cambiadis. Tornâ a cjariâ la viodude?"
 
-#: editor/browser-view.ui:38 editor/browser-view.ui:82
-msgid "Reload"
-msgstr "Torne cjarie"
+#: editor/browser-view.vala:73
+msgid "Refresh"
+msgstr "Inzorne"
 
-#: editor/browser-view.ui:76
+#: editor/browser-view.vala:74
 msgid "This content has changed. Do you want to reload the view?"
 msgstr "Chest contignût al è cambiât. Tornâ a cjariâ la viodude?"
+
+#: editor/browser-view.vala:75
+msgid "Reload"
+msgstr "Torne cjarie"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -109,7 +113,7 @@ msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:244 editor/dconf-editor.vala:457
+#: editor/dconf-editor.vala:249 editor/dconf-editor.vala:454
 msgid "dconf Editor"
 msgstr "Editôr di dconf"
 
@@ -322,7 +326,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid "Mapping of paths to manually associated schemas"
-msgstr ""
+msgstr "Mapadure di percors par schemis associâts a man"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:189
 msgid ""
@@ -627,8 +631,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:351
 msgid "An usual boolean value, defined by a relocatable schema."
-msgstr ""
-"Un valôr boolean usuâl, definît di un scheme che si pues tornâ localizâ"
+msgstr "Un valôr boolean usuâl, definît di un scheme che si pues rilocâ."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:356
 msgid "A 32-bit signed integer, defined by a relocatable schema."
@@ -670,10 +673,8 @@ msgid "Print release version and exit"
 msgstr "Mostre la version dal program e jes"
 
 #: editor/dconf-editor.vala:124
-#, fuzzy
-#| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
-msgstr "Mostre la version dal program e jes"
+msgstr "Stampe i schemis rilocabii e jes"
 
 #: editor/dconf-editor.vala:126
 msgid "Do not show initial warning"
@@ -681,77 +682,70 @@ msgstr "No sta mostrâ l'avîs iniziâl"
 
 #: editor/dconf-editor.vala:128
 msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-msgstr ""
-
-#: editor/dconf-editor.vala:211
-msgid "Known schemas installed:"
-msgstr ""
+msgstr "[PERCORS|SCHEME_FIS [CLÂF]|SCHEME_RILOCABIL:PERCORS [CLÂF]]"
 
 #: editor/dconf-editor.vala:216
-msgid "No known schemas installed."
-msgstr ""
+msgid "Known schemas installed:"
+msgstr "Schemis cognossûts instalâts:"
 
-#: editor/dconf-editor.vala:220
-msgid "Known schemas skipped:"
-msgstr ""
+#: editor/dconf-editor.vala:221
+msgid "No known schemas installed."
+msgstr "Nissun scheme cognossût instalât."
 
 #: editor/dconf-editor.vala:225
-msgid "No known schemas skipped."
-msgstr ""
+msgid "Known schemas skipped:"
+msgstr "Schemis cognossûts saltâts:"
 
-#: editor/dconf-editor.vala:229
-msgid "Unknown schemas:"
-msgstr ""
+#: editor/dconf-editor.vala:230
+msgid "No known schemas skipped."
+msgstr "Nissun scheme cognossût saltât."
 
 #: editor/dconf-editor.vala:234
-msgid "No unknown schemas."
-msgstr ""
+msgid "Unknown schemas:"
+msgstr "Schemis no cognossûts:"
 
-#: editor/dconf-editor.vala:298
+#: editor/dconf-editor.vala:239
+msgid "No unknown schemas."
+msgstr "Nissun scheme no cognossût."
+
+#: editor/dconf-editor.vala:303
 msgid "Only one window can be opened for now.\n"
 msgstr "Pal moment dome un barcon al pues jessi viert.\n"
 
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:322
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Impussibil capî: masse argoments.\n"
 
-#: editor/dconf-editor.vala:327
+#: editor/dconf-editor.vala:332
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Impussibil capî il secont argoment in chest contest.\n"
 
-#: editor/dconf-editor.vala:344
+#: editor/dconf-editor.vala:349
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Impussibil capî: sbare (caratar /) tal secont argoment.\n"
 
-#: editor/dconf-editor.vala:354
-msgid "Cannot understand: too many colons.\n"
-msgstr "Impussibil capî: masse doi ponts(:).\n"
-
-#: editor/dconf-editor.vala:366
+#: editor/dconf-editor.vala:363
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Il percors dal scheme al varès di tacâ e finî cuntune “/”.\n"
 
-#: editor/dconf-editor.vala:379
+#: editor/dconf-editor.vala:376
 msgid "Cannot understand: space character in argument.\n"
 msgstr ""
 "Impussibil capî: spazi (caratar) tal argoment.\n"
 "\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:403
+#. #: editor/dconf-editor.vala:400
 msgid "Copied to clipboard"
 msgstr "Copiât tes notis"
 
-#: editor/dconf-editor.vala:459
+#: editor/dconf-editor.vala:456
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Un visualizadôr grafic e un modificadôr di impostazions internis des "
 "aplicazions."
 
-#: editor/dconf-editor.vala:460
-#| msgid ""
-#| "Copyright © 2010-2014 – Canonical Ltd\n"
-#| "Copyright © 2015-2017 – Arnaud Bonatti"
+#: editor/dconf-editor.vala:457
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
@@ -761,96 +755,96 @@ msgstr ""
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
 "Copyright © 2017-2018 – Davi da Silva Böger"
 
-#: editor/dconf-editor.vala:464
+#: editor/dconf-editor.vala:461
 msgid "translator-credits"
 msgstr "Fabio Tomat, <f.t.public@gmail.com>"
 
-#: editor/dconf-model.vala:57
+#: editor/dconf-model.vala:67
 msgid "Boolean"
 msgstr "Bulean"
 
-#: editor/dconf-model.vala:59
+#: editor/dconf-model.vala:69
 msgid "String"
 msgstr "Stringhe"
 
-#: editor/dconf-model.vala:61
+#: editor/dconf-model.vala:71
 msgid "String array"
 msgstr "Array di stringhis"
 
-#: editor/dconf-model.vala:63
+#: editor/dconf-model.vala:73
 msgid "Enumeration"
 msgstr "Enumerazion"
 
-#: editor/dconf-model.vala:65
+#: editor/dconf-model.vala:75
 msgid "Flags"
 msgstr "Opzions"
 
-#: editor/dconf-model.vala:67
+#: editor/dconf-model.vala:77
 msgid "Double"
 msgstr "Dopli"
 
 #. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:70
+#: editor/dconf-model.vala:80
 msgid "D-Bus handle type"
 msgstr "Gjenar handle D-Bus"
 
-#: editor/dconf-model.vala:72
+#: editor/dconf-model.vala:82
 msgid "D-Bus object path"
 msgstr "Percors ogjet D-Bus"
 
-#: editor/dconf-model.vala:74
+#: editor/dconf-model.vala:84
 msgid "D-Bus object path array"
 msgstr "Array di percors ogjet D-Bus"
 
-#: editor/dconf-model.vala:76
+#: editor/dconf-model.vala:86
 msgid "D-Bus signature"
 msgstr "Firme D-Bus"
 
-#: editor/dconf-model.vala:84
+#: editor/dconf-model.vala:94
 msgid "Integer"
 msgstr "Intîr"
 
-#: editor/dconf-model.vala:202
+#: editor/dconf-model.vala:212
 msgid "True"
 msgstr "Vêr"
 
-#: editor/dconf-model.vala:204
+#: editor/dconf-model.vala:214
 msgid "False"
 msgstr "Fals"
 
-#: editor/dconf-model.vala:205
+#: editor/dconf-model.vala:215
 msgid "Nothing"
 msgstr "Nuie"
 
-#: editor/dconf-model.vala:210
+#: editor/dconf-model.vala:220
 msgid "true"
 msgstr "vêr"
 
-#: editor/dconf-model.vala:212
+#: editor/dconf-model.vala:222
 msgid "false"
 msgstr "fals"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:214
+#: editor/dconf-model.vala:224
 msgid "nothing"
 msgstr "nuie"
 
-#: editor/dconf-model.vala:253
-#, c-format
-msgid "%s (key erased)"
-msgstr "%s (clâf scancelade)"
-
-#: editor/dconf-model.vala:304
+#: editor/dconf-model.vala:270
 msgid "DConf backend"
 msgstr "Backend DConf"
 
-#: editor/dconf-model.vala:391
+#: editor/dconf-model.vala:340
 msgid "Relocatable schema"
 msgstr ""
 
-#: editor/dconf-model.vala:391
+#: editor/dconf-model.vala:340
 msgid "Schema with path"
 msgstr "Scheme cun percors"
+
+#: editor/dconf-model.vala:961
+#, c-format
+msgid "%s (key erased)"
+msgstr "%s (clâf scancelade)"
 
 #: editor/dconf-view.vala:253
 msgid "Failed to parse as double."
@@ -860,72 +854,71 @@ msgstr "No si è rivâts a analizâ come dopli."
 msgid "This value is invalid for the key type."
 msgstr "Chest valôr nol è valit pal gjenar di clâf."
 
-#: editor/dconf-window.vala:151
+#: editor/dconf-window.vala:147
 msgid "Schema is relocatable, a path is needed."
 msgstr ""
 
-#: editor/dconf-window.vala:168
+#: editor/dconf-window.vala:166
 msgid "Schema is not installed on given path."
 msgstr "Il scheme nol è instalât sul percors furnît."
 
-#: editor/dconf-window.vala:244
+#: editor/dconf-window.vala:212
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Gracie di doprâ l'Editôr Dconf par modificâ la proprie configurazion!"
 
-#: editor/dconf-window.vala:245
+#: editor/dconf-window.vala:213
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "No sta dismenteâ che cualchi opzion e pues comprometi lis aplicazions, "
 "duncje sta atent."
 
-#: editor/dconf-window.vala:246
+#: editor/dconf-window.vala:214
 msgid "I’ll be careful."
 msgstr "O starai atent."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:250
+#: editor/dconf-window.vala:218
 msgid "Show this dialog next time."
 msgstr "Mostre chest dialic la prossime volte."
 
-#: editor/dconf-window.vala:373
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Copy descriptor"
+#: editor/dconf-window.vala:388
+#, c-format
+msgid "Cannot find key “%s”."
+msgstr "Impussibil cjatâ la clâf “%s”."
+
+#: editor/dconf-window.vala:390
+#, c-format
+msgid "Cannot find folder “%s”."
+msgstr "Impussibil cjatâ la cartele “%s”."
+
+#: editor/dconf-window.vala:447
 msgid "Copy descriptor"
 msgstr "Copie il descritôr"
 
 #. TODO what happens on multiple schemas defining one key?..
 #. fallback that should never be reached
-#: editor/dconf-window.vala:375 editor/pathbar.vala:219
+#: editor/dconf-window.vala:449 editor/pathbar.vala:231
 msgid "Copy current path"
 msgstr "Copie il percors atuâl"
 
-#: editor/dconf-window.vala:380
+#: editor/dconf-window.vala:455
 msgid "Reset visible keys"
 msgstr "Ristabilìs lis clâfs visibilis"
 
-#: editor/dconf-window.vala:381
+#: editor/dconf-window.vala:456
 msgid "Reset view recursively"
 msgstr "Ristabilìs la viodude in maniere ricorsive"
 
-#: editor/dconf-window.vala:389
+#: editor/dconf-window.vala:464
 msgid "Enter delay mode"
 msgstr "Introdûs mût di ritart"
 
-#: editor/dconf-window.vala:671
-#, c-format
-msgid "Cannot find folder “%s”."
-msgstr "Impussibil cjatâ la cartele “%s”."
-
-#: editor/dconf-window.vala:676
-#, c-format
-msgid "Cannot find key “%s” here."
-msgstr "Impussibil cjatâ chi la clâf “%s”."
-
-#: editor/dconf-window.vala:681
-#, c-format
-msgid "Key “%s” has been removed."
-msgstr "La clâf “%s” e je stade gjavade."
+#: editor/dconf-window.vala:524
+msgid ""
+"The same mouse button is set for going backward and forward. Doing nothing."
+msgstr ""
+"Il stes boton dal mouse al è configurât par lâ indaûr e indenant. No si fâs "
+"nuie."
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
@@ -1037,75 +1030,75 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Jes"
 
-#: editor/key-list-box-row.vala:305
+#: editor/key-list-box-row.vala:309
 msgid "No Schema Found"
 msgstr "Nissun scheme cjatât"
 
-#: editor/key-list-box-row.vala:322
+#: editor/key-list-box-row.vala:327 editor/registry-info.vala:115
 msgid "Key erased."
 msgstr "Clâf scancelade."
 
-#: editor/key-list-box-row.vala:433
+#: editor/key-list-box-row.vala:447 editor/registry-info.vala:96
 msgid "No summary provided"
 msgstr "Nissun somari furnît"
 
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:600
-msgid "Customize…"
-msgstr "Personalize…"
-
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:603
+#: editor/key-list-box-row.vala:621
 msgid "Set to default"
 msgstr "Met i valôrs predefinîts"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:608
+#: editor/key-list-box-row.vala:626
 msgid "Dismiss change"
 msgstr "Scarte la modifiche"
 
+#. Translators: "erase key" action in the right-click menu on a key without schema
+#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
+#: editor/key-list-box-row.vala:629 editor/key-list-box-row.vala:787
+#: editor/registry-info.ui:75
+msgid "Erase key"
+msgstr "Scancele clâf"
+
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: editor/key-list-box-row.vala:632
+msgid "Do not erase"
+msgstr "No sta scancelâ"
+
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:644
+msgid "Customize…"
+msgstr "Personalize…"
+
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:611
+#: editor/key-list-box-row.vala:647
 msgid "Open"
 msgstr "Vierç"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:614
+#: editor/key-list-box-row.vala:650
 #, fuzzy
 #| msgctxt "shortcut window"
 #| msgid "Open parent folder"
 msgid "Open parent folder"
 msgstr "Vierç cartele superiôr"
 
-#. Translators: "erase key" action in the right-click menu on a key without schema
-#. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:617 editor/key-list-box-row.vala:754
-#: editor/registry-info.ui:75
-msgid "Erase key"
-msgstr "Scancele clâf"
-
-#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:620
-msgid "Do not erase"
-msgstr "No sta scancelâ"
-
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:623
+#: editor/key-list-box-row.vala:653
 msgid "Reset recursively"
 msgstr "Ristabilìs in maniere ricorsive"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:632
+#: editor/key-list-box-row.vala:663
 msgid "Copy"
 msgstr "Copie"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:748
+#: editor/key-list-box-row.vala:781
 msgid "No change"
 msgstr "Nissun cambiament"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:818 editor/registry-info.vala:266
+#: editor/key-list-box-row.vala:851 editor/registry-info.vala:281
 msgid "Default value"
 msgstr "Valôr predefinît"
 
@@ -1219,60 +1212,66 @@ msgstr ""
 "erôr de aplicazion che e à instalât chest scheme. Se pussibil, vierç une "
 "segnalazion di erôr a rivuart."
 
-#: editor/registry-info.vala:84
+#: editor/registry-info.vala:89
 msgid "Defined by"
 msgstr "Definît di"
 
-#: editor/registry-info.vala:86
+#: editor/registry-info.vala:91
 msgid "Schema"
 msgstr "Scheme"
 
-#: editor/registry-info.vala:88
+#: editor/registry-info.vala:96
 msgid "Summary"
 msgstr "Somari"
 
-#: editor/registry-info.vala:89
+#: editor/registry-info.vala:101
 msgid "Description"
 msgstr "Descrizion"
 
+#: editor/registry-info.vala:101
+msgid "No description provided"
+msgstr "Nissune descrizion furnide"
+
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:91
+#: editor/registry-info.vala:104
 msgid "Type"
 msgstr "Gjenar"
 
-#: editor/registry-info.vala:93
+#: editor/registry-info.vala:106
 msgid "Minimum"
 msgstr "Minim"
 
-#: editor/registry-info.vala:94
+#: editor/registry-info.vala:107
 msgid "Maximum"
 msgstr "Massim"
 
-#: editor/registry-info.vala:95
+#: editor/registry-info.vala:108
 msgid "Default"
 msgstr "Predefinît"
 
-#: editor/registry-info.vala:113
+#: editor/registry-info.vala:126
 msgid "Current value"
 msgstr "Valôr atuâl"
 
-#: editor/registry-info.vala:146
+#: editor/registry-info.vala:159
 msgid "Use default value"
 msgstr "Dopre valôr predefinît"
 
-#: editor/registry-info.vala:204
+#: editor/registry-info.vala:217
 msgid "Custom value"
 msgstr "Valôr personalizât"
 
 #. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
-#: editor/registry-info.vala:326
+#: editor/registry-info.vala:341
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"Dopre un pont pal segn decimâl e nissun separadôr pai miârs. Si pues doprâ "
+"la notazion X.Ye+Z ."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:332
+#: editor/registry-info.vala:347
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1282,7 +1281,7 @@ msgstr ""
 "tache cun \"m\") al so valôr vueit. Stringhis, firmis e percors di ogjet a "
 "varessin di jessi sierâts tra virgulutis."
 
-#: editor/registry-info.vala:334
+#: editor/registry-info.vala:349
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
@@ -1290,7 +1289,7 @@ msgstr ""
 "virgulutis."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:338
+#: editor/registry-info.vala:353
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1298,23 +1297,27 @@ msgstr ""
 "Dopre la peraule clâf \"nothing\" par meti un gjenar di pussibilitât (che al "
 "tache cun \"m\") al so valôr vueit."
 
-#: editor/registry-search.ui:22
+#: editor/registry-search.ui:21
 msgid "No matches"
 msgstr "Nissune corispuindince"
 
-#: editor/registry-search.vala:603
+#: editor/registry-search.vala:598
 msgid "Current folder"
 msgstr "Cartele atuâl"
 
-#: editor/registry-search.vala:607
+#: editor/registry-search.vala:602
 msgid "Folders"
 msgstr "Cartelis"
 
-#: editor/registry-search.vala:609
+#: editor/registry-search.vala:604
 msgid "Keys"
 msgstr "Clâfs"
 
-#: editor/registry-view.ui:32
+#: editor/registry-view.ui:25
+msgid "No keys in this path"
+msgstr "Nissune clâf in chest percors"
+
+#: editor/registry-view.vala:61
 msgid ""
 "Multiple schemas are installed at this path. This could lead to problems if "
 "it hasn’t been done carefully. Only one schema is displayed here. Edit "
@@ -1324,9 +1327,11 @@ msgstr ""
 "problemis se nol è stât fat cun atenzion. Dome un scheme al è mostrât achì. "
 "Modifiche i valôrs a to pericul."
 
-#: editor/registry-view.ui:58
-msgid "No keys in this path"
-msgstr "Nissune clâf in chest percors"
+#~ msgid "Cannot understand: too many colons.\n"
+#~ msgstr "Impussibil capî: masse doi ponts(:).\n"
+
+#~ msgid "Key “%s” has been removed."
+#~ msgstr "La clâf “%s” e je stade gjavade."
 
 #~ msgid "Only one argument is accepted for now.\n"
 #~ msgstr "Pal moment dome un argoment al è acetât.\n"
