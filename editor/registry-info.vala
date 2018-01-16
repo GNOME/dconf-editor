@@ -189,7 +189,7 @@ class RegistryInfo : Grid, BrowsableView
                             model.set_key_value (key, model.get_key_value (key));  // TODO that hurts...
                     }
                 });
-            revealer_reload_1_handler = modifications_handler.reload.connect (() => {
+            revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
                     custom_value_switch.set_active (model.is_key_default (gkey));
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
@@ -205,7 +205,7 @@ class RegistryInfo : Grid, BrowsableView
         }
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
-        revealer_reload_2_handler = modifications_handler.reload.connect (() => {
+        revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect (() => {
                 if (key is DConfKey && model.is_key_ghost ((DConfKey) key))
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);

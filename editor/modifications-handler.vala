@@ -70,7 +70,7 @@ class ModificationsHandler : Object
 
     public SettingsModel model { get; construct; }
 
-    public signal void reload ();
+    public signal void leave_delay_mode ();
     public signal void delayed_changes_changed ();
 
     public Behaviour behaviour { get; set; }
@@ -146,7 +146,7 @@ class ModificationsHandler : Object
         keys_awaiting_hashtable.remove_all ();
 
         delayed_changes_changed ();
-        reload ();
+        leave_delay_mode ();
     }
 
     public void dismiss_delayed_settings ()
@@ -156,7 +156,7 @@ class ModificationsHandler : Object
         keys_awaiting_hashtable.remove_all ();
 
         delayed_changes_changed ();
-        reload ();
+        leave_delay_mode ();
     }
 
     public Variant get_key_custom_value (Key key)
