@@ -22,12 +22,8 @@ class BrowserInfoBar : Revealer
 {
     [GtkChild] Stack content;
 
-    public void add_label (string name, string text_label, string? button_label = null, string button_action_name = "")
+    public void add_label (string name, string text_label, string? button_label = null, string button_action = "")
     {
-        bool has_button = button_label != null;
-        if (has_button && button_action_name == "")
-            assert_not_reached ();
-
         RegistryWarning grid = new RegistryWarning ();
 
         Label label = new Label (text_label);
@@ -35,11 +31,14 @@ class BrowserInfoBar : Revealer
         label.max_width_chars = 40;
         label.wrap = true;
 
-        if (has_button)
+        if (button_label != null)
         {
+            if (button_action == "")
+                assert_not_reached ();
+
             Button button = new Button ();
             button.label = (!) button_label;
-            button.action_name = (!) button_action_name;
+            button.set_detailed_action_name (button_action);
 
             label.set_xalign ((float) 0.0);
             grid.add (label);
