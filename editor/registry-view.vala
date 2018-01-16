@@ -56,11 +56,6 @@ class RegistryView : Grid, BrowsableView
     * * Updating
     \*/
 
-    public GLib.ListStore? get_key_model ()
-    {
-        return key_model;
-    }
-
     public void set_key_model (GLib.ListStore _key_model)
     {
         key_model = _key_model;

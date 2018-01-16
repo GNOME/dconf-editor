@@ -181,13 +181,12 @@ class DConfWindow : ApplicationWindow
         model.finalize_model ();
 
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                bool need_reload = browser_view.check_reload (current_path);
-                if (need_reload)
+                if (browser_view.check_reload (current_path, !internal_changes))    // handle infobars in needed
                 {
                     if (internal_changes)
-                        reload_view (false);
-                    else
-                        browser_view.show_hard_reload_warning ();
+                        reload_view ();
+                    else    // search
+                        reload_search_action.set_enabled (true);
                 }
                 pathbar.set_path (current_path); // update "ghost" status
             });
@@ -333,11 +332,16 @@ class DConfWindow : ApplicationWindow
     * * Action entries
     \*/
 
+    private SimpleAction reload_search_action;
+
     private void install_action_entries ()
     {
         SimpleActionGroup action_group = new SimpleActionGroup ();
         action_group.add_action_entries (action_entries, this);
         insert_action_group ("ui", action_group);
+
+        reload_search_action = (SimpleAction) action_group.lookup_action ("reload-search");
+        reload_search_action.set_enabled (false);
     }
 
     private const GLib.ActionEntry [] action_entries =
@@ -345,7 +349,8 @@ class DConfWindow : ApplicationWindow
         { "open-folder", open_folder, "s" },
         { "open-object", open_object, "s" },
         { "open-parent", open_parent, "s" },
-        { "reload", reload },
+
+        { "reload-search", reload_search },
 
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
@@ -360,8 +365,12 @@ class DConfWindow : ApplicationWindow
     {
         if (bookmarks_button.active)
             bookmarks_button.active = false;
+
         string full_name = ((!) path_variant).get_string ();
-        request_folder_path (full_name);
+        if (full_name == "")    // reload
+            request_folder_path (current_path, browser_view.get_selected_row_name ());
+        else
+            request_folder_path (full_name, "");
     }
 
     private void open_object (SimpleAction action, Variant? path_variant)
@@ -369,8 +378,12 @@ class DConfWindow : ApplicationWindow
     {
         if (bookmarks_button.active)
             bookmarks_button.active = false;
+
         string full_name = ((!) path_variant).get_string ();
-        request_object_path (full_name);
+        if (full_name == "")    // reload
+            request_object_path (current_path);
+        else
+            request_object_path (full_name);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
@@ -380,9 +393,10 @@ class DConfWindow : ApplicationWindow
         request_folder_path (SettingsModel.get_parent_path (full_name), full_name);
     }
 
-    private void reload (/* SimpleAction action, Variant? path_variant */)
+    private void reload_search (/* SimpleAction action, Variant? path_variant */)
     {
-        reload_view (true);
+        reload_search_action.set_enabled (false);
+        browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
     }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)
@@ -409,13 +423,13 @@ class DConfWindow : ApplicationWindow
         invalidate_popovers ();
     }
 
-    private void apply_delayed_settings ()
+    private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.apply_delayed_settings ();
         invalidate_popovers ();
     }
 
-    private void dismiss_delayed_settings ()
+    private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers ();
@@ -482,7 +496,7 @@ class DConfWindow : ApplicationWindow
         browser_view.select_row (selected_or_empty);
     }
 
-    private void reload_view (bool notify_missing)
+    private void reload_view ()
     {
         if (browser_view.current_view_is_browse_view ())
         {
@@ -496,7 +510,7 @@ class DConfWindow : ApplicationWindow
             }
         }
         else if (browser_view.current_view_is_properties_view ())
-            request_object_path (current_path, notify_missing);
+            request_object_path (current_path, false);
         else if (browser_view.current_view_is_search_results_view ())
             browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
     }
@@ -553,7 +567,7 @@ class DConfWindow : ApplicationWindow
     private void invalidate_popovers ()
     {
         invalidate_popovers_without_reload ();
-        reload_view (false);    // TODO better
+        reload_view ();     // TODO better
     }
     private void invalidate_popovers_without_reload ()
     {
@@ -568,15 +582,25 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void search_changed ()
     {
-        if (search_bar.search_mode_enabled)
-            browser_view.show_search_view (search_entry.text, current_path, settings.get_strv ("bookmarks"));
-        else
+        if (!search_bar.search_mode_enabled)
+        {
+            reload_search_action.set_enabled (false);
             browser_view.hide_search_view ();
+            return;
+        }
+        if (reload_search_action.get_enabled ())
+        {
+            reload_search_action.set_enabled (false);
+            browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
+        }
+        // do not place in an "else"
+        browser_view.show_search_view (search_entry.text, current_path, settings.get_strv ("bookmarks"));
     }
 
     [GtkCallback]
     private void search_cancelled ()
     {
+        reload_search_action.set_enabled (false);
         browser_view.hide_search_view ();
     }
 
@@ -818,6 +842,7 @@ class DConfWindow : ApplicationWindow
     /*\
     * * Non-existant path notifications
     \*/
+
     private void show_notification (string notification)
     {
         notification_label.set_text (notification);

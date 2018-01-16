@@ -29,6 +29,7 @@ class BrowserView : Grid
     private Widget? pre_search_view = null;
 
     private SortingOptions sorting_options = new SortingOptions ();
+    private GLib.ListStore? key_model = null;
 
     public bool small_keys_list_rows
     {
@@ -53,20 +54,51 @@ class BrowserView : Grid
 
     construct
     {
-        info_bar.add_label ("soft-reload", _("Sort preferences have changed. Do you want to reload the view?"),
-                                           _("Refresh"), "ui.reload");
-        info_bar.add_label ("hard-reload", _("This content has changed. Do you want to reload the view?"),
-                                           _("Reload"), "ui.reload");
+        install_action_entries ();
+
+        info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"),
+                                                  _("Refresh"), "bro.refresh-folder");
+        info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"),
+                                                  _("Reload"), "ui.open-folder::''");
+        info_bar.add_label ("hard-reload-object", _("This key properties have changed. Do you want to reload the view?"),
+                                                  _("Reload"), "ui.open-object::''");   // TODO also for key removing?
 
         sorting_options.notify.connect (() => {
                 if (!current_view_is_browse_view ())
                     return;
-                GLib.ListStore? key_model = browse_view.get_key_model ();
+
                 if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
                     show_soft_reload_warning ();
                 // TODO reload search results too
             });
     }
+
+    /*\
+    * * Action entries
+    \*/
+
+    private void install_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("bro", action_group);
+    }
+
+    private const GLib.ActionEntry [] action_entries =
+    {
+        { "refresh-folder", refresh_folder }
+    };
+
+    private void refresh_folder (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+        requires (key_model != null)
+    {
+        sorting_options.sort_key_model ((!) key_model);
+    }
+
+    /*\
+    * * Views
+    \*/
 
     public string get_selected_row_name ()
     {
@@ -79,6 +111,7 @@ class BrowserView : Grid
 
     public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor, bool warning_multiple_schemas)
     {
+        this.key_model = key_model;
         sorting_options.sort_key_model (key_model);
         browse_view.set_key_model (key_model);
 
@@ -214,13 +247,13 @@ class BrowserView : Grid
 
     private void show_soft_reload_warning ()
     {
-        if (!info_bar.is_shown ("hard-reload"))
-            info_bar.show_warning ("soft-reload");
+        if (!info_bar.is_shown ("hard-reload-folder") && !info_bar.is_shown ("hard-reload-object"))
+            info_bar.show_warning ("soft-reload-folder");
     }
 
-    public void show_hard_reload_warning ()
+    private void show_hard_reload_warning ()
     {
-        info_bar.show_warning ("hard-reload");
+        info_bar.show_warning (current_view_is_browse_view () ? "hard-reload-folder" : "hard-reload-object");
     }
 
     public void reload_search (string current_path, string [] bookmarks)
@@ -229,22 +262,29 @@ class BrowserView : Grid
         search_results_view.reload_search (current_path, bookmarks, sorting_options);
     }
 
-    public bool check_reload (string path)
+    public bool check_reload (string path, bool show_infobar)
     {
         SettingsModel model = modifications_handler.model;
-        if (current_view_is_properties_view ())
-        {
-            Key? fresh_key = (Key?) model.get_object (path);
-            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
-                return false;
-        }
-        else if (current_view_is_browse_view ())
+
+        if (current_view_is_browse_view ())
         {
             Directory? fresh_dir = (Directory?) model.get_directory (path);
             GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
             if (fresh_key_model != null && !browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
                 return false;
-        } // search_results_view always reloads
+        }
+        else if (current_view_is_properties_view ())
+        {
+            Key? fresh_key = (Key?) model.get_object (path);
+            if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
+                return false;
+        }
+
+        if (show_infobar && !current_view_is_search_results_view ())
+        {
+            show_hard_reload_warning ();
+            return false;
+        }
         return true;
     }
 
