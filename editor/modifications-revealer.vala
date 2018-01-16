@@ -27,9 +27,7 @@ class ModificationsRevealer : Revealer
         set
         {
             _modifications_handler = value;
-            _modifications_handler.delayed_changes_changed.connect (() => {
-                    update ();
-                });
+            _modifications_handler.delayed_changes_changed.connect (update);
         }
     }
 
@@ -58,33 +56,6 @@ class ModificationsRevealer : Revealer
             apply_button.icon = null;
             context.add_class ("text-button");
         }
-    }
-
-    /*\
-    * * Action entries
-    \*/
-
-    construct
-    {
-        SimpleActionGroup action_group = new SimpleActionGroup ();
-        action_group.add_action_entries (action_entries, this);
-        insert_action_group ("mod", action_group);
-    }
-
-    private const GLib.ActionEntry [] action_entries =
-    {
-        { "apply-delayed-settings", apply_delayed_settings },
-        { "dismiss-delayed-settings", dismiss_delayed_settings }
-    };
-
-    private void apply_delayed_settings ()
-    {
-        modifications_handler.apply_delayed_settings ();
-    }
-
-    private void dismiss_delayed_settings ()
-    {
-        modifications_handler.dismiss_delayed_settings ();
     }
 
     /*\

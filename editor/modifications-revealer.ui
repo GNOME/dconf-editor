@@ -17,7 +17,7 @@
         <child>
           <object class="GtkButton" id="dismiss-button">
             <property name="visible">True</property>
-            <property name="action-name">mod.dismiss-delayed-settings</property>
+            <property name="action-name">ui.dismiss-delayed-settings</property>
             <style>
               <class name="flat"/>
               <class name="image-button"/>
@@ -49,7 +49,7 @@
             <property name="text" translatable="yes">Apply</property>
             <property name="centered">True</property>
             <property name="iconic">True</property>
-            <property name="action-name">mod.apply-delayed-settings</property>
+            <property name="action-name">ui.apply-delayed-settings</property>
             <style>
               <class name="suggested-action"/>
             </style>

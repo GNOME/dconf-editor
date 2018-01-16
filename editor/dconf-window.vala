@@ -49,7 +49,6 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Label notification_label;
 
     private ulong behaviour_changed_handler = 0;
-    private ulong modifications_handler_leave_delay_mode_handler = 0;
 
     public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
@@ -58,7 +57,6 @@ class DConfWindow : ApplicationWindow
         modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
-        modifications_handler_leave_delay_mode_handler = modifications_handler.leave_delay_mode.connect (invalidate_popovers);
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -317,8 +315,6 @@ class DConfWindow : ApplicationWindow
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
-        modifications_handler.disconnect (modifications_handler_leave_delay_mode_handler);
-
         settings.disconnect (behaviour_changed_handler);
         settings.disconnect (small_keys_list_rows_handler);
         settings.disconnect (small_bookmarks_rows_handler);
@@ -353,7 +349,10 @@ class DConfWindow : ApplicationWindow
 
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
-        { "enter-delay-mode", enter_delay_mode }
+
+        { "enter-delay-mode", enter_delay_mode },
+        { "apply-delayed-settings", apply_delayed_settings },
+        { "dismiss-delayed-settings", dismiss_delayed_settings }
     };
 
     private void open_folder (SimpleAction action, Variant? path_variant)
@@ -407,6 +406,18 @@ class DConfWindow : ApplicationWindow
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.enter_delay_mode ();
+        invalidate_popovers ();
+    }
+
+    private void apply_delayed_settings ()
+    {
+        modifications_handler.apply_delayed_settings ();
+        invalidate_popovers ();
+    }
+
+    private void dismiss_delayed_settings ()
+    {
+        modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers ();
     }
 
