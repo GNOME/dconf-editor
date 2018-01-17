@@ -24,3 +24,4 @@ editor/registry-search.ui
 editor/registry-search.vala
 editor/registry-view.ui
 editor/registry-view.vala
+editor/setting-object.vala

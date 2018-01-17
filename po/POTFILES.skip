@@ -11,3 +11,4 @@ editor/pathbar.c
 editor/registry-info.c
 editor/registry-search.c
 editor/registry-view.c
+editor/setting-object.c

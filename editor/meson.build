@@ -80,7 +80,8 @@ sources = files(
   'registry-info.vala',
   'registry-placeholder.vala',
   'registry-search.vala',
-  'registry-view.vala'
+  'registry-view.vala',
+  'setting-object.vala'
 )
 
 resource_data = files(

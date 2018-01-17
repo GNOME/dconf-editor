@@ -17,6 +17,15 @@
 
 using Gtk;
 
+[Flags]
+enum RelocatableSchemasEnabledMappings
+{
+    USER,
+    BUILT_IN,
+    INTERNAL,
+    STARTUP
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
