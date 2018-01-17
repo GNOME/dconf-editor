@@ -89,11 +89,11 @@ class BrowserView : Grid
         { "refresh-folder", refresh_folder }
     };
 
-    private void refresh_folder (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
+    private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
         requires (key_model != null)
     {
         sorting_options.sort_key_model ((!) key_model);
+        hide_reload_warning ();
     }
 
     /*\
