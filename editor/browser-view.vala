@@ -59,9 +59,9 @@ class BrowserView : Grid
         info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"),
                                                   _("Refresh"), "bro.refresh-folder");
         info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"),
-                                                  _("Reload"), "ui.open-folder::''");
+                                                  _("Reload"), "ui.open-folder('')");
         info_bar.add_label ("hard-reload-object", _("This key properties have changed. Do you want to reload the view?"),
-                                                  _("Reload"), "ui.open-object::''");   // TODO also for key removing?
+                                                  _("Reload"), "ui.open-object('')");   // TODO also for key removing?
 
         sorting_options.notify.connect (() => {
                 if (!current_view_is_browse_view ())
