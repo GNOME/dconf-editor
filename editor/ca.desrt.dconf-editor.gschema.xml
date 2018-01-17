@@ -178,6 +178,11 @@
       <summary>Mouse button to activate the “Forward” command in browser window</summary>
       <description>For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Forward” command in a browser window. Possible values range between 6 and 14.</description>
     </key>
+    <key type="b" name="refresh-settings-schema-source">
+      <default>true</default>
+      <summary>A flag to check for added or removed schemas</summary>
+      <description>Dconf Editor can monitor if schemas are added or removed from the multiple possible locations. That’s done by checking every three seconds if the schemas list has changed. As this way to do is suboptimal, this function can be disabled by setting this flag to “false”. Note that this option will be removed when a better way to do things is found.</description>
+    </key>
     <key name="relocatable-schemas-enabled-mappings" flags="ca.desrt.dconf-editor.RelocatableSchemasEnabledMappings">
       <default>['User', 'Built-in', 'Internal', 'Startup']</default>
       <summary>Enabled relocatable schema mapping facilities</summary>

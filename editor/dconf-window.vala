@@ -188,6 +188,8 @@ class DConfWindow : ApplicationWindow
                                                 RelocatableSchemasEnabledMappings.INTERNAL in enabled_mappings_flags,
                                                 RelocatableSchemasEnabledMappings.STARTUP  in enabled_mappings_flags,
                                                 settings.get_value ("relocatable-schemas-user-paths"));
+
+        settings.bind ("refresh-settings-schema-source", model, "refresh-source", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         model.finalize_model ();
 
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {

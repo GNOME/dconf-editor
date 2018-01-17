@@ -18,6 +18,7 @@
 public class SettingsModel : Object
 {
     private SourceManager source_manager = new SourceManager ();
+    public bool refresh_source { get; set; default = true; }
 
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
@@ -47,7 +48,8 @@ public class SettingsModel : Object
         source_manager.paths_changed.connect ((modified_path_specs) => { paths_changed (modified_path_specs, false); });
         source_manager.refresh_schema_source ();
         Timeout.add (3000, () => {
-                source_manager.refresh_schema_source ();
+                if (refresh_source) // TODO better: stops the I/O, but not the wakeup
+                    source_manager.refresh_schema_source ();
                 return true;
             });
 
