@@ -484,22 +484,12 @@ public class SettingsModel : Object
         return "/" + string.joinv ("/", (string?[]?) segments) + "/";
     }
 
-    public static bool match_prefix (string[] spec_segments, string[] path_segments)
-    {
-        if (path_segments.length < spec_segments.length)
-            return false;
-        for (uint i = 0; i < path_segments.length; i++)
-            if (spec_segments [i] != "" && spec_segments [i] != path_segments [i])
-                return false;
-        return true;
-    }
-
     public static bool is_key_path (string path)
     {
         return !path.has_suffix ("/");
     }
 
-    public static string get_name (string path)
+    private static string get_name (string path)
     {
         if (path == "/")
             return "/";
@@ -523,7 +513,7 @@ public class SettingsModel : Object
         return path.slice (0, path.last_index_of_char ('/') + 1);
     }
 
-    public static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
+    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
     {
         if (key_model == null)
             return null;
@@ -540,7 +530,7 @@ public class SettingsModel : Object
         return null;
     }
 
-    public static Directory? get_folder_from_path_and_name (GLib.ListStore? key_model, string folder_name)
+    private static Directory? get_folder_from_path_and_name (GLib.ListStore? key_model, string folder_name)
     {
         if (key_model == null)
             return null;
@@ -722,7 +712,8 @@ class SchemaPathTree
 
     public bool lookup (string path, out GenericSet<SettingsSchema> path_schemas, out GenericSet<string> subpaths)
     {
-        path_schemas = new GenericSet<SettingsSchema> (schema_hash, schema_equal);
+        path_schemas = new GenericSet<SettingsSchema> ((schema) => { return str_hash (schema.get_id ()); },
+                                                       (schema1, schema2) => { return str_equal (schema1.get_id (), schema2.get_id ()); });
         subpaths = new GenericSet<string> (str_hash, str_equal);
         return lookup_segments (SettingsModel.to_segments (path), 0, ref path_schemas, ref subpaths);
     }
@@ -855,14 +846,4 @@ class SchemaPathTree
     {
         return schemas.size () == 0 && wildcard_subtree == null && subtrees.size () == 0;
     }
-}
-
-public uint schema_hash (GLib.SettingsSchema schema)
-{
-    return str_hash (schema.get_id ());
-}
-
-public bool schema_equal (GLib.SettingsSchema schema1, GLib.SettingsSchema schema2)
-{
-    return str_equal (schema1.get_id (), schema2.get_id ());
 }
