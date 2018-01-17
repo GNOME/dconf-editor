@@ -462,13 +462,13 @@ class DConfWindow : ApplicationWindow
             fallback_path = SettingsModel.get_parent_path (fallback_path);
             found_object = model.get_directory (fallback_path);
         }
+        if (not_found)
+            cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
+
         if (selected_or_empty == "")
             set_directory ((!) found_object, pathbar.get_selected_child (fallback_path));
         else
             set_directory ((!) found_object, selected_or_empty);
-
-        if (not_found)
-            cannot_find_folder (full_name);
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
