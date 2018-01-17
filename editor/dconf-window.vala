@@ -87,6 +87,7 @@ class DConfWindow : ApplicationWindow
         settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         /* init current_path */
+        SchemasUtility schemas_utility = new SchemasUtility ();
         bool strict = false;
         string? first_path = path;
         if (schema == null)
@@ -97,7 +98,7 @@ class DConfWindow : ApplicationWindow
             if (first_path == null && settings.get_boolean ("restore-view"))
                 first_path = settings.get_string ("saved-view");
         }
-        else if (model.is_relocatable_schema ((!) schema))
+        else if (schemas_utility.is_relocatable_schema ((!) schema))
         {
             if (first_path == null)
             {
@@ -120,9 +121,9 @@ class DConfWindow : ApplicationWindow
                     first_path = (!) first_path + (!) key_name;
             }
         }
-        else if (model.is_non_relocatable_schema ((!) schema))
+        else if (schemas_utility.is_non_relocatable_schema ((!) schema))
         {
-            string? schema_path = model.get_schema_path ((!) schema);
+            string? schema_path = schemas_utility.get_schema_path ((!) schema);
             if (schema_path == null)    // something wrong is happening
                 assert_not_reached (); // TODO warning?
             else if (first_path != null && first_path != schema_path)

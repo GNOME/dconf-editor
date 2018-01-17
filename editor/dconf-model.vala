@@ -17,10 +17,7 @@
 
 public class SettingsModel : Object
 {
-    private SettingsSchemaSource? settings_schema_source = null;
-    private HashTable<string, GenericSet<string>> relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
-    private HashTable<string, GenericSet<string>> startup_relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
-    private SchemaPathTree cached_schemas = new SchemaPathTree ("/"); // prefix tree for quick lookup and diff'ing on changes
+    private SourceManager source_manager = new SourceManager ();
 
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
@@ -33,40 +30,24 @@ public class SettingsModel : Object
                                                   bool startup_schemas,
                                                   Variant user_paths_variant)
     {
-        relocatable_schema_paths.remove_all ();
-        if (user_schemas)
-        {
-            VariantIter entries_iter;
-            user_paths_variant.get ("a{ss}", out entries_iter);
-            string schema_id;
-            string path_spec;
-            while (entries_iter.next ("{ss}", out schema_id, out path_spec))
-                add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec);
-        }
-        if (built_in_schemas)
-        {
-            string [,] known_mappings = ConfigurationEditor.known_mappings;
-            for (int i = 0; i < known_mappings.length [0]; i++)
-                add_relocatable_schema_info (relocatable_schema_paths, known_mappings [i,0], known_mappings [i,1]);
-        }
-        if (startup_schemas)
-        {
-            startup_relocatable_schema_paths.foreach ((schema_id, paths) => {
-                    paths.foreach ((path_spec) => add_relocatable_schema_info (relocatable_schema_paths, schema_id, path_spec));
-                });
-        }
+        source_manager.refresh_relocatable_schema_paths (user_schemas,
+                                                         built_in_schemas,
+                                                         internal_schemas,
+                                                         startup_schemas,
+                                                         user_paths_variant);
     }
 
     public void add_mapping (string schema, string path)
     {
-        add_relocatable_schema_info (startup_relocatable_schema_paths, schema, path);
+        source_manager.add_mapping (schema, path);
     }
 
     public void finalize_model ()
     {
-        refresh_schema_source ();
+        source_manager.paths_changed.connect ((modified_path_specs) => { paths_changed (modified_path_specs, false); });
+        source_manager.refresh_schema_source ();
         Timeout.add (3000, () => {
-                refresh_schema_source ();
+                source_manager.refresh_schema_source ();
                 return true;
             });
 
@@ -92,7 +73,7 @@ public class SettingsModel : Object
                 string? path_spec;
                 while ((path_spec = iter.next_value ()) != null)
                 {
-                    if (cached_schemas.get_schema_count ((!) path_spec) > 0)
+                    if (source_manager.cached_schemas.get_schema_count ((!) path_spec) > 0)
                         iter.remove ();
                 }
                 paths_changed (modified_path_specs, internal_changes);
@@ -100,106 +81,16 @@ public class SettingsModel : Object
         client.watch_sync ("/");
     }
 
-    private void refresh_schema_source ()
-    {
-        SettingsSchemaSource? settings_schema_source = create_schema_source ();
-        if (settings_schema_source == null)
-            return;
-
-        GenericSet<string> modified_path_specs = new GenericSet<string> (str_hash, str_equal);
-
-        string [] non_relocatable_schemas;
-        string [] relocatable_schemas;
-        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
-
-        foreach (string schema_id in non_relocatable_schemas)
-        {
-            SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
-            if (settings_schema == null)
-                continue;       // TODO better
-
-            cached_schemas.add_schema ((!) settings_schema, modified_path_specs);
-        }
-
-        foreach (string schema_id in relocatable_schemas)
-        {
-            GenericSet<string>? path_specs = relocatable_schema_paths.lookup (schema_id);
-            if (path_specs == null)
-                continue;
-
-            SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
-            if (settings_schema == null || ((string?) ((!) settings_schema).get_path ()) != null)
-                continue;       // TODO better
-
-            cached_schemas.add_schema_with_path_specs ((!) settings_schema, (!) path_specs, modified_path_specs);
-        }
-
-        cached_schemas.remove_unmarked (modified_path_specs);
-
-        this.settings_schema_source = settings_schema_source;
-
-        if (modified_path_specs.length > 0)
-            paths_changed (modified_path_specs, false);
-    }
-
-    private void add_relocatable_schema_info (HashTable<string, GenericSet<string>> map, string schema_id, ...)
-    {
-        GenericSet<string>? schema_info = map.lookup (schema_id);
-        if (schema_info == null)
-            schema_info = new GenericSet<string> (str_hash, str_equal);
-
-        var args = va_list ();
-        var next_arg = null;
-        while ((next_arg = args.arg ()) != null)
-        {
-            string path_spec = (string) next_arg;
-            if (path_spec == "")
-                continue;
-            if (!path_spec.has_prefix ("/"))
-                path_spec = "/" + path_spec;
-            if (!path_spec.has_suffix ("/"))
-                path_spec += "/"; // TODO proper validation
-            ((!) schema_info).add (path_spec);
-        }
-        if (((!) schema_info).length > 0)
-            map.insert (schema_id, (!) schema_info);
-    }
-
-
-
-    public static ulong compute_schema_fingerprint (SettingsSchema? schema)
-    {
-        return 0; // TODO do not take path into consideration, only keys
-    }
-
-    // We need to create new schema sources in order to detect schema changes, since schema sources cache the info and the default schema source is also a cached instance
-    // This code is adapted from GLib (https://git.gnome.org/browse/glib/tree/gio/gsettingsschema.c#n332)
-    private SettingsSchemaSource? create_schema_source ()
-    {
-        SettingsSchemaSource? source = null;
-        string[] system_data_dirs = GLib.Environment.get_system_data_dirs ();
-        for (int i = system_data_dirs.length - 1; i >= 0; i--)
-            source = try_prepend_dir (source, Path.build_filename (system_data_dirs [i], "glib-2.0", "schemas"));
-        string user_data_dir = GLib.Environment.get_user_data_dir ();
-        source = try_prepend_dir (source, Path.build_filename (user_data_dir, "glib-2.0", "schemas"));
-        string? var_schema_dir = GLib.Environment.get_variable ("GSETTINGS_SCHEMA_DIR");
-        if (var_schema_dir != null)
-            source = try_prepend_dir (source, (!) var_schema_dir);
-        return source;
-    }
-
-    private SettingsSchemaSource? try_prepend_dir (SettingsSchemaSource? source, string schemas_dir)
-    {
-        try {
-            return new SettingsSchemaSource.from_directory (schemas_dir, source, true);
-        } catch (GLib.Error e) {
-        }
-        return source;
-    }
-
     /*\
     * * Content lookup
     \*/
+
+    private enum LookupResultType
+    {
+        KEY,
+        FOLDER,
+        NOT_FOUND
+    }
 
     private LookupResultType lookup (string path, out GLib.ListStore? key_model, out bool multiple_schemas)
     {
@@ -245,12 +136,12 @@ public class SettingsModel : Object
     private void lookup_gsettings (string path, GLib.ListStore key_model, out bool multiple_schemas)
     {
         multiple_schemas = false;
-        if (settings_schema_source == null)
+        if (source_manager.source_is_null ())
             return;
 
         GenericSet<SettingsSchema> schemas;
         GenericSet<string> folders;
-        cached_schemas.lookup (path, out schemas, out folders);
+        source_manager.cached_schemas.lookup (path, out schemas, out folders);
         if (schemas.length > 0)
         {
             bool content_found = false;
@@ -281,49 +172,6 @@ public class SettingsModel : Object
     }
 
     /*\
-    * * Schemas manipulation
-    \*/
-
-    public bool is_relocatable_schema (string id)
-    {
-        string [] non_relocatable_schemas;
-        string [] relocatable_schemas;
-
-        refresh_schema_source ();   // first call
-        if (settings_schema_source == null)
-            return false;   // TODO better
-
-        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
-
-        return (id in relocatable_schemas);
-    }
-
-    public bool is_non_relocatable_schema (string id)
-    {
-        string [] non_relocatable_schemas;
-        string [] relocatable_schemas;
-
-        if (settings_schema_source == null)
-            return false;   // TODO better
-
-        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
-
-        return (id in non_relocatable_schemas);
-    }
-
-    public string? get_schema_path (string id)
-    {
-        if (settings_schema_source == null)
-            return null;   // TODO better
-
-        SettingsSchema? schema = ((!) settings_schema_source).lookup (id, true);
-        if (schema == null)
-            return null;
-
-        return ((!) schema).get_path ();
-    }
-
-    /*\
     * * Path requests
     \*/
 
@@ -340,7 +188,7 @@ public class SettingsModel : Object
         Directory? dir = null;
         uint schemas_count = 0;
         uint subpaths_count = 0;
-        cached_schemas.get_content_count (path, out schemas_count, out subpaths_count);
+        source_manager.cached_schemas.get_content_count (path, out schemas_count, out subpaths_count);
         if (schemas_count + subpaths_count > 0 || client.list (path).length > 0)
         {
             dir = new Directory (path, get_name (path));
@@ -649,201 +497,13 @@ public class SettingsModel : Object
 
         delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
 
-        try {
+        try
+        {
             client.change_sync (dconf_changeset, out last_change_tag);
-        } catch (Error error) {
+        }
+        catch (Error error)
+        {
             warning (error.message);
         }
-    }
-}
-
-public enum LookupResultType
-{
-    KEY,
-    FOLDER,
-    NOT_FOUND
-}
-
-class CachedSchemaInfo
-{
-    public SettingsSchema schema;
-    public ulong fingerprint;
-    public bool marked;
-
-    public CachedSchemaInfo (SettingsSchema schema, ulong? fingerprint=null)
-    {
-        this.schema = schema;
-        if (fingerprint != null)
-            this.fingerprint = (!) fingerprint;
-        else
-            this.fingerprint = SettingsModel.compute_schema_fingerprint (schema);
-        marked = true;
-    }
-}
-
-class SchemaPathTree
-{
-    private string path_segment;
-    private HashTable<string, CachedSchemaInfo> schemas = new HashTable<string, CachedSchemaInfo> (str_hash, str_equal);
-    private HashTable<string, SchemaPathTree> subtrees = new HashTable<string, SchemaPathTree> (str_hash, str_equal);
-    private SchemaPathTree? wildcard_subtree = null;
-
-    public SchemaPathTree (string path_segment)
-    {
-        this.path_segment = path_segment;
-    }
-
-    public uint get_schema_count (string path)
-    {
-        uint schemas_count = 0;
-        uint subpaths_count = 0;
-        get_content_count (path, out schemas_count, out subpaths_count);
-        return schemas_count;
-    }
-
-    public void get_content_count (string path, out uint schemas_count, out uint subpaths_count)
-    {
-        GenericSet<SettingsSchema> path_schemas;
-        GenericSet<string> subpaths;
-        lookup (path, out path_schemas, out subpaths);
-        schemas_count = path_schemas.length;
-        subpaths_count = subpaths.length;
-    }
-
-    public bool lookup (string path, out GenericSet<SettingsSchema> path_schemas, out GenericSet<string> subpaths)
-    {
-        path_schemas = new GenericSet<SettingsSchema> ((schema) => { return str_hash (schema.get_id ()); },
-                                                       (schema1, schema2) => { return str_equal (schema1.get_id (), schema2.get_id ()); });
-        subpaths = new GenericSet<string> (str_hash, str_equal);
-        return lookup_segments (SettingsModel.to_segments (path), 0, ref path_schemas, ref subpaths);
-    }
-
-    private bool lookup_segments (string[] path_segments, int matched_prefix_length, ref GenericSet<SettingsSchema> path_schemas, ref GenericSet<string> subpaths)
-    {
-        if (matched_prefix_length == path_segments.length)
-        {
-            foreach (CachedSchemaInfo schema_info in schemas.get_values ())
-                path_schemas.add (schema_info.schema);
-            foreach (SchemaPathTree subtree in subtrees.get_values ())
-                if (subtree.has_non_wildcard_content ())
-                    subpaths.add (subtree.path_segment);
-            return true;
-        }
-        bool found = false;
-        if (wildcard_subtree != null)
-            if (((!) wildcard_subtree).lookup_segments (path_segments, matched_prefix_length + 1, ref path_schemas, ref subpaths))
-                found = true;
-        SchemaPathTree? existing_subtree = subtrees.lookup (path_segments [matched_prefix_length]);
-        if (existing_subtree != null)
-            if (((!) existing_subtree).lookup_segments (path_segments, matched_prefix_length + 1, ref path_schemas, ref subpaths))
-                found = true;
-        return found;
-    }
-
-    public void add_schema (SettingsSchema schema, GenericSet<string> modified_path_specs)
-    {
-        string? schema_path = schema.get_path ();
-        if (schema_path == null)
-            return;
-        add_schema_to_path_spec (new CachedSchemaInfo (schema), SettingsModel.to_segments ((!) schema_path), 0, modified_path_specs);
-    }
-
-    public void add_schema_with_path_specs (SettingsSchema schema, GenericSet<string> path_specs, GenericSet<string> modified_path_specs)
-    {
-        ulong fingerprint = SettingsModel.compute_schema_fingerprint (schema);
-        path_specs.foreach ((path_spec) => {
-                add_schema_to_path_spec (new CachedSchemaInfo (schema, fingerprint), SettingsModel.to_segments (path_spec), 0, modified_path_specs);
-            });
-    }
-
-    private bool add_schema_to_path_spec (CachedSchemaInfo schema_info, string[] path_spec, int matched_prefix_length, GenericSet<string> modified_path_specs)
-    {
-        if (matched_prefix_length == path_spec.length)
-        {
-            CachedSchemaInfo? existing_schema_info = schemas.lookup (schema_info.schema.get_id ());
-            if (existing_schema_info != null && ((!) existing_schema_info).fingerprint == schema_info.fingerprint)
-            {
-                ((!) existing_schema_info).schema = schema_info.schema; // drop old schemas to avoid keeping more than one schema source in memory
-                ((!) existing_schema_info).marked = true;
-                return false;
-            }
-            schemas.insert (schema_info.schema.get_id (), schema_info);
-            modified_path_specs.add (SettingsModel.to_path (path_spec));
-            return true;
-        }
-        string segment = path_spec [matched_prefix_length];
-        if (segment == "")
-        {
-            if (wildcard_subtree == null)
-                wildcard_subtree = new SchemaPathTree (""); // doesn't add an immediate subtree, so doesn't count as modification for this node
-            return ((!) wildcard_subtree).add_schema_to_path_spec (schema_info, path_spec, matched_prefix_length + 1, modified_path_specs);
-        }
-        else
-        {
-            SchemaPathTree? existing_subtree = subtrees.lookup (segment);
-            if (existing_subtree == null)
-            {
-                SchemaPathTree new_subtree = new SchemaPathTree (segment);
-                subtrees.insert (segment, new_subtree);
-                existing_subtree = new_subtree;
-                modified_path_specs.add (SettingsModel.to_path (path_spec [0:matched_prefix_length]));
-            }
-            return ((!) existing_subtree).add_schema_to_path_spec (schema_info, path_spec, matched_prefix_length + 1, modified_path_specs);
-        }
-    }
-
-    public void remove_unmarked (GenericSet<string> modified_path_specs)
-    {
-        remove_unmarked_from_path ("/", modified_path_specs);
-    }
-
-    private void remove_unmarked_from_path (string path_spec, GenericSet<string> modified_path_specs)
-    {
-        bool modified = false;
-        schemas.foreach_remove ((schema_id, cached_schema_info) => {
-                if (!cached_schema_info.marked)
-                {
-                    modified = true;
-                    return true;
-                }
-                cached_schema_info.marked = false;
-                return false;
-            });
-
-        if (wildcard_subtree != null)
-        {
-            ((!) wildcard_subtree).remove_unmarked_from_path (path_spec + "/", modified_path_specs);
-            if (((!) wildcard_subtree).is_empty ())
-            {
-                wildcard_subtree = null; // doesn't remove an immediate subtree, so doesn't count as modification for this node
-            }
-        }
-
-        string [] empty_subtrees = {};
-        foreach (SchemaPathTree subtree in subtrees.get_values ())
-        {
-            subtree.remove_unmarked_from_path (path_spec + subtree.path_segment + "/", modified_path_specs);
-            if (subtree.is_empty ())
-                empty_subtrees += subtree.path_segment;
-        }
-        if (empty_subtrees.length > 0)
-        {
-            foreach (string empty_subtree_segment in empty_subtrees)
-                subtrees.remove (empty_subtree_segment);
-            modified = true;
-        }
-
-        if (modified)
-            modified_path_specs.add (path_spec);
-    }
-
-    private bool has_non_wildcard_content ()
-    {
-        return schemas.size() > 0 || subtrees.size () > 0;
-    }
-
-    private bool is_empty ()
-    {
-        return schemas.size () == 0 && wildcard_subtree == null && subtrees.size () == 0;
     }
 }
