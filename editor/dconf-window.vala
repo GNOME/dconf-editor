@@ -459,7 +459,7 @@ class DConfWindow : ApplicationWindow
     * * Directories tree
     \*/
 
-    private void request_folder_path (string full_name, string selected_or_empty = "")
+    private void request_folder_path (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         Directory? found_object = model.get_directory (full_name);
         bool not_found = found_object == null;
@@ -470,7 +470,7 @@ class DConfWindow : ApplicationWindow
             fallback_path = SettingsModel.get_parent_path (fallback_path);
             found_object = model.get_directory (fallback_path);
         }
-        if (not_found)
+        if (not_found && notify_missing)
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
         GLib.ListStore? key_model = model.get_children (((!) found_object).full_name);
@@ -493,22 +493,22 @@ class DConfWindow : ApplicationWindow
     private void request_object_path (string full_name, bool notify_missing = true)
     {
         SettingObject? found_object = model.get_key (full_name);
-        bool not_found = found_object == null;
-        if (not_found)
-            request_folder_path (SettingsModel.get_parent_path (full_name), full_name);
+        if (found_object == null)
+        {
+            if (notify_missing)
+            {
+                if (SettingsModel.is_key_path (full_name))
+                    cannot_find_key (full_name);
+                else
+                    cannot_find_folder (full_name);
+            }
+            request_folder_path (SettingsModel.get_parent_path (full_name), full_name, false);
+        }
         else
         {
             Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
             browser_view.prepare_properties_view ((Key) found_object, current_path == SettingsModel.get_parent_path (full_name), parent_directory.warning_multiple_schemas);
             update_current_path (strdup (full_name));
-        }
-
-        if (not_found && notify_missing)
-        {
-            if (SettingsModel.is_key_path (full_name))
-                cannot_find_key (full_name);
-            else
-                cannot_find_folder (full_name);
         }
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
