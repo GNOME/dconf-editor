@@ -518,7 +518,7 @@ class RegistrySearch : Grid, BrowsableView
 
     private void start_global_search (SettingsModel model, string current_path, string term)
     {
-        search_nodes.push_head ((!) model.get_directory ("/"));
+        search_nodes.push_head (model.get_root_directory ());
         resume_global_search (current_path, term);
     }
 

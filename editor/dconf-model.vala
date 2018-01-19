@@ -87,8 +87,22 @@ public class SettingsModel : Object
     * * Objects requests
     \*/
 
-    public Directory? get_directory (string path)
+    public Directory get_root_directory ()
     {
+        Directory root = new Directory ("/", "/");
+        uint schemas_count = 0;
+        uint subpaths_count = 0;
+        source_manager.cached_schemas.get_content_count ("/", out schemas_count, out subpaths_count);
+        if (schemas_count > 1)
+            root.warning_multiple_schemas = true;
+        return root;
+    }
+
+    private Directory? get_directory (string path)
+    {
+        if (path == "/")
+            return get_root_directory ();
+
         Directory? dir = null;
         uint schemas_count = 0;
         uint subpaths_count = 0;
@@ -335,6 +349,38 @@ public class SettingsModel : Object
         if (path.length <= 1)
             return "/";
         return path.slice (0, path.last_index_of_char ('/') + 1);
+    }
+
+    /*\
+    * * Directory methods
+    \*/
+
+    public bool get_warning_multiple_schemas (string path)
+    {
+        Directory? dir = get_directory (path);
+        if (dir == null)
+            assert_not_reached ();
+        return ((!) dir).warning_multiple_schemas;
+    }
+
+    public bool directory_is_ghost (string path)
+    {
+        if (path == "/")
+            return false;
+        return get_directory (path) == null;
+    }
+
+    public string get_fallback_path (string path, out bool warning_multiple_schemas)
+    {
+        Directory? dir = get_directory (path);
+        string fallback_path = path;
+        while (dir == null)
+        {
+            fallback_path = get_parent_path (fallback_path);
+            dir = get_directory (fallback_path);
+        }
+        warning_multiple_schemas = ((!) dir).warning_multiple_schemas;
+        return fallback_path;
     }
 
     /*\

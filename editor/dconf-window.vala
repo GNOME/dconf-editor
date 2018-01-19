@@ -410,7 +410,7 @@ class DConfWindow : ApplicationWindow
 
     private void reload_object (/* SimpleAction action, Variant? path_variant */)
     {
-        request_object_path (current_path);
+        request_object_path (current_path, false);
     }
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
@@ -461,25 +461,17 @@ class DConfWindow : ApplicationWindow
 
     private void request_folder_path (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
-        Directory? found_object = model.get_directory (full_name);
-        bool not_found = found_object == null;
+        bool warning_multiple_schemas;
+        string fallback_path = model.get_fallback_path (full_name, out warning_multiple_schemas);
 
-        string fallback_path = full_name;
-        while (found_object == null)
-        {
-            fallback_path = SettingsModel.get_parent_path (fallback_path);
-            found_object = model.get_directory (fallback_path);
-        }
-        if (not_found && notify_missing)
+        if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        GLib.ListStore? key_model = model.get_children (((!) found_object).full_name);
+        GLib.ListStore? key_model = model.get_children (fallback_path);
         if (key_model != null)
         {
-            browser_view.prepare_browse_view ((!) key_model,
-                                              current_path.has_prefix (((!) found_object).full_name),
-                                              ((!) found_object).warning_multiple_schemas);
-            update_current_path (((!) found_object).full_name);
+            browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (fallback_path), warning_multiple_schemas);
+            update_current_path (fallback_path);
 
             if (selected_or_empty == "")
                 browser_view.select_row (pathbar.get_selected_child (fallback_path));
@@ -506,8 +498,9 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            Directory parent_directory = (!) model.get_directory (SettingsModel.get_parent_path (full_name));
-            browser_view.prepare_properties_view ((Key) found_object, current_path == SettingsModel.get_parent_path (full_name), parent_directory.warning_multiple_schemas);
+            browser_view.prepare_properties_view ((Key) found_object,
+                                                  current_path == SettingsModel.get_parent_path (full_name),
+                                                  model.get_warning_multiple_schemas (SettingsModel.get_parent_path (full_name)));
             update_current_path (strdup (full_name));
         }
 
@@ -864,7 +857,7 @@ class DConfWindow : ApplicationWindow
     }
     private void cannot_find_folder (string full_name)
     {
-        show_notification (_("Cannot find folder “%s”.").printf (full_name));
+        show_notification (_("Folder “%s” doesn’t exist anymore.").printf (full_name));
     }
 
     [GtkCallback]
