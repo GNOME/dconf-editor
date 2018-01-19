@@ -84,54 +84,6 @@ public class SettingsModel : Object
     }
 
     /*\
-    * * Content lookup
-    \*/
-
-    private enum LookupResultType
-    {
-        KEY,
-        FOLDER,
-        NOT_FOUND
-    }
-
-    private LookupResultType lookup (string path, out GLib.ListStore? key_model, out bool multiple_schemas)
-    {
-        key_model = null;
-        if (is_key_path (path))
-        {
-            string name = get_name (path);
-            string parent_path = get_parent_path (path);
-            GLib.ListStore? parent_key_model = null;
-            switch (lookup (parent_path, out parent_key_model, out multiple_schemas))
-            {
-            case LookupResultType.FOLDER:
-                Key? key = get_key_from_path_and_name ((!) parent_key_model, name);
-                if (key != null)
-                {
-                    key_model = new ListStore (typeof (SettingObject));
-                    ((!) key_model).append ((!) key);
-                    return LookupResultType.KEY;
-                }
-                return LookupResultType.NOT_FOUND;
-            default:
-                return LookupResultType.NOT_FOUND;
-            }
-        }
-        else
-        {
-            GLib.ListStore _key_model = new GLib.ListStore (typeof (SettingObject));
-            lookup_gsettings (path, _key_model, out multiple_schemas);
-            create_dconf_keys (path, _key_model);
-            if (_key_model.get_n_items () > 0)
-            {
-                key_model = _key_model;
-                return LookupResultType.FOLDER;
-            }
-            return LookupResultType.NOT_FOUND;
-        }
-    }
-
-    /*\
     * * GSettings content creation
     \*/
 
@@ -200,19 +152,22 @@ public class SettingsModel : Object
         return dir;
     }
 
-    public GLib.ListStore? get_children (Directory? parent)
+    public GLib.ListStore? get_children (string folder_path)
     {
-        if (parent == null)
+        Directory? dir = get_directory (folder_path);
+        if (dir == null)
             return null;
-        GLib.ListStore? key_model = null;
+
+        GLib.ListStore key_model = new GLib.ListStore (typeof (SettingObject));
         bool multiple_schemas;
-        switch (lookup (((!) parent).full_name, out key_model, out multiple_schemas))
-        {
-        case LookupResultType.FOLDER:
+
+        lookup_gsettings (folder_path, key_model, out multiple_schemas);
+        create_dconf_keys (folder_path, key_model);
+
+        if (key_model.get_n_items () > 0)
             return key_model;
-        default:
+        else
             return null;
-        }
     }
 
     /*\
@@ -298,23 +253,23 @@ public class SettingsModel : Object
     public SettingObject? get_object (string path, bool strict = true)
     {
         if (!is_key_path (path))
-            return get_directory (path);
-        else if (strict)
-            return get_key (path);
-        else
-        {
-            GLib.ListStore? key_model = get_children (get_directory (get_parent_path (path)));
-            string name = get_name (path);
-            SettingObject? key = get_key_from_path_and_name (key_model, name);
-            if (key != null || strict)
-                return key;
-            return get_folder_from_path_and_name (key_model, name);
-        }
+            return (SettingObject?) get_directory (path);
+
+        if (strict)
+            return (SettingObject?) get_key (path);
+
+        GLib.ListStore? key_model = get_children (get_parent_path (path));
+        string name = get_name (path);
+        SettingObject? key = get_key_from_path_and_name (key_model, name);
+        if (key != null)
+            return key;
+
+        return get_folder_from_path_and_name (key_model, name);
     }
 
     public Key? get_key (string path)
     {
-        GLib.ListStore? key_model = get_children (get_directory (get_parent_path (path)));
+        GLib.ListStore? key_model = get_children (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path));
     }
 

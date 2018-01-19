@@ -83,8 +83,9 @@ class ModificationsRevealer : Revealer
             SettingObject setting_object = (SettingObject) ((!) object);
             if (setting_object is Directory)
             {
-                if (recursively) {
-                    GLib.ListStore? children = model.get_children ((Directory) setting_object);
+                if (recursively)
+                {
+                    GLib.ListStore? children = model.get_children (setting_object.full_name);
                     if (children != null)
                         _reset_objects ((!) children, true);
                 }

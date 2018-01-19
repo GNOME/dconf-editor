@@ -268,9 +268,8 @@ class BrowserView : Grid
 
         if (current_view_is_browse_view ())
         {
-            Directory? fresh_dir = (Directory?) model.get_directory (path);
-            GLib.ListStore? fresh_key_model = model.get_children (fresh_dir);
-            if (fresh_key_model != null && !browse_view.check_reload ((!) fresh_dir, (!) fresh_key_model))
+            GLib.ListStore? fresh_key_model = model.get_children (path);
+            if (fresh_key_model != null && !browse_view.check_reload ((!) fresh_key_model))
                 return false;
         }
         else if (current_view_is_properties_view ())

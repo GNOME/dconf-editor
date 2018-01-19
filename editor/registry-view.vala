@@ -62,7 +62,7 @@ class RegistryView : Grid, BrowsableView
         key_list_box.bind_model (key_model, new_list_box_row);
     }
 
-    public bool check_reload (Directory fresh_dir, GLib.ListStore fresh_key_model)
+    public bool check_reload (GLib.ListStore fresh_key_model)
     {
         if (key_model == null) // should not happen?
             return true;

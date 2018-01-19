@@ -426,7 +426,7 @@ class DConfWindow : ApplicationWindow
     private void reset_path (string path, bool recursively)
     {
         enter_delay_mode ();
-        revealer.reset_objects (model.get_children (model.get_directory (path)), recursively);
+        revealer.reset_objects (model.get_children (path), recursively);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
@@ -465,10 +465,19 @@ class DConfWindow : ApplicationWindow
         if (not_found)
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        if (selected_or_empty == "")
-            set_directory ((!) found_object, pathbar.get_selected_child (fallback_path));
-        else
-            set_directory ((!) found_object, selected_or_empty);
+        GLib.ListStore? key_model = model.get_children (((!) found_object).full_name);
+        if (key_model != null)
+        {
+            browser_view.prepare_browse_view ((!) key_model,
+                                              current_path.has_prefix (((!) found_object).full_name),
+                                              ((!) found_object).warning_multiple_schemas);
+            update_current_path (((!) found_object).full_name);
+
+            if (selected_or_empty == "")
+                browser_view.select_row (pathbar.get_selected_child (fallback_path));
+            else
+                browser_view.select_row (selected_or_empty);
+        }
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
@@ -497,30 +506,10 @@ class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void set_directory (Directory directory, string selected_or_empty)
-    {
-        GLib.ListStore? key_model = model.get_children (directory);
-        if (key_model == null)
-            return;
-        browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (directory.full_name), directory.warning_multiple_schemas);
-        update_current_path (directory.full_name);
-
-        browser_view.select_row (selected_or_empty);
-    }
-
     private void reload_view ()
     {
         if (browser_view.current_view_is_browse_view ())
-        {
-            Directory? directory = model.get_directory (current_path);
-            if (directory == null)
-                request_folder_path (current_path); // rely on fallback detection
-            else
-            {
-                string saved_selection = browser_view.get_selected_row_name ();
-                set_directory ((!) directory, saved_selection);
-            }
-        }
+            request_folder_path (current_path, browser_view.get_selected_row_name ());
         else if (browser_view.current_view_is_properties_view ())
             request_object_path (current_path, false);
         else if (browser_view.current_view_is_search_results_view ())

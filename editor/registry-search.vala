@@ -464,8 +464,7 @@ class RegistrySearch : Grid, BrowsableView
 
         if (!SettingsModel.is_key_path (current_path))
         {
-            Directory? local = model.get_directory (current_path);
-            GLib.ListStore? key_model = model.get_children (local);
+            GLib.ListStore? key_model = model.get_children (current_path);
             for (uint i = 0; i < ((!) key_model).get_n_items (); i++)
             {
                 SettingObject item = (SettingObject) ((!) key_model).get_item (i);
@@ -549,7 +548,7 @@ class RegistrySearch : Grid, BrowsableView
             Directory next = (!) search_nodes.pop_head ();
             bool local_again = next.full_name == current_path;
 
-            GLib.ListStore? next_key_model = model.get_children (next);
+            GLib.ListStore? next_key_model = model.get_children (next.full_name);
             if (next_key_model == null)
                 return true;
 
