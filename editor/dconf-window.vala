@@ -362,6 +362,8 @@ class DConfWindow : ApplicationWindow
         { "open-object", open_object, "s" },
         { "open-parent", open_parent, "s" },
 
+        { "reload-folder", reload_folder },
+        { "reload-object", reload_object },
         { "reload-search", reload_search },
 
         { "reset-recursive", reset_recursively, "s" },
@@ -379,10 +381,8 @@ class DConfWindow : ApplicationWindow
             bookmarks_button.active = false;
 
         string full_name = ((!) path_variant).get_string ();
-        if (full_name == "")    // reload
-            request_folder_path (current_path, browser_view.get_selected_row_name ());
-        else
-            request_folder_path (full_name, "");
+
+        request_folder_path (full_name, "");
     }
 
     private void open_object (SimpleAction action, Variant? path_variant)
@@ -392,10 +392,8 @@ class DConfWindow : ApplicationWindow
             bookmarks_button.active = false;
 
         string full_name = ((!) path_variant).get_string ();
-        if (full_name == "")    // reload
-            request_object_path (current_path);
-        else
-            request_object_path (full_name);
+
+        request_object_path (full_name);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
@@ -403,6 +401,16 @@ class DConfWindow : ApplicationWindow
     {
         string full_name = ((!) path_variant).get_string ();
         request_folder_path (SettingsModel.get_parent_path (full_name), full_name);
+    }
+
+    private void reload_folder (/* SimpleAction action, Variant? path_variant */)
+    {
+        request_folder_path (current_path, browser_view.get_selected_row_name ());
+    }
+
+    private void reload_object (/* SimpleAction action, Variant? path_variant */)
+    {
+        request_object_path (current_path);
     }
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
