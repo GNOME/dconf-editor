@@ -207,7 +207,7 @@ public class SchemaPathTree
         path_schemas = new GenericSet<SettingsSchema> ((schema) => { return str_hash (schema.get_id ()); },
                                                        (schema1, schema2) => { return str_equal (schema1.get_id (), schema2.get_id ()); });
         subpaths = new GenericSet<string> (str_hash, str_equal);
-        return lookup_segments (SettingsModel.to_segments (path), 0, ref path_schemas, ref subpaths);
+        return lookup_segments (to_segments (path), 0, ref path_schemas, ref subpaths);
     }
 
     private bool lookup_segments (string[] path_segments, int matched_prefix_length, ref GenericSet<SettingsSchema> path_schemas, ref GenericSet<string> subpaths)
@@ -237,14 +237,14 @@ public class SchemaPathTree
         string? schema_path = schema.get_path ();
         if (schema_path == null)
             return;
-        add_schema_to_path_spec (new CachedSchemaInfo (schema), SettingsModel.to_segments ((!) schema_path), 0, modified_path_specs);
+        add_schema_to_path_spec (new CachedSchemaInfo (schema), to_segments ((!) schema_path), 0, modified_path_specs);
     }
 
     public void add_schema_with_path_specs (SettingsSchema schema, GenericSet<string> path_specs, GenericSet<string> modified_path_specs)
     {
         ulong fingerprint = CachedSchemaInfo.compute_schema_fingerprint (schema);
         path_specs.foreach ((path_spec) => {
-                add_schema_to_path_spec (new CachedSchemaInfo (schema, fingerprint), SettingsModel.to_segments (path_spec), 0, modified_path_specs);
+                add_schema_to_path_spec (new CachedSchemaInfo (schema, fingerprint), to_segments (path_spec), 0, modified_path_specs);
             });
     }
 
@@ -260,7 +260,7 @@ public class SchemaPathTree
                 return false;
             }
             schemas.insert (schema_info.schema.get_id (), schema_info);
-            modified_path_specs.add (SettingsModel.to_path (path_spec));
+            modified_path_specs.add (to_path (path_spec));
             return true;
         }
         string segment = path_spec [matched_prefix_length];
@@ -278,7 +278,7 @@ public class SchemaPathTree
                 SchemaPathTree new_subtree = new SchemaPathTree (segment);
                 subtrees.insert (segment, new_subtree);
                 existing_subtree = new_subtree;
-                modified_path_specs.add (SettingsModel.to_path (path_spec [0:matched_prefix_length]));
+                modified_path_specs.add (to_path (path_spec [0:matched_prefix_length]));
             }
             return ((!) existing_subtree).add_schema_to_path_spec (schema_info, path_spec, matched_prefix_length + 1, modified_path_specs);
         }
@@ -337,6 +337,26 @@ public class SchemaPathTree
     private bool is_empty ()
     {
         return schemas.size () == 0 && wildcard_subtree == null && subtrees.size () == 0;
+    }
+
+    /*\
+    * * Path utilities
+    \*/
+
+    private static string [] to_segments (string path)
+    {
+        if (path == "/")
+            return new string [0];
+        int from = path.has_prefix ("/") ? 1 : 0;
+        int to = path.has_suffix ("/") ? -1 : path.length;
+        return path [from:to].split ("/");
+    }
+
+    private static string to_path (string [] segments)
+    {
+        if (segments.length == 0)
+            return "/";
+        return "/" + string.joinv ("/", (string? []?) segments) + "/";
     }
 }
 

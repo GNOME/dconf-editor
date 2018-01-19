@@ -84,58 +84,8 @@ public class SettingsModel : Object
     }
 
     /*\
-    * * GSettings content creation
+    * * Objects requests
     \*/
-
-    private void lookup_gsettings (string path, GLib.ListStore key_model, out bool multiple_schemas)
-    {
-        multiple_schemas = false;
-        if (source_manager.source_is_null ())
-            return;
-
-        GenericSet<SettingsSchema> schemas;
-        GenericSet<string> folders;
-        source_manager.cached_schemas.lookup (path, out schemas, out folders);
-        if (schemas.length > 0)
-        {
-            bool content_found = false;
-            // prefer non-relocatable schema
-            foreach (SettingsSchema schema in schemas.get_values ())
-            {
-                if (((string?) schema.get_path ()) == null)
-                    continue;
-                create_gsettings_keys (path, (!) schema, key_model);
-                content_found = true;
-                break;
-            }
-            // otherwise any will do
-            if (!content_found)
-            {
-                create_gsettings_keys (path, (!) schemas.iterator ().next_value (), key_model);
-                content_found = true;
-            }
-        }
-        foreach (string folder in folders.get_values ())
-        {
-            if (get_folder_from_path_and_name (key_model, folder) == null)
-            {
-                Directory child = new Directory (path + folder + "/", folder);
-                key_model.append (child);
-            }
-        }
-    }
-
-    /*\
-    * * Path requests
-    \*/
-
-    public static string get_base_path (string path)
-    {
-        if (!is_key_path (path))
-            return path;
-        else
-            return stripped_path (path);
-    }
 
     public Directory? get_directory (string path)
     {
@@ -170,13 +120,109 @@ public class SettingsModel : Object
             return null;
     }
 
+    public SettingObject? get_object (string path, bool strict = true)
+    {
+        if (!is_key_path (path))
+            return (SettingObject?) get_directory (path);
+
+        if (strict)
+            return (SettingObject?) get_key (path);
+
+        GLib.ListStore? key_model = get_children (get_parent_path (path));
+        string name = get_name (path);
+        SettingObject? key = get_key_from_path_and_name (key_model, name);
+        if (key != null)
+            return key;
+
+        return get_folder_from_path_and_name (key_model, name);
+    }
+
+    public Key? get_key (string path)
+    {
+        GLib.ListStore? key_model = get_children (get_parent_path (path));
+        return get_key_from_path_and_name (key_model, get_name (path));
+    }
+
+    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
+    {
+        if (key_model == null)
+            return null;
+        uint position = 0;
+        while (position < ((!) key_model).get_n_items ())
+        {
+            SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
+            if (object == null)
+                assert_not_reached ();
+            if ((!) object is Key && ((!) object).name == key_name)
+                return (Key) (!) object;
+            position++;
+        }
+        return null;
+    }
+
+    private static Directory? get_folder_from_path_and_name (GLib.ListStore? key_model, string folder_name)
+    {
+        if (key_model == null)
+            return null;
+        uint position = 0;
+        while (position < ((!) key_model).get_n_items ())
+        {
+            SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
+            if (object == null)
+                assert_not_reached ();
+            if ((!) object is Directory && ((!) object).name == folder_name)
+                return (Directory) (!) object;
+            position++;
+        }
+        return null;
+    }
+
     /*\
     * * GSettings keys creation
     \*/
 
+    private void lookup_gsettings (string path, GLib.ListStore key_model, out bool multiple_schemas)
+    {
+        multiple_schemas = false;
+        if (source_manager.source_is_null ())
+            return;
+
+        GenericSet<SettingsSchema> schemas;
+        GenericSet<string> folders;
+        source_manager.cached_schemas.lookup (path, out schemas, out folders);
+        if (schemas.length > 0)
+        {
+            bool content_found = false;
+            // prefer non-relocatable schema
+            foreach (SettingsSchema schema in schemas.get_values ())
+            {
+                if (((string?) schema.get_path ()) == null)
+                    continue;
+                create_gsettings_keys (path, (!) schema, key_model);
+                content_found = true;
+                break;
+            }
+            // otherwise any will do
+            if (!content_found)
+            {
+                create_gsettings_keys (path, (!) schemas.iterator ().next_value (), key_model);
+                content_found = true;
+            }
+        }
+
+        foreach (string folder in folders.get_values ())
+        {
+            if (get_folder_from_path_and_name (key_model, folder) == null)
+            {
+                Directory child = new Directory (path + folder + "/", folder);
+                key_model.append (child);
+            }
+        }
+    }
+
     private void create_gsettings_keys (string parent_path, GLib.SettingsSchema settings_schema, GLib.ListStore key_model)
     {
-        string[] gsettings_key_map = settings_schema.list_keys ();
+        string [] gsettings_key_map = settings_schema.list_keys ();
         string? path = settings_schema.get_path ();
         GLib.Settings settings;
         if (path == null) // relocatable
@@ -250,48 +296,21 @@ public class SettingsModel : Object
         key_model.append (new_key);
     }
 
-    public SettingObject? get_object (string path, bool strict = true)
-    {
-        if (!is_key_path (path))
-            return (SettingObject?) get_directory (path);
-
-        if (strict)
-            return (SettingObject?) get_key (path);
-
-        GLib.ListStore? key_model = get_children (get_parent_path (path));
-        string name = get_name (path);
-        SettingObject? key = get_key_from_path_and_name (key_model, name);
-        if (key != null)
-            return key;
-
-        return get_folder_from_path_and_name (key_model, name);
-    }
-
-    public Key? get_key (string path)
-    {
-        GLib.ListStore? key_model = get_children (get_parent_path (path));
-        return get_key_from_path_and_name (key_model, get_name (path));
-    }
-
-    public static string[] to_segments (string path)
-    {
-        if (path == "/")
-            return new string [0];
-        int from = path.has_prefix ("/") ? 1 : 0;
-        int to = path.has_suffix ("/") ? -1 : path.length;
-        return path [from:to].split ("/");
-    }
-
-    public static string to_path (string[] segments)
-    {
-        if (segments.length == 0)
-            return "/";
-        return "/" + string.joinv ("/", (string?[]?) segments) + "/";
-    }
+    /*\
+    * * Path utilities
+    \*/
 
     public static bool is_key_path (string path)
     {
         return !path.has_suffix ("/");
+    }
+
+    public static string get_base_path (string path)
+    {
+        if (!is_key_path (path))
+            return path;
+        else
+            return stripped_path (path);
     }
 
     private static string get_name (string path)
@@ -316,40 +335,6 @@ public class SettingsModel : Object
         if (path.length <= 1)
             return "/";
         return path.slice (0, path.last_index_of_char ('/') + 1);
-    }
-
-    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
-    {
-        if (key_model == null)
-            return null;
-        uint position = 0;
-        while (position < ((!) key_model).get_n_items ())
-        {
-            SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
-            if (object == null)
-                assert_not_reached ();
-            if ((!) object is Key && ((!) object).name == key_name)
-                return (Key) (!) object;
-            position++;
-        }
-        return null;
-    }
-
-    private static Directory? get_folder_from_path_and_name (GLib.ListStore? key_model, string folder_name)
-    {
-        if (key_model == null)
-            return null;
-        uint position = 0;
-        while (position < ((!) key_model).get_n_items ())
-        {
-            SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
-            if (object == null)
-                assert_not_reached ();
-            if ((!) object is Directory && ((!) object).name == folder_name)
-                return (Directory) (!) object;
-            position++;
-        }
-        return null;
     }
 
     /*\
