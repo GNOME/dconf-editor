@@ -365,13 +365,6 @@ public class SettingsModel : Object
         return ((!) dir).warning_multiple_schemas;
     }
 
-    public bool directory_is_ghost (string path)
-    {
-        if (path == "/")
-            return false;
-        return get_directory (path) == null;
-    }
-
     public string get_fallback_path (string path, out bool warning_multiple_schemas)
     {
         Directory? dir = get_directory (path);

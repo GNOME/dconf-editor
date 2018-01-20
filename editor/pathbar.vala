@@ -57,7 +57,7 @@ public class PathBar : Box
                         complete_path += "/";
                         if (last_item != null)
                         {
-                            bool is_ghost = model.directory_is_ghost (complete_path);
+                            bool is_ghost = !(model.path_exists (complete_path));
                             set_is_ghost ((!) last_item, is_ghost);
                             last_item = null;
                             set_is_ghost (child, is_ghost);
@@ -110,7 +110,7 @@ public class PathBar : Box
                 foreach (string item in split [0:split.length - 1])
                 {
                     complete_path += item + "/";
-                    bool is_ghost = model.directory_is_ghost (complete_path);
+                    bool is_ghost = !(model.path_exists (complete_path));
                     set_is_ghost (add_path_bar_item (item, complete_path, true, !is_key_path && (index == split.length - 2)), is_ghost);
                     set_is_ghost (add_slash_label (), is_ghost);
                     index++;
