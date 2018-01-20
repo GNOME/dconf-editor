@@ -387,11 +387,22 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
-    public string get_key_copy_text (Key key)
+    public string get_key_copy_text (string full_name)
     {
-        if (key is GSettingsKey)
-            return key.descriptor + " " + get_key_value (key).print (false);
-        return is_key_ghost ((DConfKey) key) ? _("%s (key erased)").printf (key.full_name) : key.descriptor + " " + get_key_value (key).print (false);
+        Key? key = get_key (full_name);
+        if (key == null)
+            return full_name;
+
+        if (((!) key) is GSettingsKey)
+            return ((!) key).descriptor + " " + get_key_value ((!) key).print (false);
+
+        if (!(((!) key) is DConfKey))
+            assert_not_reached ();
+
+        if (is_key_ghost ((DConfKey) (!) key))
+            return _("%s (key erased)").printf (((!) key).full_name);
+
+        return ((!) key).descriptor + " " + get_key_value ((!) key).print (false);
     }
 
     public Variant get_key_value (Key key)

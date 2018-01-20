@@ -250,7 +250,7 @@ class ConfigurationEditor : Gtk.Application
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
-//        set_accels_for_action ("win.", { "<Primary><Shift>x" });
+        set_accels_for_action ("ui.copy-path", { "<Primary><Shift>c" });
 
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
@@ -402,9 +402,8 @@ class ConfigurationEditor : Gtk.Application
     private uint notification_number = 0;
 
     private void copy_cb (SimpleAction action, Variant? gvariant)
+        requires (gvariant != null)
     {
-        if (gvariant == null)
-            return;
         copy (((!) gvariant).get_string ().compress ());
     }
 

@@ -341,7 +341,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override string get_text ()
     {
         SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (key);
+        return model.get_key_copy_text (key.full_name);
     }
 
     protected override bool generate_popover (ContextPopover popover)
@@ -482,7 +482,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override string get_text ()
     {
         SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (key);
+        return model.get_key_copy_text (key.full_name);
     }
 
     protected override bool generate_popover (ContextPopover popover)
@@ -658,8 +658,9 @@ private class ContextPopover : Popover
 
     public void new_copy_action (string text)
     {
+        Variant variant = new Variant.string (text);
         /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
-        current_section.append (_("Copy"), "app.copy(\"" + text.escape (null).escape (null) + "\")");
+        current_section.append (_("Copy"), "app.copy(" + variant.print (false) + ")");
     }
 
     public void set_group (string group_name)

@@ -307,6 +307,15 @@ class RegistrySearch : Grid, BrowsableView
             return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
     }
 
+    public string? get_copy_path_text ()
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return null;
+        else
+            return ((!) selected_row).get_action_target_value ().get_string ();
+    }
+
     public void toggle_boolean_key ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();

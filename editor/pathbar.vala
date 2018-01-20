@@ -229,7 +229,7 @@ private class PathBarItem : Button
             return;
 
         GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "app.copy(\"" + get_action_target_value ().get_string () + "\")");
+        menu.append (_("Copy current path"), "ui.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
         menu.freeze ();
 
         Popover popover_test = new Popover.from_model (this, (MenuModel) menu);

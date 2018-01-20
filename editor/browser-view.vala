@@ -182,6 +182,15 @@ class BrowserView : Grid
         return ((BrowsableView) stack.get_visible_child ()).get_copy_text ();
     }
 
+    public string? get_copy_path_text ()
+    {
+        if (current_view_is_search_results_view ())
+            return search_results_view.get_copy_path_text ();
+
+        warning ("BrowserView get_copy_path_text() called but current view is not search results view.");
+        return null;
+    }
+
     public bool show_row_popover ()
     {
         if (current_view_is_browse_view ())

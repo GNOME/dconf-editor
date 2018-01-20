@@ -371,7 +371,9 @@ class DConfWindow : ApplicationWindow
 
         { "enter-delay-mode", enter_delay_mode },
         { "apply-delayed-settings", apply_delayed_settings },
-        { "dismiss-delayed-settings", dismiss_delayed_settings }
+        { "dismiss-delayed-settings", dismiss_delayed_settings },
+
+        { "copy-path", copy_path }
     };
 
     private void open_folder (SimpleAction action, Variant? path_variant)
@@ -455,6 +457,19 @@ class DConfWindow : ApplicationWindow
         invalidate_popovers ();
     }
 
+    private void copy_path (/* SimpleAction action, Variant? path_variant */)
+    {
+        browser_view.discard_row_popover ();
+
+        if (search_bar.search_mode_enabled)
+        {
+            string selected_row_text = browser_view.get_copy_path_text () ?? current_path;
+            ((ConfigurationEditor) get_application ()).copy (selected_row_text);
+        }
+        else
+            ((ConfigurationEditor) get_application ()).copy (current_path);
+    }
+
     /*\
     * * Directories tree
     \*/
@@ -484,7 +499,7 @@ class DConfWindow : ApplicationWindow
 
     private void request_object_path (string full_name, bool notify_missing = true)
     {
-        SettingObject? found_object = model.get_key (full_name);
+        Key? found_object = model.get_key (full_name);
         if (found_object == null)
         {
             if (notify_missing)
@@ -498,7 +513,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            browser_view.prepare_properties_view ((Key) found_object,
+            browser_view.prepare_properties_view ((!) found_object,
                                                   current_path == SettingsModel.get_parent_path (full_name),
                                                   model.get_warning_multiple_schemas (SettingsModel.get_parent_path (full_name)));
             update_current_path (strdup (full_name));
@@ -538,11 +553,8 @@ class DConfWindow : ApplicationWindow
 
         if (SettingsModel.is_key_path (current_path))   // mainly here for ensuring menu is never empty
         {
-            SettingObject? object = model.get_object (current_path);
-            if (object != null && (!) object is Key)
-                menu.append (_("Copy descriptor"), "app.copy(\"" + model.get_key_copy_text ((Key) (!) object) + "\")");   // TODO what happens on multiple schemas defining one key?..
-            else    // fallback that should never be reached
-                menu.append (_("Copy current path"), "app.copy(\"" + current_path.escape (null).escape (null) + "\")");
+            Variant variant = new Variant.string (model.get_key_copy_text (current_path));
+            menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");   // TODO what happens on multiple schemas defining one key?..
         }
         else
         {
@@ -688,19 +700,12 @@ class DConfWindow : ApplicationWindow
                     return true;
                 case "c":
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
+
                     string? selected_row_text = browser_view.get_copy_text ();
-                    if (selected_row_text == null)
-                    {
-                        SettingObject? setting_object = model.get_object (current_path);
-                        if (setting_object != null && (!) setting_object is Key)
-                            selected_row_text = model.get_key_copy_text ((Key) (!) setting_object);
-                    }
+                    if (selected_row_text == null && SettingsModel.is_key_path (current_path))
+                        selected_row_text = model.get_key_copy_text (current_path);
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
-                    return true;
-                case "C":
-                    browser_view.discard_row_popover ();
-                    ((ConfigurationEditor) get_application ()).copy (current_path);
                     return true;
                 case "F1":
                     browser_view.discard_row_popover ();
