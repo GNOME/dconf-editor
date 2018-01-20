@@ -283,7 +283,7 @@ class BrowserView : Grid
         }
         else if (current_view_is_properties_view ())
         {
-            Key? fresh_key = (Key?) model.get_object (path);
+            Key? fresh_key = model.get_key (path);
             if (fresh_key != null && !properties_view.check_reload ((!) fresh_key, model.get_key_value ((!) fresh_key)))
                 return false;
         }

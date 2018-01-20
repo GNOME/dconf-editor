@@ -96,7 +96,7 @@ public class PathBar : Box
 
         if (last_item != null)
         {
-            bool is_ghost = !(model.get_object (complete_path) is Key);
+            bool is_ghost = !(model.path_exists (complete_path));
             set_is_ghost ((!) last_item, is_ghost);
             last_item = null;
         }
@@ -121,7 +121,7 @@ public class PathBar : Box
             if (is_key_path)
             {
                 complete_path += last;
-                bool is_ghost = !(model.get_object (complete_path) is Key);
+                bool is_ghost = !(model.path_exists (complete_path));
                 set_is_ghost (add_path_bar_item (last, complete_path, false, true), is_ghost);
             }
         }
