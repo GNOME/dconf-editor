@@ -153,11 +153,14 @@ class DConfWindow : ApplicationWindow
         if (first_path == null)
             first_path = "/";
 
-        SettingObject? found_object = model.get_object ((!) first_path, false);
-        if (found_object == null || (!) found_object is Key)
+        if (!SettingsModel.is_key_path ((!) first_path))
+            request_folder_path ((!) first_path);
+        else if (model.path_exists ((!) first_path))
             request_object_path ((!) first_path);
+        else if (model.path_exists ((!) first_path + "/"))
+            request_folder_path ((!) first_path + "/");
         else
-            request_folder_path (((!) found_object).full_name);
+            request_object_path ((!) first_path);
     }
 
     private void prepare_model ()
@@ -862,7 +865,7 @@ class DConfWindow : ApplicationWindow
     }
     private void cannot_find_folder (string full_name)
     {
-        show_notification (_("Folder “%s” doesn’t exist anymore.").printf (full_name));
+        show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
     }
 
     [GtkCallback]

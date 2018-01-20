@@ -157,6 +157,17 @@ public class SettingsModel : Object
         return get_key_from_path_and_name (key_model, get_name (path));
     }
 
+    public bool path_exists (string path)
+    {
+        if (is_key_path (path))
+        {
+            GLib.ListStore? key_model = get_children (get_parent_path (path));
+            return get_key_from_path_and_name (key_model, get_name (path)) != null;
+        }
+        else
+            return get_directory (path) != null;
+    }
+
     private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
     {
         if (key_model == null)
