@@ -134,21 +134,12 @@ public class SettingsModel : Object
             return null;
     }
 
-    public SettingObject? get_object (string path, bool strict = true)
+    public SettingObject? get_object (string path)
     {
-        if (!is_key_path (path))
-            return (SettingObject?) get_directory (path);
-
-        if (strict)
+        if (is_key_path (path))
             return (SettingObject?) get_key (path);
-
-        GLib.ListStore? key_model = get_children (get_parent_path (path));
-        string name = get_name (path);
-        SettingObject? key = get_key_from_path_and_name (key_model, name);
-        if (key != null)
-            return key;
-
-        return get_folder_from_path_and_name (key_model, name);
+        else
+            return (SettingObject?) get_directory (path);
     }
 
     public Key? get_key (string path)
