@@ -34,14 +34,15 @@ public class Bookmarks : MenuButton
         update_icon_and_switch ();
     }
 
-    public string schema_id { get; construct; }
+    private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
+    public string schema_path { get; construct; }
     private GLib.Settings settings;
 
     private ulong switch_active_handler = 0;
 
     construct
     {
-        settings = new GLib.Settings (schema_id);
+        settings = new GLib.Settings.with_path (schema_id, schema_path);
 
         switch_active_handler = bookmarked_switch.notify ["active"].connect (switch_changed_cb);
         ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (() => {
@@ -54,6 +55,11 @@ public class Bookmarks : MenuButton
 
         destroy.connect (() => settings.disconnect (bookmarks_changed_handler));
         bookmarked_switch.destroy.connect (() => bookmarked_switch.disconnect (switch_active_handler));
+    }
+
+    public string [] get_bookmarks ()
+    {
+        return settings.get_strv ("bookmarks");
     }
 
     private void update_icon_and_switch ()

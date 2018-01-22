@@ -111,11 +111,6 @@
       <summary>A flag to enable maximized mode</summary>
       <description>A flag to enable maximized mode</description>
     </key>
-    <key name="bookmarks" type="as">
-      <default>[]</default>
-      <summary>A list of bookmarked paths</summary>
-      <description>Contains all paths bookmarked by the user as an array of strings.</description>
-    </key>
     <key name="restore-view" type="b">
       <default>true</default>
       <summary>A flag to restore the last view</summary>
@@ -182,6 +177,13 @@
       <default>{'ca.desrt.dconf-editor.Demo.Relocatable':'/ca/desrt/dconf-editor/Demo/relocatable/'}</default>
       <summary>Mapping of paths to manually associated schemas</summary>
       <description>A dictionary that maps schema IDs with path specifications. It is used to allow the user to associate a relocatable schema to certain paths. Path specifications may contain wildcards in the form of empty segments (e.g. /ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema ID may be associated with multiple path specifications.</description>
+    </key>
+  </schema>
+  <schema id="ca.desrt.dconf-editor.Bookmarks">
+    <key name="bookmarks" type="as">
+      <default>[]</default>
+      <summary>A list of bookmarked paths</summary>
+      <description>Contains all paths bookmarked by the user as an array of strings.</description>
     </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">

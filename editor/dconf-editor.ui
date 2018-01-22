@@ -81,7 +81,7 @@
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="focus-on-click">False</property>
-            <property name="schema-id">ca.desrt.dconf-editor.Settings</property>
+            <property name="schema-path">/ca/desrt/dconf-editor/</property>
             <property name="sensitive" bind-source="search-toggle" bind-property="active" bind-flags="sync-create|invert-boolean"/>
             <!-- <accelerator key="B" signal="activate" modifiers="GDK_CONTROL_MASK"/> TODO -->
             <style>

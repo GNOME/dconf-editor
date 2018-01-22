@@ -421,7 +421,7 @@ class DConfWindow : ApplicationWindow
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
     {
         reload_search_action.set_enabled (false);
-        browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
+        browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
     }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)
@@ -532,7 +532,7 @@ class DConfWindow : ApplicationWindow
         else if (browser_view.current_view_is_properties_view ())
             request_object_path (current_path, false);
         else if (browser_view.current_view_is_search_results_view ())
-            browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
+            browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
     }
 
     /*\
@@ -608,10 +608,10 @@ class DConfWindow : ApplicationWindow
         if (reload_search_action.get_enabled ())
         {
             reload_search_action.set_enabled (false);
-            browser_view.reload_search (current_path, settings.get_strv ("bookmarks"));
+            browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
         }
         // do not place in an "else"
-        browser_view.show_search_view (search_entry.text, current_path, settings.get_strv ("bookmarks"));
+        browser_view.show_search_view (search_entry.text, current_path, bookmarks_button.get_bookmarks ());
     }
 
     [GtkCallback]

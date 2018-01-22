@@ -136,6 +136,12 @@ public class SourceManager : Object
             for (int i = 0; i < known_mappings.length [0]; i++)
                 add_relocatable_schema_info (relocatable_schema_paths, known_mappings [i,0], known_mappings [i,1]);
         }
+        if (built_in_schemas || internal_schemas)
+        {
+            string [,] internal_mappings = ConfigurationEditor.internal_mappings;
+            for (int i = 0; i < internal_mappings.length [0]; i++)
+                add_relocatable_schema_info (relocatable_schema_paths, internal_mappings [i,0], internal_mappings [i,1]);
+        }
         if (startup_schemas)
         {
             startup_relocatable_schema_paths.foreach ((schema_id, paths) => {

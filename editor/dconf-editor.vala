@@ -17,6 +17,10 @@
 
 class ConfigurationEditor : Gtk.Application
 {
+    public static string [,] internal_mappings = {
+            {"ca.desrt.dconf-editor.Bookmarks",
+                "/ca/desrt/dconf-editor/"}
+        };
     public static string [,] known_mappings = {
             {"com.gexperts.Tilix.Profile",
                 "/com/gexperts/Tilix/profiles//"},
@@ -198,6 +202,8 @@ class ConfigurationEditor : Gtk.Application
             string [] schemas_ids = {};
             for (int i = 0; i < known_mappings.length [0]; i++)
                 schemas_ids += known_mappings [i,0];
+            for (int i = 0; i < internal_mappings.length [0]; i++)
+                schemas_ids += internal_mappings [i,0];
 
             foreach (string schema_id in relocatable_schemas)
             {
