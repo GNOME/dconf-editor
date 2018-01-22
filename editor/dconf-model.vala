@@ -207,24 +207,8 @@ public class SettingsModel : Object
         GenericSet<string> folders;
         source_manager.cached_schemas.lookup (path, out schemas, out folders);
         if (schemas.length > 0)
-        {
-            bool content_found = false;
-            // prefer non-relocatable schema
             foreach (SettingsSchema schema in schemas.get_values ())
-            {
-                if (((string?) schema.get_path ()) == null)
-                    continue;
                 create_gsettings_keys (path, (!) schema, key_model);
-                content_found = true;
-                break;
-            }
-            // otherwise any will do
-            if (!content_found)
-            {
-                create_gsettings_keys (path, (!) schemas.iterator ().next_value (), key_model);
-                content_found = true;
-            }
-        }
 
         foreach (string folder in folders.get_values ())
         {

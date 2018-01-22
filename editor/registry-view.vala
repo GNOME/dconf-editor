@@ -20,8 +20,6 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
 class RegistryView : Grid, BrowsableView
 {
-    [GtkChild] private BrowserInfoBar info_bar;
-
     [GtkChild] private ScrolledWindow scrolled;
 
     [GtkChild] private ListBox key_list_box;
@@ -47,8 +45,6 @@ class RegistryView : Grid, BrowsableView
 
     construct
     {
-        info_bar.add_label ("multiple-schemas-folder", _("Multiple schemas are installed at this path. This could lead to problems if it hasn’t been done carefully. Only one schema is displayed here. Edit values at your own risk."));
-
         key_list_box.set_header_func (update_row_header);
     }
 
@@ -90,14 +86,6 @@ class RegistryView : Grid, BrowsableView
         if (((!) fresh_key_model).get_n_items () > 0)
             return true;
         return false;
-    }
-
-    public void show_multiple_schemas_warning (bool multiple_schemas_warning_needed)
-    {
-        if (multiple_schemas_warning_needed)
-            info_bar.show_warning ("multiple-schemas-folder");
-        else
-            info_bar.hide_warning ();
     }
 
     public void focus_selected_row ()
@@ -152,12 +140,19 @@ class RegistryView : Grid, BrowsableView
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         string? label_text = null;
-        if      ((row.get_child () is KeyListBoxRowEditable)
-              && (before == null || !(((!) before).get_child () is KeyListBoxRowEditable)))
-            label_text = _("Keys defined by a schema");
-        else if ((row.get_child () is KeyListBoxRowEditableNoSchema)
-              && (before == null || !(((!) before).get_child () is KeyListBoxRowEditableNoSchema)))
-            label_text = _("Keys not defined by a schema");
+        if (row.get_child () is KeyListBoxRowEditable)
+        {
+            string schema_id = ((KeyListBoxRowEditable) row.get_child ()).key.schema_id;
+            if (before == null
+             || !(((!) before).get_child () is KeyListBoxRowEditable
+               && ((KeyListBoxRowEditable) ((!) before).get_child ()).key.schema_id == schema_id))
+                label_text = schema_id;
+        }
+        else if (row.get_child () is KeyListBoxRowEditableNoSchema)
+        {
+            if (before == null || !(((!) before).get_child () is KeyListBoxRowEditableNoSchema))
+                label_text = _("Keys not defined by a schema");
+        }
 
         ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
         row.set_header (header);

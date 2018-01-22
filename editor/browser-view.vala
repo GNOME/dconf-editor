@@ -118,7 +118,6 @@ class BrowserView : Grid
         stack.set_transition_type (is_ancestor && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
         hide_reload_warning ();
-        browse_view.show_multiple_schemas_warning (warning_multiple_schemas);
     }
 
     public void select_row (string selected)
@@ -136,7 +135,6 @@ class BrowserView : Grid
         properties_view.populate_properties_list_box (key, warning_multiple_schemas);
 
         hide_reload_warning ();
-        browse_view.show_multiple_schemas_warning (false);
 
         stack.set_transition_type (is_parent && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
@@ -405,6 +403,14 @@ public interface SettingComparator : Object
             return false;
         return true;
     }
+
+    protected virtual bool sort_by_schema_thirdly (SettingObject a, SettingObject b, ref int return_value)
+    {
+        if (!(a is GSettingsKey) || !(b is GSettingsKey))
+            return false;
+        return_value = strcmp (((GSettingsKey) a).schema_id, ((GSettingsKey) b).schema_id);
+        return return_value != 0;
+    }
 }
 
 class BySchemaCaseInsensitive : Object, SettingComparator
@@ -415,6 +421,8 @@ class BySchemaCaseInsensitive : Object, SettingComparator
         if (sort_directories_first (a, b, ref return_value))
             return return_value;
         if (sort_dconf_keys_second (a, b, ref return_value))
+            return return_value;
+        if (sort_by_schema_thirdly (a, b, ref return_value))
             return return_value;
 
         return a.casefolded_name.collate (b.casefolded_name);
@@ -429,6 +437,8 @@ class BySchemaCaseSensitive : Object, SettingComparator
         if (sort_directories_first (a, b, ref return_value))
             return return_value;
         if (sort_dconf_keys_second (a, b, ref return_value))
+            return return_value;
+        if (sort_by_schema_thirdly (a, b, ref return_value))
             return return_value;
 
         return strcmp (a.name, b.name);

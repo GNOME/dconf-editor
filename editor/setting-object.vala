@@ -295,7 +295,7 @@ public class DConfKey : Key
 
 public class GSettingsKey : Key
 {
-    public string schema_id      { private get; construct; }
+    public string schema_id              { get; construct; }
     public string? schema_path   { private get; construct; }
     public string summary                { get; construct; }
     public string description    { private get; construct; }

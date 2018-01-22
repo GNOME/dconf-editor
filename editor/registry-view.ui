@@ -4,11 +4,6 @@
   <template class="RegistryView" parent="GtkGrid">
     <property name="orientation">vertical</property>
     <child>
-      <object class="BrowserInfoBar" id="info_bar">
-        <property name="visible">True</property>
-      </object>
-    </child>
-    <child>
       <object class="GtkScrolledWindow" id="scrolled">
         <property name="visible">True</property>
         <property name="expand">True</property>
