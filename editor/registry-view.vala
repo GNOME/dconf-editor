@@ -151,7 +151,15 @@ class RegistryView : Grid, BrowsableView
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
-        ListBoxRowHeader header = new ListBoxRowHeader (before == null);
+        string? label_text = null;
+        if      ((row.get_child () is KeyListBoxRowEditable)
+              && (before == null || !(((!) before).get_child () is KeyListBoxRowEditable)))
+            label_text = _("Keys defined by a schema");
+        else if ((row.get_child () is KeyListBoxRowEditableNoSchema)
+              && (before == null || !(((!) before).get_child () is KeyListBoxRowEditableNoSchema)))
+            label_text = _("Keys not defined by a schema");
+
+        ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
         row.set_header (header);
     }
 

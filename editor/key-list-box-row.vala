@@ -45,7 +45,7 @@ private class ListBoxRowHeader : Grid
         natural_width = MAX_ROW_WIDTH;
     }
 
-    public ListBoxRowHeader (bool is_first_row, string? header_text = null)
+    public ListBoxRowHeader (bool is_first_row, string? header_text)
     {
         if (header_text == null)
         {

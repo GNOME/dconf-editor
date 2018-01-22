@@ -336,48 +336,23 @@ public interface BrowsableView
 * * Sorting
 \*/
 
-public enum MergeType {
-    MIXED,
-    FIRST,
-    LAST
-}
-
 public class SortingOptions : Object
 {
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
     public bool case_sensitive { get; set; default = false; }
-    public MergeType sort_folders { get; set; default = MergeType.MIXED; }
 
     construct
     {
         settings.bind ("sort-case-sensitive", this, "case-sensitive", GLib.SettingsBindFlags.GET);
-        settings.bind ("sort-folders", this, "sort-folders", GLib.SettingsBindFlags.GET);
     }
 
     public SettingComparator get_comparator ()
     {
-        if (sort_folders == MergeType.FIRST)
-        {
-            if (case_sensitive)
-                return new FoldersFirstCaseSensitive ();
-            else
-                return new FoldersFirstCaseInsensitive ();
-        }
-        else if (sort_folders == MergeType.LAST)
-        {
-            if (case_sensitive)
-                return new FoldersLastCaseSensitive ();
-            else
-                return new FoldersLastCaseInsensitive ();
-        }
-        else // if (sort_folders == MergeType.MIXED)
-        {
-            if (case_sensitive)
-                return new FoldersMixedCaseSensitive ();
-            else
-                return new FoldersMixedCaseInsensitive ();
-        }
+        if (case_sensitive)
+            return new BySchemaCaseSensitive ();
+        else
+            return new BySchemaCaseInsensitive ();
     }
 
     public void sort_key_model (GLib.ListStore model)
@@ -408,68 +383,54 @@ public class SortingOptions : Object
 public interface SettingComparator : Object
 {
     public abstract int compare (SettingObject a, SettingObject b);
+
+    protected virtual bool sort_directories_first (SettingObject a, SettingObject b, ref int return_value)
+    {
+        if (a is Directory && !(b is Directory))
+            return_value = -1;
+        else if (!(a is Directory) && b is Directory)
+            return_value = 1;
+        else
+            return false;
+        return true;
+    }
+
+    protected virtual bool sort_dconf_keys_second (SettingObject a, SettingObject b, ref int return_value)
+    {
+        if (a is DConfKey && !(b is DConfKey))
+            return_value = -1;
+        else if (!(a is DConfKey) && b is DConfKey)
+            return_value = 1;
+        else
+            return false;
+        return true;
+    }
 }
 
-class FoldersMixedCaseInsensitive : Object, SettingComparator
+class BySchemaCaseInsensitive : Object, SettingComparator
 {
     public int compare (SettingObject a, SettingObject b)
     {
+        int return_value = 0;
+        if (sort_directories_first (a, b, ref return_value))
+            return return_value;
+        if (sort_dconf_keys_second (a, b, ref return_value))
+            return return_value;
+
         return a.casefolded_name.collate (b.casefolded_name);
     }
 }
 
-class FoldersMixedCaseSensitive : Object, SettingComparator
+class BySchemaCaseSensitive : Object, SettingComparator
 {
     public int compare (SettingObject a, SettingObject b)
     {
-        return strcmp (a.name, b.name);
-    }
-}
+        int return_value = 0;
+        if (sort_directories_first (a, b, ref return_value))
+            return return_value;
+        if (sort_dconf_keys_second (a, b, ref return_value))
+            return return_value;
 
-class FoldersFirstCaseInsensitive : Object, SettingComparator
-{
-    public int compare (SettingObject a, SettingObject b)
-    {
-        if (a is Directory && !(b is Directory))
-            return -1;
-        if (!(a is Directory) && b is Directory)
-            return 1;
-        return a.casefolded_name.collate (b.casefolded_name);
-    }
-}
-
-class FoldersFirstCaseSensitive : Object, SettingComparator
-{
-    public int compare (SettingObject a, SettingObject b)
-    {
-        if (a is Directory && !(b is Directory))
-            return -1;
-        if (!(a is Directory) && b is Directory)
-            return 1;
-        return strcmp (a.name, b.name);
-    }
-}
-
-class FoldersLastCaseInsensitive : Object, SettingComparator
-{
-    public int compare (SettingObject a, SettingObject b)
-    {
-        if (a is Directory && !(b is Directory))
-            return 1;
-        if (!(a is Directory) && b is Directory)
-            return -1;
-        return a.casefolded_name.collate (b.casefolded_name);
-    }
-}
-
-class FoldersLastCaseSensitive : Object, SettingComparator
-{
-    public int compare (SettingObject a, SettingObject b)
-    {
-        if (a is Directory && !(b is Directory))
-            return 1;
-        if (!(a is Directory) && b is Directory)
-            return -1;
         return strcmp (a.name, b.name);
     }
 }

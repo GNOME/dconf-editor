@@ -88,11 +88,6 @@
     <value value="3" nick="always-confirm-explicit"/>
     <value value="4" nick="always-delay"/>
   </enum>
-  <enum id="ca.desrt.dconf-editor.MergeType">
-    <value value="0" nick="mixed"/>
-    <value value="1" nick="first"/>
-    <value value="2" nick="last"/>
-  </enum>
   <flags id="ca.desrt.dconf-editor.RelocatableSchemasEnabledMappings">
     <value value="1" nick="User"/>
     <value value="2" nick="Built-in"/>
@@ -155,11 +150,6 @@
       <default>false</default>
       <summary>A flag to sort keys list case-sensitively</summary>
       <description>GSettings doesn’t allow keys to use upper-case in their names, but installation paths of schemas can. If “true”, the keys list is sorted case-sensitively, with in usual order upper-case folders first.</description>
-    </key>
-    <key name="sort-folders" enum="ca.desrt.dconf-editor.MergeType">
-      <default>'mixed'</default>
-      <summary>A flag to sort folders before, after or mixed with keys</summary>
-      <description>If “mixed”, folders are sorted together with keys; if “first”, all folders are sorted before keys; if “last”, all folders are sorted after keys.</description>
     </key>
     <key type="b" name="mouse-use-extra-buttons">
       <default>true</default>
