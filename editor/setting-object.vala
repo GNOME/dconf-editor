@@ -42,8 +42,6 @@ public abstract class SettingObject : Object
 
 public class Directory : SettingObject
 {
-    public bool warning_multiple_schemas = false;
-
     public Directory (string full_name, string name)
     {
         Object (full_name: full_name, name: name);
@@ -295,6 +293,9 @@ public class DConfKey : Key
 
 public class GSettingsKey : Key
 {
+    public bool warning_conflicting_key = false;
+    public bool error_hard_conflicting_key = false;
+
     public string schema_id              { get; construct; }
     public string? schema_path   { private get; construct; }
     public string summary                { get; construct; }

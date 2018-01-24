@@ -94,10 +94,10 @@ class RegistryView : Grid, BrowsableView
         if (selected_row != null)
             ((!) selected_row).grab_focus ();
     }
-    public void select_row_named (string selected, bool grab_focus)
+    public void select_row_named (string selected, string context, bool grab_focus)
     {
         check_resize ();
-        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected));
+        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context));
         if (row == null)
             assert_not_reached ();
         scroll_to_row ((!) row, grab_focus);
@@ -108,7 +108,7 @@ class RegistryView : Grid, BrowsableView
         if (row != null)
             scroll_to_row ((!) row, grab_focus);
     }
-    private int get_row_position (string selected)
+    private int get_row_position (string selected, string context)
         requires (key_model != null)
     {
         uint position = 0;
@@ -116,7 +116,12 @@ class RegistryView : Grid, BrowsableView
         {
             SettingObject object = (SettingObject) ((!) key_model).get_object (position);
             if (object.full_name == selected)
-                return (int) position;
+            {
+                if (object is Directory
+                 || context == ".dconf" && object is DConfKey // theorical?
+                 || object is GSettingsKey && ((GSettingsKey) object).schema_id == context)
+                    return (int) position;
+            }
             position++;
         }
         return 0; // selected row may have been removed

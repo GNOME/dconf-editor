@@ -20,6 +20,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid
 {
+    private string last_context = "";
+
     [GtkChild] private BrowserInfoBar info_bar;
 
     [GtkChild] private Stack stack;
@@ -109,7 +111,7 @@ class BrowserView : Grid
         return "";
     }
 
-    public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor, bool warning_multiple_schemas)
+    public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor)
     {
         this.key_model = key_model;
         sorting_options.sort_key_model (key_model);
@@ -124,20 +126,22 @@ class BrowserView : Grid
     {
         bool grab_focus = true;     // unused, for now
         if (selected != "")
-            browse_view.select_row_named ((!) selected, grab_focus);
+            browse_view.select_row_named (selected, last_context, grab_focus);
         else
             browse_view.select_first_row (grab_focus);
         properties_view.clean ();
     }
 
-    public void prepare_properties_view (Key key, bool is_parent, bool warning_multiple_schemas)
+    public void prepare_properties_view (Key key, bool is_parent)
     {
-        properties_view.populate_properties_list_box (key, warning_multiple_schemas);
+        properties_view.populate_properties_list_box (key);
 
         hide_reload_warning ();
 
         stack.set_transition_type (is_parent && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
         pre_search_view = null;
+
+        last_context = (key is GSettingsKey) ? ((GSettingsKey) key).schema_id : ".dconf";
     }
 
     public void show_search_view (string term, string current_path, string [] bookmarks)

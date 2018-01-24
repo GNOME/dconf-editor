@@ -4,7 +4,7 @@
   <template class="RegistryInfo" parent="GtkGrid">
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkRevealer" id="multiple_schemas_warning_revealer">
+      <object class="GtkRevealer" id="conflicting_key_warning_revealer">
         <property name="visible">True</property>
         <property name="reveal-child">False</property>
         <child>
@@ -29,7 +29,44 @@
                         <property name="xalign">0.5</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
-                        <property name="label" translatable="yes">Multiple schemas are installed at the parent path. This key might be defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
+                        <property name="label" translatable="yes">This key is defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkRevealer" id="hard_conflicting_key_error_revealer">
+        <property name="visible">True</property>
+        <property name="reveal-child">False</property>
+        <child>
+          <object class="GtkInfoBar">
+            <property name="visible">True</property>
+            <property name="message-type">warning</property>
+            <child internal-child="action_area">
+              <object class="GtkBox">
+                <property name="visible">False</property>
+              </object>
+            </child>
+            <child internal-child="content_area">
+              <object class="GtkBox">
+                <child>
+                  <object class="RegistryWarning">
+                    <property name="visible">True</property>
+                    <property name="halign">center</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="xalign">0.5</property>
+                        <property name="max-width-chars">40</property>
+                        <property name="wrap">True</property>
+                        <property name="label" translatable="yes">This key is incompatibly defined and used by more than one schema. It is impossible to work with its value in a meaningful way.</property>
                       </object>
                     </child>
                   </object>

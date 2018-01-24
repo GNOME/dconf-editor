@@ -202,8 +202,7 @@ class DConfWindow : ApplicationWindow
                     else    // search
                         reload_search_action.set_enabled (true);
                 }
-                bool meaningless;
-                pathbar.update_ghosts (model.get_fallback_path (pathbar.complete_path, out meaningless));
+                pathbar.update_ghosts (model.get_fallback_path (pathbar.complete_path));
             });
     }
 
@@ -481,8 +480,7 @@ class DConfWindow : ApplicationWindow
 
     private void request_folder_path (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
-        bool warning_multiple_schemas;
-        string fallback_path = model.get_fallback_path (full_name, out warning_multiple_schemas);
+        string fallback_path = model.get_fallback_path (full_name);
 
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
@@ -490,7 +488,7 @@ class DConfWindow : ApplicationWindow
         GLib.ListStore? key_model = model.get_children (fallback_path);
         if (key_model != null)
         {
-            browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (fallback_path), warning_multiple_schemas);
+            browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (fallback_path));
             update_current_path (fallback_path);
 
             if (selected_or_empty == "")
@@ -521,9 +519,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            browser_view.prepare_properties_view ((!) found_object,
-                                                  current_path == SettingsModel.get_parent_path (full_name),
-                                                  model.get_warning_multiple_schemas (SettingsModel.get_parent_path (full_name)));
+            browser_view.prepare_properties_view ((!) found_object, current_path == SettingsModel.get_parent_path (full_name));
             update_current_path (strdup (full_name));
         }
 

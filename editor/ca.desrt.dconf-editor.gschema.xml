@@ -361,8 +361,8 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
     </key>
   </schema>
   <schema id="ca.desrt.dconf-editor.Demo.Conflict1" path="/ca/desrt/dconf-editor/Demo/Conflict/">
-    <key name="a-non-conflicting-key" type="i">
-      <default>0</default>
+    <key name="a-non-conflicting-key" type="b">
+      <default>true</default>
       <summary>A normal non-conflicting key from Conflict1</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. Non-conflicting keys should have no issues.</description>
     </key>
@@ -376,15 +376,15 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <summary>A (simple) string conflicting key that should give a error</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped to the same path has a different type.</description>
     </key>
-    <key name="warning-similar" type="s">
-      <default>''</default>
+    <key name="warning-similar" type="b">
+      <default>true</default>
       <summary>Conflicting key from Conflict1 that should give a warning</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. It can be edited, since the types are compatible, but it is still an issue.</description>
     </key>
   </schema>
   <schema id="ca.desrt.dconf-editor.Demo.Conflict2" path="/ca/desrt/dconf-editor/Demo/Conflict/">
-    <key name="another-non-conflicting-key" type="i">
-      <default>0</default>
+    <key name="another-non-conflicting-key" type="b">
+      <default>true</default>
       <summary>A normal non-conflicting key from Conflict2</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. Non-conflicting keys should have no issues.</description>
     </key>
@@ -398,8 +398,8 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <summary>A nullable-string conflicting key that should give an error</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped to the same path has a different type.</description>
     </key>
-    <key name="warning-similar" type="s">
-      <default>''</default>
+    <key name="warning-similar" type="b">
+      <default>true</default>
       <summary>Conflicting key from Conflict2 that should give a warning</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. It can be edited, since the types are compatible, but it is still an issue.</description>
     </key>

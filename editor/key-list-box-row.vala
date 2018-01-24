@@ -366,7 +366,6 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
-
         if (key.type_string == "b" || key.type_string == "mb")
         {
             popover.new_section ();
@@ -445,6 +444,23 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             key_info_label.get_style_context ().add_class ("italic-label");
             key_info_label.set_label (_("No summary provided"));
         }
+
+        if (key.warning_conflicting_key)
+        {
+            if (key.error_hard_conflicting_key)
+            {
+                get_style_context ().add_class ("hard-conflict");
+                if (boolean_switch != null)
+                {
+                    ((!) boolean_switch).hide ();
+                    key_value_label.show ();
+                }
+                key_value_label.get_style_context ().add_class ("italic-label");
+                key_value_label.set_label (_("conflicting keys"));
+            }
+            else
+                get_style_context ().add_class ("conflict");
+        }
     }
 
     public KeyListBoxRowEditable (GSettingsKey _key, ModificationsHandler modifications_handler, bool search_result_mode = false)
@@ -495,6 +511,14 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             variant = new Variant.string (key.full_name);
             popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
+        }
+
+        if (key.error_hard_conflicting_key)
+        {
+            variant = new Variant.string (key.full_name);
+            popover.new_gaction ("detail", "ui.open-object(" + variant.print (false) + ")");
+            popover.new_copy_action (get_text ());
+            return true; // anything else is value-related, so we are done
         }
 
         bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
@@ -641,6 +665,9 @@ private class ContextPopover : Popover
         {
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys */
             case "customize":       action_text = _("Customize…");          break;
+
+            /* Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting */
+            case "detail":          action_text = _("Show details…");       break;
 
             /* Translators: "open folder" action in the right-click menu on a folder */
             case "open":            action_text = _("Open");                break;

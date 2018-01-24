@@ -20,7 +20,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
 class RegistryInfo : Grid, BrowsableView
 {
-    [GtkChild] private Revealer multiple_schemas_warning_revealer;
+    [GtkChild] private Revealer conflicting_key_warning_revealer;
+    [GtkChild] private Revealer hard_conflicting_key_error_revealer;
     [GtkChild] private Revealer no_schema_warning;
     [GtkChild] private Revealer one_choice_warning_revealer;
     [GtkChild] private Label one_choice_enum_warning;
@@ -60,7 +61,7 @@ class RegistryInfo : Grid, BrowsableView
     * * Populating
     \*/
 
-    public void populate_properties_list_box (Key key, bool warning_multiple_schemas)
+    public void populate_properties_list_box (Key key)
     {
         SettingsModel model = modifications_handler.model;
         if (key is DConfKey && model.is_key_ghost ((DConfKey) key))   // TODO place in "requires"
@@ -72,7 +73,24 @@ class RegistryInfo : Grid, BrowsableView
         current_key_info = key.properties;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
-        multiple_schemas_warning_revealer.set_reveal_child (has_schema && warning_multiple_schemas);
+        if (key is GSettingsKey)
+        {
+            if (((GSettingsKey) key).error_hard_conflicting_key)
+            {
+                conflicting_key_warning_revealer.set_reveal_child (false);
+                hard_conflicting_key_error_revealer.set_reveal_child (true);
+            }
+            else if (((GSettingsKey) key).warning_conflicting_key)
+            {
+                conflicting_key_warning_revealer.set_reveal_child (true);
+                hard_conflicting_key_error_revealer.set_reveal_child (false);
+            }
+            else
+            {
+                conflicting_key_warning_revealer.set_reveal_child (false);
+                hard_conflicting_key_error_revealer.set_reveal_child (false);
+            }
+        }
         no_schema_warning.set_reveal_child (!has_schema);
 
         properties_list_box.@foreach ((widget) => widget.destroy ());
@@ -109,13 +127,23 @@ class RegistryInfo : Grid, BrowsableView
 
         if (!dict.lookup ("type-code",    "s", out tmp_string))  assert_not_reached ();
 
-        Label label = new Label (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key));
-        ulong key_value_changed_handler = key.value_changed.connect (() => {
-                if (!has_schema && model.is_key_ghost ((DConfKey) key))
-                    label.set_text (_("Key erased."));
-                else
-                    label.set_text (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key));
-            });
+        ulong key_value_changed_handler = 0;
+        Label label;
+        if (key is GSettingsKey && ((GSettingsKey) key).error_hard_conflicting_key)
+        {
+            label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
+            label.get_style_context ().add_class ("italic-label");
+        }
+        else
+        {
+            label = new Label (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key));
+            key_value_changed_handler = key.value_changed.connect (() => {
+                    if (!has_schema && model.is_key_ghost ((DConfKey) key))
+                        label.set_text (_("Key erased."));
+                    else
+                        label.set_text (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key));
+                });
+        }
         label.halign = Align.START;
         label.valign = Align.START;
         label.xalign = 0;
@@ -124,6 +152,9 @@ class RegistryInfo : Grid, BrowsableView
         label.hexpand = true;
         label.show ();
         add_row_from_widget (_("Current value"), label, null);
+
+        if (key is GSettingsKey && ((GSettingsKey) key).error_hard_conflicting_key)
+            return;
 
         add_separator ();
 
@@ -217,6 +248,8 @@ class RegistryInfo : Grid, BrowsableView
         add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
 
         key_editor_child.destroy.connect (() => {
+                if (key_value_changed_handler == 0)
+                    assert_not_reached ();
                 key.disconnect (key_value_changed_handler);
                 key_editor_child.disconnect (value_has_changed_handler);
                 key_editor_child.disconnect (child_activated_handler);

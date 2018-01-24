@@ -192,12 +192,27 @@ class ModificationsHandler : Object
 
     public bool key_has_planned_change (Key key)
     {
-        return keys_awaiting_hashtable.contains (key);
+        if (keys_awaiting_hashtable.contains (key))
+            return true;
+
+        bool has_planned_changed = false;
+        keys_awaiting_hashtable.@foreach ((key_awaiting, planned_value) => {
+                if (key.full_name == key_awaiting.full_name)
+                    has_planned_changed = true;
+            });
+        return has_planned_changed;
     }
 
     public Variant? get_key_planned_value (Key key)
     {
-        return keys_awaiting_hashtable.lookup (key);
-    }
+        if (keys_awaiting_hashtable.contains (key))
+            return keys_awaiting_hashtable.lookup (key);
 
+        Variant? planned_changed = null;
+        keys_awaiting_hashtable.@foreach ((key_awaiting, planned_value) => {
+                if (key.full_name == key_awaiting.full_name)
+                    planned_changed = planned_value;
+            });
+        return planned_changed;
+    }
 }

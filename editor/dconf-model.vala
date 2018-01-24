@@ -89,13 +89,7 @@ public class SettingsModel : Object
 
     public Directory get_root_directory ()
     {
-        Directory root = new Directory ("/", "/");
-        uint schemas_count = 0;
-        uint subpaths_count = 0;
-        source_manager.cached_schemas.get_content_count ("/", out schemas_count, out subpaths_count);
-        if (schemas_count > 1)
-            root.warning_multiple_schemas = true;
-        return root;
+        return new Directory ("/", "/");
     }
 
     private Directory? get_directory (string path)
@@ -103,17 +97,12 @@ public class SettingsModel : Object
         if (path == "/")
             return get_root_directory ();
 
-        Directory? dir = null;
         uint schemas_count = 0;
         uint subpaths_count = 0;
         source_manager.cached_schemas.get_content_count (path, out schemas_count, out subpaths_count);
         if (schemas_count + subpaths_count > 0 || client.list (path).length > 0)
-        {
-            dir = new Directory (path, get_name (path));
-            if (schemas_count > 1)
-                ((!) dir).warning_multiple_schemas = true;
-        }
-        return dir;
+            return new Directory (path, get_name (path));
+        return null;
     }
 
     public GLib.ListStore? get_children (string folder_path)
@@ -142,10 +131,10 @@ public class SettingsModel : Object
             return (SettingObject?) get_directory (path);
     }
 
-    public Key? get_key (string path, string context)
+    public Key? get_key (string path, string context = "")
     {
         GLib.ListStore? key_model = get_children (get_parent_path (path));
-        return get_key_from_path_and_name (key_model, get_name (path));
+        return get_key_from_path_and_name (key_model, get_name (path), context);
     }
 
     public bool path_exists (string path)
@@ -159,7 +148,7 @@ public class SettingsModel : Object
             return get_directory (path) != null;
     }
 
-    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name)
+    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name, string schema_id = "")
     {
         if (key_model == null)
             return null;
@@ -170,7 +159,8 @@ public class SettingsModel : Object
             if (object == null)
                 assert_not_reached ();
             if ((!) object is Key && ((!) object).name == key_name)
-                return (Key) (!) object;
+                if (schema_id == "" || object is GSettingsKey && (!) schema_id == (!) ((GSettingsKey) object).schema_id)
+                    return (Key) (!) object;
             position++;
         }
         return null;
@@ -266,6 +256,21 @@ public class SettingsModel : Object
                 range_type,
                 settings_schema_key.get_range ().get_child_value (1).get_child_value (0)
             );
+        GSettingsKey? conflicting_key = (GSettingsKey?) get_key_from_path_and_name (key_model, key_id); // safe cast, no DConfKey's added yet
+        if (conflicting_key != null)
+        {
+            ((!) conflicting_key).warning_conflicting_key = true;
+            new_key.warning_conflicting_key = true;
+            if (((!) conflicting_key).error_hard_conflicting_key == true
+             || new_key.type_string != ((!) conflicting_key).type_string
+             || !new_key.default_value.equal (((!) conflicting_key).default_value)
+             || new_key.range_type != ((!) conflicting_key).range_type
+             || !new_key.range_content.equal (((!) conflicting_key).range_content))
+            {
+                ((!) conflicting_key).error_hard_conflicting_key = true;
+                new_key.error_hard_conflicting_key = true;
+            }
+        }
         key_model.append (new_key);
     }
 
@@ -341,25 +346,14 @@ public class SettingsModel : Object
     * * Directory methods
     \*/
 
-    public bool get_warning_multiple_schemas (string path)
-    {
-        Directory? dir = get_directory (path);
-        if (dir == null)
-            assert_not_reached ();
-        return ((!) dir).warning_multiple_schemas;
-    }
-
-    public string get_fallback_path (string path, out bool warning_multiple_schemas)
+    public string get_fallback_path (string path)
     {
         string fallback_path = path;
         if (is_key_path (path))
         {
             Key? key = get_key (path, "");
             if (key != null)
-            {
-                warning_multiple_schemas = true;   // TODO meaningless
                 return path;
-            }
             fallback_path = get_parent_path (path);
         }
 
@@ -369,7 +363,6 @@ public class SettingsModel : Object
             fallback_path = get_parent_path (fallback_path);
             dir = get_directory (fallback_path);
         }
-        warning_multiple_schemas = ((!) dir).warning_multiple_schemas;
         return fallback_path;
     }
 
