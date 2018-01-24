@@ -22,7 +22,6 @@ public class PathBar : Box
 {
     [GtkChild] private PathBarItem root_button;
 
-    public SettingsModel model { private get; set; }
     public string complete_path { get; private set; default = ""; }
 
     construct
@@ -44,7 +43,6 @@ public class PathBar : Box
         string last = split [split.length - 1];
         bool is_key_path = last != "";
 
-        PathBarItem? last_item = null;
         bool destroy_all = false;
         bool maintain_all = false;
         @foreach ((child) => {
@@ -53,21 +51,11 @@ public class PathBar : Box
                     if (destroy_all)
                         child.destroy ();
                     else
-                    {
                         complete_path += "/";
-                        if (last_item != null)
-                        {
-                            bool is_ghost = !(model.path_exists (complete_path));
-                            set_is_ghost ((!) last_item, is_ghost);
-                            last_item = null;
-                            set_is_ghost (child, is_ghost);
-                        }
-                    }
                     return;
                 }
 
                 PathBarItem item = (PathBarItem) child;
-                last_item = item;
 
                 if (maintain_all)
                 {
@@ -94,13 +82,6 @@ public class PathBar : Box
                 destroy_all = true;
             });
 
-        if (last_item != null)
-        {
-            bool is_ghost = !(model.path_exists (complete_path));
-            set_is_ghost ((!) last_item, is_ghost);
-            last_item = null;
-        }
-
         if (split.length > 0)
         {
             /* add one item per folder */
@@ -110,9 +91,8 @@ public class PathBar : Box
                 foreach (string item in split [0:split.length - 1])
                 {
                     complete_path += item + "/";
-                    bool is_ghost = !(model.path_exists (complete_path));
-                    set_is_ghost (add_path_bar_item (item, complete_path, true, !is_key_path && (index == split.length - 2)), is_ghost);
-                    set_is_ghost (add_slash_label (), is_ghost);
+                    add_path_bar_item (item, complete_path, true, !is_key_path && (index == split.length - 2));
+                    add_slash_label ();
                     index++;
                 }
             }
@@ -121,8 +101,7 @@ public class PathBar : Box
             if (is_key_path)
             {
                 complete_path += last;
-                bool is_ghost = !(model.path_exists (complete_path));
-                set_is_ghost (add_path_bar_item (last, complete_path, false, true), is_ghost);
+                add_path_bar_item (last, complete_path, false, true);
             }
         }
 
@@ -137,38 +116,49 @@ public class PathBar : Box
         return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
     }
 
+    public void update_ghosts (string non_ghost_path)
+    {
+        string action_target = "";
+        @foreach ((child) => {
+                if (child is PathBarItem)
+                {
+                    PathBarItem item = (PathBarItem) child;
+                    Variant? variant = item.get_action_target_value ();
+                    if (variant == null)
+                        assert_not_reached ();
+                    action_target = ((!) variant).get_string ();
+                }
+                StyleContext context = child.get_style_context ();
+                if (non_ghost_path.has_prefix (action_target))
+                    context.remove_class ("inexistent");
+                else
+                    context.add_class ("inexistent");
+            });
+    }
+
     /*\
     * * widgets management
     \*/
 
-    private Label add_slash_label ()
+    private void add_slash_label ()
     {
-        Label slash_label = new Label ("/");
-        add (slash_label);
-        return slash_label;
+        add (new Label ("/"));
     }
 
-    private PathBarItem add_path_bar_item (string label, string complete_path, bool is_folder, bool block)
+    private void add_path_bar_item (string label, string complete_path, bool is_folder, bool block)
     {
         PathBarItem path_bar_item = new PathBarItem (label, is_folder ? "ui.open-folder" : "ui.open-object");
         path_bar_item.action_target = new Variant.string (complete_path);
 
         add (path_bar_item);
         activate_item (path_bar_item, block);   // has to be after add()
-        return path_bar_item;
-    }
-
-    private void set_is_ghost (Widget child, bool is_ghost)
-    {
-        if (is_ghost)
-            child.get_style_context ().add_class ("dim-label");
-        else
-            child.get_style_context ().remove_class ("dim-label");
     }
 
     private void activate_item (PathBarItem item, bool state)
     {
         StyleContext context = item.get_style_context ();
+        if (state == context.has_class ("active"))
+            return;
         if (state)
         {
             item.cursor_type = PathBarItem.CursorType.CONTEXT;

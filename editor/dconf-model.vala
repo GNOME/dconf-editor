@@ -351,8 +351,19 @@ public class SettingsModel : Object
 
     public string get_fallback_path (string path, out bool warning_multiple_schemas)
     {
-        Directory? dir = get_directory (path);
         string fallback_path = path;
+        if (is_key_path (path))
+        {
+            Key? key = get_key (path);
+            if (key != null)
+            {
+                warning_multiple_schemas = true;   // TODO meaningless
+                return path;
+            }
+            fallback_path = get_parent_path (path);
+        }
+
+        Directory? dir = get_directory (fallback_path);
         while (dir == null)
         {
             fallback_path = get_parent_path (fallback_path);

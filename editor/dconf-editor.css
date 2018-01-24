@@ -215,9 +215,14 @@
   border-bottom-color:@theme_selected_bg_color;
 }
 
-.pathbar > button.dim-label:backdrop,
-.pathbar > label.dim-label:backdrop {
-  opacity: 1;
+/* inexistent items */
+.pathbar > label,
+.pathbar > button.inexistent > label.item {
+  color:@insensitive_fg_color;
+}
+
+.pathbar > button.inexistent:hover > label.item {
+  border-bottom-color:transparent;
 }
 
 /* search changes */

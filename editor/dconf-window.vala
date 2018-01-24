@@ -147,7 +147,6 @@ class DConfWindow : ApplicationWindow
                 first_path = settings.get_string ("saved-view");
         }
 
-        pathbar.model = model;
         prepare_model ();
 
         if (first_path == null)
@@ -203,7 +202,8 @@ class DConfWindow : ApplicationWindow
                     else    // search
                         reload_search_action.set_enabled (true);
                 }
-                pathbar.set_path (current_path); // update "ghost" status
+                bool meaningless;
+                pathbar.update_ghosts (model.get_fallback_path (pathbar.complete_path, out meaningless));
             });
     }
 
