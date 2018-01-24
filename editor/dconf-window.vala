@@ -362,7 +362,7 @@ class DConfWindow : ApplicationWindow
     private const GLib.ActionEntry [] action_entries =
     {
         { "open-folder", open_folder, "s" },
-        { "open-object", open_object, "s" },
+        { "open-object", open_object, "(ss)" },
         { "open-parent", open_parent, "s" },
 
         { "reload-folder", reload_folder },
@@ -396,9 +396,11 @@ class DConfWindow : ApplicationWindow
         if (bookmarks_button.active)
             bookmarks_button.active = false;
 
-        string full_name = ((!) path_variant).get_string ();
+        string full_name;
+        string context;
+        ((!) path_variant).@get ("(ss)", out full_name, out context);
 
-        request_object_path (full_name);
+        request_object_path (full_name, context);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
@@ -415,7 +417,7 @@ class DConfWindow : ApplicationWindow
 
     private void reload_object (/* SimpleAction action, Variant? path_variant */)
     {
-        request_object_path (current_path, false);
+        request_object_path (current_path, "", false);
     }
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
@@ -500,9 +502,12 @@ class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_object_path (string full_name, bool notify_missing = true)
+    private void request_object_path (string full_name, string context = "", bool notify_missing = true)
     {
-        Key? found_object = model.get_key (full_name);
+        Key? found_object = model.get_key (full_name, context);
+        if (found_object == null)   // TODO warn about missing context
+            found_object = model.get_key (full_name, "");
+
         if (found_object == null)
         {
             if (notify_missing)
@@ -530,7 +535,7 @@ class DConfWindow : ApplicationWindow
         if (browser_view.current_view_is_browse_view ())
             request_folder_path (current_path, browser_view.get_selected_row_name ());
         else if (browser_view.current_view_is_properties_view ())
-            request_object_path (current_path, false);
+            request_object_path (current_path, "", false);
         else if (browser_view.current_view_is_search_results_view ())
             browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
     }

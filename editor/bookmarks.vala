@@ -101,10 +101,15 @@ public class Bookmarks : MenuButton
 
             Bookmark bookmark_row = new Bookmark (bookmark);
             if (SettingsModel.is_key_path (bookmark))
-                bookmark_row.action_name = "ui.open-object";
+            {
+                Variant variant = new Variant ("(ss)", bookmark, "");
+                bookmark_row.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");    // TODO save context
+            }
             else
-                bookmark_row.action_name = "ui.open-folder";
-            bookmark_row.action_target = bookmark;
+            {
+                Variant variant = new Variant.string (bookmark);
+                bookmark_row.set_detailed_action_name ("ui.open-folder(" + variant.print (false) + ")");
+            }
             ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => remove_bookmark (bookmark));
             bookmark_row.destroy_button.destroy.connect (() => bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler));
             bookmark_row.show ();

@@ -209,13 +209,15 @@ class RegistryView : Grid, BrowsableView
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";
+            wrapper.set_action_target ("s", setting_object.full_name);
         }
         else
         {
             wrapper.get_style_context ().add_class ("key-row");
             wrapper.action_name = "ui.open-object";
+            string context = (setting_object is GSettingsKey) ? ((GSettingsKey) setting_object).schema_id : ".dconf";
+            wrapper.set_action_target ("(ss)", setting_object.full_name, context);
         }
-        wrapper.action_target = setting_object.full_name;
 
         return wrapper;
     }

@@ -126,7 +126,13 @@ public class PathBar : Box
                     Variant? variant = item.get_action_target_value ();
                     if (variant == null)
                         assert_not_reached ();
-                    action_target = ((!) variant).get_string ();
+                    if (((!) variant).get_type_string () == "s")    // directory
+                        action_target = ((!) variant).get_string ();
+                    else
+                    {
+                        string unused;
+                        ((!) variant).get ("(ss)", out action_target, out unused);
+                    }
                 }
                 StyleContext context = child.get_style_context ();
                 if (non_ghost_path.has_prefix (action_target))
@@ -147,9 +153,17 @@ public class PathBar : Box
 
     private void add_path_bar_item (string label, string complete_path, bool is_folder, bool block)
     {
-        PathBarItem path_bar_item = new PathBarItem (label, is_folder ? "ui.open-folder" : "ui.open-object");
-        path_bar_item.action_target = new Variant.string (complete_path);
-
+        PathBarItem path_bar_item;
+        if (is_folder)
+        {
+            Variant variant = new Variant.string (complete_path);
+            path_bar_item = new PathBarItem (label, "ui.open-folder(" + variant.print (false) + ")");
+        }
+        else
+        {
+            Variant variant = new Variant ("(ss)", complete_path, "");
+            path_bar_item = new PathBarItem (label, "ui.open-object(" + variant.print (false) + ")");
+        }
         add (path_bar_item);
         activate_item (path_bar_item, block);   // has to be after add()
     }
@@ -169,7 +183,7 @@ public class PathBar : Box
         else
         {
             item.cursor_type = PathBarItem.CursorType.POINTER;
-            item.set_action_name (item.default_action);
+            item.set_detailed_action_name (item.default_action);
             context.remove_class ("active");
         }
     }
@@ -230,6 +244,6 @@ private class PathBarItem : Button
     {
         Object (text_string: label, default_action: action);
         text_label.set_text (label);
-        set_action_name (action);
+        set_detailed_action_name (action);
     }
 }

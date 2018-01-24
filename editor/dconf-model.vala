@@ -137,12 +137,12 @@ public class SettingsModel : Object
     public SettingObject? get_object (string path)
     {
         if (is_key_path (path))
-            return (SettingObject?) get_key (path);
+            return (SettingObject?) get_key (path, "");
         else
             return (SettingObject?) get_directory (path);
     }
 
-    public Key? get_key (string path)
+    public Key? get_key (string path, string context)
     {
         GLib.ListStore? key_model = get_children (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path));
@@ -354,7 +354,7 @@ public class SettingsModel : Object
         string fallback_path = path;
         if (is_key_path (path))
         {
-            Key? key = get_key (path);
+            Key? key = get_key (path, "");
             if (key != null)
             {
                 warning_multiple_schemas = true;   // TODO meaningless
@@ -377,9 +377,9 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
-    public string get_key_copy_text (string full_name)
+    public string get_key_copy_text (string full_name, string context = "")
     {
-        Key? key = get_key (full_name);
+        Key? key = get_key (full_name, context);
         if (key == null)
             return full_name;
 

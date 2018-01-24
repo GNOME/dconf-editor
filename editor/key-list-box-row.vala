@@ -362,7 +362,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.new_section ();
         }
 
-        variant = new Variant.string (key.full_name);
+        variant = new Variant ("(ss)", key.full_name, ".dconf");
         popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
@@ -501,7 +501,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         bool planned_change = modifications_handler.key_has_planned_change (key);
         Variant? planned_value = modifications_handler.get_key_planned_value (key);
 
-        variant = new Variant.string (key.full_name);
+        variant = new Variant ("(ss)", key.full_name, key.schema_id);
         popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
