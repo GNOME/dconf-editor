@@ -675,6 +675,17 @@ class DConfWindow : ApplicationWindow
                     if (bookmarks_button.sensitive)
                         bookmarks_button.clicked ();
                     return true;
+
+                case "c":
+                    browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
+
+                    string? selected_row_text = browser_view.get_copy_text ();
+                    if (selected_row_text == null && SettingsModel.is_key_path (current_path))
+                        selected_row_text = model.get_key_copy_text (current_path);
+                    ConfigurationEditor application = (ConfigurationEditor) get_application ();
+                    application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
+                    return true;
+
                 case "d":
                     if (bookmarks_button.sensitive == false)
                         return true;
@@ -691,6 +702,7 @@ class DConfWindow : ApplicationWindow
                     browser_view.discard_row_popover ();
                     bookmarks_button.set_bookmarked (false);
                     return true;
+
                 case "f":
                     if (bookmarks_button.active)
                         bookmarks_button.active = false;
@@ -704,21 +716,14 @@ class DConfWindow : ApplicationWindow
                     else
                         search_bar.search_mode_enabled = false;
                     return true;
-                case "c":
-                    browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
 
-                    string? selected_row_text = browser_view.get_copy_text ();
-                    if (selected_row_text == null && SettingsModel.is_key_path (current_path))
-                        selected_row_text = model.get_key_copy_text (current_path);
-                    ConfigurationEditor application = (ConfigurationEditor) get_application ();
-                    application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
-                    return true;
                 case "F1":
                     browser_view.discard_row_popover ();
                     if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
                         return false;   // help overlay
                     ((ConfigurationEditor) get_application ()).about_cb ();
                     return true;
+
                 case "Return":
                 case "KP_Enter":
                     if (info_button.active || bookmarks_button.active)
@@ -726,6 +731,7 @@ class DConfWindow : ApplicationWindow
                     browser_view.discard_row_popover ();
                     browser_view.toggle_boolean_key ();
                     return true;
+
                 // case "BackSpace":    // ?
                 case "Delete":
                 case "KP_Delete":
@@ -741,6 +747,7 @@ class DConfWindow : ApplicationWindow
                     else
                         browser_view.set_to_default ();
                     return true;
+
                 default:
                     break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
             }
