@@ -28,21 +28,14 @@ public enum ModificationsMode {
     DELAYED
 }
 
-public uint key_hash (Key key)
-{
-    return str_hash (key.descriptor);
-}
-
-public bool key_equal (Key key1, Key key2)
-{
-    return str_equal (key1.descriptor, key2.descriptor);
-}
-
 class ModificationsHandler : Object
 {
     public ModificationsMode mode { get; set; default=ModificationsMode.NONE; }
 
-    private HashTable<Key, Variant?> keys_awaiting_hashtable = new HashTable<Key, Variant?> (key_hash, key_equal);
+    private HashTable<Key, Variant?> keys_awaiting_hashtable = new HashTable<Key, Variant?> (
+            (key)        => { return str_hash (key.descriptor); },
+            (key1, key2) => { return str_equal (key1.descriptor, key2.descriptor); }
+        );
     public uint dconf_changes_count
     {
         get
