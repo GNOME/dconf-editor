@@ -116,7 +116,7 @@ private abstract class ClickableListBoxRow : EventBox
             ((!) nullable_popover).destroy ();
     }
 
-    protected void hide_right_click_popover ()
+    public void hide_right_click_popover ()
     {
         if (nullable_popover != null)
             ((!) nullable_popover).popdown ();
@@ -586,16 +586,6 @@ private class ContextPopover : Popover
         new_section_real ();
 
         bind_model (menu, null);
-
-        key_press_event.connect (on_key_press_event);   // TODO should be only for RegistryView popovers, not for RegistryInfo ones (nullable booleans & enums)
-    }
-
-    private bool on_key_press_event (Widget widget, Gdk.EventKey event)
-    {
-        if (Gdk.keyval_name (event.keyval) != "Menu")
-            return false;
-        popdown ();
-        return true;
     }
 
     /*\

@@ -295,8 +295,14 @@ class RegistrySearch : Grid, BrowsableView
             return false;
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-        row.show_right_click_popover ();
-        rows_possibly_with_popover.append (row);
+
+        if (row.right_click_popover_visible ())
+            row.hide_right_click_popover ();
+        else
+        {
+            row.show_right_click_popover ();
+            rows_possibly_with_popover.append (row);
+        }
         return true;
     }
 
