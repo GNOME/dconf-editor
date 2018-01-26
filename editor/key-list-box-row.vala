@@ -345,7 +345,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         SettingsModel model = modifications_handler.model;
-        Variant variant;
+        Variant variant_s = new Variant.string (key.full_name);
+        Variant variant_ss = new Variant ("(ss)", key.full_name, ".dconf");
 
         if (model.is_key_ghost (key))
         {
@@ -355,13 +356,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (search_result_mode)
         {
-            variant = new Variant.string (key.full_name);
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
+            popover.new_gaction ("open_parent", "ui.open-parent(" + variant_s.print (false) + ")");
             popover.new_section ();
         }
 
-        variant = new Variant ("(ss)", key.full_name, ".dconf");
-        popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
+        popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "mb")
@@ -396,10 +395,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             if (planned_change)
             {
                 popover.new_section ();
-                popover.new_action (planned_value == null ? "unerase" : "dismiss", () => {
-                        destroy_popover ();
-                        change_dismissed ();
-                    });
+                popover.new_gaction (planned_value == null ? "unerase" : "dismiss", "bro.dismiss-change(" + variant_s.print (false) + ")");
             }
 
             if (!planned_change || planned_value != null) // not &&
@@ -502,19 +498,18 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override bool generate_popover (ContextPopover popover)
     {
         SettingsModel model = modifications_handler.model;
-        Variant variant;
+        Variant variant_s = new Variant.string (key.full_name);
+        Variant variant_ss = new Variant ("(ss)", key.full_name, key.schema_id);
 
         if (search_result_mode)
         {
-            variant = new Variant.string (key.full_name);
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
+            popover.new_gaction ("open_parent", "ui.open-parent(" + variant_s.print (false) + ")");
             popover.new_section ();
         }
 
         if (key.error_hard_conflicting_key)
         {
-            variant = new Variant.string (key.full_name);
-            popover.new_gaction ("detail", "ui.open-object(" + variant.print (false) + ")");
+            popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
             popover.new_copy_action (get_text ());
             return true; // anything else is value-related, so we are done
         }
@@ -523,8 +518,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
 
-        variant = new Variant ("(ss)", key.full_name, key.schema_id);
-        popover.new_gaction ("customize", "ui.open-object(" + variant.print (false) + ")");
+        popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_copy_action (get_text ());
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"
@@ -571,10 +565,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         else if (planned_change)
         {
             popover.new_section ();
-            popover.new_action ("dismiss", () => {
-                    destroy_popover ();
-                    change_dismissed ();
-                });
+            popover.new_gaction ("dismiss", "bro.dismiss-change(" + variant_s.print (false) + ")");
+
             if (planned_value != null)
                 popover.new_action ("default1", () => {
                         destroy_popover ();
@@ -642,15 +634,9 @@ private class ContextPopover : Popover
                 current_section.append (_("Set to default"), group_dot_action);     return;
             case "default2":
                 new_multi_default_action (group_dot_action);                        return;
-            case "dismiss":
-                /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
-                current_section.append (_("Dismiss change"), group_dot_action);     return;
             case "erase":
                 /* Translators: "erase key" action in the right-click menu on a key without schema */
                 current_section.append (_("Erase key"), group_dot_action);          return;
-            case "unerase":
-                /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
-                current_section.append (_("Do not erase"), group_dot_action);       return;
             default:
                 assert_not_reached ();
         }
@@ -667,6 +653,9 @@ private class ContextPopover : Popover
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting */
             case "detail":          action_text = _("Show details…");       break;
 
+            /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
+            case "dismiss":         action_text = _("Dismiss change");      break;
+
             /* Translators: "open folder" action in the right-click menu on a folder */
             case "open":            action_text = _("Open");                break;
 
@@ -675,6 +664,9 @@ private class ContextPopover : Popover
 
             /* Translators: "reset recursively" action in the right-click menu on a folder */
             case "recursivereset":  action_text = _("Reset recursively");   break;
+
+            /* Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased */
+            case "unerase":         action_text = _("Do not erase");        break;
 
             default: assert_not_reached ();
         }

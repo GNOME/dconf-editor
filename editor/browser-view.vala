@@ -88,8 +88,16 @@ class BrowserView : Grid
 
     private const GLib.ActionEntry [] action_entries =
     {
+        { "dismiss-change", dismiss_change, "s" },
         { "refresh-folder", refresh_folder }
     };
+
+    private void dismiss_change (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        modifications_handler.dismiss_change (((!) path_variant).get_string ());
+        invalidate_popovers ();
+    }
 
     private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
         requires (key_model != null)
