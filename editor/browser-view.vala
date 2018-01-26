@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 class BrowserView : Grid
 {
-    private string last_context = "";
+    public string last_context { get; private set; default = ""; }
 
     [GtkChild] private BrowserInfoBar info_bar;
 

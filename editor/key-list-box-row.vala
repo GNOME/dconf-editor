@@ -79,6 +79,7 @@ private abstract class ClickableListBoxRow : EventBox
     public signal void on_popover_disappear ();
 
     public abstract string get_text ();
+    protected Variant get_text_variant () { return new Variant.string (get_text ()); }
 
     public bool search_result_mode { protected get; construct; default = false; }
 
@@ -188,7 +189,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         }
 
         popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
-        popover.new_copy_action (get_text ());
+        popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
 
         popover.new_section ();
         popover.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
@@ -339,7 +340,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override string get_text ()
     {
         SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (key.full_name);
+        return model.get_key_copy_text (key.full_name, ".dconf");
     }
 
     protected override bool generate_popover (ContextPopover popover)
@@ -350,7 +351,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (model.is_key_ghost (key))
         {
-            popover.new_copy_action (get_text ());
+            popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
             return true;
         }
 
@@ -361,7 +362,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
 
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
-        popover.new_copy_action (get_text ());
+        popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
 
         if (key.type_string == "b" || key.type_string == "mb")
         {
@@ -486,7 +487,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override string get_text ()
     {
         SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (key.full_name);
+        return model.get_key_copy_text (key.full_name, key.schema_id);
     }
 
     protected override bool generate_popover (ContextPopover popover)
@@ -504,7 +505,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         if (key.error_hard_conflicting_key)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
-            popover.new_copy_action (get_text ());
+            popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
             return true; // anything else is value-related, so we are done
         }
 
@@ -513,7 +514,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
 
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
-        popover.new_copy_action (get_text ());
+        popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
 
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"
             || (
@@ -597,6 +598,9 @@ private class ContextPopover : Popover
         string action_text;
         switch (action_name)
         {
+            /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
+            case "copy":            action_text = _("Copy");                break;
+
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys */
             case "customize":       action_text = _("Customize…");          break;
 
@@ -629,13 +633,6 @@ private class ContextPopover : Popover
             default: assert_not_reached ();
         }
         current_section.append (action_text, action_action);
-    }
-
-    public void new_copy_action (string text)
-    {
-        Variant variant = new Variant.string (text);
-        /* Translators: "copy to clipboard" action in the right-click menu on the list of keys */
-        current_section.append (_("Copy"), "app.copy(" + variant.print (false) + ")");
     }
 
     public void set_group (string group_name)

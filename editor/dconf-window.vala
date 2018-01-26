@@ -568,8 +568,8 @@ class DConfWindow : ApplicationWindow
 
         if (SettingsModel.is_key_path (current_path))   // mainly here for ensuring menu is never empty
         {
-            Variant variant = new Variant.string (model.get_key_copy_text (current_path));
-            menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");   // TODO what happens on multiple schemas defining one key?..
+            Variant variant = new Variant.string (model.get_key_copy_text (current_path, browser_view.last_context));
+            menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
         }
         else
         {
@@ -690,7 +690,7 @@ class DConfWindow : ApplicationWindow
 
                     string? selected_row_text = browser_view.get_copy_text ();
                     if (selected_row_text == null && SettingsModel.is_key_path (current_path))
-                        selected_row_text = model.get_key_copy_text (current_path);
+                        selected_row_text = model.get_key_copy_text (current_path, browser_view.last_context);
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;

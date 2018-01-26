@@ -148,7 +148,7 @@ public class SettingsModel : Object
             return get_directory (path) != null;
     }
 
-    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name, string schema_id = "")
+    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name, string context = "")
     {
         if (key_model == null)
             return null;
@@ -159,8 +159,15 @@ public class SettingsModel : Object
             if (object == null)
                 assert_not_reached ();
             if ((!) object is Key && ((!) object).name == key_name)
-                if (schema_id == "" || object is GSettingsKey && (!) schema_id == (!) ((GSettingsKey) object).schema_id)
+            {
+                // assumes for now you cannot have both a dconf key and a gsettings key with the same name
+                if (context == "")
                     return (Key) (!) object;
+                if ((!) object is GSettingsKey && context == ((GSettingsKey) (!) object).schema_id)
+                    return (Key) (!) object;
+                if ((!) object is DConfKey && context == ".dconf")  // return key even if not DConfKey?
+                    return (Key) (!) object;
+            }
             position++;
         }
         return null;
@@ -370,7 +377,7 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
-    public string get_key_copy_text (string full_name, string context = "")
+    public string get_key_copy_text (string full_name, string context)
     {
         Key? key = get_key (full_name, context);
         if (key == null)
