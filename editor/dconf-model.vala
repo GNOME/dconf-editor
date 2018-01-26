@@ -413,12 +413,16 @@ public class SettingsModel : Object
         }
     }
 
-    public void set_key_to_default (GSettingsKey key)
+    public void set_key_to_default (string full_name, string schema_id)
     {
-        GLib.Settings settings = key.settings;
-        settings.reset (key.name);
+        SettingObject? key = get_key (full_name, schema_id);
+        if (key == null && !(key is GSettingsKey))
+            return; // TODO better
+
+        GLib.Settings settings = ((GSettingsKey) (!) key).settings;
+        settings.reset (((!) key).name);
         if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
-            settings.backend.changed (key.full_name, null);
+            settings.backend.changed (full_name, null);
         // Alternative workaround: key.value_changed ();
     }
 

@@ -209,7 +209,7 @@ class RegistryInfo : Grid, BrowsableView
                     {
                         if (custom_value_switch.get_active ())
                         {
-                            model.set_key_to_default ((GSettingsKey) key);
+                            model.set_key_to_default (((GSettingsKey) key).full_name, ((GSettingsKey) key).schema_id);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
                             key_editor_child.reload (model.get_key_value (key));
                             //if (tmp_string == "<flags>")                      let's try to live without this...

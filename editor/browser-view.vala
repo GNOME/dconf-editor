@@ -89,7 +89,8 @@ class BrowserView : Grid
     private const GLib.ActionEntry [] action_entries =
     {
         { "dismiss-change", dismiss_change, "s" },
-        { "refresh-folder", refresh_folder }
+        { "refresh-folder", refresh_folder },
+        { "set-to-default", set_to_default, "(ss)" }
     };
 
     private void dismiss_change (SimpleAction action, Variant? path_variant)
@@ -104,6 +105,16 @@ class BrowserView : Grid
     {
         sorting_options.sort_key_model ((!) key_model);
         hide_reload_warning ();
+    }
+
+    private void set_to_default (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name;
+        string context;
+        ((!) path_variant).@get ("(ss)", out full_name, out context);
+        modifications_handler.set_to_default (full_name, context);
+        invalidate_popovers ();
     }
 
     /*\

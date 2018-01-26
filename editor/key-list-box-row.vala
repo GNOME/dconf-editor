@@ -420,7 +420,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
                     bool boolean = ((!) boolean_switch).get_active ();
                     if (boolean == key.default_value.get_boolean ())
-                        model.set_key_to_default (key);
+                        model.set_key_to_default (key.full_name, key.schema_id);
                     else
                         model.set_key_value (key, new Variant.boolean (boolean));
                 });
@@ -562,18 +562,12 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.new_gaction ("dismiss", "bro.dismiss-change(" + variant_s.print (false) + ")");
 
             if (planned_value != null)
-                popover.new_action ("default1", () => {
-                        destroy_popover ();
-                        set_key_value (null);
-                    });
+                popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
         }
         else if (!model.is_key_default (key))
         {
             popover.new_section ();
-            popover.new_action ("default1", () => {
-                    destroy_popover ();
-                    set_key_value (null);
-                });
+            popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
         }
         return true;
     }
@@ -623,9 +617,6 @@ private class ContextPopover : Popover
 
         switch (action_action)
         {
-            case "default1":
-                /* Translators: "reset key value" action in the right-click menu on the list of keys */
-                current_section.append (_("Set to default"), group_dot_action);     return;
             case "default2":
                 new_multi_default_action (group_dot_action);                        return;
             default:
@@ -640,6 +631,9 @@ private class ContextPopover : Popover
         {
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys */
             case "customize":       action_text = _("Customize…");          break;
+
+            /* Translators: "reset key value" action in the right-click menu on the list of keys */
+            case "default1":        action_text = _("Set to default");      break;
 
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting */
             case "detail":          action_text = _("Show details…");       break;

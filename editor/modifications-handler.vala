@@ -173,7 +173,7 @@ class ModificationsHandler : Object
         else if (new_value != null)
             model.set_key_value (key, (!) new_value);
         else if (key is GSettingsKey)
-            model.set_key_to_default ((GSettingsKey) key);
+            model.set_key_to_default (((GSettingsKey) key).full_name, ((GSettingsKey) key).schema_id);
         else if (behaviour != Behaviour.UNSAFE)
         {
             mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
@@ -194,6 +194,14 @@ class ModificationsHandler : Object
         }
         else
             model.erase_key (full_name);
+    }
+
+    public void set_to_default (string full_name, string schema_id)
+    {
+        if (get_current_delay_mode ())
+            add_delayed_setting (full_name, null);
+        else
+            model.set_key_to_default (full_name, schema_id);
     }
 
     public bool key_has_planned_change (string key_path)
