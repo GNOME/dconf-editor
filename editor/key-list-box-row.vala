@@ -546,10 +546,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             popover.new_section ();
 
             if (!model.is_key_default (key))
-                popover.new_action ("default2", () => {
-                        destroy_popover ();
-                        set_key_value (null);
-                    });
+                popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
             popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
 
             popover.create_flags_list ((GSettingsKey) key, modifications_handler);
@@ -605,25 +602,6 @@ private class ContextPopover : Popover
     * * Simple actions
     \*/
 
-    public delegate void button_action ();
-    public void new_action (string action_action, button_action action)
-    {
-        set_group ("options");
-        string group_dot_action = @"options.$action_action";
-
-        SimpleAction simple_action = new SimpleAction (action_action, null);
-        simple_action.activate.connect (() => action ());
-        current_group.add_action (simple_action);
-
-        switch (action_action)
-        {
-            case "default2":
-                new_multi_default_action (group_dot_action);                        return;
-            default:
-                assert_not_reached ();
-        }
-    }
-
     public void new_gaction (string action_name, string action_action)
     {
         string action_text;
@@ -634,6 +612,8 @@ private class ContextPopover : Popover
 
             /* Translators: "reset key value" action in the right-click menu on the list of keys */
             case "default1":        action_text = _("Set to default");      break;
+
+            case "default2": new_multi_default_action (action_action);      return;
 
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting */
             case "detail":          action_text = _("Show details…");       break;
