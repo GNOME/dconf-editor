@@ -548,7 +548,6 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 
             if (!model.is_key_default (key))
                 popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
-            popover.set_group ("flags");    // ensures a flag called "customize" or "default2" won't cause problems
 
             popover.create_flags_list ((GSettingsKey) key, modifications_handler);
 
@@ -576,7 +575,7 @@ private class ContextPopover : Popover
     private GLib.Menu menu = new GLib.Menu ();
     private GLib.Menu current_section;
 
-    private ActionMap current_group;
+    private ActionMap current_group = new SimpleActionGroup ();
 
     // public signals
     public signal void value_changed (Variant? gvariant);
@@ -585,6 +584,8 @@ private class ContextPopover : Popover
     public ContextPopover ()
     {
         new_section_real ();
+
+        insert_action_group ("popmenu", (SimpleActionGroup) current_group);
 
         bind_model (menu, null);
     }
@@ -635,18 +636,6 @@ private class ContextPopover : Popover
         current_section.append (action_text, action_action);
     }
 
-    public void set_group (string group_name)
-    {
-        GLib.ActionGroup? group = get_action_group (group_name);
-        if (group == null)
-        {
-            current_group = new SimpleActionGroup ();
-            insert_action_group (group_name, (SimpleActionGroup) current_group);
-        }
-        else
-            current_group = (ActionMap) ((!) group);
-    }
-
     public void new_section ()
     {
         current_section.freeze ();
@@ -664,9 +653,6 @@ private class ContextPopover : Popover
 
     public void create_flags_list (GSettingsKey key, ModificationsHandler modifications_handler)
     {
-        set_group ("flags");
-        string group_dot = "flags.";
-
         GLib.Settings settings = key.settings;
         string [] active_flags = settings.get_strv (key.name);
         string [] all_flags = key.range_content.get_strv ();
@@ -676,7 +662,7 @@ private class ContextPopover : Popover
             SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (flag in active_flags));
             current_group.add_action (simple_action);
 
-            current_section.append (flag, group_dot + flag);
+            current_section.append (flag, @"popmenu.$flag");
 
             flags_actions += simple_action;
 
@@ -711,9 +697,8 @@ private class ContextPopover : Popover
     public GLib.Action create_buttons_list (Key key, bool has_default_value, ModificationsHandler modifications_handler)
     {
         SettingsModel model = modifications_handler.model;
-        set_group ("enum");
         const string ACTION_NAME = "choice";
-        string group_dot_action = "enum.choice";
+        string group_dot_action = "popmenu.choice";
 
         Variant key_value = model.get_key_value (key);
         VariantType original_type = key_value.get_type ();
