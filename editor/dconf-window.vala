@@ -745,7 +745,7 @@ class DConfWindow : ApplicationWindow
                     if (selected_row != null && ((!) selected_row).has_suffix ("/"))
                         reset_path ((!) selected_row, true);
                     else
-                        browser_view.set_to_default ();
+                        browser_view.set_selected_to_default ();
                     return true;
 
                 default:

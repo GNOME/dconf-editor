@@ -348,7 +348,7 @@ class RegistryView : Grid, BrowsableView
         ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
     }
 
-    public void set_to_default ()
+    public void set_selected_to_default ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)

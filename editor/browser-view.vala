@@ -210,12 +210,12 @@ class BrowserView : Grid
             search_results_view.toggle_boolean_key ();
     }
 
-    public void set_to_default ()
+    public void set_selected_to_default ()
     {
         if (current_view_is_browse_view ())
-            browse_view.set_to_default ();
+            browse_view.set_selected_to_default ();
         else if (current_view_is_search_results_view ())
-            search_results_view.set_to_default ();
+            search_results_view.set_selected_to_default ();
     }
 
     public void discard_row_popover ()
