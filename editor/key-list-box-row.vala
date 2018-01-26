@@ -179,16 +179,14 @@ private class FolderListBoxRow : ClickableListBoxRow
 
     protected override bool generate_popover (ContextPopover popover)  // TODO better
     {
-        Variant variant;
+        Variant variant = new Variant.string (full_name);
 
         if (search_result_mode)
         {
-            variant = new Variant.string (full_name);
             popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
-        variant = new Variant.string (full_name);
         popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
         popover.new_copy_action (get_text ());
 
