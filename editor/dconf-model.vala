@@ -422,17 +422,29 @@ public class SettingsModel : Object
         // Alternative workaround: key.value_changed ();
     }
 
-    public void erase_key (DConfKey key)
+    public void erase_key (string full_name)
     {
+        SettingObject? key = get_key (full_name);
+
         try
         {
-            client.write_sync (key.full_name, null);
+            client.write_sync (full_name, null);
         }
         catch (Error error)
         {
             warning (error.message);
         }
-        key.value_changed ();
+
+        if (key == null)
+            warning ("Non-existing key erase request.");
+        else if (((!) key) is Key)
+        {
+            if (!(((!) key) is DConfKey))
+                warning ("Non-DConfKey key erase request.");
+            ((Key) (!) key).value_changed ();
+        }
+        else
+            assert_not_reached ();
     }
 
     public bool is_key_default (GSettingsKey key)

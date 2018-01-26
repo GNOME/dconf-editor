@@ -377,6 +377,8 @@ class DConfWindow : ApplicationWindow
         { "apply-delayed-settings", apply_delayed_settings },
         { "dismiss-delayed-settings", dismiss_delayed_settings },
 
+        { "erase", erase_dconf_key, "s" },  // here because needs a reload_view as we enter delay_mode
+
         { "copy-path", copy_path }
     };
 
@@ -460,6 +462,13 @@ class DConfWindow : ApplicationWindow
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.dismiss_delayed_settings ();
+        invalidate_popovers ();
+    }
+
+    private void erase_dconf_key (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        modifications_handler.erase_dconf_key (((!) path_variant).get_string ());
         invalidate_popovers ();
     }
 

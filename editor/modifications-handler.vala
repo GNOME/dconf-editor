@@ -176,11 +176,24 @@ class ModificationsHandler : Object
             model.set_key_to_default ((GSettingsKey) key);
         else if (behaviour != Behaviour.UNSAFE)
         {
-            enter_delay_mode ();
+            mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
             add_delayed_setting (key.full_name, null);
         }
         else
-            model.erase_key ((DConfKey) key);
+            model.erase_key (((DConfKey) key).full_name);
+    }
+
+    public void erase_dconf_key (string full_name)
+    {
+        if (get_current_delay_mode ())
+            add_delayed_setting (full_name, null);
+        else if (behaviour != Behaviour.UNSAFE)
+        {
+            mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
+            add_delayed_setting (full_name, null);
+        }
+        else
+            model.erase_key (full_name);
     }
 
     public bool key_has_planned_change (string key_path)

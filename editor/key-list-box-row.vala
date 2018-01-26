@@ -382,10 +382,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             if (!delayed_apply_menu)
             {
                 popover.new_section ();
-                popover.new_action ("erase", () => {
-                        destroy_popover ();
-                        set_key_value (null);
-                    });
+                popover.new_gaction ("erase", "ui.erase(" + variant_s.print (false) + ")");
             }
         }
         else
@@ -401,10 +398,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             if (!planned_change || planned_value != null) // not &&
             {
                 popover.new_section ();
-                popover.new_action ("erase", () => {
-                        destroy_popover ();
-                        set_key_value (null);
-                    });
+                popover.new_gaction ("erase", "ui.erase(" + variant_s.print (false) + ")");
             }
         }
         return true;
@@ -634,9 +628,6 @@ private class ContextPopover : Popover
                 current_section.append (_("Set to default"), group_dot_action);     return;
             case "default2":
                 new_multi_default_action (group_dot_action);                        return;
-            case "erase":
-                /* Translators: "erase key" action in the right-click menu on a key without schema */
-                current_section.append (_("Erase key"), group_dot_action);          return;
             default:
                 assert_not_reached ();
         }
@@ -655,6 +646,9 @@ private class ContextPopover : Popover
 
             /* Translators: "dismiss change" action in the right-click menu on a key with pending changes */
             case "dismiss":         action_text = _("Dismiss change");      break;
+
+            /* Translators: "erase key" action in the right-click menu on a key without schema */
+            case "erase":           action_text = _("Erase key");           break;
 
             /* Translators: "open folder" action in the right-click menu on a folder */
             case "open":            action_text = _("Open");                break;
