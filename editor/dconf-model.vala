@@ -379,6 +379,15 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
+    public Variant? get_key_properties (string full_name, string context)
+    {
+        Key? key = get_key (full_name, context);
+        if (key == null)
+            return null;
+
+        return ((!) key).properties;
+    }
+
     public string get_key_copy_text (string full_name, string context)
     {
         Key? key = get_key (full_name, context);

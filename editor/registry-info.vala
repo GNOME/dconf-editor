@@ -397,11 +397,11 @@ class RegistryInfo : Grid, BrowsableView
         return (Widget) label;
     }
 
-    public bool check_reload (Key fresh_key, Variant fresh_value)
+    public bool check_reload (Variant properties)
     {
         if (current_key_info == null) // should not happen?
             return true;
-        return !((!) current_key_info).equal (fresh_key.properties); // TODO compare fresh_value with editor value?
+        return !((!) current_key_info).equal (properties); // TODO compare key value with editor value?
     }
 }
 
