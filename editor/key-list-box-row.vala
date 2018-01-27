@@ -519,13 +519,13 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"
             || (
                 (key.type_string == "y" || key.type_string == "q" || key.type_string == "u" || key.type_string == "t")
-                && (((GSettingsKey) key).range_type == "range")
-                && (Key.get_variant_as_uint64 (((GSettingsKey) key).range_content.get_child_value (1)) - Key.get_variant_as_uint64 (((GSettingsKey) key).range_content.get_child_value (0)) < 13)
+                && (key.range_type == "range")
+                && (Key.get_variant_as_uint64 (key.range_content.get_child_value (1)) - Key.get_variant_as_uint64 (key.range_content.get_child_value (0)) < 13)
                )
             || (
                 (key.type_string == "n" || key.type_string == "i" || key.type_string == "h" || key.type_string == "x")
-                && (((GSettingsKey) key).range_type == "range")
-                && (Key.get_variant_as_int64 (((GSettingsKey) key).range_content.get_child_value (1)) - Key.get_variant_as_int64 (((GSettingsKey) key).range_content.get_child_value (0)) < 13)
+                && (key.range_type == "range")
+                && (Key.get_variant_as_int64 (key.range_content.get_child_value (1)) - Key.get_variant_as_int64 (key.range_content.get_child_value (0)) < 13)
                ))
         {
             popover.new_section ();
@@ -549,7 +549,14 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             if (!model.is_key_default (key))
                 popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
 
-            popover.create_flags_list ((GSettingsKey) key, modifications_handler);
+            string [] all_flags = key.range_content.get_strv ();
+            popover.create_flags_list (key.settings.get_strv (key.name), all_flags);
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
+                    string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
+                    foreach (string flag in all_flags)
+                        popover.update_flag_status (flag, flag in active_flags);
+                });
+            popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
 
             popover.value_changed.connect ((gvariant) => set_key_value (gvariant));
         }
@@ -589,6 +596,7 @@ private class ContextPopover : Popover
 
         bind_model (menu, null);
     }
+
 
     /*\
     * * Simple actions
@@ -651,43 +659,40 @@ private class ContextPopover : Popover
     * * Flags
     \*/
 
-    public void create_flags_list (GSettingsKey key, ModificationsHandler modifications_handler)
+    public void create_flags_list (string [] active_flags, string [] all_flags)
     {
-        GLib.Settings settings = key.settings;
-        string [] active_flags = settings.get_strv (key.name);
-        string [] all_flags = key.range_content.get_strv ();
-        SimpleAction [] flags_actions = new SimpleAction [0];
         foreach (string flag in all_flags)
-        {
-            SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (flag in active_flags));
-            current_group.add_action (simple_action);
-
-            current_section.append (flag, @"popmenu.$flag");
-
-            flags_actions += simple_action;
-
-            simple_action.change_state.connect ((gaction, gvariant) => {
-                    gaction.set_state ((!) gvariant);
-
-                    string [] new_flags = new string [0];
-                    foreach (SimpleAction action in flags_actions)
-                        if (((!) action.state).get_boolean ())
-                            new_flags += action.name;
-                    Variant variant = new Variant.strv (new_flags);
-                    value_changed (variant);
-                });
-
-            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                    active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
-                    bool active = flag in active_flags;
-                    if (active != simple_action.get_state ())
-                        simple_action.set_state (new Variant.boolean (active));
-                });
-
-            destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
-        }
+            create_flag (flag, flag in active_flags, all_flags);
 
         finalize_menu ();
+    }
+    private void create_flag (string flag, bool active, string [] all_flags)
+    {
+        SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (active));
+        current_group.add_action (simple_action);
+
+        current_section.append (flag, @"popmenu.$flag");
+
+        simple_action.change_state.connect ((gaction, gvariant) => {
+                gaction.set_state ((!) gvariant);
+
+                string [] new_flags = new string [0];
+                foreach (string iter in all_flags)
+                {
+                    SimpleAction action = (SimpleAction) current_group.lookup_action (iter);
+                    if (((!) action.state).get_boolean ())
+                        new_flags += action.name;
+                }
+                Variant variant = new Variant.strv (new_flags);
+                value_changed (variant);
+            });
+    }
+
+    public void update_flag_status (string flag, bool active)
+    {
+        SimpleAction simple_action = (SimpleAction) current_group.lookup_action (flag);
+        if (active != simple_action.get_state ())
+            simple_action.set_state (new Variant.boolean (active));
     }
 
     /*\

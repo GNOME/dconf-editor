@@ -116,7 +116,17 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         this.add (label);
 
         ContextPopover popover = new ContextPopover ();
-        popover.create_flags_list (key, modifications_handler);
+
+        string [] all_flags = key.range_content.get_strv ();
+        popover.create_flags_list (key.settings.get_strv (key.name), all_flags);
+        GSettingsKey ref_key = key;
+        ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
+                string [] active_flags = modifications_handler.get_key_custom_value (ref_key).get_strv ();
+                foreach (string flag in all_flags)
+                    popover.update_flag_status (flag, flag in active_flags);
+            });
+        popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
                 if (gvariant == null)   // TODO better (2/3)
