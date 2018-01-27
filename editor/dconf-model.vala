@@ -303,8 +303,10 @@ public class SettingsModel : Object
 
     private void create_dconf_key (string parent_path, string key_id, GLib.ListStore key_model)
     {
-        Variant value = (!) client.read (parent_path + key_id);
-        DConfKey new_key = new DConfKey (client, parent_path, key_id, value.get_type_string ());
+        Variant? key_value = get_dconf_key_value_or_null (parent_path + key_id, client);
+        if (key_value == null)
+            return;
+        DConfKey new_key = new DConfKey (client, parent_path, key_id, ((!) key_value).get_type_string ());
         key_model.append (new_key);
     }
 
@@ -383,23 +385,43 @@ public class SettingsModel : Object
         if (key == null)
             return full_name;
 
-        if (((!) key) is GSettingsKey)
-            return ((!) key).descriptor + " " + get_key_value ((!) key).print (false);
+        if ((!) key is GSettingsKey)
+            return ((!) key).descriptor + " " + get_gsettings_key_value ((GSettingsKey) key).print (false);
 
-        if (!(((!) key) is DConfKey))
+        if (!((!) key is DConfKey))
             assert_not_reached ();
 
-        if (is_key_ghost ((DConfKey) (!) key))
-            return _("%s (key erased)").printf (((!) key).full_name);
-
-        return ((!) key).descriptor + " " + get_key_value ((!) key).print (false);
+        Variant? key_value = get_dconf_key_value_or_null (full_name, client);
+        if (key_value == null)
+            return _("%s (key erased)").printf (full_name);
+        else
+            return ((!) key).descriptor + " " + ((!) key_value).print (false);
     }
 
     public Variant get_key_value (Key key)
     {
-        if (key is GSettingsKey)
-            return ((GSettingsKey) key).settings.get_value (key.name);
-        return (!) client.read (key.full_name);
+        if ((!) key is GSettingsKey)
+            return get_gsettings_key_value ((GSettingsKey) key);
+        if ((!) key is DConfKey)
+            return get_dconf_key_value ((DConfKey) key, client);
+        assert_not_reached ();
+    }
+
+    private static Variant get_gsettings_key_value (GSettingsKey key)
+    {
+        return key.settings.get_value (get_name (key.full_name));
+    }
+
+    private static Variant get_dconf_key_value (DConfKey key, DConf.Client client)
+    {
+        Variant? key_value = get_dconf_key_value_or_null (key.full_name, client);
+        if (key_value == null)
+            assert_not_reached ();
+        return (!) key_value;
+    }
+    private static Variant? get_dconf_key_value_or_null (string full_name, DConf.Client client)
+    {
+        return client.read (full_name);
     }
 
     public void set_key_value (Key key, Variant value)
@@ -466,7 +488,7 @@ public class SettingsModel : Object
 
     public bool is_key_ghost (DConfKey key)
     {
-        return client.read (key.full_name) == null;
+        return get_dconf_key_value_or_null (key.full_name, client) == null;
     }
 
     public void apply_key_value_changes (HashTable<string, Variant?> changes)
