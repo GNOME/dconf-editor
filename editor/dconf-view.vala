@@ -155,8 +155,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
     private Variant? maybe_variant;
     private GLib.Action action;
 
-    public KeyEditorChildNullableBool (Key key, Variant initial_value, ModificationsHandler modifications_handler)
-        requires (key.type_string == "mb")
+    public KeyEditorChildNullableBool (Variant initial_value, bool delay_mode, bool has_planned_change, Variant? range_content_or_null)
     {
         this.visible = true;
         this.hexpand = true;
@@ -165,15 +164,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
-        Variant? range_content_or_null = null;
-        if (key is GSettingsKey)
-            range_content_or_null = ((GSettingsKey) key).range_content;
-        action = popover.create_buttons_list (false,
-                                              modifications_handler.get_current_delay_mode (),
-                                              modifications_handler.key_has_planned_change (key.full_name),
-                                              "mb",
-                                              modifications_handler.get_key_custom_value (key),
-                                              range_content_or_null);
+        action = popover.create_buttons_list (false, delay_mode, has_planned_change, "mb", initial_value, range_content_or_null);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {

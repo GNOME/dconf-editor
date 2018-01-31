@@ -303,7 +303,12 @@ class RegistryInfo : Grid, BrowsableView
             case "d":
                 return (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);
             case "mb":
-                return (KeyEditorChild) new KeyEditorChildNullableBool (key, initial_value, modifications_handler);
+                bool delay_mode = modifications_handler.get_current_delay_mode ();
+                bool has_planned_change = modifications_handler.key_has_planned_change (key.full_name);
+                Variant? range_content_or_null = null;
+                if (key is GSettingsKey)
+                    range_content_or_null = ((GSettingsKey) key).range_content;
+                return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, range_content_or_null);
             default:
                 if ("a" in key.type_string)
                     return (KeyEditorChild) new KeyEditorChildArray (key.type_string, initial_value);
