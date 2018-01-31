@@ -250,13 +250,22 @@ class ModificationsRevealer : Revealer
         if (modifications_handler.mode == ModificationsMode.TEMPORARY)
         {
             if (total_changes_count == 0)
+            {
+                apply_button.sensitive = false;
                 label.set_text (_("The value is invalid."));
+            }
             else if (total_changes_count != 1)
                 assert_not_reached ();
             else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
+            {
+                apply_button.sensitive = true;
                 label.set_text (_("The change will be dismissed if you quit this view without applying."));
+            }
             else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || modifications_handler.behaviour == Behaviour.SAFE)
+            {
+                apply_button.sensitive = true;
                 label.set_text (_("The change will be applied on such request or if you quit this view."));
+            }
             else
                 assert_not_reached ();
             set_reveal_child (true);
