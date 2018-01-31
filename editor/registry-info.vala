@@ -265,9 +265,14 @@ class RegistryInfo : Grid, BrowsableView
             case "<enum>":
                 switch (((GSettingsKey) key).range_content.n_children ())
                 {
-                    case 0:  assert_not_reached ();
-                    case 1:  return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).get_string ());
-                    default: return (KeyEditorChild) new KeyEditorChildEnum (key, initial_value, modifications_handler);
+                    case 0: assert_not_reached ();
+                    case 1:
+                        return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).get_string ());
+                    default:
+                        bool delay_mode = modifications_handler.get_current_delay_mode ();
+                        bool has_planned_change = modifications_handler.key_has_planned_change (key.full_name);
+                        Variant range_content = ((GSettingsKey) key).range_content;
+                        return (KeyEditorChild) new KeyEditorChildEnum (initial_value, delay_mode, has_planned_change, range_content);
                 }
             case "<flags>":
                 return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key, initial_value, modifications_handler);

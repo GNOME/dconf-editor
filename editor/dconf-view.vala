@@ -51,8 +51,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
     private Variant variant;
     private GLib.Action action;
 
-    public KeyEditorChildEnum (Key key, Variant initial_value, ModificationsHandler modifications_handler)
-        requires (key.type_string == "<enum>")
+    public KeyEditorChildEnum (Variant initial_value, bool delay_mode, bool has_planned_change, Variant range_content)
     {
         this.visible = true;
         this.hexpand = true;
@@ -61,12 +60,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
-        action = popover.create_buttons_list (false,
-                                              modifications_handler.get_current_delay_mode (),
-                                              modifications_handler.key_has_planned_change (key.full_name),
-                                              "<enum>",
-                                              modifications_handler.get_key_custom_value (key),
-                                              ((GSettingsKey) key).range_content);
+        action = popover.create_buttons_list (false, delay_mode, has_planned_change, "<enum>", initial_value, range_content);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
