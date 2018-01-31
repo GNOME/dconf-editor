@@ -393,7 +393,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             if (planned_change)
             {
                 popover.new_section ();
-                popover.new_gaction (planned_value == null ? "unerase" : "dismiss", "bro.dismiss-change(" + variant_s.print (false) + ")");
+                popover.new_gaction (planned_value == null ? "unerase" : "dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
             }
 
             if (!planned_change || planned_value != null) // not &&
@@ -563,7 +563,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         else if (planned_change)
         {
             popover.new_section ();
-            popover.new_gaction ("dismiss", "bro.dismiss-change(" + variant_s.print (false) + ")");
+            popover.new_gaction ("dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
 
             if (planned_value != null)
                 popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");

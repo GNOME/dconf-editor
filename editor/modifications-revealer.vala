@@ -33,8 +33,16 @@ class ModificationsRevealer : Revealer
 
     [GtkChild] private Label label;
     [GtkChild] private ModelButton apply_button;
+    [GtkChild] private MenuButton delayed_list_button;
+    [GtkChild] private Popover delayed_settings_list_popover;
+    [GtkChild] private ListBox delayed_settings_listbox;
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
+
+    construct
+    {
+        delayed_settings_listbox.set_header_func (delayed_setting_row_update_header);
+    }
 
     /*\
     * * Window management callbacks
@@ -108,14 +116,133 @@ class ModificationsRevealer : Revealer
     }
 
     /*\
-    * * Utilities
+    * * Modifications list public functions
+    \*/
+
+    public bool dismiss_selected_modification ()
+    {
+        if (!delayed_list_button.active)
+            return false;
+
+        ListBoxRow? selected_row = delayed_settings_listbox.get_selected_row ();
+        if (selected_row == null)
+            return false;
+
+        modifications_handler.dismiss_change (((DelayedSettingView) (!) ((!) selected_row).get_child ()).full_name);
+        update ();
+        return true;
+    }
+
+    public void hide_modifications_list ()
+    {
+        delayed_settings_list_popover.popdown ();
+    }
+
+    public void toggle_modifications_list ()
+    {
+        delayed_list_button.active = !delayed_settings_list_popover.visible;
+    }
+
+    public bool get_modifications_list_state ()
+    {
+        return delayed_list_button.active;
+    }
+
+    /*\
+    * * Modifications list population
+    \*/
+
+    private Widget delayed_setting_row_create (Object key)
+    {
+        string full_name = ((Key) key).full_name;
+        bool has_schema = key is GSettingsKey;
+        bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default ((GSettingsKey) key)
+                                              : modifications_handler.model.is_key_ghost ((DConfKey) key);
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
+        string? cool_planned_value = null;
+        if (planned_value != null)
+            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value, ((Key) key).type_string);
+        string? cool_default_value = null;
+        if (has_schema)
+            cool_default_value = Key.cool_text_value_from_variant (((GSettingsKey) key).default_value, ((Key) key).type_string);
+        string cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_key_value ((Key) key),
+                                                                                                             ((Key) key).type_string);
+        DelayedSettingView view = new DelayedSettingView (full_name,
+                                                          is_default_or_ghost,
+                                                          cool_key_value,
+                                                          cool_planned_value,
+                                                          cool_default_value);
+
+        ListBoxRow wrapper = new ListBoxRow ();
+        wrapper.add (view);
+        Variant variant = new Variant ("(ss)", full_name, has_schema ? ((GSettingsKey) key).schema_id : ".dconf");
+        wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");
+        return wrapper;
+    }
+
+    private void delayed_setting_row_update_header (ListBoxRow row, ListBoxRow? before)
+    {
+        string row_key_name = ((DelayedSettingView) row.get_child ()).full_name;
+        bool add_location_header = false;
+        if (before == null)
+            add_location_header = true;
+        else
+        {
+            string before_key_name = ((DelayedSettingView) ((!) before).get_child ()).full_name;
+
+            if (SettingsModel.get_parent_path (row_key_name) != SettingsModel.get_parent_path (before_key_name))
+                add_location_header = true;
+        }
+
+        if (add_location_header)
+        {
+            Grid location_header = new Grid ();
+            location_header.show ();
+            location_header.orientation = Orientation.VERTICAL;
+
+            Label location_header_label = new Label (SettingsModel.get_parent_path (row_key_name));
+            location_header_label.show ();
+            location_header_label.hexpand = true;
+            location_header_label.halign = Align.START;
+
+            StyleContext context = location_header_label.get_style_context ();
+            context.add_class ("dim-label");
+            context.add_class ("bold-label");
+            context.add_class ("list-row-header");
+
+            location_header.add (location_header_label);
+
+            Separator separator_header = new Separator (Orientation.HORIZONTAL);
+            separator_header.show ();
+            location_header.add (separator_header);
+
+            row.set_header (location_header);
+        }
+        else
+        {
+            Separator separator_header = new Separator (Orientation.HORIZONTAL);
+            separator_header.show ();
+            row.set_header (separator_header);
+        }
+    }
+
+    /*\
+    * * Update
     \*/
 
     private void update ()
     {
+        GLib.ListStore modifications_list = modifications_handler.get_delayed_settings ();
+        delayed_settings_listbox.bind_model (modifications_handler.get_delayed_settings (), delayed_setting_row_create);
+        if (modifications_list.get_n_items () == 0)
+            delayed_settings_list_popover.popdown ();
+        else
+            delayed_settings_listbox.select_row ((!) delayed_settings_listbox.get_row_at_index (0));
+
         if (modifications_handler.mode == ModificationsMode.NONE)
         {
             set_reveal_child (false);
+            apply_button.sensitive = false;
             label.set_text ("");
             return;
         }

@@ -377,7 +377,8 @@ class DConfWindow : ApplicationWindow
         { "apply-delayed-settings", apply_delayed_settings },
         { "dismiss-delayed-settings", dismiss_delayed_settings },
 
-        { "erase", erase_dconf_key, "s" },  // here because needs a reload_view as we enter delay_mode
+        { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
+        { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
         { "copy-path", copy_path }
     };
@@ -398,6 +399,7 @@ class DConfWindow : ApplicationWindow
     {
         if (bookmarks_button.active)
             bookmarks_button.active = false;
+        revealer.hide_modifications_list ();
 
         string full_name;
         string context;
@@ -463,6 +465,14 @@ class DConfWindow : ApplicationWindow
     {
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers ();
+    }
+
+    private void dismiss_change (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        modifications_handler.dismiss_change (((!) path_variant).get_string ());
+        browser_view.invalidate_popovers ();
+        reload_view ();
     }
 
     private void erase_dconf_key (SimpleAction action, Variant? path_variant)
@@ -726,6 +736,14 @@ class DConfWindow : ApplicationWindow
                         search_bar.search_mode_enabled = false;
                     return true;
 
+                case "i":
+                    if (revealer.reveal_child)
+                    {
+                        revealer.toggle_modifications_list ();
+                        return true;
+                    }
+                    return false;
+
                 case "F1":
                     browser_view.discard_row_popover ();
                     if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
@@ -749,6 +767,11 @@ class DConfWindow : ApplicationWindow
                 case "KP_Decimal":
                     if (info_button.active || bookmarks_button.active)
                         return false;
+                    if (revealer.dismiss_selected_modification ())
+                    {
+                        reload_view ();
+                        return true;
+                    }
                     browser_view.discard_row_popover ();
                     string? selected_row = browser_view.get_selected_row_name ();
                     if (selected_row != null && ((!) selected_row).has_suffix ("/"))
@@ -787,11 +810,13 @@ class DConfWindow : ApplicationWindow
 
         if (name == "Up"
          && bookmarks_button.active == false
-         && info_button.active == false)
+         && info_button.active == false
+         && !revealer.get_modifications_list_state ())
             return browser_view.up_pressed ();
         if (name == "Down"
          && bookmarks_button.active == false
-         && info_button.active == false)
+         && info_button.active == false
+         && !revealer.get_modifications_list_state ())
             return browser_view.down_pressed ();
 
         if ((name == "Return" || name == "KP_Enter")

@@ -229,4 +229,14 @@ class ModificationsHandler : Object
             });
         return planned_changed;
     }
+
+    public ListStore get_delayed_settings ()
+    {
+        ListStore delayed_settings_list = new ListStore (typeof (Key));
+        keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
+                SettingObject? key = model.get_key (key_path);
+                delayed_settings_list.append ((Key) (!) key);
+            });
+        return delayed_settings_list;
+    }
 }

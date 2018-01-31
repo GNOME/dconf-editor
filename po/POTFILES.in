@@ -13,6 +13,8 @@ editor/dconf-editor.vala
 editor/dconf-model.vala
 editor/dconf-view.vala
 editor/dconf-window.vala
+editor/delayed-setting-view.ui
+editor/delayed-setting-view.vala
 editor/help-overlay.ui
 editor/key-list-box-row.vala
 editor/modifications-revealer.ui

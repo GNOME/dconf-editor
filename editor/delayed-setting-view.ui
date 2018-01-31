@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="DelayedSettingView" parent="GtkGrid">
+    <property name="visible">True</property> <!-- TODO useful? -->
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel" id="key_name_label">
+        <property name="visible">True</property>
+        <property name="halign">start</property>
+        <property name="hexpand">true</property>
+        <style>
+          <class name="key-name"/>
+        </style>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">0</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="cancel_change_button">
+        <property name="visible">True</property>
+        <property name="halign">end</property>
+        <property name="hexpand">false</property>
+        <property name="valign">center</property>
+        <property name="can-focus">False</property>
+        <style>
+          <class name="flat"/>
+          <class name="circular"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">window-close-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="left-attach">3</property>
+        <property name="top-attach">0</property>
+        <property name="height">3</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkImage">
+        <property name="visible">True</property>
+        <property name="halign">start</property>
+        <property name="icon-name">list-remove-symbolic</property>
+        <style>
+          <class name="diff-bullet"/>
+        </style>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkGrid">
+        <property name="visible">True</property>
+        <property name="hexpand">True</property>
+        <child>
+          <object class="GtkLabel" id="key_value_label">
+            <property name="visible">True</property>
+            <property name="halign">start</property>
+            <property name="ellipsize">end</property>
+            <style>
+              <class name="value-label"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="key_value_default">
+            <property name="visible">True</property>
+            <property name="halign">start</property>
+            <property name="hexpand">True</property>
+            <property name="label" translatable="yes">Default value</property>
+            <style>
+              <class name="bold-label"/>
+            </style>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="left-attach">1</property>
+        <property name="top-attach">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkImage">
+        <property name="visible">True</property>
+        <property name="halign">start</property>
+        <property name="icon-name">list-add-symbolic</property>
+        <style>
+          <class name="diff-bullet"/>
+        </style>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkGrid">
+        <property name="visible">True</property>
+        <property name="hexpand">True</property>
+        <child>
+          <object class="GtkLabel" id="planned_value_label">
+            <property name="visible">True</property>
+            <property name="halign">start</property>
+            <property name="ellipsize">end</property>
+            <style>
+              <class name="value-label"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="planned_value_default">
+            <property name="visible">True</property>
+            <property name="halign">start</property>
+            <property name="hexpand">True</property>
+            <property name="label" translatable="yes">Default value</property>
+            <style>
+              <class name="bold-label"/>
+            </style>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="left-attach">1</property>
+        <property name="top-attach">2</property>
+      </packing>
+    </child>
+  </template>
+</interface>
