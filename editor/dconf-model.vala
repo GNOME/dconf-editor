@@ -321,34 +321,26 @@ public class SettingsModel : Object
 
     public static string get_base_path (string path)
     {
-        if (!is_key_path (path))
-            return path;
-        else
-            return stripped_path (path);
+        if (path.length <= 1)
+            return "/";
+        return path.slice (0, path.last_index_of_char ('/') + 1);
     }
 
-    private static string get_name (string path)
+    public static string get_name (string path)
     {
-        if (path == "/")
+        if (path.length <= 1)
             return "/";
         if (is_key_path (path))
-            return path [path.last_index_of_char ('/') + 1:path.length];
-        string tmp = path[0:-1];
-        return tmp [tmp.last_index_of_char ('/') + 1:tmp.length];
+            return path [path.last_index_of_char ('/') + 1 : path.length];
+        string tmp = path [0:-1];
+        return tmp [tmp.last_index_of_char ('/') + 1 : tmp.length];
     }
 
     public static string get_parent_path (string path)
     {
-        if (path == "/")
-            return path;
-        return get_base_path (!is_key_path (path) ? path [0:-1] : path);
-    }
-
-    private static string stripped_path (string path)
-    {
         if (path.length <= 1)
             return "/";
-        return path.slice (0, path.last_index_of_char ('/') + 1);
+        return get_base_path (is_key_path (path) ? path : path [0:-1]);
     }
 
     /*\

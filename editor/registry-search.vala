@@ -118,11 +118,7 @@ class RegistrySearch : Grid, BrowsableView
         ClickableListBoxRow row;
         SettingObject setting_object = (SettingObject) item;
         string full_name = setting_object.full_name;
-        string parent_path;
-        if (!SettingsModel.is_key_path (full_name))
-            parent_path = SettingsModel.get_base_path (full_name [0:full_name.length - 1]);
-        else
-            parent_path = SettingsModel.get_base_path (full_name);
+        string parent_path = SettingsModel.get_parent_path (full_name);
         bool is_local_result = parent_path == current_path;
 
         if (setting_object is Directory)
