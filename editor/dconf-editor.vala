@@ -98,7 +98,12 @@ class ConfigurationEditor : Gtk.Application
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/todo-plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/vala-pack-plugin/"},
             {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/valgrind_plugin/"},
-            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/xml-pack-plugin/"}
+            {"org.gnome.builder.plugin", "/org/gnome/builder/plugins/xml-pack-plugin/"},
+
+            // https://github.com/mate-desktop/mate-desktop/issues/300
+            {"org.mate.panel.object",              "/org/mate/panel/objects//"},                // of the form object-x; see also bug
+            {"org.mate.panel.toplevel",            "/org/mate/panel/toplevels//"},              // of the form toplevel-x
+            {"org.mate.panel.toplevel.background", "/org/mate/panel/toplevels//background/"}    // in previous dirs
         };  // TODO add more well-known mappings
 
     private static string [] skipped_schemas = {
