@@ -83,8 +83,6 @@ private abstract class ClickableListBoxRow : EventBox
 
     public bool search_result_mode { protected get; construct; default = false; }
 
-    public ModificationsHandler modifications_handler { protected get; construct; }
-
     /*\
     * * Dismiss popover on window resize
     \*/
@@ -229,6 +227,8 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     public signal void set_key_value (Variant? new_value);
     public signal void change_dismissed ();
 
+    public ModificationsHandler modifications_handler { protected get; construct; }
+
     construct
     {
         if (abstract_key.type_string == "b" && !modifications_handler.get_current_delay_mode ())
@@ -364,10 +364,16 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
 
+        bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
+
         if (key.type_string == "b" || key.type_string == "mb")
         {
             popover.new_section ();
-            GLib.Action action = popover.create_buttons_list (key, true, modifications_handler);
+            bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
+            Variant key_value = model.get_key_value (key);
+            GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+                                                              planned_change ? planned_value : key_value, null);
 
             popover.change_dismissed.connect (() => {
                     destroy_popover ();
@@ -379,7 +385,6 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                     set_key_value (gvariant);
                 });
 
-            bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
             if (!delayed_apply_menu)
             {
                 popover.new_section ();
@@ -388,8 +393,6 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
         else
         {
-            bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
-            Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
             if (planned_change)
             {
                 popover.new_section ();
@@ -529,7 +532,16 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                ))
         {
             popover.new_section ();
-            GLib.Action action = popover.create_buttons_list (key, true, modifications_handler);
+            GLib.Action action;
+            if (planned_change)
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+                                                      modifications_handler.get_key_planned_value (key.full_name), key.range_content);
+            else if (model.is_key_default (key))
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+                                                      null, key.range_content);
+            else
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+                                                      model.get_key_value (key), key.range_content);
 
             popover.change_dismissed.connect (() => {
                     destroy_popover ();
@@ -596,7 +608,6 @@ private class ContextPopover : Popover
 
         bind_model (menu, null);
     }
-
 
     /*\
     * * Simple actions
@@ -699,31 +710,17 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    public GLib.Action create_buttons_list (Key key, bool has_default_value, ModificationsHandler modifications_handler)
+    public GLib.Action create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? value_variant, Variant? range_content_or_null)
     {
-        SettingsModel model = modifications_handler.model;
+        // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
         const string ACTION_NAME = "choice";
         string group_dot_action = "popmenu.choice";
 
-        Variant key_value = model.get_key_value (key);
-        VariantType original_type = key_value.get_type ();
+        string type_string = settings_type == "<enum>" ? "s" : settings_type;
+        VariantType original_type = new VariantType (type_string);
         VariantType nullable_type = new VariantType.maybe (original_type);
         VariantType nullable_nullable_type = new VariantType.maybe (nullable_type);
-        string type_string = original_type.dup_string ();
 
-        bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-        bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
-        Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
-
-        Variant? value_variant;
-        if (!has_default_value) // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
-            value_variant = modifications_handler.get_key_custom_value (key);
-        else if (planned_change)
-            value_variant = planned_value;
-        else if (key is GSettingsKey && model.is_key_default ((GSettingsKey) key))
-            value_variant = null;
-        else
-            value_variant = key_value;
         Variant variant = new Variant.maybe (original_type, value_variant);
         Variant nullable_variant;
         if (delayed_apply_menu && !planned_change)
@@ -734,7 +731,7 @@ private class ContextPopover : Popover
         GLib.Action action = (GLib.Action) new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant);
         current_group.add_action (action);
 
-        if (has_default_value)
+        if (display_default_value)
         {
             bool complete_menu = delayed_apply_menu || planned_change;
 
@@ -742,23 +739,23 @@ private class ContextPopover : Popover
                 /* Translators: "no change" option in the right-click menu on a key when on delayed mode */
                 current_section.append (_("No change"), @"$group_dot_action(@mm$type_string nothing)");
 
-            if (key is GSettingsKey)
+            if (range_content_or_null != null)
                 new_multi_default_action (@"$group_dot_action(@mm$type_string just nothing)");
             else if (complete_menu)
                 /* Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode */
                 current_section.append (_("Erase key"), @"$group_dot_action(@mm$type_string just nothing)");
         }
 
-        switch (key.type_string)
+        switch (settings_type)
         {
             case "b":
                 current_section.append (Key.cool_boolean_text_value (true), @"$group_dot_action(@mmb true)");
                 current_section.append (Key.cool_boolean_text_value (false), @"$group_dot_action(@mmb false)");
                 break;
             case "<enum>":      // defined by the schema
-                Variant range = ((GSettingsKey) key).range_content;
+                Variant range = (!) range_content_or_null;
                 uint size = (uint) range.n_children ();
-                if (size == 0 || (size == 1 && !has_default_value))
+                if (size == 0 || (size == 1 && !display_default_value))
                     assert_not_reached ();
                 for (uint index = 0; index < size; index++)
                     current_section.append (range.get_child_value (index).print (false), @"$group_dot_action(@mms '" + range.get_child_value (index).get_string () + "')");        // TODO use int settings.get_enum ()
@@ -772,7 +769,7 @@ private class ContextPopover : Popover
             case "q":
             case "u":
             case "t":
-                Variant range = ((GSettingsKey) key).range_content;
+                Variant range = (!) range_content_or_null;
                 for (uint64 number =  Key.get_variant_as_uint64 (range.get_child_value (0));
                             number <= Key.get_variant_as_uint64 (range.get_child_value (1));
                             number++)
@@ -782,7 +779,7 @@ private class ContextPopover : Popover
             case "i":
             case "h":
             case "x":
-                Variant range = ((GSettingsKey) key).range_content;
+                Variant range = (!) range_content_or_null;
                 for (int64 number =  Key.get_variant_as_int64 (range.get_child_value (0));
                            number <= Key.get_variant_as_int64 (range.get_child_value (1));
                            number++)
