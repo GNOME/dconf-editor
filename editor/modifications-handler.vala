@@ -183,6 +183,16 @@ class ModificationsHandler : Object
             model.erase_key (((DConfKey) key).full_name);
     }
 
+    public void set_dconf_key_value (string full_name, Variant key_value)
+    {
+        model.set_dconf_key_value (full_name, key_value);
+    }
+
+    public void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
+    {
+        model.set_gsettings_key_value (full_name, schema_id, key_value);
+    }
+
     public void erase_dconf_key (string full_name)
     {
         if (get_current_delay_mode ())

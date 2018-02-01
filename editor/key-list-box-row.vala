@@ -259,7 +259,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     {
         if (boolean_switch == null)
             return;
-        ((!) boolean_switch).set_active (!((!) boolean_switch).get_active ());
+        ((!) boolean_switch).activate ();
     }
 
     public void set_delayed_icon ()
@@ -296,12 +296,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     construct
     {
-        SettingsModel model = modifications_handler.model;
         get_style_context ().add_class ("dconf-key");
-
-        if (boolean_switch != null)
-            ((!) boolean_switch).notify ["active"].connect (
-                        () => model.set_key_value (key, new Variant.boolean (((!) boolean_switch).get_active ())));
 
         key_info_label.get_style_context ().add_class ("italic-label");
         key_info_label.set_label (_("No Schema Found"));
@@ -331,7 +326,12 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             {
                 key_value_label.hide ();
                 ((!) boolean_switch).show ();
-                ((!) boolean_switch).set_active (key_value.get_boolean ());
+
+                bool key_value_boolean = key_value.get_boolean ();
+                Variant switch_variant = new Variant ("(sb)", key.full_name, !key_value_boolean);
+                ((!) boolean_switch).set_action_name ("bro.empty");
+                ((!) boolean_switch).set_active (key_value_boolean);
+                ((!) boolean_switch).set_detailed_action_name ("bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
             }
             key_value_label.set_label (Key.cool_text_value_from_variant (key_value, key.type_string));
         }
@@ -413,21 +413,10 @@ private class KeyListBoxRowEditable : KeyListBoxRow
 {
     public GSettingsKey key { get; construct; }
     private override Key abstract_key { get { return (Key) key; }}
-    private ulong boolean_switch_toggled_handler = 0;
 
     construct
     {
-        SettingsModel model = modifications_handler.model;
         get_style_context ().add_class ("gsettings-key");
-
-        if (boolean_switch != null)
-            boolean_switch_toggled_handler = ((!) boolean_switch).notify ["active"].connect (() => {
-                    bool boolean = ((!) boolean_switch).get_active ();
-                    if (boolean == key.default_value.get_boolean ())
-                        model.set_key_to_default (key.full_name, key.schema_id);
-                    else
-                        model.set_key_value (key, new Variant.boolean (boolean));
-                });
 
         if (key.summary != "")
             key_info_label.set_label (key.summary);
@@ -463,20 +452,14 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     protected override void update ()
     {
         SettingsModel model = modifications_handler.model;
+        Variant key_value = model.get_key_value (key);
         if (boolean_switch != null)
         {
-            bool boolean = model.get_key_value (key).get_boolean ();
-            if (((!) boolean_switch).get_active () != boolean)
-            {
-                if (boolean_switch_toggled_handler > 0)
-                {
-                    SignalHandler.block ((!) boolean_switch, boolean_switch_toggled_handler);
-                    ((!) boolean_switch).set_active (boolean);
-                    SignalHandler.unblock ((!) boolean_switch, boolean_switch_toggled_handler);
-                }
-                else // first init
-                    ((!) boolean_switch).set_active (boolean);
-            }
+            bool key_value_boolean = key_value.get_boolean ();
+            Variant switch_variant = new Variant ("(ssbb)", key.full_name, key.schema_id, !key_value_boolean, key.default_value.get_boolean ());
+            ((!) boolean_switch).set_action_name ("bro.empty");
+            ((!) boolean_switch).set_active (key_value_boolean);
+            ((!) boolean_switch).set_detailed_action_name ("bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
         }
 
         StyleContext css_context = get_style_context ();
@@ -484,7 +467,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             css_context.remove_class ("edited");
         else
             css_context.add_class ("edited");
-        key_value_label.set_label (Key.cool_text_value_from_variant (model.get_key_value (key), key.type_string));
+        key_value_label.set_label (Key.cool_text_value_from_variant (key_value, key.type_string));
     }
 
     protected override string get_text ()

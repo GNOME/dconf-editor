@@ -88,9 +88,16 @@ class BrowserView : Grid
 
     private const GLib.ActionEntry [] action_entries =
     {
+        { "empty", empty , "*" },
+
         { "refresh-folder", refresh_folder },
-        { "set-to-default", set_to_default, "(ss)" }
+        { "set-to-default", set_to_default, "(ss)" },
+
+        { "toggle-dconf-key-switch",     toggle_dconf_key_switch,     "(sb)"   },
+        { "toggle-gsettings-key-switch", toggle_gsettings_key_switch, "(ssbb)" }
     };
+
+    private void empty (/* SimpleAction action, Variant? variant */) {}
 
     private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
         requires (key_model != null)
@@ -107,6 +114,37 @@ class BrowserView : Grid
         ((!) path_variant).@get ("(ss)", out full_name, out context);
         modifications_handler.set_to_default (full_name, context);
         invalidate_popovers ();
+    }
+
+    private void toggle_dconf_key_switch (SimpleAction action, Variant? value_variant)
+        requires (value_variant != null)
+    {
+        if (modifications_handler.get_current_delay_mode ())
+            assert_not_reached ();
+
+        string full_name;
+        bool key_value_request;
+        ((!) value_variant).@get ("(sb)", out full_name, out key_value_request);
+
+        modifications_handler.set_dconf_key_value (full_name, key_value_request);
+    }
+
+    private void toggle_gsettings_key_switch (SimpleAction action, Variant? value_variant)
+        requires (value_variant != null)
+    {
+        if (modifications_handler.get_current_delay_mode ())
+            assert_not_reached ();
+
+        string full_name;
+        string context;
+        bool key_value_request;
+        bool key_default_value;
+        ((!) value_variant).@get ("(ssbb)", out full_name, out context, out key_value_request, out key_default_value);
+
+        if (key_value_request == key_default_value)
+            modifications_handler.set_to_default (full_name, context);
+        else
+            modifications_handler.set_gsettings_key_value (full_name, context, new Variant.boolean (key_value_request));
     }
 
     /*\

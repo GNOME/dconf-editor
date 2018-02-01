@@ -425,27 +425,66 @@ public class SettingsModel : Object
         return client.read (full_name);
     }
 
-    public void set_key_value (Key key, Variant value)
+    public void set_key_value (Key key, Variant key_value)
     {
         if (key is GSettingsKey)
-            ((GSettingsKey) key).settings.set_value (key.name, value);
+            ((GSettingsKey) key).settings.set_value (key.name, key_value);
         else
         {
-            try
-            {
-                client.write_sync (key.full_name, value, out last_change_tag);
-            }
-            catch (Error error)
-            {
-                warning (error.message);
-            }
+            set_dconf_value (key.full_name, key_value);
             key.value_changed ();
+        }
+    }
+
+    public void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
+    {
+        Key? key = get_key (full_name, schema_id);
+        if (key == null)
+        {
+            warning ("Non-existing key gsettings set-value request.");
+            set_dconf_value (full_name, key_value);
+        }
+        else if ((!) key is GSettingsKey)
+            ((GSettingsKey) (!) key).settings.set_value (((!) key).name, key_value);
+        else if ((!) key is DConfKey)               // should not happen for now
+        {
+            warning ("Key without schema gsettings set-value request.");
+            set_dconf_value (full_name, key_value);
+            ((!) key).value_changed ();
+        }
+        else
+            assert_not_reached ();
+    }
+
+    public void set_dconf_key_value (string full_name, Variant key_value)
+    {
+        Key? key = get_key (full_name, "");
+        set_dconf_value (full_name, key_value);
+
+        if (key == null)
+            warning ("Non-existing key dconf set-value request.");
+        else
+        {
+            if (!(((!) key) is DConfKey))
+                warning ("Non-DConfKey key dconf set-value request.");
+            ((Key) (!) key).value_changed ();
+        }
+    }
+    private void set_dconf_value (string full_name, Variant? key_value)
+    {
+        try
+        {
+            client.write_sync (full_name, key_value, out last_change_tag);
+        }
+        catch (Error error)
+        {
+            warning (error.message);
         }
     }
 
     public void set_key_to_default (string full_name, string schema_id)
     {
-        SettingObject? key = get_key (full_name, schema_id);
+        Key? key = get_key (full_name, schema_id);
         if (key == null && !(key is GSettingsKey))
             return; // TODO better
 
@@ -458,27 +497,17 @@ public class SettingsModel : Object
 
     public void erase_key (string full_name)
     {
-        SettingObject? key = get_key (full_name);
-
-        try
-        {
-            client.write_sync (full_name, null);
-        }
-        catch (Error error)
-        {
-            warning (error.message);
-        }
+        Key? key = get_key (full_name, "");
+        set_dconf_value (full_name, null);
 
         if (key == null)
             warning ("Non-existing key erase request.");
-        else if (((!) key) is Key)
+        else
         {
             if (!(((!) key) is DConfKey))
                 warning ("Non-DConfKey key erase request.");
             ((Key) (!) key).value_changed ();
         }
-        else
-            assert_not_reached ();
     }
 
     public bool is_key_default (GSettingsKey key)
@@ -497,7 +526,7 @@ public class SettingsModel : Object
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
         changes.foreach ((key_name, planned_value) => {
-                SettingObject? key = get_key (key_name);
+                Key? key = get_key (key_name);
                 if (key == null)
                 {
                     // TODO change value anyway?
