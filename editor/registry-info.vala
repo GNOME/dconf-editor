@@ -274,10 +274,13 @@ class RegistryInfo : Grid, BrowsableView
                         Variant range_content = ((GSettingsKey) key).range_content;
                         return (KeyEditorChild) new KeyEditorChildEnum (initial_value, delay_mode, has_planned_change, range_content);
                 }
+
             case "<flags>":
                 return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key, initial_value, modifications_handler);
+
             case "b":
                 return (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());
+
             case "n":
             case "i":
             case "h":
@@ -290,6 +293,7 @@ class RegistryInfo : Grid, BrowsableView
                         return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).print (false));
                 }
                 return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, key.type_string, range);
+
             case "y":
             case "q":
             case "u":
@@ -302,8 +306,10 @@ class RegistryInfo : Grid, BrowsableView
                         return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).print (false));
                 }
                 return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, key.type_string, range);
+
             case "d":
                 return (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);
+
             case "mb":
                 bool delay_mode = modifications_handler.get_current_delay_mode ();
                 bool has_planned_change = modifications_handler.key_has_planned_change (key.full_name);
@@ -311,6 +317,7 @@ class RegistryInfo : Grid, BrowsableView
                 if (key is GSettingsKey)
                     range_content_or_null = ((GSettingsKey) key).range_content;
                 return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, range_content_or_null);
+
             default:
                 if ("a" in key.type_string)
                     return (KeyEditorChild) new KeyEditorChildArray (key.type_string, initial_value);
