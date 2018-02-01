@@ -49,7 +49,7 @@ class RegistryInfo : Grid, BrowsableView
         properties_list_box.@foreach ((widget) => widget.destroy ());
     }
 
-    private void disconnect_handler (Object object, ref ulong handler)
+    private static void disconnect_handler (Object object, ref ulong handler)
     {
         if (handler == 0)   // erase_button_handler & revealer_reload_1_handler depend of the key's type
             return;
@@ -136,12 +136,12 @@ class RegistryInfo : Grid, BrowsableView
         }
         else
         {
-            label = new Label (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key));
+            label = new Label (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key, modifications_handler.model));
             key_value_changed_handler = key.value_changed.connect (() => {
                     if (!has_schema && model.is_key_ghost ((DConfKey) key))
                         label.set_text (_("Key erased."));
                     else
-                        label.set_text (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key));
+                        label.set_text (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key, modifications_handler.model));
                 });
         }
         label.halign = Align.START;
@@ -158,7 +158,7 @@ class RegistryInfo : Grid, BrowsableView
 
         add_separator ();
 
-        KeyEditorChild key_editor_child = create_child (key, has_schema);
+        KeyEditorChild key_editor_child = create_child (key, has_schema, modifications_handler);
         bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
         if (is_key_editor_child_single)
         {
@@ -256,7 +256,7 @@ class RegistryInfo : Grid, BrowsableView
             });
     }
 
-    private KeyEditorChild create_child (Key key, bool has_schema)
+    private static KeyEditorChild create_child (Key key, bool has_schema, ModificationsHandler modifications_handler)
     {
         SettingsModel model = modifications_handler.model;
         Variant initial_value = modifications_handler.get_key_custom_value (key);
@@ -335,9 +335,8 @@ class RegistryInfo : Grid, BrowsableView
         }
     }
 
-    private string get_current_value_text (bool is_default, Key key)
+    private static string get_current_value_text (bool is_default, Key key, SettingsModel model)
     {
-        SettingsModel model = modifications_handler.model;
         if (is_default)
             return _("Default value");
         else
