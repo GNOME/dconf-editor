@@ -276,7 +276,16 @@ class RegistryInfo : Grid, BrowsableView
                 }
 
             case "<flags>":
-                return (KeyEditorChild) new KeyEditorChildFlags ((GSettingsKey) key, initial_value, modifications_handler);
+                string [] all_flags = ((GSettingsKey) key).range_content.get_strv ();
+                string [] active_flags = ((GSettingsKey) key).settings.get_strv (key.name);
+                KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, all_flags, active_flags);
+
+                ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
+                        active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
+                        key_editor_child_flags.update_flags (active_flags);
+                    });
+                key_editor_child_flags.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+                return (KeyEditorChild) key_editor_child_flags;
 
             case "b":
                 return (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());

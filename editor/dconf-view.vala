@@ -91,12 +91,15 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
 
 private class KeyEditorChildFlags : Grid, KeyEditorChild
 {
+    private string [] all_flags;
+    private ContextPopover popover = new ContextPopover ();
+
     private Variant variant;
     private Label label = new Label ("");
 
-    public KeyEditorChildFlags (GSettingsKey key, Variant initial_value, ModificationsHandler modifications_handler)
-        requires (key.type_string == "<flags>")
+    public KeyEditorChildFlags (Variant initial_value, string [] _all_flags, string [] active_flags)
     {
+        all_flags = _all_flags;
         this.visible = true;
         this.hexpand = true;
         this.orientation = Orientation.HORIZONTAL;
@@ -114,18 +117,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         label.hexpand = true;
         this.add (label);
 
-        ContextPopover popover = new ContextPopover ();
-
-        string [] all_flags = key.range_content.get_strv ();
-        popover.create_flags_list (key.settings.get_strv (key.name), all_flags);
-        GSettingsKey ref_key = key;
-        ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                string [] active_flags = modifications_handler.get_key_custom_value (ref_key).get_strv ();
-                foreach (string flag in all_flags)
-                    popover.update_flag_status (flag, flag in active_flags);
-            });
-        popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
-
+        popover.create_flags_list (active_flags, all_flags);
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
                 if (gvariant == null)   // TODO better (2/3)
@@ -135,6 +127,12 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
             });
         reload (initial_value);
         button.set_popover ((Popover) popover);
+    }
+
+    public void update_flags (string [] active_flags)
+    {
+        foreach (string flag in all_flags)
+            popover.update_flag_status (flag, flag in active_flags);
     }
 
     public Variant get_variant ()
