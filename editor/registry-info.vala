@@ -282,24 +282,26 @@ class RegistryInfo : Grid, BrowsableView
             case "i":
             case "h":
             // TODO "x" is not working in spinbuttons (double-based)
+                Variant? range = null;
                 if (has_schema && (((GSettingsKey) key).range_type == "range"))
                 {
-                    Variant range = ((GSettingsKey) key).range_content;
-                    if (Key.get_variant_as_int64 (range.get_child_value (0)) == Key.get_variant_as_int64 (range.get_child_value (1)))
+                    range = ((GSettingsKey) key).range_content;
+                    if (Key.get_variant_as_int64 (((!) range).get_child_value (0)) == Key.get_variant_as_int64 (((!) range).get_child_value (1)))
                         return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).print (false));
                 }
-                return (KeyEditorChild) new KeyEditorChildNumberInt (key, initial_value);
+                return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, key.type_string, range);
             case "y":
             case "q":
             case "u":
             // TODO "t" is not working in spinbuttons (double-based)
+                Variant? range = null;
                 if (has_schema && (((GSettingsKey) key).range_type == "range"))
                 {
-                    Variant range = ((GSettingsKey) key).range_content;
-                    if (Key.get_variant_as_uint64 (range.get_child_value (0)) == Key.get_variant_as_uint64 (range.get_child_value (1)))
+                    range = ((GSettingsKey) key).range_content;
+                    if (Key.get_variant_as_uint64 (((!) range).get_child_value (0)) == Key.get_variant_as_uint64 (((!) range).get_child_value (1)))
                         return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).print (false));
                 }
-                return (KeyEditorChild) new KeyEditorChildNumberInt (key, initial_value);
+                return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, key.type_string, range);
             case "d":
                 return (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);
             case "mb":

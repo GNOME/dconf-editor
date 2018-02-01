@@ -337,23 +337,23 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
-    public KeyEditorChildNumberInt (Key key, Variant initial_value)
-        requires (key.type_string == "y" || key.type_string == "n" || key.type_string == "q" || key.type_string == "i" || key.type_string == "u" || key.type_string == "h")     // TODO key.type_string == "x" || key.type_string == "t" ||
+    public KeyEditorChildNumberInt (Variant initial_value, string type_string, Variant? range_content_or_null)
+        requires (type_string == "y" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u" || type_string == "h")     // TODO type_string == "x" || type_string == "t" ||
     {
-        this.key_type = key.type_string;
+        this.key_type = type_string;
 
         this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
 
         double min, max;
-        if (key is GSettingsKey && ((GSettingsKey) key).range_type == "range")
+        if (range_content_or_null != null)
         {
-            min = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (0));
-            max = get_variant_as_double (((GSettingsKey) key).range_content.get_child_value (1));
+            min = get_variant_as_double (((!) range_content_or_null).get_child_value (0));
+            max = get_variant_as_double (((!) range_content_or_null).get_child_value (1));
         }
         else
-            get_min_and_max_double (out min, out max, key.type_string);
+            get_min_and_max_double (out min, out max, type_string);
 
         Adjustment adjustment = new Adjustment (get_variant_as_double (initial_value), min, max, 1.0, 5.0, 0.0);
         this.configure (adjustment, 1.0, 0);
