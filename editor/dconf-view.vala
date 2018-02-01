@@ -449,7 +449,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 {
     private TextView text_view;
     private Revealer error_revealer;
-    private string variant_type;
+    private string key_type;
     private Variant variant;
 
     private ulong deleted_text_handler = 0;
@@ -460,7 +460,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         get_style_context ().add_class ("key-editor-child-array");
     }
 
-    public KeyEditorChildArray (string type, Variant initial_value)
+    public KeyEditorChildArray (string type_string, Variant initial_value)
     {
         this.visible = true;
         this.hexpand = true;
@@ -468,7 +468,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         orientation = Orientation.VERTICAL;
         get_style_context ().add_class ("frame");
 
-        this.variant_type = type;
+        this.key_type = type_string;
         this.variant = initial_value;
 
         ScrolledWindow scrolled_window = new ScrolledWindow (null, null);
@@ -531,7 +531,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         string tmp_text = text_view.buffer.text; // don't put in the try{} for correct C code
         try
         {
-            Variant? tmp_variant = Variant.parse (new VariantType (variant_type), tmp_text);
+            Variant? tmp_variant = Variant.parse (new VariantType (key_type), tmp_text);
             variant = (!) tmp_variant;
 
             StyleContext context = get_style_context ();
@@ -584,7 +584,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 
 private class KeyEditorChildDefault : Entry, KeyEditorChild
 {
-    private string variant_type;
+    private string key_type;
     private Variant variant;
     private bool is_string;
 
@@ -596,9 +596,9 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         get_style_context ().add_class ("key-editor-child-entry");
     }
 
-    public KeyEditorChildDefault (string type, Variant initial_value)
+    public KeyEditorChildDefault (string type_string, Variant initial_value)
     {
-        this.variant_type = type;
+        this.key_type = type_string;
         this.variant = initial_value;
 
         this.visible = true;
@@ -606,7 +606,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         this.secondary_icon_activatable = false;
         this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type."));
 
-        this.is_string = type == "s" || type == "o" || type == "g";
+        this.is_string = type_string == "s" || type_string == "o" || type_string == "g";
         this.text = is_string ? initial_value.get_string () : initial_value.print (false);
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
@@ -623,7 +623,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
 
     private bool test_value ()
     {
-        if (variant_type == "s")
+        if (key_type == "s")
         {
             variant = new Variant.string (this.text);
             return true;
@@ -632,7 +632,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         string tmp_text = is_string ? @"'$text'" : this.text; // don't put in the try{} for correct C code
         try
         {
-            Variant? tmp_variant = Variant.parse (new VariantType (variant_type), tmp_text);
+            Variant? tmp_variant = Variant.parse (new VariantType (key_type), tmp_text);
             variant = (!) tmp_variant;
 
             StyleContext context = get_style_context ();
