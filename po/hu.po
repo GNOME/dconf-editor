@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-01-24 21:45+0000\n"
-"PO-Revision-Date: 2018-01-26 22:34+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2018-01-31 03:59+0000\n"
+"PO-Revision-Date: 2018-02-04 13:24+0100\n"
+"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Poedit 2.0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: editor/bookmarks.ui:19
@@ -40,7 +40,7 @@ msgstr ""
 "A könyvjelzők ide\n"
 "lesznek hozzáadva"
 
-#: editor/bookmarks.ui:86 editor/registry-search.vala:596
+#: editor/bookmarks.ui:86 editor/registry-search.vala:598
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
 
@@ -865,16 +865,16 @@ msgstr ""
 "Meskó Balázs <meskobalazs at fedoraproject dot org>\n"
 "Úr Balázs <urbalazs at gmail dot com>"
 
-#: editor/dconf-model.vala:386
+#: editor/dconf-model.vala:397
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (kulcs törölve)"
 
-#: editor/dconf-view.vala:253
+#: editor/dconf-view.vala:263
 msgid "Failed to parse as double."
 msgstr "Nem értelmezhető lebegőpontos értékként."
 
-#: editor/dconf-view.vala:506 editor/dconf-view.vala:599
+#: editor/dconf-view.vala:516 editor/dconf-view.vala:609
 msgid "This value is invalid for the key type."
 msgstr "Ez az érték érvénytelen a kulcstípushoz."
 
@@ -890,57 +890,73 @@ msgstr "Az indítási leképezések le vannak tiltva."
 msgid "Schema is not installed on given path."
 msgstr "Nincs séma telepítve a megadott útvonalon."
 
-#: editor/dconf-window.vala:272
+#: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Köszönjük, hogy a Dconf szerkesztővel szerkeszti a konfigurációt."
 
-#: editor/dconf-window.vala:273
+#: editor/dconf-window.vala:275
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Ne feledje, hogy egyes beállítások tönkretehetik az alkalmazásokat, legyen "
 "óvatos!"
 
-#: editor/dconf-window.vala:274
+#: editor/dconf-window.vala:276
 msgid "I’ll be careful."
 msgstr "Óvatos leszek."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:278
+#: editor/dconf-window.vala:280
 msgid "Show this dialog next time."
 msgstr "Mutassa ezt legközelebb is."
 
-#: editor/dconf-window.vala:561
+#: editor/dconf-window.vala:582
 msgid "Copy descriptor"
 msgstr "Leíró másolása"
 
-#: editor/dconf-window.vala:567
+#: editor/dconf-window.vala:588
 msgid "Reset visible keys"
 msgstr "Látható gombok visszaállítása"
 
-#: editor/dconf-window.vala:568
+#: editor/dconf-window.vala:589
 msgid "Reset view recursively"
 msgstr "Nézet visszaállítása rekurzívan"
 
-#: editor/dconf-window.vala:576
+#: editor/dconf-window.vala:597
 msgid "Enter delay mode"
 msgstr "Késleltető mód megadása"
 
-#: editor/dconf-window.vala:639
+#: editor/dconf-window.vala:660
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "Ugyanaz az egérgomb lett beállítva az előre és hátra mozgáshoz. Nincs "
 "művelet."
 
-#: editor/dconf-window.vala:865
+#: editor/dconf-window.vala:908
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nem található a(z) „%s” kulcs."
 
-#: editor/dconf-window.vala:869
+#: editor/dconf-window.vala:912
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nincs semmi a kért „%s” mappában."
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
+#: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
+#: editor/key-list-box-row.vala:813 editor/registry-info.vala:314
+msgid "Default value"
+msgstr "Alapértelmezett érték"
+
+#: editor/delayed-setting-view.vala:73
+msgid "Key erased"
+msgstr "Kulcs törölve"
+
+#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:325
+#: editor/registry-info.vala:142
+msgid "Key erased."
+msgstr "Kulcs törölve."
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
@@ -974,192 +990,207 @@ msgstr "Műveletek menü"
 
 #: editor/help-overlay.ui:52
 msgctxt "shortcut window"
-msgid "Path bar navigation"
-msgstr "Útvonalsáv navigáció"
-
-#: editor/help-overlay.ui:56
-msgctxt "shortcut window"
-msgid "Open root folder"
-msgstr "Gyökérmappa megnyitása"
-
-#: editor/help-overlay.ui:63
-msgctxt "shortcut window"
-msgid "Open parent folder"
-msgstr "Szülőmappa megnyitása"
-
-#: editor/help-overlay.ui:70
-msgctxt "shortcut window"
-msgid "Open active direct child"
-msgstr "Aktív közvetlen gyermek megnyitása"
-
-#: editor/help-overlay.ui:77
-msgctxt "shortcut window"
-msgid "Open active last child"
-msgstr "Aktív utolsó gyermek megnyitása"
-
-#: editor/help-overlay.ui:86
-msgctxt "shortcut window"
-msgid "Keys list actions"
-msgstr "Kulcslista-műveletek"
-
-#: editor/help-overlay.ui:90
-msgctxt "shortcut window"
-msgid "Contextual menu"
-msgstr "Helyi menü"
-
-#: editor/help-overlay.ui:97
-msgctxt "shortcut window"
-msgid "Set to default"
-msgstr "Beállítás az alapértelmezésre"
-
-#: editor/help-overlay.ui:104
-msgctxt "shortcut window"
-msgid "Toggle boolean value"
-msgstr "Logikai érték átbillentése"
-
-#: editor/help-overlay.ui:113
-msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Vágólap"
 
-#: editor/help-overlay.ui:117
+#: editor/help-overlay.ui:56
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Leíró másolása"
 
-#: editor/help-overlay.ui:124
+#: editor/help-overlay.ui:63
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Útvonal másolása"
 
+#: editor/help-overlay.ui:72
+msgctxt "shortcut window"
+msgid "Modifications list actions"
+msgstr "Módosításlista műveletek"
+
+#: editor/help-overlay.ui:76
+msgctxt "shortcut window"
+msgid "Toggle modifications list"
+msgstr "Módosításlista ki- és bekapcsolása"
+
+#: editor/help-overlay.ui:83
+msgctxt "shortcut window"
+msgid "Open selected row key"
+msgstr "A kiválasztott sor kulcsának megnyitása"
+
+#: editor/help-overlay.ui:90
+msgctxt "shortcut window"
+msgid "Dismiss modification"
+msgstr "Módosítása elvetése"
+
+#: editor/help-overlay.ui:99
+msgctxt "shortcut window"
+msgid "Path bar navigation"
+msgstr "Útvonalsáv navigáció"
+
+#: editor/help-overlay.ui:103
+msgctxt "shortcut window"
+msgid "Open root folder"
+msgstr "Gyökérmappa megnyitása"
+
+#: editor/help-overlay.ui:110
+msgctxt "shortcut window"
+msgid "Open parent folder"
+msgstr "Szülőmappa megnyitása"
+
+#: editor/help-overlay.ui:117
+msgctxt "shortcut window"
+msgid "Open active direct child"
+msgstr "Aktív közvetlen gyermek megnyitása"
+
+#: editor/help-overlay.ui:124
+msgctxt "shortcut window"
+msgid "Open active last child"
+msgstr "Aktív utolsó gyermek megnyitása"
+
 #: editor/help-overlay.ui:133
+msgctxt "shortcut window"
+msgid "Keys list actions"
+msgstr "Kulcslista-műveletek"
+
+#: editor/help-overlay.ui:137
+msgctxt "shortcut window"
+msgid "Contextual menu"
+msgstr "Helyi menü"
+
+#: editor/help-overlay.ui:144
+msgctxt "shortcut window"
+msgid "Set to default"
+msgstr "Beállítás az alapértelmezésre"
+
+#: editor/help-overlay.ui:151
+msgctxt "shortcut window"
+msgid "Toggle boolean value"
+msgstr "Logikai érték átbillentése"
+
+#: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Általános"
 
-#: editor/help-overlay.ui:137
+#: editor/help-overlay.ui:164
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Ezen súgó megjelenítése"
 
-#: editor/help-overlay.ui:144
+#: editor/help-overlay.ui:171
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Névjegy"
 
-#: editor/help-overlay.ui:151
+#: editor/help-overlay.ui:178
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Kilépés"
 
-#: editor/key-list-box-row.vala:308
+#: editor/key-list-box-row.vala:307
 msgid "No Schema Found"
 msgstr "Nem található séma"
 
-#: editor/key-list-box-row.vala:326 editor/registry-info.vala:142
-msgid "Key erased."
-msgstr "Kulcs törölve."
-
-#: editor/key-list-box-row.vala:445 editor/registry-info.vala:114
+#: editor/key-list-box-row.vala:434 editor/registry-info.vala:114
 msgid "No summary provided"
 msgstr "Nincs megadva összefoglaló"
 
-#: editor/key-list-box-row.vala:459
+#: editor/key-list-box-row.vala:448
 msgid "conflicting keys"
 msgstr "ütköző kulcsok"
 
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:611
+msgid "Copy"
+msgstr "Másolás"
+
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:614
+msgid "Customize…"
+msgstr "Testreszabás…"
+
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:644
+#: editor/key-list-box-row.vala:617
 msgid "Set to default"
 msgstr "Beállítás az alapértelmezésre"
 
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
+#: editor/key-list-box-row.vala:622
+msgid "Show details…"
+msgstr "Részletek megjelenítése…"
+
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:649
+#: editor/key-list-box-row.vala:625
 msgid "Dismiss change"
 msgstr "Változtatás elvetése"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:652 editor/key-list-box-row.vala:814
+#: editor/key-list-box-row.vala:628 editor/key-list-box-row.vala:749
 #: editor/registry-info.ui:112
 msgid "Erase key"
 msgstr "Kulcs törlése"
 
-#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:655
-msgid "Do not erase"
-msgstr "Ne törölje"
-
-#. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:667
-msgid "Customize…"
-msgstr "Testreszabás…"
-
-#. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:670
-msgid "Show details…"
-msgstr "Részletek megjelenítése…"
-
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:673
+#: editor/key-list-box-row.vala:631
 msgid "Open"
 msgstr "Megnyitás"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:676
+#: editor/key-list-box-row.vala:634
 msgid "Open parent folder"
 msgstr "Szülőmappa megnyitása"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:679
+#: editor/key-list-box-row.vala:637
 msgid "Reset recursively"
 msgstr "Visszaállítás rekurzívan"
 
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:690
-msgid "Copy"
-msgstr "Másolás"
+#. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
+#: editor/key-list-box-row.vala:640
+msgid "Do not erase"
+msgstr "Ne törölje"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:808
+#: editor/key-list-box-row.vala:743
 msgid "No change"
 msgstr "Nincs változtatás"
 
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:878 editor/registry-info.vala:314
-msgid "Default value"
-msgstr "Alapértelmezett érték"
-
-#: editor/modifications-revealer.ui:49
+#: editor/modifications-revealer.ui:66
 msgid "Apply"
 msgstr "Alkalmaz"
 
-#: editor/modifications-revealer.vala:107
-#: editor/modifications-revealer.vala:140
+#: editor/modifications-revealer.ui:104
+msgid "Delayed setting changes will be shown here"
+msgstr "A késleltetett beállításmódosítások itt lesznek megjelenítve"
+
+#: editor/modifications-revealer.vala:115
+#: editor/modifications-revealer.vala:267
 msgid "Nothing to reset."
 msgstr "Nincs mit visszaállítani."
 
-#: editor/modifications-revealer.vala:126
+#: editor/modifications-revealer.vala:253
 msgid "The value is invalid."
 msgstr "Az érték érvénytelen."
 
-#: editor/modifications-revealer.vala:130
+#: editor/modifications-revealer.vala:257
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
 "A változtatás el lesz vetve, ha alkalmazás nélkül lép ki ebből a nézetből."
 
-#: editor/modifications-revealer.vala:132
+#: editor/modifications-revealer.vala:259
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
 "A változtatás alkalmazva lesz egy ilyen kérésen, vagy ha kilép ebből a "
 "nézetből."
 
-#: editor/modifications-revealer.vala:152
+#: editor/modifications-revealer.vala:279
 msgid "Changes will be delayed until you request it."
 msgstr "A változtatások késleltetve lesznek, amíg azt kéri."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:154
+#: editor/modifications-revealer.vala:281
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -1167,7 +1198,7 @@ msgstr[0] "Egy gsettings művelet késleltetve."
 msgstr[1] "%u gsettings művelet késleltetve."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:158
+#: editor/modifications-revealer.vala:285
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -1176,12 +1207,12 @@ msgstr[1] "%u dconf művelet késleltetve."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:161
+#: editor/modifications-revealer.vala:288
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:161
+#: editor/modifications-revealer.vala:288
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -1192,7 +1223,7 @@ msgstr[1] "%u gsettings művelet"
 #. * the space before the "and" is probably wanted, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:166
+#: editor/modifications-revealer.vala:293
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
@@ -1348,15 +1379,15 @@ msgstr ""
 msgid "No matches"
 msgstr "Nincs találat"
 
-#: editor/registry-search.vala:594
+#: editor/registry-search.vala:596
 msgid "Current folder"
 msgstr "Jelenlegi mappa"
 
-#: editor/registry-search.vala:598
+#: editor/registry-search.vala:600
 msgid "Folders"
 msgstr "Mappák"
 
-#: editor/registry-search.vala:600
+#: editor/registry-search.vala:602
 msgid "Keys"
 msgstr "Kulcsok"
 
@@ -1449,4 +1480,3 @@ msgstr "Áthelyezhető séma"
 #: editor/setting-object.vala:341
 msgid "Schema with path"
 msgstr "Útvonallal rendelkező séma"
-
