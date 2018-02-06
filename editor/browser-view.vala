@@ -62,7 +62,7 @@ class BrowserView : Grid
                                                   _("Refresh"), "bro.refresh-folder");
         info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"),
                                                   _("Reload"), "ui.reload-folder");
-        info_bar.add_label ("hard-reload-object", _("This key properties have changed. Do you want to reload the view?"),
+        info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"),
                                                   _("Reload"), "ui.reload-object");   // TODO also for key removing?
 
         sorting_options.notify.connect (() => {
