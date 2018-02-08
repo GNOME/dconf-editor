@@ -91,7 +91,9 @@ class BrowserView : Grid
         { "empty", empty , "*" },
 
         { "refresh-folder", refresh_folder },
-        { "set-to-default", set_to_default, "(ss)" },
+
+        { "set-key-value",  set_key_value,  "(ssv)" },
+        { "set-to-default", set_to_default, "(ss)"  },  // see also ui.erase(s)
 
         { "toggle-dconf-key-switch",     toggle_dconf_key_switch,     "(sb)"   },
         { "toggle-gsettings-key-switch", toggle_gsettings_key_switch, "(ssbb)" }
@@ -106,13 +108,29 @@ class BrowserView : Grid
         hide_reload_warning ();
     }
 
+    private void set_key_value (SimpleAction action, Variant? value_variant)
+        requires (value_variant != null)
+    {
+        string full_name;
+        string context;
+        Variant key_value_request;
+        ((!) value_variant).@get ("(ssv)", out full_name, out context, out key_value_request);
+
+        if (modifications_handler.get_current_delay_mode ())
+            modifications_handler.add_delayed_setting (full_name, key_value_request);
+        else if (context == ".dconf")
+            modifications_handler.set_dconf_key_value (full_name, key_value_request);
+        else
+            modifications_handler.set_gsettings_key_value (full_name, context, key_value_request);
+    }
+
     private void set_to_default (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
         string full_name;
-        string context;
-        ((!) path_variant).@get ("(ss)", out full_name, out context);
-        modifications_handler.set_to_default (full_name, context);
+        string schema_id;
+        ((!) path_variant).@get ("(ss)", out full_name, out schema_id);
+        modifications_handler.set_to_default (full_name, schema_id);
         invalidate_popovers ();
     }
 
@@ -136,15 +154,15 @@ class BrowserView : Grid
             assert_not_reached ();
 
         string full_name;
-        string context;
+        string schema_id;
         bool key_value_request;
         bool key_default_value;
-        ((!) value_variant).@get ("(ssbb)", out full_name, out context, out key_value_request, out key_default_value);
+        ((!) value_variant).@get ("(ssbb)", out full_name, out schema_id, out key_value_request, out key_default_value);
 
         if (key_value_request == key_default_value)
-            modifications_handler.set_to_default (full_name, context);
+            modifications_handler.set_to_default (full_name, schema_id);
         else
-            modifications_handler.set_gsettings_key_value (full_name, context, new Variant.boolean (key_value_request));
+            modifications_handler.set_gsettings_key_value (full_name, schema_id, new Variant.boolean (key_value_request));
     }
 
     /*\

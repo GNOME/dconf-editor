@@ -224,7 +224,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    public signal void set_key_value (Variant? new_value);
     public signal void change_dismissed ();
 
     public ModificationsHandler modifications_handler { protected get; construct; }
@@ -286,6 +285,35 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             else
                 context.remove_class ("erase");
         }
+    }
+
+    protected void set_key_value (bool has_schema, Variant? new_value)
+    {
+        ModelButton actionable = new ModelButton ();
+        actionable.visible = false;
+        Variant variant;
+        if (new_value == null)
+        {
+            if (has_schema)
+            {
+                variant = new Variant ("(ss)", abstract_key.full_name, ((GSettingsKey) abstract_key).schema_id);
+                actionable.set_detailed_action_name ("bro.set-to-default(" + variant.print (false) + ")");
+            }
+            else
+            {
+                variant = new Variant.string (abstract_key.full_name);
+                actionable.set_detailed_action_name ("ui.erase(" + variant.print (false) + ")");
+            }
+        }
+        else
+        {
+            variant = new Variant ("(ssv)", abstract_key.full_name, (has_schema ? ((GSettingsKey) abstract_key).schema_id : ".dconf"), (!) new_value);
+            actionable.set_detailed_action_name ("bro.set-key-value(" + variant.print (false) + ")");
+        }
+        ((Container) get_child ()).add (actionable);
+        actionable.clicked ();
+        ((Container) get_child ()).remove (actionable);
+        actionable.destroy ();
     }
 }
 
@@ -382,7 +410,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             popover.value_changed.connect ((gvariant) => {
                     hide_right_click_popover ();
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key.type_string), gvariant)));
-                    set_key_value (gvariant);
+                    set_key_value (false, gvariant);
                 });
 
             if (!delayed_apply_menu)
@@ -534,7 +562,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     hide_right_click_popover ();
                     Variant key_value = model.get_key_value (key);
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
-                    set_key_value (gvariant);
+                    set_key_value (true, gvariant);
                 });
         }
         else if (!delayed_apply_menu && !planned_change && key.type_string == "<flags>")
@@ -553,7 +581,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 });
             popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
 
-            popover.value_changed.connect ((gvariant) => set_key_value (gvariant));
+            popover.value_changed.connect ((gvariant) => set_key_value (true, gvariant));
         }
         else if (planned_change)
         {
