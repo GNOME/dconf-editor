@@ -40,7 +40,7 @@ class ModificationsHandler : Object
         {
             uint count = 0;
             keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
-                    SettingObject? key = model.get_key (key_path);
+                    Key? key = model.get_key (key_path);
                     if (key != null && (!) key is DConfKey)
                         count++;
                 });
@@ -53,7 +53,7 @@ class ModificationsHandler : Object
         {
             uint count = 0;
             keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
-                    SettingObject? key = model.get_key (key_path);
+                    Key? key = model.get_key (key_path);
                     if (key != null && (!) key is GSettingsKey)
                         count++;
                 });
@@ -227,8 +227,9 @@ class ModificationsHandler : Object
     {
         ListStore delayed_settings_list = new ListStore (typeof (Key));
         keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
-                SettingObject? key = model.get_key (key_path);
-                delayed_settings_list.append ((Key) (!) key);
+                Key? key = model.get_key (key_path);
+                if (key != null)    // TODO better
+                    delayed_settings_list.append ((!) key);
             });
         return delayed_settings_list;
     }
