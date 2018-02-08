@@ -132,27 +132,16 @@ class RegistrySearch : Grid, BrowsableView
             else
                 row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object, modifications_handler, !is_local_result);
 
-            Key key = (Key) setting_object;
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key.full_name));
-
-            ulong delayed_modifications_changed_handler =
-                    modifications_handler.delayed_changes_changed.connect (() => key_row.set_delayed_icon ());
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => key_row.set_delayed_icon ());
             key_row.set_delayed_icon ();
-
-            row.destroy.connect (() => {
-                    modifications_handler.disconnect (delayed_modifications_changed_handler);
-                    key_row.disconnect (change_dismissed_handler);
-                });
+            row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
         }
 
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
-
-        row.destroy.connect (() => {
-                row.disconnect (button_press_event_handler);
-            });
+        row.destroy.connect (() => row.disconnect (button_press_event_handler));
 
         /* Wrapper ensures max width for rows */
         ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();

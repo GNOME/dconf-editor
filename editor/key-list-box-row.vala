@@ -222,8 +222,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    public signal void change_dismissed ();
-
     public ModificationsHandler modifications_handler { protected get; construct; }
 
     construct
@@ -283,6 +281,18 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             else
                 context.remove_class ("erase");
         }
+    }
+
+    protected void change_dismissed ()
+    {
+        ModelButton actionable = new ModelButton ();
+        actionable.visible = false;
+        Variant variant = new Variant.string (abstract_key.full_name);
+        actionable.set_detailed_action_name ("ui.dismiss-change(" + variant.print (false) + ")");
+        ((Container) get_child ()).add (actionable);
+        actionable.clicked ();
+        ((Container) get_child ()).remove (actionable);
+        actionable.destroy ();
     }
 
     public void on_delete_call ()
