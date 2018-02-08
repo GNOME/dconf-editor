@@ -105,7 +105,6 @@ resource_data = files(
   'property-row.ui',
   'registry-info.ui',
   'registry-placeholder.ui',
-  'registry-search.ui',
   'registry-view.ui'
 )
 

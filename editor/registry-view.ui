@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="RegistryView" parent="GtkGrid">
+  <template class="RegistryList" parent="GtkGrid">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkScrolledWindow" id="scrolled">
@@ -16,8 +16,7 @@
               <class name="keys-list"/>
             </style>
             <child type="placeholder">
-              <object class="RegistryPlaceholder">
-                <property name="label" translatable="yes">No keys in this path</property>
+              <object class="RegistryPlaceholder" id="placeholder">
                 <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
                 <property name="big">True</property>
               </object>

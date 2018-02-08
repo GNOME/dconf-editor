@@ -18,16 +18,15 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-class RegistryView : Grid, BrowsableView
+class RegistryList : Grid, BrowsableView
 {
+    [GtkChild] protected ListBox key_list_box;
+    [GtkChild] protected RegistryPlaceholder placeholder;
     [GtkChild] private ScrolledWindow scrolled;
 
-    [GtkChild] private ListBox key_list_box;
-    private GLib.ListStore? key_model = null;
+    protected GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
-    private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
-
-    private bool _small_keys_list_rows;
+    protected bool _small_keys_list_rows;
     public bool small_keys_list_rows
     {
         set
@@ -41,10 +40,105 @@ class RegistryView : Grid, BrowsableView
         }
     }
 
+    protected void scroll_to_row (ListBoxRow row, bool grab_focus)
+    {
+        key_list_box.select_row (row);
+        if (grab_focus)
+            row.grab_focus ();
+
+        Allocation list_allocation, row_allocation;
+        scrolled.get_allocation (out list_allocation);
+        row.get_allocation (out row_allocation);
+        key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+    }
+
+    public void invalidate_popovers ()
+    {
+        uint position = 0;
+        ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
+        while (row != null)
+        {
+            ((!) row).destroy_popover ();
+            position++;
+            row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
+        }
+        rows_possibly_with_popover.remove_all ();
+    }
+
+    /*\
+    * * Keyboard calls
+    \*/
+
+    public bool show_row_popover ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return false;
+
+        ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
+
+        if (row.right_click_popover_visible ())
+            row.hide_right_click_popover ();
+        else
+        {
+            row.show_right_click_popover ();
+            rows_possibly_with_popover.append (row);
+        }
+        return true;
+    }
+
+    public string? get_copy_text ()
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return null;
+        else
+            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+    }
+
+    public void toggle_boolean_key ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return;
+
+        if (!(((!) selected_row).get_child () is KeyListBoxRow))
+            return;
+
+        ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
+    }
+
+    public void set_selected_to_default ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return;
+
+        if (!(((!) selected_row).get_child () is KeyListBoxRow))
+            assert_not_reached ();
+
+        ((KeyListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
+    }
+
+    public void discard_row_popover ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return;
+
+        ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
+    }
+}
+
+class RegistryView : RegistryList
+{
+    private GLib.ListStore? key_model = null;
+
     public ModificationsHandler modifications_handler { private get; set; }
 
     construct
     {
+        placeholder.label = _("No keys in this path");
         key_list_box.set_header_func (update_row_header);
     }
 
@@ -125,17 +219,6 @@ class RegistryView : Grid, BrowsableView
             position++;
         }
         return 0; // selected row may have been removed
-    }
-    private void scroll_to_row (ListBoxRow row, bool grab_focus)
-    {
-        key_list_box.select_row (row);
-        if (grab_focus)
-            row.grab_focus ();
-
-        Allocation list_allocation, row_allocation;
-        scrolled.get_allocation (out list_allocation);
-        row.get_allocation (out row_allocation);
-        key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
     }
 
     /*\
@@ -271,19 +354,6 @@ class RegistryView : Grid, BrowsableView
         return false;
     }
 
-    public void invalidate_popovers ()
-    {
-        uint position = 0;
-        ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
-        while (row != null)
-        {
-            ((!) row).destroy_popover ();
-            position++;
-            row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
-        }
-        rows_possibly_with_popover.remove_all ();
-    }
-
     public string get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
@@ -294,69 +364,5 @@ class RegistryView : Grid, BrowsableView
         }
         else
             return "";
-    }
-
-    /*\
-    * * Keyboard calls
-    \*/
-
-    public bool show_row_popover ()
-    {
-        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return false;
-
-        ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
-
-        if (row.right_click_popover_visible ())
-            row.hide_right_click_popover ();
-        else
-        {
-            row.show_right_click_popover ();
-            rows_possibly_with_popover.append (row);
-        }
-        return true;
-    }
-
-    public string? get_copy_text ()
-    {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return null;
-        else
-            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
-    }
-
-    public void toggle_boolean_key ()
-    {
-        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return;
-
-        if (!(((!) selected_row).get_child () is KeyListBoxRow))
-            return;
-
-        ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
-    }
-
-    public void set_selected_to_default ()
-    {
-        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return;
-
-        if (!(((!) selected_row).get_child () is KeyListBoxRow))
-            assert_not_reached ();
-
-        ((KeyListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
-    }
-
-    public void discard_row_popover ()
-    {
-        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
-        if (selected_row == null)
-            return;
-
-        ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
     }
 }

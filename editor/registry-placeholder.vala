@@ -23,7 +23,7 @@ class RegistryPlaceholder : Grid
     [GtkChild] private Label placeholder_label;
     [GtkChild] private Image placeholder_image;
 
-    public string label { private get; construct; }
+    public string label { construct set { placeholder_label.label = value; }}
     public string icon_name { private get; construct; }
     public bool big { private get; construct; default = false; }
 
@@ -37,7 +37,6 @@ class RegistryPlaceholder : Grid
         else
             placeholder_image.pixel_size = 36;
 
-        placeholder_label.label = label;
         placeholder_image.icon_name = icon_name;
     }
 }
