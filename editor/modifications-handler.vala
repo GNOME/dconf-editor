@@ -166,23 +166,6 @@ class ModificationsHandler : Object
         return planned_change ? planned_value == null : model.is_key_default (key);
     }
 
-    public void set_key_value (Key key, Variant? new_value)
-    {
-        if (get_current_delay_mode ())
-            add_delayed_setting (key.full_name, new_value);
-        else if (new_value != null)
-            model.set_key_value (key, (!) new_value);
-        else if (key is GSettingsKey)
-            model.set_key_to_default (((GSettingsKey) key).full_name, ((GSettingsKey) key).schema_id);
-        else if (behaviour != Behaviour.UNSAFE)
-        {
-            mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
-            add_delayed_setting (key.full_name, null);
-        }
-        else
-            model.erase_key (((DConfKey) key).full_name);
-    }
-
     public void set_dconf_key_value (string full_name, Variant key_value)
     {
         model.set_dconf_key_value (full_name, key_value);

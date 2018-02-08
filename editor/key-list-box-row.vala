@@ -199,8 +199,6 @@ private class FolderListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private abstract class KeyListBoxRow : ClickableListBoxRow
 {
-    public signal void on_delete_call ();
-
     [GtkChild] private Grid key_name_and_value_grid;
     [GtkChild] private Label key_name_label;
     [GtkChild] protected Label key_value_label;
@@ -285,6 +283,11 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             else
                 context.remove_class ("erase");
         }
+    }
+
+    public void on_delete_call ()
+    {
+        set_key_value ((abstract_key is GSettingsKey), null);
     }
 
     protected void set_key_value (bool has_schema, Variant? new_value)

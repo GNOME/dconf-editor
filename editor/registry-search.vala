@@ -136,7 +136,6 @@ class RegistrySearch : Grid, BrowsableView
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            ulong on_delete_call_handler = key_row.on_delete_call.connect (() => modifications_handler.set_key_value (key, null));
             ulong change_dismissed_handler = key_row.change_dismissed.connect (() => modifications_handler.dismiss_change (key.full_name));
 
             ulong delayed_modifications_changed_handler =
@@ -145,7 +144,6 @@ class RegistrySearch : Grid, BrowsableView
 
             row.destroy.connect (() => {
                     modifications_handler.disconnect (delayed_modifications_changed_handler);
-                    key_row.disconnect (on_delete_call_handler);
                     key_row.disconnect (change_dismissed_handler);
                 });
         }
