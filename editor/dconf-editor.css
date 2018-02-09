@@ -80,6 +80,7 @@
 .large-window.small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 
     .hc-theme                      .keys-list          > row         { padding-top:0.5em; padding-bottom:0.5em; }
+    .hc-theme.large-window         .keys-list          > row         { padding-top:calc(0.25em + 1px); padding-bottom:calc(0.25em + 1px); }
     .hc-theme.small-keys-list-rows .keys-list          > row         { padding-top:0.4em; padding-bottom:0.4em; }
 
 /* round borders for large windows */
