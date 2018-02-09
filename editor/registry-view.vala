@@ -206,6 +206,7 @@ class RegistryView : RegistryList
         requires (key_model != null)
     {
         uint position = 0;
+        uint fallback = 0;
         while (position < ((!) key_model).get_n_items ())
         {
             SettingObject object = (SettingObject) ((!) key_model).get_object (position);
@@ -215,10 +216,11 @@ class RegistryView : RegistryList
                  || context == ".dconf" && object is DConfKey // theorical?
                  || object is GSettingsKey && ((GSettingsKey) object).schema_id == context)
                     return (int) position;
+                fallback = position;
             }
             position++;
         }
-        return 0; // selected row may have been removed
+        return (int) fallback; // selected row may have been removed or context could be ""
     }
 
     /*\

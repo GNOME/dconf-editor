@@ -773,8 +773,8 @@ class DConfWindow : ApplicationWindow
                         return true;
                     }
                     browser_view.discard_row_popover ();
-                    string? selected_row = browser_view.get_selected_row_name ();
-                    if (selected_row != null && ((!) selected_row).has_suffix ("/"))
+                    string selected_row = browser_view.get_selected_row_name ();
+                    if (selected_row.has_suffix ("/"))
                         reset_path ((!) selected_row, true);
                     else
                         browser_view.set_selected_to_default ();
