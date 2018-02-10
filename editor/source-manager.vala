@@ -38,6 +38,7 @@ public class SourceManager : Object
         return (!) settings_schema_source;
     }
 
+    private string [] previous_empty_schemas = { "ca.desrt.dconf-editor.DemoEmpty" };
     public void refresh_schema_source ()
     {
         SettingsSchemaSource? settings_schema_source = create_schema_source ();
@@ -50,13 +51,43 @@ public class SourceManager : Object
         string [] relocatable_schemas;
         ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
 
+        string [] empty_schemas = {};
         foreach (string schema_id in non_relocatable_schemas)
         {
             SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
             if (settings_schema == null)
                 continue;       // TODO better
 
+            if (((!) settings_schema).list_keys ().length == 0 && ((!) settings_schema).list_children ().length == 0)
+            {
+                empty_schemas += schema_id;
+                continue;
+            }
+
             cached_schemas.add_schema ((!) settings_schema, modified_path_specs);
+        }
+
+        string [] empty_schemas_needing_warning = {};
+        if (empty_schemas.length > 0)
+            foreach (string test_string in empty_schemas)
+                if (!(test_string in previous_empty_schemas))
+                    empty_schemas_needing_warning += test_string;
+
+        // TODO i18n but big warning with plurals; and suggest to report a bug?
+        if (empty_schemas_needing_warning.length == 1)
+        {
+            warning ("Schema with id “" + empty_schemas_needing_warning [0] + "” contains neither keys nor children.");
+            previous_empty_schemas = empty_schemas;
+        }
+        else if (empty_schemas_needing_warning.length > 1)
+        {
+            string warning_string = "The following schemas:\n";
+            foreach (string warning_id in empty_schemas_needing_warning)
+                warning_string += @"  $warning_id\n";
+            warning_string += "contain neither keys nor children.";
+
+            warning (warning_string);
+            previous_empty_schemas = empty_schemas;
         }
 
         foreach (string schema_id in relocatable_schemas)
