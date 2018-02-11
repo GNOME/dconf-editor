@@ -142,8 +142,7 @@ class RegistrySearch : RegistryList
         if (selected_row == null)
             return false;
 
-        ((ClickableListBoxRow) ((!) selected_row).get_child ()).activate ();
-
+        ((!) selected_row).activate ();
         return true;
     }
 
