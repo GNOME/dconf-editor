@@ -68,6 +68,7 @@ install_data(
 sources = files(
   'bookmarks.vala',
   'browser-infobar.vala',
+  'browser-stack.vala',
   'browser-view.vala',
   'dconf-editor.vala',
   'dconf-model.vala',
@@ -91,6 +92,7 @@ resource_data = files(
   'bookmarks.ui',
   'bookmark.ui',
   'browser-infobar.ui',
+  'browser-stack.ui',
   'browser-view.ui',
   'dconf-editor.css',
   'dconf-editor-menu.ui',

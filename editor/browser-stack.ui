@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="dconf-editor">
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="BrowserStack" parent="GtkGrid">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="BrowserInfoBar" id="info_bar">
+        <property name="visible">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="visible">True</property>
+        <property name="visible-child">browse_view</property> <!-- uses the "id" attribute -->
+        <property name="transition-type">crossfade</property>
+        <property name="expand">True</property>
+        <child>
+          <object class="RegistryView"  id="browse_view">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="name">browse-view</property>
+          </packing>
+        </child>
+        <child>
+          <object class="RegistryInfo" id="properties_view">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="name">properties-view</property>
+          </packing>
+        </child>
+        <child>
+          <object class="RegistrySearch"  id="search_results_view">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="name">search-results-view</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
