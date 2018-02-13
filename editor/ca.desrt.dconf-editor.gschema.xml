@@ -373,6 +373,11 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <summary>Conflicting key defaulting to “1” that should give an error</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped to the same path has a different default value.</description>
     </key>
+    <key name="range-conflict" type="u">
+      <default>0</default>
+      <summary>Conflicting key with no range that should give an error</summary>
+      <description>This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped to the same path has a different range.</description>
+    </key>
     <key name="type-conflict" type="s">
       <default>'test'</default>
       <summary>A (simple) string conflicting key that should give a error</summary>
@@ -394,6 +399,12 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <default>2</default>
       <summary>Conflicting key defaulting to “2” that should give an error</summary>
       <description>This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped to the same path has a different default value.</description>
+    </key>
+    <key name="range-conflict" type="u">
+      <default>0</default>
+      <range min="0" max="5"/>
+      <summary>Conflicting key with range 0~5 that should give an error</summary>
+      <description>This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped to the same path has a different range.</description>
     </key>
     <key name="type-conflict" type="ms">
       <default>'test'</default>
