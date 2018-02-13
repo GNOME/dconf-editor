@@ -678,7 +678,8 @@ class DConfWindow : ApplicationWindow
         string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
 
         Widget? focus = get_focus ();
-        if (!(focus is Entry) && !(focus is TextView)) // why is this needed?
+        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
+        if (!focus_is_text_widget)
             if (name != "F10")                         // else <Shift>F10 toggles the search_entry popup
                 if (search_bar.handle_event (event))
                     return true;
@@ -696,6 +697,9 @@ class DConfWindow : ApplicationWindow
                     return true;
 
                 case "c":
+                    if (focus_is_text_widget)
+                        return false;
+
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
 
                     string? selected_row_text = browser_view.get_copy_text ();
