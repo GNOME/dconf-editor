@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-06 06:44+0000\n"
-"PO-Revision-Date: 2018-02-12 01:14+0100\n"
+"POT-Creation-Date: 2018-02-13 07:18+0000\n"
+"PO-Revision-Date: 2018-02-13 18:35+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Tutaj zostaną\n"
 "dodane zakładki"
 
-#: editor/bookmarks.ui:86 editor/registry-search.vala:598
+#: editor/bookmarks.ui:86 editor/registry-search.vala:450
 msgid "Bookmarks"
 msgstr "Zakładki"
 
@@ -56,23 +56,23 @@ msgstr "Usuń"
 msgid "Remove this bookmark"
 msgstr "Usuwa tę zakładkę"
 
-#: editor/browser-view.vala:61
+#: editor/browser-view.vala:47
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr "Preferencje porządkowania uległy zmianie. Odświeżyć widok?"
 
-#: editor/browser-view.vala:62 editor/dconf-editor.ui:160
+#: editor/browser-view.vala:48 editor/dconf-editor.ui:160
 msgid "Refresh"
 msgstr "Ośwież"
 
-#: editor/browser-view.vala:63
+#: editor/browser-view.vala:49
 msgid "This folder content has changed. Do you want to reload the view?"
 msgstr "Zawartość tego katalogu uległa zmianie. Ponownie wczytać widok?"
 
-#: editor/browser-view.vala:64 editor/browser-view.vala:66
+#: editor/browser-view.vala:50 editor/browser-view.vala:52
 msgid "Reload"
 msgstr "Wczytaj ponownie"
 
-#: editor/browser-view.vala:65
+#: editor/browser-view.vala:51
 msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr "Właściwości tego klucza uległy zmianie. Ponownie wczytać widok?"
 
@@ -361,7 +361,7 @@ msgstr ""
 "macierz ciągów."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:349
+#: editor/ca.desrt.dconf-editor.gschema.xml:351
 msgid "A boolean, type ‘b’"
 msgstr "Zmienna logiczna, typ „b”"
 
@@ -510,12 +510,12 @@ msgstr ""
 "„integer-16-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 msgid "Flags: choose-colors-you-love"
 msgstr "Flagi: wybierz-kolory-które-kochasz"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:360
+#: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Flagi mogą być ustawiane przez atrybut „enum”."
 
@@ -530,7 +530,7 @@ msgstr ""
 "„integer-16-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:354
+#: editor/ca.desrt.dconf-editor.gschema.xml:356
 msgid "An usual integer, type ‘i’"
 msgstr "Zwykła liczba całkowita, typ „i”"
 
@@ -663,22 +663,22 @@ msgstr ""
 "Zakres może ograniczać klucz całkowity do tylko jednej wartości, ale to "
 "prawdopodobnie błąd. Edytor dconf ostrzega w takim przypadku."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:350
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Zwykła wartość logiczna, określona przez schemat o zmiennym położeniu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:355
+#: editor/ca.desrt.dconf-editor.gschema.xml:357
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 "32-bitowa liczba całkowita ze znakiem, określona przez schemat o zmiennym "
 "położeniu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:366
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Zwykły, niesprzeczny klucz z 1. konfliktu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:367
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:369
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
@@ -686,13 +686,13 @@ msgstr ""
 "Ten klucz jest testem dla wielu schematów w tej samej ścieżce ze sprzecznymi "
 "kluczami. Niesprzeczne klucze nie powinny powodować problemów."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:371
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 "Sprzeczny klucz z domyślną wartością „1”, który powinien powodować błąd"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:372
-#: editor/ca.desrt.dconf-editor.gschema.xml:394
+#: editor/ca.desrt.dconf-editor.gschema.xml:374
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -702,12 +702,27 @@ msgstr ""
 "kluczami. Nie powinien być modyfikowalny, jako że klucz mapowany do tej "
 "samej ścieżki ma inną domyślną wartość."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:376
+#: editor/ca.desrt.dconf-editor.gschema.xml:378
+msgid "Conflicting key with no range that should give an error"
+msgstr "Sprzeczny klucz bez zakresu, który powinien powodować błąd"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:379
+#: editor/ca.desrt.dconf-editor.gschema.xml:407
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different range."
+msgstr ""
+"Ten klucz jest testem dla wielu schematów w tej samej ścieżce ze sprzecznymi "
+"kluczami. Nie powinien być modyfikowalny, jako że klucz mapowany do tej "
+"samej ścieżki ma inny zakres."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:383
 msgid "A (simple) string conflicting key that should give a error"
 msgstr "Sprzeczny klucz z (prostym) ciągiem, który powinien powodować błąd"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:377
-#: editor/ca.desrt.dconf-editor.gschema.xml:399
+#: editor/ca.desrt.dconf-editor.gschema.xml:384
+#: editor/ca.desrt.dconf-editor.gschema.xml:412
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -717,12 +732,12 @@ msgstr ""
 "kluczami. Nie powinien być modyfikowalny, jako że klucz mapowany do tej "
 "samej ścieżki ma inny typ."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:381
+#: editor/ca.desrt.dconf-editor.gschema.xml:388
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Sprzeczny klucz z 1. konfliktu, który powinien powodować ostrzeżenie"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:382
-#: editor/ca.desrt.dconf-editor.gschema.xml:404
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
@@ -732,22 +747,26 @@ msgstr ""
 "kluczami. Może być modyfikowany, ponieważ typy są zgodne, ale to nadal "
 "problem."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:395
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Zwykły, niesprzeczny klucz z 2. konfliktu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:393
+#: editor/ca.desrt.dconf-editor.gschema.xml:400
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 "Sprzeczny klucz z domyślną wartością „2”, który powinien powodować błąd"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:398
+#: editor/ca.desrt.dconf-editor.gschema.xml:406
+msgid "Conflicting key with range 0~5 that should give an error"
+msgstr "Sprzeczny klucz o zakresie 0~5, który powinien powodować błąd"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:411
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
 "Sprzeczny klucz z ciągiem, który może być pusty, który powinien powodować "
 "błąd"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:403
+#: editor/ca.desrt.dconf-editor.gschema.xml:416
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Sprzeczny klucz z 2. konfliktu, który powinien powodować ostrzeżenie"
 
@@ -941,12 +960,12 @@ msgstr ""
 "Ten sam przycisk myszy jest ustawiony do przejścia do tyłu i do przodu. "
 "Nierobienie niczego."
 
-#: editor/dconf-window.vala:908
+#: editor/dconf-window.vala:912
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nie można odnaleźć klucza „%s”."
 
-#: editor/dconf-window.vala:912
+#: editor/dconf-window.vala:916
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "W żądanym katalogu „%s” nic nie ma."
@@ -954,7 +973,7 @@ msgstr "W żądanym katalogu „%s” nic nie ma."
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
 #: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
-#: editor/key-list-box-row.vala:793 editor/registry-info.vala:341
+#: editor/key-list-box-row.vala:834 editor/registry-info.vala:341
 msgid "Default value"
 msgstr "Domyślna wartość"
 
@@ -962,7 +981,7 @@ msgstr "Domyślna wartość"
 msgid "Key erased"
 msgstr "Wyczyszczono klucz"
 
-#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:320
+#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
 #: editor/registry-info.vala:142
 msgid "Key erased."
 msgstr "Wyczyszczono klucz."
@@ -1097,72 +1116,72 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Zakończenie działania"
 
-#: editor/key-list-box-row.vala:302
+#: editor/key-list-box-row.vala:343
 msgid "No Schema Found"
 msgstr "Nie odnaleziono schematu"
 
-#: editor/key-list-box-row.vala:426 editor/registry-info.vala:114
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:114
 msgid "No summary provided"
 msgstr "Nie podano podsumowania"
 
-#: editor/key-list-box-row.vala:440
+#: editor/key-list-box-row.vala:481
 msgid "conflicting keys"
 msgstr "sprzeczne klucze"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:605
+#: editor/key-list-box-row.vala:646
 msgid "Copy"
 msgstr "Skopiuj"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:608
+#: editor/key-list-box-row.vala:649
 msgid "Customize…"
 msgstr "Dostosuj…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:611
+#: editor/key-list-box-row.vala:652
 msgid "Set to default"
 msgstr "Ustaw na domyślną wartość"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:616
+#: editor/key-list-box-row.vala:657
 msgid "Show details…"
 msgstr "Wyświetl szczegóły…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:619
+#: editor/key-list-box-row.vala:660
 msgid "Dismiss change"
 msgstr "Odrzuć zmianę"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:622 editor/key-list-box-row.vala:729
+#: editor/key-list-box-row.vala:663 editor/key-list-box-row.vala:770
 #: editor/registry-info.ui:112
 msgid "Erase key"
 msgstr "Wyczyść klucz"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:625
+#: editor/key-list-box-row.vala:666
 msgid "Open"
 msgstr "Otwórz"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:628
+#: editor/key-list-box-row.vala:669
 msgid "Open parent folder"
 msgstr "Otwórz katalog nadrzędny"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:631
+#: editor/key-list-box-row.vala:672
 msgid "Reset recursively"
 msgstr "Przywróć rekursywnie"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:634
+#: editor/key-list-box-row.vala:675
 msgid "Do not erase"
 msgstr "Nie czyść"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:723
+#: editor/key-list-box-row.vala:764
 msgid "No change"
 msgstr "Bez zmian"
 
@@ -1386,27 +1405,27 @@ msgstr ""
 "Użycie słowa kluczowego „nothing” do ustawienia typu „maybe” (zaczynającego "
 "się od „m”) na pustą wartość."
 
-#: editor/registry-search.ui:21
+#: editor/registry-search.vala:30
 msgid "No matches"
 msgstr "Brak wyników"
 
-#: editor/registry-search.vala:596
+#: editor/registry-search.vala:448
 msgid "Current folder"
 msgstr "Bieżący katalog"
 
-#: editor/registry-search.vala:600
+#: editor/registry-search.vala:452
 msgid "Folders"
 msgstr "Katalogi"
 
-#: editor/registry-search.vala:602
+#: editor/registry-search.vala:454
 msgid "Keys"
 msgstr "Klucze"
 
-#: editor/registry-view.ui:20
+#: editor/registry-view.vala:141
 msgid "No keys in this path"
 msgstr "Brak kluczy w tej ścieżce"
 
-#: editor/registry-view.vala:159
+#: editor/registry-view.vala:244
 msgid "Keys not defined by a schema"
 msgstr "Klucze nieokreślone przez schemat"
 
