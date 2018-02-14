@@ -362,7 +362,10 @@ class DConfWindow : ApplicationWindow
 
     private const GLib.ActionEntry [] action_entries =
     {
-        { "empty", empty , "*" },
+        { "empty", empty, "*" },
+
+        { "notify-folder-emptied", notify_folder_emptied, "s" },
+        { "notify-object-deleted", notify_object_deleted, "(ss)" },
 
         { "open-folder", open_folder, "s" },
         { "open-object", open_object, "(ss)" },
@@ -386,6 +389,24 @@ class DConfWindow : ApplicationWindow
     };
 
     private void empty (/* SimpleAction action, Variant? variant */) {}
+
+    private void notify_folder_emptied (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name = ((!) path_variant).get_string ();
+
+        show_notification (_("Folder “%s” is now empty.").printf (full_name));
+    }
+
+    private void notify_object_deleted (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name;
+        string unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
+        ((!) path_variant).@get ("(ss)", out full_name, out unused);
+
+        show_notification (_("Key “%s” has been deleted.").printf (full_name));
+    }
 
     private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)

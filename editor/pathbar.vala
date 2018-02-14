@@ -120,6 +120,7 @@ public class PathBar : Box
     {
         string action_target = "";
         @foreach ((child) => {
+                StyleContext context = child.get_style_context ();
                 if (child is PathBarItem)
                 {
                     PathBarItem item = (PathBarItem) child;
@@ -133,9 +134,27 @@ public class PathBar : Box
                         string unused;
                         ((!) variant).get ("(ss)", out action_target, out unused);
                     }
+
+                    if (non_ghost_path == action_target)
+                    {
+                        item.cursor_type = PathBarItem.CursorType.CONTEXT;
+                        item.set_action_name ("ui.empty");
+                        context.remove_class ("inexistent");
+                    }
+                    else if (non_ghost_path.has_prefix (action_target))
+                    {
+                        item.cursor_type = PathBarItem.CursorType.POINTER;
+                        item.set_detailed_action_name (item.default_action);
+                        context.remove_class ("inexistent");
+                    }
+                    else
+                    {
+                        item.cursor_type = PathBarItem.CursorType.DEFAULT;
+                        item.set_detailed_action_name (item.alternative_action);
+                        context.add_class ("inexistent");
+                    }
                 }
-                StyleContext context = child.get_style_context ();
-                if (non_ghost_path.has_prefix (action_target))
+                else if (non_ghost_path.has_prefix (action_target))
                     context.remove_class ("inexistent");
                 else
                     context.add_class ("inexistent");
@@ -157,12 +176,14 @@ public class PathBar : Box
         if (is_folder)
         {
             Variant variant = new Variant.string (complete_path);
-            path_bar_item = new PathBarItem (label, "ui.open-folder(" + variant.print (false) + ")");
+            string _variant = variant.print (false);
+            path_bar_item = new PathBarItem (label, "ui.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
         }
         else
         {
             Variant variant = new Variant ("(ss)", complete_path, "");
-            path_bar_item = new PathBarItem (label, "ui.open-object(" + variant.print (false) + ")");
+            string _variant = variant.print (false);
+            path_bar_item = new PathBarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
         }
         add (path_bar_item);
         activate_item (path_bar_item, block);   // has to be after add()
@@ -191,6 +212,7 @@ public class PathBar : Box
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
 private class PathBarItem : Button
 {
+    public string alternative_action { get; construct; }
     public string default_action { get; construct; }
     public string text_string { get; construct; }
     [GtkChild] private Label text_label;
@@ -228,6 +250,9 @@ private class PathBarItem : Button
     [GtkCallback]
     private void update_cursor ()
     {
+        if (get_style_context ().has_class ("inexistent"))
+            return;
+
         if (cursor_type != CursorType.CONTEXT)
         {
             cursor_type = CursorType.CONTEXT;
@@ -243,10 +268,10 @@ private class PathBarItem : Button
         popover_test.popup ();
     }
 
-    public PathBarItem (string label, string action)
+    public PathBarItem (string label, string _default_action, string _alternative_action)
     {
-        Object (text_string: label, default_action: action);
+        Object (text_string: label, default_action: _default_action, alternative_action: _alternative_action);
         text_label.set_text (label);
-        set_detailed_action_name (action);
+        set_detailed_action_name (_default_action);
     }
 }

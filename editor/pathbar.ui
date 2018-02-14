@@ -10,6 +10,7 @@
       <object class="PathBarItem" id="root_button">
         <property name="visible">True</property>
         <property name="action-name">ui.open-folder</property>
+        <property name="alternative-action">ui.open-folder('/')</property>
         <property name="default-action">ui.open-folder('/')</property>
         <property name="action-target">'/'</property>
         <style>
