@@ -177,7 +177,6 @@ public class PathBar : Box
         {
             item.cursor_type = PathBarItem.CursorType.CONTEXT;
             item.set_action_name ("ui.empty");
-            item.set_sensitive (true);  // GAction do not play well with other kind of... reactions
             context.add_class ("active");
         }
         else
