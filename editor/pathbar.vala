@@ -176,7 +176,7 @@ public class PathBar : Box
         if (state)
         {
             item.cursor_type = PathBarItem.CursorType.CONTEXT;
-            item.set_action_name (null);
+            item.set_action_name ("ui.empty");
             item.set_sensitive (true);  // GAction do not play well with other kind of... reactions
             context.add_class ("active");
         }
@@ -230,7 +230,11 @@ private class PathBarItem : Button
     private void update_cursor ()
     {
         if (cursor_type != CursorType.CONTEXT)
+        {
+            cursor_type = CursorType.CONTEXT;
+            set_new_cursor_type (cursor_type);
             return;
+        }
 
         GLib.Menu menu = new GLib.Menu ();
         menu.append (_("Copy current path"), "ui.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"

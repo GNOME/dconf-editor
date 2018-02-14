@@ -74,8 +74,6 @@ class BrowserView : Grid
 
     private const GLib.ActionEntry [] action_entries =
     {
-        { "empty", empty , "*" },
-
         { "refresh-folder", refresh_folder },
 
         { "set-key-value",  set_key_value,  "(ssv)" },
@@ -84,8 +82,6 @@ class BrowserView : Grid
         { "toggle-dconf-key-switch",     toggle_dconf_key_switch,     "(sb)"   },
         { "toggle-gsettings-key-switch", toggle_gsettings_key_switch, "(ssbb)" }
     };
-
-    private void empty (/* SimpleAction action, Variant? variant */) {}
 
     private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
         requires (key_model != null)

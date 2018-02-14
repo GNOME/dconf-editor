@@ -370,7 +370,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
                 bool key_value_boolean = key_value.get_boolean ();
                 Variant switch_variant = new Variant ("(sb)", key.full_name, !key_value_boolean);
-                ((!) boolean_switch).set_action_name ("bro.empty");
+                ((!) boolean_switch).set_action_name ("ui.empty");
                 ((!) boolean_switch).set_active (key_value_boolean);
                 ((!) boolean_switch).set_detailed_action_name ("bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
             }
@@ -498,7 +498,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         {
             bool key_value_boolean = key_value.get_boolean ();
             Variant switch_variant = new Variant ("(ssbb)", key.full_name, key.schema_id, !key_value_boolean, key.default_value.get_boolean ());
-            ((!) boolean_switch).set_action_name ("bro.empty");
+            ((!) boolean_switch).set_action_name ("ui.empty");
             ((!) boolean_switch).set_active (key_value_boolean);
             ((!) boolean_switch).set_detailed_action_name ("bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
         }

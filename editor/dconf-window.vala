@@ -362,6 +362,8 @@ class DConfWindow : ApplicationWindow
 
     private const GLib.ActionEntry [] action_entries =
     {
+        { "empty", empty , "*" },
+
         { "open-folder", open_folder, "s" },
         { "open-object", open_object, "(ss)" },
         { "open-parent", open_parent, "s" },
@@ -382,6 +384,8 @@ class DConfWindow : ApplicationWindow
 
         { "copy-path", copy_path }
     };
+
+    private void empty (/* SimpleAction action, Variant? variant */) {}
 
     private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
