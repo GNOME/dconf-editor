@@ -153,9 +153,6 @@ class RegistryInfo : Grid, BrowsableView
         label.show ();
         add_row_from_widget (_("Current value"), label, null);
 
-        if (key is GSettingsKey && ((GSettingsKey) key).error_hard_conflicting_key)
-            return;
-
         add_separator ();
 
         KeyEditorChild key_editor_child = create_child (key, has_schema, modifications_handler);
@@ -167,6 +164,9 @@ class RegistryInfo : Grid, BrowsableView
             one_choice_enum_warning.visible = is_enum;
         }
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
+
+        if (key is GSettingsKey && ((GSettingsKey) key).error_hard_conflicting_key)
+            return;
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
                 if (modifications_handler.should_delay_apply (tmp_string))
