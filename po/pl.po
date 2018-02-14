@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-13 07:18+0000\n"
-"PO-Revision-Date: 2018-02-13 18:35+0100\n"
+"POT-Creation-Date: 2018-02-14 04:44+0000\n"
+"PO-Revision-Date: 2018-02-14 17:10+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -937,35 +937,46 @@ msgstr "Zachowam ostrożność."
 msgid "Show this dialog next time."
 msgstr "Wyświetlenie tego okna następnym razem."
 
-#: editor/dconf-window.vala:582
+#: editor/dconf-window.vala:398
+#, c-format
+msgid "Folder “%s” is now empty."
+msgstr "Katalog „%s” jest teraz pusty."
+
+#. GAction parameter type switch is a little touchy, see pathbar.vala
+#: editor/dconf-window.vala:408
+#, c-format
+msgid "Key “%s” has been deleted."
+msgstr "Klucz „%s” został usunięty."
+
+#: editor/dconf-window.vala:607
 msgid "Copy descriptor"
 msgstr "Skopiuj deskryptor"
 
-#: editor/dconf-window.vala:588
+#: editor/dconf-window.vala:613
 msgid "Reset visible keys"
 msgstr "Przywróć widoczne klucze"
 
-#: editor/dconf-window.vala:589
+#: editor/dconf-window.vala:614
 msgid "Reset view recursively"
 msgstr "Przywróć widok rekursywnie"
 
-#: editor/dconf-window.vala:597
+#: editor/dconf-window.vala:622
 msgid "Enter delay mode"
 msgstr "Przejdź do trybu opóźnienia"
 
-#: editor/dconf-window.vala:660
+#: editor/dconf-window.vala:685
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "Ten sam przycisk myszy jest ustawiony do przejścia do tyłu i do przodu. "
 "Nierobienie niczego."
 
-#: editor/dconf-window.vala:912
+#: editor/dconf-window.vala:937
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nie można odnaleźć klucza „%s”."
 
-#: editor/dconf-window.vala:916
+#: editor/dconf-window.vala:941
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "W żądanym katalogu „%s” nic nie ma."
@@ -1262,7 +1273,7 @@ msgstr[0] " i jedno działanie dconf."
 msgstr[1] " i %u działania dconf."
 msgstr[2] " i %u działań dconf."
 
-#: editor/pathbar.vala:236
+#: editor/pathbar.vala:264
 msgid "Copy current path"
 msgstr "Skopiuj bieżącą ścieżkę"
 
