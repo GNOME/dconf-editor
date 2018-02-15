@@ -385,7 +385,8 @@ class DConfWindow : ApplicationWindow
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "copy-path", copy_path }
+        { "copy-path", copy_path },
+        { "hide-notification", hide_notification }
     };
 
     private void empty (/* SimpleAction action, Variant? variant */) {}
@@ -518,6 +519,11 @@ class DConfWindow : ApplicationWindow
         }
         else
             ((ConfigurationEditor) get_application ()).copy (current_path);
+    }
+
+    private void hide_notification (/* SimpleAction action, Variant? variant */)
+    {
+        notification_revealer.set_reveal_child (false);
     }
 
     /*\
@@ -939,11 +945,5 @@ class DConfWindow : ApplicationWindow
     private void cannot_find_folder (string full_name)
     {
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
-    }
-
-    [GtkCallback]
-    private void hide_notification ()
-    {
-        notification_revealer.set_reveal_child (false);
     }
 }

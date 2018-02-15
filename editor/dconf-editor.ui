@@ -213,10 +213,10 @@
                         <property name="visible">True</property>
                         <property name="focus-on-click">False</property>
                         <property name="relief">none</property>
+                        <property name="action-name">ui.hide-notification</property>
                         <style>
                           <class name="image-button"/>
                         </style>
-                        <signal name="clicked" handler="hide_notification"/>
                         <child>
                           <object class="GtkImage">
                             <property name="visible">True</property>
