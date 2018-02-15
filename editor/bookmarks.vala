@@ -35,13 +35,15 @@ public class Bookmarks : MenuButton
     }
 
     private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
-    public string schema_path { get; construct; }
+    public string schema_path { private get; construct; }
     private GLib.Settings settings;
 
     private ulong switch_active_handler = 0;
 
     construct
     {
+        install_action_entries ();
+
         settings = new GLib.Settings.with_path (schema_id, schema_path);
 
         switch_active_handler = bookmarked_switch.notify ["active"].connect (switch_changed_cb);
@@ -61,6 +63,32 @@ public class Bookmarks : MenuButton
     {
         return settings.get_strv ("bookmarks");
     }
+
+    /*\
+    * * Action entries
+    \*/
+
+    private void install_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("bookmarks", action_group);
+    }
+
+    private const GLib.ActionEntry [] action_entries =
+    {
+        { "unbookmark", unbookmark, "s" }
+    };
+
+    private void unbookmark (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        remove_bookmark (((!) path_variant).get_string ());
+    }
+
+    /*\
+    * * Bookmarks management
+    \*/
 
     private void update_icon_and_switch ()
     {
@@ -110,8 +138,6 @@ public class Bookmarks : MenuButton
                 Variant variant = new Variant.string (bookmark);
                 bookmark_row.set_detailed_action_name ("ui.open-folder(" + variant.print (false) + ")");
             }
-            ulong destroy_button_clicked_handler = bookmark_row.destroy_button.clicked.connect (() => remove_bookmark (bookmark));
-            bookmark_row.destroy_button.destroy.connect (() => bookmark_row.destroy_button.disconnect (destroy_button_clicked_handler));
             bookmark_row.show ();
             bookmarks_list_box.add (bookmark_row);
         }
@@ -160,18 +186,13 @@ public class Bookmarks : MenuButton
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
 private class Bookmark : ListBoxRow
 {
-    public string bookmark_name { get; construct; }
-
     [GtkChild] private Label bookmark_label;
-    [GtkChild] public Button destroy_button;
-
-    construct
-    {
-        bookmark_label.set_label (bookmark_name);
-    }
+    [GtkChild] private Button destroy_button;
 
     public Bookmark (string bookmark_name)
     {
-        Object (bookmark_name: bookmark_name);
+        bookmark_label.set_label (bookmark_name);
+        Variant variant = new Variant.string (bookmark_name);
+        destroy_button.set_detailed_action_name ("bookmarks.unbookmark(" + variant.print (false) + ")");
     }
 }
