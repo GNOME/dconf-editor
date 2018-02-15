@@ -740,7 +740,7 @@ class DConfWindow : ApplicationWindow
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    bookmarks_button.set_bookmarked (true);
+                    bookmarks_button.set_bookmarked (current_path, true);
                     return true;
                 case "D":
                     if (bookmarks_button.sensitive == false)
@@ -748,7 +748,7 @@ class DConfWindow : ApplicationWindow
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    bookmarks_button.set_bookmarked (false);
+                    bookmarks_button.set_bookmarked (current_path, false);
                     return true;
 
                 case "f":

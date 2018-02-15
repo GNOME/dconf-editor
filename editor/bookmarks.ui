@@ -29,6 +29,8 @@
           <object class="GtkSwitch" id="bookmarked_switch">
             <property name="visible">True</property>
             <property name="halign">end</property>
+            <property name="action-name">ui.empty</property>
+            <property name="action-target">''</property>
             <child internal-child="accessible">
               <object class="AtkObject">
                 <property name="AtkObject::accessible-name" translatable="yes">Location bookmarked</property>

@@ -27,18 +27,10 @@ public class Bookmarks : MenuButton
     [GtkChild] private Switch bookmarked_switch;
 
     private string current_path = "/";
-    public void set_path (string path)
-    {
-        if (current_path != path)
-            current_path = path;
-        update_icon_and_switch ();
-    }
 
     private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
     public string schema_path { private get; construct; }
     private GLib.Settings settings;
-
-    private ulong switch_active_handler = 0;
 
     construct
     {
@@ -46,7 +38,6 @@ public class Bookmarks : MenuButton
 
         settings = new GLib.Settings.with_path (schema_id, schema_path);
 
-        switch_active_handler = bookmarked_switch.notify ["active"].connect (switch_changed_cb);
         ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (() => {
                 update_bookmarks ();
                 update_icon_and_switch ();
@@ -56,12 +47,35 @@ public class Bookmarks : MenuButton
         bookmarked_switch.grab_focus ();
 
         destroy.connect (() => settings.disconnect (bookmarks_changed_handler));
-        bookmarked_switch.destroy.connect (() => bookmarked_switch.disconnect (switch_active_handler));
     }
 
+    /*\
+    * * Public calls
+    \*/
+
+    public void set_path (string path)
+    {
+        if (current_path != path)
+            current_path = path;
+        update_icon_and_switch ();
+    }
+
+    // for search
     public string [] get_bookmarks ()
     {
         return settings.get_strv ("bookmarks");
+    }
+
+    // keyboard call
+    public void set_bookmarked (string path, bool new_state)
+    {
+        if (path == current_path && bookmarked_switch.get_active () == new_state)
+            return;
+
+        if (new_state)
+            append_bookmark (path);
+        else
+            remove_bookmark (path);
     }
 
     /*\
@@ -77,8 +91,15 @@ public class Bookmarks : MenuButton
 
     private const GLib.ActionEntry [] action_entries =
     {
+        {   "bookmark",   bookmark, "s" },
         { "unbookmark", unbookmark, "s" }
     };
+
+    private void bookmark (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        append_bookmark (((!) path_variant).get_string ());
+    }
 
     private void unbookmark (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
@@ -92,27 +113,28 @@ public class Bookmarks : MenuButton
 
     private void update_icon_and_switch ()
     {
+        Variant variant = new Variant.string (current_path);
         if (current_path in settings.get_strv ("bookmarks"))
         {
             if (bookmarks_icon.icon_name != "starred-symbolic")
                 bookmarks_icon.icon_name = "starred-symbolic";
             update_switch (true);
+            bookmarked_switch.set_detailed_action_name ("bookmarks.unbookmark(" + variant.print (false) + ")");
         }
         else
         {
             if (bookmarks_icon.icon_name != "non-starred-symbolic")
                 bookmarks_icon.icon_name = "non-starred-symbolic";
             update_switch (false);
+            bookmarked_switch.set_detailed_action_name ("bookmarks.bookmark(" + variant.print (false) + ")");
         }
     }
     private void update_switch (bool bookmarked)
-        requires (switch_active_handler != 0)
     {
         if (bookmarked == bookmarked_switch.active)
             return;
-        SignalHandler.block (bookmarked_switch, switch_active_handler);
+        bookmarked_switch.set_detailed_action_name ("ui.empty('')");
         bookmarked_switch.active = bookmarked;
-        SignalHandler.unblock (bookmarked_switch, switch_active_handler);
     }
 
     private void update_bookmarks ()
@@ -143,35 +165,22 @@ public class Bookmarks : MenuButton
         }
     }
 
-    private void switch_changed_cb ()
+    private void append_bookmark (string path)
     {
-        bookmarks_popover.closed ();
+        bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 1/2
 
-        if (!bookmarked_switch.get_active ())
-            remove_bookmark (current_path);
-        else
-            bookmark_current_path ();
-    }
-
-    private void bookmark_current_path ()
-    {
         string [] bookmarks = settings.get_strv ("bookmarks");
-        if (!(current_path in bookmarks))
+        if (!(path in bookmarks))
         {
-            bookmarks += current_path;
+            bookmarks += path;
             settings.set_strv ("bookmarks", bookmarks);
         }
     }
 
-    public void set_bookmarked (bool new_state)
-    {
-        if (bookmarked_switch.get_active () != new_state)
-            bookmarked_switch.set_active (new_state);
-    }
-
     private void remove_bookmark (string bookmark_name)
     {
-        bookmarks_popover.closed ();
+        bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 2/2
+
         string [] old_bookmarks = settings.get_strv ("bookmarks");
         if (!(bookmark_name in old_bookmarks))
             return;
