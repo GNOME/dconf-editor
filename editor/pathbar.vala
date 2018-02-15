@@ -116,7 +116,7 @@ public class PathBar : Box
         return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
     }
 
-    public void update_ghosts (string non_ghost_path)
+    public void update_ghosts (string non_ghost_path, string current_path)
     {
         string action_target = "";
         @foreach ((child) => {
@@ -135,7 +135,7 @@ public class PathBar : Box
                         ((!) variant).get ("(ss)", out action_target, out unused);
                     }
 
-                    if (non_ghost_path == action_target)
+                    if (current_path == action_target)
                     {
                         item.cursor_type = PathBarItem.CursorType.CONTEXT;
                         item.set_action_name ("ui.empty");
