@@ -36,7 +36,11 @@ public class PathBar : Box
     public void set_path (ViewType type, string path)
     {
         if (type == ViewType.SEARCH)
+        {
+            update_cursors_for_search (path, true);
             return;
+        }
+        update_cursors_for_search (path, false);
 
         activate_item (root_button, path == "/");
 
@@ -117,7 +121,7 @@ public class PathBar : Box
         return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
     }
 
-    public void update_ghosts (string non_ghost_path, string current_path)
+    public void update_ghosts (string non_ghost_path, bool is_search)
     {
         string action_target = "";
         @foreach ((child) => {
@@ -136,21 +140,29 @@ public class PathBar : Box
                         ((!) variant).get ("(ss)", out action_target, out unused);
                     }
 
-                    if (current_path == action_target)
+                    if (context.has_class ("active"))
                     {
-                        item.cursor_type = PathBarItem.CursorType.CONTEXT;
-                        item.set_action_name ("ui.empty");
+                        if (is_search)
+                        {
+                            item.set_cursor_type (PathBarItem.CursorType.POINTER);
+                            item.set_detailed_action_name (item.default_action);
+                        }
+                        else
+                        {
+                            item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
+                            item.set_action_name ("ui.empty");
+                        }
                         context.remove_class ("inexistent");
                     }
                     else if (non_ghost_path.has_prefix (action_target))
                     {
-                        item.cursor_type = PathBarItem.CursorType.POINTER;
+                        item.set_cursor_type (PathBarItem.CursorType.POINTER);
                         item.set_detailed_action_name (item.default_action);
                         context.remove_class ("inexistent");
                     }
                     else
                     {
-                        item.cursor_type = PathBarItem.CursorType.DEFAULT;
+                        item.set_cursor_type (PathBarItem.CursorType.DEFAULT);
                         item.set_detailed_action_name (item.alternative_action);
                         context.add_class ("inexistent");
                     }
@@ -159,6 +171,28 @@ public class PathBar : Box
                     context.remove_class ("inexistent");
                 else
                     context.add_class ("inexistent");
+            });
+    }
+
+    private void update_cursors_for_search (string current_path, bool is_search)
+    {
+        @foreach ((child) => {
+                if (!(child is PathBarItem))
+                    return;
+                StyleContext context = child.get_style_context ();
+                if (!context.has_class ("active"))
+                    return;
+                PathBarItem item = (PathBarItem) child;
+                if (is_search)
+                {
+                    item.set_cursor_type (PathBarItem.CursorType.POINTER);
+                    item.set_detailed_action_name (item.default_action);
+                }
+                else
+                {
+                    item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
+                    item.set_action_name ("ui.empty");
+                }
             });
     }
 
@@ -190,20 +224,20 @@ public class PathBar : Box
         activate_item (path_bar_item, block);   // has to be after add()
     }
 
-    private void activate_item (PathBarItem item, bool state)
+    private void activate_item (PathBarItem item, bool state)   // never called when current_view is search
     {
         StyleContext context = item.get_style_context ();
         if (state == context.has_class ("active"))
             return;
         if (state)
         {
-            item.cursor_type = PathBarItem.CursorType.CONTEXT;
+            item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
             item.set_action_name ("ui.empty");
             context.add_class ("active");
         }
         else
         {
-            item.cursor_type = PathBarItem.CursorType.POINTER;
+            item.set_cursor_type (PathBarItem.CursorType.POINTER);
             item.set_detailed_action_name (item.default_action);
             context.remove_class ("active");
         }
@@ -223,12 +257,21 @@ private class PathBarItem : Button
         POINTER,
         CONTEXT
     }
-    public CursorType cursor_type { get; set; default = CursorType.POINTER; }
+    private CursorType cursor_type = CursorType.POINTER;
+
+    private bool hover = false; // there’s probably a function for that
 
     construct
     {
-        enter_notify_event.connect (() => { set_new_cursor_type (cursor_type); });
-        leave_notify_event.connect (() => { set_new_cursor_type (CursorType.DEFAULT); });
+        enter_notify_event.connect (() => { hover = true;  set_new_cursor_type (cursor_type); });
+        leave_notify_event.connect (() => { hover = false; set_new_cursor_type (CursorType.DEFAULT); });
+    }
+
+    public void set_cursor_type (CursorType cursor_type)
+    {
+        this.cursor_type = cursor_type;
+        if (hover)
+            set_new_cursor_type (cursor_type);
     }
 
     private void set_new_cursor_type (CursorType new_cursor_type)

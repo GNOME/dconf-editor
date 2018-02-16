@@ -212,7 +212,7 @@ class DConfWindow : ApplicationWindow
                     else    // search
                         reload_search_action.set_enabled (true);
                 }
-                pathbar.update_ghosts (_model.get_fallback_path (pathbar.complete_path), current_path);
+                pathbar.update_ghosts (_model.get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
             });
     }
 
