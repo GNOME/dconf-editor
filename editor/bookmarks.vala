@@ -169,6 +169,9 @@ public class Bookmarks : MenuButton
             bookmark_row.show ();
             bookmarks_list_box.add (bookmark_row);
         }
+        ListBoxRow? first_row = bookmarks_list_box.get_row_at_index (0);
+        if (first_row != null)
+            bookmarks_list_box.select_row ((!) first_row);
     }
 
     private void append_bookmark (string path)
