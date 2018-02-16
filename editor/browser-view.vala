@@ -181,9 +181,10 @@ class BrowserView : Grid
         current_child.hide_search_view ();
     }
 
-    public void set_path (string path)
+    public void set_path (ViewType type, string path)
+        requires (type != ViewType.SEARCH)
     {
-        current_child.set_path (path);
+        current_child.set_path (type, path);
         modifications_handler.path_changed ();
     }
 

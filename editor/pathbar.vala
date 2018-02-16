@@ -33,15 +33,15 @@ public class PathBar : Box
     * * public calls
     \*/
 
-    public void set_path (string path)
+    public void set_path (ViewType type, string path)
         requires (path [0] == '/')
+//        requires (type != ViewType.SEARCH)    // FIXME makes the app crash at startup, for no reason
     {
         activate_item (root_button, path == "/");
 
         complete_path = "";
         string [] split = path.split ("/", /* max tokens disabled */ 0);
         string last = split [split.length - 1];
-        bool is_key_path = last != "";
 
         bool destroy_all = false;
         bool maintain_all = false;
@@ -68,7 +68,7 @@ public class PathBar : Box
                 {
                     complete_path += split [0];
                     split = split [1:split.length];
-                    if (split.length == 0 || (split.length == 1 && !is_key_path))
+                    if (split.length == 0 || (split.length == 1 && type == ViewType.FOLDER))
                     {
                         activate_item (item, true);
                         maintain_all = true;
@@ -91,14 +91,14 @@ public class PathBar : Box
                 foreach (string item in split [0:split.length - 1])
                 {
                     complete_path += item + "/";
-                    add_path_bar_item (item, complete_path, true, !is_key_path && (index == split.length - 2));
+                    add_path_bar_item (item, complete_path, true, type == ViewType.FOLDER && (index == split.length - 2));
                     add_slash_label ();
                     index++;
                 }
             }
 
             /* if key path */
-            if (is_key_path)
+            if (type == ViewType.OBJECT)
             {
                 complete_path += last;
                 add_path_bar_item (last, complete_path, false, true);

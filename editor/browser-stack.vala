@@ -108,12 +108,15 @@ class BrowserStack : Grid
         search_results_view.stop_search ();
     }
 
-    public void set_path (string path)
+    public void set_path (ViewType type, string path)
+        requires (type != ViewType.SEARCH)
     {
-        if (path.has_suffix ("/"))
+        if (type == ViewType.FOLDER)
             stack.set_visible_child (browse_view);
-        else
+        else if (type == ViewType.OBJECT)
             stack.set_visible_child (properties_view);
+        else
+            assert_not_reached ();
     }
 
     public string? get_copy_text ()

@@ -53,7 +53,8 @@ public class Bookmarks : MenuButton
     * * Public calls
     \*/
 
-    public void set_path (string path)
+    public void set_path (ViewType type, string path)
+        requires (type != ViewType.SEARCH)
     {
         if (current_path != path)
             current_path = path;

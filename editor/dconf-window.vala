@@ -26,6 +26,12 @@ enum RelocatableSchemasEnabledMappings
     STARTUP
 }
 
+public enum ViewType {
+    OBJECT,
+    FOLDER,
+    SEARCH
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
@@ -541,7 +547,7 @@ class DConfWindow : ApplicationWindow
         if (key_model != null)
         {
             browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (fallback_path));
-            update_current_path (fallback_path);
+            update_current_path (ViewType.FOLDER, fallback_path);
 
             if (selected_or_empty == "")
                 browser_view.select_row (pathbar.get_selected_child (fallback_path));
@@ -572,7 +578,7 @@ class DConfWindow : ApplicationWindow
         else
         {
             browser_view.prepare_properties_view ((!) found_object, current_path == SettingsModel.get_parent_path (full_name));
-            update_current_path (strdup (full_name));
+            update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
@@ -592,12 +598,13 @@ class DConfWindow : ApplicationWindow
     * * Path changing
     \*/
 
-    private void update_current_path (string path)
+    private void update_current_path (ViewType type, string path)
+        requires (type != ViewType.SEARCH)
     {
         current_path = path;
-        browser_view.set_path (path);
-        bookmarks_button.set_path (path);
-        pathbar.set_path (path);
+        browser_view.set_path (type, path);
+        bookmarks_button.set_path (type, path);
+        pathbar.set_path (type, path);
         invalidate_popovers_without_reload ();
     }
 
