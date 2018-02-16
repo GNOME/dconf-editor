@@ -35,6 +35,7 @@ public enum ViewType {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 class DConfWindow : ApplicationWindow
 {
+    private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
 
     private SettingsModel model = new SettingsModel ();
@@ -203,7 +204,7 @@ class DConfWindow : ApplicationWindow
         model.finalize_model ();
 
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                if (browser_view.check_reload (current_path, !internal_changes))    // handle infobars in needed
+                if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
                 {
                     if (internal_changes)
                         reload_view ();
@@ -601,6 +602,7 @@ class DConfWindow : ApplicationWindow
     private void update_current_path (ViewType type, string path)
         requires (type != ViewType.SEARCH)
     {
+        current_type = type;
         current_path = path;
         browser_view.set_path (type, path);
         bookmarks_button.set_path (type, path);
@@ -614,7 +616,7 @@ class DConfWindow : ApplicationWindow
 
         GLib.Menu menu = new GLib.Menu ();
 
-        if (SettingsModel.is_key_path (current_path))   // mainly here for ensuring menu is never empty
+        if (current_type == ViewType.OBJECT)   // mainly here for ensuring menu is never empty
         {
             Variant variant = new Variant.string (model.get_key_copy_text (current_path, browser_view.last_context));
             menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
@@ -741,7 +743,7 @@ class DConfWindow : ApplicationWindow
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
 
                     string? selected_row_text = browser_view.get_copy_text ();
-                    if (selected_row_text == null && SettingsModel.is_key_path (current_path))
+                    if (selected_row_text == null && current_type == ViewType.OBJECT)
                         selected_row_text = model.get_key_copy_text (current_path, browser_view.last_context);
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);

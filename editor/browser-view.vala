@@ -203,37 +203,32 @@ class BrowserView : Grid
             info_bar.show_warning ("soft-reload-folder");
     }
 
-    private void show_hard_reload_warning ()
-    {
-        info_bar.show_warning (current_view == ViewType.FOLDER ? "hard-reload-folder" : "hard-reload-object");
-    }
-
     public void reload_search (string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
         current_child.reload_search (current_path, bookmarks, sorting_options);
     }
 
-    public bool check_reload (string path, bool show_infobar)
+    public bool check_reload (ViewType type, string path, bool show_infobar)
     {
         SettingsModel model = modifications_handler.model;
 
-        if (current_view == ViewType.FOLDER)
+        if (type == ViewType.FOLDER)
         {
             GLib.ListStore? fresh_key_model = model.get_children (path);
             if (fresh_key_model != null && !current_child.check_reload_folder ((!) fresh_key_model))
                 return false;
         }
-        else if (current_view == ViewType.OBJECT)
+        else if (type == ViewType.OBJECT)
         {
             Variant? properties = model.get_key_properties (path, last_context);
             if (properties != null && !current_child.check_reload_object ((!) properties))
                 return false;
         }
 
-        if (show_infobar && current_view != ViewType.SEARCH)
+        if (show_infobar && type != ViewType.SEARCH)
         {
-            show_hard_reload_warning ();
+            info_bar.show_warning (type == ViewType.FOLDER ? "hard-reload-folder" : "hard-reload-object");
             return false;
         }
         return true;
