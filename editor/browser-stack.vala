@@ -24,7 +24,6 @@ class BrowserStack : Grid
     [GtkChild] private RegistryView browse_view;
     [GtkChild] private RegistryInfo properties_view;
     [GtkChild] private RegistrySearch search_results_view;
-    private Widget? pre_search_view = null;
 
     public bool small_keys_list_rows
     {
@@ -45,14 +44,36 @@ class BrowserStack : Grid
     }
 
     /*\
+    * * View type
+    \*/
+
+    private ViewType current_view = ViewType.FOLDER;
+    private ViewType pre_search_view = ViewType.SEARCH; // means "not in search"
+
+    public bool current_view_is_browse_view ()
+    {
+        return current_view == ViewType.FOLDER;
+    }
+
+    public bool current_view_is_properties_view ()
+    {
+        return current_view == ViewType.OBJECT;
+    }
+
+    public bool current_view_is_search_results_view ()
+    {
+        return current_view == ViewType.SEARCH;
+    }
+
+    /*\
     * * Views
     \*/
 
     public string get_selected_row_name ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             return browse_view.get_selected_row_name ();
-        if (current_view_is_search_results_view ())
+        if (current_view == ViewType.SEARCH)
             return search_results_view.get_selected_row_name ();
         return "";
     }
@@ -61,8 +82,8 @@ class BrowserStack : Grid
     {
         browse_view.set_key_model (key_model);
 
-        stack.set_transition_type (is_ancestor && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
-        pre_search_view = null;
+        stack.set_transition_type (is_ancestor && pre_search_view == ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        pre_search_view = ViewType.SEARCH;
     }
 
     public void select_row (string selected, string last_context)
@@ -79,31 +100,39 @@ class BrowserStack : Grid
     {
         properties_view.populate_properties_list_box (key);
 
-        stack.set_transition_type (is_parent && pre_search_view == null ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
-        pre_search_view = null;
+        stack.set_transition_type (is_parent && pre_search_view == ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
+        pre_search_view = ViewType.SEARCH;
     }
 
     public void show_search_view (string term, string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         search_results_view.start_search (term, current_path, bookmarks, sorting_options);
-        if (pre_search_view == null)
+        if (pre_search_view == ViewType.SEARCH)
         {
-            pre_search_view = stack.visible_child;
             stack.set_transition_type (StackTransitionType.NONE);
-            stack.visible_child = search_results_view;
+            pre_search_view = current_view;
+            current_view = ViewType.SEARCH;
+            stack.set_visible_child (search_results_view);
         }
     }
 
     public void hide_search_view ()
     {
-        if (pre_search_view != null)
+        if (pre_search_view != ViewType.SEARCH)
         {
             stack.set_transition_type (StackTransitionType.NONE);
-            stack.visible_child = (!) pre_search_view;
-            pre_search_view = null;
+            current_view = pre_search_view;
+            pre_search_view = ViewType.SEARCH;
 
-            if (stack.get_visible_child () == browse_view)
+            if (current_view == ViewType.FOLDER)
+            {
+                stack.set_visible_child (browse_view);
                 browse_view.focus_selected_row ();
+            }
+            else if (current_view == ViewType.OBJECT)
+                stack.set_visible_child (properties_view);
+            else
+                assert_not_reached ();
         }
         search_results_view.stop_search ();
     }
@@ -111,6 +140,7 @@ class BrowserStack : Grid
     public void set_path (ViewType type, string path)
         requires (type != ViewType.SEARCH)
     {
+        current_view = type;
         if (type == ViewType.FOLDER)
             stack.set_visible_child (browse_view);
         else if (type == ViewType.OBJECT)
@@ -126,7 +156,7 @@ class BrowserStack : Grid
 
     public string? get_copy_path_text ()
     {
-        if (current_view_is_search_results_view ())
+        if (current_view == ViewType.SEARCH)
             return search_results_view.get_copy_path_text ();
 
         warning ("BrowserView get_copy_path_text() called but current view is not search results view.");
@@ -135,34 +165,34 @@ class BrowserStack : Grid
 
     public bool show_row_popover ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             return browse_view.show_row_popover ();
-        if (current_view_is_search_results_view ())
+        if (current_view == ViewType.SEARCH)
             return search_results_view.show_row_popover ();
         return false;
     }
 
     public void toggle_boolean_key ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             browse_view.toggle_boolean_key ();
-        else if (current_view_is_search_results_view ())
+        else if (current_view == ViewType.SEARCH)
             search_results_view.toggle_boolean_key ();
     }
 
     public void set_selected_to_default ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             browse_view.set_selected_to_default ();
-        else if (current_view_is_search_results_view ())
+        else if (current_view == ViewType.SEARCH)
             search_results_view.set_selected_to_default ();
     }
 
     public void discard_row_popover ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             browse_view.discard_row_popover ();
-        else if (current_view_is_search_results_view ())
+        else if (current_view == ViewType.SEARCH)
             search_results_view.discard_row_popover ();
     }
 
@@ -170,21 +200,6 @@ class BrowserStack : Grid
     {
         browse_view.invalidate_popovers ();
         search_results_view.invalidate_popovers ();
-    }
-
-    public bool current_view_is_browse_view ()
-    {
-        return stack.get_visible_child () == browse_view;
-    }
-
-    public bool current_view_is_properties_view ()
-    {
-        return stack.get_visible_child () == properties_view;
-    }
-
-    public bool current_view_is_search_results_view ()
-    {
-        return stack.get_visible_child () == search_results_view;
     }
 
     /*\
@@ -211,27 +226,25 @@ class BrowserStack : Grid
     \*/
 
     public bool return_pressed ()
+        requires (current_view == ViewType.SEARCH)
     {
-        if (!current_view_is_search_results_view ())
-            assert_not_reached ();
-
         return search_results_view.return_pressed ();
     }
 
     public bool up_pressed ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             return browse_view.up_or_down_pressed (false);
-        else if (current_view_is_search_results_view ())
+        if (current_view == ViewType.SEARCH)
             return search_results_view.up_or_down_pressed (false);
         return false;
     }
 
     public bool down_pressed ()
     {
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
             return browse_view.up_or_down_pressed (true);
-        else if (current_view_is_search_results_view ())
+        if (current_view == ViewType.SEARCH)
             return search_results_view.up_or_down_pressed (true);
         return false;
     }
