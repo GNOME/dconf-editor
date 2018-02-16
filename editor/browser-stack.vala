@@ -26,7 +26,6 @@ class BrowserStack : Grid
     [GtkChild] private RegistrySearch search_results_view;
 
     public ViewType current_view { get; private set; default = ViewType.FOLDER; }
-    private ViewType pre_search_view = ViewType.SEARCH; // means "not in search"
 
     public bool small_keys_list_rows
     {
@@ -63,8 +62,7 @@ class BrowserStack : Grid
     {
         browse_view.set_key_model (key_model);
 
-        stack.set_transition_type (is_ancestor && pre_search_view == ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
-        pre_search_view = ViewType.SEARCH;
+        stack.set_transition_type (is_ancestor && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
     public void select_row (string selected, string last_context)
@@ -81,54 +79,24 @@ class BrowserStack : Grid
     {
         properties_view.populate_properties_list_box (key);
 
-        stack.set_transition_type (is_parent && pre_search_view == ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
-        pre_search_view = ViewType.SEARCH;
-    }
-
-    public void hide_search_view ()
-    {
-        if (pre_search_view != ViewType.SEARCH)
-        {
-            stack.set_transition_type (StackTransitionType.NONE);
-            current_view = pre_search_view;
-            pre_search_view = ViewType.SEARCH;
-
-            if (current_view == ViewType.FOLDER)
-            {
-                stack.set_visible_child (browse_view);
-                browse_view.focus_selected_row ();
-            }
-            else if (current_view == ViewType.OBJECT)
-                stack.set_visible_child (properties_view);
-            else
-                assert_not_reached ();
-        }
-        search_results_view.stop_search ();
+        stack.set_transition_type (is_parent && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
     public void set_path (ViewType type, string path)
     {
+        if (current_view == ViewType.SEARCH && type != ViewType.SEARCH)
+            search_results_view.stop_search ();
+
+        current_view = type;
         if (type == ViewType.FOLDER)
-        {
-            current_view = type;
             stack.set_visible_child (browse_view);
-        }
         else if (type == ViewType.OBJECT)
-        {
-            current_view = type;
             stack.set_visible_child (properties_view);
-        }
         else // (type == ViewType.SEARCH)
         {
             search_results_view.start_search (path);
-            if (pre_search_view == ViewType.SEARCH)
-            {
-                stack.set_transition_type (StackTransitionType.NONE);
-                pre_search_view = current_view;
-
-                current_view = type;
-                stack.set_visible_child (search_results_view);
-            }
+            stack.set_transition_type (StackTransitionType.NONE);
+            stack.set_visible_child (search_results_view);
         }
     }
 

@@ -171,11 +171,6 @@ class BrowserView : Grid
         last_context = (key is GSettingsKey) ? ((GSettingsKey) key).schema_id : ".dconf";
     }
 
-    public void hide_search_view ()
-    {
-        current_child.hide_search_view ();
-    }
-
     public void set_path (ViewType type, string path)
     {
         current_child.set_path (type, path);

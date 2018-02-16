@@ -37,7 +37,9 @@ class DConfWindow : ApplicationWindow
 {
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
+    private ViewType saved_type = ViewType.FOLDER;
     private string saved_view = "/";
+    private string saved_selection = "";
 
     private SettingsModel model = new SettingsModel ();
     private ModificationsHandler modifications_handler;
@@ -602,10 +604,19 @@ class DConfWindow : ApplicationWindow
 
     private void update_current_path (ViewType type, string path)
     {
+        if (type != ViewType.SEARCH)
+        {
+            saved_type = type;
+            saved_view = path;
+        }
+        else if (current_type == ViewType.FOLDER)
+            saved_selection = browser_view.get_selected_row_name ();
+        else if (current_type == ViewType.OBJECT)
+            saved_selection = "";
+
         current_type = type;
         current_path = path;
-        if (type != ViewType.SEARCH)
-            saved_view = path;
+
         browser_view.set_path (type, path);
         bookmarks_button.set_path (type, path);
         pathbar.set_path (type, path);
@@ -679,14 +690,18 @@ class DConfWindow : ApplicationWindow
     [GtkCallback]
     private void search_cancelled ()
     {
+        if (!search_bar.search_mode_enabled)
+            return;
         hide_search_view ();
     }
 
     private void hide_search_view ()
     {
         reload_search_action.set_enabled (false);
-        current_path = saved_view;
-        browser_view.hide_search_view ();
+        if (saved_type == ViewType.FOLDER)
+            request_folder_path (saved_view, saved_selection);
+        else
+            update_current_path (saved_type, strdup (saved_view));
         reload_search_next = true;
     }
 

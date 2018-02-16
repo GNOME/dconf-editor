@@ -182,12 +182,6 @@ class RegistryView : RegistryList
         return false;
     }
 
-    public void focus_selected_row ()
-    {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row != null)
-            ((!) selected_row).grab_focus ();
-    }
     public void select_row_named (string selected, string context, bool grab_focus)
     {
         check_resize ();
