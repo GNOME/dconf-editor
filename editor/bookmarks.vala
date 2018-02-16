@@ -44,9 +44,12 @@ public class Bookmarks : MenuButton
             });
 
         update_bookmarks ();
-        bookmarked_switch.grab_focus ();
+        ulong clicked_handler = clicked.connect (() => bookmarked_switch.grab_focus ());
 
-        destroy.connect (() => settings.disconnect (bookmarks_changed_handler));
+        destroy.connect (() => {
+                settings.disconnect (bookmarks_changed_handler);
+                disconnect (clicked_handler);
+            });
     }
 
     /*\
