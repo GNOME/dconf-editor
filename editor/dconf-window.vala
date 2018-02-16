@@ -37,6 +37,7 @@ class DConfWindow : ApplicationWindow
 {
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
+    private string saved_view = "/";
 
     private SettingsModel model = new SettingsModel ();
     private ModificationsHandler modifications_handler;
@@ -342,7 +343,7 @@ class DConfWindow : ApplicationWindow
         settings.disconnect (small_bookmarks_rows_handler);
 
         settings.delay ();
-        settings.set_string ("saved-view", current_path);
+        settings.set_string ("saved-view", saved_view);
         settings.set_int ("window-width", window_width);
         settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
@@ -600,10 +601,11 @@ class DConfWindow : ApplicationWindow
     \*/
 
     private void update_current_path (ViewType type, string path)
-        requires (type != ViewType.SEARCH)
     {
         current_type = type;
         current_path = path;
+        if (type != ViewType.SEARCH)
+            saved_view = path;
         browser_view.set_path (type, path);
         bookmarks_button.set_path (type, path);
         pathbar.set_path (type, path);
@@ -612,6 +614,9 @@ class DConfWindow : ApplicationWindow
 
     private void update_hamburger_menu ()
     {
+        if (search_bar.search_mode_enabled)
+            return;
+
         GLib.Menu section;
 
         GLib.Menu menu = new GLib.Menu ();
@@ -668,7 +673,7 @@ class DConfWindow : ApplicationWindow
         }
         if (reload_search_next)
             set_search_parameters ();
-        browser_view.show_search_view (search_entry.text);
+        update_current_path (ViewType.SEARCH, search_entry.text);
     }
 
     [GtkCallback]
@@ -680,6 +685,7 @@ class DConfWindow : ApplicationWindow
     private void hide_search_view ()
     {
         reload_search_action.set_enabled (false);
+        current_path = saved_view;
         browser_view.hide_search_view ();
         reload_search_next = true;
     }

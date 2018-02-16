@@ -34,9 +34,10 @@ public class PathBar : Box
     \*/
 
     public void set_path (ViewType type, string path)
-        requires (path [0] == '/')
-//        requires (type != ViewType.SEARCH)    // FIXME makes the app crash at startup, for no reason
     {
+        if (type == ViewType.SEARCH)
+            return;
+
         activate_item (root_button, path == "/");
 
         complete_path = "";

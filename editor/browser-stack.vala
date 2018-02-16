@@ -85,18 +85,6 @@ class BrowserStack : Grid
         pre_search_view = ViewType.SEARCH;
     }
 
-    public void show_search_view (string term)
-    {
-        search_results_view.start_search (term);
-        if (pre_search_view == ViewType.SEARCH)
-        {
-            stack.set_transition_type (StackTransitionType.NONE);
-            pre_search_view = current_view;
-            current_view = ViewType.SEARCH;
-            stack.set_visible_child (search_results_view);
-        }
-    }
-
     public void hide_search_view ()
     {
         if (pre_search_view != ViewType.SEARCH)
@@ -119,15 +107,29 @@ class BrowserStack : Grid
     }
 
     public void set_path (ViewType type, string path)
-        requires (type != ViewType.SEARCH)
     {
-        current_view = type;
         if (type == ViewType.FOLDER)
+        {
+            current_view = type;
             stack.set_visible_child (browse_view);
+        }
         else if (type == ViewType.OBJECT)
+        {
+            current_view = type;
             stack.set_visible_child (properties_view);
-        else
-            assert_not_reached ();
+        }
+        else // (type == ViewType.SEARCH)
+        {
+            search_results_view.start_search (path);
+            if (pre_search_view == ViewType.SEARCH)
+            {
+                stack.set_transition_type (StackTransitionType.NONE);
+                pre_search_view = current_view;
+
+                current_view = type;
+                stack.set_visible_child (search_results_view);
+            }
+        }
     }
 
     public string? get_copy_text ()

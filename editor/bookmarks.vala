@@ -54,8 +54,10 @@ public class Bookmarks : MenuButton
     \*/
 
     public void set_path (ViewType type, string path)
-        requires (type != ViewType.SEARCH)
     {
+        if (type == ViewType.SEARCH)
+            return;
+
         if (current_path != path)
             current_path = path;
         update_icon_and_switch ();
