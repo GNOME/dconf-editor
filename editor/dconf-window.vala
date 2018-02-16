@@ -917,6 +917,9 @@ class DConfWindow : ApplicationWindow
 
     private void go_backward (bool shift)
     {
+        if (search_bar.search_mode_enabled)
+            return;
+
         browser_view.discard_row_popover ();
         if (current_path == "/")
             return;
@@ -927,6 +930,9 @@ class DConfWindow : ApplicationWindow
     }
     private void go_forward (bool shift)
     {
+        if (search_bar.search_mode_enabled)
+            return;
+
         string complete_path = pathbar.complete_path;
 
         browser_view.discard_row_popover ();
