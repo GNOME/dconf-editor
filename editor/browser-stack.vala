@@ -85,9 +85,9 @@ class BrowserStack : Grid
         pre_search_view = ViewType.SEARCH;
     }
 
-    public void show_search_view (string term, string current_path, string [] bookmarks, SortingOptions sorting_options)
+    public void show_search_view (string term)
     {
-        search_results_view.start_search (term, current_path, bookmarks, sorting_options);
+        search_results_view.start_search (term);
         if (pre_search_view == ViewType.SEARCH)
         {
             stack.set_transition_type (StackTransitionType.NONE);
@@ -187,9 +187,9 @@ class BrowserStack : Grid
     * * Reload
     \*/
 
-    public void reload_search (string current_path, string [] bookmarks, SortingOptions sorting_options)
+    public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
-        search_results_view.reload_search (current_path, bookmarks, sorting_options);
+        search_results_view.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
     public bool check_reload_folder (GLib.ListStore fresh_key_model)

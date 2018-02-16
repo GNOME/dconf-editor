@@ -356,6 +356,7 @@ class DConfWindow : ApplicationWindow
     \*/
 
     private SimpleAction reload_search_action;
+    private bool reload_search_next = true;
 
     private void install_action_entries ()
     {
@@ -460,8 +461,7 @@ class DConfWindow : ApplicationWindow
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
     {
-        reload_search_action.set_enabled (false);
-        browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
+        set_search_parameters ();
     }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)
@@ -592,7 +592,7 @@ class DConfWindow : ApplicationWindow
         else if (browser_view.current_view == ViewType.OBJECT)
             request_object_path (current_path, "", false);
         else if (browser_view.current_view == ViewType.SEARCH)
-            browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
+            browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
     }
 
     /*\
@@ -663,24 +663,32 @@ class DConfWindow : ApplicationWindow
     {
         if (!search_bar.search_mode_enabled)
         {
-            reload_search_action.set_enabled (false);
-            browser_view.hide_search_view ();
+            hide_search_view ();
             return;
         }
-        if (reload_search_action.get_enabled ())
-        {
-            reload_search_action.set_enabled (false);
-            browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
-        }
-        // do not place in an "else"
-        browser_view.show_search_view (search_entry.text, current_path, bookmarks_button.get_bookmarks ());
+        if (reload_search_next)
+            set_search_parameters ();
+        browser_view.show_search_view (search_entry.text);
     }
 
     [GtkCallback]
     private void search_cancelled ()
     {
+        hide_search_view ();
+    }
+
+    private void hide_search_view ()
+    {
         reload_search_action.set_enabled (false);
         browser_view.hide_search_view ();
+        reload_search_next = true;
+    }
+
+    private void set_search_parameters ()
+    {
+        reload_search_action.set_enabled (false);
+        browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
+        reload_search_next = false;
     }
 
     /*\

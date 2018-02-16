@@ -20,6 +20,8 @@ using Gtk;
 class RegistrySearch : RegistryList
 {
     private string current_path;
+    private string [] bookmarks;
+    private SortingOptions sorting_options;
 
     public ModificationsHandler modifications_handler { private get; set; }
 
@@ -229,10 +231,8 @@ class RegistrySearch : RegistryList
         old_term = null;
     }
 
-    public void start_search (string term, string _current_path, string [] bookmarks, SortingOptions sorting_options)
+    public void start_search (string term)
     {
-        current_path = _current_path;
-
         if (old_term != null && term == (!) old_term)
         {
             ensure_selection ();
@@ -457,10 +457,13 @@ class RegistrySearch : RegistryList
         row.set_header (header);
     }
 
-    public void reload_search (string current_path, string [] bookmarks, SortingOptions sorting_options)
+    public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         string term = old_term ?? "";
         stop_search ();
-        start_search (term, current_path, bookmarks, sorting_options);
+        this.current_path = current_path;
+        this.bookmarks = bookmarks;
+        this.sorting_options = sorting_options;
+        start_search (term);
     }
 }

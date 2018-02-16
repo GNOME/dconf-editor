@@ -171,9 +171,9 @@ class BrowserView : Grid
         last_context = (key is GSettingsKey) ? ((GSettingsKey) key).schema_id : ".dconf";
     }
 
-    public void show_search_view (string term, string current_path, string [] bookmarks)
+    public void show_search_view (string term)
     {
-        current_child.show_search_view (term, current_path, bookmarks, sorting_options);
+        current_child.show_search_view (term);
     }
 
     public void hide_search_view ()
@@ -203,10 +203,10 @@ class BrowserView : Grid
             info_bar.show_warning ("soft-reload-folder");
     }
 
-    public void reload_search (string current_path, string [] bookmarks)
+    public void set_search_parameters (string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
-        current_child.reload_search (current_path, bookmarks, sorting_options);
+        current_child.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
     public bool check_reload (ViewType type, string path, bool show_infobar)
