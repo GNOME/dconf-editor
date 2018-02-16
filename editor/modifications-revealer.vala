@@ -175,9 +175,11 @@ class ModificationsRevealer : Revealer
 
         ListBoxRow wrapper = new ListBoxRow ();
         wrapper.add (view);
-        Variant variant = new Variant ("(ss)", full_name, has_schema ? ((GSettingsKey) key).schema_id : ".dconf");
         if (modifications_handler.get_current_delay_mode ())
+        {
+            Variant variant = new Variant ("(ss)", full_name, has_schema ? ((GSettingsKey) key).schema_id : ".dconf");
             wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");
+        }
         return wrapper;
     }
 
