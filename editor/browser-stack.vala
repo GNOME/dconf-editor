@@ -25,6 +25,9 @@ class BrowserStack : Grid
     [GtkChild] private RegistryInfo properties_view;
     [GtkChild] private RegistrySearch search_results_view;
 
+    public ViewType current_view { get; private set; default = ViewType.FOLDER; }
+    private ViewType pre_search_view = ViewType.SEARCH; // means "not in search"
+
     public bool small_keys_list_rows
     {
         set
@@ -41,28 +44,6 @@ class BrowserStack : Grid
             properties_view.modifications_handler = value;
             search_results_view.modifications_handler = value;
         }
-    }
-
-    /*\
-    * * View type
-    \*/
-
-    private ViewType current_view = ViewType.FOLDER;
-    private ViewType pre_search_view = ViewType.SEARCH; // means "not in search"
-
-    public bool current_view_is_browse_view ()
-    {
-        return current_view == ViewType.FOLDER;
-    }
-
-    public bool current_view_is_properties_view ()
-    {
-        return current_view == ViewType.OBJECT;
-    }
-
-    public bool current_view_is_search_results_view ()
-    {
-        return current_view == ViewType.SEARCH;
     }
 
     /*\

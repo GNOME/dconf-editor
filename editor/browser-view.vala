@@ -52,7 +52,7 @@ class BrowserView : Grid
                                                   _("Reload"), "ui.reload-object");   // TODO also for key removing?
 
         sorting_options.notify.connect (() => {
-                if (!current_view_is_browse_view ())
+                if (current_view != ViewType.FOLDER)
                     return;
 
                 if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
@@ -205,7 +205,7 @@ class BrowserView : Grid
 
     private void show_hard_reload_warning ()
     {
-        info_bar.show_warning (current_view_is_browse_view () ? "hard-reload-folder" : "hard-reload-object");
+        info_bar.show_warning (current_view == ViewType.FOLDER ? "hard-reload-folder" : "hard-reload-object");
     }
 
     public void reload_search (string current_path, string [] bookmarks)
@@ -218,20 +218,20 @@ class BrowserView : Grid
     {
         SettingsModel model = modifications_handler.model;
 
-        if (current_view_is_browse_view ())
+        if (current_view == ViewType.FOLDER)
         {
             GLib.ListStore? fresh_key_model = model.get_children (path);
             if (fresh_key_model != null && !current_child.check_reload_folder ((!) fresh_key_model))
                 return false;
         }
-        else if (current_view_is_properties_view ())
+        else if (current_view == ViewType.OBJECT)
         {
             Variant? properties = model.get_key_properties (path, last_context);
             if (properties != null && !current_child.check_reload_object ((!) properties))
                 return false;
         }
 
-        if (show_infobar && !current_view_is_search_results_view ())
+        if (show_infobar && current_view != ViewType.SEARCH)
         {
             show_hard_reload_warning ();
             return false;
@@ -243,14 +243,11 @@ class BrowserView : Grid
     * * Proxy calls
     \*/
 
+    public ViewType current_view { get { return current_child.current_view; }}
+
     // popovers invalidation
     public void discard_row_popover () { current_child.discard_row_popover (); }
     public void invalidate_popovers () { current_child.invalidate_popovers (); }
-
-    // questionning view
-    public bool current_view_is_browse_view ()         { return current_child.current_view_is_browse_view ();         }
-    public bool current_view_is_properties_view ()     { return current_child.current_view_is_properties_view ();     }
-    public bool current_view_is_search_results_view () { return current_child.current_view_is_search_results_view (); }
 
     // keyboard
     public bool return_pressed ()   { return current_child.return_pressed ();   }

@@ -586,11 +586,11 @@ class DConfWindow : ApplicationWindow
 
     private void reload_view ()
     {
-        if (browser_view.current_view_is_browse_view ())
+        if (browser_view.current_view == ViewType.FOLDER)
             request_folder_path (current_path, browser_view.get_selected_row_name ());
-        else if (browser_view.current_view_is_properties_view ())
+        else if (browser_view.current_view == ViewType.OBJECT)
             request_object_path (current_path, "", false);
-        else if (browser_view.current_view_is_search_results_view ())
+        else if (browser_view.current_view == ViewType.SEARCH)
             browser_view.reload_search (current_path, bookmarks_button.get_bookmarks ());
     }
 
@@ -862,7 +862,7 @@ class DConfWindow : ApplicationWindow
             return browser_view.down_pressed ();
 
         if ((name == "Return" || name == "KP_Enter")
-         && browser_view.current_view_is_search_results_view ()
+         && browser_view.current_view == ViewType.SEARCH
          && search_entry.has_focus
          && browser_view.return_pressed ())
         {
