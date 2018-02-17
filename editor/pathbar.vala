@@ -176,6 +176,11 @@ public class PathBar : Box
 
     private void update_cursors_for_search (string current_path, bool is_search)
     {
+        if (is_search)
+            get_style_context ().add_class ("greyed-pathbar");
+        else
+            get_style_context ().remove_class ("greyed-pathbar");
+
         @foreach ((child) => {
                 if (!(child is PathBarItem))
                     return;

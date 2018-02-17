@@ -146,9 +146,9 @@
 /* key icons */
 
                                    .keys-list          > row > .key         { transition:background-position 0.3s,
-                                                                                                      background-size     0.3s;
-                                                                                           background-repeat:no-repeat;
-                                                                                           background-size:1.5rem; }
+                                                                                         background-size     0.3s;
+                                                                              background-repeat:no-repeat;
+                                                                              background-size:1.5rem; }
              .small-keys-list-rows .keys-list          > row > .key         { background-size:1rem; }
 
                                    .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
@@ -250,17 +250,17 @@
 }
 
 /* search changes */
-#search-toggle:checked ~ .pathbar {
+.pathbar.greyed-pathbar {
   color:@insensitive_fg_color;
 }
 
-#search-toggle:checked ~ .pathbar          > button.active       > .item,
-#search-toggle:checked ~ .pathbar          > button.active:hover > .item {
+.pathbar.greyed-pathbar          > button.active       > .item,
+.pathbar.greyed-pathbar          > button.active:hover > .item {
   border-bottom-color:alpha(currentColor,0.6);
 }
 
-#search-toggle:checked ~ .pathbar:backdrop > button.active       > .item,
-#search-toggle:checked ~ .pathbar:backdrop > button.active:hover > .item {
+.pathbar.greyed-pathbar:backdrop > button.active       > .item,
+.pathbar.greyed-pathbar:backdrop > button.active:hover > .item {
   border-bottom-color:alpha(currentColor,0.4);
 }
 
