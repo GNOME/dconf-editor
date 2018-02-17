@@ -18,35 +18,29 @@
 public class SchemasUtility : Object
 {
     private SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
+    private string [] non_relocatable_schemas = {};
+    private string [] relocatable_schemas = {};
+
+    construct
+    {
+        if (settings_schema_source != null)
+            ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
+    }
 
     public bool is_relocatable_schema (string id)
     {
-        if (settings_schema_source == null)
-            return false;   // TODO better
-
-        string [] non_relocatable_schemas;
-        string [] relocatable_schemas;
-        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
-
-        return (id in relocatable_schemas);
+        return (settings_schema_source != null) && (id in relocatable_schemas);
     }
 
     public bool is_non_relocatable_schema (string id)
     {
-        if (settings_schema_source == null)
-            return false;   // TODO better
-
-        string [] non_relocatable_schemas;
-        string [] relocatable_schemas;
-        ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
-
-        return (id in non_relocatable_schemas);
+        return (settings_schema_source != null) && (id in non_relocatable_schemas);
     }
 
     public string? get_schema_path (string id)
     {
         if (settings_schema_source == null)
-            return null;   // TODO better
+            return null;   // TODO better?
 
         SettingsSchema? schema = ((!) settings_schema_source).lookup (id, true);
         if (schema == null)
