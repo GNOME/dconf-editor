@@ -92,8 +92,8 @@ class RegistryList : Grid, BrowsableView
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
             return null;
-        else
-            return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+
+        return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
     }
 
     public void toggle_boolean_key ()

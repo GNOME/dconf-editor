@@ -766,7 +766,7 @@ class DConfWindow : ApplicationWindow
                     return true;
 
                 case "c":
-                    if (focus_is_text_widget)
+                    if (focus_is_text_widget && !search_bar.search_mode_enabled)
                         return false;
 
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
