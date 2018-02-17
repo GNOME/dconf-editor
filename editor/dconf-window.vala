@@ -163,15 +163,15 @@ class DConfWindow : ApplicationWindow
             first_path = "/";
 
         if (!SettingsModel.is_key_path ((!) first_path))
-            request_folder_path ((!) first_path);
+            request_folder ((!) first_path);
         else if (schema != null && model.path_exists ((!) first_path))
-            request_object_path ((!) first_path, (!) schema);
+            request_object ((!) first_path, (!) schema);
         else if (model.path_exists ((!) first_path))
-            request_object_path ((!) first_path);
+            request_object ((!) first_path);
         else if (model.path_exists ((!) first_path + "/"))
-            request_folder_path ((!) first_path + "/");
+            request_folder ((!) first_path + "/");
         else
-            request_object_path ((!) first_path);
+            request_object ((!) first_path);
     }
 
     private void prepare_model ()
@@ -428,7 +428,7 @@ class DConfWindow : ApplicationWindow
 
         string full_name = ((!) path_variant).get_string ();
 
-        request_folder_path (full_name, "");
+        request_folder (full_name, "");
     }
 
     private void open_object (SimpleAction action, Variant? path_variant)
@@ -442,29 +442,29 @@ class DConfWindow : ApplicationWindow
         string context;
         ((!) path_variant).@get ("(ss)", out full_name, out context);
 
-        request_object_path (full_name, context);
+        request_object (full_name, context);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
         string full_name = ((!) path_variant).get_string ();
-        request_folder_path (SettingsModel.get_parent_path (full_name), full_name);
+        request_folder (SettingsModel.get_parent_path (full_name), full_name);
     }
 
     private void reload_folder (/* SimpleAction action, Variant? path_variant */)
     {
-        request_folder_path (current_path, browser_view.get_selected_row_name ());
+        request_folder (current_path, browser_view.get_selected_row_name ());
     }
 
     private void reload_object (/* SimpleAction action, Variant? path_variant */)
     {
-        request_object_path (current_path, "", false);
+        request_object (current_path, "", false);
     }
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
     {
-        set_search_parameters ();
+        request_search (true);
     }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)
@@ -537,10 +537,10 @@ class DConfWindow : ApplicationWindow
     }
 
     /*\
-    * * Directories tree
+    * * Path requests
     \*/
 
-    private void request_folder_path (string full_name, string selected_or_empty = "", bool notify_missing = true)
+    private void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         string fallback_path = model.get_fallback_path (full_name);
 
@@ -562,7 +562,7 @@ class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_object_path (string full_name, string context = "", bool notify_missing = true)
+    private void request_object (string full_name, string context = "", bool notify_missing = true)
     {
         Key? found_object = model.get_key (full_name, context);
         if (found_object == null)   // TODO warn about missing context
@@ -577,7 +577,7 @@ class DConfWindow : ApplicationWindow
                 else
                     cannot_find_folder (full_name);
             }
-            request_folder_path (SettingsModel.get_parent_path (full_name), full_name, false);
+            request_folder (SettingsModel.get_parent_path (full_name), full_name, false);
         }
         else
         {
@@ -588,14 +588,25 @@ class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
+    private void request_search (bool reload)
+    {
+        if (reload)
+        {
+            reload_search_action.set_enabled (false);
+            browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
+            reload_search_next = false;
+        }
+        update_current_path (ViewType.SEARCH, search_entry.text);
+    }
+
     private void reload_view ()
     {
         if (browser_view.current_view == ViewType.FOLDER)
-            request_folder_path (current_path, browser_view.get_selected_row_name ());
+            request_folder (current_path, browser_view.get_selected_row_name ());
         else if (browser_view.current_view == ViewType.OBJECT)
-            request_object_path (current_path, "", false);
+            request_object (current_path, "", false);
         else if (browser_view.current_view == ViewType.SEARCH)
-            browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
+            request_search (true);
     }
 
     /*\
@@ -671,20 +682,16 @@ class DConfWindow : ApplicationWindow
     }
 
     /*\
-    * * Search
+    * * Search callbacks
     \*/
 
     [GtkCallback]
     private void search_changed ()
     {
-        if (!search_bar.search_mode_enabled)
-        {
+        if (search_bar.search_mode_enabled)
+            request_search (reload_search_next);
+        else
             hide_search_view ();
-            return;
-        }
-        if (reload_search_next)
-            set_search_parameters ();
-        update_current_path (ViewType.SEARCH, search_entry.text);
     }
 
     [GtkCallback]
@@ -699,21 +706,14 @@ class DConfWindow : ApplicationWindow
     {
         reload_search_action.set_enabled (false);
         if (saved_type == ViewType.FOLDER)
-            request_folder_path (saved_view, saved_selection);
+            request_folder (saved_view, saved_selection);
         else
             update_current_path (saved_type, strdup (saved_view));
         reload_search_next = true;
     }
 
-    private void set_search_parameters ()
-    {
-        reload_search_action.set_enabled (false);
-        browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
-        reload_search_next = false;
-    }
-
     /*\
-    * * Other callbacks
+    * * Global callbacks
     \*/
 
     [GtkCallback]
@@ -939,9 +939,9 @@ class DConfWindow : ApplicationWindow
         if (current_path == "/")
             return;
         if (shift)
-            request_folder_path ("/");
+            request_folder ("/");
         else
-            request_folder_path (SettingsModel.get_parent_path (current_path), current_path.dup ());
+            request_folder (SettingsModel.get_parent_path (current_path), current_path.dup ());
     }
     private void go_forward (bool shift)
     {
@@ -957,19 +957,19 @@ class DConfWindow : ApplicationWindow
         if (shift)
         {
             if (SettingsModel.is_key_path (complete_path))
-                request_object_path (complete_path);
+                request_object (complete_path);
             else
-                request_folder_path (complete_path);
+                request_folder (complete_path);
             return;
         }
 
         int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
         if (index_of_last_slash != -1)
-            request_folder_path (complete_path.slice (0, index_of_last_slash + 1));
+            request_folder (complete_path.slice (0, index_of_last_slash + 1));
         else if (SettingsModel.is_key_path (complete_path))
-            request_object_path (complete_path);
+            request_object (complete_path);
         else
-            request_folder_path (complete_path);
+            request_folder (complete_path);
     }
 
     /*\

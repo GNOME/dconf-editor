@@ -459,11 +459,9 @@ class RegistrySearch : RegistryList
 
     public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
-        string term = old_term ?? "";
         stop_search ();
         this.current_path = current_path;
         this.bookmarks = bookmarks;
         this.sorting_options = sorting_options;
-        start_search (term);
     }
 }
