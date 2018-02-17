@@ -29,12 +29,12 @@ public class SchemasUtility : Object
 
     public bool is_relocatable_schema (string id)
     {
-        return (settings_schema_source != null) && (id in relocatable_schemas);
+        return (id in relocatable_schemas);
     }
 
     public bool is_non_relocatable_schema (string id)
     {
-        return (settings_schema_source != null) && (id in non_relocatable_schemas);
+        return (id in non_relocatable_schemas);
     }
 
     public string? get_schema_path (string id)
