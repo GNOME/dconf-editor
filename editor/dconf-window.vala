@@ -524,7 +524,7 @@ class DConfWindow : ApplicationWindow
 
         if (search_bar.search_mode_enabled)
         {
-            string selected_row_text = browser_view.get_copy_path_text () ?? current_path;
+            string selected_row_text = browser_view.get_copy_path_text () ?? saved_view;
             ((ConfigurationEditor) get_application ()).copy (selected_row_text);
         }
         else

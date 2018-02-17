@@ -203,8 +203,17 @@ class RegistrySearch : RegistryList
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
             return null;
+
+        Variant variant = ((!) selected_row).get_action_target_value ();
+        string action_target;
+        if (((!) variant).get_type_string () == "s")    // directory
+            action_target = ((!) variant).get_string ();
         else
-            return ((!) selected_row).get_action_target_value ().get_string ();
+        {
+            string unused;
+            ((!) variant).get ("(ss)", out action_target, out unused);
+        }
+        return action_target;
     }
 
     /*\
