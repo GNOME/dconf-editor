@@ -64,12 +64,12 @@ class BrowserStack : Grid
     }
 
     public void select_row (string selected, string last_context)
-        requires (current_view == ViewType.FOLDER)
+        requires (current_view != ViewType.OBJECT)
     {
         if (selected == "")
-            folder_view.select_first_row ();
+            ((RegistryList) stack.get_visible_child ()).select_first_row ();
         else
-            folder_view.select_row_named (selected, last_context);
+            ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context, current_view == ViewType.FOLDER);
     }
 
     public void prepare_object_view (Key key, bool is_parent)
@@ -179,19 +179,15 @@ class BrowserStack : Grid
 
     public bool up_pressed ()
     {
-        if (current_view == ViewType.FOLDER)
-            return folder_view.up_or_down_pressed (false);
-        if (current_view == ViewType.SEARCH)
-            return search_view.up_or_down_pressed (false);
+        if (current_view != ViewType.OBJECT)
+            return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (false);
         return false;
     }
 
     public bool down_pressed ()
     {
-        if (current_view == ViewType.FOLDER)
-            return folder_view.up_or_down_pressed (true);
-        if (current_view == ViewType.SEARCH)
-            return search_view.up_or_down_pressed (true);
+        if (current_view != ViewType.OBJECT)
+            return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (true);
         return false;
     }
 }

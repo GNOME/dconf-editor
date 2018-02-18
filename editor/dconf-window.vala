@@ -599,7 +599,9 @@ class DConfWindow : ApplicationWindow
             browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
             reload_search_next = false;
         }
+        string selected_row = browser_view.get_selected_row_name ();
         update_current_path (ViewType.SEARCH, search_entry.text);
+        browser_view.select_row (selected_row);
     }
 
     private void reload_view ()

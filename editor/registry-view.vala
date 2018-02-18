@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-class RegistryList : Grid, BrowsableView
+private abstract class RegistryList : Grid, BrowsableView
 {
     [GtkChild] protected ListBox key_list_box;
     [GtkChild] protected RegistryPlaceholder placeholder;
@@ -78,6 +78,37 @@ class RegistryList : Grid, BrowsableView
         else
             return "";
     }
+
+    public abstract void select_first_row ();
+
+    public void select_row_named (string selected, string context, bool grab_focus)
+    {
+        check_resize ();
+        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context));
+        if (row != null)
+            scroll_to_row ((!) row, grab_focus);
+    }
+    private int get_row_position (string selected, string context)
+    {
+        uint position = 0;
+        uint fallback = 0;
+        while (position < list_model.get_n_items ())
+        {
+            SettingObject object = (SettingObject) list_model.get_object (position);
+            if (object.full_name == selected)
+            {
+                if (object is Directory
+                 || context == ".dconf" && object is DConfKey // theorical?
+                 || object is GSettingsKey && ((GSettingsKey) object).schema_id == context)
+                    return (int) position;
+                fallback = position;
+            }
+            position++;
+        }
+        return (int) fallback; // selected row may have been removed or context could be ""
+    }
+
+    public abstract bool up_or_down_pressed (bool is_down);
 
     /*\
     * * Keyboard calls
@@ -192,40 +223,11 @@ class RegistryView : RegistryList
         return false;
     }
 
-    public void select_row_named (string selected, string context)
+    public override void select_first_row ()
     {
-        bool grab_focus = true;     // unused, for now
-        check_resize ();
-        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context));
-        if (row == null)
-            assert_not_reached ();
-        scroll_to_row ((!) row, grab_focus);
-    }
-    public void select_first_row ()
-    {
-        bool grab_focus = true;     // unused, for now
         ListBoxRow? row = key_list_box.get_row_at_index (0);
         if (row != null)
-            scroll_to_row ((!) row, grab_focus);
-    }
-    private int get_row_position (string selected, string context)
-    {
-        uint position = 0;
-        uint fallback = 0;
-        while (position < list_model.get_n_items ())
-        {
-            SettingObject object = (SettingObject) list_model.get_object (position);
-            if (object.full_name == selected)
-            {
-                if (object is Directory
-                 || context == ".dconf" && object is DConfKey // theorical?
-                 || object is GSettingsKey && ((GSettingsKey) object).schema_id == context)
-                    return (int) position;
-                fallback = position;
-            }
-            position++;
-        }
-        return (int) fallback; // selected row may have been removed or context could be ""
+            scroll_to_row ((!) row, true);
     }
 
     /*\
@@ -327,7 +329,7 @@ class RegistryView : RegistryList
         return false;
     }
 
-    public bool up_or_down_pressed (bool is_down)
+    public override bool up_or_down_pressed (bool is_down)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         uint n_items = list_model.get_n_items ();

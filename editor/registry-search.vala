@@ -42,7 +42,7 @@ class RegistrySearch : RegistryList
             select_first_row ();
     }
 
-    private void select_first_row ()
+    public override void select_first_row ()
     {
         ListBoxRow? row = key_list_box.get_row_at_index (0);
         if (row != null)
@@ -146,7 +146,7 @@ class RegistrySearch : RegistryList
         return true;
     }
 
-    public bool up_or_down_pressed (bool is_down)
+    public override bool up_or_down_pressed (bool is_down)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         uint n_items = list_model.get_n_items ();
