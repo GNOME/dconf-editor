@@ -151,11 +151,11 @@ class BrowserView : Grid
     * * Views
     \*/
 
-    public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor)
+    public void prepare_folder_view (GLib.ListStore key_model, bool is_ancestor)
     {
         this.key_model = key_model;
         sorting_options.sort_key_model (key_model);
-        current_child.prepare_browse_view (key_model, is_ancestor);
+        current_child.prepare_folder_view (key_model, is_ancestor);
         hide_reload_warning ();
     }
 
@@ -165,9 +165,9 @@ class BrowserView : Grid
         current_child.select_row (selected, last_context);
     }
 
-    public void prepare_properties_view (Key key, bool is_parent)
+    public void prepare_object_view (Key key, bool is_parent)
     {
-        current_child.prepare_properties_view (key, is_parent);
+        current_child.prepare_object_view (key, is_parent);
         hide_reload_warning ();
         last_context = (key is GSettingsKey) ? ((GSettingsKey) key).schema_id : ".dconf";
     }

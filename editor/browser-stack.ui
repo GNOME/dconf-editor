@@ -6,32 +6,23 @@
     <child>
       <object class="GtkStack" id="stack">
         <property name="visible">True</property>
-        <property name="visible-child">browse_view</property> <!-- uses the "id" attribute -->
+        <property name="visible-child">folder_view</property>
         <property name="transition-type">crossfade</property>
         <property name="expand">True</property>
         <child>
-          <object class="RegistryView"  id="browse_view">
+          <object class="RegistryView"   id="folder_view">
             <property name="visible">True</property>
           </object>
-          <packing>
-            <property name="name">browse-view</property>
-          </packing>
         </child>
         <child>
-          <object class="RegistryInfo" id="properties_view">
+          <object class="RegistryInfo"   id="object_view">
             <property name="visible">True</property>
           </object>
-          <packing>
-            <property name="name">properties-view</property>
-          </packing>
         </child>
         <child>
-          <object class="RegistrySearch"  id="search_results_view">
+          <object class="RegistrySearch" id="search_view">
             <property name="visible">True</property>
           </object>
-          <packing>
-            <property name="name">search-results-view</property>
-          </packing>
         </child>
       </object>
     </child>

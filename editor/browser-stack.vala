@@ -21,9 +21,9 @@ using Gtk;
 class BrowserStack : Grid
 {
     [GtkChild] private Stack stack;
-    [GtkChild] private RegistryView browse_view;
-    [GtkChild] private RegistryInfo properties_view;
-    [GtkChild] private RegistrySearch search_results_view;
+    [GtkChild] private RegistryView folder_view;
+    [GtkChild] private RegistryInfo object_view;
+    [GtkChild] private RegistrySearch search_view;
 
     public ViewType current_view { get; private set; default = ViewType.FOLDER; }
 
@@ -31,17 +31,17 @@ class BrowserStack : Grid
     {
         set
         {
-            browse_view.small_keys_list_rows = value;
-            search_results_view.small_keys_list_rows = value;
+            folder_view.small_keys_list_rows = value;
+            search_view.small_keys_list_rows = value;
         }
     }
 
     public ModificationsHandler modifications_handler
     {
         set {
-            browse_view.modifications_handler = value;
-            properties_view.modifications_handler = value;
-            search_results_view.modifications_handler = value;
+            folder_view.modifications_handler = value;
+            object_view.modifications_handler = value;
+            search_view.modifications_handler = value;
         }
     }
 
@@ -56,9 +56,9 @@ class BrowserStack : Grid
         return "";
     }
 
-    public void prepare_browse_view (GLib.ListStore key_model, bool is_ancestor)
+    public void prepare_folder_view (GLib.ListStore key_model, bool is_ancestor)
     {
-        browse_view.set_key_model (key_model);
+        folder_view.set_key_model (key_model);
 
         stack.set_transition_type (is_ancestor && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
@@ -67,14 +67,14 @@ class BrowserStack : Grid
         requires (current_view == ViewType.FOLDER)
     {
         if (selected == "")
-            browse_view.select_first_row ();
+            folder_view.select_first_row ();
         else
-            browse_view.select_row_named (selected, last_context);
+            folder_view.select_row_named (selected, last_context);
     }
 
-    public void prepare_properties_view (Key key, bool is_parent)
+    public void prepare_object_view (Key key, bool is_parent)
     {
-        properties_view.populate_properties_list_box (key);
+        object_view.populate_properties_list_box (key);
 
         stack.set_transition_type (is_parent && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
@@ -87,20 +87,20 @@ class BrowserStack : Grid
 
         current_view = type;
         if (type == ViewType.FOLDER)
-            stack.set_visible_child (browse_view);
+            stack.set_visible_child (folder_view);
         else if (type == ViewType.OBJECT)
-            stack.set_visible_child (properties_view);
+            stack.set_visible_child (object_view);
         else // (type == ViewType.SEARCH)
         {
-            search_results_view.start_search (path);
+            search_view.start_search (path);
             stack.set_transition_type (StackTransitionType.NONE);
-            stack.set_visible_child (search_results_view);
+            stack.set_visible_child (search_view);
         }
 
         if (clean_object_view)
-            properties_view.clean ();
+            object_view.clean ();
         if (clean_search_view)
-            search_results_view.clean ();
+            search_view.clean ();
     }
 
     public string? get_copy_text ()
@@ -111,7 +111,7 @@ class BrowserStack : Grid
     public string? get_copy_path_text ()
     {
         if (current_view == ViewType.SEARCH)
-            return search_results_view.get_copy_path_text ();
+            return search_view.get_copy_path_text ();
 
         warning ("BrowserView get_copy_path_text() called but current view is not search results view.");
         return null;
@@ -144,8 +144,8 @@ class BrowserStack : Grid
 
     public void invalidate_popovers ()
     {
-        browse_view.invalidate_popovers ();
-        search_results_view.invalidate_popovers ();
+        folder_view.invalidate_popovers ();
+        search_view.invalidate_popovers ();
     }
 
     /*\
@@ -154,17 +154,17 @@ class BrowserStack : Grid
 
     public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
-        search_results_view.set_search_parameters (current_path, bookmarks, sorting_options);
+        search_view.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
     public bool check_reload_folder (GLib.ListStore fresh_key_model)
     {
-        return browse_view.check_reload (fresh_key_model);
+        return folder_view.check_reload (fresh_key_model);
     }
 
     public bool check_reload_object (Variant properties)
     {
-        return properties_view.check_reload (properties);
+        return object_view.check_reload (properties);
     }
 
     /*\
@@ -174,24 +174,24 @@ class BrowserStack : Grid
     public bool return_pressed ()
         requires (current_view == ViewType.SEARCH)
     {
-        return search_results_view.return_pressed ();
+        return search_view.return_pressed ();
     }
 
     public bool up_pressed ()
     {
         if (current_view == ViewType.FOLDER)
-            return browse_view.up_or_down_pressed (false);
+            return folder_view.up_or_down_pressed (false);
         if (current_view == ViewType.SEARCH)
-            return search_results_view.up_or_down_pressed (false);
+            return search_view.up_or_down_pressed (false);
         return false;
     }
 
     public bool down_pressed ()
     {
         if (current_view == ViewType.FOLDER)
-            return browse_view.up_or_down_pressed (true);
+            return folder_view.up_or_down_pressed (true);
         if (current_view == ViewType.SEARCH)
-            return search_results_view.up_or_down_pressed (true);
+            return search_view.up_or_down_pressed (true);
         return false;
     }
 }

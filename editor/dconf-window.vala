@@ -552,7 +552,7 @@ class DConfWindow : ApplicationWindow
         GLib.ListStore? key_model = model.get_children (fallback_path);
         if (key_model != null)
         {
-            browser_view.prepare_browse_view ((!) key_model, current_path.has_prefix (fallback_path));
+            browser_view.prepare_folder_view ((!) key_model, current_path.has_prefix (fallback_path));
             update_current_path (ViewType.FOLDER, fallback_path);
 
             if (selected_or_empty == "")
@@ -584,7 +584,7 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            browser_view.prepare_properties_view ((!) found_object, current_path == SettingsModel.get_parent_path (full_name));
+            browser_view.prepare_object_view ((!) found_object, current_path == SettingsModel.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
