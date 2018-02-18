@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  https://git.gnome.org/browse/glib/log/gio/gschema.dtd
+  https://gitlab.gnome.org/GNOME/glib/blob/master/gio/gschema.dtd
   /usr/share/glib-2.0/schemas/gschema.dtd
 -->
 <!DOCTYPE schemalist [

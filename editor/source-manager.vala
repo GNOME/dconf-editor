@@ -112,7 +112,7 @@ public class SourceManager : Object
     }
 
     // We need to create new schema sources in order to detect schema changes, since schema sources cache the info and the default schema source is also a cached instance
-    // This code is adapted from GLib (https://git.gnome.org/browse/glib/tree/gio/gsettingsschema.c#n332)
+    // This code is adapted from GLib (https://gitlab.gnome.org/GNOME/glib/blob/master/gio/gsettingsschema.c#L331)
     private SettingsSchemaSource? create_schema_source ()
     {
         SettingsSchemaSource? source = null;
