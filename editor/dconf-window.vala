@@ -207,13 +207,14 @@ class DConfWindow : ApplicationWindow
         model.finalize_model ();
 
         model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
+                if (current_type == ViewType.SEARCH)
                 {
-                    if (internal_changes)
-                        reload_view ();
-                    else    // search
+                    if (!internal_changes)
                         reload_search_action.set_enabled (true);
                 }
+                else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
+                    reload_view ();
+
                 pathbar.update_ghosts (_model.get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
             });
     }
@@ -524,6 +525,7 @@ class DConfWindow : ApplicationWindow
 
         if (search_bar.search_mode_enabled)
         {
+            model.copy_action = true;
             string selected_row_text = browser_view.get_copy_path_text () ?? saved_view;
             ((ConfigurationEditor) get_application ()).copy (selected_row_text);
         }
@@ -578,6 +580,7 @@ class DConfWindow : ApplicationWindow
                     cannot_find_folder (full_name);
             }
             request_folder (SettingsModel.get_parent_path (full_name), full_name, false);
+            pathbar.update_ghosts (model.get_fallback_path (pathbar.complete_path), false);
         }
         else
         {
@@ -766,7 +769,9 @@ class DConfWindow : ApplicationWindow
                     return true;
 
                 case "c":
-                    if (focus_is_text_widget && !search_bar.search_mode_enabled)
+                    if (search_bar.search_mode_enabled)
+                        model.copy_action = true;
+                    else if (focus_is_text_widget)
                         return false;
 
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call

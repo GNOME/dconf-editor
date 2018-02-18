@@ -207,19 +207,25 @@ class BrowserView : Grid
             GLib.ListStore? fresh_key_model = model.get_children (path);
             if (fresh_key_model != null && !current_child.check_reload_folder ((!) fresh_key_model))
                 return false;
+            if (show_infobar)
+            {
+                info_bar.show_warning ("hard-reload-folder");
+                return false;
+            }
         }
         else if (type == ViewType.OBJECT)
         {
             Variant? properties = model.get_key_properties (path, last_context);
             if (properties != null && !current_child.check_reload_object ((!) properties))
                 return false;
+            if (show_infobar)
+            {
+                info_bar.show_warning ("hard-reload-object");
+                return false;
+            }
         }
-
-        if (show_infobar && type != ViewType.SEARCH)
-        {
-            info_bar.show_warning (type == ViewType.FOLDER ? "hard-reload-folder" : "hard-reload-object");
-            return false;
-        }
+        else // (type == ViewType.SEARCH)
+            assert_not_reached ();
         return true;
     }
 

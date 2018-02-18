@@ -22,6 +22,7 @@ public class SettingsModel : Object
 
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
+    public bool copy_action = false;
 
     public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
 
@@ -45,7 +46,7 @@ public class SettingsModel : Object
 
     public void finalize_model ()
     {
-        source_manager.paths_changed.connect ((modified_path_specs) => { paths_changed (modified_path_specs, false); });
+        source_manager.paths_changed.connect ((modified_path_specs) => paths_changed (modified_path_specs, false));
         source_manager.refresh_schema_source ();
         Timeout.add (3000, () => {
                 if (refresh_source) // TODO better: stops the I/O, but not the wakeup
@@ -54,7 +55,9 @@ public class SettingsModel : Object
             });
 
         client.changed.connect ((client, prefix, changes, tag) => {
-                bool internal_changes = false;
+                bool internal_changes = copy_action;
+                if (copy_action)
+                    copy_action = false;
                 if (last_change_tag != null && tag != null && (!) last_change_tag == (!) tag)
                 {
                     last_change_tag = null;
