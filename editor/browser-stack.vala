@@ -51,10 +51,8 @@ class BrowserStack : Grid
 
     public string get_selected_row_name ()
     {
-        if (current_view == ViewType.FOLDER)
-            return browse_view.get_selected_row_name ();
-        if (current_view == ViewType.SEARCH)
-            return search_results_view.get_selected_row_name ();
+        if (current_view != ViewType.OBJECT)
+            return ((RegistryList) stack.get_visible_child ()).get_selected_row_name ();
         return "";
     }
 
@@ -121,35 +119,27 @@ class BrowserStack : Grid
 
     public bool show_row_popover ()
     {
-        if (current_view == ViewType.FOLDER)
-            return browse_view.show_row_popover ();
-        if (current_view == ViewType.SEARCH)
-            return search_results_view.show_row_popover ();
+        if (current_view != ViewType.OBJECT)
+            return ((RegistryList) stack.get_visible_child ()).show_row_popover ();
         return false;
     }
 
     public void toggle_boolean_key ()
     {
-        if (current_view == ViewType.FOLDER)
-            browse_view.toggle_boolean_key ();
-        else if (current_view == ViewType.SEARCH)
-            search_results_view.toggle_boolean_key ();
+        if (current_view != ViewType.OBJECT)
+            ((RegistryList) stack.get_visible_child ()).toggle_boolean_key ();
     }
 
     public void set_selected_to_default ()
     {
-        if (current_view == ViewType.FOLDER)
-            browse_view.set_selected_to_default ();
-        else if (current_view == ViewType.SEARCH)
-            search_results_view.set_selected_to_default ();
+        if (current_view != ViewType.OBJECT)
+            ((RegistryList) stack.get_visible_child ()).set_selected_to_default ();
     }
 
     public void discard_row_popover ()
     {
-        if (current_view == ViewType.FOLDER)
-            browse_view.discard_row_popover ();
-        else if (current_view == ViewType.SEARCH)
-            search_results_view.discard_row_popover ();
+        if (current_view != ViewType.OBJECT)
+            ((RegistryList) stack.get_visible_child ()).discard_row_popover ();
     }
 
     public void invalidate_popovers ()

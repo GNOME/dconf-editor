@@ -25,8 +25,6 @@ class RegistrySearch : RegistryList
 
     public ModificationsHandler modifications_handler { private get; set; }
 
-    private GLib.ListStore search_results_model = new GLib.ListStore (typeof (SettingObject));
-
     construct
     {
         placeholder.label = _("No matches");
@@ -151,7 +149,7 @@ class RegistrySearch : RegistryList
     public bool up_or_down_pressed (bool is_down)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        uint n_items = search_results_model.get_n_items ();
+        uint n_items = list_model.get_n_items ();
 
         if (selected_row != null)
         {
@@ -180,18 +178,6 @@ class RegistrySearch : RegistryList
             return true;
         }
         return false;
-    }
-
-    public string get_selected_row_name ()
-    {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row != null)
-        {
-            int position = ((!) selected_row).get_index ();
-            return ((SettingObject) ((!) search_results_model).get_object (position)).full_name;
-        }
-        else
-            return "";
     }
 
     /*\
@@ -233,7 +219,7 @@ class RegistrySearch : RegistryList
     {
         key_list_box.bind_model (null, null);
         stop_global_search ();
-        search_results_model.remove_all ();
+        list_model.remove_all ();
         post_local = -1;
         post_bookmarks = -1;
         post_folders = -1;
@@ -267,13 +253,13 @@ class RegistrySearch : RegistryList
         else
         {
             stop_global_search ();
-            search_results_model.remove_all ();
+            list_model.remove_all ();
             post_local = -1;
             post_folders = -1;
 
             local_search (model, sorting_options, SettingsModel.get_base_path (current_path), term);
             bookmark_search (model, current_path, term, bookmarks);
-            key_list_box.bind_model (search_results_model, new_list_box_row);
+            key_list_box.bind_model (list_model, new_list_box_row);
 
             select_first_row ();
 
@@ -287,13 +273,13 @@ class RegistrySearch : RegistryList
     {
         for (int i = post_local - 1; i >= 0; i--)
         {
-            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            SettingObject item = (SettingObject) list_model.get_item (i);
             if (!(term in item.name))
             {
                 post_local--;
                 post_bookmarks--;
                 post_folders--;
-                search_results_model.remove (i);
+                list_model.remove (i);
             }
         }
     }
@@ -302,31 +288,31 @@ class RegistrySearch : RegistryList
     {
         for (int i = post_bookmarks - 1; i >= post_local; i--)
         {
-            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            SettingObject item = (SettingObject) list_model.get_item (i);
             if (!(term in item.name))
             {
                 post_bookmarks--;
                 post_folders--;
-                search_results_model.remove (i);
+                list_model.remove (i);
             }
         }
     }
 
     private void refine_global_results (string term)
     {
-        for (int i = (int) search_results_model.get_n_items () - 1; i >= post_folders; i--)
+        for (int i = (int) list_model.get_n_items () - 1; i >= post_folders; i--)
         {
-            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            SettingObject item = (SettingObject) list_model.get_item (i);
             if (!(term in item.name))
-                search_results_model.remove (i);
+                list_model.remove (i);
         }
         for (int i = post_folders - 1; i >= post_local; i--)
         {
-            SettingObject item = (SettingObject) search_results_model.get_item (i);
+            SettingObject item = (SettingObject) list_model.get_item (i);
             if (!(term in item.name))
             {
                 post_folders--;
-                search_results_model.remove (i);
+                list_model.remove (i);
             }
         }
     }
@@ -343,10 +329,10 @@ class RegistrySearch : RegistryList
             {
                 SettingObject item = (SettingObject) ((!) key_model).get_item (i);
                 if (term in item.name)
-                    search_results_model.insert_sorted (item, compare);
+                    list_model.insert_sorted (item, compare);
             }
         }
-        post_local = (int) search_results_model.get_n_items ();
+        post_local = (int) list_model.get_n_items ();
         post_bookmarks = post_local;
         post_folders = post_local;
 
@@ -377,7 +363,7 @@ class RegistrySearch : RegistryList
             {
                 post_bookmarks++;
                 post_folders++;
-                search_results_model.insert (post_bookmarks - 1, (!) setting_object);
+                list_model.insert (post_bookmarks - 1, (!) setting_object);
             }
         }
 
@@ -432,13 +418,13 @@ class RegistrySearch : RegistryList
                 if (item is Directory)
                 {
                     if (!local_again && term in item.name)
-                        search_results_model.insert (post_folders++, item);
+                        list_model.insert (post_folders++, item);
                     search_nodes.push_tail ((Directory) item); // we still search local children
                 }
                 else
                 {
                     if (!local_again && term in item.name)
-                        search_results_model.append (item);
+                        list_model.append (item);
                 }
             }
 

@@ -24,6 +24,8 @@ class RegistryList : Grid, BrowsableView
     [GtkChild] protected RegistryPlaceholder placeholder;
     [GtkChild] private ScrolledWindow scrolled;
 
+    protected GLib.ListStore list_model = new GLib.ListStore (typeof (SettingObject));
+
     protected GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
     protected bool _small_keys_list_rows;
@@ -63,6 +65,18 @@ class RegistryList : Grid, BrowsableView
             row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (position);
         }
         rows_possibly_with_popover.remove_all ();
+    }
+
+    public string get_selected_row_name ()
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        if (selected_row != null)
+        {
+            int position = ((!) selected_row).get_index ();
+            return ((SettingObject) list_model.get_object (position)).full_name;
+        }
+        else
+            return "";
     }
 
     /*\
@@ -132,8 +146,6 @@ class RegistryList : Grid, BrowsableView
 
 class RegistryView : RegistryList
 {
-    private GLib.ListStore? key_model = null;
-
     public ModificationsHandler modifications_handler { private get; set; }
 
     construct
@@ -146,23 +158,21 @@ class RegistryView : RegistryList
     * * Updating
     \*/
 
-    public void set_key_model (GLib.ListStore _key_model)
+    public void set_key_model (GLib.ListStore key_model)
     {
-        key_model = _key_model;
-        key_list_box.bind_model (key_model, new_list_box_row);
+        list_model = key_model;
+        key_list_box.bind_model (list_model, new_list_box_row);
     }
 
     public bool check_reload (GLib.ListStore fresh_key_model)
     {
-        if (key_model == null) // should not happen?
+        if (list_model.get_n_items () != fresh_key_model.get_n_items ())
             return true;
-        if (((!) key_model).get_n_items () != fresh_key_model.get_n_items ())
-            return true;
-        for (uint i = 0; i < ((!) key_model).get_n_items (); i++)
+        for (uint i = 0; i < list_model.get_n_items (); i++)
         {
-            SettingObject setting_object = (SettingObject) ((!) key_model).get_item (i);
+            SettingObject setting_object = (SettingObject) list_model.get_item (i);
             bool found = false;
-            for (uint j = 0; j < ((!) fresh_key_model).get_n_items (); j++)
+            for (uint j = 0; j < fresh_key_model.get_n_items (); j++)
             {
                 SettingObject fresh_setting_object = (SettingObject) fresh_key_model.get_item (j);
                 if (setting_object.get_type () != fresh_setting_object.get_type ())
@@ -177,7 +187,7 @@ class RegistryView : RegistryList
             if (!found)
                 return true;
         }
-        if (((!) fresh_key_model).get_n_items () > 0)
+        if (fresh_key_model.get_n_items () > 0)
             return true;
         return false;
     }
@@ -199,13 +209,12 @@ class RegistryView : RegistryList
             scroll_to_row ((!) row, grab_focus);
     }
     private int get_row_position (string selected, string context)
-        requires (key_model != null)
     {
         uint position = 0;
         uint fallback = 0;
-        while (position < ((!) key_model).get_n_items ())
+        while (position < list_model.get_n_items ())
         {
-            SettingObject object = (SettingObject) ((!) key_model).get_object (position);
+            SettingObject object = (SettingObject) list_model.get_object (position);
             if (object.full_name == selected)
             {
                 if (object is Directory
@@ -320,11 +329,8 @@ class RegistryView : RegistryList
 
     public bool up_or_down_pressed (bool is_down)
     {
-        if (key_model == null)
-            return false;
-
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        uint n_items = ((!) key_model).get_n_items ();
+        uint n_items = list_model.get_n_items ();
 
         if (selected_row != null)
         {
@@ -350,17 +356,5 @@ class RegistryView : RegistryList
             return true;
         }
         return false;
-    }
-
-    public string get_selected_row_name ()
-    {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row != null)
-        {
-            int position = ((!) selected_row).get_index ();
-            return ((SettingObject) ((!) key_model).get_object (position)).full_name;
-        }
-        else
-            return "";
     }
 }
