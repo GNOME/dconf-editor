@@ -160,6 +160,7 @@ class BrowserView : Grid
     }
 
     public void select_row (string selected)
+        requires (current_view == ViewType.FOLDER)
     {
         current_child.select_row (selected, last_context);
     }

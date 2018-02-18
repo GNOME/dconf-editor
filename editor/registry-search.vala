@@ -229,7 +229,7 @@ class RegistrySearch : RegistryList
     private uint? search_source = null;
     private GLib.Queue<Directory> search_nodes = new GLib.Queue<Directory> ();
 
-    public void stop_search ()
+    public void clean ()
     {
         key_list_box.bind_model (null, null);
         stop_global_search ();
@@ -468,7 +468,7 @@ class RegistrySearch : RegistryList
 
     public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
-        stop_search ();
+        clean ();
         this.current_path = current_path;
         this.bookmarks = bookmarks;
         this.sorting_options = sorting_options;

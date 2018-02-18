@@ -182,16 +182,18 @@ class RegistryView : RegistryList
         return false;
     }
 
-    public void select_row_named (string selected, string context, bool grab_focus)
+    public void select_row_named (string selected, string context)
     {
+        bool grab_focus = true;     // unused, for now
         check_resize ();
         ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context));
         if (row == null)
             assert_not_reached ();
         scroll_to_row ((!) row, grab_focus);
     }
-    public void select_first_row (bool grab_focus)
+    public void select_first_row ()
     {
+        bool grab_focus = true;     // unused, for now
         ListBoxRow? row = key_list_box.get_row_at_index (0);
         if (row != null)
             scroll_to_row ((!) row, grab_focus);

@@ -66,13 +66,12 @@ class BrowserStack : Grid
     }
 
     public void select_row (string selected, string last_context)
+        requires (current_view == ViewType.FOLDER)
     {
-        bool grab_focus = true;     // unused, for now
-        if (selected != "")
-            browse_view.select_row_named (selected, last_context, grab_focus);
+        if (selected == "")
+            browse_view.select_first_row ();
         else
-            browse_view.select_first_row (grab_focus);
-        properties_view.clean ();
+            browse_view.select_row_named (selected, last_context);
     }
 
     public void prepare_properties_view (Key key, bool is_parent)
@@ -84,8 +83,9 @@ class BrowserStack : Grid
 
     public void set_path (ViewType type, string path)
     {
-        if (current_view == ViewType.SEARCH && type != ViewType.SEARCH)
-            search_results_view.stop_search ();
+        // might become “bool clear = type != current_view”, one day…
+        bool clean_object_view = type == ViewType.FOLDER;    // note: not on search
+        bool clean_search_view = current_view == ViewType.SEARCH && type != ViewType.SEARCH;
 
         current_view = type;
         if (type == ViewType.FOLDER)
@@ -98,6 +98,11 @@ class BrowserStack : Grid
             stack.set_transition_type (StackTransitionType.NONE);
             stack.set_visible_child (search_results_view);
         }
+
+        if (clean_object_view)
+            properties_view.clean ();
+        if (clean_search_view)
+            search_results_view.clean ();
     }
 
     public string? get_copy_text ()
