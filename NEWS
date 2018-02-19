@@ -1,3 +1,40 @@
+dconf-editor 3.27.91
+=====================
+
+Random schedule is random, that’s a beta release. :) I didn’t publish 3.27.4, as
+it would have needed a Gtk+ 3.22.27 release and as there was so many big changes
+planned in the code that releasing a snapshot would have been quite meaningless.
+So have a look also to the 3.27.4 news!
+
+As planned, the code changed a lot this last month, and that will help in future
+developments; but that is not visible to the user of course. There has been many
+attention given to details, like hiding boolean switches from keys list when the
+delay mode is activated, ensuring all ellipsize correctly, selecting the current
+row when entering search mode, etc. Schemas containing neither keys nor children
+are not displayed anymore but emit a warning at application startup instead. The
+transitions also look smooth using HighContrast theme.
+
+The big thing is probably the handling of multiple schemas installed at the same
+path, and the new keys list organisation by schema. The first looks certainly as
+a corner-case, but not handling that was a sad proof of the fragility of the way
+the application was displaying keys, and I’m happy it’s now fixed. The second is
+possibly something that will help a bit users to understand the structure of the
+settings internals, and that’s always a good thing. Sorting folders first option
+has been of course removed, as that’s the default now.
+
+Hope we’re good now for an incredible 3.28 release in March! :)
+
+Translations updated:
+  Finnish: Jiri Grönroos
+  Friulian: Fabio Tomat
+  Galician: Fran Dieguez
+  Hungarian: Balázs Meskó and Balázs Úr
+  Indonesian: Kukuh Syafaat and Andika Triwidada
+  Lithuanian: Aurimas Černius
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Spanish: Daniel Mustieles
+
 dconf-editor 3.27.4
 =====================
 
