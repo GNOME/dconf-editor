@@ -593,15 +593,17 @@ class DConfWindow : ApplicationWindow
 
     private void request_search (bool reload)
     {
+        string selected_row = browser_view.get_selected_row_name ();
         if (reload)
         {
             reload_search_action.set_enabled (false);
-            browser_view.set_search_parameters (current_path, bookmarks_button.get_bookmarks ());
+            browser_view.set_search_parameters (saved_view, bookmarks_button.get_bookmarks ());
             reload_search_next = false;
         }
-        string selected_row = browser_view.get_selected_row_name ();
         update_current_path (ViewType.SEARCH, search_entry.text);
         browser_view.select_row (selected_row);
+        if (!search_entry.has_focus)
+            search_entry.grab_focus_without_selecting ();
     }
 
     private void reload_view ()
