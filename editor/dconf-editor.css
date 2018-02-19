@@ -69,8 +69,8 @@
                                                                                   padding 0.3s,
                                                                                   border-radius 0.3s; } stuttering of a single row is almost bearable */
 
-                                   .keys-list          > .key-row    { min-height:4em; }
-                                   .keys-list          > .folder-row { min-height:2em; }
+                                   .keys-list          > .key-row    { min-height:4.2em; }
+                                   .keys-list          > .folder-row { min-height:2.1em; }
                                    .keys-list          > row         { margin:0;      padding-top:0.25em; padding-bottom:0.25em; }
 .large-window                      .keys-list          > row         { margin:0.25em; padding-top:0;      padding-bottom:0;      }
 
