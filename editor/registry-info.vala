@@ -31,7 +31,8 @@ class RegistryInfo : Grid, BrowsableView
 
     public ModificationsHandler modifications_handler { private get; set; }
 
-    private Variant? current_key_info;
+    private Variant? current_key_info = null;
+    public string full_name { get; private set; default = ""; }
 
     /*\
     * * Cleaning
@@ -71,6 +72,7 @@ class RegistryInfo : Grid, BrowsableView
         bool has_schema;
         unowned Variant [] dict_container;
         current_key_info = key.properties;
+        full_name = key.full_name;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
         if (key is GSettingsKey)

@@ -53,7 +53,7 @@ class BrowserStack : Grid
     {
         if (current_view != ViewType.OBJECT)
             return ((RegistryList) stack.get_visible_child ()).get_selected_row_name ();
-        return "";
+        return object_view.full_name;
     }
 
     public void prepare_folder_view (GLib.ListStore key_model, bool is_ancestor)
