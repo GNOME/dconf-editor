@@ -93,6 +93,11 @@ class RegistryInfo : Grid, BrowsableView
                 hard_conflicting_key_error_revealer.set_reveal_child (false);
             }
         }
+        else
+        {
+            conflicting_key_warning_revealer.set_reveal_child (false);
+            hard_conflicting_key_error_revealer.set_reveal_child (false);
+        }
         no_schema_warning.set_reveal_child (!has_schema);
 
         properties_list_box.@foreach ((widget) => widget.destroy ());
