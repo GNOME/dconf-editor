@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-01-31 03:59+0000\n"
-"PO-Revision-Date: 2018-02-04 13:24+0100\n"
-"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
+"POT-Creation-Date: 2018-02-14 04:44+0000\n"
+"PO-Revision-Date: 2018-02-23 23:45+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: editor/bookmarks.ui:19
@@ -40,7 +40,7 @@ msgstr ""
 "A könyvjelzők ide\n"
 "lesznek hozzáadva"
 
-#: editor/bookmarks.ui:86 editor/registry-search.vala:598
+#: editor/bookmarks.ui:86 editor/registry-search.vala:450
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
 
@@ -56,24 +56,24 @@ msgstr "Eltávolítás"
 msgid "Remove this bookmark"
 msgstr "Könyvjelző eltávolítása"
 
-#: editor/browser-view.vala:61
+#: editor/browser-view.vala:47
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr "A rendezési beállítások megváltoztak. Szeretné újratölteni a nézetet?"
 
-#: editor/browser-view.vala:62 editor/dconf-editor.ui:160
+#: editor/browser-view.vala:48 editor/dconf-editor.ui:160
 msgid "Refresh"
 msgstr "Frissítés"
 
-#: editor/browser-view.vala:63
+#: editor/browser-view.vala:49
 msgid "This folder content has changed. Do you want to reload the view?"
 msgstr "A mappa tartalma megváltozott. Szeretné újratölteni a nézetet?"
 
-#: editor/browser-view.vala:64 editor/browser-view.vala:66
+#: editor/browser-view.vala:50 editor/browser-view.vala:52
 msgid "Reload"
 msgstr "Újratöltés"
 
-#: editor/browser-view.vala:65
-msgid "This key properties have changed. Do you want to reload the view?"
+#: editor/browser-view.vala:51
+msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr "A kulcs tulajdonságai megváltoztak. Szeretné újratölteni a nézetet?"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
@@ -116,7 +116,7 @@ msgid "The GNOME Project"
 msgstr "A GNOME projekt"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:255 editor/dconf-editor.vala:460
+#: editor/dconf-editor.vala:260 editor/dconf-editor.vala:465
 msgid "dconf Editor"
 msgstr "dconf szerkesztő"
 
@@ -361,7 +361,7 @@ msgstr ""
 "Tartalmazza az összes könyvjelzőzött útvonalat egy karakterlánc tömbben."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:349
+#: editor/ca.desrt.dconf-editor.gschema.xml:351
 msgid "A boolean, type ‘b’"
 msgstr "Logikai érték, típusa „b”"
 
@@ -511,12 +511,12 @@ msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16 bites előjeles egész. Lásd még az „integer-16-unsigned” kulcsot."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 msgid "Flags: choose-colors-you-love"
 msgstr "Jelzők: válasszon olyan színeket amelyeket szeret"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:360
+#: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Az „enum” attribútum által beállítható jelzők."
 
@@ -530,7 +530,7 @@ msgstr ""
 "16 bites előjel nélküli egész. Lásd még az „integer-16-signed” kulcsot."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:354
+#: editor/ca.desrt.dconf-editor.gschema.xml:356
 msgid "An usual integer, type ‘i’"
 msgstr "Szokványos egész, típusa „i”"
 
@@ -657,87 +657,106 @@ msgstr ""
 "lehessen, de ez valószínűleg egy hiba. A Dconf szerkesztő figyelmezteti majd "
 "ebben az esetben."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:350
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Szokványos logikai érték, amit egy áthelyezhető séma definiál."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:355
+#: editor/ca.desrt.dconf-editor.gschema.xml:357
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr "32 bites előjeles egész, amit egy áthelyezhető séma definiál."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:366
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Egy normál, nem ütköző kulcs innen: Conflict1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:367
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:369
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
 "Ez a kulcs egy teszt egy ugyanazon útvonalon lévő, ütköző kulcsokkal "
-"rendelkezők sémákhoz. A nem ütköző kulcsokkal nem szabad, hogy probléma "
+"rendelkező sémákhoz. A nem ütköző kulcsokkal nem szabad, hogy probléma "
 "legyen."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:371
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 "Ütköző, „1” alapértelmezett értékű ütköző kulcs, amely hibát kell adjon"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:372
-#: editor/ca.desrt.dconf-editor.gschema.xml:394
+#: editor/ca.desrt.dconf-editor.gschema.xml:374
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
 "Ez a kulcs egy teszt egy ugyanazon útvonalon lévő, ütköző kulcsokkal "
-"rendelkezők sémákhoz. Nem szabad hogy szerkeszthető legyen, mivel egy "
+"rendelkező sémákhoz. Nem szabad hogy szerkeszthető legyen, mivel egy "
 "ugyanehhez az útvonalhoz rendelt kulcsnak más az alapértelmezett értéke."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:376
+#: editor/ca.desrt.dconf-editor.gschema.xml:378
+msgid "Conflicting key with no range that should give an error"
+msgstr "Ütköző kulcs tartomány nélkül, amely hibát kell adjon"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:379
+#: editor/ca.desrt.dconf-editor.gschema.xml:407
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different range."
+msgstr ""
+"Ez a kulcs egy teszt egy ugyanazon útvonalon lévő, ütköző kulcsokkal "
+"rendelkező sémákhoz. Nem szabad hogy szerkeszthető legyen, mivel egy "
+"ugyanehhez az útvonalhoz rendelt kulcsnak más a tartománya."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:383
 msgid "A (simple) string conflicting key that should give a error"
 msgstr "Egy (egyszerű) karakterlánc ütköző kulcs, amely hibát kell adjon"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:377
-#: editor/ca.desrt.dconf-editor.gschema.xml:399
+#: editor/ca.desrt.dconf-editor.gschema.xml:384
+#: editor/ca.desrt.dconf-editor.gschema.xml:412
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
 "Ez a kulcs egy teszt egy ugyanazon útvonalon lévő, ütköző kulcsokkal "
-"rendelkezők sémákhoz. Nem szabad hogy szerkeszthető legyen, mivel egy "
+"rendelkező sémákhoz. Nem szabad hogy szerkeszthető legyen, mivel egy "
 "ugyanehhez az útvonalhoz rendelt kulcsnak más a típusa."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:381
+#: editor/ca.desrt.dconf-editor.gschema.xml:388
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Ütköző kulcs innen: Conflict1, amely figyelmeztetést kell adjon"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:382
-#: editor/ca.desrt.dconf-editor.gschema.xml:404
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
 "Ez a kulcs egy teszt egy ugyanazon útvonalon lévő, ütköző kulcsokkal "
-"rendelkezők sémákhoz. Szerkeszthető, mivel a típusok kompatibilisek, de még "
+"rendelkező sémákhoz. Szerkeszthető, mivel a típusok kompatibilisek, de még "
 "így is probléma."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:395
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Egy normál, nem ütköző kulcs innen: Conflict2"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:393
+#: editor/ca.desrt.dconf-editor.gschema.xml:400
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr "Ütköző, „2” alapértelmezett értékű kulcs, amely hibát kell adjon"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:398
+#: editor/ca.desrt.dconf-editor.gschema.xml:406
+msgid "Conflicting key with range 0~5 that should give an error"
+msgstr "Ütköző kulcs 0~5 tartománnyal, amely hibát kell adjon"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:411
 msgid "A nullable-string conflicting key that should give an error"
 msgstr "Egy nullozható ütköző karakterlánc kulcs, amely hibát kell adjon"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:403
+#: editor/ca.desrt.dconf-editor.gschema.xml:416
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Ütköző kulcs innen: Conflict2, amely figyelmeztetést kell adjon"
 
@@ -774,81 +793,81 @@ msgstr "Kulcsok keresése"
 msgid "Refresh search results"
 msgstr "Keresési eredmények frissítése"
 
-#: editor/dconf-editor.vala:127
+#: editor/dconf-editor.vala:132
 msgid "Print release version and exit"
 msgstr "Kiadási verzió kiírása és kilépés"
 
-#: editor/dconf-editor.vala:128
+#: editor/dconf-editor.vala:133
 msgid "Print relocatable schemas and exit"
 msgstr "Áthelyezhető sémák kiírása és kilépés"
 
-#: editor/dconf-editor.vala:130
+#: editor/dconf-editor.vala:135
 msgid "Do not show initial warning"
 msgstr "Ne jelenítse meg a kezdeti figyelmeztetést"
 
-#: editor/dconf-editor.vala:132
+#: editor/dconf-editor.vala:137
 msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
 msgstr "[ÚTVONAL|KÖTÖTT_SÉMA [KULCS]|ÁTHELYEZHETŐ_SÉMA:ÚTVONAL [KULCS]]"
 
-#: editor/dconf-editor.vala:222
+#: editor/dconf-editor.vala:227
 msgid "Known schemas installed:"
 msgstr "Ismert telepített sémák:"
 
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:232
 msgid "No known schemas installed."
 msgstr "Nincsenek ismert sémák telepítve."
 
-#: editor/dconf-editor.vala:231
+#: editor/dconf-editor.vala:236
 msgid "Known schemas skipped:"
 msgstr "Kihagyott ismert sémák:"
 
-#: editor/dconf-editor.vala:236
+#: editor/dconf-editor.vala:241
 msgid "No known schemas skipped."
 msgstr "Nincsenek kihagyott ismert sémák."
 
-#: editor/dconf-editor.vala:240
+#: editor/dconf-editor.vala:245
 msgid "Unknown schemas:"
 msgstr "Ismeretlen sémák:"
 
-#: editor/dconf-editor.vala:245
+#: editor/dconf-editor.vala:250
 msgid "No unknown schemas."
 msgstr "Nincsenek ismeretlen sémák."
 
-#: editor/dconf-editor.vala:310
+#: editor/dconf-editor.vala:315
 msgid "Only one window can be opened for now.\n"
 msgstr "Jelenleg csak egy ablak nyitható meg.\n"
 
-#: editor/dconf-editor.vala:329
+#: editor/dconf-editor.vala:334
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nem értelmezhető: túl sok argumentum.\n"
 
-#: editor/dconf-editor.vala:339
+#: editor/dconf-editor.vala:344
 msgid "Cannot understand second argument in this context.\n"
 msgstr "A második argumentum nem értelmezhető ebben a környezetben.\n"
 
-#: editor/dconf-editor.vala:356
+#: editor/dconf-editor.vala:361
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nem értelmezhető: ferde vonal karakter a második argumentumban.\n"
 
-#: editor/dconf-editor.vala:370
+#: editor/dconf-editor.vala:375
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "A sémaútvonal „/” karakterrel kell kezdődjön és végződjön.\n"
 
-#: editor/dconf-editor.vala:383
+#: editor/dconf-editor.vala:388
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nem értelmezhető: szóköz karakter az argumentumban.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:407
+#. #: editor/dconf-editor.vala:412
 msgid "Copied to clipboard"
 msgstr "Vágólapra másolva"
 
-#: editor/dconf-editor.vala:462
+#: editor/dconf-editor.vala:467
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Az alkalmazások belső beállításainak grafikus megjelenítője és szerkesztője."
 
-#: editor/dconf-editor.vala:463
+#: editor/dconf-editor.vala:468
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
@@ -858,7 +877,7 @@ msgstr ""
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
 "Copyright © 2017-2018 – Davi da Silva Böger"
 
-#: editor/dconf-editor.vala:467
+#: editor/dconf-editor.vala:472
 msgid "translator-credits"
 msgstr ""
 "Kelemen Gábor <kelemeng at gnome dot hu>\n"
@@ -870,11 +889,11 @@ msgstr ""
 msgid "%s (key erased)"
 msgstr "%s (kulcs törölve)"
 
-#: editor/dconf-view.vala:263
+#: editor/dconf-view.vala:259
 msgid "Failed to parse as double."
 msgstr "Nem értelmezhető lebegőpontos értékként."
 
-#: editor/dconf-view.vala:516 editor/dconf-view.vala:609
+#: editor/dconf-view.vala:512 editor/dconf-view.vala:605
 msgid "This value is invalid for the key type."
 msgstr "Ez az érték érvénytelen a kulcstípushoz."
 
@@ -909,35 +928,46 @@ msgstr "Óvatos leszek."
 msgid "Show this dialog next time."
 msgstr "Mutassa ezt legközelebb is."
 
-#: editor/dconf-window.vala:582
+#: editor/dconf-window.vala:398
+#, c-format
+msgid "Folder “%s” is now empty."
+msgstr "A(z) „%s” mappa most már üres."
+
+#. GAction parameter type switch is a little touchy, see pathbar.vala
+#: editor/dconf-window.vala:408
+#, c-format
+msgid "Key “%s” has been deleted."
+msgstr "A(z) „%s” kulcs törölve lett."
+
+#: editor/dconf-window.vala:607
 msgid "Copy descriptor"
 msgstr "Leíró másolása"
 
-#: editor/dconf-window.vala:588
+#: editor/dconf-window.vala:613
 msgid "Reset visible keys"
 msgstr "Látható gombok visszaállítása"
 
-#: editor/dconf-window.vala:589
+#: editor/dconf-window.vala:614
 msgid "Reset view recursively"
 msgstr "Nézet visszaállítása rekurzívan"
 
-#: editor/dconf-window.vala:597
+#: editor/dconf-window.vala:622
 msgid "Enter delay mode"
 msgstr "Késleltető mód megadása"
 
-#: editor/dconf-window.vala:660
+#: editor/dconf-window.vala:685
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "Ugyanaz az egérgomb lett beállítva az előre és hátra mozgáshoz. Nincs "
 "művelet."
 
-#: editor/dconf-window.vala:908
+#: editor/dconf-window.vala:937
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nem található a(z) „%s” kulcs."
 
-#: editor/dconf-window.vala:912
+#: editor/dconf-window.vala:941
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nincs semmi a kért „%s” mappában."
@@ -945,7 +975,7 @@ msgstr "Nincs semmi a kért „%s” mappában."
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
 #: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
-#: editor/key-list-box-row.vala:813 editor/registry-info.vala:314
+#: editor/key-list-box-row.vala:834 editor/registry-info.vala:341
 msgid "Default value"
 msgstr "Alapértelmezett érték"
 
@@ -953,7 +983,7 @@ msgstr "Alapértelmezett érték"
 msgid "Key erased"
 msgstr "Kulcs törölve"
 
-#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:325
+#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
 #: editor/registry-info.vala:142
 msgid "Key erased."
 msgstr "Kulcs törölve."
@@ -1088,72 +1118,72 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Kilépés"
 
-#: editor/key-list-box-row.vala:307
+#: editor/key-list-box-row.vala:343
 msgid "No Schema Found"
 msgstr "Nem található séma"
 
-#: editor/key-list-box-row.vala:434 editor/registry-info.vala:114
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:114
 msgid "No summary provided"
 msgstr "Nincs megadva összefoglaló"
 
-#: editor/key-list-box-row.vala:448
+#: editor/key-list-box-row.vala:481
 msgid "conflicting keys"
 msgstr "ütköző kulcsok"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:611
+#: editor/key-list-box-row.vala:646
 msgid "Copy"
 msgstr "Másolás"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:614
+#: editor/key-list-box-row.vala:649
 msgid "Customize…"
 msgstr "Testreszabás…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:617
+#: editor/key-list-box-row.vala:652
 msgid "Set to default"
 msgstr "Beállítás az alapértelmezésre"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:622
+#: editor/key-list-box-row.vala:657
 msgid "Show details…"
 msgstr "Részletek megjelenítése…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:625
+#: editor/key-list-box-row.vala:660
 msgid "Dismiss change"
 msgstr "Változtatás elvetése"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:628 editor/key-list-box-row.vala:749
+#: editor/key-list-box-row.vala:663 editor/key-list-box-row.vala:770
 #: editor/registry-info.ui:112
 msgid "Erase key"
 msgstr "Kulcs törlése"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:631
+#: editor/key-list-box-row.vala:666
 msgid "Open"
 msgstr "Megnyitás"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:634
+#: editor/key-list-box-row.vala:669
 msgid "Open parent folder"
 msgstr "Szülőmappa megnyitása"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:637
+#: editor/key-list-box-row.vala:672
 msgid "Reset recursively"
 msgstr "Visszaállítás rekurzívan"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:640
+#: editor/key-list-box-row.vala:675
 msgid "Do not erase"
 msgstr "Ne törölje"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:743
+#: editor/key-list-box-row.vala:764
 msgid "No change"
 msgstr "Nincs változtatás"
 
@@ -1166,31 +1196,31 @@ msgid "Delayed setting changes will be shown here"
 msgstr "A késleltetett beállításmódosítások itt lesznek megjelenítve"
 
 #: editor/modifications-revealer.vala:115
-#: editor/modifications-revealer.vala:267
+#: editor/modifications-revealer.vala:276
 msgid "Nothing to reset."
 msgstr "Nincs mit visszaállítani."
 
-#: editor/modifications-revealer.vala:253
+#: editor/modifications-revealer.vala:255
 msgid "The value is invalid."
 msgstr "Az érték érvénytelen."
 
-#: editor/modifications-revealer.vala:257
+#: editor/modifications-revealer.vala:262
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
 "A változtatás el lesz vetve, ha alkalmazás nélkül lép ki ebből a nézetből."
 
-#: editor/modifications-revealer.vala:259
+#: editor/modifications-revealer.vala:267
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
 "A változtatás alkalmazva lesz egy ilyen kérésen, vagy ha kilép ebből a "
 "nézetből."
 
-#: editor/modifications-revealer.vala:279
+#: editor/modifications-revealer.vala:288
 msgid "Changes will be delayed until you request it."
 msgstr "A változtatások késleltetve lesznek, amíg azt kéri."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:281
+#: editor/modifications-revealer.vala:290
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -1198,7 +1228,7 @@ msgstr[0] "Egy gsettings művelet késleltetve."
 msgstr[1] "%u gsettings művelet késleltetve."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:285
+#: editor/modifications-revealer.vala:294
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -1207,12 +1237,12 @@ msgstr[1] "%u dconf művelet késleltetve."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:288
+#: editor/modifications-revealer.vala:297
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:288
+#: editor/modifications-revealer.vala:297
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -1223,14 +1253,14 @@ msgstr[1] "%u gsettings művelet"
 #. * the space before the "and" is probably wanted, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:293
+#: editor/modifications-revealer.vala:302
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
 msgstr[0] " és egy dconf művelet késleltetve."
 msgstr[1] " és %u dconf művelet késleltetve."
 
-#: editor/pathbar.vala:236
+#: editor/pathbar.vala:264
 msgid "Copy current path"
 msgstr "Jelenlegi útvonal másolása"
 
@@ -1340,7 +1370,7 @@ msgid "Custom value"
 msgstr "Egyedi érték"
 
 #. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
-#: editor/registry-info.vala:374
+#: editor/registry-info.vala:401
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
@@ -1349,7 +1379,7 @@ msgstr ""
 "Ye+Z jelölést is használhatja."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:380
+#: editor/registry-info.vala:407
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1359,7 +1389,7 @@ msgstr ""
 "értékre állításához. A karakterláncokat, szignatúrákat és "
 "objektumútvonalakat idézőjelek közé kell tenni."
 
-#: editor/registry-info.vala:382
+#: editor/registry-info.vala:409
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
@@ -1367,7 +1397,7 @@ msgstr ""
 "kell tenni."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:386
+#: editor/registry-info.vala:413
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1375,27 +1405,27 @@ msgstr ""
 "Használja a „nothing” kulcsszót egy „talán” típus (ez „m”-mel kezdődik) üres "
 "értékre állításához."
 
-#: editor/registry-search.ui:21
+#: editor/registry-search.vala:30
 msgid "No matches"
 msgstr "Nincs találat"
 
-#: editor/registry-search.vala:596
+#: editor/registry-search.vala:448
 msgid "Current folder"
 msgstr "Jelenlegi mappa"
 
-#: editor/registry-search.vala:600
+#: editor/registry-search.vala:452
 msgid "Folders"
 msgstr "Mappák"
 
-#: editor/registry-search.vala:602
+#: editor/registry-search.vala:454
 msgid "Keys"
 msgstr "Kulcsok"
 
-#: editor/registry-view.ui:20
+#: editor/registry-view.vala:141
 msgid "No keys in this path"
 msgstr "Nincsenek kulcsok ezen az útvonalon"
 
-#: editor/registry-view.vala:159
+#: editor/registry-view.vala:244
 msgid "Keys not defined by a schema"
 msgstr "Nem séma által definiált kulcsok"
 
@@ -1480,3 +1510,4 @@ msgstr "Áthelyezhető séma"
 #: editor/setting-object.vala:341
 msgid "Schema with path"
 msgstr "Útvonallal rendelkező séma"
+
