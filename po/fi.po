@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-06 06:44+0000\n"
-"PO-Revision-Date: 2018-02-07 20:23+0200\n"
+"POT-Creation-Date: 2018-02-14 04:44+0000\n"
+"PO-Revision-Date: 2018-02-23 14:48+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -38,7 +38,7 @@ msgstr ""
 "Kirjanmerkit\n"
 "lisätään tänne"
 
-#: editor/bookmarks.ui:86 editor/registry-search.vala:598
+#: editor/bookmarks.ui:86 editor/registry-search.vala:450
 msgid "Bookmarks"
 msgstr "Kirjanmerkit"
 
@@ -54,23 +54,23 @@ msgstr "Poista"
 msgid "Remove this bookmark"
 msgstr "Poista tämä kirjanmerkki"
 
-#: editor/browser-view.vala:61
+#: editor/browser-view.vala:47
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr "Lajitteluasetukset ovat muuttuneet. Haluatko päivittää näkymän?"
 
-#: editor/browser-view.vala:62 editor/dconf-editor.ui:160
+#: editor/browser-view.vala:48 editor/dconf-editor.ui:160
 msgid "Refresh"
 msgstr "Päivitä"
 
-#: editor/browser-view.vala:63
+#: editor/browser-view.vala:49
 msgid "This folder content has changed. Do you want to reload the view?"
 msgstr "Tämän kansion sisältö on muuttunut. Haluatko päivittää näkymän?"
 
-#: editor/browser-view.vala:64 editor/browser-view.vala:66
+#: editor/browser-view.vala:50 editor/browser-view.vala:52
 msgid "Reload"
 msgstr "Lataa uudelleen"
 
-#: editor/browser-view.vala:65
+#: editor/browser-view.vala:51
 msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr "Avaimen ominaisuudet ovat muuttuneet. Haluatko päivittää näkymän?"
 
@@ -325,7 +325,7 @@ msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:349
+#: editor/ca.desrt.dconf-editor.gschema.xml:351
 msgid "A boolean, type ‘b’"
 msgstr ""
 
@@ -447,12 +447,12 @@ msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 msgid "Flags: choose-colors-you-love"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:360
+#: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "Flags could be set by the “enum” attribute."
 msgstr ""
 
@@ -465,7 +465,7 @@ msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:354
+#: editor/ca.desrt.dconf-editor.gschema.xml:356
 msgid "An usual integer, type ‘i’"
 msgstr ""
 
@@ -572,74 +572,90 @@ msgid ""
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:350
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:355
+#: editor/ca.desrt.dconf-editor.gschema.xml:357
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:366
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
 msgid "A normal non-conflicting key from Conflict1"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:367
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:369
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:371
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:372
-#: editor/ca.desrt.dconf-editor.gschema.xml:394
+#: editor/ca.desrt.dconf-editor.gschema.xml:374
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:376
+#: editor/ca.desrt.dconf-editor.gschema.xml:378
+msgid "Conflicting key with no range that should give an error"
+msgstr ""
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:379
+#: editor/ca.desrt.dconf-editor.gschema.xml:407
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different range."
+msgstr ""
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:383
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:377
-#: editor/ca.desrt.dconf-editor.gschema.xml:399
+#: editor/ca.desrt.dconf-editor.gschema.xml:384
+#: editor/ca.desrt.dconf-editor.gschema.xml:412
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:381
+#: editor/ca.desrt.dconf-editor.gschema.xml:388
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:382
-#: editor/ca.desrt.dconf-editor.gschema.xml:404
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:395
 msgid "A normal non-conflicting key from Conflict2"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:393
+#: editor/ca.desrt.dconf-editor.gschema.xml:400
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:398
+#: editor/ca.desrt.dconf-editor.gschema.xml:406
+msgid "Conflicting key with range 0~5 that should give an error"
+msgstr ""
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:411
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:403
+#: editor/ca.desrt.dconf-editor.gschema.xml:416
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr ""
 
@@ -809,49 +825,61 @@ msgstr "Olen varovainen."
 msgid "Show this dialog next time."
 msgstr "Näytä tämä varoitus ensi kerralla."
 
-#: editor/dconf-window.vala:582
+#: editor/dconf-window.vala:398
+#, c-format
+#| msgid "Key “%s” has been removed."
+msgid "Folder “%s” is now empty."
+msgstr "Kansio “%s” on nyt tyhjä."
+
+#. GAction parameter type switch is a little touchy, see pathbar.vala
+#: editor/dconf-window.vala:408
+#, c-format
+#| msgid "Key “%s” has been removed."
+msgid "Key “%s” has been deleted."
+msgstr "Avain “%s” on poistettu."
+
+#: editor/dconf-window.vala:607
 #, fuzzy
 #| msgctxt "shortcut window"
 #| msgid "Copy descriptor"
 msgid "Copy descriptor"
 msgstr "Kopioi deskriptori"
 
-#: editor/dconf-window.vala:588
+#: editor/dconf-window.vala:613
 msgid "Reset visible keys"
 msgstr "Nollaa näkyvät avaimet"
 
-#: editor/dconf-window.vala:589
+#: editor/dconf-window.vala:614
 #, fuzzy
 #| msgid "Reset recursively"
 msgid "Reset view recursively"
 msgstr "Nollaa rekursiivisesti"
 
-#: editor/dconf-window.vala:597
+#: editor/dconf-window.vala:622
 msgid "Enter delay mode"
 msgstr "Siirry viivetilaan"
 
-#: editor/dconf-window.vala:660
+#: editor/dconf-window.vala:685
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "Sama hiiren painike on asetettu eteen- ja taaksepäin siirtymiseen. Ei tehdä "
 "mitään."
 
-#: editor/dconf-window.vala:908
+#: editor/dconf-window.vala:937
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Avainta “%s” ei löydy."
 
-#: editor/dconf-window.vala:912
+#: editor/dconf-window.vala:941
 #, c-format
-#| msgid "Cannot find folder “%s”."
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Pyydetyssä kansiossa “%s” ei ole mitään."
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
 #: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
-#: editor/key-list-box-row.vala:793 editor/registry-info.vala:341
+#: editor/key-list-box-row.vala:834 editor/registry-info.vala:341
 msgid "Default value"
 msgstr "Oletusarvo"
 
@@ -859,7 +887,7 @@ msgstr "Oletusarvo"
 msgid "Key erased"
 msgstr "Avain poistettu"
 
-#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:320
+#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
 #: editor/registry-info.vala:142
 msgid "Key erased."
 msgstr "Avain poistettu."
@@ -994,72 +1022,72 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Lopeta"
 
-#: editor/key-list-box-row.vala:302
+#: editor/key-list-box-row.vala:343
 msgid "No Schema Found"
 msgstr "Skeemaa ei löytynyt"
 
-#: editor/key-list-box-row.vala:426 editor/registry-info.vala:114
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:114
 msgid "No summary provided"
 msgstr "Yhteenvetoa ei tarjottu"
 
-#: editor/key-list-box-row.vala:440
+#: editor/key-list-box-row.vala:481
 msgid "conflicting keys"
 msgstr ""
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:605
+#: editor/key-list-box-row.vala:646
 msgid "Copy"
 msgstr "Kopioi"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:608
+#: editor/key-list-box-row.vala:649
 msgid "Customize…"
 msgstr "Muokkaa…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:611
+#: editor/key-list-box-row.vala:652
 msgid "Set to default"
 msgstr "Palauta oletusarvo"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:616
+#: editor/key-list-box-row.vala:657
 msgid "Show details…"
 msgstr "Näytä tiedot…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:619
+#: editor/key-list-box-row.vala:660
 msgid "Dismiss change"
 msgstr "Hylkää muutos"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:622 editor/key-list-box-row.vala:729
+#: editor/key-list-box-row.vala:663 editor/key-list-box-row.vala:770
 #: editor/registry-info.ui:112
 msgid "Erase key"
 msgstr "Poista avain"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:625
+#: editor/key-list-box-row.vala:666
 msgid "Open"
 msgstr "Avaa"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:628
+#: editor/key-list-box-row.vala:669
 msgid "Open parent folder"
 msgstr "Avaa ylätason kansio"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:631
+#: editor/key-list-box-row.vala:672
 msgid "Reset recursively"
 msgstr "Nollaa rekursiivisesti"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:634
+#: editor/key-list-box-row.vala:675
 msgid "Do not erase"
 msgstr "Älä poista"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:723
+#: editor/key-list-box-row.vala:764
 msgid "No change"
 msgstr "Ei muutosta"
 
@@ -1136,7 +1164,7 @@ msgid_plural " and %u dconf operations delayed."
 msgstr[0] " ja yksi dconf-toimenpide viivästetty."
 msgstr[1] " ja %u dconf-toimenpidettä viivästetty."
 
-#: editor/pathbar.vala:236
+#: editor/pathbar.vala:264
 msgid "Copy current path"
 msgstr "Kopioi nykyinen polku"
 
@@ -1256,29 +1284,29 @@ msgid ""
 "empty value."
 msgstr ""
 
-#: editor/registry-search.ui:21
+#: editor/registry-search.vala:30
 msgid "No matches"
 msgstr "Ei tuloksia"
 
-#: editor/registry-search.vala:596
+#: editor/registry-search.vala:448
 msgid "Current folder"
 msgstr "Nykyinen kansio"
 
-#: editor/registry-search.vala:600
+#: editor/registry-search.vala:452
 msgid "Folders"
 msgstr "Kansiot"
 
-#: editor/registry-search.vala:602
+#: editor/registry-search.vala:454
 msgid "Keys"
 msgstr "Avaimet"
 
-#: editor/registry-view.ui:20
+#: editor/registry-view.vala:141
 msgid "No keys in this path"
 msgstr "Ei avaimia tässä polussa"
 
-#: editor/registry-view.vala:159
+#: editor/registry-view.vala:244
 msgid "Keys not defined by a schema"
-msgstr ""
+msgstr "Skeema ei määritä avaimia"
 
 #: editor/setting-object.vala:65
 msgid "Boolean"
@@ -1362,10 +1390,6 @@ msgstr ""
 #: editor/setting-object.vala:341
 msgid "Schema with path"
 msgstr ""
-
-#~| msgid "Key \"%s\" has been removed."
-#~ msgid "Key “%s” has been removed."
-#~ msgstr "Avain “%s” on poistettu."
 
 #, fuzzy
 #~| msgid "Integer [%s..%s]"
