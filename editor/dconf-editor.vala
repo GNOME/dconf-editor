@@ -317,7 +317,7 @@ class ConfigurationEditor : Gtk.Application
             return Posix.EXIT_FAILURE;
         }
 
-        string arg0 = args [0];
+        string arg0 = strdup (args [0]);
         if (" " in arg0)
         {
             if (args.length == 1)
