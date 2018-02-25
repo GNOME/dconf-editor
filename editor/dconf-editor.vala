@@ -19,7 +19,9 @@ class ConfigurationEditor : Gtk.Application
 {
     public static string [,] internal_mappings = {
             {"ca.desrt.dconf-editor.Bookmarks",
-                "/ca/desrt/dconf-editor/"}
+                "/ca/desrt/dconf-editor/"},
+            {"ca.desrt.dconf-editor.Demo.EmptyRelocatable",
+                "/ca/desrt/dconf-editor/Demo/EmptyRelocatable/"}
         };
     public static string [,] known_mappings = {
             {"com.gexperts.Tilix.Profile",

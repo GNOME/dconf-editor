@@ -38,7 +38,7 @@ public class SourceManager : Object
         return (!) settings_schema_source;
     }
 
-    private string [] previous_empty_schemas = { "ca.desrt.dconf-editor.DemoEmpty" };
+    private string [] previous_empty_schemas = { "ca.desrt.dconf-editor.Demo.Empty", "ca.desrt.dconf-editor.Demo.EmptyRelocatable" };
     public void refresh_schema_source ()
     {
         SettingsSchemaSource? settings_schema_source = create_schema_source ();
@@ -67,6 +67,25 @@ public class SourceManager : Object
             cached_schemas.add_schema ((!) settings_schema, modified_path_specs);
         }
 
+        foreach (string schema_id in relocatable_schemas)
+        {
+            GenericSet<string>? path_specs = relocatable_schema_paths.lookup (schema_id);
+            if (path_specs == null)
+                continue;
+
+            SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
+            if (settings_schema == null || ((string?) ((!) settings_schema).get_path ()) != null)
+                continue;       // TODO better
+
+            if (((!) settings_schema).list_keys ().length == 0 && ((!) settings_schema).list_children ().length == 0)
+            {
+                empty_schemas += schema_id;
+                continue;
+            }
+
+            cached_schemas.add_schema_with_path_specs ((!) settings_schema, (!) path_specs, modified_path_specs);
+        }
+
         string [] empty_schemas_needing_warning = {};
         if (empty_schemas.length > 0)
             foreach (string test_string in empty_schemas)
@@ -88,19 +107,6 @@ public class SourceManager : Object
 
             warning (warning_string);
             previous_empty_schemas = empty_schemas;
-        }
-
-        foreach (string schema_id in relocatable_schemas)
-        {
-            GenericSet<string>? path_specs = relocatable_schema_paths.lookup (schema_id);
-            if (path_specs == null)
-                continue;
-
-            SettingsSchema? settings_schema = ((!) settings_schema_source).lookup (schema_id, true);
-            if (settings_schema == null || ((string?) ((!) settings_schema).get_path ()) != null)
-                continue;       // TODO better
-
-            cached_schemas.add_schema_with_path_specs ((!) settings_schema, (!) path_specs, modified_path_specs);
         }
 
         cached_schemas.remove_unmarked (modified_path_specs);

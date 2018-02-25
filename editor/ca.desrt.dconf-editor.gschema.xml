@@ -343,7 +343,9 @@ If you are not interacting with D-Bus, then there is no reason to make use of th
       <description>A range could limit an integer key to only allow one value, but that’s probably an error. Dconf Editor warns you in that case.</description>
     </key>
   </schema>
-  <schema id="ca.desrt.dconf-editor.DemoEmpty" path="/ca/desrt/dconf-editor/Demo/Empty/">
+  <schema id="ca.desrt.dconf-editor.Demo.Empty" path="/ca/desrt/dconf-editor/Demo/Empty/">
+  </schema>
+  <schema id="ca.desrt.dconf-editor.Demo.EmptyRelocatable">
   </schema>
   <schema id="ca.desrt.dconf-editor.Demo.Relocatable">
     <key name="boolean" type="b">
