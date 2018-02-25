@@ -2,15 +2,15 @@
 # Copyright (C) 2012, 2013 Seong-ho Cho et al.
 # This file is distributed under the same license as the dconf package.
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012, 2013
-# Changwoo Ryu <cwryu@debian.org>, 2013-2017.
+# Changwoo Ryu <cwryu@debian.org>, 2013-2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-05 19:23+0000\n"
-"PO-Revision-Date: 2017-03-07 20:00+0900\n"
+"POT-Creation-Date: 2018-02-25 04:46+0000\n"
+"PO-Revision-Date: 2018-02-25 22:53+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -24,15 +24,15 @@ msgstr ""
 msgid "Bookmark this Location"
 msgstr "이 위치 북마크"
 
-#: editor/bookmarks.ui:34
+#: editor/bookmarks.ui:36
 msgid "Location bookmarked"
 msgstr "위치 북마크함"
 
-#: editor/bookmarks.ui:35
+#: editor/bookmarks.ui:37
 msgid "Toggle to bookmark this location"
 msgstr "이 위치 북마크 추가를 토글합니다"
 
-#: editor/bookmarks.ui:84
+#: editor/bookmarks.ui:62
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -40,21 +40,41 @@ msgstr ""
 "여기에 북마크가\n"
 "추가됩니다"
 
-#: editor/bookmarks.ui:113
+#: editor/bookmarks.ui:88 editor/registry-search.vala:445
 msgid "Bookmarks"
 msgstr "북마크"
 
-#: editor/bookmarks.ui:114
+#: editor/bookmarks.ui:89
 msgid "Manage your bookmarks"
 msgstr "북마크를 관리합니다"
 
-#: editor/bookmark.ui:30
+#: editor/bookmark.ui:33
 msgid "Remove"
 msgstr "제거"
 
-#: editor/bookmark.ui:31
+#: editor/bookmark.ui:34
 msgid "Remove this bookmark"
 msgstr "이 북마크를 제거합니다"
+
+#: editor/browser-view.vala:47
+msgid "Sort preferences have changed. Do you want to refresh the view?"
+msgstr "정렬 기본 설정이 바뀌었습니다. 뷰를 새로 고치시겠습니까?"
+
+#: editor/browser-view.vala:48 editor/dconf-editor.ui:159
+msgid "Refresh"
+msgstr "새로 고침"
+
+#: editor/browser-view.vala:49
+msgid "This folder content has changed. Do you want to reload the view?"
+msgstr "이 폴더의 내용이 바뀌었습니다. 뷰를 다시 읽어들이시겠습니까?"
+
+#: editor/browser-view.vala:50 editor/browser-view.vala:52
+msgid "Reload"
+msgstr "다시 읽기"
+
+#: editor/browser-view.vala:51
+msgid "This key’s properties have changed. Do you want to reload the view?"
+msgstr "이 키의 속성이 바뀌었습니다. 뷰를 다시 읽어들이시겠습니까?"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -95,7 +115,7 @@ msgid "The GNOME Project"
 msgstr "그놈 프로젝트"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:467
 msgid "dconf Editor"
 msgstr "dconf 편집기"
 
@@ -103,7 +123,7 @@ msgstr "dconf 편집기"
 msgid "Configuration editor for dconf"
 msgstr "dconf용 설정 편집기"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Directly edit your entire configuration database"
 msgstr "모든 설정 데이터베이스를 직접 편집합니다"
 
@@ -112,40 +132,37 @@ msgstr "모든 설정 데이터베이스를 직접 편집합니다"
 msgid "settings;configuration;"
 msgstr "settings;configuration;설정;"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: editor/ca.desrt.dconf-editor.desktop.in:15
+msgid "ca.desrt.dconf-editor"
+msgstr "ca.desrt.dconf-editor"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:101
 msgid "The width of the window"
 msgstr "창 너비"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#: editor/ca.desrt.dconf-editor.gschema.xml:102
 msgid "The width of the main window in pixels."
 msgstr "메인창 너비, 픽셀 단위."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#: editor/ca.desrt.dconf-editor.gschema.xml:106
 msgid "The height of the window"
 msgstr "창 높이"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The height of the main window in pixels."
 msgstr "메인창 높이, 픽셀 단위."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#: editor/ca.desrt.dconf-editor.gschema.xml:111
+#: editor/ca.desrt.dconf-editor.gschema.xml:112
 msgid "A flag to enable maximized mode"
 msgstr "최대화 모드를 활성화하는 플래그"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:33
-msgid "A list of bookmarked paths"
-msgstr "북마크한 경로의 목록"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:34
-msgid "Contains all paths bookmarked by the user as an array of strings."
-msgstr "사용자가 북마크한 모든 경로가 문자열의 배열로 들어 있습니다."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:38
+#: editor/ca.desrt.dconf-editor.gschema.xml:116
 msgid "A flag to restore the last view"
 msgstr "마지막 뷰를 복구하는 플래그"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:39
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -153,48 +170,48 @@ msgstr ""
 "“참”이면 dconf 편집기가 시작할 때 “saved-view” 키에 들어 있는 경로로 이동합니"
 "다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:43
+#: editor/ca.desrt.dconf-editor.gschema.xml:121
 msgid "A path to restore the last view"
 msgstr "마지막 뷰를 복구할 경로"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:44
+#: editor/ca.desrt.dconf-editor.gschema.xml:122
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
 "“restore-view” 키가 “참”이면, dconf 편집기가 시작할 때 이 경로로 이동합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:48
+#: editor/ca.desrt.dconf-editor.gschema.xml:126
 msgid "Show initial warning"
 msgstr "최초 경고 표시"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:49
+#: editor/ca.desrt.dconf-editor.gschema.xml:127
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr "“참”이면 dconf 편집기가 시작할 때 주의 사항을 알려주는 팝업을 엽니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid "A flag to enable small rows for keys list"
 msgstr "키 목록에 대해 작은 줄을 사용하는 플래그"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:54
+#: editor/ca.desrt.dconf-editor.gschema.xml:132
 msgid "If “true”, the keys list use smaller rows."
 msgstr "“참”이면, 키 목록에 작은 줄을 사용합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:58
+#: editor/ca.desrt.dconf-editor.gschema.xml:136
 msgid "A flag to enable small rows for bookmarks list"
 msgstr "책갈피 목록에 대해 작은 줄을 사용하는 플래그"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:59
+#: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "“참”이면, 책갈피 목록에 작은 줄을 사용합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:68
+#: editor/ca.desrt.dconf-editor.gschema.xml:141
 msgid "Change the behaviour of a key value change request"
 msgstr "키 값 변경 요청의 동작을 바꿉니다"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:69
+#: editor/ca.desrt.dconf-editor.gschema.xml:142
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -213,11 +230,11 @@ msgstr ""
 "를 바꾸면 적용하지만 후자는 버립니다. “always-delay”는 변경 사항을 지연 상태"
 "로 놓아서, 여러 키를 한번에 바꿀 수 있게 만듭니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:73
+#: editor/ca.desrt.dconf-editor.gschema.xml:146
 msgid "A flag to sort keys list case-sensitively"
 msgstr "키 목록을 대소문자 구별해서 정렬하는 플래그"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:74
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -227,11 +244,24 @@ msgstr ""
 "대문자를 사용할 수 있습니다. “참”이면, 키 목록을 대소문자를 구별해 정렬합니"
 "다. 그러면 대문자 폴더가 먼저 나타납니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
-msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "찾아보기 창에서 “뒤로” 명령이 동작할 마우스 단추."
+#: editor/ca.desrt.dconf-editor.gschema.xml:151
+msgid "Use “Back” and “Forward” mouse button events"
+msgstr "“뒤로” 및 “앞으로” 마우스 단추 이벤트 사용"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will determine if any action is taken inside of a browser window when either "
+"is pressed."
+msgstr ""
+"“앞으로” 및 “뒤로” 단추가 있는 마우스 사용자의 경우, 브라우저 창에서 이러한 "
+"단추를 눌렀을 때 어떤 동작을 할지 이 키에 따라서 결정됩니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:157
+msgid "Mouse button to activate the “Back” command in browser window"
+msgstr "찾아보기 창에서 “뒤로” 명령이 동작할 마우스 단추"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:158
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -240,11 +270,11 @@ msgstr ""
 "“앞으로” 및 “뒤로” 단추가 있는 마우스 사용자의 경우, 이 키는 “뒤로” 명령이 동"
 "작하는 단추를 지정합니다. 가능한 값은 6에서 14 사이입니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#: editor/ca.desrt.dconf-editor.gschema.xml:163
 msgid "Mouse button to activate the “Forward” command in browser window"
-msgstr "찾아보기 창에서 “앞으로” 명령이 동작할 마우스 단추."
+msgstr "찾아보기 창에서 “앞으로” 명령이 동작할 마우스 단추"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#: editor/ca.desrt.dconf-editor.gschema.xml:164
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -253,19 +283,82 @@ msgstr ""
 "“앞으로” 및 “뒤로” 단추가 있는 마우스 사용자의 경우, 이 키는 “앞으로” 명령이 "
 "동작하는 단추를 지정합니다. 가능한 값은 6에서 14 사이입니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:98
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
+msgid "A flag to check for added or removed schemas"
+msgstr "추가하거나 제거한 스키마를 검사하는 플래그"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:169
+msgid ""
+"Dconf Editor can monitor if schemas are added or removed from the multiple "
+"possible locations. That’s done by checking every three seconds if the "
+"schemas list has changed. As this way to do is suboptimal, this function can "
+"be disabled by setting this flag to “false”. Note that this option will be "
+"removed when a better way to do things is found."
+msgstr ""
+"dconf 편집 프로그램은 스키마를 여러 위치에 추가했거나 제거했는지 여부를 감시"
+"할 수 있습니다. 매 3초마다 스키마 목록이 바뀌었는지 확인하는 방법을 사용합니"
+"다. 이런 방법은 최적의 방법이 아니므로, 이 기능은 이 플래그를 “거짓”으로 설정"
+"해서 기본값으로 꺼져 있습니다. 앞으로 더 나은 방법이 생기면 이 옵션은 제거될 "
+"수 있습니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
+msgid "Enabled relocatable schema mapping facilities"
+msgstr "위치 이동 가능 스키마 매핑 기능 사용"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:174
+msgid ""
+"Flags for the relocatable schemas mapping facilities. “User” enables "
+"mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
+"enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
+"reserved for Dconf Editor own mappings; “Startup” is for mapping a "
+"relocatable schema from the command-line."
+msgstr ""
+"위치 이동 가능 스키마 매핑 기능을 사용하는 플래그. “User”는 “relocatable-"
+"schemas-user-paths” 키에 따라 매핑 여부를 결정합니다. “Built-in”은 dconf 편집"
+"에 하드 코딩되어 있는 매핑을 사용합니다. “Internal”은 dconf 편집 프로그램 자"
+"기 자신의 매핑 전용으로 예약되어 있습니다. “Startup”은 명령행에서 위치 이동 "
+"가능 스키마를 매핑합니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:178
+msgid "Mapping of paths to manually associated schemas"
+msgstr "수동으로 연결한 스키마의 경로 매핑"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:179
+msgid ""
+"A dictionary that maps schema IDs with path specifications. It is used to "
+"allow the user to associate a relocatable schema to certain paths. Path "
+"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
+"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
+"may be associated with multiple path specifications."
+msgstr ""
+"스키마 ID와 경로 지정을 매핑하는 테이블. 사용자는 이 테이블을 이용해 위치 이"
+"동 가능 스키마를 특정 경로에 연결할 수 있습니다. 경로 지정은 빈 세그먼트 형태"
+"로 (예: /ca/desrt/dconf-editor//) 여러 경로가 가능함을 지정하는 와일드카드가 "
+"들어갈 수 있습니다. 하나의 동일한 스키마 ID를 여러 경로 지정과 연결할 수도 있"
+"습니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:185
+msgid "A list of bookmarked paths"
+msgstr "북마크한 경로의 목록"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr "사용자가 북마크한 모든 경로가 문자열의 배열로 들어 있습니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:211
+#: editor/ca.desrt.dconf-editor.gschema.xml:353
 msgid "A boolean, type ‘b’"
 msgstr "불리언, 타입 ‘b’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:99
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "불리언은 “참”이나 “거짓”의 값만 가능합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#: editor/ca.desrt.dconf-editor.gschema.xml:216
 msgid "A nullable boolean, type ‘mb’"
 msgstr "널 가능 불리언, 타입 ‘mb’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:104
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -275,11 +368,11 @@ msgstr ""
 "(nothing)” 값을 가질 수 있습니다. 널 가능 불리언은  “참”, “거짓”, 그리고 “없"
 "음” 값이 가능합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#: editor/ca.desrt.dconf-editor.gschema.xml:221
 msgid "A byte (unsigned), type ‘y’"
 msgstr "바이트 (부호 없음), 타입 ‘y’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#: editor/ca.desrt.dconf-editor.gschema.xml:222
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -287,11 +380,11 @@ msgstr ""
 "바이트 값은 0과 255 사이의 정수 값입니다. 문자를 전달하는데 사용할 수 있습니"
 "다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid "A bytestring, type ‘ay’"
 msgstr "바이트 문자열, 타입 ‘ay’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#: editor/ca.desrt.dconf-editor.gschema.xml:227
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -300,11 +393,11 @@ msgstr ""
 "바이트 문자열 타입은 문자열을 전달하는데 주로 사용합니다. 올바른 UTF-8 값이 "
 "아닐 수도 있습니다. 문자열인 경우 널 문자를 배열이 끝 문자로 사용해야 합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid "A bytestring array, type ‘aay’"
 msgstr "바이트 문자열 배열, 타입 ‘aay’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
+#: editor/ca.desrt.dconf-editor.gschema.xml:232
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -312,26 +405,26 @@ msgstr ""
 "바이트 문자열의 배열 타입입니다. 바이트 문자열 타입은 문자열을 전달하는데 주"
 "로 사용합니다. 올바른 UTF-8 값이 아닐 수도 있습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#: editor/ca.desrt.dconf-editor.gschema.xml:236
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "D-버스 핸들 타입, 타입 ‘h’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#: editor/ca.desrt.dconf-editor.gschema.xml:237
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message. If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 "핸들 타입은 32비트 부호 있는 정수 값으로, 관례적으로 D-버스 메시지와 같이 보"
 "내는 파일 디스크립터의 배열 인덱스 값을 사용합니다. D-버스를 이용해 통신하지 "
 "않는다면 이 타입을 사용할 이유가 없습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:130
+#: editor/ca.desrt.dconf-editor.gschema.xml:243
 msgid "A D-Bus object path, type ‘o’"
 msgstr "D-버스 오브젝트 경로, 타입 ‘o’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:244
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -340,11 +433,11 @@ msgstr ""
 "오브젝트 경로는 D-버스의 주어진 대상에서 오브젝트를 구별하는데 사용합니다. D-"
 "버스를 이용해 통신하지 않는다면 이 타입을 사용할 이유가 없습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:137
+#: editor/ca.desrt.dconf-editor.gschema.xml:250
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "D-버스 오브젝트 경로 배열, 타입 ‘ao’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:251
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -353,11 +446,11 @@ msgstr ""
 "오브젝트 경로 배열은 임의 개수의 오브젝트 경로가 들어 있습니다. (없으면 "
 "\"[]\") D-버스를 이용해 통신하지 않는다면 이 타입을 사용할 이유가 없습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#: editor/ca.desrt.dconf-editor.gschema.xml:257
 msgid "A D-Bus signature, type ‘g’"
 msgstr "D-버스 시그너쳐, 타입 ‘g’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:258
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -366,85 +459,88 @@ msgstr ""
 "D-버스 시그너쳐는 D-버스 메서드나 메시지에 타입 시그너쳐로 사용하는 문자열입"
 "니다. D-버스를 이용해 통신하지 않는다면 이 타입을 사용할 이유가 없습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:151
+#: editor/ca.desrt.dconf-editor.gschema.xml:264
 msgid "A double, type ‘d’"
 msgstr "배정밀도 부동소수, 타입 ‘d’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:265
 msgid "A double value could represent any real number."
 msgstr "배정밀도 부동소수 값은 실수 값을 표현하는데 사용합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:156
+#: editor/ca.desrt.dconf-editor.gschema.xml:269
 msgid "A 5-choices enumeration"
 msgstr "5개 선택 열거형"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#: editor/ca.desrt.dconf-editor.gschema.xml:270
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr "열거형은 “enum” 속성이나 “choices” 태그로 지정할 수 있습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
+#: editor/ca.desrt.dconf-editor.gschema.xml:274
 msgid "A short integer, type ‘n’"
 msgstr "short 정수, 타입 ‘n’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16비트 부호 있는 정수, “integer-16-unsigned” 키도 참고."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:279
+#: editor/ca.desrt.dconf-editor.gschema.xml:363
 msgid "Flags: choose-colors-you-love"
 msgstr "플래그: 좋아하는-색-선택"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:167
+#: editor/ca.desrt.dconf-editor.gschema.xml:280
+#: editor/ca.desrt.dconf-editor.gschema.xml:364
 msgid "Flags could be set by the “enum” attribute."
 msgstr "플래그는 “enum” 속성으로 설정할 수 있습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:284
 msgid "An unsigned short integer, type ‘q’"
 msgstr "부호 없는 short 정수, 타입 ‘q’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:285
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16비트 부호 없는 정수, “integer-16-signed” 키도 참고."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
+#: editor/ca.desrt.dconf-editor.gschema.xml:358
 msgid "An usual integer, type ‘i’"
 msgstr "일반 정수, 타입 ‘i’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:290
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "32비트 부호 있는 정수, “integer-32-unsigned” 키도 참고."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#: editor/ca.desrt.dconf-editor.gschema.xml:294
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "부호 없는 일반 정수, 타입 ‘u’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:295
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "32비트 부호 없는 정수, “integer-32-signed” 키도 참고."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:299
 msgid "A long integer, type ‘x’"
 msgstr "long 정수, 타입 ‘x’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:300
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "64비트 부호 있는 정수, “integer-64-unsigned” 키도 참고."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:191
+#: editor/ca.desrt.dconf-editor.gschema.xml:304
 msgid "An unsigned long integer, type ‘t’"
 msgstr "부호없는 long 정수, 타입 ‘t’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+#: editor/ca.desrt.dconf-editor.gschema.xml:305
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "64비트 부호 없는 정수, “integer-64-signed” 키도 참고."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#: editor/ca.desrt.dconf-editor.gschema.xml:311
 msgid "A number with range"
 msgstr "범위가 있는 수"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:199
+#: editor/ca.desrt.dconf-editor.gschema.xml:312
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -454,25 +550,25 @@ msgstr ""
 "포함)은 사용자가 설정한 범위로 한정할 수 있습니다. 예를 들어, 이 정수 값은 -2"
 "에서 10 사이의 값만 설정할 수 있습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:316
 msgid "A custom type, here ‘(ii)’"
 msgstr "사용자 설정 타입, ‘(ii)’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:204
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "dconf 편집기에서는 GSettings에서 지원하는 모든 타입의 설정을 편집할 수 있습니"
 "다. 더 나은 다른 방법이 없으면 문자열 항목을 설정합니다. 다음은 2개의 32비트 "
 "부호 있는 정수의 튜플입니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:321
 msgid "A string, type ‘s’"
 msgstr "문자열, 타입 ‘s’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:209
+#: editor/ca.desrt.dconf-editor.gschema.xml:322
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -480,11 +576,11 @@ msgstr ""
 "문자열 타입은 모든 UTF-8 문자열을 쓸 수 있습니다. 빈 문자열 “''”은 널(없음) "
 "값과 다르니 주의하십시오. “string-nullable” 키도 참고하십시오."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:213
+#: editor/ca.desrt.dconf-editor.gschema.xml:326
 msgid "A string array, type ‘as’"
 msgstr "문자열 배열, 타입 ‘as’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:214
+#: editor/ca.desrt.dconf-editor.gschema.xml:327
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -492,11 +588,11 @@ msgstr ""
 "문자열 배열에는 어떤 길이든 문자열을 몇 개라도 들어 있을 수 있습니다. 빈 배열"
 "일(“[]”) 수도 있습니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
+#: editor/ca.desrt.dconf-editor.gschema.xml:331
 msgid "A nullable string, type ‘ms’"
 msgstr "널 가능 문자열, 타입 ‘ms’"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#: editor/ca.desrt.dconf-editor.gschema.xml:332
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -507,11 +603,11 @@ msgstr ""
 "문자열 “''” 포함) 값으로 설정할 수 있고, 널 값을(nothing) 설정할 수도 있습니"
 "다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#: editor/ca.desrt.dconf-editor.gschema.xml:336
 msgid "A 1-choice enumeration"
 msgstr "1개 선택 열거형"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:337
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -519,17 +615,114 @@ msgstr ""
 "열거형에 하나의 항목만 들어 있는 것도 가능하긴 하지만, 보통은 오류가 있는 경"
 "우입니다. 이런 경우 dconf 편집기에서 경고를 표시합니다."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:229
+#: editor/ca.desrt.dconf-editor.gschema.xml:342
 msgid "A 1-choice integer value"
 msgstr "1개 선택 정수 값"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:230
+#: editor/ca.desrt.dconf-editor.gschema.xml:343
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
 "정수의 범위로 하나의 값만 허용하는 것도 가능하긴 하지만, 보통은 오류가 있는 "
 "경우입니다. 이런 경우 dconf 편집기에서 경고를 표시합니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
+msgid "An usual boolean value, defined by a relocatable schema."
+msgstr "일반 불리언 값, 위치 이동 가능 스키마에서 정의."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
+msgid "A 32-bit signed integer, defined by a relocatable schema."
+msgstr "32비트 부호 있는 정수, 위치 이동 가능 스키마에서 정의."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:370
+msgid "A normal non-conflicting key from Conflict1"
+msgstr "Conflict1에서 충돌하지 않는 일반 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:371
+#: editor/ca.desrt.dconf-editor.gschema.xml:398
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. Non-conflicting keys should have no issues."
+msgstr ""
+"이 키는 같은 경로에 여러 스키마를 설치했을 때 키가 충돌하는지 테스트합니다. "
+"충돌하지 않는 키는 문제가 없어야 합니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
+msgid "Conflicting key defaulting to “1” that should give an error"
+msgstr "오류를 출력해야 하는 기본값이 “1”인 충돌하는 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:376
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different default value."
+msgstr ""
+"이 키는 같은 경로에 여러 스키마를 설치했을 때 키가 충돌하는지 테스트합니다. "
+"같은 경로에 매핑한 키의 기본값이 서로 다르기 때문에 편집할 수 없어야 합니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
+msgid "Conflicting key with no range that should give an error"
+msgstr "오류를 출력해야 하는 범위가 없는 충돌하는 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:381
+#: editor/ca.desrt.dconf-editor.gschema.xml:409
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different range."
+msgstr ""
+"이 키는 같은 경로에 여러 스키마를 설치했을 때 키가 충돌하는지 테스트합니다. "
+"같은 경로에 매핑한 키의 범위가 서로 다르기 때문에 편집할 수 없어야 합니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:385
+msgid "A (simple) string conflicting key that should give a error"
+msgstr "오류를 출력해야 하는 (간단한) 문자열 충돌 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:386
+#: editor/ca.desrt.dconf-editor.gschema.xml:414
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different type."
+msgstr ""
+"이 키는 같은 경로에 여러 스키마를 설치했을 때 키가 충돌하는지 테스트합니다. "
+"같은 경로에 매핑된 키의 타입이 호환되지 않으므로 편집할 수 없습니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:390
+msgid "Conflicting key from Conflict1 that should give a warning"
+msgstr "경고를 출력해야 하는 Conflict1에서 충돌하는 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:391
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It can be edited, since the types are compatible, but it is still an "
+"issue."
+msgstr ""
+"이 키는 같은 경로에 여러 스키마를 설치했을 때 키가 충돌하는지 테스트합니다. "
+"타입이 호환되므로 편집할 수는 있지만, 문제가 발생할 수 있습니다."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:397
+msgid "A normal non-conflicting key from Conflict2"
+msgstr "Conflict2에서 충돌하지 않는 일반 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:402
+msgid "Conflicting key defaulting to “2” that should give an error"
+msgstr "오류를 출력해야 하는 기본값이 “2”인 충돌하는 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
+msgid "Conflicting key with range 0~5 that should give an error"
+msgstr "오류를 출력해야 하는 범위가 0-5인 충돌하는 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:413
+msgid "A nullable-string conflicting key that should give an error"
+msgstr "오류를 출력해야 하는 널 가능 충돌하는 키"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:418
+msgid "Conflicting key from Conflict2 that should give a warning"
+msgstr "경고를 출력해야 하는 Conflict2에서 충돌하는 키"
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -543,156 +736,220 @@ msgstr "정보(_A)"
 msgid "_Quit"
 msgstr "끝내기(_Q)"
 
-#: editor/dconf-editor.ui:49
+#: editor/dconf-editor.ui:34
 msgid "Actions"
 msgstr "동작"
 
 #. TODO 1/3 Informations
-#: editor/dconf-editor.ui:50
+#: editor/dconf-editor.ui:35
 msgid "Current view actions"
 msgstr "현재 뷰 동작"
 
-#: editor/dconf-editor.ui:77
+#: editor/dconf-editor.ui:62
 msgid "Search"
 msgstr "검색"
 
-#: editor/dconf-editor.ui:78
+#: editor/dconf-editor.ui:63
 msgid "Search keys"
 msgstr "검색 키"
 
-#: editor/dconf-editor.vala:22
+#: editor/dconf-editor.ui:160
+msgid "Refresh search results"
+msgstr "검색 결과 새로 고침"
+
+#: editor/dconf-editor.vala:134
 msgid "Print release version and exit"
 msgstr "릴리스 버전을 표시하고 끝납니다"
 
+#: editor/dconf-editor.vala:135
+msgid "Print relocatable schemas and exit"
+msgstr "위치 이동 가능 스키마를 표시하고 끝납니다"
+
+#: editor/dconf-editor.vala:137
+msgid "Do not show initial warning"
+msgstr "최초 경고 표시하지 않음"
+
+#: editor/dconf-editor.vala:139
+msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
+msgstr "[<경로>|<고정_스키마> [<키>]|<위치_이동_가능_스키마>:<경로> [<키>]]"
+
+#: editor/dconf-editor.vala:229
+msgid "Known schemas installed:"
+msgstr "설치한 알려진 스키마:"
+
+#: editor/dconf-editor.vala:234
+msgid "No known schemas installed."
+msgstr "설치한 알려진 스키마가 없습니다."
+
+#: editor/dconf-editor.vala:238
+msgid "Known schemas skipped:"
+msgstr "건너 뛴 알려진 스키마:"
+
+#: editor/dconf-editor.vala:243
+msgid "No known schemas skipped."
+msgstr "건너 뛴 알려진 스키마가 없습니다."
+
+#: editor/dconf-editor.vala:247
+msgid "Unknown schemas:"
+msgstr "알 수 없는 스키마:"
+
+#: editor/dconf-editor.vala:252
+msgid "No unknown schemas."
+msgstr "알 수 없는 스키마가 없습니다."
+
+#: editor/dconf-editor.vala:317
+msgid "Only one window can be opened for now.\n"
+msgstr "현재는 하나의 창만 열 수 있습니다.\n"
+
+#: editor/dconf-editor.vala:336
+msgid "Cannot understand: too many arguments.\n"
+msgstr "이해 불가: 인자가 너무 많습니다.\n"
+
+#: editor/dconf-editor.vala:346
+msgid "Cannot understand second argument in this context.\n"
+msgstr "이 문맥에서 두번째 인자를 이해할 수 없습니다.\n"
+
+#: editor/dconf-editor.vala:363
+msgid "Cannot understand: slash character in second argument.\n"
+msgstr "이해 불가: 두번째 인자에 '/' 문자가 들어 있습니다.\n"
+
+#: editor/dconf-editor.vala:377
+msgid "Schema path should start and end with a “/”.\n"
+msgstr "스키마 경로는 “/”로 시작하고 끝나야 합니다.\n"
+
+#: editor/dconf-editor.vala:390
+msgid "Cannot understand: space character in argument.\n"
+msgstr "이해 불가: 인자에 공백 문자가 들어 있습니다.\n"
+
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:96
+#. #: editor/dconf-editor.vala:414
 msgid "Copied to clipboard"
 msgstr "클립보드에 복사됨"
 
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:469
+msgid "A graphical viewer and editor of applications’ internal settings."
+msgstr "프로그램의 내부 설정 값을 보고 편집하는 프로그램."
+
+#: editor/dconf-editor.vala:470
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2016 – Arnaud Bonatti"
+"Copyright © 2015-2018 – Arnaud Bonatti\n"
+"Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2016 – Arnaud Bonatti"
+"Copyright © 2015-2018 – Arnaud Bonatti\n"
+"Copyright © 2017-2018 – Davi da Silva Böger"
 
-#: editor/dconf-editor.vala:154
+#: editor/dconf-editor.vala:474
 msgid "translator-credits"
 msgstr ""
 "조성호 <darkcircle.0426@gmail.com>, 2012, 2013\n"
 "류창우 <cwryu@debian.org>, 2013-2016."
 
-#: editor/dconf-model.vala:220
-msgid "Boolean"
-msgstr "불리언"
+#: editor/dconf-model.vala:400
+#, c-format
+msgid "%s (key erased)"
+msgstr "%s (키 지워짐)"
 
-#: editor/dconf-model.vala:222
-msgid "String"
-msgstr "문자"
+#: editor/dconf-view.vala:259
+msgid "Failed to parse as double."
+msgstr "배정밀도 부동소수점으로 파싱하는데 실패했습니다."
 
-#: editor/dconf-model.vala:224
-msgid "String array"
-msgstr "문자열 배열"
-
-#: editor/dconf-model.vala:226
-msgid "Enumeration"
-msgstr "열거형"
-
-#: editor/dconf-model.vala:228
-msgid "Flags"
-msgstr "플래그"
-
-#: editor/dconf-model.vala:230
-msgid "Double"
-msgstr "배정밀도 부동소수점"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:233
-msgid "D-Bus handle type"
-msgstr "D-버스 핸들 타입"
-
-#: editor/dconf-model.vala:235
-msgid "D-Bus object path"
-msgstr "D-버스 오브젝트 경로"
-
-#: editor/dconf-model.vala:237
-msgid "D-Bus object path array"
-msgstr "D-버스 오브젝트 경로 배열"
-
-#: editor/dconf-model.vala:239
-msgid "D-Bus signature"
-msgstr "D-버스 시그너쳐"
-
-#: editor/dconf-model.vala:247
-msgid "Integer"
-msgstr "정수형"
-
-#: editor/dconf-model.vala:362
-msgid "True"
-msgstr "참"
-
-#: editor/dconf-model.vala:364
-msgid "False"
-msgstr "거짓"
-
-#: editor/dconf-model.vala:365
-msgid "Nothing"
-msgstr "없음"
-
-#: editor/dconf-model.vala:370
-msgid "true"
-msgstr "참"
-
-#: editor/dconf-model.vala:372
-msgid "false"
-msgstr "거짓"
-
-#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:374
-msgid "nothing"
-msgstr "없음(nothing)"
-
-#: editor/dconf-view.vala:438
+#: editor/dconf-view.vala:512 editor/dconf-view.vala:605
 msgid "This value is invalid for the key type."
 msgstr "키 종류에 맞지 않는 값입니다."
 
-#: editor/dconf-window.vala:132
+#: editor/dconf-window.vala:115
+msgid "Schema is relocatable, a path is needed."
+msgstr "위치 이동 가능한 스키마이므로, 경로가 필요합니다."
+
+#: editor/dconf-window.vala:127
+msgid "Startup mappings are disabled."
+msgstr "시작 매핑을 사용하지 않습니다."
+
+#: editor/dconf-window.vala:141
+msgid "Schema is not installed on given path."
+msgstr "주어진 경로에 스키마를 설치하지 않았습니다."
+
+#: editor/dconf-window.vala:285
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "dconf 편집기를 사용해 주셔서 감사합니다. 이 프로그램으로 설정을 편집합니다."
 
-#: editor/dconf-window.vala:133
+#: editor/dconf-window.vala:286
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "옵션에 따라 잘못 바꾸면 프로그램 실행에 문제가 있을 수도 있습니다. 그러니 주"
 "의하십시오."
 
-#: editor/dconf-window.vala:134
+#: editor/dconf-window.vala:287
 msgid "I’ll be careful."
 msgstr "주의하겠습니다."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:138
+#: editor/dconf-window.vala:291
 msgid "Show this dialog next time."
 msgstr "다음에 이 대화 창 표시."
 
-#: editor/dconf-window.vala:248
-msgid "Copy current path"
-msgstr "현재 경로 복사"
+#: editor/dconf-window.vala:411
+#, c-format
+msgid "Folder “%s” is now empty."
+msgstr "현재 “%s” 폴더가 비었습니다."
 
-#: editor/dconf-window.vala:253
+#. GAction parameter type switch is a little touchy, see pathbar.vala
+#: editor/dconf-window.vala:421
+#, c-format
+msgid "Key “%s” has been deleted."
+msgstr "“%s” 키를 삭제했습니다."
+
+#: editor/dconf-window.vala:656
+msgid "Copy descriptor"
+msgstr "디스크립터 복사"
+
+#: editor/dconf-window.vala:662
 msgid "Reset visible keys"
 msgstr "보이는 키 초기화"
 
-#. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/dconf-window.vala:254 editor/key-list-box-row.vala:485
-msgid "Reset recursively"
-msgstr "재귀적으로 초기화"
+#: editor/dconf-window.vala:663
+msgid "Reset view recursively"
+msgstr "재귀적으로 뷰 초기화"
 
-#: editor/dconf-window.vala:262
+#: editor/dconf-window.vala:671
 msgid "Enter delay mode"
 msgstr "지연 모드 사용"
+
+#: editor/dconf-window.vala:736
+msgid ""
+"The same mouse button is set for going backward and forward. Doing nothing."
+msgstr ""
+"같은 마우스 단추를 뒤로 및 앞으로 가는데 사용하도록 설정했습니다. 아무 것도 "
+"하지 않습니다."
+
+#: editor/dconf-window.vala:996
+#, c-format
+msgid "Cannot find key “%s”."
+msgstr "“%s” 키를 찾을 수 없습니다."
+
+#: editor/dconf-window.vala:1000
+#, c-format
+msgid "There’s nothing in requested folder “%s”."
+msgstr "요청한 “%s” 폴더에 아무 것도 없습니다."
+
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
+#: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
+#: editor/key-list-box-row.vala:834 editor/registry-info.vala:348
+msgid "Default value"
+msgstr "기본값"
+
+#: editor/delayed-setting-view.vala:73
+msgid "Key erased"
+msgstr "키 지워짐"
+
+#: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
+#: editor/registry-info.vala:149
+msgid "Key erased."
+msgstr "키 지워짐."
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
@@ -726,181 +983,211 @@ msgstr "동작 메뉴"
 
 #: editor/help-overlay.ui:52
 msgctxt "shortcut window"
-msgid "Path bar navigation"
-msgstr "경로 입력창 내비게이션"
-
-#: editor/help-overlay.ui:56
-msgctxt "shortcut window"
-msgid "Open root folder"
-msgstr "최상위 폴더 열기"
-
-#: editor/help-overlay.ui:63
-msgctxt "shortcut window"
-msgid "Open parent folder"
-msgstr "상위 폴더 열기"
-
-#: editor/help-overlay.ui:70
-msgctxt "shortcut window"
-msgid "Open active direct child"
-msgstr "활성화된 직접 하위 항목 열기"
-
-#: editor/help-overlay.ui:77
-msgctxt "shortcut window"
-msgid "Open active last child"
-msgstr "활성화된 최근 하위 항목 열기"
-
-#: editor/help-overlay.ui:86
-msgctxt "shortcut window"
-msgid "Keys list actions"
-msgstr "키 목록 동작"
-
-#: editor/help-overlay.ui:90
-msgctxt "shortcut window"
-msgid "Contextual menu"
-msgstr "컨텍스트 메뉴"
-
-#: editor/help-overlay.ui:97
-msgctxt "shortcut window"
-msgid "Set to default"
-msgstr "기본값으로 설정"
-
-#: editor/help-overlay.ui:104
-msgctxt "shortcut window"
-msgid "Toggle boolean value"
-msgstr "불리언 값 토글"
-
-#: editor/help-overlay.ui:113
-msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "클립보드"
 
-#: editor/help-overlay.ui:117
+#: editor/help-overlay.ui:56
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "디스크립터 복사"
 
-#: editor/help-overlay.ui:124
+#: editor/help-overlay.ui:63
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "경로 복사"
 
+#: editor/help-overlay.ui:72
+msgctxt "shortcut window"
+msgid "Modifications list actions"
+msgstr "변경 사항 목록 동작"
+
+#: editor/help-overlay.ui:76
+msgctxt "shortcut window"
+msgid "Toggle modifications list"
+msgstr "변경 사항 목록 토글"
+
+#: editor/help-overlay.ui:83
+msgctxt "shortcut window"
+msgid "Open selected row key"
+msgstr "선택한 열의 키 열기"
+
+#: editor/help-overlay.ui:90
+msgctxt "shortcut window"
+msgid "Dismiss modification"
+msgstr "변경 사항 버리기"
+
+#: editor/help-overlay.ui:99
+msgctxt "shortcut window"
+msgid "Path bar navigation"
+msgstr "경로 입력창 내비게이션"
+
+#: editor/help-overlay.ui:103
+msgctxt "shortcut window"
+msgid "Open root folder"
+msgstr "최상위 폴더 열기"
+
+#: editor/help-overlay.ui:110
+msgctxt "shortcut window"
+msgid "Open parent folder"
+msgstr "상위 폴더 열기"
+
+#: editor/help-overlay.ui:117
+msgctxt "shortcut window"
+msgid "Open active direct child"
+msgstr "활성화된 직접 하위 항목 열기"
+
+#: editor/help-overlay.ui:124
+msgctxt "shortcut window"
+msgid "Open active last child"
+msgstr "활성화된 최근 하위 항목 열기"
+
 #: editor/help-overlay.ui:133
+msgctxt "shortcut window"
+msgid "Keys list actions"
+msgstr "키 목록 동작"
+
+#: editor/help-overlay.ui:137
+msgctxt "shortcut window"
+msgid "Contextual menu"
+msgstr "컨텍스트 메뉴"
+
+#: editor/help-overlay.ui:144
+msgctxt "shortcut window"
+msgid "Set to default"
+msgstr "기본값으로 설정"
+
+#: editor/help-overlay.ui:151
+msgctxt "shortcut window"
+msgid "Toggle boolean value"
+msgstr "불리언 값 토글"
+
+#: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "일반"
 
-#: editor/help-overlay.ui:137
+#: editor/help-overlay.ui:164
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "이 도움말을 표시합니다"
 
-#: editor/help-overlay.ui:144
+#: editor/help-overlay.ui:171
 msgctxt "shortcut window"
 msgid "About"
 msgstr "정보"
 
-#: editor/help-overlay.ui:151
+#: editor/help-overlay.ui:178
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "끝내기"
 
-#: editor/key-list-box-row.vala:188
+#: editor/key-list-box-row.vala:343
 msgid "No Schema Found"
 msgstr "스키마 없음"
 
-#: editor/key-list-box-row.vala:202
-msgid "Key erased."
-msgstr "키 지워짐."
-
-#: editor/key-list-box-row.vala:224
-#, c-format
-msgid "%s (key erased)"
-msgstr "%s (키 지워짐)"
-
-#: editor/key-list-box-row.vala:310
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:121
 msgid "No summary provided"
 msgstr "주어진 요약이 없습니다"
 
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:465
+#: editor/key-list-box-row.vala:481
+msgid "conflicting keys"
+msgstr "충돌하는 키"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:646
+msgid "Copy"
+msgstr "복사"
+
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:649
 msgid "Customize…"
 msgstr "사용자 설정…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:468
+#: editor/key-list-box-row.vala:652
 msgid "Set to default"
 msgstr "기본값으로 설정"
 
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
+#: editor/key-list-box-row.vala:657
+msgid "Show details…"
+msgstr "자세히 보기…"
+
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:473
+#: editor/key-list-box-row.vala:660
 msgid "Dismiss change"
 msgstr "변경 사항 버리기"
 
-#. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:476
-msgid "Open"
-msgstr "열기"
-
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
-#: editor/registry-info.ui:28
+#: editor/key-list-box-row.vala:663 editor/key-list-box-row.vala:770
+#: editor/registry-info.ui:112
 msgid "Erase key"
 msgstr "키 지우기"
 
+#. Translators: "open folder" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:666
+msgid "Open"
+msgstr "열기"
+
+#. Translators: "open parent folder" action in the right-click menu on a folder in a search result
+#: editor/key-list-box-row.vala:669
+msgid "Open parent folder"
+msgstr "상위 폴더 열기"
+
+#. Translators: "reset recursively" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:672
+msgid "Reset recursively"
+msgstr "재귀적으로 초기화"
+
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:482
+#: editor/key-list-box-row.vala:675
 msgid "Do not erase"
 msgstr "지우지 않기"
 
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:494
-msgid "Copy"
-msgstr "복사"
-
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:604
+#: editor/key-list-box-row.vala:764
 msgid "No change"
 msgstr "변경 없음"
 
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:674 editor/registry-info.vala:261
-msgid "Default value"
-msgstr "기본값"
-
-#: editor/modifications-revealer.ui:49
+#: editor/modifications-revealer.ui:66
 msgid "Apply"
 msgstr "적용"
 
-#: editor/modifications-revealer.vala:141
+#: editor/modifications-revealer.ui:104
+msgid "Delayed setting changes will be shown here"
+msgstr "지연된 설정 변경 사항이 여기에 표시됩니다"
+
+#: editor/modifications-revealer.vala:115
+#: editor/modifications-revealer.vala:279
 msgid "Nothing to reset."
 msgstr "초기화할 사항 없음."
 
-#: editor/modifications-revealer.vala:241
+#: editor/modifications-revealer.vala:258
 msgid "The value is invalid."
 msgstr "값이 올바르지 않습니다."
 
-#: editor/modifications-revealer.vala:245
+#: editor/modifications-revealer.vala:265
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr "적용하지 않고 이 뷰를 끝내면 변경 사항을 잃어버립니다."
 
-#: editor/modifications-revealer.vala:247
+#: editor/modifications-revealer.vala:270
 msgid "The change will be applied on such request or if you quit this view."
 msgstr "그러한 요청이 있거나 이 뷰를 끝내면 변경 사항을 적용합니다."
 
-#: editor/modifications-revealer.vala:264
+#: editor/modifications-revealer.vala:291
 msgid "Changes will be delayed until you request it."
 msgstr "변경 사항은 요청하기까지 지연됩니다."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:266
+#: editor/modifications-revealer.vala:293
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
 msgstr[0] "%u개 gsettings 동작이 지연 상태입니다."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:270
+#: editor/modifications-revealer.vala:297
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -908,12 +1195,12 @@ msgstr[0] "%u개 dconf 동작이 지연 상태입니다."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:273
+#: editor/modifications-revealer.vala:300
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:273
+#: editor/modifications-revealer.vala:300
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -923,24 +1210,44 @@ msgstr[0] "%u개 gsettings 동작"
 #. * the space before the "and" is probably wanted, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:278
+#: editor/modifications-revealer.vala:305
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
 msgstr[0] " 그리고 %u개 dconf 동작이 지연 상태입니다."
 
-#: editor/registry-info.ui:22
-msgid ""
-"No schema available. Dconf Editor can’t find a schema associated with this "
-"key. The application that installed this key may have been removed, may have "
-"stop the use of this key, or may use a relocatable schema for defining its "
-"keys."
-msgstr ""
-"스키마가 없습니다. dconf 편집기는 이 키에 해당하는 스키마를 찾을 수 없습니"
-"다. 이 키를 설치한 프로그램이 제거되었거나, 이 키 사용을 중단했거나, 이 키를 "
-"정의할 때 스키마 위치를 옮길 수 있게 만들었을 수도 있습니다."
+#: editor/pathbar.vala:313
+msgid "Copy current path"
+msgstr "현재 경로 복사"
 
-#: editor/registry-info.ui:56
+#: editor/registry-info.ui:32
+msgid ""
+"This key is defined and used by more than one schema. This could lead to "
+"problems. Edit value at your own risk."
+msgstr ""
+"이 키는 여러 개의 스키마에서 정의하고 사용합니다. 문제가 될 수 있습니다. 위험"
+"을 인지하고 편집하십시오."
+
+#: editor/registry-info.ui:69
+msgid ""
+"This key is incompatibly defined and used by more than one schema. It is "
+"impossible to work with its value in a meaningful way."
+msgstr ""
+"이 키는 호환되지 않게 정의되었고 여러 개의 스키마에서 사용됩니다. 이 값을 의"
+"미 있는 방식으로 사용하기가 불가능합니다."
+
+#: editor/registry-info.ui:106
+msgid ""
+"No schema available. A schema is what describes the use of a key, and Dconf "
+"Editor can’t find one associated with this key. If the application that was "
+"using this key has been uninstalled, or if this key is obsolete, you may "
+"want to erase it."
+msgstr ""
+"스키마가 없습니다. 스키마는 키의 사용을 설명하는데, dconf 편집 프로그램에서 "
+"이 키에 해당하는 스키마를 찾을 수 없습니다. 이 키를 사용하는 프로그램의 설치"
+"를 삭제했거나, 이 키를 더 이상 사용하지 않는다면 키를 지워도 됩니다."
+
+#: editor/registry-info.ui:149
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -949,7 +1256,7 @@ msgstr ""
 "열거형은 하나의 선택만 할 수 잇습니다. 이 스키마를 설치한 프로그램의 오류로 "
 "보입니다. 가능하면 이 문제에 대해 버그를 제출해 주십시오."
 
-#: editor/registry-info.ui:65
+#: editor/registry-info.ui:159
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -958,49 +1265,74 @@ msgstr ""
 "정수형에 하나의 값만 쓸 수 잇습니다. 이 스키마를 설치한 프로그램의 오류로 보"
 "입니다. 가능하면 이 문제에 대해 버그를 제출해 주십시오."
 
-#: editor/registry-info.vala:82
+#: editor/registry-info.vala:114
+msgid "Defined by"
+msgstr "정의한 곳"
+
+#: editor/registry-info.vala:116
 msgid "Schema"
 msgstr "스키마"
 
-#: editor/registry-info.vala:83
+#: editor/registry-info.vala:121
 msgid "Summary"
 msgstr "요약"
 
-#: editor/registry-info.vala:84
+#: editor/registry-info.vala:126
 msgid "Description"
 msgstr "설명"
 
-#. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:86
-msgid "Type"
-msgstr "형식"
+#: editor/registry-info.vala:126
+msgid "No description provided"
+msgstr "주어진 설명이 없습니다"
 
-#: editor/registry-info.vala:88
+#. Translators: as in datatype (integer, boolean, string, etc.)
+#: editor/registry-info.vala:129
+msgid "Type"
+msgstr "타입"
+
+#: editor/registry-info.vala:131
 msgid "Minimum"
 msgstr "최소"
 
-#: editor/registry-info.vala:89
+#: editor/registry-info.vala:132
 msgid "Maximum"
 msgstr "최대"
 
-#: editor/registry-info.vala:90
+#: editor/registry-info.vala:133
 msgid "Default"
 msgstr "기본값"
 
-#: editor/registry-info.vala:110
+#: editor/registry-info.vala:141
+msgid ""
+"There are conflicting definitions of this key, getting value would be either "
+"problematic or meaningless."
+msgstr ""
+"이 키를 충돌하게 정의했습니다. 값을 가져오는 일이 문제가 있거나 의미가 없을 "
+"수 있습니다."
+
+#: editor/registry-info.vala:161
 msgid "Current value"
 msgstr "현재 값"
 
-#: editor/registry-info.vala:143
+#: editor/registry-info.vala:197
 msgid "Use default value"
 msgstr "기본값 사용"
 
-#: editor/registry-info.vala:201
+#: editor/registry-info.vala:255
 msgid "Custom value"
 msgstr "사용자 설정 값"
 
+#. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
+#: editor/registry-info.vala:408
+msgid ""
+"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
+"notation."
+msgstr ""
+"점을 소수점으로 사용하고 숫자 천단위 구분을 하지 않습니다. X.Ye+Z 형식의 지"
+"수 표기를 사용할 수 있습니다."
+
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:324
+#: editor/registry-info.vala:414
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1009,42 +1341,121 @@ msgstr ""
 "키워드 \"nothing\"은 그 빈 값에 \"maybe\" 타입을(\"m\"으로 시작) 설정합니다. "
 "문자열, 시그너쳐, 오브젝트 경로는 문자열로 둘러싸야 합니다."
 
-#: editor/registry-info.vala:326
+#: editor/registry-info.vala:416
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "문자열, 시그너쳐, 오브젝트 경로는 따옴표로 둘러싸야 합니다."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:330
+#: editor/registry-info.vala:420
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
 "키워드 \"nothing\"은 그 빈 값에 \"maybe\" 타입을(\"m\"으로 시작) 설정합니다."
 
-#: editor/registry-view.ui:32
-msgid "Sort preferences have changed. Do you want to reload the view?"
-msgstr "정렬 기본 설정이 바뀌었습니다. 뷰를 다시 읽어들이시겠습니까?"
+#: editor/registry-search.vala:30
+msgid "No matches"
+msgstr "검색 결과 없음"
 
-#: editor/registry-view.ui:38
-msgid "Reload"
-msgstr "다시 읽기"
+#: editor/registry-search.vala:443
+msgid "Current folder"
+msgstr "현재 폴더"
 
-#: editor/registry-view.ui:136
+#: editor/registry-search.vala:447
+msgid "Folders"
+msgstr "폴더"
+
+#: editor/registry-search.vala:449
+msgid "Keys"
+msgstr "키"
+
+#: editor/registry-view.vala:184
 msgid "No keys in this path"
 msgstr "이 경로에 키가 없습니다"
 
-#: editor/registry-view.vala:182
-#, c-format
-msgid "Cannot find folder “%s”."
-msgstr "“%s” 폴더를 찾을 수 없습니다."
+#: editor/registry-view.vala:251
+msgid "Keys not defined by a schema"
+msgstr "스키마에서 키를 정의하지 않았습니다"
 
-#: editor/registry-view.vala:200
-#, c-format
-msgid "Cannot find key “%s” here."
-msgstr "여기서 “%s” 키를 찾을 수 없습니다."
+#: editor/setting-object.vala:65
+msgid "Boolean"
+msgstr "불리언"
 
-#: editor/registry-view.vala:206
-#, c-format
-msgid "Key “%s” has been removed."
-msgstr "“%s” 키를 제거했습니다."
+#: editor/setting-object.vala:67
+msgid "String"
+msgstr "문자"
+
+#: editor/setting-object.vala:69
+msgid "String array"
+msgstr "문자열 배열"
+
+#: editor/setting-object.vala:71
+msgid "Enumeration"
+msgstr "열거형"
+
+#: editor/setting-object.vala:73
+msgid "Flags"
+msgstr "플래그"
+
+#: editor/setting-object.vala:75
+msgid "Double"
+msgstr "배정밀도 부동소수점"
+
+#. Translators: this handle type is an index; you may maintain the word "handle"
+#: editor/setting-object.vala:78
+msgid "D-Bus handle type"
+msgstr "D-버스 핸들 타입"
+
+#: editor/setting-object.vala:80
+msgid "D-Bus object path"
+msgstr "D-버스 오브젝트 경로"
+
+#: editor/setting-object.vala:82
+msgid "D-Bus object path array"
+msgstr "D-버스 오브젝트 경로 배열"
+
+#: editor/setting-object.vala:84
+msgid "D-Bus signature"
+msgstr "D-버스 시그너쳐"
+
+#: editor/setting-object.vala:92
+msgid "Integer"
+msgstr "정수형"
+
+#: editor/setting-object.vala:210
+msgid "True"
+msgstr "참"
+
+#: editor/setting-object.vala:212
+msgid "False"
+msgstr "거짓"
+
+#: editor/setting-object.vala:213
+msgid "Nothing"
+msgstr "없음"
+
+#: editor/setting-object.vala:218
+msgid "true"
+msgstr "참"
+
+#: editor/setting-object.vala:220
+msgid "false"
+msgstr "거짓"
+
+#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
+#: editor/setting-object.vala:222
+msgid "nothing"
+msgstr "없음(nothing)"
+
+#: editor/setting-object.vala:268
+msgid "DConf backend"
+msgstr "DConf 백엔드"
+
+#: editor/setting-object.vala:341
+msgid "Relocatable schema"
+msgstr "위치 이동 가능 스키마"
+
+#: editor/setting-object.vala:341
+msgid "Schema with path"
+msgstr "경로가 있는 스키마"
