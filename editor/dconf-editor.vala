@@ -299,6 +299,12 @@ class ConfigurationEditor : Gtk.Application
         simple_activation ();
     }
 
+    protected override void open (GLib.File [] files, string hint)
+    {
+        warning ("Flatpak test, " + files.length.to_string () + " files.");
+        simple_activation ();
+    }
+
     protected override int command_line (ApplicationCommandLine commands)
     {
         string [] args = {};
