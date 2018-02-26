@@ -152,7 +152,8 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            warning ("Unknown schema %s.".printf ((!) schema));
+            if ((!) schema != "")
+                warning (_("Unknown schema “%s”.").printf ((!) schema));
             if (settings.get_boolean ("restore-view"))
                 first_path = settings.get_string ("saved-view");
         }
