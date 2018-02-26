@@ -340,15 +340,18 @@ class ConfigurationEditor : Gtk.Application
 
         if (arg0.has_prefix ("/"))
         {
-            int ret = Posix.EXIT_SUCCESS;
+            Gtk.Window window = get_new_window (null, arg0, null);
             if (args.length == 2)
             {
                 commands.print (_("Cannot understand second argument in this context.\n"));
-                ret = Posix.EXIT_FAILURE;
+                window.present ();
+                return Posix.EXIT_FAILURE;
             }
-            Gtk.Window window = get_new_window (null, arg0, null);
-            window.present ();
-            return ret;
+            else
+            {
+                window.present ();
+                return Posix.EXIT_SUCCESS;
+            }
         }
 
         string? key_name = null;
