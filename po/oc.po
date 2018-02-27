@@ -359,15 +359,24 @@ msgid "A D-Bus handle type, type ‘h’"
 msgstr "Un tipe d'identificador D-Bus, tipe « h »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
+#| msgid ""
+#| "The handle type is a 32bit signed integer value that is, by convention, "
+#| "used as an index into an array of file descriptors that are sent "
+#| "alongside a D-Bus message. If you are not interacting with D-Bus, then "
+#| "there is no reason to make use of this type."
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"Lo tipe identificador es un entièr signat 32bit utilizat per convencion coma "
+"Lo tipe identificador es un entièr signat 32-bit utilizat per convencion coma "
 "indici d'un tablèu de descriptors de fichiers qu'acompanhan un messatge D-"
-"Bus. Se sètz pas dins un contèxte D-Bus, aqueste tipe vos servís pas a res."
+"Bus.\n"
+"\n"
+"Se sètz pas dins un contèxte D-Bus, aqueste tipe vos servís pas a res."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 #| msgid "A D-Bus object path, type \"o\""
@@ -375,14 +384,21 @@ msgid "A D-Bus object path, type ‘o’"
 msgstr "Un camin d'objècte D-Bus, tipe « o »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
+#| msgid ""
+#| "An object path is used to identify D-Bus objects at a given destination "
+#| "on the bus. If you are not interacting with D-Bus, then there is no "
+#| "reason to make use of this type."
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Un camin d'objècte es utilizat per identificar d'objèctes D-Bus a una "
-"destinacion donada sul bus. Se sètz pas dins un contèxte D-Bus, aqueste tipe "
-"vos servís pas a res."
+"destinacion donada sul bus.\n"
+"\n"
+"Se sètz pas dins un contèxte D-Bus, aqueste tipe vos servís pas a res."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 #| msgid "A D-Bus object path array, type \"ao\""
@@ -390,14 +406,21 @@ msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Un tablèu de camins d'objècte D-Bus, tipe « ao »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
+#| msgid ""
+#| "An object path array could contain any number of object paths (including "
+#| "none: “[]”). If you are not interacting with D-Bus, then there is no "
+#| "reason to make use of this type."
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"none: “[]”).\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Un tablèu de camins d'objèctes pòt conténer un nombre indefinit de camins "
-"d'objèctes (inclús cap : « [] »). Se sètz pas dins un contèxte D-Bus, "
-"aqueste tipe vos servís pas a res."
+"d'objèctes (inclús cap : « [] »).\n"
+"\n"
+"Se sètz pas dins un contèxte D-Bus, aqueste tipe vos servís pas a res."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 #| msgid "A D-Bus signature, type \"g\""
@@ -405,14 +428,21 @@ msgid "A D-Bus signature, type ‘g’"
 msgstr "Una signatura D-Bus, tipe « g »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
+#| msgid ""
+#| "A D-Bus signature is a string used as type signature for a D-Bus method "
+#| "or message. If you are not interacting with D-Bus, then there is no "
+#| "reason to make use of this type."
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Una signatura D-Bus es una cadena utilizada coma signatura de tipe per un "
-"metòde o un messatge D-Bus. Se sètz pas dins un contèxte D-Bus, aqueste tipe "
-"vos servís pas a res."
+"metòde o un messatge D-Bus.\n"
+"\n"
+"Se sètz pas dins un contèxte D-Bus, aqueste tipe vos servís pas a res."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 #| msgid "A double, type \"d\""
@@ -445,8 +475,8 @@ msgstr "Un entièr cort, tipe « n »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
 #| msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
-msgstr "Un entièr signat 16bit. Veire tanben la clau « integer-16-unsigned »."
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
+msgstr "Un entièr signat 16-bit. Veire tanben la clau « integer-16-unsigned »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Flags: choose-colors-you-love"
@@ -464,8 +494,8 @@ msgstr "Un entièr cort non signat, tipe « q »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
 #| msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
-msgstr "Un entièr non signat 16bit. Veire tanben la clau « integer-16-signed »."
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
+msgstr "Un entièr non signat 16-bit. Veire tanben la clau « integer-16-signed »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
 #| msgid "An usual integer, type \"i\""
@@ -474,8 +504,8 @@ msgstr "Un entièr abitual, tipe « i »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
 #| msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
-msgstr "Un entièr signat 32bit. Veire tanben la clau « integer-32-unsigned »."
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
+msgstr "Un entièr signat 32-bit. Veire tanben la clau « integer-32-unsigned »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
 #| msgid "An unsigned usual integer, type \"u\""
@@ -484,8 +514,8 @@ msgstr "Un entièr non signat abitual, tipe « u »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
 #| msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
-msgstr "Un entièr non signat 32bit. Veire tanben la clau « integer-32-signed »."
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
+msgstr "Un entièr non signat 32-bit. Veire tanben la clau « integer-32-signed »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 #| msgid "A long integer, type \"x\""
@@ -494,8 +524,8 @@ msgstr "Un entièr long, tipe « x »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
 #| msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
-msgstr "Un entièr signat 64bit. Veire tanben la clau « integer-64-unsigned »."
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
+msgstr "Un entièr signat 64-bit. Veire tanben la clau « integer-64-unsigned »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
 #| msgid "An unsigned long integer, type \"t\""
@@ -504,8 +534,8 @@ msgstr "Un entièr long non signat, tipe « t »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
 #| msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
-msgstr "Un entièr non signat 64bit. Veire tanben la clau « integer-64-signed »."
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
+msgstr "Un entièr non signat 64-bit. Veire tanben la clau « integer-64-signed »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "A number with range"
@@ -534,11 +564,11 @@ msgstr "Un tipe personalizat, aicí « ii »"
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "L'editor Dconf permet d'editar quin tipe de reglatge que siá pres en carga "
 "per GSettings, se rabatent sus un tipe cadena se a pas d'autre mejan de "
-"representacion. Aquò es un tuple de dos entièrs signats 32bit."
+"representacion. Aquò es un tuple de dos entièrs signats 32-bit."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 #| msgid "A string, type \"s\""
