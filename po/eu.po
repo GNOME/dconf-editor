@@ -530,7 +530,7 @@ msgid ""
 "integer could only take a value between -2 and 10."
 msgstr ""
 "Zenbakizko ezarpen bakoitza (edozer motatako osokoak eta zeinurik gabeko "
-"osokoak baita bikoitzak ere)  balioen barruti pertsonalizatu batera muga "
+"osokoak baita bikoitzak ere) balioen barruti pertsonalizatu batera muga "
 "daiteke. Adibidez, osoko honek -2 eta 10 arteko balio bat har dezake soilik."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
