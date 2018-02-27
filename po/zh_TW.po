@@ -554,10 +554,12 @@ msgstr "複製到剪貼薄"
 #: editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2016 – Arnaud Bonatti"
+"Copyright © 2015-2018 – Arnaud Bonatti\n"
+"Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr ""
 "版權所有 © 2010-2014 – Canonical Ltd\n"
-"版權所有 © 2015-2016 – Arnaud Bonatti"
+"版權所有 © 2015-2018 – Arnaud Bonatti\n"
+"版權所有 © 2017-2018 – Davi da Silva Böger"
 
 #: editor/dconf-editor.vala:154
 msgid "translator-credits"
