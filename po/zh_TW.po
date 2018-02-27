@@ -307,13 +307,17 @@ msgstr "D-Bus 處理類型，類型「h」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "handle 類型是 32位元有符號的整數值，依慣例用於隨 D-Bus 訊息一併傳送的檔案描述"
-"陣列的索引。如果您不與 D-Bus 互動，則沒有理由使用到這個類型。"
+"陣列的索引。\n"
+"\n"
+"如果您不與 D-Bus 互動，則沒有理由使用到這個類型。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
@@ -322,11 +326,14 @@ msgstr "D-Bus 物件路徑，類型「o」"
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"用來識別在指定目的匯流排上 D-Bus 物件的路徑。如果您不與 D-Bus 互動，則沒有理"
-"由使用到這個類型。"
+"用來識別在指定目的匯流排上 D-Bus 物件的路徑。\n"
+"\n"
+"如果您不與 D-Bus 互動，則沒有理由使用到這個類型。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
@@ -335,11 +342,14 @@ msgstr "D-Bus 物件路徑陣列，類型「ao」"
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"none: “[]”).\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"可以包含任意物件路徑數量的物件路徑陣列 (包含空陣列：\"[]\")。如果您不與 D-"
-"Bus 互動，則沒有理由使用到這個類型。"
+"可以包含任意物件路徑數量的物件路徑陣列 (包含空陣列：「[]」)。\n"
+"\n"
+"如果您不與 D-Bus 互動，則沒有理由使用到這個類型。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
@@ -348,11 +358,14 @@ msgstr "D-Bus 簽名檔，類型「g」"
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"D-Bus 簽名檔是一種字串，用於 D-Bus 方法或訊息的類型簽署。如果您不與 D-Bus 互"
-"動，則沒有理由使用到這個類型。"
+"D-Bus 簽名檔是一種字串，用於 D-Bus 方法或訊息的類型簽署。\n"
+"\n"
+"如果您不與 D-Bus 互動，則沒有理由使用到這個類型。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
@@ -377,7 +390,7 @@ msgid "A short integer, type ‘n’"
 msgstr "短整數，類型「n」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16 位元有符號的整數。另請參閱「integer-16-unsigned」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
@@ -393,7 +406,7 @@ msgid "An unsigned short integer, type ‘q’"
 msgstr "無符號短整數，類型「q」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16 位元無符號的整數。另請參閱「integer-16-signed」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
@@ -401,7 +414,7 @@ msgid "An usual integer, type ‘i’"
 msgstr "一般整數，類型「i」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "32 位元有符號的整數。另請參閱「integer-32-unsigned」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
@@ -409,7 +422,7 @@ msgid "An unsigned usual integer, type ‘u’"
 msgstr "無符號一般整數，類型「u」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "32 位元無符號的整數。另請參閱「integer-32-signed」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
@@ -417,7 +430,7 @@ msgid "A long integer, type ‘x’"
 msgstr "長整數，類型「x」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "64 位元有符號的整數。另請參閱「integer-64-unsigned」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
@@ -425,7 +438,7 @@ msgid "An unsigned long integer, type ‘t’"
 msgstr "無符號長整數，類型「t」"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "64 位元無符號的整數。另請參閱「integer-64-signed」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
@@ -449,7 +462,7 @@ msgstr "自訂的類型，這裡「(ii)」"
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "Dconf 編輯器讓您可以編輯任何 GSettings 支援的設定值類型，當它沒有更好的方案時"
 "則退回到字串項目。這裡有兩個 32 位元有符號整數元組。"
@@ -463,8 +476,8 @@ msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"字串類型可以接受任何 utf8 字串。請注意空字串 \"\" 不是 NULL (空值)；另請參閱"
-"的「string-nullable」設定鍵。。"
+"字串類型可以接受任何 utf8 字串。請注意空字串「''」不是 NULL (空值)；另請參閱"
+"的「string-nullable」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid "A string array, type ‘as’"

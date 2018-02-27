@@ -296,9 +296,9 @@ msgstr "D-Bus 句柄类型，类型“h”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
 msgid ""
-"The handle type is a 32-bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message.\n"
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message.\n"
 "\n"
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
@@ -466,7 +466,7 @@ msgid ""
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
 "字串类型可以接受任何 utf8 字串。请注意空字串“''”不是 NULL (空值)；另请参"
-"阅“string-nullable”键值。。"
+"阅“string-nullable”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
 msgid "A string array, type ‘as’"
