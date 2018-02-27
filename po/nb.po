@@ -560,10 +560,12 @@ msgstr "Grafisk visning og redigering av programinterne innstillinger."
 #: editor/dconf-editor.vala:210
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2017 – Arnaud Bonatti"
+"Copyright © 2015-2018 – Arnaud Bonatti\n"
+"Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr ""
 "Opphavsrett © 2010-2014 – Canonical Ltd\n"
-"Opphavsrett © 2015-2017 – Arnaud Bonatti"
+"Opphavsrett © 2015-2018 – Arnaud Bonatti\n"
+"Opphavsrett © 2017-2018 – Davi da Silva Böger"
 
 #: editor/dconf-editor.vala:214
 msgid "translator-credits"

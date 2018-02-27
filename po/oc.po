@@ -1236,10 +1236,3 @@ msgstr "La clau « %s » es estada suprimida."
 
 #~ msgid "Value"
 #~ msgstr "Valor"
-
-#~ msgid ""
-#~ "Copyright © 2010-2014 – Canonical Ltd\n"
-#~ "Copyright © 2015 – Arnaud Bonatti"
-#~ msgstr ""
-#~ "Copyright © 2010-2014 – Canonical Ltd\n"
-#~ "Copyright © 2015 – Arnaud Bonatti"
