@@ -167,7 +167,7 @@ class ConfigurationEditor : Gtk.Application
 
     public ConfigurationEditor ()
     {
-        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE);
+        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN);
 
 //        TODO needs gio-2.0 >= 2.56
 //        set_option_context_parameter_string (_("..."));
