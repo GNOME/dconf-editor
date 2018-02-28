@@ -182,7 +182,7 @@ msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
-"Hvis 'sand', åbner Dconf-redigering ved opstart en pop-op for at minde "
+"Hvis “sand”, åbner Dconf-redigering ved opstart en pop-op for at minde "
 "brugeren om at være forsigtig."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:53
@@ -221,7 +221,7 @@ msgstr ""
 "elementet, hvilket inkluderer mellemtilstande. Værdien “safe” vil bede om "
 "bekræftelse i disse tilfælde, men vil tillade øjeblikkelige ændringer for "
 "booleske variable, booleske variable som kan sættes til null, nummereringer "
-"og flag. Værdierne 'always-confirm-implicit' og 'always-confirm-explicit' "
+"og flag. Værdierne “always-confirm-implicit” og “always-confirm-explicit” "
 "vil altid bede om bekræftelse, men førstnævnte vil anvende ændringen hvis du "
 "skifter sti, hvorimod sidstnævnte forkaster den. Værdien “always-delay” "
 "tilføjer alle ændringer i ventetilstand, hvilket muliggør anvendelse af "
@@ -336,15 +336,19 @@ msgstr "En type for D-Bus-håndtag, type “h”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a "
-"D-Bus message. If you are not interacting with D-Bus, then there is no "
-"reason to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Håndtagstypen er en 32-bit heltalsværdi med fortegn som, ved konvention, "
 "bruges som et indeks i et array af fildeskriptorer, der sendes sideløbende "
-"med en D-Bus-meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke "
-"nogen grund til at gøre brug af denne type."
+"med en D-Bus-meddelelse.\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
@@ -353,12 +357,16 @@ msgstr "En D-Bus-objektsti, type “o”"
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "En objektsti bruges til at identificere D-Bus-objekter på en given "
-"destination på bussen. Hvis du ikke interagerer med D-Bus, er der ikke nogen "
-"grund til at gøre brug af denne type."
+"destination på bussen.\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
@@ -367,12 +375,16 @@ msgstr "Et D-Bus-objektsti-array, type “ao”"
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"none: “[]”).\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Et objektsti-array kan indeholde et hvilket som helst antal objektstier "
-"(inklusive ingen: “[]”). Hvis du ikke interagerer med D-Bus, er der ikke "
-"nogen grund til at gøre brug af denne type."
+"(inklusive ingen: “[]”).\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
@@ -381,12 +393,16 @@ msgstr "En D-Bus-signatur, type “g”"
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "En D-Bus-signatur er en streng, der bruges som typesignatur for en "
-"D-Bus-metode eller -meddelelse. Hvis du ikke interagerer med D-Bus, er der "
-"ikke nogen grund til at gøre brug af denne type."
+"D-Bus-metode eller -meddelelse.\n"
+"\n"
+"Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug "
+"af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
@@ -415,7 +431,7 @@ msgid "A short integer, type ‘n’"
 msgstr "Et kort heltal, type “n”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "Et 16-bit heltal med fortegn. Se også nøglen “integer-16-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
@@ -431,7 +447,7 @@ msgid "An unsigned short integer, type ‘q’"
 msgstr "Et kort heltal uden fortegn, type “q”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "Et 16-bit heltal uden fortegn. Se også nøglen “integer-16-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
@@ -439,7 +455,7 @@ msgid "An usual integer, type ‘i’"
 msgstr "Et almindeligt heltal, type “i”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "Et 32-bit heltal med fortegn. Se også nøglen “integer-32-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
@@ -447,7 +463,7 @@ msgid "An unsigned usual integer, type ‘u’"
 msgstr "Et almindeligt heltal uden fortegn, type “u”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "Et 32-bit heltal uden fortegn. Se også nøglen “integer-32-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
@@ -455,7 +471,7 @@ msgid "A long integer, type ‘x’"
 msgstr "Et langt heltal, type “x”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "Et 64-bit heltal med fortegn. Se også nøglen “integer-64-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
@@ -463,7 +479,7 @@ msgid "An unsigned long integer, type ‘t’"
 msgstr "Et langt heltal uden fortegn, type “t”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "Et 64-bit heltal uden fortegn. Se også nøglen “integer-64-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
@@ -488,7 +504,7 @@ msgstr "En brugerdefineret type, her “(ii)”"
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "Dconf-redigering lader dig redigere enhver indstillingstype som undersøttes "
 "af GSettings og falder tilbage til en streng når den ikke har en bedre måde "
