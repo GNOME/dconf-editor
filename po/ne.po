@@ -249,7 +249,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid "A bytestring, type ‘ay’"
-msgstr "बाइट स्ट्रिंग , 'ay’ प्रकार"
+msgstr "बाइट स्ट्रिंग , 'ay' प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid ""
@@ -275,10 +275,10 @@ msgstr "अपरिचित बाँणको प्रकार %d"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message. If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
@@ -340,7 +340,7 @@ msgid "A short integer, type ‘n’"
 msgstr "आधार-N इन्टिजर"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
@@ -356,7 +356,7 @@ msgid "An unsigned short integer, type ‘q’"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
@@ -365,7 +365,7 @@ msgid "An usual integer, type ‘i’"
 msgstr "गम्बेल (प्रकार १)"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
@@ -373,7 +373,7 @@ msgid "An unsigned usual integer, type ‘u’"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
@@ -381,7 +381,7 @@ msgid "A long integer, type ‘x’"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
@@ -389,7 +389,7 @@ msgid "An unsigned long integer, type ‘t’"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
@@ -416,7 +416,7 @@ msgstr "गम्बेल (प्रकार २)"
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "डिकन्फ सम्पादकले तपाईंलाई जिसेटिङ्ग द्वारा समर्थित कुनै पनि सेटिङ्ग प्रकार टाइप गर्न दिन्छ, "
 "स्ट्रिङ्ग प्रविष्टिमा फिर्ता आउँछ जब यसमा राम्रो तरीका छैन। यहाँ दुई ३२ बिटमा हस्ताक्षर "
@@ -460,7 +460,7 @@ msgid ""
 msgstr ""
 "जिसेटिङ्ग ले निस्क्रिय प्रकारको अनुमति दिन्छ, जुन अन्य प्रकारका जस्तै छन् तर \"केही\" मान "
 "लिन सक्दछ। एउटा शुन्य स्ट्रिङ्गले कुनै पनि स्ट्रिङ्गलाई मानको रूपमा मान्न सक्छ, खाली स्ट्रिङ "
-"सहित \"'', वा NULL (केही पनि) हुन सक्छ।"
+"सहित \"''\", वा NULL (केही पनि) हुन सक्छ।"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:223
 #, fuzzy
