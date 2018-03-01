@@ -332,14 +332,17 @@ msgstr "Ročnik vodila D-Bus, vrste »h«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Ročnik je 32-bitno podpisano celo število, ki je po pretvorbi uporabljeno "
-"kot kazalo za polje opisnika datoteke, poslano skupaj s sporočilom D-Bus. V "
-"kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
+"kot kazalo za polje opisnika datoteke, poslano skupaj s sporočilom D-Bus.\n"
+"\n"
+"V kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
@@ -348,11 +351,14 @@ msgstr "Pot predmeta vodila D-Bus, vrste »o«"
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"the bus.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
-"Pot predmeta določa predmete vodila D-Bus na podanem cilju vodila. V kolikor "
-"z vodilom ni posebnih povezav, te vrste ni treba določati."
+"Pot predmeta določa predmete vodila D-Bus na podanem cilju vodila.\n"
+"\n"
+"V kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
@@ -361,12 +367,15 @@ msgstr "Polje poti predmeta vodila D-Bus, vrste »ao«"
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"none: “[]”).\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Polje poti predmeta lahko vključuje poljubno število poti predmeta (vključno "
-"s praznim poljem » [] «. V kolikor z vodilom ni posebnih povezav, te vrste "
-"ni treba določati."
+"s praznim poljem » [] «.\n"
+"\n"
+"V kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
@@ -375,12 +384,15 @@ msgstr "Podpis vodila D-Bus, vrste »g«"
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message. If you are not interacting with D-Bus, then there is no reason to "
-"make use of this type."
+"message.\n"
+"\n"
+"If you are not interacting with D-Bus, then there is no reason to make use "
+"of this type."
 msgstr ""
 "Podpis vodila D-Bus je niz, ki je uporabljen kot vrsta za način vodila "
-"oziroma sporočilo. V kolikor z vodilom ni posebnih povezav, te vrste ni "
-"treba določati."
+"oziroma sporočilo.\n"
+"\n"
+"V kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
@@ -407,7 +419,7 @@ msgid "A short integer, type ‘n’"
 msgstr "Kratko celo število, vpis »n«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "16-bitno podpisano celo število. Oglejte si tudi ključ »integer-16-unsigned«."
 
@@ -424,7 +436,7 @@ msgid "An unsigned short integer, type ‘q’"
 msgstr "Nepodpisano kratko celo število vrste »q«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-16-signed«."
 
@@ -433,7 +445,7 @@ msgid "An usual integer, type ‘i’"
 msgstr "Običajno celo število vrste »i«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32-bitno podpisano celo število. Oglejte si tudi ključ »integer-32-unsigned«."
 
@@ -442,7 +454,7 @@ msgid "An unsigned usual integer, type ‘u’"
 msgstr "Nepodpisano običajno celo število, vpis »u«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-32-signed«."
 
@@ -451,7 +463,7 @@ msgid "A long integer, type ‘x’"
 msgstr "Dolgo celo število vrste »x«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64-bitno podpisano celo število. Oglejte si tudi ključ »integer-64-unsigned«."
 
@@ -460,7 +472,7 @@ msgid "An unsigned long integer, type ‘t’"
 msgstr "Nepodpisano dolgo celo število, vpis »t«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-64-signed«"
 
@@ -486,7 +498,7 @@ msgstr "Vrsta po meri, tukaj »(ii)«"
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
 "Urejevalnik Dconf omogoča urejanje katerekoli nastavitve, ki jo podpira "
 "okolje GSettings, se pa nastavitev povrne na vpisano vrednost, če ni drugače "
