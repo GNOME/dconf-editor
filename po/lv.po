@@ -966,9 +966,9 @@ msgstr[2] "%u gsettings darbības"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] "un %u dconf darbība ir aizturēta."
-msgstr[1] "un %u dconf darbības ir aizturētas."
-msgstr[2] "un %u dconf darbības ir aizturētas."
+msgstr[0] " un %u dconf darbība ir aizturēta."
+msgstr[1] " un %u dconf darbības ir aizturētas."
+msgstr[2] " un %u dconf darbības ir aizturētas."
 
 #: editor/registry-info.ui:22
 msgid ""
