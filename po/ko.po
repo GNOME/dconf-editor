@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-25 04:46+0000\n"
-"PO-Revision-Date: 2018-02-25 22:53+0900\n"
+"POT-Creation-Date: 2018-02-26 17:08+0000\n"
+"PO-Revision-Date: 2018-03-03 20:48+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -115,7 +115,7 @@ msgid "The GNOME Project"
 msgstr "그놈 프로젝트"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:467
+#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:476
 msgid "dconf Editor"
 msgstr "dconf 편집기"
 
@@ -797,40 +797,40 @@ msgstr "알 수 없는 스키마:"
 msgid "No unknown schemas."
 msgstr "알 수 없는 스키마가 없습니다."
 
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:323
 msgid "Only one window can be opened for now.\n"
 msgstr "현재는 하나의 창만 열 수 있습니다.\n"
 
-#: editor/dconf-editor.vala:336
+#: editor/dconf-editor.vala:342
 msgid "Cannot understand: too many arguments.\n"
 msgstr "이해 불가: 인자가 너무 많습니다.\n"
 
-#: editor/dconf-editor.vala:346
+#: editor/dconf-editor.vala:352
 msgid "Cannot understand second argument in this context.\n"
 msgstr "이 문맥에서 두번째 인자를 이해할 수 없습니다.\n"
 
-#: editor/dconf-editor.vala:363
+#: editor/dconf-editor.vala:372
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "이해 불가: 두번째 인자에 '/' 문자가 들어 있습니다.\n"
 
-#: editor/dconf-editor.vala:377
+#: editor/dconf-editor.vala:386
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "스키마 경로는 “/”로 시작하고 끝나야 합니다.\n"
 
-#: editor/dconf-editor.vala:390
+#: editor/dconf-editor.vala:399
 msgid "Cannot understand: space character in argument.\n"
 msgstr "이해 불가: 인자에 공백 문자가 들어 있습니다.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:414
+#. #: editor/dconf-editor.vala:423
 msgid "Copied to clipboard"
 msgstr "클립보드에 복사됨"
 
-#: editor/dconf-editor.vala:469
+#: editor/dconf-editor.vala:478
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "프로그램의 내부 설정 값을 보고 편집하는 프로그램."
 
-#: editor/dconf-editor.vala:470
+#: editor/dconf-editor.vala:479
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
@@ -840,7 +840,7 @@ msgstr ""
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
 "Copyright © 2017-2018 – Davi da Silva Böger"
 
-#: editor/dconf-editor.vala:474
+#: editor/dconf-editor.vala:483
 msgid "translator-credits"
 msgstr ""
 "조성호 <darkcircle.0426@gmail.com>, 2012, 2013\n"
@@ -871,66 +871,71 @@ msgstr "시작 매핑을 사용하지 않습니다."
 msgid "Schema is not installed on given path."
 msgstr "주어진 경로에 스키마를 설치하지 않았습니다."
 
-#: editor/dconf-window.vala:285
+#: editor/dconf-window.vala:156
+#, c-format
+msgid "Unknown schema “%s”."
+msgstr "알 수 없는 스키마 “%s”"
+
+#: editor/dconf-window.vala:286
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "dconf 편집기를 사용해 주셔서 감사합니다. 이 프로그램으로 설정을 편집합니다."
 
-#: editor/dconf-window.vala:286
+#: editor/dconf-window.vala:287
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "옵션에 따라 잘못 바꾸면 프로그램 실행에 문제가 있을 수도 있습니다. 그러니 주"
 "의하십시오."
 
-#: editor/dconf-window.vala:287
+#: editor/dconf-window.vala:288
 msgid "I’ll be careful."
 msgstr "주의하겠습니다."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:291
+#: editor/dconf-window.vala:292
 msgid "Show this dialog next time."
 msgstr "다음에 이 대화 창 표시."
 
-#: editor/dconf-window.vala:411
+#: editor/dconf-window.vala:412
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "현재 “%s” 폴더가 비었습니다."
 
 #. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:421
+#: editor/dconf-window.vala:422
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "“%s” 키를 삭제했습니다."
 
-#: editor/dconf-window.vala:656
+#: editor/dconf-window.vala:657
 msgid "Copy descriptor"
 msgstr "디스크립터 복사"
 
-#: editor/dconf-window.vala:662
+#: editor/dconf-window.vala:663
 msgid "Reset visible keys"
 msgstr "보이는 키 초기화"
 
-#: editor/dconf-window.vala:663
+#: editor/dconf-window.vala:664
 msgid "Reset view recursively"
 msgstr "재귀적으로 뷰 초기화"
 
-#: editor/dconf-window.vala:671
+#: editor/dconf-window.vala:672
 msgid "Enter delay mode"
 msgstr "지연 모드 사용"
 
-#: editor/dconf-window.vala:736
+#: editor/dconf-window.vala:737
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "같은 마우스 단추를 뒤로 및 앞으로 가는데 사용하도록 설정했습니다. 아무 것도 "
 "하지 않습니다."
 
-#: editor/dconf-window.vala:996
+#: editor/dconf-window.vala:997
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "“%s” 키를 찾을 수 없습니다."
 
-#: editor/dconf-window.vala:1000
+#: editor/dconf-window.vala:1001
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "요청한 “%s” 폴더에 아무 것도 없습니다."
