@@ -467,7 +467,7 @@ msgid ""
 "to make use of this type."
 msgstr ""
 "Un array di percors di ogjets al pues contignî un cualsisei numar di percors "
-"(ancje nissun: \"[]\"). Gjavant il câs che si stedi interagjint cun D-Bus, "
+"(ancje nissun: “[]”). Gjavant il câs che si stedi interagjint cun D-Bus, "
 "no'nd è altis motîfs par doprâ chest gjenar."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:257
@@ -1386,8 +1386,8 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Dopre la peraule clâf \"nothing\" par meti un gjenar di pussibilitât (che al "
-"tache cun \"m\") al so valôr vueit. Stringhis, firmis e percors di ogjet a "
+"Dopre la peraule clâf “nothing” par meti un gjenar di pussibilitât (che al "
+"tache cun “m”) al so valôr vueit. Stringhis, firmis e percors di ogjet a "
 "varessin di jessi sierâts tra virgulutis."
 
 #: editor/registry-info.vala:409
@@ -1403,8 +1403,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Dopre la peraule clâf \"nothing\" par meti un gjenar di pussibilitât (che al "
-"tache cun \"m\") al so valôr vueit."
+"Dopre la peraule clâf “nothing” par meti un gjenar di pussibilitât (che al "
+"tache cun “m”) al so valôr vueit."
 
 #: editor/registry-search.vala:30
 msgid "No matches"
