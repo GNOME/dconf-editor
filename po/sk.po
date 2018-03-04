@@ -331,18 +331,15 @@ msgstr "Typ obsluhy D-Bus, typ „h”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid ""
-"The handle type is a 32-bit signed integer value that is, by convention, "
-"used as an index into an array of file descriptors that are sent alongside a "
-"D-Bus message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message. If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 "Typ obsluhy je 32 bitová hodnota so znamienkom, ktorý je podľa zvyku "
 "používaný ako ukazovateľ na pole popisovačov súborov, ktoré sú zasielané "
-"spolu so správou zbernice D-Bus.\n"
-"\n"
-"Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
+"spolu so správou zbernice D-Bus. Ak nepracujete so zbernicou D-Bus, potom "
+"nie je dôvod na použitie tohto typu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:130
 msgid "A D-Bus object path, type ‘o’"
@@ -351,15 +348,12 @@ msgstr "Cesta objektu zbernice D-Bus, typ „o”"
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"the bus. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 "Cesta objektu sa používa na identifikovanie objektov zbernice D-Bus podľa "
-"daného umiestnenia na zbernici.\n"
-"\n"
-"Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
+"daného umiestnenia na zbernici. Ak nepracujete so zbernicou D-Bus, potom nie "
+"je dôvod na použitie tohto typu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:137
 msgid "A D-Bus object path array, type ‘ao’"
@@ -368,15 +362,12 @@ msgstr "Pole ciest objektov D-Bus, typ „ao”"
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”).\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 "Pole ciest objektov by malo obsahovať ľubovoľný počet ciest objektov "
-"(vrátane žiadnej: „[]”).\n"
-"\n"
-"Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
+"(vrátane žiadnej: „[]”). Ak nepracujete so zbernicou D-Bus, potom nie je "
+"dôvod na použitie tohto typu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
 msgid "A D-Bus signature, type ‘g’"
@@ -385,15 +376,12 @@ msgstr "Podpis D-Bus, typ „g”"
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"message. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 "Podpis zbernice D-Bus je reťazec používaný ako typ podpisu pre metódu alebo "
-"správu zbernice D-Bus.\n"
-"\n"
-"Ak nepracujete so zbernicou D-Bus, potom nie je dôvod na použitie tohto typu."
+"správu zbernice D-Bus. Ak nepracujete so zbernicou D-Bus, potom nie je dôvod "
+"na použitie tohto typu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "A double, type ‘d’"
@@ -420,7 +408,7 @@ msgid "A short integer, type ‘n’"
 msgstr "Krátke celé číslo, typ „n”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "16 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-16-unsigned”."
 
@@ -438,7 +426,7 @@ msgid "An unsigned short integer, type ‘q’"
 msgstr "Krátke celé číslo bez znamienka, typ „q”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-16-signed”."
 
@@ -447,7 +435,7 @@ msgid "An usual integer, type ‘i’"
 msgstr "Celé číslo, typ „i”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-32-unsigned”."
 
@@ -456,7 +444,7 @@ msgid "An unsigned usual integer, type ‘u’"
 msgstr "Celé číslo bez znamienka, typ „u”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-32-signed”."
 
@@ -465,7 +453,7 @@ msgid "A long integer, type ‘x’"
 msgstr "Dlhé celé číslo, typ „x”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-64-unsigned”."
 
@@ -474,7 +462,7 @@ msgid "An unsigned long integer, type ‘t’"
 msgstr "Dlhé celé číslo bez znamienka, typ „t”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-64-signed”."
 
@@ -500,7 +488,7 @@ msgstr "Vlastný typ, typ „(ii)”"
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32-bit signed integers."
+"tuple of two 32bit signed integers."
 msgstr ""
 "Editor systému Dconf umožňuje upraviť nastavenia typu podporvaného v triede "
 "GSettings, ktoré sa premenia na reťazec, ak neexistuje lepší spôsob "
@@ -508,7 +496,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A string, type ‘s’"
-msgstr "Reťazec, typ „s”"
+msgstr "Reťazec, typ \"s\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid ""

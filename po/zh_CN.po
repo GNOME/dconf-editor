@@ -147,8 +147,8 @@ msgstr "是否还原上次视图的标志"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:9
 msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in "
-"the “saved-view” key."
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
 msgstr ""
 "如果设置为“true”，Dconf 编辑器会在运行时尝试跳至“saved-view”键值描述的路径。"
 
@@ -158,7 +158,7 @@ msgstr "要还原的上次查看的路径"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:11
 msgid ""
-"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
 "如果“restore-view”键值设置为“true”，Dconf 编辑器会在运行时尝试跳至这个路径。"
@@ -169,7 +169,7 @@ msgstr "显示初始警告"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:13
 msgid ""
-"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr "如果设置为“true”，Dconf 编辑器启动时会打开弹出窗口提醒用户小心操作。"
 
@@ -178,7 +178,7 @@ msgid "A flag to enable small rows for keys list"
 msgstr "对键列表启用小行的标记"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:15
-msgid "If “true”, the keys list use smaller rows."
+msgid "If 'true', the keys list use smaller rows."
 msgstr "如果为 true，键列表使用较小的行。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:16
@@ -186,7 +186,7 @@ msgid "A flag to enable small rows for bookmarks list"
 msgstr "对书签列表启用小行的标记"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:17
-msgid "If “true”, the bookmarks list use smaller rows."
+msgid "If 'true', the bookmarks list use smaller rows."
 msgstr "如果为 true，书签列表中使用较小的行。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:18
@@ -195,13 +195,13 @@ msgstr "更改键值更改请求的行为"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:19
 msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased "
+"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The “safe” value asks for confirmation in "
+"including intermediate states. The 'safe' value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
+"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
 "values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The “always-delay” value adds "
+"change path whereas the second dismiss it. The 'always-delay' value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 "不鼓励“unsafe”的数值：对于具有非特殊类型的键，每次条目中发生更改时键值都会更"
@@ -237,28 +237,28 @@ msgstr ""
 "进”命令。取值范围是 6 到 14。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
-msgid "A boolean, type ‘b’"
-msgstr "布尔值，类型 “b”"
+msgid "A boolean, type \"b\""
+msgstr "布尔值，类型 \"b\""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
-msgid "Booleans can only take two values, “true” or “false”."
+msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgstr "布尔类只能取两种数值，“true”或“false”。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:22
-msgid "A nullable boolean, type ‘mb’"
+msgid "A nullable boolean, type \"mb\""
 msgstr "可空布尔值，类型“mb”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:23
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a “nothing” value. A nullable boolean can only take three values, "
-"“true”, “false” and “nothing”."
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
 msgstr ""
 "GSettings 允许使用“可空”类型。这种类型其他类型相似，但可以接受“nothing”数值。"
 "可空布尔值只能为三种数值，“true”、“false”和“nothing”。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:24
-msgid "A byte (unsigned), type ‘y’"
+msgid "A byte (unsigned), type \"y\""
 msgstr "无符号字节，类型“y”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:25
@@ -268,7 +268,7 @@ msgid ""
 msgstr "字节数值为取值 0 到 255 的整数，可以用于传递字符。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:26
-msgid "A bytestring, type ‘ay’"
+msgid "A bytestring, type \"ay\""
 msgstr "字节串，类型“ay”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:27
@@ -281,7 +281,7 @@ msgstr ""
 "尾的空字符作为最后一个字符包含入数组。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:28
-msgid "A bytestring array, type ‘aay’"
+msgid "A bytestring array, type \"aay\""
 msgstr "字节串数组，类型“aay”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:29
@@ -291,14 +291,14 @@ msgid ""
 msgstr "这是字节串数组的类型。字节串类型通常用来传递可能不为合法 utf8 的字串。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:30
-msgid "A D-Bus handle type, type ‘h’"
+msgid "A D-Bus handle type, type \"h\""
 msgstr "D-Bus 句柄类型，类型“h”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:31
 msgid ""
-"The handle type is a 32-bit signed integer value that is, by convention, "
-"used as an index into an array of file descriptors that are sent alongside a "
-"D-Bus message.\n"
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message.\n"
 "\n"
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
@@ -309,7 +309,7 @@ msgstr ""
 "如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:34
-msgid "A D-Bus object path, type ‘o’"
+msgid "A D-Bus object path, type \"o\""
 msgstr "D-Bus 对象路径，类型“o”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:35
@@ -325,13 +325,13 @@ msgstr ""
 "如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:38
-msgid "A D-Bus object path array, type ‘ao’"
+msgid "A D-Bus object path array, type \"ao\""
 msgstr "D-Bus 对象路径数组，类型“ao”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:39
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”).\n"
+"none: \"[]\").\n"
 "\n"
 "If you are not interacting with D-Bus, then there is no reason to make use "
 "of this type."
@@ -341,7 +341,7 @@ msgstr ""
 "如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:42
-msgid "A D-Bus signature, type ‘g’"
+msgid "A D-Bus signature, type \"g\""
 msgstr "D-Bus 签名，类型“g”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:43
@@ -357,7 +357,7 @@ msgstr ""
 "如果您不与 D-Bus 交互，则没有理由使用到这个类型。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:46
-msgid "A double, type ‘d’"
+msgid "A double, type \"d\""
 msgstr "双精度，类型“d”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:47
@@ -370,16 +370,16 @@ msgstr "五选项枚举"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:49
 msgid ""
-"Enumerations could be done either with the “enum” attribute, or with a "
-"“choices” tag."
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
 msgstr "枚举可以使用“enum”属性或“choices”标签完成。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:50
-msgid "A short integer, type ‘n’"
+msgid "A short integer, type \"n\""
 msgstr "短整数，类型“n”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:51
-msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr "16 位有符号整数。另请参阅“integer-16-unsigned”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:52
@@ -387,47 +387,47 @@ msgid "Flags: choose-colors-you-love"
 msgstr "标志：choose-colors-you-love"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:53
-msgid "Flags could be set by the “enum” attribute."
+msgid "Flags could be set by the \"enum\" attribute."
 msgstr "标志可以由“enum”属性设置。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:54
-msgid "An unsigned short integer, type ‘q’"
+msgid "An unsigned short integer, type \"q\""
 msgstr "无符号短整数，类型“q”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:55
-msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr "16 位无符号整数。另请参阅“integer-16-signed”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:56
-msgid "An usual integer, type ‘i’"
+msgid "An usual integer, type \"i\""
 msgstr "一般整数，类型“i”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:57
-msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr "32 位有符号整数。另请参阅“integer-32-unsigned”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:58
-msgid "An unsigned usual integer, type ‘u’"
+msgid "An unsigned usual integer, type \"u\""
 msgstr "无符号一般整数，类型“u”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:59
-msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr "32 位无符号整数。另请参阅“integer-32-signed”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:60
-msgid "A long integer, type ‘x’"
+msgid "A long integer, type \"x\""
 msgstr "长整数，类型“x”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:61
-msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr "64 位有符号整数。另请参阅“integer-64-unsigned”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:62
-msgid "An unsigned long integer, type ‘t’"
+msgid "An unsigned long integer, type \"t\""
 msgstr "无符号长整数，类型“t”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:63
-msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr "64 位无符号整数。另请参阅“integer-64-signed”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:64
@@ -438,59 +438,60 @@ msgstr "数字，带范围限制"
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -2 and 10."
+"integer could only take a value between -5 and 9."
 msgstr ""
 "每个位数的设置值 (各个类型的整型和无符号的整型，及双精度浮点类型) 可限制为自"
-"订的数值范围。例如，此整数只能使用 -2 到 10 之间的一个数值。"
+"订的数值范围。例如，此整数只能使用 -5 到 9 之间的一个数值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
-msgid "A custom type, here ‘(ii)’"
+msgid "A custom type, here \"(ii)\""
 msgstr "自定义类型，此处为“(ii)”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:67
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32-bit signed integers."
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
 msgstr ""
 "Dconf 编辑器让您可以编辑任何 GSettings 支持的设置值类型，当其没有更好方案时则"
 "回退到字串项目。这里有两个 32 位有符号整数元组。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:68
-msgid "A string, type ‘s’"
+msgid "A string, type \"s\""
 msgstr "字串，类型“s”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:69
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''” "
-"is not the same as NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
 msgstr ""
 "字串类型可以接受任何 utf8 字串。请注意空字串“''”不是 NULL (空值)；另请参"
-"阅“string-nullable”键值。"
+"阅“string-nullable”键值。。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
-msgid "A string array, type ‘as’"
+msgid "A string array, type \"as\""
 msgstr "字串数组，类型“as”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:71
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
-"an empty array, “[]”."
+"an empty array, \"[]\"."
 msgstr ""
-"一个字符串数组，包含任意数量的任何长度的字符串。可以是一个空数组，“[]”。"
+"一个字符串数组，包含任意数量的任何长度的字符串。可以是一个空数组，\"[]\"。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
-msgid "A nullable string, type ‘ms’"
+msgid "A nullable string, type \"ms\""
 msgstr "可空字串，类型“ms”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:73
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a “nothing” value. A nullable string can take any string as value, "
-"including the empty string “''”, or can be NULL (nothing)."
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
 "GSettings 允许使用“可空”类型。这种类型其他类型相似，但可以接受“nothing”数值。"
-"可空字串可以是任何字串值（包括空字串 “''”），或者 NULL (空值)。"
+"可空字串可以是任何字串值（包括空字串 \"''\"），或者 NULL (空值)。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
 msgid "A 1-choice enumeration"
@@ -498,7 +499,7 @@ msgstr "单选项枚举"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:75
 msgid ""
-"An enumeration could contain only one item, but that’s probably an error. "
+"An enumeration could contain only one item, but that's probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
 "一处枚举只能包含一个项目，但这可能是一个错误。 Dconf 系统配置编辑器会在这种情"
@@ -975,17 +976,17 @@ msgstr "此路径中没有键值"
 
 #: ../editor/registry-view.vala:170
 #, c-format
-msgid "Cannot find folder “%s”."
+msgid "Cannot find folder \"%s\"."
 msgstr "找不到文件夹“%s”。"
 
 #: ../editor/registry-view.vala:188
 #, c-format
-msgid "Cannot find key “%s” here."
+msgid "Cannot find key \"%s\" here."
 msgstr "这里找不到设置键“%s”。"
 
 #: ../editor/registry-view.vala:194
 #, c-format
-msgid "Key “%s” has been removed."
+msgid "Key \"%s\" has been removed."
 msgstr "已经移除设置键“%s”。"
 
 #~ msgid "Double [%s..%s]"

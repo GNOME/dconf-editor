@@ -152,8 +152,8 @@ msgstr "Μια σημαία που θα επαναφέρετε στην τελε
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in "
-"the “saved-view” key."
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
 msgstr ""
 "Αν είναι αληθές, ο επεξεργαστής Dconf θα προσπαθήσει να περιηγηθεί στην "
 "διαδρομή του κλειδιού «saved-view»."
@@ -164,7 +164,7 @@ msgstr "Μια διαδρομή που θα επαναφέρεται στην τ
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
-"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
 "Αν είναι αληθές το κλειδί «restore-view», ο επεξεργαστής Dconf θα "
@@ -176,7 +176,7 @@ msgstr "Εμφάνιση αρχικής προειδοποίησης"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
-"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
 "Αν είναι αληθές, όταν εκκινηθεί ο επεξεργαστής Dconf θα ανοίξει ένα "
@@ -188,7 +188,7 @@ msgid "A flag to enable small rows for keys list"
 msgstr "Μια σημαία για την ενεργοποίηση της λειτουργίας πλήρους οθόνης"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
-msgid "If “true”, the keys list use smaller rows."
+msgid "If 'true', the keys list use smaller rows."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
@@ -196,7 +196,7 @@ msgid "A flag to enable small rows for bookmarks list"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
-msgid "If “true”, the bookmarks list use smaller rows."
+msgid "If 'true', the bookmarks list use smaller rows."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
@@ -205,13 +205,13 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:69
 msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased "
+"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The “safe” value asks for confirmation in "
+"including intermediate states. The 'safe' value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
+"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
 "values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The “always-delay” value adds "
+"change path whereas the second dismiss it. The 'always-delay' value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
@@ -246,30 +246,30 @@ msgstr ""
 "παράθυρο περιηγητή. Οι επιτρεπτές τιμές είναι από 6 μέχρι 14."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
-msgid "A boolean, type ‘b’"
-msgstr "Μια λογική μεταβλητή, πληκτρολογήστε «b»"
+msgid "A boolean, type \"b\""
+msgstr "Μια λογική μεταβλητή, πληκτρολογήστε \"b\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:93
-msgid "Booleans can only take two values, “true” or “false”."
+msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgstr "Μια λογική μεταβλητή μπορεί να πάρει δύο τιμές, «true» ή «false»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:97
-msgid "A nullable boolean, type ‘mb’"
-msgstr "Μια λογική μεταβλητή nullable, πληκτρολογήστε «mb»"
+msgid "A nullable boolean, type \"mb\""
+msgstr "Μια λογική μεταβλητή nullable, πληκτρολογήστε \"mb\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a “nothing” value. A nullable boolean can only take three values, "
-"“true”, “false” and “nothing”."
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
 msgstr ""
 "Το GSettings επιτρέπει τύπους nullable, που είναι όμοιοι με άλλους τύπους "
 "αλλά μπορούν να πάρουν την τιμή «nothing». Μια λογική τιμή nullable μπορεί "
 "να πάρει τρεις τιμές, «true», «false» και «nothing»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
-msgid "A byte (unsigned), type ‘y’"
-msgstr "Ένα byte (χωρίς πρόσημο), πληκτρολογήστε «y»"
+msgid "A byte (unsigned), type \"y\""
+msgstr "Ένα byte (χωρίς πρόσημο), πληκτρολογήστε \"y\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid ""
@@ -280,8 +280,8 @@ msgstr ""
 "για να μεταβιβάσει χαρακτήρες."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:107
-msgid "A bytestring, type ‘ay’"
-msgstr "Ένα bytestring, πληκτρολογήστε «ay»"
+msgid "A bytestring, type \"ay\""
+msgstr "Ένα bytestring, πληκτρολογήστε \"ay\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
 msgid ""
@@ -295,8 +295,8 @@ msgstr ""
 "χαρακτήρας του πίνακα."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:112
-msgid "A bytestring array, type ‘aay’"
-msgstr "Ένας πίνακας bytestring, πληκτρολογήστε «aay»"
+msgid "A bytestring array, type \"aay\""
+msgstr "Ένας πίνακας bytestring, πληκτρολογήστε \"aay\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid ""
@@ -308,17 +308,16 @@ msgstr ""
 "έγκυρα utf8."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:117
-msgid "A D-Bus handle type, type ‘h’"
-msgstr "Ένας τύπος χειριστή D-Bus, πληκτρολογήστε «h»"
+msgid "A D-Bus handle type, type \"h\""
+msgstr "Ένας τύπος χειριστή D-Bus, πληκτρολογήστε \"h\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:118
+#, fuzzy
 msgid ""
-"The handle type is a 32-bit signed integer value that is, by convention, "
-"used as an index into an array of file descriptors that are sent alongside a "
-"D-Bus message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message. If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 "Ο τύπος χειριστή είναι ένας ακέραιος 32bit με πρόσημο, που κατά σύμβαση "
 "χρησιμοποιείται ως δείκτης σε πίνακα με περιγραφείς αρχείου, που "
@@ -328,16 +327,15 @@ msgstr ""
 "τον τύπο."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
-msgid "A D-Bus object path, type ‘o’"
-msgstr "Μια διαδρομή αντικειμένου D-Bus, πληκτρολογήστε «o»"
+msgid "A D-Bus object path, type \"o\""
+msgstr "Μια διαδρομή αντικειμένου D-Bus, πληκτρολογήστε \"o\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:125
+#, fuzzy
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"the bus. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 "Μια διαδρομή αντικειμένου χρησιμοποιείται για να αναγνωρίσει αντικείμενα D-"
 "Bus σε έναν ορισμένο προορισμό του διαύλου.\n"
@@ -346,34 +344,32 @@ msgstr ""
 "τον τύπο."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
-msgid "A D-Bus object path array, type ‘ao’"
-msgstr "Ένας πίνακας διαδρομής αντικειμένου D-Bus, πληκτρολογήστε «ao»"
+msgid "A D-Bus object path array, type \"ao\""
+msgstr "Ένας πίνακας διαδρομής αντικειμένου D-Bus, πληκτρολογήστε \"ao\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:132
+#, fuzzy
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”).\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"none: \"[]\"). If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 "Ένας πίνακας διαδρομής αντικεμένου μπορεί να περιέχει οποιονδήποτε αριθμό "
-"διαδρομών αντικειμένων (και του κενού: «[]»).\n"
+"διαδρομών αντικειμένων (και του κενού: \"[]\").\n"
 "\n"
 "Αν δεν αλληλεπιδράτε με το D-Bus, τότε δεν υπάρχει λόγος να χρησιμοποιήσετε "
 "τον τύπο."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A D-Bus signature, type ‘g’"
-msgstr "Μια υπογραφή D-Bus, πληκτρολογήστε «g»"
+msgid "A D-Bus signature, type \"g\""
+msgstr "Μια υπογραφή D-Bus, πληκτρολογήστε \"g\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:139
+#, fuzzy
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"message. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 "Μια υπογραφή D-Bus είναι μια συμβολοσειρά που χρησιμοποιείται ως τύπος για "
 "μια μέθοδο ή μήνυμα D-Bus.\n"
@@ -382,8 +378,8 @@ msgstr ""
 "τον τύπο."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-msgid "A double, type ‘d’"
-msgstr "Μια μεταβλητή διπλής ακρίβειας, πληκτρολογήστε «d»"
+msgid "A double, type \"d\""
+msgstr "Μια μεταβλητή διπλής ακρίβειας, πληκτρολογήστε \"d\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:146
 msgid "A double value could represent any real number."
@@ -397,18 +393,18 @@ msgstr "Μια αρίθμηση 5 επιλογών"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid ""
-"Enumerations could be done either with the “enum” attribute, or with a "
-"“choices” tag."
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
 msgstr ""
-"Η αρίθμηση μπορεί να γίνει είτε με ένα όρισμα «enum», ή με μια σημαία "
-"«choices»."
+"Η αρίθμηση μπορεί να γίνει είτε με ένα όρισμα \"enum\", ή με μια σημαία "
+"\"choices\"."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:155
-msgid "A short integer, type ‘n’"
-msgstr "Ένας ακέραιος short, πληκτρολογήστε «n»"
+msgid "A short integer, type \"n\""
+msgstr "Ένας ακέραιος short, πληκτρολογήστε \"n\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:156
-msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
 "Ένας ακέραιος 16bit με πρόσημο. Δείτε επίσης το κλειδί «integer-16-unsigned»."
 
@@ -417,53 +413,53 @@ msgid "Flags: choose-colors-you-love"
 msgstr "Σημαίες: choose-colors-you-love"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
-msgid "Flags could be set by the “enum” attribute."
+msgid "Flags could be set by the \"enum\" attribute."
 msgstr "Σημαίες που μπορούν να οριστούν από το γνώρισμα «enum»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:165
-msgid "An unsigned short integer, type ‘q’"
-msgstr "Ένας ακέραιος short χωρίς πρόσημο, πληκτρολογήστε «q»"
+msgid "An unsigned short integer, type \"q\""
+msgstr "Ένας ακέραιος short χωρίς πρόσημο, πληκτρολογήστε \"q\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
 "Ένας ακέραιος 16bit χωρίς πρόσημο. Δείτε επίσης το κλειδί «integer-16-"
 "signed»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:170
-msgid "An usual integer, type ‘i’"
-msgstr "Ένας ακέραιος, πληκτρολογήστε «i»"
+msgid "An usual integer, type \"i\""
+msgstr "Ένας ακέραιος, πληκτρολογήστε \"i\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
-msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
 "Ένας ακέραιος 32bit με πρόσημο. Δείτε επίσης το κλειδί «integer-32-unsigned»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
-msgid "An unsigned usual integer, type ‘u’"
-msgstr "Ένας ακέραιος χωρίς πρόσημο, πληκτρολογήστε «u»"
+msgid "An unsigned usual integer, type \"u\""
+msgstr "Ένας ακέραιος χωρίς πρόσημο, πληκτρολογήστε \"u\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
-msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
 "Ένας ακέραιος 32bit χωρίς πρόσημο. Δείτε επίσης το κλειδί «integer-32-"
 "signed»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
-msgid "A long integer, type ‘x’"
+msgid "A long integer, type \"x\""
 msgstr "Ένας ακέραιος long, πληκτρολογήστε «x»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
-msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
 "Ένας ακέραιος 64bit με πρόσημο. Δείτε επίσης το κλειδί «integer-64-unsigned»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
-msgid "An unsigned long integer, type ‘t’"
-msgstr "Ένας ακέραιος long χωρίς πρόσημο, πληκτρολογήστε «t»"
+msgid "An unsigned long integer, type \"t\""
+msgstr "Ένας ακέραιος long χωρίς πρόσημο, πληκτρολογήστε \"t\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
-msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
 "Ένας ακέραιος 64bit χωρίς πρόσημο. Δείτε επίσης το κλειδί «integer-64-"
 "signed»."
@@ -483,66 +479,68 @@ msgstr ""
 "παράδειγμα, αυτός ο ακέραιος μπορεί να πάρει μια τιμή μεταξύ -2 και 10."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
-msgid "A custom type, here ‘(ii)’"
-msgstr "Ένας προσαρμοσμένος τύπος, εδώ «(ii)»"
+msgid "A custom type, here \"(ii)\""
+msgstr "Ένας προσαρμοσμένος τύπος, εδώ \"(ii)\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32-bit signed integers."
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
 msgstr ""
 "Ο επεξεργαστής Dconf σας επιτρέπει να επεξεργαστείτε κάθε τύπο ρύθμισης του "
 "GSettings, χρησιμοποιώντας μια συμβολοσειρά όταν δεν υπάρχει ο κατάλληλος "
 "τύπος. Εδώ είναι μια λίστα δύο ακεραίων 32bit με πρόσημο."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:202
-msgid "A string, type ‘s’"
-msgstr "Μια συμβολοσειρά, πληκτρολογήστε «s»"
+msgid "A string, type \"s\""
+msgstr "Μια συμβολοσειρά, πληκτρολογήστε \"s\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''” "
-"is not the same as NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
 msgstr ""
 "Μια συμβολοσειρά μπορεί να δεχτεί οποιαδήποτε συμβολοσειρά σε utf8. Προσέχτε "
-"ότι μια κενή συμβολοσειρά «''» δεν είναι το ίδιο με το NULL (τίποτα). "
-"Δείτε επίσης το κλειδί «string-nullable»"
+"ότι μια κενή συμβολοσειρά \"''\" δεν είναι το ίδιο με το NULL (τίποτα). "
+"Δείτε επίσης το κλειδί \"string-nullable\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:207
-msgid "A string array, type ‘as’"
-msgstr "Ένας πίνακας συμβολοσειρών, πληκτρολογήστε «as»"
+msgid "A string array, type \"as\""
+msgstr "Ένας πίνακας συμβολοσειρών, πληκτρολογήστε \"as\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
-"an empty array, “[]”."
+"an empty array, \"[]\"."
 msgstr ""
 "Ένας πίνακας συμβολοσειρών μπορεί να περιέχει αριθμούς και συμβολοσειρές "
-"οποιουδήποτε μεγέθους. Μπορεί να περιέχει και τον κενό πίνακα, «[]»."
+"οποιουδήποτε μεγέθους. Μπορεί να περιέχει και τον κενό πίνακα, \"[]\"."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
-msgid "A nullable string, type ‘ms’"
-msgstr "Μια συμβολοσειρά nullable, πληκτρολογήστε «ms»"
+msgid "A nullable string, type \"ms\""
+msgstr "Μια συμβολοσειρά nullable, πληκτρολογήστε \"ms\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a “nothing” value. A nullable string can take any string as value, "
-"including the empty string “''”, or can be NULL (nothing)."
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
 "Το GSettings επιτρέπει τύπους nullable, που είναι όμοιοι με άλλους τύπους "
-"αλλά μπορούν να πάρουν την τιμή «nothing». Μια συμβολοσειρά nullable "
+"αλλά μπορούν να πάρουν την τιμή \"nothing\". Μια συμβολοσειρά nullable "
 "μπορεί να πάρει οποιαδήποτε συμβολοσειρά ως τιμή, συμπεριλαμβανομένης της "
-"κενής «''», ή μπορεί να είναι NULL (τίποτα)."
+"κενής \"''\", ή μπορεί να είναι NULL (τίποτα)."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
+#, fuzzy
 msgid "A 1-choice enumeration"
-msgstr ""
+msgstr "Μια αρίθμηση 5 επιλογών"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid ""
-"An enumeration could contain only one item, but that’s probably an error. "
+"An enumeration could contain only one item, but that's probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
 
@@ -647,8 +645,9 @@ msgid "D-Bus signature"
 msgstr "Υπογραφή D-Bus"
 
 #: editor/dconf-model.vala:222
+#, fuzzy
 msgid "Integer"
-msgstr "Ακέραιος"
+msgstr "Ακέραιος [%s..%s]"
 
 #: editor/dconf-model.vala:337
 msgid "True"
@@ -978,8 +977,8 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Χρησιμοποιήστε τη λέξη κλειδί «nothing» για να ορίσετε τον τύπο maybe "
-"(ξεκινά με «m») στην κενή τιμή του. Συμβολοσειρές, υπογραφές και διαδρομές "
+"Χρησιμοποιήστε τη λέξη κλειδί \"nothing\" για να ορίσετε τον τύπο maybe "
+"(ξεκινά με \"m\") στην κενή τιμή του. Συμβολοσειρές, υπογραφές και διαδρομές "
 "αντικειμένων πρέπει να έχουν εισαγωγικά."
 
 #: editor/registry-info.vala:298
@@ -994,8 +993,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Χρησιμοποιήστε τη λέξη κλειδί «nothing» για να ορίσετε τον τύπο maybe "
-"(ξεκινά με «m») στην κενή τιμή του."
+"Χρησιμοποιήστε τη λέξη κλειδί \"nothing\" για να ορίσετε τον τύπο maybe "
+"(ξεκινά με \"m\") στην κενή τιμή του."
 
 #: editor/registry-view.ui:95
 msgid "No keys in this path"
@@ -1003,17 +1002,17 @@ msgstr "Δεν υπάρχουν κλειδιά σε αυτή τη διαδρομ
 
 #: editor/registry-view.vala:170
 #, c-format
-msgid "Cannot find folder “%s”."
+msgid "Cannot find folder \"%s\"."
 msgstr ""
 
 #: editor/registry-view.vala:188
 #, c-format
-msgid "Cannot find key “%s” here."
+msgid "Cannot find key \"%s\" here."
 msgstr ""
 
 #: editor/registry-view.vala:194
 #, c-format
-msgid "Key “%s” has been removed."
+msgid "Key \"%s\" has been removed."
 msgstr ""
 
 #~ msgid "Double [%s..%s]"

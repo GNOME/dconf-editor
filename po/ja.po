@@ -139,8 +139,8 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:39
 msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in "
-"the “saved-view” key."
+"If 'true', Dconf Editor tries at launch to navigate to the path described in "
+"the 'saved-view' key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:43
@@ -149,7 +149,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:44
 msgid ""
-"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
+"If the 'restore-view' key is set to 'true', Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:49
 msgid ""
-"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
+"If 'true', Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
 
@@ -169,7 +169,7 @@ msgid "A flag to enable small rows for keys list"
 msgstr "フルスクリーンモードを有効にするフラグです。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:54
-msgid "If “true”, the keys list use smaller rows."
+msgid "If 'true', the keys list use smaller rows."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
@@ -177,7 +177,7 @@ msgid "A flag to enable small rows for bookmarks list"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:59
-msgid "If “true”, the bookmarks list use smaller rows."
+msgid "If 'true', the bookmarks list use smaller rows."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
@@ -186,13 +186,13 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:69
 msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased "
+"The 'unsafe' value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The “safe” value asks for confirmation in "
+"including intermediate states. The 'safe' value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
+"enums and flags. The 'always-confirm-implicit' and 'always-confirm-explicit' "
 "values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The “always-delay” value adds "
+"change path whereas the second dismiss it. The 'always-delay' value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
@@ -225,26 +225,26 @@ msgstr ""
 "です。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
-msgid "A boolean, type ‘b’"
+msgid "A boolean, type \"b\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:93
-msgid "Booleans can only take two values, “true” or “false”."
+msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:97
-msgid "A nullable boolean, type ‘mb’"
+msgid "A nullable boolean, type \"mb\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a “nothing” value. A nullable boolean can only take three values, "
-"“true”, “false” and “nothing”."
+"take a \"nothing\" value. A nullable boolean can only take three values, "
+"\"true\", \"false\" and \"nothing\"."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
-msgid "A byte (unsigned), type ‘y’"
+msgid "A byte (unsigned), type \"y\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
@@ -254,7 +254,7 @@ msgid ""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:107
-msgid "A bytestring, type ‘ay’"
+msgid "A bytestring, type \"ay\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
@@ -265,7 +265,7 @@ msgid ""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:112
-msgid "A bytestring array, type ‘aay’"
+msgid "A bytestring array, type \"aay\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
@@ -275,60 +275,52 @@ msgid ""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:117
-msgid "A D-Bus handle type, type ‘h’"
+msgid "A D-Bus handle type, type \"h\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:118
 msgid ""
-"The handle type is a 32-bit signed integer value that is, by convention, "
-"used as an index into an array of file descriptors that are sent alongside a "
-"D-Bus message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"The handle type is a 32bit signed integer value that is, by convention, used "
+"as an index into an array of file descriptors that are sent alongside a D-"
+"Bus message. If you are not interacting with D-Bus, then there is no reason "
+"to make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:124
-msgid "A D-Bus object path, type ‘o’"
+msgid "A D-Bus object path, type \"o\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:125
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
-"the bus.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"the bus. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
-msgid "A D-Bus object path array, type ‘ao’"
+msgid "A D-Bus object path array, type \"ao\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:132
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”).\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"none: \"[]\"). If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A D-Bus signature, type ‘g’"
+msgid "A D-Bus signature, type \"g\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:139
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
-"message.\n"
-"\n"
-"If you are not interacting with D-Bus, then there is no reason to make use "
-"of this type."
+"message. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-msgid "A double, type ‘d’"
+msgid "A double, type \"d\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:146
@@ -341,16 +333,16 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid ""
-"Enumerations could be done either with the “enum” attribute, or with a "
-"“choices” tag."
+"Enumerations could be done either with the \"enum\" attribute, or with a "
+"\"choices\" tag."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:155
-msgid "A short integer, type ‘n’"
+msgid "A short integer, type \"n\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:156
-msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
+msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:160
@@ -358,47 +350,47 @@ msgid "Flags: choose-colors-you-love"
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
-msgid "Flags could be set by the “enum” attribute."
+msgid "Flags could be set by the \"enum\" attribute."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:165
-msgid "An unsigned short integer, type ‘q’"
+msgid "An unsigned short integer, type \"q\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
+msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:170
-msgid "An usual integer, type ‘i’"
+msgid "An usual integer, type \"i\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
-msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
+msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
-msgid "An unsigned usual integer, type ‘u’"
+msgid "An unsigned usual integer, type \"u\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
-msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
+msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
-msgid "A long integer, type ‘x’"
+msgid "A long integer, type \"x\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
-msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
+msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
-msgid "An unsigned long integer, type ‘t’"
+msgid "An unsigned long integer, type \"t\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
-msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
+msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
@@ -413,45 +405,46 @@ msgid ""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
-msgid "A custom type, here ‘(ii)’"
+msgid "A custom type, here \"(ii)\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
-"back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32-bit signed integers."
+"back on a string entry when it doesn't have a better way to do. Here is a "
+"tuple of two 32bit signed integers."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:202
-msgid "A string, type ‘s’"
+msgid "A string, type \"s\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''” "
-"is not the same as NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string "
+"\"''\" is not the same as NULL (nothing); see also the \"string-nullable\" "
+"key."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:207
-msgid "A string array, type ‘as’"
+msgid "A string array, type \"as\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
-"an empty array, “[]”."
+"an empty array, \"[]\"."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
-msgid "A nullable string, type ‘ms’"
+msgid "A nullable string, type \"ms\""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
-"take a “nothing” value. A nullable string can take any string as value, "
-"including the empty string “''”, or can be NULL (nothing)."
+"take a \"nothing\" value. A nullable string can take any string as value, "
+"including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
@@ -461,7 +454,7 @@ msgstr "列挙値"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid ""
-"An enumeration could contain only one item, but that’s probably an error. "
+"An enumeration could contain only one item, but that's probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
 
@@ -907,17 +900,17 @@ msgstr ""
 
 #: editor/registry-view.vala:170
 #, c-format
-msgid "Cannot find folder “%s”."
+msgid "Cannot find folder \"%s\"."
 msgstr ""
 
 #: editor/registry-view.vala:188
 #, c-format
-msgid "Cannot find key “%s” here."
+msgid "Cannot find key \"%s\" here."
 msgstr ""
 
 #: editor/registry-view.vala:194
 #, c-format
-msgid "Key “%s” has been removed."
+msgid "Key \"%s\" has been removed."
 msgstr ""
 
 #~ msgid "_Find…"

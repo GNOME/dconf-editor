@@ -923,7 +923,7 @@ msgstr "Skema tidak dipasang pada path yang diberikan."
 #: editor/dconf-window.vala:156
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr "Skema \"%s\" tidak diketahui."
+msgstr "Skema “%s” tidak diketahui."
 
 #: editor/dconf-window.vala:286
 msgid "Thanks for using Dconf Editor for editing your settings!"
@@ -949,13 +949,13 @@ msgstr "Tampilkan dialog ini saat selanjutnya."
 #: editor/dconf-window.vala:412
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr "Folder \"%s\" sekarang kosong."
+msgstr "Folder “%s” sekarang kosong."
 
 #. GAction parameter type switch is a little touchy, see pathbar.vala
 #: editor/dconf-window.vala:422
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr "Kunci \"%s\" telah dihapus."
+msgstr "Kunci “%s” telah dihapus."
 
 #: editor/dconf-window.vala:657
 msgid "Copy descriptor"
