@@ -741,7 +741,7 @@ msgstr "Restableix recursivament"
 
 #: editor/dconf-window.vala:262
 msgid "Enter delay mode"
-msgstr "Entre en mode de retardament"
+msgstr "Entra en mode de retardament"
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
