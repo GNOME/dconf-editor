@@ -813,7 +813,7 @@ msgstr "यस मार्गमा कुने कुञ्जी छैन"
 #: editor/registry-view.vala:182
 #, c-format
 msgid "Cannot find folder “%s”."
-msgstr "फोल्डर भेटिएन  “%s”."
+msgstr "फोल्डर भेटिएन “%s”."
 
 #: editor/registry-view.vala:200
 #, c-format
