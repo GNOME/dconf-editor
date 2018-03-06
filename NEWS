@@ -1,3 +1,32 @@
+dconf-editor 3.27.92
+=====================
+
+Small fixes of corner cases, it looks good for a clean release. I’m just annoyed
+by the impossibility of opening a path from command-line when in a Flatpack, but
+I don’t consider this packaging format as supported for now, so fixes will come.
+
+Translations updated:
+  all: Arnaud Bonatti
+  Catalan: Jordi Mas
+  Czech: Marek Černocký
+  Danish: Ask Hjorth Larsen
+  Dutch: Nathan Follens
+  Finnish: Jiri Grönroos
+  Friulian: Fabio Tomat
+  Galician: Fran Dieguez
+  German: Tim Sabsch
+  Hungarian: Balázs Úr
+  Indonesian: Kukuh Syafaat
+  Kazakh: Baurzhan Muftakhidinov
+  Korean: Changwoo Ryu
+  Lithuanian: Aurimas Černius
+  Occitan: Cédric Valmary
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Serbian: Марко Костић
+  Serbian Latin: Милош Поповић
+  Turkish: Emin Tufan Çetin
+
 dconf-editor 3.27.91
 =====================
 
