@@ -369,7 +369,7 @@ msgid ""
 "Bus message. If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
-"Le type identificateur est un entier signé 32bit utilisé par convention "
+"Le type identificateur est un entier signé 32 bit utilisé par convention "
 "comme indice d'un tableau de descripteurs de fichiers qui accompagnent un "
 "message D-Bus. Si vous n'êtes pas dans un contexte D-Bus, ce type ne vous "
 "sert à rien."
@@ -443,7 +443,7 @@ msgstr "Un entier court, type « n »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
 msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
-msgstr "Un entier signé 16bit. Voir aussi la clé « integer-16-unsigned »."
+msgstr "Un entier signé 16 bit. Voir aussi la clé « integer-16-unsigned »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Flags: choose-colors-you-love"
@@ -459,7 +459,7 @@ msgstr "Un entier court non signé, type « q »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
 msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
-msgstr "Un entier non signé 16bit. Voir aussi la clé « integer-16-signed »."
+msgstr "Un entier non signé 16 bit. Voir aussi la clé « integer-16-signed »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
 msgid "An usual integer, type ‘i’"
@@ -467,7 +467,7 @@ msgstr "Un entier habituel, type « i »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
-msgstr "Un entier signé 32bit. Voir aussi la clé « integer-32-unsigned »."
+msgstr "Un entier signé 32 bit. Voir aussi la clé « integer-32-unsigned »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
 msgid "An unsigned usual integer, type ‘u’"
@@ -475,7 +475,7 @@ msgstr "Un entier non signé habituel, type « u »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
-msgstr "Un entier non signé 32bit. Voir aussi la clé « integer-32-signed »."
+msgstr "Un entier non signé 32 bit. Voir aussi la clé « integer-32-signed »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "A long integer, type ‘x’"
@@ -483,7 +483,7 @@ msgstr "Un entier long, type « x »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
-msgstr "Un entier signé 64bit. Voir aussi la clé « integer-64-unsigned »."
+msgstr "Un entier signé 64 bit. Voir aussi la clé « integer-64-unsigned »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
 msgid "An unsigned long integer, type ‘t’"
@@ -491,7 +491,7 @@ msgstr "Un entier long non signé, type « t »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
-msgstr "Un entier non signé 64bit. Voir aussi la clé « integer-64-signed »."
+msgstr "Un entier non signé 64 bit. Voir aussi la clé « integer-64-signed »."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "A number with range"
@@ -519,7 +519,7 @@ msgid ""
 msgstr ""
 "L'éditeur Dconf permet d'éditer n'importe quel type de réglage pris en "
 "charge par GSettings, se rabattant sur un type chaîne s'il n'a pas d'autre "
-"moyen de représentation. Ceci est un tuple de deux entiers signés 32bit."
+"moyen de représentation. Ceci est un tuple de deux entiers signés 32 bit."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A string, type ‘s’"
