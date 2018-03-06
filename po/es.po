@@ -423,8 +423,8 @@ msgid ""
 "D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
 msgstr ""
-"El tipo manejador es un entero de 32 bit con signo que, por convenio, se usa "
-"como índice en un vector de descriptores de archivos que se envían en un "
+"El tipo manejador es un entero de 32 bits con signo que, por convenio, se "
+"usa como índice en un vector de descriptores de archivos que se envían en un "
 "mensaje de D-Bus. Si no está trabajando con D-Bus, no hay razón para usar "
 "este tipo."
 
@@ -549,7 +549,7 @@ msgstr "Un entero largo, escriba «x»"
 #: editor/ca.desrt.dconf-editor.gschema.xml:300
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
-"Un entero de 64bit con signo. Consulte también la clave «integer-64-"
+"Un entero de 64 bits con signo. Consulte también la clave «integer-64-"
 "unsigned»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:304
@@ -559,7 +559,7 @@ msgstr "Un entero largo sin signo, escriba «t»"
 #: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
-"Un entero de 64bit sin signo. Consulte también la clave «integer-64-signed»."
+"Un entero de 64 bits sin signo. Consulte también la clave «integer-64-signed»."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:311
 msgid "A number with range"
