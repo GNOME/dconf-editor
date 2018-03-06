@@ -234,30 +234,22 @@
     <key name="dbus-handle" type="h">
       <default>0</default>
       <summary>A D-Bus handle type, type ‘h’</summary>
-      <description>The handle type is a 32-bit signed integer value that is, by convention, used as an index into an array of file descriptors that are sent alongside a D-Bus message.
-
-If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
+      <description>The handle type is a 32-bit signed integer value that is, by convention, used as an index into an array of file descriptors that are sent alongside a D-Bus message.&#xA;&#xA;If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="dbus-object-path" type="o">
       <default>'/ca/desrt/dconf_editor'</default>
       <summary>A D-Bus object path, type ‘o’</summary>
-      <description>An object path is used to identify D-Bus objects at a given destination on the bus.
-
-If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
+      <description>An object path is used to identify D-Bus objects at a given destination on the bus.&#xA;&#xA;If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="dbus-object-path-array" type="ao">
       <default>['/ca/desrt/dconf_editor/menus/appmenu', '/ca/desrt/dconf_editor/window/1']</default>
       <summary>A D-Bus object path array, type ‘ao’</summary>
-      <description>An object path array could contain any number of object paths (including none: “[]”).
-
-If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
+      <description>An object path array could contain any number of object paths (including none: “[]”).&#xA;&#xA;If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="dbus-signature" type="g">
       <default>'ii'</default>
       <summary>A D-Bus signature, type ‘g’</summary>
-      <description>A D-Bus signature is a string used as type signature for a D-Bus method or message.
-
-If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
+      <description>A D-Bus signature is a string used as type signature for a D-Bus method or message.&#xA;&#xA;If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
     <key name="double" type="d">
       <default>3.1415926535897933</default>
