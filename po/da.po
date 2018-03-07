@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-14 04:44+0000\n"
-"PO-Revision-Date: 2018-03-03 18:42+0100\n"
+"POT-Creation-Date: 2018-03-04 08:24+0000\n"
+"PO-Revision-Date: 2018-03-07 22:23+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -30,15 +30,15 @@ msgstr ""
 msgid "Bookmark this Location"
 msgstr "Bogmærk denne placering"
 
-#: editor/bookmarks.ui:34
+#: editor/bookmarks.ui:36
 msgid "Location bookmarked"
 msgstr "Placeringen blev bogmærket"
 
-#: editor/bookmarks.ui:35
+#: editor/bookmarks.ui:37
 msgid "Toggle to bookmark this location"
 msgstr "Slå bogmærke til/fra for denne placering"
 
-#: editor/bookmarks.ui:60
+#: editor/bookmarks.ui:62
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -46,11 +46,11 @@ msgstr ""
 "Bogmærker vil\n"
 "blive tilføjet her"
 
-#: editor/bookmarks.ui:86 editor/registry-search.vala:450
+#: editor/bookmarks.ui:88 editor/registry-search.vala:445
 msgid "Bookmarks"
 msgstr "Bogmærker"
 
-#: editor/bookmarks.ui:87
+#: editor/bookmarks.ui:89
 msgid "Manage your bookmarks"
 msgstr "Håndtér dine bogmærker"
 
@@ -66,7 +66,7 @@ msgstr "Fjern dette bogmærke"
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr "Sorteringsindstillingerne er ændret. Vil du genopfriske visningen?"
 
-#: editor/browser-view.vala:48 editor/dconf-editor.ui:160
+#: editor/browser-view.vala:48 editor/dconf-editor.ui:159
 msgid "Refresh"
 msgstr "Genopfrisk"
 
@@ -122,7 +122,7 @@ msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:260 editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:476
 msgid "dconf Editor"
 msgstr "dconf-redigering"
 
@@ -267,7 +267,10 @@ msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
 "is pressed."
-msgstr "For brugere med mus, der har “Frem”- og “Tilbage”-knapper, bestemmer denne nøgle om der udføres nogen handling i et browservindue, når en af disse trykkes."
+msgstr ""
+"For brugere med mus, der har “Frem”- og “Tilbage”-knapper, bestemmer denne "
+"nøgle om der udføres nogen handling i et browservindue, når en af disse "
+"trykkes."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:157
 msgid "Mouse button to activate the “Back” command in browser window"
@@ -308,7 +311,13 @@ msgid ""
 "schemas list has changed. As this way to do is suboptimal, this function can "
 "be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
-msgstr "Dconf Editor kan overvåge om der tilføjes eller fjernes skemaer fra flere mulige steder. Dette gøres ved at kontrollere hvert tredje sekund, om skemalisten er ændret. Da denne fremgangsmåde ikke er optimal, kan funktionen deaktiveres ved at sætte dette flag til “false”. Bemærk at denne indstilling vil blive fjernet, så snart vi finder en bedre måde at gøre det på."
+msgstr ""
+"Dconf Editor kan overvåge om der tilføjes eller fjernes skemaer fra flere "
+"mulige steder. Dette gøres ved at kontrollere hvert tredje sekund, om "
+"skemalisten er ændret. Da denne fremgangsmåde ikke er optimal, kan "
+"funktionen deaktiveres ved at sætte dette flag til “false”. Bemærk at denne "
+"indstilling vil blive fjernet, så snart vi finder en bedre måde at gøre det "
+"på."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Enabled relocatable schema mapping facilities"
@@ -321,7 +330,12 @@ msgid ""
 "enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
-msgstr "Flag til afbildningsfunktioner for flytbare skemaer. “User” aktiverer afbildninger defineret af nøglen “relocatable-schemas-user-paths”; “Built-in” aktiverer velkendte afbildninger som ligger fast i Dconf-redigeringen; “Internal” er reserveret til Dconf-redigeringens egne afbildninger; “Startup” er til at afbilde et flytbart skema fra kommandolinjen."
+msgstr ""
+"Flag til afbildningsfunktioner for flytbare skemaer. “User” aktiverer "
+"afbildninger defineret af nøglen “relocatable-schemas-user-paths”; “Built-"
+"in” aktiverer velkendte afbildninger som ligger fast i Dconf-redigeringen; "
+"“Internal” er reserveret til Dconf-redigeringens egne afbildninger; "
+"“Startup” er til at afbilde et flytbart skema fra kommandolinjen."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "Mapping of paths to manually associated schemas"
@@ -334,7 +348,11 @@ msgid ""
 "specifications may contain wildcards in the form of empty segments (e.g. /ca/"
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
-msgstr "En ordbog som afbilder skema-id'er på stiangivelser. Tillader brugeren at knytte et flytbart skema til visse stier. Stiangivelser kan indeholde jokere i form af tomme dele (f.eks. /ca/desrt/dconf-editor//) og dermed definere mere end en sti. Samme skema-id kan tilknyttes flere stiangivelser."
+msgstr ""
+"En ordbog som afbilder skema-id'er på stiangivelser. Tillader brugeren at "
+"knytte et flytbart skema til visse stier. Stiangivelser kan indeholde jokere "
+"i form af tomme dele (f.eks. /ca/desrt/dconf-editor//) og dermed definere "
+"mere end en sti. Samme skema-id kan tilknyttes flere stiangivelser."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
 msgid "A list of bookmarked paths"
@@ -346,7 +364,7 @@ msgstr ""
 "Indeholder alle stier som er bogmærket af brugeren som et array af strenge."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
+#: editor/ca.desrt.dconf-editor.gschema.xml:353
 msgid "A boolean, type ‘b’"
 msgstr "En boolesk variabel, type “b”"
 
@@ -416,7 +434,11 @@ msgid ""
 "used as an index into an array of file descriptors that are sent alongside a "
 "D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
-msgstr "Håndtagstypen er en 32-bit heltalsværdi med fortegn som, ved konvention, bruges som et indeks i et array af fildeskriptorer, der sendes sideløbende med en D-Bus-meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke nogen grund til at gøre brug af denne type."
+msgstr ""
+"Håndtagstypen er en 32-bit heltalsværdi med fortegn som, ved konvention, "
+"bruges som et indeks i et array af fildeskriptorer, der sendes sideløbende "
+"med en D-Bus-meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke "
+"nogen grund til at gøre brug af denne type."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:243
 msgid "A D-Bus object path, type ‘o’"
@@ -491,12 +513,12 @@ msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "Et 16-bit heltal med fortegn. Se også nøglen “integer-16-unsigned”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:361
+#: editor/ca.desrt.dconf-editor.gschema.xml:363
 msgid "Flags: choose-colors-you-love"
 msgstr "Flag: vælg-farver-du-elsker"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:362
+#: editor/ca.desrt.dconf-editor.gschema.xml:364
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Flag kan sættes med “enum”-attributten."
 
@@ -509,7 +531,7 @@ msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "Et 16-bit heltal uden fortegn. Se også nøglen “integer-16-signed”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:356
+#: editor/ca.desrt.dconf-editor.gschema.xml:358
 msgid "An usual integer, type ‘i’"
 msgstr "Et almindeligt heltal, type “i”"
 
@@ -564,7 +586,10 @@ msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32-bit signed integers."
-msgstr "Dconf-redigering lader dig redigere enhver indstillingstype som undersøttes af GSettings og falder tilbage til en streng når den ikke har en bedre måde at gøre det på. Her er en tupel af to 32-bit heltal med fortegn."
+msgstr ""
+"Dconf-redigering lader dig redigere enhver indstillingstype som undersøttes "
+"af GSettings og falder tilbage til en streng når den ikke har en bedre måde "
+"at gøre det på. Her er en tupel af to 32-bit heltal med fortegn."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:321
 msgid "A string, type ‘s’"
@@ -629,90 +654,103 @@ msgstr ""
 "men dette er sandsynligvis en fejl. Dconf-redigeringen advarer dig i det "
 "tilfælde."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "En almindelig boolesk værdi defineret af et flytbart skema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr "E 32 bit-heltal med fortegn defineret af et flytbart skema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:370
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "En normal nøgle, der ikke forårsager konflikt, fra Conflict1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:369
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
+#: editor/ca.desrt.dconf-editor.gschema.xml:371
+#: editor/ca.desrt.dconf-editor.gschema.xml:398
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
-msgstr "Denne nøgle er en test for flere skemaer i samme sti med modstridende nøgler. Nøgler som ikke er i modstrid bør ikke have problemer."
+msgstr ""
+"Denne nøgle er en test for flere skemaer i samme sti med modstridende "
+"nøgler. Nøgler som ikke er i modstrid bør ikke have problemer."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:373
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr "Modstridende nøgle, som standard “1”, som bør give en fejl"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
+#: editor/ca.desrt.dconf-editor.gschema.xml:376
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
-msgstr "Denne nøgle er en test af flere skemaer i samme sti med modstridende nøgler. Den bør ikke kunne redigeres, da en nøgle som afbildes til samme sti har en forskellig standardværdi."
+msgstr ""
+"Denne nøgle er en test af flere skemaer i samme sti med modstridende nøgler. "
+"Den bør ikke kunne redigeres, da en nøgle som afbildes til samme sti har en "
+"forskellig standardværdi."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
 msgid "Conflicting key with no range that should give an error"
 msgstr "Modstridende nøgle uden interval, som bør give en fejl"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:379
-#: editor/ca.desrt.dconf-editor.gschema.xml:407
+#: editor/ca.desrt.dconf-editor.gschema.xml:381
+#: editor/ca.desrt.dconf-editor.gschema.xml:409
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
-msgstr "Denne nøgle er en test for flere skemaer i samme sti med modstridende nøgler. Den bør ikke kunne redigeres, da en nøgle som afbildes til samme sti har et andet interval."
+msgstr ""
+"Denne nøgle er en test for flere skemaer i samme sti med modstridende "
+"nøgler. Den bør ikke kunne redigeres, da en nøgle som afbildes til samme sti "
+"har et andet interval."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:383
+#: editor/ca.desrt.dconf-editor.gschema.xml:385
 msgid "A (simple) string conflicting key that should give a error"
 msgstr "En modstridende nøgle med en (simpel) streng, som bør give en fejl"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:384
-#: editor/ca.desrt.dconf-editor.gschema.xml:412
+#: editor/ca.desrt.dconf-editor.gschema.xml:386
+#: editor/ca.desrt.dconf-editor.gschema.xml:414
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
-msgstr "Denne nøgle er en test til flere skemaer i samme sti med modstridende nøgler. Den bør ikke kunne redigeres, da en nøgle afbildet til samme sti har en anden type."
+msgstr ""
+"Denne nøgle er en test til flere skemaer i samme sti med modstridende "
+"nøgler. Den bør ikke kunne redigeres, da en nøgle afbildet til samme sti har "
+"en anden type."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:390
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Modstridende nøgle fra Conflict1, som bør give en advarsel"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#: editor/ca.desrt.dconf-editor.gschema.xml:391
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
-msgstr "Denne nøgle er en test af flere skemaer i samme sti med modstridende nøgler. Den kan redigeres, da typerne er kompatible, men dette er stadig et problem."
+msgstr ""
+"Denne nøgle er en test af flere skemaer i samme sti med modstridende nøgler. "
+"Den kan redigeres, da typerne er kompatible, men dette er stadig et problem."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
+#: editor/ca.desrt.dconf-editor.gschema.xml:397
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "En normal nøgle fra Conflict2 uden konflikt"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:400
+#: editor/ca.desrt.dconf-editor.gschema.xml:402
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr "Modstridende nøgle, som standard “2”, som bør give en fejl"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:406
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr "Modstridende nøgle med interval 0~5 som bør give en fejl"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:411
+#: editor/ca.desrt.dconf-editor.gschema.xml:413
 msgid "A nullable-string conflicting key that should give an error"
 msgstr "En modstridende streng, der kan være null, som bør give en fejl"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:416
+#: editor/ca.desrt.dconf-editor.gschema.xml:418
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Modstridende nøgle fra Conflict2, som bør give en advarsel"
 
@@ -737,92 +775,93 @@ msgstr "Handlinger"
 msgid "Current view actions"
 msgstr "Aktuelle visningshandlinger"
 
-#: editor/dconf-editor.ui:63
+#: editor/dconf-editor.ui:62
 msgid "Search"
 msgstr "Søg"
 
-#: editor/dconf-editor.ui:64
+#: editor/dconf-editor.ui:63
 msgid "Search keys"
 msgstr "Søg på nøgler"
 
-#: editor/dconf-editor.ui:161
+#: editor/dconf-editor.ui:160
 msgid "Refresh search results"
 msgstr "Genopfrisk søgeresultater"
 
-#: editor/dconf-editor.vala:132
+#: editor/dconf-editor.vala:134
 msgid "Print release version and exit"
 msgstr "Udskriv versionsoplysninger og afslut"
 
-#: editor/dconf-editor.vala:133
+#: editor/dconf-editor.vala:135
 msgid "Print relocatable schemas and exit"
 msgstr "Udskriv flytbare skemaer og afslut"
 
-#: editor/dconf-editor.vala:135
+#: editor/dconf-editor.vala:137
 msgid "Do not show initial warning"
 msgstr "Vis ikke indledende advarsel"
 
-#: editor/dconf-editor.vala:137
+#: editor/dconf-editor.vala:139
 msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
 msgstr "[STI|FAST_SKEMA [NØGLE]|FLYTBART_SKEMA:STI [NØGLE]]"
 
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
 msgstr "Installerede kendte skemaer:"
 
-#: editor/dconf-editor.vala:232
+#: editor/dconf-editor.vala:234
 msgid "No known schemas installed."
 msgstr "Ingen kendte skemaer installeret."
 
-#: editor/dconf-editor.vala:236
+#: editor/dconf-editor.vala:238
 msgid "Known schemas skipped:"
 msgstr "Kendte skemaer sprunget over:"
 
-#: editor/dconf-editor.vala:241
+#: editor/dconf-editor.vala:243
 msgid "No known schemas skipped."
 msgstr "Ingen kendte skemaer sprunget over."
 
-#: editor/dconf-editor.vala:245
+#: editor/dconf-editor.vala:247
 msgid "Unknown schemas:"
 msgstr "Ukendte skemaer:"
 
-#: editor/dconf-editor.vala:250
+#: editor/dconf-editor.vala:252
 msgid "No unknown schemas."
 msgstr "Ingen ukendte skemaer."
 
-#: editor/dconf-editor.vala:315
+#: editor/dconf-editor.vala:323
 msgid "Only one window can be opened for now.\n"
 msgstr "Kun ét vindue kan åbnes indtil videre.\n"
 
-#: editor/dconf-editor.vala:334
+#: editor/dconf-editor.vala:342
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Ikke forstået: for mange argumenter.\n"
 
-#: editor/dconf-editor.vala:344
+#: editor/dconf-editor.vala:352
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Kan ikke forstå andet argument i denne kontekst.\n"
 
-#: editor/dconf-editor.vala:361
+#: editor/dconf-editor.vala:372
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Ikke forstået: skråstregstegn i andet argument.\n"
 
-#: editor/dconf-editor.vala:375
+#: editor/dconf-editor.vala:386
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Skemastien bør starte og slutte med “/”.\n"
 
-#: editor/dconf-editor.vala:388
+#: editor/dconf-editor.vala:399
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Ikke forstået: mellemrumstegn i argument.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:412
+#. #: editor/dconf-editor.vala:423
 msgid "Copied to clipboard"
 msgstr "Kopieret til udklipsholderen"
 
-#: editor/dconf-editor.vala:467
+#: editor/dconf-editor.vala:478
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr "En grafisk fremviser og redigering af programmeers interne indstillinger."
+msgstr ""
+"En grafisk fremviser og redigering af programmeers interne indstillinger."
 
-#: editor/dconf-editor.vala:468
+#: editor/dconf-editor.vala:479
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
@@ -832,7 +871,7 @@ msgstr ""
 "Ophavsret © 2015–2018 — Arnaud Bonatti<\n"
 "Ophavsret © 2017–2018 — Davi da Silva Böger"
 
-#: editor/dconf-editor.vala:472
+#: editor/dconf-editor.vala:483
 msgid "translator-credits"
 msgstr ""
 "Kenneth Nielsen\n"
@@ -842,7 +881,7 @@ msgstr ""
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: editor/dconf-model.vala:397
+#: editor/dconf-model.vala:400
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (nøgle slettet)"
@@ -855,76 +894,82 @@ msgstr "Kunne ikke fortolke som double."
 msgid "This value is invalid for the key type."
 msgstr "Denne værdi er ugyldig for nøgletypen."
 
-#: editor/dconf-window.vala:105
+#: editor/dconf-window.vala:115
 msgid "Schema is relocatable, a path is needed."
 msgstr "Skemaet er flytbart — der er brug for en sti."
 
-#: editor/dconf-window.vala:117
+#: editor/dconf-window.vala:127
 msgid "Startup mappings are disabled."
 msgstr "Opstartsafbildninger er slået fra."
 
-#: editor/dconf-window.vala:131
+#: editor/dconf-window.vala:141
 msgid "Schema is not installed on given path."
 msgstr "Skemaet er ikke installeret på den givne sti."
 
-#: editor/dconf-window.vala:274
+#: editor/dconf-window.vala:156
+#, c-format
+msgid "Unknown schema “%s”."
+msgstr "Ukendt skema: “%s”."
+
+#: editor/dconf-window.vala:286
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Tak fordi du bruger Dconf-redigering til at redigere dine indstillinger."
 
-#: editor/dconf-window.vala:275
+#: editor/dconf-window.vala:287
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Husk på at nogle indstillinger kan få programmer til ikke at virke. Så vær "
 "forsigtig."
 
-#: editor/dconf-window.vala:276
+#: editor/dconf-window.vala:288
 msgid "I’ll be careful."
 msgstr "Jeg skal nok være forsigtig."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:280
+#: editor/dconf-window.vala:292
 msgid "Show this dialog next time."
 msgstr "Vis denne dialog næste gang."
 
-#: editor/dconf-window.vala:398
+#: editor/dconf-window.vala:412
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Mappen “%s” er nu tom."
 
 #. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:408
+#: editor/dconf-window.vala:422
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Nøglen “%s” er blevet slettet."
 
-#: editor/dconf-window.vala:607
+#: editor/dconf-window.vala:657
 msgid "Copy descriptor"
 msgstr "Kopiér deskriptor"
 
-#: editor/dconf-window.vala:613
+#: editor/dconf-window.vala:663
 msgid "Reset visible keys"
 msgstr "Nulstil synlige nøgler"
 
-#: editor/dconf-window.vala:614
+#: editor/dconf-window.vala:664
 msgid "Reset view recursively"
 msgstr "Nulstil visning rekursivt"
 
-#: editor/dconf-window.vala:622
+#: editor/dconf-window.vala:672
 msgid "Enter delay mode"
 msgstr "Aktivér ventetilstand"
 
-#: editor/dconf-window.vala:685
+#: editor/dconf-window.vala:737
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
-msgstr "Samme musetast er indstillet til at gå både fremad og tilbage. Gør intet."
+msgstr ""
+"Samme musetast er indstillet til at gå både fremad og tilbage. Gør intet."
 
-#: editor/dconf-window.vala:937
+#: editor/dconf-window.vala:997
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Kan ikke finde nøglen “%s”."
 
-#: editor/dconf-window.vala:941
+#: editor/dconf-window.vala:1001
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Der er ikke noget i den forespurgte mappe “%s”."
@@ -932,7 +977,7 @@ msgstr "Der er ikke noget i den forespurgte mappe “%s”."
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
 #: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
-#: editor/key-list-box-row.vala:834 editor/registry-info.vala:341
+#: editor/key-list-box-row.vala:834 editor/registry-info.vala:348
 msgid "Default value"
 msgstr "Standardværdi"
 
@@ -941,7 +986,7 @@ msgid "Key erased"
 msgstr "Nøgle slettet"
 
 #: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
-#: editor/registry-info.vala:142
+#: editor/registry-info.vala:149
 msgid "Key erased."
 msgstr "Nøgle slettet."
 
@@ -1080,7 +1125,7 @@ msgstr "Afslut"
 msgid "No Schema Found"
 msgstr "Intet skema fundet"
 
-#: editor/key-list-box-row.vala:467 editor/registry-info.vala:114
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:121
 msgid "No summary provided"
 msgstr "Intet sammendrag givet"
 
@@ -1155,34 +1200,34 @@ msgid "Delayed setting changes will be shown here"
 msgstr "Udskudte/ventende indstillingsændringer vil blive vist her"
 
 #: editor/modifications-revealer.vala:115
-#: editor/modifications-revealer.vala:276
+#: editor/modifications-revealer.vala:279
 msgid "Nothing to reset."
 msgstr "Intet at nulstille."
 
-#: editor/modifications-revealer.vala:255
+#: editor/modifications-revealer.vala:258
 msgid "The value is invalid."
 msgstr "Værdien er ugyldig."
 
 # Dobbelt op på ændring.., men jeg kan ikke lige finde på nogen anden formulering
-#: editor/modifications-revealer.vala:262
+#: editor/modifications-revealer.vala:265
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
 "Ændringen vil blive forkastet, hvis du afslutter denne visning uden at "
 "anvende ændringer."
 
-#: editor/modifications-revealer.vala:267
+#: editor/modifications-revealer.vala:270
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
 "Ændringen vil blive udført ved forespørgsel herom, eller hvis du afslutter "
 "visningen."
 
 # Ikke meget bedre end den engelske, men heller ikke meget værre
-#: editor/modifications-revealer.vala:288
+#: editor/modifications-revealer.vala:291
 msgid "Changes will be delayed until you request it."
 msgstr "Ændringerne vil vente indtil du beder om at de bliver gennemført."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:290
+#: editor/modifications-revealer.vala:293
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -1190,7 +1235,7 @@ msgstr[0] "En gsettings-operation venter."
 msgstr[1] "%u gsettings-operationer venter."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:294
+#: editor/modifications-revealer.vala:297
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -1199,12 +1244,12 @@ msgstr[1] "%u dconf-operationer venter."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:297
+#: editor/modifications-revealer.vala:300
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:297
+#: editor/modifications-revealer.vala:300
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -1215,14 +1260,14 @@ msgstr[1] "%u gsettings-operationer"
 #. * the space before the "and" is probably wanted, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:302
+#: editor/modifications-revealer.vala:305
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
 msgstr[0] " og en dconf-operation venter."
 msgstr[1] " og %u dconf-operationer venter."
 
-#: editor/pathbar.vala:264
+#: editor/pathbar.vala:313
 msgid "Copy current path"
 msgstr "Kopiér aktuelle sti"
 
@@ -1230,13 +1275,17 @@ msgstr "Kopiér aktuelle sti"
 msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
-msgstr "Denne nøgle er defineret og bruges af flere skemaer. Dette kan føre til problemer. Ændr værdien på eget ansvar."
+msgstr ""
+"Denne nøgle er defineret og bruges af flere skemaer. Dette kan føre til "
+"problemer. Ændr værdien på eget ansvar."
 
 #: editor/registry-info.ui:69
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
-msgstr "Denne nøgle er inkompatibelt defineret og bruges af flere skemaer. Dens værdi kan ikke bruges på meningsfuld vis."
+msgstr ""
+"Denne nøgle er inkompatibelt defineret og bruges af flere skemaer. Dens "
+"værdi kan ikke bruges på meningsfuld vis."
 
 #: editor/registry-info.ui:106
 msgid ""
@@ -1244,7 +1293,11 @@ msgid ""
 "Editor can’t find one associated with this key. If the application that was "
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
-msgstr "Intet tilgængeligt skema. Et skema er det som beskriver hvordan en nøgle bruges, og Dconf-redigering kan ikke finde et skema tilknyttet denne nøgle. Hvis programmet, der brugte denne nøgle, er blevet afinstalleret, eller hvis nøglen er forældet, kan du overveje at slette den."
+msgstr ""
+"Intet tilgængeligt skema. Et skema er det som beskriver hvordan en nøgle "
+"bruges, og Dconf-redigering kan ikke finde et skema tilknyttet denne nøgle. "
+"Hvis programmet, der brugte denne nøgle, er blevet afinstalleret, eller hvis "
+"nøglen er forældet, kan du overveje at slette den."
 
 #: editor/registry-info.ui:149
 msgid ""
@@ -1266,70 +1319,74 @@ msgstr ""
 "program, som installerede dette skema. Hvis det er muligt, så åbn en "
 "fejlrapport om det."
 
-#: editor/registry-info.vala:107
+#: editor/registry-info.vala:114
 msgid "Defined by"
 msgstr "Defineret af"
 
-#: editor/registry-info.vala:109
+#: editor/registry-info.vala:116
 msgid "Schema"
 msgstr "Skema"
 
-#: editor/registry-info.vala:114
+#: editor/registry-info.vala:121
 msgid "Summary"
 msgstr "Sammendrag"
 
-#: editor/registry-info.vala:119
+#: editor/registry-info.vala:126
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: editor/registry-info.vala:119
+#: editor/registry-info.vala:126
 msgid "No description provided"
 msgstr "Ingen beskrivelse givet"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:122
+#: editor/registry-info.vala:129
 msgid "Type"
 msgstr "Type"
 
-#: editor/registry-info.vala:124
+#: editor/registry-info.vala:131
 msgid "Minimum"
 msgstr "Minimum"
 
-#: editor/registry-info.vala:125
+#: editor/registry-info.vala:132
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: editor/registry-info.vala:126
+#: editor/registry-info.vala:133
 msgid "Default"
 msgstr "Standard"
 
-#: editor/registry-info.vala:134
+#: editor/registry-info.vala:141
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
-msgstr "Der er modstridende definitioner af denne nøgle. Det vil være problematisk eller meningsløst at bestemme værdien."
+msgstr ""
+"Der er modstridende definitioner af denne nøgle. Det vil være problematisk "
+"eller meningsløst at bestemme værdien."
 
-#: editor/registry-info.vala:154
+#: editor/registry-info.vala:161
 msgid "Current value"
 msgstr "Nuværende værdi"
 
-#: editor/registry-info.vala:190
+#: editor/registry-info.vala:197
 msgid "Use default value"
 msgstr "Anvend standardværdi"
 
-#: editor/registry-info.vala:248
+#: editor/registry-info.vala:255
 msgid "Custom value"
 msgstr "Brugerdefineret værdi"
 
 #. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
-#: editor/registry-info.vala:401
+#: editor/registry-info.vala:408
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
-msgstr "Brug en prik som decimaltegn og ingen tusindeadskiller. Du kan bruge notationen X.Ye+Z."
+msgstr ""
+"Brug en prik som decimaltegn og ingen tusindeadskiller. Du kan bruge "
+"notationen X.Ye+Z."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:407
+#: editor/registry-info.vala:414
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1338,13 +1395,13 @@ msgstr ""
 "Brug nøgleordet “intet” for at sætte en måsketype (starter med “m”) til dens "
 "tomme værdi. Strenge, signaturer og objektstier skal sættes i anførselstegn."
 
-#: editor/registry-info.vala:409
+#: editor/registry-info.vala:416
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Strenge, signaturer og objektstier skal sættes i anførselstegn."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:413
+#: editor/registry-info.vala:420
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1356,23 +1413,23 @@ msgstr ""
 msgid "No matches"
 msgstr "Ingen træffere"
 
-#: editor/registry-search.vala:448
+#: editor/registry-search.vala:443
 msgid "Current folder"
 msgstr "Nuværende mappe"
 
-#: editor/registry-search.vala:452
+#: editor/registry-search.vala:447
 msgid "Folders"
 msgstr "Mapper"
 
-#: editor/registry-search.vala:454
+#: editor/registry-search.vala:449
 msgid "Keys"
 msgstr "Nøgler"
 
-#: editor/registry-view.vala:141
+#: editor/registry-view.vala:184
 msgid "No keys in this path"
 msgstr "Ingen nøgler i denne sti"
 
-#: editor/registry-view.vala:244
+#: editor/registry-view.vala:251
 msgid "Keys not defined by a schema"
 msgstr "Nøgler som ikke defineret af et skema"
 
