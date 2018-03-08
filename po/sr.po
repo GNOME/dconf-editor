@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-14 04:44+0000\n"
-"PO-Revision-Date: 2018-02-18 21:34+0100\n"
+"POT-Creation-Date: 2018-02-26 17:08+0000\n"
+"PO-Revision-Date: 2018-03-03 07:21+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
@@ -19,21 +19,21 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
 msgstr "Прибележи ово место"
 
-#: editor/bookmarks.ui:34
+#: editor/bookmarks.ui:36
 msgid "Location bookmarked"
 msgstr "Место је прибележено"
 
-#: editor/bookmarks.ui:35
+#: editor/bookmarks.ui:37
 msgid "Toggle to bookmark this location"
 msgstr "Окидач за бележење овог места"
 
-#: editor/bookmarks.ui:60
+#: editor/bookmarks.ui:62
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -41,11 +41,11 @@ msgstr ""
 "Обележивачи ће\n"
 "бити додати овде"
 
-#: editor/bookmarks.ui:86 editor/registry-search.vala:450
+#: editor/bookmarks.ui:88 editor/registry-search.vala:445
 msgid "Bookmarks"
 msgstr "Обележивачи"
 
-#: editor/bookmarks.ui:87
+#: editor/bookmarks.ui:89
 msgid "Manage your bookmarks"
 msgstr "Управљајте вашим обележивачима"
 
@@ -61,7 +61,7 @@ msgstr "Уклоните овај обележивач"
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr "Поставке ређања су измењене. Да ли желите да освежите преглед?"
 
-#: editor/browser-view.vala:48 editor/dconf-editor.ui:160
+#: editor/browser-view.vala:48 editor/dconf-editor.ui:159
 msgid "Refresh"
 msgstr "Освежи"
 
@@ -117,7 +117,7 @@ msgid "The GNOME Project"
 msgstr "Гномов пројекат"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:260 editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:476
 msgid "dconf Editor"
 msgstr "дконф уређивач"
 
@@ -360,7 +360,7 @@ msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr "Садржи све путање које је корисник забележио, у облику низа ниски."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
+#: editor/ca.desrt.dconf-editor.gschema.xml:353
 msgid "A boolean, type ‘b’"
 msgstr "Логичка вредност, врста „b“"
 
@@ -509,12 +509,12 @@ msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16-битни цео број са знаком. Видите такође кључ „integer-16-unsigned“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:361
+#: editor/ca.desrt.dconf-editor.gschema.xml:363
 msgid "Flags: choose-colors-you-love"
 msgstr "Заставице: изаберите-боје-које-обожавате"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:362
+#: editor/ca.desrt.dconf-editor.gschema.xml:364
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Заставице могу бити постављене атрибутом „enum“."
 
@@ -527,7 +527,7 @@ msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16-битни цео број без знака. Видите такође кључ „integer-16-signed“."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:356
+#: editor/ca.desrt.dconf-editor.gschema.xml:358
 msgid "An usual integer, type ‘i’"
 msgstr "Уобичајени цео број, врста „i“"
 
@@ -650,20 +650,20 @@ msgstr ""
 "Набрајање може да ограничи да кључ целог броја дозволи само једну вредност, "
 "али је то вероватно грешка. Дконф уређивач вас упозорава у том случају."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Обична булова вредност коју наводи премостива шема."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr "32-битни потписани број којег наводи премостива шема."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:370
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Обичан несукобљени кључ са Conflict1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:369
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
+#: editor/ca.desrt.dconf-editor.gschema.xml:371
+#: editor/ca.desrt.dconf-editor.gschema.xml:398
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
@@ -671,13 +671,13 @@ msgstr ""
 "Овај кључ је проба за више шема унутар једне путање са сукобљеним кључевима. "
 "Несукобљени кључеви неће бити проблематични."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:373
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 "Сукобљени кључ подразумевано има вредност „1“ и то би требало изазвати грешку"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
+#: editor/ca.desrt.dconf-editor.gschema.xml:376
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -687,12 +687,12 @@ msgstr ""
 "Не би требало бити могућа његова измена зато што кључ мапиран у исту путању "
 "садржи другачију подразумевану вредност."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
 msgid "Conflicting key with no range that should give an error"
 msgstr "Сукобљени кључ без опсега који би требао да изазове грешку"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:379
-#: editor/ca.desrt.dconf-editor.gschema.xml:407
+#: editor/ca.desrt.dconf-editor.gschema.xml:381
+#: editor/ca.desrt.dconf-editor.gschema.xml:409
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -702,13 +702,13 @@ msgstr ""
 "Не би требало бити могућа његова измена зато што кључ мапиран у исту путању "
 "има другачији опсег."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:383
+#: editor/ca.desrt.dconf-editor.gschema.xml:385
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
 "(Једноставан) сукобљени кључ врсте ниска који би требао да изазове грешку"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:384
-#: editor/ca.desrt.dconf-editor.gschema.xml:412
+#: editor/ca.desrt.dconf-editor.gschema.xml:386
+#: editor/ca.desrt.dconf-editor.gschema.xml:414
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -718,12 +718,12 @@ msgstr ""
 "Не би требало бити могућа његова измена зато што кључ мапиран у исту путању "
 "има другачију врсту."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:390
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Сукобљени кључ из Conflict1 који би требао да изазове упозорење"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#: editor/ca.desrt.dconf-editor.gschema.xml:391
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
@@ -732,24 +732,24 @@ msgstr ""
 "Овај кључ је проба за више шема унутар једне путање са сукобљеним кључевима. "
 "Може се изменити јер су врсте кључа подударне али је то ипак проблематично."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
+#: editor/ca.desrt.dconf-editor.gschema.xml:397
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Обичан несукобљени кључ из Conflict2"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:400
+#: editor/ca.desrt.dconf-editor.gschema.xml:402
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 "Сукобљени кључ подразумевано има вредност „2“ и то би требало изазвати грешку"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:406
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr "Сукобљени кључ са опсегом од 0 до 5 и то би требало изазвати грешку"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:411
+#: editor/ca.desrt.dconf-editor.gschema.xml:413
 msgid "A nullable-string conflicting key that should give an error"
 msgstr "Сукобљени кључ врсте ништавна ниска који би требао да изазове грешку"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:416
+#: editor/ca.desrt.dconf-editor.gschema.xml:418
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Сукобљени кључ из Conflict2 који би требао да изазове грешку"
 
@@ -774,92 +774,92 @@ msgstr "Радње"
 msgid "Current view actions"
 msgstr "Радње тренутног прегледа"
 
-#: editor/dconf-editor.ui:63
+#: editor/dconf-editor.ui:62
 msgid "Search"
 msgstr "Претрага"
 
-#: editor/dconf-editor.ui:64
+#: editor/dconf-editor.ui:63
 msgid "Search keys"
 msgstr "Кључеви претраге"
 
-#: editor/dconf-editor.ui:161
+#: editor/dconf-editor.ui:160
 msgid "Refresh search results"
 msgstr "Освежи резултате претраге"
 
-#: editor/dconf-editor.vala:132
+#: editor/dconf-editor.vala:134
 msgid "Print release version and exit"
 msgstr "Исписује издање и излази"
 
-#: editor/dconf-editor.vala:133
+#: editor/dconf-editor.vala:135
 msgid "Print relocatable schemas and exit"
 msgstr "Испиши премостиве шеме и изађи"
 
-#: editor/dconf-editor.vala:135
+#: editor/dconf-editor.vala:137
 msgid "Do not show initial warning"
 msgstr "Не приказуј почетно упозорење"
 
-#: editor/dconf-editor.vala:137
+#: editor/dconf-editor.vala:139
 msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
 msgstr "[ПУТАЊА|ФИКСНА_ШЕМА [КЉУЧ]|ПРЕМОСТИВА_ШЕМА:ПУТАЊА [КЉУЧ]]"
 
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
 msgstr "Инсталиране познате шеме:"
 
-#: editor/dconf-editor.vala:232
+#: editor/dconf-editor.vala:234
 msgid "No known schemas installed."
 msgstr "Нема инсталираних познатих шема."
 
-#: editor/dconf-editor.vala:236
+#: editor/dconf-editor.vala:238
 msgid "Known schemas skipped:"
 msgstr "Прескочене познате шеме:"
 
-#: editor/dconf-editor.vala:241
+#: editor/dconf-editor.vala:243
 msgid "No known schemas skipped."
 msgstr "Нема прескочених познатих шема."
 
-#: editor/dconf-editor.vala:245
+#: editor/dconf-editor.vala:247
 msgid "Unknown schemas:"
 msgstr "Непознате шеме:"
 
-#: editor/dconf-editor.vala:250
+#: editor/dconf-editor.vala:252
 msgid "No unknown schemas."
 msgstr "Нема непознатих шема."
 
-#: editor/dconf-editor.vala:315
+#: editor/dconf-editor.vala:323
 msgid "Only one window can be opened for now.\n"
 msgstr "Само један прозор може бити отворен за сада.\n"
 
-#: editor/dconf-editor.vala:334
+#: editor/dconf-editor.vala:342
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Не разумем: сувише аргумената.\n"
 
-#: editor/dconf-editor.vala:344
+#: editor/dconf-editor.vala:352
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Не разумем други аргумент у овом контексту.\n"
 
-#: editor/dconf-editor.vala:361
+#: editor/dconf-editor.vala:372
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Не разумем: коса линија у другом аргументу.\n"
 
-#: editor/dconf-editor.vala:375
+#: editor/dconf-editor.vala:386
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Путања шеме треба почињати и завршавати се са знаком „/“.\n"
 
-#: editor/dconf-editor.vala:388
+#: editor/dconf-editor.vala:399
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Не разумем: знак размака у аргументу.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:412
+#. #: editor/dconf-editor.vala:423
 msgid "Copied to clipboard"
 msgstr "Умножено у оставу"
 
-#: editor/dconf-editor.vala:467
+#: editor/dconf-editor.vala:478
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Графички прегледач и уређивач унутрашњих подешавања програма."
 
-#: editor/dconf-editor.vala:468
+#: editor/dconf-editor.vala:479
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
@@ -869,7 +869,7 @@ msgstr ""
 "Ауторска права © 2015-2016 – Арно Бонати (Arnaud Bonatti)\n"
 "Ауторска права © 2017-2018 – Дави да Силва Боегер (Davi da Silva Böger)"
 
-#: editor/dconf-editor.vala:472
+#: editor/dconf-editor.vala:483
 msgid "translator-credits"
 msgstr ""
 "Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
@@ -877,7 +877,7 @@ msgstr ""
 "\n"
 "http://prevod.org — превод на српски језик"
 
-#: editor/dconf-model.vala:397
+#: editor/dconf-model.vala:400
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (кључ је обрисан)"
@@ -890,75 +890,80 @@ msgstr "Нисам успео да обрадим као дупло."
 msgid "This value is invalid for the key type."
 msgstr "Ова врста је неисправна за врсту кључа."
 
-#: editor/dconf-window.vala:105
+#: editor/dconf-window.vala:115
 msgid "Schema is relocatable, a path is needed."
 msgstr "Шема је премостива, потребна је путања."
 
-#: editor/dconf-window.vala:117
+#: editor/dconf-window.vala:127
 msgid "Startup mappings are disabled."
 msgstr "Мапирања на покретању су онемогућена."
 
-#: editor/dconf-window.vala:131
+#: editor/dconf-window.vala:141
 msgid "Schema is not installed on given path."
 msgstr "Шема није инсталирана унутар дате путање."
 
-#: editor/dconf-window.vala:274
+#: editor/dconf-window.vala:156
+#, c-format
+msgid "Unknown schema “%s”."
+msgstr "Непознате шема „%s“."
+
+#: editor/dconf-window.vala:286
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Хвала вам што користите Дконф за уређивање ваших подешавања!"
 
-#: editor/dconf-window.vala:275
+#: editor/dconf-window.vala:287
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Не заборавите да неке опције могу пореметити рад програма. Будите пажљиви."
 
-#: editor/dconf-window.vala:276
+#: editor/dconf-window.vala:288
 msgid "I’ll be careful."
 msgstr "Бићу пажљив."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:280
+#: editor/dconf-window.vala:292
 msgid "Show this dialog next time."
 msgstr "Прикажи ово прозорче следећи пут."
 
-#: editor/dconf-window.vala:398
+#: editor/dconf-window.vala:412
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Фасцикла „%s“ је сада празна."
 
 #. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:408
+#: editor/dconf-window.vala:422
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Кључ „%s“ је обрисан."
 
-#: editor/dconf-window.vala:607
+#: editor/dconf-window.vala:657
 msgid "Copy descriptor"
 msgstr "Копирај описника"
 
-#: editor/dconf-window.vala:613
+#: editor/dconf-window.vala:663
 msgid "Reset visible keys"
 msgstr "Поново постави видљиве кључеве"
 
-#: editor/dconf-window.vala:614
+#: editor/dconf-window.vala:664
 msgid "Reset view recursively"
 msgstr "Рекурзивно поново постави преглед"
 
-#: editor/dconf-window.vala:622
+#: editor/dconf-window.vala:672
 msgid "Enter delay mode"
 msgstr "Укључи режим застоја"
 
-#: editor/dconf-window.vala:685
+#: editor/dconf-window.vala:737
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "Исти тастер миша је намештен за кретање назад и напред. Не радим било шта."
 
-#: editor/dconf-window.vala:937
+#: editor/dconf-window.vala:997
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Не могу да нађем кључ „%s“."
 
-#: editor/dconf-window.vala:941
+#: editor/dconf-window.vala:1001
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Нема било чега у затраженој фасцикли „%s“."
@@ -966,7 +971,7 @@ msgstr "Нема било чега у затраженој фасцикли „%
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
 #: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
-#: editor/key-list-box-row.vala:834 editor/registry-info.vala:341
+#: editor/key-list-box-row.vala:834 editor/registry-info.vala:348
 msgid "Default value"
 msgstr "Основна вредност"
 
@@ -975,7 +980,7 @@ msgid "Key erased"
 msgstr "Кључ је обрисан"
 
 #: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
-#: editor/registry-info.vala:142
+#: editor/registry-info.vala:149
 msgid "Key erased."
 msgstr "Кључ је обрисан."
 
@@ -1113,7 +1118,7 @@ msgstr "Излаз"
 msgid "No Schema Found"
 msgstr "Нема шеме"
 
-#: editor/key-list-box-row.vala:467 editor/registry-info.vala:114
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:121
 msgid "No summary provided"
 msgstr "Сажетак није достављен"
 
@@ -1187,30 +1192,30 @@ msgid "Delayed setting changes will be shown here"
 msgstr "Одложене промене подешавања биће приказане овде"
 
 #: editor/modifications-revealer.vala:115
-#: editor/modifications-revealer.vala:276
+#: editor/modifications-revealer.vala:279
 msgid "Nothing to reset."
 msgstr "Нема ничега за повраћај."
 
-#: editor/modifications-revealer.vala:255
+#: editor/modifications-revealer.vala:258
 msgid "The value is invalid."
 msgstr "Вредност је неисправна."
 
-#: editor/modifications-revealer.vala:262
+#: editor/modifications-revealer.vala:265
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
 "Измене ће бити одбачене ако напустите овај преглед а да их не примените."
 
-#: editor/modifications-revealer.vala:267
+#: editor/modifications-revealer.vala:270
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
 "Измене ће бити примењене при таквом захтеву или ако напустите овај преглед."
 
-#: editor/modifications-revealer.vala:288
+#: editor/modifications-revealer.vala:291
 msgid "Changes will be delayed until you request it."
 msgstr "Измене ће бити одложене све док их не затражите."
 
 #. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:290
+#: editor/modifications-revealer.vala:293
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -1220,7 +1225,7 @@ msgstr[2] "%u радњи гподешавања је одложено."
 msgstr[3] "Једна радња гподешавања је одложена."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:294
+#: editor/modifications-revealer.vala:297
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -1231,12 +1236,12 @@ msgstr[3] "Једна радња дконфа је одложена."
 
 #. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:297
+#: editor/modifications-revealer.vala:300
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:297
+#: editor/modifications-revealer.vala:300
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -1249,7 +1254,7 @@ msgstr[3] "Једна радња гподешавања"
 #. * the space before the "and" is probably wanted, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:302
+#: editor/modifications-revealer.vala:305
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
@@ -1258,7 +1263,7 @@ msgstr[1] " и %u радње дконфа су одложене."
 msgstr[2] " и %u радњи дконфа је одложено."
 msgstr[3] " и једна радња дконфа је одложена."
 
-#: editor/pathbar.vala:264
+#: editor/pathbar.vala:313
 msgid "Copy current path"
 msgstr "Умножи тренутну путању"
 
@@ -1311,44 +1316,44 @@ msgstr ""
 "обавестите нас о овоме тако што ћете нам послати извештај са грешком у вези "
 "тога."
 
-#: editor/registry-info.vala:107
+#: editor/registry-info.vala:114
 msgid "Defined by"
 msgstr "Одређено од стране"
 
-#: editor/registry-info.vala:109
+#: editor/registry-info.vala:116
 msgid "Schema"
 msgstr "Шема"
 
-#: editor/registry-info.vala:114
+#: editor/registry-info.vala:121
 msgid "Summary"
 msgstr "Сажетак"
 
-#: editor/registry-info.vala:119
+#: editor/registry-info.vala:126
 msgid "Description"
 msgstr "Опис"
 
-#: editor/registry-info.vala:119
+#: editor/registry-info.vala:126
 msgid "No description provided"
 msgstr "Опис није достављен"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:122
+#: editor/registry-info.vala:129
 msgid "Type"
 msgstr "Врста"
 
-#: editor/registry-info.vala:124
+#: editor/registry-info.vala:131
 msgid "Minimum"
 msgstr "Најмање"
 
-#: editor/registry-info.vala:125
+#: editor/registry-info.vala:132
 msgid "Maximum"
 msgstr "Највише"
 
-#: editor/registry-info.vala:126
+#: editor/registry-info.vala:133
 msgid "Default"
 msgstr "Основно"
 
-#: editor/registry-info.vala:134
+#: editor/registry-info.vala:141
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
@@ -1356,20 +1361,20 @@ msgstr ""
 "Постоје сукобљене дефиниције овог кључа, добављање вредности из њега би било "
 "проблематично или узалудно."
 
-#: editor/registry-info.vala:154
+#: editor/registry-info.vala:161
 msgid "Current value"
 msgstr "Текућа вредност"
 
-#: editor/registry-info.vala:190
+#: editor/registry-info.vala:197
 msgid "Use default value"
 msgstr "Користи основну вредност"
 
-#: editor/registry-info.vala:248
+#: editor/registry-info.vala:255
 msgid "Custom value"
 msgstr "Произвољна вредност"
 
 #. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
-#: editor/registry-info.vala:401
+#: editor/registry-info.vala:408
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
@@ -1378,7 +1383,7 @@ msgstr ""
 "Ш.Џ+Ж начин бележења."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:407
+#: editor/registry-info.vala:414
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1388,13 +1393,13 @@ msgstr ""
 "на њену празну вредност. Ниске, потписи и путање објеката требају бити под "
 "знацима навода."
 
-#: editor/registry-info.vala:409
+#: editor/registry-info.vala:416
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Ниске, потписи и путање објеката требају бити под знацима навода."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:413
+#: editor/registry-info.vala:420
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1406,23 +1411,23 @@ msgstr ""
 msgid "No matches"
 msgstr "Нема поклапања"
 
-#: editor/registry-search.vala:448
+#: editor/registry-search.vala:443
 msgid "Current folder"
 msgstr "Тренутна фасцикла"
 
-#: editor/registry-search.vala:452
+#: editor/registry-search.vala:447
 msgid "Folders"
 msgstr "Фасцикле"
 
-#: editor/registry-search.vala:454
+#: editor/registry-search.vala:449
 msgid "Keys"
 msgstr "Кључеви"
 
-#: editor/registry-view.vala:141
+#: editor/registry-view.vala:184
 msgid "No keys in this path"
 msgstr "Нема кључева у овој путањи"
 
-#: editor/registry-view.vala:244
+#: editor/registry-view.vala:251
 msgid "Keys not defined by a schema"
 msgstr "Кључеви ненаведени у шеми"
 
