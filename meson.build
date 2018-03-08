@@ -36,7 +36,7 @@ config_h = configuration_data()
 # package
 set_defines = [
   ['PACKAGE', dconf_editor_name],
-  ['PACKAGE_BUGREPORT', 'http://bugzilla.gnome.org/enter_bug.cgi?product=' + dconf_editor_name],
+  ['PACKAGE_BUGREPORT', 'https://bugzilla.gnome.org/enter_bug.cgi?product=' + dconf_editor_name],
   ['PACKAGE_NAME', dconf_editor_name],
   ['PACKAGE_STRING', '@0@ @1@'.format(dconf_editor_name, dconf_editor_version)],
   ['PACKAGE_TARNAME', dconf_editor_name],
