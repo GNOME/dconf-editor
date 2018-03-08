@@ -44,7 +44,7 @@
   <!--a translatable version of project_group-->
   <developer_name>The GNOME Project</developer_name>
   <!--GNOME Projects usually have no per-app donation page-->
-  <url type="donation">http://www.gnome.org/friends/</url>
+  <url type="donation">https://www.gnome.org/friends/</url>
 
   <provides>
     <binary>dconf-editor</binary>
