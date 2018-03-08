@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-20 13:03+0000\n"
-"PO-Revision-Date: 2018-02-18 21:34+0100\n"
+"POT-Creation-Date: 2018-03-06 04:56+0000\n"
+"PO-Revision-Date: 2018-03-03 07:21+0100\n"
 "Last-Translator: Marko M. Kostić <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -117,7 +117,7 @@ msgid "The GNOME Project"
 msgstr "Gnomov projekat"
 
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:260 editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:476
 msgid "dconf Editor"
 msgstr "dkonf uređivač"
 
@@ -360,7 +360,7 @@ msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr "Sadrži sve putanje koje je korisnik zabeležio, u obliku niza niski."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid "A boolean, type ‘b’"
 msgstr "Logička vrednost, vrsta „b“"
 
@@ -439,11 +439,11 @@ msgstr ""
 "sa porukom D-sabirnice. Ako ne delujete sa D-sabirnicom, onda nemate razloga "
 "da koristite ovu vrstu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:243
+#: editor/ca.desrt.dconf-editor.gschema.xml:241
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Putanja objekta D-sabirnice, vrsta „o“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:244
+#: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -453,11 +453,11 @@ msgstr ""
 "odredištu na sabirnici. Ako ne delujete sa D-sabirnicom, onda nemate razloga "
 "da koristite ovu vrstu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:250
+#: editor/ca.desrt.dconf-editor.gschema.xml:246
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Niz putanje objekta D-sabirnice, vrsta „ao“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:251
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -467,11 +467,11 @@ msgstr ""
 "ništa: „[]“). Ako ne delujete sa D-sabirnicom, onda nemate razloga da "
 "koristite ovu vrstu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:257
+#: editor/ca.desrt.dconf-editor.gschema.xml:251
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Potpis D-sabirnice, vrsta „g“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:258
+#: editor/ca.desrt.dconf-editor.gschema.xml:252
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -481,89 +481,89 @@ msgstr ""
 "poruku D-sabirnice. Ako ne delujete sa D-sabirnicom, onda nemate razloga da "
 "koristite ovu vrstu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:264
+#: editor/ca.desrt.dconf-editor.gschema.xml:256
 msgid "A double, type ‘d’"
 msgstr "Dvostruko, vrsta „d“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:265
+#: editor/ca.desrt.dconf-editor.gschema.xml:257
 msgid "A double value could represent any real number."
 msgstr "Dvostruka vrednost može da predstavlja bilo koji realni broj."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:269
+#: editor/ca.desrt.dconf-editor.gschema.xml:261
 msgid "A 5-choices enumeration"
 msgstr "Nabrajanje 5-izbora"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:270
+#: editor/ca.desrt.dconf-editor.gschema.xml:262
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr ""
 "Nabrajanja mogu biti urađena ili sa atributom „enum“ ili sa oznakom „choices“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:274
+#: editor/ca.desrt.dconf-editor.gschema.xml:266
 msgid "A short integer, type ‘n’"
 msgstr "Kratak ceo broj, vrsta „n“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:275
+#: editor/ca.desrt.dconf-editor.gschema.xml:267
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16-bitni ceo broj sa znakom. Vidite takođe ključ „integer-16-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:361
+#: editor/ca.desrt.dconf-editor.gschema.xml:271
+#: editor/ca.desrt.dconf-editor.gschema.xml:355
 msgid "Flags: choose-colors-you-love"
 msgstr "Zastavice: izaberite-boje-koje-obožavate"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:362
+#: editor/ca.desrt.dconf-editor.gschema.xml:272
+#: editor/ca.desrt.dconf-editor.gschema.xml:356
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Zastavice mogu biti postavljene atributom „enum“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:284
+#: editor/ca.desrt.dconf-editor.gschema.xml:276
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Kratak ceo broj bez znaka, vrsta „q“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:285
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16-bitni ceo broj bez znaka. Vidite takođe ključ „integer-16-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:356
+#: editor/ca.desrt.dconf-editor.gschema.xml:281
+#: editor/ca.desrt.dconf-editor.gschema.xml:350
 msgid "An usual integer, type ‘i’"
 msgstr "Uobičajeni ceo broj, vrsta „i“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:290
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "32-bitni ceo broj sa znakom. Vidite takođe ključ „integer-32-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:294
+#: editor/ca.desrt.dconf-editor.gschema.xml:286
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Uobičajeni ceo broj bez znaka, vrsta „u“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:295
+#: editor/ca.desrt.dconf-editor.gschema.xml:287
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "32-bitni ceo broj bez znaka. Vidite takođe ključ „integer-32-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:299
+#: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid "A long integer, type ‘x’"
 msgstr "Dug ceo broj, vrsta „x“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:300
+#: editor/ca.desrt.dconf-editor.gschema.xml:292
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "64-bitni ceo broj sa znakom. Vidite takođe ključ „integer-64-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:304
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Dugi ceo broj bez znaka, vrsta „t“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:305
+#: editor/ca.desrt.dconf-editor.gschema.xml:297
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "64-bitni ceo broj bez znaka. Vidite takođe ključ „integer-64-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:311
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
 msgid "A number with range"
 msgstr "Broj sa opsegom"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:312
+#: editor/ca.desrt.dconf-editor.gschema.xml:304
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -573,11 +573,11 @@ msgstr ""
 "vrste, i još i dvostruki) mogu biti ograničeni na proizvoljni opseg "
 "vrednosti. Na primer, ovaj ceo broj može da ima vrednost samo između -2 i 10."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:316
+#: editor/ca.desrt.dconf-editor.gschema.xml:308
 msgid "A custom type, here ‘(ii)’"
 msgstr "Proizvoljna vrsta, ovde „(ii)“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:317
+#: editor/ca.desrt.dconf-editor.gschema.xml:309
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -587,11 +587,11 @@ msgstr ""
 "podešavanje (GSettings), vraćajući se nazad na unos niske kada nema bolji "
 "način da to uradi. Ovde je n-torka dva 32-bitna cela broja sa znakom."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:321
+#: editor/ca.desrt.dconf-editor.gschema.xml:313
 msgid "A string, type ‘s’"
 msgstr "Niska, vrsta „s“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:322
+#: editor/ca.desrt.dconf-editor.gschema.xml:314
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -599,11 +599,11 @@ msgstr ""
 "Vrsta niske može da prihvati bilo koju utf8 nisku. Znajte da prazna niska "
 "„''“ nije isto što i NIŠTICA (ništa); vidite takođe ključ „string-nullable“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:326
+#: editor/ca.desrt.dconf-editor.gschema.xml:318
 msgid "A string array, type ‘as’"
 msgstr "Niz niske, vrsta „as“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:327
+#: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -611,11 +611,11 @@ msgstr ""
 "Niz niske sadrži bilo koji broj niski bilo koje dužine. Može biti prazan "
 "niz, „[]“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:331
+#: editor/ca.desrt.dconf-editor.gschema.xml:323
 msgid "A nullable string, type ‘ms’"
 msgstr "Ništavna niska, vrsta „ms“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:332
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -626,11 +626,11 @@ msgstr ""
 "koju nisku kao vrednost, uključujući praznu nisku „''“, ili može biti NIŠTICA "
 "(ništa)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:336
+#: editor/ca.desrt.dconf-editor.gschema.xml:328
 msgid "A 1-choice enumeration"
 msgstr "Nabrajanje 1-izbora"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:337
+#: editor/ca.desrt.dconf-editor.gschema.xml:329
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -638,11 +638,11 @@ msgstr ""
 "Nabrajanje može da sadrži samo jednu stavku, ali je to verovatno greška. "
 "Dkonf uređivač vas upozorava u tom slučaju."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:342
+#: editor/ca.desrt.dconf-editor.gschema.xml:334
 msgid "A 1-choice integer value"
 msgstr "Vrednost celog broja 1-izbora"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:343
+#: editor/ca.desrt.dconf-editor.gschema.xml:335
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -650,20 +650,20 @@ msgstr ""
 "Nabrajanje može da ograniči da ključ celog broja dozvoli samo jednu vrednost, "
 "ali je to verovatno greška. Dkonf uređivač vas upozorava u tom slučaju."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
+#: editor/ca.desrt.dconf-editor.gschema.xml:346
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Obična bulova vrednost koju navodi premostiva šema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
+#: editor/ca.desrt.dconf-editor.gschema.xml:351
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr "32-bitni potpisani broj kojeg navodi premostiva šema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Običan nesukobljeni ključ sa Conflict1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:369
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
+#: editor/ca.desrt.dconf-editor.gschema.xml:363
+#: editor/ca.desrt.dconf-editor.gschema.xml:390
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
@@ -671,13 +671,13 @@ msgstr ""
 "Ovaj ključ je proba za više šema unutar jedne putanje sa sukobljenim ključevima. "
 "Nesukobljeni ključevi neće biti problematični."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:373
+#: editor/ca.desrt.dconf-editor.gschema.xml:367
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 "Sukobljeni ključ podrazumevano ima vrednost „1“ i to bi trebalo izazvati grešku"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:395
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -687,12 +687,12 @@ msgstr ""
 "Ne bi trebalo biti moguća njegova izmena zato što ključ mapiran u istu putanju "
 "sadrži drugačiju podrazumevanu vrednost."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#: editor/ca.desrt.dconf-editor.gschema.xml:372
 msgid "Conflicting key with no range that should give an error"
 msgstr "Sukobljeni ključ bez opsega koji bi trebao da izazove grešku"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:379
-#: editor/ca.desrt.dconf-editor.gschema.xml:407
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -702,13 +702,13 @@ msgstr ""
 "Ne bi trebalo biti moguća njegova izmena zato što ključ mapiran u istu putanju "
 "ima drugačiji opseg."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:383
+#: editor/ca.desrt.dconf-editor.gschema.xml:377
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
 "(Jednostavan) sukobljeni ključ vrste niska koji bi trebao da izazove grešku"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:384
-#: editor/ca.desrt.dconf-editor.gschema.xml:412
+#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#: editor/ca.desrt.dconf-editor.gschema.xml:406
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -718,12 +718,12 @@ msgstr ""
 "Ne bi trebalo biti moguća njegova izmena zato što ključ mapiran u istu putanju "
 "ima drugačiju vrstu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:382
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Sukobljeni ključ iz Conflict1 koji bi trebao da izazove upozorenje"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#: editor/ca.desrt.dconf-editor.gschema.xml:383
+#: editor/ca.desrt.dconf-editor.gschema.xml:411
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
@@ -732,24 +732,24 @@ msgstr ""
 "Ovaj ključ je proba za više šema unutar jedne putanje sa sukobljenim ključevima. "
 "Može se izmeniti jer su vrste ključa podudarne ali je to ipak problematično."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Običan nesukobljeni ključ iz Conflict2"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:400
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 "Sukobljeni ključ podrazumevano ima vrednost „2“ i to bi trebalo izazvati grešku"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:406
+#: editor/ca.desrt.dconf-editor.gschema.xml:400
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr "Sukobljeni ključ sa opsegom od 0 do 5 i to bi trebalo izazvati grešku"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:411
+#: editor/ca.desrt.dconf-editor.gschema.xml:405
 msgid "A nullable-string conflicting key that should give an error"
 msgstr "Sukobljeni ključ vrste ništavna niska koji bi trebao da izazove grešku"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:416
+#: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Sukobljeni ključ iz Conflict2 koji bi trebao da izazove grešku"
 
@@ -786,80 +786,80 @@ msgstr "Ključevi pretrage"
 msgid "Refresh search results"
 msgstr "Osveži rezultate pretrage"
 
-#: editor/dconf-editor.vala:132
+#: editor/dconf-editor.vala:134
 msgid "Print release version and exit"
 msgstr "Ispisuje izdanje i izlazi"
 
-#: editor/dconf-editor.vala:133
+#: editor/dconf-editor.vala:135
 msgid "Print relocatable schemas and exit"
 msgstr "Ispiši premostive šeme i izađi"
 
-#: editor/dconf-editor.vala:135
+#: editor/dconf-editor.vala:137
 msgid "Do not show initial warning"
 msgstr "Ne prikazuj početno upozorenje"
 
-#: editor/dconf-editor.vala:137
+#: editor/dconf-editor.vala:139
 msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
 msgstr "[PUTANJA|FIKSNA_ŠEMA [KLJUČ]|PREMOSTIVA_ŠEMA:PUTANJA [KLJUČ]]"
 
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
 msgstr "Instalirane poznate šeme:"
 
-#: editor/dconf-editor.vala:232
+#: editor/dconf-editor.vala:234
 msgid "No known schemas installed."
 msgstr "Nema instaliranih poznatih šema."
 
-#: editor/dconf-editor.vala:236
+#: editor/dconf-editor.vala:238
 msgid "Known schemas skipped:"
 msgstr "Preskočene poznate šeme:"
 
-#: editor/dconf-editor.vala:241
+#: editor/dconf-editor.vala:243
 msgid "No known schemas skipped."
 msgstr "Nema preskočenih poznatih šema."
 
-#: editor/dconf-editor.vala:245
+#: editor/dconf-editor.vala:247
 msgid "Unknown schemas:"
 msgstr "Nepoznate šeme:"
 
-#: editor/dconf-editor.vala:250
+#: editor/dconf-editor.vala:252
 msgid "No unknown schemas."
 msgstr "Nema nepoznatih šema."
 
-#: editor/dconf-editor.vala:315
+#: editor/dconf-editor.vala:323
 msgid "Only one window can be opened for now.\n"
 msgstr "Samo jedan prozor može biti otvoren za sada.\n"
 
-#: editor/dconf-editor.vala:334
+#: editor/dconf-editor.vala:342
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Ne razumem: suviše argumenata.\n"
 
-#: editor/dconf-editor.vala:344
+#: editor/dconf-editor.vala:352
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Ne razumem drugi argument u ovom kontekstu.\n"
 
-#: editor/dconf-editor.vala:361
+#: editor/dconf-editor.vala:372
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Ne razumem: kosa linija u drugom argumentu.\n"
 
-#: editor/dconf-editor.vala:375
+#: editor/dconf-editor.vala:386
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Putanja šeme treba počinjati i završavati se sa znakom „/“.\n"
 
-#: editor/dconf-editor.vala:388
+#: editor/dconf-editor.vala:399
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Ne razumem: znak razmaka u argumentu.\n"
 
 #. #. * * Copy action
-#. #: editor/dconf-editor.vala:412
+#. #: editor/dconf-editor.vala:423
 msgid "Copied to clipboard"
 msgstr "Umnoženo u ostavu"
 
-#: editor/dconf-editor.vala:467
+#: editor/dconf-editor.vala:478
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Grafički pregledač i uređivač unutrašnjih podešavanja programa."
 
-#: editor/dconf-editor.vala:468
+#: editor/dconf-editor.vala:479
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2015-2018 – Arnaud Bonatti\n"
@@ -869,7 +869,7 @@ msgstr ""
 "Autorska prava © 2015-2016 – Arno Bonati (Arnaud Bonatti)\n"
 "Autorska prava © 2017-2018 – Davi da Silva Boeger (Davi da Silva Böger)"
 
-#: editor/dconf-editor.vala:472
+#: editor/dconf-editor.vala:483
 msgid "translator-credits"
 msgstr ""
 "Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
@@ -902,63 +902,68 @@ msgstr "Mapiranja na pokretanju su onemogućena."
 msgid "Schema is not installed on given path."
 msgstr "Šema nije instalirana unutar date putanje."
 
-#: editor/dconf-window.vala:285
+#: editor/dconf-window.vala:156
+#, c-format
+msgid "Unknown schema “%s”."
+msgstr "Nepoznate šema „%s“."
+
+#: editor/dconf-window.vala:286
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Hvala vam što koristite Dkonf za uređivanje vaših podešavanja!"
 
-#: editor/dconf-window.vala:286
+#: editor/dconf-window.vala:287
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Ne zaboravite da neke opcije mogu poremetiti rad programa. Budite pažljivi."
 
-#: editor/dconf-window.vala:287
+#: editor/dconf-window.vala:288
 msgid "I’ll be careful."
 msgstr "Biću pažljiv."
 
 #. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:291
+#: editor/dconf-window.vala:292
 msgid "Show this dialog next time."
 msgstr "Prikaži ovo prozorče sledeći put."
 
-#: editor/dconf-window.vala:411
+#: editor/dconf-window.vala:412
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Fascikla „%s“ je sada prazna."
 
 #. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:421
+#: editor/dconf-window.vala:422
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Ključ „%s“ je obrisan."
 
-#: editor/dconf-window.vala:656
+#: editor/dconf-window.vala:657
 msgid "Copy descriptor"
 msgstr "Kopiraj opisnika"
 
-#: editor/dconf-window.vala:662
+#: editor/dconf-window.vala:663
 msgid "Reset visible keys"
 msgstr "Ponovo postavi vidljive ključeve"
 
-#: editor/dconf-window.vala:663
+#: editor/dconf-window.vala:664
 msgid "Reset view recursively"
 msgstr "Rekurzivno ponovo postavi pregled"
 
-#: editor/dconf-window.vala:671
+#: editor/dconf-window.vala:672
 msgid "Enter delay mode"
 msgstr "Uključi režim zastoja"
 
-#: editor/dconf-window.vala:736
+#: editor/dconf-window.vala:737
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 "Isti taster miša je namešten za kretanje nazad i napred. Ne radim bilo šta."
 
-#: editor/dconf-window.vala:996
+#: editor/dconf-window.vala:997
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Ne mogu da nađem ključ „%s“."
 
-#: editor/dconf-window.vala:1000
+#: editor/dconf-window.vala:1001
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nema bilo čega u zatraženoj fascikli „%s“."
