@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2018-03-11 20:40+0000\n"
-"PO-Revision-Date: 2018-03-13 01:10+0100\n"
+"PO-Revision-Date: 2018-03-13 01:29+0100\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -971,7 +971,7 @@ msgstr "Uklj/Isklj popis promjena"
 #: editor/help-overlay.ui:83
 msgctxt "shortcut window"
 msgid "Open selected row key"
-msgstr "Orvori odabrani redak ključa"
+msgstr "Otvori odabrani redak ključa"
 
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
@@ -1215,8 +1215,9 @@ msgid ""
 "want to erase it."
 msgstr ""
 "Nema dostupnih shema. Shema opisuje korištenje ključa i Dconf uređivač ne "
-"može pronaći jedan povezan sa ovim ključem. Ako aplikacija koja koristi ovaj "
-"ključ je deinstalirana ili je ovaj ključ zastario, možda ga želite obrisati."
+"može pronaći nijednu shemu povezanu sa ovim ključem. Ako aplikacija koja "
+"koristi ovaj ključ je deinstalirana ili je ovaj ključ zastario, možda ga "
+"želite obrisati."
 
 #: editor/registry-info.ui:149
 msgid ""
@@ -1239,7 +1240,7 @@ msgstr ""
 
 #: editor/registry-info.vala:114
 msgid "Defined by"
-msgstr "Odredio"
+msgstr "Definirao/la"
 
 #: editor/registry-info.vala:116
 msgid "Schema"
