@@ -1,3 +1,25 @@
+dconf-editor 3.28.0
+=====================
+
+All looks good for a new stable release. Many changes in the UI, many changes in
+the backend, some real improvements that –I hope– will please every user of this
+3.28 release. Needs to be highlighted, the rework of the list of keys look, some
+fixes in the backend with notably the support of relocatable schemas (a function
+that was asked regularly) and a refresh of the schema list, and a first revision
+of an improved search function.
+
+Translations updated:
+  Croatian: gogo
+  Danish: Ask Hjorth Larsen
+  British English: Bruce Cowan
+  French: Alain Lojewski
+  German: Tim Sabsch
+  Italian: Milo Casagrande
+  Latvian: Rūdolfs Mazurs
+  Serbian and Serbian Latin: Марко Костић and Милош Поповић
+  Swedish: Anders Jonsson
+  Turkish: Muhammet Kara
+
 dconf-editor 3.27.92
 =====================
 
