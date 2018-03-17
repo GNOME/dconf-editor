@@ -213,7 +213,7 @@ class RegistrySearch : RegistryList
     private int post_bookmarks;
     private int post_folders;
     private uint? search_source = null;
-    private GLib.Queue<Directory> search_nodes = new GLib.Queue<Directory> ();
+    private GLib.Queue<string> search_nodes = new GLib.Queue<string> ();
 
     public void clean ()
     {
@@ -378,7 +378,7 @@ class RegistrySearch : RegistryList
 
     private void start_global_search (SettingsModel model, string current_path, string term)
     {
-        search_nodes.push_head (model.get_root_directory ());
+        search_nodes.push_head ("/");
         resume_global_search (current_path, term);
     }
 
@@ -405,10 +405,10 @@ class RegistrySearch : RegistryList
         SettingsModel model = modifications_handler.model;
         if (!search_nodes.is_empty ())
         {
-            Directory next = (!) search_nodes.pop_head ();
-            bool local_again = next.full_name == current_path;
+            string next = (!) search_nodes.pop_head ();
+            bool local_again = next == current_path;
 
-            GLib.ListStore? next_key_model = model.get_children (next.full_name);
+            GLib.ListStore? next_key_model = model.get_children (next);
             if (next_key_model == null)
                 return true;
 
@@ -419,7 +419,7 @@ class RegistrySearch : RegistryList
                 {
                     if (!local_again && term in item.name)
                         list_model.insert (post_folders++, item);
-                    search_nodes.push_tail ((Directory) item); // we still search local children
+                    search_nodes.push_tail (item.full_name); // we still search local children
                 }
                 else
                 {

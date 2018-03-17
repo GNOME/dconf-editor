@@ -90,15 +90,10 @@ public class SettingsModel : Object
     * * Objects requests
     \*/
 
-    public Directory get_root_directory ()
-    {
-        return new Directory ("/", "/");
-    }
-
     private Directory? get_directory (string path)
     {
         if (path == "/")
-            return get_root_directory ();
+            return new Directory ("/", "/");
 
         uint schemas_count = 0;
         uint subpaths_count = 0;
