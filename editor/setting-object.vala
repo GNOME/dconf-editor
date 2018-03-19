@@ -90,6 +90,8 @@ public abstract class Key : SettingObject
             case "x":
             case "t":
                 return _("Integer");
+            case "v":
+                return _("Variant");
             default:
                 return type;
         }

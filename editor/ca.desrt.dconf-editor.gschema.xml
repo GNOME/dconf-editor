@@ -323,6 +323,16 @@
       <summary>A nullable string, type ‘ms’</summary>
       <description>GSettings allows nullable types, that are similar to other types but could take a “nothing” value. A nullable string can take any string as value, including the empty string “''”, or can be NULL (nothing).</description>
     </key>
+    <key name="variant" type="v">
+      <default>&#60;@mmb just nothing&#62;</default>
+      <summary>A variant, type ‘v’</summary>
+      <description>Variants could be stored inside variants, and consequently as a GSettings type. Their representation use the XML brackets (‘&#60;’ and ‘&#62;’ characters, in a gschema file “&amp;#60;” and “&amp;#62;” respectively), with a parsable representation of their content inside. If unclear, the type can be given in the value with a prefix annotation like “@x” (where “x” is the type string) or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html for complete documentation.</description>
+    </key>
+    <key name="variant-dictionary" type="a{sv}">
+      <default>{'title': &#60;'Example'&#62;, 'character': &#60;uint32 56&#62;, 'bold': &#60;true&#62;}</default>
+      <summary>A “vardict”, type ‘a{sv}’</summary>
+      <description>A dictionary maps values of a basic type to another value (of any type). One simple use case is to map strings to variants.</description>
+    </key>
     <key name="weird-enum" enum="ca.desrt.dconf-editor.DemoWeirdEnum">
       <default>'only-choice'</default>
       <summary>A 1-choice enumeration</summary>

@@ -407,6 +407,10 @@ class RegistryInfo : Grid, BrowsableView
         if (type == "d")    // TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
             return warning_label (_("Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z notation."));
 
+        if ("v" in type)
+            return warning_label (_("Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://developer.gnome.org/glib/stable/gvariant-text.html for complete documentation."));
+
+        /* the "<flags>" special type is not concerned but has an 's' and a 'g' in it; "s", "g" and "o" types have a specific UI */
         if (type != "<flags>" && ((type != "s" && "s" in type) || (type != "g" && "g" in type)) || (type != "o" && "o" in type))
         {
             if ("m" in type)
@@ -415,7 +419,8 @@ class RegistryInfo : Grid, BrowsableView
             else
                 return warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks."));
         }
-        else if (type != "m" && type != "mb" && type != "<enum>" && "m" in type)
+        /* the "mb" type has a specific UI; the "<enum>" special type is not concerned but has an 'm' in it */
+        else if (type != "mb" && type != "<enum>" && "m" in type)
             /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
             return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."));
         return null;
