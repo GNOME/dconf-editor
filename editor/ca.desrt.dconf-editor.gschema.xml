@@ -344,6 +344,11 @@
       <summary>A 1-choice integer value</summary>
       <description>A range could limit an integer key to only allow one value, but that’s probably an error. Dconf Editor warns you in that case.</description>
     </key>
+    <key name="weird-triv" type="()">
+      <default>()</default>
+      <summary>The empty tuple, type and value “()”</summary>
+      <description>There’s an empty tuple type (called sometimes “triv”) that is a tuple with no content, and can only take “()” as value.</description>
+    </key>
   </schema>
   <schema id="ca.desrt.dconf-editor.Demo.Empty" path="/ca/desrt/dconf-editor/Demo/Empty/">
   </schema>

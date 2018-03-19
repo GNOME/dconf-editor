@@ -92,6 +92,8 @@ public abstract class Key : SettingObject
                 return _("Integer");
             case "v":
                 return _("Variant");
+            case "()":
+                return _("Empty tuple");
             default:
                 return type;
         }

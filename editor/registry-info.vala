@@ -26,6 +26,7 @@ class RegistryInfo : Grid, BrowsableView
     [GtkChild] private Revealer one_choice_warning_revealer;
     [GtkChild] private Label one_choice_enum_warning;
     [GtkChild] private Label one_choice_integer_warning;
+    [GtkChild] private Label one_choice_tuple_warning;
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
@@ -166,9 +167,9 @@ class RegistryInfo : Grid, BrowsableView
         bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
         if (is_key_editor_child_single)
         {
-            bool is_enum = tmp_string == "<enum>";
-            one_choice_integer_warning.visible = !is_enum;
-            one_choice_enum_warning.visible = is_enum;
+            one_choice_enum_warning.visible = tmp_string == "<enum>";
+            one_choice_tuple_warning.visible = tmp_string == "()";
+            one_choice_integer_warning.visible = (tmp_string != "<enum>") && (tmp_string != "()");
         }
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
@@ -333,6 +334,9 @@ class RegistryInfo : Grid, BrowsableView
                 if (key is GSettingsKey)
                     range_content_or_null = ((GSettingsKey) key).range_content;
                 return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, range_content_or_null);
+
+            case "()":
+                return (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");
 
             default:
                 if ("a" in key.type_string)

@@ -159,6 +159,16 @@
                         <property name="label" translatable="yes">This integer key can only take one value. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkLabel" id="one_choice_tuple_warning">
+                        <property name="visible">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="xalign">0.5</property>
+                        <property name="max-width-chars">40</property>
+                        <property name="wrap">True</property>
+                        <property name="label" translatable="yes">This key has a special “empty tuple” type. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

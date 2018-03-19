@@ -408,7 +408,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
 
-        if (key.type_string == "b" || key.type_string == "mb")
+        if (key.type_string == "b" || key.type_string == "mb" || key.type_string == "()")
         {
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
@@ -553,7 +553,8 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 (key.type_string == "n" || key.type_string == "i" || key.type_string == "h" || key.type_string == "x")
                 && (key.range_type == "range")
                 && (Key.get_variant_as_int64 (key.range_content.get_child_value (1)) - Key.get_variant_as_int64 (key.range_content.get_child_value (0)) < 13)
-               ))
+               )
+            || key.type_string == "()")
         {
             popover.new_section ();
             GLib.Action action;
@@ -808,6 +809,9 @@ private class ContextPopover : Popover
                            number <= Key.get_variant_as_int64 (range.get_child_value (1));
                            number++)
                     current_section.append (number.to_string (), @"$group_dot_action(@mm$type_string $number)");
+                break;
+            case "()":
+                current_section.append ("()", @"$group_dot_action(@mm() ())");
                 break;
         }
 
