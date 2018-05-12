@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-28 08:32+0000\n"
-"PO-Revision-Date: 2018-02-28 09:57+0100\n"
+"POT-Creation-Date: 2018-03-19 11:21+0000\n"
+"PO-Revision-Date: 2018-05-12 13:43+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -356,7 +356,7 @@ msgstr ""
 "uživatel do záložek."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:211
-#: editor/ca.desrt.dconf-editor.gschema.xml:353
+#: editor/ca.desrt.dconf-editor.gschema.xml:360
 msgid "A boolean, type ‘b’"
 msgstr "Pravdivostní hodnota, typ „b“"
 
@@ -434,11 +434,11 @@ msgstr ""
 "posílány společně se zprávami D-Bus. Pokud nekomunikujete se sběrnicí D-Bus, "
 "není žádný důvod k tomu, abyste tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:243
+#: editor/ca.desrt.dconf-editor.gschema.xml:241
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Cesta k objektu D-Bus, typ „o“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:244
+#: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -448,25 +448,25 @@ msgstr ""
 "Pokud nekomunikujete se sběrnicí D-Bus, není žádný důvod k tomu, abyste "
 "tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:250
+#: editor/ca.desrt.dconf-editor.gschema.xml:246
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Pole cest k objektům D-Bus, typ „ao“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:251
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
 "Pole cest k objektům může obsahovat libovolný počet cest k objektům (včetně "
-"žádných cest: „[]“). Pokud nekomunikujete se sběrnicí D-Bus, není žádný důvod "
-"k tomu, abyste tento typ používali."
+"žádných cest: „[]“). Pokud nekomunikujete se sběrnicí D-Bus, není žádný "
+"důvod k tomu, abyste tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:257
+#: editor/ca.desrt.dconf-editor.gschema.xml:251
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Podpis D-Bus, typ „g“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:258
+#: editor/ca.desrt.dconf-editor.gschema.xml:252
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -476,88 +476,88 @@ msgstr ""
 "sběrnice D-Bus. Pokud nekomunikujete se sběrnicí D-Bus, není žádný důvod k "
 "tomu, abyste tento typ používali."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:264
+#: editor/ca.desrt.dconf-editor.gschema.xml:256
 msgid "A double, type ‘d’"
 msgstr "Dvojitá přesnost, typ „d“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:265
+#: editor/ca.desrt.dconf-editor.gschema.xml:257
 msgid "A double value could represent any real number."
 msgstr "Hodnota s dvojitou přesností může vyjadřovat libovolné reálné číslo."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:269
+#: editor/ca.desrt.dconf-editor.gschema.xml:261
 msgid "A 5-choices enumeration"
 msgstr "Výčet s 5 volbami"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:270
+#: editor/ca.desrt.dconf-editor.gschema.xml:262
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr "Výčty mohou být dány buď atributem „enum“ nebo značkou „choices“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:274
+#: editor/ca.desrt.dconf-editor.gschema.xml:266
 msgid "A short integer, type ‘n’"
 msgstr "Krátké celé číslo, typ „n“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:275
+#: editor/ca.desrt.dconf-editor.gschema.xml:267
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "16bitové celé číslo bez znaménka. Viz také klíč „integer-16-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:279
-#: editor/ca.desrt.dconf-editor.gschema.xml:363
+#: editor/ca.desrt.dconf-editor.gschema.xml:271
+#: editor/ca.desrt.dconf-editor.gschema.xml:370
 msgid "Flags: choose-colors-you-love"
 msgstr "Příznaky: „vyberte si svoji oblíbenou barvu“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:280
-#: editor/ca.desrt.dconf-editor.gschema.xml:364
+#: editor/ca.desrt.dconf-editor.gschema.xml:272
+#: editor/ca.desrt.dconf-editor.gschema.xml:371
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Příznaky mohou být nastaveny atributem „enum“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:284
+#: editor/ca.desrt.dconf-editor.gschema.xml:276
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Krátké celé nezáporné číslo, typ „q“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:285
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16bitové celé číslo bez znaménka. Viz také klíč „integer-16-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:358
+#: editor/ca.desrt.dconf-editor.gschema.xml:281
+#: editor/ca.desrt.dconf-editor.gschema.xml:365
 msgid "An usual integer, type ‘i’"
 msgstr "Běžné celé číslo, typ „i“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:290
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "32bitové celé číslo se znaménkem. Viz také klíč „integer-32-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:294
+#: editor/ca.desrt.dconf-editor.gschema.xml:286
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Běžné celé nezáporné číslo, typ „u“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:295
+#: editor/ca.desrt.dconf-editor.gschema.xml:287
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "32bitové celé číslo bez znaménka. Viz také klíč „integer-32-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:299
+#: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid "A long integer, type ‘x’"
 msgstr "Dlouhé celé číslo, typ „x“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:300
+#: editor/ca.desrt.dconf-editor.gschema.xml:292
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "64bitové celé číslo se znaménkem. Viz také klíč „integer-64-unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:304
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Dlouhé celé nezáporné číslo, typ „t“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:305
+#: editor/ca.desrt.dconf-editor.gschema.xml:297
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "64bitové celé číslo bez znaménka. Viz také klíč „integer-64-signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:311
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
 msgid "A number with range"
 msgstr "Číslo s rozsahem"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:312
+#: editor/ca.desrt.dconf-editor.gschema.xml:304
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -567,11 +567,11 @@ msgstr ""
 "plus čísla s dvojitou přesností) může být omezeno jen na určitý rozsah "
 "hodnot. Například, celé číslo by mohlo nabývat jen hodnot mezi -2 a 10."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:316
+#: editor/ca.desrt.dconf-editor.gschema.xml:308
 msgid "A custom type, here ‘(ii)’"
 msgstr "Vlastní typ, zde „(ii)“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:317
+#: editor/ca.desrt.dconf-editor.gschema.xml:309
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -582,11 +582,11 @@ msgstr ""
 "variantu v podobě textového pole. Zde se jedná o dvojici 32bitových celých "
 "čísel."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:321
+#: editor/ca.desrt.dconf-editor.gschema.xml:313
 msgid "A string, type ‘s’"
 msgstr "Textový řetězec, typ „s“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:322
+#: editor/ca.desrt.dconf-editor.gschema.xml:314
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -595,11 +595,11 @@ msgstr ""
 "řetězec „''“ není to stejné co prázdná hodnota (nic, NULL). Viz také klíč "
 "„nullable-key“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:326
+#: editor/ca.desrt.dconf-editor.gschema.xml:318
 msgid "A string array, type ‘as’"
 msgstr "Pole textových řetězců, typ „as“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:327
+#: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -607,11 +607,11 @@ msgstr ""
 "Pole textových řetězců může obsahovat libovolný počet řetězců jakékoliv "
 "délky. Pole může být i prázdné: „[]“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:331
+#: editor/ca.desrt.dconf-editor.gschema.xml:323
 msgid "A nullable string, type ‘ms’"
 msgstr "Textový řetězec, může mít prázdnou hodnotu, typ „ms“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:332
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -623,11 +623,45 @@ msgstr ""
 "řetězce „''“, nebo může mít prázdnou hodnotu „nic“ (NULL). Prázdný řetězec a "
 "prázdná hodnota jsou dvě rozdílné věci."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:336
+#: editor/ca.desrt.dconf-editor.gschema.xml:328
+msgid "A variant, type ‘v’"
+msgstr "Vyriabilní typ, typ „v“"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:329
+msgid ""
+"Variants could be stored inside variants, and consequently as a GSettings "
+"type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
+"a gschema file “&#60;” and “&#62;” respectively), with a parsable "
+"representation of their content inside. If unclear, the type can be given in "
+"the value with a prefix annotation like “@x” (where “x” is the type string) "
+"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
+"for complete documentation."
+msgstr ""
+"Variabilní typy mohou být uchovány ve variabilních typech a následně jako "
+"typ GSettings. Pro jejich reprezentaci se používají závorky XML („<“ a „>“, "
+"resp. v souboru gschema „&#60“ a „&#62“), uvnitř s obsahem, který je "
+"reprezentuje. Pokud to není zřejmé, může být typ výslovně uveden spolu s "
+"hodnotou pomocí prefixu jako je „@x“ (kde „x“ je řetězec označující typ) "
+"nebo „int64“. Úplná dokumentace viz https://developer.gnome.org/glib/stable/"
+"gvariant-text.html"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:333
+msgid "A “vardict”, type ‘a{sv}’"
+msgstr "Variabilní slovník, typ „a{sv}“"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:334
+msgid ""
+"A dictionary maps values of a basic type to another value (of any type). One "
+"simple use case is to map strings to variants."
+msgstr ""
+"Slovník mapuje hodnoty základního typu na jiné hodnoty (jiného typu). Jeden "
+"z jednoduchých případů použití je mapování řetězců na variabilní typy."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:338
 msgid "A 1-choice enumeration"
 msgstr "Výčet s 1 volbou"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:337
+#: editor/ca.desrt.dconf-editor.gschema.xml:339
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -635,11 +669,11 @@ msgstr ""
 "Výčet sice může obsahovat jen jednu hodnotu, ale nejspíše jde chybu. Proto "
 "vás v takovém případě bud Editor Dconf varovat."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:342
+#: editor/ca.desrt.dconf-editor.gschema.xml:344
 msgid "A 1-choice integer value"
 msgstr "Celočíselná hodnota s 1 volbou"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:343
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -647,21 +681,33 @@ msgstr ""
 "Rozsah sice může omezit celočíselný klíč jen jednu hodnotu, ale nejspíše jde "
 "chybu. Proto vás v takovém případě bud Editor Dconf varovat."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:354
+#: editor/ca.desrt.dconf-editor.gschema.xml:349
+msgid "The empty tuple, type and value “()”"
+msgstr "Prázdná n-tice, typ a hodnota „()“"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:350
+msgid ""
+"There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
+"no content, and can only take “()” as value."
+msgstr ""
+"Existuje typ prázdná n-tice (v angličtině někdy označovaný „triv“), což je n-"
+"tice, která nemá žádný obsah a může nabývat pouze hodnotu „()“."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Neobvyklá pravdivostní hodnota, definovaná přemístitelným schématem."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 "32bitové celé číslo se znaménkem, definované pomocí přemístitelného schématu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:370
+#: editor/ca.desrt.dconf-editor.gschema.xml:377
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Normální nekonfliktní klíč z Conflict1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:371
-#: editor/ca.desrt.dconf-editor.gschema.xml:398
+#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#: editor/ca.desrt.dconf-editor.gschema.xml:405
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
@@ -669,12 +715,12 @@ msgstr ""
 "Tento klíč je testem pro více schémat ve stejné cestě s konfliktními klíči. "
 "Nekonfliktní klíče by neměly způsobit žádné problémy."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:375
+#: editor/ca.desrt.dconf-editor.gschema.xml:382
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr "Konfliktní klíč s výchozí hodnotou „1“, který by měl způsobit chybu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:376
-#: editor/ca.desrt.dconf-editor.gschema.xml:403
+#: editor/ca.desrt.dconf-editor.gschema.xml:383
+#: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -684,12 +730,12 @@ msgstr ""
 "Neměl by být upravitelný, protože klíč mapovaný na stejnou cestu má jinou "
 "výchozí hodnotu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:380
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
 msgid "Conflicting key with no range that should give an error"
 msgstr "Konfliktní klíč bez rozsahu, který by měl způsobit chybu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:381
-#: editor/ca.desrt.dconf-editor.gschema.xml:409
+#: editor/ca.desrt.dconf-editor.gschema.xml:388
+#: editor/ca.desrt.dconf-editor.gschema.xml:416
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -699,12 +745,12 @@ msgstr ""
 "Neměl by být upravitelný, protože klíč mapovaný na stejnou cestu má jiný "
 "rozsah."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:385
+#: editor/ca.desrt.dconf-editor.gschema.xml:392
 msgid "A (simple) string conflicting key that should give a error"
 msgstr "Konfliktní klíč typu (jednoduchý) řetězec, který by měl způsobit chybu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:386
-#: editor/ca.desrt.dconf-editor.gschema.xml:414
+#: editor/ca.desrt.dconf-editor.gschema.xml:393
+#: editor/ca.desrt.dconf-editor.gschema.xml:421
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -713,12 +759,12 @@ msgstr ""
 "Tento klíč je testem pro více schémat ve stejné cestě s konfliktními klíči. "
 "Neměl by být upravitelný, protože klíč mapovaný na stejnou cestu má jiný typ."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:390
+#: editor/ca.desrt.dconf-editor.gschema.xml:397
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Konfliktní klíč z Conflict1, který by měl způsobit varování"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:391
-#: editor/ca.desrt.dconf-editor.gschema.xml:419
+#: editor/ca.desrt.dconf-editor.gschema.xml:398
+#: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
@@ -727,25 +773,25 @@ msgstr ""
 "Tento klíč je testem pro více schémat ve stejné cestě s konfliktními klíči. "
 "Lze jej upravovat, protože typy jsou kompatibilní, ale i tak je problémový."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:397
+#: editor/ca.desrt.dconf-editor.gschema.xml:404
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Normální nekonfliktní klíč z Conflict2"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:402
+#: editor/ca.desrt.dconf-editor.gschema.xml:409
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr "Konfliktní klíč s výchozí hodnotou „2“, který by měl způsobit chybu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:408
+#: editor/ca.desrt.dconf-editor.gschema.xml:415
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr "Konfliktní klíč s rozsahem 0~5, který by měl způsobit chybu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:413
+#: editor/ca.desrt.dconf-editor.gschema.xml:420
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
 "Konfliktní klíč typu řetězec s možnou prázdnou hodnotou, který by měl "
 "způsobit chybu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:418
+#: editor/ca.desrt.dconf-editor.gschema.xml:425
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Konfliktní klíč z Conflict2, který by měl způsobit varování"
 
@@ -869,7 +915,7 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Marek Černocký <marek@manet.cz>"
 
-#: editor/dconf-model.vala:400
+#: editor/dconf-model.vala:395
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (klíč smazán)"
@@ -965,7 +1011,7 @@ msgstr "V požadované složce „%s“ nic není."
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
 #: editor/delayed-setting-view.vala:50 editor/delayed-setting-view.vala:59
-#: editor/key-list-box-row.vala:834 editor/registry-info.vala:348
+#: editor/key-list-box-row.vala:838 editor/registry-info.vala:352
 msgid "Default value"
 msgstr "Výchozí hodnota"
 
@@ -974,7 +1020,7 @@ msgid "Key erased"
 msgstr "Klíč vymazán"
 
 #: editor/delayed-setting-view.vala:82 editor/key-list-box-row.vala:361
-#: editor/registry-info.vala:149
+#: editor/registry-info.vala:150
 msgid "Key erased."
 msgstr "Klíč byl vymazán."
 
@@ -1112,7 +1158,7 @@ msgstr "Ukončit"
 msgid "No Schema Found"
 msgstr "Nenalezeno žádné schéma"
 
-#: editor/key-list-box-row.vala:467 editor/registry-info.vala:121
+#: editor/key-list-box-row.vala:467 editor/registry-info.vala:122
 msgid "No summary provided"
 msgstr "Není uveden žádný souhrn"
 
@@ -1121,59 +1167,59 @@ msgid "conflicting keys"
 msgstr "konfliktní klíče"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:646
+#: editor/key-list-box-row.vala:647
 msgid "Copy"
 msgstr "Kopírovat"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:649
+#: editor/key-list-box-row.vala:650
 msgid "Customize…"
 msgstr "Přizpůsobit…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:652
+#: editor/key-list-box-row.vala:653
 msgid "Set to default"
 msgstr "Nastavit na výchozí"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:657
+#: editor/key-list-box-row.vala:658
 msgid "Show details…"
 msgstr "Zobrazit podrobnosti…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:660
+#: editor/key-list-box-row.vala:661
 msgid "Dismiss change"
 msgstr "Zahodit změnu"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:663 editor/key-list-box-row.vala:770
+#: editor/key-list-box-row.vala:664 editor/key-list-box-row.vala:771
 #: editor/registry-info.ui:112
 msgid "Erase key"
 msgstr "Smazat klíč"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:666
+#: editor/key-list-box-row.vala:667
 msgid "Open"
 msgstr "Otevřít"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:669
+#: editor/key-list-box-row.vala:670
 msgid "Open parent folder"
 msgstr "Otevřít rodičovskou složku"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:672
+#: editor/key-list-box-row.vala:673
 msgid "Reset recursively"
 msgstr "Resetovat rekurzivně"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:675
+#: editor/key-list-box-row.vala:676
 msgid "Do not erase"
 msgstr "Nemazat"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:764
+#: editor/key-list-box-row.vala:765
 msgid "No change"
 msgstr "Žádná změna"
 
@@ -1302,44 +1348,54 @@ msgstr ""
 "chybu v aplikaci, které toto schéma nainstalovala. Pokud je to možné, "
 "nahlaste to jako chybu."
 
-#: editor/registry-info.vala:114
+#: editor/registry-info.ui:169
+msgid ""
+"This key has a special “empty tuple” type. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
+msgstr ""
+"Tento klíč má speciální typ „prázdná n-tice“. Nejspíše se jedná o chybu v "
+"aplikaci, které toto schéma nainstalovala. Pokud je to možné, nahlaste to "
+"jako chybu."
+
+#: editor/registry-info.vala:115
 msgid "Defined by"
 msgstr "Definováno pomocí"
 
-#: editor/registry-info.vala:116
+#: editor/registry-info.vala:117
 msgid "Schema"
 msgstr "Schéma"
 
-#: editor/registry-info.vala:121
+#: editor/registry-info.vala:122
 msgid "Summary"
 msgstr "Přehled"
 
-#: editor/registry-info.vala:126
+#: editor/registry-info.vala:127
 msgid "Description"
 msgstr "Popis"
 
-#: editor/registry-info.vala:126
+#: editor/registry-info.vala:127
 msgid "No description provided"
 msgstr "Není uveden žádný popisovač"
 
 #. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:129
+#: editor/registry-info.vala:130
 msgid "Type"
 msgstr "Typ"
 
-#: editor/registry-info.vala:131
+#: editor/registry-info.vala:132
 msgid "Minimum"
 msgstr "Minimum"
 
-#: editor/registry-info.vala:132
+#: editor/registry-info.vala:133
 msgid "Maximum"
 msgstr "Maximum"
 
-#: editor/registry-info.vala:133
+#: editor/registry-info.vala:134
 msgid "Default"
 msgstr "Výchozí"
 
-#: editor/registry-info.vala:141
+#: editor/registry-info.vala:142
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
@@ -1347,20 +1403,20 @@ msgstr ""
 "Existují konfliktní definice tohoto klíče, takže získání hodnoty by bylo buď "
 "problematické nebo nesmyslné."
 
-#: editor/registry-info.vala:161
+#: editor/registry-info.vala:162
 msgid "Current value"
 msgstr "Aktuální hodnota"
 
-#: editor/registry-info.vala:197
+#: editor/registry-info.vala:198
 msgid "Use default value"
 msgstr "Použít výchozí hodnotu"
 
-#: editor/registry-info.vala:255
+#: editor/registry-info.vala:256
 msgid "Custom value"
 msgstr "Vlastní hodnota"
 
 #. TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
-#: editor/registry-info.vala:408
+#: editor/registry-info.vala:412
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
@@ -1368,8 +1424,17 @@ msgstr ""
 "Použijte desetinnou tečku a žádný oddělovač tisíců. Můžete použít zápis X.Ye"
 "+Z."
 
+#: editor/registry-info.vala:415
+msgid ""
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
+"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
+"documentation."
+msgstr ""
+"Obsah variabilního typu by měl být uzavřen do závorek XML („<“ a„>“). Úplná "
+"dokumentace viz https://developer.gnome.org/glib/stable/gvariant-text.html"
+
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:414
+#: editor/registry-info.vala:422
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1379,13 +1444,13 @@ msgstr ""
 "začínajících „m“ (z anglického „maybe“ – „možná“). Řetězce, podpisy a cesty "
 "by měly být uzavřené do uvozovek."
 
-#: editor/registry-info.vala:416
+#: editor/registry-info.vala:424
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Řetězce, podpisy a cesty by měly být uzavřené do uvozovek."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:420
+#: editor/registry-info.vala:429
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1462,39 +1527,47 @@ msgstr "Podpis D-Bus"
 msgid "Integer"
 msgstr "Celé číslo"
 
-#: editor/setting-object.vala:210
+#: editor/setting-object.vala:94
+msgid "Variant"
+msgstr "Variabilní typ"
+
+#: editor/setting-object.vala:96
+msgid "Empty tuple"
+msgstr "Prázdná n-tice"
+
+#: editor/setting-object.vala:214
 msgid "True"
 msgstr "Pravda"
 
-#: editor/setting-object.vala:212
+#: editor/setting-object.vala:216
 msgid "False"
 msgstr "Nepravda"
 
-#: editor/setting-object.vala:213
+#: editor/setting-object.vala:217
 msgid "Nothing"
 msgstr "Nic"
 
-#: editor/setting-object.vala:218
+#: editor/setting-object.vala:222
 msgid "true"
 msgstr "pravda"
 
-#: editor/setting-object.vala:220
+#: editor/setting-object.vala:224
 msgid "false"
 msgstr "nepravda"
 
 #. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/setting-object.vala:222
+#: editor/setting-object.vala:226
 msgid "nothing"
 msgstr "nic"
 
-#: editor/setting-object.vala:268
+#: editor/setting-object.vala:272
 msgid "DConf backend"
 msgstr "Výkonná část DConf"
 
-#: editor/setting-object.vala:341
+#: editor/setting-object.vala:345
 msgid "Relocatable schema"
 msgstr "Přemístitelné schéma"
 
-#: editor/setting-object.vala:341
+#: editor/setting-object.vala:345
 msgid "Schema with path"
 msgstr "Schéma s cestou"
