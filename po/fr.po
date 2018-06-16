@@ -591,7 +591,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:308
 msgid "A custom type, here ‘(ii)’"
-msgstr "Un type personnalisé, ici « ii »"
+msgstr "Un type personnalisé, ici « (ii) »"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:309
 msgid ""
