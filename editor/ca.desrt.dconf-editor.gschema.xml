@@ -251,6 +251,16 @@
       <summary>A D-Bus signature, type ‘g’</summary>
       <description>A D-Bus signature is a string used as type signature for a D-Bus method or message.&#xA;&#xA;If you are not interacting with D-Bus, then there is no reason to make use of this type.</description>
     </key>
+    <key name="dict-entry" type="{ss}">
+      <default>{'color', 'red'}</default>
+      <summary>A dictionary entry</summary>
+      <description>A dictionary maps values of a basic type to another value (of any type). A dictionary entry is one such mapping.</description>
+    </key>
+    <key name="dictionary" type="a{sv}">
+      <default>{'title': &#60;'Example'&#62;, 'character': &#60;uint32 56&#62;, 'bold': &#60;true&#62;}</default>
+      <summary>A “vardict”, type ‘a{sv}’</summary>
+      <description>A dictionary maps values of a basic type to another value (of any type). One simple use case is to map strings to variants.</description>
+    </key>
     <key name="double" type="d">
       <default>3.1415926535897933</default>
       <summary>A double, type ‘d’</summary>
@@ -327,11 +337,6 @@
       <default>&#60;@mmb just nothing&#62;</default>
       <summary>A variant, type ‘v’</summary>
       <description>Variants could be stored inside variants, and consequently as a GSettings type. Their representation use the XML brackets (‘&#60;’ and ‘&#62;’ characters, in a gschema file “&amp;#60;” and “&amp;#62;” respectively), with a parsable representation of their content inside. If unclear, the type can be given in the value with a prefix annotation like “@x” (where “x” is the type string) or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html for complete documentation.</description>
-    </key>
-    <key name="variant-dictionary" type="a{sv}">
-      <default>{'title': &#60;'Example'&#62;, 'character': &#60;uint32 56&#62;, 'bold': &#60;true&#62;}</default>
-      <summary>A “vardict”, type ‘a{sv}’</summary>
-      <description>A dictionary maps values of a basic type to another value (of any type). One simple use case is to map strings to variants.</description>
     </key>
     <key name="weird-enum" enum="ca.desrt.dconf-editor.DemoWeirdEnum">
       <default>'only-choice'</default>
