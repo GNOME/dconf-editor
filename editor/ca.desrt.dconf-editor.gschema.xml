@@ -315,6 +315,7 @@
     </key>
     <key name="pair-of-integers" type="(ii)">
       <default>(800, 600)</default>
+      <!-- Translators: do not forget the parenthesis, they are meaningful. -->
       <summary>A custom type, here ‘(ii)’</summary>
       <description>Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn’t have a better way to do. Here is a tuple of two 32-bit signed integers.</description>
     </key>
