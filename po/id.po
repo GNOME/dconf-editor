@@ -584,7 +584,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:316
 msgid "A custom type, here ‘(ii)’"
-msgstr "Sebuah tipe ubahan, di sini \"ii\""
+msgstr "Sebuah tipe ubahan, di sini \"(ii)\""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid ""
