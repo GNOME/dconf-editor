@@ -103,38 +103,36 @@ public class SettingsModel : Object
         return null;
     }
 
-    private GLib.ListStore? get_children_as_liststore (string folder_path)
+    private GLib.ListStore get_children_as_liststore (string folder_path)
     {
+        GLib.ListStore key_model = new GLib.ListStore (typeof (SettingObject));
+
         Directory? dir = get_directory (folder_path);
         if (dir == null)
-            return null;
+            return key_model;
 
-        GLib.ListStore key_model = new GLib.ListStore (typeof (SettingObject));
         bool multiple_schemas;
 
         lookup_gsettings (folder_path, key_model, out multiple_schemas);
         create_dconf_keys (folder_path, key_model);
 
-        if (key_model.get_n_items () > 0)
-            return key_model;
-        else
-            return null;
+        return key_model;
     }
 
     public SettingObject [] get_children (string folder_path)
     {
-        GLib.ListStore? list_store = get_children_as_liststore (folder_path);
-        if (list_store == null)
+        GLib.ListStore list_store = get_children_as_liststore (folder_path);
+        if (list_store.get_n_items () == 0)
             return {};
 
         SettingObject [] keys_array = {};
         uint position = 0;
-        Object? object = ((!) list_store).get_item (0);
+        Object? object = list_store.get_item (0);
         do
         {
             keys_array += (SettingObject) (!) object;
             position++;
-            object = ((!) list_store).get_item (position);
+            object = list_store.get_item (position);
         }
         while (object != null);
         return keys_array;
@@ -150,7 +148,7 @@ public class SettingsModel : Object
 
     public Key? get_key (string path, string context = "")
     {
-        GLib.ListStore? key_model = get_children_as_liststore (get_parent_path (path));
+        GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path), context);
     }
 
@@ -158,19 +156,20 @@ public class SettingsModel : Object
     {
         if (is_key_path (path))
         {
-            GLib.ListStore? key_model = get_children_as_liststore (get_parent_path (path));
+            GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
             return get_key_from_path_and_name (key_model, get_name (path)) != null;
         }
         else
             return get_directory (path) != null;
     }
 
-    private static Key? get_key_from_path_and_name (GLib.ListStore? key_model, string key_name, string context = "")
+    private static Key? get_key_from_path_and_name (GLib.ListStore key_model, string key_name, string context = "")
     {
-        if (key_model == null)
+        uint n_items = key_model.get_n_items ();
+        if (n_items == 0)
             return null;
         uint position = 0;
-        while (position < ((!) key_model).get_n_items ())
+        while (position < n_items)
         {
             SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
             if (object == null)
