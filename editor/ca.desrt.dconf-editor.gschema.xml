@@ -253,7 +253,7 @@
     </key>
     <key name="dict-entry" type="{ss}">
       <default>{'color', 'red'}</default>
-      <summary>A dictionary entry</summary>
+      <summary>A dictionary entry of type ‘{ss}’</summary>
       <description>A dictionary maps values of a basic type to another value (of any type). A dictionary entry is one such mapping.</description>
     </key>
     <key name="dictionary" type="a{sv}">
