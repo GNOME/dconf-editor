@@ -514,20 +514,20 @@ public class SettingsModel : Object
         return settings.get_user_value (key.name) == null;
     }
 
-    public bool key_has_no_schema (string full_name)
+    public bool key_has_schema (string full_name)
     {
         if (!is_key_path (full_name))
             assert_not_reached ();
 
         Key? key = get_key (full_name, "");
-        return key == null || (!) key is DConfKey;
+        return key != null && (!) key is GSettingsKey;
     }
 
     public bool is_key_ghost (string full_name)
     {
         // we're "sure" the key is a DConfKey, but that might have changed since
-        if (!key_has_no_schema (full_name))
-            warning (@"Function is_key_ghost called for path:\n  $full_name\nbut key found is not a DConfKey.");
+        if (key_has_schema (full_name))
+            warning (@"Function is_key_ghost called for path:\n  $full_name\nbut key found there has a schema.");
 
         return get_dconf_key_value_or_null (full_name, client) == null;
     }

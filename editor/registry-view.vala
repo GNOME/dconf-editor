@@ -119,7 +119,7 @@ private abstract class RegistryList : Grid, BrowsableView
         if (modifications_handler.key_has_planned_change (row.full_name))
         {
             context.add_class ("delayed");
-            if (model.key_has_no_schema (row.full_name))
+            if (!model.key_has_schema (row.full_name))
             {
                 if (modifications_handler.get_key_planned_value (row.full_name) == null)
                     context.add_class ("erase");
@@ -130,7 +130,7 @@ private abstract class RegistryList : Grid, BrowsableView
         else
         {
             context.remove_class ("delayed");
-            if (model.key_has_no_schema (row.full_name) && model.is_key_ghost (row.full_name))
+            if (!model.key_has_schema (row.full_name) && model.is_key_ghost (row.full_name))
                 context.add_class ("erase");
             else
                 context.remove_class ("erase");
