@@ -83,6 +83,8 @@ private abstract class ClickableListBoxRow : EventBox
 
     public bool search_result_mode { protected get; construct; default = false; }
 
+    public string full_name { get; construct; }
+
     /*\
     * * Dismiss popover on window resize
     \*/
@@ -160,15 +162,11 @@ private abstract class ClickableListBoxRow : EventBox
 private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
-    public string full_name;
-    private string parent_path;
 
-    public FolderListBoxRow (string label, string path, string _parent_path, bool search_result_mode = false)
+    public FolderListBoxRow (string label, string path, bool search_result_mode = false)
     {
-        Object (search_result_mode: search_result_mode);
+        Object (full_name: path, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
-        full_name = path;
-        parent_path = _parent_path;
     }
 
     public override string get_text ()
@@ -205,6 +203,9 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     [GtkChild] protected Label key_info_label;
     protected Switch? boolean_switch = null;
 
+    public string key_name    { get; construct; }
+    public string type_string { get; construct; }
+
     public bool small_keys_list_rows
     {
         set
@@ -226,7 +227,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     construct
     {
-        if (abstract_key.type_string == "b" && !modifications_handler.get_current_delay_mode ())
+        if (type_string == "b" && !modifications_handler.get_current_delay_mode ())
         {
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
@@ -237,18 +238,9 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
 
         update ();
-        key_name_label.set_label (search_result_mode ? abstract_key.full_name : abstract_key.name);
-
-        ulong key_value_changed_handler = abstract_key.value_changed.connect (() => {
-                update ();
-                destroy_popover ();
-            });
-        destroy.connect (() => {
-                abstract_key.disconnect (key_value_changed_handler);
-            });
+        key_name_label.set_label (search_result_mode ? full_name : key_name);
     }
-    private abstract Key abstract_key { get; }
-    protected abstract void update ();
+    public abstract void update ();
 
     public void toggle_boolean_key ()
     {
@@ -257,37 +249,11 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         ((!) boolean_switch).activate ();
     }
 
-    public void set_delayed_icon ()
-    {
-        SettingsModel model = modifications_handler.model;
-        Key key = abstract_key;
-        StyleContext context = get_style_context ();
-        if (modifications_handler.key_has_planned_change (key.full_name))
-        {
-            context.add_class ("delayed");
-            if (key is DConfKey)
-            {
-                if (modifications_handler.get_key_planned_value (key.full_name) == null)
-                    context.add_class ("erase");
-                else
-                    context.remove_class ("erase");
-            }
-        }
-        else
-        {
-            context.remove_class ("delayed");
-            if (key is DConfKey && model.is_key_ghost (key.full_name))
-                context.add_class ("erase");
-            else
-                context.remove_class ("erase");
-        }
-    }
-
     protected void change_dismissed ()
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
-        Variant variant = new Variant.string (abstract_key.full_name);
+        Variant variant = new Variant.string (full_name);
         actionable.set_detailed_action_name ("ui.dismiss-change(" + variant.print (false) + ")");
         ((Container) get_child ()).add (actionable);
         actionable.clicked ();
@@ -297,30 +263,30 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     public void on_delete_call ()
     {
-        set_key_value ((abstract_key is GSettingsKey), null);
+        set_key_value ((this is KeyListBoxRowEditable) ? ((KeyListBoxRowEditable) this).schema_id : "", null);
     }
 
-    protected void set_key_value (bool has_schema, Variant? new_value)
+    protected void set_key_value (string schema_or_empty, Variant? new_value)
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
         Variant variant;
         if (new_value == null)
         {
-            if (has_schema)
+            if (schema_or_empty != "")
             {
-                variant = new Variant ("(ss)", abstract_key.full_name, ((GSettingsKey) abstract_key).schema_id);
+                variant = new Variant ("(ss)", full_name, schema_or_empty);
                 actionable.set_detailed_action_name ("bro.set-to-default(" + variant.print (false) + ")");
             }
             else
             {
-                variant = new Variant.string (abstract_key.full_name);
+                variant = new Variant.string (full_name);
                 actionable.set_detailed_action_name ("ui.erase(" + variant.print (false) + ")");
             }
         }
         else
         {
-            variant = new Variant ("(ssv)", abstract_key.full_name, (has_schema ? ((GSettingsKey) abstract_key).schema_id : ".dconf"), (!) new_value);
+            variant = new Variant ("(ssv)", full_name, (schema_or_empty == "" ? ".dconf" : schema_or_empty), (!) new_value);
             actionable.set_detailed_action_name ("bro.set-key-value(" + variant.print (false) + ")");
         }
         ((Container) get_child ()).add (actionable);
@@ -333,7 +299,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
     public DConfKey key { get; construct; }
-    private override Key abstract_key { get { return (Key) key; }}
 
     construct
     {
@@ -343,15 +308,25 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         key_info_label.set_label (_("No Schema Found"));
     }
 
-    public KeyListBoxRowEditableNoSchema (DConfKey _key, ModificationsHandler modifications_handler, bool search_result_mode = false)
+    public KeyListBoxRowEditableNoSchema (string _type_string,
+                                          DConfKey _key,
+                                          ModificationsHandler modifications_handler,
+                                          string _key_name,
+                                          string _full_name,
+                                          bool search_result_mode = false)
     {
-        Object (key: _key, modifications_handler: modifications_handler, search_result_mode : search_result_mode);
+        Object (type_string: _type_string,
+                key: _key,
+                modifications_handler: modifications_handler,
+                key_name: _key_name,
+                full_name: _full_name,
+                search_result_mode: search_result_mode);
     }
 
-    protected override void update ()
+    public override void update ()
     {
         SettingsModel model = modifications_handler.model;
-        if (model.is_key_ghost (key.full_name))
+        if (model.is_key_ghost (full_name))
         {
             if (boolean_switch != null)
             {
@@ -369,28 +344,28 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 ((!) boolean_switch).show ();
 
                 bool key_value_boolean = key_value.get_boolean ();
-                Variant switch_variant = new Variant ("(sb)", key.full_name, !key_value_boolean);
+                Variant switch_variant = new Variant ("(sb)", full_name, !key_value_boolean);
                 ((!) boolean_switch).set_action_name ("ui.empty");
                 ((!) boolean_switch).set_active (key_value_boolean);
                 ((!) boolean_switch).set_detailed_action_name ("bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
             }
-            key_value_label.set_label (Key.cool_text_value_from_variant (key_value, key.type_string));
+            key_value_label.set_label (Key.cool_text_value_from_variant (key_value, type_string));
         }
     }
 
     protected override string get_text ()
     {
         SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (key.full_name, ".dconf");
+        return model.get_key_copy_text (full_name, ".dconf");
     }
 
     protected override bool generate_popover (ContextPopover popover)
     {
         SettingsModel model = modifications_handler.model;
-        Variant variant_s = new Variant.string (key.full_name);
-        Variant variant_ss = new Variant ("(ss)", key.full_name, ".dconf");
+        Variant variant_s = new Variant.string (full_name);
+        Variant variant_ss = new Variant ("(ss)", full_name, ".dconf");
 
-        if (model.is_key_ghost (key.full_name))
+        if (model.is_key_ghost (full_name))
         {
             popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
             return true;
@@ -405,15 +380,15 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
 
-        bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
-        Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
+        bool planned_change = modifications_handler.key_has_planned_change (full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
 
-        if (key.type_string == "b" || key.type_string == "mb" || key.type_string == "()")
+        if (type_string == "b" || type_string == "mb" || type_string == "()")
         {
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
             Variant key_value = model.get_key_value (key);
-            GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+            GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
                                                               planned_change ? planned_value : key_value, null);
 
             popover.change_dismissed.connect (() => {
@@ -422,8 +397,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 });
             popover.value_changed.connect ((gvariant) => {
                     hide_right_click_popover ();
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key.type_string), gvariant)));
-                    set_key_value (false, gvariant);
+                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (type_string), gvariant)));
+                    set_key_value ("", gvariant);
                 });
 
             if (!delayed_apply_menu)
@@ -453,7 +428,8 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 private class KeyListBoxRowEditable : KeyListBoxRow
 {
     public GSettingsKey key { get; construct; }
-    private override Key abstract_key { get { return (Key) key; }}
+
+    public string schema_id { get; construct; }
 
     construct
     {
@@ -485,19 +461,31 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
     }
 
-    public KeyListBoxRowEditable (GSettingsKey _key, ModificationsHandler modifications_handler, bool search_result_mode = false)
+    public KeyListBoxRowEditable (string _type_string,
+                                  GSettingsKey _key,
+                                  string _schema_id,
+                                  ModificationsHandler modifications_handler,
+                                  string _key_name,
+                                  string _full_name,
+                                  bool search_result_mode = false)
     {
-        Object (key: _key, modifications_handler: modifications_handler, search_result_mode : search_result_mode);
+        Object (type_string: _type_string,
+                key: _key,
+                schema_id: _schema_id,
+                modifications_handler: modifications_handler,
+                key_name: _key_name,
+                full_name: _full_name,
+                search_result_mode: search_result_mode);
     }
 
-    protected override void update ()
+    public override void update ()
     {
         SettingsModel model = modifications_handler.model;
         Variant key_value = model.get_key_value (key);
         if (boolean_switch != null)
         {
             bool key_value_boolean = key_value.get_boolean ();
-            Variant switch_variant = new Variant ("(ssbb)", key.full_name, key.schema_id, !key_value_boolean, key.default_value.get_boolean ());
+            Variant switch_variant = new Variant ("(ssbb)", full_name, schema_id, !key_value_boolean, key.default_value.get_boolean ());
             ((!) boolean_switch).set_action_name ("ui.empty");
             ((!) boolean_switch).set_active (key_value_boolean);
             ((!) boolean_switch).set_detailed_action_name ("bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
@@ -508,20 +496,20 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             css_context.remove_class ("edited");
         else
             css_context.add_class ("edited");
-        key_value_label.set_label (Key.cool_text_value_from_variant (key_value, key.type_string));
+        key_value_label.set_label (Key.cool_text_value_from_variant (key_value, type_string));
     }
 
     protected override string get_text ()
     {
         SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (key.full_name, key.schema_id);
+        return model.get_key_copy_text (full_name, schema_id);
     }
 
     protected override bool generate_popover (ContextPopover popover)
     {
         SettingsModel model = modifications_handler.model;
-        Variant variant_s = new Variant.string (key.full_name);
-        Variant variant_ss = new Variant ("(ss)", key.full_name, key.schema_id);
+        Variant variant_s = new Variant.string (full_name);
+        Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
 
         if (search_result_mode)
         {
@@ -537,35 +525,35 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
 
         bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-        bool planned_change = modifications_handler.key_has_planned_change (key.full_name);
-        Variant? planned_value = modifications_handler.get_key_planned_value (key.full_name);
+        bool planned_change = modifications_handler.key_has_planned_change (full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
 
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
 
-        if (key.type_string == "b" || key.type_string == "<enum>" || key.type_string == "mb"
+        if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
-                (key.type_string == "y" || key.type_string == "q" || key.type_string == "u" || key.type_string == "t")
+                (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
                 && (key.range_type == "range")
                 && (Key.get_variant_as_uint64 (key.range_content.get_child_value (1)) - Key.get_variant_as_uint64 (key.range_content.get_child_value (0)) < 13)
                )
             || (
-                (key.type_string == "n" || key.type_string == "i" || key.type_string == "h" || key.type_string == "x")
+                (type_string == "n" || type_string == "i" || type_string == "h" || type_string == "x")
                 && (key.range_type == "range")
                 && (Key.get_variant_as_int64 (key.range_content.get_child_value (1)) - Key.get_variant_as_int64 (key.range_content.get_child_value (0)) < 13)
                )
-            || key.type_string == "()")
+            || type_string == "()")
         {
             popover.new_section ();
             GLib.Action action;
             if (planned_change)
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
-                                                      modifications_handler.get_key_planned_value (key.full_name), key.range_content);
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
+                                                      modifications_handler.get_key_planned_value (full_name), key.range_content);
             else if (model.is_key_default (key))
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
                                                       null, key.range_content);
             else
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, key.type_string,
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
                                                       model.get_key_value (key), key.range_content);
 
             popover.change_dismissed.connect (() => {
@@ -576,10 +564,10 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                     hide_right_click_popover ();
                     Variant key_value = model.get_key_value (key);
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
-                    set_key_value (true, gvariant);
+                    set_key_value (schema_id, gvariant);
                 });
         }
-        else if (!delayed_apply_menu && !planned_change && key.type_string == "<flags>")
+        else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
         {
             popover.new_section ();
 
@@ -587,7 +575,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
 
             string [] all_flags = key.range_content.get_strv ();
-            popover.create_flags_list (key.settings.get_strv (key.name), all_flags);
+            popover.create_flags_list (key.settings.get_strv (key_name), all_flags);
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                     string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
                     foreach (string flag in all_flags)
@@ -595,7 +583,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 });
             popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
 
-            popover.value_changed.connect ((gvariant) => set_key_value (true, gvariant));
+            popover.value_changed.connect ((gvariant) => set_key_value (schema_id, gvariant));
         }
         else if (planned_change)
         {

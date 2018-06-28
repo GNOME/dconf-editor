@@ -23,8 +23,6 @@ class RegistrySearch : RegistryList
     private string [] bookmarks;
     private SortingOptions sorting_options;
 
-    public ModificationsHandler modifications_handler { private get; set; }
-
     construct
     {
         placeholder.label = _("No matches");
@@ -59,26 +57,40 @@ class RegistrySearch : RegistryList
         ClickableListBoxRow row;
         SettingObject setting_object = (SettingObject) item;
         string full_name = setting_object.full_name;
-        string parent_path = SettingsModel.get_parent_path (full_name);
-        bool is_local_result = parent_path == current_path;
+        bool is_local_result = SettingsModel.get_parent_path (full_name) == current_path;
 
         if (setting_object is Directory)
         {
-            row = new FolderListBoxRow (setting_object.name, setting_object.full_name, setting_object.parent_path, !is_local_result);
+            row = new FolderListBoxRow (                    setting_object.name, full_name, !is_local_result);
         }
         else
         {
+            Key key = (Key) setting_object;
             if (setting_object is GSettingsKey)
-                row = new KeyListBoxRowEditable ((GSettingsKey) setting_object, modifications_handler, !is_local_result);
+                row = new KeyListBoxRowEditable (           key.type_string,
+                                                            (GSettingsKey) setting_object,
+                                                            ((GSettingsKey) setting_object).schema_id,
+                                                            modifications_handler,
+                                                            setting_object.name, full_name, !is_local_result);
             else
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object, modifications_handler, !is_local_result);
+                row = new KeyListBoxRowEditableNoSchema (   key.type_string,
+                                                            (DConfKey) setting_object,
+                                                            modifications_handler,
+                                                            setting_object.name, full_name, !is_local_result);
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => key_row.set_delayed_icon ());
-            key_row.set_delayed_icon ();
-            row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+            ulong key_value_changed_handler = key.value_changed.connect (() => {
+                    key_row.update ();
+                    key_row.destroy_popover ();
+                });
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
+            set_delayed_icon (key_row);
+            row.destroy.connect (() => {
+                    modifications_handler.disconnect (delayed_modifications_changed_handler);
+                    key.disconnect (key_value_changed_handler);
+                });
         }
 
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
@@ -93,14 +105,14 @@ class RegistrySearch : RegistryList
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";
-            wrapper.set_action_target ("s", setting_object.full_name);
+            wrapper.set_action_target ("s", full_name);
         }
         else
         {
             wrapper.get_style_context ().add_class ("key-row");
             wrapper.action_name = "ui.open-object";
             string context = (setting_object is GSettingsKey) ? ((GSettingsKey) setting_object).schema_id : ".dconf";
-            wrapper.set_action_target ("(ss)", setting_object.full_name, context);
+            wrapper.set_action_target ("(ss)", full_name, context);
         }
 
         return wrapper;

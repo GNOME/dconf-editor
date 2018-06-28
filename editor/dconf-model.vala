@@ -514,7 +514,7 @@ public class SettingsModel : Object
         return settings.get_user_value (key.name) == null;
     }
 
-    private bool key_has_no_schema (string full_name)
+    public bool key_has_no_schema (string full_name)
     {
         if (!is_key_path (full_name))
             assert_not_reached ();

@@ -28,6 +28,8 @@ private abstract class RegistryList : Grid, BrowsableView
 
     protected GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
+    public ModificationsHandler modifications_handler { protected get; set; }
+
     protected bool _small_keys_list_rows;
     public bool small_keys_list_rows
     {
@@ -110,6 +112,31 @@ private abstract class RegistryList : Grid, BrowsableView
 
     public abstract bool up_or_down_pressed (bool is_down);
 
+    protected void set_delayed_icon (KeyListBoxRow row)
+    {
+        SettingsModel model = modifications_handler.model;
+        StyleContext context = row.get_style_context ();
+        if (modifications_handler.key_has_planned_change (row.full_name))
+        {
+            context.add_class ("delayed");
+            if (model.key_has_no_schema (row.full_name))
+            {
+                if (modifications_handler.get_key_planned_value (row.full_name) == null)
+                    context.add_class ("erase");
+                else
+                    context.remove_class ("erase");
+            }
+        }
+        else
+        {
+            context.remove_class ("delayed");
+            if (model.key_has_no_schema (row.full_name) && model.is_key_ghost (row.full_name))
+                context.add_class ("erase");
+            else
+                context.remove_class ("erase");
+        }
+    }
+
     /*\
     * * Keyboard calls
     \*/
@@ -177,8 +204,6 @@ private abstract class RegistryList : Grid, BrowsableView
 
 class RegistryView : RegistryList
 {
-    public ModificationsHandler modifications_handler { private get; set; }
-
     construct
     {
         placeholder.label = _("No keys in this path");
@@ -239,10 +264,10 @@ class RegistryView : RegistryList
         string? label_text = null;
         if (row.get_child () is KeyListBoxRowEditable)
         {
-            string schema_id = ((KeyListBoxRowEditable) row.get_child ()).key.schema_id;
+            string schema_id = ((KeyListBoxRowEditable) row.get_child ()).schema_id;
             if (before == null
              || !(((!) before).get_child () is KeyListBoxRowEditable
-               && ((KeyListBoxRowEditable) ((!) before).get_child ()).key.schema_id == schema_id))
+               && ((KeyListBoxRowEditable) ((!) before).get_child ()).schema_id == schema_id))
                 label_text = schema_id;
         }
         else if (row.get_child () is KeyListBoxRowEditableNoSchema)
@@ -259,24 +284,40 @@ class RegistryView : RegistryList
     {
         ClickableListBoxRow row;
         SettingObject setting_object = (SettingObject) item;
+        string full_name = setting_object.full_name;
 
         if (setting_object is Directory)
         {
-            row = new FolderListBoxRow (setting_object.name, setting_object.full_name, setting_object.parent_path);
+            row = new FolderListBoxRow (                    setting_object.name, full_name);
         }
         else
         {
+            Key key = (Key) setting_object;
             if (setting_object is GSettingsKey)
-                row = new KeyListBoxRowEditable ((GSettingsKey) setting_object, modifications_handler);
+                row = new KeyListBoxRowEditable (           key.type_string,
+                                                            (GSettingsKey) setting_object,
+                                                            ((GSettingsKey) setting_object).schema_id,
+                                                            modifications_handler,
+                                                            setting_object.name, full_name);
             else
-                row = new KeyListBoxRowEditableNoSchema ((DConfKey) setting_object, modifications_handler);
+                row = new KeyListBoxRowEditableNoSchema (   key.type_string,
+                                                            (DConfKey) setting_object,
+                                                            modifications_handler,
+                                                            setting_object.name, full_name);
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => key_row.set_delayed_icon ());
-            key_row.set_delayed_icon ();
-            row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+            ulong key_value_changed_handler = key.value_changed.connect (() => {
+                    key_row.update ();
+                    key_row.destroy_popover ();
+                });
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
+            set_delayed_icon (key_row);
+            row.destroy.connect (() => {
+                    modifications_handler.disconnect (delayed_modifications_changed_handler);
+                    key.disconnect (key_value_changed_handler);
+                });
         }
 
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
@@ -291,14 +332,14 @@ class RegistryView : RegistryList
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";
-            wrapper.set_action_target ("s", setting_object.full_name);
+            wrapper.set_action_target ("s", full_name);
         }
         else
         {
             wrapper.get_style_context ().add_class ("key-row");
             wrapper.action_name = "ui.open-object";
             string context = (setting_object is GSettingsKey) ? ((GSettingsKey) setting_object).schema_id : ".dconf";
-            wrapper.set_action_target ("(ss)", setting_object.full_name, context);
+            wrapper.set_action_target ("(ss)", full_name, context);
         }
 
         return wrapper;
