@@ -276,7 +276,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         else
         {
             context.remove_class ("delayed");
-            if (key is DConfKey && model.is_key_ghost ((DConfKey) key))
+            if (key is DConfKey && model.is_key_ghost (key.full_name))
                 context.add_class ("erase");
             else
                 context.remove_class ("erase");
@@ -351,7 +351,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     protected override void update ()
     {
         SettingsModel model = modifications_handler.model;
-        if (model.is_key_ghost (key))
+        if (model.is_key_ghost (key.full_name))
         {
             if (boolean_switch != null)
             {
@@ -390,7 +390,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         Variant variant_s = new Variant.string (key.full_name);
         Variant variant_ss = new Variant ("(ss)", key.full_name, ".dconf");
 
-        if (model.is_key_ghost (key))
+        if (model.is_key_ghost (key.full_name))
         {
             popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
             return true;

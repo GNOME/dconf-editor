@@ -101,7 +101,7 @@ class ModificationsRevealer : Revealer
             }
             if (setting_object is DConfKey)
             {
-                if (!model.is_key_ghost ((DConfKey) setting_object))
+                if (!model.is_key_ghost (setting_object.full_name))
                     modifications_handler.add_delayed_setting (setting_object.full_name, null);
             }
             else if (!model.is_key_default ((GSettingsKey) setting_object))
@@ -157,7 +157,7 @@ class ModificationsRevealer : Revealer
         string full_name = ((Key) key).full_name;
         bool has_schema = key is GSettingsKey;
         bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default ((GSettingsKey) key)
-                                              : modifications_handler.model.is_key_ghost ((DConfKey) key);
+                                              : modifications_handler.model.is_key_ghost (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
         string? cool_planned_value = null;
         if (planned_value != null)

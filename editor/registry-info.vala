@@ -66,7 +66,7 @@ class RegistryInfo : Grid, BrowsableView
     public void populate_properties_list_box (Key key)
     {
         SettingsModel model = modifications_handler.model;
-        if (key is DConfKey && model.is_key_ghost ((DConfKey) key))   // TODO place in "requires"
+        if (key is DConfKey && model.is_key_ghost (key.full_name))   // TODO place in "requires"
             assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
@@ -146,7 +146,7 @@ class RegistryInfo : Grid, BrowsableView
         {
             label = new Label (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key, modifications_handler.model));
             key_value_changed_handler = key.value_changed.connect (() => {
-                    if (!has_schema && model.is_key_ghost ((DConfKey) key))
+                    if (!has_schema && model.is_key_ghost (key.full_name))
                         label.set_text (_("Key erased."));
                     else
                         label.set_text (get_current_value_text (has_schema && model.is_key_default ((GSettingsKey) key), key, modifications_handler.model));
@@ -245,7 +245,7 @@ class RegistryInfo : Grid, BrowsableView
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect (() => {
-                if (key is DConfKey && model.is_key_ghost ((DConfKey) key))
+                if (key is DConfKey && model.is_key_ghost (key.full_name))
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
                 key_editor_child.reload (model.get_key_value (key));
