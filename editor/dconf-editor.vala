@@ -477,7 +477,7 @@ class ConfigurationEditor : Gtk.Application
                                "version", Config.VERSION,
                                "comments", _("A graphical viewer and editor of applications’ internal settings."),
                                "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2018 – Arnaud Bonatti\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger"),
-                               "license-type", Gtk.License.GPL_3_0,
+                               "license-type", Gtk.License.GPL_3_0, /* means "version 3.0 or later" */
                                "wrap-license", true,
                                "authors", authors,
                                "translator-credits", _("translator-credits"),
