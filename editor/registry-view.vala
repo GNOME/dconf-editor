@@ -225,6 +225,8 @@ class RegistryView : RegistryList
         if (list_model.get_n_items () != fresh_key_model.length)
             return true;
         bool [] skip = new bool [fresh_key_model.length];
+        for (uint i = 0; i < fresh_key_model.length; i++)
+            skip [i] = false;
         for (uint i = 0; i < list_model.get_n_items (); i++)
         {
             SettingObject? setting_object = (SettingObject) list_model.get_item (i);
@@ -233,14 +235,17 @@ class RegistryView : RegistryList
             bool found = false;
             for (uint j = 0; j < fresh_key_model.length; j++)
             {
-                if (skip [j])
+                if (skip [j] == true)
                     continue;
                 SettingObject fresh_setting_object = fresh_key_model [j];
-                if (((!) setting_object).get_type () != fresh_setting_object.get_type ())
+                if (((!) setting_object).full_name != fresh_setting_object.full_name)
                     continue;
-                if (((!) setting_object).name != fresh_setting_object.name)
-                    continue;
-                // TODO compare other visible info (i.e. key summary and value)
+                // TODO compare other visible info (i.e. key type_string or summary [if not directories])
+                if (SettingsModel.is_key_path (fresh_setting_object.full_name))
+                {
+                    if (((!) setting_object).type_string != fresh_setting_object.type_string)
+                        continue;
+                }
                 found = true;
                 skip [j] = true;
                 break;
@@ -248,8 +253,9 @@ class RegistryView : RegistryList
             if (!found)
                 return true;
         }
-        if (fresh_key_model.length > 0)
-            return true;
+        for (uint i = 0; i < fresh_key_model.length; i++)
+            if (skip [i] == false)
+                return true;
         return false;
     }
 
