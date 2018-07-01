@@ -59,7 +59,7 @@ class RegistrySearch : RegistryList
         string full_name = setting_object.full_name;
         bool is_local_result = SettingsModel.get_parent_path (full_name) == current_path;
 
-        if (setting_object is Directory)
+        if (!SettingsModel.is_key_path (setting_object.full_name))
         {
             row = new FolderListBoxRow (                    setting_object.name, full_name, !is_local_result);
         }
@@ -427,7 +427,7 @@ class RegistrySearch : RegistryList
             for (uint i = 0; i < ((!) next_key_model).get_n_items (); i++)
             {
                 SettingObject item = (SettingObject) ((!) next_key_model).get_item (i);
-                if (item is Directory)
+                if (!SettingsModel.is_key_path (item.full_name))
                 {
                     if (!local_again && term in item.name)
                         list_model.insert (post_folders++, item);

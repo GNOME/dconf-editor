@@ -99,7 +99,7 @@ private abstract class RegistryList : Grid, BrowsableView
             SettingObject object = (SettingObject) list_model.get_object (position);
             if (object.full_name == selected)
             {
-                if (object is Directory
+                if (!SettingsModel.is_key_path (object.full_name)
                  || context == ".dconf" && object is DConfKey // theorical?
                  || object is GSettingsKey && ((GSettingsKey) object).schema_id == context)
                     return (int) position;
@@ -286,7 +286,7 @@ class RegistryView : RegistryList
         SettingObject setting_object = (SettingObject) item;
         string full_name = setting_object.full_name;
 
-        if (setting_object is Directory)
+        if (!SettingsModel.is_key_path (setting_object.full_name))
         {
             row = new FolderListBoxRow (                    setting_object.name, full_name);
         }

@@ -89,7 +89,7 @@ class ModificationsRevealer : Revealer
                 return;
 
             SettingObject setting_object = (SettingObject) ((!) object);
-            if (setting_object is Directory)
+            if (!SettingsModel.is_key_path (setting_object.full_name))
             {
                 if (recursively)
                 {

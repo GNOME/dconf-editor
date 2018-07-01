@@ -310,9 +310,9 @@ public interface SettingComparator : Object
 
     protected virtual bool sort_directories_first (SettingObject a, SettingObject b, ref int return_value)
     {
-        if (a is Directory && !(b is Directory))
+        if (!SettingsModel.is_key_path (a.full_name) && SettingsModel.is_key_path (b.full_name))
             return_value = -1;
-        else if (!(a is Directory) && b is Directory)
+        else if (SettingsModel.is_key_path (a.full_name) && !SettingsModel.is_key_path (b.full_name))
             return_value = 1;
         else
             return false;
