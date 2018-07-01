@@ -243,7 +243,7 @@ class RegistryView : RegistryList
                 // TODO compare other visible info (i.e. key type_string or summary [if not directories])
                 if (SettingsModel.is_key_path (fresh_setting_object.full_name))
                 {
-                    if (((!) setting_object).type_string != fresh_setting_object.type_string)
+                    if (((Key) (!) setting_object).type_string != ((Key) fresh_setting_object).type_string)
                         continue;
                 }
                 found = true;
