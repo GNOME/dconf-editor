@@ -323,6 +323,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     public void update (Variant? key_value)
     {
+        StyleContext context = key_value_label.get_style_context ();
         if (key_value == null)
         {
             if (boolean_switch != null)
@@ -330,6 +331,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 ((!) boolean_switch).hide ();
                 key_value_label.show ();
             }
+            if (!context.has_class ("italic-label")) context.add_class ("italic-label");
             key_value_label.set_label (_("Key erased."));
         }
         else
@@ -345,6 +347,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 ((!) boolean_switch).set_active (key_value_boolean);
                 ((!) boolean_switch).set_detailed_action_name ("bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
             }
+            if (context.has_class ("italic-label")) context.remove_class ("italic-label");
             key_value_label.set_label (Key.cool_text_value_from_variant ((!) key_value, type_string));
         }
     }
