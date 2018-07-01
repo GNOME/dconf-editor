@@ -336,10 +336,10 @@ class RegistrySearch : RegistryList
 
         if (!SettingsModel.is_key_path (current_path))
         {
-            GLib.ListStore? key_model = model.get_children (current_path);
-            for (uint i = 0; i < ((!) key_model).get_n_items (); i++)
+            SettingObject [] key_model = model.get_children (current_path);
+            for (uint i = 0; i < key_model.length; i++)
             {
-                SettingObject item = (SettingObject) ((!) key_model).get_item (i);
+                SettingObject item = key_model [i];
                 if (term in item.name)
                     list_model.insert_sorted (item, compare);
             }
@@ -420,13 +420,13 @@ class RegistrySearch : RegistryList
             string next = (!) search_nodes.pop_head ();
             bool local_again = next == current_path;
 
-            GLib.ListStore? next_key_model = model.get_children (next);
-            if (next_key_model == null)
+            SettingObject [] next_key_model = model.get_children (next);
+            if (next_key_model.length == 0)
                 return true;
 
-            for (uint i = 0; i < ((!) next_key_model).get_n_items (); i++)
+            for (uint i = 0; i < next_key_model.length; i++)
             {
-                SettingObject item = (SettingObject) ((!) next_key_model).get_item (i);
+                SettingObject item = next_key_model [i];
                 if (!SettingsModel.is_key_path (item.full_name))
                 {
                     if (!local_again && term in item.name)

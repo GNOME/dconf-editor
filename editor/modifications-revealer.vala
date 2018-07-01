@@ -70,32 +70,27 @@ class ModificationsRevealer : Revealer
     * * Reseting objects
     \*/
 
-    public void reset_objects (GLib.ListStore? objects, bool recursively)
+    public void reset_objects (SettingObject [] objects, bool recursively)
     {
         _reset_objects (objects, recursively);
         warn_if_no_planned_changes ();
     }
 
-    private void _reset_objects (GLib.ListStore? objects, bool recursively)
+    private void _reset_objects (SettingObject [] objects, bool recursively)
     {
-        SettingsModel model = modifications_handler.model;
-        if (objects == null)
+        if (objects.length == 0)
             return;
+        SettingsModel model = modifications_handler.model;
 
-        for (uint position = 0;; position++)
+        for (uint position = 0; position < objects.length; position++)
         {
-            Object? object = ((!) objects).get_object (position);
-            if (object == null)
-                return;
-
-            SettingObject setting_object = (SettingObject) ((!) object);
+            SettingObject setting_object = (SettingObject) objects [position];
             if (!SettingsModel.is_key_path (setting_object.full_name))
             {
                 if (recursively)
                 {
-                    GLib.ListStore? children = model.get_children (setting_object.full_name);
-                    if (children != null)
-                        _reset_objects ((!) children, true);
+                    SettingObject [] children = model.get_children (setting_object.full_name);
+                    _reset_objects (children, true);
                 }
                 continue;
             }

@@ -550,17 +550,13 @@ class DConfWindow : ApplicationWindow
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        GLib.ListStore? key_model = model.get_children (fallback_path);
-        if (key_model != null)
-        {
-            browser_view.prepare_folder_view ((!) key_model, current_path.has_prefix (fallback_path));
-            update_current_path (ViewType.FOLDER, fallback_path);
+        browser_view.prepare_folder_view (model.get_children (fallback_path), current_path.has_prefix (fallback_path));
+        update_current_path (ViewType.FOLDER, fallback_path);
 
-            if (selected_or_empty == "")
-                browser_view.select_row (pathbar.get_selected_child (fallback_path));
-            else
-                browser_view.select_row (selected_or_empty);
-        }
+        if (selected_or_empty == "")
+            browser_view.select_row (pathbar.get_selected_child (fallback_path));
+        else
+            browser_view.select_row (selected_or_empty);
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }

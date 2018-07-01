@@ -220,30 +220,35 @@ class RegistryView : RegistryList
         key_list_box.bind_model (list_model, new_list_box_row);
     }
 
-    public bool check_reload (GLib.ListStore fresh_key_model)
+    public bool check_reload (SettingObject [] fresh_key_model)
     {
-        if (list_model.get_n_items () != fresh_key_model.get_n_items ())
+        if (list_model.get_n_items () != fresh_key_model.length)
             return true;
+        bool [] skip = new bool [fresh_key_model.length];
         for (uint i = 0; i < list_model.get_n_items (); i++)
         {
-            SettingObject setting_object = (SettingObject) list_model.get_item (i);
+            SettingObject? setting_object = (SettingObject) list_model.get_item (i);
+            if (setting_object == null)
+                assert_not_reached ();
             bool found = false;
-            for (uint j = 0; j < fresh_key_model.get_n_items (); j++)
+            for (uint j = 0; j < fresh_key_model.length; j++)
             {
-                SettingObject fresh_setting_object = (SettingObject) fresh_key_model.get_item (j);
-                if (setting_object.get_type () != fresh_setting_object.get_type ())
+                if (skip [j])
                     continue;
-                if (setting_object.name != fresh_setting_object.name)
+                SettingObject fresh_setting_object = fresh_key_model [j];
+                if (((!) setting_object).get_type () != fresh_setting_object.get_type ())
+                    continue;
+                if (((!) setting_object).name != fresh_setting_object.name)
                     continue;
                 // TODO compare other visible info (i.e. key summary and value)
                 found = true;
-                fresh_key_model.remove (j);
+                skip [j] = true;
                 break;
             }
             if (!found)
                 return true;
         }
-        if (fresh_key_model.get_n_items () > 0)
+        if (fresh_key_model.length > 0)
             return true;
         return false;
     }

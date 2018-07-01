@@ -151,11 +151,14 @@ class BrowserView : Grid
     * * Views
     \*/
 
-    public void prepare_folder_view (GLib.ListStore key_model, bool is_ancestor)
+    public void prepare_folder_view (SettingObject [] key_array, bool is_ancestor)
     {
-        this.key_model = key_model;
-        sorting_options.sort_key_model (key_model);
-        current_child.prepare_folder_view (key_model, is_ancestor);
+        key_model = new GLib.ListStore (typeof (SettingObject));
+        for (uint i = 0; i < key_array.length; i++)
+            ((!) key_model).append (key_array [i]);
+
+        sorting_options.sort_key_model ((!) key_model);
+        current_child.prepare_folder_view ((!) key_model, is_ancestor);
         hide_reload_warning ();
     }
 
@@ -205,8 +208,8 @@ class BrowserView : Grid
 
         if (type == ViewType.FOLDER)
         {
-            GLib.ListStore? fresh_key_model = model.get_children (path);
-            if (fresh_key_model != null && !current_child.check_reload_folder ((!) fresh_key_model))
+            SettingObject [] fresh_key_model = model.get_children (path);
+            if (!current_child.check_reload_folder (fresh_key_model))
                 return false;
             if (show_infobar)
             {

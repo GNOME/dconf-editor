@@ -157,7 +157,7 @@ class BrowserStack : Grid
         search_view.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
-    public bool check_reload_folder (GLib.ListStore fresh_key_model)
+    public bool check_reload_folder (SettingObject [] fresh_key_model)
     {
         return folder_view.check_reload (fresh_key_model);
     }
