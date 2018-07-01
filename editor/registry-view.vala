@@ -303,26 +303,51 @@ class RegistryView : RegistryList
         }
         else
         {
+            SettingsModel model = modifications_handler.model;
             Key key = (Key) setting_object;
+            ulong key_value_changed_handler;
             if (setting_object is GSettingsKey)
+            {
+                GSettingsKey gkey = (GSettingsKey) key;
+                bool key_default_value_if_bool = key.type_string == "b" ? gkey.default_value.get_boolean () : false;    // TODO better 1/6
                 row = new KeyListBoxRowEditable (           key.type_string,
-                                                            (GSettingsKey) setting_object,
-                                                            ((GSettingsKey) setting_object).schema_id,
+                                                            gkey,
+                                                            gkey.schema_id,
                                                             modifications_handler,
                                                             setting_object.name, full_name);
+                key_value_changed_handler = key.value_changed.connect (() => {
+                        ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
+                                                              model.is_key_default (gkey),
+                                                              key_default_value_if_bool);                               // TODO better 2/6
+                        row.destroy_popover ();
+                    });
+                ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
+                                                      model.is_key_default (gkey),
+                                                      key_default_value_if_bool);                                       // TODO better 3/6
+            }
             else
+            {
+                DConfKey dkey = (DConfKey) setting_object;
                 row = new KeyListBoxRowEditableNoSchema (   key.type_string,
-                                                            (DConfKey) setting_object,
+                                                            dkey,
                                                             modifications_handler,
                                                             setting_object.name, full_name);
+                key_value_changed_handler = key.value_changed.connect (() => {
+                        if (model.is_key_ghost (full_name)) // fails with the ternary operator 1/4
+                            ((KeyListBoxRowEditableNoSchema) row).update (null);
+                        else
+                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                        row.destroy_popover ();
+                    });
+                if (model.is_key_ghost (full_name))         // fails with the ternary operator 2/4
+                    ((KeyListBoxRowEditableNoSchema) row).update (null);
+                else
+                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+            }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            ulong key_value_changed_handler = key.value_changed.connect (() => {
-                    key_row.update ();
-                    key_row.destroy_popover ();
-                });
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
             set_delayed_icon (key_row);
             row.destroy.connect (() => {

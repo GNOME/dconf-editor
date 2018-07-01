@@ -237,10 +237,8 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             key_name_and_value_grid.attach ((!) boolean_switch, 1, 0, 1, 2);
         }
 
-        update ();
         key_name_label.set_label (search_result_mode ? full_name : key_name);
     }
-    public abstract void update ();
 
     public void toggle_boolean_key ()
     {
@@ -323,10 +321,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 search_result_mode: search_result_mode);
     }
 
-    public override void update ()
+    public void update (Variant? key_value)
     {
-        SettingsModel model = modifications_handler.model;
-        if (model.is_key_ghost (full_name))
+        if (key_value == null)
         {
             if (boolean_switch != null)
             {
@@ -337,19 +334,18 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
         else
         {
-            Variant key_value = model.get_key_value (key);
             if (boolean_switch != null)
             {
                 key_value_label.hide ();
                 ((!) boolean_switch).show ();
 
-                bool key_value_boolean = key_value.get_boolean ();
+                bool key_value_boolean = ((!) key_value).get_boolean ();
                 Variant switch_variant = new Variant ("(sb)", full_name, !key_value_boolean);
                 ((!) boolean_switch).set_action_name ("ui.empty");
                 ((!) boolean_switch).set_active (key_value_boolean);
                 ((!) boolean_switch).set_detailed_action_name ("bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
             }
-            key_value_label.set_label (Key.cool_text_value_from_variant (key_value, type_string));
+            key_value_label.set_label (Key.cool_text_value_from_variant ((!) key_value, type_string));
         }
     }
 
@@ -478,21 +474,19 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 search_result_mode: search_result_mode);
     }
 
-    public override void update ()
+    public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool)
     {
-        SettingsModel model = modifications_handler.model;
-        Variant key_value = model.get_key_value (key);
         if (boolean_switch != null)
         {
             bool key_value_boolean = key_value.get_boolean ();
-            Variant switch_variant = new Variant ("(ssbb)", full_name, schema_id, !key_value_boolean, key.default_value.get_boolean ());
+            Variant switch_variant = new Variant ("(ssbb)", full_name, schema_id, !key_value_boolean, key_default_value_if_bool);
             ((!) boolean_switch).set_action_name ("ui.empty");
             ((!) boolean_switch).set_active (key_value_boolean);
             ((!) boolean_switch).set_detailed_action_name ("bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
         }
 
         StyleContext css_context = get_style_context ();
-        if (model.is_key_default (key))
+        if (is_key_default)
             css_context.remove_class ("edited");
         else
             css_context.add_class ("edited");
