@@ -78,9 +78,6 @@ private abstract class ClickableListBoxRow : EventBox
 {
     public signal void on_popover_disappear ();
 
-    public abstract string get_text ();
-    protected Variant get_text_variant () { return new Variant.string (get_text ()); }
-
     public bool search_result_mode { protected get; construct; default = false; }
 
     public string full_name { get; construct; }
@@ -109,7 +106,10 @@ private abstract class ClickableListBoxRow : EventBox
     \*/
 
     private ContextPopover? nullable_popover = null;
-    protected virtual bool generate_popover (ContextPopover popover) { return false; }      // no popover should be created
+    protected virtual bool generate_popover (ContextPopover popover, Variant copy_text_variant) // use Variant to sanitize text
+    {
+        return false; // no popover should be created
+    }
 
     public void destroy_popover ()
     {
@@ -128,12 +128,12 @@ private abstract class ClickableListBoxRow : EventBox
         return (nullable_popover != null) && (((!) nullable_popover).visible);
     }
 
-    public void show_right_click_popover (int event_x = (int) (get_allocated_width () / 2.0))
+    public void show_right_click_popover (Variant copy_text_variant, int event_x = (int) (get_allocated_width () / 2.0))
     {
         if (nullable_popover == null)
         {
             nullable_popover = new ContextPopover ();
-            if (!generate_popover ((!) nullable_popover))
+            if (!generate_popover ((!) nullable_popover, copy_text_variant))
             {
                 ((!) nullable_popover).destroy ();  // TODO better, again
                 nullable_popover = null;
@@ -169,12 +169,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         folder_name_label.set_text (search_result_mode ? path : label);
     }
 
-    public override string get_text ()
-    {
-        return full_name;
-    }
-
-    protected override bool generate_popover (ContextPopover popover)  // TODO better
+    protected override bool generate_popover (ContextPopover popover, Variant copy_text_variant)  // TODO better
     {
         Variant variant = new Variant.string (full_name);
 
@@ -185,7 +180,7 @@ private class FolderListBoxRow : ClickableListBoxRow
         }
 
         popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
+        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
 
         popover.new_section ();
         popover.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
@@ -352,13 +347,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
     }
 
-    protected override string get_text ()
-    {
-        SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (full_name, ".dconf");
-    }
-
-    protected override bool generate_popover (ContextPopover popover)
+    protected override bool generate_popover (ContextPopover popover, Variant copy_text_variant)
     {
         SettingsModel model = modifications_handler.model;
         Variant variant_s = new Variant.string (full_name);
@@ -366,7 +355,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
         if (model.is_key_ghost (full_name))
         {
-            popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
+            popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
             return true;
         }
 
@@ -377,7 +366,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
 
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
+        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
 
         bool planned_change = modifications_handler.key_has_planned_change (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
@@ -496,13 +485,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_value_label.set_label (Key.cool_text_value_from_variant (key_value, type_string));
     }
 
-    protected override string get_text ()
-    {
-        SettingsModel model = modifications_handler.model;
-        return model.get_key_copy_text (full_name, schema_id);
-    }
-
-    protected override bool generate_popover (ContextPopover popover)
+    protected override bool generate_popover (ContextPopover popover, Variant copy_text_variant)
     {
         SettingsModel model = modifications_handler.model;
         Variant variant_s = new Variant.string (full_name);
@@ -517,7 +500,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         if (key.error_hard_conflicting_key)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
-            popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
+            popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
             return true; // anything else is value-related, so we are done
         }
 
@@ -526,7 +509,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
 
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + get_text_variant ().print (false) + ")");
+        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
 
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (

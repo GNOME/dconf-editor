@@ -354,7 +354,7 @@ class RegistryInfo : Grid, BrowsableView
             return Key.cool_text_value_from_variant (model.get_key_value (key), key.type_string);
     }
 
-    public string? get_copy_text ()
+    public string? get_copy_text () // can compile with "private", but is public 2/2
     {
         Widget? focused_row = properties_list_box.get_focus_child ();
         if (focused_row == null)

@@ -164,7 +164,7 @@ class RegistrySearch : RegistryList
                 event_x += widget_x;
             }
 
-            row.show_right_click_popover (event_x);
+            row.show_right_click_popover (get_copy_text_variant (row), event_x);
             rows_possibly_with_popover.append (row);
         }
         else

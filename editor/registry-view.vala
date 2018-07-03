@@ -153,19 +153,34 @@ private abstract class RegistryList : Grid, BrowsableView
             row.hide_right_click_popover ();
         else
         {
-            row.show_right_click_popover ();
+            row.show_right_click_popover (get_copy_text_variant (row));
             rows_possibly_with_popover.append (row);
         }
         return true;
     }
 
-    public string? get_copy_text ()
+    public string? get_copy_text () // can compile with "private", but is public 1/2
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
             return null;
 
-        return ((ClickableListBoxRow) ((!) selected_row).get_child ()).get_text ();
+        return _get_copy_text ((ClickableListBoxRow) ((!) selected_row).get_child ());
+    }
+    private string _get_copy_text (ClickableListBoxRow row)
+    {
+        if (row is FolderListBoxRow)
+            return row.full_name;
+        // (row is KeyListBoxRow)
+        SettingsModel model = modifications_handler.model;
+        if (row is KeyListBoxRowEditable)
+            return model.get_key_copy_text (row.full_name, ((KeyListBoxRowEditable) row).schema_id);
+        // (row is KeyListBoxRowEditableNoSchema)
+        return model.get_key_copy_text (row.full_name, ".dconf");
+    }
+    protected Variant get_copy_text_variant (ClickableListBoxRow row)
+    {
+        return new Variant.string (_get_copy_text (row));
     }
 
     public void toggle_boolean_key ()
@@ -399,7 +414,7 @@ class RegistryView : RegistryList
                 event_x += widget_x;
             }
 
-            row.show_right_click_popover (event_x);
+            row.show_right_click_popover (get_copy_text_variant (row), event_x);
             rows_possibly_with_popover.append (row);
         }
 
