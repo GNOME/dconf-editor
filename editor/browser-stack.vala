@@ -148,6 +148,12 @@ class BrowserStack : Grid
         search_view.invalidate_popovers ();
     }
 
+    public void hide_or_show_toggles (bool show)
+    {
+        folder_view.hide_or_show_toggles (show);
+        search_view.hide_or_show_toggles (show);
+    }
+
     /*\
     * * Reload
     \*/

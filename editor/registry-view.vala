@@ -69,6 +69,17 @@ private abstract class RegistryList : Grid, BrowsableView
         rows_possibly_with_popover.remove_all ();
     }
 
+    public void hide_or_show_toggles (bool show)
+    {
+        key_list_box.@foreach ((row_wrapper) => {
+                ClickableListBoxRow? row = (ClickableListBoxRow) ((ListBoxRowWrapper) row_wrapper).get_child ();
+                if (row == null)
+                    assert_not_reached ();
+                if ((!) row is KeyListBoxRow && ((KeyListBoxRow) (!) row).type_string == "b")
+                    ((KeyListBoxRow) row).hide_or_show_toggles (show);
+            });
+    }
+
     public string get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
@@ -333,12 +344,14 @@ class RegistryView : RegistryList
                 key_value_changed_handler = key.value_changed.connect (() => {
                         ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
                                                               model.is_key_default (gkey),
-                                                              key_default_value_if_bool);                               // TODO better 2/6
+                                                              key_default_value_if_bool,                                // TODO better 2/6
+                                                              modifications_handler.get_current_delay_mode ());
                         row.destroy_popover ();
                     });
                 ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
                                                       model.is_key_default (gkey),
-                                                      key_default_value_if_bool);                                       // TODO better 3/6
+                                                      key_default_value_if_bool,                                        // TODO better 3/6
+                                                      modifications_handler.get_current_delay_mode ());
             }
             else
             {
@@ -349,15 +362,19 @@ class RegistryView : RegistryList
                                                             setting_object.name, full_name);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 1/4
-                            ((KeyListBoxRowEditableNoSchema) row).update (null);
+                            ((KeyListBoxRowEditableNoSchema) row).update (null,
+                                                                          modifications_handler.get_current_delay_mode ());
                         else
-                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey),
+                                                                          modifications_handler.get_current_delay_mode ());
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 2/4
-                    ((KeyListBoxRowEditableNoSchema) row).update (null);
+                    ((KeyListBoxRowEditableNoSchema) row).update (null,
+                                                                  modifications_handler.get_current_delay_mode ());
                 else
-                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey),
+                                                                  modifications_handler.get_current_delay_mode ());
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;

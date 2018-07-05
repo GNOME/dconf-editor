@@ -80,12 +80,14 @@ class RegistrySearch : RegistryList
                 key_value_changed_handler = key.value_changed.connect (() => {
                         ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
                                                               model.is_key_default (gkey),
-                                                              key_default_value_if_bool);                               // TODO better 5/6
+                                                              key_default_value_if_bool,                                // TODO better 5/6
+                                                              modifications_handler.get_current_delay_mode ());
                         row.destroy_popover ();
                     });
                 ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
                                                       model.is_key_default (gkey),
-                                                      key_default_value_if_bool);                                       // TODO better 6/6
+                                                      key_default_value_if_bool,                                        // TODO better 6/6
+                                                      modifications_handler.get_current_delay_mode ());
             }
             else
             {
@@ -96,15 +98,19 @@ class RegistrySearch : RegistryList
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
-                            ((KeyListBoxRowEditableNoSchema) row).update (null);
+                            ((KeyListBoxRowEditableNoSchema) row).update (null,
+                                                                          modifications_handler.get_current_delay_mode ());
                         else
-                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey),
+                                                                          modifications_handler.get_current_delay_mode ());
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
-                    ((KeyListBoxRowEditableNoSchema) row).update (null);
+                    ((KeyListBoxRowEditableNoSchema) row).update (null,
+                                                                  modifications_handler.get_current_delay_mode ());
                 else
-                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey),
+                                                                  modifications_handler.get_current_delay_mode ());
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;

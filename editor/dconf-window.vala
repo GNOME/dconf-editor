@@ -77,7 +77,7 @@ class DConfWindow : ApplicationWindow
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
 
-        behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers);
+        behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
@@ -490,19 +490,19 @@ class DConfWindow : ApplicationWindow
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.enter_delay_mode ();
-        invalidate_popovers ();
+        invalidate_popovers_with_ui_reload ();
     }
 
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.apply_delayed_settings ();
-        invalidate_popovers ();
+        invalidate_popovers_with_ui_reload ();
     }
 
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.dismiss_delayed_settings ();
-        invalidate_popovers ();
+        invalidate_popovers_with_ui_reload ();
     }
 
     private void dismiss_change (SimpleAction action, Variant? path_variant)
@@ -517,7 +517,7 @@ class DConfWindow : ApplicationWindow
         requires (path_variant != null)
     {
         modifications_handler.erase_dconf_key (((!) path_variant).get_string ());
-        invalidate_popovers ();
+        invalidate_popovers_with_ui_reload ();
     }
 
     private void copy_path (/* SimpleAction action, Variant? path_variant */)
@@ -674,10 +674,10 @@ class DConfWindow : ApplicationWindow
         info_button.set_menu_model ((MenuModel) menu);
     }
 
-    private void invalidate_popovers ()
+    private void invalidate_popovers_with_ui_reload ()
     {
+        browser_view.hide_or_show_toggles (!modifications_handler.get_current_delay_mode ());
         invalidate_popovers_without_reload ();
-        reload_view ();     // TODO better
     }
     private void invalidate_popovers_without_reload ()
     {

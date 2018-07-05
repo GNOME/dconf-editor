@@ -222,17 +222,35 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     construct
     {
-        if (type_string == "b" && !modifications_handler.get_current_delay_mode ())
+        if (type_string == "b")
         {
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
-            ((!) boolean_switch).show ();
-            key_value_label.hide ();
+            if (!modifications_handler.get_current_delay_mode ())
+            {
+                ((!) boolean_switch).show ();
+                key_value_label.hide ();
+            }
             key_name_and_value_grid.attach ((!) boolean_switch, 1, 0, 1, 2);
         }
 
         key_name_label.set_label (search_result_mode ? full_name : key_name);
+    }
+
+    public void hide_or_show_toggles (bool show)
+        requires (boolean_switch != null)
+    {
+        if (show)
+        {
+            key_value_label.hide ();
+            ((!) boolean_switch).show ();
+        }
+        else
+        {
+            ((!) boolean_switch).hide ();
+            key_value_label.show ();
+        }
     }
 
     public void toggle_boolean_key ()
@@ -316,12 +334,12 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 search_result_mode: search_result_mode);
     }
 
-    public void update (Variant? key_value)
+    public void update (Variant? key_value, bool delay_mode)
     {
         StyleContext context = key_value_label.get_style_context ();
         if (key_value == null)
         {
-            if (boolean_switch != null)
+            if (boolean_switch != null) // && !delay_mode?
             {
                 ((!) boolean_switch).hide ();
                 key_value_label.show ();
@@ -333,8 +351,11 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         {
             if (boolean_switch != null)
             {
-                key_value_label.hide ();
-                ((!) boolean_switch).show ();
+                if (!delay_mode)
+                {
+                    key_value_label.hide ();
+                    ((!) boolean_switch).show ();
+                }
 
                 bool key_value_boolean = ((!) key_value).get_boolean ();
                 Variant switch_variant = new Variant ("(sb)", full_name, !key_value_boolean);
@@ -466,7 +487,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                 search_result_mode: search_result_mode);
     }
 
-    public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool)
+    public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool, bool delay_mode)
     {
         if (boolean_switch != null)
         {

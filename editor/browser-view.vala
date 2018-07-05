@@ -239,9 +239,11 @@ class BrowserView : Grid
 
     public ViewType current_view { get { return current_child.current_view; }}
 
-    // popovers invalidation
+    // popovers invalidation and toggles hiding/revealing
     public void discard_row_popover () { current_child.discard_row_popover (); }
     public void invalidate_popovers () { current_child.invalidate_popovers (); }
+
+    public void hide_or_show_toggles (bool show) { current_child.hide_or_show_toggles (show); }
 
     // keyboard
     public bool return_pressed ()   { return current_child.return_pressed ();   }
