@@ -266,9 +266,10 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         actionable.visible = false;
         Variant variant = new Variant.string (full_name);
         actionable.set_detailed_action_name ("ui.dismiss-change(" + variant.print (false) + ")");
-        ((Container) get_child ()).add (actionable);
+        Container child = (Container) get_child ();
+        child.add (actionable);
         actionable.clicked ();
-        ((Container) get_child ()).remove (actionable);
+        child.remove (actionable);
         actionable.destroy ();
     }
 
@@ -300,9 +301,10 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             variant = new Variant ("(ssv)", full_name, (schema_or_empty == "" ? ".dconf" : schema_or_empty), (!) new_value);
             actionable.set_detailed_action_name ("bro.set-key-value(" + variant.print (false) + ")");
         }
-        ((Container) get_child ()).add (actionable);
+        Container child = (Container) get_child ();
+        child.add (actionable);
         actionable.clicked ();
-        ((Container) get_child ()).remove (actionable);
+        child.remove (actionable);
         actionable.destroy ();
     }
 }
