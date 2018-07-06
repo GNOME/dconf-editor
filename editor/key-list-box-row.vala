@@ -76,8 +76,6 @@ private class ListBoxRowHeader : Grid
 
 private abstract class ClickableListBoxRow : EventBox
 {
-    public signal void on_popover_disappear ();
-
     public bool search_result_mode { protected get; construct; default = false; }
 
     public string full_name { get; construct; }
@@ -144,11 +142,7 @@ private abstract class ClickableListBoxRow : EventBox
                 return;
             }
 
-            ((!) nullable_popover).closed.connect (() => on_popover_disappear ());
-            ((!) nullable_popover).destroy.connect (() => {
-                    on_popover_disappear ();
-                    nullable_popover = null;
-                });
+            ((!) nullable_popover).destroy.connect (() => { nullable_popover = null; });
 
             ((!) nullable_popover).set_relative_to (this);
             ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
