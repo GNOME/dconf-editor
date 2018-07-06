@@ -164,7 +164,7 @@ private abstract class RegistryList : Grid, BrowsableView
             row.hide_right_click_popover ();
         else
         {
-            row.show_right_click_popover (get_copy_text_variant (row), modifications_handler);
+            show_right_click_popover (row, null);
             rows_possibly_with_popover.append (row);
         }
         return true;
@@ -225,5 +225,33 @@ private abstract class RegistryList : Grid, BrowsableView
             return;
 
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
+    }
+
+    protected void show_right_click_popover (ClickableListBoxRow row, int? event_x)
+    {
+        if (row.nullable_popover == null)
+        {
+            row.nullable_popover = new ContextPopover ();
+            if (!row.generate_popover ((!) row.nullable_popover, get_copy_text_variant (row), modifications_handler))
+            {
+                ((!) row.nullable_popover).destroy ();  // TODO better, again
+                row.nullable_popover = null;
+                return;
+            }
+
+            ((!) row.nullable_popover).destroy.connect (() => { row.nullable_popover = null; });
+
+            ((!) row.nullable_popover).set_relative_to (row);
+            ((!) row.nullable_popover).position = PositionType.BOTTOM;     // TODO better
+        }
+        else if (((!) row.nullable_popover).visible)
+            warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click or long Menu key press
+
+        if (event_x == null)
+            event_x = (int) (row.get_allocated_width () / 2.0);
+
+        Gdk.Rectangle rect = { x:(!) event_x, y:row.get_allocated_height (), width:0, height:0 };
+        ((!) row.nullable_popover).set_pointing_to (rect);
+        ((!) row.nullable_popover).popup ();
     }
 }

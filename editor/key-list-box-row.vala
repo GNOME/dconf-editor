@@ -103,10 +103,10 @@ private abstract class ClickableListBoxRow : EventBox
     * * right click popover stuff
     \*/
 
-    private ContextPopover? nullable_popover = null;
-    protected virtual bool generate_popover (ContextPopover popover,
-                                             Variant copy_text_variant, // use Variant to sanitize text
-                                             ModificationsHandler modifications_handler)
+    public ContextPopover? nullable_popover = null;
+    public virtual bool generate_popover (ContextPopover popover,
+                                          Variant copy_text_variant, // use Variant to sanitize text
+                                          ModificationsHandler modifications_handler)
     {
         return false; // no popover should be created
     }
@@ -127,33 +127,6 @@ private abstract class ClickableListBoxRow : EventBox
     {
         return (nullable_popover != null) && (((!) nullable_popover).visible);
     }
-
-    public void show_right_click_popover (Variant copy_text_variant,
-                                          ModificationsHandler modifications_handler,
-                                          int event_x = (int) (get_allocated_width () / 2.0))
-    {
-        if (nullable_popover == null)
-        {
-            nullable_popover = new ContextPopover ();
-            if (!generate_popover ((!) nullable_popover, copy_text_variant, modifications_handler))
-            {
-                ((!) nullable_popover).destroy ();  // TODO better, again
-                nullable_popover = null;
-                return;
-            }
-
-            ((!) nullable_popover).destroy.connect (() => { nullable_popover = null; });
-
-            ((!) nullable_popover).set_relative_to (this);
-            ((!) nullable_popover).position = PositionType.BOTTOM;     // TODO better
-        }
-        else if (((!) nullable_popover).visible)
-            warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click or long Menu key press
-
-        Gdk.Rectangle rect = { x:event_x, y:get_allocated_height (), width:0, height:0 };
-        ((!) nullable_popover).set_pointing_to (rect);
-        ((!) nullable_popover).popup ();
-    }
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
@@ -167,9 +140,9 @@ private class FolderListBoxRow : ClickableListBoxRow
         folder_name_label.set_text (search_result_mode ? path : label);
     }
 
-    protected override bool generate_popover (ContextPopover popover,
-                                              Variant copy_text_variant,
-                                              ModificationsHandler modifications_handler)
+    public override bool generate_popover (ContextPopover popover,
+                                           Variant copy_text_variant,
+                                           ModificationsHandler modifications_handler)
     {
         Variant variant = new Variant.string (full_name);
 
@@ -379,9 +352,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
     }
 
-    protected override bool generate_popover (ContextPopover popover,
-                                              Variant copy_text_variant,
-                                              ModificationsHandler modifications_handler)
+    public override bool generate_popover (ContextPopover popover,
+                                           Variant copy_text_variant,
+                                           ModificationsHandler modifications_handler)
     {
         SettingsModel model = modifications_handler.model;
         Variant variant_s = new Variant.string (full_name);

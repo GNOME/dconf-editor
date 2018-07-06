@@ -214,7 +214,7 @@ class RegistryView : RegistryList
                 event_x += widget_x;
             }
 
-            row.show_right_click_popover (get_copy_text_variant (row), modifications_handler, event_x);
+            show_right_click_popover (row, event_x);
             rows_possibly_with_popover.append (row);
         }
 
