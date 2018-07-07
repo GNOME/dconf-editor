@@ -303,7 +303,10 @@ private abstract class RegistryList : Grid, BrowsableView
 
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
-        GSettingsKey key = row.key;
+        Key? _key = model.get_key (row.full_name, row.schema_id);   // racy...
+        if (_key == null)
+            assert_not_reached ();
+        GSettingsKey key = (GSettingsKey) (!) _key;
         Variant variant_s = new Variant.string (row.full_name);
         Variant variant_ss = new Variant ("(ss)", row.full_name, row.schema_id);
 

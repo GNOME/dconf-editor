@@ -73,8 +73,10 @@ class RegistrySearch : RegistryList
                 GSettingsKey gkey = (GSettingsKey) key;
                 bool key_default_value_if_bool = key.type_string == "b" ? gkey.default_value.get_boolean () : false;    // TODO better 4/6
                 row = new KeyListBoxRowEditable (           key.type_string,
-                                                            gkey,
                                                             gkey.schema_id,
+                                                            gkey.summary,
+                                                            gkey.warning_conflicting_key,
+                                                            gkey.error_hard_conflicting_key,
                                                             modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {

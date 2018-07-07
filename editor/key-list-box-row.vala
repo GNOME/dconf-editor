@@ -324,25 +324,41 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
 private class KeyListBoxRowEditable : KeyListBoxRow
 {
-    public GSettingsKey key { get; construct; }
-
     public string schema_id { get; construct; }
 
     construct
     {
         get_style_context ().add_class ("gsettings-key");
+    }
 
-        if (key.summary != "")
-            key_info_label.set_label (key.summary);
+    public KeyListBoxRowEditable (string _type_string,
+                                  string _schema_id,
+                                  string summary,
+                                  bool warning_conflicting_key,
+                                  bool error_hard_conflicting_key,
+                                  bool _delay_mode,
+                                  string _key_name,
+                                  string _full_name,
+                                  bool _search_result_mode = false)
+    {
+        Object (type_string: _type_string,
+                schema_id: _schema_id,
+                delay_mode: _delay_mode,
+                key_name: _key_name,
+                full_name: _full_name,
+                search_result_mode: _search_result_mode);
+
+        if (summary != "")
+            key_info_label.set_label (summary);
         else
         {
             key_info_label.get_style_context ().add_class ("italic-label");
             key_info_label.set_label (_("No summary provided"));
         }
 
-        if (key.warning_conflicting_key)
+        if (warning_conflicting_key)
         {
-            if (key.error_hard_conflicting_key)
+            if (error_hard_conflicting_key)
             {
                 get_style_context ().add_class ("hard-conflict");
                 if (boolean_switch != null)
@@ -356,23 +372,6 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             else
                 get_style_context ().add_class ("conflict");
         }
-    }
-
-    public KeyListBoxRowEditable (string _type_string,
-                                  GSettingsKey _key,
-                                  string _schema_id,
-                                  bool _delay_mode,
-                                  string _key_name,
-                                  string _full_name,
-                                  bool _search_result_mode = false)
-    {
-        Object (type_string: _type_string,
-                key: _key,
-                schema_id: _schema_id,
-                delay_mode: _delay_mode,
-                key_name: _key_name,
-                full_name: _full_name,
-                search_result_mode: _search_result_mode);
     }
 
     public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool)
