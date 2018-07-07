@@ -80,6 +80,7 @@ sources = files(
   'modifications-revealer.vala',
   'pathbar.vala',
   'registry-info.vala',
+  'registry-list.vala',
   'registry-placeholder.vala',
   'registry-search.vala',
   'registry-view.vala',
