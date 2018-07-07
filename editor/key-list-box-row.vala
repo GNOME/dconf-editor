@@ -76,7 +76,7 @@ private class ListBoxRowHeader : Grid
 
 private abstract class ClickableListBoxRow : EventBox
 {
-    public bool search_result_mode { protected get; construct; default = false; }
+    public bool search_result_mode { public get; construct; default = false; }
 
     public string full_name { get; construct; }
 
@@ -104,12 +104,6 @@ private abstract class ClickableListBoxRow : EventBox
     \*/
 
     public ContextPopover? nullable_popover = null;
-    public virtual bool generate_popover (ContextPopover popover,
-                                          Variant copy_text_variant, // use Variant to sanitize text
-                                          ModificationsHandler modifications_handler)
-    {
-        return false; // no popover should be created
-    }
 
     public void destroy_popover ()
     {
@@ -138,27 +132,6 @@ private class FolderListBoxRow : ClickableListBoxRow
     {
         Object (full_name: path, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
-    }
-
-    public override bool generate_popover (ContextPopover popover,
-                                           Variant copy_text_variant,
-                                           ModificationsHandler modifications_handler)
-    {
-        Variant variant = new Variant.string (full_name);
-
-        if (search_result_mode)
-        {
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
-            popover.new_section ();
-        }
-
-        popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
-
-        popover.new_section ();
-        popover.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
-
-        return true;
     }
 }
 
@@ -242,7 +215,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         ((!) boolean_switch).activate ();
     }
 
-    protected void change_dismissed ()
+    public void change_dismissed ()
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
@@ -260,7 +233,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         set_key_value ((this is KeyListBoxRowEditable) ? ((KeyListBoxRowEditable) this).schema_id : "", null);
     }
 
-    protected void set_key_value (string schema_or_empty, Variant? new_value)
+    public void set_key_value (string schema_or_empty, Variant? new_value)
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
@@ -351,73 +324,6 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
             key_value_label.set_label (Key.cool_text_value_from_variant ((!) key_value, type_string));
         }
     }
-
-    public override bool generate_popover (ContextPopover popover,
-                                           Variant copy_text_variant,
-                                           ModificationsHandler modifications_handler)
-    {
-        SettingsModel model = modifications_handler.model;
-        Variant variant_s = new Variant.string (full_name);
-        Variant variant_ss = new Variant ("(ss)", full_name, ".dconf");
-
-        if (model.is_key_ghost (full_name))
-        {
-            popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
-            return true;
-        }
-
-        if (search_result_mode)
-        {
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant_s.print (false) + ")");
-            popover.new_section ();
-        }
-
-        popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
-
-        bool planned_change = modifications_handler.key_has_planned_change (full_name);
-        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
-
-        if (type_string == "b" || type_string == "mb" || type_string == "()")
-        {
-            popover.new_section ();
-            bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-            Variant key_value = model.get_key_value (key);
-            GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                              planned_change ? planned_value : key_value, null);
-
-            popover.change_dismissed.connect (() => {
-                    destroy_popover ();
-                    change_dismissed ();
-                });
-            popover.value_changed.connect ((gvariant) => {
-                    hide_right_click_popover ();
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (type_string), gvariant)));
-                    set_key_value ("", gvariant);
-                });
-
-            if (!delayed_apply_menu)
-            {
-                popover.new_section ();
-                popover.new_gaction ("erase", "ui.erase(" + variant_s.print (false) + ")");
-            }
-        }
-        else
-        {
-            if (planned_change)
-            {
-                popover.new_section ();
-                popover.new_gaction (planned_value == null ? "unerase" : "dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
-            }
-
-            if (!planned_change || planned_value != null) // not &&
-            {
-                popover.new_section ();
-                popover.new_gaction ("erase", "ui.erase(" + variant_s.print (false) + ")");
-            }
-        }
-        return true;
-    }
 }
 
 private class KeyListBoxRowEditable : KeyListBoxRow
@@ -490,104 +396,6 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         else
             css_context.add_class ("edited");
         key_value_label.set_label (Key.cool_text_value_from_variant (key_value, type_string));
-    }
-
-    protected override bool generate_popover (ContextPopover popover,
-                                              Variant copy_text_variant,
-                                              ModificationsHandler modifications_handler)
-    {
-        SettingsModel model = modifications_handler.model;
-        Variant variant_s = new Variant.string (full_name);
-        Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
-
-        if (search_result_mode)
-        {
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant_s.print (false) + ")");
-            popover.new_section ();
-        }
-
-        if (key.error_hard_conflicting_key)
-        {
-            popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
-            popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
-            return true; // anything else is value-related, so we are done
-        }
-
-        bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-        bool planned_change = modifications_handler.key_has_planned_change (full_name);
-        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
-
-        popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
-
-        if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
-            || (
-                (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
-                && (key.range_type == "range")
-                && (Key.get_variant_as_uint64 (key.range_content.get_child_value (1)) - Key.get_variant_as_uint64 (key.range_content.get_child_value (0)) < 13)
-               )
-            || (
-                (type_string == "n" || type_string == "i" || type_string == "h" || type_string == "x")
-                && (key.range_type == "range")
-                && (Key.get_variant_as_int64 (key.range_content.get_child_value (1)) - Key.get_variant_as_int64 (key.range_content.get_child_value (0)) < 13)
-               )
-            || type_string == "()")
-        {
-            popover.new_section ();
-            GLib.Action action;
-            if (planned_change)
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                      modifications_handler.get_key_planned_value (full_name), key.range_content);
-            else if (model.is_key_default (key))
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                      null, key.range_content);
-            else
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                      model.get_key_value (key), key.range_content);
-
-            popover.change_dismissed.connect (() => {
-                    destroy_popover ();
-                    change_dismissed ();
-                });
-            popover.value_changed.connect ((gvariant) => {
-                    hide_right_click_popover ();
-                    Variant key_value = model.get_key_value (key);
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
-                    set_key_value (schema_id, gvariant);
-                });
-        }
-        else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
-        {
-            popover.new_section ();
-
-            if (!model.is_key_default (key))
-                popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
-
-            string [] all_flags = key.range_content.get_strv ();
-            popover.create_flags_list (key.settings.get_strv (key_name), all_flags);
-            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                    string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
-                    foreach (string flag in all_flags)
-                        popover.update_flag_status (flag, flag in active_flags);
-                });
-            popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
-
-            popover.value_changed.connect ((gvariant) => set_key_value (schema_id, gvariant));
-        }
-        else if (planned_change)
-        {
-            popover.new_section ();
-            popover.new_gaction ("dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
-
-            if (planned_value != null)
-                popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
-        }
-        else if (!model.is_key_default (key))
-        {
-            popover.new_section ();
-            popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
-        }
-        return true;
     }
 }
 
