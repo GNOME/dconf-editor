@@ -75,42 +75,36 @@ class RegistrySearch : RegistryList
                 row = new KeyListBoxRowEditable (           key.type_string,
                                                             gkey,
                                                             gkey.schema_id,
-                                                            modifications_handler,
+                                                            modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
                                                               model.is_key_default (gkey),
-                                                              key_default_value_if_bool,                                // TODO better 5/6
-                                                              modifications_handler.get_current_delay_mode ());
+                                                              key_default_value_if_bool);                               // TODO better 5/6
                         row.destroy_popover ();
                     });
                 ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
                                                       model.is_key_default (gkey),
-                                                      key_default_value_if_bool,                                        // TODO better 6/6
-                                                      modifications_handler.get_current_delay_mode ());
+                                                      key_default_value_if_bool);                                       // TODO better 6/6
             }
             else
             {
                 DConfKey dkey = (DConfKey) setting_object;
                 row = new KeyListBoxRowEditableNoSchema (   key.type_string,
                                                             dkey,
-                                                            modifications_handler,
+                                                            modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
-                            ((KeyListBoxRowEditableNoSchema) row).update (null,
-                                                                          modifications_handler.get_current_delay_mode ());
+                            ((KeyListBoxRowEditableNoSchema) row).update (null);
                         else
-                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey),
-                                                                          modifications_handler.get_current_delay_mode ());
+                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
-                    ((KeyListBoxRowEditableNoSchema) row).update (null,
-                                                                  modifications_handler.get_current_delay_mode ());
+                    ((KeyListBoxRowEditableNoSchema) row).update (null);
                 else
-                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey),
-                                                                  modifications_handler.get_current_delay_mode ());
+                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
@@ -170,7 +164,7 @@ class RegistrySearch : RegistryList
                 event_x += widget_x;
             }
 
-            row.show_right_click_popover (get_copy_text_variant (row), event_x);
+            row.show_right_click_popover (get_copy_text_variant (row), modifications_handler, event_x);
             rows_possibly_with_popover.append (row);
         }
         else

@@ -106,7 +106,9 @@ private abstract class ClickableListBoxRow : EventBox
     \*/
 
     private ContextPopover? nullable_popover = null;
-    protected virtual bool generate_popover (ContextPopover popover, Variant copy_text_variant) // use Variant to sanitize text
+    protected virtual bool generate_popover (ContextPopover popover,
+                                             Variant copy_text_variant, // use Variant to sanitize text
+                                             ModificationsHandler modifications_handler)
     {
         return false; // no popover should be created
     }
@@ -128,12 +130,14 @@ private abstract class ClickableListBoxRow : EventBox
         return (nullable_popover != null) && (((!) nullable_popover).visible);
     }
 
-    public void show_right_click_popover (Variant copy_text_variant, int event_x = (int) (get_allocated_width () / 2.0))
+    public void show_right_click_popover (Variant copy_text_variant,
+                                          ModificationsHandler modifications_handler,
+                                          int event_x = (int) (get_allocated_width () / 2.0))
     {
         if (nullable_popover == null)
         {
             nullable_popover = new ContextPopover ();
-            if (!generate_popover ((!) nullable_popover, copy_text_variant))
+            if (!generate_popover ((!) nullable_popover, copy_text_variant, modifications_handler))
             {
                 ((!) nullable_popover).destroy ();  // TODO better, again
                 nullable_popover = null;
@@ -169,7 +173,9 @@ private class FolderListBoxRow : ClickableListBoxRow
         folder_name_label.set_text (search_result_mode ? path : label);
     }
 
-    protected override bool generate_popover (ContextPopover popover, Variant copy_text_variant)  // TODO better
+    protected override bool generate_popover (ContextPopover popover,
+                                              Variant copy_text_variant,
+                                              ModificationsHandler modifications_handler)
     {
         Variant variant = new Variant.string (full_name);
 
@@ -201,6 +207,32 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     public string key_name    { get; construct; }
     public string type_string { get; construct; }
 
+    private bool _delay_mode = false;
+    public bool delay_mode
+    {
+        protected get
+        {
+            return _delay_mode;
+        }
+        set
+        {
+            _delay_mode = value;
+            if (boolean_switch != null)
+            {
+                if (value)
+                {
+                    ((!) boolean_switch).hide ();
+                    key_value_label.show ();
+                }
+                else
+                {
+                    key_value_label.hide ();
+                    ((!) boolean_switch).show ();
+                }
+            }
+        }
+    }
+
     public bool small_keys_list_rows
     {
         set
@@ -218,8 +250,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    public ModificationsHandler modifications_handler { protected get; construct; }
-
     construct
     {
         if (type_string == "b")
@@ -227,30 +257,15 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
-            if (!modifications_handler.get_current_delay_mode ())
+            if (!delay_mode)
             {
-                ((!) boolean_switch).show ();
                 key_value_label.hide ();
+                ((!) boolean_switch).show ();
             }
             key_name_and_value_grid.attach ((!) boolean_switch, 1, 0, 1, 2);
         }
 
         key_name_label.set_label (search_result_mode ? full_name : key_name);
-    }
-
-    public void hide_or_show_toggles (bool show)
-        requires (boolean_switch != null)
-    {
-        if (show)
-        {
-            key_value_label.hide ();
-            ((!) boolean_switch).show ();
-        }
-        else
-        {
-            ((!) boolean_switch).hide ();
-            key_value_label.show ();
-        }
     }
 
     public void toggle_boolean_key ()
@@ -323,20 +338,20 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
     public KeyListBoxRowEditableNoSchema (string _type_string,
                                           DConfKey _key,
-                                          ModificationsHandler modifications_handler,
+                                          bool _delay_mode,
                                           string _key_name,
                                           string _full_name,
-                                          bool search_result_mode = false)
+                                          bool _search_result_mode = false)
     {
         Object (type_string: _type_string,
                 key: _key,
-                modifications_handler: modifications_handler,
                 key_name: _key_name,
+                delay_mode: _delay_mode,
                 full_name: _full_name,
-                search_result_mode: search_result_mode);
+                search_result_mode: _search_result_mode);
     }
 
-    public void update (Variant? key_value, bool delay_mode)
+    public void update (Variant? key_value)
     {
         StyleContext context = key_value_label.get_style_context ();
         if (key_value == null)
@@ -370,7 +385,9 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
         }
     }
 
-    protected override bool generate_popover (ContextPopover popover, Variant copy_text_variant)
+    protected override bool generate_popover (ContextPopover popover,
+                                              Variant copy_text_variant,
+                                              ModificationsHandler modifications_handler)
     {
         SettingsModel model = modifications_handler.model;
         Variant variant_s = new Variant.string (full_name);
@@ -475,21 +492,21 @@ private class KeyListBoxRowEditable : KeyListBoxRow
     public KeyListBoxRowEditable (string _type_string,
                                   GSettingsKey _key,
                                   string _schema_id,
-                                  ModificationsHandler modifications_handler,
+                                  bool _delay_mode,
                                   string _key_name,
                                   string _full_name,
-                                  bool search_result_mode = false)
+                                  bool _search_result_mode = false)
     {
         Object (type_string: _type_string,
                 key: _key,
                 schema_id: _schema_id,
-                modifications_handler: modifications_handler,
+                delay_mode: _delay_mode,
                 key_name: _key_name,
                 full_name: _full_name,
-                search_result_mode: search_result_mode);
+                search_result_mode: _search_result_mode);
     }
 
-    public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool, bool delay_mode)
+    public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool)
     {
         if (boolean_switch != null)
         {
@@ -508,7 +525,9 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         key_value_label.set_label (Key.cool_text_value_from_variant (key_value, type_string));
     }
 
-    protected override bool generate_popover (ContextPopover popover, Variant copy_text_variant)
+    protected override bool generate_popover (ContextPopover popover,
+                                              Variant copy_text_variant,
+                                              ModificationsHandler modifications_handler)
     {
         SettingsModel model = modifications_handler.model;
         Variant variant_s = new Variant.string (full_name);
