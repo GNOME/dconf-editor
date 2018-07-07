@@ -420,7 +420,7 @@ public class SettingsModel : Object
         if ((!) key is GSettingsKey)
             return get_gsettings_key_value ((GSettingsKey) key);
         if ((!) key is DConfKey)
-            return get_dconf_key_value ((DConfKey) key, client);
+            return _get_dconf_key_value (key.full_name, client);
         assert_not_reached ();
     }
 
@@ -429,9 +429,13 @@ public class SettingsModel : Object
         return key.settings.get_value (get_name (key.full_name));
     }
 
-    private static Variant get_dconf_key_value (DConfKey key, DConf.Client client)
+    public Variant get_dconf_key_value (string full_name)
     {
-        Variant? key_value = get_dconf_key_value_or_null (key.full_name, client);
+        return _get_dconf_key_value (full_name, client);
+    }
+    private static Variant _get_dconf_key_value (string full_name, DConf.Client client)
+    {
+        Variant? key_value = get_dconf_key_value_or_null (full_name, client);
         if (key_value == null)
             assert_not_reached ();
         return (!) key_value;

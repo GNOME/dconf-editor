@@ -404,7 +404,6 @@ private abstract class RegistryList : Grid, BrowsableView
 
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
-        DConfKey key = row.key;
         Variant variant_s = new Variant.string (row.full_name);
         Variant variant_ss = new Variant ("(ss)", row.full_name, ".dconf");
 
@@ -430,7 +429,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-            Variant key_value = model.get_key_value (key);
+            Variant key_value = model.get_dconf_key_value (row.full_name);
             GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string,
                                                               planned_change ? planned_value : key_value, null);
 

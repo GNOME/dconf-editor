@@ -266,8 +266,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 {
-    public DConfKey key { get; construct; }
-
     construct
     {
         get_style_context ().add_class ("dconf-key");
@@ -277,14 +275,12 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
     }
 
     public KeyListBoxRowEditableNoSchema (string _type_string,
-                                          DConfKey _key,
                                           bool _delay_mode,
                                           string _key_name,
                                           string _full_name,
                                           bool _search_result_mode = false)
     {
         Object (type_string: _type_string,
-                key: _key,
                 key_name: _key_name,
                 delay_mode: _delay_mode,
                 full_name: _full_name,

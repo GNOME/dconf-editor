@@ -91,7 +91,6 @@ class RegistrySearch : RegistryList
             {
                 DConfKey dkey = (DConfKey) setting_object;
                 row = new KeyListBoxRowEditableNoSchema (   key.type_string,
-                                                            dkey,
                                                             modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
