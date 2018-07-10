@@ -24,6 +24,8 @@ public class SettingsModel : Object
     private string? last_change_tag = null;
     public bool copy_action = false;
 
+    public bool use_shortpaths { private get; set; default = false; }
+
     public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
 
     public void refresh_relocatable_schema_paths (bool user_schemas,
@@ -130,7 +132,42 @@ public class SettingsModel : Object
         Object? object = list_store.get_item (0);
         do
         {
-            keys_array += (SettingObject) (!) object;
+            SettingObject base_object = (SettingObject) (!) object;
+            if (!use_shortpaths)
+                keys_array += base_object;              // 1/4
+            else
+            {
+                string base_full_name = base_object.full_name;
+                if (is_key_path (base_full_name))
+                    keys_array += base_object;          // 2/4
+                else
+                {
+                    GLib.ListStore child_list_store = get_children_as_liststore (base_full_name);
+                    if (child_list_store.get_n_items () != 1)
+                        keys_array += base_object;      // 3/4
+                    else
+                    {
+                        SettingObject test_object = (SettingObject) child_list_store.get_item (0);
+                        string test_full_name = test_object.full_name;
+                        if (is_key_path (test_full_name))
+                            keys_array += base_object;  // 4/4
+                        else
+                        {
+                            string name = base_object.name;
+                            do
+                            {
+                                base_full_name = test_full_name;
+                                name += "/" + test_object.name;
+                                child_list_store = get_children_as_liststore (test_object.full_name);
+                                test_object = (SettingObject) child_list_store.get_item (0);
+                                test_full_name = test_object.full_name;
+                            }
+                            while (!is_key_path (test_full_name) && child_list_store.get_n_items () == 1);
+                            keys_array += new Directory (base_full_name, name);
+                        }
+                    }
+                }
+            }
             position++;
             object = list_store.get_item (position);
         }

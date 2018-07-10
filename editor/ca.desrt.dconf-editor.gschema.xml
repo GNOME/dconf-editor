@@ -178,6 +178,11 @@
       <summary>Mapping of paths to manually associated schemas</summary>
       <description>A dictionary that maps schema IDs with path specifications. It is used to allow the user to associate a relocatable schema to certain paths. Path specifications may contain wildcards in the form of empty segments (e.g. /ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema ID may be associated with multiple path specifications.</description>
     </key>
+    <key name="use-shortpaths" type="b">
+      <default>false</default>
+      <summary>A flag for skipping unnecessary subfolders</summary>
+      <description>When a folder only contains one subfolder and no keys, Dconf Editor can jump to that subfolder directly. This flag enables that behaviour.</description>
+    </key>
   </schema>
   <schema id="ca.desrt.dconf-editor.Bookmarks">
     <key name="bookmarks" type="as">

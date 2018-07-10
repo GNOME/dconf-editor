@@ -67,11 +67,15 @@ class DConfWindow : ApplicationWindow
     [GtkChild] private Revealer notification_revealer;
     [GtkChild] private Label notification_label;
 
+    private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
 
     public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
         install_action_entries ();
+
+        use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
+        settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
@@ -343,6 +347,7 @@ class DConfWindow : ApplicationWindow
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
         settings.disconnect (behaviour_changed_handler);
+        settings.disconnect (use_shortpaths_changed_handler);
         settings.disconnect (small_keys_list_rows_handler);
         settings.disconnect (small_bookmarks_rows_handler);
 
@@ -753,7 +758,7 @@ class DConfWindow : ApplicationWindow
         Widget? focus = get_focus ();
         bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
         if (!focus_is_text_widget)
-            if (name != "F10")                         // else <Shift>F10 toggles the search_entry popup
+            if (name != "F10") // else <Shift>F10 toggles the search_entry popup; see if a976aa9740 fixes that in Gtk+ 4
                 if (search_bar.handle_event (event))
                     return true;
 
