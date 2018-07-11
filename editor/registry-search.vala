@@ -91,7 +91,6 @@ class RegistrySearch : RegistryList
             }
             else
             {
-                DConfKey dkey = (DConfKey) setting_object;
                 row = new KeyListBoxRowEditableNoSchema (   key.type_string,
                                                             modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
@@ -99,13 +98,13 @@ class RegistrySearch : RegistryList
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
                             ((KeyListBoxRowEditableNoSchema) row).update (null);
                         else
-                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_dconf_key_value (full_name));
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
                     ((KeyListBoxRowEditableNoSchema) row).update (null);
                 else
-                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_key_value (dkey));
+                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_dconf_key_value (full_name));
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
