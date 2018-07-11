@@ -374,12 +374,12 @@ private class KeyListBoxRowEditable : KeyListBoxRow
         }
     }
 
-    public void update (Variant key_value, bool is_key_default, bool key_default_value_if_bool)
+    public void update (Variant key_value, bool is_key_default)
     {
         if (boolean_switch != null)
         {
             bool key_value_boolean = key_value.get_boolean ();
-            Variant switch_variant = new Variant ("(ssbb)", full_name, schema_id, !key_value_boolean, key_default_value_if_bool);
+            Variant switch_variant = new Variant ("(ssbb)", full_name, schema_id, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
             ((!) boolean_switch).set_action_name ("ui.empty");
             ((!) boolean_switch).set_active (key_value_boolean);
             ((!) boolean_switch).set_detailed_action_name ("bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");

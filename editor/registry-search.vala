@@ -71,7 +71,6 @@ class RegistrySearch : RegistryList
             if (setting_object is GSettingsKey)
             {
                 GSettingsKey gkey = (GSettingsKey) key;
-                bool key_default_value_if_bool = key.type_string == "b" ? gkey.default_value.get_boolean () : false;    // TODO better 4/6
                 row = new KeyListBoxRowEditable (           key.type_string,
                                                             gkey.schema_id,
                                                             gkey.summary,
@@ -81,13 +80,11 @@ class RegistrySearch : RegistryList
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
-                                                              model.is_key_default (gkey),
-                                                              key_default_value_if_bool);                               // TODO better 5/6
+                                                              model.is_key_default (gkey));
                         row.destroy_popover ();
                     });
                 ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
-                                                      model.is_key_default (gkey),
-                                                      key_default_value_if_bool);                                       // TODO better 6/6
+                                                      model.is_key_default (gkey));
             }
             else
             {

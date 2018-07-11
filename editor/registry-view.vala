@@ -124,7 +124,6 @@ class RegistryView : RegistryList
             if (setting_object is GSettingsKey)
             {
                 GSettingsKey gkey = (GSettingsKey) key;
-                bool key_default_value_if_bool = key.type_string == "b" ? gkey.default_value.get_boolean () : false;    // TODO better 1/6
                 row = new KeyListBoxRowEditable (           key.type_string,
                                                             gkey.schema_id,
                                                             gkey.summary,
@@ -134,13 +133,11 @@ class RegistryView : RegistryList
                                                             setting_object.name, full_name);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
-                                                              model.is_key_default (gkey),
-                                                              key_default_value_if_bool);                               // TODO better 2/6
+                                                              model.is_key_default (gkey));
                         row.destroy_popover ();
                     });
                 ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
-                                                      model.is_key_default (gkey),
-                                                      key_default_value_if_bool);                                       // TODO better 3/6
+                                                      model.is_key_default (gkey));
             }
             else
             {
