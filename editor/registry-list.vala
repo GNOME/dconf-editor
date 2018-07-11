@@ -228,6 +228,27 @@ private abstract class RegistryList : Grid, BrowsableView
     }
 
     /*\
+    * * Row creation
+    \*/
+
+    protected void update_gsettings_row (KeyListBoxRowEditable row, string type_string, Variant key_value, bool is_key_default)
+    {
+        if (type_string == "b")
+        {
+            bool key_value_boolean = key_value.get_boolean ();
+            Variant switch_variant = new Variant ("(ssbb)", row.full_name, row.schema_id, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
+            row.update_switch (key_value_boolean, "bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
+        }
+
+        StyleContext css_context = row.get_style_context ();
+        if (is_key_default)
+            css_context.remove_class ("edited");
+        else
+            css_context.add_class ("edited");
+        row.update_label (Key.cool_text_value_from_variant (key_value, type_string));
+    }
+
+    /*\
     * * Right click popover creation
     \*/
 

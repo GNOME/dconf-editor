@@ -79,12 +79,16 @@ class RegistrySearch : RegistryList
                                                             modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
-                        ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
-                                                              model.is_key_default (gkey));
+                        update_gsettings_row ((KeyListBoxRowEditable) row,
+                                              key.type_string,
+                                              model.get_key_value (key),
+                                              model.is_key_default (gkey));
                         row.destroy_popover ();
                     });
-                ((KeyListBoxRowEditable) row).update (model.get_key_value (key),
-                                                      model.is_key_default (gkey));
+                update_gsettings_row ((KeyListBoxRowEditable) row,
+                                      key.type_string,
+                                      model.get_key_value (key),
+                                      model.is_key_default (gkey));
             }
             else
             {
