@@ -158,18 +158,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         {
             _delay_mode = value;
             if (boolean_switch != null)
-            {
-                if (value)
-                {
-                    ((!) boolean_switch).hide ();
-                    key_value_label.show ();
-                }
-                else
-                {
-                    key_value_label.hide ();
-                    ((!) boolean_switch).show ();
-                }
-            }
+                hide_or_show_switch ();
         }
     }
 
@@ -197,11 +186,10 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
-            if (!delay_mode)
-            {
-                key_value_label.hide ();
-                ((!) boolean_switch).show ();
-            }
+
+            _use_switch = true;
+            hide_or_show_switch ();
+
             key_name_and_value_grid.attach ((!) boolean_switch, 1, 0, 1, 2);
         }
 
@@ -262,6 +250,58 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         child.remove (actionable);
         actionable.destroy ();
     }
+
+    /*\
+    * * Updating
+    \*/
+
+    public void update_label (string key_value_string, bool italic)
+    {
+        if (italic)
+        {
+            StyleContext context = key_value_label.get_style_context ();
+            if (!context.has_class ("italic-label"))
+                context.add_class ("italic-label");
+        }
+        else
+        {
+            StyleContext context = key_value_label.get_style_context ();
+            if (context.has_class ("italic-label"))
+                context.remove_class ("italic-label");
+        }
+
+        key_value_label.set_label (key_value_string);
+    }
+
+    protected bool _use_switch = false;
+    public void use_switch (bool show)
+        requires (boolean_switch != null)
+    {
+        _use_switch = show;
+        hide_or_show_switch ();
+    }
+    private void hide_or_show_switch ()
+        requires (boolean_switch != null)
+    {
+        if (_use_switch && !delay_mode)
+        {
+            key_value_label.hide ();
+            ((!) boolean_switch).show ();
+        }
+        else
+        {
+            ((!) boolean_switch).hide ();
+            key_value_label.show ();
+        }
+    }
+
+    public void update_switch (bool key_value_boolean, string detailed_action_name)
+        requires (boolean_switch != null)
+    {
+        ((!) boolean_switch).set_action_name ("ui.empty");
+        ((!) boolean_switch).set_active (key_value_boolean);
+        ((!) boolean_switch).set_detailed_action_name (detailed_action_name);
+    }
 }
 
 private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
@@ -285,40 +325,6 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                 delay_mode: _delay_mode,
                 full_name: _full_name,
                 search_result_mode: _search_result_mode);
-    }
-
-    public void update (Variant? key_value)
-    {
-        StyleContext context = key_value_label.get_style_context ();
-        if (key_value == null)
-        {
-            if (boolean_switch != null) // && !delay_mode?
-            {
-                ((!) boolean_switch).hide ();
-                key_value_label.show ();
-            }
-            if (!context.has_class ("italic-label")) context.add_class ("italic-label");
-            key_value_label.set_label (_("Key erased."));
-        }
-        else
-        {
-            if (boolean_switch != null)
-            {
-                if (!delay_mode)
-                {
-                    key_value_label.hide ();
-                    ((!) boolean_switch).show ();
-                }
-
-                bool key_value_boolean = ((!) key_value).get_boolean ();
-                Variant switch_variant = new Variant ("(sb)", full_name, !key_value_boolean);
-                ((!) boolean_switch).set_action_name ("ui.empty");
-                ((!) boolean_switch).set_active (key_value_boolean);
-                ((!) boolean_switch).set_detailed_action_name ("bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
-            }
-            if (context.has_class ("italic-label")) context.remove_class ("italic-label");
-            key_value_label.set_label (Key.cool_text_value_from_variant ((!) key_value, type_string));
-        }
     }
 }
 
@@ -361,30 +367,13 @@ private class KeyListBoxRowEditable : KeyListBoxRow
             if (error_hard_conflicting_key)
             {
                 get_style_context ().add_class ("hard-conflict");
-                if (boolean_switch != null)
-                {
-                    ((!) boolean_switch).hide ();
-                    key_value_label.show ();
-                }
+                _use_switch = false;
                 key_value_label.get_style_context ().add_class ("italic-label");
                 key_value_label.set_label (_("conflicting keys"));
             }
             else
                 get_style_context ().add_class ("conflict");
         }
-    }
-
-    public void update_label (string key_value_string /* , bool italic */)
-    {
-        key_value_label.set_label (key_value_string);
-    }
-
-    public void update_switch (bool key_value_boolean, string detailed_action_name)
-        requires (boolean_switch != null)
-    {
-        ((!) boolean_switch).set_action_name ("ui.empty");
-        ((!) boolean_switch).set_active (key_value_boolean);
-        ((!) boolean_switch).set_detailed_action_name (detailed_action_name);
     }
 }
 

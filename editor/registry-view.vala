@@ -150,15 +150,15 @@ class RegistryView : RegistryList
                                                             setting_object.name, full_name);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 1/4
-                            ((KeyListBoxRowEditableNoSchema) row).update (null);
+                            update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, null);
                         else
-                            ((KeyListBoxRowEditableNoSchema) row).update (model.get_dconf_key_value (full_name));
+                            update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, model.get_dconf_key_value (full_name));
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 2/4
-                    ((KeyListBoxRowEditableNoSchema) row).update (null);
+                    update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, null);
                 else
-                    ((KeyListBoxRowEditableNoSchema) row).update (model.get_dconf_key_value (full_name));
+                    update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, model.get_dconf_key_value (full_name));
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;

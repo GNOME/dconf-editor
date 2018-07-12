@@ -245,7 +245,28 @@ private abstract class RegistryList : Grid, BrowsableView
             css_context.remove_class ("edited");
         else
             css_context.add_class ("edited");
-        row.update_label (Key.cool_text_value_from_variant (key_value, type_string));
+        row.update_label (Key.cool_text_value_from_variant (key_value, type_string), false);
+    }
+
+    protected void update_dconf_row (KeyListBoxRowEditableNoSchema row, string type_string, Variant? key_value)
+    {
+        if (key_value == null)
+        {
+            row.update_label (_("Key erased."), true);
+            if (type_string == "b")
+                row.use_switch (false);
+        }
+        else
+        {
+            if (type_string == "b")
+            {
+                bool key_value_boolean = ((!) key_value).get_boolean ();
+                Variant switch_variant = new Variant ("(sb)", row.full_name, !key_value_boolean);
+                row.update_switch (key_value_boolean, "bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
+                row.use_switch (true);
+            }
+            row.update_label (Key.cool_text_value_from_variant ((!) key_value, type_string), false);
+        }
     }
 
     /*\
