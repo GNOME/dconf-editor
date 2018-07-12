@@ -79,13 +79,13 @@ class RegistrySearch : RegistryList
                                                             modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
-                        update_gsettings_row ((KeyListBoxRowEditable) row,
+                        update_gsettings_row ((KeyListBoxRow) row,
                                               key.type_string,
                                               model.get_key_value (key),
                                               model.is_key_default (gkey));
                         row.destroy_popover ();
                     });
-                update_gsettings_row ((KeyListBoxRowEditable) row,
+                update_gsettings_row ((KeyListBoxRow) row,
                                       key.type_string,
                                       model.get_key_value (key),
                                       model.is_key_default (gkey));
@@ -97,15 +97,15 @@ class RegistrySearch : RegistryList
                                                             setting_object.name, full_name, !is_local_result);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
-                            update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, null);
+                            update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
                         else
-                            update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, model.get_dconf_key_value (full_name));
+                            update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
-                    update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, null);
+                    update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
                 else
-                    update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, model.get_dconf_key_value (full_name));
+                    update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
@@ -127,7 +127,7 @@ class RegistrySearch : RegistryList
 
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
-        if (row is FolderListBoxRow)
+        if (row.context == ".folder")
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";

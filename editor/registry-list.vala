@@ -180,14 +180,9 @@ private abstract class RegistryList : Grid, BrowsableView
     }
     private string _get_copy_text (ClickableListBoxRow row)
     {
-        if (row is FolderListBoxRow)
+        if (row.context == ".folder")
             return row.full_name;
-        // (row is KeyListBoxRow)
-        SettingsModel model = modifications_handler.model;
-        if (row is KeyListBoxRowEditable)
-            return model.get_key_copy_text (row.full_name, ((KeyListBoxRowEditable) row).schema_id);
-        // (row is KeyListBoxRowEditableNoSchema)
-        return model.get_key_copy_text (row.full_name, ".dconf");
+        return modifications_handler.model.get_key_copy_text (row.full_name, row.context);
     }
     protected Variant get_copy_text_variant (ClickableListBoxRow row)
     {
@@ -231,12 +226,12 @@ private abstract class RegistryList : Grid, BrowsableView
     * * Row creation
     \*/
 
-    protected void update_gsettings_row (KeyListBoxRowEditable row, string type_string, Variant key_value, bool is_key_default)
+    protected void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default)
     {
         if (type_string == "b")
         {
             bool key_value_boolean = key_value.get_boolean ();
-            Variant switch_variant = new Variant ("(ssbb)", row.full_name, row.schema_id, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
+            Variant switch_variant = new Variant ("(ssbb)", row.full_name, row.context, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
             row.update_switch (key_value_boolean, "bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
         }
 
@@ -248,7 +243,7 @@ private abstract class RegistryList : Grid, BrowsableView
         row.update_label (Key.cool_text_value_from_variant (key_value, type_string), false);
     }
 
-    protected void update_dconf_row (KeyListBoxRowEditableNoSchema row, string type_string, Variant? key_value)
+    protected void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
     {
         if (key_value == null)
         {
@@ -306,13 +301,12 @@ private abstract class RegistryList : Grid, BrowsableView
         if (row.nullable_popover == null)
             assert_not_reached ();
 
-        if (row is FolderListBoxRow)
-            return generate_folder_popover ((FolderListBoxRow) row);
-        if (row is KeyListBoxRowEditable)
-            return generate_gsettings_popover ((KeyListBoxRowEditable) row);
-        if (row is KeyListBoxRowEditableNoSchema)
-            return generate_dconf_popover ((KeyListBoxRowEditableNoSchema) row);
-        assert_not_reached ();
+        switch (row.context)
+        {
+            case ".folder": return generate_folder_popover ((FolderListBoxRow) row);
+            case ".dconf" : return generate_dconf_popover ((KeyListBoxRow) row);
+            default       : return generate_gsettings_popover ((KeyListBoxRow) row);
+        }
     }
 
     private bool generate_folder_popover (FolderListBoxRow row)
@@ -338,19 +332,19 @@ private abstract class RegistryList : Grid, BrowsableView
         return true;
     }
 
-    private bool generate_gsettings_popover (KeyListBoxRowEditable row)
+    private bool generate_gsettings_popover (KeyListBoxRow row)
     {
         if (row.nullable_popover == null)
             assert_not_reached ();
 
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
-        Key? _key = model.get_key (row.full_name, row.schema_id);   // racy...
+        Key? _key = model.get_key (row.full_name, row.context);   // racy...
         if (_key == null)
             assert_not_reached ();
         GSettingsKey key = (GSettingsKey) (!) _key;
         Variant variant_s = new Variant.string (row.full_name);
-        Variant variant_ss = new Variant ("(ss)", row.full_name, row.schema_id);
+        Variant variant_ss = new Variant ("(ss)", row.full_name, row.context);
 
         if (row.search_result_mode)
         {
@@ -405,7 +399,7 @@ private abstract class RegistryList : Grid, BrowsableView
                     row.hide_right_click_popover ();
                     Variant key_value = model.get_key_value (key);
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
-                    row.set_key_value (row.schema_id, gvariant);
+                    row.set_key_value (row.context, gvariant);
                 });
         }
         else if (!delayed_apply_menu && !planned_change && row.type_string == "<flags>")
@@ -424,7 +418,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 });
             popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
 
-            popover.value_changed.connect ((gvariant) => row.set_key_value (row.schema_id, gvariant));
+            popover.value_changed.connect ((gvariant) => row.set_key_value (row.context, gvariant));
         }
         else if (planned_change)
         {
@@ -442,7 +436,7 @@ private abstract class RegistryList : Grid, BrowsableView
         return true;
     }
 
-    private bool generate_dconf_popover (KeyListBoxRowEditableNoSchema row)
+    private bool generate_dconf_popover (KeyListBoxRow row)
     {
         if (row.nullable_popover == null)
             assert_not_reached ();

@@ -88,18 +88,16 @@ class RegistryView : RegistryList
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         string? label_text = null;
-        if (row.get_child () is KeyListBoxRowEditable)
+        if (((ClickableListBoxRow) row.get_child ()).context == ".dconf")
         {
-            string schema_id = ((KeyListBoxRowEditable) row.get_child ()).schema_id;
-            if (before == null
-             || !(((!) before).get_child () is KeyListBoxRowEditable
-               && ((KeyListBoxRowEditable) ((!) before).get_child ()).schema_id == schema_id))
-                label_text = schema_id;
-        }
-        else if (row.get_child () is KeyListBoxRowEditableNoSchema)
-        {
-            if (before == null || !(((!) before).get_child () is KeyListBoxRowEditableNoSchema))
+            if (before == null || !(((ClickableListBoxRow) ((!) before).get_child ()).context == ".dconf"))
                 label_text = _("Keys not defined by a schema");
+        }
+        else if (((ClickableListBoxRow) row.get_child ()).context != ".folder")
+        {
+            string schema_id = ((ClickableListBoxRow) row.get_child ()).context;
+            if (before == null || ((ClickableListBoxRow) ((!) before).get_child ()).context != schema_id)
+                label_text = schema_id;
         }
 
         ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
@@ -132,13 +130,13 @@ class RegistryView : RegistryList
                                                             modifications_handler.get_current_delay_mode (),
                                                             setting_object.name, full_name);
                 key_value_changed_handler = key.value_changed.connect (() => {
-                        update_gsettings_row ((KeyListBoxRowEditable) row,
+                        update_gsettings_row ((KeyListBoxRow) row,
                                               key.type_string,
                                               model.get_key_value (key),
                                               model.is_key_default (gkey));
                         row.destroy_popover ();
                     });
-                update_gsettings_row ((KeyListBoxRowEditable) row,
+                update_gsettings_row ((KeyListBoxRow) row,
                                       key.type_string,
                                       model.get_key_value (key),
                                       model.is_key_default (gkey));
@@ -150,15 +148,15 @@ class RegistryView : RegistryList
                                                             setting_object.name, full_name);
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 1/4
-                            update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, null);
+                            update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
                         else
-                            update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, model.get_dconf_key_value (full_name));
+                            update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
                         row.destroy_popover ();
                     });
                 if (model.is_key_ghost (full_name))         // fails with the ternary operator 2/4
-                    update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, null);
+                    update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
                 else
-                    update_dconf_row ((KeyListBoxRowEditableNoSchema) row, key.type_string, model.get_dconf_key_value (full_name));
+                    update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
@@ -180,7 +178,7 @@ class RegistryView : RegistryList
 
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
-        if (row is FolderListBoxRow)
+        if (row.context == ".folder")
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";

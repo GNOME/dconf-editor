@@ -79,6 +79,7 @@ private abstract class ClickableListBoxRow : EventBox
     public bool search_result_mode { public get; construct; default = false; }
 
     public string full_name { get; construct; }
+    public string context   { get; construct; }
 
     /*\
     * * Dismiss popover on window resize
@@ -130,7 +131,7 @@ private class FolderListBoxRow : ClickableListBoxRow
 
     public FolderListBoxRow (string label, string path, bool search_result_mode = false)
     {
-        Object (full_name: path, search_result_mode: search_result_mode);
+        Object (full_name: path, context: ".folder", search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
     }
 }
@@ -218,7 +219,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     public void on_delete_call ()
     {
-        set_key_value ((this is KeyListBoxRowEditable) ? ((KeyListBoxRowEditable) this).schema_id : "", null);
+        set_key_value (context == ".dconf" ? "" : context, null);
     }
 
     public void set_key_value (string schema_or_empty, Variant? new_value)
@@ -321,6 +322,7 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
                                           bool _search_result_mode = false)
     {
         Object (type_string: _type_string,
+                context: ".dconf",
                 key_name: _key_name,
                 delay_mode: _delay_mode,
                 full_name: _full_name,
@@ -330,15 +332,13 @@ private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
 
 private class KeyListBoxRowEditable : KeyListBoxRow
 {
-    public string schema_id { get; construct; }
-
     construct
     {
         get_style_context ().add_class ("gsettings-key");
     }
 
     public KeyListBoxRowEditable (string _type_string,
-                                  string _schema_id,
+                                  string schema_id,
                                   string summary,
                                   bool warning_conflicting_key,
                                   bool error_hard_conflicting_key,
@@ -348,7 +348,7 @@ private class KeyListBoxRowEditable : KeyListBoxRow
                                   bool _search_result_mode = false)
     {
         Object (type_string: _type_string,
-                schema_id: _schema_id,
+                context: schema_id,
                 delay_mode: _delay_mode,
                 key_name: _key_name,
                 full_name: _full_name,
