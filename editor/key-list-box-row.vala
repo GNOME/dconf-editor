@@ -278,8 +278,11 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     public void use_switch (bool show)
         requires (boolean_switch != null)
     {
-        _use_switch = show;
-        hide_or_show_switch ();
+        if (_use_switch != show)
+        {
+            _use_switch = show;
+            hide_or_show_switch ();
+        }
     }
     private void hide_or_show_switch ()
         requires (boolean_switch != null)

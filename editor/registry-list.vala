@@ -226,8 +226,11 @@ private abstract class RegistryList : Grid, BrowsableView
     * * Row creation
     \*/
 
-    protected void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default)
+    protected void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default, bool error_hard_conflicting_key)
     {
+        if (error_hard_conflicting_key)
+            return;
+
         if (type_string == "b")
         {
             bool key_value_boolean = key_value.get_boolean ();

@@ -133,13 +133,15 @@ class RegistryView : RegistryList
                         update_gsettings_row ((KeyListBoxRow) row,
                                               key.type_string,
                                               model.get_key_value (key),
-                                              model.is_key_default (gkey));
+                                              model.is_key_default (gkey),
+                                              gkey.error_hard_conflicting_key);
                         row.destroy_popover ();
                     });
                 update_gsettings_row ((KeyListBoxRow) row,
                                       key.type_string,
                                       model.get_key_value (key),
-                                      model.is_key_default (gkey));
+                                      model.is_key_default (gkey),
+                                      gkey.error_hard_conflicting_key);
             }
             else
             {
