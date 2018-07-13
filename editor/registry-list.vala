@@ -24,13 +24,16 @@ private abstract class RegistryList : Grid, BrowsableView
     [GtkChild] protected RegistryPlaceholder placeholder;
     [GtkChild] private ScrolledWindow scrolled;
 
+    protected bool search_mode { private get; set; }
+    protected string? current_path_if_search_mode = null;  // TODO only used in search mode
+
     protected GLib.ListStore list_model = new GLib.ListStore (typeof (SettingObject));
 
-    protected GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
+    private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
     public ModificationsHandler modifications_handler { protected get; set; }
 
-    protected bool _small_keys_list_rows;
+    private bool _small_keys_list_rows;
     public bool small_keys_list_rows
     {
         set
@@ -123,7 +126,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     public abstract bool up_or_down_pressed (bool is_down);
 
-    protected void set_delayed_icon (KeyListBoxRow row)
+    private void set_delayed_icon (KeyListBoxRow row)
     {
         SettingsModel model = modifications_handler.model;
         StyleContext context = row.get_style_context ();
@@ -184,7 +187,7 @@ private abstract class RegistryList : Grid, BrowsableView
             return row.full_name;
         return modifications_handler.model.get_key_copy_text (row.full_name, row.context);
     }
-    protected Variant get_copy_text_variant (ClickableListBoxRow row)
+    private Variant get_copy_text_variant (ClickableListBoxRow row)
     {
         return new Variant.string (_get_copy_text (row));
     }
@@ -226,7 +229,136 @@ private abstract class RegistryList : Grid, BrowsableView
     * * Row creation
     \*/
 
-    protected void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default, bool error_hard_conflicting_key)
+    protected Widget new_list_box_row (Object item)
+    {
+        ClickableListBoxRow row;
+        SettingObject setting_object = (SettingObject) item;
+        string full_name = setting_object.full_name;
+
+        if (search_mode && current_path_if_search_mode == null)
+            assert_not_reached ();
+        bool search_mode_non_local_result = search_mode && SettingsModel.get_parent_path (full_name) != (!) current_path_if_search_mode;
+
+        if (!SettingsModel.is_key_path (setting_object.full_name))
+        {
+            row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
+        }
+        else
+        {
+            SettingsModel model = modifications_handler.model;
+            Key key = (Key) setting_object;
+            ulong key_value_changed_handler;
+            if (setting_object is GSettingsKey)
+            {
+                GSettingsKey gkey = (GSettingsKey) key;
+
+                bool italic_summary;
+                string summary = gkey.summary;
+                if (summary == "")
+                {
+                    summary = _("No summary provided"); // FIXME 2/2
+                    italic_summary = true;
+                }
+                else
+                    italic_summary = false;
+
+                row = new KeyListBoxRow (key.type_string,
+                                         gkey.schema_id,
+                                         summary,
+                                         italic_summary,
+                                         modifications_handler.get_current_delay_mode (),
+                                         setting_object.name,
+                                         full_name,
+                                         search_mode_non_local_result);
+
+                if (gkey.warning_conflicting_key)
+                {
+                    if (gkey.error_hard_conflicting_key)
+                    {
+                        row.get_style_context ().add_class ("hard-conflict");
+                        ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
+                        if (key.type_string == "b")
+                            ((KeyListBoxRow) row).use_switch (false);
+                    }
+                    else
+                        row.get_style_context ().add_class ("conflict");
+                }
+
+                key_value_changed_handler = key.value_changed.connect (() => {
+                        update_gsettings_row ((KeyListBoxRow) row,
+                                              key.type_string,
+                                              model.get_key_value (key),
+                                              model.is_key_default (gkey),
+                                              gkey.error_hard_conflicting_key);
+                        row.destroy_popover ();
+                    });
+                update_gsettings_row ((KeyListBoxRow) row,
+                                      key.type_string,
+                                      model.get_key_value (key),
+                                      model.is_key_default (gkey),
+                                      gkey.error_hard_conflicting_key);
+            }
+            else
+            {
+                row = new KeyListBoxRow (key.type_string,
+                                         ".dconf",
+                                         _("No Schema Found"),
+                                         true,
+                                         modifications_handler.get_current_delay_mode (),
+                                         setting_object.name,
+                                         full_name,
+                                         search_mode_non_local_result);
+
+                key_value_changed_handler = key.value_changed.connect (() => {
+                        if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
+                            update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
+                        else
+                            update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
+                        row.destroy_popover ();
+                    });
+                if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
+                    update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
+                else
+                    update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
+            }
+
+            KeyListBoxRow key_row = (KeyListBoxRow) row;
+            key_row.small_keys_list_rows = _small_keys_list_rows;
+
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
+            set_delayed_icon (key_row);
+            row.destroy.connect (() => {
+                    modifications_handler.disconnect (delayed_modifications_changed_handler);
+                    key.disconnect (key_value_changed_handler);
+                });
+        }
+
+        ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
+        row.destroy.connect (() => row.disconnect (button_press_event_handler));
+
+        /* Wrapper ensures max width for rows */
+        ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
+
+        wrapper.set_halign (Align.CENTER);
+        wrapper.add (row);
+        if (row.context == ".folder")
+        {
+            wrapper.get_style_context ().add_class ("folder-row");
+            wrapper.action_name = "ui.open-folder";
+            wrapper.set_action_target ("s", full_name);
+        }
+        else
+        {
+            wrapper.get_style_context ().add_class ("key-row");
+            wrapper.action_name = "ui.open-object";
+            string context = (setting_object is GSettingsKey) ? ((GSettingsKey) setting_object).schema_id : ".dconf";
+            wrapper.set_action_target ("(ss)", full_name, context);
+        }
+
+        return wrapper;
+    }
+
+    private void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default, bool error_hard_conflicting_key)
     {
         if (error_hard_conflicting_key)
             return;
@@ -246,7 +378,7 @@ private abstract class RegistryList : Grid, BrowsableView
         row.update_label (Key.cool_text_value_from_variant (key_value, type_string), false);
     }
 
-    protected void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
+    private void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
     {
         if (key_value == null)
         {
@@ -267,11 +399,44 @@ private abstract class RegistryList : Grid, BrowsableView
         }
     }
 
+    private bool on_button_pressed (Widget widget, Gdk.EventButton event)
+    {
+        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
+        Container list_box = (Container) list_box_row.get_parent ();
+        key_list_box.select_row (list_box_row);
+
+        if (!search_mode)
+            list_box_row.grab_focus ();
+
+        if (event.button == Gdk.BUTTON_SECONDARY)
+        {
+            if (search_mode && list_box.get_focus_child () != null)
+                list_box_row.grab_focus ();
+
+            ClickableListBoxRow row = (ClickableListBoxRow) widget;
+
+            int event_x = (int) event.x;
+            if (event.window != widget.get_window ())   // boolean value switch
+            {
+                int widget_x, unused;
+                event.window.get_position (out widget_x, out unused);
+                event_x += widget_x;
+            }
+
+            show_right_click_popover (row, event_x);
+            rows_possibly_with_popover.append (row);
+        }
+        else if (search_mode)
+            list_box_row.grab_focus ();
+
+        return false;
+    }
+
     /*\
     * * Right click popover creation
     \*/
 
-    protected void show_right_click_popover (ClickableListBoxRow row, int? event_x)
+    private void show_right_click_popover (ClickableListBoxRow row, int? event_x)
     {
         if (row.nullable_popover == null)
         {

@@ -19,12 +19,12 @@ using Gtk;
 
 class RegistrySearch : RegistryList
 {
-    private string current_path;
     private string [] bookmarks;
     private SortingOptions sorting_options;
 
     construct
     {
+        search_mode = true;
         placeholder.label = _("No matches");
         key_list_box.set_header_func (update_row_header);
     }
@@ -46,166 +46,6 @@ class RegistrySearch : RegistryList
         if (row != null)
             key_list_box.select_row ((!) row);
         key_list_box.get_adjustment ().set_value (0);
-    }
-
-    /*\
-    * * Key ListBox
-    \*/
-
-    private Widget new_list_box_row (Object item)
-    {
-        ClickableListBoxRow row;
-        SettingObject setting_object = (SettingObject) item;
-        string full_name = setting_object.full_name;
-        bool is_local_result = SettingsModel.get_parent_path (full_name) == current_path;
-
-        if (!SettingsModel.is_key_path (setting_object.full_name))
-        {
-            row = new FolderListBoxRow (                    setting_object.name, full_name, !is_local_result);
-        }
-        else
-        {
-            SettingsModel model = modifications_handler.model;
-            Key key = (Key) setting_object;
-            ulong key_value_changed_handler;
-            if (setting_object is GSettingsKey)
-            {
-                GSettingsKey gkey = (GSettingsKey) key;
-
-                bool italic_summary;
-                string summary = gkey.summary;
-                if (summary == "")
-                {
-                    summary = _("No summary provided"); // FIXME 2/2
-                    italic_summary = true;
-                }
-                else
-                    italic_summary = false;
-
-                row = new KeyListBoxRow (key.type_string,
-                                         gkey.schema_id,
-                                         summary,
-                                         italic_summary,
-                                         modifications_handler.get_current_delay_mode (),
-                                         setting_object.name,
-                                         full_name,
-                                         !is_local_result);
-
-                if (gkey.warning_conflicting_key)
-                {
-                    if (gkey.error_hard_conflicting_key)
-                    {
-                        row.get_style_context ().add_class ("hard-conflict");
-                        ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
-                        if (key.type_string == "b")
-                            ((KeyListBoxRow) row).use_switch (false);
-                    }
-                    else
-                        row.get_style_context ().add_class ("conflict");
-                }
-
-                key_value_changed_handler = key.value_changed.connect (() => {
-                        update_gsettings_row ((KeyListBoxRow) row,
-                                              key.type_string,
-                                              model.get_key_value (key),
-                                              model.is_key_default (gkey),
-                                              gkey.error_hard_conflicting_key);
-                        row.destroy_popover ();
-                    });
-                update_gsettings_row ((KeyListBoxRow) row,
-                                      key.type_string,
-                                      model.get_key_value (key),
-                                      model.is_key_default (gkey),
-                                      gkey.error_hard_conflicting_key);
-            }
-            else
-            {
-                row = new KeyListBoxRow (key.type_string,
-                                         ".dconf",
-                                         _("No Schema Found"),
-                                         true,
-                                         modifications_handler.get_current_delay_mode (),
-                                         setting_object.name,
-                                         full_name,
-                                         !is_local_result);
-
-                key_value_changed_handler = key.value_changed.connect (() => {
-                        if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
-                            update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
-                        else
-                            update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
-                        row.destroy_popover ();
-                    });
-                if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
-                    update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
-                else
-                    update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
-            }
-
-            KeyListBoxRow key_row = (KeyListBoxRow) row;
-            key_row.small_keys_list_rows = _small_keys_list_rows;
-
-            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
-            set_delayed_icon (key_row);
-            row.destroy.connect (() => {
-                    modifications_handler.disconnect (delayed_modifications_changed_handler);
-                    key.disconnect (key_value_changed_handler);
-                });
-        }
-
-        ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
-        row.destroy.connect (() => row.disconnect (button_press_event_handler));
-
-        /* Wrapper ensures max width for rows */
-        ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
-
-        wrapper.set_halign (Align.CENTER);
-        wrapper.add (row);
-        if (row.context == ".folder")
-        {
-            wrapper.get_style_context ().add_class ("folder-row");
-            wrapper.action_name = "ui.open-folder";
-            wrapper.set_action_target ("s", full_name);
-        }
-        else
-        {
-            wrapper.get_style_context ().add_class ("key-row");
-            wrapper.action_name = "ui.open-object";
-            string context = (setting_object is GSettingsKey) ? ((GSettingsKey) setting_object).schema_id : ".dconf";
-            wrapper.set_action_target ("(ss)", full_name, context);
-        }
-
-        return wrapper;
-    }
-
-    private bool on_button_pressed (Widget widget, Gdk.EventButton event)
-    {
-        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
-        Container list_box = (Container) list_box_row.get_parent ();
-        key_list_box.select_row (list_box_row);
-
-        if (event.button == Gdk.BUTTON_SECONDARY)
-        {
-            if (list_box.get_focus_child () != null)
-                list_box_row.grab_focus ();
-
-            ClickableListBoxRow row = (ClickableListBoxRow) widget;
-
-            int event_x = (int) event.x;
-            if (event.window != widget.get_window ())   // boolean value switch
-            {
-                int widget_x, unused;
-                event.window.get_position (out widget_x, out unused);
-                event_x += widget_x;
-            }
-
-            show_right_click_popover (row, event_x);
-            rows_possibly_with_popover.append (row);
-        }
-        else
-            list_box_row.grab_focus ();
-
-        return false;
     }
 
     public bool return_pressed ()
@@ -299,6 +139,7 @@ class RegistrySearch : RegistryList
     }
 
     public void start_search (string term)
+        requires (current_path_if_search_mode != null)
     {
         if (old_term != null && term == (!) old_term)
         {
@@ -313,11 +154,11 @@ class RegistrySearch : RegistryList
             refine_local_results (term);
             refine_bookmarks_results (term);
             if ((!) old_term == "")
-                start_global_search (model, current_path, term);
+                start_global_search (model, (!) current_path_if_search_mode, term);
             else
             {
                 refine_global_results (term);
-                resume_global_search (current_path, term); // update search term
+                resume_global_search ((!) current_path_if_search_mode, term); // update search term
             }
 
             ensure_selection ();
@@ -329,14 +170,14 @@ class RegistrySearch : RegistryList
             post_local = -1;
             post_folders = -1;
 
-            local_search (model, sorting_options, SettingsModel.get_base_path (current_path), term);
-            bookmark_search (model, current_path, term, bookmarks);
+            local_search (model, sorting_options, SettingsModel.get_base_path ((!) current_path_if_search_mode), term);
+            bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks);
             key_list_box.bind_model (list_model, new_list_box_row);
 
             select_first_row ();
 
             if (term != "")
-                start_global_search (model, current_path, term);
+                start_global_search (model, (!) current_path_if_search_mode, term);
         }
         old_term = term;
     }
@@ -527,7 +368,7 @@ class RegistrySearch : RegistryList
     public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         clean ();
-        this.current_path = current_path;
+        current_path_if_search_mode = current_path;
         this.bookmarks = bookmarks;
         this.sorting_options = sorting_options;
     }
