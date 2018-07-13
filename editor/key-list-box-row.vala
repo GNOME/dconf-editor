@@ -129,7 +129,7 @@ private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
 
-    public FolderListBoxRow (string label, string path, bool search_result_mode = false)
+    public FolderListBoxRow (string label, string path, bool search_result_mode)
     {
         Object (full_name: path, context: ".folder", search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
@@ -137,13 +137,13 @@ private class FolderListBoxRow : ClickableListBoxRow
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
-private abstract class KeyListBoxRow : ClickableListBoxRow
+private class KeyListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Grid key_name_and_value_grid;
     [GtkChild] private Label key_name_label;
-    [GtkChild] protected Label key_value_label;
-    [GtkChild] protected Label key_info_label;
-    protected Switch? boolean_switch = null;
+    [GtkChild] private Label key_value_label;
+    [GtkChild] private Label key_info_label;
+    private Switch? boolean_switch = null;
 
     public string key_name    { get; construct; }
     public string type_string { get; construct; }
@@ -151,7 +151,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
     private bool _delay_mode = false;
     public bool delay_mode
     {
-        protected get
+        private get
         {
             return _delay_mode;
         }
@@ -182,6 +182,11 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
 
     construct
     {
+        if (context == ".dconf")
+            get_style_context ().add_class ("dconf-key");
+        else
+            get_style_context ().add_class ("gsettings-key");
+
         if (type_string == "b")
         {
             boolean_switch = new Switch ();
@@ -195,6 +200,27 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         }
 
         key_name_label.set_label (search_result_mode ? full_name : key_name);
+    }
+
+    public KeyListBoxRow (string _type_string,
+                          string _context,
+                          string summary,
+                          bool italic_summary,
+                          bool _delay_mode,
+                          string _key_name,
+                          string _full_name,
+                          bool _search_result_mode)
+    {
+        Object (type_string: _type_string,
+                context: _context,
+                delay_mode: _delay_mode,
+                key_name: _key_name,
+                full_name: _full_name,
+                search_result_mode: _search_result_mode);
+
+        if (italic_summary)
+            key_info_label.get_style_context ().add_class ("italic-label");
+        key_info_label.set_label (summary);
     }
 
     public void toggle_boolean_key ()
@@ -274,7 +300,7 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         key_value_label.set_label (key_value_string);
     }
 
-    protected bool _use_switch = false;
+    private bool _use_switch = false;
     public void use_switch (bool show)
         requires (boolean_switch != null)
     {
@@ -305,78 +331,6 @@ private abstract class KeyListBoxRow : ClickableListBoxRow
         ((!) boolean_switch).set_action_name ("ui.empty");
         ((!) boolean_switch).set_active (key_value_boolean);
         ((!) boolean_switch).set_detailed_action_name (detailed_action_name);
-    }
-}
-
-private class KeyListBoxRowEditableNoSchema : KeyListBoxRow
-{
-    construct
-    {
-        get_style_context ().add_class ("dconf-key");
-
-        key_info_label.get_style_context ().add_class ("italic-label");
-        key_info_label.set_label (_("No Schema Found"));
-    }
-
-    public KeyListBoxRowEditableNoSchema (string _type_string,
-                                          bool _delay_mode,
-                                          string _key_name,
-                                          string _full_name,
-                                          bool _search_result_mode = false)
-    {
-        Object (type_string: _type_string,
-                context: ".dconf",
-                key_name: _key_name,
-                delay_mode: _delay_mode,
-                full_name: _full_name,
-                search_result_mode: _search_result_mode);
-    }
-}
-
-private class KeyListBoxRowEditable : KeyListBoxRow
-{
-    construct
-    {
-        get_style_context ().add_class ("gsettings-key");
-    }
-
-    public KeyListBoxRowEditable (string _type_string,
-                                  string schema_id,
-                                  string summary,
-                                  bool warning_conflicting_key,
-                                  bool error_hard_conflicting_key,
-                                  bool _delay_mode,
-                                  string _key_name,
-                                  string _full_name,
-                                  bool _search_result_mode = false)
-    {
-        Object (type_string: _type_string,
-                context: schema_id,
-                delay_mode: _delay_mode,
-                key_name: _key_name,
-                full_name: _full_name,
-                search_result_mode: _search_result_mode);
-
-        if (summary != "")
-            key_info_label.set_label (summary);
-        else
-        {
-            key_info_label.get_style_context ().add_class ("italic-label");
-            key_info_label.set_label (_("No summary provided"));
-        }
-
-        if (warning_conflicting_key)
-        {
-            if (error_hard_conflicting_key)
-            {
-                get_style_context ().add_class ("hard-conflict");
-                _use_switch = false;
-                key_value_label.get_style_context ().add_class ("italic-label");
-                key_value_label.set_label (_("conflicting keys"));
-            }
-            else
-                get_style_context ().add_class ("conflict");
-        }
     }
 }
 

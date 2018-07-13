@@ -112,7 +112,7 @@ class RegistryView : RegistryList
 
         if (!SettingsModel.is_key_path (setting_object.full_name))
         {
-            row = new FolderListBoxRow (                    setting_object.name, full_name);
+            row = new FolderListBoxRow (                    setting_object.name, full_name, false);
         }
         else
         {
@@ -122,13 +122,39 @@ class RegistryView : RegistryList
             if (setting_object is GSettingsKey)
             {
                 GSettingsKey gkey = (GSettingsKey) key;
-                row = new KeyListBoxRowEditable (           key.type_string,
-                                                            gkey.schema_id,
-                                                            gkey.summary,
-                                                            gkey.warning_conflicting_key,
-                                                            gkey.error_hard_conflicting_key,
-                                                            modifications_handler.get_current_delay_mode (),
-                                                            setting_object.name, full_name);
+
+                bool italic_summary;
+                string summary = gkey.summary;
+                if (summary == "")
+                {
+                    summary = _("No summary provided"); // FIXME 1/2
+                    italic_summary = true;
+                }
+                else
+                    italic_summary = false;
+
+                row = new KeyListBoxRow (key.type_string,
+                                         gkey.schema_id,
+                                         summary,
+                                         italic_summary,
+                                         modifications_handler.get_current_delay_mode (),
+                                         setting_object.name,
+                                         full_name,
+                                         false);
+
+                if (gkey.warning_conflicting_key)
+                {
+                    if (gkey.error_hard_conflicting_key)
+                    {
+                        row.get_style_context ().add_class ("hard-conflict");
+                        ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
+                        if (key.type_string == "b")
+                            ((KeyListBoxRow) row).use_switch (false);
+                    }
+                    else
+                        row.get_style_context ().add_class ("conflict");
+                }
+
                 key_value_changed_handler = key.value_changed.connect (() => {
                         update_gsettings_row ((KeyListBoxRow) row,
                                               key.type_string,
@@ -145,9 +171,15 @@ class RegistryView : RegistryList
             }
             else
             {
-                row = new KeyListBoxRowEditableNoSchema (   key.type_string,
-                                                            modifications_handler.get_current_delay_mode (),
-                                                            setting_object.name, full_name);
+                row = new KeyListBoxRow (key.type_string,
+                                         ".dconf",
+                                         _("No Schema Found"),
+                                         true,
+                                         modifications_handler.get_current_delay_mode (),
+                                         setting_object.name,
+                                         full_name,
+                                         false);
+
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 1/4
                             update_dconf_row ((KeyListBoxRow) row, key.type_string, null);

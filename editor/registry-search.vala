@@ -26,7 +26,7 @@ class RegistrySearch : RegistryList
     construct
     {
         placeholder.label = _("No matches");
-        key_list_box.set_header_func (update_search_results_header);
+        key_list_box.set_header_func (update_row_header);
     }
 
     /*\
@@ -71,13 +71,39 @@ class RegistrySearch : RegistryList
             if (setting_object is GSettingsKey)
             {
                 GSettingsKey gkey = (GSettingsKey) key;
-                row = new KeyListBoxRowEditable (           key.type_string,
-                                                            gkey.schema_id,
-                                                            gkey.summary,
-                                                            gkey.warning_conflicting_key,
-                                                            gkey.error_hard_conflicting_key,
-                                                            modifications_handler.get_current_delay_mode (),
-                                                            setting_object.name, full_name, !is_local_result);
+
+                bool italic_summary;
+                string summary = gkey.summary;
+                if (summary == "")
+                {
+                    summary = _("No summary provided"); // FIXME 2/2
+                    italic_summary = true;
+                }
+                else
+                    italic_summary = false;
+
+                row = new KeyListBoxRow (key.type_string,
+                                         gkey.schema_id,
+                                         summary,
+                                         italic_summary,
+                                         modifications_handler.get_current_delay_mode (),
+                                         setting_object.name,
+                                         full_name,
+                                         !is_local_result);
+
+                if (gkey.warning_conflicting_key)
+                {
+                    if (gkey.error_hard_conflicting_key)
+                    {
+                        row.get_style_context ().add_class ("hard-conflict");
+                        ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
+                        if (key.type_string == "b")
+                            ((KeyListBoxRow) row).use_switch (false);
+                    }
+                    else
+                        row.get_style_context ().add_class ("conflict");
+                }
+
                 key_value_changed_handler = key.value_changed.connect (() => {
                         update_gsettings_row ((KeyListBoxRow) row,
                                               key.type_string,
@@ -94,9 +120,15 @@ class RegistrySearch : RegistryList
             }
             else
             {
-                row = new KeyListBoxRowEditableNoSchema (   key.type_string,
-                                                            modifications_handler.get_current_delay_mode (),
-                                                            setting_object.name, full_name, !is_local_result);
+                row = new KeyListBoxRow (key.type_string,
+                                         ".dconf",
+                                         _("No Schema Found"),
+                                         true,
+                                         modifications_handler.get_current_delay_mode (),
+                                         setting_object.name,
+                                         full_name,
+                                         !is_local_result);
+
                 key_value_changed_handler = key.value_changed.connect (() => {
                         if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
                             update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
@@ -476,7 +508,7 @@ class RegistrySearch : RegistryList
         return false;
     }
 
-    private void update_search_results_header (ListBoxRow row, ListBoxRow? before)
+    private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         string? label_text = null;
         if (before == null && post_local > 0)
