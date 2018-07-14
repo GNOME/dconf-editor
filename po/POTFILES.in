@@ -22,6 +22,7 @@ editor/modifications-revealer.vala
 editor/pathbar.vala
 editor/registry-info.ui
 editor/registry-info.vala
+editor/registry-list.vala
 editor/registry-search.vala
 editor/registry-view.vala
 editor/setting-object.vala
