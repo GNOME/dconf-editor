@@ -104,35 +104,4 @@ class RegistryView : RegistryList
         ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
         row.set_header (header);
     }
-
-    public override bool up_or_down_pressed (bool is_down)
-    {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        uint n_items = list_model.get_n_items ();
-
-        if (selected_row != null)
-        {
-            Widget? row_content = ((!) selected_row).get_child ();
-            if (row_content != null && ((ClickableListBoxRow) (!) row_content).right_click_popover_visible ())
-                return false;
-
-            int position = ((!) selected_row).get_index ();
-            ListBoxRow? row = null;
-            if (!is_down && (position >= 1))
-                row = key_list_box.get_row_at_index (position - 1);
-            if (is_down && (position < n_items - 1))
-                row = key_list_box.get_row_at_index (position + 1);
-
-            if (row != null)
-                scroll_to_row ((!) row, true);
-
-            return true;
-        }
-        else if (n_items >= 1)
-        {
-            key_list_box.select_row (key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1));
-            return true;
-        }
-        return false;
-    }
 }

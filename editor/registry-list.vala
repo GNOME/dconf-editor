@@ -124,8 +124,6 @@ private abstract class RegistryList : Grid, BrowsableView
         return (int) fallback; // selected row may have been removed or context could be ""
     }
 
-    public abstract bool up_or_down_pressed (bool is_down);
-
     private void set_delayed_icon (KeyListBoxRow row)
     {
         SettingsModel model = modifications_handler.model;
@@ -225,6 +223,44 @@ private abstract class RegistryList : Grid, BrowsableView
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
     }
 
+    public bool up_or_down_pressed (bool is_down)
+    {
+        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        uint n_items = list_model.get_n_items ();
+
+        if (selected_row != null)
+        {
+            Widget? row_content = ((!) selected_row).get_child ();
+            if (row_content != null && ((ClickableListBoxRow) (!) row_content).right_click_popover_visible ())
+                return false;
+
+            int position = ((!) selected_row).get_index ();
+            ListBoxRow? row = null;
+            if (!is_down && (position >= 1))
+                row = key_list_box.get_row_at_index (position - 1);
+            if (is_down && (position < n_items - 1))
+                row = key_list_box.get_row_at_index (position + 1);
+
+            if (row != null)
+            {
+                if (search_mode)
+                {
+                    Container list_box = (Container) ((!) selected_row).get_parent ();
+                    scroll_to_row ((!) row, list_box.get_focus_child () != null);
+                }
+                else
+                    scroll_to_row ((!) row, true);
+            }
+            return true;
+        }
+        else if (n_items >= 1)
+        {
+            key_list_box.select_row (key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1));
+            return true;
+        }
+        return false;
+    }
+
     /*\
     * * Row creation
     \*/
@@ -256,7 +292,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 string summary = gkey.summary;
                 if (summary == "")
                 {
-                    summary = _("No summary provided"); // FIXME 2/2
+                    summary = _("No summary provided");
                     italic_summary = true;
                 }
                 else
