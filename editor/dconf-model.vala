@@ -573,6 +573,22 @@ public class SettingsModel : Object
         return settings.get_user_value (key.name) == null;
     }
 
+    public void has_conflicting_keys (string full_name, out bool warning_conflicting_key, out bool error_hard_conflicting_key)
+    {
+        if (!is_key_path (full_name))
+            assert_not_reached ();
+
+        Key? key = get_key (full_name, "");
+        if (key == null)
+            assert_not_reached ();  // TODO better?
+        if (!((!) key is GSettingsKey))
+            assert_not_reached ();  // TODO better?
+
+        GSettingsKey gkey = (GSettingsKey) (!) key;
+        warning_conflicting_key = gkey.warning_conflicting_key;
+        error_hard_conflicting_key = gkey.error_hard_conflicting_key;
+    }
+
     public bool key_has_schema (string full_name)
     {
         if (!is_key_path (full_name))

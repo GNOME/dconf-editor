@@ -307,9 +307,13 @@ private abstract class RegistryList : Grid, BrowsableView
                                          full_name,
                                          search_mode_non_local_result);
 
-                if (gkey.warning_conflicting_key)
+                bool warning_conflicting_key;
+                bool error_hard_conflicting_key;
+                model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+
+                if (warning_conflicting_key)
                 {
-                    if (gkey.error_hard_conflicting_key)
+                    if (error_hard_conflicting_key)
                     {
                         row.get_style_context ().add_class ("hard-conflict");
                         ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
@@ -325,14 +329,14 @@ private abstract class RegistryList : Grid, BrowsableView
                                               key.type_string,
                                               model.get_key_value (key),
                                               model.is_key_default (gkey),
-                                              gkey.error_hard_conflicting_key);
+                                              error_hard_conflicting_key);
                         row.destroy_popover ();
                     });
                 update_gsettings_row ((KeyListBoxRow) row,
                                       key.type_string,
                                       model.get_key_value (key),
                                       model.is_key_default (gkey),
-                                      gkey.error_hard_conflicting_key);
+                                      error_hard_conflicting_key);
             }
             else
             {
