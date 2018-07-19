@@ -151,11 +151,19 @@ class BrowserView : Grid
     * * Views
     \*/
 
-    public void prepare_folder_view (SettingObject [] key_array, bool is_ancestor)
+    public void prepare_folder_view (string [,]? key_array, bool is_ancestor)
     {
-        key_model = new GLib.ListStore (typeof (SettingObject));
-        for (uint i = 0; i < key_array.length; i++)
-            ((!) key_model).append (key_array [i]);
+        key_model = new GLib.ListStore (typeof (SimpleSettingObject));
+        if (key_array != null)
+        {
+            for (uint i = 0; i < ((!) key_array).length [0]; i++)
+            {
+                SimpleSettingObject sso = new SimpleSettingObject (((!) key_array) [i, 0],
+                                                                   ((!) key_array) [i, 1],
+                                                                   ((!) key_array) [i, 2]);
+                ((!) key_model).append (sso);
+            }
+        }
 
         sorting_options.sort_key_model ((!) key_model);
         current_child.prepare_folder_view ((!) key_model, is_ancestor);
@@ -172,7 +180,7 @@ class BrowserView : Grid
     {
         current_child.prepare_object_view (key, is_parent);
         hide_reload_warning ();
-        last_context = (key is GSettingsKey) ? ((GSettingsKey) key).schema_id : ".dconf";
+        last_context = key.context;
     }
 
     public void set_path (ViewType type, string path)
@@ -208,7 +216,7 @@ class BrowserView : Grid
 
         if (type == ViewType.FOLDER)
         {
-            SettingObject [] fresh_key_model = model.get_children (path);
+            string [,] fresh_key_model = model.get_children (path);
             if (!current_child.check_reload_folder (fresh_key_model))
                 return false;
             if (show_infobar)
@@ -259,6 +267,16 @@ class BrowserView : Grid
     public string get_selected_row_name () { return current_child.get_selected_row_name (); }
     public string? get_copy_text ()        { return current_child.get_copy_text ();         }
     public string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
+
+    // values changes
+    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    {
+        current_child.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+    }
+    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    {
+        current_child.dkey_value_push (full_name, key_value_or_null);
+    }
 }
 
 /*\
@@ -288,7 +306,7 @@ public class SortingOptions : Object
     {
         SettingComparator comparator = get_comparator ();
 
-        model.sort ((a, b) => comparator.compare ((SettingObject) a, (SettingObject) b));
+        model.sort ((a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b));
     }
 
     public bool is_key_model_sorted (GLib.ListStore model)
@@ -298,8 +316,8 @@ public class SortingOptions : Object
         uint last = model.get_n_items () - 1;
         for (int i = 0; i < last; i++)
         {
-            SettingObject item = (SettingObject) model.get_item (i);
-            SettingObject next = (SettingObject) model.get_item (i + 1);
+            SimpleSettingObject item = (SimpleSettingObject) model.get_item (i);
+            SimpleSettingObject next = (SimpleSettingObject) model.get_item (i + 1);
             if (comparator.compare (item, next) > 0)
                 return false;
         }
@@ -311,9 +329,9 @@ public class SortingOptions : Object
 
 public interface SettingComparator : Object
 {
-    public abstract int compare (SettingObject a, SettingObject b);
+    public abstract int compare (SimpleSettingObject a, SimpleSettingObject b);
 
-    protected virtual bool sort_directories_first (SettingObject a, SettingObject b, ref int return_value)
+    protected virtual bool sort_directories_first (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
     {
         if (!SettingsModel.is_key_path (a.full_name) && SettingsModel.is_key_path (b.full_name))
             return_value = -1;
@@ -324,29 +342,27 @@ public interface SettingComparator : Object
         return true;
     }
 
-    protected virtual bool sort_dconf_keys_second (SettingObject a, SettingObject b, ref int return_value)
+    protected virtual bool sort_dconf_keys_second (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
     {
-        if (a is DConfKey && !(b is DConfKey))
+        if (a.context == ".dconf" && b.context != ".dconf")
             return_value = -1;
-        else if (!(a is DConfKey) && b is DConfKey)
+        else if (a.context != ".dconf" && b.context == ".dconf")
             return_value = 1;
         else
             return false;
         return true;
     }
 
-    protected virtual bool sort_by_schema_thirdly (SettingObject a, SettingObject b, ref int return_value)
+    protected virtual bool sort_by_schema_thirdly (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
     {
-        if (!(a is GSettingsKey) || !(b is GSettingsKey))
-            return false;
-        return_value = strcmp (((GSettingsKey) a).schema_id, ((GSettingsKey) b).schema_id);
+        return_value = strcmp (a.context, b.context);
         return return_value != 0;
     }
 }
 
 class BySchemaCaseInsensitive : Object, SettingComparator
 {
-    public int compare (SettingObject a, SettingObject b)
+    public int compare (SimpleSettingObject a, SimpleSettingObject b)
     {
         int return_value = 0;
         if (sort_directories_first (a, b, ref return_value))
@@ -362,7 +378,7 @@ class BySchemaCaseInsensitive : Object, SettingComparator
 
 class BySchemaCaseSensitive : Object, SettingComparator
 {
-    public int compare (SettingObject a, SettingObject b)
+    public int compare (SimpleSettingObject a, SimpleSettingObject b)
     {
         int return_value = 0;
         if (sort_directories_first (a, b, ref return_value))

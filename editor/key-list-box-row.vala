@@ -192,6 +192,10 @@ private class KeyListBoxRow : ClickableListBoxRow
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
+            if (context == ".dconf")
+                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',true))");
+            else
+                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('','',true,true))");
 
             _use_switch = true;
             hide_or_show_switch ();

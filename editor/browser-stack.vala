@@ -163,7 +163,7 @@ class BrowserStack : Grid
         search_view.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
-    public bool check_reload_folder (SettingObject [] fresh_key_model)
+    public bool check_reload_folder (string [,] fresh_key_model)
     {
         return folder_view.check_reload (fresh_key_model);
     }
@@ -171,6 +171,21 @@ class BrowserStack : Grid
     public bool check_reload_object (Variant properties)
     {
         return object_view.check_reload (properties);
+    }
+
+    /*\
+    * * Values changes  // TODO reloads all the views instead of the current one, because method is called before it is made visible
+    \*/
+
+    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    {
+        folder_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+        search_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+    }
+    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    {
+        folder_view.dkey_value_push (full_name, key_value_or_null);
+        search_view.dkey_value_push (full_name, key_value_or_null);
     }
 
     /*\

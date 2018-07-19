@@ -17,15 +17,13 @@
 
 public abstract class SettingObject : Object
 {
+    public string context { get; construct; }  // TODO make uint8
     public string name { get; construct; }
     public string full_name { get; construct; }
 
-    public string casefolded_name { get; private construct; }
     public string parent_path { get; private construct; }
     construct
     {
-        casefolded_name = name.casefold ();
-
         if (full_name.length < 2)
             parent_path = "/";
         else
@@ -40,11 +38,30 @@ public abstract class SettingObject : Object
     }
 }
 
+public class SimpleSettingObject : Object
+{
+    public string context { get; construct; }  // TODO make uint8
+    public string name { get; construct; }
+    public string full_name { get; construct; }
+
+    public string casefolded_name { get; private construct; }
+
+    construct
+    {
+        casefolded_name = name.casefold ();
+    }
+
+    public SimpleSettingObject (string _context, string _name, string _full_name)
+    {
+        Object (context: _context, name: _name, full_name: _full_name);
+    }
+}
+
 public class Directory : SettingObject
 {
-    public Directory (string full_name, string name)
+    public Directory (string _full_name, string _name)
     {
-        Object (full_name: full_name, name: name);
+        Object (context: ".folder", full_name: _full_name, name: _name);
     }
 }
 
@@ -56,6 +73,7 @@ public abstract class Key : SettingObject
     public Variant properties { owned get; protected set; }
 
     public signal void value_changed ();
+    public ulong key_value_changed_handler = 0;
 
     protected static string key_to_description (string type)
     {
@@ -263,7 +281,7 @@ public class DConfKey : Key
 
     public DConfKey (DConf.Client client, string parent_full_name, string name, string type_string)
     {
-        Object (full_name: parent_full_name + name, name: name, type_string: type_string);
+        Object (context: ".dconf", full_name: parent_full_name + name, name: name, type_string: type_string);
 
         VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));     // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
         builder.add ("b",    false);
@@ -300,7 +318,6 @@ public class GSettingsKey : Key
     public bool warning_conflicting_key = false;
     public bool error_hard_conflicting_key = false;
 
-    public string schema_id              { get; construct; }
     public string? schema_path   { private get; construct; }
     public string summary                { get; construct; }
     public string description    { private get; construct; }
@@ -311,8 +328,8 @@ public class GSettingsKey : Key
     public override string descriptor {
         owned get {
             if (schema_path == null)
-                return @"$schema_id:$parent_path $name";
-            return @"$schema_id $name";
+                return @"$context:$parent_path $name";
+            return @"$context $name";
         }
     }
 
@@ -326,11 +343,11 @@ public class GSettingsKey : Key
         string? description_nullable = description.locale_to_utf8 (-1, null, null, null);
         description = description_nullable ?? description;
 
-        Object (full_name: parent_full_name + name,
+        Object (context: schema_id,
+                full_name: parent_full_name + name,
                 name: name,
                 settings : settings,
                 // schema infos
-                schema_id: schema_id,
                 schema_path: schema_path,
                 summary: summary,
                 description: description,
@@ -352,7 +369,6 @@ public class GSettingsKey : Key
         builder.add ("{ss}", "parent-path", parent_full_name);
         builder.add ("{ss}", "type-code",   type_string);
         builder.add ("{ss}", "type-name",   key_to_description (type_string));
-        builder.add ("{ss}", "schema-id",   schema_id);
         builder.add ("{ss}", "summary",     summary);
         builder.add ("{ss}", "description", description);
         builder.add ("{ss}", "default-value", cool_text_value_from_variant (default_value, type_string));

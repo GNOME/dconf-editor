@@ -34,34 +34,35 @@ class RegistryView : RegistryList
     {
         list_model = key_model;
         key_list_box.bind_model (list_model, new_list_box_row);
+        modifications_handler.model.keys_value_push ();
     }
 
-    public bool check_reload (SettingObject [] fresh_key_model)
+    public bool check_reload (string [,] fresh_key_model)
     {
-        if (list_model.get_n_items () != fresh_key_model.length)
+        uint n_items = fresh_key_model.length [0];
+        if (list_model.get_n_items () != n_items)
             return true;
-        bool [] skip = new bool [fresh_key_model.length];
-        for (uint i = 0; i < fresh_key_model.length; i++)
+        bool [] skip = new bool [n_items];
+        for (uint i = 0; i < n_items; i++)
             skip [i] = false;
         for (uint i = 0; i < list_model.get_n_items (); i++)
         {
-            SettingObject? setting_object = (SettingObject) list_model.get_item (i);
+            SimpleSettingObject? setting_object = (SimpleSettingObject) list_model.get_item (i);
             if (setting_object == null)
                 assert_not_reached ();
             bool found = false;
-            for (uint j = 0; j < fresh_key_model.length; j++)
+            for (uint j = 0; j < n_items; j++)
             {
                 if (skip [j] == true)
                     continue;
-                SettingObject fresh_setting_object = fresh_key_model [j];
-                if (((!) setting_object).full_name != fresh_setting_object.full_name)
+                if (((!) setting_object).full_name != fresh_key_model [j,2])
                     continue;
-                // TODO compare other visible info (i.e. key type_string or summary [if not directories])
-                if (SettingsModel.is_key_path (fresh_setting_object.full_name))
+/* FIXME                // TODO compare other visible info (i.e. key type_string or summary [if not directories])
+                if (SettingsModel.is_key_path (fresh_key_model [j,2]))
                 {
-                    if (((Key) (!) setting_object).type_string != ((Key) fresh_setting_object).type_string)
+                    if (((Key) (!) setting_object).type_string != ((Key) fresh_key_model [j]).type_string)
                         continue;
-                }
+                } */
                 found = true;
                 skip [j] = true;
                 break;
@@ -69,7 +70,7 @@ class RegistryView : RegistryList
             if (!found)
                 return true;
         }
-        for (uint i = 0; i < fresh_key_model.length; i++)
+        for (uint i = 0; i < n_items; i++)
             if (skip [i] == false)
                 return true;
         return false;

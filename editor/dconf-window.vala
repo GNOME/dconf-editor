@@ -222,6 +222,13 @@ class DConfWindow : ApplicationWindow
 
                 pathbar.update_ghosts (_model.get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
             });
+
+        model.gkey_value_push.connect ((_model, full_name, schema_id, key_value, is_key_default) => {
+                browser_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+            });
+        model.dkey_value_push.connect ((_model, full_name, key_value_or_null) => {
+                browser_view.dkey_value_push (full_name, key_value_or_null);
+            });
     }
 
     /*\
@@ -555,7 +562,7 @@ class DConfWindow : ApplicationWindow
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        browser_view.prepare_folder_view (model.get_children (fallback_path), current_path.has_prefix (fallback_path));
+        browser_view.prepare_folder_view (model.get_children (fallback_path, true), current_path.has_prefix (fallback_path));
         update_current_path (ViewType.FOLDER, fallback_path);
 
         if (selected_or_empty == "")

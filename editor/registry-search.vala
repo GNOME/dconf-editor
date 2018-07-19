@@ -146,13 +146,14 @@ class RegistrySearch : RegistryList
                 start_global_search (model, (!) current_path_if_search_mode, term);
         }
         old_term = term;
+        model.keys_value_push ();
     }
 
     private void refine_local_results (string term)
     {
         for (int i = post_local - 1; i >= 0; i--)
         {
-            SettingObject item = (SettingObject) list_model.get_item (i);
+            SimpleSettingObject item = (SimpleSettingObject) list_model.get_item (i);
             if (!(term in item.name))
             {
                 post_local--;
@@ -167,7 +168,7 @@ class RegistrySearch : RegistryList
     {
         for (int i = post_bookmarks - 1; i >= post_local; i--)
         {
-            SettingObject item = (SettingObject) list_model.get_item (i);
+            SimpleSettingObject item = (SimpleSettingObject) list_model.get_item (i);
             if (!(term in item.name))
             {
                 post_bookmarks--;
@@ -181,13 +182,13 @@ class RegistrySearch : RegistryList
     {
         for (int i = (int) list_model.get_n_items () - 1; i >= post_folders; i--)
         {
-            SettingObject item = (SettingObject) list_model.get_item (i);
+            SimpleSettingObject item = (SimpleSettingObject) list_model.get_item (i);
             if (!(term in item.name))
                 list_model.remove (i);
         }
         for (int i = post_folders - 1; i >= post_local; i--)
         {
-            SettingObject item = (SettingObject) list_model.get_item (i);
+            SimpleSettingObject item = (SimpleSettingObject) list_model.get_item (i);
             if (!(term in item.name))
             {
                 post_folders--;
@@ -199,16 +200,23 @@ class RegistrySearch : RegistryList
     private bool local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term)
     {
         SettingComparator comparator = sorting_options.get_comparator ();
-        GLib.CompareDataFunc compare = (a, b) => comparator.compare((SettingObject) a, (SettingObject) b);
+        GLib.CompareDataFunc compare = (a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b);
 
         if (!SettingsModel.is_key_path (current_path))
         {
-            SettingObject [] key_model = model.get_children (current_path);
-            for (uint i = 0; i < key_model.length; i++)
+            string [,]? key_model = model.get_children (current_path);
+            if (key_model != null)
             {
-                SettingObject item = key_model [i];
-                if (term in item.name)
-                    list_model.insert_sorted (item, compare);
+                for (uint i = 0; i < key_model.length [0]; i++)
+                {
+                    if (term in ((!) key_model) [i, 1])
+                    {
+                        SimpleSettingObject sso = new SimpleSettingObject (((!) key_model) [i, 0],
+                                                                           ((!) key_model) [i, 1],
+                                                                           ((!) key_model) [i, 2]);
+                        list_model.insert_sorted (sso, compare);
+                    }
+                }
             }
         }
         post_local = (int) list_model.get_n_items ();
@@ -242,7 +250,10 @@ class RegistrySearch : RegistryList
             {
                 post_bookmarks++;
                 post_folders++;
-                list_model.insert (post_bookmarks - 1, (!) setting_object);
+                SimpleSettingObject sso = new SimpleSettingObject (((!) setting_object).context,
+                                                                   ((!) setting_object).name,
+                                                                   ((!) setting_object).full_name);
+                list_model.insert (post_bookmarks - 1, sso);
             }
         }
 
@@ -287,23 +298,34 @@ class RegistrySearch : RegistryList
             string next = (!) search_nodes.pop_head ();
             bool local_again = next == current_path;
 
-            SettingObject [] next_key_model = model.get_children (next);
-            if (next_key_model.length == 0)
+            string [,]? next_key_model = model.get_children (next);
+            if (next_key_model == null)
                 return true;
 
-            for (uint i = 0; i < next_key_model.length; i++)
+            for (uint i = 0; i < ((!) next_key_model).length [0]; i++)
             {
-                SettingObject item = next_key_model [i];
-                if (!SettingsModel.is_key_path (item.full_name))
+                string name      = ((!) next_key_model) [i, 1];
+                string full_name = ((!) next_key_model) [i, 2];
+                if (!SettingsModel.is_key_path (full_name))
                 {
-                    if (!local_again && term in item.name)
-                        list_model.insert (post_folders++, item);
-                    search_nodes.push_tail (item.full_name); // we still search local children
+                    if (!local_again && term in name)
+                    {
+                        SimpleSettingObject sso = new SimpleSettingObject (((!) next_key_model) [i, 0],
+                                                                           ((!) next_key_model) [i, 1],
+                                                                           ((!) next_key_model) [i, 2]);
+                        list_model.insert (post_folders++, sso);
+                    }
+                    search_nodes.push_tail (full_name); // we still search local children
                 }
                 else
                 {
-                    if (!local_again && term in item.name)
-                        list_model.append (item);
+                    if (!local_again && term in name)
+                    {
+                        SimpleSettingObject sso = new SimpleSettingObject (((!) next_key_model) [i, 0],
+                                                                           ((!) next_key_model) [i, 1],
+                                                                           ((!) next_key_model) [i, 2]);
+                        list_model.append (sso);
+                    }
                 }
             }
 

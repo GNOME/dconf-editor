@@ -76,7 +76,7 @@ class RegistryInfo : Grid, BrowsableView
         full_name = key.full_name;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
-        if (key is GSettingsKey)
+        if (has_schema)
         {
             if (((GSettingsKey) key).error_hard_conflicting_key)
             {
@@ -137,7 +137,7 @@ class RegistryInfo : Grid, BrowsableView
 
         ulong key_value_changed_handler = 0;
         Label label;
-        if (key is GSettingsKey && ((GSettingsKey) key).error_hard_conflicting_key)
+        if (has_schema && ((GSettingsKey) key).error_hard_conflicting_key)
         {
             label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
             label.get_style_context ().add_class ("italic-label");
@@ -173,7 +173,7 @@ class RegistryInfo : Grid, BrowsableView
         }
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
-        if (key is GSettingsKey && ((GSettingsKey) key).error_hard_conflicting_key)
+        if (has_schema && ((GSettingsKey) key).error_hard_conflicting_key)
             return;
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
@@ -217,7 +217,7 @@ class RegistryInfo : Grid, BrowsableView
                     {
                         if (custom_value_switch.get_active ())
                         {
-                            model.set_key_to_default (((GSettingsKey) key).full_name, ((GSettingsKey) key).schema_id);
+                            model.set_key_to_default (key.full_name, gkey.context);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
                             key_editor_child.reload (model.get_key_value (key));
                             //if (tmp_string == "<flags>")                      let's try to live without this...

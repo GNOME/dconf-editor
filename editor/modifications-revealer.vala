@@ -70,37 +70,42 @@ class ModificationsRevealer : Revealer
     * * Reseting objects
     \*/
 
-    public void reset_objects (SettingObject [] objects, bool recursively)
+    public void reset_objects (string [,] objects, bool recursively)
     {
         _reset_objects (objects, recursively);
         warn_if_no_planned_changes ();
     }
 
-    private void _reset_objects (SettingObject [] objects, bool recursively)
+    private void _reset_objects (string [,]? objects, bool recursively)
     {
-        if (objects.length == 0)
+        if (objects == null)
             return;
         SettingsModel model = modifications_handler.model;
 
-        for (uint position = 0; position < objects.length; position++)
+        for (uint position = 0; position < ((!) objects).length [0]; position++)
         {
-            SettingObject setting_object = (SettingObject) objects [position];
-            if (!SettingsModel.is_key_path (setting_object.full_name))
+            string full_name = objects [position, 2];
+            // directory
+            if (!SettingsModel.is_key_path (full_name))
             {
                 if (recursively)
-                {
-                    SettingObject [] children = model.get_children (setting_object.full_name);
-                    _reset_objects (children, true);
-                }
-                continue;
+                    _reset_objects (model.get_children (full_name), true);
             }
-            if (setting_object is DConfKey)
+            // dconf key
+            else if (objects [position, 0] == ".dconf")
             {
-                if (!model.is_key_ghost (setting_object.full_name))
-                    modifications_handler.add_delayed_setting (setting_object.full_name, null);
+                if (!model.is_key_ghost (full_name))
+                    modifications_handler.add_delayed_setting (full_name, null);
             }
-            else if (!model.is_key_default ((GSettingsKey) setting_object))
-                modifications_handler.add_delayed_setting (setting_object.full_name, null);
+            // gsettings
+            else
+            {
+                Key? key = model.get_key (full_name, objects [position, 0]);
+                if (key == null)
+                    assert_not_reached ();
+                if (!model.is_key_default ((GSettingsKey) (!) key))
+                    modifications_handler.add_delayed_setting (full_name, null);
+            }
         }
     }
 
@@ -172,7 +177,7 @@ class ModificationsRevealer : Revealer
         wrapper.add (view);
         if (modifications_handler.get_current_delay_mode ())
         {
-            Variant variant = new Variant ("(ss)", full_name, has_schema ? ((GSettingsKey) key).schema_id : ".dconf");
+            Variant variant = new Variant ("(ss)", full_name, ((Key) key).context);
             wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");
         }
         return wrapper;

@@ -27,7 +27,7 @@ private abstract class RegistryList : Grid, BrowsableView
     protected bool search_mode { private get; set; }
     protected string? current_path_if_search_mode = null;  // TODO only used in search mode
 
-    protected GLib.ListStore list_model = new GLib.ListStore (typeof (SettingObject));
+    protected GLib.ListStore list_model = new GLib.ListStore (typeof (SimpleSettingObject));
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
@@ -89,7 +89,7 @@ private abstract class RegistryList : Grid, BrowsableView
         if (selected_row != null)
         {
             int position = ((!) selected_row).get_index ();
-            return ((SettingObject) list_model.get_object (position)).full_name;
+            return ((SimpleSettingObject) list_model.get_object (position)).full_name;
         }
         else
             return "";
@@ -110,12 +110,11 @@ private abstract class RegistryList : Grid, BrowsableView
         uint fallback = 0;
         while (position < list_model.get_n_items ())
         {
-            SettingObject object = (SettingObject) list_model.get_object (position);
+            SimpleSettingObject object = (SimpleSettingObject) list_model.get_object (position);
             if (object.full_name == selected)
             {
                 if (!SettingsModel.is_key_path (object.full_name)
-                 || context == ".dconf" && object is DConfKey // theorical?
-                 || object is GSettingsKey && ((GSettingsKey) object).schema_id == context)
+                 || object.context == context)
                     return (int) position;
                 fallback = position;
             }
@@ -268,28 +267,37 @@ private abstract class RegistryList : Grid, BrowsableView
     protected Widget new_list_box_row (Object item)
     {
         ClickableListBoxRow row;
-        SettingObject setting_object = (SettingObject) item;
+        SimpleSettingObject setting_object = (SimpleSettingObject) item;
         string full_name = setting_object.full_name;
 
         if (search_mode && current_path_if_search_mode == null)
             assert_not_reached ();
         bool search_mode_non_local_result = search_mode && SettingsModel.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
-        if (!SettingsModel.is_key_path (setting_object.full_name))
+        if (!SettingsModel.is_key_path (full_name))
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
         }
         else
         {
             SettingsModel model = modifications_handler.model;
-            Key key = (Key) setting_object;
-            ulong key_value_changed_handler;
-            if (setting_object is GSettingsKey)
-            {
-                GSettingsKey gkey = (GSettingsKey) key;
 
+            Variant? properties = model.get_key_properties (setting_object.full_name, setting_object.context);
+            if (properties == null) // key doesn't exist
+                assert_not_reached ();
+
+            bool has_schema;
+            unowned Variant [] dict_container;
+            ((!) properties).get ("(ba{ss})", out has_schema, out dict_container);
+            Variant dict = dict_container [0];
+
+            string type_code;       if (!dict.lookup ("type-code",  "s", out type_code))    assert_not_reached ();
+            string key_name;        if (!dict.lookup ("key-name",   "s", out key_name))     assert_not_reached ();
+
+            if (has_schema)
+            {
+                string summary;     if (!dict.lookup ("summary",    "s", out summary))      assert_not_reached ();
                 bool italic_summary;
-                string summary = gkey.summary;
                 if (summary == "")
                 {
                     summary = _("No summary provided");
@@ -298,12 +306,12 @@ private abstract class RegistryList : Grid, BrowsableView
                 else
                     italic_summary = false;
 
-                row = new KeyListBoxRow (key.type_string,
-                                         gkey.schema_id,
+                row = new KeyListBoxRow (type_code,
+                                         setting_object.context,
                                          summary,
                                          italic_summary,
                                          modifications_handler.get_current_delay_mode (),
-                                         setting_object.name,
+                                         key_name,
                                          full_name,
                                          search_mode_non_local_result);
 
@@ -317,49 +325,23 @@ private abstract class RegistryList : Grid, BrowsableView
                     {
                         row.get_style_context ().add_class ("hard-conflict");
                         ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
-                        if (key.type_string == "b")
+                        if (type_code == "b")
                             ((KeyListBoxRow) row).use_switch (false);
                     }
                     else
                         row.get_style_context ().add_class ("conflict");
                 }
-
-                key_value_changed_handler = key.value_changed.connect (() => {
-                        update_gsettings_row ((KeyListBoxRow) row,
-                                              key.type_string,
-                                              model.get_key_value (key),
-                                              model.is_key_default (gkey),
-                                              error_hard_conflicting_key);
-                        row.destroy_popover ();
-                    });
-                update_gsettings_row ((KeyListBoxRow) row,
-                                      key.type_string,
-                                      model.get_key_value (key),
-                                      model.is_key_default (gkey),
-                                      error_hard_conflicting_key);
             }
             else
             {
-                row = new KeyListBoxRow (key.type_string,
+                row = new KeyListBoxRow (type_code,
                                          ".dconf",
                                          _("No Schema Found"),
                                          true,
                                          modifications_handler.get_current_delay_mode (),
-                                         setting_object.name,
+                                         key_name,
                                          full_name,
                                          search_mode_non_local_result);
-
-                key_value_changed_handler = key.value_changed.connect (() => {
-                        if (model.is_key_ghost (full_name)) // fails with the ternary operator 3/4
-                            update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
-                        else
-                            update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
-                        row.destroy_popover ();
-                    });
-                if (model.is_key_ghost (full_name))         // fails with the ternary operator 4/4
-                    update_dconf_row ((KeyListBoxRow) row, key.type_string, null);
-                else
-                    update_dconf_row ((KeyListBoxRow) row, key.type_string, model.get_dconf_key_value (full_name));
             }
 
             KeyListBoxRow key_row = (KeyListBoxRow) row;
@@ -369,7 +351,6 @@ private abstract class RegistryList : Grid, BrowsableView
             set_delayed_icon (key_row);
             row.destroy.connect (() => {
                     modifications_handler.disconnect (delayed_modifications_changed_handler);
-                    key.disconnect (key_value_changed_handler);
                 });
         }
 
@@ -391,8 +372,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             wrapper.get_style_context ().add_class ("key-row");
             wrapper.action_name = "ui.open-object";
-            string context = (setting_object is GSettingsKey) ? ((GSettingsKey) setting_object).schema_id : ".dconf";
-            wrapper.set_action_target ("(ss)", full_name, context);
+            wrapper.set_action_target ("(ss)", full_name, setting_object.context);
         }
 
         return wrapper;
@@ -470,6 +450,49 @@ private abstract class RegistryList : Grid, BrowsableView
             list_box_row.grab_focus ();
 
         return false;
+    }
+
+    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    {
+        KeyListBoxRow? row = get_row_for_key (full_name, schema_id);
+        if (row == null)    // TODO make method only called when necessary 1/2
+            return;
+
+        bool warning_conflicting_key;
+        bool error_hard_conflicting_key;
+        modifications_handler.model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+
+        update_gsettings_row ((!) row,
+                              ((!) row).type_string,
+                              key_value,
+                              is_key_default,
+                              error_hard_conflicting_key);
+        ((!) row).destroy_popover ();
+    }
+
+    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    {
+        KeyListBoxRow? row = get_row_for_key (full_name, ".dconf");
+        if (row == null)    // TODO make method only called when necessary 2/2
+            return;
+
+        update_dconf_row ((!) row, ((!) row).type_string, key_value_or_null);
+        ((!) row).destroy_popover ();
+    }
+
+    private KeyListBoxRow? get_row_for_key (string full_name, string context)
+    {
+        KeyListBoxRow? key_row_child = null;
+        key_list_box.foreach ((row) => {
+                Widget? row_child = ((ListBoxRow) row).get_child ();
+                if (row_child == null)
+                    assert_not_reached ();
+                if ((!) row_child is KeyListBoxRow
+                 && ((KeyListBoxRow) (!) row_child).full_name == full_name
+                 && ((KeyListBoxRow) (!) row_child).context == context)
+                    key_row_child = (KeyListBoxRow) (!) row_child;
+            });
+        return key_row_child;
     }
 
     /*\
