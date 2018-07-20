@@ -74,7 +74,7 @@ class BrowserStack : Grid
 
     public void prepare_object_view (Key key, bool is_parent)
     {
-        object_view.populate_properties_list_box (key);
+        object_view.populate_properties_list_box (key, key.full_name, key.context, key.properties);
 
         stack.set_transition_type (is_parent && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
