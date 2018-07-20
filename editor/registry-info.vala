@@ -66,24 +66,28 @@ class RegistryInfo : Grid, BrowsableView
     public void populate_properties_list_box (Key key)
     {
         SettingsModel model = modifications_handler.model;
-        if (key is DConfKey && model.is_key_ghost (key.full_name))   // TODO place in "requires"
+        full_name = key.full_name;
+        if (key is DConfKey && model.is_key_ghost (full_name))   // TODO place in "requires"
             assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
         bool has_schema;
         unowned Variant [] dict_container;
         current_key_info = key.properties;
-        full_name = key.full_name;
         key.properties.get ("(ba{ss})", out has_schema, out dict_container);
 
+        bool error_hard_conflicting_key = false;
         if (has_schema)
         {
-            if (((GSettingsKey) key).error_hard_conflicting_key)
+            bool warning_conflicting_key;
+            model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+
+            if (error_hard_conflicting_key)
             {
                 conflicting_key_warning_revealer.set_reveal_child (false);
                 hard_conflicting_key_error_revealer.set_reveal_child (true);
             }
-            else if (((GSettingsKey) key).warning_conflicting_key)
+            else if (warning_conflicting_key)
             {
                 conflicting_key_warning_revealer.set_reveal_child (true);
                 hard_conflicting_key_error_revealer.set_reveal_child (false);
@@ -137,7 +141,7 @@ class RegistryInfo : Grid, BrowsableView
 
         ulong key_value_changed_handler = 0;
         Label label;
-        if (has_schema && ((GSettingsKey) key).error_hard_conflicting_key)
+        if (has_schema && error_hard_conflicting_key)
         {
             label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
             label.get_style_context ().add_class ("italic-label");
@@ -173,7 +177,7 @@ class RegistryInfo : Grid, BrowsableView
         }
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
-        if (has_schema && ((GSettingsKey) key).error_hard_conflicting_key)
+        if (has_schema && error_hard_conflicting_key)
             return;
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
