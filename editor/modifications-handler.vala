@@ -34,32 +34,10 @@ class ModificationsHandler : Object
 
     private HashTable<string, Variant?> keys_awaiting_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
 
-    public uint dconf_changes_count
-    {
-        get
-        {
-            uint count = 0;
-            keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
-                    Key? key = model.get_key (key_path);
-                    if (key != null && (!) key is DConfKey)
-                        count++;
-                });
-            return count;
-        }
-    }
-    public uint gsettings_changes_count
-    {
-        get
-        {
-            uint count = 0;
-            keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
-                    Key? key = model.get_key (key_path);
-                    if (key != null && (!) key is GSettingsKey)
-                        count++;
-                });
-            return count;
-        }
-    }
+    private GenericSet<string> dconf_changes_set = new GenericSet<string> (str_hash, str_equal);
+    private GenericSet<string> gsettings_changes_set = new GenericSet<string> (str_hash, str_equal);
+    public uint dconf_changes_count { get { return dconf_changes_set.length; }}
+    public uint gsettings_changes_count { get { return gsettings_changes_set.length; }}
 
     public SettingsModel model { get; construct; }
 
@@ -100,9 +78,18 @@ class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    public void add_delayed_setting (string key_path, Variant? new_value)
+    public void add_delayed_setting (string key_path, Variant? new_value, bool has_schema)
     {
-        keys_awaiting_hashtable.insert (key_path, new_value);
+        if (!keys_awaiting_hashtable.contains (key_path))
+        {
+            if (has_schema)
+                gsettings_changes_set.add (key_path);
+            else
+                dconf_changes_set.add (key_path);
+            keys_awaiting_hashtable.insert (key_path, new_value);
+        }
+        else
+            keys_awaiting_hashtable.replace (key_path, new_value);
 
         mode = get_current_delay_mode () ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
 
@@ -114,7 +101,13 @@ class ModificationsHandler : Object
         if (mode == ModificationsMode.NONE)
             mode = behaviour == Behaviour.ALWAYS_DELAY ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
 
-        keys_awaiting_hashtable.remove (key_path);
+        if (keys_awaiting_hashtable.remove (key_path))
+        {
+            if (!gsettings_changes_set.remove (key_path)
+             && !dconf_changes_set.remove (key_path))
+                assert_not_reached ();
+        }
+        // else...  // happens on the second edit with unparsable value in a KeyEditorChildDefault
 
         delayed_changes_changed ();
     }
@@ -136,6 +129,8 @@ class ModificationsHandler : Object
         mode = ModificationsMode.NONE;
 
         model.apply_key_value_changes (keys_awaiting_hashtable);
+        gsettings_changes_set.remove_all ();
+        dconf_changes_set.remove_all ();
         keys_awaiting_hashtable.remove_all ();
 
         delayed_changes_changed ();
@@ -146,6 +141,8 @@ class ModificationsHandler : Object
     {
         mode = ModificationsMode.NONE;
 
+        gsettings_changes_set.remove_all ();
+        dconf_changes_set.remove_all ();
         keys_awaiting_hashtable.remove_all ();
 
         delayed_changes_changed ();
@@ -179,20 +176,21 @@ class ModificationsHandler : Object
     public void erase_dconf_key (string full_name)
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (full_name, null);
+            add_delayed_setting (full_name, null, false);
         else if (behaviour != Behaviour.UNSAFE)
         {
             mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
-            add_delayed_setting (full_name, null);
+            add_delayed_setting (full_name, null, false);
         }
         else
             model.erase_key (full_name);
     }
 
     public void set_to_default (string full_name, string schema_id)
+        requires (schema_id != ".dconf")
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (full_name, null);
+            add_delayed_setting (full_name, null, true);
         else
             model.set_key_to_default (full_name, schema_id);
     }

@@ -95,7 +95,7 @@ class ModificationsRevealer : Revealer
             else if (objects [position, 0] == ".dconf")
             {
                 if (!model.is_key_ghost (full_name))
-                    modifications_handler.add_delayed_setting (full_name, null);
+                    modifications_handler.add_delayed_setting (full_name, null, false);
             }
             // gsettings
             else
@@ -104,7 +104,7 @@ class ModificationsRevealer : Revealer
                 if (key == null)
                     assert_not_reached ();
                 if (!model.is_key_default ((GSettingsKey) (!) key))
-                    modifications_handler.add_delayed_setting (full_name, null);
+                    modifications_handler.add_delayed_setting (full_name, null, true);
             }
         }
     }

@@ -98,12 +98,13 @@ class BrowserView : Grid
         Variant key_value_request;
         ((!) value_variant).@get ("(ssv)", out full_name, out context, out key_value_request);
 
+        bool has_schema = context != ".dconf";
         if (modifications_handler.get_current_delay_mode ())
-            modifications_handler.add_delayed_setting (full_name, key_value_request);
-        else if (context == ".dconf")
-            modifications_handler.set_dconf_key_value (full_name, key_value_request);
-        else
+            modifications_handler.add_delayed_setting (full_name, key_value_request, has_schema);
+        else if (has_schema)
             modifications_handler.set_gsettings_key_value (full_name, context, key_value_request);
+        else
+            modifications_handler.set_dconf_key_value (full_name, key_value_request);
     }
 
     private void set_to_default (SimpleAction action, Variant? path_variant)
