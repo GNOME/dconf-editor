@@ -570,12 +570,13 @@ private abstract class RegistryList : Grid, BrowsableView
 
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
-        Key? _key = model.get_key (row.full_name, row.context);   // racy...
+        string full_name = row.full_name;
+        Key? _key = model.get_key (full_name, row.context);   // racy...
         if (_key == null)
             assert_not_reached ();
         GSettingsKey key = (GSettingsKey) (!) _key;
-        Variant variant_s = new Variant.string (row.full_name);
-        Variant variant_ss = new Variant ("(ss)", row.full_name, row.context);
+        Variant variant_s = new Variant.string (full_name);
+        Variant variant_ss = new Variant ("(ss)", full_name, row.context);
 
         if (row.search_result_mode)
         {
@@ -585,7 +586,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         bool error_hard_conflicting_key;
         bool warning_conflicting_key;
-        model.has_conflicting_keys (row.full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+        model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
         if (error_hard_conflicting_key)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
@@ -594,35 +595,36 @@ private abstract class RegistryList : Grid, BrowsableView
         }
 
         bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-        bool planned_change = modifications_handler.key_has_planned_change (row.full_name);
-        Variant? planned_value = modifications_handler.get_key_planned_value (row.full_name);
+        bool planned_change = modifications_handler.key_has_planned_change (full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
 
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
-        if (row.type_string == "b" || row.type_string == "<enum>" || row.type_string == "mb"
+        string type_string = row.type_string;
+        if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
-                (row.type_string == "y" || row.type_string == "q" || row.type_string == "u" || row.type_string == "t")
+                (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
                 && (key.range_type == "range")
                 && (Key.get_variant_as_uint64 (key.range_content.get_child_value (1)) - Key.get_variant_as_uint64 (key.range_content.get_child_value (0)) < 13)
                )
             || (
-                (row.type_string == "n" || row.type_string == "i" || row.type_string == "h" || row.type_string == "x")
+                (type_string == "n" || type_string == "i" || type_string == "h" || type_string == "x")
                 && (key.range_type == "range")
                 && (Key.get_variant_as_int64 (key.range_content.get_child_value (1)) - Key.get_variant_as_int64 (key.range_content.get_child_value (0)) < 13)
                )
-            || row.type_string == "()")
+            || type_string == "()")
         {
             popover.new_section ();
             GLib.Action action;
             if (planned_change)
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string,
-                                                      modifications_handler.get_key_planned_value (row.full_name), key.range_content);
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
+                                                      modifications_handler.get_key_planned_value (full_name), key.range_content);
             else if (model.is_key_default (key))
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string,
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
                                                       null, key.range_content);
             else
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string,
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
                                                       model.get_key_value (key), key.range_content);
 
             popover.change_dismissed.connect (() => {
@@ -636,7 +638,7 @@ private abstract class RegistryList : Grid, BrowsableView
                     row.set_key_value (row.context, gvariant);
                 });
         }
-        else if (!delayed_apply_menu && !planned_change && row.type_string == "<flags>")
+        else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
         {
             popover.new_section ();
 
