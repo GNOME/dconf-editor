@@ -583,7 +583,10 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
         }
 
-        if (key.error_hard_conflicting_key)
+        bool error_hard_conflicting_key;
+        bool warning_conflicting_key;
+        model.has_conflicting_keys (row.full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+        if (error_hard_conflicting_key)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
             popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
