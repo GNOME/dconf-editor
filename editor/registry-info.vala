@@ -111,11 +111,12 @@ class RegistryInfo : Grid, BrowsableView
         Variant dict = dict_container [0];
 
         // TODO use VariantDict
-        string key_name, parent_path, tmp_string;
+        string key_name, parent_path, type_code, range_type, tmp_string;
         bool test;
 
         if (!dict.lookup ("key-name",     "s", out key_name))    assert_not_reached ();
         if (!dict.lookup ("parent-path",  "s", out parent_path)) assert_not_reached ();
+        if (!dict.lookup ("type-code",    "s", out type_code))   assert_not_reached ();
 
         if (dict.lookup ("defined-by",    "s", out tmp_string))  add_row_from_label (_("Defined by"),  tmp_string);
         else assert_not_reached ();
@@ -134,11 +135,23 @@ class RegistryInfo : Grid, BrowsableView
         /* Translators: as in datatype (integer, boolean, string, etc.) */
         if (dict.lookup ("type-name",     "s", out tmp_string))  add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
+        bool range_type_is_range = false;
+        if (dict.lookup ("range-type",    "s", out range_type)) // has_schema
+        {
+            if (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
+             || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
+             || type_code == "n" || type_code == "q"    // signed and unsigned 16 bits
+             || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
+            {
+                range_type_is_range = range_type == "range";
+                add_row_from_label (_("Forced range"),           Key.cool_boolean_text_value (range_type_is_range));
+            }
+        }
+        else
+            range_type = "";    // dconf key
         if (dict.lookup ("minimum",       "s", out tmp_string))  add_row_from_label (_("Minimum"),     tmp_string);
         if (dict.lookup ("maximum",       "s", out tmp_string))  add_row_from_label (_("Maximum"),     tmp_string);
         if (dict.lookup ("default-value", "s", out tmp_string))  add_row_from_label (_("Default"),     tmp_string);
-
-        if (!dict.lookup ("type-code",    "s", out tmp_string))  assert_not_reached ();
 
         ulong key_value_changed_handler = 0;
         Label label;
@@ -174,13 +187,13 @@ class RegistryInfo : Grid, BrowsableView
 
         add_separator ();
 
-        KeyEditorChild key_editor_child = create_child (key, full_name, has_schema, tmp_string, modifications_handler);
+        KeyEditorChild key_editor_child = create_child (key, full_name, has_schema, type_code, range_type_is_range, modifications_handler);
         bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
         if (is_key_editor_child_single)
         {
-            one_choice_enum_warning.visible = tmp_string == "<enum>";
-            one_choice_tuple_warning.visible = tmp_string == "()";
-            one_choice_integer_warning.visible = (tmp_string != "<enum>") && (tmp_string != "()");
+            one_choice_enum_warning.visible = type_code == "<enum>";
+            one_choice_tuple_warning.visible = type_code == "()";
+            one_choice_integer_warning.visible = (type_code != "<enum>") && (type_code != "()");
         }
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
@@ -188,7 +201,7 @@ class RegistryInfo : Grid, BrowsableView
             return;
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
-                if (modifications_handler.should_delay_apply (tmp_string))
+                if (modifications_handler.should_delay_apply (type_code))
                 {
                     if (is_valid)
                         modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), has_schema);
@@ -213,7 +226,7 @@ class RegistryInfo : Grid, BrowsableView
             GSettingsKey gkey = (GSettingsKey) key;
             custom_value_switch.set_active (modifications_handler.key_value_is_default (gkey));
             ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
-                    if (modifications_handler.should_delay_apply (tmp_string))
+                    if (modifications_handler.should_delay_apply (type_code))
                     {
                         if (custom_value_switch.get_active ())
                             modifications_handler.add_delayed_setting (full_name, null, true);
@@ -231,7 +244,7 @@ class RegistryInfo : Grid, BrowsableView
                             model.set_key_to_default (full_name, context);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
                             key_editor_child.reload (model.get_key_value (key));
-                            //if (tmp_string == "<flags>")                      let's try to live without this...
+                            //if (type_code == "<flags>")                      let's try to live without this...
                             //    key.planned_value = key.value;
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
@@ -260,11 +273,11 @@ class RegistryInfo : Grid, BrowsableView
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
                 key_editor_child.reload (model.get_key_value (key));
-                //if (tmp_string == "<flags>")                      let's try to live without this...
+                //if (type_code == "<flags>")                      let's try to live without this...
                 //    key.planned_value = key.value;
                 SignalHandler.unblock (key_editor_child, value_has_changed_handler);
             });
-        add_row_from_widget (_("Custom value"), key_editor_child, tmp_string);
+        add_row_from_widget (_("Custom value"), key_editor_child, type_code);
 
         key_editor_child.destroy.connect (() => {
                 if (key_value_changed_handler == 0)
@@ -275,7 +288,7 @@ class RegistryInfo : Grid, BrowsableView
             });
     }
 
-    private static KeyEditorChild create_child (Key key, string full_name, bool has_schema, string type_string, ModificationsHandler modifications_handler)
+    private static KeyEditorChild create_child (Key key, string full_name, bool has_schema, string type_string, bool range_type_is_range, ModificationsHandler modifications_handler)
     {
         SettingsModel model = modifications_handler.model;
         Variant initial_value = modifications_handler.get_key_custom_value (key);
@@ -312,9 +325,9 @@ class RegistryInfo : Grid, BrowsableView
             case "n":
             case "i":
             case "h":
-            // TODO "x" is not working in spinbuttons (double-based)
+            // TODO "x" is not working in spinbuttons (double-based)    1/2
                 Variant? range = null;
-                if (has_schema && (((GSettingsKey) key).range_type == "range"))
+                if (has_schema && range_type_is_range)  // type_string != "h"
                 {
                     range = ((GSettingsKey) key).range_content;
                     if (Key.get_variant_as_int64 (((!) range).get_child_value (0)) == Key.get_variant_as_int64 (((!) range).get_child_value (1)))
@@ -325,9 +338,9 @@ class RegistryInfo : Grid, BrowsableView
             case "y":
             case "q":
             case "u":
-            // TODO "t" is not working in spinbuttons (double-based)
+            // TODO "t" is not working in spinbuttons (double-based)    2/2
                 Variant? range = null;
-                if (has_schema && (((GSettingsKey) key).range_type == "range"))
+                if (has_schema && range_type_is_range)
                 {
                     range = ((GSettingsKey) key).range_content;
                     if (Key.get_variant_as_uint64 (((!) range).get_child_value (0)) == Key.get_variant_as_uint64 (((!) range).get_child_value (1)))

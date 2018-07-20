@@ -245,9 +245,12 @@ public abstract class Key : SettingObject
         }
     }
 
-    protected static bool show_min_and_max (string type)
+    protected static bool show_min_and_max (string type_code)
     {
-        return (type == "d" || type == "y" || type == "n" || type == "q" || type == "i" || type == "u" || type == "x" || type == "t");
+        return (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
+             || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
+             || type_code == "n" || type_code == "q"    // signed and unsigned 16 bits
+             || type_code == "x" || type_code == "t");  // signed and unsigned 64 bits
     }
 
     public static uint64 get_variant_as_uint64 (Variant variant)
@@ -364,14 +367,15 @@ public class GSettingsKey : Key
         VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));
         builder.add ("b",    true);
         builder.open (new VariantType ("a{ss}"));
-        builder.add ("{ss}", "key-name",    name);
-        builder.add ("{ss}", "defined-by",  defined_by);
-        builder.add ("{ss}", "parent-path", parent_full_name);
-        builder.add ("{ss}", "type-code",   type_string);
-        builder.add ("{ss}", "type-name",   key_to_description (type_string));
-        builder.add ("{ss}", "summary",     summary);
-        builder.add ("{ss}", "description", description);
+        builder.add ("{ss}", "key-name",      name);
+        builder.add ("{ss}", "defined-by",    defined_by);
+        builder.add ("{ss}", "parent-path",   parent_full_name);
+        builder.add ("{ss}", "type-code",     type_string);
+        builder.add ("{ss}", "type-name",     key_to_description (type_string));
+        builder.add ("{ss}", "summary",       summary);
+        builder.add ("{ss}", "description",   description);
         builder.add ("{ss}", "default-value", cool_text_value_from_variant (default_value, type_string));
+        builder.add ("{ss}", "range-type",    range_type);
         if (show_min_and_max (type_string))
         {
             string min, max;
