@@ -135,6 +135,7 @@ class RegistryInfo : Grid, BrowsableView
         /* Translators: as in datatype (integer, boolean, string, etc.) */
         if (dict.lookup ("type-name",     "s", out tmp_string))  add_row_from_label (_("Type"),        tmp_string);
         else assert_not_reached ();
+
         bool range_type_is_range = false;
         if (dict.lookup ("range-type",    "s", out range_type)) // has_schema
         {
@@ -149,8 +150,15 @@ class RegistryInfo : Grid, BrowsableView
         }
         else
             range_type = "";    // dconf key
+
+        bool minimum_is_maximum = false;
+        string tmp = "";
+        tmp_string = "";
         if (dict.lookup ("minimum",       "s", out tmp_string))  add_row_from_label (_("Minimum"),     tmp_string);
-        if (dict.lookup ("maximum",       "s", out tmp_string))  add_row_from_label (_("Maximum"),     tmp_string);
+        if (dict.lookup ("maximum",       "s", out tmp       ))  add_row_from_label (_("Maximum"),     tmp       );
+        if (tmp != "" && tmp == tmp_string)
+            minimum_is_maximum = true;
+
         if (dict.lookup ("default-value", "s", out tmp_string))  add_row_from_label (_("Default"),     tmp_string);
 
         ulong key_value_changed_handler = 0;
@@ -187,7 +195,40 @@ class RegistryInfo : Grid, BrowsableView
 
         add_separator ();
 
-        KeyEditorChild key_editor_child = create_child (key, full_name, has_schema, type_code, range_type_is_range, modifications_handler);
+        KeyEditorChild key_editor_child;
+        Variant initial_value = modifications_handler.get_key_custom_value (key);
+        switch (type_code)
+        {
+            case "b":
+                key_editor_child = (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());                      break;
+            case "i":   // int32
+            case "u":   // uint32
+            case "n":   // int16
+            case "q":   // uint16
+            case "y":   // uint8
+            case "h":   // handle type
+            // TODO "x" and "t" are not working in spinbuttons (double-based)
+                if (minimum_is_maximum)
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
+                else
+                    key_editor_child = create_child_integer (key, initial_value, has_schema, type_code, range_type_is_range);   break;
+            case "d":
+                key_editor_child = (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);                             break;
+            case "mb":
+                key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);               break;
+            case "<enum>":  // has_schema
+                key_editor_child = create_child_enum ((GSettingsKey) key, initial_value, full_name, modifications_handler);     break;
+            case "<flags>": // has_schema
+                key_editor_child = create_child_flags ((GSettingsKey) key, initial_value, modifications_handler);               break;
+            case "()":
+                key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                  break;
+            default:
+                if ("a" in type_code)
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildArray (type_code, initial_value);
+                else
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildDefault (type_code, initial_value);                   break;
+        }
+
         bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
         if (is_key_editor_child_single)
         {
@@ -288,86 +329,51 @@ class RegistryInfo : Grid, BrowsableView
             });
     }
 
-    private static KeyEditorChild create_child (Key key, string full_name, bool has_schema, string type_string, bool range_type_is_range, ModificationsHandler modifications_handler)
+    private static KeyEditorChild create_child_integer (Key key, Variant initial_value, bool has_schema, string type_string, bool range_type_is_range)
     {
-        SettingsModel model = modifications_handler.model;
-        Variant initial_value = modifications_handler.get_key_custom_value (key);
-        switch (type_string)
+        Variant? range = null;
+        if (has_schema && range_type_is_range)  // type_string != "h"
+            range = ((GSettingsKey) key).range_content;
+        return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_string, range);
+    }
+
+    private static KeyEditorChild create_child_mb (Variant initial_value, string full_name, bool has_schema, ModificationsHandler modifications_handler)
+    {
+        bool delay_mode = modifications_handler.get_current_delay_mode ();
+        bool has_planned_change = modifications_handler.key_has_planned_change (full_name);
+        Variant? range_content_or_null = null;
+        if (has_schema)
+            range_content_or_null = new Variant.boolean (true); // only used for adding or not "set to default"
+        return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, range_content_or_null);
+    }
+
+    private static KeyEditorChild create_child_enum (GSettingsKey key, Variant initial_value, string full_name, ModificationsHandler modifications_handler)
+    {
+        Variant range_content = key.range_content;
+        switch (range_content.n_children ())
         {
-            case "<enum>":
-                switch (((GSettingsKey) key).range_content.n_children ())
-                {
-                    case 0: assert_not_reached ();
-                    case 1:
-                        return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).get_string ());
-                    default:
-                        bool delay_mode = modifications_handler.get_current_delay_mode ();
-                        bool has_planned_change = modifications_handler.key_has_planned_change (full_name);
-                        Variant range_content = ((GSettingsKey) key).range_content;
-                        return (KeyEditorChild) new KeyEditorChildEnum (initial_value, delay_mode, has_planned_change, range_content);
-                }
-
-            case "<flags>":
-                string [] all_flags = ((GSettingsKey) key).range_content.get_strv ();
-                string [] active_flags = ((GSettingsKey) key).settings.get_strv (key.name);
-                KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, all_flags, active_flags);
-
-                ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                        active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
-                        key_editor_child_flags.update_flags (active_flags);
-                    });
-                key_editor_child_flags.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
-                return (KeyEditorChild) key_editor_child_flags;
-
-            case "b":
-                return (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());
-
-            case "n":
-            case "i":
-            case "h":
-            // TODO "x" is not working in spinbuttons (double-based)    1/2
-                Variant? range = null;
-                if (has_schema && range_type_is_range)  // type_string != "h"
-                {
-                    range = ((GSettingsKey) key).range_content;
-                    if (Key.get_variant_as_int64 (((!) range).get_child_value (0)) == Key.get_variant_as_int64 (((!) range).get_child_value (1)))
-                        return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).print (false));
-                }
-                return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_string, range);
-
-            case "y":
-            case "q":
-            case "u":
-            // TODO "t" is not working in spinbuttons (double-based)    2/2
-                Variant? range = null;
-                if (has_schema && range_type_is_range)
-                {
-                    range = ((GSettingsKey) key).range_content;
-                    if (Key.get_variant_as_uint64 (((!) range).get_child_value (0)) == Key.get_variant_as_uint64 (((!) range).get_child_value (1)))
-                        return (KeyEditorChild) new KeyEditorChildSingle (model.get_key_value (key), model.get_key_value (key).print (false));
-                }
-                return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_string, range);
-
-            case "d":
-                return (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);
-
-            case "mb":
+            case 0: assert_not_reached ();
+            case 1:
+                return (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.get_string ());
+            default:
                 bool delay_mode = modifications_handler.get_current_delay_mode ();
                 bool has_planned_change = modifications_handler.key_has_planned_change (full_name);
-                Variant? range_content_or_null = null;
-                if (has_schema)
-                    range_content_or_null = ((GSettingsKey) key).range_content;
-                return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, range_content_or_null);
-
-            case "()":
-                return (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");
-
-            default:
-                if ("a" in type_string)
-                    return (KeyEditorChild) new KeyEditorChildArray (type_string, initial_value);
-                else
-                    return (KeyEditorChild) new KeyEditorChildDefault (type_string, initial_value);
+                return (KeyEditorChild) new KeyEditorChildEnum (initial_value, delay_mode, has_planned_change, range_content);
         }
+    }
+
+    private static KeyEditorChild create_child_flags (GSettingsKey key, Variant initial_value, ModificationsHandler modifications_handler)
+    {
+        string [] all_flags = key.range_content.get_strv ();
+        string [] active_flags = key.settings.get_strv (key.name);
+        KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, all_flags, active_flags);
+
+        ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
+                active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
+                key_editor_child_flags.update_flags (active_flags);
+            });
+        key_editor_child_flags.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+        return (KeyEditorChild) key_editor_child_flags;
     }
 
     private static string get_current_value_text (Variant? key_value)
