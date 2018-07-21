@@ -163,10 +163,17 @@ class ModificationsRevealer : Revealer
         string? cool_planned_value = null;
         if (planned_value != null)
             cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value, type_string);
+
         string? cool_default_value = null;
+        string cool_key_value;
         if (has_schema)
+        {
             cool_default_value = Key.cool_text_value_from_variant (((GSettingsKey) key).default_value, type_string);
-        string cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_key_value (key), type_string);
+            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_gsettings_key_value (full_name, context), type_string);
+        }
+        else
+            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_dconf_key_value (full_name), type_string);
+
         DelayedSettingView view = new DelayedSettingView (full_name,
                                                           is_default_or_ghost,
                                                           cool_key_value,

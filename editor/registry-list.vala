@@ -627,7 +627,7 @@ private abstract class RegistryList : Grid, BrowsableView
                                                       null);
             else
                 action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
-                                                      model.get_key_value (key));
+                                                      model.get_gsettings_key_value (full_name, schema_id));
 
             popover.change_dismissed.connect (() => {
                     row.destroy_popover ();
@@ -635,7 +635,8 @@ private abstract class RegistryList : Grid, BrowsableView
                 });
             popover.value_changed.connect ((gvariant) => {
                     row.hide_right_click_popover ();
-                    Variant key_value = model.get_key_value (key);
+                    Variant key_value;
+                    key_value = model.get_gsettings_key_value (full_name, schema_id);
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
                     row.set_key_value (schema_id, gvariant);
                 });
@@ -650,7 +651,7 @@ private abstract class RegistryList : Grid, BrowsableView
             string [] all_flags = range_content.get_strv ();
             popover.create_flags_list (key.settings.get_strv (row.key_name), all_flags);
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                    string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
+                    string [] active_flags = modifications_handler.get_key_custom_value (full_name, schema_id).get_strv ();
                     foreach (string flag in all_flags)
                         popover.update_flag_status (flag, flag in active_flags);
                 });

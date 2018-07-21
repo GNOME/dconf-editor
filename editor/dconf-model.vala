@@ -531,7 +531,7 @@ public class SettingsModel : Object
             return full_name;
 
         if ((!) key is GSettingsKey)
-            return ((!) key).descriptor + " " + get_gsettings_key_value ((GSettingsKey) key).print (false);
+            return ((!) key).descriptor + " " + _get_gsettings_key_value ((GSettingsKey) key).print (false);
 
         if (!((!) key is DConfKey))
             assert_not_reached ();
@@ -543,16 +543,21 @@ public class SettingsModel : Object
             return ((!) key).descriptor + " " + ((!) key_value).print (false);
     }
 
-    public Variant get_key_value (Key key)
+    private Variant get_key_value (Key key)
     {
         if ((!) key is GSettingsKey)
-            return get_gsettings_key_value ((GSettingsKey) key);
+            return _get_gsettings_key_value ((GSettingsKey) key);
         if ((!) key is DConfKey)
             return _get_dconf_key_value (key.full_name, client);
         assert_not_reached ();
     }
 
-    private static Variant get_gsettings_key_value (GSettingsKey key)
+    public Variant get_gsettings_key_value (string full_name, string schema_id)
+    {
+        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        return _get_gsettings_key_value (key);
+    }
+    private static Variant _get_gsettings_key_value (GSettingsKey key)
     {
         return key.settings.get_value (get_name (key.full_name));
     }

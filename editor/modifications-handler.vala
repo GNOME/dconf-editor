@@ -149,11 +149,17 @@ class ModificationsHandler : Object
         leave_delay_mode ();
     }
 
-    public Variant get_key_custom_value (Key key)
+    public Variant get_key_custom_value (string full_name, string context)
     {
-        bool planned_change = key_has_planned_change (key.full_name);
-        Variant? planned_value = get_key_planned_value (key.full_name);
-        return planned_change && (planned_value != null) ? (!) planned_value : model.get_key_value (key);
+        bool planned_change = key_has_planned_change (full_name);
+        Variant? planned_value = get_key_planned_value (full_name);
+        if (planned_change && (planned_value != null))
+            return (!) planned_value;
+
+        if (context != ".dconf")
+            return model.get_gsettings_key_value (full_name, context);
+        else
+            return model.get_dconf_key_value (full_name);
     }
 
     public void set_dconf_key_value (string full_name, Variant key_value)

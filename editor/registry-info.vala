@@ -172,16 +172,20 @@ class RegistryInfo : Grid, BrowsableView
         {
             if (has_schema && model.is_key_default (full_name, context))
                 label = new Label (get_current_value_text (null));
+            else if (has_schema)
+                label = new Label (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
             else
-                label = new Label (get_current_value_text (model.get_key_value (key)));
+                label = new Label (get_current_value_text (model.get_dconf_key_value (full_name)));
 
             key_value_changed_handler = key.value_changed.connect (() => {
                     if (!has_schema && model.is_key_ghost (full_name))
                         label.set_text (_("Key erased."));
                     else if (has_schema && model.is_key_default (full_name, context))
                         label.set_text (get_current_value_text (null));
+                    else if (has_schema)
+                        label.set_text (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
                     else
-                        label.set_text (get_current_value_text (model.get_key_value (key)));
+                        label.set_text (get_current_value_text (model.get_dconf_key_value (full_name)));
                 });
         }
         label.halign = Align.START;
@@ -196,7 +200,7 @@ class RegistryInfo : Grid, BrowsableView
         add_separator ();
 
         KeyEditorChild key_editor_child;
-        Variant initial_value = modifications_handler.get_key_custom_value (key);
+        Variant initial_value = modifications_handler.get_key_custom_value (full_name, context);
         switch (type_code)
         {
             case "b":
@@ -226,7 +230,7 @@ class RegistryInfo : Grid, BrowsableView
                 key_editor_child = create_child_enum (range_content, initial_value, full_name, modifications_handler);              break;
             case "<flags>": // has_schema
                 Variant range_content = model.get_range_content (full_name, context);
-                key_editor_child = create_child_flags ((GSettingsKey) key, range_content, initial_value, modifications_handler);    break;
+                key_editor_child = create_child_flags (full_name, context, range_content, initial_value, modifications_handler);    break;
             case "()":
                 key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                      break;
             default:
@@ -283,7 +287,7 @@ class RegistryInfo : Grid, BrowsableView
                             modifications_handler.add_delayed_setting (full_name, null, true);
                         else
                         {
-                            Variant tmp_variant = modifications_handler.get_key_custom_value (key);
+                            Variant tmp_variant = modifications_handler.get_key_custom_value (full_name, context);
                             modifications_handler.add_delayed_setting (full_name, tmp_variant, true);
                             key_editor_child.reload (tmp_variant);
                         }
@@ -294,13 +298,13 @@ class RegistryInfo : Grid, BrowsableView
                         {
                             model.set_key_to_default (full_name, context);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
-                            key_editor_child.reload (model.get_key_value (key));
+                            key_editor_child.reload (model.get_gsettings_key_value (full_name, context));
                             //if (type_code == "<flags>")                      let's try to live without this...
                             //    key.planned_value = key.value;
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
-                            model.set_key_value (key, model.get_key_value (key));  // TODO that hurts...
+                            model.set_key_value (key, model.get_gsettings_key_value (full_name, context));  // TODO that hurts...
                     }
                 });
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
@@ -323,7 +327,10 @@ class RegistryInfo : Grid, BrowsableView
                 if (!has_schema && model.is_key_ghost (full_name))
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
-                key_editor_child.reload (model.get_key_value (key));
+                if (has_schema)
+                    key_editor_child.reload (model.get_gsettings_key_value (full_name, context));
+                else
+                    key_editor_child.reload (model.get_dconf_key_value (full_name));
                 //if (type_code == "<flags>")                      let's try to live without this...
                 //    key.planned_value = key.value;
                 SignalHandler.unblock (key_editor_child, value_has_changed_handler);
@@ -360,12 +367,12 @@ class RegistryInfo : Grid, BrowsableView
         }
     }
 
-    private static KeyEditorChild create_child_flags (GSettingsKey key, Variant range_content, Variant initial_value, ModificationsHandler modifications_handler)
+    private static KeyEditorChild create_child_flags (string full_name, string context, Variant range_content, Variant initial_value, ModificationsHandler modifications_handler)
     {
         KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, range_content.get_strv ());
 
         ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
+                string [] active_flags = modifications_handler.get_key_custom_value (full_name, context).get_strv ();
                 key_editor_child_flags.update_flags (active_flags);
             });
         key_editor_child_flags.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
