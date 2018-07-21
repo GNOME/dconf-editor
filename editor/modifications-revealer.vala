@@ -100,10 +100,7 @@ class ModificationsRevealer : Revealer
             // gsettings
             else
             {
-                Key? key = model.get_key (full_name, objects [position, 0]);
-                if (key == null)
-                    assert_not_reached ();
-                if (!model.is_key_default ((GSettingsKey) (!) key))
+                if (!model.is_key_default (full_name, objects [position, 0]))
                     modifications_handler.add_delayed_setting (full_name, null, true);
             }
         }
@@ -152,21 +149,24 @@ class ModificationsRevealer : Revealer
     * * Modifications list population
     \*/
 
-    private Widget delayed_setting_row_create (Object key)
+    private Widget delayed_setting_row_create (Object object)
     {
-        string full_name = ((Key) key).full_name;
-        bool has_schema = key is GSettingsKey;
-        bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default ((GSettingsKey) key)
+        Key key = (Key) object;
+        string full_name = key.full_name;
+        string context = key.context;
+        string type_string = key.type_string;
+        bool has_schema = context != ".dconf";
+
+        bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default (full_name, context)
                                               : modifications_handler.model.is_key_ghost (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
         string? cool_planned_value = null;
         if (planned_value != null)
-            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value, ((Key) key).type_string);
+            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value, type_string);
         string? cool_default_value = null;
         if (has_schema)
-            cool_default_value = Key.cool_text_value_from_variant (((GSettingsKey) key).default_value, ((Key) key).type_string);
-        string cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_key_value ((Key) key),
-                                                                                                             ((Key) key).type_string);
+            cool_default_value = Key.cool_text_value_from_variant (((GSettingsKey) key).default_value, type_string);
+        string cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_key_value (key), type_string);
         DelayedSettingView view = new DelayedSettingView (full_name,
                                                           is_default_or_ghost,
                                                           cool_key_value,
@@ -177,7 +177,7 @@ class ModificationsRevealer : Revealer
         wrapper.add (view);
         if (modifications_handler.get_current_delay_mode ())
         {
-            Variant variant = new Variant ("(ss)", full_name, ((Key) key).context);
+            Variant variant = new Variant ("(ss)", full_name, context);
             wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");
         }
         return wrapper;

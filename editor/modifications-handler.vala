@@ -156,13 +156,6 @@ class ModificationsHandler : Object
         return planned_change && (planned_value != null) ? (!) planned_value : model.get_key_value (key);
     }
 
-    public bool key_value_is_default (GSettingsKey key) // doesn't make sense for DConfKey?
-    {
-        bool planned_change = key_has_planned_change (key.full_name);
-        Variant? planned_value = get_key_planned_value (key.full_name);
-        return planned_change ? planned_value == null : model.is_key_default (key);
-    }
-
     public void set_dconf_key_value (string full_name, Variant key_value)
     {
         model.set_dconf_key_value (full_name, key_value);

@@ -166,7 +166,7 @@ public class SettingsModel : Object
                             gkey_value_push (gkey.full_name,
                                              gkey.context,
                                              get_key_value (gkey),
-                                             is_key_default (gkey));
+                                             _is_key_default (gkey));
                         });
                 }
                 else if ((!) object is DConfKey)
@@ -244,7 +244,7 @@ public class SettingsModel : Object
                 gkey_value_push (gkey.full_name,
                                  gkey.context,
                                  get_key_value (gkey),
-                                 is_key_default (gkey));
+                                 _is_key_default (gkey));
             }
             else
             {
@@ -271,6 +271,13 @@ public class SettingsModel : Object
     {
         GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path), context);
+    }
+    private GSettingsKey get_gsettings_key (string full_name, string schema_id)
+    {
+        Key? key = get_key (full_name, schema_id);
+        if (key == null || !((!) key is GSettingsKey))
+            assert_not_reached ();
+        return (GSettingsKey) (!) key;
     }
 
     public bool path_exists (string path)
@@ -625,12 +632,9 @@ public class SettingsModel : Object
 
     public void set_key_to_default (string full_name, string schema_id)
     {
-        Key? key = get_key (full_name, schema_id);
-        if (key == null && !(key is GSettingsKey))
-            return; // TODO better
-
-        GLib.Settings settings = ((GSettingsKey) (!) key).settings;
-        settings.reset (((!) key).name);
+        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        GLib.Settings settings = key.settings;
+        settings.reset (key.name);
         if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
             settings.backend.changed (full_name, null);
         // Alternative workaround: key.value_changed ();
@@ -651,7 +655,12 @@ public class SettingsModel : Object
         }
     }
 
-    public bool is_key_default (GSettingsKey key)
+    public bool is_key_default (string full_name, string schema_id)
+    {
+        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        return _is_key_default (key);
+    }
+    private bool _is_key_default (GSettingsKey key)
     {
         GLib.Settings settings = key.settings;
         return settings.get_user_value (key.name) == null;
@@ -675,10 +684,8 @@ public class SettingsModel : Object
 
     public Variant get_range_content (string full_name, string schema_id)
     {
-        Key? key = get_key (full_name, schema_id);
-        if (key == null || !((!) key is GSettingsKey))
-            assert_not_reached ();
-        return ((GSettingsKey) (!) key).range_content;
+        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        return key.range_content;
     }
 
     public bool key_has_schema (string full_name)

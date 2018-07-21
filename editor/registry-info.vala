@@ -170,7 +170,7 @@ class RegistryInfo : Grid, BrowsableView
         }
         else
         {
-            if (has_schema && model.is_key_default ((GSettingsKey) key))
+            if (has_schema && model.is_key_default (full_name, context))
                 label = new Label (get_current_value_text (null));
             else
                 label = new Label (get_current_value_text (model.get_key_value (key)));
@@ -178,7 +178,7 @@ class RegistryInfo : Grid, BrowsableView
             key_value_changed_handler = key.value_changed.connect (() => {
                     if (!has_schema && model.is_key_ghost (full_name))
                         label.set_text (_("Key erased."));
-                    else if (has_schema && model.is_key_default ((GSettingsKey) key))
+                    else if (has_schema && model.is_key_default (full_name, context))
                         label.set_text (get_current_value_text (null));
                     else
                         label.set_text (get_current_value_text (model.get_key_value (key)));
@@ -271,8 +271,11 @@ class RegistryInfo : Grid, BrowsableView
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
-            GSettingsKey gkey = (GSettingsKey) key;
-            custom_value_switch.set_active (modifications_handler.key_value_is_default (gkey));
+            bool planned_change = modifications_handler.key_has_planned_change (full_name);
+            Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
+            bool key_value_is_default = planned_change ? planned_value == null : model.is_key_default (full_name, context);
+            custom_value_switch.set_active (key_value_is_default);
+
             ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
                     if (modifications_handler.should_delay_apply (type_code))
                     {
@@ -302,7 +305,7 @@ class RegistryInfo : Grid, BrowsableView
                 });
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
-                    custom_value_switch.set_active (model.is_key_default (gkey));
+                    custom_value_switch.set_active (model.is_key_default (full_name, context));
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
                 });
             custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
