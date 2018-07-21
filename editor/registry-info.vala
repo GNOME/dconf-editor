@@ -260,8 +260,10 @@ class RegistryInfo : Grid, BrowsableView
                     else
                         modifications_handler.dismiss_change (full_name);
                 }
+                else if (has_schema)
+                    model.set_gsettings_key_value (full_name, context, key_editor_child.get_variant ());
                 else
-                    model.set_key_value (key, key_editor_child.get_variant ());
+                    model.set_dconf_key_value (full_name, key_editor_child.get_variant ());
             });
 
         if (has_schema)
@@ -304,7 +306,7 @@ class RegistryInfo : Grid, BrowsableView
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
-                            model.set_key_value (key, model.get_gsettings_key_value (full_name, context));  // TODO that hurts...
+                            model.set_gsettings_key_value (full_name, context, model.get_gsettings_key_value (full_name, context));  // TODO that hurts...
                     }
                 });
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {

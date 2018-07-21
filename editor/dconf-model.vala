@@ -578,17 +578,6 @@ public class SettingsModel : Object
         return client.read (full_name);
     }
 
-    public void set_key_value (Key key, Variant key_value)
-    {
-        if (key is GSettingsKey)
-            ((GSettingsKey) key).settings.set_value (key.name, key_value);
-        else
-        {
-            set_dconf_value (key.full_name, key_value);
-            key.value_changed ();
-        }
-    }
-
     public void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
     {
         Key? key = get_key (full_name, schema_id);
