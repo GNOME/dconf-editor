@@ -702,7 +702,7 @@ public class SettingsModel : Object
     public string get_cool_default_value (string full_name, string schema_id)
     {
         GSettingsKey key = get_gsettings_key (full_name, schema_id);
-        return Key.cool_text_value_from_variant (key.default_value, key.type_string);
+        return Key.cool_text_value_from_variant (key.default_value);
     }
 
     public bool key_has_schema (string full_name)

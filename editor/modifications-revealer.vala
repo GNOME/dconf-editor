@@ -154,7 +154,6 @@ class ModificationsRevealer : Revealer
         Key key = (Key) object;
         string full_name = key.full_name;
         string context = key.context;
-        string type_string = key.type_string;
         bool has_schema = context != ".dconf";
 
         bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default (full_name, context)
@@ -162,17 +161,17 @@ class ModificationsRevealer : Revealer
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
         string? cool_planned_value = null;
         if (planned_value != null)
-            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value, type_string);
+            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value);
 
         string? cool_default_value = null;
         string cool_key_value;
         if (has_schema)
         {
             cool_default_value = modifications_handler.model.get_cool_default_value (full_name, context);
-            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_gsettings_key_value (full_name, context), type_string);
+            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_gsettings_key_value (full_name, context));
         }
         else
-            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_dconf_key_value (full_name), type_string);
+            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_dconf_key_value (full_name));
 
         DelayedSettingView view = new DelayedSettingView (full_name,
                                                           is_default_or_ghost,

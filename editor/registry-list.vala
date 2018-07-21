@@ -395,7 +395,7 @@ private abstract class RegistryList : Grid, BrowsableView
             css_context.remove_class ("edited");
         else
             css_context.add_class ("edited");
-        row.update_label (Key.cool_text_value_from_variant (key_value, type_string), false);
+        row.update_label (Key.cool_text_value_from_variant (key_value), false);
     }
 
     private void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
@@ -415,7 +415,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 row.update_switch (key_value_boolean, "bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
                 row.use_switch (true);
             }
-            row.update_label (Key.cool_text_value_from_variant ((!) key_value, type_string), false);
+            row.update_label (Key.cool_text_value_from_variant ((!) key_value), false);
         }
     }
 

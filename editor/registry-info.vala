@@ -383,7 +383,7 @@ class RegistryInfo : Grid, BrowsableView
     {
         if (key_value == null)
             return _("Default value");
-        return Key.cool_text_value_from_variant ((!) key_value, ((!) key_value).get_type_string ());
+        return Key.cool_text_value_from_variant ((!) key_value);
     }
 
     public string? get_copy_text () // can compile with "private", but is public 2/2

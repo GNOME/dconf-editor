@@ -178,8 +178,9 @@ public abstract class Key : SettingObject
         }
     }
 
-    public static string cool_text_value_from_variant (Variant variant, string type)        // called from subclasses and from KeyListBoxRow
+    public static string cool_text_value_from_variant (Variant variant)        // called from subclasses and from KeyListBoxRow
     {
+        string type = variant.get_type_string ();
         switch (type)
         {
             case "b":
@@ -374,15 +375,15 @@ public class GSettingsKey : Key
         builder.add ("{ss}", "type-name",     key_to_description (type_string));
         builder.add ("{ss}", "summary",       summary);
         builder.add ("{ss}", "description",   description);
-        builder.add ("{ss}", "default-value", cool_text_value_from_variant (default_value, type_string));
+        builder.add ("{ss}", "default-value", cool_text_value_from_variant (default_value));
         builder.add ("{ss}", "range-type",    range_type);
         if (show_min_and_max (type_string))
         {
             string min, max;
             if (range_type == "range")     // TODO test more; and what happen if only min/max is in range?
             {
-                min = cool_text_value_from_variant (range_content.get_child_value (0), type_string);
-                max = cool_text_value_from_variant (range_content.get_child_value (1), type_string);
+                min = cool_text_value_from_variant (range_content.get_child_value (0));
+                max = cool_text_value_from_variant (range_content.get_child_value (1));
             }
             else
                 get_min_and_max_string (out min, out max, type_string);
