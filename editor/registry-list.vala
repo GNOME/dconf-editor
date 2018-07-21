@@ -611,7 +611,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
                )
             || (
-                (type_string == "n" || type_string == "i" || type_string == "h" || type_string == "x")
+                (type_string == "n" || type_string == "i" || type_string == "x")    // the handle type cannot have range
                 && (key.range_type == "range")
                 && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
                )
