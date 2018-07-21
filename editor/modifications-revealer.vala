@@ -168,7 +168,7 @@ class ModificationsRevealer : Revealer
         string cool_key_value;
         if (has_schema)
         {
-            cool_default_value = Key.cool_text_value_from_variant (((GSettingsKey) key).default_value, type_string);
+            cool_default_value = modifications_handler.model.get_cool_default_value (full_name, context);
             cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_gsettings_key_value (full_name, context), type_string);
         }
         else
