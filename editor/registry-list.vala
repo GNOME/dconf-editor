@@ -572,10 +572,6 @@ private abstract class RegistryList : Grid, BrowsableView
         ContextPopover popover = (!) row.nullable_popover;
         string full_name = row.full_name;
         string schema_id = row.context;
-        Key? _key = model.get_key (full_name, schema_id);   // racy...
-        if (_key == null)
-            assert_not_reached ();
-        GSettingsKey key = (GSettingsKey) (!) _key;
         Variant variant_s = new Variant.string (full_name);
         Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
 
@@ -603,16 +599,17 @@ private abstract class RegistryList : Grid, BrowsableView
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
         string type_string = row.type_string;
-        Variant range_content = model.get_range_content (full_name, schema_id);
+        bool range_type_is_range;
+        Variant range_content = model.get_range_content_2 (full_name, schema_id, out range_type_is_range);
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
                 (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
-                && (key.range_type == "range")
+                && (range_type_is_range)
                 && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
                )
             || (
                 (type_string == "n" || type_string == "i" || type_string == "x")    // the handle type cannot have range
-                && (key.range_type == "range")
+                && (range_type_is_range)
                 && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
                )
             || type_string == "()")
@@ -649,7 +646,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
 
             string [] all_flags = range_content.get_strv ();
-            popover.create_flags_list (key.settings.get_strv (row.key_name), all_flags);
+            popover.create_flags_list (modifications_handler.get_key_custom_value (full_name, schema_id).get_strv (), all_flags);
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                     string [] active_flags = modifications_handler.get_key_custom_value (full_name, schema_id).get_strv ();
                     foreach (string flag in all_flags)

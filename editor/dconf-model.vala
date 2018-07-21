@@ -692,6 +692,12 @@ public class SettingsModel : Object
         GSettingsKey key = get_gsettings_key (full_name, schema_id);
         return key.range_content;
     }
+    public Variant get_range_content_2 (string full_name, string schema_id, out bool range_type_is_range)
+    {
+        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        range_type_is_range = key.range_type == "range";
+        return key.range_content;
+    }
 
     public string get_cool_default_value (string full_name, string schema_id)
     {
