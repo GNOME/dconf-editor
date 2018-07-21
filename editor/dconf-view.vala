@@ -60,7 +60,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
-        action = popover.create_buttons_list (false, delay_mode, has_planned_change, "<enum>", initial_value, range_content);
+        action = popover.create_buttons_list (false, delay_mode, has_planned_change, "<enum>", range_content, initial_value);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {
@@ -97,7 +97,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     private Variant variant;
     private Label label = new Label ("");
 
-    public KeyEditorChildFlags (Variant initial_value, string [] _all_flags, string [] active_flags)
+    public KeyEditorChildFlags (Variant initial_value, string [] _all_flags)
     {
         all_flags = _all_flags;
         this.visible = true;
@@ -117,7 +117,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         label.hexpand = true;
         this.add (label);
 
-        popover.create_flags_list (active_flags, all_flags);
+        popover.create_flags_list (initial_value.get_strv (), all_flags);
         popover.set_relative_to (button);
         popover.value_changed.connect ((gvariant) => {
                 if (gvariant == null)   // TODO better (2/3)
@@ -153,7 +153,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
     private Variant? maybe_variant;
     private GLib.Action action;
 
-    public KeyEditorChildNullableBool (Variant initial_value, bool delay_mode, bool has_planned_change, Variant? range_content_or_null)
+    public KeyEditorChildNullableBool (Variant initial_value, bool delay_mode, bool has_planned_change, bool has_schema)
     {
         this.visible = true;
         this.hexpand = true;
@@ -161,8 +161,12 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         this.use_popover = true;
         this.width_request = 100;
 
+        Variant? meaningless_variant_or_null = null;  // only used for adding or not "set to default"
+        if (has_schema)
+            meaningless_variant_or_null = new Variant.boolean (true);
+
         ContextPopover popover = new ContextPopover ();
-        action = popover.create_buttons_list (false, delay_mode, has_planned_change, "mb", initial_value, range_content_or_null);
+        action = popover.create_buttons_list (false, delay_mode, has_planned_change, "mb", meaningless_variant_or_null, initial_value);
         popover.set_relative_to (this);
 
         popover.value_changed.connect ((gvariant) => {

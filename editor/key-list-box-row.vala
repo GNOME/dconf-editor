@@ -459,7 +459,7 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    public GLib.Action create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? value_variant, Variant? range_content_or_null)
+    public GLib.Action create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? range_content_or_null, Variant? value_variant)
     {
         // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
         const string ACTION_NAME = "choice";

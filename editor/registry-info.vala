@@ -211,22 +211,29 @@ class RegistryInfo : Grid, BrowsableView
                 if (minimum_is_maximum)
                     key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
                 else
-                    key_editor_child = create_child_integer (key, initial_value, has_schema, type_code, range_type_is_range);   break;
+                {
+                    Variant? range = null;
+                    if (has_schema && range_type_is_range)  // type_string != "h"
+                        range = model.get_range_content (full_name, context);
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_code, range);
+                }                                                                                                                   break;
             case "d":
-                key_editor_child = (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);                             break;
+                key_editor_child = (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);                                 break;
             case "mb":
-                key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);               break;
+                key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);                   break;
             case "<enum>":  // has_schema
-                key_editor_child = create_child_enum ((GSettingsKey) key, initial_value, full_name, modifications_handler);     break;
+                Variant range_content = model.get_range_content (full_name, context);
+                key_editor_child = create_child_enum (range_content, initial_value, full_name, modifications_handler);              break;
             case "<flags>": // has_schema
-                key_editor_child = create_child_flags ((GSettingsKey) key, initial_value, modifications_handler);               break;
+                Variant range_content = model.get_range_content (full_name, context);
+                key_editor_child = create_child_flags ((GSettingsKey) key, range_content, initial_value, modifications_handler);    break;
             case "()":
-                key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                  break;
+                key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                      break;
             default:
                 if ("a" in type_code)
                     key_editor_child = (KeyEditorChild) new KeyEditorChildArray (type_code, initial_value);
                 else
-                    key_editor_child = (KeyEditorChild) new KeyEditorChildDefault (type_code, initial_value);                   break;
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildDefault (type_code, initial_value);                       break;
         }
 
         bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
@@ -329,27 +336,15 @@ class RegistryInfo : Grid, BrowsableView
             });
     }
 
-    private static KeyEditorChild create_child_integer (Key key, Variant initial_value, bool has_schema, string type_string, bool range_type_is_range)
-    {
-        Variant? range = null;
-        if (has_schema && range_type_is_range)  // type_string != "h"
-            range = ((GSettingsKey) key).range_content;
-        return (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_string, range);
-    }
-
     private static KeyEditorChild create_child_mb (Variant initial_value, string full_name, bool has_schema, ModificationsHandler modifications_handler)
     {
         bool delay_mode = modifications_handler.get_current_delay_mode ();
         bool has_planned_change = modifications_handler.key_has_planned_change (full_name);
-        Variant? range_content_or_null = null;
-        if (has_schema)
-            range_content_or_null = new Variant.boolean (true); // only used for adding or not "set to default"
-        return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, range_content_or_null);
+        return (KeyEditorChild) new KeyEditorChildNullableBool (initial_value, delay_mode, has_planned_change, has_schema);
     }
 
-    private static KeyEditorChild create_child_enum (GSettingsKey key, Variant initial_value, string full_name, ModificationsHandler modifications_handler)
+    private static KeyEditorChild create_child_enum (Variant range_content, Variant initial_value, string full_name, ModificationsHandler modifications_handler)
     {
-        Variant range_content = key.range_content;
         switch (range_content.n_children ())
         {
             case 0: assert_not_reached ();
@@ -362,14 +357,12 @@ class RegistryInfo : Grid, BrowsableView
         }
     }
 
-    private static KeyEditorChild create_child_flags (GSettingsKey key, Variant initial_value, ModificationsHandler modifications_handler)
+    private static KeyEditorChild create_child_flags (GSettingsKey key, Variant range_content, Variant initial_value, ModificationsHandler modifications_handler)
     {
-        string [] all_flags = key.range_content.get_strv ();
-        string [] active_flags = key.settings.get_strv (key.name);
-        KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, all_flags, active_flags);
+        KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, range_content.get_strv ());
 
         ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
+                string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
                 key_editor_child_flags.update_flags (active_flags);
             });
         key_editor_child_flags.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));

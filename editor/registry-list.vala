@@ -571,12 +571,13 @@ private abstract class RegistryList : Grid, BrowsableView
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
         string full_name = row.full_name;
-        Key? _key = model.get_key (full_name, row.context);   // racy...
+        string schema_id = row.context;
+        Key? _key = model.get_key (full_name, schema_id);   // racy...
         if (_key == null)
             assert_not_reached ();
         GSettingsKey key = (GSettingsKey) (!) _key;
         Variant variant_s = new Variant.string (full_name);
-        Variant variant_ss = new Variant ("(ss)", full_name, row.context);
+        Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
 
         if (row.search_result_mode)
         {
@@ -602,30 +603,31 @@ private abstract class RegistryList : Grid, BrowsableView
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
         string type_string = row.type_string;
+        Variant range_content = model.get_range_content (full_name, schema_id);
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
                 (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
                 && (key.range_type == "range")
-                && (Key.get_variant_as_uint64 (key.range_content.get_child_value (1)) - Key.get_variant_as_uint64 (key.range_content.get_child_value (0)) < 13)
+                && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
                )
             || (
                 (type_string == "n" || type_string == "i" || type_string == "h" || type_string == "x")
                 && (key.range_type == "range")
-                && (Key.get_variant_as_int64 (key.range_content.get_child_value (1)) - Key.get_variant_as_int64 (key.range_content.get_child_value (0)) < 13)
+                && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
                )
             || type_string == "()")
         {
             popover.new_section ();
             GLib.Action action;
             if (planned_change)
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                      modifications_handler.get_key_planned_value (full_name), key.range_content);
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
+                                                      modifications_handler.get_key_planned_value (full_name));
             else if (model.is_key_default (key))
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                      null, key.range_content);
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
+                                                      null);
             else
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string,
-                                                      model.get_key_value (key), key.range_content);
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
+                                                      model.get_key_value (key));
 
             popover.change_dismissed.connect (() => {
                     row.destroy_popover ();
@@ -635,7 +637,7 @@ private abstract class RegistryList : Grid, BrowsableView
                     row.hide_right_click_popover ();
                     Variant key_value = model.get_key_value (key);
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
-                    row.set_key_value (row.context, gvariant);
+                    row.set_key_value (schema_id, gvariant);
                 });
         }
         else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
@@ -645,7 +647,7 @@ private abstract class RegistryList : Grid, BrowsableView
             if (!model.is_key_default (key))
                 popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
 
-            string [] all_flags = key.range_content.get_strv ();
+            string [] all_flags = range_content.get_strv ();
             popover.create_flags_list (key.settings.get_strv (row.key_name), all_flags);
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                     string [] active_flags = modifications_handler.get_key_custom_value (key).get_strv ();
@@ -654,7 +656,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 });
             popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
 
-            popover.value_changed.connect ((gvariant) => row.set_key_value (row.context, gvariant));
+            popover.value_changed.connect ((gvariant) => row.set_key_value (schema_id, gvariant));
         }
         else if (planned_change)
         {
@@ -705,8 +707,8 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
             Variant key_value = model.get_dconf_key_value (row.full_name);
-            GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string,
-                                                              planned_change ? planned_value : key_value, null);
+            GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string, null,
+                                                              planned_change ? planned_value : key_value);
 
             popover.change_dismissed.connect (() => {
                     row.destroy_popover ();

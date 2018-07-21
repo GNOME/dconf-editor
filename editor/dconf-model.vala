@@ -673,6 +673,14 @@ public class SettingsModel : Object
         error_hard_conflicting_key = gkey.error_hard_conflicting_key;
     }
 
+    public Variant get_range_content (string full_name, string schema_id)
+    {
+        Key? key = get_key (full_name, schema_id);
+        if (key == null || !((!) key is GSettingsKey))
+            assert_not_reached ();
+        return ((GSettingsKey) (!) key).range_content;
+    }
+
     public bool key_has_schema (string full_name)
     {
         if (!is_key_path (full_name))
