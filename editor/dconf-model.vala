@@ -27,8 +27,6 @@ public class SettingsModel : Object
     public bool use_shortpaths { private get; set; default = false; }
 
     public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
-    public signal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default);
-    public signal void dkey_value_push (string full_name, Variant? key_value_or_null);
 
     public void refresh_relocatable_schema_paths (bool user_schemas,
                                                   bool built_in_schemas,
@@ -437,7 +435,10 @@ public class SettingsModel : Object
     * * Watched keys
     \*/
 
-    GLib.ListStore watched_keys = new GLib.ListStore (typeof (Key));
+    public signal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default);
+    public signal void dkey_value_push (string full_name, Variant? key_value_or_null);
+
+    private GLib.ListStore watched_keys = new GLib.ListStore (typeof (Key));
 
     public void keys_value_push ()
     {
@@ -446,24 +447,27 @@ public class SettingsModel : Object
         while (object != null)
         {
             if ((!) object is GSettingsKey)
-            {
-                GSettingsKey gkey = (GSettingsKey) (!) object;
-                gkey_value_push (gkey.full_name,
-                                 gkey.context,
-                                 get_key_value (gkey),
-                                 _is_key_default (gkey));
-            }
-            else
-            {
-                string full_name = ((Key) (!) object).full_name;
-                if (is_key_ghost (full_name))
-                    dkey_value_push (full_name, null);
-                else
-                    dkey_value_push (full_name, get_dconf_key_value (full_name));
-            }
+                push_gsettings_key_value ((GSettingsKey) (!) object);
+            else if ((!) object is DConfKey)
+                push_dconf_key_value (((Key) (!) object).full_name, client);
             position++;
             object = watched_keys.get_item (position);
         };
+    }
+
+    private void add_watched_key (Key key)
+    {
+        if (key is GSettingsKey)
+            key.key_value_changed_handler = key.value_changed.connect (() => {
+                    push_gsettings_key_value ((GSettingsKey) key);
+                });
+        else if (key is DConfKey)
+            key.key_value_changed_handler = key.value_changed.connect (() => {
+                    push_dconf_key_value (key.full_name, client);
+                });
+        else assert_not_reached ();
+
+        watched_keys.append (key);
     }
 
     private void clean_watched_keys ()
@@ -483,30 +487,18 @@ public class SettingsModel : Object
         watched_keys.remove_all ();
     }
 
-    private void add_watched_key (Key key)
+    private inline void push_gsettings_key_value (GSettingsKey key)
     {
-        if (key is GSettingsKey)
-        {
-            GSettingsKey gkey = (GSettingsKey) key;
-            gkey.key_value_changed_handler = gkey.value_changed.connect (() => {
-                    gkey_value_push (gkey.full_name,
-                                     gkey.context,
-                                     get_key_value (gkey),
-                                     _is_key_default (gkey));
-                });
-        }
-        else if (key is DConfKey)
-        {
-            DConfKey dkey = (DConfKey) key;
-            string full_name = key.full_name;
-            dkey.key_value_changed_handler = dkey.value_changed.connect (() => {
-                    if (is_key_ghost (full_name))
-                        dkey_value_push (full_name, null);
-                    else
-                        dkey_value_push (full_name, get_dconf_key_value (full_name));
-                });
-        }
-        watched_keys.append (key);
+        gkey_value_push (key.full_name,
+                         key.context,
+                         _get_gsettings_key_value (key),
+                         _is_key_default (key));
+    }
+
+    private inline void push_dconf_key_value (string full_name, DConf.Client client)
+    {
+        dkey_value_push (full_name,
+                         get_dconf_key_value_or_null (full_name, client));
     }
 
     /*\
@@ -578,15 +570,6 @@ public class SettingsModel : Object
             return _("%s (key erased)").printf (full_name);
         else
             return ((!) key).descriptor + " " + ((!) key_value).print (false);
-    }
-
-    private Variant get_key_value (Key key)
-    {
-        if ((!) key is GSettingsKey)
-            return _get_gsettings_key_value ((GSettingsKey) key);
-        if ((!) key is DConfKey)
-            return _get_dconf_key_value (key.full_name, client);
-        assert_not_reached ();
     }
 
     public Variant get_gsettings_key_value (string full_name, string schema_id)
