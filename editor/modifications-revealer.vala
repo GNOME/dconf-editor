@@ -42,6 +42,9 @@ class ModificationsRevealer : Revealer
     construct
     {
         delayed_settings_listbox.set_header_func (delayed_setting_row_update_header);
+
+        apply_button.icon = null;
+        apply_button.get_style_context ().add_class ("text-button");
     }
 
     /*\
@@ -49,20 +52,26 @@ class ModificationsRevealer : Revealer
     \*/
 
     [GtkCallback]
-    private void on_size_allocate (Allocation allocation)
+    private void on_size_allocate (Allocation allocation)   // TODO remaining warnings printed on redim when allocation width passes 900
     {
         StyleContext context = apply_button.get_style_context ();
         if (allocation.width < 900)
         {
-            context.remove_class ("text-button");
-            apply_button.icon = apply_button_icon;
-            context.add_class ("image-button");
+            if (apply_button.icon == null)
+            {
+                context.remove_class ("text-button");
+                apply_button.icon = apply_button_icon;
+                context.add_class ("image-button");
+            }
         }
         else
         {
-            context.remove_class ("image-button");
-            apply_button.icon = null;
-            context.add_class ("text-button");
+            if (apply_button.icon != null)
+            {
+                context.remove_class ("image-button");
+                apply_button.icon = null;
+                context.add_class ("text-button");
+            }
         }
     }
 
