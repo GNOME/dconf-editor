@@ -67,8 +67,6 @@ public class Directory : SettingObject
 
 public abstract class Key : SettingObject
 {
-    public abstract string descriptor { owned get; }
-
     public string type_string { get; protected set; default = "*"; }
     public Variant properties { owned get; protected set; }
 
@@ -281,8 +279,6 @@ public abstract class Key : SettingObject
 
 public class DConfKey : Key
 {
-    public override string descriptor { owned get { return full_name; } }
-
     public DConfKey (DConf.Client client, string parent_full_name, string name, string type_string)
     {
         Object (context: ".dconf", full_name: parent_full_name + name, name: name, type_string: type_string);
@@ -329,7 +325,7 @@ public class GSettingsKey : Key
     public string range_type             { get; construct; }
     public Variant range_content         { get; construct; }
 
-    public override string descriptor {
+    public string descriptor {
         owned get {
             if (schema_path == null)
                 return @"$context:$parent_path $name";

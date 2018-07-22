@@ -560,16 +560,24 @@ public class SettingsModel : Object
             return full_name;
 
         if ((!) key is GSettingsKey)
-            return ((!) key).descriptor + " " + _get_gsettings_key_value ((GSettingsKey) key).print (false);
+            return get_gsettings_key_copy_text ((GSettingsKey) (!) key);
 
-        if (!((!) key is DConfKey))
-            assert_not_reached ();
+        if ((!) key is DConfKey)
+            return get_dconf_key_copy_text (full_name, client);
 
+        assert_not_reached ();
+    }
+    private static inline string get_gsettings_key_copy_text (GSettingsKey key)
+    {
+        return key.descriptor + " " + _get_gsettings_key_value (key).print (false);
+    }
+    private static inline string get_dconf_key_copy_text (string full_name, DConf.Client client)
+    {
         Variant? key_value = get_dconf_key_value_or_null (full_name, client);
         if (key_value == null)
             return _("%s (key erased)").printf (full_name);
         else
-            return ((!) key).descriptor + " " + ((!) key_value).print (false);
+            return full_name + " " + ((!) key_value).print (false);
     }
 
     public Variant get_gsettings_key_value (string full_name, string schema_id)
@@ -744,7 +752,7 @@ public class SettingsModel : Object
                 }
                 else if ((!) key is GSettingsKey)
                 {
-                    string key_descriptor = ((Key) (!) key).descriptor;
+                    string key_descriptor = ((GSettingsKey) (!) key).descriptor;
                     string settings_descriptor = key_descriptor [0:key_descriptor.last_index_of_char (' ')]; // strip the key name
                     GLib.Settings? settings = delayed_settings_hashtable.lookup (settings_descriptor);
                     if (settings == null)
