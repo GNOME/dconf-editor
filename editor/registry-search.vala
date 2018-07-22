@@ -242,17 +242,16 @@ class RegistrySearch : RegistryList
             if (SettingsModel.get_parent_path (bookmark) == current_path)
                 continue;
 
-            SettingObject? setting_object = model.get_object (bookmark);
-            if (setting_object == null)
+            string context = "";
+            string name = "";
+            if (!model.get_object (bookmark, ref context, ref name))
                 continue;
 
-            if (term in ((!) setting_object).name)
+            if (term in name)
             {
                 post_bookmarks++;
                 post_folders++;
-                SimpleSettingObject sso = new SimpleSettingObject (((!) setting_object).context,
-                                                                   ((!) setting_object).name,
-                                                                   ((!) setting_object).full_name);
+                SimpleSettingObject sso = new SimpleSettingObject (context, name, bookmark);
                 list_model.insert (post_bookmarks - 1, sso);
             }
         }

@@ -192,12 +192,20 @@ public class SettingsModel : Object
         keys_array [position, 2] = object.full_name;
     }
 
-    public SettingObject? get_object (string path)
+    public bool get_object (string path, ref string context, ref string name)
     {
+        SettingObject? object;
         if (is_key_path (path))
-            return (SettingObject?) get_key (path, "");
+            object = (SettingObject?) get_key (path, "");
         else
-            return (SettingObject?) get_directory (path);
+            object = (SettingObject?) get_directory (path);
+
+        if (object == null)
+            return false;
+
+        context = ((!) object).context;
+        name = ((!) object).name;
+        return true;
     }
 
     private Key? get_key (string path, string context = "")
