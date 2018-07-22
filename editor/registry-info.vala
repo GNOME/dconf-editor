@@ -30,10 +30,13 @@ class RegistryInfo : Grid, BrowsableView
     [GtkChild] private ListBox properties_list_box;
     [GtkChild] private Button erase_button;
 
+    private Label current_value_label;
+
     public ModificationsHandler modifications_handler { private get; set; }
 
     private Variant? current_key_info = null;
     public string full_name { get; private set; default = ""; }
+    public string context { get; private set; default = ""; }
 
     /*\
     * * Cleaning
@@ -63,9 +66,10 @@ class RegistryInfo : Grid, BrowsableView
     * * Populating
     \*/
 
-    public void populate_properties_list_box (Key key, string _full_name, string context, Variant _current_key_info)
+    public void populate_properties_list_box (string _full_name, string _context, Variant _current_key_info)
     {
         full_name = _full_name;
+        context = _context;
         current_key_info = _current_key_info;
 
         SettingsModel model = modifications_handler.model;
@@ -161,41 +165,28 @@ class RegistryInfo : Grid, BrowsableView
 
         if (dict.lookup ("default-value", "s", out tmp_string))  add_row_from_label (_("Default"),     tmp_string);
 
-        ulong key_value_changed_handler = 0;
-        Label label;
         if (has_schema && error_hard_conflicting_key)
         {
-            label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
-            label.get_style_context ().add_class ("italic-label");
+            current_value_label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
+            current_value_label.get_style_context ().add_class ("italic-label");
         }
         else
         {
             if (has_schema && model.is_key_default (full_name, context))
-                label = new Label (get_current_value_text (null));
+                current_value_label = new Label (get_current_value_text (null));
             else if (has_schema)
-                label = new Label (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
+                current_value_label = new Label (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
             else
-                label = new Label (get_current_value_text (model.get_dconf_key_value (full_name)));
-
-            key_value_changed_handler = key.value_changed.connect (() => {
-                    if (!has_schema && model.is_key_ghost (full_name))
-                        label.set_text (_("Key erased."));
-                    else if (has_schema && model.is_key_default (full_name, context))
-                        label.set_text (get_current_value_text (null));
-                    else if (has_schema)
-                        label.set_text (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
-                    else
-                        label.set_text (get_current_value_text (model.get_dconf_key_value (full_name)));
-                });
+                current_value_label = new Label (get_current_value_text (model.get_dconf_key_value (full_name)));
         }
-        label.halign = Align.START;
-        label.valign = Align.START;
-        label.xalign = 0;
-        label.yalign = 0;
-        label.wrap = true;
-        label.hexpand = true;
-        label.show ();
-        add_row_from_widget (_("Current value"), label, null);
+        current_value_label.halign = Align.START;
+        current_value_label.valign = Align.START;
+        current_value_label.xalign = 0;
+        current_value_label.yalign = 0;
+        current_value_label.wrap = true;
+        current_value_label.hexpand = true;
+        current_value_label.show ();
+        add_row_from_widget (_("Current value"), current_value_label, null);
 
         add_separator ();
 
@@ -340,9 +331,6 @@ class RegistryInfo : Grid, BrowsableView
         add_row_from_widget (_("Custom value"), key_editor_child, type_code);
 
         key_editor_child.destroy.connect (() => {
-                if (key_value_changed_handler == 0)
-                    assert_not_reached ();
-                key.disconnect (key_value_changed_handler);
                 key_editor_child.disconnect (value_has_changed_handler);
                 key_editor_child.disconnect (child_activated_handler);
             });
@@ -479,6 +467,34 @@ class RegistryInfo : Grid, BrowsableView
         if (current_key_info == null) // should not happen?
             return true;
         return !((!) current_key_info).equal (properties); // TODO compare key value with editor value?
+    }
+
+    /*\
+    * * Updating value
+    \*/
+
+    public void gkey_value_push (Variant key_value, bool is_key_default)
+    {
+        SettingsModel model = modifications_handler.model;
+        if (model.is_key_default (full_name, context))
+            current_value_label.set_text (get_current_value_text (null));
+        else
+            current_value_label.set_text (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
+    }
+
+    public void dkey_value_push (Variant? key_value_or_null)
+    {
+        SettingsModel model = modifications_handler.model;
+        if (model.is_key_ghost (full_name))
+        {
+            current_value_label.get_style_context ().add_class ("italic-label");
+            current_value_label.set_text (_("Key erased."));
+        }
+        else
+        {
+            current_value_label.get_style_context ().remove_class ("italic-label");
+            current_value_label.set_text (get_current_value_text (model.get_dconf_key_value (full_name)));
+        }
     }
 }
 

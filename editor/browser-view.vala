@@ -177,11 +177,11 @@ class BrowserView : Grid
         current_child.select_row (selected, last_context);
     }
 
-    public void prepare_object_view (Key key, bool is_parent)
+    public void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
     {
-        current_child.prepare_object_view (key, is_parent);
+        current_child.prepare_object_view (full_name, context, properties, is_parent);
         hide_reload_warning ();
-        last_context = key.context;
+        last_context = context;
     }
 
     public void set_path (ViewType type, string path)

@@ -72,9 +72,9 @@ class BrowserStack : Grid
             ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context, current_view == ViewType.FOLDER);
     }
 
-    public void prepare_object_view (Key key, bool is_parent)
+    public void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
     {
-        object_view.populate_properties_list_box (key, key.full_name, key.context, key.properties);
+        object_view.populate_properties_list_box (full_name, context, properties);
 
         stack.set_transition_type (is_parent && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
@@ -181,11 +181,15 @@ class BrowserStack : Grid
     {
         folder_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
         search_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+        if (full_name == object_view.full_name && schema_id == object_view.context)
+            object_view.gkey_value_push (key_value, is_key_default);
     }
     public void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         folder_view.dkey_value_push (full_name, key_value_or_null);
         search_view.dkey_value_push (full_name, key_value_or_null);
+        if (full_name == object_view.full_name)
+            object_view.dkey_value_push (key_value_or_null);
     }
 
     /*\

@@ -26,8 +26,6 @@ public class SettingsModel : Object
 
     public bool use_shortpaths { private get; set; default = false; }
 
-    GLib.ListStore watched_keys = new GLib.ListStore (typeof (Key));
-
     public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
     public signal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default);
     public signal void dkey_value_push (string full_name, Variant? key_value_or_null);
@@ -128,21 +126,7 @@ public class SettingsModel : Object
     public string [,]? get_children (string folder_path, bool update_watch = false)
     {
         if (update_watch)
-        {
-            uint position = 0;
-            Object? object = watched_keys.get_item (0);
-            Key key;
-            while (object != null)
-            {
-                key = (Key) (!) object;
-                key.disconnect (key.key_value_changed_handler);
-                key.key_value_changed_handler = 0;
-
-                position++;
-                object = watched_keys.get_item (position);
-            };
-            watched_keys.remove_all ();
-        }
+            clean_watched_keys ();
 
         GLib.ListStore list_store = get_children_as_liststore (folder_path);
         uint n_items = list_store.get_n_items ();
@@ -154,36 +138,12 @@ public class SettingsModel : Object
         Object? object = list_store.get_item (0);
         do
         {
-            SettingObject base_object = (SettingObject) (!) object;
-
             // watch for changes
             if (update_watch && (!) object is Key)
-            {
-                if ((!) object is GSettingsKey)
-                {
-                    GSettingsKey gkey = (GSettingsKey) (!) object;
-                    gkey.key_value_changed_handler = gkey.value_changed.connect (() => {
-                            gkey_value_push (gkey.full_name,
-                                             gkey.context,
-                                             get_key_value (gkey),
-                                             _is_key_default (gkey));
-                        });
-                }
-                else if ((!) object is DConfKey)
-                {
-                    DConfKey dkey = (DConfKey) (!) object;
-                    string full_name = base_object.full_name;
-                    dkey.key_value_changed_handler = dkey.value_changed.connect (() => {
-                            if (is_key_ghost (full_name))
-                                dkey_value_push (full_name, null);
-                            else
-                                dkey_value_push (full_name, get_dconf_key_value (full_name));
-                        });
-                }
-                watched_keys.append ((Key) (!) object);
-            }
+                add_watched_key ((Key) (!) object);
 
             // prepare the array
+            SettingObject base_object = (SettingObject) (!) object;
             if (!use_shortpaths)
                 add_object (ref keys_array, base_object, position);             // 1/4
             else
@@ -230,33 +190,6 @@ public class SettingsModel : Object
         keys_array [position, 0] = object.context;
         keys_array [position, 1] = object.name;
         keys_array [position, 2] = object.full_name;
-    }
-
-    public void keys_value_push ()
-    {
-        uint position = 0;
-        Object? object = watched_keys.get_item (0);
-        while (object != null)
-        {
-            if ((!) object is GSettingsKey)
-            {
-                GSettingsKey gkey = (GSettingsKey) (!) object;
-                gkey_value_push (gkey.full_name,
-                                 gkey.context,
-                                 get_key_value (gkey),
-                                 _is_key_default (gkey));
-            }
-            else
-            {
-                string full_name = ((Key) (!) object).full_name;
-                if (is_key_ghost (full_name))
-                    dkey_value_push (full_name, null);
-                else
-                    dkey_value_push (full_name, get_dconf_key_value (full_name));
-            }
-            position++;
-            object = watched_keys.get_item (position);
-        };
     }
 
     public SettingObject? get_object (string path)
@@ -488,7 +421,83 @@ public class SettingsModel : Object
     }
 
     /*\
-    * * Directory methods
+    * * Watched keys
+    \*/
+
+    GLib.ListStore watched_keys = new GLib.ListStore (typeof (Key));
+
+    public void keys_value_push ()
+    {
+        uint position = 0;
+        Object? object = watched_keys.get_item (0);
+        while (object != null)
+        {
+            if ((!) object is GSettingsKey)
+            {
+                GSettingsKey gkey = (GSettingsKey) (!) object;
+                gkey_value_push (gkey.full_name,
+                                 gkey.context,
+                                 get_key_value (gkey),
+                                 _is_key_default (gkey));
+            }
+            else
+            {
+                string full_name = ((Key) (!) object).full_name;
+                if (is_key_ghost (full_name))
+                    dkey_value_push (full_name, null);
+                else
+                    dkey_value_push (full_name, get_dconf_key_value (full_name));
+            }
+            position++;
+            object = watched_keys.get_item (position);
+        };
+    }
+
+    private void clean_watched_keys ()
+    {
+        uint position = 0;
+        Object? object = watched_keys.get_item (0);
+        Key key;
+        while (object != null)
+        {
+            key = (Key) (!) object;
+            key.disconnect (key.key_value_changed_handler);
+            key.key_value_changed_handler = 0;
+
+            position++;
+            object = watched_keys.get_item (position);
+        };
+        watched_keys.remove_all ();
+    }
+
+    private void add_watched_key (Key key)
+    {
+        if (key is GSettingsKey)
+        {
+            GSettingsKey gkey = (GSettingsKey) key;
+            gkey.key_value_changed_handler = gkey.value_changed.connect (() => {
+                    gkey_value_push (gkey.full_name,
+                                     gkey.context,
+                                     get_key_value (gkey),
+                                     _is_key_default (gkey));
+                });
+        }
+        else if (key is DConfKey)
+        {
+            DConfKey dkey = (DConfKey) key;
+            string full_name = key.full_name;
+            dkey.key_value_changed_handler = dkey.value_changed.connect (() => {
+                    if (is_key_ghost (full_name))
+                        dkey_value_push (full_name, null);
+                    else
+                        dkey_value_push (full_name, get_dconf_key_value (full_name));
+                });
+        }
+        watched_keys.append (key);
+    }
+
+    /*\
+    * * Path methods
     \*/
 
     public string get_fallback_path (string path)
@@ -509,6 +518,21 @@ public class SettingsModel : Object
             dir = get_directory (fallback_path);
         }
         return fallback_path;
+    }
+
+    public string get_fallback_context (string full_name, string context)
+    {
+        Key? found_object = get_key (full_name, context);
+        if (found_object == null)   // TODO warn about missing context
+            found_object = get_key (full_name, "");
+
+        if (found_object == null)
+            return "";
+
+        clean_watched_keys ();
+        add_watched_key ((!) found_object);
+
+        return ((!) found_object).context;
     }
 
     /*\

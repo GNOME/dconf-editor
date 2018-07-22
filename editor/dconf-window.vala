@@ -573,13 +573,11 @@ class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_object (string full_name, string context = "", bool notify_missing = true)
+    private void request_object (string full_name, string _context = "", bool notify_missing = true)
     {
-        Key? found_object = model.get_key (full_name, context);
-        if (found_object == null)   // TODO warn about missing context
-            found_object = model.get_key (full_name, "");
+        string context = model.get_fallback_context (full_name, _context);
 
-        if (found_object == null)
+        if (context == "")
         {
             if (notify_missing)
             {
@@ -593,7 +591,12 @@ class DConfWindow : ApplicationWindow
         }
         else
         {
-            browser_view.prepare_object_view ((!) found_object, current_path == SettingsModel.get_parent_path (full_name));
+            Variant? properties = model.get_key_properties (full_name, context);
+            if (properties == null)
+                assert_not_reached ();
+
+            browser_view.prepare_object_view (full_name, context, (!) properties,
+                                              current_path == SettingsModel.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
