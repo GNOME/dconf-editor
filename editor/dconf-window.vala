@@ -167,7 +167,7 @@ class DConfWindow : ApplicationWindow
         if (first_path == null)
             first_path = "/";
 
-        if (!SettingsModel.is_key_path ((!) first_path))
+        if (SettingsModel.is_folder_path ((!) first_path))
             request_folder ((!) first_path);
         else if (schema != null && model.path_exists ((!) first_path))
             request_object ((!) first_path, (!) schema);

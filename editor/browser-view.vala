@@ -333,9 +333,9 @@ public interface SettingComparator : Object
 
     protected virtual bool sort_directories_first (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
     {
-        if (!SettingsModel.is_key_path (a.full_name) && SettingsModel.is_key_path (b.full_name))
+        if (SettingsModel.is_folder_path (a.full_name) && SettingsModel.is_key_path (b.full_name))
             return_value = -1;
-        else if (SettingsModel.is_key_path (a.full_name) && !SettingsModel.is_key_path (b.full_name))
+        else if (SettingsModel.is_key_path (a.full_name) && SettingsModel.is_folder_path (b.full_name))
             return_value = 1;
         else
             return false;

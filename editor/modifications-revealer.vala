@@ -86,7 +86,7 @@ class ModificationsRevealer : Revealer
         {
             string full_name = objects [position, 2];
             // directory
-            if (!SettingsModel.is_key_path (full_name))
+            if (SettingsModel.is_folder_path (full_name))
             {
                 if (recursively)
                     _reset_objects (model.get_children (full_name), true);

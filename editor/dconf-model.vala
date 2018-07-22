@@ -173,7 +173,7 @@ public class SettingsModel : Object
                                 test_object = (SettingObject) child_list_store.get_item (0);
                                 test_full_name = test_object.full_name;
                             }
-                            while (!is_key_path (test_full_name) && child_list_store.get_n_items () == 1);
+                            while (is_folder_path (test_full_name) && child_list_store.get_n_items () == 1);
                             add_object (ref keys_array, new Directory (base_full_name, name), position);
                         }
                     }
@@ -399,9 +399,14 @@ public class SettingsModel : Object
     * * Path utilities
     \*/
 
-    public static bool is_key_path (string path)
+    public static inline bool is_key_path (string path)
     {
         return !path.has_suffix ("/");
+    }
+
+    public static inline bool is_folder_path (string path)
+    {
+        return path.has_suffix ("/");
     }
 
     public static string get_base_path (string path)
@@ -694,7 +699,7 @@ public class SettingsModel : Object
 
     public void has_conflicting_keys (string full_name, out bool warning_conflicting_key, out bool error_hard_conflicting_key)
     {
-        if (!is_key_path (full_name))
+        if (is_folder_path (full_name))
             assert_not_reached ();
 
         Key? key = get_key (full_name, "");
@@ -728,7 +733,7 @@ public class SettingsModel : Object
 
     public bool key_has_schema (string full_name)
     {
-        if (!is_key_path (full_name))
+        if (is_folder_path (full_name))
             assert_not_reached ();
 
         Key? key = get_key (full_name, "");

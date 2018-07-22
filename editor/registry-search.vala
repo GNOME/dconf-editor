@@ -202,7 +202,7 @@ class RegistrySearch : RegistryList
         SettingComparator comparator = sorting_options.get_comparator ();
         GLib.CompareDataFunc compare = (a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b);
 
-        if (!SettingsModel.is_key_path (current_path))
+        if (SettingsModel.is_folder_path (current_path))
         {
             string [,]? key_model = model.get_children (current_path);
             if (key_model != null)
@@ -305,7 +305,7 @@ class RegistrySearch : RegistryList
             {
                 string name      = ((!) next_key_model) [i, 1];
                 string full_name = ((!) next_key_model) [i, 2];
-                if (!SettingsModel.is_key_path (full_name))
+                if (SettingsModel.is_folder_path (full_name))
                 {
                     if (!local_again && term in name)
                     {
