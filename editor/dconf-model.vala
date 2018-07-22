@@ -200,7 +200,7 @@ public class SettingsModel : Object
             return (SettingObject?) get_directory (path);
     }
 
-    public Key? get_key (string path, string context = "")
+    private Key? get_key (string path, string context = "")
     {
         GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path), context);

@@ -247,7 +247,7 @@ class RegistryInfo : Grid, BrowsableView
                 if (modifications_handler.should_delay_apply (type_code))
                 {
                     if (is_valid)
-                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), has_schema);
+                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), context);
                     else
                         modifications_handler.dismiss_change (full_name);
                 }
@@ -277,11 +277,11 @@ class RegistryInfo : Grid, BrowsableView
                     if (modifications_handler.should_delay_apply (type_code))
                     {
                         if (custom_value_switch.get_active ())
-                            modifications_handler.add_delayed_setting (full_name, null, true);
+                            modifications_handler.add_delayed_setting (full_name, null, context);
                         else
                         {
                             Variant tmp_variant = modifications_handler.get_key_custom_value (full_name, context);
-                            modifications_handler.add_delayed_setting (full_name, tmp_variant, true);
+                            modifications_handler.add_delayed_setting (full_name, tmp_variant, context);
                             key_editor_child.reload (tmp_variant);
                         }
                     }
@@ -311,7 +311,7 @@ class RegistryInfo : Grid, BrowsableView
         {
             erase_button_handler = erase_button.clicked.connect (() => {
                     modifications_handler.enter_delay_mode ();
-                    modifications_handler.add_delayed_setting (full_name, null, false);
+                    modifications_handler.add_delayed_setting (full_name, null, ".dconf");
                 });
         }
 

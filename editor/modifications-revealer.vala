@@ -95,13 +95,14 @@ class ModificationsRevealer : Revealer
             else if (objects [position, 0] == ".dconf")
             {
                 if (!model.is_key_ghost (full_name))
-                    modifications_handler.add_delayed_setting (full_name, null, false);
+                    modifications_handler.add_delayed_setting (full_name, null, ".dconf");
             }
             // gsettings
             else
             {
-                if (!model.is_key_default (full_name, objects [position, 0]))
-                    modifications_handler.add_delayed_setting (full_name, null, true);
+                string schema_id = objects [position, 0];
+                if (!model.is_key_default (full_name, schema_id))
+                    modifications_handler.add_delayed_setting (full_name, null, schema_id);
             }
         }
     }
@@ -151,9 +152,8 @@ class ModificationsRevealer : Revealer
 
     private Widget delayed_setting_row_create (Object object)
     {
-        Key key = (Key) object;
-        string full_name = key.full_name;
-        string context = key.context;
+        string full_name = ((SimpleSettingObject) object).full_name;
+        string context = ((SimpleSettingObject) object).context;
         bool has_schema = context != ".dconf";
 
         bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default (full_name, context)
