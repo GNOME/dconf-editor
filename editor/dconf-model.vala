@@ -211,10 +211,10 @@ public class SettingsModel : Object
         GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path), context);
     }
-    private GSettingsKey get_gsettings_key (string full_name, string schema_id)
+    private GSettingsKey get_specific_gsettings_key (string full_name, string schema_id)
     {
         Key? key = get_key (full_name, schema_id);
-        if (key == null || !((!) key is GSettingsKey))
+        if (key == null || !((!) key is GSettingsKey) || ((!) key).context != schema_id)
             assert_not_reached ();
         return (GSettingsKey) (!) key;
     }
@@ -544,45 +544,9 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
-    public Variant? get_key_properties (string full_name, string context)
-    {
-        Key? key = get_key (full_name, context);
-        if (key == null)
-            return null;
-
-        return ((!) key).properties;
-    }
-
-    public string get_key_copy_text (string full_name, string context)
-    {
-        Key? key = get_key (full_name, context);
-        if (key == null)
-            return full_name;
-
-        if ((!) key is GSettingsKey)
-            return get_gsettings_key_copy_text ((GSettingsKey) (!) key);
-
-        if ((!) key is DConfKey)
-            return get_dconf_key_copy_text (full_name, client);
-
-        assert_not_reached ();
-    }
-    private static inline string get_gsettings_key_copy_text (GSettingsKey key)
-    {
-        return key.descriptor + " " + _get_gsettings_key_value (key).print (false);
-    }
-    private static inline string get_dconf_key_copy_text (string full_name, DConf.Client client)
-    {
-        Variant? key_value = get_dconf_key_value_or_null (full_name, client);
-        if (key_value == null)
-            return _("%s (key erased)").printf (full_name);
-        else
-            return full_name + " " + ((!) key_value).print (false);
-    }
-
     public Variant get_gsettings_key_value (string full_name, string schema_id)
     {
-        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
         return _get_gsettings_key_value (key);
     }
     private static Variant _get_gsettings_key_value (GSettingsKey key)
@@ -654,7 +618,7 @@ public class SettingsModel : Object
 
     public void set_key_to_default (string full_name, string schema_id)
     {
-        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
         GLib.Settings settings = key.settings;
         settings.reset (key.name);
         if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
@@ -679,47 +643,13 @@ public class SettingsModel : Object
 
     public bool is_key_default (string full_name, string schema_id)
     {
-        GSettingsKey key = get_gsettings_key (full_name, schema_id);
+        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
         return _is_key_default (key);
     }
     private bool _is_key_default (GSettingsKey key)
     {
         GLib.Settings settings = key.settings;
         return settings.get_user_value (key.name) == null;
-    }
-
-    public void has_conflicting_keys (string full_name, out bool warning_conflicting_key, out bool error_hard_conflicting_key)
-    {
-        if (is_folder_path (full_name))
-            assert_not_reached ();
-
-        Key? key = get_key (full_name, "");
-        if (key == null)
-            assert_not_reached ();  // TODO better?
-        if (!((!) key is GSettingsKey))
-            assert_not_reached ();  // TODO better?
-
-        GSettingsKey gkey = (GSettingsKey) (!) key;
-        warning_conflicting_key = gkey.warning_conflicting_key;
-        error_hard_conflicting_key = gkey.error_hard_conflicting_key;
-    }
-
-    public Variant get_range_content (string full_name, string schema_id)
-    {
-        GSettingsKey key = get_gsettings_key (full_name, schema_id);
-        return key.range_content;
-    }
-    public Variant get_range_content_2 (string full_name, string schema_id, out bool range_type_is_range)
-    {
-        GSettingsKey key = get_gsettings_key (full_name, schema_id);
-        range_type_is_range = key.range_type == "range";
-        return key.range_content;
-    }
-
-    public string get_cool_default_value (string full_name, string schema_id)
-    {
-        GSettingsKey key = get_gsettings_key (full_name, schema_id);
-        return Key.cool_text_value_from_variant (key.default_value);
     }
 
     public bool key_has_schema (string full_name)
@@ -788,5 +718,81 @@ public class SettingsModel : Object
         {
             warning (error.message);
         }
+    }
+
+    /*\
+    * * Key properties methods
+    \*/
+
+    public Variant? get_key_properties (string full_name, string context)
+    {
+        Key? key = get_key (full_name, context);
+        if (key == null)
+            return null;
+
+        return ((!) key).properties;
+    }
+
+    public string get_key_copy_text (string full_name, string context)
+    {
+        Key? key = get_key (full_name, context);
+        if (key == null)
+            return full_name;
+
+        if ((!) key is GSettingsKey)
+            return get_gsettings_key_copy_text ((GSettingsKey) (!) key);
+
+        if ((!) key is DConfKey)
+            return get_dconf_key_copy_text (full_name, client);
+
+        assert_not_reached ();
+    }
+    private static inline string get_gsettings_key_copy_text (GSettingsKey key)
+    {
+        return key.descriptor + " " + _get_gsettings_key_value (key).print (false);
+    }
+    private static inline string get_dconf_key_copy_text (string full_name, DConf.Client client)
+    {
+        Variant? key_value = get_dconf_key_value_or_null (full_name, client);
+        if (key_value == null)
+            return _("%s (key erased)").printf (full_name);
+        else
+            return full_name + " " + ((!) key_value).print (false);
+    }
+
+    // GSettings-only
+
+    public void has_conflicting_keys (string full_name, out bool warning_conflicting_key, out bool error_hard_conflicting_key)
+    {
+        if (is_folder_path (full_name))
+            assert_not_reached ();
+
+        Key? key = get_key (full_name, "");
+        if (key == null)
+            assert_not_reached ();  // TODO better?
+        if (!((!) key is GSettingsKey))
+            assert_not_reached ();  // TODO better?
+
+        GSettingsKey gkey = (GSettingsKey) (!) key;
+        warning_conflicting_key = gkey.warning_conflicting_key;
+        error_hard_conflicting_key = gkey.error_hard_conflicting_key;
+    }
+
+    public Variant get_range_content (string full_name, string schema_id)
+    {
+        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
+        return key.range_content;
+    }
+    public Variant get_range_content_2 (string full_name, string schema_id, out bool range_type_is_range)
+    {
+        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
+        range_type_is_range = key.range_type == "range";
+        return key.range_content;
+    }
+
+    public string get_cool_default_value (string full_name, string schema_id)
+    {
+        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
+        return Key.cool_text_value_from_variant (key.default_value);
     }
 }
