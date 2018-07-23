@@ -167,16 +167,13 @@ class DConfWindow : ApplicationWindow
         if (first_path == null)
             first_path = "/";
 
-        if (SettingsModel.is_folder_path ((!) first_path))
-            request_folder ((!) first_path);
-        else if (schema != null && model.path_exists ((!) first_path))
-            request_object ((!) first_path, (!) schema);
-        else if (model.path_exists ((!) first_path))
-            request_object ((!) first_path);
-        else if (model.path_exists ((!) first_path + "/"))
-            request_folder ((!) first_path + "/");
+        string startup_path = model.get_startup_path_fallback ((!) first_path);
+        if (SettingsModel.is_folder_path (startup_path))
+            request_folder (startup_path);
+        else if (schema != null)
+            request_object (startup_path, (!) schema);
         else
-            request_object ((!) first_path);
+            request_object (startup_path);
     }
 
     private void prepare_model ()

@@ -219,17 +219,6 @@ public class SettingsModel : Object
         return (GSettingsKey) (!) key;
     }
 
-    public bool path_exists (string path)
-    {
-        if (is_key_path (path))
-        {
-            GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
-            return get_key_from_path_and_name (key_model, get_name (path)) != null;
-        }
-        else
-            return get_directory (path) != null;
-    }
-
     private static Key? get_key_from_path_and_name (GLib.ListStore key_model, string key_name, string context = "")
     {
         uint n_items = key_model.get_n_items ();
@@ -523,6 +512,27 @@ public class SettingsModel : Object
             dir = get_directory (fallback_path);
         }
         return fallback_path;
+    }
+
+    public string get_startup_path_fallback (string path)   // TODO take context and check that also
+    {
+        // folder: let the get_fallback_path method do its usual job if needed
+        if (is_folder_path (path))
+            return path;
+
+        // key: return if exists
+        GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
+        Key? key = get_key_from_path_and_name (key_model, get_name (path));
+        if (key != null)
+            return path;
+
+        // test if the user forgot the last '/' in a folder path
+        string new_path = path + "/";
+        if (get_directory (new_path) != null)
+            return new_path;
+
+        // let the usual fallback methods do their job if needed
+        return path;
     }
 
     public string get_fallback_context (string full_name, string context)
