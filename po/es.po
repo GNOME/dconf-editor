@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2018-07-19 10:25+0000\n"
-"PO-Revision-Date: 2018-07-20 08:16+0200\n"
+"POT-Creation-Date: 2018-07-20 06:24+0000\n"
+"PO-Revision-Date: 2018-07-23 08:30+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -306,15 +306,72 @@ msgstr ""
 msgid "A flag to check for added or removed schemas"
 msgstr "Una opción para indicar los esquemas añadido o eliminados"
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:169
+msgid ""
+"Dconf Editor can monitor if schemas are added or removed from the multiple "
+"possible locations. That’s done by checking every three seconds if the "
+"schemas list has changed. As this way to do is suboptimal, this function can "
+"be disabled by setting this flag to “false”. Note that this option will be "
+"removed when a better way to do things is found."
+msgstr ""
+"El editor de Dconf puede monitorizar si los esquemas se añaden o quitan de "
+"las múltiples ubicaciones posibles. Esto se hace comprobando cada tres "
+"segundos si la lista de esquemas ha cambiado. Dado que esta práctica es "
+"insuficiente, esta función se puede desactivar fijando este indicador a "
+"«falso». Tenga en cuenta que esta opción se eliminará cuando se encuentre "
+"una forma mejor de hacer las cosas."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
-#, fuzzy
-#| msgid "Print relocatable schemas and exit"
 msgid "Enabled relocatable schema mapping facilities"
-msgstr "Mostrar esquemas reubicables y salir"
+msgstr "Instalaciones de asignación de esquema reubicable activadas"
+
+# Hardcoded es lo mismo que coded sólo que con más énfasis. «Bien codificadas» o algo así.
+#: editor/ca.desrt.dconf-editor.gschema.xml:174
+msgid ""
+"Flags for the relocatable schemas mapping facilities. “User” enables "
+"mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
+"enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
+"reserved for Dconf Editor own mappings; “Startup” is for mapping a "
+"relocatable schema from the command-line."
+msgstr ""
+"Indicadores para las instalaciones de asignación de esquemas reubicables. "
+"«User» activa las asignaciones definidas por la clave «relocatable-schemas-"
+"user-paths»; «Built-in» permite asignaciones conocidas implementadas en el "
+"editor de Dconf; «Internal» está reservado para las asignaciones propias del "
+"editor de Dconf; «Startup» es para asignar un esquema reubicable desde la "
+"línea de comandos."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "Mapping of paths to manually associated schemas"
-msgstr "Mapeo de rutas para esquemas asociados manualmente"
+msgstr "Asignación de rutas a esquemas asociados manualmente"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:179
+msgid ""
+"A dictionary that maps schema IDs with path specifications. It is used to "
+"allow the user to associate a relocatable schema to certain paths. Path "
+"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
+"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
+"may be associated with multiple path specifications."
+msgstr ""
+"Un diccionario que asigna ID de esquema con especificaciones de ruta. Se usa "
+"para permitir que el usuario asocie un esquema reubicable a ciertas rutas. "
+"Las especificaciones de ruta pueden contener comodines en forma de segmentos "
+"vacíos (por ejemplo, /ca/desrt/dconf-editor//), definiendo posiblemente "
+"múltiples rutas. El mismo ID de esquema puede asociarse con múltiples "
+"especificaciones de ruta."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:183
+msgid "A flag for skipping unnecessary subfolders"
+msgstr "Un indicador para saltar subcarpetas innecesarias"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:184
+msgid ""
+"When a folder only contains one subfolder and no keys, Dconf Editor can jump "
+"to that subfolder directly. This flag enables that behaviour."
+msgstr ""
+"Cuando una carpeta contiene unicamente una subcarpeta sin claves, el editor "
+"de Dconf puede saltar a esa subcarpeta directamente. Este indicador activa "
+"este comportamiento."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:190
 msgid "A list of bookmarked paths"
@@ -450,9 +507,25 @@ msgstr ""
 msgid "A dictionary entry of type ‘{ss}’"
 msgstr "Una entrada del diccionario de tipo «{ss}»"
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:262
+msgid ""
+"A dictionary maps values of a basic type to another value (of any type). A "
+"dictionary entry is one such mapping."
+msgstr ""
+"Un diccionario asigna valores de un tipo básico a otro valor (de cualquier "
+"tipo). Una entrada de diccionario es una de esas asignaciones."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:266
 msgid "A “vardict”, type ‘a{sv}’"
 msgstr "Un «vardict», escriba «a{sv}»"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:267
+msgid ""
+"A dictionary maps values of a basic type to another value (of any type). One "
+"simple use case is to map strings to variants."
+msgstr ""
+"Un diccionario asigna valores de un tipo básico a otro valor (de cualquier "
+"tipo). Un caso de uso simple es asignar cadenas a variantes."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:271
 msgid "A double, type ‘d’"
@@ -618,6 +691,25 @@ msgstr ""
 msgid "A variant, type ‘v’"
 msgstr "Una variante, escriba «v»"
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
+msgid ""
+"Variants could be stored inside variants, and consequently as a GSettings "
+"type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
+"a gschema file “&#60;” and “&#62;” respectively), with a parsable "
+"representation of their content inside. If unclear, the type can be given in "
+"the value with a prefix annotation like “@x” (where “x” is the type string) "
+"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
+"for complete documentation."
+msgstr ""
+"Las variantes se pueden almacenar dentro de las variantes y, en "
+"consecuencia, como un tipo de GSettings. Su representación utiliza los "
+"corchetes XML (caracteres «<» y «>», en un archivo gschema «&#60;» y "
+"«&#62;», respectivamente), con una representación analizable de su contenido "
+"en el interior. Si no está claro, el tipo se puede dar en el valor con una "
+"anotación de prefijo como «@x» (donde «x» es la cadena de tipo) o «int64». "
+"Consulte https://developer.gnome.org/glib/stable/gvariant-text.html para "
+"obtener la documentación completa."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:349
 msgid "A 1-choice enumeration"
 msgstr "Un enumerado de 1 opción"
@@ -642,6 +734,18 @@ msgstr ""
 "Un rango puede limitar a una clave entera a tener solo un valor, pero esto "
 "es probablemente un error. El editor de Dconf le avisa en estos casos."
 
+#: editor/ca.desrt.dconf-editor.gschema.xml:360
+msgid "The empty tuple, type and value “()”"
+msgstr "La tupla vacía, tipo y valor «()»"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
+msgid ""
+"There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
+"no content, and can only take “()” as value."
+msgstr ""
+"Hay una tupla vacía (a veces llamada «triv») que es una tupla sin contenido "
+"y sólo puede tomar «()» como valor."
+
 #: editor/ca.desrt.dconf-editor.gschema.xml:372
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Un valor booleano, definido por un esquema reubicable."
@@ -649,6 +753,99 @@ msgstr "Un valor booleano, definido por un esquema reubicable."
 #: editor/ca.desrt.dconf-editor.gschema.xml:377
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr "Un entero de 32 bits con signo, definido por un esquema reubicable."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:388
+msgid "A normal non-conflicting key from Conflict1"
+msgstr "Una clave no conflictiva normal de Conflict1"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:416
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. Non-conflicting keys should have no issues."
+msgstr ""
+"Esta clave es una prueba para esquemas múltiples en la misma ruta con claves "
+"conflictivas. Las claves no conflictivas no deberían tener problemas."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:393
+msgid "Conflicting key defaulting to “1” that should give an error"
+msgstr "Clave conflictiva predeterminada en «1» que debería dar un error"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
+#: editor/ca.desrt.dconf-editor.gschema.xml:421
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different default value."
+msgstr ""
+"Esta clave es una prueba para esquemas múltiples en la misma ruta con claves "
+"conflictivas. No se debería poder editar ya que una clave asignada a la "
+"misma ruta tiene un valor predeterminado diferente."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:398
+msgid "Conflicting key with no range that should give an error"
+msgstr "Clave conflictiva sin rango que debería dar un error"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:399
+#: editor/ca.desrt.dconf-editor.gschema.xml:427
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different range."
+msgstr ""
+"Esta clave es una prueba para esquemas múltiples en la misma ruta con claves "
+"conflictivas. No se debería poder editar ya que una clave asignada a la "
+"misma ruta tiene un rango diferente."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
+msgid "A (simple) string conflicting key that should give a error"
+msgstr "Una cadena (simple) de clave conflictiva que debería dar un error"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:404
+#: editor/ca.desrt.dconf-editor.gschema.xml:432
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different type."
+msgstr ""
+"Esta clave es una prueba para esquemas múltiples en la misma ruta con claves "
+"conflictivas. No se debería poder editar ya que una clave asignada a la "
+"misma ruta tiene un tipo diferente."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
+msgid "Conflicting key from Conflict1 that should give a warning"
+msgstr "Clave conflictiva de Conflict1 que debería dar un aviso"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:409
+#: editor/ca.desrt.dconf-editor.gschema.xml:437
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It can be edited, since the types are compatible, but it is still an "
+"issue."
+msgstr ""
+"Esta clave es una prueba para esquemas múltiples en la misma ruta con claves "
+"conflictivas. Se puede editar, ya que los tipos son compatibles, pero sigue "
+"siendo un problema."
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:415
+msgid "A normal non-conflicting key from Conflict2"
+msgstr "Una clave no conflictiva normal de Conflict2"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:420
+msgid "Conflicting key defaulting to “2” that should give an error"
+msgstr "Clave conflictiva predeterminada a «2» que debería dar un error"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:426
+msgid "Conflicting key with range 0~5 that should give an error"
+msgstr "Clave conflictiva con rango 0~5 que debería dar un error"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
+msgid "A nullable-string conflicting key that should give an error"
+msgstr "Una clave conflictiva de cadena anulable que debería dar un error"
+
+#: editor/ca.desrt.dconf-editor.gschema.xml:436
+msgid "Conflicting key from Conflict2 that should give a warning"
+msgstr "Clave conflictiva de Conflict2 que debería dar un aviso"
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
