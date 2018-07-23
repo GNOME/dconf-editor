@@ -20,22 +20,6 @@ public abstract class SettingObject : Object
     public string context { get; construct; }  // TODO make uint8
     public string name { get; construct; }
     public string full_name { get; construct; }
-
-    public string parent_path { get; private construct; }
-    construct
-    {
-        if (full_name.length < 2)
-            parent_path = "/";
-        else
-        {
-            string tmp_string = full_name.slice (0, full_name.last_index_of_char ('/'));
-
-            if (full_name.has_suffix ("/"))
-                parent_path = full_name.slice (0, tmp_string.last_index_of_char ('/') + 1);
-            else
-                parent_path = tmp_string + "/";
-        }
-    }
 }
 
 public class SimpleSettingObject : Object
@@ -327,6 +311,19 @@ public class GSettingsKey : Key
 
     public string descriptor {
         owned get {
+            string parent_path;
+            if (full_name.length < 2)
+                parent_path = "/";
+            else
+            {
+                string tmp_string = full_name.slice (0, full_name.last_index_of_char ('/'));
+
+                if (full_name.has_suffix ("/"))
+                    parent_path = full_name.slice (0, tmp_string.last_index_of_char ('/') + 1);
+                else
+                    parent_path = tmp_string + "/";
+            }
+
             if (schema_path == null)
                 return @"$context:$parent_path $name";
             return @"$context $name";
