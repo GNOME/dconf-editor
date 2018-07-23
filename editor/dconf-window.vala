@@ -225,9 +225,11 @@ class DConfWindow : ApplicationWindow
 
         model.gkey_value_push.connect ((_model, full_name, schema_id, key_value, is_key_default) => {
                 browser_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+                revealer.gkey_value_push (full_name, schema_id, key_value, is_key_default);
             });
         model.dkey_value_push.connect ((_model, full_name, key_value_or_null) => {
                 browser_view.dkey_value_push (full_name, key_value_or_null);
+                revealer.dkey_value_push (full_name, key_value_or_null);
             });
     }
 

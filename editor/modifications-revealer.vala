@@ -173,18 +173,19 @@ class ModificationsRevealer : Revealer
             cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value);
 
         string? cool_default_value = null;
-        string cool_key_value;
+        Variant key_value;
         if (has_schema)
         {
             cool_default_value = modifications_handler.model.get_cool_default_value (full_name, context);
-            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_gsettings_key_value (full_name, context));
+            key_value = modifications_handler.model.get_gsettings_key_value (full_name, context);
         }
         else
-            cool_key_value = Key.cool_text_value_from_variant (modifications_handler.model.get_dconf_key_value (full_name));
+            key_value = modifications_handler.model.get_dconf_key_value (full_name);
 
         DelayedSettingView view = new DelayedSettingView (full_name,
+                                                          context,
                                                           is_default_or_ghost,
-                                                          cool_key_value,
+                                                          key_value,
                                                           cool_planned_value,
                                                           cool_default_value);
 
@@ -245,13 +246,35 @@ class ModificationsRevealer : Revealer
     }
 
     /*\
-    * * Update
+    * * Updating values
+    \*/
+
+    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    {
+        delayed_settings_listbox.foreach ((widget) => {
+                DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
+                if (row.full_name == full_name && row.context == schema_id)
+                    row.update_gsettings_key_current_value (key_value, is_key_default);
+            });
+    }
+
+    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    {
+        delayed_settings_listbox.foreach ((widget) => {
+                DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
+                if (row.full_name == full_name)
+                    row.update_dconf_key_current_value (key_value_or_null);
+            });
+    }
+
+    /*\
+    * * Updating text
     \*/
 
     private void update ()
     {
         GLib.ListStore modifications_list = modifications_handler.get_delayed_settings ();
-        delayed_settings_listbox.bind_model (modifications_handler.get_delayed_settings (), delayed_setting_row_create);
+        delayed_settings_listbox.bind_model (modifications_list, delayed_setting_row_create);
         if (modifications_list.get_n_items () == 0)
             delayed_settings_list_popover.popdown ();
         else
