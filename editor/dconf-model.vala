@@ -735,17 +735,11 @@ public class SettingsModel : Object
 
     public string get_key_copy_text (string full_name, string context)
     {
-        Key? key = get_key (full_name, context);
-        if (key == null)
-            return full_name;
-
-        if ((!) key is GSettingsKey)
-            return get_gsettings_key_copy_text ((GSettingsKey) (!) key);
-
-        if ((!) key is DConfKey)
+        if (context == ".dconf")
             return get_dconf_key_copy_text (full_name, client);
 
-        assert_not_reached ();
+        GSettingsKey key = get_specific_gsettings_key (full_name, context);
+        return get_gsettings_key_copy_text (key);
     }
     private static inline string get_gsettings_key_copy_text (GSettingsKey key)
     {
