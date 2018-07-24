@@ -52,7 +52,22 @@ public class Directory : SettingObject
 public abstract class Key : SettingObject
 {
     public string type_string { get; protected set; default = "*"; }
-    public Variant properties { owned get; protected set; }
+
+    private Variant? all_properties = null;
+    protected abstract Variant generate_properties (string [] query);
+    public Variant get_properties (string [] query)
+    {
+        bool all_properties_queried = query.length == 0;
+        if (all_properties_queried && all_properties != null)
+            return (!) all_properties;
+
+        // generating properties late allows to include things about duplicated keys, that are known at the key's creation
+        Variant properties = generate_properties (query);
+
+        if (all_properties_queried)
+            all_properties = properties;
+        return properties;
+    }
 
     public signal void value_changed ();
     public ulong key_value_changed_handler = 0;
@@ -267,25 +282,6 @@ public class DConfKey : Key
     {
         Object (context: ".dconf", full_name: parent_full_name + name, name: name, type_string: type_string);
 
-        VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));     // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
-        builder.add ("b",    false);
-        builder.open (new VariantType ("a{ss}"));
-        builder.add ("{ss}", "key-name",    name);
-        builder.add ("{ss}", "defined-by",  _("DConf backend"));
-        builder.add ("{ss}", "parent-path", parent_full_name);
-        builder.add ("{ss}", "type-code",   type_string);
-        builder.add ("{ss}", "type-name",   key_to_description (type_string));
-        if (show_min_and_max (type_string))
-        {
-            string min, max;
-            get_min_and_max_string (out min, out max, type_string);
-
-            builder.add ("{ss}", "minimum", min);
-            builder.add ("{ss}", "maximum", max);
-        }
-        builder.close ();
-        properties = builder.end ();
-
         client.changed.connect ((client, prefix, changes, tag) => {
                 foreach (string item in changes)
                     if (prefix + item == full_name)
@@ -295,6 +291,35 @@ public class DConfKey : Key
                     }
             });
     }
+
+    protected override Variant generate_properties (string [] query)
+    {
+        bool all_properties_queried = query.length == 0;
+
+        VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));     // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
+        builder.add ("b",    false);
+        builder.open (new VariantType ("a{ss}"));
+
+        if (all_properties_queried || "key-name" in query)
+            builder.add ("{ss}",      "key-name",           name);
+        if (all_properties_queried || "defined-by" in query)
+            builder.add ("{ss}",      "defined-by",         _("DConf backend"));
+        if (all_properties_queried || "type-code" in query)
+            builder.add ("{ss}",      "type-code",          type_string);
+        if (all_properties_queried || "type-name" in query)
+            builder.add ("{ss}",      "type-name",          key_to_description (type_string));
+
+        if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
+        {
+            string min, max;
+            get_min_and_max_string (out min, out max, type_string);
+
+            builder.add ("{ss}",      "minimum",            min);
+            builder.add ("{ss}",      "maximum",            max);
+        }
+        builder.close ();
+        return builder.end ();
+    }
 }
 
 public class GSettingsKey : Key
@@ -302,12 +327,12 @@ public class GSettingsKey : Key
     public bool warning_conflicting_key = false;
     public bool error_hard_conflicting_key = false;
 
-    public string? schema_path   { private get; construct; }
-    public string summary        { private get; construct; }
-    public string description    { private get; construct; }
-    public Variant default_value         { get; construct; }
-    public string range_type             { get; construct; }
-    public Variant range_content         { get; construct; }
+    public string? schema_path  { private get; construct; }
+    public string summary       { private get; construct; }
+    public string description   { private get; construct; }
+    public Variant default_value        { get; construct; }
+    public string range_type            { get; construct; }
+    public Variant range_content        { get; construct; }
 
     public string descriptor {
         owned get {
@@ -348,29 +373,42 @@ public class GSettingsKey : Key
                 schema_path: schema_path,
                 summary: summary,
                 description: description,
+                type_string: type_string,
                 default_value: default_value,       // TODO devel default/admin default
                 range_type: range_type,
                 range_content: range_content);
 
         settings.changed [name].connect (() => value_changed ());
+    }
 
-        this.type_string = type_string;
+    protected override Variant generate_properties (string [] query)
+    {
+        bool all_properties_queried = query.length == 0;
 
         string defined_by = schema_path == null ? _("Relocatable schema") : _("Schema with path");
 
         VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));
         builder.add ("b",    true);
         builder.open (new VariantType ("a{ss}"));
-        builder.add ("{ss}", "key-name",      name);
-        builder.add ("{ss}", "defined-by",    defined_by);
-        builder.add ("{ss}", "parent-path",   parent_full_name);
-        builder.add ("{ss}", "type-code",     type_string);
-        builder.add ("{ss}", "type-name",     key_to_description (type_string));
-        builder.add ("{ss}", "summary",       summary);
-        builder.add ("{ss}", "description",   description);
-        builder.add ("{ss}", "default-value", cool_text_value_from_variant (default_value));
-        builder.add ("{ss}", "range-type",    range_type);
-        if (show_min_and_max (type_string))
+
+        if (all_properties_queried || "key-name" in query)
+            builder.add ("{ss}",      "key-name",           name);
+        if (all_properties_queried || "defined-by" in query)
+            builder.add ("{ss}",      "defined-by",         defined_by);
+        if (all_properties_queried || "type-code" in query)
+            builder.add ("{ss}",      "type-code",          type_string);
+        if (all_properties_queried || "type-name" in query)
+            builder.add ("{ss}",      "type-name",          key_to_description (type_string));
+        if (all_properties_queried || "summary" in query)
+            builder.add ("{ss}",      "summary",            summary);
+        if (all_properties_queried || "description" in query)
+            builder.add ("{ss}",      "description",        description);
+        if (all_properties_queried || "default-value" in query)
+            builder.add ("{ss}",      "default-value",      cool_text_value_from_variant (default_value));
+        if (all_properties_queried || "range-type" in query)
+            builder.add ("{ss}",      "range-type",         range_type);
+
+        if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
         {
             string min, max;
             if (range_type == "range")     // TODO test more; and what happen if only min/max is in range?
@@ -381,11 +419,10 @@ public class GSettingsKey : Key
             else
                 get_min_and_max_string (out min, out max, type_string);
 
-            builder.add ("{ss}", "minimum", min);
-            builder.add ("{ss}", "maximum", max);
+            builder.add ("{ss}",      "minimum",            min);
+            builder.add ("{ss}",      "maximum",            max);
         }
         builder.close ();
-        properties = builder.end ();
+        return builder.end ();
     }
 }
-

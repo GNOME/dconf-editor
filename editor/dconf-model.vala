@@ -756,7 +756,7 @@ public class SettingsModel : Object
         if (key == null)
             return null;
 
-        return ((!) key).properties;
+        return ((!) key).get_properties ({});
     }
 
     public string get_key_copy_text (string full_name, string context)

@@ -115,11 +115,10 @@ class RegistryInfo : Grid, BrowsableView
         Variant dict = dict_container [0];
 
         // TODO use VariantDict
-        string key_name, parent_path, type_code, range_type, tmp_string;
+        string key_name, type_code, range_type, tmp_string;
         bool test;
 
         if (!dict.lookup ("key-name",     "s", out key_name))    assert_not_reached ();
-        if (!dict.lookup ("parent-path",  "s", out parent_path)) assert_not_reached ();
         if (!dict.lookup ("type-code",    "s", out type_code))   assert_not_reached ();
 
         if (dict.lookup ("defined-by",    "s", out tmp_string))  add_row_from_label (_("Defined by"),  tmp_string);
