@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2018-07-20 06:24+0000\n"
+"POT-Creation-Date: 2018-07-23 06:38+0000\n"
 "PO-Revision-Date: 2018-07-23 08:30+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
@@ -446,7 +446,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:241
 msgid "A D-Bus handle type, type ‘h’"
-msgstr "Un tipo de manejador D-Bus, escriba «h»"
+msgstr "Un tipo de gestor D-Bus, escriba «h»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid ""
@@ -455,7 +455,7 @@ msgid ""
 "D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
 msgstr ""
-"El tipo manejador es un entero de 32 bits con signo que, por convenio, se "
+"El tipo gestor es un entero de 32 bits con signo que, por convenio, se "
 "usa como índice en un vector de descriptores de archivos que se envían en un "
 "mensaje de D-Bus. Si no está trabajando con D-Bus, no hay razón para usar "
 "este tipo."
@@ -1559,7 +1559,7 @@ msgstr "Doble"
 #. Translators: this handle type is an index; you may maintain the word "handle"
 #: editor/setting-object.vala:78
 msgid "D-Bus handle type"
-msgstr "Tipo de manejador D-Bus"
+msgstr "Tipo de gestor D-Bus"
 
 #: editor/setting-object.vala:80
 msgid "D-Bus object path"
