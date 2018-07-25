@@ -303,7 +303,7 @@ public class GSettingsKey : Key
     public bool error_hard_conflicting_key = false;
 
     public string? schema_path   { private get; construct; }
-    public string summary                { get; construct; }
+    public string summary        { private get; construct; }
     public string description    { private get; construct; }
     public Variant default_value         { get; construct; }
     public string range_type             { get; construct; }

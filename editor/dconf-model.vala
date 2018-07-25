@@ -27,6 +27,9 @@ public class SettingsModel : Object
     public bool use_shortpaths { private get; set; default = false; }
 
     public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
+    private bool paths_has_changed = false;
+
+    private HashTable<string, Key> saved_keys = new HashTable<string, Key> (str_hash, str_equal);
 
     public void refresh_relocatable_schema_paths (bool user_schemas,
                                                   bool built_in_schemas,
@@ -48,7 +51,10 @@ public class SettingsModel : Object
 
     public void finalize_model ()
     {
-        source_manager.paths_changed.connect ((modified_path_specs) => paths_changed (modified_path_specs, false));
+        source_manager.paths_changed.connect ((modified_path_specs) => {
+                paths_has_changed = true;
+                paths_changed (modified_path_specs, false);
+            });
         source_manager.refresh_schema_source ();
         Timeout.add (3000, () => {
                 if (refresh_source) // TODO better: stops the I/O, but not the wakeup
@@ -208,6 +214,13 @@ public class SettingsModel : Object
 
     private Key? get_key (string path, string context = "")
     {
+        if (paths_has_changed == false)
+        {
+            Key? key = saved_keys.lookup (path);
+            if (paths_has_changed && key != null && (context == "" || ((!) key).context == context))
+                return key;
+        }
+
         GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
         return get_key_from_path_and_name (key_model, get_name (path), context);
     }
@@ -457,6 +470,7 @@ public class SettingsModel : Object
         else assert_not_reached ();
 
         watched_keys.append (key);
+        saved_keys.insert (key.full_name, key);
     }
 
     private void clean_watched_keys ()
@@ -474,6 +488,8 @@ public class SettingsModel : Object
             object = watched_keys.get_item (position);
         };
         watched_keys.remove_all ();
+        saved_keys.remove_all ();
+        paths_has_changed = false;
     }
 
     private inline void push_gsettings_key_value (GSettingsKey key)
