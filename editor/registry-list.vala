@@ -282,7 +282,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             SettingsModel model = modifications_handler.model;
 
-            Variant properties = model.get_key_properties (setting_object.full_name, setting_object.context);
+            Variant properties = model.get_key_properties (setting_object.full_name, setting_object.context, {});
 
             bool has_schema;
             unowned Variant [] dict_container;

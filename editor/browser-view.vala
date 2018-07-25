@@ -228,7 +228,7 @@ class BrowserView : Grid
         else if (type == ViewType.OBJECT)
         {
             if (model.key_exists (path, last_context)
-             && !current_child.check_reload_object (model.get_key_properties (path, last_context)))
+             && !current_child.check_reload_object (model.get_key_properties (path, last_context, {})))
                 return false;
             if (show_infobar)
             {

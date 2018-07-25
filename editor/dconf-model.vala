@@ -756,7 +756,7 @@ public class SettingsModel : Object
     * * Key properties methods
     \*/
 
-    public Variant get_key_properties (string full_name, string context)
+    public Variant get_key_properties (string full_name, string context, string [] query)
     {
         Key? key = get_key (full_name, context);
         if (key == null)
@@ -764,7 +764,7 @@ public class SettingsModel : Object
         if (((!) key).context != context)
             assert_not_reached ();
 
-        return ((!) key).get_properties ({});
+        return ((!) key).get_properties (query);
     }
 
     public string get_key_copy_text (string full_name, string context)
@@ -816,11 +816,5 @@ public class SettingsModel : Object
         GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
         range_type_is_range = key.range_type == "range";
         return key.range_content;
-    }
-
-    public string get_cool_default_value (string full_name, string schema_id)
-    {
-        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
-        return Key.cool_text_value_from_variant (key.default_value);
     }
 }

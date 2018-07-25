@@ -591,7 +591,7 @@ class DConfWindow : ApplicationWindow
         else
         {
             browser_view.prepare_object_view (full_name, context,
-                                              model.get_key_properties (full_name, context),
+                                              model.get_key_properties (full_name, context, {}),
                                               current_path == SettingsModel.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }

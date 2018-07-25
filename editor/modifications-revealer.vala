@@ -176,7 +176,15 @@ class ModificationsRevealer : Revealer
         Variant key_value;
         if (has_schema)
         {
-            cool_default_value = modifications_handler.model.get_cool_default_value (full_name, context);
+            bool _has_schema;
+            unowned Variant [] dict_container;
+
+            Variant properties = modifications_handler.model.get_key_properties (full_name, context, {"default-value"});
+            properties.get ("(ba{ss})", out has_schema, out dict_container);
+
+            Variant dict = dict_container [0];
+            if (!dict.lookup ("default-value", "s", out cool_default_value))    assert_not_reached ();
+
             key_value = modifications_handler.model.get_gsettings_key_value (full_name, context);
         }
         else
