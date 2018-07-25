@@ -163,10 +163,12 @@ class ModificationsRevealer : Revealer
     {
         string full_name = ((SimpleSettingObject) object).full_name;
         string context = ((SimpleSettingObject) object).context;
-        bool has_schema = context != ".dconf";
 
-        bool is_default_or_ghost = has_schema ? modifications_handler.model.is_key_default (full_name, context)
-                                              : modifications_handler.model.is_key_ghost (full_name);
+        bool has_schema = context != ".dconf";
+        SettingsModel model = modifications_handler.model;
+
+        bool is_default_or_ghost = has_schema ? model.is_key_default (full_name, context)
+                                              : model.is_key_ghost (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
         string? cool_planned_value = null;
         if (planned_value != null)
@@ -176,14 +178,9 @@ class ModificationsRevealer : Revealer
         Variant key_value;
         if (has_schema)
         {
-            bool _has_schema;
-            unowned Variant [] dict_container;
-
-            Variant properties = modifications_handler.model.get_key_properties (full_name, context, {"default-value"});
-            properties.get ("(ba{ss})", out has_schema, out dict_container);
-
-            Variant dict = dict_container [0];
-            if (!dict.lookup ("default-value", "s", out cool_default_value))    assert_not_reached ();
+            VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"default-value"}));
+            if (!properties.lookup ("default-value", "s", out cool_default_value))
+                assert_not_reached ();
 
             key_value = modifications_handler.model.get_gsettings_key_value (full_name, context);
         }

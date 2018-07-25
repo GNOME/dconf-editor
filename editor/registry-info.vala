@@ -72,14 +72,12 @@ class RegistryInfo : Grid, BrowsableView
         context = _context;
         current_key_info = _current_key_info;
 
+        bool has_schema = context != ".dconf";
         SettingsModel model = modifications_handler.model;
-        if (context == ".dconf" && model.is_key_ghost (full_name))   // TODO place in "requires"
+
+        if (!has_schema && model.is_key_ghost (full_name))   // TODO place in "requires"
             assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
-
-        bool has_schema; // = context != ".dconf";
-        unowned Variant [] dict_container;
-        _current_key_info.get ("(ba{ss})", out has_schema, out dict_container);
 
         bool error_hard_conflicting_key = false;
         if (has_schema)
@@ -112,35 +110,48 @@ class RegistryInfo : Grid, BrowsableView
 
         properties_list_box.@foreach ((widget) => widget.destroy ());
 
-        Variant dict = dict_container [0];
+        VariantDict properties = new VariantDict (_current_key_info);
 
-        // TODO use VariantDict
-        string key_name, type_code, range_type, tmp_string;
+        // TODO g_variant_dict_lookup_value() return value is not annotated as nullable
+        string type_code;
+        if (!properties.lookup ("type-code",    "s",    out type_code))
+            assert_not_reached ();
+
         bool test;
+        string tmp_string;
 
-        if (!dict.lookup ("key-name",     "s", out key_name))    assert_not_reached ();
-        if (!dict.lookup ("type-code",    "s", out type_code))   assert_not_reached ();
-
-        if (dict.lookup ("defined-by",    "s", out tmp_string))  add_row_from_label (_("Defined by"),  tmp_string);
+        if (properties.lookup ("defined-by",    "s",    out tmp_string))
+            add_row_from_label (_("Defined by"),            tmp_string);
         else assert_not_reached ();
-        if (dict.lookup ("schema-id",     "s", out tmp_string))  add_row_from_label (_("Schema"),      tmp_string);
+
+        if (properties.lookup ("schema-id",     "s",    out tmp_string))
+            add_row_from_label (_("Schema"),                tmp_string);
+
         add_separator ();
-        if (dict.lookup ("summary",       "s", out tmp_string))
+        if (properties.lookup ("summary",       "s",    out tmp_string))
         {
             test = tmp_string == "";
-            add_row_from_label (_("Summary"),                    test ? _("No summary provided")     : tmp_string, test);
+            add_row_from_label (_("Summary"),
+                                test ?                      _("No summary provided")
+                                     :                      tmp_string,
+                                test);
         }
-        if (dict.lookup ("description",   "s", out tmp_string))
+        if (properties.lookup ("description",   "s",    out tmp_string))
         {
             test = tmp_string == "";
-            add_row_from_label (_("Description"),                test ? _("No description provided") : tmp_string, test);
+            add_row_from_label (_("Description"),
+                                test ?                      _("No description provided")
+                                     :                      tmp_string,
+                                test);
         }
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (dict.lookup ("type-name",     "s", out tmp_string))  add_row_from_label (_("Type"),        tmp_string);
+        if (properties.lookup ("type-name",     "s",    out tmp_string))
+            add_row_from_label (_("Type"),                  tmp_string);
         else assert_not_reached ();
 
+        string range_type;
         bool range_type_is_range = false;
-        if (dict.lookup ("range-type",    "s", out range_type)) // has_schema
+        if (properties.lookup ("range-type",    "s",    out range_type)) // has_schema
         {
             if (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
              || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
@@ -148,7 +159,7 @@ class RegistryInfo : Grid, BrowsableView
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
                 range_type_is_range = range_type == "range";
-                add_row_from_label (_("Forced range"),           Key.cool_boolean_text_value (range_type_is_range));
+                add_row_from_label (_("Forced range"),      Key.cool_boolean_text_value (range_type_is_range));
             }
         }
         else
@@ -157,12 +168,15 @@ class RegistryInfo : Grid, BrowsableView
         bool minimum_is_maximum = false;
         string tmp = "";
         tmp_string = "";
-        if (dict.lookup ("minimum",       "s", out tmp_string))  add_row_from_label (_("Minimum"),     tmp_string);
-        if (dict.lookup ("maximum",       "s", out tmp       ))  add_row_from_label (_("Maximum"),     tmp       );
+        if (properties.lookup ("minimum",       "s",    out tmp_string))
+            add_row_from_label (_("Minimum"),               tmp_string);
+        if (properties.lookup ("maximum",       "s",    out tmp       ))
+            add_row_from_label (_("Maximum"),               tmp       );
         if (tmp != "" && tmp == tmp_string)
             minimum_is_maximum = true;
 
-        if (dict.lookup ("default-value", "s", out tmp_string))  add_row_from_label (_("Default"),     tmp_string);
+        if (properties.lookup ("default-value", "s",    out tmp_string))
+            add_row_from_label (_("Default"),               tmp_string);
 
         if (has_schema && error_hard_conflicting_key)
         {

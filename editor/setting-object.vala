@@ -296,29 +296,29 @@ public class DConfKey : Key
     {
         bool all_properties_queried = query.length == 0;
 
-        VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));     // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
-        builder.add ("b",    false);
-        builder.open (new VariantType ("a{ss}"));
+        // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
+        VariantDict variantdict = new VariantDict ();
 
-        if (all_properties_queried || "key-name" in query)
-            builder.add ("{ss}",      "key-name",           name);
-        if (all_properties_queried || "defined-by" in query)
-            builder.add ("{ss}",      "defined-by",         _("DConf backend"));
-        if (all_properties_queried || "type-code" in query)
-            builder.add ("{ss}",      "type-code",          type_string);
-        if (all_properties_queried || "type-name" in query)
-            builder.add ("{ss}",      "type-name",          key_to_description (type_string));
+        if (all_properties_queried || "has-schema"      in query)
+            variantdict.insert_value ("has-schema",                 new Variant.boolean (false));
+        if (all_properties_queried || "key-name"        in query)
+            variantdict.insert_value ("key-name",                   new Variant.string (name));
+        if (all_properties_queried || "defined-by"      in query)
+            variantdict.insert_value ("defined-by",                 new Variant.string (_("DConf backend")));
+        if (all_properties_queried || "type-code"       in query)
+            variantdict.insert_value ("type-code",                  new Variant.string (type_string));
+        if (all_properties_queried || "type-name"       in query)
+            variantdict.insert_value ("type-name",                  new Variant.string (key_to_description (type_string)));
 
         if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
         {
             string min, max;
             get_min_and_max_string (out min, out max, type_string);
 
-            builder.add ("{ss}",      "minimum",            min);
-            builder.add ("{ss}",      "maximum",            max);
+            variantdict.insert_value ("minimum",                    new Variant.string (min));
+            variantdict.insert_value ("maximum",                    new Variant.string (max));
         }
-        builder.close ();
-        return builder.end ();
+        return variantdict.end ();
     }
 }
 
@@ -387,26 +387,26 @@ public class GSettingsKey : Key
 
         string defined_by = schema_path == null ? _("Relocatable schema") : _("Schema with path");
 
-        VariantBuilder builder = new VariantBuilder (new VariantType ("(ba{ss})"));
-        builder.add ("b",    true);
-        builder.open (new VariantType ("a{ss}"));
+        VariantDict variantdict = new VariantDict ();
 
-        if (all_properties_queried || "key-name" in query)
-            builder.add ("{ss}",      "key-name",           name);
-        if (all_properties_queried || "defined-by" in query)
-            builder.add ("{ss}",      "defined-by",         defined_by);
-        if (all_properties_queried || "type-code" in query)
-            builder.add ("{ss}",      "type-code",          type_string);
-        if (all_properties_queried || "type-name" in query)
-            builder.add ("{ss}",      "type-name",          key_to_description (type_string));
-        if (all_properties_queried || "summary" in query)
-            builder.add ("{ss}",      "summary",            summary);
-        if (all_properties_queried || "description" in query)
-            builder.add ("{ss}",      "description",        description);
-        if (all_properties_queried || "default-value" in query)
-            builder.add ("{ss}",      "default-value",      cool_text_value_from_variant (default_value));
-        if (all_properties_queried || "range-type" in query)
-            builder.add ("{ss}",      "range-type",         range_type);
+        if (all_properties_queried || "has-schema"      in query)
+            variantdict.insert_value ("has-schema",                 new Variant.boolean (true));
+        if (all_properties_queried || "key-name"        in query)
+            variantdict.insert_value ("key-name",                   new Variant.string (name));
+        if (all_properties_queried || "defined-by"      in query)
+            variantdict.insert_value ("defined-by",                 new Variant.string (defined_by));
+        if (all_properties_queried || "type-code"       in query)
+            variantdict.insert_value ("type-code",                  new Variant.string (type_string));
+        if (all_properties_queried || "type-name"       in query)
+            variantdict.insert_value ("type-name",                  new Variant.string (key_to_description (type_string)));
+        if (all_properties_queried || "summary"         in query)
+            variantdict.insert_value ("summary",                    new Variant.string (summary));
+        if (all_properties_queried || "description"     in query)
+            variantdict.insert_value ("description",                new Variant.string (description));
+        if (all_properties_queried || "default-value"   in query)
+            variantdict.insert_value ("default-value",              new Variant.string (cool_text_value_from_variant (default_value)));
+        if (all_properties_queried || "range-type"      in query)
+            variantdict.insert_value ("range-type",                 new Variant.string (range_type));
 
         if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
         {
@@ -419,10 +419,9 @@ public class GSettingsKey : Key
             else
                 get_min_and_max_string (out min, out max, type_string);
 
-            builder.add ("{ss}",      "minimum",            min);
-            builder.add ("{ss}",      "maximum",            max);
+            variantdict.insert_value ("minimum",                    new Variant.string (min));
+            variantdict.insert_value ("maximum",                    new Variant.string (max));
         }
-        builder.close ();
-        return builder.end ();
+        return variantdict.end ();
     }
 }
