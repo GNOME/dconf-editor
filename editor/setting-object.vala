@@ -53,20 +53,26 @@ public abstract class Key : SettingObject
 {
     public string type_string { get; protected set; default = "*"; }
 
-    private Variant? all_properties = null;
-    protected abstract Variant generate_properties (string [] query);
+    private Variant? all_fixed_properties = null;
+    protected abstract Variant create_fixed_properties (string [] query);
+    protected abstract Variant add_variable_properties (Variant fixed_properties, string [] query);
     public Variant get_properties (string [] query)
     {
-        bool all_properties_queried = query.length == 0;
-        if (all_properties_queried && all_properties != null)
-            return (!) all_properties;
+        Variant fixed_properties;
+        if (query.length == 0)
+        {
+            if (all_fixed_properties == null)
+            {
+                fixed_properties = create_fixed_properties ({});
+                all_fixed_properties = fixed_properties;
+            }
+            else
+                fixed_properties = (!) all_fixed_properties;
+        }
+        else
+            fixed_properties = create_fixed_properties (query);
 
-        // generating properties late allows to include things about duplicated keys, that are known at the key's creation
-        Variant properties = generate_properties (query);
-
-        if (all_properties_queried)
-            all_properties = properties;
-        return properties;
+        return add_variable_properties (fixed_properties, query);
     }
 
     public signal void value_changed ();
@@ -292,7 +298,7 @@ public class DConfKey : Key
             });
     }
 
-    protected override Variant generate_properties (string [] query)
+    protected override Variant create_fixed_properties (string [] query)
     {
         bool all_properties_queried = query.length == 0;
 
@@ -319,6 +325,11 @@ public class DConfKey : Key
             variantdict.insert_value ("maximum",                    new Variant.string (max));
         }
         return variantdict.end ();
+    }
+
+    protected override Variant add_variable_properties (Variant fixed_properties, string [] query)
+    {
+        return fixed_properties;
     }
 }
 
@@ -381,7 +392,7 @@ public class GSettingsKey : Key
         settings.changed [name].connect (() => value_changed ());
     }
 
-    protected override Variant generate_properties (string [] query)
+    protected override Variant create_fixed_properties (string [] query)
     {
         bool all_properties_queried = query.length == 0;
 
@@ -409,10 +420,6 @@ public class GSettingsKey : Key
             variantdict.insert_value ("range-type",                 new Variant.string (range_type));
         if (all_properties_queried || "range-content"   in query)
             variantdict.insert_value ("range-content",              new Variant.variant (range_content));
-        if (all_properties_queried || "soft-conflict"   in query)
-            variantdict.insert_value ("soft-conflict",              new Variant.boolean (warning_conflicting_key));
-        if (all_properties_queried || "hard-conflict"   in query)
-            variantdict.insert_value ("hard-conflict",              new Variant.boolean (error_hard_conflicting_key));
 
         if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
         {
@@ -428,6 +435,20 @@ public class GSettingsKey : Key
             variantdict.insert_value ("minimum",                    new Variant.string (min));
             variantdict.insert_value ("maximum",                    new Variant.string (max));
         }
+        return variantdict.end ();
+    }
+
+    protected override Variant add_variable_properties (Variant fixed_properties, string [] query)
+    {
+        bool all_properties_queried = query.length == 0;
+
+        VariantDict variantdict = new VariantDict (fixed_properties);
+
+        if (all_properties_queried || "soft-conflict"   in query)
+            variantdict.insert_value ("soft-conflict",              new Variant.boolean (warning_conflicting_key));
+        if (all_properties_queried || "hard-conflict"   in query)
+            variantdict.insert_value ("hard-conflict",              new Variant.boolean (error_hard_conflicting_key));
+
         return variantdict.end ();
     }
 }
