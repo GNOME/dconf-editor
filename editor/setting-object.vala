@@ -407,6 +407,10 @@ public class GSettingsKey : Key
             variantdict.insert_value ("default-value",              new Variant.string (cool_text_value_from_variant (default_value)));
         if (all_properties_queried || "range-type"      in query)
             variantdict.insert_value ("range-type",                 new Variant.string (range_type));
+        if (all_properties_queried || "soft-conflict"   in query)
+            variantdict.insert_value ("soft-conflict",              new Variant.boolean (warning_conflicting_key));
+        if (all_properties_queried || "hard-conflict"   in query)
+            variantdict.insert_value ("hard-conflict",              new Variant.boolean (error_hard_conflicting_key));
 
         if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
         {

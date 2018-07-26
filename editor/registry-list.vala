@@ -284,7 +284,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
             VariantDict properties = new VariantDict (model.get_key_properties (setting_object.full_name,
                                                                                 setting_object.context,
-                                                                                {"has-schema", "key-name", "type-code", "summary"}));
+                                                                                {"has-schema", "key-name", "type-code", "summary", "soft-conflict", "hard-conflict"}));
             string key_name, type_code;
             bool has_schema;
 
@@ -323,7 +323,10 @@ private abstract class RegistryList : Grid, BrowsableView
 
                 bool warning_conflicting_key;
                 bool error_hard_conflicting_key;
-                model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+                if (!properties.lookup ("soft-conflict", "b", out warning_conflicting_key))
+                    assert_not_reached ();
+                if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
+                    assert_not_reached ();
 
                 if (warning_conflicting_key)
                 {
@@ -464,12 +467,23 @@ private abstract class RegistryList : Grid, BrowsableView
         if (row == null)    // TODO make method only called when necessary 1/2
             return;
 
+        SettingsModel model = modifications_handler.model;
+
+        VariantDict properties = new VariantDict (model.get_key_properties (full_name,
+                                                                            schema_id,
+                                                                            {"type-code", "soft-conflict", "hard-conflict"}));
+        string type_code;
         bool warning_conflicting_key;
         bool error_hard_conflicting_key;
-        modifications_handler.model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+        if (!properties.lookup ("type-code",     "s", out type_code))
+            assert_not_reached ();
+        if (!properties.lookup ("soft-conflict", "b", out warning_conflicting_key))
+            assert_not_reached ();
+        if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
+            assert_not_reached ();
 
         update_gsettings_row ((!) row,
-                              ((!) row).type_string,
+                              type_code,
                               key_value,
                               is_key_default,
                               error_hard_conflicting_key);
@@ -587,9 +601,15 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
         }
 
+        VariantDict properties = new VariantDict (model.get_key_properties (full_name,
+                                                                            schema_id,
+                                                                            {"type-code", "hard-conflict"}));
+        string type_string;
         bool error_hard_conflicting_key;
-        bool warning_conflicting_key;
-        model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+        if (!properties.lookup ("type-code",     "s", out type_string))
+            assert_not_reached ();
+        if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
+            assert_not_reached ();
         if (error_hard_conflicting_key)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
@@ -604,7 +624,6 @@ private abstract class RegistryList : Grid, BrowsableView
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
-        string type_string = row.type_string;
         bool range_type_is_range;
         Variant range_content = model.get_range_content_2 (full_name, schema_id, out range_type_is_range);
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"

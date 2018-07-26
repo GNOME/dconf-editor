@@ -79,26 +79,34 @@ class RegistryInfo : Grid, BrowsableView
             assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
+        VariantDict properties = new VariantDict (_current_key_info);
+
         bool error_hard_conflicting_key = false;
         if (has_schema)
         {
-            bool warning_conflicting_key;
-            model.has_conflicting_keys (full_name, out warning_conflicting_key, out error_hard_conflicting_key);
+            if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
+                assert_not_reached ();
 
             if (error_hard_conflicting_key)
             {
                 conflicting_key_warning_revealer.set_reveal_child (false);
                 hard_conflicting_key_error_revealer.set_reveal_child (true);
             }
-            else if (warning_conflicting_key)
-            {
-                conflicting_key_warning_revealer.set_reveal_child (true);
-                hard_conflicting_key_error_revealer.set_reveal_child (false);
-            }
             else
             {
-                conflicting_key_warning_revealer.set_reveal_child (false);
-                hard_conflicting_key_error_revealer.set_reveal_child (false);
+                bool warning_conflicting_key;
+                if (!properties.lookup ("soft-conflict", "b", out warning_conflicting_key))
+                    assert_not_reached ();
+                if (warning_conflicting_key)
+                {
+                    conflicting_key_warning_revealer.set_reveal_child (true);
+                    hard_conflicting_key_error_revealer.set_reveal_child (false);
+                }
+                else
+                {
+                    conflicting_key_warning_revealer.set_reveal_child (false);
+                    hard_conflicting_key_error_revealer.set_reveal_child (false);
+                }
             }
         }
         else
@@ -109,8 +117,6 @@ class RegistryInfo : Grid, BrowsableView
         no_schema_warning.set_reveal_child (!has_schema);
 
         properties_list_box.@foreach ((widget) => widget.destroy ());
-
-        VariantDict properties = new VariantDict (_current_key_info);
 
         // TODO g_variant_dict_lookup_value() return value is not annotated as nullable
         string type_code;

@@ -790,22 +790,6 @@ public class SettingsModel : Object
 
     // GSettings-only
 
-    public void has_conflicting_keys (string full_name, out bool warning_conflicting_key, out bool error_hard_conflicting_key)
-    {
-        if (is_folder_path (full_name))
-            assert_not_reached ();
-
-        Key? key = get_key (full_name, "");
-        if (key == null)
-            assert_not_reached ();  // TODO better?
-        if (!((!) key is GSettingsKey))
-            assert_not_reached ();  // TODO better?
-
-        GSettingsKey gkey = (GSettingsKey) (!) key;
-        warning_conflicting_key = gkey.warning_conflicting_key;
-        error_hard_conflicting_key = gkey.error_hard_conflicting_key;
-    }
-
     public Variant get_range_content (string full_name, string schema_id)
     {
         GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
