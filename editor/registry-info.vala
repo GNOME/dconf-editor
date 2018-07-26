@@ -155,21 +155,18 @@ class RegistryInfo : Grid, BrowsableView
             add_row_from_label (_("Type"),                  tmp_string);
         else assert_not_reached ();
 
-        string range_type;
         bool range_type_is_range = false;
-        if (properties.lookup ("range-type",    "s",    out range_type)) // has_schema
+        if (properties.lookup ("range-type",    "s",    out tmp_string)) // has_schema
         {
             if (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
              || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
              || type_code == "n" || type_code == "q"    // signed and unsigned 16 bits
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
-                range_type_is_range = range_type == "range";
+                range_type_is_range = tmp_string == "range";
                 add_row_from_label (_("Forced range"),      Key.cool_boolean_text_value (range_type_is_range));
             }
         }
-        else
-            range_type = "";    // dconf key
 
         bool minimum_is_maximum = false;
         string tmp = "";
@@ -227,8 +224,8 @@ class RegistryInfo : Grid, BrowsableView
                 else
                 {
                     Variant? range = null;
-                    if (has_schema && range_type_is_range)  // type_string != "h"
-                        range = model.get_range_content (full_name, context);
+                    if (has_schema && range_type_is_range && !properties.lookup ("range-content", "v", out range))  // type_string != "h"
+                        assert_not_reached ();
                     key_editor_child = (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_code, range);
                 }                                                                                                                   break;
             case "d":
@@ -236,10 +233,14 @@ class RegistryInfo : Grid, BrowsableView
             case "mb":
                 key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);                   break;
             case "<enum>":  // has_schema
-                Variant range_content = model.get_range_content (full_name, context);
+                Variant range_content;
+                if (!properties.lookup ("range-content", "v", out range_content))
+                    assert_not_reached ();
                 key_editor_child = create_child_enum (range_content, initial_value, full_name, modifications_handler);              break;
             case "<flags>": // has_schema
-                Variant range_content = model.get_range_content (full_name, context);
+                Variant range_content;
+                if (!properties.lookup ("range-content", "v", out range_content))
+                    assert_not_reached ();
                 key_editor_child = create_child_flags (full_name, context, range_content, initial_value, modifications_handler);    break;
             case "()":
                 key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                      break;

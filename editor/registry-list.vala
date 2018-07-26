@@ -603,10 +603,15 @@ private abstract class RegistryList : Grid, BrowsableView
 
         VariantDict properties = new VariantDict (model.get_key_properties (full_name,
                                                                             schema_id,
-                                                                            {"type-code", "hard-conflict"}));
-        string type_string;
+                                                                            {"type-code", "range-type", "range-content", "hard-conflict"}));
+        string type_string, range_type;
+        Variant range_content;
         bool error_hard_conflicting_key;
         if (!properties.lookup ("type-code",     "s", out type_string))
+            assert_not_reached ();
+        if (!properties.lookup ("range-type",    "s", out range_type))
+            assert_not_reached ();
+        if (!properties.lookup ("range-content", "v", out range_content))
             assert_not_reached ();
         if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
             assert_not_reached ();
@@ -624,17 +629,15 @@ private abstract class RegistryList : Grid, BrowsableView
         popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
-        bool range_type_is_range;
-        Variant range_content = model.get_range_content_2 (full_name, schema_id, out range_type_is_range);
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
                 (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
-                && (range_type_is_range)
+                && (range_type == "range")
                 && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
                )
             || (
                 (type_string == "n" || type_string == "i" || type_string == "x")    // the handle type cannot have range
-                && (range_type_is_range)
+                && (range_type == "range")
                 && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
                )
             || type_string == "()")

@@ -787,18 +787,4 @@ public class SettingsModel : Object
         else
             return full_name + " " + ((!) key_value).print (false);
     }
-
-    // GSettings-only
-
-    public Variant get_range_content (string full_name, string schema_id)
-    {
-        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
-        return key.range_content;
-    }
-    public Variant get_range_content_2 (string full_name, string schema_id, out bool range_type_is_range)
-    {
-        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
-        range_type_is_range = key.range_type == "range";
-        return key.range_content;
-    }
 }
