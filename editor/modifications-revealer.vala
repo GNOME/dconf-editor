@@ -109,11 +109,16 @@ class ModificationsRevealer : Revealer
             // gsettings
             else
             {
-                string schema_id = objects [position, 0];
-                VariantDict properties = new VariantDict (model.get_key_properties (full_name, schema_id, {"is-default"}));
+                VariantDict properties = new VariantDict (model.get_key_properties (full_name,
+                                                                                    objects [position, 0],
+                                                                                    {"is-default", "schema-id"}));
                 bool is_key_default;
-                if (!properties.lookup ("is-default", "b", out is_key_default))
+                string schema_id;
+                if (!properties.lookup ("is-default",   "b",    out is_key_default))
                     assert_not_reached ();
+                if (!properties.lookup ("schema-id",    "s",    out schema_id))
+                    assert_not_reached ();
+
                 if (!is_key_default)
                     modifications_handler.add_delayed_setting (full_name, null, true, schema_id);
             }

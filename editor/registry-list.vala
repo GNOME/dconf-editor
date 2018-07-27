@@ -593,7 +593,27 @@ private abstract class RegistryList : Grid, BrowsableView
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
         string full_name = row.full_name;
-        string schema_id = row.context;
+
+        VariantDict properties = new VariantDict (model.get_key_properties (full_name,
+                                                                            row.context,
+                                                                            {"schema-id", "type-code", "range-type", "range-content", "is-default", "hard-conflict", "key-value"}));
+
+        string schema_id, type_string, range_type;
+        Variant range_content;
+        bool is_key_default, error_hard_conflicting_key;
+        if (!properties.lookup ("schema-id",        "s",    out schema_id))
+            assert_not_reached ();
+        if (!properties.lookup ("type-code",        "s",    out type_string))
+            assert_not_reached ();
+        if (!properties.lookup ("range-type",       "s",    out range_type))
+            assert_not_reached ();
+        if (!properties.lookup ("range-content",    "v",    out range_content))
+            assert_not_reached ();
+        if (!properties.lookup ("is-default",       "b",    out is_key_default))
+            assert_not_reached ();
+        if (!properties.lookup ("hard-conflict",    "b",    out error_hard_conflicting_key))
+            assert_not_reached ();
+
         Variant variant_s = new Variant.string (full_name);
         Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
 
@@ -603,22 +623,6 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
         }
 
-        VariantDict properties = new VariantDict (model.get_key_properties (full_name,
-                                                                            schema_id,
-                                                                            {"type-code", "range-type", "range-content", "is-default", "hard-conflict", "key-value"}));
-        string type_string, range_type;
-        Variant range_content;
-        bool is_key_default, error_hard_conflicting_key;
-        if (!properties.lookup ("type-code",     "s", out type_string))
-            assert_not_reached ();
-        if (!properties.lookup ("range-type",    "s", out range_type))
-            assert_not_reached ();
-        if (!properties.lookup ("range-content", "v", out range_content))
-            assert_not_reached ();
-        if (!properties.lookup ("is-default",    "b", out is_key_default))
-            assert_not_reached ();
-        if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
-            assert_not_reached ();
         if (error_hard_conflicting_key)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");

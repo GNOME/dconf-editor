@@ -402,6 +402,8 @@ public class GSettingsKey : Key
 
         if (all_properties_queried || "has-schema"      in query)
             variantdict.insert_value ("has-schema",                 new Variant.boolean (true));
+        if (all_properties_queried || "schema-id"       in query)
+            variantdict.insert_value ("schema-id",                  new Variant.string (context));
         if (all_properties_queried || "key-name"        in query)
             variantdict.insert_value ("key-name",                   new Variant.string (name));
         if (all_properties_queried || "defined-by"      in query)
