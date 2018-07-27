@@ -282,13 +282,11 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             SettingsModel model = modifications_handler.model;
 
-            Variant? properties = model.get_key_properties (setting_object.full_name, setting_object.context);
-            if (properties == null) // key doesn't exist
-                assert_not_reached ();
+            Variant properties = model.get_key_properties (setting_object.full_name, setting_object.context);
 
             bool has_schema;
             unowned Variant [] dict_container;
-            ((!) properties).get ("(ba{ss})", out has_schema, out dict_container);
+            properties.get ("(ba{ss})", out has_schema, out dict_container);
             Variant dict = dict_container [0];
 
             string type_code;       if (!dict.lookup ("type-code",  "s", out type_code))    assert_not_reached ();

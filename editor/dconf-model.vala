@@ -212,6 +212,12 @@ public class SettingsModel : Object
         return true;
     }
 
+    public bool key_exists (string path, string context)
+    {
+        Key? key = get_key (path, context);
+        return key != null;
+    }
+
     private Key? get_key (string path, string context = "")
     {
         if (paths_has_changed == false)
@@ -750,11 +756,13 @@ public class SettingsModel : Object
     * * Key properties methods
     \*/
 
-    public Variant? get_key_properties (string full_name, string context)
+    public Variant get_key_properties (string full_name, string context)
     {
         Key? key = get_key (full_name, context);
         if (key == null)
-            return null;
+            assert_not_reached ();
+        if (((!) key).context != context)
+            assert_not_reached ();
 
         return ((!) key).get_properties ({});
     }
