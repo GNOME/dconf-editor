@@ -76,11 +76,12 @@ class BrowserView : Grid
     {
         { "refresh-folder", refresh_folder },
 
-        { "set-key-value",  set_key_value,  "(ssv)" },
-        { "set-to-default", set_to_default, "(ss)"  },  // see also ui.erase(s)
+        { "set-gsettings-key-value",    set_gsettings_key_value,        "(ssv)"  },
+        { "set-dconf-key-value",        set_dconf_key_value,            "(ssv)"  },
+        { "set-to-default",             set_to_default,                 "(ss)"   },  // see also ui.erase(s)
 
-        { "toggle-dconf-key-switch",     toggle_dconf_key_switch,     "(sb)"   },
-        { "toggle-gsettings-key-switch", toggle_gsettings_key_switch, "(ssbb)" }
+        { "toggle-dconf-key-switch",     toggle_dconf_key_switch,       "(sb)"   },
+        { "toggle-gsettings-key-switch", toggle_gsettings_key_switch,   "(ssbb)" }
     };
 
     private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
@@ -90,18 +91,29 @@ class BrowserView : Grid
         hide_reload_warning ();
     }
 
-    private void set_key_value (SimpleAction action, Variant? value_variant)
+    private void set_gsettings_key_value (SimpleAction action, Variant? value_variant)
         requires (value_variant != null)
     {
         string full_name;
-        string context;
+        string schema_id;
         Variant key_value_request;
-        ((!) value_variant).@get ("(ssv)", out full_name, out context, out key_value_request);
+        ((!) value_variant).@get ("(ssv)", out full_name, out schema_id, out key_value_request);
 
         if (modifications_handler.get_current_delay_mode ())
-            modifications_handler.add_delayed_setting (full_name, key_value_request, context);
-        else if (context != ".dconf")
-            modifications_handler.set_gsettings_key_value (full_name, context, key_value_request);
+            modifications_handler.add_delayed_setting (full_name, key_value_request, true, schema_id);
+        else
+            modifications_handler.set_gsettings_key_value (full_name, schema_id, key_value_request);
+    }
+
+    private void set_dconf_key_value (SimpleAction action, Variant? value_variant)
+        requires (value_variant != null)
+    {
+        string full_name;
+        Variant key_value_request;
+        ((!) value_variant).@get ("(sv)", out full_name, out key_value_request);
+
+        if (modifications_handler.get_current_delay_mode ())
+            modifications_handler.add_delayed_setting (full_name, key_value_request, false);
         else
             modifications_handler.set_dconf_key_value (full_name, key_value_request);
     }

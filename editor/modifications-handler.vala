@@ -78,12 +78,12 @@ class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    public void add_delayed_setting (string key_path, Variant? new_value, string context)
+    public void add_delayed_setting (string key_path, Variant? new_value, bool has_schema, string schema_id_if_gsettings_key = "")
     {
         if (!keys_awaiting_hashtable.contains (key_path))
         {
-            if (context != ".dconf")
-                gsettings_changes_set.insert (key_path, context);
+            if (has_schema)
+                gsettings_changes_set.insert (key_path, schema_id_if_gsettings_key);
             else
                 dconf_changes_set.add (key_path);
             keys_awaiting_hashtable.insert (key_path, new_value);
@@ -176,11 +176,11 @@ class ModificationsHandler : Object
     public void erase_dconf_key (string full_name)
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (full_name, null, ".dconf");
+            add_delayed_setting (full_name, null, false);
         else if (behaviour != Behaviour.UNSAFE)
         {
             mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
-            add_delayed_setting (full_name, null, ".dconf");
+            add_delayed_setting (full_name, null, false);
         }
         else
             model.erase_key (full_name);
@@ -190,7 +190,7 @@ class ModificationsHandler : Object
         requires (schema_id != ".dconf")
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (full_name, null, schema_id);
+            add_delayed_setting (full_name, null, true, schema_id);
         else
             model.set_key_to_default (full_name, schema_id);
     }

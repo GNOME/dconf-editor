@@ -30,24 +30,22 @@ private class DelayedSettingView : Grid
     public string full_name { get; construct; }
     public string context { get; construct; }
 
-    public DelayedSettingView (string _full_name, string _context, bool is_default_or_ghost, Variant key_value, string? cool_planned_value, string? cool_default_value)
+    public DelayedSettingView (string name, string _full_name, string _context, bool has_schema_and_is_default, Variant key_value, string? cool_planned_value, string? cool_default_value)
     {
         Object (full_name: _full_name, context: _context);
         Variant variant = new Variant.string (full_name);
-        key_name_label.label = SettingsModel.get_name (full_name);
+        key_name_label.label = name;
         cancel_change_button.set_detailed_action_name ("ui.dismiss-change(" + variant.print (false) + ")");
 
         if (cool_default_value == null)
         {
-            if (is_default_or_ghost)
-                update_dconf_key_current_value (null);
-            else
-                update_dconf_key_current_value (key_value);
+            // at row creation, key is never ghost
+            update_dconf_key_current_value (key_value);
             update_dconf_key_planned_value (cool_planned_value);
         }
         else
         {
-            update_gsettings_key_current_value (key_value, is_default_or_ghost);
+            update_gsettings_key_current_value (key_value, has_schema_and_is_default);
             update_gsettings_key_planned_value (cool_planned_value, (!) cool_default_value);
         }
     }

@@ -147,6 +147,7 @@ private class KeyListBoxRow : ClickableListBoxRow
 
     public string key_name    { get; construct; }
     public string type_string { get; construct; }
+    public bool has_schema    { get; construct; }
 
     private bool _delay_mode = false;
     public bool delay_mode
@@ -182,20 +183,20 @@ private class KeyListBoxRow : ClickableListBoxRow
 
     construct
     {
-        if (context == ".dconf")
-            get_style_context ().add_class ("dconf-key");
-        else
+        if (has_schema)
             get_style_context ().add_class ("gsettings-key");
+        else
+            get_style_context ().add_class ("dconf-key");
 
         if (type_string == "b")
         {
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
-            if (context == ".dconf")
-                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',true))");
-            else
+            if (has_schema)
                 ((!) boolean_switch).set_detailed_action_name ("ui.empty(('','',true,true))");
+            else
+                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',true))");
 
             _use_switch = true;
             hide_or_show_switch ();
@@ -206,7 +207,8 @@ private class KeyListBoxRow : ClickableListBoxRow
         key_name_label.set_label (search_result_mode ? full_name : key_name);
     }
 
-    public KeyListBoxRow (string _type_string,
+    public KeyListBoxRow (bool _has_schema,
+                          string _type_string,
                           string _context,
                           string summary,
                           bool italic_summary,
@@ -215,7 +217,8 @@ private class KeyListBoxRow : ClickableListBoxRow
                           string _full_name,
                           bool _search_result_mode)
     {
-        Object (type_string: _type_string,
+        Object (has_schema: _has_schema,
+                type_string: _type_string,
                 context: _context,
                 delay_mode: _delay_mode,
                 key_name: _key_name,
@@ -249,19 +252,19 @@ private class KeyListBoxRow : ClickableListBoxRow
 
     public void on_delete_call ()
     {
-        set_key_value (context == ".dconf" ? "" : context, null);
+        set_key_value (null);
     }
 
-    public void set_key_value (string schema_or_empty, Variant? new_value)
+    public void set_key_value (Variant? new_value)
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
         Variant variant;
         if (new_value == null)
         {
-            if (schema_or_empty != "")
+            if (has_schema)
             {
-                variant = new Variant ("(ss)", full_name, schema_or_empty);
+                variant = new Variant ("(ss)", full_name, context);
                 actionable.set_detailed_action_name ("bro.set-to-default(" + variant.print (false) + ")");
             }
             else
@@ -272,8 +275,16 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
         else
         {
-            variant = new Variant ("(ssv)", full_name, (schema_or_empty == "" ? ".dconf" : schema_or_empty), (!) new_value);
-            actionable.set_detailed_action_name ("bro.set-key-value(" + variant.print (false) + ")");
+            if (has_schema)
+            {
+                variant = new Variant ("(ssv)", full_name, context, (!) new_value);
+                actionable.set_detailed_action_name ("bro.set-gsettings-key-value(" + variant.print (false) + ")");
+            }
+            else
+            {
+                variant = new Variant ("(sv)", full_name, (!) new_value);
+                actionable.set_detailed_action_name ("bro.set-dconf-key-value(" + variant.print (false) + ")");
+            }
         }
         Container child = (Container) get_child ();
         child.add (actionable);

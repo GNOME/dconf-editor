@@ -72,19 +72,20 @@ class RegistryInfo : Grid, BrowsableView
         context = _context;
         current_key_info = _current_key_info;
 
-        bool has_schema = context != ".dconf";
         SettingsModel model = modifications_handler.model;
 
-        if (!has_schema && model.is_key_ghost (full_name))   // TODO place in "requires"
-            assert_not_reached ();
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
         VariantDict properties = new VariantDict (_current_key_info);
 
+        bool has_schema;
+        if (!properties.lookup ("has-schema",       "b",    out has_schema))
+            assert_not_reached ();
+
         bool error_hard_conflicting_key = false;
         if (has_schema)
         {
-            if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
+            if (!properties.lookup ("hard-conflict", "b",   out error_hard_conflicting_key))
                 assert_not_reached ();
 
             if (error_hard_conflicting_key)
@@ -272,10 +273,12 @@ class RegistryInfo : Grid, BrowsableView
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
                 if (modifications_handler.should_delay_apply (type_code))
                 {
-                    if (is_valid)
-                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), context);
-                    else
+                    if (!is_valid)
                         modifications_handler.dismiss_change (full_name);
+                    else if (has_schema)
+                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), true, context);
+                    else
+                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), false);
                 }
                 else if (has_schema)
                     model.set_gsettings_key_value (full_name, context, key_editor_child.get_variant ());
@@ -303,11 +306,11 @@ class RegistryInfo : Grid, BrowsableView
                     if (modifications_handler.should_delay_apply (type_code))
                     {
                         if (custom_value_switch.get_active ())
-                            modifications_handler.add_delayed_setting (full_name, null, context);
+                            modifications_handler.add_delayed_setting (full_name, null, true, context);
                         else
                         {
                             Variant tmp_variant = modifications_handler.get_key_custom_value (full_name, context);
-                            modifications_handler.add_delayed_setting (full_name, tmp_variant, context);
+                            modifications_handler.add_delayed_setting (full_name, tmp_variant, true, context);
                             key_editor_child.reload (tmp_variant);
                         }
                     }
@@ -346,7 +349,7 @@ class RegistryInfo : Grid, BrowsableView
         {
             erase_button_handler = erase_button.clicked.connect (() => {
                     modifications_handler.enter_delay_mode ();
-                    modifications_handler.add_delayed_setting (full_name, null, ".dconf");
+                    modifications_handler.add_delayed_setting (full_name, null, false);
                 });
         }
 

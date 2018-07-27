@@ -104,7 +104,7 @@ class ModificationsRevealer : Revealer
             else if (objects [position, 0] == ".dconf")
             {
                 if (!model.is_key_ghost (full_name))
-                    modifications_handler.add_delayed_setting (full_name, null, ".dconf");
+                    modifications_handler.add_delayed_setting (full_name, null, false);
             }
             // gsettings
             else
@@ -115,7 +115,7 @@ class ModificationsRevealer : Revealer
                 if (!properties.lookup ("is-default", "b", out is_key_default))
                     assert_not_reached ();
                 if (!is_key_default)
-                    modifications_handler.add_delayed_setting (full_name, null, schema_id);
+                    modifications_handler.add_delayed_setting (full_name, null, true, schema_id);
             }
         }
     }
@@ -182,8 +182,6 @@ class ModificationsRevealer : Revealer
         else if (!properties.lookup ("is-default",  "b",    out has_schema_and_is_default))
             assert_not_reached ();
 
-        bool is_default_or_ghost = has_schema ? has_schema_and_is_default
-                                              : model.is_key_ghost (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
         string? cool_planned_value = null;
         if (planned_value != null)
@@ -198,9 +196,10 @@ class ModificationsRevealer : Revealer
         if (!properties.lookup ("key-value",        "v",    out key_value))
             assert_not_reached ();
 
-        DelayedSettingView view = new DelayedSettingView (full_name,
+        DelayedSettingView view = new DelayedSettingView (((SimpleSettingObject) object).name,
+                                                          full_name,
                                                           context,
-                                                          is_default_or_ghost,
+                                                          has_schema_and_is_default,    // at row creation, key is never ghost
                                                           key_value,
                                                           cool_planned_value,
                                                           cool_default_value);

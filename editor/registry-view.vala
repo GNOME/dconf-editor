@@ -90,16 +90,16 @@ class RegistryView : RegistryList
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         string? label_text = null;
-        if (((ClickableListBoxRow) row.get_child ()).context == ".dconf")
+        if (row.get_child () is KeyListBoxRow)  // no header for folders
         {
-            if (before == null || !(((ClickableListBoxRow) ((!) before).get_child ()).context == ".dconf"))
-                label_text = _("Keys not defined by a schema");
-        }
-        else if (((ClickableListBoxRow) row.get_child ()).context != ".folder")
-        {
-            string schema_id = ((ClickableListBoxRow) row.get_child ()).context;
-            if (before == null || ((ClickableListBoxRow) ((!) before).get_child ()).context != schema_id)
-                label_text = schema_id;
+            string context = ((ClickableListBoxRow) row.get_child ()).context;
+            if (before == null || ((ClickableListBoxRow) ((!) before).get_child ()).context != context)
+            {
+                if (((KeyListBoxRow) row.get_child ()).has_schema)
+                    label_text = context;
+                else
+                    label_text = _("Keys not defined by a schema");
+            }
         }
 
         ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);

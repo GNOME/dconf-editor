@@ -312,7 +312,8 @@ private abstract class RegistryList : Grid, BrowsableView
                 else
                     italic_summary = false;
 
-                row = new KeyListBoxRow (type_code,
+                row = new KeyListBoxRow (true,
+                                         type_code,
                                          setting_object.context,
                                          summary,
                                          italic_summary,
@@ -343,7 +344,8 @@ private abstract class RegistryList : Grid, BrowsableView
             }
             else
             {
-                row = new KeyListBoxRow (type_code,
+                row = new KeyListBoxRow (false,
+                                         type_code,
                                          ".dconf",
                                          _("No Schema Found"),
                                          true,
@@ -668,7 +670,7 @@ private abstract class RegistryList : Grid, BrowsableView
                     row.hide_right_click_popover ();
 
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (type_string), gvariant)));
-                    row.set_key_value (schema_id, gvariant);
+                    row.set_key_value (gvariant);
                 });
         }
         else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
@@ -687,7 +689,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 });
             popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
 
-            popover.value_changed.connect ((gvariant) => row.set_key_value (schema_id, gvariant));
+            popover.value_changed.connect ((gvariant) => row.set_key_value (gvariant));
         }
         else if (planned_change)
         {
@@ -751,7 +753,7 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.value_changed.connect ((gvariant) => {
                     row.hide_right_click_popover ();
                     action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (row.type_string), gvariant)));
-                    row.set_key_value ("", gvariant);
+                    row.set_key_value (gvariant);
                 });
 
             if (!delayed_apply_menu)
