@@ -156,10 +156,11 @@ class ModificationsHandler : Object
         if (planned_change && (planned_value != null))
             return (!) planned_value;
 
-        if (context != ".dconf")
-            return model.get_gsettings_key_value (full_name, context);
-        else
-            return model.get_dconf_key_value (full_name);
+        VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"key-value"}));
+        Variant key_value;
+        if (!properties.lookup ("key-value", "v", out key_value))
+            assert_not_reached ();
+        return key_value;
     }
 
     public void set_dconf_key_value (string full_name, Variant key_value)

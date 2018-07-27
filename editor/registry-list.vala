@@ -603,7 +603,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         VariantDict properties = new VariantDict (model.get_key_properties (full_name,
                                                                             schema_id,
-                                                                            {"type-code", "range-type", "range-content", "is-default", "hard-conflict"}));
+                                                                            {"type-code", "range-type", "range-content", "is-default", "hard-conflict", "key-value"}));
         string type_string, range_type;
         Variant range_content;
         bool is_key_default, error_hard_conflicting_key;
@@ -653,8 +653,12 @@ private abstract class RegistryList : Grid, BrowsableView
                 action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
                                                       null);
             else
-                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
-                                                      model.get_gsettings_key_value (full_name, schema_id));
+            {
+                Variant key_value;
+                if (!properties.lookup ("key-value", "v", out key_value))
+                    assert_not_reached ();
+                action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content, key_value);
+            }
 
             popover.change_dismissed.connect (() => {
                     row.destroy_popover ();
@@ -662,9 +666,8 @@ private abstract class RegistryList : Grid, BrowsableView
                 });
             popover.value_changed.connect ((gvariant) => {
                     row.hide_right_click_popover ();
-                    Variant key_value;
-                    key_value = model.get_gsettings_key_value (full_name, schema_id);
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (key_value.get_type_string ()), gvariant)));
+
+                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (type_string), gvariant)));
                     row.set_key_value (schema_id, gvariant);
                 });
         }
@@ -734,7 +737,10 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-            Variant key_value = model.get_dconf_key_value (row.full_name);
+            VariantDict properties = new VariantDict (model.get_key_properties (row.full_name, ".dconf", {"key-value"}));
+            Variant key_value;
+            if (!properties.lookup ("key-value", "v", out key_value))
+                assert_not_reached ();
             GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string, null,
                                                               planned_change ? planned_value : key_value);
 

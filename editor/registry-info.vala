@@ -187,19 +187,19 @@ class RegistryInfo : Grid, BrowsableView
         if (properties.lookup ("default-value",     "s",    out tmp_string))
             add_row_from_label (_("Default"),                   tmp_string);
 
-        if (has_schema && error_hard_conflicting_key)
+        if ( /* has_schema && */ error_hard_conflicting_key)
         {
             current_value_label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
             current_value_label.get_style_context ().add_class ("italic-label");
         }
+        else if (has_schema_and_is_default)
+            current_value_label = new Label (get_current_value_text (null));
         else
         {
-            if (has_schema_and_is_default)
-                current_value_label = new Label (get_current_value_text (null));
-            else if (has_schema)
-                current_value_label = new Label (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
-            else
-                current_value_label = new Label (get_current_value_text (model.get_dconf_key_value (full_name)));
+            Variant key_value;
+            if (!properties.lookup ("key-value",    "v",    out key_value))
+                assert_not_reached ();
+            current_value_label = new Label (get_current_value_text (key_value));
         }
         current_value_label.halign = Align.START;
         current_value_label.valign = Align.START;
@@ -313,17 +313,21 @@ class RegistryInfo : Grid, BrowsableView
                     }
                     else
                     {
+                        VariantDict local_properties = new VariantDict (model.get_key_properties (full_name, context, {"key-value"}));
+                        Variant key_value;
+                        if (!local_properties.lookup ("key-value", "v", out key_value))
+                            assert_not_reached ();
                         if (custom_value_switch.get_active ())
                         {
                             model.set_key_to_default (full_name, context);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
-                            key_editor_child.reload (model.get_gsettings_key_value (full_name, context));
+                            key_editor_child.reload (key_value);
                             //if (type_code == "<flags>")                      let's try to live without this...
                             //    key.planned_value = key.value;
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
-                            model.set_gsettings_key_value (full_name, context, model.get_gsettings_key_value (full_name, context));  // TODO that hurts...
+                            model.set_gsettings_key_value (full_name, context, key_value); // TODO sets key value with key value... that hurts
                     }
                 });
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
@@ -351,10 +355,12 @@ class RegistryInfo : Grid, BrowsableView
                 if (!has_schema && model.is_key_ghost (full_name))
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
-                if (has_schema)
-                    key_editor_child.reload (model.get_gsettings_key_value (full_name, context));
-                else
-                    key_editor_child.reload (model.get_dconf_key_value (full_name));
+
+                VariantDict local_properties = new VariantDict (model.get_key_properties (full_name, context, {"key-value"}));
+                Variant key_value;
+                if (!local_properties.lookup ("key-value", "v", out key_value))
+                    assert_not_reached ();
+                key_editor_child.reload (key_value);
                 //if (type_code == "<flags>")                      let's try to live without this...
                 //    key.planned_value = key.value;
                 SignalHandler.unblock (key_editor_child, value_has_changed_handler);
@@ -514,8 +520,7 @@ class RegistryInfo : Grid, BrowsableView
 
     public void dkey_value_push (Variant? key_value_or_null)
     {
-        SettingsModel model = modifications_handler.model;
-        if (model.is_key_ghost (full_name))
+        if (key_value_or_null == null)
         {
             current_value_label.get_style_context ().add_class ("italic-label");
             current_value_label.set_text (_("Key erased."));
@@ -523,7 +528,7 @@ class RegistryInfo : Grid, BrowsableView
         else
         {
             current_value_label.get_style_context ().remove_class ("italic-label");
-            current_value_label.set_text (get_current_value_text (model.get_dconf_key_value (full_name)));
+            current_value_label.set_text (get_current_value_text (key_value_or_null));
         }
     }
 }

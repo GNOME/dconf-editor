@@ -284,9 +284,9 @@ public abstract class Key : SettingObject
 
 public class DConfKey : Key
 {
-    public DConfKey (DConf.Client client, string parent_full_name, string name, string type_string)
+    public DConfKey (DConf.Client client, string full_name, string name, string type_string)
     {
-        Object (context: ".dconf", full_name: parent_full_name + name, name: name, type_string: type_string);
+        Object (context: ".dconf", full_name: full_name, name: name, type_string: type_string);
 
         client.changed.connect ((client, prefix, changes, tag) => {
                 foreach (string item in changes)

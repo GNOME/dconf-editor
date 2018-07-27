@@ -170,7 +170,7 @@ class ModificationsRevealer : Revealer
 
         SettingsModel model = modifications_handler.model;
 
-        VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"has-schema", "is-default", "default-value"}));
+        VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"has-schema", "is-default", "default-value", "key-value"}));
 
         bool has_schema;
         if (!properties.lookup ("has-schema",       "b",    out has_schema))
@@ -190,12 +190,13 @@ class ModificationsRevealer : Revealer
             cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value);
 
         string? cool_default_value = null;
-        Variant key_value;
         if (has_schema
-         && properties.lookup ("default-value", "s",    out cool_default_value))
-            key_value = model.get_gsettings_key_value (full_name, context);
-        else
-            key_value = model.get_dconf_key_value (full_name);
+         && !properties.lookup ("default-value",    "s",    out cool_default_value))
+            assert_not_reached ();
+
+        Variant key_value;
+        if (!properties.lookup ("key-value",        "v",    out key_value))
+            assert_not_reached ();
 
         DelayedSettingView view = new DelayedSettingView (full_name,
                                                           context,

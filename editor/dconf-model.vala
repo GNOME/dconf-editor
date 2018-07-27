@@ -388,16 +388,16 @@ public class SettingsModel : Object
                     key_model.append (new Directory (item_path, item_name));
             }
             else if (DConf.is_key (item_path) && get_key_from_path_and_name (key_model, item) == null)
-                create_dconf_key (parent_path, item, key_model);
+                create_dconf_key (parent_path + item, item, key_model);
         }
     }
 
-    private void create_dconf_key (string parent_path, string key_id, GLib.ListStore key_model)
+    private void create_dconf_key (string full_name, string key_id, GLib.ListStore key_model)
     {
-        Variant? key_value = get_dconf_key_value_or_null (parent_path + key_id, client);
+        Variant? key_value = get_dconf_key_value_or_null (full_name, client);
         if (key_value == null)
             return;
-        DConfKey new_key = new DConfKey (client, parent_path, key_id, ((!) key_value).get_type_string ());
+        DConfKey new_key = new DConfKey (client, full_name, key_id, ((!) key_value).get_type_string ());
         key_model.append (new_key);
     }
 
@@ -502,7 +502,7 @@ public class SettingsModel : Object
     {
         gkey_value_push (key.full_name,
                          key.context,
-                         _get_gsettings_key_value (key),
+                         get_gsettings_key_value (key),
                          is_key_default (key));
     }
 
@@ -576,21 +576,12 @@ public class SettingsModel : Object
     * * Key value methods
     \*/
 
-    public Variant get_gsettings_key_value (string full_name, string schema_id)
+    private static Variant get_gsettings_key_value (GSettingsKey key)
     {
-        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
-        return _get_gsettings_key_value (key);
-    }
-    private static Variant _get_gsettings_key_value (GSettingsKey key)
-    {
-        return key.settings.get_value (get_name (key.full_name));
+        return key.settings.get_value (key.name);
     }
 
-    public Variant get_dconf_key_value (string full_name)
-    {
-        return _get_dconf_key_value (full_name, client);
-    }
-    private static Variant _get_dconf_key_value (string full_name, DConf.Client client)
+    private static Variant get_dconf_key_value (string full_name, DConf.Client client)
     {
         Variant? key_value = get_dconf_key_value_or_null (full_name, client);
         if (key_value == null)
@@ -758,7 +749,17 @@ public class SettingsModel : Object
         if (((!) key).context != context)
             assert_not_reached ();
 
-        return ((!) key).get_properties (query);
+        Variant key_properties = ((!) key).get_properties (query);
+        VariantDict properties = new VariantDict (key_properties);
+
+        if (query.length == 0 || "key-value" in query)
+        {
+            if (key is GSettingsKey)
+                properties.insert_value ("key-value", new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
+            else // (key is DConfKey)
+                properties.insert_value ("key-value", new Variant.variant (get_dconf_key_value (((!) key).full_name, client)));
+        }
+        return properties.end ();
     }
 
     public string get_key_copy_text (string full_name, string context)
@@ -771,7 +772,7 @@ public class SettingsModel : Object
     }
     private static inline string get_gsettings_key_copy_text (GSettingsKey key)
     {
-        return key.descriptor + " " + _get_gsettings_key_value (key).print (false);
+        return key.descriptor + " " + get_gsettings_key_value (key).print (false);
     }
     private static inline string get_dconf_key_copy_text (string full_name, DConf.Client client)
     {
