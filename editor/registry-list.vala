@@ -603,15 +603,17 @@ private abstract class RegistryList : Grid, BrowsableView
 
         VariantDict properties = new VariantDict (model.get_key_properties (full_name,
                                                                             schema_id,
-                                                                            {"type-code", "range-type", "range-content", "hard-conflict"}));
+                                                                            {"type-code", "range-type", "range-content", "is-default", "hard-conflict"}));
         string type_string, range_type;
         Variant range_content;
-        bool error_hard_conflicting_key;
+        bool is_key_default, error_hard_conflicting_key;
         if (!properties.lookup ("type-code",     "s", out type_string))
             assert_not_reached ();
         if (!properties.lookup ("range-type",    "s", out range_type))
             assert_not_reached ();
         if (!properties.lookup ("range-content", "v", out range_content))
+            assert_not_reached ();
+        if (!properties.lookup ("is-default",    "b", out is_key_default))
             assert_not_reached ();
         if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
             assert_not_reached ();
@@ -647,7 +649,7 @@ private abstract class RegistryList : Grid, BrowsableView
             if (planned_change)
                 action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
                                                       modifications_handler.get_key_planned_value (full_name));
-            else if (model.is_key_default (full_name, schema_id))
+            else if (is_key_default)
                 action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
                                                       null);
             else
@@ -670,7 +672,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             popover.new_section ();
 
-            if (!model.is_key_default (full_name, schema_id))
+            if (!is_key_default)
                 popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
 
             string [] all_flags = range_content.get_strv ();
@@ -692,7 +694,7 @@ private abstract class RegistryList : Grid, BrowsableView
             if (planned_value != null)
                 popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
         }
-        else if (!model.is_key_default (full_name, schema_id))
+        else if (!is_key_default)
         {
             popover.new_section ();
             popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");

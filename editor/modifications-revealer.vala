@@ -110,7 +110,11 @@ class ModificationsRevealer : Revealer
             else
             {
                 string schema_id = objects [position, 0];
-                if (!model.is_key_default (full_name, schema_id))
+                VariantDict properties = new VariantDict (model.get_key_properties (full_name, schema_id, {"is-default"}));
+                bool is_key_default;
+                if (!properties.lookup ("is-default", "b", out is_key_default))
+                    assert_not_reached ();
+                if (!is_key_default)
                     modifications_handler.add_delayed_setting (full_name, null, schema_id);
             }
         }
@@ -164,10 +168,21 @@ class ModificationsRevealer : Revealer
         string full_name = ((SimpleSettingObject) object).full_name;
         string context = ((SimpleSettingObject) object).context;
 
-        bool has_schema = context != ".dconf";
         SettingsModel model = modifications_handler.model;
 
-        bool is_default_or_ghost = has_schema ? model.is_key_default (full_name, context)
+        VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"has-schema", "is-default", "default-value"}));
+
+        bool has_schema;
+        if (!properties.lookup ("has-schema",       "b",    out has_schema))
+            assert_not_reached ();
+
+        bool has_schema_and_is_default;
+        if (!has_schema)
+            has_schema_and_is_default = false;
+        else if (!properties.lookup ("is-default",  "b",    out has_schema_and_is_default))
+            assert_not_reached ();
+
+        bool is_default_or_ghost = has_schema ? has_schema_and_is_default
                                               : model.is_key_ghost (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
         string? cool_planned_value = null;
@@ -176,16 +191,11 @@ class ModificationsRevealer : Revealer
 
         string? cool_default_value = null;
         Variant key_value;
-        if (has_schema)
-        {
-            VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"default-value"}));
-            if (!properties.lookup ("default-value", "s", out cool_default_value))
-                assert_not_reached ();
-
-            key_value = modifications_handler.model.get_gsettings_key_value (full_name, context);
-        }
+        if (has_schema
+         && properties.lookup ("default-value", "s",    out cool_default_value))
+            key_value = model.get_gsettings_key_value (full_name, context);
         else
-            key_value = modifications_handler.model.get_dconf_key_value (full_name);
+            key_value = model.get_dconf_key_value (full_name);
 
         DelayedSettingView view = new DelayedSettingView (full_name,
                                                           context,
@@ -251,7 +261,7 @@ class ModificationsRevealer : Revealer
     }
 
     /*\
-    * * Updating values
+    * * Updating values; TODO only works for watched keys...
     \*/
 
     public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)

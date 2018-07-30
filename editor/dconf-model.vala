@@ -503,7 +503,7 @@ public class SettingsModel : Object
         gkey_value_push (key.full_name,
                          key.context,
                          _get_gsettings_key_value (key),
-                         _is_key_default (key));
+                         is_key_default (key));
     }
 
     private inline void push_dconf_key_value (string full_name, DConf.Client client)
@@ -673,15 +673,9 @@ public class SettingsModel : Object
         }
     }
 
-    public bool is_key_default (string full_name, string schema_id)
+    private static inline bool is_key_default (GSettingsKey key)
     {
-        GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
-        return _is_key_default (key);
-    }
-    private bool _is_key_default (GSettingsKey key)
-    {
-        GLib.Settings settings = key.settings;
-        return settings.get_user_value (key.name) == null;
+        return key.settings.get_user_value (key.name) == null;
     }
 
     public bool key_has_schema (string full_name)

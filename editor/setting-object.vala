@@ -448,6 +448,8 @@ public class GSettingsKey : Key
             variantdict.insert_value ("soft-conflict",              new Variant.boolean (warning_conflicting_key));
         if (all_properties_queried || "hard-conflict"   in query)
             variantdict.insert_value ("hard-conflict",              new Variant.boolean (error_hard_conflicting_key));
+        if (all_properties_queried || "is-default"      in query)
+            variantdict.insert_value ("is-default",                 new Variant.boolean (settings.get_user_value (name) == null));
 
         return variantdict.end ();
     }

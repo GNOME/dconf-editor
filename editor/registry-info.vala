@@ -120,43 +120,43 @@ class RegistryInfo : Grid, BrowsableView
 
         // TODO g_variant_dict_lookup_value() return value is not annotated as nullable
         string type_code;
-        if (!properties.lookup ("type-code",    "s",    out type_code))
+        if (!properties.lookup ("type-code",        "s",    out type_code))
             assert_not_reached ();
 
         bool test;
         string tmp_string;
 
-        if (properties.lookup ("defined-by",    "s",    out tmp_string))
-            add_row_from_label (_("Defined by"),            tmp_string);
+        if (properties.lookup ("defined-by",        "s",    out tmp_string))
+            add_row_from_label (_("Defined by"),                tmp_string);
         else assert_not_reached ();
 
-        if (properties.lookup ("schema-id",     "s",    out tmp_string))
-            add_row_from_label (_("Schema"),                tmp_string);
+        if (properties.lookup ("schema-id",         "s",    out tmp_string))
+            add_row_from_label (_("Schema"),                    tmp_string);
 
         add_separator ();
-        if (properties.lookup ("summary",       "s",    out tmp_string))
+        if (properties.lookup ("summary",           "s",    out tmp_string))
         {
             test = tmp_string == "";
             add_row_from_label (_("Summary"),
-                                test ?                      _("No summary provided")
-                                     :                      tmp_string,
+                                test ?                          _("No summary provided")
+                                     :                          tmp_string,
                                 test);
         }
-        if (properties.lookup ("description",   "s",    out tmp_string))
+        if (properties.lookup ("description",       "s",    out tmp_string))
         {
             test = tmp_string == "";
             add_row_from_label (_("Description"),
-                                test ?                      _("No description provided")
-                                     :                      tmp_string,
+                                test ?                          _("No description provided")
+                                     :                          tmp_string,
                                 test);
         }
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (properties.lookup ("type-name",     "s",    out tmp_string))
-            add_row_from_label (_("Type"),                  tmp_string);
+        if (properties.lookup ("type-name",         "s",    out tmp_string))
+            add_row_from_label (_("Type"),                      tmp_string);
         else assert_not_reached ();
 
         bool range_type_is_range = false;
-        if (properties.lookup ("range-type",    "s",    out tmp_string)) // has_schema
+        if (properties.lookup ("range-type",        "s",    out tmp_string)) // has_schema
         {
             if (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
              || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
@@ -164,22 +164,28 @@ class RegistryInfo : Grid, BrowsableView
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
                 range_type_is_range = tmp_string == "range";
-                add_row_from_label (_("Forced range"),      Key.cool_boolean_text_value (range_type_is_range));
+                add_row_from_label (_("Forced range"),          Key.cool_boolean_text_value (range_type_is_range));
             }
         }
 
         bool minimum_is_maximum = false;
         string tmp = "";
         tmp_string = "";
-        if (properties.lookup ("minimum",       "s",    out tmp_string))
-            add_row_from_label (_("Minimum"),               tmp_string);
-        if (properties.lookup ("maximum",       "s",    out tmp       ))
-            add_row_from_label (_("Maximum"),               tmp       );
+        if (properties.lookup ("minimum",           "s",    out tmp_string))
+            add_row_from_label (_("Minimum"),                   tmp_string);
+        if (properties.lookup ("maximum",           "s",    out tmp       ))
+            add_row_from_label (_("Maximum"),                   tmp       );
         if (tmp != "" && tmp == tmp_string)
             minimum_is_maximum = true;
 
-        if (properties.lookup ("default-value", "s",    out tmp_string))
-            add_row_from_label (_("Default"),               tmp_string);
+        bool has_schema_and_is_default;
+        if (!has_schema)
+            has_schema_and_is_default = false;
+        else if (!properties.lookup ("is-default",  "b",    out has_schema_and_is_default))
+            assert_not_reached ();
+
+        if (properties.lookup ("default-value",     "s",    out tmp_string))
+            add_row_from_label (_("Default"),                   tmp_string);
 
         if (has_schema && error_hard_conflicting_key)
         {
@@ -188,7 +194,7 @@ class RegistryInfo : Grid, BrowsableView
         }
         else
         {
-            if (has_schema && model.is_key_default (full_name, context))
+            if (has_schema_and_is_default)
                 current_value_label = new Label (get_current_value_text (null));
             else if (has_schema)
                 current_value_label = new Label (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
@@ -290,7 +296,7 @@ class RegistryInfo : Grid, BrowsableView
 
             bool planned_change = modifications_handler.key_has_planned_change (full_name);
             Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
-            bool key_value_is_default = planned_change ? planned_value == null : model.is_key_default (full_name, context);
+            bool key_value_is_default = planned_change ? planned_value == null : has_schema_and_is_default;
             custom_value_switch.set_active (key_value_is_default);
 
             ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
@@ -322,7 +328,12 @@ class RegistryInfo : Grid, BrowsableView
                 });
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
-                    custom_value_switch.set_active (model.is_key_default (full_name, context));
+
+                    VariantDict local_properties = new VariantDict (model.get_key_properties (full_name, context, {"is-default"}));
+                    bool is_key_default;
+                    if (!local_properties.lookup ("is-default", "b", out is_key_default))
+                        assert_not_reached ();
+                    custom_value_switch.set_active (is_key_default);
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
                 });
             custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
@@ -493,13 +504,12 @@ class RegistryInfo : Grid, BrowsableView
     * * Updating value
     \*/
 
-    public void gkey_value_push (Variant key_value, bool is_key_default)
+    public void gkey_value_push (Variant key_value, bool is_key_default)    // TODO check if there isn't a problem on conflicting keys
     {
-        SettingsModel model = modifications_handler.model;
-        if (model.is_key_default (full_name, context))
+        if (is_key_default)
             current_value_label.set_text (get_current_value_text (null));
         else
-            current_value_label.set_text (get_current_value_text (model.get_gsettings_key_value (full_name, context)));
+            current_value_label.set_text (get_current_value_text (key_value));
     }
 
     public void dkey_value_push (Variant? key_value_or_null)
