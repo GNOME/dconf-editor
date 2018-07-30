@@ -35,6 +35,9 @@ class RegistrySearch : RegistryList
 
     private void ensure_selection ()
     {
+        if (!(key_list_box is ListBox)) // suppresses some warnings if the window is closed while the search is processing
+            return;
+
         ListBoxRow? row = key_list_box.get_selected_row ();
         if (row == null)
             select_first_row ();

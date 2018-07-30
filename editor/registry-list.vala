@@ -360,9 +360,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
             set_delayed_icon (key_row);
-            row.destroy.connect (() => {
-                    modifications_handler.disconnect (delayed_modifications_changed_handler);
-                });
+            row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
         }
 
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
@@ -533,7 +531,7 @@ private abstract class RegistryList : Grid, BrowsableView
                 return;
             }
 
-            ((!) row.nullable_popover).destroy.connect (() => { row.nullable_popover = null; });
+            ((!) row.nullable_popover).destroy.connect_after (() => { row.nullable_popover = null; });
 
             ((!) row.nullable_popover).set_relative_to (row);
             ((!) row.nullable_popover).position = PositionType.BOTTOM;     // TODO better
