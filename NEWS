@@ -1,3 +1,24 @@
+dconf-editor 3.29.90
+=====================
+
+This development cycle has been quite calm (until its end), and that’s why there
+wasn’t any previous “alpha” release. The only visible things for users should be
+some new demos. But internally, this module can now be splitted in two, one that
+handles the UI (“frontend”) and one that plays with the dconf service, gsettings
+API, and possibly other sources of configuration informations to be added in the
+future. The goal is to move this “backend” as a new module –a library first, and
+then to transform it as a D-Bus service– in the next development cycle. There is
+probably at least one regression due to these big changes, but I will do my best
+to test all the things before 3.30 release. If you see a bug, please report. :·)
+
+Translations updated:
+  Catalan: Jordi Mas
+  Croatian: Goran Vidović
+  Czech: Marek Černocký
+  Friulian: Fabio Tomat
+  Slovenian: Matej Urbančič
+  Spanish: Rodrigo Lledó Milanca and Daniel Mustieles
+
 dconf-editor 3.28.0
 =====================
 
