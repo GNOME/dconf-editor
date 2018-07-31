@@ -466,13 +466,9 @@ public class SettingsModel : Object
     private void add_watched_key (Key key)
     {
         if (key is GSettingsKey)
-            key.key_value_changed_handler = key.value_changed.connect (() => {
-                    push_gsettings_key_value ((GSettingsKey) key);
-                });
+            key.key_value_changed_handler = key.value_changed.connect (() => push_gsettings_key_value ((GSettingsKey) key));
         else if (key is DConfKey)
-            key.key_value_changed_handler = key.value_changed.connect (() => {
-                    push_dconf_key_value (key.full_name, client);
-                });
+            key.key_value_changed_handler = key.value_changed.connect (() => push_dconf_key_value (key.full_name, client));
         else assert_not_reached ();
 
         watched_keys.append (key);

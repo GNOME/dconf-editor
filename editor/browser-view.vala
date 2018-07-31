@@ -239,9 +239,14 @@ class BrowserView : Grid
         }
         else if (type == ViewType.OBJECT)
         {
-            if (model.key_exists (path, last_context)
-             && !current_child.check_reload_object (model.get_key_properties (path, last_context, {})))
-                return false;
+            if (model.key_exists (path, last_context))
+            {
+                VariantDict properties = new VariantDict (model.get_key_properties (path, last_context, {}));
+                properties.remove ("is-default");
+                properties.remove ("key-value");
+                if (!current_child.check_reload_object (properties.end ()))
+                    return false;
+            }
             if (show_infobar)
             {
                 info_bar.show_warning ("hard-reload-object");

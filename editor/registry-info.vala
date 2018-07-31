@@ -70,13 +70,18 @@ class RegistryInfo : Grid, BrowsableView
     {
         full_name = _full_name;
         context = _context;
-        current_key_info = _current_key_info;
+
+        VariantDict properties = new VariantDict (_current_key_info);
+        properties.remove ("is-default");
+        properties.remove ("key-value");
+        current_key_info = properties.end ();
+        properties.clear ();
 
         SettingsModel model = modifications_handler.model;
 
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
-        VariantDict properties = new VariantDict (_current_key_info);
+        properties = new VariantDict (_current_key_info);
 
         bool has_schema;
         if (!properties.lookup ("has-schema",       "b",    out has_schema))
