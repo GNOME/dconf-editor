@@ -355,6 +355,8 @@ private abstract class RegistryList : Grid, BrowsableView
                                          search_mode_non_local_result);
             }
 
+            properties.clear ();
+
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
@@ -481,6 +483,7 @@ private abstract class RegistryList : Grid, BrowsableView
             assert_not_reached ();
         if (!properties.lookup ("hard-conflict", "b", out error_hard_conflicting_key))
             assert_not_reached ();
+        properties.clear ();
 
         update_gsettings_row ((!) row,
                               type_code,
@@ -625,6 +628,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
             popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
+            properties.clear ();
             return true; // anything else is value-related, so we are done
         }
 
@@ -706,6 +710,7 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
             popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
         }
+        properties.clear ();
         return true;
     }
 
@@ -745,6 +750,7 @@ private abstract class RegistryList : Grid, BrowsableView
             Variant key_value;
             if (!properties.lookup ("key-value", "v", out key_value))
                 assert_not_reached ();
+            properties.clear ();
             GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string, null,
                                                               planned_change ? planned_value : key_value);
 

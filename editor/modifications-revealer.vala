@@ -118,6 +118,7 @@ class ModificationsRevealer : Revealer
                     assert_not_reached ();
                 if (!properties.lookup ("schema-id",    "s",    out schema_id))
                     assert_not_reached ();
+                properties.clear ();
 
                 if (!is_key_default)
                     modifications_handler.add_delayed_setting (full_name, null, true, schema_id);
@@ -200,6 +201,8 @@ class ModificationsRevealer : Revealer
         Variant key_value;
         if (!properties.lookup ("key-value",        "v",    out key_value))
             assert_not_reached ();
+
+        properties.clear ();
 
         DelayedSettingView view = new DelayedSettingView (((SimpleSettingObject) object).name,
                                                           full_name,

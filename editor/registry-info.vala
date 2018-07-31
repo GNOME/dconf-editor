@@ -272,6 +272,8 @@ class RegistryInfo : Grid, BrowsableView
         }
         one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
 
+        properties.clear ();
+
         if (has_schema && error_hard_conflicting_key)
             return;
 
@@ -325,6 +327,7 @@ class RegistryInfo : Grid, BrowsableView
                         Variant key_value;
                         if (!local_properties.lookup ("key-value", "v", out key_value))
                             assert_not_reached ();
+                        local_properties.clear ();
                         if (custom_value_switch.get_active ())
                         {
                             model.set_key_to_default (full_name, context);
@@ -345,6 +348,7 @@ class RegistryInfo : Grid, BrowsableView
                     bool is_key_default;
                     if (!local_properties.lookup ("is-default", "b", out is_key_default))
                         assert_not_reached ();
+                    local_properties.clear ();
                     custom_value_switch.set_active (is_key_default);
                     SignalHandler.unblock (custom_value_switch, switch_active_handler);
                 });
@@ -368,6 +372,7 @@ class RegistryInfo : Grid, BrowsableView
                 Variant key_value;
                 if (!local_properties.lookup ("key-value", "v", out key_value))
                     assert_not_reached ();
+                local_properties.clear ();
                 key_editor_child.reload (key_value);
                 //if (type_code == "<flags>")                      let's try to live without this...
                 //    key.planned_value = key.value;

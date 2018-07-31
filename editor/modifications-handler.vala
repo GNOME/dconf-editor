@@ -160,6 +160,7 @@ class ModificationsHandler : Object
         Variant key_value;
         if (!properties.lookup ("key-value", "v", out key_value))
             assert_not_reached ();
+        properties.clear ();
         return key_value;
     }
 
