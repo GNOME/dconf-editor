@@ -18,7 +18,7 @@
 using Gtk;
 
 [Flags]
-enum RelocatableSchemasEnabledMappings
+internal enum RelocatableSchemasEnabledMappings
 {
     USER,
     BUILT_IN,
