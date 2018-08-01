@@ -18,9 +18,9 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
-class BrowserView : Grid
+private class BrowserView : Grid
 {
-    public string last_context { get; private set; default = ""; }
+    internal string last_context { get; private set; default = ""; }
 
     [GtkChild] private BrowserInfoBar info_bar;
     [GtkChild] private BrowserStack current_child;
@@ -28,10 +28,10 @@ class BrowserView : Grid
     private SortingOptions sorting_options = new SortingOptions ();
     private GLib.ListStore? key_model = null;
 
-    public bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
+    internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
 
     private ModificationsHandler _modifications_handler;
-    public ModificationsHandler modifications_handler
+    internal ModificationsHandler modifications_handler
     {
         private get { return _modifications_handler; }
         set {
@@ -163,7 +163,7 @@ class BrowserView : Grid
     * * Views
     \*/
 
-    public void prepare_folder_view (string [,]? key_array, bool is_ancestor)
+    internal void prepare_folder_view (string [,]? key_array, bool is_ancestor)
     {
         key_model = new GLib.ListStore (typeof (SimpleSettingObject));
         if (key_array != null)
@@ -182,20 +182,20 @@ class BrowserView : Grid
         hide_reload_warning ();
     }
 
-    public void select_row (string selected)
+    internal void select_row (string selected)
         requires (current_view != ViewType.OBJECT)
     {
         current_child.select_row (selected, last_context);
     }
 
-    public void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
+    internal void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
     {
         current_child.prepare_object_view (full_name, context, properties, is_parent);
         hide_reload_warning ();
         last_context = context;
     }
 
-    public void set_path (ViewType type, string path)
+    internal void set_path (ViewType type, string path)
     {
         current_child.set_path (type, path);
         modifications_handler.path_changed ();
@@ -216,13 +216,13 @@ class BrowserView : Grid
             info_bar.show_warning ("soft-reload-folder");
     }
 
-    public void set_search_parameters (string current_path, string [] bookmarks)
+    internal void set_search_parameters (string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
         current_child.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
-    public bool check_reload (ViewType type, string path, bool show_infobar)
+    internal bool check_reload (ViewType type, string path, bool show_infobar)
     {
         SettingsModel model = modifications_handler.model;
 
@@ -262,35 +262,35 @@ class BrowserView : Grid
     * * Proxy calls
     \*/
 
-    public ViewType current_view { get { return current_child.current_view; }}
+    internal ViewType current_view { get { return current_child.current_view; }}
 
     // popovers invalidation and toggles hiding/revealing
-    public void discard_row_popover () { current_child.discard_row_popover (); }
-    public void invalidate_popovers () { current_child.invalidate_popovers (); }
+    internal void discard_row_popover () { current_child.discard_row_popover (); }
+    internal void invalidate_popovers () { current_child.invalidate_popovers (); }
 
-    public void hide_or_show_toggles (bool show) { current_child.hide_or_show_toggles (show); }
+    internal void hide_or_show_toggles (bool show) { current_child.hide_or_show_toggles (show); }
 
     // keyboard
-    public bool return_pressed ()   { return current_child.return_pressed ();   }
-    public bool up_pressed ()       { return current_child.up_pressed ();       }
-    public bool down_pressed ()     { return current_child.down_pressed ();     }
+    internal bool return_pressed ()   { return current_child.return_pressed ();   }
+    internal bool up_pressed ()       { return current_child.up_pressed ();       }
+    internal bool down_pressed ()     { return current_child.down_pressed ();     }
 
-    public bool show_row_popover () { return current_child.show_row_popover (); }   // Menu
+    internal bool show_row_popover () { return current_child.show_row_popover (); }   // Menu
 
-    public void toggle_boolean_key ()      { current_child.toggle_boolean_key ();      }
-    public void set_selected_to_default () { current_child.set_selected_to_default (); }
+    internal void toggle_boolean_key ()      { current_child.toggle_boolean_key ();      }
+    internal void set_selected_to_default () { current_child.set_selected_to_default (); }
 
     // current row property
-    public string get_selected_row_name () { return current_child.get_selected_row_name (); }
-    public string? get_copy_text ()        { return current_child.get_copy_text ();         }
-    public string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
+    internal string get_selected_row_name () { return current_child.get_selected_row_name (); }
+    internal string? get_copy_text ()        { return current_child.get_copy_text ();         }
+    internal string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
 
     // values changes
-    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
     {
         current_child.gkey_value_push (full_name, schema_id, key_value, is_key_default);
     }
-    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         current_child.dkey_value_push (full_name, key_value_or_null);
     }
@@ -300,18 +300,18 @@ class BrowserView : Grid
 * * Sorting
 \*/
 
-public class SortingOptions : Object
+private class SortingOptions : Object
 {
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
-    public bool case_sensitive { get; set; default = false; }
+    internal bool case_sensitive { get; set; default = false; }
 
     construct
     {
         settings.bind ("sort-case-sensitive", this, "case-sensitive", GLib.SettingsBindFlags.GET);
     }
 
-    public SettingComparator get_comparator ()
+    internal SettingComparator get_comparator ()
     {
         if (case_sensitive)
             return new BySchemaCaseSensitive ();
@@ -319,14 +319,14 @@ public class SortingOptions : Object
             return new BySchemaCaseInsensitive ();
     }
 
-    public void sort_key_model (GLib.ListStore model)
+    internal void sort_key_model (GLib.ListStore model)
     {
         SettingComparator comparator = get_comparator ();
 
         model.sort ((a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b));
     }
 
-    public bool is_key_model_sorted (GLib.ListStore model)
+    internal bool is_key_model_sorted (GLib.ListStore model)
     {
         SettingComparator comparator = get_comparator ();
 
@@ -344,9 +344,9 @@ public class SortingOptions : Object
 
 /* Comparison functions */
 
-public interface SettingComparator : Object
+private interface SettingComparator : Object
 {
-    public abstract int compare (SimpleSettingObject a, SimpleSettingObject b);
+    internal abstract int compare (SimpleSettingObject a, SimpleSettingObject b);
 
     protected virtual bool sort_directories_first (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
     {
@@ -377,9 +377,9 @@ public interface SettingComparator : Object
     }
 }
 
-class BySchemaCaseInsensitive : Object, SettingComparator
+private class BySchemaCaseInsensitive : Object, SettingComparator
 {
-    public int compare (SimpleSettingObject a, SimpleSettingObject b)
+    internal int compare (SimpleSettingObject a, SimpleSettingObject b)
     {
         int return_value = 0;
         if (sort_directories_first (a, b, ref return_value))
@@ -393,9 +393,9 @@ class BySchemaCaseInsensitive : Object, SettingComparator
     }
 }
 
-class BySchemaCaseSensitive : Object, SettingComparator
+private class BySchemaCaseSensitive : Object, SettingComparator
 {
-    public int compare (SimpleSettingObject a, SimpleSettingObject b)
+    internal int compare (SimpleSettingObject a, SimpleSettingObject b)
     {
         int return_value = 0;
         if (sort_directories_first (a, b, ref return_value))

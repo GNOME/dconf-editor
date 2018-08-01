@@ -21,7 +21,7 @@ const int MAX_ROW_WIDTH = 1000;
 
 private class ListBoxRowWrapper : ListBoxRow
 {
-    public override void get_preferred_width (out int minimum_width, out int natural_width)
+    internal override void get_preferred_width (out int minimum_width, out int natural_width)
     {
         base.get_preferred_width (out minimum_width, out natural_width);
         natural_width = MAX_ROW_WIDTH;
@@ -30,7 +30,7 @@ private class ListBoxRowWrapper : ListBoxRow
 
 private class RegistryWarning : Grid
 {
-    public override void get_preferred_width (out int minimum_width, out int natural_width)
+    internal override void get_preferred_width (out int minimum_width, out int natural_width)
     {
         base.get_preferred_width (out minimum_width, out natural_width);
         natural_width = MAX_ROW_WIDTH;
@@ -39,13 +39,13 @@ private class RegistryWarning : Grid
 
 private class ListBoxRowHeader : Grid
 {
-    public override void get_preferred_width (out int minimum_width, out int natural_width)
+    internal override void get_preferred_width (out int minimum_width, out int natural_width)
     {
         base.get_preferred_width (out minimum_width, out natural_width);
         natural_width = MAX_ROW_WIDTH;
     }
 
-    public ListBoxRowHeader (bool is_first_row, string? header_text)
+    internal ListBoxRowHeader (bool is_first_row, string? header_text)
     {
         if (header_text == null)
         {
@@ -76,10 +76,10 @@ private class ListBoxRowHeader : Grid
 
 private abstract class ClickableListBoxRow : EventBox
 {
-    public bool search_result_mode { public get; construct; default = false; }
+    public bool search_result_mode  { internal get; protected construct; default = false; }
 
-    public string full_name { get; construct; }
-    public string context   { get; construct; }
+    public string full_name         { internal get; protected construct; }
+    public string context           { internal get; protected construct; }
 
     /*\
     * * Dismiss popover on window resize
@@ -104,21 +104,21 @@ private abstract class ClickableListBoxRow : EventBox
     * * right click popover stuff
     \*/
 
-    public ContextPopover? nullable_popover = null;
+    internal ContextPopover? nullable_popover = null;
 
-    public void destroy_popover ()
+    internal void destroy_popover ()
     {
         if (nullable_popover != null)       // check sometimes not useful
             ((!) nullable_popover).destroy ();
     }
 
-    public void hide_right_click_popover ()
+    internal void hide_right_click_popover ()
     {
         if (nullable_popover != null)
             ((!) nullable_popover).popdown ();
     }
 
-    public bool right_click_popover_visible ()
+    internal bool right_click_popover_visible ()
     {
         return (nullable_popover != null) && (((!) nullable_popover).visible);
     }
@@ -129,7 +129,7 @@ private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
 
-    public FolderListBoxRow (string label, string path, bool search_result_mode)
+    internal FolderListBoxRow (string label, string path, bool search_result_mode)
     {
         Object (full_name: path, context: ".folder", search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
@@ -145,12 +145,12 @@ private class KeyListBoxRow : ClickableListBoxRow
     [GtkChild] private Label key_info_label;
     private Switch? boolean_switch = null;
 
-    public string key_name    { get; construct; }
-    public string type_string { get; construct; }
-    public bool has_schema    { get; construct; }
+    public string key_name    { internal get; internal construct; }
+    public string type_string { internal get; internal construct; }
+    public bool has_schema    { internal get; internal construct; }
 
     private bool _delay_mode = false;
-    public bool delay_mode
+    internal bool delay_mode
     {
         private get
         {
@@ -164,7 +164,7 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    public bool small_keys_list_rows
+    internal bool small_keys_list_rows
     {
         set
         {
@@ -207,7 +207,7 @@ private class KeyListBoxRow : ClickableListBoxRow
         key_name_label.set_label (search_result_mode ? full_name : key_name);
     }
 
-    public KeyListBoxRow (bool _has_schema,
+    internal KeyListBoxRow (bool _has_schema,
                           string _type_string,
                           string _context,
                           string summary,
@@ -230,14 +230,14 @@ private class KeyListBoxRow : ClickableListBoxRow
         key_info_label.set_label (summary);
     }
 
-    public void toggle_boolean_key ()
+    internal void toggle_boolean_key ()
     {
         if (boolean_switch == null)
             return;
         ((!) boolean_switch).activate ();
     }
 
-    public void change_dismissed ()
+    internal void change_dismissed ()
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
@@ -250,12 +250,12 @@ private class KeyListBoxRow : ClickableListBoxRow
         actionable.destroy ();
     }
 
-    public void on_delete_call ()
+    internal void on_delete_call ()
     {
         set_key_value (null);
     }
 
-    public void set_key_value (Variant? new_value)
+    internal void set_key_value (Variant? new_value)
     {
         ModelButton actionable = new ModelButton ();
         actionable.visible = false;
@@ -297,7 +297,7 @@ private class KeyListBoxRow : ClickableListBoxRow
     * * Updating
     \*/
 
-    public void update_label (string key_value_string, bool italic)
+    internal void update_label (string key_value_string, bool italic)
     {
         if (italic)
         {
@@ -316,7 +316,7 @@ private class KeyListBoxRow : ClickableListBoxRow
     }
 
     private bool _use_switch = false;
-    public void use_switch (bool show)
+    internal void use_switch (bool show)
         requires (boolean_switch != null)
     {
         if (_use_switch != show)
@@ -340,7 +340,7 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    public void update_switch (bool key_value_boolean, string detailed_action_name)
+    internal void update_switch (bool key_value_boolean, string detailed_action_name)
         requires (boolean_switch != null)
     {
         ((!) boolean_switch).set_action_name ("ui.empty");
@@ -357,10 +357,10 @@ private class ContextPopover : Popover
     private ActionMap current_group = new SimpleActionGroup ();
 
     // public signals
-    public signal void value_changed (Variant? gvariant);
-    public signal void change_dismissed ();
+    internal signal void value_changed (Variant? gvariant);
+    internal signal void change_dismissed ();
 
-    public ContextPopover ()
+    internal ContextPopover ()
     {
         new_section_real ();
 
@@ -373,7 +373,7 @@ private class ContextPopover : Popover
     * * Simple actions
     \*/
 
-    public void new_gaction (string action_name, string action_action)
+    internal void new_gaction (string action_name, string action_action)
     {
         string action_text;
         switch (action_name)
@@ -415,7 +415,7 @@ private class ContextPopover : Popover
         current_section.append (action_text, action_action);
     }
 
-    public void new_section ()
+    internal void new_section ()
     {
         current_section.freeze ();
         new_section_real ();
@@ -430,7 +430,7 @@ private class ContextPopover : Popover
     * * Flags
     \*/
 
-    public void create_flags_list (string [] active_flags, string [] all_flags)
+    internal void create_flags_list (string [] active_flags, string [] all_flags)
     {
         foreach (string flag in all_flags)
             create_flag (flag, flag in active_flags, all_flags);
@@ -459,7 +459,7 @@ private class ContextPopover : Popover
             });
     }
 
-    public void update_flag_status (string flag, bool active)
+    internal void update_flag_status (string flag, bool active)
     {
         SimpleAction simple_action = (SimpleAction) current_group.lookup_action (flag);
         if (active != simple_action.get_state ())
@@ -470,7 +470,7 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    public GLib.Action create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? range_content_or_null, Variant? value_variant)
+    internal GLib.Action create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? range_content_or_null, Variant? value_variant)
     {
         // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
         const string ACTION_NAME = "choice";

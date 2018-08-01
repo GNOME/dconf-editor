@@ -18,10 +18,10 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
-class ModificationsRevealer : Revealer
+private class ModificationsRevealer : Revealer
 {
     private ModificationsHandler _modifications_handler;
-    public ModificationsHandler modifications_handler
+    internal ModificationsHandler modifications_handler
     {
         private get { return _modifications_handler; }
         set
@@ -79,7 +79,7 @@ class ModificationsRevealer : Revealer
     * * Reseting objects
     \*/
 
-    public void reset_objects (string [,] objects, bool recursively)
+    internal void reset_objects (string [,] objects, bool recursively)
     {
         _reset_objects (objects, recursively);
         warn_if_no_planned_changes ();
@@ -136,7 +136,7 @@ class ModificationsRevealer : Revealer
     * * Modifications list public functions
     \*/
 
-    public bool dismiss_selected_modification ()
+    internal bool dismiss_selected_modification ()
     {
         if (!delayed_list_button.active)
             return false;
@@ -150,17 +150,17 @@ class ModificationsRevealer : Revealer
         return true;
     }
 
-    public void hide_modifications_list ()
+    internal void hide_modifications_list ()
     {
         delayed_settings_list_popover.popdown ();
     }
 
-    public void toggle_modifications_list ()
+    internal void toggle_modifications_list ()
     {
         delayed_list_button.active = !delayed_settings_list_popover.visible;
     }
 
-    public bool get_modifications_list_state ()
+    internal bool get_modifications_list_state ()
     {
         return delayed_list_button.active;
     }
@@ -272,7 +272,7 @@ class ModificationsRevealer : Revealer
     * * Updating values; TODO only works for watched keys...
     \*/
 
-    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
     {
         delayed_settings_listbox.foreach ((widget) => {
                 DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
@@ -281,7 +281,7 @@ class ModificationsRevealer : Revealer
             });
     }
 
-    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         delayed_settings_listbox.foreach ((widget) => {
                 DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();

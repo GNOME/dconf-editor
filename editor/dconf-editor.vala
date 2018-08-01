@@ -15,15 +15,15 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-class ConfigurationEditor : Gtk.Application
+private class ConfigurationEditor : Gtk.Application
 {
-    public static string [,] internal_mappings = {
+    internal static string [,] internal_mappings = {
             {"ca.desrt.dconf-editor.Bookmarks",
                 "/ca/desrt/dconf-editor/"},
             {"ca.desrt.dconf-editor.Demo.EmptyRelocatable",
                 "/ca/desrt/dconf-editor/Demo/EmptyRelocatable/"}
         };
-    public static string [,] known_mappings = {
+    internal static string [,] known_mappings = {
             {"com.gexperts.Tilix.Profile",
                 "/com/gexperts/Tilix/profiles//"},
             {"org.gnome.builder.editor.language",
@@ -154,7 +154,7 @@ class ConfigurationEditor : Gtk.Application
     * * Application init
     \*/
 
-    public static int main (string [] args)
+    private static int main (string [] args)
     {
         Intl.setlocale (LocaleCategory.ALL, "");
         Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
@@ -165,7 +165,7 @@ class ConfigurationEditor : Gtk.Application
         return app.run (args);
     }
 
-    public ConfigurationEditor ()
+    private ConfigurationEditor ()
     {
         Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN);
 
@@ -429,7 +429,7 @@ class ConfigurationEditor : Gtk.Application
         copy (((!) gvariant).get_string ().compress ());
     }
 
-    public void copy (string text)
+    internal void copy (string text)
     {
         // clipboard
         Gdk.Display? display = Gdk.Display.get_default ();
@@ -452,7 +452,7 @@ class ConfigurationEditor : Gtk.Application
         send_notification ("copy", notification);
     }
 
-    public void clean_copy_notification ()
+    internal void clean_copy_notification ()
     {
         if (notification_number > 0)
         {
@@ -466,7 +466,7 @@ class ConfigurationEditor : Gtk.Application
     * * App-menu callbacks
     \*/
 
-    public void about_cb ()
+    internal void about_cb ()
     {
         string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
         Gtk.Window? window = get_active_window ();

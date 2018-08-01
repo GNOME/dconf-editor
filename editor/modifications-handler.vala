@@ -15,38 +15,38 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public enum Behaviour {
+internal enum Behaviour {
     UNSAFE,
     SAFE,
     ALWAYS_CONFIRM_IMPLICIT,
     ALWAYS_CONFIRM_EXPLICIT,
     ALWAYS_DELAY
 }
-public enum ModificationsMode {
+internal enum ModificationsMode {
     NONE,
     TEMPORARY,
     DELAYED
 }
 
-class ModificationsHandler : Object
+private class ModificationsHandler : Object
 {
-    public ModificationsMode mode { get; set; default=ModificationsMode.NONE; }
+    internal ModificationsMode mode { get; set; default=ModificationsMode.NONE; }
 
     private HashTable<string, Variant?> keys_awaiting_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
 
     private GenericSet<string> dconf_changes_set = new GenericSet<string> (str_hash, str_equal);
     private HashTable<string, string> gsettings_changes_set = new HashTable<string, string> (str_hash, str_equal);
-    public uint dconf_changes_count { get { return dconf_changes_set.length; }}
-    public uint gsettings_changes_count { get { return gsettings_changes_set.length; }}
+    internal uint dconf_changes_count { get { return dconf_changes_set.length; }}
+    internal uint gsettings_changes_count { get { return gsettings_changes_set.length; }}
 
-    public SettingsModel model { get; construct; }
+    public SettingsModel model { internal get; internal construct; }
 
-    public signal void leave_delay_mode ();
-    public signal void delayed_changes_changed ();
+    internal signal void leave_delay_mode ();
+    internal signal void delayed_changes_changed ();
 
-    public Behaviour behaviour { get; set; }
+    internal Behaviour behaviour { get; set; }
 
-    public ModificationsHandler (SettingsModel model)
+    internal ModificationsHandler (SettingsModel model)
     {
         Object (model: model);
     }
@@ -55,12 +55,12 @@ class ModificationsHandler : Object
     * * Public calls
     \*/
 
-    public bool get_current_delay_mode ()
+    internal bool get_current_delay_mode ()
     {
         return mode == ModificationsMode.DELAYED || behaviour == Behaviour.ALWAYS_DELAY;
     }
 
-    public bool should_delay_apply (string type_string)
+    internal bool should_delay_apply (string type_string)
     {
         if (get_current_delay_mode () || behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
             return true;
@@ -71,14 +71,14 @@ class ModificationsHandler : Object
         assert_not_reached ();
     }
 
-    public void enter_delay_mode ()
+    internal void enter_delay_mode ()
     {
         mode = ModificationsMode.DELAYED;
 
         delayed_changes_changed ();
     }
 
-    public void add_delayed_setting (string key_path, Variant? new_value, bool has_schema, string schema_id_if_gsettings_key = "")
+    internal void add_delayed_setting (string key_path, Variant? new_value, bool has_schema, string schema_id_if_gsettings_key = "")
     {
         if (!keys_awaiting_hashtable.contains (key_path))
         {
@@ -96,7 +96,7 @@ class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    public void dismiss_change (string key_path)
+    internal void dismiss_change (string key_path)
     {
         if (mode == ModificationsMode.NONE)
             mode = behaviour == Behaviour.ALWAYS_DELAY ? ModificationsMode.DELAYED : ModificationsMode.TEMPORARY;
@@ -112,7 +112,7 @@ class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    public void path_changed ()
+    internal void path_changed ()
     {
         if (mode != ModificationsMode.TEMPORARY)
             return;
@@ -124,7 +124,7 @@ class ModificationsHandler : Object
             assert_not_reached ();
     }
 
-    public void apply_delayed_settings ()
+    internal void apply_delayed_settings ()
     {
         mode = ModificationsMode.NONE;
 
@@ -137,7 +137,7 @@ class ModificationsHandler : Object
         leave_delay_mode ();
     }
 
-    public void dismiss_delayed_settings ()
+    internal void dismiss_delayed_settings ()
     {
         mode = ModificationsMode.NONE;
 
@@ -149,7 +149,7 @@ class ModificationsHandler : Object
         leave_delay_mode ();
     }
 
-    public Variant get_key_custom_value (string full_name, string context)
+    internal Variant get_key_custom_value (string full_name, string context)
     {
         bool planned_change = key_has_planned_change (full_name);
         Variant? planned_value = get_key_planned_value (full_name);
@@ -164,17 +164,17 @@ class ModificationsHandler : Object
         return key_value;
     }
 
-    public void set_dconf_key_value (string full_name, Variant key_value)
+    internal void set_dconf_key_value (string full_name, Variant key_value)
     {
         model.set_dconf_key_value (full_name, key_value);
     }
 
-    public void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
+    internal void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
     {
         model.set_gsettings_key_value (full_name, schema_id, key_value);
     }
 
-    public void erase_dconf_key (string full_name)
+    internal void erase_dconf_key (string full_name)
     {
         if (get_current_delay_mode ())
             add_delayed_setting (full_name, null, false);
@@ -187,7 +187,7 @@ class ModificationsHandler : Object
             model.erase_key (full_name);
     }
 
-    public void set_to_default (string full_name, string schema_id)
+    internal void set_to_default (string full_name, string schema_id)
         requires (schema_id != ".dconf")
     {
         if (get_current_delay_mode ())
@@ -196,7 +196,7 @@ class ModificationsHandler : Object
             model.set_key_to_default (full_name, schema_id);
     }
 
-    public bool key_has_planned_change (string key_path)
+    internal bool key_has_planned_change (string key_path)
     {
         if (keys_awaiting_hashtable.contains (key_path))
             return true;
@@ -209,7 +209,7 @@ class ModificationsHandler : Object
         return has_planned_changed;
     }
 
-    public Variant? get_key_planned_value (string key_path)
+    internal Variant? get_key_planned_value (string key_path)
     {
         if (keys_awaiting_hashtable.contains (key_path))
             return keys_awaiting_hashtable.lookup (key_path);
@@ -222,7 +222,7 @@ class ModificationsHandler : Object
         return planned_changed;
     }
 
-    public ListStore get_delayed_settings ()
+    internal ListStore get_delayed_settings ()
     {
         ListStore delayed_settings_list = new ListStore (typeof (SimpleSettingObject));
         keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {

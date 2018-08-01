@@ -17,7 +17,7 @@
 
 using Gtk;
 
-class RegistrySearch : RegistryList
+private class RegistrySearch : RegistryList
 {
     private string [] bookmarks;
     private SortingOptions sorting_options;
@@ -43,7 +43,7 @@ class RegistrySearch : RegistryList
             select_first_row ();
     }
 
-    public override void select_first_row ()
+    internal override void select_first_row ()
     {
         ListBoxRow? row = key_list_box.get_row_at_index (0);
         if (row != null)
@@ -51,7 +51,7 @@ class RegistrySearch : RegistryList
         key_list_box.get_adjustment ().set_value (0);
     }
 
-    public bool return_pressed ()
+    internal bool return_pressed ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -65,7 +65,7 @@ class RegistrySearch : RegistryList
     * * Keyboard calls
     \*/
 
-    public string? get_copy_path_text ()
+    internal string? get_copy_path_text ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -96,7 +96,7 @@ class RegistrySearch : RegistryList
     private uint? search_source = null;
     private GLib.Queue<string> search_nodes = new GLib.Queue<string> ();
 
-    public void clean ()
+    internal void clean ()
     {
         key_list_box.bind_model (null, null);
         stop_global_search ();
@@ -107,7 +107,7 @@ class RegistrySearch : RegistryList
         old_term = null;
     }
 
-    public void start_search (string term)
+    internal void start_search (string term)
         requires (current_path_if_search_mode != null)
     {
         if (old_term != null && term == (!) old_term)
@@ -355,7 +355,7 @@ class RegistrySearch : RegistryList
         row.set_header (header);
     }
 
-    public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
+    internal void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         clean ();
         current_path_if_search_mode = current_path;

@@ -15,48 +15,48 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public abstract class SettingObject : Object
+private abstract class SettingObject : Object
 {
-    public string context { get; construct; }  // TODO make uint8
-    public string name { get; construct; }
-    public string full_name { get; construct; }
+    public string context   { internal get; protected construct; }          // TODO make uint8 1/2
+    public string name      { internal get; protected construct; }
+    public string full_name { internal get; protected construct; }
 }
 
-public class SimpleSettingObject : Object
+private class SimpleSettingObject : Object
 {
-    public string context { get; construct; }  // TODO make uint8
-    public string name { get; construct; }
-    public string full_name { get; construct; }
+    public string context           { internal get; internal construct; }   // TODO make uint8 2/2
+    public string name              { internal get; internal construct; }
+    public string full_name         { internal get; internal construct; }
 
-    public string casefolded_name { get; private construct; }
+    public string casefolded_name   { internal get; private construct; }
 
     construct
     {
         casefolded_name = name.casefold ();
     }
 
-    public SimpleSettingObject (string _context, string _name, string _full_name)
+    internal SimpleSettingObject (string _context, string _name, string _full_name)
     {
         Object (context: _context, name: _name, full_name: _full_name);
     }
 }
 
-public class Directory : SettingObject
+private class Directory : SettingObject
 {
-    public Directory (string _full_name, string _name)
+    internal Directory (string _full_name, string _name)
     {
         Object (context: ".folder", full_name: _full_name, name: _name);
     }
 }
 
-public abstract class Key : SettingObject
+private abstract class Key : SettingObject
 {
-    public string type_string { get; protected set; default = "*"; }
+    internal string type_string { get; protected set; default = "*"; }
 
     private Variant? all_fixed_properties = null;
     protected abstract Variant create_fixed_properties (string [] query);
     protected abstract Variant add_variable_properties (Variant fixed_properties, string [] query);
-    public Variant get_properties (string [] query)
+    internal Variant get_properties (string [] query)
     {
         Variant fixed_properties;
         if (query.length == 0)
@@ -75,8 +75,8 @@ public abstract class Key : SettingObject
         return add_variable_properties (fixed_properties, query);
     }
 
-    public signal void value_changed ();
-    public ulong key_value_changed_handler = 0;
+    internal signal void value_changed ();
+    internal ulong key_value_changed_handler = 0;
 
     protected static string key_to_description (string type)
     {
@@ -181,7 +181,7 @@ public abstract class Key : SettingObject
         }
     }
 
-    public static string cool_text_value_from_variant (Variant variant)        // called from subclasses and from KeyListBoxRow
+    internal static string cool_text_value_from_variant (Variant variant)        // called from subclasses and from KeyListBoxRow
     {
         string type = variant.get_type_string ();
         switch (type)
@@ -228,7 +228,7 @@ public abstract class Key : SettingObject
         return variant.print (false);
     }
 
-    public static string cool_boolean_text_value (bool? nullable_boolean, bool capitalized = true)
+    internal static string cool_boolean_text_value (bool? nullable_boolean, bool capitalized = true)
     {
         if (capitalized)
         {
@@ -257,7 +257,7 @@ public abstract class Key : SettingObject
              || type_code == "x" || type_code == "t");  // signed and unsigned 64 bits
     }
 
-    public static uint64 get_variant_as_uint64 (Variant variant)
+    internal static uint64 get_variant_as_uint64 (Variant variant)
     {
         switch (variant.classify ())
         {
@@ -269,7 +269,7 @@ public abstract class Key : SettingObject
         }
     }
 
-    public static int64 get_variant_as_int64 (Variant variant)
+    internal static int64 get_variant_as_int64 (Variant variant)
     {
         switch (variant.classify ())
         {
@@ -282,9 +282,9 @@ public abstract class Key : SettingObject
     }
 }
 
-public class DConfKey : Key
+private class DConfKey : Key
 {
-    public DConfKey (DConf.Client client, string full_name, string name, string type_string)
+    internal DConfKey (DConf.Client client, string full_name, string name, string type_string)
     {
         Object (context: ".dconf", full_name: full_name, name: name, type_string: type_string);
 
@@ -333,19 +333,21 @@ public class DConfKey : Key
     }
 }
 
-public class GSettingsKey : Key
+private class GSettingsKey : Key
 {
-    public bool warning_conflicting_key = false;
-    public bool error_hard_conflicting_key = false;
+    internal bool warning_conflicting_key = false;
+    internal bool error_hard_conflicting_key = false;
 
-    public string? schema_path  { private get; construct; }
-    public string summary       { private get; construct; }
-    public string description   { private get; construct; }
-    public Variant default_value        { get; construct; }
-    public string range_type            { get; construct; }
-    public Variant range_content        { get; construct; }
+    public string? schema_path      { private get; internal construct; }
+    public string summary           { private get; internal construct; }
+    public string description       { private get; internal construct; }
+    public Variant default_value   { internal get; internal construct; }
+    public string range_type       { internal get; internal construct; }
+    public Variant range_content   { internal get; internal construct; }
 
-    public string descriptor {
+    public GLib.Settings settings  { internal get; internal construct; }
+
+    internal string descriptor {
         owned get {
             string parent_path;
             if (full_name.length < 2)
@@ -366,9 +368,7 @@ public class GSettingsKey : Key
         }
     }
 
-    public GLib.Settings settings { get; construct; }
-
-    public GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
+    internal GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
     {
         string? summary_nullable = summary.locale_to_utf8 (-1, null, null, null);
         summary = summary_nullable ?? summary;

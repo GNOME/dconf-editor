@@ -15,7 +15,7 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public class SchemasUtility : Object
+private class SchemasUtility : Object
 {
     private SettingsSchemaSource? settings_schema_source = SettingsSchemaSource.get_default ();
     private string [] non_relocatable_schemas = {};
@@ -27,17 +27,17 @@ public class SchemasUtility : Object
             ((!) settings_schema_source).list_schemas (true, out non_relocatable_schemas, out relocatable_schemas);
     }
 
-    public bool is_relocatable_schema (string id)
+    internal bool is_relocatable_schema (string id)
     {
         return (id in relocatable_schemas);
     }
 
-    public bool is_non_relocatable_schema (string id)
+    internal bool is_non_relocatable_schema (string id)
     {
         return (id in non_relocatable_schemas);
     }
 
-    public string? get_schema_path (string id)
+    internal string? get_schema_path (string id)
     {
         if (settings_schema_source == null)
             return null;   // TODO better?

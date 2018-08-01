@@ -18,16 +18,16 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-stack.ui")]
-class BrowserStack : Grid
+private class BrowserStack : Grid
 {
     [GtkChild] private Stack stack;
     [GtkChild] private RegistryView folder_view;
     [GtkChild] private RegistryInfo object_view;
     [GtkChild] private RegistrySearch search_view;
 
-    public ViewType current_view { get; private set; default = ViewType.FOLDER; }
+    internal ViewType current_view { get; private set; default = ViewType.FOLDER; }
 
-    public bool small_keys_list_rows
+    internal bool small_keys_list_rows
     {
         set
         {
@@ -36,7 +36,7 @@ class BrowserStack : Grid
         }
     }
 
-    public ModificationsHandler modifications_handler
+    internal ModificationsHandler modifications_handler
     {
         set {
             folder_view.modifications_handler = value;
@@ -49,21 +49,21 @@ class BrowserStack : Grid
     * * Views
     \*/
 
-    public string get_selected_row_name ()
+    internal string get_selected_row_name ()
     {
         if (current_view != ViewType.OBJECT)
             return ((RegistryList) stack.get_visible_child ()).get_selected_row_name ();
         return object_view.full_name;
     }
 
-    public void prepare_folder_view (GLib.ListStore key_model, bool is_ancestor)
+    internal void prepare_folder_view (GLib.ListStore key_model, bool is_ancestor)
     {
         folder_view.set_key_model (key_model);
 
         stack.set_transition_type (is_ancestor && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
-    public void select_row (string selected, string last_context)
+    internal void select_row (string selected, string last_context)
         requires (current_view != ViewType.OBJECT)
     {
         if (selected == "")
@@ -72,14 +72,14 @@ class BrowserStack : Grid
             ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context, current_view == ViewType.FOLDER);
     }
 
-    public void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
+    internal void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
     {
         object_view.populate_properties_list_box (full_name, context, properties);
 
         stack.set_transition_type (is_parent && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
-    public void set_path (ViewType type, string path)
+    internal void set_path (ViewType type, string path)
     {
         // might become “bool clear = type != current_view”, one day…
         bool clean_object_view = type == ViewType.FOLDER;    // note: not on search
@@ -103,12 +103,12 @@ class BrowserStack : Grid
             search_view.clean ();
     }
 
-    public string? get_copy_text ()
+    internal string? get_copy_text ()
     {
         return ((BrowsableView) stack.get_visible_child ()).get_copy_text ();
     }
 
-    public string? get_copy_path_text ()
+    internal string? get_copy_path_text ()
     {
         if (current_view == ViewType.SEARCH)
             return search_view.get_copy_path_text ();
@@ -117,38 +117,38 @@ class BrowserStack : Grid
         return null;
     }
 
-    public bool show_row_popover ()
+    internal bool show_row_popover ()
     {
         if (current_view != ViewType.OBJECT)
             return ((RegistryList) stack.get_visible_child ()).show_row_popover ();
         return false;
     }
 
-    public void toggle_boolean_key ()
+    internal void toggle_boolean_key ()
     {
         if (current_view != ViewType.OBJECT)
             ((RegistryList) stack.get_visible_child ()).toggle_boolean_key ();
     }
 
-    public void set_selected_to_default ()
+    internal void set_selected_to_default ()
     {
         if (current_view != ViewType.OBJECT)
             ((RegistryList) stack.get_visible_child ()).set_selected_to_default ();
     }
 
-    public void discard_row_popover ()
+    internal void discard_row_popover ()
     {
         if (current_view != ViewType.OBJECT)
             ((RegistryList) stack.get_visible_child ()).discard_row_popover ();
     }
 
-    public void invalidate_popovers ()
+    internal void invalidate_popovers ()
     {
         folder_view.invalidate_popovers ();
         search_view.invalidate_popovers ();
     }
 
-    public void hide_or_show_toggles (bool show)
+    internal void hide_or_show_toggles (bool show)
     {
         folder_view.hide_or_show_toggles (show);
         search_view.hide_or_show_toggles (show);
@@ -158,17 +158,17 @@ class BrowserStack : Grid
     * * Reload
     \*/
 
-    public void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
+    internal void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
     {
         search_view.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
-    public bool check_reload_folder (string [,] fresh_key_model)
+    internal bool check_reload_folder (string [,] fresh_key_model)
     {
         return folder_view.check_reload (fresh_key_model);
     }
 
-    public bool check_reload_object (Variant properties)
+    internal bool check_reload_object (Variant properties)
     {
         return object_view.check_reload (properties);
     }
@@ -177,14 +177,14 @@ class BrowserStack : Grid
     * * Values changes  // TODO reloads all the views instead of the current one, because method is called before it is made visible
     \*/
 
-    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
     {
         folder_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
         search_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
         if (full_name == object_view.full_name && schema_id == object_view.context)
             object_view.gkey_value_push (key_value, is_key_default);
     }
-    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         folder_view.dkey_value_push (full_name, key_value_or_null);
         search_view.dkey_value_push (full_name, key_value_or_null);
@@ -196,20 +196,20 @@ class BrowserStack : Grid
     * * Keyboard calls
     \*/
 
-    public bool return_pressed ()
+    internal bool return_pressed ()
         requires (current_view == ViewType.SEARCH)
     {
         return search_view.return_pressed ();
     }
 
-    public bool up_pressed ()
+    internal bool up_pressed ()
     {
         if (current_view != ViewType.OBJECT)
             return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (false);
         return false;
     }
 
-    public bool down_pressed ()
+    internal bool down_pressed ()
     {
         if (current_view != ViewType.OBJECT)
             return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (true);
@@ -217,7 +217,7 @@ class BrowserStack : Grid
     }
 }
 
-public interface BrowsableView
+private interface BrowsableView
 {
-    public abstract string? get_copy_text ();
+    internal abstract string? get_copy_text ();
 }

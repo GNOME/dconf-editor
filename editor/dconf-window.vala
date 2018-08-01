@@ -26,14 +26,14 @@ enum RelocatableSchemasEnabledMappings
     STARTUP
 }
 
-public enum ViewType {
+internal enum ViewType {
     OBJECT,
     FOLDER,
     SEARCH
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
-class DConfWindow : ApplicationWindow
+private class DConfWindow : ApplicationWindow
 {
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
@@ -49,9 +49,9 @@ class DConfWindow : ApplicationWindow
     private bool window_is_maximized = false;
     private bool window_is_tiled = false;
 
-    public bool mouse_extra_buttons { private get; set; default = true; }
-    public int mouse_back_button { private get; set; default = 8; }
-    public int mouse_forward_button { private get; set; default = 9; }
+    internal bool mouse_extra_buttons   { private get; set; default = true; }
+    internal int mouse_back_button      { private get; set; default = 8; }
+    internal int mouse_forward_button   { private get; set; default = 9; }
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
@@ -70,7 +70,7 @@ class DConfWindow : ApplicationWindow
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
 
-    public DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
+    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
         install_action_entries ();
 

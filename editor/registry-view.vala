@@ -17,7 +17,7 @@
 
 using Gtk;
 
-class RegistryView : RegistryList
+private class RegistryView : RegistryList
 {
     construct
     {
@@ -30,14 +30,14 @@ class RegistryView : RegistryList
     * * Updating
     \*/
 
-    public void set_key_model (GLib.ListStore key_model)
+    internal void set_key_model (GLib.ListStore key_model)
     {
         list_model = key_model;
         key_list_box.bind_model (list_model, new_list_box_row);
         modifications_handler.model.keys_value_push ();
     }
 
-    public bool check_reload (string [,] fresh_key_model)
+    internal bool check_reload (string [,] fresh_key_model)
     {
         uint n_items = fresh_key_model.length [0];
         if (list_model.get_n_items () != n_items)
@@ -76,7 +76,7 @@ class RegistryView : RegistryList
         return false;
     }
 
-    public override void select_first_row ()
+    internal override void select_first_row ()
     {
         ListBoxRow? row = key_list_box.get_row_at_index (0);
         if (row != null)

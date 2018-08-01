@@ -15,31 +15,25 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public class SourceManager : Object
+private class SourceManager : Object
 {
-    public SchemaPathTree cached_schemas { get; private set; default = new SchemaPathTree ("/"); } // prefix tree for quick lookup and diff'ing on changes
+    internal SchemaPathTree cached_schemas { get; private set; default = new SchemaPathTree ("/"); } // prefix tree for quick lookup and diff'ing on changes
 
     /*\
     * * Schema source
     \*/
 
-    public signal void paths_changed (GenericSet<string> modified_path_specs);
+    internal signal void paths_changed (GenericSet<string> modified_path_specs);
 
     private SettingsSchemaSource? settings_schema_source = null;
 
-    public bool source_is_null ()
+    internal bool source_is_null ()
     {
         return settings_schema_source == null;
     }
 
-    public SettingsSchemaSource get_source ()
-        requires (settings_schema_source != null)
-    {
-        return (!) settings_schema_source;
-    }
-
     private string [] previous_empty_schemas = { "ca.desrt.dconf-editor.Demo.Empty", "ca.desrt.dconf-editor.Demo.EmptyRelocatable" };
-    public void refresh_schema_source ()
+    internal void refresh_schema_source ()
     {
         SettingsSchemaSource? settings_schema_source = create_schema_source ();
         if (settings_schema_source == null)
@@ -151,11 +145,11 @@ public class SourceManager : Object
     private HashTable<string, GenericSet<string>> relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
     private HashTable<string, GenericSet<string>> startup_relocatable_schema_paths = new HashTable<string, GenericSet<string>> (str_hash, str_equal);
 
-    public void refresh_relocatable_schema_paths (bool user_schemas,
-                                                  bool built_in_schemas,
-                                                  bool internal_schemas,
-                                                  bool startup_schemas,
-                                                  Variant user_paths_variant)
+    internal void refresh_relocatable_schema_paths (bool    user_schemas,
+                                                    bool    built_in_schemas,
+                                                    bool    internal_schemas,
+                                                    bool    startup_schemas,
+                                                    Variant user_paths_variant)
     {
         relocatable_schema_paths.remove_all ();
         if (user_schemas)
@@ -187,7 +181,7 @@ public class SourceManager : Object
         }
     }
 
-    public void add_mapping (string schema, string path)
+    internal void add_mapping (string schema, string path)
     {
         add_relocatable_schema_info (startup_relocatable_schema_paths, schema, path);
     }
@@ -216,19 +210,19 @@ public class SourceManager : Object
     }
 }
 
-public class SchemaPathTree
+private class SchemaPathTree
 {
     private string path_segment;
     private HashTable<string, CachedSchemaInfo> schemas = new HashTable<string, CachedSchemaInfo> (str_hash, str_equal);
     private HashTable<string, SchemaPathTree> subtrees = new HashTable<string, SchemaPathTree> (str_hash, str_equal);
     private SchemaPathTree? wildcard_subtree = null;
 
-    public SchemaPathTree (string path_segment)
+    internal SchemaPathTree (string path_segment)
     {
         this.path_segment = path_segment;
     }
 
-    public uint get_schema_count (string path)
+    internal uint get_schema_count (string path)
     {
         uint schemas_count = 0;
         uint subpaths_count = 0;
@@ -236,7 +230,7 @@ public class SchemaPathTree
         return schemas_count;
     }
 
-    public void get_content_count (string path, out uint schemas_count, out uint subpaths_count)
+    internal void get_content_count (string path, out uint schemas_count, out uint subpaths_count)
     {
         GenericSet<SettingsSchema> path_schemas;
         GenericSet<string> subpaths;
@@ -245,7 +239,7 @@ public class SchemaPathTree
         subpaths_count = subpaths.length;
     }
 
-    public bool lookup (string path, out GenericSet<SettingsSchema> path_schemas, out GenericSet<string> subpaths)
+    internal bool lookup (string path, out GenericSet<SettingsSchema> path_schemas, out GenericSet<string> subpaths)
     {
         path_schemas = new GenericSet<SettingsSchema> ((schema) => { return str_hash (schema.get_id ()); },
                                                        (schema1, schema2) => { return str_equal (schema1.get_id (), schema2.get_id ()); });
@@ -275,7 +269,7 @@ public class SchemaPathTree
         return found;
     }
 
-    public void add_schema (SettingsSchema schema, GenericSet<string> modified_path_specs)
+    internal void add_schema (SettingsSchema schema, GenericSet<string> modified_path_specs)
     {
         string? schema_path = schema.get_path ();
         if (schema_path == null)
@@ -283,7 +277,7 @@ public class SchemaPathTree
         add_schema_to_path_spec (new CachedSchemaInfo (schema), to_segments ((!) schema_path), 0, modified_path_specs);
     }
 
-    public void add_schema_with_path_specs (SettingsSchema schema, GenericSet<string> path_specs, GenericSet<string> modified_path_specs)
+    internal void add_schema_with_path_specs (SettingsSchema schema, GenericSet<string> path_specs, GenericSet<string> modified_path_specs)
     {
         ulong fingerprint = CachedSchemaInfo.compute_schema_fingerprint (schema);
         path_specs.foreach ((path_spec) => {
@@ -327,7 +321,7 @@ public class SchemaPathTree
         }
     }
 
-    public void remove_unmarked (GenericSet<string> modified_path_specs)
+    internal void remove_unmarked (GenericSet<string> modified_path_specs)
     {
         remove_unmarked_from_path ("/", modified_path_specs);
     }
@@ -403,18 +397,18 @@ public class SchemaPathTree
     }
 }
 
-class CachedSchemaInfo
+private class CachedSchemaInfo
 {
-    public SettingsSchema schema;
-    public ulong fingerprint;
-    public bool marked;
+    internal SettingsSchema schema;
+    internal ulong fingerprint;
+    internal bool marked;
 
-    public static ulong compute_schema_fingerprint (SettingsSchema? schema)
+    internal static ulong compute_schema_fingerprint (SettingsSchema? schema)
     {
         return 0; // TODO do not take path into consideration, only keys
     }
 
-    public CachedSchemaInfo (SettingsSchema schema, ulong? fingerprint = null)
+    internal CachedSchemaInfo (SettingsSchema schema, ulong? fingerprint = null)
     {
         this.schema = schema;
         if (fingerprint != null)

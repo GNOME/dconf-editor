@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
-public class Bookmarks : MenuButton
+private class Bookmarks : MenuButton
 {
     [GtkChild] private ListBox bookmarks_list_box;
     [GtkChild] private Popover bookmarks_popover;
@@ -29,7 +29,7 @@ public class Bookmarks : MenuButton
     private string current_path = "/";
 
     private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
-    public string schema_path { private get; construct; }
+    public string schema_path { private get; internal construct; }
     private GLib.Settings settings;
 
     construct
@@ -56,7 +56,7 @@ public class Bookmarks : MenuButton
     * * Public calls
     \*/
 
-    public void set_path (ViewType type, string path)
+    internal void set_path (ViewType type, string path)
     {
         if (type == ViewType.SEARCH)
             return;
@@ -67,13 +67,13 @@ public class Bookmarks : MenuButton
     }
 
     // for search
-    public string [] get_bookmarks ()
+    internal string [] get_bookmarks ()
     {
         return settings.get_strv ("bookmarks");
     }
 
     // keyboard call
-    public void set_bookmarked (string path, bool new_state)
+    internal void set_bookmarked (string path, bool new_state)
     {
         if (path == current_path && bookmarked_switch.get_active () == new_state)
             return;
@@ -207,7 +207,7 @@ private class Bookmark : ListBoxRow
     [GtkChild] private Label bookmark_label;
     [GtkChild] private Button destroy_button;
 
-    public Bookmark (string bookmark_name)
+    internal Bookmark (string bookmark_name)
     {
         bookmark_label.set_label (bookmark_name);
         Variant variant = new Variant.string (bookmark_name);

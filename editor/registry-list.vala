@@ -31,10 +31,10 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
-    public ModificationsHandler modifications_handler { protected get; set; }
+    internal ModificationsHandler modifications_handler { protected get; set; }
 
     private bool _small_keys_list_rows;
-    public bool small_keys_list_rows
+    internal bool small_keys_list_rows
     {
         set
         {
@@ -59,7 +59,7 @@ private abstract class RegistryList : Grid, BrowsableView
         key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
     }
 
-    public void invalidate_popovers ()
+    internal void invalidate_popovers ()
     {
         uint position = 0;
         ClickableListBoxRow? row = (ClickableListBoxRow?) rows_possibly_with_popover.get_item (0);
@@ -72,7 +72,7 @@ private abstract class RegistryList : Grid, BrowsableView
         rows_possibly_with_popover.remove_all ();
     }
 
-    public void hide_or_show_toggles (bool show)
+    internal void hide_or_show_toggles (bool show)
     {
         key_list_box.@foreach ((row_wrapper) => {
                 ClickableListBoxRow? row = (ClickableListBoxRow) ((ListBoxRowWrapper) row_wrapper).get_child ();
@@ -83,7 +83,7 @@ private abstract class RegistryList : Grid, BrowsableView
             });
     }
 
-    public string get_selected_row_name ()
+    internal string get_selected_row_name ()
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row != null)
@@ -95,9 +95,9 @@ private abstract class RegistryList : Grid, BrowsableView
             return "";
     }
 
-    public abstract void select_first_row ();
+    internal abstract void select_first_row ();
 
-    public void select_row_named (string selected, string context, bool grab_focus)
+    internal void select_row_named (string selected, string context, bool grab_focus)
     {
         check_resize ();
         ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context));
@@ -152,7 +152,7 @@ private abstract class RegistryList : Grid, BrowsableView
     * * Keyboard calls
     \*/
 
-    public bool show_row_popover ()
+    internal bool show_row_popover ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -170,7 +170,7 @@ private abstract class RegistryList : Grid, BrowsableView
         return true;
     }
 
-    public string? get_copy_text () // can compile with "private", but is public 1/2
+    internal string? get_copy_text () // can compile with "private", but is public 1/2
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -189,7 +189,7 @@ private abstract class RegistryList : Grid, BrowsableView
         return new Variant.string (_get_copy_text (row));
     }
 
-    public void toggle_boolean_key ()
+    internal void toggle_boolean_key ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -201,7 +201,7 @@ private abstract class RegistryList : Grid, BrowsableView
         ((KeyListBoxRow) ((!) selected_row).get_child ()).toggle_boolean_key ();
     }
 
-    public void set_selected_to_default ()
+    internal void set_selected_to_default ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -213,7 +213,7 @@ private abstract class RegistryList : Grid, BrowsableView
         ((KeyListBoxRow) ((!) selected_row).get_child ()).on_delete_call ();
     }
 
-    public void discard_row_popover ()
+    internal void discard_row_popover ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -222,7 +222,7 @@ private abstract class RegistryList : Grid, BrowsableView
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
     }
 
-    public bool up_or_down_pressed (bool is_down)
+    internal bool up_or_down_pressed (bool is_down)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         uint n_items = list_model.get_n_items ();
@@ -463,7 +463,7 @@ private abstract class RegistryList : Grid, BrowsableView
         return false;
     }
 
-    public void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
     {
         KeyListBoxRow? row = get_row_for_key (full_name, schema_id);
         if (row == null)    // TODO make method only called when necessary 1/2
@@ -493,7 +493,7 @@ private abstract class RegistryList : Grid, BrowsableView
         ((!) row).destroy_popover ();
     }
 
-    public void dkey_value_push (string full_name, Variant? key_value_or_null)
+    internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         KeyListBoxRow? row = get_row_for_key (full_name, ".dconf");
         if (row == null)    // TODO make method only called when necessary 2/2

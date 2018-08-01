@@ -18,11 +18,11 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-infobar.ui")]
-class BrowserInfoBar : Revealer
+private class BrowserInfoBar : Revealer
 {
     [GtkChild] Stack content;
 
-    public void add_label (string name, string text_label, string? button_label = null, string button_action = "")
+    internal void add_label (string name, string text_label, string? button_label = null, string button_action = "")
     {
         RegistryWarning grid = new RegistryWarning ();
 
@@ -54,17 +54,17 @@ class BrowserInfoBar : Revealer
         content.add_named (grid, name);
     }
 
-    public void hide_warning ()
+    internal void hide_warning ()
     {
         set_reveal_child (false);
     }
 
-    public bool is_shown (string name)
+    internal bool is_shown (string name)
     {
         return get_child_revealed () && (content.get_visible_child_name () == name);
     }
 
-    public void show_warning (string name)
+    internal void show_warning (string name)
     {
         if (!get_child_revealed ())
         {

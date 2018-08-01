@@ -18,14 +18,14 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-placeholder.ui")]
-class RegistryPlaceholder : Grid
+private class RegistryPlaceholder : Grid
 {
     [GtkChild] private Label placeholder_label;
     [GtkChild] private Image placeholder_image;
 
-    public string label { construct set { placeholder_label.label = value; }}
-    public string icon_name { private get; construct; }
-    public bool big { private get; construct; default = false; }
+    public string label     { internal construct set { placeholder_label.label = value; }}
+    public string icon_name { private get; internal construct; }
+    public bool big         { private get; internal construct; default = false; }
 
     construct
     {

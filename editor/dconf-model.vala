@@ -15,27 +15,27 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-public class SettingsModel : Object
+private class SettingsModel : Object
 {
     private SourceManager source_manager = new SourceManager ();
-    public bool refresh_source { get; set; default = true; }
+    internal bool refresh_source { get; set; default = true; }
 
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
-    public bool copy_action = false;
+    internal bool copy_action = false;
 
-    public bool use_shortpaths { private get; set; default = false; }
+    internal bool use_shortpaths { private get; set; default = false; }
 
-    public signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
+    internal signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
     private bool paths_has_changed = false;
 
     private HashTable<string, Key> saved_keys = new HashTable<string, Key> (str_hash, str_equal);
 
-    public void refresh_relocatable_schema_paths (bool user_schemas,
-                                                  bool built_in_schemas,
-                                                  bool internal_schemas,
-                                                  bool startup_schemas,
-                                                  Variant user_paths_variant)
+    internal void refresh_relocatable_schema_paths (bool    user_schemas,
+                                                    bool    built_in_schemas,
+                                                    bool    internal_schemas,
+                                                    bool    startup_schemas,
+                                                    Variant user_paths_variant)
     {
         source_manager.refresh_relocatable_schema_paths (user_schemas,
                                                          built_in_schemas,
@@ -44,12 +44,12 @@ public class SettingsModel : Object
                                                          user_paths_variant);
     }
 
-    public void add_mapping (string schema, string path)
+    internal void add_mapping (string schema, string path)
     {
         source_manager.add_mapping (schema, path);
     }
 
-    public void finalize_model ()
+    internal void finalize_model ()
     {
         source_manager.paths_changed.connect ((modified_path_specs) => {
                 paths_has_changed = true;
@@ -127,7 +127,7 @@ public class SettingsModel : Object
         return key_model;
     }
 
-    public string [,]? get_children (string folder_path, bool update_watch = false)
+    internal string [,]? get_children (string folder_path, bool update_watch = false)
     {
         if (update_watch)
             clean_watched_keys ();
@@ -196,7 +196,7 @@ public class SettingsModel : Object
         keys_array [position, 2] = object.full_name;
     }
 
-    public bool get_object (string path, ref string context, ref string name)
+    internal bool get_object (string path, ref string context, ref string name)
     {
         SettingObject? object;
         if (is_key_path (path))
@@ -212,7 +212,7 @@ public class SettingsModel : Object
         return true;
     }
 
-    public bool key_exists (string path, string context)
+    internal bool key_exists (string path, string context)
     {
         Key? key = get_key (path, context);
         return key != null;
@@ -405,24 +405,24 @@ public class SettingsModel : Object
     * * Path utilities
     \*/
 
-    public static inline bool is_key_path (string path)
+    internal static inline bool is_key_path (string path)
     {
         return !path.has_suffix ("/");
     }
 
-    public static inline bool is_folder_path (string path)
+    internal static inline bool is_folder_path (string path)
     {
         return path.has_suffix ("/");
     }
 
-    public static string get_base_path (string path)
+    internal static string get_base_path (string path)
     {
         if (path.length <= 1)
             return "/";
         return path.slice (0, path.last_index_of_char ('/') + 1);
     }
 
-    public static string get_name (string path)
+    internal static string get_name (string path)
     {
         if (path.length <= 1)
             return "/";
@@ -432,7 +432,7 @@ public class SettingsModel : Object
         return tmp [tmp.last_index_of_char ('/') + 1 : tmp.length];
     }
 
-    public static string get_parent_path (string path)
+    internal static string get_parent_path (string path)
     {
         if (path.length <= 1)
             return "/";
@@ -443,12 +443,12 @@ public class SettingsModel : Object
     * * Watched keys
     \*/
 
-    public signal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default);
-    public signal void dkey_value_push (string full_name, Variant? key_value_or_null);
+    internal signal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default);
+    internal signal void dkey_value_push (string full_name, Variant? key_value_or_null);
 
     private GLib.ListStore watched_keys = new GLib.ListStore (typeof (Key));
 
-    public void keys_value_push ()
+    internal void keys_value_push ()
     {
         uint position = 0;
         Object? object = watched_keys.get_item (0);
@@ -512,7 +512,7 @@ public class SettingsModel : Object
     * * Path methods
     \*/
 
-    public string get_fallback_path (string path)
+    internal string get_fallback_path (string path)
     {
         string fallback_path = path;
         if (is_key_path (path))
@@ -532,7 +532,7 @@ public class SettingsModel : Object
         return fallback_path;
     }
 
-    public string get_startup_path_fallback (string path)   // TODO take context and check that also
+    internal string get_startup_path_fallback (string path)   // TODO take context and check that also
     {
         // folder: let the get_fallback_path method do its usual job if needed
         if (is_folder_path (path))
@@ -553,7 +553,7 @@ public class SettingsModel : Object
         return path;
     }
 
-    public string get_fallback_context (string full_name, string context)
+    internal string get_fallback_context (string full_name, string context)
     {
         Key? found_object = get_key (full_name, context);
         if (found_object == null)   // TODO warn about missing context
@@ -589,7 +589,7 @@ public class SettingsModel : Object
         return client.read (full_name);
     }
 
-    public void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
+    internal void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
     {
         Key? key = get_key (full_name, schema_id);
         if (key == null)
@@ -609,7 +609,7 @@ public class SettingsModel : Object
             assert_not_reached ();
     }
 
-    public void set_dconf_key_value (string full_name, Variant key_value)
+    internal void set_dconf_key_value (string full_name, Variant key_value)
     {
         Key? key = get_key (full_name, "");
         set_dconf_value (full_name, key_value);
@@ -635,7 +635,7 @@ public class SettingsModel : Object
         }
     }
 
-    public void set_key_to_default (string full_name, string schema_id)
+    internal void set_key_to_default (string full_name, string schema_id)
     {
         GSettingsKey key = get_specific_gsettings_key (full_name, schema_id);
         GLib.Settings settings = key.settings;
@@ -645,7 +645,7 @@ public class SettingsModel : Object
         // Alternative workaround: key.value_changed ();
     }
 
-    public void erase_key (string full_name)
+    internal void erase_key (string full_name)
     {
         Key? key = get_key (full_name, "");
         set_dconf_value (full_name, null);
@@ -665,7 +665,7 @@ public class SettingsModel : Object
         return key.settings.get_user_value (key.name) == null;
     }
 
-    public bool key_has_schema (string full_name)
+    internal bool key_has_schema (string full_name)
     {
         if (is_folder_path (full_name))
             assert_not_reached ();
@@ -674,7 +674,7 @@ public class SettingsModel : Object
         return key != null && (!) key is GSettingsKey;
     }
 
-    public bool is_key_ghost (string full_name)
+    internal bool is_key_ghost (string full_name)
     {
         // we're "sure" the key is a DConfKey, but that might have changed since
         if (key_has_schema (full_name))
@@ -683,7 +683,7 @@ public class SettingsModel : Object
         return get_dconf_key_value_or_null (full_name, client) == null;
     }
 
-    public void apply_key_value_changes (HashTable<string, Variant?> changes)
+    internal void apply_key_value_changes (HashTable<string, Variant?> changes)
     {
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
@@ -737,7 +737,7 @@ public class SettingsModel : Object
     * * Key properties methods
     \*/
 
-    public Variant get_key_properties (string full_name, string context, string [] query)
+    internal Variant get_key_properties (string full_name, string context, string [] query)
     {
         Key? key = get_key (full_name, context);
         if (key == null)
@@ -758,7 +758,7 @@ public class SettingsModel : Object
         return properties.end ();
     }
 
-    public string get_key_copy_text (string full_name, string context)
+    internal string get_key_copy_text (string full_name, string context)
     {
         if (context == ".dconf")
             return get_dconf_key_copy_text (full_name, client);

@@ -17,33 +17,33 @@
 
 using Gtk;
 
-public interface KeyEditorChild : Widget
+private interface KeyEditorChild : Widget
 {
-    public signal void value_has_changed (bool is_valid = true);
+    internal signal void value_has_changed (bool is_valid = true);
 
-    public abstract Variant get_variant ();
-    public signal void child_activated ();
+    internal abstract Variant get_variant ();
+    internal signal void child_activated ();
 
-    public abstract void reload (Variant gvariant);
+    internal abstract void reload (Variant gvariant);
 }
 
 private class KeyEditorChildSingle : Label, KeyEditorChild
 {
     private Variant variant;
 
-    public KeyEditorChildSingle (Variant key_value, string text)
+    internal KeyEditorChildSingle (Variant key_value, string text)
     {
         variant = key_value;
         set_label (text);
         show ();
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
 
-    public void reload (Variant gvariant) {}
+    internal void reload (Variant gvariant) {}
 }
 
 private class KeyEditorChildEnum : MenuButton, KeyEditorChild
@@ -51,7 +51,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
     private Variant variant;
     private GLib.Action action;
 
-    public KeyEditorChildEnum (Variant initial_value, bool delay_mode, bool has_planned_change, Variant range_content)
+    internal KeyEditorChildEnum (Variant initial_value, bool delay_mode, bool has_planned_change, Variant range_content)
     {
         this.visible = true;
         this.hexpand = true;
@@ -75,12 +75,12 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         this.set_popover ((Popover) popover);
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         variant = gvariant;
         VariantType type = gvariant.get_type ();
@@ -97,7 +97,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     private Variant variant;
     private Label label = new Label ("");
 
-    public KeyEditorChildFlags (Variant initial_value, string [] _all_flags)
+    internal KeyEditorChildFlags (Variant initial_value, string [] _all_flags)
     {
         all_flags = _all_flags;
         this.visible = true;
@@ -129,18 +129,18 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         button.set_popover ((Popover) popover);
     }
 
-    public void update_flags (string [] active_flags)
+    internal void update_flags (string [] active_flags)
     {
         foreach (string flag in all_flags)
             popover.update_flag_status (flag, flag in active_flags);
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         this.variant = gvariant;
         label.label = gvariant.print (false);
@@ -153,7 +153,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
     private Variant? maybe_variant;
     private GLib.Action action;
 
-    public KeyEditorChildNullableBool (Variant initial_value, bool delay_mode, bool has_planned_change, bool has_schema)
+    internal KeyEditorChildNullableBool (Variant initial_value, bool delay_mode, bool has_planned_change, bool has_schema)
     {
         this.visible = true;
         this.hexpand = true;
@@ -181,12 +181,12 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         this.set_popover ((Popover) popover);
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         variant = gvariant;
         maybe_variant = variant.get_maybe ();
@@ -204,7 +204,7 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
 {
     private ToggleButton button_true;
 
-    public KeyEditorChildBool (bool initial_value)
+    internal KeyEditorChildBool (bool initial_value)
     {
         this.visible = true;
         this.hexpand = true;
@@ -230,12 +230,12 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
         button_true.toggled.connect (() => value_has_changed ());
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return new Variant.boolean (button_true.active);
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         button_true.active = gvariant.get_boolean ();
     }
@@ -253,7 +253,7 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
         get_style_context ().add_class ("key-editor-child-entry");
     }
 
-    public KeyEditorChildNumberDouble (Variant initial_value)
+    internal KeyEditorChildNumberDouble (Variant initial_value)
     {
         this.variant = initial_value;
 
@@ -302,7 +302,7 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
         }
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
@@ -322,7 +322,7 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
         }
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         set_lock (true);
         this.text = gvariant.print (false);
@@ -339,7 +339,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
-    public KeyEditorChildNumberInt (Variant initial_value, string type_string, Variant? range_content_or_null)
+    internal KeyEditorChildNumberInt (Variant initial_value, string type_string, Variant? range_content_or_null)
         requires (type_string == "y" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u" || type_string == "h")     // TODO type_string == "x" || type_string == "t" ||
     {
         this.key_type = type_string;
@@ -406,7 +406,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         }
     }
 
-    public Variant get_variant ()   // TODO test_value against range
+    internal Variant get_variant ()   // TODO test_value against range
     {
         switch (key_type)
         {
@@ -439,7 +439,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         }
     }
 
-    public void reload (Variant gvariant)       // TODO "key_editor_child_number_int_real_reload: assertion 'gvariant != NULL' failed" two times when ghosting a key
+    internal void reload (Variant gvariant)       // TODO "key_editor_child_number_int_real_reload: assertion 'gvariant != NULL' failed" two times when ghosting a key
     {
         set_lock (true);
         this.set_value (get_variant_as_double (gvariant));
@@ -462,7 +462,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         get_style_context ().add_class ("key-editor-child-array");
     }
 
-    public KeyEditorChildArray (string type_string, Variant initial_value)
+    internal KeyEditorChildArray (string type_string, Variant initial_value)
     {
         this.visible = true;
         this.hexpand = true;
@@ -554,7 +554,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         }
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
@@ -574,7 +574,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         }
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         set_lock (true);
         text_view.buffer.text = gvariant.print (false);
@@ -598,7 +598,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         get_style_context ().add_class ("key-editor-child-entry");
     }
 
-    public KeyEditorChildDefault (string type_string, Variant initial_value)
+    internal KeyEditorChildDefault (string type_string, Variant initial_value)
     {
         this.key_type = type_string;
         this.variant = initial_value;
@@ -655,7 +655,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         }
     }
 
-    public Variant get_variant ()
+    internal Variant get_variant ()
     {
         return variant;
     }
@@ -675,7 +675,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         }
     }
 
-    public void reload (Variant gvariant)
+    internal void reload (Variant gvariant)
     {
         set_lock (true);
         this.text = is_string ? gvariant.get_string () : gvariant.print (false);

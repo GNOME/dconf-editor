@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
-class RegistryInfo : Grid, BrowsableView
+private class RegistryInfo : Grid, BrowsableView
 {
     [GtkChild] private Revealer conflicting_key_warning_revealer;
     [GtkChild] private Revealer hard_conflicting_key_error_revealer;
@@ -32,11 +32,11 @@ class RegistryInfo : Grid, BrowsableView
 
     private Label current_value_label;
 
-    public ModificationsHandler modifications_handler { private get; set; }
+    internal ModificationsHandler modifications_handler { private get; set; }
 
     private Variant? current_key_info = null;
-    public string full_name { get; private set; default = ""; }
-    public string context { get; private set; default = ""; }
+    internal string full_name { get; private set; default = ""; }
+    internal string context { get; private set; default = ""; }
 
     /*\
     * * Cleaning
@@ -46,7 +46,7 @@ class RegistryInfo : Grid, BrowsableView
     private ulong revealer_reload_1_handler = 0;
     private ulong revealer_reload_2_handler = 0;
 
-    public void clean ()
+    internal void clean ()
     {
         disconnect_handler (erase_button, ref erase_button_handler);
         disconnect_handler (modifications_handler, ref revealer_reload_1_handler);
@@ -66,7 +66,7 @@ class RegistryInfo : Grid, BrowsableView
     * * Populating
     \*/
 
-    public void populate_properties_list_box (string _full_name, string _context, Variant _current_key_info)
+    internal void populate_properties_list_box (string _full_name, string _context, Variant _current_key_info)
     {
         full_name = _full_name;
         context = _context;
@@ -426,7 +426,7 @@ class RegistryInfo : Grid, BrowsableView
         return Key.cool_text_value_from_variant ((!) key_value);
     }
 
-    public string? get_copy_text () // can compile with "private", but is public 2/2
+    internal string? get_copy_text () // can compile with "private", but is public 2/2
     {
         Widget? focused_row = properties_list_box.get_focus_child ();
         if (focused_row == null)
@@ -512,7 +512,7 @@ class RegistryInfo : Grid, BrowsableView
         return (Widget) label;
     }
 
-    public bool check_reload (Variant properties)
+    internal bool check_reload (Variant properties)
     {
         if (current_key_info == null) // should not happen?
             return true;
@@ -523,7 +523,7 @@ class RegistryInfo : Grid, BrowsableView
     * * Updating value
     \*/
 
-    public void gkey_value_push (Variant key_value, bool is_key_default)    // TODO check if there isn't a problem on conflicting keys
+    internal void gkey_value_push (Variant key_value, bool is_key_default)    // TODO check if there isn't a problem on conflicting keys
     {
         if (is_key_default)
             current_value_label.set_text (get_current_value_text (null));
@@ -531,7 +531,7 @@ class RegistryInfo : Grid, BrowsableView
             current_value_label.set_text (get_current_value_text (key_value));
     }
 
-    public void dkey_value_push (Variant? key_value_or_null)
+    internal void dkey_value_push (Variant? key_value_or_null)
     {
         if (key_value_or_null == null)
         {
@@ -554,7 +554,7 @@ private class PropertyRow : ListBoxRowWrapper
 
     private Widget? value_widget = null;
 
-    public PropertyRow.from_label (string property_name, string property_value, bool use_italic)
+    internal PropertyRow.from_label (string property_name, string property_value, bool use_italic)
     {
         name_label.set_text (property_name);
 
@@ -570,7 +570,7 @@ private class PropertyRow : ListBoxRowWrapper
         grid.attach (value_label, 1, 0, 1, 1);
     }
 
-    public PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
+    internal PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
     {
         name_label.set_text (property_name);
 
@@ -590,7 +590,7 @@ private class PropertyRow : ListBoxRowWrapper
         }
     }
 
-    public string? get_copy_text ()
+    internal string? get_copy_text ()
     {
         if (value_widget != null)
             return ((Label) (!) value_widget).get_label ();
