@@ -410,7 +410,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (key_type)
         {
-            case "y": return new Variant.byte   ((uchar)  get_int64_from_entry ()); // TODO uchar or uint8?
+            case "y": return new Variant.byte   ((uint8)  get_int64_from_entry ());
             case "n": return new Variant.int16  ((int16)  get_int64_from_entry ());
             case "q": return new Variant.uint16 ((uint16) get_int64_from_entry ());
             case "i": return new Variant.int32  ((int32)  get_int64_from_entry ());
