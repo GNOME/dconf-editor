@@ -54,16 +54,16 @@ private abstract class Key : SettingObject
     internal string type_string { get; protected set; default = "*"; }
 
     private Variant? all_fixed_properties = null;
-    protected abstract Variant create_fixed_properties (string [] query);
-    protected abstract Variant add_variable_properties (Variant fixed_properties, string [] query);
-    internal Variant get_properties (string [] query)
+    protected abstract Variant create_fixed_properties (PropertyQuery query);
+    protected abstract Variant add_variable_properties (Variant fixed_properties, PropertyQuery query);
+    internal Variant get_properties (PropertyQuery query)
     {
         Variant fixed_properties;
-        if (query.length == 0)
+        if (query == 0)
         {
             if (all_fixed_properties == null)
             {
-                fixed_properties = create_fixed_properties ({});
+                fixed_properties = create_fixed_properties (0);
                 all_fixed_properties = fixed_properties;
             }
             else
@@ -298,36 +298,36 @@ private class DConfKey : Key
             });
     }
 
-    protected override Variant create_fixed_properties (string [] query)
+    protected override Variant create_fixed_properties (PropertyQuery query)
     {
-        bool all_properties_queried = query.length == 0;
+        bool all_properties_queried = query == 0;
 
         // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
-        VariantDict variantdict = new VariantDict ();
+        RegistryVariantDict variantdict = new RegistryVariantDict ();
 
-        if (all_properties_queried || "has-schema"      in query)
-            variantdict.insert_value ("has-schema",                 new Variant.boolean (false));
-        if (all_properties_queried || "key-name"        in query)
-            variantdict.insert_value ("key-name",                   new Variant.string (name));
-        if (all_properties_queried || "defined-by"      in query)
-            variantdict.insert_value ("defined-by",                 new Variant.string (_("DConf backend")));
-        if (all_properties_queried || "type-code"       in query)
-            variantdict.insert_value ("type-code",                  new Variant.string (type_string));
-        if (all_properties_queried || "type-name"       in query)
-            variantdict.insert_value ("type-name",                  new Variant.string (key_to_description (type_string)));
+        if (all_properties_queried || PropertyQuery.HAS_SCHEMA      in query)
+            variantdict.insert_value (PropertyQuery.HAS_SCHEMA,                 new Variant.boolean (false));
+        if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
+            variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
+        if (all_properties_queried || PropertyQuery.DEFINED_BY      in query)
+            variantdict.insert_value (PropertyQuery.DEFINED_BY,                 new Variant.string (_("DConf backend")));
+        if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
+            variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
+        if (all_properties_queried || PropertyQuery.TYPE_NAME       in query)
+            variantdict.insert_value (PropertyQuery.TYPE_NAME,                  new Variant.string (key_to_description (type_string)));
 
-        if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
+        if (show_min_and_max (type_string) && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
             string min, max;
             get_min_and_max_string (out min, out max, type_string);
 
-            variantdict.insert_value ("minimum",                    new Variant.string (min));
-            variantdict.insert_value ("maximum",                    new Variant.string (max));
+            variantdict.insert_value (PropertyQuery.MINIMUM,                    new Variant.string (min));
+            variantdict.insert_value (PropertyQuery.MAXIMUM,                    new Variant.string (max));
         }
         return variantdict.end ();
     }
 
-    protected override Variant add_variable_properties (Variant fixed_properties, string [] query)
+    protected override Variant add_variable_properties (Variant fixed_properties, PropertyQuery query)
     {
         return fixed_properties;
     }
@@ -392,38 +392,39 @@ private class GSettingsKey : Key
         settings.changed [name].connect (() => value_changed ());
     }
 
-    protected override Variant create_fixed_properties (string [] query)
+    protected override Variant create_fixed_properties (PropertyQuery query)
     {
-        bool all_properties_queried = query.length == 0;
+        bool all_properties_queried = query == 0;
 
         string defined_by = schema_path == null ? _("Relocatable schema") : _("Schema with path");
 
-        VariantDict variantdict = new VariantDict ();
+        RegistryVariantDict variantdict = new RegistryVariantDict ();
 
-        if (all_properties_queried || "has-schema"      in query)
-            variantdict.insert_value ("has-schema",                 new Variant.boolean (true));
-        if (all_properties_queried || "schema-id"       in query)
-            variantdict.insert_value ("schema-id",                  new Variant.string (context));
-        if (all_properties_queried || "key-name"        in query)
-            variantdict.insert_value ("key-name",                   new Variant.string (name));
-        if (all_properties_queried || "defined-by"      in query)
-            variantdict.insert_value ("defined-by",                 new Variant.string (defined_by));
-        if (all_properties_queried || "type-code"       in query)
-            variantdict.insert_value ("type-code",                  new Variant.string (type_string));
-        if (all_properties_queried || "type-name"       in query)
-            variantdict.insert_value ("type-name",                  new Variant.string (key_to_description (type_string)));
-        if (all_properties_queried || "summary"         in query)
-            variantdict.insert_value ("summary",                    new Variant.string (summary));
-        if (all_properties_queried || "description"     in query)
-            variantdict.insert_value ("description",                new Variant.string (description));
-        if (all_properties_queried || "default-value"   in query)
-            variantdict.insert_value ("default-value",              new Variant.string (cool_text_value_from_variant (default_value)));
-        if (all_properties_queried || "range-type"      in query)
-            variantdict.insert_value ("range-type",                 new Variant.string (range_type));
-        if (all_properties_queried || "range-content"   in query)
-            variantdict.insert_value ("range-content",              new Variant.variant (range_content));
+        if (all_properties_queried || PropertyQuery.HAS_SCHEMA      in query)
+            variantdict.insert_value (PropertyQuery.HAS_SCHEMA,                 new Variant.boolean (true));
+        if (all_properties_queried || PropertyQuery.SCHEMA_ID       in query)
+            variantdict.insert_value (PropertyQuery.SCHEMA_ID,                  new Variant.string (context));
+        if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
+            variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
+        if (all_properties_queried || PropertyQuery.DEFINED_BY      in query)
+            variantdict.insert_value (PropertyQuery.DEFINED_BY,                 new Variant.string (defined_by));
+        if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
+            variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
+        if (all_properties_queried || PropertyQuery.TYPE_NAME       in query)
+            variantdict.insert_value (PropertyQuery.TYPE_NAME,                  new Variant.string (key_to_description (type_string)));
+        if (all_properties_queried || PropertyQuery.SUMMARY         in query)
+            variantdict.insert_value (PropertyQuery.SUMMARY,                    new Variant.string (summary));
+        if (all_properties_queried || PropertyQuery.DESCRIPTION     in query)
+            variantdict.insert_value (PropertyQuery.DESCRIPTION,                new Variant.string (description));
+        if (all_properties_queried || PropertyQuery.DEFAULT_VALUE   in query)
+            variantdict.insert_value (PropertyQuery.DEFAULT_VALUE,              new Variant.string (cool_text_value_from_variant (default_value)));
+        if (all_properties_queried || PropertyQuery.RANGE_TYPE      in query)
+            variantdict.insert_value (PropertyQuery.RANGE_TYPE,                 new Variant.string (range_type));
+        if (all_properties_queried || PropertyQuery.RANGE_CONTENT   in query)
+            variantdict.insert_value (PropertyQuery.RANGE_CONTENT,              new Variant.variant (range_content));
 
-        if (show_min_and_max (type_string) && (all_properties_queried || "minimum" in query || "maximum" in query))
+        if (show_min_and_max (type_string)
+         && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
             string min, max;
             if (range_type == "range")     // TODO test more; and what happen if only min/max is in range?
@@ -434,24 +435,24 @@ private class GSettingsKey : Key
             else
                 get_min_and_max_string (out min, out max, type_string);
 
-            variantdict.insert_value ("minimum",                    new Variant.string (min));
-            variantdict.insert_value ("maximum",                    new Variant.string (max));
+            variantdict.insert_value (PropertyQuery.MINIMUM,                    new Variant.string (min));
+            variantdict.insert_value (PropertyQuery.MAXIMUM,                    new Variant.string (max));
         }
         return variantdict.end ();
     }
 
-    protected override Variant add_variable_properties (Variant fixed_properties, string [] query)
+    protected override Variant add_variable_properties (Variant fixed_properties, PropertyQuery query)
     {
-        bool all_properties_queried = query.length == 0;
+        bool all_properties_queried = query == 0;
 
-        VariantDict variantdict = new VariantDict (fixed_properties);
+        RegistryVariantDict variantdict = new RegistryVariantDict.from_auv (fixed_properties);
 
-        if (all_properties_queried || "soft-conflict"   in query)
-            variantdict.insert_value ("soft-conflict",              new Variant.boolean (warning_conflicting_key));
-        if (all_properties_queried || "hard-conflict"   in query)
-            variantdict.insert_value ("hard-conflict",              new Variant.boolean (error_hard_conflicting_key));
-        if (all_properties_queried || "is-default"      in query)
-            variantdict.insert_value ("is-default",                 new Variant.boolean (settings.get_user_value (name) == null));
+        if (all_properties_queried || PropertyQuery.SOFT_CONFLICT   in query)
+            variantdict.insert_value (PropertyQuery.SOFT_CONFLICT,              new Variant.boolean (warning_conflicting_key));
+        if (all_properties_queried || PropertyQuery.HARD_CONFLICT   in query)
+            variantdict.insert_value (PropertyQuery.HARD_CONFLICT,              new Variant.boolean (error_hard_conflicting_key));
+        if (all_properties_queried || PropertyQuery.IS_DEFAULT      in query)
+            variantdict.insert_value (PropertyQuery.IS_DEFAULT,                 new Variant.boolean (settings.get_user_value (name) == null));
 
         return variantdict.end ();
     }

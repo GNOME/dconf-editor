@@ -737,7 +737,7 @@ private class SettingsModel : Object
     * * Key properties methods
     \*/
 
-    internal Variant get_key_properties (string full_name, string context, string [] query)
+    internal Variant get_key_properties (string full_name, string context, uint query)
     {
         Key? key = get_key (full_name, context);
         if (key == null)
@@ -745,15 +745,15 @@ private class SettingsModel : Object
         if (((!) key).context != context)
             assert_not_reached ();
 
-        Variant key_properties = ((!) key).get_properties (query);
-        VariantDict properties = new VariantDict (key_properties);
+        Variant key_properties = ((!) key).get_properties ((PropertyQuery) query);
+        RegistryVariantDict properties = new RegistryVariantDict.from_auv (key_properties);
 
-        if (query.length == 0 || "key-value" in query)
+        if (query == 0 || PropertyQuery.KEY_VALUE in (PropertyQuery) query)
         {
             if (key is GSettingsKey)
-                properties.insert_value ("key-value", new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
+                properties.insert_value (PropertyQuery.KEY_VALUE, new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
             else // (key is DConfKey)
-                properties.insert_value ("key-value", new Variant.variant (get_dconf_key_value (((!) key).full_name, client)));
+                properties.insert_value (PropertyQuery.KEY_VALUE, new Variant.variant (get_dconf_key_value (((!) key).full_name, client)));
         }
         return properties.end ();
     }

@@ -156,9 +156,9 @@ private class ModificationsHandler : Object
         if (planned_change && (planned_value != null))
             return (!) planned_value;
 
-        VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"key-value"}));
+        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.KEY_VALUE));
         Variant key_value;
-        if (!properties.lookup ("key-value", "v", out key_value))
+        if (!properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
             assert_not_reached ();
         properties.clear ();
         return key_value;

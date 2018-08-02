@@ -109,14 +109,12 @@ private class ModificationsRevealer : Revealer
             // gsettings
             else
             {
-                VariantDict properties = new VariantDict (model.get_key_properties (full_name,
-                                                                                    objects [position, 0],
-                                                                                    {"is-default", "schema-id"}));
+                RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, objects [position, 0], (uint) (PropertyQuery.IS_DEFAULT & PropertyQuery.SCHEMA_ID)));
                 bool is_key_default;
                 string schema_id;
-                if (!properties.lookup ("is-default",   "b",    out is_key_default))
+                if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
                     assert_not_reached ();
-                if (!properties.lookup ("schema-id",    "s",    out schema_id))
+                if (!properties.lookup (PropertyQuery.SCHEMA_ID,        "s",    out schema_id))
                     assert_not_reached ();
                 properties.clear ();
 
@@ -176,16 +174,16 @@ private class ModificationsRevealer : Revealer
 
         SettingsModel model = modifications_handler.model;
 
-        VariantDict properties = new VariantDict (model.get_key_properties (full_name, context, {"has-schema", "is-default", "default-value", "key-value"}));
+        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
 
         bool has_schema;
-        if (!properties.lookup ("has-schema",       "b",    out has_schema))
+        if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
             assert_not_reached ();
 
         bool has_schema_and_is_default;
         if (!has_schema)
             has_schema_and_is_default = false;
-        else if (!properties.lookup ("is-default",  "b",    out has_schema_and_is_default))
+        else if (!properties.lookup (PropertyQuery.IS_DEFAULT,          "b",    out has_schema_and_is_default))
             assert_not_reached ();
 
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
@@ -195,11 +193,11 @@ private class ModificationsRevealer : Revealer
 
         string? cool_default_value = null;
         if (has_schema
-         && !properties.lookup ("default-value",    "s",    out cool_default_value))
+         && !properties.lookup (PropertyQuery.DEFAULT_VALUE,            "s",    out cool_default_value))
             assert_not_reached ();
 
         Variant key_value;
-        if (!properties.lookup ("key-value",        "v",    out key_value))
+        if (!properties.lookup (PropertyQuery.KEY_VALUE,                "v",    out key_value))
             assert_not_reached ();
 
         properties.clear ();

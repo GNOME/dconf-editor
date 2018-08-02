@@ -76,6 +76,7 @@ sources = files(
   'dconf-window.vala',
   'delayed-setting-view.vala',
   'key-list-box-row.vala',
+  'model-utils.vala',
   'modifications-handler.vala',
   'modifications-revealer.vala',
   'pathbar.vala',

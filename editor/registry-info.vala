@@ -71,26 +71,25 @@ private class RegistryInfo : Grid, BrowsableView
         full_name = _full_name;
         context = _context;
 
-        VariantDict properties = new VariantDict (_current_key_info);
-        properties.remove ("is-default");
-        properties.remove ("key-value");
+        RegistryVariantDict properties = new RegistryVariantDict.from_auv (_current_key_info);
+        properties.remove (PropertyQuery.IS_DEFAULT);
+        properties.remove (PropertyQuery.KEY_VALUE);
         current_key_info = properties.end ();
-        properties.clear ();
 
         SettingsModel model = modifications_handler.model;
 
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
-        properties = new VariantDict (_current_key_info);
+        properties = new RegistryVariantDict.from_auv (_current_key_info);
 
         bool has_schema;
-        if (!properties.lookup ("has-schema",       "b",    out has_schema))
+        if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
             assert_not_reached ();
 
         bool error_hard_conflicting_key = false;
         if (has_schema)
         {
-            if (!properties.lookup ("hard-conflict", "b",   out error_hard_conflicting_key))
+            if (!properties.lookup (PropertyQuery.HARD_CONFLICT,        "b",    out error_hard_conflicting_key))
                 assert_not_reached ();
 
             if (error_hard_conflicting_key)
@@ -101,7 +100,7 @@ private class RegistryInfo : Grid, BrowsableView
             else
             {
                 bool warning_conflicting_key;
-                if (!properties.lookup ("soft-conflict", "b", out warning_conflicting_key))
+                if (!properties.lookup (PropertyQuery.SOFT_CONFLICT,    "b",    out warning_conflicting_key))
                     assert_not_reached ();
                 if (warning_conflicting_key)
                 {
@@ -126,43 +125,43 @@ private class RegistryInfo : Grid, BrowsableView
 
         // TODO g_variant_dict_lookup_value() return value is not annotated as nullable
         string type_code;
-        if (!properties.lookup ("type-code",        "s",    out type_code))
+        if (!properties.lookup (PropertyQuery.TYPE_CODE,                "s",    out type_code))
             assert_not_reached ();
 
         bool test;
         string tmp_string;
 
-        if (properties.lookup ("defined-by",        "s",    out tmp_string))
-            add_row_from_label (_("Defined by"),                tmp_string);
+        if (properties.lookup (PropertyQuery.DEFINED_BY,                "s",    out tmp_string))
+            add_row_from_label (_("Defined by"),                                    tmp_string);
         else assert_not_reached ();
 
-        if (properties.lookup ("schema-id",         "s",    out tmp_string))
-            add_row_from_label (_("Schema"),                    tmp_string);
+        if (properties.lookup (PropertyQuery.SCHEMA_ID,                 "s",    out tmp_string))
+            add_row_from_label (_("Schema"),                                        tmp_string);
 
         add_separator ();
-        if (properties.lookup ("summary",           "s",    out tmp_string))
+        if (properties.lookup (PropertyQuery.SUMMARY,                   "s",    out tmp_string))
         {
             test = tmp_string == "";
             add_row_from_label (_("Summary"),
-                                test ?                          _("No summary provided")
-                                     :                          tmp_string,
+                                test ?                                              _("No summary provided")
+                                     :                                              tmp_string,
                                 test);
         }
-        if (properties.lookup ("description",       "s",    out tmp_string))
+        if (properties.lookup (PropertyQuery.DESCRIPTION,               "s",    out tmp_string))
         {
             test = tmp_string == "";
             add_row_from_label (_("Description"),
-                                test ?                          _("No description provided")
-                                     :                          tmp_string,
+                                test ?                                              _("No description provided")
+                                     :                                              tmp_string,
                                 test);
         }
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        if (properties.lookup ("type-name",         "s",    out tmp_string))
-            add_row_from_label (_("Type"),                      tmp_string);
+        if (properties.lookup (PropertyQuery.TYPE_NAME,                 "s",    out tmp_string))
+            add_row_from_label (_("Type"),                                          tmp_string);
         else assert_not_reached ();
 
         bool range_type_is_range = false;
-        if (properties.lookup ("range-type",        "s",    out tmp_string)) // has_schema
+        if (properties.lookup (PropertyQuery.RANGE_TYPE,                "s",    out tmp_string)) // has_schema
         {
             if (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
              || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
@@ -177,21 +176,21 @@ private class RegistryInfo : Grid, BrowsableView
         bool minimum_is_maximum = false;
         string tmp = "";
         tmp_string = "";
-        if (properties.lookup ("minimum",           "s",    out tmp_string))
-            add_row_from_label (_("Minimum"),                   tmp_string);
-        if (properties.lookup ("maximum",           "s",    out tmp       ))
-            add_row_from_label (_("Maximum"),                   tmp       );
+        if (properties.lookup (PropertyQuery.MINIMUM,                   "s",    out tmp_string))
+            add_row_from_label (_("Minimum"),                                       tmp_string);
+        if (properties.lookup (PropertyQuery.MAXIMUM,                   "s",    out tmp       ))
+            add_row_from_label (_("Maximum"),                                       tmp       );
         if (tmp != "" && tmp == tmp_string)
             minimum_is_maximum = true;
 
         bool has_schema_and_is_default;
         if (!has_schema)
             has_schema_and_is_default = false;
-        else if (!properties.lookup ("is-default",  "b",    out has_schema_and_is_default))
+        else if (!properties.lookup (PropertyQuery.IS_DEFAULT,          "b",    out has_schema_and_is_default))
             assert_not_reached ();
 
-        if (properties.lookup ("default-value",     "s",    out tmp_string))
-            add_row_from_label (_("Default"),                   tmp_string);
+        if (properties.lookup (PropertyQuery.DEFAULT_VALUE,             "s",    out tmp_string))
+            add_row_from_label (_("Default"),                                       tmp_string);
 
         if ( /* has_schema && */ error_hard_conflicting_key)
         {
@@ -203,7 +202,7 @@ private class RegistryInfo : Grid, BrowsableView
         else
         {
             Variant key_value;
-            if (!properties.lookup ("key-value",    "v",    out key_value))
+            if (!properties.lookup (PropertyQuery.KEY_VALUE,            "v",    out key_value))
                 assert_not_reached ();
             current_value_label = new Label (get_current_value_text (key_value));
         }
@@ -223,7 +222,7 @@ private class RegistryInfo : Grid, BrowsableView
         switch (type_code)
         {
             case "b":
-                key_editor_child = (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());                      break;
+                key_editor_child = (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());                          break;
             case "i":   // int32
             case "u":   // uint32
             case "n":   // int16
@@ -236,7 +235,7 @@ private class RegistryInfo : Grid, BrowsableView
                 else
                 {
                     Variant? range = null;
-                    if (has_schema && range_type_is_range && !properties.lookup ("range-content", "v", out range))  // type_string != "h"
+                    if (has_schema && range_type_is_range && !properties.lookup (PropertyQuery.RANGE_CONTENT, "v", out range))  // type_string != "h"
                         assert_not_reached ();
                     key_editor_child = (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_code, range);
                 }                                                                                                                   break;
@@ -246,12 +245,12 @@ private class RegistryInfo : Grid, BrowsableView
                 key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);                   break;
             case "<enum>":  // has_schema
                 Variant range_content;
-                if (!properties.lookup ("range-content", "v", out range_content))
+                if (!properties.lookup (PropertyQuery.RANGE_CONTENT,    "v",    out range_content))
                     assert_not_reached ();
                 key_editor_child = create_child_enum (range_content, initial_value, full_name, modifications_handler);              break;
             case "<flags>": // has_schema
                 Variant range_content;
-                if (!properties.lookup ("range-content", "v", out range_content))
+                if (!properties.lookup (PropertyQuery.RANGE_CONTENT,    "v",    out range_content))
                     assert_not_reached ();
                 key_editor_child = create_child_flags (full_name, context, range_content, initial_value, modifications_handler);    break;
             case "()":
@@ -323,9 +322,9 @@ private class RegistryInfo : Grid, BrowsableView
                     }
                     else
                     {
-                        VariantDict local_properties = new VariantDict (model.get_key_properties (full_name, context, {"key-value"}));
+                        RegistryVariantDict local_properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.KEY_VALUE));
                         Variant key_value;
-                        if (!local_properties.lookup ("key-value", "v", out key_value))
+                        if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
                             assert_not_reached ();
                         local_properties.clear ();
                         if (custom_value_switch.get_active ())
@@ -344,9 +343,9 @@ private class RegistryInfo : Grid, BrowsableView
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
 
-                    VariantDict local_properties = new VariantDict (model.get_key_properties (full_name, context, {"is-default"}));
+                    RegistryVariantDict local_properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.IS_DEFAULT));
                     bool is_key_default;
-                    if (!local_properties.lookup ("is-default", "b", out is_key_default))
+                    if (!local_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_key_default))
                         assert_not_reached ();
                     local_properties.clear ();
                     custom_value_switch.set_active (is_key_default);
@@ -368,9 +367,9 @@ private class RegistryInfo : Grid, BrowsableView
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
 
-                VariantDict local_properties = new VariantDict (model.get_key_properties (full_name, context, {"key-value"}));
+                RegistryVariantDict local_properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.KEY_VALUE));
                 Variant key_value;
-                if (!local_properties.lookup ("key-value", "v", out key_value))
+                if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
                     assert_not_reached ();
                 local_properties.clear ();
                 key_editor_child.reload (key_value);
