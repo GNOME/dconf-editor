@@ -156,7 +156,7 @@ private class ModificationsHandler : Object
         if (planned_change && (planned_value != null))
             return (!) planned_value;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.KEY_VALUE));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.KEY_VALUE));
         Variant key_value;
         if (!properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
             assert_not_reached ();

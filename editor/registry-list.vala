@@ -282,9 +282,9 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             SettingsModel model = modifications_handler.model;
 
-            RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (setting_object.full_name,
+            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (setting_object.full_name,
                                                                                                          setting_object.context,
-                                                                                                         (uint) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT)));
+                                                                                                         (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT)));
             string key_name, type_code;
             bool has_schema;
 
@@ -466,7 +466,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         SettingsModel model = modifications_handler.model;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, schema_id, (uint) (PropertyQuery.TYPE_CODE & PropertyQuery.KEY_CONFLICT)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, schema_id, (uint16) (PropertyQuery.TYPE_CODE & PropertyQuery.KEY_CONFLICT)));
         string type_code;
         uint8 _key_conflict;
         if (!properties.lookup (PropertyQuery.TYPE_CODE,    "s", out type_code))
@@ -586,7 +586,7 @@ private abstract class RegistryList : Grid, BrowsableView
         ContextPopover popover = (!) row.nullable_popover;
         string full_name = row.full_name;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, row.context, (uint) (PropertyQuery.SCHEMA_ID & PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.KEY_CONFLICT & PropertyQuery.KEY_VALUE)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, row.context, (uint16) (PropertyQuery.SCHEMA_ID & PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.KEY_CONFLICT & PropertyQuery.KEY_VALUE)));
 
         string schema_id, type_string;
         uint8 _range_type, _key_conflict;
@@ -738,7 +738,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-            RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (row.full_name, ".dconf", (uint) PropertyQuery.KEY_VALUE));
+            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (row.full_name, ".dconf", (uint16) PropertyQuery.KEY_VALUE));
             Variant key_value;
             if (!properties.lookup (PropertyQuery.KEY_VALUE,        "v",    out key_value))
                 assert_not_reached ();

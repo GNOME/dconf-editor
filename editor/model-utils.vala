@@ -42,7 +42,7 @@ internal enum KeyConflict {     // transformed as uint8
 }
 
 [Flags]
-internal enum PropertyQuery {   // transformed as uint32 // TODO might finish at uint16
+internal enum PropertyQuery {   // transformed as uint16
     HAS_SCHEMA,
     DEFINED_BY, // TODO something
     KEY_NAME,
@@ -74,16 +74,16 @@ private class RegistryVariantDict : Object
     {
     }
 
-    internal RegistryVariantDict.from_auv (Variant variant)
+    internal RegistryVariantDict.from_aqv (Variant variant)
     {
-        if (variant.get_type_string () != "a{uv}")
+        if (variant.get_type_string () != "a{qv}")
             assert_not_reached ();
 
         VariantIter iter = new VariantIter (variant);
 
         uint key;
         Variant content;
-        while (iter.next ("{uv}", out key, out content))
+        while (iter.next ("{qv}", out key, out content))
             hash_table.insert (key, content);
     }
 
@@ -130,8 +130,8 @@ private class RegistryVariantDict : Object
 
     internal Variant end ()
     {
-        VariantBuilder builder = new VariantBuilder (new VariantType ("a{uv}"));
-        hash_table.@foreach ((key, variant) => builder.add ("{uv}", key, variant));
+        VariantBuilder builder = new VariantBuilder (new VariantType ("a{qv}"));
+        hash_table.@foreach ((key, variant) => builder.add ("{qv}", key, variant));
         clear ();
         return builder.end ();
     }

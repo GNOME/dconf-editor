@@ -71,7 +71,7 @@ private class RegistryInfo : Grid, BrowsableView
         full_name = _full_name;
         context = _context;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (_current_key_info);
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (_current_key_info);
         properties.remove (PropertyQuery.IS_DEFAULT);
         properties.remove (PropertyQuery.KEY_VALUE);
         current_key_info = properties.end ();
@@ -80,7 +80,7 @@ private class RegistryInfo : Grid, BrowsableView
 
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
-        properties = new RegistryVariantDict.from_auv (_current_key_info);
+        properties = new RegistryVariantDict.from_aqv (_current_key_info);
 
         bool has_schema;
         if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
@@ -317,7 +317,7 @@ private class RegistryInfo : Grid, BrowsableView
                     }
                     else
                     {
-                        RegistryVariantDict local_properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.KEY_VALUE));
+                        RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.KEY_VALUE));
                         Variant key_value;
                         if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
                             assert_not_reached ();
@@ -338,7 +338,7 @@ private class RegistryInfo : Grid, BrowsableView
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
 
-                    RegistryVariantDict local_properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.IS_DEFAULT));
+                    RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.IS_DEFAULT));
                     bool is_key_default;
                     if (!local_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_key_default))
                         assert_not_reached ();
@@ -362,7 +362,7 @@ private class RegistryInfo : Grid, BrowsableView
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
 
-                RegistryVariantDict local_properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) PropertyQuery.KEY_VALUE));
+                RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.KEY_VALUE));
                 Variant key_value;
                 if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
                     assert_not_reached ();

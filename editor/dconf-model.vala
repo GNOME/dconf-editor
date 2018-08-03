@@ -742,7 +742,7 @@ private class SettingsModel : Object
     * * Key properties methods
     \*/
 
-    internal Variant get_key_properties (string full_name, string context, uint query)
+    internal Variant get_key_properties (string full_name, string context, uint16 query)
     {
         Key? key = get_key (full_name, context);
         if (key == null)
@@ -751,7 +751,7 @@ private class SettingsModel : Object
             assert_not_reached ();
 
         Variant key_properties = ((!) key).get_properties ((PropertyQuery) query);
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (key_properties);
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (key_properties);
 
         if (query == 0 || PropertyQuery.KEY_VALUE in (PropertyQuery) query)
         {

@@ -440,7 +440,7 @@ private class GSettingsKey : Key
     {
         bool all_properties_queried = query == 0;
 
-        RegistryVariantDict variantdict = new RegistryVariantDict.from_auv (fixed_properties);
+        RegistryVariantDict variantdict = new RegistryVariantDict.from_aqv (fixed_properties);
 
         if (all_properties_queried || PropertyQuery.KEY_CONFLICT    in query)
             variantdict.insert_value (PropertyQuery.KEY_CONFLICT,               new Variant.byte ((uint8) key_conflict));

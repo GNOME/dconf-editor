@@ -109,7 +109,7 @@ private class ModificationsRevealer : Revealer
             // gsettings
             else
             {
-                RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, objects [position, 0], (uint) (PropertyQuery.IS_DEFAULT & PropertyQuery.SCHEMA_ID)));
+                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, objects [position, 0], (uint16) (PropertyQuery.IS_DEFAULT & PropertyQuery.SCHEMA_ID)));
                 bool is_key_default;
                 string schema_id;
                 if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
@@ -174,7 +174,7 @@ private class ModificationsRevealer : Revealer
 
         SettingsModel model = modifications_handler.model;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, context, (uint) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
 
         bool has_schema;
         if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
