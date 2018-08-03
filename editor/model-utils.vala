@@ -43,6 +43,7 @@ internal enum KeyConflict {     // transformed as uint8
 
 [Flags]
 internal enum PropertyQuery {   // transformed as uint16
+    HASH,
     HAS_SCHEMA,
     KEY_NAME,
     TYPE_CODE,

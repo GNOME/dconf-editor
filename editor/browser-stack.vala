@@ -168,9 +168,9 @@ private class BrowserStack : Grid
         return folder_view.check_reload (fresh_key_model);
     }
 
-    internal bool check_reload_object (Variant properties)
+    internal bool check_reload_object (uint properties_hash)
     {
-        return object_view.check_reload (properties);
+        return object_view.check_reload (properties_hash);
     }
 
     /*\

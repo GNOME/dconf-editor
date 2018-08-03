@@ -53,14 +53,19 @@ private abstract class Key : SettingObject
 {
     internal string type_string { get; protected set; default = "*"; }
 
+    internal uint key_hash { internal get; private set; default = 0; }
     private Variant? all_fixed_properties = null;
     protected abstract Variant create_fixed_properties (PropertyQuery query);
     internal Variant get_fixed_properties (PropertyQuery query)
     {
         if (query != 0)
             return create_fixed_properties (query);
-        else if (all_fixed_properties == null)
+
+        if (all_fixed_properties == null)
+        {
             all_fixed_properties = create_fixed_properties (0);
+            key_hash = ((!) all_fixed_properties).get_data_as_bytes ().hash ();
+        }
         return (!) all_fixed_properties;
     }
 

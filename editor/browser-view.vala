@@ -240,10 +240,11 @@ private class BrowserView : Grid
         {
             if (model.key_exists (path, last_context))
             {
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (path, last_context, 0));
-                properties.remove (PropertyQuery.IS_DEFAULT);
-                properties.remove (PropertyQuery.KEY_VALUE);
-                if (!current_child.check_reload_object (properties.end ()))
+                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (path, last_context, (uint16) PropertyQuery.HASH));
+                uint properties_hash;
+                if (!properties.lookup (PropertyQuery.HASH, "u", out properties_hash))
+                    assert_not_reached ();
+                if (!current_child.check_reload_object (properties_hash))
                     return false;
             }
             if (show_infobar)

@@ -34,7 +34,7 @@ private class RegistryInfo : Grid, BrowsableView
 
     internal ModificationsHandler modifications_handler { private get; set; }
 
-    private Variant? current_key_info = null;
+    private uint current_key_info_hash = 0;
     internal string full_name { get; private set; default = ""; }
     internal string context { get; private set; default = ""; }
 
@@ -66,21 +66,17 @@ private class RegistryInfo : Grid, BrowsableView
     * * Populating
     \*/
 
-    internal void populate_properties_list_box (string _full_name, string _context, Variant _current_key_info)
+    internal void populate_properties_list_box (string _full_name, string _context, Variant current_key_info)
     {
         full_name = _full_name;
         context = _context;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (_current_key_info);
-        properties.remove (PropertyQuery.IS_DEFAULT);
-        properties.remove (PropertyQuery.KEY_VALUE);
-        current_key_info = properties.end ();
-
-        SettingsModel model = modifications_handler.model;
-
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
-        properties = new RegistryVariantDict.from_aqv (_current_key_info);
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (current_key_info);
+
+        if (!properties.lookup (PropertyQuery.HASH,                     "u",    out current_key_info_hash))
+            assert_not_reached ();
 
         bool has_schema;
         if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
@@ -270,6 +266,8 @@ private class RegistryInfo : Grid, BrowsableView
 
         if ( /* has_schema && */ key_conflict == KeyConflict.HARD)
             return;
+
+        SettingsModel model = modifications_handler.model;
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
                 if (modifications_handler.should_delay_apply (type_code))
@@ -506,11 +504,11 @@ private class RegistryInfo : Grid, BrowsableView
         return (Widget) label;
     }
 
-    internal bool check_reload (Variant properties)
+    internal bool check_reload (uint properties_hash)
     {
-        if (current_key_info == null) // should not happen?
+        if (current_key_info_hash == 0) // should not happen?
             return true;
-        return !((!) current_key_info).equal (properties); // TODO compare key value with editor value?
+        return current_key_info_hash == properties_hash; // TODO compare key value with editor value?
     }
 
     /*\
