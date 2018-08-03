@@ -280,6 +280,7 @@ private class DConfKey : Key
 
     private ulong client_changed_handler = 0;
     internal void connect_client (DConf.Client client)
+        requires (client_changed_handler == 0)
     {
         client_changed_handler = client.changed.connect ((client, prefix, changes, tag) => {
                 foreach (string item in changes)
@@ -381,6 +382,7 @@ private class GSettingsKey : Key
 
     private ulong settings_changed_handler = 0;
     internal void connect_settings ()
+        requires (settings_changed_handler == 0)
     {
         settings_changed_handler = settings.changed [name].connect (() => value_changed ());
     }
