@@ -41,7 +41,6 @@ internal enum PropertyQuery {   // transformed as uint32 // TODO might finish at
     DEFINED_BY, // TODO something
     KEY_NAME,
     TYPE_CODE,
-    TYPE_NAME,  // TODO something
 
     // variable properties
     KEY_VALUE,

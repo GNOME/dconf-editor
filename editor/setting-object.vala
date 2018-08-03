@@ -78,7 +78,7 @@ private abstract class Key : SettingObject
     internal signal void value_changed ();
     internal ulong key_value_changed_handler = 0;
 
-    protected static string key_to_description (string type)
+    internal static string key_to_description (string type)   // TODO move in model-utils.vala
     {
         switch (type)
         {
@@ -313,8 +313,6 @@ private class DConfKey : Key
             variantdict.insert_value (PropertyQuery.DEFINED_BY,                 new Variant.string (_("DConf backend")));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
             variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
-        if (all_properties_queried || PropertyQuery.TYPE_NAME       in query)
-            variantdict.insert_value (PropertyQuery.TYPE_NAME,                  new Variant.string (key_to_description (type_string)));
 
         if (show_min_and_max (type_string) && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
@@ -410,8 +408,6 @@ private class GSettingsKey : Key
             variantdict.insert_value (PropertyQuery.DEFINED_BY,                 new Variant.string (defined_by));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
             variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
-        if (all_properties_queried || PropertyQuery.TYPE_NAME       in query)
-            variantdict.insert_value (PropertyQuery.TYPE_NAME,                  new Variant.string (key_to_description (type_string)));
         if (all_properties_queried || PropertyQuery.SUMMARY         in query)
             variantdict.insert_value (PropertyQuery.SUMMARY,                    new Variant.string (summary));
         if (all_properties_queried || PropertyQuery.DESCRIPTION     in query)
