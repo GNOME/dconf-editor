@@ -308,8 +308,6 @@ private class DConfKey : Key
             variantdict.insert_value (PropertyQuery.HAS_SCHEMA,                 new Variant.boolean (false));
         if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
             variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
-        if (all_properties_queried || PropertyQuery.DEFINED_BY      in query)
-            variantdict.insert_value (PropertyQuery.DEFINED_BY,                 new Variant.string (_("DConf backend")));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
             variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
 
@@ -397,18 +395,16 @@ private class GSettingsKey : Key
     {
         bool all_properties_queried = query == 0;
 
-        string defined_by = schema_path == null ? _("Relocatable schema") : _("Schema with path");
-
         RegistryVariantDict variantdict = new RegistryVariantDict ();
 
         if (all_properties_queried || PropertyQuery.HAS_SCHEMA      in query)
             variantdict.insert_value (PropertyQuery.HAS_SCHEMA,                 new Variant.boolean (true));
+        if (all_properties_queried || PropertyQuery.FIXED_SCHEMA    in query)
+            variantdict.insert_value (PropertyQuery.FIXED_SCHEMA,               new Variant.boolean (schema_path != null));
         if (all_properties_queried || PropertyQuery.SCHEMA_ID       in query)
             variantdict.insert_value (PropertyQuery.SCHEMA_ID,                  new Variant.string (context));
         if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
             variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
-        if (all_properties_queried || PropertyQuery.DEFINED_BY      in query)
-            variantdict.insert_value (PropertyQuery.DEFINED_BY,                 new Variant.string (defined_by));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
             variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
         if (all_properties_queried || PropertyQuery.SUMMARY         in query)
@@ -439,4 +435,13 @@ private class GSettingsKey : Key
         }
         return variantdict.end ();
     }
+}
+
+private string get_defined_by (bool has_schema, bool fixed_schema = false)
+{
+    if (fixed_schema)
+        return _("Schema with path");
+    if (has_schema)
+        return _("Relocatable schema");
+    return _("DConf backend");
 }

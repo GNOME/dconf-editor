@@ -124,12 +124,12 @@ private class RegistryInfo : Grid, BrowsableView
         if (!properties.lookup (PropertyQuery.TYPE_CODE,                "s",    out type_code))
             assert_not_reached ();
 
-        bool test;
+        bool tmp_bool;
         string tmp_string;
 
-        if (properties.lookup (PropertyQuery.DEFINED_BY,                "s",    out tmp_string))
-            add_row_from_label (_("Defined by"),                                    tmp_string);
-        else assert_not_reached ();
+        if (!properties.lookup (PropertyQuery.FIXED_SCHEMA,             "b",    out tmp_bool))
+            tmp_bool = false;
+        add_row_from_label (_("Defined by"),                                        get_defined_by (has_schema, tmp_bool));
 
         if (properties.lookup (PropertyQuery.SCHEMA_ID,                 "s",    out tmp_string))
             add_row_from_label (_("Schema"),                                        tmp_string);
@@ -137,19 +137,19 @@ private class RegistryInfo : Grid, BrowsableView
         add_separator ();
         if (properties.lookup (PropertyQuery.SUMMARY,                   "s",    out tmp_string))
         {
-            test = tmp_string == "";
+            tmp_bool = tmp_string == "";
             add_row_from_label (_("Summary"),
-                                test ?                                              _("No summary provided")
-                                     :                                              tmp_string,
-                                test);
+                                tmp_bool ?                                          _("No summary provided")
+                                         :                                          tmp_string,
+                                tmp_bool);
         }
         if (properties.lookup (PropertyQuery.DESCRIPTION,               "s",    out tmp_string))
         {
-            test = tmp_string == "";
+            tmp_bool = tmp_string == "";
             add_row_from_label (_("Description"),
-                                test ?                                              _("No description provided")
-                                     :                                              tmp_string,
-                                test);
+                                tmp_bool ?                                          _("No description provided")
+                                         :                                          tmp_string,
+                                tmp_bool);
         }
         /* Translators: as in datatype (integer, boolean, string, etc.) */
         add_row_from_label (_("Type"),                                              Key.key_to_description (type_code));

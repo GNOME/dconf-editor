@@ -44,7 +44,6 @@ internal enum KeyConflict {     // transformed as uint8
 [Flags]
 internal enum PropertyQuery {   // transformed as uint16
     HAS_SCHEMA,
-    DEFINED_BY, // TODO something
     KEY_NAME,
     TYPE_CODE,
 
@@ -52,6 +51,7 @@ internal enum PropertyQuery {   // transformed as uint16
     KEY_VALUE,
 
     // GSettingsKey only fixed properties
+    FIXED_SCHEMA,
     SCHEMA_ID,
     SUMMARY,
     DESCRIPTION,
