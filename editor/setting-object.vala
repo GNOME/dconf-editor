@@ -273,11 +273,15 @@ private abstract class Key : SettingObject
 
 private class DConfKey : Key
 {
-    internal DConfKey (DConf.Client client, string full_name, string name, string type_string)
+    internal DConfKey (string full_name, string name, string type_string)
     {
         Object (context: ".dconf", full_name: full_name, name: name, type_string: type_string);
+    }
 
-        client.changed.connect ((client, prefix, changes, tag) => {
+    private ulong client_changed_handler = 0;
+    internal void connect_client (DConf.Client client)
+    {
+        client_changed_handler = client.changed.connect ((client, prefix, changes, tag) => {
                 foreach (string item in changes)
                     if (prefix + item == full_name)
                     {
@@ -285,6 +289,12 @@ private class DConfKey : Key
                         return;
                     }
             });
+    }
+    internal void disconnect_client (DConf.Client client)
+        requires (client_changed_handler != 0)
+    {
+        client.disconnect (client_changed_handler);
+        client_changed_handler = 0;
     }
 
     protected override Variant create_fixed_properties (PropertyQuery query)
@@ -369,8 +379,18 @@ private class GSettingsKey : Key
                 default_value: default_value,       // TODO devel default/admin default
                 range_type: range_type,
                 range_content: range_content);
+    }
 
-        settings.changed [name].connect (() => value_changed ());
+    private ulong settings_changed_handler = 0;
+    internal void connect_settings ()
+    {
+        settings_changed_handler = settings.changed [name].connect (() => value_changed ());
+    }
+    internal void disconnect_settings ()
+        requires (settings_changed_handler != 0)
+    {
+        settings.disconnect (settings_changed_handler);
+        settings_changed_handler = 0;
     }
 
     protected override Variant create_fixed_properties (PropertyQuery query)

@@ -402,7 +402,7 @@ private class SettingsModel : Object
         Variant? key_value = get_dconf_key_value_or_null (full_name, client);
         if (key_value == null)
             return;
-        DConfKey new_key = new DConfKey (client, full_name, key_id, ((!) key_value).get_type_string ());
+        DConfKey new_key = new DConfKey (full_name, key_id, ((!) key_value).get_type_string ());
         key_model.append (new_key);
     }
 
@@ -471,9 +471,15 @@ private class SettingsModel : Object
     private void add_watched_key (Key key)
     {
         if (key is GSettingsKey)
+        {
+            ((GSettingsKey) key).connect_settings ();
             key.key_value_changed_handler = key.value_changed.connect (() => push_gsettings_key_value ((GSettingsKey) key));
+        }
         else if (key is DConfKey)
+        {
+            ((DConfKey) key).connect_client (client);
             key.key_value_changed_handler = key.value_changed.connect (() => push_dconf_key_value (key.full_name, client));
+        }
         else assert_not_reached ();
 
         watched_keys.append (key);
@@ -488,6 +494,13 @@ private class SettingsModel : Object
         while (object != null)
         {
             key = (Key) (!) object;
+
+            if (key is GSettingsKey)
+                ((GSettingsKey) key).disconnect_settings ();
+            else if (key is DConfKey)
+                ((DConfKey) key).disconnect_client (client);
+            else assert_not_reached ();
+
             key.disconnect (key.key_value_changed_handler);
             key.key_value_changed_handler = 0;
 
