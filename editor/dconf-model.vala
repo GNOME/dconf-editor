@@ -326,14 +326,16 @@ private class SettingsModel : Object
     {
         SettingsSchemaKey settings_schema_key = settings_schema.get_key (key_id);
 
-        string range_type = settings_schema_key.get_range ().get_child_value (0).get_string (); // don’t put it in the switch, or it fails
+        RangeType range_type = RangeType.get_from_string (settings_schema_key.get_range ().get_child_value (0).get_string ()); // don’t put it in the switch, or it fails
         string type_string;
         switch (range_type)
         {
-            case "enum":    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
-            case "flags":   type_string = "<flags>"; break; // flags=""
+            case RangeType.ENUM:    type_string = "<enum>"; break;  // <choices> or enum="", and hopefully <aliases>
+            case RangeType.FLAGS:   type_string = "<flags>"; break; // flags=""
             default:
-            case "type":    type_string = settings_schema_key.get_value_type ().dup_string (); break;
+            case RangeType.OTHER:
+            case RangeType.RANGE:
+            case RangeType.TYPE:    type_string = settings_schema_key.get_value_type ().dup_string (); break;
         }
 
         string? nullable_summary = settings_schema_key.get_summary ();

@@ -161,14 +161,15 @@ private class RegistryInfo : Grid, BrowsableView
         else assert_not_reached ();
 
         bool range_type_is_range = false;
-        if (properties.lookup (PropertyQuery.RANGE_TYPE,                "s",    out tmp_string)) // has_schema
+        uint8 range_type;
+        if (properties.lookup (PropertyQuery.RANGE_TYPE,                "y",    out range_type)) // has_schema
         {
             if (type_code == "d" || type_code == "y"    // double and unsigned 8 bits; not the handle type
              || type_code == "i" || type_code == "u"    // signed and unsigned 32 bits
              || type_code == "n" || type_code == "q"    // signed and unsigned 16 bits
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
-                range_type_is_range = tmp_string == "range";
+                range_type_is_range = ((RangeType) range_type) == RangeType.RANGE;
                 add_row_from_label (_("Forced range"),          Key.cool_boolean_text_value (range_type_is_range));
             }
         }

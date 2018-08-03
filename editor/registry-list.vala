@@ -595,14 +595,15 @@ private abstract class RegistryList : Grid, BrowsableView
 
         RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, row.context, (uint) (PropertyQuery.SCHEMA_ID & PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.HARD_CONFLICT & PropertyQuery.KEY_VALUE)));
 
-        string schema_id, type_string, range_type;
+        string schema_id, type_string;
+        uint8 range_type;
         Variant range_content;
         bool is_key_default, error_hard_conflicting_key;
         if (!properties.lookup (PropertyQuery.SCHEMA_ID,            "s",    out schema_id))
             assert_not_reached ();
         if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_string))
             assert_not_reached ();
-        if (!properties.lookup (PropertyQuery.RANGE_TYPE,           "s",    out range_type))
+        if (!properties.lookup (PropertyQuery.RANGE_TYPE,           "y",    out range_type))
             assert_not_reached ();
         if (!properties.lookup (PropertyQuery.RANGE_CONTENT,        "v",    out range_content))
             assert_not_reached ();
@@ -638,12 +639,12 @@ private abstract class RegistryList : Grid, BrowsableView
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
                 (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
-                && (range_type == "range")
+                && ((RangeType) range_type == RangeType.RANGE)
                 && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
                )
             || (
                 (type_string == "n" || type_string == "i" || type_string == "x")    // the handle type cannot have range
-                && (range_type == "range")
+                && ((RangeType) range_type == RangeType.RANGE)
                 && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
                )
             || type_string == "()")

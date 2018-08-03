@@ -15,8 +15,28 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+internal enum RangeType {       // transformed as uint8
+    TYPE,
+    ENUM,
+    FLAGS,
+    RANGE,
+    OTHER;
+
+    internal static RangeType get_from_string (string str)
+    {
+        switch (str)
+        {
+            case "type":    return RangeType.TYPE;
+            case "enum":    return RangeType.ENUM;
+            case "flags":   return RangeType.FLAGS;
+            case "range":   return RangeType.RANGE;
+            default:        return RangeType.OTHER;
+        }
+    }
+}
+
 [Flags]
-internal enum PropertyQuery {   // TODO might finish at uint16
+internal enum PropertyQuery {   // transformed as uint32 // TODO might finish at uint16
     HAS_SCHEMA,
     DEFINED_BY, // TODO something
     KEY_NAME,

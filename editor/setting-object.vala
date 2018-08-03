@@ -342,7 +342,7 @@ private class GSettingsKey : Key
     public string summary           { private get; internal construct; }
     public string description       { private get; internal construct; }
     public Variant default_value   { internal get; internal construct; }
-    public string range_type       { internal get; internal construct; }
+    public RangeType range_type    { internal get; internal construct; }
     public Variant range_content   { internal get; internal construct; }
 
     public GLib.Settings settings  { internal get; internal construct; }
@@ -368,7 +368,7 @@ private class GSettingsKey : Key
         }
     }
 
-    internal GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, string range_type, Variant range_content)
+    internal GSettingsKey (string parent_full_name, string name, GLib.Settings settings, string schema_id, string? schema_path, string summary, string description, string type_string, Variant default_value, RangeType range_type, Variant range_content)
     {
         string? summary_nullable = summary.locale_to_utf8 (-1, null, null, null);
         summary = summary_nullable ?? summary;
@@ -419,7 +419,7 @@ private class GSettingsKey : Key
         if (all_properties_queried || PropertyQuery.DEFAULT_VALUE   in query)
             variantdict.insert_value (PropertyQuery.DEFAULT_VALUE,              new Variant.string (cool_text_value_from_variant (default_value)));
         if (all_properties_queried || PropertyQuery.RANGE_TYPE      in query)
-            variantdict.insert_value (PropertyQuery.RANGE_TYPE,                 new Variant.string (range_type));
+            variantdict.insert_value (PropertyQuery.RANGE_TYPE,                 new Variant.byte ((uint8) range_type));
         if (all_properties_queried || PropertyQuery.RANGE_CONTENT   in query)
             variantdict.insert_value (PropertyQuery.RANGE_CONTENT,              new Variant.variant (range_content));
 
@@ -427,7 +427,7 @@ private class GSettingsKey : Key
          && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
             string min, max;
-            if (range_type == "range")     // TODO test more; and what happen if only min/max is in range?
+            if (range_type == RangeType.RANGE)     // TODO test more; and what happen if only min/max is in range?
             {
                 min = cool_text_value_from_variant (range_content.get_child_value (0));
                 max = cool_text_value_from_variant (range_content.get_child_value (1));
