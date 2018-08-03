@@ -79,21 +79,22 @@ private class ModificationsRevealer : Revealer
     * * Reseting objects
     \*/
 
-    internal void reset_objects (string [,] objects, bool recursively)
+    internal void reset_objects (Variant? objects, bool recursively)
     {
         _reset_objects (objects, recursively);
         warn_if_no_planned_changes ();
     }
 
-    private void _reset_objects (string [,]? objects, bool recursively)
+    private void _reset_objects (Variant? objects, bool recursively)
     {
         if (objects == null)
             return;
         SettingsModel model = modifications_handler.model;
 
-        for (uint position = 0; position < ((!) objects).length [0]; position++)
+        VariantIter iter = new VariantIter ((!) objects);
+        string context, name, full_name;
+        while (iter.next ("(sss)", out context, out name, out full_name))
         {
-            string full_name = objects [position, 2];
             // directory
             if (SettingsModel.is_folder_path (full_name))
             {
@@ -101,7 +102,7 @@ private class ModificationsRevealer : Revealer
                     _reset_objects (model.get_children (full_name), true);
             }
             // dconf key
-            else if (objects [position, 0] == ".dconf")
+            else if (context == ".dconf")
             {
                 if (!model.is_key_ghost (full_name))
                     modifications_handler.add_delayed_setting (full_name, null, false);
@@ -109,7 +110,7 @@ private class ModificationsRevealer : Revealer
             // gsettings
             else
             {
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, objects [position, 0], (uint16) (PropertyQuery.IS_DEFAULT & PropertyQuery.SCHEMA_ID)));
+                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) (PropertyQuery.IS_DEFAULT & PropertyQuery.SCHEMA_ID)));
                 bool is_key_default;
                 string schema_id;
                 if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))

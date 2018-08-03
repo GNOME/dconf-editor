@@ -37,26 +37,37 @@ private class RegistryView : RegistryList
         modifications_handler.model.keys_value_push ();
     }
 
-    internal bool check_reload (string [,] fresh_key_model)
+    internal bool check_reload (Variant? fresh_key_model)
     {
-        uint n_items = fresh_key_model.length [0];
+        if (fresh_key_model == null)
+            return true;
+        VariantIter iter = new VariantIter ((!) fresh_key_model);
+
+        uint n_items = (uint) iter.n_children ();
         if (list_model.get_n_items () != n_items)
             return true;
+
         bool [] skip = new bool [n_items];
         for (uint i = 0; i < n_items; i++)
             skip [i] = false;
-        for (uint i = 0; i < list_model.get_n_items (); i++)
+        string context, name, full_name;
+        while (iter.next ("(sss)", out context, out name, out full_name))
         {
-            SimpleSettingObject? setting_object = (SimpleSettingObject) list_model.get_item (i);
-            if (setting_object == null)
-                assert_not_reached ();
             bool found = false;
-            for (uint j = 0; j < n_items; j++)
+            for (uint i = 0; i < list_model.get_n_items (); i++)
             {
-                if (skip [j] == true)
+                if (skip [i] == true)
                     continue;
-                if (((!) setting_object).full_name != fresh_key_model [j,2])
+
+                SimpleSettingObject? setting_object = (SimpleSettingObject) list_model.get_item (i);
+                if (setting_object == null)
+                    assert_not_reached ();
+
+                if (((!) setting_object).full_name != full_name)
                     continue;
+                if (((!) setting_object).context != context)
+                    continue;
+
 /* FIXME                // TODO compare other visible info (i.e. key type_string or summary [if not directories])
                 if (SettingsModel.is_key_path (fresh_key_model [j,2]))
                 {
@@ -64,7 +75,7 @@ private class RegistryView : RegistryList
                         continue;
                 } */
                 found = true;
-                skip [j] = true;
+                skip [i] = true;
                 break;
             }
             if (!found)

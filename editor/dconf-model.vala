@@ -127,7 +127,7 @@ private class SettingsModel : Object
         return key_model;
     }
 
-    internal string [,]? get_children (string folder_path, bool update_watch = false)
+    internal Variant? get_children (string folder_path, bool update_watch = false)
     {
         if (update_watch)
             clean_watched_keys ();
@@ -137,7 +137,7 @@ private class SettingsModel : Object
         if (n_items == 0)
             return null;
 
-        string [,] keys_array = new string [n_items, 3];
+        VariantBuilder builder = new VariantBuilder (new VariantType ("a(sss)"));
         uint position = 0;
         Object? object = list_store.get_item (0);
         do
@@ -149,23 +149,23 @@ private class SettingsModel : Object
             // prepare the array
             SettingObject base_object = (SettingObject) (!) object;
             if (!use_shortpaths)
-                add_object (ref keys_array, base_object, position);             // 1/4
+                builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name);             // 1/4
             else
             {
                 string base_full_name = base_object.full_name;
                 if (is_key_path (base_full_name))
-                    add_object (ref keys_array, base_object, position);         // 2/4
+                    builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name);         // 2/4
                 else
                 {
                     GLib.ListStore child_list_store = get_children_as_liststore (base_full_name);
                     if (child_list_store.get_n_items () != 1)
-                        add_object (ref keys_array, base_object, position);     // 3/4
+                        builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name);     // 3/4
                     else
                     {
                         SettingObject test_object = (SettingObject) child_list_store.get_item (0);
                         string test_full_name = test_object.full_name;
                         if (is_key_path (test_full_name))
-                            add_object (ref keys_array, base_object, position); // 4/4
+                            builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name); // 4/4
                         else
                         {
                             string name = base_object.name;
@@ -178,7 +178,7 @@ private class SettingsModel : Object
                                 test_full_name = test_object.full_name;
                             }
                             while (is_folder_path (test_full_name) && child_list_store.get_n_items () == 1);
-                            add_object (ref keys_array, new Directory (base_full_name, name), position);
+                            builder.add ("(sss)", ".folder", name, base_full_name);
                         }
                     }
                 }
@@ -187,13 +187,7 @@ private class SettingsModel : Object
             object = list_store.get_item (position);
         }
         while (object != null);
-        return keys_array;
-    }
-    private void add_object (ref string [,] keys_array, SettingObject object, uint position)
-    {
-        keys_array [position, 0] = object.context;
-        keys_array [position, 1] = object.name;
-        keys_array [position, 2] = object.full_name;
+        return builder.end ();
     }
 
     internal bool get_object (string path, ref string context, ref string name)

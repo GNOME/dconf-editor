@@ -163,16 +163,16 @@ private class BrowserView : Grid
     * * Views
     \*/
 
-    internal void prepare_folder_view (string [,]? key_array, bool is_ancestor)
+    internal void prepare_folder_view (Variant? children, bool is_ancestor)
     {
         key_model = new GLib.ListStore (typeof (SimpleSettingObject));
-        if (key_array != null)
+        if (children != null)
         {
-            for (uint i = 0; i < ((!) key_array).length [0]; i++)
+            VariantIter iter = new VariantIter ((!) children);
+            string context, name, full_name;
+            while (iter.next ("(sss)", out context, out name, out full_name))
             {
-                SimpleSettingObject sso = new SimpleSettingObject (((!) key_array) [i, 0],
-                                                                   ((!) key_array) [i, 1],
-                                                                   ((!) key_array) [i, 2]);
+                SimpleSettingObject sso = new SimpleSettingObject (context, name, full_name);
                 ((!) key_model).append (sso);
             }
         }
@@ -228,8 +228,7 @@ private class BrowserView : Grid
 
         if (type == ViewType.FOLDER)
         {
-            string [,] fresh_key_model = model.get_children (path);
-            if (!current_child.check_reload_folder (fresh_key_model))
+            if (!current_child.check_reload_folder (model.get_children (path)))
                 return false;
             if (show_infobar)
             {

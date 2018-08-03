@@ -163,7 +163,7 @@ private class BrowserStack : Grid
         search_view.set_search_parameters (current_path, bookmarks, sorting_options);
     }
 
-    internal bool check_reload_folder (string [,] fresh_key_model)
+    internal bool check_reload_folder (Variant? fresh_key_model)
     {
         return folder_view.check_reload (fresh_key_model);
     }
