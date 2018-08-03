@@ -108,8 +108,10 @@ private abstract class ClickableListBoxRow : EventBox
 
     internal void destroy_popover ()
     {
-        if (nullable_popover != null)       // check sometimes not useful
-            ((!) nullable_popover).destroy ();
+        if (nullable_popover == null)       // check sometimes not useful
+            return;
+        ((!) nullable_popover).destroy ();
+        nullable_popover = null;
     }
 
     internal void hide_right_click_popover ()
@@ -120,7 +122,7 @@ private abstract class ClickableListBoxRow : EventBox
 
     internal bool right_click_popover_visible ()
     {
-        return (nullable_popover != null) && (((!) nullable_popover).visible);
+        return (nullable_popover != null) && ((!) nullable_popover).visible;
     }
 }
 

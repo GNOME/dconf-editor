@@ -152,7 +152,7 @@ private abstract class RegistryList : Grid, BrowsableView
     * * Keyboard calls
     \*/
 
-    internal bool show_row_popover ()
+    internal bool toggle_row_popover ()
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -513,7 +513,7 @@ private abstract class RegistryList : Grid, BrowsableView
     * * Right click popover creation
     \*/
 
-    private void show_right_click_popover (ClickableListBoxRow row, int? event_x)
+    private void show_right_click_popover (ClickableListBoxRow row, int? nullable_event_x)
     {
         if (row.nullable_popover == null)
         {
@@ -531,12 +531,14 @@ private abstract class RegistryList : Grid, BrowsableView
             ((!) row.nullable_popover).position = PositionType.BOTTOM;     // TODO better
         }
         else if (((!) row.nullable_popover).visible)
-            warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click or long Menu key press
+            warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click
+        int event_x;
+        if (nullable_event_x == null)
+            event_x = (int) (((int) row.get_allocated_width ()) / 2.0);
+        else
+            event_x = (!) nullable_event_x;
 
-        if (event_x == null)
-            event_x = (int) (row.get_allocated_width () / 2.0);
-
-        Gdk.Rectangle rect = { x:(!) event_x, y:row.get_allocated_height (), width:0, height:0 };
+        Gdk.Rectangle rect = { x:event_x, y:row.get_allocated_height (), width:0, height:0 };
         ((!) row.nullable_popover).set_pointing_to (rect);
         ((!) row.nullable_popover).popup ();
     }

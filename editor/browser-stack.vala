@@ -117,10 +117,10 @@ private class BrowserStack : Grid
         return null;
     }
 
-    internal bool show_row_popover ()
+    internal bool toggle_row_popover ()
     {
         if (current_view != ViewType.OBJECT)
-            return ((RegistryList) stack.get_visible_child ()).show_row_popover ();
+            return ((RegistryList) stack.get_visible_child ()).toggle_row_popover ();
         return false;
     }
 

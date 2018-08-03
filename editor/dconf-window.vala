@@ -920,7 +920,7 @@ private class DConfWindow : ApplicationWindow
 
         if (name == "Menu")
         {
-            if (browser_view.show_row_popover ())
+            if (browser_view.toggle_row_popover ())
             {
                 if (bookmarks_button.active)
                     bookmarks_button.active = false;

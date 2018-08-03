@@ -275,7 +275,7 @@ private class BrowserView : Grid
     internal bool up_pressed ()       { return current_child.up_pressed ();       }
     internal bool down_pressed ()     { return current_child.down_pressed ();     }
 
-    internal bool show_row_popover () { return current_child.show_row_popover (); }   // Menu
+    internal bool toggle_row_popover () { return current_child.toggle_row_popover (); }   // Menu
 
     internal void toggle_boolean_key ()      { current_child.toggle_boolean_key ();      }
     internal void set_selected_to_default () { current_child.set_selected_to_default (); }
