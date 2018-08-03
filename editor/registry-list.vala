@@ -284,23 +284,23 @@ private abstract class RegistryList : Grid, BrowsableView
 
             RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (setting_object.full_name,
                                                                                                          setting_object.context,
-                                                                                                         (uint) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.SOFT_CONFLICT & PropertyQuery.HARD_CONFLICT)));
+                                                                                                         (uint) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT)));
             string key_name, type_code;
             bool has_schema;
 
-            if (!properties.lookup (PropertyQuery.KEY_NAME, "s", out key_name))
+            if (!properties.lookup (PropertyQuery.KEY_NAME,             "s",    out key_name))
                 assert_not_reached ();
 
-            if (!properties.lookup (PropertyQuery.TYPE_CODE, "s", out type_code))
+            if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_code))
                 assert_not_reached ();
 
-            if (!properties.lookup (PropertyQuery.HAS_SCHEMA, "b", out has_schema))
+            if (!properties.lookup (PropertyQuery.HAS_SCHEMA,           "b",    out has_schema))
                 assert_not_reached ();
 
             if (has_schema)
             {
                 string summary = "";
-                if (!properties.lookup (PropertyQuery.SUMMARY, "s", out summary))
+                if (!properties.lookup (PropertyQuery.SUMMARY,          "s",    out summary))
                     assert_not_reached ();
 
                 bool italic_summary;
@@ -322,24 +322,19 @@ private abstract class RegistryList : Grid, BrowsableView
                                          full_name,
                                          search_mode_non_local_result);
 
-                bool warning_conflicting_key;
-                bool error_hard_conflicting_key;
-                if (!properties.lookup (PropertyQuery.SOFT_CONFLICT, "b", out warning_conflicting_key))
+                uint8 _key_conflict;
+                if (!properties.lookup (PropertyQuery.KEY_CONFLICT,     "y",    out _key_conflict))
                     assert_not_reached ();
-                if (!properties.lookup (PropertyQuery.HARD_CONFLICT, "b", out error_hard_conflicting_key))
-                    assert_not_reached ();
+                KeyConflict key_conflict = (KeyConflict) _key_conflict;
 
-                if (warning_conflicting_key)
+                if (key_conflict == KeyConflict.SOFT)
+                    row.get_style_context ().add_class ("conflict");
+                else if (key_conflict == KeyConflict.HARD)
                 {
-                    if (error_hard_conflicting_key)
-                    {
-                        row.get_style_context ().add_class ("hard-conflict");
-                        ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
-                        if (type_code == "b")
-                            ((KeyListBoxRow) row).use_switch (false);
-                    }
-                    else
-                        row.get_style_context ().add_class ("conflict");
+                    row.get_style_context ().add_class ("hard-conflict");
+                    ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
+                    if (type_code == "b")
+                        ((KeyListBoxRow) row).use_switch (false);
                 }
             }
             else
@@ -471,23 +466,21 @@ private abstract class RegistryList : Grid, BrowsableView
 
         SettingsModel model = modifications_handler.model;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, schema_id, (uint) (PropertyQuery.TYPE_CODE & PropertyQuery.SOFT_CONFLICT & PropertyQuery.HARD_CONFLICT)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, schema_id, (uint) (PropertyQuery.TYPE_CODE & PropertyQuery.KEY_CONFLICT)));
         string type_code;
-        bool warning_conflicting_key;
-        bool error_hard_conflicting_key;
-        if (!properties.lookup (PropertyQuery.TYPE_CODE,     "s", out type_code))
+        uint8 _key_conflict;
+        if (!properties.lookup (PropertyQuery.TYPE_CODE,    "s", out type_code))
             assert_not_reached ();
-        if (!properties.lookup (PropertyQuery.SOFT_CONFLICT, "b", out warning_conflicting_key))
+        if (!properties.lookup (PropertyQuery.KEY_CONFLICT, "y", out _key_conflict))
             assert_not_reached ();
-        if (!properties.lookup (PropertyQuery.HARD_CONFLICT, "b", out error_hard_conflicting_key))
-            assert_not_reached ();
+        KeyConflict key_conflict = (KeyConflict) _key_conflict;
         properties.clear ();
 
         update_gsettings_row ((!) row,
                               type_code,
                               key_value,
                               is_key_default,
-                              error_hard_conflicting_key);
+                              key_conflict == KeyConflict.HARD);
         ((!) row).destroy_popover ();
     }
 
@@ -593,24 +586,26 @@ private abstract class RegistryList : Grid, BrowsableView
         ContextPopover popover = (!) row.nullable_popover;
         string full_name = row.full_name;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, row.context, (uint) (PropertyQuery.SCHEMA_ID & PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.HARD_CONFLICT & PropertyQuery.KEY_VALUE)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_auv (model.get_key_properties (full_name, row.context, (uint) (PropertyQuery.SCHEMA_ID & PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.KEY_CONFLICT & PropertyQuery.KEY_VALUE)));
 
         string schema_id, type_string;
-        uint8 range_type;
+        uint8 _range_type, _key_conflict;
         Variant range_content;
-        bool is_key_default, error_hard_conflicting_key;
+        bool is_key_default;
         if (!properties.lookup (PropertyQuery.SCHEMA_ID,            "s",    out schema_id))
             assert_not_reached ();
         if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_string))
             assert_not_reached ();
-        if (!properties.lookup (PropertyQuery.RANGE_TYPE,           "y",    out range_type))
+        if (!properties.lookup (PropertyQuery.RANGE_TYPE,           "y",    out _range_type))
             assert_not_reached ();
         if (!properties.lookup (PropertyQuery.RANGE_CONTENT,        "v",    out range_content))
             assert_not_reached ();
         if (!properties.lookup (PropertyQuery.IS_DEFAULT,           "b",    out is_key_default))
             assert_not_reached ();
-        if (!properties.lookup (PropertyQuery.HARD_CONFLICT,        "b",    out error_hard_conflicting_key))
+        if (!properties.lookup (PropertyQuery.KEY_CONFLICT,         "y",    out _key_conflict))
             assert_not_reached ();
+        RangeType range_type = (RangeType) _range_type;
+        KeyConflict key_conflict = (KeyConflict) _key_conflict;
 
         Variant variant_s = new Variant.string (full_name);
         Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
@@ -621,7 +616,7 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
         }
 
-        if (error_hard_conflicting_key)
+        if (key_conflict == KeyConflict.HARD)
         {
             popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
             popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
@@ -639,12 +634,12 @@ private abstract class RegistryList : Grid, BrowsableView
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
             || (
                 (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
-                && ((RangeType) range_type == RangeType.RANGE)
+                && (range_type == RangeType.RANGE)
                 && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
                )
             || (
                 (type_string == "n" || type_string == "i" || type_string == "x")    // the handle type cannot have range
-                && ((RangeType) range_type == RangeType.RANGE)
+                && (range_type == RangeType.RANGE)
                 && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
                )
             || type_string == "()")

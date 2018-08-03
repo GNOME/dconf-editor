@@ -359,16 +359,19 @@ private class SettingsModel : Object
         GSettingsKey? conflicting_key = (GSettingsKey?) get_key_from_path_and_name (key_model, key_id); // safe cast, no DConfKey's added yet
         if (conflicting_key != null)
         {
-            ((!) conflicting_key).warning_conflicting_key = true;
-            new_key.warning_conflicting_key = true;
-            if (((!) conflicting_key).error_hard_conflicting_key == true
+            if (((!) conflicting_key).key_conflict == KeyConflict.HARD
              || new_key.type_string != ((!) conflicting_key).type_string
              || !new_key.default_value.equal (((!) conflicting_key).default_value)
              || new_key.range_type != ((!) conflicting_key).range_type
              || !new_key.range_content.equal (((!) conflicting_key).range_content))
             {
-                ((!) conflicting_key).error_hard_conflicting_key = true;
-                new_key.error_hard_conflicting_key = true;
+                ((!) conflicting_key).key_conflict = KeyConflict.HARD;
+                new_key.key_conflict = KeyConflict.HARD;
+            }
+            else
+            {
+                ((!) conflicting_key).key_conflict = KeyConflict.SOFT;
+                new_key.key_conflict = KeyConflict.SOFT;
             }
         }
         key_model.append (new_key);

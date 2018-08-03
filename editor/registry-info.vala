@@ -86,32 +86,28 @@ private class RegistryInfo : Grid, BrowsableView
         if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
             assert_not_reached ();
 
-        bool error_hard_conflicting_key = false;
+        KeyConflict key_conflict = KeyConflict.NONE;
         if (has_schema)
         {
-            if (!properties.lookup (PropertyQuery.HARD_CONFLICT,        "b",    out error_hard_conflicting_key))
+            uint8 _key_conflict;
+            if (!properties.lookup (PropertyQuery.KEY_CONFLICT,         "y",    out _key_conflict))
                 assert_not_reached ();
+            key_conflict = (KeyConflict) _key_conflict;
 
-            if (error_hard_conflicting_key)
+            if (key_conflict == KeyConflict.HARD)
             {
                 conflicting_key_warning_revealer.set_reveal_child (false);
                 hard_conflicting_key_error_revealer.set_reveal_child (true);
             }
+            else if (key_conflict == KeyConflict.SOFT)
+            {
+                conflicting_key_warning_revealer.set_reveal_child (true);
+                hard_conflicting_key_error_revealer.set_reveal_child (false);
+            }
             else
             {
-                bool warning_conflicting_key;
-                if (!properties.lookup (PropertyQuery.SOFT_CONFLICT,    "b",    out warning_conflicting_key))
-                    assert_not_reached ();
-                if (warning_conflicting_key)
-                {
-                    conflicting_key_warning_revealer.set_reveal_child (true);
-                    hard_conflicting_key_error_revealer.set_reveal_child (false);
-                }
-                else
-                {
-                    conflicting_key_warning_revealer.set_reveal_child (false);
-                    hard_conflicting_key_error_revealer.set_reveal_child (false);
-                }
+                conflicting_key_warning_revealer.set_reveal_child (false);
+                hard_conflicting_key_error_revealer.set_reveal_child (false);
             }
         }
         else
@@ -191,7 +187,7 @@ private class RegistryInfo : Grid, BrowsableView
         if (properties.lookup (PropertyQuery.DEFAULT_VALUE,             "s",    out tmp_string))
             add_row_from_label (_("Default"),                                       tmp_string);
 
-        if ( /* has_schema && */ error_hard_conflicting_key)
+        if ( /* has_schema && */ key_conflict == KeyConflict.HARD)
         {
             current_value_label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
             current_value_label.get_style_context ().add_class ("italic-label");
@@ -272,7 +268,7 @@ private class RegistryInfo : Grid, BrowsableView
 
         properties.clear ();
 
-        if (has_schema && error_hard_conflicting_key)
+        if ( /* has_schema && */ key_conflict == KeyConflict.HARD)
             return;
 
         ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {

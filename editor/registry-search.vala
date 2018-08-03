@@ -36,7 +36,7 @@ private class RegistrySearch : RegistryList
     private void ensure_selection ()
     {
         if (!(key_list_box is ListBox)) // suppresses some warnings if the window is closed while the search is processing
-            return;
+            return;                     // TODO see if 5596feae9b51563a33f1bffc6a370e6ba556adb7 fixed that in Gtk 4
 
         ListBoxRow? row = key_list_box.get_selected_row ();
         if (row == null)

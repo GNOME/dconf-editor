@@ -333,8 +333,7 @@ private class DConfKey : Key
 
 private class GSettingsKey : Key
 {
-    internal bool warning_conflicting_key = false;
-    internal bool error_hard_conflicting_key = false;
+    internal KeyConflict key_conflict = KeyConflict.NONE;
 
     public string? schema_path      { private get; internal construct; }
     public string summary           { private get; internal construct; }
@@ -443,10 +442,8 @@ private class GSettingsKey : Key
 
         RegistryVariantDict variantdict = new RegistryVariantDict.from_auv (fixed_properties);
 
-        if (all_properties_queried || PropertyQuery.SOFT_CONFLICT   in query)
-            variantdict.insert_value (PropertyQuery.SOFT_CONFLICT,              new Variant.boolean (warning_conflicting_key));
-        if (all_properties_queried || PropertyQuery.HARD_CONFLICT   in query)
-            variantdict.insert_value (PropertyQuery.HARD_CONFLICT,              new Variant.boolean (error_hard_conflicting_key));
+        if (all_properties_queried || PropertyQuery.KEY_CONFLICT    in query)
+            variantdict.insert_value (PropertyQuery.KEY_CONFLICT,               new Variant.byte ((uint8) key_conflict));
         if (all_properties_queried || PropertyQuery.IS_DEFAULT      in query)
             variantdict.insert_value (PropertyQuery.IS_DEFAULT,                 new Variant.boolean (settings.get_user_value (name) == null));
 

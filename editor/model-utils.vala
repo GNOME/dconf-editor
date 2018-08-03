@@ -35,6 +35,12 @@ internal enum RangeType {       // transformed as uint8
     }
 }
 
+internal enum KeyConflict {     // transformed as uint8
+    NONE,
+    SOFT,
+    HARD
+}
+
 [Flags]
 internal enum PropertyQuery {   // transformed as uint32 // TODO might finish at uint16
     HAS_SCHEMA,
@@ -56,8 +62,7 @@ internal enum PropertyQuery {   // transformed as uint32 // TODO might finish at
     MINIMUM,
 
     // GSettingsKey only variable properties
-    SOFT_CONFLICT,
-    HARD_CONFLICT,
+    KEY_CONFLICT,
     IS_DEFAULT
 }
 
