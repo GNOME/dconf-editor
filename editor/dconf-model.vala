@@ -750,17 +750,25 @@ private class SettingsModel : Object
         if (((!) key).context != context)
             assert_not_reached ();
 
-        Variant key_properties = ((!) key).get_properties ((PropertyQuery) query);
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (key_properties);
+        Variant key_properties = ((!) key).get_fixed_properties ((PropertyQuery) query);
+        bool all_properties_queried = query == 0;
+        RegistryVariantDict variantdict = new RegistryVariantDict.from_aqv (key_properties);
 
-        if (query == 0 || PropertyQuery.KEY_VALUE in (PropertyQuery) query)
+        if (all_properties_queried || PropertyQuery.KEY_VALUE in (PropertyQuery) query)
         {
             if (key is GSettingsKey)
-                properties.insert_value (PropertyQuery.KEY_VALUE, new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
+                variantdict.insert_value (PropertyQuery.KEY_VALUE, new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
             else // (key is DConfKey)
-                properties.insert_value (PropertyQuery.KEY_VALUE, new Variant.variant (get_dconf_key_value (((!) key).full_name, client)));
+                variantdict.insert_value (PropertyQuery.KEY_VALUE, new Variant.variant (get_dconf_key_value (((!) key).full_name, client)));
         }
-        return properties.end ();
+        if (key is GSettingsKey)
+        {
+            if (all_properties_queried || PropertyQuery.KEY_CONFLICT    in query)
+                variantdict.insert_value (PropertyQuery.KEY_CONFLICT,                new Variant.byte ((uint8) ((GSettingsKey) (!) key).key_conflict));
+            if (all_properties_queried || PropertyQuery.IS_DEFAULT      in query)
+                variantdict.insert_value (PropertyQuery.IS_DEFAULT,                  new Variant.boolean (((GSettingsKey) (!) key).settings.get_user_value (((!) key).name) == null));
+        }
+        return variantdict.end ();
     }
 
     internal string get_key_copy_text (string full_name, string context)

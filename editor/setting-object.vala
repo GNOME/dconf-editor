@@ -55,24 +55,13 @@ private abstract class Key : SettingObject
 
     private Variant? all_fixed_properties = null;
     protected abstract Variant create_fixed_properties (PropertyQuery query);
-    protected abstract Variant add_variable_properties (Variant fixed_properties, PropertyQuery query);
-    internal Variant get_properties (PropertyQuery query)
+    internal Variant get_fixed_properties (PropertyQuery query)
     {
-        Variant fixed_properties;
-        if (query == 0)
-        {
-            if (all_fixed_properties == null)
-            {
-                fixed_properties = create_fixed_properties (0);
-                all_fixed_properties = fixed_properties;
-            }
-            else
-                fixed_properties = (!) all_fixed_properties;
-        }
-        else
-            fixed_properties = create_fixed_properties (query);
-
-        return add_variable_properties (fixed_properties, query);
+        if (query != 0)
+            return create_fixed_properties (query);
+        else if (all_fixed_properties == null)
+            all_fixed_properties = create_fixed_properties (0);
+        return (!) all_fixed_properties;
     }
 
     internal signal void value_changed ();
@@ -324,11 +313,6 @@ private class DConfKey : Key
         }
         return variantdict.end ();
     }
-
-    protected override Variant add_variable_properties (Variant fixed_properties, PropertyQuery query)
-    {
-        return fixed_properties;
-    }
 }
 
 private class GSettingsKey : Key
@@ -433,20 +417,6 @@ private class GSettingsKey : Key
             variantdict.insert_value (PropertyQuery.MINIMUM,                    new Variant.string (min));
             variantdict.insert_value (PropertyQuery.MAXIMUM,                    new Variant.string (max));
         }
-        return variantdict.end ();
-    }
-
-    protected override Variant add_variable_properties (Variant fixed_properties, PropertyQuery query)
-    {
-        bool all_properties_queried = query == 0;
-
-        RegistryVariantDict variantdict = new RegistryVariantDict.from_aqv (fixed_properties);
-
-        if (all_properties_queried || PropertyQuery.KEY_CONFLICT    in query)
-            variantdict.insert_value (PropertyQuery.KEY_CONFLICT,               new Variant.byte ((uint8) key_conflict));
-        if (all_properties_queried || PropertyQuery.IS_DEFAULT      in query)
-            variantdict.insert_value (PropertyQuery.IS_DEFAULT,                 new Variant.boolean (settings.get_user_value (name) == null));
-
         return variantdict.end ();
     }
 }
