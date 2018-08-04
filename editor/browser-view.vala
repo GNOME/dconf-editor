@@ -77,7 +77,7 @@ private class BrowserView : Grid
         { "refresh-folder", refresh_folder },
 
         { "set-gsettings-key-value",    set_gsettings_key_value,        "(ssv)"  },
-        { "set-dconf-key-value",        set_dconf_key_value,            "(ssv)"  },
+        { "set-dconf-key-value",        set_dconf_key_value,            "(sv)"   },
         { "set-to-default",             set_to_default,                 "(ss)"   },  // see also ui.erase(s)
 
         { "toggle-dconf-key-switch",     toggle_dconf_key_switch,       "(sb)"   },
