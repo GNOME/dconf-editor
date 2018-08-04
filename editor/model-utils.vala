@@ -68,7 +68,7 @@ internal enum PropertyQuery {   // transformed as uint16
 
 private class RegistryVariantDict : Object
 {
-    private HashTable<uint, Variant> hash_table = new HashTable<uint, Variant> ((a) => { return a; }, (a, b) => { return a == b; });
+    private HashTable<uint16, Variant> hash_table = new HashTable<uint16, Variant> ((a) => { return a; }, (a, b) => { return a == b; });
 
     internal RegistryVariantDict ()
     {
@@ -81,13 +81,13 @@ private class RegistryVariantDict : Object
 
         VariantIter iter = new VariantIter (variant);
 
-        uint key;
+        uint16 key;
         Variant content;
         while (iter.next ("{qv}", out key, out content))
             hash_table.insert (key, content);
     }
 
-    internal bool lookup (uint key, string format_string, ...)
+    internal bool lookup (uint16 key, string format_string, ...)
     {
         Variant? variant = hash_table.lookup (key);
 
@@ -99,7 +99,7 @@ private class RegistryVariantDict : Object
         return true;
     }
 
-    internal Variant? lookup_value (uint key, VariantType expected_type)
+    internal Variant? lookup_value (uint16 key, VariantType expected_type)
     {
         Variant? result = hash_table.lookup (key);
         if (result == null && !((!) result).is_of_type (expected_type))
@@ -107,18 +107,18 @@ private class RegistryVariantDict : Object
         return (!) result;
     }
 
-    internal bool contains (uint key)
+    internal bool contains (uint16 key)
     {
         return hash_table.contains (key);
     }
 
-    internal void insert_value (uint key, Variant variant)
+    internal void insert_value (uint16 key, Variant variant)
     {
         // TODO g_hash_table_insert returns a boolean now
         hash_table.insert (key, variant);
     }
 
-    internal bool remove (uint key)
+    internal bool remove (uint16 key)
     {
         return hash_table.remove (key);
     }
