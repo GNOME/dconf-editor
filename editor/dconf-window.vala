@@ -171,9 +171,9 @@ private class DConfWindow : ApplicationWindow
         if (SettingsModel.is_folder_path (startup_path))
             request_folder (startup_path);
         else if (schema != null)
-            request_object (startup_path, (!) schema);
+            request_object (startup_path, ModelUtils.undefined_context_id, true, (!) schema);
         else
-            request_object (startup_path);
+            request_object (startup_path, ModelUtils.undefined_context_id, true);
     }
 
     private void prepare_model ()
@@ -220,9 +220,9 @@ private class DConfWindow : ApplicationWindow
                 pathbar.update_ghosts (_model.get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
             });
 
-        model.gkey_value_push.connect ((_model, full_name, schema_id, key_value, is_key_default) => {
-                browser_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
-                revealer.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+        model.gkey_value_push.connect ((_model, full_name, context, key_value, is_key_default) => {
+                browser_view.gkey_value_push (full_name, context, key_value, is_key_default);
+                revealer.gkey_value_push (full_name, context, key_value, is_key_default);
             });
         model.dkey_value_push.connect ((_model, full_name, key_value_or_null) => {
                 browser_view.dkey_value_push (full_name, key_value_or_null);
@@ -389,10 +389,10 @@ private class DConfWindow : ApplicationWindow
         { "empty", empty, "*" },
 
         { "notify-folder-emptied", notify_folder_emptied, "s" },
-        { "notify-object-deleted", notify_object_deleted, "(ss)" },
+        { "notify-object-deleted", notify_object_deleted, "(sq)" },
 
         { "open-folder", open_folder, "s" },
-        { "open-object", open_object, "(ss)" },
+        { "open-object", open_object, "(sq)" },
         { "open-parent", open_parent, "s" },
 
         { "reload-folder", reload_folder },
@@ -427,8 +427,8 @@ private class DConfWindow : ApplicationWindow
         requires (path_variant != null)
     {
         string full_name;
-        string unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
-        ((!) path_variant).@get ("(ss)", out full_name, out unused);
+        uint16 unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
+        ((!) path_variant).@get ("(sq)", out full_name, out unused);
 
         show_notification (_("Key “%s” has been deleted.").printf (full_name));
     }
@@ -452,10 +452,10 @@ private class DConfWindow : ApplicationWindow
         revealer.hide_modifications_list ();
 
         string full_name;
-        string context;
-        ((!) path_variant).@get ("(ss)", out full_name, out context);
+        uint16 context_id;
+        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
 
-        request_object (full_name, context);
+        request_object (full_name, context_id);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
@@ -472,7 +472,7 @@ private class DConfWindow : ApplicationWindow
 
     private void reload_object (/* SimpleAction action, Variant? path_variant */)
     {
-        request_object (current_path, "", false);
+        request_object (current_path, ModelUtils.undefined_context_id, false);
     }
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
@@ -576,11 +576,11 @@ private class DConfWindow : ApplicationWindow
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_object (string full_name, string _context = "", bool notify_missing = true)
+    private void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "")
     {
-        string context = model.get_fallback_context (full_name, _context);
+        context_id = model.get_fallback_context (full_name, context_id, schema_id);
 
-        if (context == "")
+        if (ModelUtils.is_undefined_context_id (context_id))
         {
             if (notify_missing)
             {
@@ -594,8 +594,8 @@ private class DConfWindow : ApplicationWindow
         }
         else
         {
-            browser_view.prepare_object_view (full_name, context,
-                                              model.get_key_properties (full_name, context, 0),
+            browser_view.prepare_object_view (full_name, context_id,
+                                              model.get_key_properties (full_name, context_id, 0),
                                               current_path == SettingsModel.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }
@@ -623,7 +623,7 @@ private class DConfWindow : ApplicationWindow
         if (browser_view.current_view == ViewType.FOLDER)
             request_folder (current_path, browser_view.get_selected_row_name ());
         else if (browser_view.current_view == ViewType.OBJECT)
-            request_object (current_path, "", false);
+            request_object (current_path, ModelUtils.undefined_context_id, false);
         else if (browser_view.current_view == ViewType.SEARCH)
             request_search (true);
     }
@@ -664,7 +664,7 @@ private class DConfWindow : ApplicationWindow
 
         if (current_type == ViewType.OBJECT)   // mainly here for ensuring menu is never empty
         {
-            Variant variant = new Variant.string (model.get_key_copy_text (current_path, browser_view.last_context));
+            Variant variant = new Variant.string (model.get_key_copy_text (current_path, browser_view.last_context_id));
             menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
         }
         else
@@ -794,7 +794,7 @@ private class DConfWindow : ApplicationWindow
 
                     string? selected_row_text = browser_view.get_copy_text ();
                     if (selected_row_text == null && current_type == ViewType.OBJECT)
-                        selected_row_text = model.get_key_copy_text (current_path, browser_view.last_context);
+                        selected_row_text = model.get_key_copy_text (current_path, browser_view.last_context_id);
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;

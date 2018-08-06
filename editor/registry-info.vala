@@ -35,8 +35,8 @@ private class RegistryInfo : Grid, BrowsableView
     internal ModificationsHandler modifications_handler { private get; set; }
 
     private uint current_key_info_hash = 0;
-    internal string full_name { get; private set; default = ""; }
-    internal string context { get; private set; default = ""; }
+    internal string full_name   { get; private set; default = ""; }
+    internal uint16 context_id  { get; private set; default = ModelUtils.undefined_context_id; }
 
     /*\
     * * Cleaning
@@ -66,10 +66,10 @@ private class RegistryInfo : Grid, BrowsableView
     * * Populating
     \*/
 
-    internal void populate_properties_list_box (string _full_name, string _context, Variant current_key_info)
+    internal void populate_properties_list_box (string _full_name, uint16 _context_id, Variant current_key_info)
     {
         full_name = _full_name;
-        context = _context;
+        context_id = _context_id;
 
         clean ();   // for when switching between two keys, for example with a search (maybe also bookmarks)
 
@@ -209,7 +209,7 @@ private class RegistryInfo : Grid, BrowsableView
         add_separator ();
 
         KeyEditorChild key_editor_child;
-        Variant initial_value = modifications_handler.get_key_custom_value (full_name, context);
+        Variant initial_value = modifications_handler.get_key_custom_value (full_name, context_id);
         switch (type_code)
         {
             case "b":
@@ -243,7 +243,7 @@ private class RegistryInfo : Grid, BrowsableView
                 Variant range_content;
                 if (!properties.lookup (PropertyQuery.RANGE_CONTENT,    "v",    out range_content))
                     assert_not_reached ();
-                key_editor_child = create_child_flags (full_name, context, range_content, initial_value, modifications_handler);    break;
+                key_editor_child = create_child_flags (full_name, context_id, range_content, initial_value, modifications_handler); break;
             case "()":
                 key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                      break;
             default:
@@ -274,13 +274,11 @@ private class RegistryInfo : Grid, BrowsableView
                 {
                     if (!is_valid)
                         modifications_handler.dismiss_change (full_name);
-                    else if (has_schema)
-                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), true, context);
                     else
-                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), false);
+                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), context_id);
                 }
                 else if (has_schema)
-                    model.set_gsettings_key_value (full_name, context, key_editor_child.get_variant ());
+                    model.set_gsettings_key_value (full_name, context_id, key_editor_child.get_variant ());
                 else
                     model.set_dconf_key_value (full_name, key_editor_child.get_variant ());
             });
@@ -305,24 +303,24 @@ private class RegistryInfo : Grid, BrowsableView
                     if (modifications_handler.should_delay_apply (type_code))
                     {
                         if (custom_value_switch.get_active ())
-                            modifications_handler.add_delayed_setting (full_name, null, true, context);
+                            modifications_handler.add_delayed_setting (full_name, null, context_id);
                         else
                         {
-                            Variant tmp_variant = modifications_handler.get_key_custom_value (full_name, context);
-                            modifications_handler.add_delayed_setting (full_name, tmp_variant, true, context);
+                            Variant tmp_variant = modifications_handler.get_key_custom_value (full_name, context_id);
+                            modifications_handler.add_delayed_setting (full_name, tmp_variant, context_id);
                             key_editor_child.reload (tmp_variant);
                         }
                     }
                     else
                     {
-                        RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.KEY_VALUE));
+                        RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
                         Variant key_value;
                         if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
                             assert_not_reached ();
                         local_properties.clear ();
                         if (custom_value_switch.get_active ())
                         {
-                            model.set_key_to_default (full_name, context);
+                            model.set_key_to_default (full_name, context_id);
                             SignalHandler.block (key_editor_child, value_has_changed_handler);
                             key_editor_child.reload (key_value);
                             //if (type_code == "<flags>")                      let's try to live without this...
@@ -330,13 +328,13 @@ private class RegistryInfo : Grid, BrowsableView
                             SignalHandler.unblock (key_editor_child, value_has_changed_handler);
                         }
                         else
-                            model.set_gsettings_key_value (full_name, context, key_value); // TODO sets key value with key value... that hurts
+                            model.set_gsettings_key_value (full_name, context_id, key_value); // TODO sets key value with key value... that hurts
                     }
                 });
             revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
                     SignalHandler.block (custom_value_switch, switch_active_handler);
 
-                    RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.IS_DEFAULT));
+                    RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.IS_DEFAULT));
                     bool is_key_default;
                     if (!local_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_key_default))
                         assert_not_reached ();
@@ -350,7 +348,7 @@ private class RegistryInfo : Grid, BrowsableView
         {
             erase_button_handler = erase_button.clicked.connect (() => {
                     modifications_handler.enter_delay_mode ();
-                    modifications_handler.add_delayed_setting (full_name, null, false);
+                    modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
                 });
         }
 
@@ -360,7 +358,7 @@ private class RegistryInfo : Grid, BrowsableView
                     return;
                 SignalHandler.block (key_editor_child, value_has_changed_handler);
 
-                RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.KEY_VALUE));
+                RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
                 Variant key_value;
                 if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
                     assert_not_reached ();
@@ -399,12 +397,12 @@ private class RegistryInfo : Grid, BrowsableView
         }
     }
 
-    private static KeyEditorChild create_child_flags (string full_name, string context, Variant range_content, Variant initial_value, ModificationsHandler modifications_handler)
+    private static KeyEditorChild create_child_flags (string full_name, uint16 context_id, Variant range_content, Variant initial_value, ModificationsHandler modifications_handler)
     {
         KeyEditorChildFlags key_editor_child_flags = new KeyEditorChildFlags (initial_value, range_content.get_strv ());
 
         ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                string [] active_flags = modifications_handler.get_key_custom_value (full_name, context).get_strv ();
+                string [] active_flags = modifications_handler.get_key_custom_value (full_name, context_id).get_strv ();
                 key_editor_child_flags.update_flags (active_flags);
             });
         key_editor_child_flags.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));

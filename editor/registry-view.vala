@@ -50,9 +50,9 @@ private class RegistryView : RegistryList
         bool [] skip = new bool [n_items];
         for (uint i = 0; i < n_items; i++)
             skip [i] = false;
-        bool is_folder;
-        string context, name;
-        while (iter.next ("(bss)", out is_folder, out context, out name))
+        uint16 context_id;
+        string name;
+        while (iter.next ("(qs)", out context_id, out name))
         {
             bool found = false;
             for (uint i = 0; i < list_model.get_n_items (); i++)
@@ -64,11 +64,9 @@ private class RegistryView : RegistryList
                 if (setting_object == null)
                     assert_not_reached ();
 
-                if (((!) setting_object).is_folder != is_folder)
+                if (((!) setting_object).context_id != context_id)
                     continue;
                 if (((!) setting_object).name != name)
-                    continue;
-                if (((!) setting_object).context != context)
                     continue;
 
 /* FIXME                // TODO compare other visible info (i.e. key type_string or summary [if not directories])
@@ -106,11 +104,17 @@ private class RegistryView : RegistryList
         string? label_text = null;
         if (row.get_child () is KeyListBoxRow)  // no header for folders
         {
-            string context = ((ClickableListBoxRow) row.get_child ()).context;
-            if (before == null || ((ClickableListBoxRow) ((!) before).get_child ()).context != context)
+            uint16 context_id = ((ClickableListBoxRow) row.get_child ()).context_id;
+            if (before == null || ((ClickableListBoxRow) ((!) before).get_child ()).context_id != context_id)
             {
                 if (((KeyListBoxRow) row.get_child ()).has_schema)
-                    label_text = context;
+                {
+                    RegistryVariantDict properties = new RegistryVariantDict.from_aqv (modifications_handler.model.get_key_properties (((KeyListBoxRow) row.get_child ()).full_name, context_id, (uint16) PropertyQuery.SCHEMA_ID));
+                    string schema_id;
+                    if (!properties.lookup (PropertyQuery.SCHEMA_ID, "s", out schema_id))
+                        assert_not_reached ();
+                    label_text = schema_id;
+                }
                 else
                     label_text = _("Keys not defined by a schema");
             }

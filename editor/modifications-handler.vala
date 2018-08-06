@@ -35,7 +35,7 @@ private class ModificationsHandler : Object
     private HashTable<string, Variant?> keys_awaiting_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
 
     private GenericSet<string> dconf_changes_set = new GenericSet<string> (str_hash, str_equal);
-    private HashTable<string, string> gsettings_changes_set = new HashTable<string, string> (str_hash, str_equal);
+    private HashTable<string, uint16> gsettings_changes_set = new HashTable<string, uint16> (str_hash, str_equal);
     internal uint dconf_changes_count { get { return dconf_changes_set.length; }}
     internal uint gsettings_changes_count { get { return gsettings_changes_set.length; }}
 
@@ -78,14 +78,15 @@ private class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    internal void add_delayed_setting (string key_path, Variant? new_value, bool has_schema, string schema_id_if_gsettings_key = "")
+    internal void add_delayed_setting (string key_path, Variant? new_value, uint16 context_id)
+        requires (!ModelUtils.is_folder_context_id (context_id))
     {
         if (!keys_awaiting_hashtable.contains (key_path))
         {
-            if (has_schema)
-                gsettings_changes_set.insert (key_path, schema_id_if_gsettings_key);
-            else
+            if (ModelUtils.is_dconf_context_id (context_id))
                 dconf_changes_set.add (key_path);
+            else
+                gsettings_changes_set.insert (key_path, context_id);
             keys_awaiting_hashtable.insert (key_path, new_value);
         }
         else
@@ -149,14 +150,14 @@ private class ModificationsHandler : Object
         leave_delay_mode ();
     }
 
-    internal Variant get_key_custom_value (string full_name, string context)
+    internal Variant get_key_custom_value (string full_name, uint16 context_id)
     {
         bool planned_change = key_has_planned_change (full_name);
         Variant? planned_value = get_key_planned_value (full_name);
         if (planned_change && (planned_value != null))
             return (!) planned_value;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) PropertyQuery.KEY_VALUE));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
         Variant key_value;
         if (!properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
             assert_not_reached ();
@@ -169,31 +170,32 @@ private class ModificationsHandler : Object
         model.set_dconf_key_value (full_name, key_value);
     }
 
-    internal void set_gsettings_key_value (string full_name, string schema_id, Variant key_value)
+    internal void set_gsettings_key_value (string full_name, uint16 context_id, Variant key_value)
     {
-        model.set_gsettings_key_value (full_name, schema_id, key_value);
+        model.set_gsettings_key_value (full_name, context_id, key_value);
     }
 
     internal void erase_dconf_key (string full_name)
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (full_name, null, false);
+            add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
         else if (behaviour != Behaviour.UNSAFE)
         {
             mode = ModificationsMode.DELAYED;   // call only once delayed_changes_changed()
-            add_delayed_setting (full_name, null, false);
+            add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
         }
         else
             model.erase_key (full_name);
     }
 
-    internal void set_to_default (string full_name, string schema_id)
-        requires (schema_id != ".dconf")
+    internal void set_to_default (string full_name, uint16 context_id)
+        requires (!ModelUtils.is_folder_context_id (context_id))
+        requires (!ModelUtils.is_dconf_context_id (context_id))
     {
         if (get_current_delay_mode ())
-            add_delayed_setting (full_name, null, true, schema_id);
+            add_delayed_setting (full_name, null, context_id);
         else
-            model.set_key_to_default (full_name, schema_id);
+            model.set_key_to_default (full_name, context_id);
     }
 
     internal bool key_has_planned_change (string key_path)
@@ -228,14 +230,12 @@ private class ModificationsHandler : Object
         keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
                 if (dconf_changes_set.contains (key_path))
                     delayed_settings_list.append (
-                        new SimpleSettingObject.from_full_name (false,
-                                                                ".dconf",
+                        new SimpleSettingObject.from_full_name (ModelUtils.dconf_context_id,
                                                                 key_path.slice (key_path.last_index_of_char ('/') + 1, key_path.length),
                                                                 key_path));
                 else if (gsettings_changes_set.contains (key_path))
                     delayed_settings_list.append (
-                        new SimpleSettingObject.from_full_name (false,
-                                                                gsettings_changes_set.lookup (key_path),
+                        new SimpleSettingObject.from_full_name (gsettings_changes_set.lookup (key_path),
                                                                 key_path.slice (key_path.last_index_of_char ('/') + 1, key_path.length),
                                                                 key_path));
                 else

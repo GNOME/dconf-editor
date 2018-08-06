@@ -63,18 +63,18 @@ private class BrowserStack : Grid
         stack.set_transition_type (is_ancestor && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
-    internal void select_row (string selected, string last_context)
+    internal void select_row (string selected, uint16 last_context_id)
         requires (current_view != ViewType.OBJECT)
     {
         if (selected == "")
             ((RegistryList) stack.get_visible_child ()).select_first_row ();
         else
-            ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context, current_view == ViewType.FOLDER);
+            ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context_id, current_view == ViewType.FOLDER);
     }
 
-    internal void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
+    internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)
     {
-        object_view.populate_properties_list_box (full_name, context, properties);
+        object_view.populate_properties_list_box (full_name, context_id, properties);
 
         stack.set_transition_type (is_parent && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
@@ -177,11 +177,11 @@ private class BrowserStack : Grid
     * * Values changes  // TODO reloads all the views instead of the current one, because method is called before it is made visible
     \*/
 
-    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        folder_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
-        search_view.gkey_value_push (full_name, schema_id, key_value, is_key_default);
-        if (full_name == object_view.full_name && schema_id == object_view.context)
+        folder_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
+        search_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
+        if (full_name == object_view.full_name && context_id == object_view.context_id)
             object_view.gkey_value_push (key_value, is_key_default);
     }
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)

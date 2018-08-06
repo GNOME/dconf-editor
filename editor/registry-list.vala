@@ -97,14 +97,14 @@ private abstract class RegistryList : Grid, BrowsableView
 
     internal abstract void select_first_row ();
 
-    internal void select_row_named (string selected, string context, bool grab_focus)
+    internal void select_row_named (string selected, uint16 context_id, bool grab_focus)
     {
         check_resize ();
-        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context));
+        ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (selected, context_id));
         if (row != null)
             scroll_to_row ((!) row, grab_focus);
     }
-    private int get_row_position (string selected, string context)
+    private int get_row_position (string selected, uint16 context_id)
     {
         uint position = 0;
         uint fallback = 0;
@@ -113,8 +113,8 @@ private abstract class RegistryList : Grid, BrowsableView
             SimpleSettingObject object = (SimpleSettingObject) list_model.get_object (position);
             if (object.full_name == selected)
             {
-                if (object.is_folder
-                 || object.context == context)
+                if (ModelUtils.is_folder_context_id (object.context_id)
+                 || object.context_id == context_id)
                     return (int) position;
                 fallback = position;
             }
@@ -180,9 +180,9 @@ private abstract class RegistryList : Grid, BrowsableView
     }
     private string _get_copy_text (ClickableListBoxRow row)
     {
-        if (row.context == ".folder")
+        if (ModelUtils.is_folder_context_id (row.context_id))
             return row.full_name;
-        return modifications_handler.model.get_key_copy_text (row.full_name, row.context);
+        return modifications_handler.model.get_key_copy_text (row.full_name, row.context_id);
     }
     private Variant get_copy_text_variant (ClickableListBoxRow row)
     {
@@ -274,7 +274,7 @@ private abstract class RegistryList : Grid, BrowsableView
             assert_not_reached ();
         bool search_mode_non_local_result = search_mode && SettingsModel.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
-        if (setting_object.is_folder)
+        if (ModelUtils.is_folder_context_id (setting_object.context_id))
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
         }
@@ -283,7 +283,7 @@ private abstract class RegistryList : Grid, BrowsableView
             SettingsModel model = modifications_handler.model;
 
             RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name,
-                                                                                                         setting_object.context,
+                                                                                                         setting_object.context_id,
                                                                                                          (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT)));
             string key_name, type_code;
             bool has_schema;
@@ -314,7 +314,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
                 row = new KeyListBoxRow (true,
                                          type_code,
-                                         setting_object.context,
+                                         setting_object.context_id,
                                          summary,
                                          italic_summary,
                                          modifications_handler.get_current_delay_mode (),
@@ -341,7 +341,7 @@ private abstract class RegistryList : Grid, BrowsableView
             {
                 row = new KeyListBoxRow (false,
                                          type_code,
-                                         ".dconf",
+                                         ModelUtils.dconf_context_id,
                                          _("No Schema Found"),
                                          true,
                                          modifications_handler.get_current_delay_mode (),
@@ -368,7 +368,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
-        if (row.context == ".folder")
+        if (ModelUtils.is_folder_context_id (row.context_id))
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";
@@ -378,7 +378,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             wrapper.get_style_context ().add_class ("key-row");
             wrapper.action_name = "ui.open-object";
-            wrapper.set_action_target ("(ss)", full_name, setting_object.context);
+            wrapper.set_action_target ("(sq)", full_name, setting_object.context_id);
         }
 
         return wrapper;
@@ -392,8 +392,8 @@ private abstract class RegistryList : Grid, BrowsableView
         if (type_string == "b")
         {
             bool key_value_boolean = key_value.get_boolean ();
-            Variant switch_variant = new Variant ("(ssbb)", row.full_name, row.context, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
-            row.update_switch (key_value_boolean, "bro.toggle-gsettings-key-switch(" + switch_variant.print (false) + ")");
+            Variant switch_variant = new Variant ("(sqbb)", row.full_name, row.context_id, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
+            row.update_switch (key_value_boolean, "bro.toggle-gsettings-key-switch(" + switch_variant.print (true) + ")");
         }
 
         StyleContext css_context = row.get_style_context ();
@@ -458,15 +458,15 @@ private abstract class RegistryList : Grid, BrowsableView
         return false;
     }
 
-    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        KeyListBoxRow? row = get_row_for_key (full_name, schema_id);
+        KeyListBoxRow? row = get_row_for_key (full_name, context_id);
         if (row == null)    // TODO make method only called when necessary 1/2
             return;
 
         SettingsModel model = modifications_handler.model;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, schema_id, (uint16) (PropertyQuery.TYPE_CODE & PropertyQuery.KEY_CONFLICT)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.TYPE_CODE & PropertyQuery.KEY_CONFLICT)));
         string type_code;
         uint8 _key_conflict;
         if (!properties.lookup (PropertyQuery.TYPE_CODE,    "s", out type_code))
@@ -486,7 +486,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
-        KeyListBoxRow? row = get_row_for_key (full_name, ".dconf");
+        KeyListBoxRow? row = get_row_for_key (full_name, ModelUtils.dconf_context_id);
         if (row == null)    // TODO make method only called when necessary 2/2
             return;
 
@@ -494,7 +494,7 @@ private abstract class RegistryList : Grid, BrowsableView
         ((!) row).destroy_popover ();
     }
 
-    private KeyListBoxRow? get_row_for_key (string full_name, string context)
+    private KeyListBoxRow? get_row_for_key (string full_name, uint16 context_id)
     {
         KeyListBoxRow? key_row_child = null;
         key_list_box.foreach ((row) => {
@@ -503,7 +503,7 @@ private abstract class RegistryList : Grid, BrowsableView
                     assert_not_reached ();
                 if ((!) row_child is KeyListBoxRow
                  && ((KeyListBoxRow) (!) row_child).full_name == full_name
-                 && ((KeyListBoxRow) (!) row_child).context == context)
+                 && ((KeyListBoxRow) (!) row_child).context_id == context_id)
                     key_row_child = (KeyListBoxRow) (!) row_child;
             });
         return key_row_child;
@@ -548,11 +548,12 @@ private abstract class RegistryList : Grid, BrowsableView
         if (row.nullable_popover == null)
             assert_not_reached ();
 
-        switch (row.context)
+        switch (row.context_id)
         {
-            case ".folder": return generate_folder_popover ((FolderListBoxRow) row);
-            case ".dconf" : return generate_dconf_popover ((KeyListBoxRow) row);
-            default       : return generate_gsettings_popover ((KeyListBoxRow) row);
+            case ModelUtils.undefined_context_id : assert_not_reached ();
+            case ModelUtils.folder_context_id    : return generate_folder_popover ((FolderListBoxRow) row);
+            case ModelUtils.dconf_context_id     : return generate_dconf_popover     ((KeyListBoxRow) row);
+            default                              : return generate_gsettings_popover ((KeyListBoxRow) row);
         }
     }
 
@@ -587,15 +588,14 @@ private abstract class RegistryList : Grid, BrowsableView
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
         string full_name = row.full_name;
+        uint16 context_id = row.context_id;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, row.context, (uint16) (PropertyQuery.SCHEMA_ID & PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.KEY_CONFLICT & PropertyQuery.KEY_VALUE)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.KEY_CONFLICT & PropertyQuery.KEY_VALUE)));
 
-        string schema_id, type_string;
+        string type_string;
         uint8 _range_type, _key_conflict;
         Variant range_content;
         bool is_key_default;
-        if (!properties.lookup (PropertyQuery.SCHEMA_ID,            "s",    out schema_id))
-            assert_not_reached ();
         if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_string))
             assert_not_reached ();
         if (!properties.lookup (PropertyQuery.RANGE_TYPE,           "y",    out _range_type))
@@ -610,7 +610,7 @@ private abstract class RegistryList : Grid, BrowsableView
         KeyConflict key_conflict = (KeyConflict) _key_conflict;
 
         Variant variant_s = new Variant.string (full_name);
-        Variant variant_ss = new Variant ("(ss)", full_name, schema_id);
+        Variant variant_sq = new Variant ("(sq)", full_name, context_id);
 
         if (row.search_result_mode)
         {
@@ -620,7 +620,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (key_conflict == KeyConflict.HARD)
         {
-            popover.new_gaction ("detail", "ui.open-object(" + variant_ss.print (false) + ")");
+            popover.new_gaction ("detail", "ui.open-object(" + variant_sq.print (true) + ")");
             popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
             properties.clear ();
             return true; // anything else is value-related, so we are done
@@ -630,7 +630,7 @@ private abstract class RegistryList : Grid, BrowsableView
         bool planned_change = modifications_handler.key_has_planned_change (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
 
-        popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
+        popover.new_gaction ("customize", "ui.open-object(" + variant_sq.print (true) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
@@ -678,12 +678,12 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
 
             if (!is_key_default)
-                popover.new_gaction ("default2", "bro.set-to-default(" + variant_ss.print (false) + ")");
+                popover.new_gaction ("default2", "bro.set-to-default(" + variant_sq.print (true) + ")");
 
             string [] all_flags = range_content.get_strv ();
-            popover.create_flags_list (modifications_handler.get_key_custom_value (full_name, schema_id).get_strv (), all_flags);
+            popover.create_flags_list (modifications_handler.get_key_custom_value (full_name, context_id).get_strv (), all_flags);
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                    string [] active_flags = modifications_handler.get_key_custom_value (full_name, schema_id).get_strv ();
+                    string [] active_flags = modifications_handler.get_key_custom_value (full_name, context_id).get_strv ();
                     foreach (string flag in all_flags)
                         popover.update_flag_status (flag, flag in active_flags);
                 });
@@ -697,12 +697,12 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_gaction ("dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
 
             if (planned_value != null)
-                popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
+                popover.new_gaction ("default1", "bro.set-to-default(" + variant_sq.print (true) + ")");
         }
         else if (!is_key_default)
         {
             popover.new_section ();
-            popover.new_gaction ("default1", "bro.set-to-default(" + variant_ss.print (false) + ")");
+            popover.new_gaction ("default1", "bro.set-to-default(" + variant_sq.print (true) + ")");
         }
         properties.clear ();
         return true;
@@ -716,7 +716,7 @@ private abstract class RegistryList : Grid, BrowsableView
         SettingsModel model = modifications_handler.model;
         ContextPopover popover = (!) row.nullable_popover;
         Variant variant_s = new Variant.string (row.full_name);
-        Variant variant_ss = new Variant ("(ss)", row.full_name, ".dconf");
+        Variant variant_sq = new Variant ("(sq)", row.full_name, ModelUtils.dconf_context_id);
 
         if (model.is_key_ghost (row.full_name))
         {
@@ -730,7 +730,7 @@ private abstract class RegistryList : Grid, BrowsableView
             popover.new_section ();
         }
 
-        popover.new_gaction ("customize", "ui.open-object(" + variant_ss.print (false) + ")");
+        popover.new_gaction ("customize", "ui.open-object(" + variant_sq.print (true) + ")");
         popover.new_gaction ("copy", "app.copy(" + get_copy_text_variant (row).print (false) + ")");
 
         bool planned_change = modifications_handler.key_has_planned_change (row.full_name);
@@ -740,7 +740,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             popover.new_section ();
             bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
-            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (row.full_name, ".dconf", (uint16) PropertyQuery.KEY_VALUE));
+            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (row.full_name, ModelUtils.dconf_context_id, (uint16) PropertyQuery.KEY_VALUE));
             Variant key_value;
             if (!properties.lookup (PropertyQuery.KEY_VALUE,        "v",    out key_value))
                 assert_not_reached ();

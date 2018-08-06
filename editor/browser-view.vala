@@ -20,12 +20,12 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 private class BrowserView : Grid
 {
-    internal string last_context { get; private set; default = ""; }
+    internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
 
     [GtkChild] private BrowserInfoBar info_bar;
     [GtkChild] private BrowserStack current_child;
 
-    private SortingOptions sorting_options = new SortingOptions ();
+    private SortingOptions sorting_options;
     private GLib.ListStore? key_model = null;
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
@@ -37,6 +37,15 @@ private class BrowserView : Grid
         set {
             _modifications_handler = value;
             current_child.modifications_handler = value;
+            sorting_options = new SortingOptions (value.model);
+            sorting_options.notify.connect (() => {
+                    if (current_view != ViewType.FOLDER)
+                        return;
+
+                    if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
+                        show_soft_reload_warning ();
+                    // TODO reload search results too
+                });
         }
     }
 
@@ -50,15 +59,6 @@ private class BrowserView : Grid
                                                   _("Reload"), "ui.reload-folder");
         info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"),
                                                   _("Reload"), "ui.reload-object");   // TODO also for key removing?
-
-        sorting_options.notify.connect (() => {
-                if (current_view != ViewType.FOLDER)
-                    return;
-
-                if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
-                    show_soft_reload_warning ();
-                // TODO reload search results too
-            });
     }
 
     /*\
@@ -76,12 +76,11 @@ private class BrowserView : Grid
     {
         { "refresh-folder", refresh_folder },
 
-        { "set-gsettings-key-value",    set_gsettings_key_value,        "(ssv)"  },
-        { "set-dconf-key-value",        set_dconf_key_value,            "(sv)"   },
-        { "set-to-default",             set_to_default,                 "(ss)"   },  // see also ui.erase(s)
+        { "set-key-value",               set_key_value,                 "(sqv)"  },
+        { "set-to-default",              set_to_default,                "(sq)"   },  // see also ui.erase(s)
 
         { "toggle-dconf-key-switch",     toggle_dconf_key_switch,       "(sb)"   },
-        { "toggle-gsettings-key-switch", toggle_gsettings_key_switch,   "(ssbb)" }
+        { "toggle-gsettings-key-switch", toggle_gsettings_key_switch,   "(sqbb)" }
     };
 
     private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
@@ -91,29 +90,18 @@ private class BrowserView : Grid
         hide_reload_warning ();
     }
 
-    private void set_gsettings_key_value (SimpleAction action, Variant? value_variant)
+    private void set_key_value (SimpleAction action, Variant? value_variant)
         requires (value_variant != null)
     {
         string full_name;
-        string schema_id;
+        uint16 context_id;
         Variant key_value_request;
-        ((!) value_variant).@get ("(ssv)", out full_name, out schema_id, out key_value_request);
+        ((!) value_variant).@get ("(sqv)", out full_name, out context_id, out key_value_request);
 
         if (modifications_handler.get_current_delay_mode ())
-            modifications_handler.add_delayed_setting (full_name, key_value_request, true, schema_id);
-        else
-            modifications_handler.set_gsettings_key_value (full_name, schema_id, key_value_request);
-    }
-
-    private void set_dconf_key_value (SimpleAction action, Variant? value_variant)
-        requires (value_variant != null)
-    {
-        string full_name;
-        Variant key_value_request;
-        ((!) value_variant).@get ("(sv)", out full_name, out key_value_request);
-
-        if (modifications_handler.get_current_delay_mode ())
-            modifications_handler.add_delayed_setting (full_name, key_value_request, false);
+            modifications_handler.add_delayed_setting (full_name, key_value_request, context_id);
+        else if (!ModelUtils.is_dconf_context_id (context_id))
+            modifications_handler.set_gsettings_key_value (full_name, context_id, key_value_request);
         else
             modifications_handler.set_dconf_key_value (full_name, key_value_request);
     }
@@ -122,9 +110,9 @@ private class BrowserView : Grid
         requires (path_variant != null)
     {
         string full_name;
-        string schema_id;
-        ((!) path_variant).@get ("(ss)", out full_name, out schema_id);
-        modifications_handler.set_to_default (full_name, schema_id);
+        uint16 context_id;
+        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
+        modifications_handler.set_to_default (full_name, context_id);
         invalidate_popovers ();
     }
 
@@ -148,15 +136,15 @@ private class BrowserView : Grid
             assert_not_reached ();
 
         string full_name;
-        string schema_id;
+        uint16 context_id;
         bool key_value_request;
         bool key_default_value;
-        ((!) value_variant).@get ("(ssbb)", out full_name, out schema_id, out key_value_request, out key_default_value);
+        ((!) value_variant).@get ("(sqbb)", out full_name, out context_id, out key_value_request, out key_default_value);
 
         if (key_value_request == key_default_value)
-            modifications_handler.set_to_default (full_name, schema_id);
+            modifications_handler.set_to_default (full_name, context_id);
         else
-            modifications_handler.set_gsettings_key_value (full_name, schema_id, new Variant.boolean (key_value_request));
+            modifications_handler.set_gsettings_key_value (full_name, context_id, new Variant.boolean (key_value_request));
     }
 
     /*\
@@ -169,11 +157,13 @@ private class BrowserView : Grid
         if (children != null)
         {
             VariantIter iter = new VariantIter ((!) children);
-            bool is_folder;
-            string context, name;
-            while (iter.next ("(bss)", out is_folder, out context, out name))
+            uint16 context_id;
+            string name;
+            while (iter.next ("(qs)", out context_id, out name))
             {
-                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (is_folder, context, name, base_path);
+                if (ModelUtils.is_undefined_context_id (context_id))
+                    assert_not_reached ();
+                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
                 ((!) key_model).append (sso);
             }
         }
@@ -186,14 +176,14 @@ private class BrowserView : Grid
     internal void select_row (string selected)
         requires (current_view != ViewType.OBJECT)
     {
-        current_child.select_row (selected, last_context);
+        current_child.select_row (selected, last_context_id);
     }
 
-    internal void prepare_object_view (string full_name, string context, Variant properties, bool is_parent)
+    internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)
     {
-        current_child.prepare_object_view (full_name, context, properties, is_parent);
+        current_child.prepare_object_view (full_name, context_id, properties, is_parent);
         hide_reload_warning ();
-        last_context = context;
+        last_context_id = context_id;
     }
 
     internal void set_path (ViewType type, string path)
@@ -239,9 +229,9 @@ private class BrowserView : Grid
         }
         else if (type == ViewType.OBJECT)
         {
-            if (model.key_exists (path, last_context))
+            if (model.key_exists (path, last_context_id))
             {
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (path, last_context, (uint16) PropertyQuery.HASH));
+                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (path, last_context_id, (uint16) PropertyQuery.HASH));
                 uint properties_hash;
                 if (!properties.lookup (PropertyQuery.HASH, "u", out properties_hash))
                     assert_not_reached ();
@@ -287,9 +277,9 @@ private class BrowserView : Grid
     internal string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
 
     // values changes
-    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        current_child.gkey_value_push (full_name, schema_id, key_value, is_key_default);
+        current_child.gkey_value_push (full_name, context_id, key_value, is_key_default);
     }
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
@@ -303,6 +293,7 @@ private class BrowserView : Grid
 
 private class SortingOptions : Object
 {
+    public SettingsModel model { private get; construct; }
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
     internal bool case_sensitive { get; set; default = false; }
@@ -312,30 +303,32 @@ private class SortingOptions : Object
         settings.bind ("sort-case-sensitive", this, "case-sensitive", GLib.SettingsBindFlags.GET);
     }
 
+    internal SortingOptions (SettingsModel _model)
+    {
+        Object (model: _model);
+    }
+
     internal SettingComparator get_comparator ()
     {
-        if (case_sensitive)
-            return new BySchemaCaseSensitive ();
-        else
-            return new BySchemaCaseInsensitive ();
+        return new SettingComparator (model.get_sorted_context_id (case_sensitive), case_sensitive);
     }
 
-    internal void sort_key_model (GLib.ListStore model)
+    internal void sort_key_model (GLib.ListStore key_model)
     {
         SettingComparator comparator = get_comparator ();
 
-        model.sort ((a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b));
+        key_model.sort ((a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b));
     }
 
-    internal bool is_key_model_sorted (GLib.ListStore model)
+    internal bool is_key_model_sorted (GLib.ListStore key_model)
     {
         SettingComparator comparator = get_comparator ();
 
-        uint last = model.get_n_items () - 1;
+        uint last = key_model.get_n_items () - 1;
         for (int i = 0; i < last; i++)
         {
-            SimpleSettingObject item = (SimpleSettingObject) model.get_item (i);
-            SimpleSettingObject next = (SimpleSettingObject) model.get_item (i + 1);
+            SimpleSettingObject item = (SimpleSettingObject) key_model.get_item (i);
+            SimpleSettingObject next = (SimpleSettingObject) key_model.get_item (i + 1);
             if (comparator.compare (item, next) > 0)
                 return false;
         }
@@ -345,67 +338,73 @@ private class SortingOptions : Object
 
 /* Comparison functions */
 
-private interface SettingComparator : Object
+private class SettingComparator : Object
 {
-    internal abstract int compare (SimpleSettingObject a, SimpleSettingObject b);
+    private uint16 [] sorted_context_id;
+    private bool case_sensitive;
 
-    protected virtual bool sort_directories_first (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
+    internal SettingComparator (uint16 [] _sorted_context_id, bool _case_sensitive)
     {
-        if (a.is_folder && !b.is_folder)
-            return_value = -1;
-        else if (!a.is_folder && b.is_folder)
-            return_value = 1;
-        else
-            return false;
-        return true;
+        sorted_context_id = _sorted_context_id;
+        case_sensitive = _case_sensitive;
     }
 
-    protected virtual bool sort_dconf_keys_second (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
-    {
-        if (a.context == ".dconf" && b.context != ".dconf")
-            return_value = -1;
-        else if (a.context != ".dconf" && b.context == ".dconf")
-            return_value = 1;
-        else
-            return false;
-        return true;
-    }
-
-    protected virtual bool sort_by_schema_thirdly (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
-    {
-        return_value = strcmp (a.context, b.context);
-        return return_value != 0;
-    }
-}
-
-private class BySchemaCaseInsensitive : Object, SettingComparator
-{
     internal int compare (SimpleSettingObject a, SimpleSettingObject b)
     {
-        int return_value = 0;
-        if (sort_directories_first (a, b, ref return_value))
-            return return_value;
-        if (sort_dconf_keys_second (a, b, ref return_value))
-            return return_value;
-        if (sort_by_schema_thirdly (a, b, ref return_value))
-            return return_value;
-
-        return a.casefolded_name.collate (b.casefolded_name);
+        if (a.context_id != b.context_id)
+        {
+            int sort_hint = 0;
+            if (sort_directories_first (a, b, ref sort_hint))
+                return sort_hint;
+            if (sort_dconf_keys_second (a, b, ref sort_hint))
+                return sort_hint;
+            return sort_by_schema_thirdly (a, b, sorted_context_id);
+        }
+        else
+        {
+            if (case_sensitive)
+                return strcmp (a.name, b.name);
+            else
+                return (a.casefolded_name).collate (b.casefolded_name);
+        }
     }
-}
 
-private class BySchemaCaseSensitive : Object, SettingComparator
-{
-    internal int compare (SimpleSettingObject a, SimpleSettingObject b)
+    private static bool sort_directories_first (SimpleSettingObject a, SimpleSettingObject b, ref int sort_hint)
     {
-        int return_value = 0;
-        if (sort_directories_first (a, b, ref return_value))
-            return return_value;
-        if (sort_dconf_keys_second (a, b, ref return_value))
-            return return_value;
-        if (sort_by_schema_thirdly (a, b, ref return_value))
-            return return_value;
+        if (ModelUtils.is_folder_context_id (a.context_id)) // !ModelUtils.is_folder_context_id (b.context_id)
+        {
+            sort_hint = -1;
+            return true;
+        }
+        if (ModelUtils.is_folder_context_id (b.context_id)) // !ModelUtils.is_folder_context_id (a.context_id)
+        {
+            sort_hint = 1;
+            return true;
+        }
+        return false;
+    }
 
-        return strcmp (a.name, b.name);
+    private static bool sort_dconf_keys_second (SimpleSettingObject a, SimpleSettingObject b, ref int sort_hint)
+    {
+        if (ModelUtils.is_dconf_context_id (a.context_id))  // && !ModelUtils.is_dconf_context_id (b.context_id)
+        {
+            sort_hint = -1;
+            return true;
+        }
+        if (ModelUtils.is_dconf_context_id (b.context_id))  // && !ModelUtils.is_dconf_context_id (a.context_id)
+        {
+            sort_hint = 1;
+            return true;
+        }
+        return false;
+    }
+
+    private static int sort_by_schema_thirdly (SimpleSettingObject a, SimpleSettingObject b, uint16 [] sorted_context_id)
+    {
+        uint16 a_place = sorted_context_id [a.context_id - ModelUtils.special_context_id_number];
+        uint16 b_place = sorted_context_id [b.context_id - ModelUtils.special_context_id_number];
+        if (a_place == b_place)
+            assert_not_reached ();
+        return a_place < b_place ? -1 : 1;
     }
 }

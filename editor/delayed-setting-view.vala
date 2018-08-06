@@ -27,12 +27,12 @@ private class DelayedSettingView : Grid
     [GtkChild] private Label planned_value_default;
     [GtkChild] private Button cancel_change_button;
 
-    public string full_name { internal get; internal construct; }
-    public string context   { internal get; internal construct; }
+    public string full_name     { internal get; internal construct; }
+    public uint16 context_id    { internal get; internal construct; }
 
-    internal DelayedSettingView (string name, string _full_name, string _context, bool has_schema_and_is_default, Variant key_value, string? cool_planned_value, string? cool_default_value)
+    internal DelayedSettingView (string name, string _full_name, uint16 _context_id, bool has_schema_and_is_default, Variant key_value, string? cool_planned_value, string? cool_default_value)
     {
-        Object (full_name: _full_name, context: _context);
+        Object (full_name: _full_name, context_id: _context_id);
         Variant variant = new Variant.string (full_name);
         key_name_label.label = name;
         cancel_change_button.set_detailed_action_name ("ui.dismiss-change(" + variant.print (false) + ")");

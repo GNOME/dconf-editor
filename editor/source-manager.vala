@@ -155,7 +155,7 @@ private class SourceManager : Object
         if (user_schemas)
         {
             VariantIter entries_iter;
-            user_paths_variant.get ("a{ss}", out entries_iter);
+            user_paths_variant.@get ("a{ss}", out entries_iter);
             string schema_id;
             string path_spec;
             while (entries_iter.next ("{ss}", out schema_id, out path_spec))

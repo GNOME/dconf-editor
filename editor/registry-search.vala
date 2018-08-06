@@ -77,8 +77,8 @@ private class RegistrySearch : RegistryList
             action_target = ((!) variant).get_string ();
         else
         {
-            string unused;
-            ((!) variant).get ("(ss)", out action_target, out unused);
+            uint16 unused;
+            ((!) variant).@get ("(sq)", out action_target, out unused);
         }
         return action_target;
     }
@@ -211,13 +211,13 @@ private class RegistrySearch : RegistryList
             if (key_model != null)
             {
                 VariantIter iter = new VariantIter ((!) key_model);
-                bool is_folder;
-                string context, name;
-                while (iter.next ("(bss)", out is_folder, out context, out name))
+                uint16 context_id;
+                string name;
+                while (iter.next ("(qs)", out context_id, out name))
                 {
                     if (term in name)
                     {
-                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (is_folder, context, name, current_path);
+                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, current_path);
                         list_model.insert_sorted (sso, compare);
                     }
                 }
@@ -246,16 +246,16 @@ private class RegistrySearch : RegistryList
             if (SettingsModel.get_parent_path (bookmark) == current_path)
                 continue;
 
-            string context = "";
-            string name = "";
-            if (!model.get_object (bookmark, ref context, ref name))
+            uint16 context_id;
+            string name;
+            if (!model.get_object (bookmark, out context_id, out name))
                 continue;
 
             if (term in name)
             {
                 post_bookmarks++;
                 post_folders++;
-                SimpleSettingObject sso = new SimpleSettingObject.from_full_name (SettingsModel.is_folder_path (bookmark), context, name, bookmark);
+                SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, bookmark);
                 list_model.insert (post_bookmarks - 1, sso);
             }
         }
@@ -306,16 +306,16 @@ private class RegistrySearch : RegistryList
                 return true;
 
             VariantIter iter = new VariantIter ((!) next_key_model);
-            bool is_folder;
-            string context, name;
-            while (iter.next ("(bss)", out is_folder, out context, out name))
+            uint16 context_id;
+            string name;
+            while (iter.next ("(qs)", out context_id, out name))
             {
-                if (is_folder)
+                if (ModelUtils.is_folder_context_id (context_id))
                 {
                     string full_name = SettingsModel.recreate_full_name (next, name, true);
                     if (!local_again && term in name)
                     {
-                        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (true, context, name, full_name);
+                        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, full_name);
                         list_model.insert (post_folders++, sso);
                     }
                     search_nodes.push_tail (full_name); // we still search local children
@@ -324,7 +324,7 @@ private class RegistrySearch : RegistryList
                 {
                     if (!local_again && term in name)
                     {
-                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (false, context, name, next);
+                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, next);
                         list_model.append (sso);
                     }
                 }

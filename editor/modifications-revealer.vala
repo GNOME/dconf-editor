@@ -92,38 +92,36 @@ private class ModificationsRevealer : Revealer
         SettingsModel model = modifications_handler.model;
 
         VariantIter iter = new VariantIter ((!) objects);
-        bool is_folder;
-        string context, name;
-        while (iter.next ("(bss)", out is_folder, out context, out name))
+        uint16 context_id;
+        string name;
+        while (iter.next ("(qs)", out context_id, out name))
         {
-            string full_name = SettingsModel.recreate_full_name (base_path, name, is_folder);
-
             // directory
-            if (is_folder)
+            if (ModelUtils.is_folder_context_id (context_id))
             {
+                string full_name = SettingsModel.recreate_full_name (base_path, name, true);
                 if (recursively)
                     _reset_objects (full_name, model.get_children (full_name), true);
             }
             // dconf key
-            else if (context == ".dconf")
+            else if (ModelUtils.is_dconf_context_id (context_id))
             {
+                string full_name = SettingsModel.recreate_full_name (base_path, name, false);
                 if (!model.is_key_ghost (full_name))
-                    modifications_handler.add_delayed_setting (full_name, null, false);
+                    modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
             }
             // gsettings
             else
             {
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) (PropertyQuery.IS_DEFAULT & PropertyQuery.SCHEMA_ID)));
+                string full_name = SettingsModel.recreate_full_name (base_path, name, false);
+                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.IS_DEFAULT)));
                 bool is_key_default;
-                string schema_id;
                 if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
-                    assert_not_reached ();
-                if (!properties.lookup (PropertyQuery.SCHEMA_ID,        "s",    out schema_id))
                     assert_not_reached ();
                 properties.clear ();
 
                 if (!is_key_default)
-                    modifications_handler.add_delayed_setting (full_name, null, true, schema_id);
+                    modifications_handler.add_delayed_setting (full_name, null, context_id);
             }
         }
     }
@@ -174,11 +172,11 @@ private class ModificationsRevealer : Revealer
     private Widget delayed_setting_row_create (Object object)
     {
         string full_name = ((SimpleSettingObject) object).full_name;
-        string context = ((SimpleSettingObject) object).context;
+        uint16 context_id = ((SimpleSettingObject) object).context_id;
 
         SettingsModel model = modifications_handler.model;
 
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
 
         bool has_schema;
         if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
@@ -208,7 +206,7 @@ private class ModificationsRevealer : Revealer
 
         DelayedSettingView view = new DelayedSettingView (((SimpleSettingObject) object).name,
                                                           full_name,
-                                                          context,
+                                                          context_id,
                                                           has_schema_and_is_default,    // at row creation, key is never ghost
                                                           key_value,
                                                           cool_planned_value,
@@ -218,8 +216,8 @@ private class ModificationsRevealer : Revealer
         wrapper.add (view);
         if (modifications_handler.get_current_delay_mode ())
         {
-            Variant variant = new Variant ("(ss)", full_name, context);
-            wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");
+            Variant variant = new Variant ("(sq)", full_name, context_id);
+            wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");
         }
         return wrapper;
     }
@@ -274,11 +272,11 @@ private class ModificationsRevealer : Revealer
     * * Updating values; TODO only works for watched keys...
     \*/
 
-    internal void gkey_value_push (string full_name, string schema_id, Variant key_value, bool is_key_default)
+    internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
         delayed_settings_listbox.foreach ((widget) => {
                 DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
-                if (row.full_name == full_name && row.context == schema_id)
+                if (row.full_name == full_name && row.context_id == context_id)
                     row.update_gsettings_key_current_value (key_value, is_key_default);
             });
     }

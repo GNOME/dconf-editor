@@ -79,7 +79,7 @@ private abstract class ClickableListBoxRow : EventBox
     public bool search_result_mode  { internal get; protected construct; default = false; }
 
     public string full_name         { internal get; protected construct; }
-    public string context           { internal get; protected construct; }
+    public uint16 context_id        { internal get; protected construct; }
 
     /*\
     * * Dismiss popover on window resize
@@ -133,7 +133,7 @@ private class FolderListBoxRow : ClickableListBoxRow
 
     internal FolderListBoxRow (string label, string path, bool search_result_mode)
     {
-        Object (full_name: path, context: ".folder", search_result_mode: search_result_mode);
+        Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
     }
 }
@@ -196,7 +196,7 @@ private class KeyListBoxRow : ClickableListBoxRow
             ((!) boolean_switch).can_focus = false;
             ((!) boolean_switch).valign = Align.CENTER;
             if (has_schema)
-                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('','',true,true))");
+                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',uint16 0,true,true))");
             else
                 ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',true))");
 
@@ -211,7 +211,7 @@ private class KeyListBoxRow : ClickableListBoxRow
 
     internal KeyListBoxRow (bool _has_schema,
                             string _type_string,
-                            string _context,
+                            uint16 _context_id,
                             string summary,
                             bool italic_summary,
                             bool _delay_mode,
@@ -221,7 +221,7 @@ private class KeyListBoxRow : ClickableListBoxRow
     {
         Object (has_schema: _has_schema,
                 type_string: _type_string,
-                context: _context,
+                context_id: _context_id,
                 delay_mode: _delay_mode,
                 key_name: _key_name,
                 full_name: _full_name,
@@ -266,8 +266,8 @@ private class KeyListBoxRow : ClickableListBoxRow
         {
             if (has_schema)
             {
-                variant = new Variant ("(ss)", full_name, context);
-                actionable.set_detailed_action_name ("bro.set-to-default(" + variant.print (false) + ")");
+                variant = new Variant ("(sq)", full_name, context_id);
+                actionable.set_detailed_action_name ("bro.set-to-default(" + variant.print (true) + ")");
             }
             else
             {
@@ -277,16 +277,8 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
         else
         {
-            if (has_schema)
-            {
-                variant = new Variant ("(ssv)", full_name, context, (!) new_value);
-                actionable.set_detailed_action_name ("bro.set-gsettings-key-value(" + variant.print (false) + ")");
-            }
-            else
-            {
-                variant = new Variant ("(sv)", full_name, (!) new_value);
-                actionable.set_detailed_action_name ("bro.set-dconf-key-value(" + variant.print (false) + ")");
-            }
+            variant = new Variant ("(sqv)", full_name, context_id, (!) new_value);
+            actionable.set_detailed_action_name ("bro.set-key-value(" + variant.print (true) + ")");
         }
         Container child = (Container) get_child ();
         child.add (actionable);

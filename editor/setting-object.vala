@@ -17,15 +17,13 @@
 
 private abstract class SettingObject : Object
 {
-    public string context   { internal get; protected construct; }          // TODO make uint8 1/2
-    public string name      { internal get; protected construct; }
-    public string full_name { internal get; protected construct; }
+    public string name          { internal get; protected construct; }
+    public string full_name     { internal get; protected construct; }
 }
 
 private class SimpleSettingObject : Object
 {
-    public bool is_folder           { internal get; internal construct; }
-    public string context           { internal get; internal construct; }   // TODO make uint8 2/2
+    public uint16 context_id        { internal get; internal construct; }
     public string name              { internal get; internal construct; }
     public string full_name         { internal get; internal construct; }
 
@@ -36,15 +34,15 @@ private class SimpleSettingObject : Object
         casefolded_name = name.casefold ();
     }
 
-    internal SimpleSettingObject.from_base_path (bool _is_folder, string _context, string _name, string _base_path)
+    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path)
     {
-        string _full_name = SettingsModel.recreate_full_name (_base_path, _name, _is_folder);
-        Object (is_folder: _is_folder, context: _context, name: _name, full_name: _full_name);
+        string _full_name = SettingsModel.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
+        Object (context_id: _context_id, name: _name, full_name: _full_name);
     }
 
-    internal SimpleSettingObject.from_full_name (bool _is_folder, string _context, string _name, string _full_name)
+    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name)
     {
-        Object (is_folder: _is_folder, context: _context, name: _name, full_name: _full_name);
+        Object (context_id: _context_id, name: _name, full_name: _full_name);
     }
 }
 
@@ -52,7 +50,7 @@ private class Directory : SettingObject
 {
     internal Directory (string _full_name, string _name)
     {
-        Object (context: ".folder", full_name: _full_name, name: _name);
+        Object (full_name: _full_name, name: _name);
     }
 }
 
@@ -287,7 +285,7 @@ private class DConfKey : Key
 {
     internal DConfKey (string full_name, string name, string type_string)
     {
-        Object (context: ".dconf", full_name: full_name, name: name, type_string: type_string);
+        Object (full_name: full_name, name: name, type_string: type_string);
     }
 
     private ulong client_changed_handler = 0;
@@ -343,6 +341,7 @@ private class GSettingsKey : Key
     public string? schema_path      { private get; internal construct; }
     public string summary           { private get; internal construct; }
     public string description       { private get; internal construct; }
+    public string schema_id        { internal get; internal construct; }
     public Variant default_value   { internal get; internal construct; }
     public RangeType range_type    { internal get; internal construct; }
     public Variant range_content   { internal get; internal construct; }
@@ -365,8 +364,8 @@ private class GSettingsKey : Key
             }
 
             if (schema_path == null)
-                return @"$context:$parent_path $name";
-            return @"$context $name";
+                return @"$schema_id:$parent_path $name";
+            return @"$schema_id $name";
         }
     }
 
@@ -378,7 +377,7 @@ private class GSettingsKey : Key
         string? description_nullable = description.locale_to_utf8 (-1, null, null, null);
         description = description_nullable ?? description;
 
-        Object (context: schema_id,
+        Object (schema_id: schema_id,
                 full_name: parent_full_name + name,
                 name: name,
                 settings : settings,
@@ -416,7 +415,7 @@ private class GSettingsKey : Key
         if (all_properties_queried || PropertyQuery.FIXED_SCHEMA    in query)
             variantdict.insert_value (PropertyQuery.FIXED_SCHEMA,               new Variant.boolean (schema_path != null));
         if (all_properties_queried || PropertyQuery.SCHEMA_ID       in query)
-            variantdict.insert_value (PropertyQuery.SCHEMA_ID,                  new Variant.string (context));
+            variantdict.insert_value (PropertyQuery.SCHEMA_ID,                  new Variant.string (schema_id));
         if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
             variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)

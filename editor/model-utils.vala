@@ -137,3 +137,16 @@ private class RegistryVariantDict : Object
         return builder.end ();
     }
 }
+
+namespace ModelUtils
+{
+    internal const uint16 special_context_id_number = 3;
+
+    internal const uint16 undefined_context_id = 0;
+    internal const uint16 folder_context_id    = 1;
+    internal const uint16 dconf_context_id     = 2;
+
+    internal static inline bool is_undefined_context_id (uint16 context_id) { return context_id == undefined_context_id; }
+    internal static inline bool is_folder_context_id (uint16 context_id)    { return context_id == folder_context_id; }
+    internal static inline bool is_dconf_context_id (uint16 context_id)     { return context_id == dconf_context_id; }
+}

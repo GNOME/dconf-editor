@@ -158,8 +158,8 @@ private class Bookmarks : MenuButton
             Bookmark bookmark_row = new Bookmark (bookmark);
             if (SettingsModel.is_key_path (bookmark))
             {
-                Variant variant = new Variant ("(ss)", bookmark, "");
-                bookmark_row.set_detailed_action_name ("ui.open-object(" + variant.print (false) + ")");    // TODO save context
+                Variant variant = new Variant ("(sq)", bookmark, ModelUtils.undefined_context_id);
+                bookmark_row.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");    // TODO save context
             }
             else
             {

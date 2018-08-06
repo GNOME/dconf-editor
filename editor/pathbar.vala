@@ -136,8 +136,8 @@ private class PathBar : Box
                         action_target = ((!) variant).get_string ();
                     else
                     {
-                        string unused;
-                        ((!) variant).get ("(ss)", out action_target, out unused);
+                        uint16 unused;
+                        ((!) variant).@get ("(sq)", out action_target, out unused);
                     }
 
                     if (context.has_class ("active"))
@@ -221,8 +221,8 @@ private class PathBar : Box
         }
         else
         {
-            Variant variant = new Variant ("(ss)", complete_path, "");
-            string _variant = variant.print (false);
+            Variant variant = new Variant ("(sq)", complete_path, ModelUtils.undefined_context_id);
+            string _variant = variant.print (true);
             path_bar_item = new PathBarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
         }
         add (path_bar_item);
