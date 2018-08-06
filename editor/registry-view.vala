@@ -109,6 +109,9 @@ private class RegistryView : RegistryList
             {
                 if (((KeyListBoxRow) row.get_child ()).has_schema)
                 {
+                    if (!modifications_handler.model.key_exists (((KeyListBoxRow) ((!) row).get_child ()).full_name, context_id))
+                        return; // FIXME that happens when reloading a now-empty folder
+
                     RegistryVariantDict properties = new RegistryVariantDict.from_aqv (modifications_handler.model.get_key_properties (((KeyListBoxRow) row.get_child ()).full_name, context_id, (uint16) PropertyQuery.SCHEMA_ID));
                     string schema_id;
                     if (!properties.lookup (PropertyQuery.SCHEMA_ID, "s", out schema_id))
