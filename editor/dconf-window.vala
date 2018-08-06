@@ -542,7 +542,11 @@ private class DConfWindow : ApplicationWindow
             ((ConfigurationEditor) get_application ()).copy (selected_row_text);
         }
         else
+        {
+            if (browser_view.current_view == ViewType.OBJECT)
+                model.copy_action = true;
             ((ConfigurationEditor) get_application ()).copy (current_path);
+        }
     }
 
     private void hide_notification (/* SimpleAction action, Variant? variant */)
@@ -781,7 +785,7 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "c":
-                    if (search_bar.search_mode_enabled)
+                    if (browser_view.current_view != ViewType.FOLDER)
                         model.copy_action = true;
                     else if (focus_is_text_widget)
                         return false;
