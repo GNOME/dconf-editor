@@ -63,15 +63,17 @@ private class BrowserView : Grid
             _modifications_handler = value;
             current_child.modifications_handler = value;
             sorting_options = new SortingOptions (value.model);
-            sorting_options.notify.connect (() => {
-                    if (current_view != ViewType.FOLDER)
-                        return;
-
-                    if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
-                        show_soft_reload_warning ();
-                    // TODO reload search results too
-                });
+            sorting_options.notify ["case-sensitive"].connect (on_case_sensitive_changed);
         }
+    }
+    private void on_case_sensitive_changed ()
+    {
+        if (current_view != ViewType.FOLDER)
+            return;
+
+        if (key_model != null && !sorting_options.is_key_model_sorted ((!) key_model))
+            show_soft_reload_warning ();
+        // TODO reload search results too
     }
 
     construct

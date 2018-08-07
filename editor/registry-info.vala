@@ -266,21 +266,7 @@ private class RegistryInfo : Grid, BrowsableView
         if ( /* has_schema && */ key_conflict == KeyConflict.HARD)
             return;
 
-        SettingsModel model = modifications_handler.model;
-
-        ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((is_valid) => {
-                if (modifications_handler.should_delay_apply (type_code))
-                {
-                    if (!is_valid)
-                        modifications_handler.dismiss_change (full_name);
-                    else
-                        modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), context_id);
-                }
-                else if (has_schema)
-                    model.set_gsettings_key_value (full_name, context_id, key_editor_child.get_variant ());
-                else
-                    model.set_dconf_key_value (full_name, key_editor_child.get_variant ());
-            });
+        ulong value_has_changed_handler = key_editor_child.value_has_changed.connect ((_key_editor_child, is_valid) => on_value_has_changed (modifications_handler, _key_editor_child, full_name, context_id, has_schema, type_code, is_valid));
 
         if (has_schema)
         {
@@ -298,70 +284,15 @@ private class RegistryInfo : Grid, BrowsableView
             bool key_value_is_default = planned_change ? planned_value == null : has_schema_and_is_default;
             custom_value_switch.set_active (key_value_is_default);
 
-            ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => {
-                    if (modifications_handler.should_delay_apply (type_code))
-                    {
-                        if (custom_value_switch.get_active ())
-                            modifications_handler.add_delayed_setting (full_name, null, context_id);
-                        else
-                        {
-                            Variant tmp_variant = modifications_handler.get_key_custom_value (full_name, context_id);
-                            modifications_handler.add_delayed_setting (full_name, tmp_variant, context_id);
-                            key_editor_child.reload (tmp_variant);
-                        }
-                    }
-                    else
-                    {
-                        RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
-                        Variant key_value;
-                        if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
-                            assert_not_reached ();
-                        local_properties.clear ();
-                        if (custom_value_switch.get_active ())
-                        {
-                            model.set_key_to_default (full_name, context_id);
-                            SignalHandler.block (key_editor_child, value_has_changed_handler);
-                            key_editor_child.reload (key_value);
-                            //if (type_code == "<flags>")                      let's try to live without this...
-                            //    key.planned_value = key.value;
-                            SignalHandler.unblock (key_editor_child, value_has_changed_handler);
-                        }
-                        else
-                            model.set_gsettings_key_value (full_name, context_id, key_value); // TODO sets key value with key value... that hurts
-                    }
-                });
-            revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect (() => {
-                    SignalHandler.block (custom_value_switch, switch_active_handler);
-
-                    RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.IS_DEFAULT));
-                    bool is_key_default;
-                    if (!local_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_key_default))
-                        assert_not_reached ();
-                    local_properties.clear ();
-                    custom_value_switch.set_active (is_key_default);
-                    SignalHandler.unblock (custom_value_switch, switch_active_handler);
-                });
+            ulong switch_active_handler = custom_value_switch.notify ["active"].connect (() => on_custom_value_switch_toggled (modifications_handler, custom_value_switch, key_editor_child, value_has_changed_handler, full_name, context_id, type_code)); // TODO get custom_value_switch from the params
+            revealer_reload_1_handler = modifications_handler.leave_delay_mode.connect ((_modifications_handler) => on_revealer_reload_1 (_modifications_handler, custom_value_switch, switch_active_handler, full_name, context_id));
             custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
         }
         else
             erase_button.set_action_target ("s", full_name);
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
-        revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect (() => {
-                if (!has_schema && model.is_key_ghost (full_name))
-                    return;
-                SignalHandler.block (key_editor_child, value_has_changed_handler);
-
-                RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
-                Variant key_value;
-                if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
-                    assert_not_reached ();
-                local_properties.clear ();
-                key_editor_child.reload (key_value);
-                //if (type_code == "<flags>")                      let's try to live without this...
-                //    key.planned_value = key.value;
-                SignalHandler.unblock (key_editor_child, value_has_changed_handler);
-            });
+        revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect ((_modifications_handler) => on_revealer_reload_2 (_modifications_handler, key_editor_child, value_has_changed_handler, full_name, context_id, has_schema));
         add_row_from_widget (_("Custom value"), key_editor_child, type_code);
 
         key_editor_child.destroy.connect (() => {
@@ -421,6 +352,85 @@ private class RegistryInfo : Grid, BrowsableView
             return null;
     }
 
+    private static void on_value_has_changed (ModificationsHandler _modifications_handler, KeyEditorChild key_editor_child, string full_name, uint16 context_id, bool has_schema, string type_code, bool is_valid)
+    {
+        if (_modifications_handler.should_delay_apply (type_code))
+        {
+            if (is_valid)
+                _modifications_handler.add_delayed_setting (full_name, key_editor_child.get_variant (), context_id);
+            else
+                _modifications_handler.dismiss_change (full_name);
+        }
+        else if (has_schema)
+            _modifications_handler.model.set_gsettings_key_value (full_name, context_id, key_editor_child.get_variant ());
+        else
+            _modifications_handler.model.set_dconf_key_value (full_name, key_editor_child.get_variant ());
+    }
+
+    private static void on_custom_value_switch_toggled (ModificationsHandler _modifications_handler, Switch custom_value_switch, KeyEditorChild key_editor_child, ulong value_has_changed_handler, string full_name, uint16 context_id, string type_code)
+    {
+        if (_modifications_handler.should_delay_apply (type_code))
+        {
+            if (custom_value_switch.get_active ())
+                _modifications_handler.add_delayed_setting (full_name, null, context_id);
+            else
+            {
+                Variant tmp_variant = _modifications_handler.get_key_custom_value (full_name, context_id);
+                _modifications_handler.add_delayed_setting (full_name, tmp_variant, context_id);
+                key_editor_child.reload (tmp_variant);
+            }
+        }
+        else
+        {
+            SettingsModel model = _modifications_handler.model;
+            RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
+            Variant key_value;
+            if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
+                assert_not_reached ();
+            local_properties.clear ();
+            if (custom_value_switch.get_active ())
+            {
+                model.set_key_to_default (full_name, context_id);
+                SignalHandler.block (key_editor_child, value_has_changed_handler);
+                key_editor_child.reload (key_value);
+                //if (type_code == "<flags>")                      let's try to live without this...
+                //    key.planned_value = key.value;
+                SignalHandler.unblock (key_editor_child, value_has_changed_handler);
+            }
+            else
+                model.set_gsettings_key_value (full_name, context_id, key_value); // TODO sets key value with key value... that hurts
+        }
+    }
+
+    private static void on_revealer_reload_1 (ModificationsHandler _modifications_handler, Switch custom_value_switch, ulong switch_active_handler, string full_name, uint16 context_id)
+    {
+        SignalHandler.block (custom_value_switch, switch_active_handler);
+
+        RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (_modifications_handler.model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.IS_DEFAULT));
+        bool is_key_default;
+        if (!local_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_key_default))
+            assert_not_reached ();
+        local_properties.clear ();
+        custom_value_switch.set_active (is_key_default);
+        SignalHandler.unblock (custom_value_switch, switch_active_handler);
+    }
+
+    private static void on_revealer_reload_2 (ModificationsHandler _modifications_handler, KeyEditorChild key_editor_child, ulong value_has_changed_handler, string full_name, uint16 context_id, bool has_schema)
+    {
+        if (!has_schema && _modifications_handler.model.is_key_ghost (full_name))
+            return;
+        SignalHandler.block (key_editor_child, value_has_changed_handler);
+
+        RegistryVariantDict local_properties = new RegistryVariantDict.from_aqv (_modifications_handler.model.get_key_properties (full_name, context_id, (uint16) PropertyQuery.KEY_VALUE));
+        Variant key_value;
+        if (!local_properties.lookup (PropertyQuery.KEY_VALUE, "v", out key_value))
+            assert_not_reached ();
+        local_properties.clear ();
+        key_editor_child.reload (key_value);
+        //if (type_code == "<flags>")                      let's try to live without this...
+        //    key.planned_value = key.value;
+        SignalHandler.unblock (key_editor_child, value_has_changed_handler);
+    }
     /*\
     * * Rows creation
     \*/

@@ -208,26 +208,31 @@ private class DConfWindow : ApplicationWindow
         settings.bind ("refresh-settings-schema-source", model, "refresh-source", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         model.finalize_model ();
 
-        model.paths_changed.connect ((_model, modified_path_specs, internal_changes) => {
-                if (current_type == ViewType.SEARCH)
-                {
-                    if (!internal_changes)
-                        reload_search_action.set_enabled (true);
-                }
-                else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
-                    reload_view ();
+        model.paths_changed.connect (on_paths_changed);
+        model.gkey_value_push.connect (propagate_gkey_value_push);
+        model.dkey_value_push.connect (propagate_dkey_value_push);
+    }
+    private void on_paths_changed (SettingsModelCore _model, GenericSet<string> unused, bool internal_changes)
+    {
+        if (current_type == ViewType.SEARCH)
+        {
+            if (!internal_changes)
+                reload_search_action.set_enabled (true);
+        }
+        else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
+            reload_view ();
 
-                pathbar.update_ghosts (((SettingsModel) _model).get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
-            });
-
-        model.gkey_value_push.connect ((_model, full_name, context, key_value, is_key_default) => {
-                browser_view.gkey_value_push (full_name, context, key_value, is_key_default);
-                revealer.gkey_value_push (full_name, context, key_value, is_key_default);
-            });
-        model.dkey_value_push.connect ((_model, full_name, key_value_or_null) => {
-                browser_view.dkey_value_push (full_name, key_value_or_null);
-                revealer.dkey_value_push (full_name, key_value_or_null);
-            });
+        pathbar.update_ghosts (((SettingsModel) _model).get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
+    }
+    private void propagate_gkey_value_push (string full_name, uint16 context, Variant key_value, bool is_key_default)
+    {
+        browser_view.gkey_value_push (full_name, context, key_value, is_key_default);
+        revealer.gkey_value_push     (full_name, context, key_value, is_key_default);
+    }
+    private void propagate_dkey_value_push (string full_name, Variant? key_value_or_null)
+    {
+        browser_view.dkey_value_push (full_name, key_value_or_null);
+        revealer.dkey_value_push     (full_name, key_value_or_null);
     }
 
     /*\

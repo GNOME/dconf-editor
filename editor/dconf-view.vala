@@ -63,16 +63,17 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         action = popover.create_buttons_list (false, delay_mode, has_planned_change, "<enum>", range_content, initial_value);
         popover.set_relative_to (this);
 
-        popover.value_changed.connect ((gvariant) => {
-                if (gvariant == null)   // TODO better (1/3)
-                    assert_not_reached ();
-                reload ((!) gvariant);
-                popover.closed ();
-
-                value_has_changed ();
-            });
+        popover.value_changed.connect (on_popover_value_changed);
         reload (initial_value);
         this.set_popover ((Popover) popover);
+    }
+    private void on_popover_value_changed (ContextPopover _popover, Variant? gvariant)
+        requires (gvariant != null)
+    {
+        reload ((!) gvariant);
+        _popover.closed ();
+
+        value_has_changed ();
     }
 
     internal Variant get_variant ()
@@ -119,14 +120,15 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
 
         popover.create_flags_list (initial_value.get_strv (), all_flags);
         popover.set_relative_to (button);
-        popover.value_changed.connect ((gvariant) => {
-                if (gvariant == null)   // TODO better (2/3)
-                    assert_not_reached ();
-                reload ((!) gvariant);
-                value_has_changed ();
-            });
+        popover.value_changed.connect (on_popover_value_changed);
         reload (initial_value);
         button.set_popover ((Popover) popover);
+    }
+    private void on_popover_value_changed (Popover _popover, Variant? gvariant)
+        requires (gvariant != null)
+    {
+        reload ((!) gvariant);
+        value_has_changed ();
     }
 
     internal void update_flags (string [] active_flags)
@@ -169,16 +171,17 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         action = popover.create_buttons_list (false, delay_mode, has_planned_change, "mb", meaningless_variant_or_null, initial_value);
         popover.set_relative_to (this);
 
-        popover.value_changed.connect ((gvariant) => {
-                if (gvariant == null)   // TODO better (3/3)
-                    assert_not_reached ();
-                reload ((!) gvariant);
-                popover.closed ();
-
-                value_has_changed ();
-            });
+        popover.value_changed.connect (on_popover_value_changed);
         reload (initial_value);
         this.set_popover ((Popover) popover);
+    }
+    private void on_popover_value_changed (Popover _popover, Variant? gvariant)
+        requires (gvariant != null)
+    {
+        reload ((!) gvariant);
+        _popover.closed ();
+
+        value_has_changed ();
     }
 
     internal Variant get_variant ()
@@ -481,20 +484,10 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         text_view.expand = true;
         text_view.wrap_mode = WrapMode.WORD;
         text_view.monospace = true;
-        text_view.key_press_event.connect ((event) => {
-                string keyval_name = (!) (Gdk.keyval_name (event.keyval) ?? "");
-                if ((keyval_name == "Return" || keyval_name == "KP_Enter")
-                && ((event.state & Gdk.ModifierType.MODIFIER_MASK) == 0)
-                && (test_value ()))
-                {
-                    child_activated ();
-                    return true;
-                }
-                return base.key_press_event (event);
-            });
+        text_view.key_press_event.connect (on_key_press_event);
         // https://bugzilla.gnome.org/show_bug.cgi?id=789676
-        text_view.button_press_event.connect_after (() => Gdk.EVENT_STOP);
-        text_view.button_release_event.connect_after (() => Gdk.EVENT_STOP);
+        text_view.button_press_event.connect_after (event_stop);
+        text_view.button_release_event.connect_after (event_stop);
 
         scrolled_window.add (text_view);
         add (scrolled_window);
@@ -526,6 +519,22 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
                 ref_buffer.disconnect (deleted_text_handler);
                 ref_buffer.disconnect (inserted_text_handler);
             });
+    }
+    private bool on_key_press_event (Gdk.EventKey event)
+    {
+        string keyval_name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+        if ((keyval_name == "Return" || keyval_name == "KP_Enter")
+        && ((event.state & Gdk.ModifierType.MODIFIER_MASK) == 0)
+        && (test_value ()))
+        {
+            child_activated ();
+            return Gdk.EVENT_STOP;
+        }
+        return base.key_press_event (event);
+    }
+    private static bool event_stop ()
+    {
+        return Gdk.EVENT_STOP;
     }
 
     private bool test_value ()

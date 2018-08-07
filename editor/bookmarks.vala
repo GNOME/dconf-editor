@@ -38,10 +38,7 @@ private class Bookmarks : MenuButton
 
         settings = new GLib.Settings.with_path (schema_id, schema_path);
 
-        ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (() => {
-                update_bookmarks ();
-                update_icon_and_switch ();
-            });
+        ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (on_bookmarks_changed);
 
         update_bookmarks ();
         ulong clicked_handler = clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
@@ -50,6 +47,12 @@ private class Bookmarks : MenuButton
                 settings.disconnect (bookmarks_changed_handler);
                 disconnect (clicked_handler);
             });
+    }
+
+    private void on_bookmarks_changed ()
+    {
+        update_bookmarks ();
+        update_icon_and_switch ();
     }
 
     /*\

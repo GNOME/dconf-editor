@@ -572,18 +572,20 @@ private abstract class SettingsModelCore : Object
         if (key is GSettingsKey)
         {
             ((GSettingsKey) key).connect_settings ();
-            key.key_value_changed_handler = key.value_changed.connect (() => push_gsettings_key_value ((GSettingsKey) key));
+            key.key_value_changed_handler = key.value_changed.connect (on_gkey_value_changed);
         }
         else if (key is DConfKey)
         {
             ((DConfKey) key).connect_client (client);
-            key.key_value_changed_handler = key.value_changed.connect (() => push_dconf_key_value (key.full_name, client));
+            key.key_value_changed_handler = key.value_changed.connect (on_dkey_value_changed);
         }
         else assert_not_reached ();
 
         watched_keys.append (key);
         saved_keys.insert (key.full_name, key);
     }
+    private void on_gkey_value_changed (Key key) { push_gsettings_key_value ((GSettingsKey) key); }
+    private void on_dkey_value_changed (Key key) { push_dconf_key_value (key.full_name, client); }
 
     private void clean_watched_keys ()
     {

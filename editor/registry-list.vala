@@ -662,16 +662,8 @@ private abstract class RegistryList : Grid, BrowsableView
                 action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content, key_value);
             }
 
-            popover.change_dismissed.connect (() => {
-                    row.destroy_popover ();
-                    row.change_dismissed ();
-                });
-            popover.value_changed.connect ((gvariant) => {
-                    row.hide_right_click_popover ();
-
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (type_string), gvariant)));
-                    row.set_key_value (gvariant);
-                });
+            popover.change_dismissed.connect (() => on_popover_change_dismissed (row));
+            popover.value_changed.connect ((gvariant) => on_popover_value_change (row, gvariant, action));
         }
         else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
         {
@@ -748,15 +740,8 @@ private abstract class RegistryList : Grid, BrowsableView
             GLib.Action action = popover.create_buttons_list (true, delayed_apply_menu, planned_change, row.type_string, null,
                                                               planned_change ? planned_value : key_value);
 
-            popover.change_dismissed.connect (() => {
-                    row.destroy_popover ();
-                    row.change_dismissed ();
-                });
-            popover.value_changed.connect ((gvariant) => {
-                    row.hide_right_click_popover ();
-                    action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (row.type_string), gvariant)));
-                    row.set_key_value (gvariant);
-                });
+            popover.change_dismissed.connect (() => on_popover_change_dismissed (row));
+            popover.value_changed.connect ((gvariant) => on_popover_value_change (row, gvariant, action));
 
             if (!delayed_apply_menu)
             {
@@ -779,5 +764,18 @@ private abstract class RegistryList : Grid, BrowsableView
             }
         }
         return true;
+    }
+
+    private static void on_popover_change_dismissed (KeyListBoxRow row)
+    {
+        row.destroy_popover ();
+        row.change_dismissed ();
+    }
+    private static void on_popover_value_change (KeyListBoxRow row, Variant? gvariant, GLib.Action action)
+    {
+        row.hide_right_click_popover ();
+
+        action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (row.type_string), gvariant)));
+        row.set_key_value (gvariant);
     }
 }
