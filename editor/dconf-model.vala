@@ -15,14 +15,14 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-private class SettingsModel : Object
+private abstract class SettingsModelCore : Object
 {
     private SourceManager source_manager = new SourceManager ();
     internal bool refresh_source { get; set; default = true; }
 
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
-    internal bool copy_action = false;
+    protected bool copy_action = false;
 
     internal bool use_shortpaths { private get; set; default = false; }
 
@@ -31,11 +31,11 @@ private class SettingsModel : Object
 
     private HashTable<string, Key> saved_keys = new HashTable<string, Key> (str_hash, str_equal);
 
-    internal void refresh_relocatable_schema_paths (bool    user_schemas,
-                                                    bool    built_in_schemas,
-                                                    bool    internal_schemas,
-                                                    bool    startup_schemas,
-                                                    Variant user_paths_variant)
+    protected void _refresh_relocatable_schema_paths (bool    user_schemas,
+                                                      bool    built_in_schemas,
+                                                      bool    internal_schemas,
+                                                      bool    startup_schemas,
+                                                      Variant user_paths_variant)
     {
         source_manager.refresh_relocatable_schema_paths (user_schemas,
                                                          built_in_schemas,
@@ -44,12 +44,12 @@ private class SettingsModel : Object
                                                          user_paths_variant);
     }
 
-    internal void add_mapping (string schema, string path)
+    protected void _add_mapping (string schema, string folder_path)
     {
-        source_manager.add_mapping (schema, path);
+        source_manager.add_mapping (schema, folder_path);
     }
 
-    internal void finalize_model ()
+    protected void _finalize_model ()
     {
         source_manager.paths_changed.connect ((modified_path_specs) => {
                 paths_has_changed = true;
@@ -127,7 +127,7 @@ private class SettingsModel : Object
         return key_model;
     }
 
-    internal Variant? get_children (string folder_path, bool update_watch = false)
+    protected Variant? _get_children (string folder_path, bool update_watch)
     {
         if (update_watch)
             clean_watched_keys ();
@@ -192,7 +192,7 @@ private class SettingsModel : Object
         return builder.end ();
     }
 
-    internal bool get_object (string path, out uint16 context_id, out string name)
+    protected bool _get_object (string path, out uint16 context_id, out string name)
     {
         SettingObject? object;
         if (ModelUtils.is_key_path (path))
@@ -212,9 +212,15 @@ private class SettingsModel : Object
         return true;
     }
 
-    internal bool key_exists (string path, uint16 context_id)
+    protected bool _key_exists (string key_path, uint16 key_context_id)
     {
-        Key? key = get_key (path, get_key_context_from_id (context_id));
+        Key? key = get_key (key_path, get_key_context_from_id (key_context_id));
+        return key != null;
+    }
+
+    protected bool _key_exists_2 (string key_path)
+    {
+        Key? key = get_key (key_path, "");
         return key != null;
     }
 
@@ -238,28 +244,23 @@ private class SettingsModel : Object
         return get_key_from_path_and_name (key_model, ModelUtils.get_name (path), context);
     }
 
-    private Key get_specific_key (string full_name, uint16 context_id)
-        requires (!ModelUtils.is_undefined_context_id (context_id))
-        requires (!ModelUtils.is_folder_context_id (context_id))
+    private Key get_specific_key (string key_path, uint16 key_context_id)
     {
-        if (ModelUtils.is_dconf_context_id (context_id))
+        if (ModelUtils.is_dconf_context_id (key_context_id))
         {
-            Key? nullable_key = get_key (full_name, ".dconf");
+            Key? nullable_key = get_key (key_path, ".dconf");
             if (nullable_key == null || !((!) nullable_key is DConfKey))
                 assert_not_reached ();
             return (!) nullable_key;
         }
         else
-            return (Key) get_specific_gsettings_key (full_name, context_id);
+            return (Key) get_specific_gsettings_key (key_path, key_context_id);
     }
 
-    private GSettingsKey get_specific_gsettings_key (string full_name, uint16 context_id)
-        requires (!ModelUtils.is_undefined_context_id (context_id))
-        requires (!ModelUtils.is_folder_context_id (context_id))
-        requires (!ModelUtils.is_dconf_context_id (context_id))
+    private GSettingsKey get_specific_gsettings_key (string key_path, uint16 gkey_context_id)
     {
-        string schema_id = get_schema_id_from_context_id (context_id);
-        Key? key = get_key (full_name, schema_id);
+        string schema_id = get_schema_id_from_gkey_context_id (gkey_context_id);
+        Key? key = get_key (key_path, schema_id);
         if (key == null || !((!) key is GSettingsKey) || ((GSettingsKey) (!) key).schema_id != schema_id)
             assert_not_reached ();
         return (GSettingsKey) (!) key;
@@ -359,8 +360,9 @@ private class SettingsModel : Object
         contexts_hashtable_1.insert (schema_id, context_index);
         contexts_hashtable_2.insert (context_index, schema_id);
 
-        contexts_list.insert_sorted_with_data (context_index, (a, b) => sort_context_ids (a, b));
-
+        contexts_list.insert_sorted_with_data (context_index, (a, b) => sort_context_ids (get_schema_id_from_gkey_context_id (a),
+                                                                                          get_schema_id_from_gkey_context_id (b),
+                                                                                          _case_sensitive));
         return context_index;
     }
 
@@ -371,10 +373,10 @@ private class SettingsModel : Object
     {
         if (ModelUtils.is_dconf_context_id (context_id))
             return ".dconf";
-        return get_schema_id_from_context_id (context_id);
+        return get_schema_id_from_gkey_context_id (context_id);
     }
 
-    private string get_schema_id_from_context_id (uint16 context_id)
+    private string get_schema_id_from_gkey_context_id (uint16 context_id)
         requires (!ModelUtils.is_undefined_context_id (context_id))
         requires (!ModelUtils.is_folder_context_id (context_id))
         requires (!ModelUtils.is_dconf_context_id (context_id))
@@ -386,14 +388,8 @@ private class SettingsModel : Object
         return (!) nullable_schema_id;
     }
 
-    internal uint16 [] get_sorted_context_id (bool case_sensitive)
+    protected uint16 [] _get_sorted_context_id ()
     {
-        if (case_sensitive != _case_sensitive)
-        {
-            _case_sensitive = case_sensitive;
-            contexts_list.sort_with_data ((a, b) => sort_context_ids (a, b));
-        }
-
         uint length = contexts_list.length ();
         uint16 [] contexts_array = new uint16 [length];
         for (uint i = 0; i < length; i++)
@@ -401,18 +397,24 @@ private class SettingsModel : Object
         return contexts_array;
     }
 
-    internal int sort_context_ids (uint16 a, uint16 b)
+    protected void sort_contexts_list (bool case_sensitive)
     {
-        string a_str = get_schema_id_from_context_id (a);
-        string b_str = get_schema_id_from_context_id (b);
+        if (case_sensitive == _case_sensitive)
+            return;
 
-        if (!_case_sensitive)
+        _case_sensitive = case_sensitive;
+        contexts_list.sort_with_data ((a, b) => sort_context_ids (get_schema_id_from_gkey_context_id (a),
+                                                                  get_schema_id_from_gkey_context_id (b),
+                                                                  case_sensitive));
+    }
+    private static int sort_context_ids (string a_str, string b_str, bool case_sensitive)
+    {
+        if (!case_sensitive)
         {
             int insensitive_sort = (a_str.casefold ()).collate (b_str.casefold ());
             if (insensitive_sort != 0)
                 return insensitive_sort;
         }
-
         return strcmp (a_str, b_str);
     }
 
@@ -550,7 +552,7 @@ private class SettingsModel : Object
 
     private GLib.ListStore watched_keys = new GLib.ListStore (typeof (Key));
 
-    internal void keys_value_push ()
+    protected void _keys_value_push ()
     {
         uint position = 0;
         Object? object = watched_keys.get_item (0);
@@ -617,28 +619,20 @@ private class SettingsModel : Object
                          is_key_default (gkey));
     }
 
-    private inline void push_dconf_key_value (string full_name, DConf.Client client)
+    private inline void push_dconf_key_value (string key_path, DConf.Client client)
     {
-        dkey_value_push (full_name,
-                         get_dconf_key_value_or_null (full_name, client));
+        dkey_value_push (key_path,
+                         get_dconf_key_value_or_null (key_path, client));
     }
 
     /*\
     * * Path methods
     \*/
 
-    internal string get_fallback_path (string path)
+    protected string _get_folder_fallback_path (string folder_path)
     {
-        string fallback_path = path;
-        if (ModelUtils.is_key_path (path))
-        {
-            Key? key = get_key (path, "");
-            if (key != null)
-                return path;
-            fallback_path = ModelUtils.get_parent_path (path);
-        }
-
-        Directory? dir = get_directory (fallback_path);
+        string fallback_path = folder_path;
+        Directory? dir = get_directory (folder_path);
         while (dir == null)
         {
             fallback_path = ModelUtils.get_parent_path (fallback_path);
@@ -647,7 +641,7 @@ private class SettingsModel : Object
         return fallback_path;
     }
 
-    internal string get_startup_path_fallback (string path)   // TODO take context and check that also
+    protected string _get_startup_path_fallback (string path)   // TODO take context and check that also
     {
         // folder: let the get_fallback_path method do its usual job if needed
         if (ModelUtils.is_folder_path (path))
@@ -668,7 +662,7 @@ private class SettingsModel : Object
         return path;
     }
 
-    internal uint16 get_fallback_context (string full_name, uint16 context_id, string schema_id = "")
+    protected uint16 _get_fallback_context (string key_path, uint16 context_id, string schema_id)
     {
         string context;
         if (schema_id != "")
@@ -678,9 +672,9 @@ private class SettingsModel : Object
         else
             context = get_key_context_from_id (context_id);
 
-        Key? found_object = get_key (full_name, context);
+        Key? found_object = get_key (key_path, context);
         if (found_object == null && context != "")  // TODO warn about missing context
-            found_object = get_key (full_name, "");
+            found_object = get_key (key_path, "");
 
         if (found_object == null)
             return ModelUtils.undefined_context_id;
@@ -695,9 +689,9 @@ private class SettingsModel : Object
     * * Key value methods
     \*/
 
-    private static Variant get_gsettings_key_value (GSettingsKey key)
+    private static Variant get_gsettings_key_value (GSettingsKey gkey)
     {
-        return key.settings.get_value (key.name);
+        return gkey.settings.get_value (gkey.name);
     }
 
     private static Variant get_dconf_key_value (string full_name, DConf.Client client)
@@ -712,41 +706,46 @@ private class SettingsModel : Object
         return client.read (full_name);
     }
 
-    internal void set_gsettings_key_value (string full_name, uint16 context_id, Variant key_value)
+    protected void _set_gsettings_key_value (string key_path, uint16 gkey_context_id, Variant key_value)
     {
-        string schema_id = get_schema_id_from_context_id (context_id);
+        string schema_id = get_schema_id_from_gkey_context_id (gkey_context_id);
 
-        Key? key = get_key (full_name, schema_id);
+        Key? key = get_key (key_path, schema_id);
         if (key == null)
         {
             warning ("Non-existing key gsettings set-value request.");
-            set_dconf_value (full_name, key_value);
+            set_dconf_value (key_path, key_value);
         }
         else if ((!) key is GSettingsKey)
             ((GSettingsKey) (!) key).settings.set_value (((!) key).name, key_value);
         else if ((!) key is DConfKey)               // should not happen for now
         {
             warning ("Key without schema gsettings set-value request.");
-            set_dconf_value (full_name, key_value);
+            set_dconf_value (key_path, key_value);
             ((!) key).value_changed ();
         }
         else
             assert_not_reached ();
     }
 
-    internal void set_dconf_key_value (string full_name, Variant key_value)
+    protected void _set_dconf_key_value (string full_name, Variant? key_value)
     {
         Key? key = get_key (full_name, "");
         set_dconf_value (full_name, key_value);
 
         if (key == null)
-            warning ("Non-existing key dconf set-value request.");
-        else
         {
-            if (!(((!) key) is DConfKey))
-                warning ("Non-DConfKey key dconf set-value request.");
-            ((Key) (!) key).value_changed ();
+            if (key_value == null)  warning ("Non-existing key erase request.");
+            else                    warning ("Non-existing key dconf set-value request.");
+            return;
         }
+        if (!(((!) key) is DConfKey))
+        {
+            if (key_value == null)  warning ("Non-DConfKey key erase request.");
+            else                    warning ("Non-DConfKey key dconf set-value request.");
+        }
+
+        ((Key) (!) key).value_changed ();
     }
     private void set_dconf_value (string full_name, Variant? key_value)
     {
@@ -760,64 +759,38 @@ private class SettingsModel : Object
         }
     }
 
-    internal void set_key_to_default (string full_name, uint16 context_id)
+    protected void _set_key_to_default (string key_path, uint16 gkey_context_id)
     {
-        GSettingsKey key = get_specific_gsettings_key (full_name, context_id);
-        GLib.Settings settings = key.settings;
-        settings.reset (key.name);
+        GSettingsKey gkey = get_specific_gsettings_key (key_path, gkey_context_id);
+        GLib.Settings settings = gkey.settings;
+        settings.reset (gkey.name);
         if (settings.backend.get_type ().name () == "GDelayedSettingsBackend") // Workaround for https://bugzilla.gnome.org/show_bug.cgi?id=791290
-            settings.backend.changed (full_name, null);
+            settings.backend.changed (key_path, null);
         // Alternative workaround: key.value_changed ();
     }
 
-    internal void erase_key (string full_name)
+    private static inline bool is_key_default (GSettingsKey gkey)
     {
-        Key? key = get_key (full_name, "");
-        set_dconf_value (full_name, null);
-
-        if (key == null)
-            warning ("Non-existing key erase request.");
-        else
-        {
-            if (!(((!) key) is DConfKey))
-                warning ("Non-DConfKey key erase request.");
-            ((Key) (!) key).value_changed ();
-        }
+        return gkey.settings.get_user_value (gkey.name) == null;
     }
 
-    private static inline bool is_key_default (GSettingsKey key)
+    protected bool _key_has_schema (string key_path)
     {
-        return key.settings.get_user_value (key.name) == null;
-    }
-
-    internal bool key_has_schema (string full_name)
-    {
-        if (ModelUtils.is_folder_path (full_name))
-            assert_not_reached ();
-
-        Key? key = get_key (full_name, "");
+        Key? key = get_key (key_path, "");
         return key != null && (!) key is GSettingsKey;
     }
 
-    internal bool is_key_ghost (string full_name)
+    protected bool _is_key_ghost (string key_path)
     {
-        // we're "sure" the key is a DConfKey, but that might have changed since
-        if (key_has_schema (full_name))
-            warning (@"Function is_key_ghost called for path:\n  $full_name\nbut key found there has a schema.");
-
-        return _is_key_ghost (full_name);
-    }
-    private bool _is_key_ghost (string full_name)
-    {
-        return get_dconf_key_value_or_null (full_name, client) == null;
+        return get_dconf_key_value_or_null (key_path, client) == null;
     }
 
-    internal void apply_key_value_changes (HashTable<string, Variant?> changes)
+    protected void _apply_key_value_changes (HashTable<string, Variant?> changes)
     {
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
-        changes.foreach ((key_name, planned_value) => {
-                Key? key = get_key (key_name, "");
+        changes.foreach ((key_path, planned_value) => {
+                Key? key = get_key (key_path, "");
                 if (key == null)
                 {
                     // TODO change value anyway?
@@ -863,12 +836,12 @@ private class SettingsModel : Object
     }
 
     /*\
-    * * Key properties methods
+    * * Key properties
     \*/
 
-    internal Variant get_key_properties (string full_name, uint16 context_id, uint16 _query)
+    protected Variant _get_key_properties (string key_path, uint16 key_context_id, uint16 _query)
     {
-        Key key = get_specific_key (full_name, context_id);
+        Key key = get_specific_key (key_path, key_context_id);
 
         PropertyQuery query = (PropertyQuery) _query;
 
@@ -888,7 +861,7 @@ private class SettingsModel : Object
             if (key is GSettingsKey)
                 variantdict.insert_value (PropertyQuery.KEY_VALUE,                  new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
             else // (key is DConfKey)
-                variantdict.insert_value (PropertyQuery.KEY_VALUE,                  new Variant.variant (get_dconf_key_value (((!) key).full_name, client)));
+                variantdict.insert_value (PropertyQuery.KEY_VALUE,                  new Variant.variant (get_dconf_key_value (key_path, client)));
         }
         if (key is GSettingsKey)
         {
@@ -900,26 +873,210 @@ private class SettingsModel : Object
         return variantdict.end ();
     }
 
-    internal string get_key_copy_text (string full_name, uint16 context_id)
-        requires (!ModelUtils.is_undefined_context_id (context_id))
-        requires (!ModelUtils.is_folder_context_id (context_id))
+    protected string get_gsettings_key_copy_text (string key_path, uint16 gkey_context_id)
     {
-        if (ModelUtils.is_dconf_context_id (context_id))
-            return get_dconf_key_copy_text (full_name, client);
+        GSettingsKey gkey = get_specific_gsettings_key (key_path, gkey_context_id);
+        return _get_gsettings_key_copy_text (gkey);
+    }
+    private static inline string _get_gsettings_key_copy_text (GSettingsKey gkey)
+    {
+        return gkey.descriptor + " " + get_gsettings_key_value (gkey).print (false);
+    }
 
-        GSettingsKey key = get_specific_gsettings_key (full_name, context_id);
-        return get_gsettings_key_copy_text (key);
-    }
-    private static inline string get_gsettings_key_copy_text (GSettingsKey key)
+    protected string get_dconf_key_copy_text (string key_path)
     {
-        return key.descriptor + " " + get_gsettings_key_value (key).print (false);
+        return _get_dconf_key_copy_text (key_path, client);
     }
-    private static inline string get_dconf_key_copy_text (string full_name, DConf.Client client)
+    private static inline string _get_dconf_key_copy_text (string key_path, DConf.Client client)
     {
-        Variant? key_value = get_dconf_key_value_or_null (full_name, client);
+        Variant? key_value = get_dconf_key_value_or_null (key_path, client);
         if (key_value == null)
-            return _("%s (key erased)").printf (full_name);
+            return _("%s (key erased)").printf (key_path);
         else
-            return full_name + " " + ((!) key_value).print (false);
+            return key_path + " " + ((!) key_value).print (false);
+    }
+}
+
+private class SettingsModel : SettingsModelCore
+{
+    /*\
+    * * Init
+    \*/
+
+    internal void refresh_relocatable_schema_paths (bool    user_schemas,
+                                                    bool    built_in_schemas,
+                                                    bool    internal_schemas,
+                                                    bool    startup_schemas,
+                                                    Variant user_paths_variant)
+    {
+        _refresh_relocatable_schema_paths (user_schemas,
+                                           built_in_schemas,
+                                           internal_schemas,
+                                           startup_schemas,
+                                           user_paths_variant);
+    }
+
+    internal void add_mapping (string schema, string folder_path)
+        requires (ModelUtils.is_folder_path (folder_path))
+    {
+        _add_mapping (schema, folder_path);
+    }
+
+    internal void finalize_model ()
+    {
+        _finalize_model ();
+    }
+
+    /*\
+    * * Directories informations
+    \*/
+
+    internal Variant? get_children (string folder_path, bool update_watch = false)
+        requires (ModelUtils.is_folder_path (folder_path))
+    {
+        return _get_children (folder_path, update_watch);
+    }
+
+    internal uint16 [] get_sorted_context_id (bool case_sensitive)
+    {
+        sort_contexts_list (case_sensitive);
+        return _get_sorted_context_id ();
+    }
+
+    internal void keys_value_push ()
+    {
+        _keys_value_push ();
+    }
+
+    /*\
+    * * Weird things
+    \*/
+
+    internal void copy_action_called ()
+    {
+        copy_action = true;
+    }
+
+    internal bool get_object (string path, out uint16 context_id, out string name)
+    {
+        return _get_object (path, out context_id, out name);
+    }
+
+    internal string get_fallback_path (string path)
+    {
+        // folder
+        if (ModelUtils.is_folder_path (path))
+            return _get_folder_fallback_path (path);
+        // key
+        if (_key_exists_2 (path))
+            return path;
+        else
+            return _get_folder_fallback_path (ModelUtils.get_parent_path (path));
+    }
+
+    internal string get_startup_path_fallback (string path)   // TODO take context and check that also
+    {
+        return _get_startup_path_fallback (path);
+    }
+
+    internal uint16 get_fallback_context (string key_path, uint16 context_id, string schema_id = "")
+        requires (ModelUtils.is_key_path (key_path))
+    {
+        return _get_fallback_context (key_path, context_id, schema_id);
+    }
+
+    /*\
+    * * GSettingsKey manipulation
+    \*/
+
+    internal void set_gsettings_key_value (string key_path, uint16 gkey_context_id, Variant key_value)
+        requires (ModelUtils.is_key_path (key_path))
+        requires (!ModelUtils.is_undefined_context_id (gkey_context_id))
+        requires (!ModelUtils.is_folder_context_id (gkey_context_id))
+        requires (!ModelUtils.is_dconf_context_id (gkey_context_id))
+    {
+        _set_gsettings_key_value (key_path, gkey_context_id, key_value);
+    }
+
+    internal void set_key_to_default (string key_path, uint16 gkey_context_id)
+        requires (ModelUtils.is_key_path (key_path))
+        requires (!ModelUtils.is_undefined_context_id (gkey_context_id))
+        requires (!ModelUtils.is_folder_context_id (gkey_context_id))
+        requires (!ModelUtils.is_dconf_context_id (gkey_context_id))
+    {
+        _set_key_to_default (key_path, gkey_context_id);
+    }
+
+    /*\
+    * * DConfKey manipulation
+    \*/
+
+    internal void set_dconf_key_value (string key_path, Variant key_value)
+        requires (ModelUtils.is_key_path (key_path))
+    {
+        _set_dconf_key_value (key_path, key_value);
+    }
+
+    internal void erase_key (string key_path)
+        requires (ModelUtils.is_key_path (key_path))
+    {
+        _set_dconf_key_value (key_path, null);
+    }
+
+    internal void apply_key_value_changes (HashTable<string, Variant?> changes)
+    {
+        _apply_key_value_changes (changes);
+    }
+
+    /*\
+    * * Key existence tests
+    \*/
+
+    internal bool key_exists (string key_path, uint16 key_context_id)
+        requires (ModelUtils.is_key_path (key_path))
+        requires (!ModelUtils.is_undefined_context_id (key_context_id))
+        requires (!ModelUtils.is_folder_context_id (key_context_id))
+    {
+        return _key_exists (key_path, key_context_id); // TODO make ModelUtils.is_dconf_context_id() test here
+    }
+
+    internal bool key_has_schema (string key_path)
+        requires (ModelUtils.is_key_path (key_path))
+    {
+        return _key_has_schema (key_path);
+    }
+
+    internal bool is_key_ghost (string key_path)
+        requires (ModelUtils.is_key_path (key_path))
+    {
+        // we're "sure" the key is a DConfKey, but that might have changed since
+        if (_key_has_schema (key_path))
+            warning (@"Function is_key_ghost called for path:\n  $key_path\nbut key found there has a schema.");
+
+        return _is_key_ghost (key_path);
+    }
+
+    /*\
+    * * Keys properties
+    \*/
+
+    internal Variant get_key_properties (string key_path, uint16 key_context_id, uint16 query)
+        requires (ModelUtils.is_key_path (key_path))
+        requires (!ModelUtils.is_undefined_context_id (key_context_id))
+        requires (!ModelUtils.is_folder_context_id (key_context_id))
+        // PropertyQuery has the same number of values than uint16
+    {
+        return _get_key_properties (key_path, key_context_id, query);
+    }
+
+    internal string get_key_copy_text (string key_path, uint16 key_context_id)
+        requires (ModelUtils.is_key_path (key_path))
+        requires (!ModelUtils.is_undefined_context_id (key_context_id))
+        requires (!ModelUtils.is_folder_context_id (key_context_id))
+    {
+        if (ModelUtils.is_dconf_context_id (key_context_id))
+            return get_dconf_key_copy_text (key_path);
+        else
+            return get_gsettings_key_copy_text (key_path, key_context_id);
     }
 }

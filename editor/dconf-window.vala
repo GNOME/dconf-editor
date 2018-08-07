@@ -217,7 +217,7 @@ private class DConfWindow : ApplicationWindow
                 else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
                     reload_view ();
 
-                pathbar.update_ghosts (_model.get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
+                pathbar.update_ghosts (((SettingsModel) _model).get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
             });
 
         model.gkey_value_push.connect ((_model, full_name, context, key_value, is_key_default) => {
@@ -537,14 +537,14 @@ private class DConfWindow : ApplicationWindow
 
         if (search_bar.search_mode_enabled)
         {
-            model.copy_action = true;
+            model.copy_action_called ();
             string selected_row_text = browser_view.get_copy_path_text () ?? saved_view;
             ((ConfigurationEditor) get_application ()).copy (selected_row_text);
         }
         else
         {
             if (browser_view.current_view == ViewType.OBJECT)
-                model.copy_action = true;
+                model.copy_action_called ();
             ((ConfigurationEditor) get_application ()).copy (current_path);
         }
     }
@@ -786,7 +786,7 @@ private class DConfWindow : ApplicationWindow
 
                 case "c":
                     if (browser_view.current_view != ViewType.FOLDER)
-                        model.copy_action = true;
+                        model.copy_action_called ();
                     else if (focus_is_text_widget)
                         return false;
 

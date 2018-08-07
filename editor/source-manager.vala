@@ -181,9 +181,9 @@ private class SourceManager : Object
         }
     }
 
-    internal void add_mapping (string schema, string path)
+    internal void add_mapping (string schema, string folder_path)
     {
-        add_relocatable_schema_info (startup_relocatable_schema_paths, schema, path);
+        add_relocatable_schema_info (startup_relocatable_schema_paths, schema, folder_path);
     }
 
     private void add_relocatable_schema_info (HashTable<string, GenericSet<string>> map, string schema_id, ...)
