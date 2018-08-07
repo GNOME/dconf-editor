@@ -123,16 +123,16 @@ private abstract class RegistryList : Grid, BrowsableView
         return (int) fallback; // selected row may have been removed or context could be ""
     }
 
-    private void set_delayed_icon (KeyListBoxRow row)
+    private static void set_delayed_icon (ModificationsHandler _modifications_handler, KeyListBoxRow row)
     {
-        SettingsModel model = modifications_handler.model;
+        SettingsModel model = _modifications_handler.model;
         StyleContext context = row.get_style_context ();
-        if (modifications_handler.key_has_planned_change (row.full_name))
+        if (_modifications_handler.key_has_planned_change (row.full_name))
         {
             context.add_class ("delayed");
             if (!model.key_has_schema (row.full_name))
             {
-                if (modifications_handler.get_key_planned_value (row.full_name) == null)
+                if (_modifications_handler.get_key_planned_value (row.full_name) == null)
                     context.add_class ("erase");
                 else
                     context.remove_class ("erase");
@@ -355,8 +355,8 @@ private abstract class RegistryList : Grid, BrowsableView
             KeyListBoxRow key_row = (KeyListBoxRow) row;
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
-            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (() => set_delayed_icon (key_row));
-            set_delayed_icon (key_row);
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect ((_modifications_handler) => set_delayed_icon (_modifications_handler, key_row));
+            set_delayed_icon (modifications_handler, key_row);
             row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
         }
 
