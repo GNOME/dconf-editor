@@ -102,7 +102,8 @@ private class BrowserView : Grid
         { "refresh-folder", refresh_folder },
 
         { "set-key-value",               set_key_value,                 "(sqv)"  },
-        { "set-to-default",              set_to_default,                "(sq)"   },  // see also ui.erase(s)
+        { "set-to-default",              set_to_default,                "(sq)"   },
+        { "delay-erase",                 delay_erase,                   "s"      },  // see also ui.erase(s)
 
         { "toggle-dconf-key-switch",     toggle_dconf_key_switch,       "(sb)"   },
         { "toggle-gsettings-key-switch", toggle_gsettings_key_switch,   "(sqbb)" }
@@ -129,6 +130,16 @@ private class BrowserView : Grid
             modifications_handler.set_gsettings_key_value (full_name, context_id, key_value_request);
         else
             modifications_handler.set_dconf_key_value (full_name, key_value_request);
+    }
+
+    private void delay_erase (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name_or_empty = ((!) path_variant).get_string ();
+        if (full_name_or_empty == "")
+            return;
+        modifications_handler.enter_delay_mode ();
+        modifications_handler.add_delayed_setting (full_name_or_empty, null, ModelUtils.dconf_context_id);
     }
 
     private void set_to_default (SimpleAction action, Variant? path_variant)

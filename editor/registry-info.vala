@@ -42,13 +42,12 @@ private class RegistryInfo : Grid, BrowsableView
     * * Cleaning
     \*/
 
-    private ulong erase_button_handler = 0;
     private ulong revealer_reload_1_handler = 0;
     private ulong revealer_reload_2_handler = 0;
 
     internal void clean ()
     {
-        disconnect_handler (erase_button, ref erase_button_handler);
+        erase_button.set_action_target ("s", "");
         disconnect_handler (modifications_handler, ref revealer_reload_1_handler);
         disconnect_handler (modifications_handler, ref revealer_reload_2_handler);
         properties_list_box.@foreach ((widget) => widget.destroy ());
@@ -56,7 +55,7 @@ private class RegistryInfo : Grid, BrowsableView
 
     private static void disconnect_handler (Object object, ref ulong handler)
     {
-        if (handler == 0)   // erase_button_handler & revealer_reload_1_handler depend of the key's type
+        if (handler == 0)   // revealer_reload_1_handler depends of the key's type
             return;
         object.disconnect (handler);
         handler = 0;
@@ -345,12 +344,7 @@ private class RegistryInfo : Grid, BrowsableView
             custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
         }
         else
-        {
-            erase_button_handler = erase_button.clicked.connect (() => {
-                    modifications_handler.enter_delay_mode ();
-                    modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
-                });
-        }
+            erase_button.set_action_target ("s", full_name);
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect (() => {
