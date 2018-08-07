@@ -17,6 +17,31 @@
 
 using Gtk;
 
+private class SimpleSettingObject : Object
+{
+    public uint16 context_id        { internal get; internal construct; }
+    public string name              { internal get; internal construct; }
+    public string full_name         { internal get; internal construct; }
+
+    public string casefolded_name   { internal get; private construct; }
+
+    construct
+    {
+        casefolded_name = name.casefold ();
+    }
+
+    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path)
+    {
+        string _full_name = SettingsModel.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
+        Object (context_id: _context_id, name: _name, full_name: _full_name);
+    }
+
+    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name)
+    {
+        Object (context_id: _context_id, name: _name, full_name: _full_name);
+    }
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 private class BrowserView : Grid
 {
