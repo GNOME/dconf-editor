@@ -223,10 +223,15 @@ private class SettingsModel : Object
         if (paths_has_changed == false)
         {
             Key? key = saved_keys.lookup (path);
-            if (paths_has_changed && key != null && (context == ""
-                                                  || (context == ".dconf" && (!) key is DConfKey)
-                                                  || ((!) key is GSettingsKey && ((GSettingsKey) (!) key).schema_id == context)))
-                return key;
+            if (key != null)
+            {
+                switch (context)
+                {
+                    case ""      : if ((!) key is GSettingsKey || !_is_key_ghost (path))                          return key; else break;
+                    case ".dconf": if ((!) key is DConfKey     && !_is_key_ghost (path))                          return key; else break;
+                    default      : if ((!) key is GSettingsKey && ((GSettingsKey) (!) key).schema_id == context)  return key; else break;
+                }
+            }
         }
 
         GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
@@ -846,6 +851,10 @@ private class SettingsModel : Object
         if (key_has_schema (full_name))
             warning (@"Function is_key_ghost called for path:\n  $full_name\nbut key found there has a schema.");
 
+        return _is_key_ghost (full_name);
+    }
+    private bool _is_key_ghost (string full_name)
+    {
         return get_dconf_key_value_or_null (full_name, client) == null;
     }
 
