@@ -873,21 +873,21 @@ private abstract class SettingsModelCore : Object
         return variantdict.end ();
     }
 
-    protected string get_gsettings_key_copy_text (string key_path, uint16 gkey_context_id)
+    protected string get_suggested_gsettings_key_copy_text (string key_path, uint16 gkey_context_id)
     {
         GSettingsKey gkey = get_specific_gsettings_key (key_path, gkey_context_id);
-        return _get_gsettings_key_copy_text (gkey);
+        return _get_suggested_gsettings_key_copy_text (gkey);
     }
-    private static inline string _get_gsettings_key_copy_text (GSettingsKey gkey)
+    private static inline string _get_suggested_gsettings_key_copy_text (GSettingsKey gkey)
     {
         return gkey.descriptor + " " + get_gsettings_key_value (gkey).print (false);
     }
 
-    protected string get_dconf_key_copy_text (string key_path)
+    protected string get_suggested_dconf_key_copy_text (string key_path)
     {
-        return _get_dconf_key_copy_text (key_path, client);
+        return _get_suggested_dconf_key_copy_text (key_path, client);
     }
-    private static inline string _get_dconf_key_copy_text (string key_path, DConf.Client client)
+    private static inline string _get_suggested_dconf_key_copy_text (string key_path, DConf.Client client)
     {
         Variant? key_value = get_dconf_key_value_or_null (key_path, client);
         if (key_value == null)
@@ -1069,14 +1069,14 @@ private class SettingsModel : SettingsModelCore
         return _get_key_properties (key_path, key_context_id, query);
     }
 
-    internal string get_key_copy_text (string key_path, uint16 key_context_id)
+    internal string get_suggested_key_copy_text (string key_path, uint16 key_context_id)
         requires (ModelUtils.is_key_path (key_path))
         requires (!ModelUtils.is_undefined_context_id (key_context_id))
         requires (!ModelUtils.is_folder_context_id (key_context_id))
     {
         if (ModelUtils.is_dconf_context_id (key_context_id))
-            return get_dconf_key_copy_text (key_path);
+            return get_suggested_dconf_key_copy_text (key_path);
         else
-            return get_gsettings_key_copy_text (key_path, key_context_id);
+            return get_suggested_gsettings_key_copy_text (key_path, key_context_id);
     }
 }

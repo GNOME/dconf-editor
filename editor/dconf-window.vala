@@ -664,7 +664,7 @@ private class DConfWindow : ApplicationWindow
 
         if (current_type == ViewType.OBJECT)   // mainly here for ensuring menu is never empty
         {
-            Variant variant = new Variant.string (model.get_key_copy_text (current_path, browser_view.last_context_id));
+            Variant variant = new Variant.string (model.get_suggested_key_copy_text (current_path, browser_view.last_context_id));
             menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
         }
         else
@@ -794,7 +794,7 @@ private class DConfWindow : ApplicationWindow
 
                     string? selected_row_text = browser_view.get_copy_text ();
                     if (selected_row_text == null && current_type == ViewType.OBJECT)
-                        selected_row_text = model.get_key_copy_text (current_path, browser_view.last_context_id);
+                        selected_row_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
                     ConfigurationEditor application = (ConfigurationEditor) get_application ();
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;

@@ -182,7 +182,7 @@ private abstract class RegistryList : Grid, BrowsableView
     {
         if (ModelUtils.is_folder_context_id (row.context_id))
             return row.full_name;
-        return modifications_handler.model.get_key_copy_text (row.full_name, row.context_id);
+        return modifications_handler.model.get_suggested_key_copy_text (row.full_name, row.context_id);
     }
     private Variant get_copy_text_variant (ClickableListBoxRow row)
     {
