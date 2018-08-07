@@ -44,7 +44,7 @@ private class Bookmarks : MenuButton
             });
 
         update_bookmarks ();
-        ulong clicked_handler = clicked.connect (() => bookmarked_switch.grab_focus ());
+        ulong clicked_handler = clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
 
         destroy.connect (() => {
                 settings.disconnect (bookmarks_changed_handler);
