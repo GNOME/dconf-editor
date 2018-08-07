@@ -210,14 +210,14 @@ private class KeyListBoxRow : ClickableListBoxRow
     }
 
     internal KeyListBoxRow (bool _has_schema,
-                          string _type_string,
-                          string _context,
-                          string summary,
-                          bool italic_summary,
-                          bool _delay_mode,
-                          string _key_name,
-                          string _full_name,
-                          bool _search_result_mode)
+                            string _type_string,
+                            string _context,
+                            string summary,
+                            bool italic_summary,
+                            bool _delay_mode,
+                            string _key_name,
+                            string _full_name,
+                            bool _search_result_mode)
     {
         Object (has_schema: _has_schema,
                 type_string: _type_string,

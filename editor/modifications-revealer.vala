@@ -79,27 +79,30 @@ private class ModificationsRevealer : Revealer
     * * Reseting objects
     \*/
 
-    internal void reset_objects (Variant? objects, bool recursively)
+    internal void reset_objects (string base_path, Variant? objects, bool recursively)
     {
-        _reset_objects (objects, recursively);
+        _reset_objects (base_path, objects, recursively);
         warn_if_no_planned_changes ();
     }
 
-    private void _reset_objects (Variant? objects, bool recursively)
+    private void _reset_objects (string base_path, Variant? objects, bool recursively)
     {
         if (objects == null)
             return;
         SettingsModel model = modifications_handler.model;
 
         VariantIter iter = new VariantIter ((!) objects);
-        string context, name, full_name;
-        while (iter.next ("(sss)", out context, out name, out full_name))
+        bool is_folder;
+        string context, name;
+        while (iter.next ("(bss)", out is_folder, out context, out name))
         {
+            string full_name = SettingsModel.recreate_full_name (base_path, name, is_folder);
+
             // directory
-            if (SettingsModel.is_folder_path (full_name))
+            if (is_folder)
             {
                 if (recursively)
-                    _reset_objects (model.get_children (full_name), true);
+                    _reset_objects (full_name, model.get_children (full_name), true);
             }
             // dconf key
             else if (context == ".dconf")

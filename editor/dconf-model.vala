@@ -137,35 +137,37 @@ private class SettingsModel : Object
         if (n_items == 0)
             return null;
 
-        VariantBuilder builder = new VariantBuilder (new VariantType ("a(sss)"));
+        VariantBuilder builder = new VariantBuilder (new VariantType ("a(bss)"));
         uint position = 0;
         Object? object = list_store.get_item (0);
         do
         {
+            bool object_is_key = (!) object is Key;
+
             // watch for changes
-            if (update_watch && (!) object is Key)
+            if (update_watch && object_is_key)
                 add_watched_key ((Key) (!) object);
 
             // prepare the array
             SettingObject base_object = (SettingObject) (!) object;
             if (!use_shortpaths)
-                builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name);             // 1/4
+                builder.add ("(bss)", !object_is_key, base_object.context, base_object.name);   // 1/4
             else
             {
                 string base_full_name = base_object.full_name;
                 if (is_key_path (base_full_name))
-                    builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name);         // 2/4
+                    builder.add ("(bss)", false, base_object.context, base_object.name);        // 2/4
                 else
                 {
                     GLib.ListStore child_list_store = get_children_as_liststore (base_full_name);
                     if (child_list_store.get_n_items () != 1)
-                        builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name);     // 3/4
+                        builder.add ("(bss)", true, "", base_object.name);     // 3/4
                     else
                     {
                         SettingObject test_object = (SettingObject) child_list_store.get_item (0);
                         string test_full_name = test_object.full_name;
                         if (is_key_path (test_full_name))
-                            builder.add ("(sss)", base_object.context, base_object.name, base_object.full_name); // 4/4
+                            builder.add ("(bss)", true, "", base_object.name); // 4/4
                         else
                         {
                             string name = base_object.name;
@@ -178,7 +180,7 @@ private class SettingsModel : Object
                                 test_full_name = test_object.full_name;
                             }
                             while (is_folder_path (test_full_name) && child_list_store.get_n_items () == 1);
-                            builder.add ("(sss)", ".folder", name, base_full_name);
+                            builder.add ("(bss)", true, "", name);
                         }
                     }
                 }
@@ -403,6 +405,14 @@ private class SettingsModel : Object
     /*\
     * * Path utilities
     \*/
+
+    internal static inline string recreate_full_name (string base_path, string name, bool is_folder)
+    {
+        if (is_folder)
+            return base_path + name + "/";
+        else
+            return base_path + name;
+    }
 
     internal static inline bool is_key_path (string path)
     {

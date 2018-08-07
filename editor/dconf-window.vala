@@ -495,7 +495,7 @@ private class DConfWindow : ApplicationWindow
     private void reset_path (string path, bool recursively)
     {
         enter_delay_mode ();
-        revealer.reset_objects (model.get_children (path), recursively);
+        revealer.reset_objects (path, model.get_children (path), recursively);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
@@ -561,7 +561,7 @@ private class DConfWindow : ApplicationWindow
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        browser_view.prepare_folder_view (model.get_children (fallback_path, true), current_path.has_prefix (fallback_path));
+        browser_view.prepare_folder_view (fallback_path, model.get_children (fallback_path, true), current_path.has_prefix (fallback_path));
         update_current_path (ViewType.FOLDER, fallback_path);
 
         if (selected_or_empty == "")

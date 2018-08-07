@@ -211,12 +211,13 @@ private class RegistrySearch : RegistryList
             if (key_model != null)
             {
                 VariantIter iter = new VariantIter ((!) key_model);
-                string context, name, full_name;
-                while (iter.next ("(sss)", out context, out name, out full_name))
+                bool is_folder;
+                string context, name;
+                while (iter.next ("(bss)", out is_folder, out context, out name))
                 {
                     if (term in name)
                     {
-                        SimpleSettingObject sso = new SimpleSettingObject (context, name, full_name);
+                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (is_folder, context, name, current_path);
                         list_model.insert_sorted (sso, compare);
                     }
                 }
@@ -254,7 +255,7 @@ private class RegistrySearch : RegistryList
             {
                 post_bookmarks++;
                 post_folders++;
-                SimpleSettingObject sso = new SimpleSettingObject (context, name, bookmark);
+                SimpleSettingObject sso = new SimpleSettingObject.from_full_name (SettingsModel.is_folder_path (bookmark), context, name, bookmark);
                 list_model.insert (post_bookmarks - 1, sso);
             }
         }
@@ -305,14 +306,16 @@ private class RegistrySearch : RegistryList
                 return true;
 
             VariantIter iter = new VariantIter ((!) next_key_model);
-            string context, name, full_name;
-            while (iter.next ("(sss)", out context, out name, out full_name))
+            bool is_folder;
+            string context, name;
+            while (iter.next ("(bss)", out is_folder, out context, out name))
             {
-                if (SettingsModel.is_folder_path (full_name))
+                if (is_folder)
                 {
+                    string full_name = SettingsModel.recreate_full_name (next, name, true);
                     if (!local_again && term in name)
                     {
-                        SimpleSettingObject sso = new SimpleSettingObject (context, name, full_name);
+                        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (true, context, name, full_name);
                         list_model.insert (post_folders++, sso);
                     }
                     search_nodes.push_tail (full_name); // we still search local children
@@ -321,7 +324,7 @@ private class RegistrySearch : RegistryList
                 {
                     if (!local_again && term in name)
                     {
-                        SimpleSettingObject sso = new SimpleSettingObject (context, name, full_name);
+                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (false, context, name, next);
                         list_model.append (sso);
                     }
                 }

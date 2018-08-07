@@ -24,6 +24,7 @@ private abstract class SettingObject : Object
 
 private class SimpleSettingObject : Object
 {
+    public bool is_folder           { internal get; internal construct; }
     public string context           { internal get; internal construct; }   // TODO make uint8 2/2
     public string name              { internal get; internal construct; }
     public string full_name         { internal get; internal construct; }
@@ -35,9 +36,15 @@ private class SimpleSettingObject : Object
         casefolded_name = name.casefold ();
     }
 
-    internal SimpleSettingObject (string _context, string _name, string _full_name)
+    internal SimpleSettingObject.from_base_path (bool _is_folder, string _context, string _name, string _base_path)
     {
-        Object (context: _context, name: _name, full_name: _full_name);
+        string _full_name = SettingsModel.recreate_full_name (_base_path, _name, _is_folder);
+        Object (is_folder: _is_folder, context: _context, name: _name, full_name: _full_name);
+    }
+
+    internal SimpleSettingObject.from_full_name (bool _is_folder, string _context, string _name, string _full_name)
+    {
+        Object (is_folder: _is_folder, context: _context, name: _name, full_name: _full_name);
     }
 }
 

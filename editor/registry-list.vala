@@ -113,7 +113,7 @@ private abstract class RegistryList : Grid, BrowsableView
             SimpleSettingObject object = (SimpleSettingObject) list_model.get_object (position);
             if (object.full_name == selected)
             {
-                if (SettingsModel.is_folder_path (object.full_name)
+                if (object.is_folder
                  || object.context == context)
                     return (int) position;
                 fallback = position;
@@ -274,7 +274,7 @@ private abstract class RegistryList : Grid, BrowsableView
             assert_not_reached ();
         bool search_mode_non_local_result = search_mode && SettingsModel.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
-        if (SettingsModel.is_folder_path (full_name))
+        if (setting_object.is_folder)
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
         }
@@ -282,7 +282,7 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             SettingsModel model = modifications_handler.model;
 
-            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (setting_object.full_name,
+            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name,
                                                                                                          setting_object.context,
                                                                                                          (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT)));
             string key_name, type_code;

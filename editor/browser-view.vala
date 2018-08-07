@@ -163,16 +163,17 @@ private class BrowserView : Grid
     * * Views
     \*/
 
-    internal void prepare_folder_view (Variant? children, bool is_ancestor)
+    internal void prepare_folder_view (string base_path, Variant? children, bool is_ancestor)
     {
         key_model = new GLib.ListStore (typeof (SimpleSettingObject));
         if (children != null)
         {
             VariantIter iter = new VariantIter ((!) children);
-            string context, name, full_name;
-            while (iter.next ("(sss)", out context, out name, out full_name))
+            bool is_folder;
+            string context, name;
+            while (iter.next ("(bss)", out is_folder, out context, out name))
             {
-                SimpleSettingObject sso = new SimpleSettingObject (context, name, full_name);
+                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (is_folder, context, name, base_path);
                 ((!) key_model).append (sso);
             }
         }
@@ -350,9 +351,9 @@ private interface SettingComparator : Object
 
     protected virtual bool sort_directories_first (SimpleSettingObject a, SimpleSettingObject b, ref int return_value)
     {
-        if (SettingsModel.is_folder_path (a.full_name) && SettingsModel.is_key_path (b.full_name))
+        if (a.is_folder && !b.is_folder)
             return_value = -1;
-        else if (SettingsModel.is_key_path (a.full_name) && SettingsModel.is_folder_path (b.full_name))
+        else if (!a.is_folder && b.is_folder)
             return_value = 1;
         else
             return false;

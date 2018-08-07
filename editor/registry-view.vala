@@ -50,8 +50,9 @@ private class RegistryView : RegistryList
         bool [] skip = new bool [n_items];
         for (uint i = 0; i < n_items; i++)
             skip [i] = false;
-        string context, name, full_name;
-        while (iter.next ("(sss)", out context, out name, out full_name))
+        bool is_folder;
+        string context, name;
+        while (iter.next ("(bss)", out is_folder, out context, out name))
         {
             bool found = false;
             for (uint i = 0; i < list_model.get_n_items (); i++)
@@ -63,7 +64,9 @@ private class RegistryView : RegistryList
                 if (setting_object == null)
                     assert_not_reached ();
 
-                if (((!) setting_object).full_name != full_name)
+                if (((!) setting_object).is_folder != is_folder)
+                    continue;
+                if (((!) setting_object).name != name)
                     continue;
                 if (((!) setting_object).context != context)
                     continue;

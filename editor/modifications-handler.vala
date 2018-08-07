@@ -228,14 +228,16 @@ private class ModificationsHandler : Object
         keys_awaiting_hashtable.@foreach ((key_path, planned_value) => {
                 if (dconf_changes_set.contains (key_path))
                     delayed_settings_list.append (
-                        new SimpleSettingObject (".dconf",
-                                                 key_path.slice (key_path.last_index_of_char ('/'), key_path.length),
-                                                 key_path));
+                        new SimpleSettingObject.from_full_name (false,
+                                                                ".dconf",
+                                                                key_path.slice (key_path.last_index_of_char ('/') + 1, key_path.length),
+                                                                key_path));
                 else if (gsettings_changes_set.contains (key_path))
                     delayed_settings_list.append (
-                        new SimpleSettingObject (gsettings_changes_set.lookup (key_path),
-                                                 key_path.slice (key_path.last_index_of_char ('/'), key_path.length),
-                                                 key_path));
+                        new SimpleSettingObject.from_full_name (false,
+                                                                gsettings_changes_set.lookup (key_path),
+                                                                key_path.slice (key_path.last_index_of_char ('/') + 1, key_path.length),
+                                                                key_path));
                 else
                     assert_not_reached ();
             });
