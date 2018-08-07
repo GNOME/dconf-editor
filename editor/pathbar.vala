@@ -152,7 +152,10 @@ private class PathBar : Box
                             item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
                             item.set_action_name ("ui.empty");
                         }
-                        context.remove_class ("inexistent");
+                        if (non_ghost_path.has_prefix (action_target))
+                            context.remove_class ("inexistent");
+                        else
+                            context.add_class ("inexistent");
                     }
                     else if (non_ghost_path.has_prefix (action_target))
                     {
@@ -299,7 +302,7 @@ private class PathBarItem : Button
     [GtkCallback]
     private void update_cursor ()
     {
-        if (get_style_context ().has_class ("inexistent"))
+        if (get_style_context ().has_class ("inexistent") && !get_style_context ().has_class ("active"))
             return;
 
         if (cursor_type != CursorType.CONTEXT)

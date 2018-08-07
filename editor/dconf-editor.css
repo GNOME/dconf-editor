@@ -234,18 +234,20 @@
   border-bottom-color:alpha(currentColor,0.5);
 }
 
-.pathbar          > button.active       > .item,
-.pathbar          > button.active:hover > .item {
+.pathbar          > button.active                  > .item,
+.pathbar          > button.active:hover            > .item,
+.pathbar          > button.active.inexistent       > .item,
+.pathbar          > button.active.inexistent:hover > .item {
   border-bottom-color:@theme_selected_bg_color;
 }
 
 /* inexistent items */
 .pathbar > label,
-.pathbar > button.inexistent > label.item {
+.pathbar > button.inexistent:not(.active) > label.item {
   color:@insensitive_fg_color;
 }
 
-.pathbar > button.inexistent:hover > label.item {
+.pathbar > button.inexistent:not(.active):hover > label.item {
   border-bottom-color:transparent;
 }
 
@@ -254,13 +256,17 @@
   color:@insensitive_fg_color;
 }
 
-.pathbar.greyed-pathbar          > button.active       > .item,
-.pathbar.greyed-pathbar          > button.active:hover > .item {
+.pathbar.greyed-pathbar          > button.active                  > .item,
+.pathbar.greyed-pathbar          > button.active:hover            > .item,
+.pathbar.greyed-pathbar          > button.active.inexistent       > .item,
+.pathbar.greyed-pathbar          > button.active.inexistent:hover > .item {
   border-bottom-color:alpha(currentColor,0.6);
 }
 
-.pathbar.greyed-pathbar:backdrop > button.active       > .item,
-.pathbar.greyed-pathbar:backdrop > button.active:hover > .item {
+.pathbar.greyed-pathbar:backdrop > button.active                  > .item,
+.pathbar.greyed-pathbar:backdrop > button.active:hover            > .item,
+.pathbar.greyed-pathbar:backdrop > button.active.inexistent       > .item,
+.pathbar.greyed-pathbar:backdrop > button.active.inexistent:hover > .item {
   border-bottom-color:alpha(currentColor,0.4);
 }
 
