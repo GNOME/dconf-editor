@@ -272,7 +272,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (search_mode && current_path_if_search_mode == null)
             assert_not_reached ();
-        bool search_mode_non_local_result = search_mode && SettingsModel.get_parent_path (full_name) != (!) current_path_if_search_mode;
+        bool search_mode_non_local_result = search_mode && ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
         if (ModelUtils.is_folder_context_id (setting_object.context_id))
         {

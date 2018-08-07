@@ -32,7 +32,7 @@ private class SimpleSettingObject : Object
 
     internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path)
     {
-        string _full_name = SettingsModel.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
+        string _full_name = ModelUtils.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
         Object (context_id: _context_id, name: _name, full_name: _full_name);
     }
 

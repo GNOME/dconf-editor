@@ -156,7 +156,7 @@ private class Bookmarks : MenuButton
             unduplicated_bookmarks += bookmark;
 
             Bookmark bookmark_row = new Bookmark (bookmark);
-            if (SettingsModel.is_key_path (bookmark))
+            if (ModelUtils.is_key_path (bookmark))
             {
                 Variant variant = new Variant ("(sq)", bookmark, ModelUtils.undefined_context_id);
                 bookmark_row.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");    // TODO save context

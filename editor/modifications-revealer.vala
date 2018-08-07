@@ -99,21 +99,21 @@ private class ModificationsRevealer : Revealer
             // directory
             if (ModelUtils.is_folder_context_id (context_id))
             {
-                string full_name = SettingsModel.recreate_full_name (base_path, name, true);
+                string full_name = ModelUtils.recreate_full_name (base_path, name, true);
                 if (recursively)
                     _reset_objects (full_name, model.get_children (full_name), true);
             }
             // dconf key
             else if (ModelUtils.is_dconf_context_id (context_id))
             {
-                string full_name = SettingsModel.recreate_full_name (base_path, name, false);
+                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
                 if (!model.is_key_ghost (full_name))
                     modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
             }
             // gsettings
             else
             {
-                string full_name = SettingsModel.recreate_full_name (base_path, name, false);
+                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
                 RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.IS_DEFAULT)));
                 bool is_key_default;
                 if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
@@ -232,7 +232,7 @@ private class ModificationsRevealer : Revealer
         {
             string before_key_name = ((DelayedSettingView) ((!) before).get_child ()).full_name;
 
-            if (SettingsModel.get_parent_path (row_key_name) != SettingsModel.get_parent_path (before_key_name))
+            if (ModelUtils.get_parent_path (row_key_name) != ModelUtils.get_parent_path (before_key_name))
                 add_location_header = true;
         }
 
@@ -242,7 +242,7 @@ private class ModificationsRevealer : Revealer
             location_header.show ();
             location_header.orientation = Orientation.VERTICAL;
 
-            Label location_header_label = new Label (SettingsModel.get_parent_path (row_key_name));
+            Label location_header_label = new Label (ModelUtils.get_parent_path (row_key_name));
             location_header_label.show ();
             location_header_label.hexpand = true;
             location_header_label.halign = Align.START;

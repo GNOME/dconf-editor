@@ -77,8 +77,8 @@ private class SettingsModel : Object
                 foreach (string change in changes)
                 {
                     string item_path = prefix + change;
-                    if (is_key_path (item_path))
-                        modified_path_specs.add (get_parent_path (item_path));
+                    if (ModelUtils.is_key_path (item_path))
+                        modified_path_specs.add (ModelUtils.get_parent_path (item_path));
                     else
                         modified_path_specs.add (item_path);
                 }
@@ -107,7 +107,7 @@ private class SettingsModel : Object
         uint subpaths_count = 0;
         source_manager.cached_schemas.get_content_count (path, out schemas_count, out subpaths_count);
         if (schemas_count + subpaths_count > 0 || client.list (path).length > 0)
-            return new Directory (path, get_name (path));
+            return new Directory (path, ModelUtils.get_name (path));
         return null;
     }
 
@@ -164,7 +164,7 @@ private class SettingsModel : Object
                     {
                         SettingObject test_object = (SettingObject) child_list_store.get_item (0);
                         string test_full_name = test_object.full_name;
-                        if (is_key_path (test_full_name))
+                        if (ModelUtils.is_key_path (test_full_name))
                             builder.add ("(qs)", ModelUtils.folder_context_id, base_object.name);
                         else
                         {
@@ -177,7 +177,7 @@ private class SettingsModel : Object
                                 test_object = (SettingObject) child_list_store.get_item (0);
                                 test_full_name = test_object.full_name;
                             }
-                            while (is_folder_path (test_full_name) && child_list_store.get_n_items () == 1);
+                            while (ModelUtils.is_folder_path (test_full_name) && child_list_store.get_n_items () == 1);
                             builder.add ("(qs)", ModelUtils.folder_context_id, name);
                         }
                     }
@@ -195,7 +195,7 @@ private class SettingsModel : Object
     internal bool get_object (string path, out uint16 context_id, out string name)
     {
         SettingObject? object;
-        if (is_key_path (path))
+        if (ModelUtils.is_key_path (path))
             object = (SettingObject?) get_key (path, "");
         else
             object = (SettingObject?) get_directory (path);
@@ -234,8 +234,8 @@ private class SettingsModel : Object
             }
         }
 
-        GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
-        return get_key_from_path_and_name (key_model, get_name (path), context);
+        GLib.ListStore key_model = get_children_as_liststore (ModelUtils.get_parent_path (path));
+        return get_key_from_path_and_name (key_model, ModelUtils.get_name (path), context);
     }
 
     private Key get_specific_key (string full_name, uint16 context_id)
@@ -542,52 +542,6 @@ private class SettingsModel : Object
     }
 
     /*\
-    * * Path utilities
-    \*/
-
-    internal static inline string recreate_full_name (string base_path, string name, bool is_folder)
-    {
-        if (is_folder)
-            return base_path + name + "/";
-        else
-            return base_path + name;
-    }
-
-    internal static inline bool is_key_path (string path)
-    {
-        return !path.has_suffix ("/");
-    }
-
-    internal static inline bool is_folder_path (string path)
-    {
-        return path.has_suffix ("/");
-    }
-
-    internal static string get_base_path (string path)
-    {
-        if (path.length <= 1)
-            return "/";
-        return path.slice (0, path.last_index_of_char ('/') + 1);
-    }
-
-    internal static string get_name (string path)
-    {
-        if (path.length <= 1)
-            return "/";
-        if (is_key_path (path))
-            return path [path.last_index_of_char ('/') + 1 : path.length];
-        string tmp = path [0:-1];
-        return tmp [tmp.last_index_of_char ('/') + 1 : tmp.length];
-    }
-
-    internal static string get_parent_path (string path)
-    {
-        if (path.length <= 1)
-            return "/";
-        return get_base_path (is_key_path (path) ? path : path [0:-1]);
-    }
-
-    /*\
     * * Watched keys
     \*/
 
@@ -676,18 +630,18 @@ private class SettingsModel : Object
     internal string get_fallback_path (string path)
     {
         string fallback_path = path;
-        if (is_key_path (path))
+        if (ModelUtils.is_key_path (path))
         {
             Key? key = get_key (path, "");
             if (key != null)
                 return path;
-            fallback_path = get_parent_path (path);
+            fallback_path = ModelUtils.get_parent_path (path);
         }
 
         Directory? dir = get_directory (fallback_path);
         while (dir == null)
         {
-            fallback_path = get_parent_path (fallback_path);
+            fallback_path = ModelUtils.get_parent_path (fallback_path);
             dir = get_directory (fallback_path);
         }
         return fallback_path;
@@ -696,12 +650,12 @@ private class SettingsModel : Object
     internal string get_startup_path_fallback (string path)   // TODO take context and check that also
     {
         // folder: let the get_fallback_path method do its usual job if needed
-        if (is_folder_path (path))
+        if (ModelUtils.is_folder_path (path))
             return path;
 
         // key: return if exists
-        GLib.ListStore key_model = get_children_as_liststore (get_parent_path (path));
-        Key? key = get_key_from_path_and_name (key_model, get_name (path));
+        GLib.ListStore key_model = get_children_as_liststore (ModelUtils.get_parent_path (path));
+        Key? key = get_key_from_path_and_name (key_model, ModelUtils.get_name (path));
         if (key != null)
             return path;
 
@@ -838,7 +792,7 @@ private class SettingsModel : Object
 
     internal bool key_has_schema (string full_name)
     {
-        if (is_folder_path (full_name))
+        if (ModelUtils.is_folder_path (full_name))
             assert_not_reached ();
 
         Key? key = get_key (full_name, "");

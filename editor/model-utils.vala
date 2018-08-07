@@ -149,4 +149,50 @@ namespace ModelUtils
     internal static inline bool is_undefined_context_id (uint16 context_id) { return context_id == undefined_context_id; }
     internal static inline bool is_folder_context_id (uint16 context_id)    { return context_id == folder_context_id; }
     internal static inline bool is_dconf_context_id (uint16 context_id)     { return context_id == dconf_context_id; }
+
+    /*\
+    * * Path utilities
+    \*/
+
+    internal static inline bool is_key_path (string path)
+    {
+        return !path.has_suffix ("/");
+    }
+
+    internal static inline bool is_folder_path (string path)
+    {
+        return path.has_suffix ("/");
+    }
+
+    internal static string get_parent_path (string path)
+    {
+        if (path.length <= 1)
+            return "/";
+        return get_base_path (is_key_path (path) ? path : path [0:-1]);
+    }
+
+    internal static string get_base_path (string path)
+    {
+        if (path.length <= 1)
+            return "/";
+        return path.slice (0, path.last_index_of_char ('/') + 1);
+    }
+
+    internal static string get_name (string path)
+    {
+        if (path.length <= 1)
+            return "/";
+        if (is_key_path (path))
+            return path [path.last_index_of_char ('/') + 1 : path.length];
+        string tmp = path [0:-1];
+        return tmp [tmp.last_index_of_char ('/') + 1 : tmp.length];
+    }
+
+    internal static inline string recreate_full_name (string base_path, string name, bool is_folder)
+    {
+        if (is_folder)
+            return base_path + name + "/";
+        else
+            return base_path + name;
+    }
 }

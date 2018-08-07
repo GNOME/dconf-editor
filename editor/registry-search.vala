@@ -139,7 +139,7 @@ private class RegistrySearch : RegistryList
             post_local = -1;
             post_folders = -1;
 
-            local_search (model, sorting_options, SettingsModel.get_base_path ((!) current_path_if_search_mode), term);
+            local_search (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term);
             bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks);
             key_list_box.bind_model (list_model, new_list_box_row);
 
@@ -205,7 +205,7 @@ private class RegistrySearch : RegistryList
         SettingComparator comparator = sorting_options.get_comparator ();
         GLib.CompareDataFunc compare = (a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b);
 
-        if (SettingsModel.is_folder_path (current_path))
+        if (ModelUtils.is_folder_path (current_path))
         {
             Variant? key_model = model.get_children (current_path);
             if (key_model != null)
@@ -243,7 +243,7 @@ private class RegistrySearch : RegistryList
 
             if (bookmark == current_path)
                 continue;
-            if (SettingsModel.get_parent_path (bookmark) == current_path)
+            if (ModelUtils.get_parent_path (bookmark) == current_path)
                 continue;
 
             uint16 context_id;
@@ -312,7 +312,7 @@ private class RegistrySearch : RegistryList
             {
                 if (ModelUtils.is_folder_context_id (context_id))
                 {
-                    string full_name = SettingsModel.recreate_full_name (next, name, true);
+                    string full_name = ModelUtils.recreate_full_name (next, name, true);
                     if (!local_again && term in name)
                     {
                         SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, full_name);

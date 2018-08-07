@@ -168,7 +168,7 @@ private class DConfWindow : ApplicationWindow
             first_path = "/";
 
         string startup_path = model.get_startup_path_fallback ((!) first_path);
-        if (SettingsModel.is_folder_path (startup_path))
+        if (ModelUtils.is_folder_path (startup_path))
             request_folder (startup_path);
         else if (schema != null)
             request_object (startup_path, ModelUtils.undefined_context_id, true, (!) schema);
@@ -462,7 +462,7 @@ private class DConfWindow : ApplicationWindow
         requires (path_variant != null)
     {
         string full_name = ((!) path_variant).get_string ();
-        request_folder (SettingsModel.get_parent_path (full_name), full_name);
+        request_folder (ModelUtils.get_parent_path (full_name), full_name);
     }
 
     private void reload_folder (/* SimpleAction action, Variant? path_variant */)
@@ -584,19 +584,19 @@ private class DConfWindow : ApplicationWindow
         {
             if (notify_missing)
             {
-                if (SettingsModel.is_key_path (full_name))
+                if (ModelUtils.is_key_path (full_name))
                     cannot_find_key (full_name);
                 else
                     cannot_find_folder (full_name);
             }
-            request_folder (SettingsModel.get_parent_path (full_name), full_name, false);
+            request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
             pathbar.update_ghosts (model.get_fallback_path (pathbar.complete_path), false);
         }
         else
         {
             browser_view.prepare_object_view (full_name, context_id,
                                               model.get_key_properties (full_name, context_id, 0),
-                                              current_path == SettingsModel.get_parent_path (full_name));
+                                              current_path == ModelUtils.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
@@ -962,7 +962,7 @@ private class DConfWindow : ApplicationWindow
         if (shift)
             request_folder ("/");
         else
-            request_folder (SettingsModel.get_parent_path (current_path), current_path.dup ());
+            request_folder (ModelUtils.get_parent_path (current_path), current_path.dup ());
     }
     private void go_forward (bool shift)
     {
@@ -977,7 +977,7 @@ private class DConfWindow : ApplicationWindow
 
         if (shift)
         {
-            if (SettingsModel.is_key_path (complete_path))
+            if (ModelUtils.is_key_path (complete_path))
                 request_object (complete_path);
             else
                 request_folder (complete_path);
@@ -987,7 +987,7 @@ private class DConfWindow : ApplicationWindow
         int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
         if (index_of_last_slash != -1)
             request_folder (complete_path.slice (0, index_of_last_slash + 1));
-        else if (SettingsModel.is_key_path (complete_path))
+        else if (ModelUtils.is_key_path (complete_path))
             request_object (complete_path);
         else
             request_folder (complete_path);
