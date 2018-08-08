@@ -34,19 +34,23 @@ private abstract class Key : SettingObject
     internal string type_string { get; protected set; default = "*"; }
 
     internal uint key_hash { internal get; private set; default = 0; }
-    private Variant? all_fixed_properties = null;
-    protected abstract Variant create_fixed_properties (PropertyQuery query);
-    internal Variant get_fixed_properties (PropertyQuery query)
+    internal Variant? all_fixed_properties { internal get; private set; default = null; }
+    internal static void generate_key_fixed_properties (Key key)
+        requires (key.key_hash == 0)
+        requires (key.all_fixed_properties == null)
     {
-        if (query != 0)
-            return create_fixed_properties (query);
-
-        if (all_fixed_properties == null)
-        {
-            all_fixed_properties = create_fixed_properties (0);
-            key_hash = ((!) all_fixed_properties).get_data_as_bytes ().hash ();
-        }
-        return (!) all_fixed_properties;
+        RegistryVariantDict variantdict = new RegistryVariantDict ();
+        get_key_fixed_properties (key, 0, ref variantdict);
+        key.all_fixed_properties = variantdict.end ();
+        key.key_hash = ((!) key.all_fixed_properties).get_data_as_bytes ().hash ();
+    }
+    internal static void get_key_fixed_properties (Key key, PropertyQuery query, ref RegistryVariantDict variantdict)
+    {
+        if (key is DConfKey)
+            DConfKey._get_key_fixed_properties ((DConfKey) key, query, ref variantdict);
+        else if (key is GSettingsKey)
+            GSettingsKey._get_key_fixed_properties ((GSettingsKey) key, query, ref variantdict);
+        else assert_not_reached ();
     }
 
     internal signal void value_changed ();
@@ -283,29 +287,25 @@ private class DConfKey : Key
         client_changed_handler = 0;
     }
 
-    protected override Variant create_fixed_properties (PropertyQuery query)
+    internal static void _get_key_fixed_properties (DConfKey dkey, PropertyQuery query, ref RegistryVariantDict variantdict)
     {
         bool all_properties_queried = query == 0;
-
-        // TODO add VariantBuilder add_parsed () function in vala/glib-2.0.vapi line ~5490
-        RegistryVariantDict variantdict = new RegistryVariantDict ();
 
         if (all_properties_queried || PropertyQuery.HAS_SCHEMA      in query)
             variantdict.insert_value (PropertyQuery.HAS_SCHEMA,                 new Variant.boolean (false));
         if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
-            variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
+            variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (dkey.name));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
-            variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
+            variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (dkey.type_string));
 
-        if (show_min_and_max (type_string) && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
+        if (show_min_and_max (dkey.type_string) && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
             string min, max;
-            get_min_and_max_string (out min, out max, type_string);
+            get_min_and_max_string (out min, out max, dkey.type_string);
 
             variantdict.insert_value (PropertyQuery.MINIMUM,                    new Variant.string (min));
             variantdict.insert_value (PropertyQuery.MAXIMUM,                    new Variant.string (max));
         }
-        return variantdict.end ();
     }
 }
 
@@ -379,49 +379,47 @@ private class GSettingsKey : Key
         settings_changed_handler = 0;
     }
 
-    protected override Variant create_fixed_properties (PropertyQuery query)
+    internal static void _get_key_fixed_properties (GSettingsKey gkey, PropertyQuery query, ref RegistryVariantDict variantdict)
     {
         bool all_properties_queried = query == 0;
 
-        RegistryVariantDict variantdict = new RegistryVariantDict ();
-
         if (all_properties_queried || PropertyQuery.HAS_SCHEMA      in query)
             variantdict.insert_value (PropertyQuery.HAS_SCHEMA,                 new Variant.boolean (true));
-        if (all_properties_queried || PropertyQuery.FIXED_SCHEMA    in query)
-            variantdict.insert_value (PropertyQuery.FIXED_SCHEMA,               new Variant.boolean (schema_path != null));
-        if (all_properties_queried || PropertyQuery.SCHEMA_ID       in query)
-            variantdict.insert_value (PropertyQuery.SCHEMA_ID,                  new Variant.string (schema_id));
         if (all_properties_queried || PropertyQuery.KEY_NAME        in query)
-            variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (name));
+            variantdict.insert_value (PropertyQuery.KEY_NAME,                   new Variant.string (gkey.name));
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
-            variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (type_string));
-        if (all_properties_queried || PropertyQuery.SUMMARY         in query)
-            variantdict.insert_value (PropertyQuery.SUMMARY,                    new Variant.string (summary));
-        if (all_properties_queried || PropertyQuery.DESCRIPTION     in query)
-            variantdict.insert_value (PropertyQuery.DESCRIPTION,                new Variant.string (description));
-        if (all_properties_queried || PropertyQuery.DEFAULT_VALUE   in query)
-            variantdict.insert_value (PropertyQuery.DEFAULT_VALUE,              new Variant.string (cool_text_value_from_variant (default_value)));
-        if (all_properties_queried || PropertyQuery.RANGE_TYPE      in query)
-            variantdict.insert_value (PropertyQuery.RANGE_TYPE,                 new Variant.byte ((uint8) range_type));
-        if (all_properties_queried || PropertyQuery.RANGE_CONTENT   in query)
-            variantdict.insert_value (PropertyQuery.RANGE_CONTENT,              new Variant.variant (range_content));
+            variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (gkey.type_string));
 
-        if (show_min_and_max (type_string)
+        if (all_properties_queried || PropertyQuery.FIXED_SCHEMA    in query)
+            variantdict.insert_value (PropertyQuery.FIXED_SCHEMA,               new Variant.boolean (gkey.schema_path != null));
+        if (all_properties_queried || PropertyQuery.SUMMARY         in query)
+            variantdict.insert_value (PropertyQuery.SUMMARY,                    new Variant.string (gkey.summary));
+        if (all_properties_queried || PropertyQuery.DESCRIPTION     in query)
+            variantdict.insert_value (PropertyQuery.DESCRIPTION,                new Variant.string (gkey.description));
+        if (all_properties_queried || PropertyQuery.SCHEMA_ID       in query)
+            variantdict.insert_value (PropertyQuery.SCHEMA_ID,                  new Variant.string (gkey.schema_id));
+        if (all_properties_queried || PropertyQuery.DEFAULT_VALUE   in query)
+            variantdict.insert_value (PropertyQuery.DEFAULT_VALUE,              new Variant.string (cool_text_value_from_variant (gkey.default_value)));
+        if (all_properties_queried || PropertyQuery.RANGE_TYPE      in query)
+            variantdict.insert_value (PropertyQuery.RANGE_TYPE,                 new Variant.byte ((uint8) gkey.range_type));
+        if (all_properties_queried || PropertyQuery.RANGE_CONTENT   in query)
+            variantdict.insert_value (PropertyQuery.RANGE_CONTENT,              new Variant.variant (gkey.range_content));
+
+        if (show_min_and_max (gkey.type_string)
          && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
             string min, max;
-            if (range_type == RangeType.RANGE)     // TODO test more; and what happen if only min/max is in range?
+            if (gkey.range_type == RangeType.RANGE)     // TODO test more; and what happen if only min/max is in range?
             {
-                min = cool_text_value_from_variant (range_content.get_child_value (0));
-                max = cool_text_value_from_variant (range_content.get_child_value (1));
+                min = cool_text_value_from_variant (gkey.range_content.get_child_value (0));
+                max = cool_text_value_from_variant (gkey.range_content.get_child_value (1));
             }
             else
-                get_min_and_max_string (out min, out max, type_string);
+                get_min_and_max_string (out min, out max, gkey.type_string);
 
             variantdict.insert_value (PropertyQuery.MINIMUM,                    new Variant.string (min));
             variantdict.insert_value (PropertyQuery.MAXIMUM,                    new Variant.string (max));
         }
-        return variantdict.end ();
     }
 }
 

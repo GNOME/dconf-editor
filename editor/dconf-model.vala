@@ -846,31 +846,41 @@ private abstract class SettingsModelCore : Object
         Key key = get_specific_key (key_path, key_context_id);
 
         PropertyQuery query = (PropertyQuery) _query;
-
-        Variant key_properties;
-        if (PropertyQuery.HASH in query)
-            key_properties = ((!) key).get_fixed_properties (0);    // ensures hash is generated
-
-        key_properties = ((!) key).get_fixed_properties (query);
-
         bool all_properties_queried = query == 0;
-        RegistryVariantDict variantdict = new RegistryVariantDict.from_aqv (key_properties);
 
+        if ((all_properties_queried || PropertyQuery.HASH in query) && key.all_fixed_properties == null)
+            Key.generate_key_fixed_properties (key);
+
+        RegistryVariantDict variantdict;
+
+        // fixed properties
+        if (all_properties_queried)
+            variantdict = new RegistryVariantDict.from_aqv ((!) key.all_fixed_properties);
+        else
+        {
+            variantdict = new RegistryVariantDict ();
+            Key.get_key_fixed_properties (key, query, ref variantdict);
+        }
+
+        // special case
         if (all_properties_queried || PropertyQuery.HASH                in query)
-            variantdict.insert_value (PropertyQuery.HASH,                           new Variant.uint32 (((!) key).key_hash));
+            variantdict.insert_value (PropertyQuery.HASH,                           new Variant.uint32 (key.key_hash));
+
+        // variable properties
         if (all_properties_queried ||     PropertyQuery.KEY_VALUE       in query)
         {
             if (key is GSettingsKey)
-                variantdict.insert_value (PropertyQuery.KEY_VALUE,                  new Variant.variant (get_gsettings_key_value ((GSettingsKey) (!) key)));
-            else // (key is DConfKey)
+                variantdict.insert_value (PropertyQuery.KEY_VALUE,                  new Variant.variant (get_gsettings_key_value ((GSettingsKey) key)));
+            else if (key is DConfKey)
                 variantdict.insert_value (PropertyQuery.KEY_VALUE,                  new Variant.variant (get_dconf_key_value (key_path, client)));
+            else assert_not_reached ();
         }
         if (key is GSettingsKey)
         {
             if (all_properties_queried || PropertyQuery.KEY_CONFLICT    in query)
-                variantdict.insert_value (PropertyQuery.KEY_CONFLICT,               new Variant.byte ((uint8) ((GSettingsKey) (!) key).key_conflict));
+                variantdict.insert_value (PropertyQuery.KEY_CONFLICT,               new Variant.byte ((uint8) ((GSettingsKey) key).key_conflict));
             if (all_properties_queried || PropertyQuery.IS_DEFAULT      in query)
-                variantdict.insert_value (PropertyQuery.IS_DEFAULT,                 new Variant.boolean (((GSettingsKey) (!) key).settings.get_user_value (((!) key).name) == null));
+                variantdict.insert_value (PropertyQuery.IS_DEFAULT,                 new Variant.boolean (((GSettingsKey) key).settings.get_user_value (key.name) == null));
         }
         return variantdict.end ();
     }
