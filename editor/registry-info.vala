@@ -203,7 +203,7 @@ private class RegistryInfo : Grid, BrowsableView
         current_value_label.wrap = true;
         current_value_label.hexpand = true;
         current_value_label.show ();
-        add_row_from_widget (_("Current value"), current_value_label, null);
+        add_row_from_widget (_("Current value"), current_value_label);
 
         add_separator ();
 
@@ -230,7 +230,15 @@ private class RegistryInfo : Grid, BrowsableView
                     key_editor_child = (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_code, range);
                 }                                                                                                                   break;
             case "d":
-                key_editor_child = (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value);                                 break;
+                if (minimum_is_maximum)
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
+                else
+                {
+                    Variant? range = null;
+                    if (has_schema && range_type_is_range && !properties.lookup (PropertyQuery.RANGE_CONTENT, "v", out range))
+                        assert_not_reached ();
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value, range);
+                }                                                                                                                   break;
             case "mb":
                 key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);                   break;
             case "<enum>":  // has_schema
@@ -293,7 +301,7 @@ private class RegistryInfo : Grid, BrowsableView
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect ((_modifications_handler) => on_revealer_reload_2 (_modifications_handler, key_editor_child, value_has_changed_handler, full_name, context_id, has_schema));
-        add_row_from_widget (_("Custom value"), key_editor_child, type_code);
+        add_row_from_widget (_("Custom value"), key_editor_child, type_code, minimum_is_maximum);
 
         key_editor_child.destroy.connect (() => {
                 key_editor_child.disconnect (value_has_changed_handler);
@@ -448,9 +456,9 @@ private class RegistryInfo : Grid, BrowsableView
         properties_list_box.add (row);
     }
 
-    private void add_row_from_widget (string property_name, Widget widget, string? type)
+    private void add_row_from_widget (string property_name, Widget widget, string? type = null, bool minimum_is_maximum = false)
     {
-        PropertyRow row = new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type) : null);
+        PropertyRow row = new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type, minimum_is_maximum) : null);
         widget.bind_property ("sensitive", row, "sensitive", BindingFlags.SYNC_CREATE);
         properties_list_box.add (row);
     }
@@ -472,10 +480,14 @@ private class RegistryInfo : Grid, BrowsableView
         properties_list_box.add (row);
     }
 
-    private static Widget? add_warning (string type)
+    private static Widget? add_warning (string type, bool minimum_is_maximum)
     {
         if (type == "d")    // TODO if type contains "d"; on Intl.get_language_names ()[0] != "C"?
+        {
+            if (minimum_is_maximum)
+                return null;
             return warning_label (_("Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z notation."));
+        }
 
         if ("v" in type)
             return warning_label (_("Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://developer.gnome.org/glib/stable/gvariant-text.html for complete documentation."));

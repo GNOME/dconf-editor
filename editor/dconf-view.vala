@@ -251,12 +251,15 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
 
+    private double min;
+    private double max;
+
     construct
     {
         get_style_context ().add_class ("key-editor-child-entry");
     }
 
-    internal KeyEditorChildNumberDouble (Variant initial_value)
+    internal KeyEditorChildNumberDouble (Variant initial_value, Variant? range_content_or_null)
     {
         this.variant = initial_value;
 
@@ -266,6 +269,17 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
         this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));
 
         this.text = initial_value.print (false);
+
+        if (range_content_or_null != null)
+        {
+            min = ((!) range_content_or_null).get_child_value (0).get_double ();
+            max = ((!) range_content_or_null).get_child_value (1).get_double ();
+        }
+        else
+        {
+            min = double.MIN;
+            max = double.MAX;
+        }
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
         deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
@@ -281,10 +295,26 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
 
     private bool test_value ()
     {
+        Variant? tmp_variant;
         string tmp_text = this.text; // don't put in the try{} for correct C code
         try
         {
-            Variant? tmp_variant = Variant.parse (VariantType.DOUBLE, tmp_text);
+            tmp_variant = Variant.parse (VariantType.DOUBLE, tmp_text);
+        }
+        catch (VariantParseError e)
+        {
+            show_error ();
+            return false;
+        }
+
+        double variant_value = ((!) tmp_variant).get_double ();
+        if ((variant_value < min) || (variant_value > max))
+        {
+            show_error ();
+            return false;
+        }
+        else
+        {
             variant = (!) tmp_variant;
 
             StyleContext context = get_style_context ();
@@ -294,15 +324,13 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
 
             return true;
         }
-        catch (VariantParseError e)
-        {
-            StyleContext context = get_style_context ();
-            if (!context.has_class ("error"))
-                context.add_class ("error");
-            secondary_icon_name = "dialog-error-symbolic";
-
-            return false;
-        }
+    }
+    private void show_error ()
+    {
+        StyleContext context = get_style_context ();
+        if (!context.has_class ("error"))
+            context.add_class ("error");
+        secondary_icon_name = "dialog-error-symbolic";
     }
 
     internal Variant get_variant ()
