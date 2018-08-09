@@ -213,13 +213,13 @@ private class RegistryInfo : Grid, BrowsableView
         {
             case "b":
                 key_editor_child = (KeyEditorChild) new KeyEditorChildBool (initial_value.get_boolean ());                          break;
+
             case "i":   // int32
             case "u":   // uint32
             case "n":   // int16
             case "q":   // uint16
             case "y":   // uint8
             case "h":   // handle type
-            // TODO "x" and "t" are not working in spinbuttons (double-based)
                 if (minimum_is_maximum)
                     key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
                 else
@@ -229,7 +229,8 @@ private class RegistryInfo : Grid, BrowsableView
                         assert_not_reached ();
                     key_editor_child = (KeyEditorChild) new KeyEditorChildNumberInt (initial_value, type_code, range);
                 }                                                                                                                   break;
-            case "d":
+
+            case "d":   // double
                 if (minimum_is_maximum)
                     key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
                 else
@@ -239,6 +240,27 @@ private class RegistryInfo : Grid, BrowsableView
                         assert_not_reached ();
                     key_editor_child = (KeyEditorChild) new KeyEditorChildNumberDouble (initial_value, range);
                 }                                                                                                                   break;
+            case "t":   // uint64
+                if (minimum_is_maximum)
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
+                else
+                {
+                    Variant? range = null;
+                    if (has_schema && range_type_is_range && !properties.lookup (PropertyQuery.RANGE_CONTENT, "v", out range))
+                        assert_not_reached ();
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildNumberUint64 (initial_value, range);
+                }                                                                                                                   break;
+            case "x":   // int64
+                if (minimum_is_maximum)
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
+                else
+                {
+                    Variant? range = null;
+                    if (has_schema && range_type_is_range && !properties.lookup (PropertyQuery.RANGE_CONTENT, "v", out range))
+                        assert_not_reached ();
+                    key_editor_child = (KeyEditorChild) new KeyEditorChildNumberInt64 (initial_value, range);
+                }                                                                                                                   break;
+
             case "mb":
                 key_editor_child = create_child_mb (initial_value, full_name, has_schema, modifications_handler);                   break;
             case "<enum>":  // has_schema
@@ -251,8 +273,10 @@ private class RegistryInfo : Grid, BrowsableView
                 if (!properties.lookup (PropertyQuery.RANGE_CONTENT,    "v",    out range_content))
                     assert_not_reached ();
                 key_editor_child = create_child_flags (full_name, context_id, range_content, initial_value, modifications_handler); break;
+
             case "()":
                 key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (new Variant ("()", "()"), "()");                      break;
+
             default:
                 if ("a" in type_code)
                     key_editor_child = (KeyEditorChild) new KeyEditorChildArray (type_code, initial_value);

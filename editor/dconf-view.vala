@@ -244,43 +244,20 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
     }
 }
 
-private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
+private abstract class KeyEditorChildNumberCustom : Entry, KeyEditorChild
 {
-    private Variant variant;
+    protected Variant variant;
 
-    private ulong deleted_text_handler = 0;
-    private ulong inserted_text_handler = 0;
-
-    private double min;
-    private double max;
+    protected ulong deleted_text_handler = 0;
+    protected ulong inserted_text_handler = 0;
 
     construct
     {
         get_style_context ().add_class ("key-editor-child-entry");
     }
 
-    internal KeyEditorChildNumberDouble (Variant initial_value, Variant? range_content_or_null)
+    protected void connect_entry ()
     {
-        this.variant = initial_value;
-
-        this.visible = true;
-        this.hexpand = true;
-        this.secondary_icon_activatable = false;
-        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));
-
-        this.text = initial_value.print (false);
-
-        if (range_content_or_null != null)
-        {
-            min = ((!) range_content_or_null).get_child_value (0).get_double ();
-            max = ((!) range_content_or_null).get_child_value (1).get_double ();
-        }
-        else
-        {
-            min = double.MIN;
-            max = double.MAX;
-        }
-
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
         deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
         inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
@@ -293,44 +270,22 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
             });
     }
 
-    private bool test_value ()
+    protected void show_error (bool show)
     {
-        Variant? tmp_variant;
-        string tmp_text = this.text; // don't put in the try{} for correct C code
-        try
+        StyleContext context = get_style_context ();
+        if (show)
         {
-            tmp_variant = Variant.parse (VariantType.DOUBLE, tmp_text);
-        }
-        catch (VariantParseError e)
-        {
-            show_error ();
-            return false;
-        }
-
-        double variant_value = ((!) tmp_variant).get_double ();
-        if ((variant_value < min) || (variant_value > max))
-        {
-            show_error ();
-            return false;
+            // TODO "error" style class should not be active/visible when the default-value toggle is activated (and the entry inactive)
+            if (!context.has_class ("error"))
+                context.add_class ("error");
+            secondary_icon_name = "dialog-error-symbolic";
         }
         else
         {
-            variant = (!) tmp_variant;
-
-            StyleContext context = get_style_context ();
             if (context.has_class ("error"))
                 context.remove_class ("error");
             set_icon_from_icon_name (EntryIconPosition.SECONDARY, null);
-
-            return true;
         }
-    }
-    private void show_error ()
-    {
-        StyleContext context = get_style_context ();
-        if (!context.has_class ("error"))
-            context.add_class ("error");
-        secondary_icon_name = "dialog-error-symbolic";
     }
 
     internal Variant get_variant ()
@@ -360,6 +315,185 @@ private class KeyEditorChildNumberDouble : Entry, KeyEditorChild
         if (!test_value ())
             assert_not_reached ();
         set_lock (false);
+    }
+
+    protected abstract bool test_value ();
+}
+
+private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
+{
+    private double min;
+    private double max;
+
+    internal KeyEditorChildNumberDouble (Variant initial_value, Variant? range_content_or_null)
+    {
+        this.variant = initial_value;
+
+        this.visible = true;
+        this.hexpand = true;
+        this.secondary_icon_activatable = false;
+        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));  // TODO change text for range
+
+        this.text = initial_value.print (false);
+
+        if (range_content_or_null != null)
+        {
+            min = ((!) range_content_or_null).get_child_value (0).get_double ();
+            max = ((!) range_content_or_null).get_child_value (1).get_double ();
+        }
+        else
+        {
+            min = double.MIN;
+            max = double.MAX;
+        }
+
+        connect_entry ();
+    }
+
+    protected override bool test_value ()
+    {
+        Variant? tmp_variant;
+        string tmp_text = this.text; // don't put in the try{} for correct C code
+        try
+        {
+            tmp_variant = Variant.parse (VariantType.DOUBLE, tmp_text);
+        }
+        catch (VariantParseError e)
+        {
+            show_error (true);
+            return false;
+        }
+
+        double variant_value = ((!) tmp_variant).get_double ();
+        if ((variant_value < min) || (variant_value > max))
+        {
+            show_error (true);
+            return false;
+        }
+        else
+        {
+            variant = (!) tmp_variant;
+            show_error (false);
+            return true;
+        }
+    }
+}
+
+private class KeyEditorChildNumberInt64 : KeyEditorChildNumberCustom
+{
+    private int64 min;
+    private int64 max;
+
+    internal KeyEditorChildNumberInt64 (Variant initial_value, Variant? range_content_or_null)
+    {
+        this.variant = initial_value;
+
+        this.visible = true;
+        this.hexpand = true;
+        this.secondary_icon_activatable = false;
+        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type.")); // TODO custom text, including range 1/2
+
+        this.text = initial_value.print (false);
+
+        if (range_content_or_null != null)
+        {
+            min = ((!) range_content_or_null).get_child_value (0).get_int64 ();
+            max = ((!) range_content_or_null).get_child_value (1).get_int64 ();
+        }
+        else
+        {
+            min = int64.MIN;
+            max = int64.MAX;
+        }
+
+        connect_entry ();
+    }
+
+    protected override bool test_value ()
+    {
+        Variant? tmp_variant;
+        string tmp_text = this.text; // don't put in the try{} for correct C code
+        try
+        {
+            tmp_variant = Variant.parse (VariantType.INT64, tmp_text);
+        }
+        catch (VariantParseError e)
+        {
+            show_error (true);
+            return false;
+        }
+
+        double variant_value = ((!) tmp_variant).get_int64 ();
+        if ((variant_value < min) || (variant_value > max))
+        {
+            show_error (true);
+            return false;
+        }
+        else
+        {
+            variant = (!) tmp_variant;
+            show_error (false);
+            return true;
+        }
+    }
+}
+
+private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
+{
+    private uint64 min;
+    private uint64 max;
+
+    internal KeyEditorChildNumberUint64 (Variant initial_value, Variant? range_content_or_null)
+    {
+        this.variant = initial_value;
+
+        this.visible = true;
+        this.hexpand = true;
+        this.secondary_icon_activatable = false;
+        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type.")); // TODO custom text, including range 2/2
+
+        this.text = initial_value.print (false);
+
+        if (range_content_or_null != null)
+        {
+            min = ((!) range_content_or_null).get_child_value (0).get_uint64 ();
+            max = ((!) range_content_or_null).get_child_value (1).get_uint64 ();
+        }
+        else
+        {
+            min = uint64.MIN;
+            max = uint64.MAX;
+        }
+
+        connect_entry ();
+    }
+
+    protected override bool test_value ()
+    {
+        Variant? tmp_variant;
+        string tmp_text = this.text; // don't put in the try{} for correct C code
+        try
+        {
+            tmp_variant = Variant.parse (VariantType.UINT64, tmp_text);
+        }
+        catch (VariantParseError e)
+        {
+            show_error (true);
+            return false;
+        }
+
+        double variant_value = ((!) tmp_variant).get_uint64 ();
+        if ((variant_value < min) || (variant_value > max))
+        {
+            show_error (true);
+            return false;
+        }
+        else
+        {
+            variant = (!) tmp_variant;
+            show_error (false);
+            return true;
+        }
     }
 }
 
