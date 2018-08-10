@@ -283,57 +283,55 @@ private class RegistrySearch : RegistryList
     private void resume_global_search (string current_path, string term)
     {
         search_source = Idle.add (() => {
-                if (global_search_step (current_path, term))
-                    return true;
-                search_source = null;
-                return false;
+                if (search_nodes.is_empty ())
+                {
+                    search_source = null;
+                    return false;
+                }
+                global_search_step (current_path, term);
+                return true;
             });
     }
 
-    private bool global_search_step (string current_path, string term)
+    private void global_search_step (string current_path, string term)
     {
         SettingsModel model = modifications_handler.model;
-        if (!search_nodes.is_empty ())
+
+        string next = (!) search_nodes.pop_head ();
+        bool local_again = (next == current_path) || (next == ModelUtils.get_base_path (current_path));
+
+        Variant? next_key_model = model.get_children (next, true, false);
+        if (next_key_model == null)
+            return;
+
+        VariantIter iter = new VariantIter ((!) next_key_model);
+        uint16 context_id;
+        string name;
+        while (iter.next ("(qs)", out context_id, out name))
         {
-            string next = (!) search_nodes.pop_head ();
-            bool local_again = next == current_path;
-
-            Variant? next_key_model = model.get_children (next, true, false);
-            if (next_key_model == null)
-                return true;
-
-            VariantIter iter = new VariantIter ((!) next_key_model);
-            uint16 context_id;
-            string name;
-            while (iter.next ("(qs)", out context_id, out name))
+            if (ModelUtils.is_folder_context_id (context_id))
             {
-                if (ModelUtils.is_folder_context_id (context_id))
+                string full_name = ModelUtils.recreate_full_name (next, name, true);
+                if (!local_again && !(full_name in bookmarks) && term in name)
                 {
-                    string full_name = ModelUtils.recreate_full_name (next, name, true);
-                    if (!local_again && term in name)
-                    {
-                        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, full_name);
-                        list_model.insert (post_folders++, sso);
-                    }
-                    search_nodes.push_tail (full_name); // we still search local children
+                    SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, full_name);
+                    list_model.insert (post_folders++, sso);
                 }
-                else
+                search_nodes.push_tail (full_name); // we still search local children
+            }
+            else
+            {
+                string full_name = ModelUtils.recreate_full_name (next, name, false);
+                if (!local_again && !(full_name in bookmarks) && term in name)
                 {
-                    if (!local_again && term in name)
-                    {
-                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, next);
-                        list_model.append (sso);
-                        model.key_value_push (next + name, context_id);
-                    }
+                    SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, next);
+                    list_model.append (sso);
+                    model.key_value_push (next + name, context_id);
                 }
             }
-
-            ensure_selection ();
-
-            return true;
         }
 
-        return false;
+        ensure_selection ();
     }
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
