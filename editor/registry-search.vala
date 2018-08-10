@@ -131,9 +131,13 @@ private class RegistrySearch : RegistryList
             }
 
             ensure_selection ();
+
+            model.keys_value_push ();
         }
         else
         {
+            model.clean_watched_keys ();
+
             stop_global_search ();
             list_model.remove_all ();
             post_local = -1;
@@ -145,11 +149,12 @@ private class RegistrySearch : RegistryList
 
             select_first_row ();
 
+            model.keys_value_push ();
+
             if (term != "")
                 start_global_search (model, (!) current_path_if_search_mode, term);
         }
         old_term = term;
-        model.keys_value_push ();
     }
 
     private void refine_local_results (string term)
@@ -200,39 +205,33 @@ private class RegistrySearch : RegistryList
         }
     }
 
-    private bool local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term)
+    private void local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term)
+        requires (ModelUtils.is_folder_path (current_path))
     {
         SettingComparator comparator = sorting_options.get_comparator ();
         GLib.CompareDataFunc compare = (a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b);
 
-        if (ModelUtils.is_folder_path (current_path))
+        Variant? key_model = model.get_children (current_path, true, false); // here to update watched keys even coming from RegistryInfo
+        if (key_model != null)
         {
-            Variant? key_model = model.get_children (current_path);
-            if (key_model != null)
+            VariantIter iter = new VariantIter ((!) key_model);
+            uint16 context_id;
+            string name;
+            while (iter.next ("(qs)", out context_id, out name))
             {
-                VariantIter iter = new VariantIter ((!) key_model);
-                uint16 context_id;
-                string name;
-                while (iter.next ("(qs)", out context_id, out name))
+                if (term in name)
                 {
-                    if (term in name)
-                    {
-                        SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, current_path);
-                        list_model.insert_sorted (sso, compare);
-                    }
+                    SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, current_path);
+                    list_model.insert_sorted (sso, compare);
                 }
             }
         }
         post_local = (int) list_model.get_n_items ();
         post_bookmarks = post_local;
         post_folders = post_local;
-
-        if (term == "")
-            return false;
-        return true;
     }
 
-    private bool bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks)
+    private void bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks)
     {
         string [] installed_bookmarks = {}; // TODO move check in Bookmarks
         foreach (string bookmark in bookmarks)
@@ -243,7 +242,7 @@ private class RegistrySearch : RegistryList
 
             if (bookmark == current_path)
                 continue;
-            if (ModelUtils.get_parent_path (bookmark) == current_path)
+            if (ModelUtils.get_parent_path (bookmark) == ModelUtils.get_base_path (current_path))
                 continue;
 
             uint16 context_id;
@@ -259,8 +258,6 @@ private class RegistrySearch : RegistryList
                 list_model.insert (post_bookmarks - 1, sso);
             }
         }
-
-        return true;
     }
 
     private void stop_global_search ()
@@ -301,7 +298,7 @@ private class RegistrySearch : RegistryList
             string next = (!) search_nodes.pop_head ();
             bool local_again = next == current_path;
 
-            Variant? next_key_model = model.get_children (next);
+            Variant? next_key_model = model.get_children (next, true, false);
             if (next_key_model == null)
                 return true;
 
@@ -326,6 +323,7 @@ private class RegistrySearch : RegistryList
                     {
                         SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, next);
                         list_model.append (sso);
+                        model.key_value_push (next + name, context_id);
                     }
                 }
             }

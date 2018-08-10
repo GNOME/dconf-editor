@@ -127,10 +127,10 @@ private abstract class SettingsModelCore : Object
         return key_model;
     }
 
-    protected Variant? _get_children (string folder_path, bool update_watch)
+    protected Variant? _get_children (string folder_path, bool watch, bool clean_watched)
     {
-        if (update_watch)
-            clean_watched_keys ();
+        if (clean_watched)
+            _clean_watched_keys ();
 
         GLib.ListStore list_store = get_children_as_liststore (folder_path);
         uint n_items = list_store.get_n_items ();
@@ -145,7 +145,7 @@ private abstract class SettingsModelCore : Object
             SettingObject base_object = (SettingObject) (!) object;
             if (base_object is Key)
             {
-                if (update_watch)
+                if (watch)
                     add_watched_key ((Key) base_object);
 
                 builder.add ("(qs)", get_context_id_from_key ((Key) base_object), base_object.name);
@@ -206,6 +206,9 @@ private abstract class SettingsModelCore : Object
             name = "";                                      // garbage 2/2
             return false;
         }
+
+        if ((!) object is Key)
+            add_watched_key ((Key) (!) object);
 
         context_id = get_context_id_from_object ((!) object);
         name = ((!) object).name;
@@ -562,6 +565,28 @@ private abstract class SettingsModelCore : Object
                 push_gsettings_key_value ((GSettingsKey) (!) object);
             else if ((!) object is DConfKey)
                 push_dconf_key_value (((Key) (!) object).full_name, client);
+            else assert_not_reached ();
+            position++;
+            object = watched_keys.get_item (position);
+        };
+    }
+
+    protected void _key_value_push (string key_path, uint16 key_context_id)
+    {
+        uint position = 0;
+        Object? object = watched_keys.get_item (0);
+        while (object != null)
+        {
+            if (((Key) (!) object).full_name == key_path
+             && get_context_id_from_key ((Key) (!) object) == key_context_id)
+            {
+                if ((!) object is GSettingsKey)
+                    push_gsettings_key_value ((GSettingsKey) (!) object);
+                else if ((!) object is DConfKey)
+                    push_dconf_key_value (((Key) (!) object).full_name, client);
+                else assert_not_reached ();
+                return;
+            }
             position++;
             object = watched_keys.get_item (position);
         };
@@ -587,7 +612,7 @@ private abstract class SettingsModelCore : Object
     private void on_gkey_value_changed (Key key) { push_gsettings_key_value ((GSettingsKey) key); }
     private void on_dkey_value_changed (Key key) { push_dconf_key_value (key.full_name, client); }
 
-    private void clean_watched_keys ()
+    protected void _clean_watched_keys ()
     {
         uint position = 0;
         Object? object = watched_keys.get_item (0);
@@ -681,7 +706,7 @@ private abstract class SettingsModelCore : Object
         if (found_object == null)
             return ModelUtils.undefined_context_id;
 
-        clean_watched_keys ();
+        _clean_watched_keys ();
         add_watched_key ((!) found_object);
 
         return get_context_id_from_object ((!) found_object);
@@ -943,10 +968,10 @@ private class SettingsModel : SettingsModelCore
     * * Directories informations
     \*/
 
-    internal Variant? get_children (string folder_path, bool update_watch = false)
+    internal Variant? get_children (string folder_path, bool watch = false, bool clean_watched = false)
         requires (ModelUtils.is_folder_path (folder_path))
     {
-        return _get_children (folder_path, update_watch);
+        return _get_children (folder_path, watch, clean_watched);
     }
 
     internal uint16 [] get_sorted_context_id (bool case_sensitive)
@@ -960,9 +985,22 @@ private class SettingsModel : SettingsModelCore
         _keys_value_push ();
     }
 
+    internal void key_value_push (string key_path, uint16 key_context_id)
+        requires (ModelUtils.is_key_path (key_path))
+        requires (!ModelUtils.is_undefined_context_id (key_context_id))
+        requires (!ModelUtils.is_folder_context_id (key_context_id))
+    {
+        _key_value_push (key_path, key_context_id);
+    }
+
     /*\
     * * Weird things
     \*/
+
+    internal void clean_watched_keys ()
+    {
+        _clean_watched_keys ();
+    }
 
     internal void copy_action_called ()
     {
