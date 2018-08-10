@@ -72,7 +72,15 @@ private class Bookmarks : MenuButton
     // for search
     internal string [] get_bookmarks ()
     {
-        return settings.get_strv ("bookmarks");
+        string [] all_bookmarks = settings.get_strv ("bookmarks");
+        string [] unduplicated_bookmarks = {};
+        foreach (string bookmark in all_bookmarks)
+        {
+            if (bookmark in unduplicated_bookmarks)
+                continue;
+            unduplicated_bookmarks += bookmark;
+        }
+        return unduplicated_bookmarks;
     }
 
     // keyboard call

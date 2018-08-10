@@ -233,13 +233,8 @@ private class RegistrySearch : RegistryList
 
     private void bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks)
     {
-        string [] installed_bookmarks = {}; // TODO move check in Bookmarks
         foreach (string bookmark in bookmarks)
         {
-            if (bookmark in installed_bookmarks)
-                continue;
-            installed_bookmarks += bookmark;
-
             if (bookmark == current_path)
                 continue;
             if (ModelUtils.get_parent_path (bookmark) == ModelUtils.get_base_path (current_path))
