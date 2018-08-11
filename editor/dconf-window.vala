@@ -216,7 +216,7 @@ private class DConfWindow : ApplicationWindow
     {
         if (current_type == ViewType.SEARCH)
         {
-            if (!internal_changes)
+            if (!internal_changes)  // TODO do not react to value changes
                 reload_search_action.set_enabled (true);
         }
         else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed

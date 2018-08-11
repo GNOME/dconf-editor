@@ -23,6 +23,7 @@ private abstract class SettingsModelCore : Object
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
     protected bool copy_action = false;
+    private bool gsettings_change = false;
 
     internal bool use_shortpaths { private get; set; default = false; }
 
@@ -63,9 +64,11 @@ private abstract class SettingsModelCore : Object
             });
 
         client.changed.connect ((client, prefix, changes, tag) => {
-                bool internal_changes = copy_action;
+                bool internal_changes = copy_action || gsettings_change;
                 if (copy_action)
                     copy_action = false;
+                if (gsettings_change)
+                    gsettings_change = false;
                 if (last_change_tag != null && tag != null && (!) last_change_tag == (!) tag)
                 {
                     last_change_tag = null;
@@ -816,14 +819,17 @@ private abstract class SettingsModelCore : Object
     {
         HashTable<string, GLib.Settings> delayed_settings_hashtable = new HashTable<string, GLib.Settings> (str_hash, str_equal);
         DConf.Changeset dconf_changeset = new DConf.Changeset ();
+        bool dconf_changeset_has_change = false;
         changes.foreach ((key_path, planned_value) => {
                 Key? key = get_key (key_path, "");
-                if (key == null)
+                if (key == null || (!) key is DConfKey) // TODO assert_not_reached() if no key found?
                 {
-                    // TODO change value anyway?
+                    dconf_changeset_has_change = true;
+                    dconf_changeset.set (((!) key).full_name, planned_value);
                 }
                 else if ((!) key is GSettingsKey)
                 {
+                    gsettings_change = true;
                     string key_descriptor = ((GSettingsKey) (!) key).descriptor;
                     string settings_descriptor = key_descriptor [0:key_descriptor.last_index_of_char (' ')]; // strip the key name
                     GLib.Settings? settings = delayed_settings_hashtable.lookup (settings_descriptor);
@@ -844,21 +850,22 @@ private abstract class SettingsModelCore : Object
                     else
                         ((!) settings).set_value (((!) key).name, (!) planned_value);
                 }
-                else if ((!) key is DConfKey)
-                    dconf_changeset.set (((!) key).full_name, planned_value);
                 else
                     assert_not_reached ();
             });
 
         delayed_settings_hashtable.foreach_remove ((key_descriptor, schema_settings) => { schema_settings.apply (); return true; });
 
-        try
+        if (dconf_changeset_has_change)
         {
-            client.change_sync (dconf_changeset, out last_change_tag);
-        }
-        catch (Error error)
-        {
-            warning (error.message);
+            try
+            {
+                client.change_sync (dconf_changeset, out last_change_tag);
+            }
+            catch (Error error)
+            {
+                warning (error.message);
+            }
         }
     }
 
