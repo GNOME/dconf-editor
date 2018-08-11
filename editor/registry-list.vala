@@ -798,8 +798,8 @@ private abstract class RegistryList : Grid, BrowsableView
     private static void on_popover_value_change (KeyListBoxRow row, Variant? gvariant, GLib.Action action)
     {
         row.hide_right_click_popover ();
-
-        action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType (row.type_string), gvariant)));
+        VariantType variant_type = row.type_string == "<enum>" ? VariantType.STRING : new VariantType (row.type_string);
+        action.change_state (new Variant.maybe (null, new Variant.maybe (variant_type, gvariant)));
         row.set_key_value (gvariant);
     }
 }
