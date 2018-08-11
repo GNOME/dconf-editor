@@ -303,7 +303,8 @@ private abstract class SettingsModelCore : Object
         if (key_model == null)
             return null;
         uint position = 0;
-        while (position < ((!) key_model).get_n_items ())
+        uint n_items = ((!) key_model).get_n_items ();
+        while (position < n_items)
         {
             SettingObject? object = (SettingObject?) ((!) key_model).get_object (position);
             if (object == null)
