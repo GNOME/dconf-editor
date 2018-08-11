@@ -977,25 +977,29 @@ private class DConfWindow : ApplicationWindow
         string complete_path = pathbar.complete_path;
 
         browser_view.discard_row_popover ();
-        if (current_path == complete_path)
+        if (current_path == complete_path)  // TODO something?
             return;
 
         if (shift)
         {
-            if (ModelUtils.is_key_path (complete_path))
+            string fallback_path = model.get_fallback_path (complete_path);
+            if (ModelUtils.is_key_path (fallback_path))
+                request_object (fallback_path);
+            else if (fallback_path != current_path)
+                request_folder (fallback_path);
+            else
+                request_folder (complete_path);
+        }
+        else
+        {
+            int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
+            if (index_of_last_slash != -1)
+                request_folder (complete_path.slice (0, index_of_last_slash + 1));
+            else if (ModelUtils.is_key_path (complete_path))
                 request_object (complete_path);
             else
                 request_folder (complete_path);
-            return;
         }
-
-        int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
-        if (index_of_last_slash != -1)
-            request_folder (complete_path.slice (0, index_of_last_slash + 1));
-        else if (ModelUtils.is_key_path (complete_path))
-            request_object (complete_path);
-        else
-            request_folder (complete_path);
     }
 
     /*\
