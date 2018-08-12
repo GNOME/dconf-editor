@@ -127,7 +127,7 @@ private class ConfigurationEditor : Gtk.Application
         };
 
     private static bool disable_warning = false;
-    private static string [] remaining = new string [3];
+    private static string? [] remaining = new string? [3];
 
     private const OptionEntry [] option_entries =
     {
@@ -136,7 +136,7 @@ private class ConfigurationEditor : Gtk.Application
 
         { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
 
-        { OPTION_REMAINING, 0, 0, OptionArg.FILENAME_ARRAY, ref remaining, "args", N_("[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]") }, // should probably be a STRING_ARRAY, but then crashes: for paths with more than 20 chars, on some locales depending of the computer... xD
+        { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, ref remaining, "args", N_("[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]") },
         {}
     };
 
@@ -311,6 +311,8 @@ private class ConfigurationEditor : Gtk.Application
         foreach (string? i in remaining)
             if (i != null)
                 args += (!) i;
+            else
+                break;
 
         if (args.length == 0)
         {
