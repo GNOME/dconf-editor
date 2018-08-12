@@ -97,14 +97,12 @@ private abstract class RegistryList : Grid, BrowsableView
     }
     private static string _get_selected_row_name (ListBox key_list_box, GLib.ListStore list_model)
     {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row != null)
-        {
-            int position = ((!) selected_row).get_index ();
-            return ((SimpleSettingObject) list_model.get_object (position)).full_name;
-        }
-        else
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
             return "";
+
+        int position = ((!) selected_row).get_index ();
+        return ((SimpleSettingObject) list_model.get_object (position)).full_name;
     }
 
     internal abstract void select_first_row ();
@@ -182,21 +180,24 @@ private abstract class RegistryList : Grid, BrowsableView
 
     internal string? get_copy_text () // can compile with "private", but is public 1/2
     {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
             return null;
 
-        return _get_copy_text ((ClickableListBoxRow) ((!) selected_row).get_child ());
-    }
-    private string _get_copy_text (ClickableListBoxRow row)
-    {
+        ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
+
         if (ModelUtils.is_folder_context_id (row.context_id))
-            return row.full_name;
-        return modifications_handler.model.get_suggested_key_copy_text (row.full_name, row.context_id);
+            return _get_folder_copy_text (row);
+        else
+            return _get_key_copy_text (row, modifications_handler);
     }
-    private Variant get_copy_text_variant (ClickableListBoxRow row)
+    private static inline string _get_folder_copy_text (ClickableListBoxRow row)
     {
-        return new Variant.string (_get_copy_text (row));
+        return row.full_name;
+    }
+    private static inline string _get_key_copy_text (ClickableListBoxRow row, ModificationsHandler modifications_handler)
+    {
+        return modifications_handler.model.get_suggested_key_copy_text (row.full_name, row.context_id);
     }
 
     internal void toggle_boolean_key ()
@@ -234,7 +235,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     internal bool up_or_down_pressed (bool is_down)
     {
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         uint n_items = list_model.get_n_items ();
 
         if (selected_row != null)
@@ -394,7 +395,7 @@ private abstract class RegistryList : Grid, BrowsableView
         return wrapper;
     }
 
-    private void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default, bool error_hard_conflicting_key)
+    private static void update_gsettings_row (KeyListBoxRow row, string type_string, Variant key_value, bool is_key_default, bool error_hard_conflicting_key)
     {
         if (error_hard_conflicting_key)
             return;
@@ -414,7 +415,7 @@ private abstract class RegistryList : Grid, BrowsableView
         row.update_label (Key.cool_text_value_from_variant (key_value), false);
     }
 
-    private void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
+    private static void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
     {
         if (key_value == null)
         {
@@ -469,7 +470,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        KeyListBoxRow? row = get_row_for_key (full_name, context_id);
+        KeyListBoxRow? row = get_row_for_key (key_list_box, full_name, context_id);
         if (row == null)    // TODO make method only called when necessary 1/2
             return;
 
@@ -495,7 +496,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
-        KeyListBoxRow? row = get_row_for_key (full_name, ModelUtils.dconf_context_id);
+        KeyListBoxRow? row = get_row_for_key (key_list_box, full_name, ModelUtils.dconf_context_id);
         if (row == null)    // TODO make method only called when necessary 2/2
             return;
 
@@ -503,19 +504,24 @@ private abstract class RegistryList : Grid, BrowsableView
         ((!) row).destroy_popover ();
     }
 
-    private KeyListBoxRow? get_row_for_key (string full_name, uint16 context_id)
+    private static KeyListBoxRow? get_row_for_key (ListBox key_list_box, string full_name, uint16 context_id)
     {
-        KeyListBoxRow? key_row_child = null;
-        key_list_box.foreach ((row) => {
-                Widget? row_child = ((ListBoxRow) row).get_child ();
-                if (row_child == null)
-                    assert_not_reached ();
-                if ((!) row_child is KeyListBoxRow
-                 && ((KeyListBoxRow) (!) row_child).full_name == full_name
-                 && ((KeyListBoxRow) (!) row_child).context_id == context_id)
-                    key_row_child = (KeyListBoxRow) (!) row_child;
-            });
-        return key_row_child;
+        int position = 0;
+        ListBoxRow? row = key_list_box.get_row_at_index (0);
+        while (row != null)
+        {
+            Widget? row_child = ((ListBoxRow) (!) row).get_child ();
+            if (row_child == null)
+                assert_not_reached ();
+
+            if ((!) row_child is KeyListBoxRow
+             && ((KeyListBoxRow) (!) row_child).full_name == full_name
+             && ((KeyListBoxRow) (!) row_child).context_id == context_id)
+                return (KeyListBoxRow) (!) row_child;
+
+            row = key_list_box.get_row_at_index (++position);
+        }
+        return null;
     }
 
     /*\
@@ -524,11 +530,30 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private void show_right_click_popover (ClickableListBoxRow row, int? nullable_event_x)
     {
+        generate_popover_if_needed (row, modifications_handler);
+        place_popover (row, nullable_event_x);
+        rows_possibly_with_popover.append (row);
+    }
+    private static void place_popover (ClickableListBoxRow row, int? nullable_event_x)
+    {
+        int event_x;
+        if (nullable_event_x == null)
+            event_x = (int) (((int) row.get_allocated_width ()) / 2.0);
+        else
+            event_x = (!) nullable_event_x;
+
+        Gdk.Rectangle rect = { x:event_x, y:row.get_allocated_height (), width:0, height:0 };
+        ((!) row.nullable_popover).set_pointing_to (rect);
+        ((!) row.nullable_popover).popup ();
+    }
+
+    private static void generate_popover_if_needed (ClickableListBoxRow row, ModificationsHandler modifications_handler)
+    {
         if (row.nullable_popover == null)
         {
             row.nullable_popover = new ContextPopover ();
             // boolean test for rows without popovers, but that never happens in current design
-            if (!generate_popover (row, modifications_handler, get_copy_text_variant (row)))
+            if (!generate_popover (row, modifications_handler))
             {
                 ((!) row.nullable_popover).destroy ();  // TODO better, again
                 row.nullable_popover = null;
@@ -541,21 +566,10 @@ private abstract class RegistryList : Grid, BrowsableView
             ((!) row.nullable_popover).position = PositionType.BOTTOM;     // TODO better
         }
         else if (((!) row.nullable_popover).visible)
-            warning ("show_right_click_popover() called but popover is visible");   // TODO is called on multi-right-click
-        int event_x;
-        if (nullable_event_x == null)
-            event_x = (int) (((int) row.get_allocated_width ()) / 2.0);
-        else
-            event_x = (!) nullable_event_x;
-
-        Gdk.Rectangle rect = { x:event_x, y:row.get_allocated_height (), width:0, height:0 };
-        ((!) row.nullable_popover).set_pointing_to (rect);
-        ((!) row.nullable_popover).popup ();
-
-        rows_possibly_with_popover.append (row);
+            warning ("generate_popover_if_needed() called but popover is visible");   // TODO is called on multi-right-click
     }
 
-    private static bool generate_popover (ClickableListBoxRow row, ModificationsHandler modifications_handler, Variant copy_text_variant)
+    private static bool generate_popover (ClickableListBoxRow row, ModificationsHandler modifications_handler)
         requires (row.nullable_popover != null)
     {
         switch (row.context_id)
@@ -564,20 +578,20 @@ private abstract class RegistryList : Grid, BrowsableView
                 assert_not_reached ();
 
             case ModelUtils.folder_context_id:
-                return generate_folder_popover (row, copy_text_variant);
+                return generate_folder_popover (row);
 
             case ModelUtils.dconf_context_id:
                 if (modifications_handler.model.is_key_ghost (row.full_name))
-                    return generate_ghost_popover (row, copy_text_variant);
+                    return generate_ghost_popover (row, _get_key_copy_text_variant (row, modifications_handler));
                 else
-                    return generate_dconf_popover ((KeyListBoxRow) row, modifications_handler, copy_text_variant);
+                    return generate_dconf_popover ((KeyListBoxRow) row, modifications_handler, _get_key_copy_text_variant (row, modifications_handler));
 
             default:
-                return generate_gsettings_popover ((KeyListBoxRow) row, modifications_handler, copy_text_variant);
+                return generate_gsettings_popover ((KeyListBoxRow) row, modifications_handler, _get_key_copy_text_variant (row, modifications_handler));
         }
     }
 
-    private static bool generate_folder_popover (ClickableListBoxRow row, Variant copy_text_variant)
+    private static bool generate_folder_popover (ClickableListBoxRow row)
     {
         if (row.nullable_popover == null)   // do not place in requires 1/4
             assert_not_reached ();
@@ -592,7 +606,7 @@ private abstract class RegistryList : Grid, BrowsableView
         }
 
         popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
+        popover.new_gaction ("copy", "app.copy(" + _get_folder_copy_text_variant (row).print (false) + ")");
 
         popover.new_section ();
         popover.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
@@ -801,5 +815,14 @@ private abstract class RegistryList : Grid, BrowsableView
         VariantType variant_type = row.type_string == "<enum>" ? VariantType.STRING : new VariantType (row.type_string);
         action.change_state (new Variant.maybe (null, new Variant.maybe (variant_type, gvariant)));
         row.set_key_value (gvariant);
+    }
+
+    private static inline Variant _get_folder_copy_text_variant (ClickableListBoxRow row)
+    {
+        return new Variant.string (_get_folder_copy_text (row));
+    }
+    private static inline Variant _get_key_copy_text_variant (ClickableListBoxRow row, ModificationsHandler modifications_handler)
+    {
+        return new Variant.string (_get_key_copy_text (row, modifications_handler));
     }
 }
