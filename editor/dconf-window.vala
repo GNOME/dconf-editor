@@ -570,7 +570,7 @@ private class DConfWindow : ApplicationWindow
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        browser_view.prepare_folder_view (fallback_path, model.get_children (fallback_path, true, true), current_path.has_prefix (fallback_path));
+        browser_view.prepare_folder_view (create_key_model (fallback_path, model.get_children (fallback_path, true, true)), current_path.has_prefix (fallback_path));
         update_current_path (ViewType.FOLDER, fallback_path);
 
         if (selected_or_empty == "")
@@ -579,6 +579,24 @@ private class DConfWindow : ApplicationWindow
             browser_view.select_row (selected_or_empty);
 
         search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+    }
+    private static GLib.ListStore create_key_model (string base_path, Variant? children)
+    {
+        GLib.ListStore key_model = new GLib.ListStore (typeof (SimpleSettingObject));
+        if (children != null)
+        {
+            VariantIter iter = new VariantIter ((!) children);
+            uint16 context_id;
+            string name;
+            while (iter.next ("(qs)", out context_id, out name))
+            {
+                if (ModelUtils.is_undefined_context_id (context_id))
+                    assert_not_reached ();
+                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
+                ((!) key_model).append (sso);
+            }
+        }
+        return key_model;
     }
 
     private void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "")

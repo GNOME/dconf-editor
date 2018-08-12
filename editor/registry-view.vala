@@ -101,6 +101,10 @@ private class RegistryView : RegistryList
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
+        _update_row_header (row, before, modifications_handler.model);
+    }
+    private static void _update_row_header (ListBoxRow row, ListBoxRow? before, SettingsModel model)
+    {
         string? label_text = null;
         if (row.get_child () is KeyListBoxRow)  // no header for folders
         {
@@ -109,10 +113,10 @@ private class RegistryView : RegistryList
             {
                 if (((KeyListBoxRow) row.get_child ()).has_schema)
                 {
-                    if (!modifications_handler.model.key_exists (((KeyListBoxRow) ((!) row).get_child ()).full_name, context_id))
+                    if (!model.key_exists (((KeyListBoxRow) ((!) row).get_child ()).full_name, context_id))
                         return; // FIXME that happens when reloading a now-empty folder
 
-                    RegistryVariantDict properties = new RegistryVariantDict.from_aqv (modifications_handler.model.get_key_properties (((KeyListBoxRow) row.get_child ()).full_name, context_id, (uint16) PropertyQuery.SCHEMA_ID));
+                    RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (((KeyListBoxRow) row.get_child ()).full_name, context_id, (uint16) PropertyQuery.SCHEMA_ID));
                     string schema_id;
                     if (!properties.lookup (PropertyQuery.SCHEMA_ID, "s", out schema_id))
                         assert_not_reached ();

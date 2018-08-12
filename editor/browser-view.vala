@@ -189,24 +189,11 @@ private class BrowserView : Grid
     * * Views
     \*/
 
-    internal void prepare_folder_view (string base_path, Variant? children, bool is_ancestor)
+    internal void prepare_folder_view (GLib.ListStore _key_model, bool is_ancestor)
     {
-        key_model = new GLib.ListStore (typeof (SimpleSettingObject));
-        if (children != null)
-        {
-            VariantIter iter = new VariantIter ((!) children);
-            uint16 context_id;
-            string name;
-            while (iter.next ("(qs)", out context_id, out name))
-            {
-                if (ModelUtils.is_undefined_context_id (context_id))
-                    assert_not_reached ();
-                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
-                ((!) key_model).append (sso);
-            }
-        }
-
+        key_model = _key_model;
         sorting_options.sort_key_model ((!) key_model);
+
         current_child.prepare_folder_view ((!) key_model, is_ancestor);
         hide_reload_warning ();
     }
