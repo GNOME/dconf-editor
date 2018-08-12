@@ -115,12 +115,16 @@ private class Bookmarks : MenuButton
     private void bookmark (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 1/2
+
         append_bookmark (((!) path_variant).get_string ());
     }
 
     private void unbookmark (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 2/2
+
         remove_bookmark (((!) path_variant).get_string ());
     }
 
@@ -187,8 +191,6 @@ private class Bookmarks : MenuButton
 
     private void append_bookmark (string path)
     {
-        bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 1/2
-
         string [] bookmarks = settings.get_strv ("bookmarks");
         if (!(path in bookmarks))
         {
@@ -199,8 +201,6 @@ private class Bookmarks : MenuButton
 
     private void remove_bookmark (string bookmark_name)
     {
-        bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 2/2
-
         string [] old_bookmarks = settings.get_strv ("bookmarks");
         if (!(bookmark_name in old_bookmarks))
             return;
