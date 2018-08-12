@@ -98,11 +98,13 @@
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
       <default>800</default>
+      <range min="630"/>
       <summary>The width of the window</summary>
       <description>The width of the main window in pixels.</description>
     </key>
     <key name="window-height" type="i">
       <default>600</default>
+      <range min="420"/>
       <summary>The height of the window</summary>
       <description>The height of the main window in pixels.</description>
     </key>
