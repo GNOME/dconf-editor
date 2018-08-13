@@ -1,3 +1,17 @@
+dconf-editor 3.29.91
+=====================
+
+There have been many refactorings and fixes since the last beta release, notably
+regarding memory cleaning. All should be good now for a final release. Yeah! :·)
+
+Translations updated:
+  French: Claude Paroz
+  Friulian: Fabio Tomat
+  German: Tim Sabsch
+  Lithuanian: Aurimas Černius
+  Polish: Piotr Drąg
+  Slovenian: Matej Urbančič
+
 dconf-editor 3.29.90
 =====================
 
