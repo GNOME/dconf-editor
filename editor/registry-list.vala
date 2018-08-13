@@ -280,100 +280,111 @@ private abstract class RegistryList : Grid, BrowsableView
         ClickableListBoxRow row;
         SimpleSettingObject setting_object = (SimpleSettingObject) item;
         string full_name = setting_object.full_name;
+        uint16 context_id = setting_object.context_id;
 
         if (search_mode && current_path_if_search_mode == null)
             assert_not_reached ();
         bool search_mode_non_local_result = search_mode && ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
-        if (ModelUtils.is_folder_context_id (setting_object.context_id))
+        if (ModelUtils.is_folder_context_id (context_id))
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
         }
         else
         {
-            SettingsModel model = modifications_handler.model;
+            Variant properties = modifications_handler.model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT));
 
-            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name,
-                                                                                                         setting_object.context_id,
-                                                                                                         (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.KEY_NAME & PropertyQuery.TYPE_CODE & PropertyQuery.SUMMARY & PropertyQuery.KEY_CONFLICT)));
-            string key_name, type_code;
-            bool has_schema;
-
-            if (!properties.lookup (PropertyQuery.KEY_NAME,             "s",    out key_name))
-                assert_not_reached ();
-
-            if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_code))
-                assert_not_reached ();
-
-            if (!properties.lookup (PropertyQuery.HAS_SCHEMA,           "b",    out has_schema))
-                assert_not_reached ();
-
-            if (has_schema)
-            {
-                string summary = "";
-                if (!properties.lookup (PropertyQuery.SUMMARY,          "s",    out summary))
-                    assert_not_reached ();
-
-                bool italic_summary;
-                if (summary == "")
-                {
-                    summary = _("No summary provided");
-                    italic_summary = true;
-                }
-                else
-                    italic_summary = false;
-
-                row = new KeyListBoxRow (true,
-                                         type_code,
-                                         setting_object.context_id,
-                                         summary,
-                                         italic_summary,
-                                         modifications_handler.get_current_delay_mode (),
-                                         key_name,
-                                         full_name,
-                                         search_mode_non_local_result);
-
-                uint8 _key_conflict;
-                if (!properties.lookup (PropertyQuery.KEY_CONFLICT,     "y",    out _key_conflict))
-                    assert_not_reached ();
-                KeyConflict key_conflict = (KeyConflict) _key_conflict;
-
-                if (key_conflict == KeyConflict.SOFT)
-                    row.get_style_context ().add_class ("conflict");
-                else if (key_conflict == KeyConflict.HARD)
-                {
-                    row.get_style_context ().add_class ("hard-conflict");
-                    ((KeyListBoxRow) row).update_label (_("conflicting keys"), true);
-                    if (type_code == "b")
-                        ((KeyListBoxRow) row).use_switch (false);
-                }
-            }
-            else
-            {
-                row = new KeyListBoxRow (false,
-                                         type_code,
-                                         ModelUtils.dconf_context_id,
-                                         _("No Schema Found"),
-                                         true,
-                                         modifications_handler.get_current_delay_mode (),
-                                         key_name,
-                                         full_name,
-                                         search_mode_non_local_result);
-            }
-
-            properties.clear ();
-
-            KeyListBoxRow key_row = (KeyListBoxRow) row;
+            KeyListBoxRow key_row = create_key_list_box_row (full_name, context_id, properties, modifications_handler.get_current_delay_mode (), search_mode_non_local_result);
             key_row.small_keys_list_rows = _small_keys_list_rows;
 
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect ((_modifications_handler) => set_delayed_icon (_modifications_handler, key_row));
             set_delayed_icon (modifications_handler, key_row);
-            row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+            key_row.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+
+            row = (ClickableListBoxRow) key_row;
         }
 
         ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
         row.destroy.connect (() => row.disconnect (button_press_event_handler));
 
+        return put_row_in_wrapper (row);
+    }
+
+    private static KeyListBoxRow create_key_list_box_row (string full_name, uint16 context_id, Variant aqv, bool delay_mode, bool search_mode_non_local_result)
+    {
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (aqv);
+        string key_name, type_code;
+        bool has_schema;
+
+        if (!properties.lookup (PropertyQuery.KEY_NAME,             "s",    out key_name))
+            assert_not_reached ();
+
+        if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_code))
+            assert_not_reached ();
+
+        if (!properties.lookup (PropertyQuery.HAS_SCHEMA,           "b",    out has_schema))
+            assert_not_reached ();
+
+        if (has_schema)
+        {
+            string summary = "";
+            if (!properties.lookup (PropertyQuery.SUMMARY,          "s",    out summary))
+                assert_not_reached ();
+
+            bool italic_summary;
+            if (summary == "")
+            {
+                summary = _("No summary provided");
+                italic_summary = true;
+            }
+            else
+                italic_summary = false;
+
+            KeyListBoxRow row = new KeyListBoxRow (true,
+                                                   type_code,
+                                                   context_id,
+                                                   summary,
+                                                   italic_summary,
+                                                   delay_mode,
+                                                   key_name,
+                                                   full_name,
+                                                   search_mode_non_local_result);
+
+            uint8 _key_conflict;
+            if (!properties.lookup (PropertyQuery.KEY_CONFLICT,     "y",    out _key_conflict))
+                assert_not_reached ();
+            KeyConflict key_conflict = (KeyConflict) _key_conflict;
+
+            if (key_conflict == KeyConflict.SOFT)
+                row.get_style_context ().add_class ("conflict");
+            else if (key_conflict == KeyConflict.HARD)
+            {
+                row.get_style_context ().add_class ("hard-conflict");
+                row.update_label (_("conflicting keys"), true);
+                if (type_code == "b")
+                    row.use_switch (false);
+            }
+
+            properties.clear ();
+            return row;
+        }
+        else
+        {
+            properties.clear ();
+            return new KeyListBoxRow (false,
+                                      type_code,
+                                      ModelUtils.dconf_context_id,
+                                      _("No Schema Found"),
+                                      true,
+                                      delay_mode,
+                                      key_name,
+                                      full_name,
+                                      search_mode_non_local_result);
+        }
+    }
+
+    private static ListBoxRowWrapper put_row_in_wrapper (ClickableListBoxRow row)
+    {
         /* Wrapper ensures max width for rows */
         ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
 
@@ -383,13 +394,13 @@ private abstract class RegistryList : Grid, BrowsableView
         {
             wrapper.get_style_context ().add_class ("folder-row");
             wrapper.action_name = "ui.open-folder";
-            wrapper.set_action_target ("s", full_name);
+            wrapper.set_action_target ("s", row.full_name);
         }
         else
         {
             wrapper.get_style_context ().add_class ("key-row");
             wrapper.action_name = "ui.open-object";
-            wrapper.set_action_target ("(sq)", full_name, setting_object.context_id);
+            wrapper.set_action_target ("(sq)", row.full_name, row.context_id);
         }
 
         return wrapper;
@@ -438,8 +449,8 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private bool on_button_pressed (Widget widget, Gdk.EventButton event)
     {
-        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();
-        Container list_box = (Container) list_box_row.get_parent ();
+        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();    // is a ListBoxRowWrapper
+        // ListBox list_box = (ListBox) list_box_row.get_parent ();     // instead of key_list_box
         key_list_box.select_row (list_box_row);
 
         if (!search_mode)
@@ -447,7 +458,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
-            if (search_mode && list_box.get_focus_child () != null)
+            if (search_mode && key_list_box.get_focus_child () != null)
                 list_box_row.grab_focus ();
 
             ClickableListBoxRow row = (ClickableListBoxRow) widget;
