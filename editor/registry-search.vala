@@ -30,23 +30,60 @@ private class RegistrySearch : RegistryList
     }
 
     /*\
-    * * Updating
+    * * Simple public calls
     \*/
-
-    private void ensure_selection ()
-    {
-        if (!(key_list_box is ListBox)) // suppresses some warnings if the window is closed while the search is processing
-            return;                     // TODO see if 5596feae9b51563a33f1bffc6a370e6ba556adb7 fixed that in Gtk 4
-
-        ListBoxRow? selected_row = key_list_box.get_selected_row ();
-        if (selected_row == null)
-            _select_first_row (key_list_box);
-    }
 
     internal override void select_first_row ()
     {
         _select_first_row (key_list_box);
     }
+
+    internal bool return_pressed ()
+    {
+        return _return_pressed (key_list_box);
+    }
+
+    internal string? get_copy_path_text ()
+    {
+        return _get_copy_path_text (key_list_box);
+    }
+
+    internal void clean ()
+    {
+        key_list_box.bind_model (null, null);
+
+        stop_global_search ();
+
+        post_local = -1;
+        post_bookmarks = -1;
+        post_folders = -1;
+
+        old_term = null;
+    }
+
+    internal void set_search_parameters (string current_path, string [] _bookmarks, SortingOptions _sorting_options)
+    {
+        clean ();
+
+        current_path_if_search_mode = current_path;
+        bookmarks = _bookmarks;
+        sorting_options = _sorting_options;
+    }
+
+    /*\
+    * * Updating
+    \*/
+
+    private static void ensure_selection (ListBox? key_list_box)    // technical nullability
+    {
+        if (key_list_box == null)   // suppresses some warnings if the window is closed while the search is processing
+            return;                 // TODO see if 5596feae9b51563a33f1bffc6a370e6ba556adb7 fixed that in Gtk 4
+
+        ListBoxRow? selected_row = ((!) key_list_box).get_selected_row ();
+        if (selected_row == null)
+            _select_first_row ((!) key_list_box);
+    }
+
     private static void _select_first_row (ListBox key_list_box)
     {
         ListBoxRow? row = key_list_box.get_row_at_index (0);
@@ -55,7 +92,7 @@ private class RegistrySearch : RegistryList
         key_list_box.get_adjustment ().set_value (0);
     }
 
-    internal bool return_pressed ()
+    private static bool _return_pressed (ListBox key_list_box)
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -69,13 +106,14 @@ private class RegistrySearch : RegistryList
     * * Keyboard calls
     \*/
 
-    internal string? get_copy_path_text ()
+    private static string? _get_copy_path_text (ListBox key_list_box)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
             return null;
         return _get_action_target ((!) selected_row);
     }
+
     private static string _get_action_target (ListBoxRow selected_row)
     {
         Variant? variant = selected_row.get_action_target_value ();
@@ -106,29 +144,19 @@ private class RegistrySearch : RegistryList
     private uint? search_source = null;
     private GLib.Queue<string> search_nodes = new GLib.Queue<string> ();
 
-    internal void clean ()
-    {
-        key_list_box.bind_model (null, null);
-        stop_global_search ();
-        post_local = -1;
-        post_bookmarks = -1;
-        post_folders = -1;
-        old_term = null;
-    }
-
     internal void start_search (string term)
         requires (current_path_if_search_mode != null)
     {
         if (old_term != null && term == (!) old_term)
         {
-            ensure_selection ();
+            ensure_selection (key_list_box);
             return;
         }
 
         SettingsModel model = modifications_handler.model;
         if (old_term != null && term.has_prefix ((!) old_term))
         {
-            pause_global_search ();
+            pause_global_search (ref search_source);
             refine_local_results (term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
             refine_bookmarks_results (term, post_local, ref list_model, ref post_bookmarks, ref post_folders);
             if ((!) old_term == "")
@@ -139,7 +167,7 @@ private class RegistrySearch : RegistryList
                 resume_global_search ((!) current_path_if_search_mode, term); // update search term
             }
 
-            ensure_selection ();
+            ensure_selection (key_list_box);
 
             model.keys_value_push ();
         }
@@ -148,14 +176,16 @@ private class RegistrySearch : RegistryList
             model.clean_watched_keys ();
 
             stop_global_search ();
-            post_local = -1;
-            post_folders = -1;
 
-            local_search (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
+            local_search (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
+            post_local = (int) list_model.get_n_items ();
+            post_bookmarks = post_local;
+            post_folders = post_local;
+
             bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, ref list_model, ref post_bookmarks, ref post_folders);
             key_list_box.bind_model (list_model, new_list_box_row);
 
-            select_first_row ();
+            _select_first_row (key_list_box);
 
             model.keys_value_push ();
 
@@ -213,7 +243,7 @@ private class RegistrySearch : RegistryList
         }
     }
 
-    private static void local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term, ref GLib.ListStore list_model, ref int post_local, ref int post_bookmarks, ref int post_folders)
+    private static void local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term, ref GLib.ListStore list_model)
         requires (ModelUtils.is_folder_path (current_path))
     {
         SettingComparator comparator = sorting_options.get_comparator ();
@@ -234,9 +264,6 @@ private class RegistrySearch : RegistryList
                 }
             }
         }
-        post_local = (int) list_model.get_n_items ();
-        post_bookmarks = post_local;
-        post_folders = post_local;
     }
 
     private static void bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks, ref GLib.ListStore list_model, ref int post_bookmarks, ref int post_folders)
@@ -265,7 +292,7 @@ private class RegistrySearch : RegistryList
 
     private void stop_global_search ()
     {
-        pause_global_search ();
+        pause_global_search (ref search_source);
         search_nodes.clear ();
         list_model.remove_all ();
     }
@@ -276,7 +303,7 @@ private class RegistrySearch : RegistryList
         resume_global_search (current_path, term);
     }
 
-    private void pause_global_search ()
+    private static void pause_global_search (ref uint? search_source)
     {
         if (search_source == null)
             return;
@@ -335,7 +362,7 @@ private class RegistrySearch : RegistryList
             }
         }
 
-        ensure_selection ();
+        ensure_selection (key_list_box);
     }
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
@@ -355,13 +382,5 @@ private class RegistrySearch : RegistryList
         if (row_index == post_folders)
             return _("Keys");
         return null;
-    }
-
-    internal void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
-    {
-        clean ();
-        current_path_if_search_mode = current_path;
-        this.bookmarks = bookmarks;
-        this.sorting_options = sorting_options;
     }
 }
