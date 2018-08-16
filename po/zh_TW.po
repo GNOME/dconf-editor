@@ -601,7 +601,7 @@ msgid ""
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
 "字串類型可以接受任何 utf8 字串。請注意空字串 \"\" 不是 NULL (空值)；另請參閱"
-"的「string-nullable」設定鍵。。"
+"的「string-nullable」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:334
 msgid "A string array, type ‘as’"
