@@ -159,7 +159,7 @@ private class RegistryInfo : Grid, BrowsableView
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
                 range_type_is_range = ((RangeType) range_type) == RangeType.RANGE;
-                add_row_from_label (_("Forced range"),          Key.cool_boolean_text_value (range_type_is_range));
+                add_row_from_label (_("Forced range"),                              range_type_is_range ? _("Yes") : _("No"));
             }
         }
 
