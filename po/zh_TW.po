@@ -297,8 +297,8 @@ msgid ""
 "removed when a better way to do things is found."
 msgstr ""
 "Dconf Editor 可以從多個可能位置監控增加與移除的基模。這是透過每隔三秒檢查基模"
-"列表是否變更而達到的。如果你覺得這種達成的方法不太好，可以將這個旗幟設定至 "
-"\"false\" 以停用此功能。注意：這個選項將會在找到更好的方法之後移除掉。"
+"列表是否變更而達到的。如果你覺得這種達成的方法不太好，可以將這個旗幟設定至"
+"「false」以停用此功能。注意：這個選項將會在找到更好的方法之後移除掉。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Enabled relocatable schema mapping facilities"
@@ -446,7 +446,7 @@ msgid ""
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
-"可以包含任意物件路徑數量的物件路徑陣列 (包含空陣列：\"[]\")。如果您不與 D-"
+"可以包含任意物件路徑數量的物件路徑陣列 (包含空陣列：「[]」)。如果您不與 D-"
 "Bus 互動，則沒有理由使用到這個類型。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:256
@@ -600,7 +600,7 @@ msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"字串類型可以接受任何 utf8 字串。請注意空字串 \"\" 不是 NULL (空值)；另請參閱"
+"字串類型可以接受任何 utf8 字串。請注意空字串「''」不是 NULL (空值)；另請參閱"
 "的「string-nullable」設定鍵。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:334
@@ -674,7 +674,7 @@ msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
-"有個空位元類型 (有時稱為 \"triv\") 是一個沒有內容的位元組，只能將「{}」作為"
+"有個空位元類型 (有時稱為「triv」) 是一個沒有內容的位元組，只能將「{}」作為"
 "值。"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:372
@@ -700,7 +700,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:393
 msgid "Conflicting key defaulting to “1” that should give an error"
-msgstr "應該對預設值為 \"1\" 的衝突設定鍵給出錯誤"
+msgstr "應該對預設值為「1」的衝突設定鍵給出錯誤"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:394
 #: editor/ca.desrt.dconf-editor.gschema.xml:421
@@ -760,7 +760,7 @@ msgstr "來自 Conflict2 的未衝突普通設定鍵"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:420
 msgid "Conflicting key defaulting to “2” that should give an error"
-msgstr "應該對預設值為 \"2\" 的衝突設定鍵給出錯誤"
+msgstr "應該對預設值為「2」的衝突設定鍵給出錯誤"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid "Conflicting key with range 0~5 that should give an error"
