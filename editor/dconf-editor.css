@@ -114,18 +114,18 @@
                                    .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
 
 /* icon sizing */
-                                   .keys-list          > row > .folder > grid { background-size:1.5rem; }
-             .small-keys-list-rows .keys-list          > row > .folder > grid { background-size:1rem; }
+                                   .keys-list          > row > .folder > grid,
+             .small-keys-list-rows .keys-list          > row > .folder > grid { background-size:1.1rem; } /* 1.1rem is roughly equivalent 16px */
 
 /* technical padding: icon visual padding + icon size + some padding */
                                    .keys-list:dir(ltr) > row > .folder > grid,
-                                   .keys-list:dir(ltr) > row > .key    > grid { padding-left:  3rem; }
+                                   .keys-list:dir(ltr) > row > .key    > grid { padding-left:  2.75rem; }
 
              .small-keys-list-rows .keys-list:dir(ltr) > row > .folder > grid,
              .small-keys-list-rows .keys-list:dir(ltr) > row > .key    > grid { padding-left:  2.25rem; }
 
                                    .keys-list:dir(rtl) > row > .folder > grid,
-                                   .keys-list:dir(rtl) > row > .key    > grid { padding-right: 3rem; }
+                                   .keys-list:dir(rtl) > row > .key    > grid { padding-right: 2.75rem; }
              .small-keys-list-rows .keys-list:dir(rtl) > row > .folder > grid,
              .small-keys-list-rows .keys-list:dir(rtl) > row > .key    > grid { padding-right: 2.25rem; }
 
@@ -147,14 +147,15 @@
 
                                    .keys-list          > row > .key         { transition:background-position 0.3s,
                                                                                          background-size     0.3s;
-                                                                              background-repeat:no-repeat;
-                                                                              background-size:1.5rem; }
-             .small-keys-list-rows .keys-list          > row > .key         { background-size:1rem; }
+                                                                              background-repeat:no-repeat;}
+                                   .keys-list          > row > .key,
+             .small-keys-list-rows .keys-list          > row > .key         { background-size:1.1rem; } /* 1.1rem is roughly equivalent 16px */
 
                                    .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
                                    .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }
              .small-keys-list-rows .keys-list:dir(ltr) > row > .key         { background-position:            0.75rem  center; }
              .small-keys-list-rows .keys-list:dir(rtl) > row > .key         { background-position:calc(100% - 0.75rem) center; }
+
 
 /* icons */
 .keys-list > row >                       .key.delayed,
