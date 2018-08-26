@@ -87,9 +87,10 @@ private class DConfWindow : ApplicationWindow
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
 
-        set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
+        // maximize before setting default size: only one call to on_size_allocate() so no change of the large-window CSS class at start
         if (settings.get_boolean ("window-is-maximized"))
             maximize ();
+        set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
 
         set_css_styles ();
 

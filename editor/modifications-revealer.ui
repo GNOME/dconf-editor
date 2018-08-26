@@ -7,6 +7,9 @@
     <child>
       <object class="GtkActionBar">
         <property name="visible">True</property>
+        <style>
+          <class name="modifications-revealer"/>
+        </style>
         <child>
           <object class="GtkMenuButton" id="delayed_list_button">
             <property name="visible">True</property>

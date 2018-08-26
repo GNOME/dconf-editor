@@ -4,6 +4,7 @@
   <template class="FolderListBoxRow" parent="ClickableListBoxRow">
     <property name="visible">True</property>
     <style>
+      <class name="managed"/>
       <class name="folder"/>
     </style>
     <child>

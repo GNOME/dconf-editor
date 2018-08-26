@@ -4,6 +4,7 @@
   <template class="KeyListBoxRow" parent="ClickableListBoxRow">
     <property name="visible">True</property>
     <style>
+      <class name="managed"/>
       <class name="key"/>
     </style>
     <child>
@@ -41,6 +42,7 @@
             <property name="ellipsize">end</property>
             <property name="single-line-mode">True</property>
             <style>
+              <class name="key-summary"/>
               <class name="dim-label"/>
             </style>
           </object>
