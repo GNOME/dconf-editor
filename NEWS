@@ -1,3 +1,22 @@
+dconf-editor 3.29.92
+=====================
+
+Two strings added (freeze break), a quite important rework of the CSS file (that
+notably makes icons less fuzzy when using small rows), that looks calm and good.
+
+Translation updated:
+  Chinese (Taiwan): Yi-Jyun Pan and Arnaud Bonatti
+  Czech: Marek Cernocky
+  French: Claude Paroz
+  German: Mario Blättermann
+  Greek: Efstathios Iosifidis
+  Indonesian: Kukuh Syafaat
+  Italian: Milo Casagrande
+  Lithuanian: Aurimas Černius
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Turkish: Emin Tufan Çetin
+
 dconf-editor 3.29.91
 =====================
 
