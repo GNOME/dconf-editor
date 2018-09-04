@@ -269,7 +269,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "Botón do rato que activa a orde «Anterior» na xanela  de navegación"
+msgstr "Botón do rato que activa a orde «Anterior» na xanela de navegación"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:160
 msgid ""
@@ -292,7 +292,7 @@ msgid ""
 "Possible values range between 6 and 14."
 msgstr ""
 "Para os usuarios con rato que teñen botóns «Seguinte» e «Anterior», esta "
-"chave determinará  que botón activa a orde «Seguinte» nunha xanela de "
+"chave determinará que botón activa a orde «Seguinte» nunha xanela de "
 "navegador. O intervalo de valores posíbeis está entre 6 e 14."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:170
