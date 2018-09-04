@@ -157,7 +157,7 @@ msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
-"”'true” (egia) bada, Dconf editoreak abiarazten saiatuko da 'saved-view' "
+"“true” (egia) bada, Dconf editoreak abiarazten saiatuko da “saved-view” "
 "gakoan azaldutako bide-izenera nabigatzeko."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:43
@@ -172,7 +172,7 @@ msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
-"”restore-view” gakoa ”true” (egia) gisa ezartzen bada, Dconf editoreak "
+"“restore-view” gakoa “true” (egia) gisa ezartzen bada, Dconf editoreak "
 "abiarazten saiatuko da bere bide-izenera nabigatzeko."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:48
@@ -187,7 +187,7 @@ msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
-"'”true” (egia) bada, Dconf editoreak laster-leiho bat irekiko du abiaraztean "
+"“true” (egia) bada, Dconf editoreak laster-leiho bat irekiko du abiaraztean "
 "erabiltzaileari kontu handiz ibiltzeko gogoraraziz."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:53
@@ -198,7 +198,7 @@ msgstr "Gakoen zerrendan errenkada txikiak baimentzeko bandera"
 #| msgid "If 'true', the keys list use smaller rows."
 msgid "If “true”, the keys list use smaller rows."
 msgstr ""
-"”true” (egia) bada, gakoen zerrendak errenkada txikiagoak erabiliko ditu."
+"“true” (egia) bada, gakoen zerrendak errenkada txikiagoak erabiliko ditu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:58
 msgid "A flag to enable small rows for bookmarks list"
@@ -208,7 +208,7 @@ msgstr "Laster-marken zerrendan errenkada txikiak baimentzeko bandera"
 #| msgid "If 'true', the bookmarks list use smaller rows."
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr ""
-"”true” (egia) bada, laster-marken zerrendak errenkada txikiagoak erabiliko "
+"“true” (egia) bada, laster-marken zerrendak errenkada txikiagoak erabiliko "
 "ditu."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:68
@@ -236,14 +236,14 @@ msgid ""
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
-"”unsafe” balioa ez da gomendagarria mota berezia ez duten gakoetan, honek "
+"“unsafe” balioa ez da gomendagarria mota berezia ez duten gakoetan, honek "
 "gakoaren balioa eguneratzen du sarreran zerbait aldatzen den bakoitzean, "
-"tarteko egoerak barne. ”safe” balioak berrespena eskatuko du egoera "
+"tarteko egoerak barne. “safe” balioak berrespena eskatuko du egoera "
 "horietan, baina boolearretan eta nuluak izan daitezkeen boolearretan, "
-"zerrendapenetan eta banderetan aldaketa berehala baimentzen ditu. ”always-"
-"confirm-implicit” eta ”always-confirm-explicit” balioek beti eskatuko dute "
+"zerrendapenetan eta banderetan aldaketa berehala baimentzen ditu. “always-"
+"confirm-implicit” eta “always-confirm-explicit” balioek beti eskatuko dute "
 "berrespena, aurrenekoak aldaketak aplikatzen ditu bide-izenak aldatzen "
-"dituzunean, bigarrengoak berriz baztertu egiten du. ”always-delay” balioak "
+"dituzunean, bigarrengoak berriz baztertu egiten du. “always-delay” balioak "
 "aldaketa bakoitza atzerapen moduan gehitzen du, hainbat gako aldi berean "
 "aplikatzea baimenduz."
 
@@ -266,7 +266,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:85
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "Saguaren botoia “Atzera“ komandoa aktibatzeko arakatzailearen leihoan"
+msgstr "Saguaren botoia “Atzera” komandoa aktibatzeko arakatzailearen leihoan"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:86
 msgid ""
@@ -274,13 +274,13 @@ msgid ""
 "will set which button activates the “Back” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr ""
-"“Aurrera“ eta “Atzera“ botoidun saguak dituzten erabiltzaileentzako, gako "
-"honek “Atzera“ komandoa zein botoik aktibatuko duen arakatzailearen leihoan "
+"“Aurrera” eta “Atzera” botoidun saguak dituzten erabiltzaileentzako, gako "
+"honek “Atzera” komandoa zein botoik aktibatuko duen arakatzailearen leihoan "
 "zehazten du. Balio erabilgarriak 6 eta 14 artekoa dira."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:91
 msgid "Mouse button to activate the “Forward” command in browser window"
-msgstr "Saguaren botoia “Aurrera“ komandoa aktibatzeko arakatzailearen leihoan"
+msgstr "Saguaren botoia “Aurrera” komandoa aktibatzeko arakatzailearen leihoan"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:92
 msgid ""
@@ -288,8 +288,8 @@ msgid ""
 "will set which button activates the “Forward” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr ""
-"“Aurrera“ eta “Atzera“ botoidun saguak dituzten erabiltzaileentzako, gako "
-"honek “Aurrera“ komandoa zein botoik aktibatuko duen arakatzailearen leihoan "
+"“Aurrera” eta “Atzera” botoidun saguak dituzten erabiltzaileentzako, gako "
+"honek “Aurrera” komandoa zein botoik aktibatuko duen arakatzailearen leihoan "
 "zehazten du. Balio erabilgarriak 6 eta 14 artekoa dira."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
@@ -301,8 +301,8 @@ msgstr "Balio boolearra, ‘b’ mota"
 #| msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
-"Boolearrek soilik bi balio erabil ditzakete: “true“ (egia) edo "
-"“false“ (faltsua)"
+"Boolearrek soilik bi balio erabil ditzakete: “true” (egia) edo "
+"“false” (faltsua)."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
 #| msgid "A nullable boolean, type \"mb\""
@@ -310,18 +310,14 @@ msgid "A nullable boolean, type ‘mb’"
 msgstr "Balio boolear nulua, ‘mb’ mota"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:104
-#| msgid ""
-#| "GSettings allows nullable types, that are similar to other types but "
-#| "could take a \"nothing\" value. A nullable boolean can only take three "
-#| "values, \"true\", \"false\" and \"nothing\"."
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
 "“true”, “false” and “nothing”."
 msgstr ""
 "GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina "
-"“nothing“ (ezer ere ez) balioa har dezakete. Balio boolear nulu batek hiru "
-"balio soilik eduki ditzake: “true“, “false“ eta “nothing“."
+"“nothing” (ezer ere ez) balioa har dezakete. Balio boolear nulu batek hiru "
+"balio soilik eduki ditzake: “true”, “false” eta “nothing”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:108
 #| msgid "A byte (unsigned), type \"y\""
@@ -408,7 +404,7 @@ msgid ""
 "to make use of this type."
 msgstr ""
 "Objektuen bide-izenen matrize batek hainbat objektuen bide-izen eduki "
-"ditzake (hutsa baita ere: \"[]\"). Ez baduzu D-Bus-arekin elkarreragiten, "
+"ditzake (hutsa baita ere: “[]”). Ez baduzu D-Bus-arekin elkarreragiten, "
 "ez dago mota hau erabiltzeko arrazoirik."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:144
@@ -447,7 +443,7 @@ msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr ""
-"Zerrendapenak “enum“ atributuarekin egin daiteke, edo “choices“ etiketa "
+"Zerrendapenak “enum” atributuarekin egin daiteke, edo “choices” etiketa "
 "batekin."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
@@ -458,7 +454,7 @@ msgstr "Osoko laburra, ‘n’ mota"
 #: editor/ca.desrt.dconf-editor.gschema.xml:162
 #| msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
-msgstr "16 bit-eko zeinudun osokoa. Ikus “integer-16-unsigned“ gakoa."
+msgstr "16 bit-eko zeinudun osokoa. Ikus “integer-16-unsigned” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Flags: choose-colors-you-love"
@@ -467,7 +463,7 @@ msgstr "Banderak: choose-colors-you-love (aukeratu maite dituzun koloreak)"
 #: editor/ca.desrt.dconf-editor.gschema.xml:167
 #| msgid "Flags could be set by the \"enum\" attribute."
 msgid "Flags could be set by the “enum” attribute."
-msgstr "banderak “enum“ atributuarekin ezar daitezke."
+msgstr "banderak “enum” atributuarekin ezar daitezke."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
 #| msgid "An unsigned short integer, type \"q\""
@@ -477,7 +473,7 @@ msgstr "Zeinurik gabeko osoko laburra, ‘q’ mota"
 #: editor/ca.desrt.dconf-editor.gschema.xml:172
 #| msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
-msgstr "16 bit-eko zeinurik gabeko osokoa. Ikus “integer-16-signed“ gakoa."
+msgstr "16 bit-eko zeinurik gabeko osokoa. Ikus “integer-16-signed” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:176
 #| msgid "An usual integer, type \"i\""
@@ -487,7 +483,7 @@ msgstr "Ohiko osokoa, ‘i’ mota"
 #: editor/ca.desrt.dconf-editor.gschema.xml:177
 #| msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
-msgstr "32 bit-eko zeinudun osokoa. Ikus “integer-32-unsigned“ gakoa."
+msgstr "32 bit-eko zeinudun osokoa. Ikus “integer-32-unsigned” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
 #| msgid "An unsigned usual integer, type \"u\""
@@ -497,7 +493,7 @@ msgstr "Zeinurik gabeko ohiko osokoa, ‘u’ mota"
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
 #| msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
-msgstr "32 bit-eko zeinurik gabeko osokoa. Ikus “integer-32-signed“ gakoa."
+msgstr "32 bit-eko zeinurik gabeko osokoa. Ikus “integer-32-signed” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 #| msgid "A long integer, type \"x\""
@@ -507,7 +503,7 @@ msgstr "Osoko luzea, ‘x’ mota"
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
 #| msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
-msgstr "64 bit-eko zeinudun osokoa. Ikus “integer-64-unsigned“ gakoa."
+msgstr "64 bit-eko zeinudun osokoa. Ikus “integer-64-unsigned” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:191
 #| msgid "An unsigned long integer, type \"t\""
@@ -517,7 +513,7 @@ msgstr "Zeinurik gabeko osoko luzea, ‘t’ mota"
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
 #| msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
-msgstr "64 bit-eko zeinurik gabeko osokoa. Ikus “integer-64-signed“ gakoa."
+msgstr "64 bit-eko zeinurik gabeko osokoa. Ikus “integer-64-signed” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "A number with range"
@@ -530,7 +526,7 @@ msgid ""
 "integer could only take a value between -2 and 10."
 msgstr ""
 "Zenbakizko ezarpen bakoitza (edozer motatako osokoak eta zeinurik gabeko "
-"osokoak baita bikoitzak ere)  balioen barruti pertsonalizatu batera muga "
+"osokoak baita bikoitzak ere) balioen barruti pertsonalizatu batera muga "
 "daiteke. Adibidez, osoko honek -2 eta 10 arteko balio bat har dezake soilik."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
@@ -566,8 +562,8 @@ msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"Kate motak edozer utf8 kate onar dezake. Jakin ezazu “''“ kate hutsa ez "
-"dela NULL-en (nulua) berdina; ikus “string-nullable“ gakoa."
+"Kate motak edozer utf8 kate onar dezake. Jakin ezazu “''” kate hutsa ez "
+"dela NULL-en (nulua) berdina; ikus “string-nullable” gakoa."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:213
 #| msgid "A string array, type \"as\""
@@ -583,7 +579,7 @@ msgid ""
 "an empty array, “[]”."
 msgstr ""
 "Kateen matrize batek edozer luzerako edozer kate kopuru eduki dezake. Kate "
-"hutsa ere izan daiteke: “[]“."
+"hutsa ere izan daiteke: “[]”."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:218
 #| msgid "A nullable string, type \"ms\""
@@ -601,8 +597,8 @@ msgid ""
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
 "GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina "
-"“nothing“ (ezer ere ez) balioa har dezakete). Nulua izan daitekeen kate "
-"edozer kate eduki dezake balio gisa, bai “''“ kate hutsa baita NULL "
+"“nothing” (ezer ere ez) balioa har dezakete). Nulua izan daitekeen kate "
+"edozer kate eduki dezake balio gisa, bai “''” kate hutsa baita NULL "
 "(nulua) ere."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:223
@@ -1130,7 +1126,7 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Erabili \"nothing\" gako-hitza mota posible bat (\"m\" hizkiarekin "
+"Erabili “nothing” gako-hitza mota posible bat (“m” hizkiarekin "
 "hasitakoa) bere balio hutsera ezartzeko. Kateak, sinadurak eta objektuen "
 "bide-izenak komatxoz (\") inguratuta egon beharko lukete."
 
@@ -1147,7 +1143,7 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Erabili \"nothing\" gako-hitza mota posible bat (\"m\" hizkiarekin "
+"Erabili “nothing” gako-hitza mota posible bat (“m” hizkiarekin "
 "hasitakoa) bere balio hutsera ezartzeko."
 
 #: editor/registry-view.ui:32
@@ -1166,19 +1162,19 @@ msgstr "Ez dago gakorik bide-izen honetan"
 #, c-format
 #| msgid "Cannot find folder \"%s\"."
 msgid "Cannot find folder “%s”."
-msgstr "Ezin da “%s“ karpeta aurkitu."
+msgstr "Ezin da “%s” karpeta aurkitu."
 
 #: editor/registry-view.vala:200
 #, c-format
 #| msgid "Cannot find key \"%s\" here."
 msgid "Cannot find key “%s” here."
-msgstr "Ezin da “%s“ gakoa aurkitu hemen."
+msgstr "Ezin da “%s” gakoa aurkitu hemen."
 
 #: editor/registry-view.vala:206
 #, c-format
 #| msgid "Key \"%s\" has been removed."
 msgid "Key “%s” has been removed."
-msgstr "“%s“ gakoa kendu egin da."
+msgstr "“%s” gakoa kendu egin da."
 
 #, fuzzy
 #~ msgid "dconf-editor"
