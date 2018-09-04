@@ -496,7 +496,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A string, type ‘s’"
-msgstr "Reťazec, typ \"s\""
+msgstr "Reťazec, typ „s”"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid ""
