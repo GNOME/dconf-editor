@@ -238,7 +238,7 @@ msgstr ""
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:20
 msgid "A boolean, type \"b\""
-msgstr "布尔值，类型 \"b\""
+msgstr "布尔值，类型“b”"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:21
 msgid "Booleans can only take two values, \"true\" or \"false\"."
@@ -438,10 +438,10 @@ msgstr "数字，带范围限制"
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
-"integer could only take a value between -5 and 9."
+"integer could only take a value between -2 and 10."
 msgstr ""
 "每个位数的设置值 (各个类型的整型和无符号的整型，及双精度浮点类型) 可限制为自"
-"订的数值范围。例如，此整数只能使用 -5 到 9 之间的一个数值。"
+"订的数值范围。例如，此整数只能使用 -2 到 10 之间的一个数值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:66
 msgid "A custom type, here \"(ii)\""
@@ -467,7 +467,7 @@ msgid ""
 "key."
 msgstr ""
 "字串类型可以接受任何 utf8 字串。请注意空字串“''”不是 NULL (空值)；另请参"
-"阅“string-nullable”键值。。"
+"阅“string-nullable”键值。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:70
 msgid "A string array, type \"as\""
@@ -478,7 +478,7 @@ msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, \"[]\"."
 msgstr ""
-"一个字符串数组，包含任意数量的任何长度的字符串。可以是一个空数组，\"[]\"。"
+"一个字符串数组，包含任意数量的任何长度的字符串。可以是一个空数组，“[]”。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:72
 msgid "A nullable string, type \"ms\""
@@ -491,7 +491,7 @@ msgid ""
 "including the empty string \"''\", or can be NULL (nothing)."
 msgstr ""
 "GSettings 允许使用“可空”类型。这种类型其他类型相似，但可以接受“nothing”数值。"
-"可空字串可以是任何字串值（包括空字串 \"''\"），或者 NULL (空值)。"
+"可空字串可以是任何字串值（包括空字串“''”），或者 NULL (空值)。"
 
 #: ../editor/ca.desrt.dconf-editor.gschema.xml.h:74
 msgid "A 1-choice enumeration"
