@@ -1342,8 +1342,8 @@ msgstr[1] "%u opérations gsettings"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] "et %u opération dconf retardée."
-msgstr[1] "et %u opérations dconf retardées."
+msgstr[0] " et %u opération dconf retardée."
+msgstr[1] " et %u opérations dconf retardées."
 
 #: editor/pathbar.vala:313
 msgid "Copy current path"
