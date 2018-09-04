@@ -1,3 +1,19 @@
+dconf-editor 3.30.0
+=====================
+
+New stable release. No problem found since last beta, more translations updates;
+and an application mostly similar to the previous stable release, code excluded.
+
+Translations updated:
+  Croatian: Goran Vidović
+  Danish: Ask Hjorth Larsen
+  Galician: Fran Diéguez
+  Greek: Efstathios Iosifidis
+  Hungarian: Balázs Meskó
+  Korean: Changwoo Ryu
+  Latvian: Rūdolfs Mazurs
+  Swedish: Anders Jonsson
+
 dconf-editor 3.29.92
 =====================
 
