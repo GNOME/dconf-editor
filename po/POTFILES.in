@@ -7,7 +7,6 @@ editor/browser-view.vala
 editor/ca.desrt.dconf-editor.appdata.xml.in
 editor/ca.desrt.dconf-editor.desktop.in
 editor/ca.desrt.dconf-editor.gschema.xml
-editor/dconf-editor-menu.ui
 editor/dconf-editor.ui
 editor/dconf-editor.vala
 editor/dconf-model.vala
