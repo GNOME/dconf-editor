@@ -144,10 +144,11 @@ private class ConfigurationEditor : Gtk.Application
     {
         // generic
         { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
-
-        // app-menu
         { "about", about_cb },
-        { "quit", quit_cb }
+
+        // quit
+        { "quit",           quit_if_no_pending_changes },
+        { "apply-and-quit", apply_pending_changes_and_quit }
     };
 
     /*\
@@ -263,7 +264,9 @@ private class ConfigurationEditor : Gtk.Application
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
-        set_accels_for_action ("ui.copy-path", { "<Primary><Shift>c" });
+        set_accels_for_action ("ui.copy-path",          { "<Primary><Shift>c" });
+        set_accels_for_action ("app.quit",              { "<Primary>q" });
+        set_accels_for_action ("app.apply-and-quit",    { "<Primary><Shift>q" });
 
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
@@ -488,12 +491,18 @@ private class ConfigurationEditor : Gtk.Application
                                null);
     }
 
-    private void quit_cb ()
+    private void quit_if_no_pending_changes ()
+    {
+        Gtk.Window? window = get_active_window ();
+        if (window == null || ((DConfWindow) (!) window).quit_if_no_pending_changes ())
+            base.quit ();
+    }
+
+    private void apply_pending_changes_and_quit ()
     {
         Gtk.Window? window = get_active_window ();
         if (window != null)
-            ((!) window).destroy ();
-
+            ((DConfWindow) (!) window).apply_pending_changes_and_quit ();
         base.quit ();
     }
 }

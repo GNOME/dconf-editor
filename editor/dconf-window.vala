@@ -353,6 +353,23 @@ private class DConfWindow : ApplicationWindow
         window_height = (!) _window_height;
     }
 
+    internal bool quit_if_no_pending_changes ()
+    {
+        if (modifications_handler.has_pending_changes ())
+        {
+            show_notification ("There are pending changes. Use <ctrl><shift>q to apply changes and quit.");
+            return false;
+        }
+        destroy ();
+        return true;
+    }
+
+    internal void apply_pending_changes_and_quit ()
+    {
+        modifications_handler.apply_delayed_settings ();
+        destroy ();
+    }
+
     [GtkCallback]
     private void on_destroy ()
     {
@@ -710,6 +727,12 @@ private class DConfWindow : ApplicationWindow
             section.freeze ();
             menu.append_section (null, section);
         }
+
+        section = new GLib.Menu ();     // TODO not accessible in search mode
+        section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
+        section.append (_("About"), "app.about");   // TODO move as "win."
+        section.freeze ();
+        menu.append_section (null, section);
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);

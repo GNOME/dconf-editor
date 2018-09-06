@@ -172,11 +172,25 @@
                 <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;F1</property>
               </object>
             </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="visible">True</property>
+            <property name="title" translatable="yes" context="shortcut window">Quit</property>
+            <!-- TODO missing "discard and quit", as <alt>F4 has a different behaviour when a dialog is opened (and is WM-specific) -->
             <child>
-              <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a KeyEditor dialog is opened -->
+              <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a dialog is opened -->
                 <property name="visible">True</property>
-                <property name="title" translatable="yes" context="shortcut window">Quit</property>
+                <property name="title" translatable="yes" context="shortcut window">Quit if there’s no pending changes</property>
                 <property name="accelerator">&lt;Primary&gt;q</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a dialog is opened -->
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Apply pending changes and quit</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;q</property>
               </object>
             </child>
           </object>

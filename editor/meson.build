@@ -97,7 +97,6 @@ resource_data = files(
   'browser-stack.ui',
   'browser-view.ui',
   'dconf-editor.css',
-  'dconf-editor-menu.ui',
   'dconf-editor.ui',
   'delayed-setting-view.ui',
   'folder-list-box-row.ui',

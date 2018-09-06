@@ -20,7 +20,6 @@
     <file preprocess="xml-stripblanks">registry-view.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
-    <file preprocess="xml-stripblanks" alias="menus.ui">dconf-editor-menu.ui</file>
     <file preprocess="xml-stripblanks">help-overlay.ui</file>
   </gresource>
 </gresources>

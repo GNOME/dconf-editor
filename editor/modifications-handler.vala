@@ -55,6 +55,11 @@ private class ModificationsHandler : Object
     * * Public calls
     \*/
 
+    internal bool has_pending_changes ()
+    {
+        return dconf_changes_count + gsettings_changes_count != 0;
+    }
+
     internal bool get_current_delay_mode ()
     {
         return mode == ModificationsMode.DELAYED || behaviour == Behaviour.ALWAYS_DELAY;
