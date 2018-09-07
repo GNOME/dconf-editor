@@ -509,10 +509,6 @@ msgid ""
 "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr ""
 
-#: editor/dconf-editor.vala:154
-msgid "translator-credits"
-msgstr "অনুবাদক-কৃতিত্ব"
-
 #: editor/dconf-model.vala:195
 msgid "Boolean"
 msgstr "বুলিয়ান"

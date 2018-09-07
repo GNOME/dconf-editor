@@ -485,6 +485,7 @@ private class ConfigurationEditor : Gtk.Application
                                "license-type", Gtk.License.GPL_3_0, /* means "version 3.0 or later" */
                                "wrap-license", true,
                                "authors", authors,
+                               /* Translators: This string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
                                "translator-credits", _("translator-credits"),
                                "logo-icon-name", "ca.desrt.dconf-editor",
                                "website", "https://wiki.gnome.org/Apps/DconfEditor",
