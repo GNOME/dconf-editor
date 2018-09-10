@@ -269,8 +269,11 @@ private class DConfKey : Key
 
     private ulong client_changed_handler = 0;
     internal void connect_client (DConf.Client client)
-        requires (client_changed_handler == 0)
+//        requires (client_changed_handler == 0)
     {
+        if (client_changed_handler != 0)    // FIXME happens since editable paths 1/3
+            return;
+
         client_changed_handler = client.changed.connect ((client, prefix, changes, tag) => {
                 foreach (string item in changes)
                     if (prefix + item == full_name)
@@ -281,8 +284,11 @@ private class DConfKey : Key
             });
     }
     internal void disconnect_client (DConf.Client client)
-        requires (client_changed_handler != 0)
+//        requires (client_changed_handler != 0)
     {
+        if (client_changed_handler == 0)    // FIXME happens since editable paths 2/3
+            return;
+
         client.disconnect (client_changed_handler);
         client_changed_handler = 0;
     }

@@ -25,7 +25,8 @@ private abstract class RegistryList : Grid, BrowsableView
     [GtkChild] private ScrolledWindow scrolled;
 
     protected bool search_mode { private get; set; }
-    protected string? current_path_if_search_mode = null;  // TODO only used in search mode
+    protected string? current_path_if_search_mode = null;   // TODO only used in search mode
+    protected bool search_is_path_search = false;           // TODO only used in search mode
 
     protected GLib.ListStore list_model = new GLib.ListStore (typeof (SimpleSettingObject));
 
@@ -233,6 +234,15 @@ private abstract class RegistryList : Grid, BrowsableView
         ((ClickableListBoxRow) ((!) selected_row).get_child ()).destroy_popover ();
     }
 
+    internal void row_grab_focus ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return;
+
+        ((!) selected_row).grab_focus ();
+    }
+
     internal bool up_or_down_pressed (bool is_down)
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
@@ -284,7 +294,9 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (search_mode && current_path_if_search_mode == null)
             assert_not_reached ();
-        bool search_mode_non_local_result = search_mode && ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode;
+        bool search_mode_non_local_result = search_mode
+                                         && (search_is_path_search
+                                          || ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode);
 
         if (ModelUtils.is_folder_context_id (context_id))
         {

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="PathWidget" parent="GtkBox">
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkStack" id="pathbar_stack">
+        <property name="visible">True</property>
+        <property name="valign">center</property>
+        <property name="visible-child">pathbar</property> <!-- uses the "id" attribute -->
+        <child>
+          <object class="PathEntry" id="searchentry">
+            <property name="visible">True</property>
+            <signal name="search-changed" handler="search_changed_cb"/>
+            <signal name="search-stopped" handler="search_stopped_cb"/>
+          </object>
+          <packing>
+            <property name="icon-name">document-edit-symbolic</property> <!-- TODO document-edit-symbolic ? -->
+            <property name="title" translatable="yes">Edit path</property>
+            <property name="name">entry</property>
+          </packing>
+        </child>
+        <child>
+          <object class="PathBar" id="pathbar">
+            <property name="visible">True</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="icon-name">folder-visiting-symbolic</property>
+            <property name="title" translatable="yes">Browse keys</property>
+            <property name="name">pathbar</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">start</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkToggleButton" id="search_toggle">
+        <property name="visible">True</property>
+        <property name="valign">center</property>
+        <property name="focus-on-click">False</property>
+        <property name="action-name">ui.toggle-search</property>
+        <property name="action-target">true</property>
+        <!-- <accelerator key="F" signal="toggled" modifiers="GDK_CONTROL_MASK"/> TODO -->
+        <style>
+          <class name="image-button"/>
+        </style>
+        <child internal-child="accessible">
+          <object class="AtkObject">
+            <property name="AtkObject::accessible-name" translatable="yes">Search</property>
+            <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">edit-find-symbolic</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">end</property>
+      </packing>
+    </child>
+  </template>
+</interface>

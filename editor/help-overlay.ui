@@ -33,13 +33,6 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
-                <property name="title" translatable="yes" context="shortcut window">Search bar</property>
-                <property name="accelerator">&lt;Primary&gt;f</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Actions menu</property>
                 <property name="accelerator">F10</property>
               </object>
@@ -170,6 +163,40 @@
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">About</property>
                 <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;F1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="visible">True</property>
+            <property name="title" translatable="yes" context="shortcut window">Search options</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Toggle search</property>
+                <property name="accelerator">&lt;Primary&gt;f</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Edit path</property>
+                <property name="accelerator">&lt;Primary&gt;l</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Edit parent path</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;l</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Browse keys tree</property>
+                <property name="accelerator">Escape</property>
               </object>
             </child>
           </object>

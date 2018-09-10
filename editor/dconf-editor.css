@@ -56,6 +56,12 @@
 * * lists rows height and icon
 \*/
 
+/* hack: fix next lines misplacement when the first line is a header */
+
+list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
+  margin-top:-1px;
+}
+
 /* row height */
                                    .keys-list          > row         { transition:min-height 0.3s,
                                                                                   margin-left 0.3s, margin-right 0.3s,
@@ -165,21 +171,56 @@
 * * pathbar
 \*/
 
-.root-button > label {
+/* evolutions on large window */
+              .pathbar {
+  /* nautilus/src/resources/css/Adwaita.css:71 .path-bar-box uses 200ms */
+  transition: border-color     0.3s,
+              background-color 0.3s;
+  border-color:transparent;
+
+  border-width:1px;
+  border-style:solid;
+  border-radius:3px;
+
+  padding:0;
+  margin:6px 0;
+}
+
+.large-window .pathbar {
+  /* like in nautilus/src/resources/css/Adwaita.css:75
+     .path-bar-box.width-maximized */
+  border-color:@borders;
+}
+
+.large-window .pathbar:not(:backdrop) {
+  /* like in nautilus/src/resources/css/Adwaita.css:79
+     .path-bar-box.width-maximized:not(:backdrop) */
+  background-color:@theme_bg_color;
+}
+
+/* root button */
+              .pathbar:dir(ltr) > button.root-button { padding-left :0; margin-left :0; }
+              .pathbar:dir(rtl) > button.root-button { padding-right:0; margin-right:0; }
+
+              .pathbar          > button.root-button > label {
+  padding-left:3px;
+  transition:border-width 0 ease, padding 0 ease;
+  background-position:50% center;
+  margin-left:0;
+  margin-right:0;
   background-image:-gtk-icontheme("ca.desrt.dconf-editor-symbolic");
-  background-position:center;
   background-size:1.1rem;
   background-repeat:no-repeat;
   min-width:1.1rem;
 }
-
-.pathbar {
-  margin:0 4px;
+.large-window .pathbar          > button.root-button > label {
+  padding-left:5px;
+  border-left-width:0;
+  background-position:60% center;
 }
 
+/* pathbar internals */
 .pathbar > label {
-  padding-left:0.1em;
-  padding-right:0.1em;
   color:alpha(currentColor,0.8);
 }
 .pathbar > label:backdrop {
@@ -187,12 +228,12 @@
 }
 
 .pathbar > button {
-  padding-left:0.1em;
-  padding-right:0.1em;
-  margin-left:0.1em;
-  margin-right:0.1em;
+  padding:0 0.1em;
+  margin:0 0.1em;
 
-  outline-offset:0;
+  outline-offset:-4px;
+
+  border-radius:0;
 
   border:none;
   border-color:transparent;
@@ -204,14 +245,21 @@
 
 /* underline selected label */
 .pathbar > button > .item {
-  border-width:2px 0px;
+  border-width:3px 2px;
+  border-radius:0;
+  padding:2px 4px;
   border-style:solid;
   border-color:transparent;
   transition:border-bottom-color 0.3s;
 }
 
+.small-window .pathbar > button > .item {
+  transition:padding             0.3s;  /* here because the class is applied on startup */
+  padding:2px 1px;
+}
+
 .pathbar > button:hover > .item {
-  border-bottom-color:alpha(currentColor,0.5);
+  border-bottom-color:@borders;
 }
 
 .pathbar          > button.active                  > .item,
@@ -259,8 +307,8 @@
 .delayed-settings-popover list > row > grid > label,
 .delayed-settings-popover list > row > grid > grid > label,
 .modifications-revealer button,
-.titlebar > box.pathbar > button,
-.titlebar > box.pathbar > label {
+.titlebar > box > stack > box.pathbar > button,
+.titlebar > box > stack > box.pathbar > label {
   transition:all 0 ease;
 }
 

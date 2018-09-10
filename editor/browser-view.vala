@@ -278,6 +278,11 @@ private class BrowserView : Grid
     * * Proxy calls
     \*/
 
+    internal void row_grab_focus ()
+    {
+        current_child.row_grab_focus ();
+    }
+
     internal ViewType current_view { get { return current_child.current_view; }}
 
     // popovers invalidation and toggles hiding/revealing

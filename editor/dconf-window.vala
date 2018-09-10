@@ -57,9 +57,7 @@ private class DConfWindow : ApplicationWindow
 
     [GtkChild] private Bookmarks bookmarks_button;
     [GtkChild] private MenuButton info_button;
-    [GtkChild] private PathBar pathbar;
-    [GtkChild] private SearchBar search_bar;
-    [GtkChild] private SearchEntry search_entry;
+    [GtkChild] private PathWidget path_widget;
 
     [GtkChild] private BrowserView browser_view;
     [GtkChild] private ModificationsRevealer revealer;
@@ -87,15 +85,11 @@ private class DConfWindow : ApplicationWindow
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
 
-        // maximize before setting default size: only one call to on_size_allocate() so no change of the large-window CSS class at start
         if (settings.get_boolean ("window-is-maximized"))
             maximize ();
         set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
 
         set_css_styles ();
-
-        search_bar.connect_entry (search_entry);
-        search_bar.notify ["search-mode-enabled"].connect (search_changed);
 
         settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -223,7 +217,7 @@ private class DConfWindow : ApplicationWindow
         else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
             reload_view ();
 
-        pathbar.update_ghosts (((SettingsModel) _model).get_fallback_path (pathbar.complete_path), search_bar.search_mode_enabled);
+        path_widget.update_ghosts (((SettingsModel) _model).get_fallback_path (path_widget.complete_path));
     }
     private void propagate_gkey_value_push (string full_name, uint16 context, Variant key_value, bool is_key_default)
     {
@@ -336,9 +330,20 @@ private class DConfWindow : ApplicationWindow
 
         StyleContext context = get_style_context ();
         if (allocation.width > MAX_ROW_WIDTH + 42)
+        {
+            context.remove_class ("small-window");
             context.add_class ("large-window");
-        else
+        }
+        else if (allocation.width < 787)
+        {
             context.remove_class ("large-window");
+            context.add_class ("small-window");
+        }
+        else
+        {
+            context.remove_class ("large-window");
+            context.remove_class ("small-window");
+        }
 
         /* save size */
 
@@ -424,6 +429,8 @@ private class DConfWindow : ApplicationWindow
         { "reload-object", reload_object },
         { "reload-search", reload_search },
 
+        { "toggle-search", toggle_search, "b" },
+
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
 
@@ -505,6 +512,16 @@ private class DConfWindow : ApplicationWindow
         request_search (true);
     }
 
+    private void toggle_search (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        bool search_request = ((!) path_variant).get_boolean ();
+        if (search_request && !path_widget.search_mode_enabled)
+            request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+        else if (!search_request && path_widget.search_mode_enabled)
+            stop_search ();
+    }
+
     private void reset_recursively (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
@@ -560,7 +577,7 @@ private class DConfWindow : ApplicationWindow
     {
         browser_view.discard_row_popover ();
 
-        if (search_bar.search_mode_enabled)
+        if (path_widget.search_mode_enabled)
         {
             model.copy_action_called ();
             string selected_row_text = browser_view.get_copy_path_text () ?? saved_view;
@@ -594,11 +611,12 @@ private class DConfWindow : ApplicationWindow
         update_current_path (ViewType.FOLDER, fallback_path);
 
         if (selected_or_empty == "")
-            browser_view.select_row (pathbar.get_selected_child (fallback_path));
+            browser_view.select_row (path_widget.get_selected_child (fallback_path));
         else
             browser_view.select_row (selected_or_empty);
 
-        search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        stop_search ();
+        // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
     private static GLib.ListStore create_key_model (string base_path, Variant? children)
     {
@@ -633,7 +651,7 @@ private class DConfWindow : ApplicationWindow
                     cannot_find_folder (full_name);
             }
             request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
-            pathbar.update_ghosts (model.get_fallback_path (pathbar.complete_path), false);
+            path_widget.update_ghosts (model.get_fallback_path (path_widget.complete_path));
         }
         else
         {
@@ -643,10 +661,11 @@ private class DConfWindow : ApplicationWindow
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
-        search_bar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        stop_search ();
+        // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_search (bool reload)
+    private void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR)
     {
         string selected_row = browser_view.get_selected_row_name ();
         if (reload)
@@ -655,10 +674,12 @@ private class DConfWindow : ApplicationWindow
             browser_view.set_search_parameters (saved_view, bookmarks_button.get_bookmarks ());
             reload_search_next = false;
         }
-        update_current_path (ViewType.SEARCH, search_entry.text);
+        if (mode != PathEntry.SearchMode.UNCLEAR)
+            path_widget.prepare_search (mode);
+        update_current_path (ViewType.SEARCH, path_widget.text);
         browser_view.select_row (selected_row);
-        if (!search_entry.has_focus)
-            search_entry.grab_focus_without_selecting ();
+        if (!path_widget.entry_has_focus)
+            path_widget.entry_grab_focus_without_selecting ();
     }
 
     private void reload_view ()
@@ -692,13 +713,13 @@ private class DConfWindow : ApplicationWindow
 
         browser_view.set_path (type, path);
         bookmarks_button.set_path (type, path);
-        pathbar.set_path (type, path);
+        path_widget.set_path (type, path);
         invalidate_popovers_without_reload ();
     }
 
     private void update_hamburger_menu ()
     {
-        if (search_bar.search_mode_enabled)
+        if (path_widget.search_mode_enabled)
             return;
 
         GLib.Menu section;
@@ -754,30 +775,28 @@ private class DConfWindow : ApplicationWindow
     \*/
 
     [GtkCallback]
-    private void search_changed ()
+    private void search_changed_cb ()
     {
-        if (search_bar.search_mode_enabled)
-            request_search (reload_search_next);
-        else
-            hide_search_view ();
+        request_search (reload_search_next);
     }
 
     [GtkCallback]
-    private void search_cancelled ()
+    private void search_stopped_cb ()
     {
-        if (!search_bar.search_mode_enabled)
-            return;
-        hide_search_view ();
-    }
+        browser_view.row_grab_focus ();
 
-    private void hide_search_view ()
-    {
         reload_search_action.set_enabled (false);
         if (saved_type == ViewType.FOLDER)
             request_folder (saved_view, saved_selection);
         else
             update_current_path (saved_type, strdup (saved_view));
         reload_search_next = true;
+    }
+
+    private void stop_search ()
+    {
+        if (path_widget.search_mode_enabled)
+            search_stopped_cb ();
     }
 
     /*\
@@ -812,14 +831,11 @@ private class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
     {
-        string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+        uint keyval = event.keyval;
+        string name = (!) (Gdk.keyval_name (keyval) ?? "");
 
         Widget? focus = get_focus ();
         bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
-        if (!focus_is_text_widget)
-            if (name != "F10") // else <Shift>F10 toggles the search_entry popup; see if a976aa9740 fixes that in Gtk+ 4
-                if (search_bar.handle_event (event))
-                    return true;
 
         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
         {
@@ -866,18 +882,31 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "f":
-                    if (bookmarks_button.active)
+                    if (bookmarks_button.active)    // should never happen if path_widget.search_mode_enabled
                         bookmarks_button.active = false;
-                    if (info_button.active)
+                    if (info_button.active)         // should never happen if path_widget.search_mode_enabled
                         info_button.active = false;
-                    browser_view.discard_row_popover ();
-                    if (!search_bar.search_mode_enabled)
-                        search_bar.search_mode_enabled = true;
-                    else if (!search_entry.has_focus)
-                        search_entry.grab_focus ();
+                    browser_view.discard_row_popover ();   // could happen if path_widget.search_mode_enabled
+                    if (!path_widget.search_mode_enabled)
+                        request_search (true, PathEntry.SearchMode.SEARCH);
+                    else if (!path_widget.entry_has_focus)
+                        path_widget.entry_grab_focus ();
                     else
-                        search_bar.search_mode_enabled = false;
+                        stop_search ();
                     return true;
+
+                case "g":   // usual shortcut for "next-match" in a SearchEntry; see also "Down"
+                    if (bookmarks_button.active == false
+                     && info_button.active == false
+                     && !revealer.get_modifications_list_state ())
+                        return browser_view.down_pressed ();
+                    return false;
+                case "G":   // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
+                    if (bookmarks_button.active == false
+                     && info_button.active == false
+                     && !revealer.get_modifications_list_state ())
+                        return browser_view.up_pressed ();
+                    return false;
 
                 case "i":
                     if (revealer.reveal_child)
@@ -886,6 +915,17 @@ private class DConfWindow : ApplicationWindow
                         return true;
                     }
                     return false;
+
+                case "l":
+                    if (path_widget.search_mode_enabled)
+                        return false;
+                    request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
+                    return true;
+                case "L":
+                    if (path_widget.search_mode_enabled)
+                        return false;
+                    request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
+                    return true;
 
                 case "F1":
                     browser_view.discard_row_popover ();
@@ -928,7 +968,7 @@ private class DConfWindow : ApplicationWindow
             }
         }
 
-        if (((event.state & Gdk.ModifierType.MOD1_MASK) != 0))
+        if ((event.state & Gdk.ModifierType.MOD1_MASK) != 0)
         {
             if (name == "Up")
             {
@@ -951,24 +991,37 @@ private class DConfWindow : ApplicationWindow
             return false;
         }
 
-        if (name == "Up"
+        if (name == "Up"    // see also <ctrl>G
          && bookmarks_button.active == false
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.up_pressed ();
-        if (name == "Down"
+        if (name == "Down"  // see also <ctrl>g
          && bookmarks_button.active == false
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.down_pressed ();
 
-        if ((name == "Return" || name == "KP_Enter")
-         && browser_view.current_view == ViewType.SEARCH
-         && search_entry.has_focus
-         && browser_view.return_pressed ())
+        if (name == "Return" || name == "KP_Enter")
         {
-            search_bar.set_search_mode (false);
-            return true;
+            if (browser_view.current_view == ViewType.SEARCH
+            && path_widget.entry_has_focus
+            && browser_view.return_pressed ())
+            {
+                stop_search ();
+                return true;
+            }
+            return false;
+        }
+
+        if (name == "Escape")
+        {
+            if (path_widget.search_mode_enabled)
+            {
+                stop_search ();
+                return true;
+            }
+            return false;
         }
 
         if (name == "Menu")
@@ -997,12 +1050,34 @@ private class DConfWindow : ApplicationWindow
         if (bookmarks_button.active || info_button.active)
             return false;
 
-        return false;    // browser_view.handle_search_event (event);
+        if (!path_widget.search_mode_enabled &&
+            // see gtk_search_entry_is_keynav() in gtk+/gtk/gtksearchentry.c:388
+            (keyval == Gdk.Key.Tab          || keyval == Gdk.Key.KP_Tab         ||
+             keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
+             keyval == Gdk.Key.Down         || keyval == Gdk.Key.KP_Down        ||
+             keyval == Gdk.Key.Left         || keyval == Gdk.Key.KP_Left        ||
+             keyval == Gdk.Key.Right        || keyval == Gdk.Key.KP_Right       ||
+             keyval == Gdk.Key.Home         || keyval == Gdk.Key.KP_Home        ||
+             keyval == Gdk.Key.End          || keyval == Gdk.Key.KP_End         ||
+             keyval == Gdk.Key.Page_Up      || keyval == Gdk.Key.KP_Page_Up     ||
+             keyval == Gdk.Key.Page_Down    || keyval == Gdk.Key.KP_Page_Down   ||
+             ((event.state & (Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.MOD1_MASK)) != 0) ||
+             name == "space" || name == "KP_Space"))
+            return false;
+
+        if ((!focus_is_text_widget)
+         && (event.is_modifier == 0)
+         && (event.length != 0)
+//       && (name != "F10")     // else <Shift>F10 toggles the search_entry popup; see if a976aa9740 fixes that in Gtk+ 4
+         && (path_widget.handle_event (event)))
+            return true;
+
+        return false;
     }
 
     private void go_backward (bool shift)
     {
-        if (search_bar.search_mode_enabled)
+        if (path_widget.search_mode_enabled)
             return;
 
         browser_view.discard_row_popover ();
@@ -1015,10 +1090,10 @@ private class DConfWindow : ApplicationWindow
     }
     private void go_forward (bool shift)
     {
-        if (search_bar.search_mode_enabled)
+        if (path_widget.search_mode_enabled)
             return;
 
-        string complete_path = pathbar.complete_path;
+        string complete_path = path_widget.complete_path;
 
         browser_view.discard_row_popover ();
         if (current_path == complete_path)  // TODO something?

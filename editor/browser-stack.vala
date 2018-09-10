@@ -196,6 +196,12 @@ private class BrowserStack : Grid
     * * Keyboard calls
     \*/
 
+    internal void row_grab_focus ()
+    {
+        if (current_view != ViewType.OBJECT)
+            ((RegistryList) stack.get_visible_child ()).row_grab_focus ();
+    }
+
     internal bool return_pressed ()
         requires (current_view == ViewType.SEARCH)
     {

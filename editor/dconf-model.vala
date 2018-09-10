@@ -195,7 +195,7 @@ private abstract class SettingsModelCore : Object
         return builder.end ();
     }
 
-    protected bool _get_object (string path, out uint16 context_id, out string name)
+    protected bool _get_object (string path, out uint16 context_id, out string name, bool watch)
     {
         SettingObject? object;
         if (ModelUtils.is_key_path (path))
@@ -210,7 +210,7 @@ private abstract class SettingsModelCore : Object
             return false;
         }
 
-        if ((!) object is Key)
+        if (watch && (!) object is Key)
             add_watched_key ((Key) (!) object);
 
         context_id = get_context_id_from_object ((!) object);
@@ -631,7 +631,8 @@ private abstract class SettingsModelCore : Object
                 ((DConfKey) key).disconnect_client (client);
             else assert_not_reached ();
 
-            key.disconnect (key.key_value_changed_handler);
+            if (key.key_value_changed_handler != 0) // FIXME happens since editable paths 3/3
+                key.disconnect (key.key_value_changed_handler);
             key.key_value_changed_handler = 0;
 
             position++;
@@ -1015,9 +1016,9 @@ private class SettingsModel : SettingsModelCore
         copy_action = true;
     }
 
-    internal bool get_object (string path, out uint16 context_id, out string name)
+    internal bool get_object (string path, out uint16 context_id, out string name, bool watch = true)
     {
-        return _get_object (path, out context_id, out name);
+        return _get_object (path, out context_id, out name, watch);
     }
 
     internal string get_fallback_path (string path)
