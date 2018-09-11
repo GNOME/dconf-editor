@@ -55,7 +55,6 @@ private class DConfWindow : ApplicationWindow
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
-    [GtkChild] private Bookmarks bookmarks_button;
     [GtkChild] private MenuButton info_button;
     [GtkChild] private PathWidget path_widget;
 
@@ -468,8 +467,7 @@ private class DConfWindow : ApplicationWindow
     private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
+        path_widget.close_popovers ();
 
         string full_name = ((!) path_variant).get_string ();
 
@@ -479,8 +477,7 @@ private class DConfWindow : ApplicationWindow
     private void open_object (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
+        path_widget.close_popovers ();
         revealer.hide_modifications_list ();
 
         string full_name;
@@ -671,7 +668,7 @@ private class DConfWindow : ApplicationWindow
         if (reload)
         {
             reload_search_action.set_enabled (false);
-            browser_view.set_search_parameters (saved_view, bookmarks_button.get_bookmarks ());
+            browser_view.set_search_parameters (saved_view, path_widget.get_bookmarks ());
             reload_search_next = false;
         }
         if (mode != PathEntry.SearchMode.UNCLEAR)
@@ -712,7 +709,6 @@ private class DConfWindow : ApplicationWindow
         current_path = path;
 
         browser_view.set_path (type, path);
-        bookmarks_button.set_path (type, path);
         path_widget.set_path (type, path);
         invalidate_popovers_without_reload ();
     }
@@ -842,11 +838,11 @@ private class DConfWindow : ApplicationWindow
             switch (name)
             {
                 case "b":
+                case "B":
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    if (bookmarks_button.sensitive)
-                        bookmarks_button.clicked ();
+                    path_widget.click_bookmarks_button ();
                     return true;
 
                 case "c":
@@ -865,25 +861,24 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "d":
-                    if (bookmarks_button.sensitive == false)
+                    if (!path_widget.is_bookmarks_button_sensitive)
                         return true;
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    bookmarks_button.set_bookmarked (current_path, true);
+                    path_widget.set_bookmarked (current_path, true);
                     return true;
                 case "D":
-                    if (bookmarks_button.sensitive == false)
+                    if (!path_widget.is_bookmarks_button_sensitive)
                         return true;
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    bookmarks_button.set_bookmarked (current_path, false);
+                    path_widget.set_bookmarked (current_path, false);
                     return true;
 
                 case "f":
-                    if (bookmarks_button.active)    // should never happen if path_widget.search_mode_enabled
-                        bookmarks_button.active = false;
+                    path_widget.close_popovers ();  // should never be needed if path_widget.search_mode_enabled
                     if (info_button.active)         // should never happen if path_widget.search_mode_enabled
                         info_button.active = false;
                     browser_view.discard_row_popover ();   // could happen if path_widget.search_mode_enabled
@@ -896,13 +891,13 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "g":   // usual shortcut for "next-match" in a SearchEntry; see also "Down"
-                    if (bookmarks_button.active == false
+                    if (!path_widget.is_bookmarks_button_active
                      && info_button.active == false
                      && !revealer.get_modifications_list_state ())
                         return browser_view.down_pressed ();
                     return false;
                 case "G":   // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
-                    if (bookmarks_button.active == false
+                    if (!path_widget.is_bookmarks_button_active
                      && info_button.active == false
                      && !revealer.get_modifications_list_state ())
                         return browser_view.up_pressed ();
@@ -936,7 +931,7 @@ private class DConfWindow : ApplicationWindow
 
                 case "Return":
                 case "KP_Enter":
-                    if (info_button.active || bookmarks_button.active)
+                    if (info_button.active || path_widget.is_bookmarks_button_active)
                         return false;
                     browser_view.discard_row_popover ();
                     browser_view.toggle_boolean_key ();
@@ -948,7 +943,7 @@ private class DConfWindow : ApplicationWindow
                 case "decimalpoint":
                 case "period":
                 case "KP_Decimal":
-                    if (info_button.active || bookmarks_button.active)
+                    if (info_button.active || path_widget.is_bookmarks_button_active)
                         return false;
                     if (revealer.dismiss_selected_modification ())
                     {
@@ -986,18 +981,17 @@ private class DConfWindow : ApplicationWindow
         if (name == "F10")
         {
             browser_view.discard_row_popover ();
-            if (bookmarks_button.active)
-                bookmarks_button.active = false;
+            path_widget.close_popovers ();
             return false;
         }
 
         if (name == "Up"    // see also <ctrl>G
-         && bookmarks_button.active == false
+         && !path_widget.is_bookmarks_button_active
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.up_pressed ();
         if (name == "Down"  // see also <ctrl>g
-         && bookmarks_button.active == false
+         && !path_widget.is_bookmarks_button_active
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.down_pressed ();
@@ -1028,8 +1022,7 @@ private class DConfWindow : ApplicationWindow
         {
             if (browser_view.toggle_row_popover ())
             {
-                if (bookmarks_button.active)
-                    bookmarks_button.active = false;
+                path_widget.close_popovers ();
                 if (info_button.active)
                     info_button.active = false;
             }
@@ -1037,8 +1030,7 @@ private class DConfWindow : ApplicationWindow
                 return true;
             else if (info_button.active == false)
             {
-                if (bookmarks_button.active)
-                    bookmarks_button.active = false;
+                path_widget.close_popovers ();
                 browser_view.discard_row_popover ();
                 info_button.active = true;
             }
@@ -1047,7 +1039,7 @@ private class DConfWindow : ApplicationWindow
             return true;
         }
 
-        if (bookmarks_button.active || info_button.active)
+        if (path_widget.is_bookmarks_button_active || info_button.active)
             return false;
 
         if (!path_widget.search_mode_enabled &&

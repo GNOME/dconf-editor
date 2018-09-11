@@ -19,6 +19,14 @@
         <property name="visible">True</property>
         <property name="show-close-button">True</property>
         <property name="has-subtitle">False</property>
+        <child type="title">
+          <object class="PathWidget" id="path_widget">
+            <property name="visible">True</property>
+            <property name="hexpand">False</property>
+            <signal name="search-changed" handler="search_changed_cb"/>
+            <signal name="search-stopped" handler="search_stopped_cb"/>
+          </object>
+        </child>
         <child>
           <object class="GtkMenuButton" id="info_button">
             <property name="visible">True</property>
@@ -45,33 +53,6 @@
           </object>
           <packing>
             <property name="pack-type">end</property>
-          </packing>
-        </child>
-        <child>
-          <object class="Bookmarks" id="bookmarks_button">
-            <property name="visible">True</property>
-            <property name="valign">center</property>
-            <property name="focus-on-click">False</property>
-            <property name="schema-path">/ca/desrt/dconf-editor/</property>
-            <property name="sensitive" bind-source="path_widget" bind-property="search-mode-enabled" bind-flags="sync-create|invert-boolean"/>
-            <!-- <accelerator key="B" signal="activate" modifiers="GDK_CONTROL_MASK"/> TODO -->
-            <style>
-              <class name="image-button"/> <!-- TODO https://bugzilla.gnome.org/show_bug.cgi?id=756731 -->
-            </style>
-          </object>
-          <packing>
-            <property name="pack-type">end</property>
-          </packing>
-        </child>
-        <child type="title">
-          <object class="PathWidget" id="path_widget">
-            <property name="visible">True</property>
-            <property name="hexpand">False</property>
-            <signal name="search-changed" handler="search_changed_cb"/>
-            <signal name="search-stopped" handler="search_stopped_cb"/>
-          </object>
-          <packing>
-            <property name="pack-type">start</property>
           </packing>
         </child>
       </object>

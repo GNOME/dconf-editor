@@ -25,6 +25,8 @@ private class PathWidget : Box
     [GtkChild] private PathBar      pathbar;
     [GtkChild] private PathEntry    searchentry;
 
+    [GtkChild] private Bookmarks    bookmarks_button;
+
     internal signal void search_changed ();
     internal signal void search_stopped ();
 
@@ -75,6 +77,7 @@ private class PathWidget : Box
     {
         pathbar.set_path (type, path);
         searchentry.set_path (type, path);
+        bookmarks_button.set_path (type, path);
 
         if (type == ViewType.SEARCH && !search_mode_enabled)
             enter_search_mode ();
@@ -115,6 +118,20 @@ private class PathWidget : Box
         searchentry.prepare (mode);
     }
 
+    /* bookmarks button */
+    internal bool is_bookmarks_button_sensitive { get { return bookmarks_button.sensitive;  }}
+    internal bool is_bookmarks_button_active    { get { return bookmarks_button.active;     }}
+
+    internal string [] get_bookmarks ()
+    {
+        return bookmarks_button.get_bookmarks ();
+    }
+
+    internal void set_bookmarked (string path, bool new_state)
+    {
+        bookmarks_button.set_bookmarked (path, new_state);
+    }
+
 /*      string [] tokens = full_name.split (" ");
         uint index = 0;
         string token;
@@ -128,6 +145,28 @@ private class PathWidget : Box
             }
             index++;
         } */
+
+    /*\
+    * * bookmarks
+    \*/
+
+    construct
+    {
+        // TODO here again, allow to use in UI file "bind-property" without "bind-source", using the instanciated object as source
+        bind_property ("search-mode-enabled", bookmarks_button, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
+    }
+
+    internal void close_popovers ()
+    {
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
+    }
+
+    internal void click_bookmarks_button ()
+    {
+        if (bookmarks_button.sensitive)
+            bookmarks_button.clicked ();
+    }
 
     /*\
     * * sizing
