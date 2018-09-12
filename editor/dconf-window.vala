@@ -429,6 +429,7 @@ private class DConfWindow : ApplicationWindow
         { "reload-search", reload_search },
 
         { "toggle-search", toggle_search, "b" },
+        { "update-bookmarks-icons", update_bookmarks_icons, "as" },
 
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
@@ -517,6 +518,37 @@ private class DConfWindow : ApplicationWindow
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
         else if (!search_request && path_widget.search_mode_enabled)
             stop_search ();
+    }
+
+    private void update_bookmarks_icons (SimpleAction action, Variant? bookmarks_variant)
+        requires (bookmarks_variant != null)
+    {
+        string [] bookmarks = ((!) bookmarks_variant).get_strv ();
+
+        if (bookmarks.length == 0)
+            return;
+
+        foreach (string bookmark in bookmarks)
+        {
+            if (ModelUtils.is_folder_path (bookmark))
+                continue;   // TODO check folder existence
+
+            uint16 context_id;
+            string name;
+            bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);
+            if (!bookmark_exists)
+                path_widget.update_bookmark_icon (bookmark, false);
+            else if (context_id == ModelUtils.dconf_context_id)
+                path_widget.update_bookmark_icon (bookmark, true, false);
+            else
+            {
+                RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
+                bool is_default;
+                if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
+                    assert_not_reached ();
+                path_widget.update_bookmark_icon (bookmark, true, true, is_default);
+            }
+        }
     }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)

@@ -168,6 +168,11 @@ private class PathWidget : Box
             bookmarks_button.clicked ();
     }
 
+    internal void update_bookmark_icon (string bookmark, bool bookmark_exists, bool bookmark_has_schema = false, bool bookmark_is_default = false)
+    {
+        bookmarks_button.update_bookmark_icon (bookmark, bookmark_exists, bookmark_has_schema, bookmark_is_default);
+    }
+
     /*\
     * * sizing
     \*/

@@ -95,6 +95,33 @@ private class Bookmarks : MenuButton
             remove_bookmark (path);
     }
 
+    internal void update_bookmark_icon (string bookmark, bool bookmark_exists, bool bookmark_has_schema, bool bookmark_is_default)
+    {
+        bookmarks_list_box.@foreach ((widget) => {
+                Bookmark bookmark_row = (Bookmark) (!) widget;
+
+                if (bookmark_row.bookmark_name != bookmark)
+                    return; // TODO probably doesn't stop other row to be checked
+
+                StyleContext context = ((!) bookmark_row.get_child ()).get_style_context ();
+                context.add_class ("key");
+                if (!bookmark_exists)
+                {
+                    context.add_class ("dconf-key");
+                    context.add_class ("erase");
+                    return;
+                }
+                if (!bookmark_has_schema)
+                {
+                    context.add_class ("dconf-key");
+                    return;
+                }
+                context.add_class ("gsettings-key");
+                if (!bookmark_is_default)
+                    context.add_class ("edited");
+            });
+    }
+
     /*\
     * * Action entries
     \*/
@@ -162,7 +189,10 @@ private class Bookmarks : MenuButton
     {
         bookmarks_list_box.@foreach ((widget) => widget.destroy ());
 
-        string [] bookmarks = settings.get_strv ("bookmarks");
+        Variant bookmarks_variant = settings.get_value ("bookmarks");
+        set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (false) + ")");  // TODO disable action on popover closed
+
+        string [] bookmarks = bookmarks_variant.get_strv ();
         string [] unduplicated_bookmarks = new string [0];
         foreach (string bookmark in bookmarks)
         {
@@ -215,11 +245,17 @@ private class Bookmarks : MenuButton
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
 private class Bookmark : ListBoxRow
 {
+    [GtkChild] private Grid main_grid;
     [GtkChild] private Label bookmark_label;
     [GtkChild] private Button destroy_button;
 
-    internal Bookmark (string bookmark_name)
+    public string bookmark_name { get; construct; }
+
+    internal Bookmark (string _bookmark_name)
     {
+        Object (bookmark_name: _bookmark_name);
+        if (ModelUtils.is_folder_path (bookmark_name))
+            main_grid.get_style_context ().add_class ("folder");
         bookmark_label.set_label (bookmark_name);
         Variant variant = new Variant.string (bookmark_name);
         destroy_button.set_detailed_action_name ("bookmarks.unbookmark(" + variant.print (false) + ")");

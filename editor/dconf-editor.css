@@ -37,6 +37,18 @@
   margin-bottom:-2px;
 }
 
+                      .bookmark {
+  background-repeat:no-repeat;
+  background-size:1.5rem;
+}
+.small-bookmarks-rows .bookmark {
+  background-size:1.1rem;
+}
+                      .bookmark:dir(ltr) { padding-left :2.2rem; background-position:0    center; }
+                      .bookmark:dir(rtl) { padding-right:2.2rem; background-position:100% center; }
+.small-bookmarks-rows .bookmark:dir(ltr) { padding-left :1.7rem; }
+.small-bookmarks-rows .bookmark:dir(rtl) { padding-right:1.7rem; }
+
 /*\
 * * pending change list popover
 \*/
@@ -138,26 +150,26 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
 
 /* icon choice */
 
-.keys-list > row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
-.keys-list > row:active >                .folder               { background-image:-gtk-icontheme("folder-open-symbolic"); }
+             row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
+             row:active >                .folder               { background-image:-gtk-icontheme("folder-open-symbolic"); }
 
-.keys-list > row >                       .key.delayed,
-.keys-list > row >             .dconf-key.key.delayed,
-.keys-list > row >  .edited.gsettings-key.key.delayed          { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
+             row >                       .key.delayed,
+             row >             .dconf-key.key.delayed,
+             row >  .edited.gsettings-key.key.delayed          { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
 
-.keys-list > row >         .gsettings-key.key.delayed.conflict,
-.keys-list > row >  .edited.gsettings-key.key.delayed.conflict { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
+             row >         .gsettings-key.key.delayed.conflict,
+             row >  .edited.gsettings-key.key.delayed.conflict { background-image:-gtk-icontheme("document-open-recent-symbolic"); }
 
-.keys-list > row >         .gsettings-key.key.conflict,
-.keys-list > row >  .edited.gsettings-key.key.conflict         { background-image:-gtk-icontheme("dialog-warning-symbolic"); }
-.keys-list > row >         .gsettings-key.key.hard-conflict,
-.keys-list > row >  .edited.gsettings-key.key.hard-conflict    { background-image:-gtk-icontheme("dialog-error-symbolic"); }
+             row >         .gsettings-key.key.conflict,
+             row >  .edited.gsettings-key.key.conflict         { background-image:-gtk-icontheme("dialog-warning-symbolic"); }
+             row >         .gsettings-key.key.hard-conflict,
+             row >  .edited.gsettings-key.key.hard-conflict    { background-image:-gtk-icontheme("dialog-error-symbolic"); }
 
-.keys-list > row >  .edited.gsettings-key.key                  { background-image:-gtk-icontheme("document-edit-symbolic"); }
+             row >  .edited.gsettings-key.key                  { background-image:-gtk-icontheme("document-edit-symbolic"); }
 
-.keys-list > row >             .dconf-key.key                  { background-image:-gtk-icontheme("dialog-question-symbolic"); }
-.keys-list > row >       .erase.dconf-key.key.delayed          { background-image:-gtk-icontheme("user-trash-symbolic"); }
-.keys-list > row >       .erase.dconf-key.key                  { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
+             row >             .dconf-key.key                  { background-image:-gtk-icontheme("dialog-question-symbolic"); }
+             row >       .erase.dconf-key.key.delayed          { background-image:-gtk-icontheme("user-trash-symbolic"); }
+             row >       .erase.dconf-key.key                  { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
 
 /* text styling */
 
