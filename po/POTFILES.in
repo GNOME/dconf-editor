@@ -1,6 +1,7 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 editor/bookmarks.ui
+editor/bookmarks.vala
 editor/bookmark.ui
 editor/browser-view.ui
 editor/browser-view.vala
@@ -19,6 +20,8 @@ editor/key-list-box-row.vala
 editor/modifications-revealer.ui
 editor/modifications-revealer.vala
 editor/pathbar.vala
+editor/pathentry.ui
+editor/pathwidget.ui
 editor/registry-info.ui
 editor/registry-info.vala
 editor/registry-list.vala
