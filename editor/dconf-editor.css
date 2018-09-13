@@ -283,6 +283,13 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
   border-bottom-color:@theme_selected_bg_color;
 }
 
+.pathbar:backdrop > button.active                  > .item,
+.pathbar:backdrop > button.active:hover            > .item,
+.pathbar:backdrop > button.active.inexistent       > .item,
+.pathbar:backdrop > button.active.inexistent:hover > .item {
+  border-bottom-color:@borders;
+}
+
 /* inexistent items */
 .pathbar > label,
 .pathbar > button.inexistent:not(.active) > label.item {
@@ -291,25 +298,6 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
 
 .pathbar > button.inexistent:not(.active):hover > label.item {
   border-bottom-color:transparent;
-}
-
-/* search changes */
-.pathbar.greyed-pathbar {
-  color:@insensitive_fg_color;
-}
-
-.pathbar.greyed-pathbar          > button.active                  > .item,
-.pathbar.greyed-pathbar          > button.active:hover            > .item,
-.pathbar.greyed-pathbar          > button.active.inexistent       > .item,
-.pathbar.greyed-pathbar          > button.active.inexistent:hover > .item {
-  border-bottom-color:alpha(currentColor,0.6);
-}
-
-.pathbar.greyed-pathbar:backdrop > button.active                  > .item,
-.pathbar.greyed-pathbar:backdrop > button.active:hover            > .item,
-.pathbar.greyed-pathbar:backdrop > button.active.inexistent       > .item,
-.pathbar.greyed-pathbar:backdrop > button.active.inexistent:hover > .item {
-  border-bottom-color:alpha(currentColor,0.4);
 }
 
 /*\
