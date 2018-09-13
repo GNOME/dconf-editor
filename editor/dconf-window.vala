@@ -783,19 +783,16 @@ private class DConfWindow : ApplicationWindow
 
     private void update_hamburger_menu ()
     {
-        if (path_widget.search_mode_enabled)
-            return;
-
         GLib.Menu section;
 
         GLib.Menu menu = new GLib.Menu ();
 
-        if (current_type == ViewType.OBJECT)   // mainly here for ensuring menu is never empty
+        if (current_type == ViewType.OBJECT)   // TODO a better way to copy various representations of a key name/value/path
         {
             Variant variant = new Variant.string (model.get_suggested_key_copy_text (current_path, browser_view.last_context_id));
             menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
         }
-        else
+        else if (current_type != ViewType.SEARCH)
         {
             section = new GLib.Menu ();
             Variant variant = new Variant.string (current_path);

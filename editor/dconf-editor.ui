@@ -32,7 +32,6 @@
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="focus-on-click">False</property>
-            <property name="sensitive" bind-source="path_widget" bind-property="search-mode-enabled" bind-flags="sync-create|invert-boolean"/>
             <accelerator key="F10" signal="clicked"/> <!-- TODO report bug: property binding has to be defined before accelerator -->
             <style>
               <class name="image-button"/>
