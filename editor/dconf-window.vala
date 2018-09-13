@@ -190,6 +190,8 @@ private class DConfWindow : ApplicationWindow
             request_object (startup_path, ModelUtils.undefined_context_id, true, (!) schema);
         else
             request_object (startup_path, ModelUtils.undefined_context_id, true);
+
+        Timeout.add (300, () => { this.get_style_context ().remove_class ("startup"); return Source.REMOVE; });
     }
 
     private void prepare_model ()

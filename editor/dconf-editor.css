@@ -264,11 +264,15 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
   padding:2px 4px;
   border-style:solid;
   border-color:transparent;
-  transition:border-bottom-color 0.3s;
+  transition:border-bottom-color 0.3s,
+             padding             0.2s;  /* needs to be a bit faster */
+}
+
+.small-window.startup .pathbar > button > .item { /* class remove after 0.3s */
+  transition:padding             0;
 }
 
 .small-window .pathbar > button > .item {
-  transition:padding             0.3s;  /* here because the class is applied on startup */
   padding:2px 1px;
 }
 

@@ -13,6 +13,7 @@
     <signal name="destroy" handler="on_destroy"/>
     <style>
       <class name="dconf-editor"/>
+      <class name="startup"/>
     </style>
     <child type="titlebar">
       <object class="GtkHeaderBar">
