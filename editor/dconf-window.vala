@@ -947,6 +947,8 @@ private class DConfWindow : ApplicationWindow
                         request_search (true, PathEntry.SearchMode.SEARCH);
                     else if (!path_widget.entry_has_focus)
                         path_widget.entry_grab_focus ();
+                    else if (path_widget.text.has_prefix ("/"))
+                        request_search (true, PathEntry.SearchMode.SEARCH);
                     else
                         stop_search ();
                     return true;
