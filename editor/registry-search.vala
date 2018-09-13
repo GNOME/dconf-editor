@@ -263,7 +263,9 @@ private class RegistrySearch : RegistryList
             SimpleSettingObject? item = (SimpleSettingObject?) list_model.get_item (i);
             if (item == null)
                 assert_not_reached ();
-            if (!(term in ((!) item).name))
+            string name = ((!) item).name;
+            if (!(term in name)
+             || (((!) item).is_search && term == name))
             {
                 post_bookmarks--;
                 post_folders--;
