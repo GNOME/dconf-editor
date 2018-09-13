@@ -365,15 +365,28 @@ private class RegistrySearch : RegistryList
                 continue;
             if (ModelUtils.get_parent_path (bookmark) == ModelUtils.get_base_path (current_path))
                 continue;
+            if (bookmark == "?" + term)
+                continue;
 
             uint16 context_id;
             string name;
-            if (!model.get_object (bookmark, out context_id, out name))
-                continue;
+            bool is_search;
+            if (bookmark.has_prefix ("?"))
+            {
+                context_id = ModelUtils.undefined_context_id;
+                name = ModelUtils.get_name (bookmark.slice (1, bookmark.length));
+                is_search = true;
+            }
+            else
+            {
+                if (!model.get_object (bookmark, out context_id, out name, !(ModelUtils.get_parent_path (bookmark) in bookmarks)))
+                    continue;
+                is_search = false;
+            }
 
             if (term in name)
             {
-                SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, bookmark);
+                SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, bookmark, is_search);
                 list_model.insert (post_bookmarks, sso);
                 post_bookmarks++;
             }

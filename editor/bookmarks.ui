@@ -14,9 +14,8 @@
         <property name="row-spacing">6</property>
         <property name="margin">4</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="switch_label">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Bookmark this Location</property>
             <property name="margin-start">6</property>
             <property name="halign">start</property>
           </object>
@@ -30,7 +29,7 @@
             <property name="visible">True</property>
             <property name="halign">end</property>
             <property name="action-name">ui.empty</property>
-            <property name="action-target">''</property>
+            <property name="action-target">('',byte 255)</property>
             <child internal-child="accessible">
               <object class="AtkObject">
                 <property name="AtkObject::accessible-name" translatable="yes">Location bookmarked</property>

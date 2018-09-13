@@ -112,7 +112,8 @@ resource_data = files(
   'property-row.ui',
   'registry-info.ui',
   'registry-placeholder.ui',
-  'registry-view.ui'
+  'registry-view.ui',
+  'search-list-box-row.ui'
 )
 
 sources += gnome.compile_resources(

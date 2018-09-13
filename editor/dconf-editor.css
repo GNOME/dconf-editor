@@ -88,12 +88,12 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
                                                                                   border-radius 0.3s; } stuttering of a single row is almost bearable */
 
                                    .keys-list          > .key-row    { min-height:4.2em; }
-                                   .keys-list          > .folder-row { min-height:2.1em; }
+                                   .keys-list          > .f-or-s-row { min-height:2.1em; }
                                    .keys-list          > row         { margin:0;      padding-top:0.25em; padding-bottom:0.25em; }
 .large-window                      .keys-list          > row         { margin:0.25em; padding-top:0;      padding-bottom:0;      }
 
              .small-keys-list-rows .keys-list          > .key-row    { min-height:2.5em; }
-             .small-keys-list-rows .keys-list          > .folder-row { min-height:1.5em; }
+             .small-keys-list-rows .keys-list          > .f-or-s-row { min-height:1.5em; }
              .small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 .large-window.small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 
@@ -152,6 +152,8 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
 
              row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
              row:active >                .folder               { background-image:-gtk-icontheme("folder-open-symbolic"); }
+
+             row >                       .search               { background-image:-gtk-icontheme("edit-find-symbolic"); }
 
              row >                       .key.delayed,
              row >             .dconf-key.key.delayed,

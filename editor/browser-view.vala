@@ -19,6 +19,7 @@ using Gtk;
 
 private class SimpleSettingObject : Object
 {
+    public bool is_search           { internal get; internal construct; }
     public uint16 context_id        { internal get; internal construct; }
     public string name              { internal get; internal construct; }
     public string full_name         { internal get; internal construct; }
@@ -30,15 +31,15 @@ private class SimpleSettingObject : Object
         casefolded_name = name.casefold ();
     }
 
-    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path)
+    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path, bool _is_search = false)
     {
         string _full_name = ModelUtils.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
-        Object (context_id: _context_id, name: _name, full_name: _full_name);
+        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search);
     }
 
-    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name)
+    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name, bool _is_search = false)
     {
-        Object (context_id: _context_id, name: _name, full_name: _full_name);
+        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search);
     }
 }
 

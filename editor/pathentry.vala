@@ -63,7 +63,7 @@ private class PathEntry : Box
 //        if (type == ViewType.SEARCH)
     }
 
-    internal void prepare (SearchMode mode)
+    internal void prepare (SearchMode mode, string? search = null)
     {
         switch (mode)
         {
@@ -73,7 +73,7 @@ private class PathEntry : Box
                 return;
 
             case SearchMode.EDIT_PATH_SELECT_ALL:
-                search_entry.text = current_path;
+                search_entry.text = search == null ? current_path : (!) search;
                 search_entry.grab_focus ();
                 return;
 

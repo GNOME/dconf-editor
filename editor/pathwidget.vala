@@ -113,13 +113,12 @@ private class PathWidget : Box
         return true;
     }
 
-    internal void prepare_search (PathEntry.SearchMode mode)
+    internal void prepare_search (PathEntry.SearchMode mode, string? search)
     {
-        searchentry.prepare (mode);
+        searchentry.prepare (mode, search);
     }
 
     /* bookmarks button */
-    internal bool is_bookmarks_button_sensitive { get { return bookmarks_button.sensitive;  }}
     internal bool is_bookmarks_button_active    { get { return bookmarks_button.active;     }}
 
     internal string [] get_bookmarks ()
@@ -127,9 +126,23 @@ private class PathWidget : Box
         return bookmarks_button.get_bookmarks ();
     }
 
-    internal void set_bookmarked (string path, bool new_state)
+    internal void click_bookmarks_button ()
     {
-        bookmarks_button.set_bookmarked (path, new_state);
+        bookmarks_button.clicked ();
+    }
+
+    internal void   bookmark_current_path () {   bookmarks_button.bookmark_current_path (); }
+    internal void unbookmark_current_path () { bookmarks_button.unbookmark_current_path (); }
+
+    internal void close_popovers ()
+    {
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
+    }
+
+    internal void update_bookmark_icon (string bookmark, bool bookmark_exists, bool bookmark_has_schema = false, bool bookmark_is_default = false)
+    {
+        bookmarks_button.update_bookmark_icon (bookmark, bookmark_exists, bookmark_has_schema, bookmark_is_default);
     }
 
 /*      string [] tokens = full_name.split (" ");
@@ -145,33 +158,6 @@ private class PathWidget : Box
             }
             index++;
         } */
-
-    /*\
-    * * bookmarks
-    \*/
-
-    construct
-    {
-        // TODO here again, allow to use in UI file "bind-property" without "bind-source", using the instanciated object as source
-        bind_property ("search-mode-enabled", bookmarks_button, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
-    }
-
-    internal void close_popovers ()
-    {
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
-    }
-
-    internal void click_bookmarks_button ()
-    {
-        if (bookmarks_button.sensitive)
-            bookmarks_button.clicked ();
-    }
-
-    internal void update_bookmark_icon (string bookmark, bool bookmark_exists, bool bookmark_has_schema = false, bool bookmark_is_default = false)
-    {
-        bookmarks_button.update_bookmark_icon (bookmark, bookmark_exists, bookmark_has_schema, bookmark_is_default);
-    }
 
     /*\
     * * sizing

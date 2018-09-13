@@ -29,7 +29,29 @@ internal enum RelocatableSchemasEnabledMappings
 internal enum ViewType {
     OBJECT,
     FOLDER,
-    SEARCH
+    SEARCH;
+
+    internal static uint8 to_byte (ViewType type)
+    {
+        switch (type)
+        {
+            case ViewType.OBJECT: return 0;
+            case ViewType.FOLDER: return 1;
+            case ViewType.SEARCH: return 2;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal static ViewType from_byte (uint8 type)
+    {
+        switch (type)
+        {
+            case 0: return ViewType.OBJECT;
+            case 1: return ViewType.FOLDER;
+            case 2: return ViewType.SEARCH;
+            default: assert_not_reached ();
+        }
+    }
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
@@ -422,6 +444,7 @@ private class DConfWindow : ApplicationWindow
 
         { "open-folder", open_folder, "s" },
         { "open-object", open_object, "(sq)" },
+        { "open-search", open_search, "s" },
         { "open-parent", open_parent, "s" },
 
         { "reload-folder", reload_folder },
@@ -488,6 +511,16 @@ private class DConfWindow : ApplicationWindow
         request_object (full_name, context_id);
     }
 
+    private void open_search (SimpleAction action, Variant? search_variant)
+        requires (search_variant != null)
+    {
+        path_widget.close_popovers ();
+
+        string search = ((!) search_variant).get_string ();
+
+        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL, search);
+    }
+
     private void open_parent (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
@@ -530,6 +563,8 @@ private class DConfWindow : ApplicationWindow
 
         foreach (string bookmark in bookmarks)
         {
+            if (bookmark.has_prefix ("?"))
+                continue;
             if (ModelUtils.is_folder_path (bookmark))
                 continue;   // TODO check folder existence
 
@@ -694,7 +729,7 @@ private class DConfWindow : ApplicationWindow
         // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR)
+    private void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null)
     {
         string selected_row = browser_view.get_selected_row_name ();
         if (reload)
@@ -704,8 +739,9 @@ private class DConfWindow : ApplicationWindow
             reload_search_next = false;
         }
         if (mode != PathEntry.SearchMode.UNCLEAR)
-            path_widget.prepare_search (mode);
-        update_current_path (ViewType.SEARCH, path_widget.text);
+            path_widget.prepare_search (mode, search);
+        string search_text = search == null ? path_widget.text : (!) search;
+        update_current_path (ViewType.SEARCH, search_text);
         browser_view.select_row (selected_row);
         if (!path_widget.entry_has_focus)
             path_widget.entry_grab_focus_without_selecting ();
@@ -893,20 +929,16 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "d":
-                    if (!path_widget.is_bookmarks_button_sensitive)
-                        return true;
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    path_widget.set_bookmarked (current_path, true);
+                    path_widget.bookmark_current_path ();
                     return true;
                 case "D":
-                    if (!path_widget.is_bookmarks_button_sensitive)
-                        return true;
                     if (info_button.active)
                         info_button.active = false;
                     browser_view.discard_row_popover ();
-                    path_widget.set_bookmarked (current_path, false);
+                    path_widget.unbookmark_current_path ();
                     return true;
 
                 case "f":
@@ -1031,12 +1063,9 @@ private class DConfWindow : ApplicationWindow
         if (name == "Return" || name == "KP_Enter")
         {
             if (browser_view.current_view == ViewType.SEARCH
-            && path_widget.entry_has_focus
-            && browser_view.return_pressed ())
-            {
-                stop_search ();
+             && path_widget.entry_has_focus
+             && browser_view.return_pressed ())
                 return true;
-            }
             return false;
         }
 

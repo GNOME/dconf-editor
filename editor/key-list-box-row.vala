@@ -138,6 +138,18 @@ private class FolderListBoxRow : ClickableListBoxRow
     }
 }
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/search-list-box-row.ui")]
+private class SearchListBoxRow : ClickableListBoxRow
+{
+    [GtkChild] private Label search_label;
+
+    internal SearchListBoxRow (string search)
+    {
+        Object (full_name: search, context_id: ModelUtils.undefined_context_id);
+        search_label.set_text (search);
+    }
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private class KeyListBoxRow : ClickableListBoxRow
 {
@@ -393,10 +405,13 @@ private class ContextPopover : Popover
             case "erase":           action_text = _("Erase key");           break;
 
             /* Translators: "open folder" action in the right-click menu on a folder */
-            case "open":            action_text = _("Open");                break;
+            case "open-folder":     action_text = _("Open");                break;
+
+            /* Translators: "open search" action in the right-click menu on a search */
+            case "open-search":     action_text = _("Search");                break;
 
             /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
-            case "open_parent":     action_text = _("Open parent folder");  break;
+            case "open-parent":     action_text = _("Open parent folder");  break;
 
             /* Translators: "reset recursively" action in the right-click menu on a folder */
             case "recursivereset":  action_text = _("Reset recursively");   break;

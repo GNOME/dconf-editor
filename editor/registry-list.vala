@@ -187,12 +187,12 @@ private abstract class RegistryList : Grid, BrowsableView
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
 
-        if (ModelUtils.is_folder_context_id (row.context_id))
-            return _get_folder_copy_text (row);
+        if (ModelUtils.is_folder_context_id (row.context_id) || ModelUtils.is_undefined_context_id (row.context_id))
+            return _get_folder_or_search_copy_text (row);
         else
             return _get_key_copy_text (row, modifications_handler);
     }
-    private static inline string _get_folder_copy_text (ClickableListBoxRow row)
+    private static inline string _get_folder_or_search_copy_text (ClickableListBoxRow row)
     {
         return row.full_name;
     }
@@ -298,7 +298,11 @@ private abstract class RegistryList : Grid, BrowsableView
                                          && (search_is_path_search
                                           || ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode);
 
-        if (ModelUtils.is_folder_context_id (context_id))
+        if (setting_object.is_search)
+        {
+            row = new SearchListBoxRow (full_name.slice (1, full_name.length));
+        }
+        else if (ModelUtils.is_folder_context_id (context_id))
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
         }
@@ -402,9 +406,15 @@ private abstract class RegistryList : Grid, BrowsableView
 
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
-        if (ModelUtils.is_folder_context_id (row.context_id))
+        if (ModelUtils.is_undefined_context_id (row.context_id))
         {
-            wrapper.get_style_context ().add_class ("folder-row");
+            wrapper.get_style_context ().add_class ("f-or-s-row");
+            wrapper.action_name = "ui.open-search";
+            wrapper.set_action_target ("s", row.full_name);
+        }
+        else if (ModelUtils.is_folder_context_id (row.context_id))
+        {
+            wrapper.get_style_context ().add_class ("f-or-s-row");
             wrapper.action_name = "ui.open-folder";
             wrapper.set_action_target ("s", row.full_name);
         }
@@ -597,8 +607,8 @@ private abstract class RegistryList : Grid, BrowsableView
     {
         switch (row.context_id)
         {
-            case ModelUtils.undefined_context_id:
-                assert_not_reached ();
+            case ModelUtils.undefined_context_id:   // TODO search_context_id, and assert_not_reached() on undefined_context_id
+                return generate_search_popover (row);
 
             case ModelUtils.folder_context_id:
                 return generate_folder_popover (row);
@@ -614,9 +624,23 @@ private abstract class RegistryList : Grid, BrowsableView
         }
     }
 
+    private static bool generate_search_popover (ClickableListBoxRow row)
+    {
+        if (row.nullable_popover == null)   // do not place in requires 1/5
+            assert_not_reached ();
+
+        ContextPopover popover = (!) row.nullable_popover;
+        Variant variant = new Variant.string (row.full_name);
+
+        popover.new_gaction ("open-search", "ui.open-search(" + variant.print (false) + ")");
+        popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
+
+        return true;
+    }
+
     private static bool generate_folder_popover (ClickableListBoxRow row)
     {
-        if (row.nullable_popover == null)   // do not place in requires 1/4
+        if (row.nullable_popover == null)   // do not place in requires 2/5
             assert_not_reached ();
 
         ContextPopover popover = (!) row.nullable_popover;
@@ -624,12 +648,12 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (row.search_result_mode)
         {
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant.print (false) + ")");
+            popover.new_gaction ("open-parent", "ui.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
-        popover.new_gaction ("open", "ui.open-folder(" + variant.print (false) + ")");
-        popover.new_gaction ("copy", "app.copy(" + _get_folder_copy_text_variant (row).print (false) + ")");
+        popover.new_gaction ("open-folder", "ui.open-folder(" + variant.print (false) + ")");
+        popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
 
         popover.new_section ();
         popover.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
@@ -639,7 +663,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private static bool generate_gsettings_popover (KeyListBoxRow row, ModificationsHandler modifications_handler, Variant copy_text_variant)
     {
-        if (row.nullable_popover == null)   // do not place in requires 2/4
+        if (row.nullable_popover == null)   // do not place in requires 3/5
             assert_not_reached ();
 
         SettingsModel model = modifications_handler.model;
@@ -671,7 +695,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (row.search_result_mode)
         {
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant_s.print (false) + ")");
+            popover.new_gaction ("open-parent", "ui.open-parent(" + variant_s.print (false) + ")");
             popover.new_section ();
         }
 
@@ -759,7 +783,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private static bool generate_ghost_popover (ClickableListBoxRow row, Variant copy_text_variant)
     {
-        if (row.nullable_popover == null)   // do not place in requires 3/4
+        if (row.nullable_popover == null)   // do not place in requires 4/5
             assert_not_reached ();
 
         ContextPopover popover = (!) row.nullable_popover;
@@ -769,7 +793,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private static bool generate_dconf_popover (KeyListBoxRow row, ModificationsHandler modifications_handler, Variant copy_text_variant)
     {
-        if (row.nullable_popover == null)   // do not place in requires 4/4
+        if (row.nullable_popover == null)   // do not place in requires 5/5
             assert_not_reached ();
 
         SettingsModel model = modifications_handler.model;
@@ -779,7 +803,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
         if (row.search_result_mode)
         {
-            popover.new_gaction ("open_parent", "ui.open-parent(" + variant_s.print (false) + ")");
+            popover.new_gaction ("open-parent", "ui.open-parent(" + variant_s.print (false) + ")");
             popover.new_section ();
         }
 
@@ -840,9 +864,9 @@ private abstract class RegistryList : Grid, BrowsableView
         row.set_key_value (gvariant);
     }
 
-    private static inline Variant _get_folder_copy_text_variant (ClickableListBoxRow row)
+    private static inline Variant _get_folder_or_search_copy_text_variant (ClickableListBoxRow row)
     {
-        return new Variant.string (_get_folder_copy_text (row));
+        return new Variant.string (_get_folder_or_search_copy_text (row));
     }
     private static inline Variant _get_key_copy_text_variant (ClickableListBoxRow row, ModificationsHandler modifications_handler)
     {
