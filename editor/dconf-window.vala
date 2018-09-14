@@ -117,6 +117,16 @@ private class DConfWindow : ApplicationWindow
         settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         /* init current_path */
+        bool restore_view = settings.get_boolean ("restore-view");
+        if (restore_view)
+        {
+            string saved_path = settings.get_string ("saved-pathbar-path");
+            string fallback_path = model.get_fallback_path (saved_path);
+            /* path_widget.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
+            path_widget.update_ghosts (fallback_path);  // TODO allow a complete state restoration (including search and this) */
+            path_widget.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
+        }
+
         SchemasUtility schemas_utility = new SchemasUtility ();
         bool strict = false;
         string? first_path = path;
@@ -125,7 +135,7 @@ private class DConfWindow : ApplicationWindow
             if (key_name != null)
                 assert_not_reached ();
 
-            if (first_path == null && settings.get_boolean ("restore-view"))
+            if (first_path == null && restore_view)
                 first_path = settings.get_string ("saved-view");
         }
         else if (schemas_utility.is_relocatable_schema ((!) schema))
@@ -133,7 +143,7 @@ private class DConfWindow : ApplicationWindow
             if (first_path == null)
             {
                 warning (_("Schema is relocatable, a path is needed."));
-                if (settings.get_boolean ("restore-view"))
+                if (restore_view)
                     first_path = settings.get_string ("saved-view");
             }
             else
@@ -159,7 +169,7 @@ private class DConfWindow : ApplicationWindow
             else if (first_path != null && first_path != schema_path)
             {
                 warning (_("Schema is not installed on given path."));
-                if (settings.get_boolean ("restore-view"))
+                if (restore_view)
                     first_path = settings.get_string ("saved-view");
             }
             else if (key_name == null)
@@ -174,7 +184,7 @@ private class DConfWindow : ApplicationWindow
         {
             if ((!) schema != "")
                 warning (_("Unknown schema “%s”.").printf ((!) schema));
-            if (settings.get_boolean ("restore-view"))
+            if (restore_view)
                 first_path = settings.get_string ("saved-view");
         }
 
@@ -410,6 +420,7 @@ private class DConfWindow : ApplicationWindow
 
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
+        settings.set_string ("saved-pathbar-path", path_widget.complete_path);
         if (window_width <= 630)    settings.set_int ("window-width", 630);
         else                        settings.set_int ("window-width", window_width);
         if (window_height <= 420)   settings.set_int ("window-height", 420);
