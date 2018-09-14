@@ -125,7 +125,7 @@ sources += gnome.compile_resources(
 
 deps = [
   dependency('dconf', version: '>= 0.26.1'),
-  dependency('glib-2.0', version: '>= 2.55.1'),
+  dependency('glib-2.0', version: '>= 2.56.0'),
   dependency('gmodule-2.0'),
   dependency('gtk+-3.0', version: '>= 3.22.27'),
   valac.find_library('config', dirs: meson.current_source_dir()),

@@ -136,7 +136,7 @@ private class ConfigurationEditor : Gtk.Application
 
         { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
 
-        { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, ref remaining, "args", N_("[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]") },
+        { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, ref remaining, "args", null },
         {}
     };
 
@@ -170,10 +170,32 @@ private class ConfigurationEditor : Gtk.Application
     {
         Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN);
 
-//        TODO needs gio-2.0 >= 2.56
-//        set_option_context_parameter_string (_("..."));
-//        set_option_context_summary (_("..."));
-//        set_option_context_description (_("..."));
+        set_option_context_parameter_string ("[ PATH | [FIXED_SCHEMA|RELOC_SCHEMA:PATH] [KEY] ]");
+        /* Translators: try to put that string in 80 characters or less, if possible. */
+        set_option_context_summary (_("Graphical interface for editing other applications settings.") + "\n\n" + _("Uses the gsettings API of the glib library, and other ways."));
+
+        set_option_context_description (_("Arguments description:") +
+"\n  PATH" +
+"\n    " + _("a folder path or a key path") +
+"\n    " + _("example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”") +
+
+"\n  FIXED_SCHEMA" +
+"\n    " + _("the name of a schema with fixed path") +
+"\n    " + _("example: “ca.desrt.dconf-editor.Settings”") +
+
+"\n  RELOC_SCHEMA" +
+/* Translators: no need to put your translation of "relocatable" between quotation marks, that's done to highlight why the option is called "RELOC_SCHEMA" */
+"\n    " + _("the name of a “relocatable” schema, without fixed path") +
+"\n    " + _("see list with the “--list-relocatable-schemas” option") +
+
+"\n  MAPPING" +
+"\n    " + _("the path where to map the relocatable schema") +
+"\n    " + _("example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”") +
+
+"\n  KEY" +
+"\n    " + _("the name of a key from the schema") +
+"\n    " + _("example: “bookmarks”") +
+"\n");
 
         add_main_option_entries (option_entries);
     }
