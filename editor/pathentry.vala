@@ -57,8 +57,20 @@ private class PathEntry : Box
         return search_entry.handle_event (event);
     }
 
+    private bool has_error_class = false;
     internal void set_path (ViewType type, string path)
     {
+        if (!has_error_class && DConfWindow.is_path_invalid (path))
+        {
+            has_error_class = true;
+            search_entry.get_style_context ().add_class ("error");
+        }
+        else if (has_error_class && !DConfWindow.is_path_invalid (path))
+        {
+            has_error_class = false;
+            search_entry.get_style_context ().remove_class ("error");
+        }
+
         current_path = path;
 //        if (type == ViewType.SEARCH)
     }

@@ -373,6 +373,9 @@ private class ConfigurationEditor : Gtk.Application
 
         if (arg0.has_prefix ("/"))
         {
+            if (arg0.contains ("//"))
+                return failure_double_slash (commands);
+
             Gtk.Window window = get_new_window (null, arg0, null);
             if (args.length == 2)
             {
@@ -414,11 +417,20 @@ private class ConfigurationEditor : Gtk.Application
                 simple_activation ();
                 return Posix.EXIT_FAILURE;
             }
+            if (((!) path).contains ("//"))
+                return failure_double_slash (commands);
         }
 
         Gtk.Window window = get_new_window (test_format [0], path, key_name);
         window.present ();
         return Posix.EXIT_SUCCESS;
+    }
+
+    private int failure_double_slash (ApplicationCommandLine commands)
+    {
+        commands.print (_("Cannot understand: given path contains “//”.\n"));
+        simple_activation ();
+        return Posix.EXIT_FAILURE;
     }
 
     private int failure_space (ApplicationCommandLine commands)

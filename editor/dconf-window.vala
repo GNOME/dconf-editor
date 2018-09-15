@@ -118,8 +118,13 @@ private class DConfWindow : ApplicationWindow
 
         /* init current_path */
         bool restore_view = settings.get_boolean ("restore-view");
+        string? settings_saved_view = null;
         if (restore_view)
         {
+            settings_saved_view = settings.get_string ("saved-view");
+            if (((!) settings_saved_view).contains ("//"))
+                settings_saved_view = "/";
+
             string saved_path = settings.get_string ("saved-pathbar-path");
             string fallback_path = model.get_fallback_path (saved_path);
             /* path_widget.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
@@ -136,7 +141,7 @@ private class DConfWindow : ApplicationWindow
                 assert_not_reached ();
 
             if (first_path == null && restore_view)
-                first_path = settings.get_string ("saved-view");
+                first_path = settings_saved_view;
         }
         else if (schemas_utility.is_relocatable_schema ((!) schema))
         {
@@ -144,7 +149,7 @@ private class DConfWindow : ApplicationWindow
             {
                 warning (_("Schema is relocatable, a path is needed."));
                 if (restore_view)
-                    first_path = settings.get_string ("saved-view");
+                    first_path = settings_saved_view;
             }
             else
             {
@@ -170,7 +175,7 @@ private class DConfWindow : ApplicationWindow
             {
                 warning (_("Schema is not installed on given path."));
                 if (restore_view)
-                    first_path = settings.get_string ("saved-view");
+                    first_path = settings_saved_view;
             }
             else if (key_name == null)
                 first_path = schema_path;
@@ -185,7 +190,7 @@ private class DConfWindow : ApplicationWindow
             if ((!) schema != "")
                 warning (_("Unknown schema “%s”.").printf ((!) schema));
             if (restore_view)
-                first_path = settings.get_string ("saved-view");
+                first_path = settings_saved_view;
         }
 
         prepare_model ();
@@ -578,6 +583,8 @@ private class DConfWindow : ApplicationWindow
         {
             if (bookmark.has_prefix ("?"))
                 continue;
+            if (is_path_invalid (bookmark))
+                continue;
             if (ModelUtils.is_folder_path (bookmark))
                 continue;   // TODO check folder existence
 
@@ -676,6 +683,11 @@ private class DConfWindow : ApplicationWindow
     /*\
     * * Path requests
     \*/
+
+    public static bool is_path_invalid (string path)
+    {
+        return path.has_prefix ("/") && path.contains ("//");
+    }
 
     private void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
