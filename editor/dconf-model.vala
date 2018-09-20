@@ -977,6 +977,14 @@ private class SettingsModel : SettingsModelCore
     * * Directories informations
     \*/
 
+    internal Variant _get_folder_properties (string folder_path)
+    {
+        RegistryVariantDict variantdict = new RegistryVariantDict ();
+
+        variantdict.insert_value (PropertyQuery.KEY_NAME, new Variant.string (ModelUtils.get_name (folder_path)));
+        return variantdict.end ();
+    }
+
     internal Variant? get_children (string folder_path, bool watch = false, bool clean_watched = false)
         requires (ModelUtils.is_folder_path (folder_path))
     {
@@ -1118,6 +1126,12 @@ private class SettingsModel : SettingsModelCore
     /*\
     * * Keys properties
     \*/
+
+    internal Variant get_folder_properties (string folder_path)
+        requires (ModelUtils.is_folder_path (folder_path))
+    {
+        return _get_folder_properties (folder_path);
+    }
 
     internal Variant get_key_properties (string key_path, uint16 key_context_id, uint16 query)
         requires (ModelUtils.is_key_path (key_path))

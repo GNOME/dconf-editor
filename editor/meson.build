@@ -98,6 +98,7 @@ resource_data = files(
   'browser-infobar.ui',
   'browser-stack.ui',
   'browser-view.ui',
+  'config-list-box-row.ui',
   'dconf-editor.css',
   'dconf-editor.ui',
   'delayed-setting-view.ui',
@@ -113,6 +114,7 @@ resource_data = files(
   'registry-info.ui',
   'registry-placeholder.ui',
   'registry-view.ui',
+  'return-list-box-row.ui',
   'search-list-box-row.ui'
 )
 

@@ -68,12 +68,6 @@
 * * lists rows height and icon
 \*/
 
-/* hack: fix next lines misplacement when the first line is a header */
-
-list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
-  margin-top:-1px;
-}
-
 /* row height */
                                    .keys-list          > row         { transition:min-height 0.3s,
                                                                                   margin-left 0.3s, margin-right 0.3s,
@@ -144,6 +138,10 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
                                    .keys-list:dir(ltr) > row > .managed         { background-position:            0.75rem  center; }
                                    .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.75rem) center; }
 
+                                   .keys-list          > row > .managed.small   { background-size:1.1rem; } /* ~16px usually, base size */
+                                   .keys-list:dir(ltr) > row > .managed.small   { background-position:            0.95rem  center; }
+                                   .keys-list:dir(rtl) > row > .managed.small   { background-position:calc(100% - 0.95rem) center; }
+
              .small-keys-list-rows .keys-list          > row > .managed         { background-size:1.1rem; } /* ~16px usually, base size */
              .small-keys-list-rows .keys-list:dir(ltr) > row > .managed         { background-position:            0.55rem  center; }
              .small-keys-list-rows .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.55rem) center; }
@@ -152,8 +150,10 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
 
              row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
              row:active >                .folder               { background-image:-gtk-icontheme("folder-open-symbolic"); }
-
              row >                       .search               { background-image:-gtk-icontheme("edit-find-symbolic"); }
+
+             row >                       .return               { background-image:-gtk-icontheme("edit-undo-symbolic"); }
+             row >                       .config               { background-image:-gtk-icontheme("dialog-information-symbolic"); }
 
              row >                       .key.delayed,
              row >             .dconf-key.key.delayed,
@@ -292,6 +292,12 @@ list.keys-list > grid.big-popover.dim-label.vertical + grid.vertical {
 .pathbar:backdrop > button.active.inexistent       > .item,
 .pathbar:backdrop > button.active.inexistent:hover > .item {
   border-bottom-color:@borders;
+}
+
+/* dashed in config */
+
+.pathbar.config   > button.active                  > .item {
+  border-bottom-style:dashed;
 }
 
 /* inexistent items */

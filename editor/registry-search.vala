@@ -35,7 +35,7 @@ private class RegistrySearch : RegistryList
 
     internal override void select_first_row ()
     {
-        _select_first_row (key_list_box);
+        _select_first_row (key_list_box, (!) old_term);
     }
 
     internal bool return_pressed ()
@@ -62,11 +62,13 @@ private class RegistrySearch : RegistryList
         old_term = null;
     }
 
-    internal void set_search_parameters (string current_path, string [] _bookmarks, SortingOptions _sorting_options)
+    uint16 fallback_context_id = ModelUtils.undefined_context_id;
+    internal void set_search_parameters (string current_path, uint16 current_context_id, string [] _bookmarks, SortingOptions _sorting_options)
     {
         clean ();
 
         current_path_if_search_mode = current_path;
+        fallback_context_id = current_context_id;
         bookmarks = _bookmarks;
         sorting_options = _sorting_options;
     }
@@ -75,21 +77,48 @@ private class RegistrySearch : RegistryList
     * * Updating
     \*/
 
-    private static void ensure_selection (ListBox? key_list_box)    // technical nullability
+    private static void ensure_selection (ListBox? key_list_box, string full_name)    // technical nullability
     {
         if (key_list_box == null)   // suppresses some warnings if the window is closed while the search is processing
             return;                 // TODO see if 5596feae9b51563a33f1bffc6a370e6ba556adb7 fixed that in Gtk 4
 
         ListBoxRow? selected_row = ((!) key_list_box).get_selected_row ();
         if (selected_row == null)
-            _select_first_row ((!) key_list_box);
+            _select_first_row ((!) key_list_box, full_name);
     }
 
-    private static void _select_first_row (ListBox key_list_box)
+    private static void _select_first_row (ListBox key_list_box, string term)
     {
-        ListBoxRow? row = key_list_box.get_row_at_index (0);
-        if (row != null)
-            key_list_box.select_row ((!) row);
+        ListBoxRow? row;
+        if (term.has_prefix ("/"))
+        {
+            row = key_list_box.get_row_at_index (0);
+            if (row == null)
+                assert_not_reached ();
+
+            ClickableListBoxRow? row_child = (ClickableListBoxRow?) ((!) row).get_child ();
+            if (row_child != null)
+            {
+                if (((!) row_child).full_name != term)
+                {
+                    ListBoxRow? second_row = key_list_box.get_row_at_index (1);
+                    if (second_row != null)
+                        row = second_row;
+                }
+            }
+        }
+        else
+        {
+            row = key_list_box.get_row_at_index (1);
+            if (row == null)
+            {
+                row = key_list_box.get_row_at_index (0);
+                if (row == null)
+                    assert_not_reached ();
+            }
+        }
+
+        key_list_box.select_row ((!) row);
         key_list_box.get_adjustment ().set_value (0);
     }
 
@@ -152,7 +181,7 @@ private class RegistrySearch : RegistryList
         if ((old_term != null && term == (!) old_term)
          || DConfWindow.is_path_invalid (term))
         {
-            ensure_selection (key_list_box);
+            ensure_selection (key_list_box, (!) old_term);
             return;
         }
 
@@ -172,7 +201,7 @@ private class RegistrySearch : RegistryList
                 resume_global_search ((!) current_path_if_search_mode, term); // update search term
             }
 
-            ensure_selection (key_list_box);
+            ensure_selection (key_list_box, term);
 
             model.keys_value_push ();
         }
@@ -182,12 +211,23 @@ private class RegistrySearch : RegistryList
 
             stop_global_search ();
 
+            search_is_path_search = term.has_prefix ("/");
+            if (search_is_path_search)
+                current_path_if_search_mode = ModelUtils.get_base_path (term);
+
+            uint16 _fallback_context_id = ModelUtils.is_folder_path ((!) current_path_if_search_mode) ? ModelUtils.folder_context_id : fallback_context_id;
+            string name = ModelUtils.get_name ((!) current_path_if_search_mode);
+            SimpleSettingObject sso = new SimpleSettingObject.from_full_name (_fallback_context_id,
+                                                                              name,
+                                                                              (!) current_path_if_search_mode,
+                                                                              true, true);
+            list_model.insert (0, sso);
+
             local_search (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
 
             post_local = (int) list_model.get_n_items ();
             post_paths = post_local;
 
-            search_is_path_search = term.has_prefix ("/");
             if (search_is_path_search)
                 paths_search (model, term, ref list_model, ref post_paths);
             post_bookmarks = post_paths;
@@ -197,7 +237,7 @@ private class RegistrySearch : RegistryList
 
             key_list_box.bind_model (list_model, new_list_box_row);
 
-            _select_first_row (key_list_box);
+            _select_first_row (key_list_box, term);
 
             model.keys_value_push ();
 
@@ -209,12 +249,12 @@ private class RegistrySearch : RegistryList
 
     private static void refine_local_results (string term, ref GLib.ListStore list_model, ref int post_local, ref int post_paths, ref int post_bookmarks, ref int post_folders)
     {
-        if (post_local < 0)
+        if (post_local < 1)
             assert_not_reached ();
-        if (post_local == 0)
+        if (post_local == 1)
             return;
 
-        for (int i = post_local - 1; i >= 0; i--)
+        for (int i = post_local - 1; i >= 1; i--)
         {
             SimpleSettingObject? item = (SimpleSettingObject?) list_model.get_item (i);
             if (item == null)
@@ -319,25 +359,14 @@ private class RegistrySearch : RegistryList
 
     private static void paths_search (SettingsModel model, string term, ref GLib.ListStore list_model, ref int post_paths)
     {
-        uint16 context_id;
-        string name;
-
-        string base_path;
-        if (ModelUtils.is_key_path (term))
-            base_path = ModelUtils.get_parent_path (term);
-        else if (model.get_object (term, out context_id, out name, false))   // TODO model.get_folder
-        {
-            SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, term);
-            list_model.insert (post_paths, sso);
-            post_paths++;
-            base_path = term;
-        }
-        else    // strange construction because else something wrong happens
-            base_path = ModelUtils.get_parent_path (term);
+        string base_path = ModelUtils.get_base_path (term);
 
         Variant? key_model = model.get_children (base_path, true, false);
         if (key_model == null)
             return;
+
+        uint16 context_id;
+        string name;
 
         int post_subfolders = post_paths;
         VariantIter iter = new VariantIter ((!) key_model);
@@ -468,7 +497,7 @@ private class RegistrySearch : RegistryList
             }
         }
 
-        ensure_selection (key_list_box);
+        ensure_selection (key_list_box, term);
     }
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
@@ -479,7 +508,9 @@ private class RegistrySearch : RegistryList
     }
     private static string? get_header_text (int row_index, int post_local, int post_paths, int post_bookmarks, int post_folders)
     {
-        if (row_index == 0 && post_local > 0)
+        if (row_index == 0)
+            return null;
+        if (row_index == 1 && post_local > 1)
             return _("Current folder");
         if (row_index == post_local && post_local != post_paths)
             return _("Paths");

@@ -51,7 +51,7 @@ private class BrowserStack : Grid
 
     internal string get_selected_row_name ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             return ((RegistryList) stack.get_visible_child ()).get_selected_row_name ();
         return object_view.full_name;
     }
@@ -64,7 +64,7 @@ private class BrowserStack : Grid
     }
 
     internal void select_row (string selected, uint16 last_context_id)
-        requires (current_view != ViewType.OBJECT)
+        requires (ViewType.displays_objects_list (current_view))
     {
         if (selected == "")
             ((RegistryList) stack.get_visible_child ()).select_first_row ();
@@ -88,14 +88,16 @@ private class BrowserStack : Grid
         current_view = type;
         if (type == ViewType.FOLDER)
             stack.set_visible_child (folder_view);
-        else if (type == ViewType.OBJECT)
+        else if (ViewType.displays_object_infos (type))
             stack.set_visible_child (object_view);
-        else // (type == ViewType.SEARCH)
+        else if (type == ViewType.SEARCH)
         {
             search_view.start_search (path);
             stack.set_transition_type (StackTransitionType.NONE);
             stack.set_visible_child (search_view);
+            search_view.select_first_row ();
         }
+        else assert_not_reached ();
 
         if (clean_object_view)
             object_view.clean ();
@@ -119,26 +121,26 @@ private class BrowserStack : Grid
 
     internal bool toggle_row_popover ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             return ((RegistryList) stack.get_visible_child ()).toggle_row_popover ();
         return false;
     }
 
     internal void toggle_boolean_key ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             ((RegistryList) stack.get_visible_child ()).toggle_boolean_key ();
     }
 
     internal void set_selected_to_default ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             ((RegistryList) stack.get_visible_child ()).set_selected_to_default ();
     }
 
     internal void discard_row_popover ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             ((RegistryList) stack.get_visible_child ()).discard_row_popover ();
     }
 
@@ -158,9 +160,9 @@ private class BrowserStack : Grid
     * * Reload
     \*/
 
-    internal void set_search_parameters (string current_path, string [] bookmarks, SortingOptions sorting_options)
+    internal void set_search_parameters (string current_path, uint16 current_context_id, string [] bookmarks, SortingOptions sorting_options)
     {
-        search_view.set_search_parameters (current_path, bookmarks, sorting_options);
+        search_view.set_search_parameters (current_path, current_context_id, bookmarks, sorting_options);
     }
 
     internal bool check_reload_folder (Variant? fresh_key_model)
@@ -198,7 +200,7 @@ private class BrowserStack : Grid
 
     internal void row_grab_focus ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             ((RegistryList) stack.get_visible_child ()).row_grab_focus ();
     }
 
@@ -210,14 +212,14 @@ private class BrowserStack : Grid
 
     internal bool up_pressed ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (false);
         return false;
     }
 
     internal bool down_pressed ()
     {
-        if (current_view != ViewType.OBJECT)
+        if (ViewType.displays_objects_list (current_view))
             return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (true);
         return false;
     }

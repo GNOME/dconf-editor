@@ -6,6 +6,7 @@
     <file preprocess="xml-stripblanks">browser-infobar.ui</file>
     <file preprocess="xml-stripblanks">browser-stack.ui</file>
     <file preprocess="xml-stripblanks">browser-view.ui</file>
+    <file preprocess="xml-stripblanks">config-list-box-row.ui</file>
     <file>dconf-editor.css</file>
     <file preprocess="xml-stripblanks">dconf-editor.ui</file>
     <file preprocess="xml-stripblanks">delayed-setting-view.ui</file>
@@ -20,6 +21,7 @@
     <file preprocess="xml-stripblanks">registry-info.ui</file>
     <file preprocess="xml-stripblanks">registry-placeholder.ui</file>
     <file preprocess="xml-stripblanks">registry-view.ui</file>
+    <file preprocess="xml-stripblanks">return-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">search-list-box-row.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">

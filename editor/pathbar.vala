@@ -30,17 +30,62 @@ private class PathBar : Box
     }
 
     /*\
-    * * public calls
+    * * keyboard
+    \*/
+
+    internal bool has_popover ()    // TODO urg
+    {
+        bool return_value = false;
+        @foreach ((child) => {
+                if (child is PathBarItem)
+                {
+                    PathBarItem item = (PathBarItem) child;
+                    if (item.is_active && item.has_popover ())
+                        return_value = true;
+                }
+            });
+        return return_value;
+    }
+
+    internal void close_menu ()     // TODO urg
+    {
+        @foreach ((child) => {
+                if (child is PathBarItem)
+                {
+                    PathBarItem item = (PathBarItem) child;
+                    if (item.is_active)
+                        item.close_menu ();
+                }
+            });
+    }
+
+    internal void toggle_menu ()    // TODO urg
+    {
+        @foreach ((child) => {
+                if (child is PathBarItem)
+                {
+                    PathBarItem item = (PathBarItem) child;
+                    if (item.is_active)
+                        item.toggle_menu ();
+                }
+            });
+    }
+
+    /*\
+    * * main public calls
     \*/
 
     internal void set_path (ViewType type, string path)
     {
         if (type == ViewType.SEARCH)
-        {
-            update_cursors_for_search (path, true);
             return;
-        }
-        update_cursors_for_search (path, false);
+
+        update_cursors (type, path);
+
+        if (type == ViewType.CONFIG)
+            get_style_context ().add_class ("config");
+        else
+            get_style_context ().remove_class ("config");
 
         activate_item (root_button, path == "/");
 
@@ -73,7 +118,7 @@ private class PathBar : Box
                 {
                     complete_path += split [0];
                     split = split [1:split.length];
-                    if (split.length == 0 || (split.length == 1 && type == ViewType.FOLDER))
+                    if (split.length == 0 || (split.length == 1 && (type == ViewType.FOLDER || type == ViewType.CONFIG)))
                     {
                         activate_item (item, true);
                         maintain_all = true;
@@ -96,7 +141,7 @@ private class PathBar : Box
                 foreach (string item in split [0:split.length - 1])
                 {
                     complete_path += item + "/";
-                    add_path_bar_item (item, complete_path, true, type == ViewType.FOLDER && (index == split.length - 2));
+                    add_path_bar_item (item, complete_path, true, (type == ViewType.FOLDER || type == ViewType.CONFIG) && (index == split.length - 2));
                     add_slash_label ();
                     index++;
                 }
@@ -140,7 +185,7 @@ private class PathBar : Box
                         ((!) variant).@get ("(sq)", out action_target, out unused);
                     }
 
-                    if (context.has_class ("active"))
+                    if (item.is_active)
                     {
                         if (is_search)
                         {
@@ -177,16 +222,17 @@ private class PathBar : Box
             });
     }
 
-    private void update_cursors_for_search (string current_path, bool is_search)
+    private void update_cursors (ViewType type, string current_path)
     {
+        bool active_button_has_action = type == ViewType.CONFIG;
+
         @foreach ((child) => {
                 if (!(child is PathBarItem))
                     return;
-                StyleContext context = child.get_style_context ();
-                if (!context.has_class ("active"))
-                    return;
                 PathBarItem item = (PathBarItem) child;
-                if (is_search)
+                if (!item.is_active)
+                    return;
+                if (active_button_has_action)
                 {
                     item.set_cursor_type (PathBarItem.CursorType.POINTER);
                     item.set_detailed_action_name (item.default_action);
@@ -227,22 +273,24 @@ private class PathBar : Box
         activate_item (path_bar_item, block);   // has to be after add()
     }
 
-    private void activate_item (PathBarItem item, bool state)   // never called when current_view is search
+    private static void activate_item (PathBarItem item, bool state)   // never called when current_view is search
     {
-        StyleContext context = item.get_style_context ();
-        if (state == context.has_class ("active"))
+        if (state == item.is_active)
             return;
+
         if (state)
         {
+            item.is_active = true;
             item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
             item.set_action_name ("ui.empty");
-            context.add_class ("active");
+            item.get_style_context ().add_class ("active");
         }
         else
         {
+            item.is_active = false;
             item.set_cursor_type (PathBarItem.CursorType.POINTER);
             item.set_detailed_action_name (item.default_action);
-            context.remove_class ("active");
+            item.get_style_context ().remove_class ("active");
         }
     }
 }
@@ -250,10 +298,14 @@ private class PathBar : Box
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
 private class PathBarItem : Button
 {
+    public bool is_active { internal get; internal set; default = false; }
+
     public string alternative_action { internal get; internal construct; }
     public string default_action     { internal get; internal construct; }
     public string text_string        { internal get; internal construct; }
+ 
     [GtkChild] private Label text_label;
+    private Popover? popover = null;
 
     internal enum CursorType {
         DEFAULT,
@@ -297,7 +349,8 @@ private class PathBarItem : Button
     [GtkCallback]
     private void update_cursor ()
     {
-        if (get_style_context ().has_class ("inexistent") && !get_style_context ().has_class ("active"))
+        StyleContext context = get_style_context ();
+        if (context.has_class ("inexistent") && !context.has_class ("active"))  // TODO use is_active when sanitized
             return;
 
         if (cursor_type != CursorType.CONTEXT)
@@ -307,12 +360,8 @@ private class PathBarItem : Button
             return;
         }
 
-        GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "ui.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
-        menu.freeze ();
-
-        Popover popover_test = new Popover.from_model (this, (MenuModel) menu);
-        popover_test.popup ();
+        generate_popover ();
+        ((!) popover).popup ();
     }
 
     internal PathBarItem (string label, string _default_action, string _alternative_action)
@@ -320,5 +369,36 @@ private class PathBarItem : Button
         Object (text_string: label, default_action: _default_action, alternative_action: _alternative_action);
         text_label.set_text (label);
         set_detailed_action_name (_default_action);
+    }
+
+    internal bool has_popover ()
+    {
+        return popover != null && ((!) popover).get_mapped ();
+    }
+
+    internal void close_menu ()
+    {
+        if (has_popover ())
+            ((!) popover).popdown ();
+    }
+
+    internal void toggle_menu ()
+    {
+        if (popover == null)
+            generate_popover ();
+
+        if (((!) popover).get_mapped ())
+            ((!) popover).popdown ();
+        else
+            ((!) popover).popup ();
+    }
+
+    private void generate_popover ()
+    {
+        GLib.Menu menu = new GLib.Menu ();
+        menu.append (_("Copy current path"), "ui.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
+        menu.freeze ();
+
+        popover = new Popover.from_model (this, (MenuModel) menu);
     }
 }

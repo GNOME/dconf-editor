@@ -19,7 +19,11 @@ using Gtk;
 
 private class SimpleSettingObject : Object
 {
+    public bool is_pinned           { internal get; internal construct; }
+
+    public bool is_config           { internal get; private construct; }
     public bool is_search           { internal get; internal construct; }
+
     public uint16 context_id        { internal get; internal construct; }
     public string name              { internal get; internal construct; }
     public string full_name         { internal get; internal construct; }
@@ -28,18 +32,19 @@ private class SimpleSettingObject : Object
 
     construct
     {
+        is_config = is_pinned && !is_search;
         casefolded_name = name.casefold ();
     }
 
-    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path, bool _is_search = false)
+    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path, bool _is_search = false, bool _is_config_or_is_pinned_search = false)
     {
         string _full_name = ModelUtils.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
-        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search);
+        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search, is_pinned: _is_config_or_is_pinned_search);
     }
 
-    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name, bool _is_search = false)
+    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name, bool _is_search = false, bool _is_config_or_is_pinned_search = false)
     {
-        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search);
+        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search, is_pinned: _is_config_or_is_pinned_search);
     }
 }
 
@@ -200,7 +205,7 @@ private class BrowserView : Grid
     }
 
     internal void select_row (string selected)
-        requires (current_view != ViewType.OBJECT)
+        requires (ViewType.displays_objects_list (current_view))
     {
         current_child.select_row (selected, last_context_id);
     }
@@ -236,14 +241,14 @@ private class BrowserView : Grid
     internal void set_search_parameters (string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
-        current_child.set_search_parameters (current_path, bookmarks, sorting_options);
+        current_child.set_search_parameters (current_path, last_context_id, bookmarks, sorting_options);
     }
 
     internal bool check_reload (ViewType type, string path, bool show_infobar)
     {
         SettingsModel model = modifications_handler.model;
 
-        if (type == ViewType.FOLDER)
+        if (type == ViewType.FOLDER || (type == ViewType.CONFIG && ModelUtils.is_folder_path (path)))
         {
             if (!current_child.check_reload_folder (model.get_children (path)))
                 return false;
@@ -253,7 +258,7 @@ private class BrowserView : Grid
                 return false;
             }
         }
-        else if (type == ViewType.OBJECT)
+        else if (type == ViewType.OBJECT || type == ViewType.CONFIG)
         {
             if (model.key_exists (path, last_context_id))
             {
@@ -270,7 +275,9 @@ private class BrowserView : Grid
                 return false;
             }
         }
-        else // (type == ViewType.SEARCH)
+        else if (type == ViewType.SEARCH)
+            assert_not_reached ();
+        else
             assert_not_reached ();
         return true;
     }
@@ -382,6 +389,11 @@ private class SettingComparator : Object
 
     internal int compare (SimpleSettingObject a, SimpleSettingObject b)
     {
+        if (a.is_pinned)
+            return -1;
+        if (b.is_pinned)
+            return 1;
+
         if (a.context_id != b.context_id)
         {
             int sort_hint = 0;

@@ -35,8 +35,15 @@ private class PathEntry : Box
         SEARCH
     }
 
+    private ulong search_changed_handler = 0;
     internal signal void search_changed ();
     internal signal void search_stopped ();
+
+    construct
+    {
+        search_changed_handler = search_entry.search_changed.connect (() => search_changed ()); 
+        search_entry.stop_search.connect (() => search_stopped ());
+    }
 
     internal void entry_grab_focus_without_selecting ()
     {
@@ -76,6 +83,13 @@ private class PathEntry : Box
     }
 
     internal void prepare (SearchMode mode, string? search = null)
+        requires (search_changed_handler != 0)
+    {
+        SignalHandler.block (search_entry, search_changed_handler);
+        _prepare (mode, search);
+        SignalHandler.unblock (search_entry, search_changed_handler);
+    }
+    private inline void _prepare (SearchMode mode, string? search)
     {
         switch (mode)
         {
@@ -115,17 +129,5 @@ private class PathEntry : Box
             default:
                 assert_not_reached ();
         }
-    }
-
-    [GtkCallback]
-    private void search_changed_cb ()
-    {
-        search_changed ();
-    }
-
-    [GtkCallback]
-    private void search_stopped_cb ()
-    {
-        search_stopped ();
     }
 }

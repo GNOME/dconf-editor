@@ -74,6 +74,23 @@ private class RegistryInfo : Grid, BrowsableView
 
         RegistryVariantDict properties = new RegistryVariantDict.from_aqv (current_key_info);
 
+        properties_list_box.@foreach ((widget) => widget.destroy ());
+
+        if (context_id == ModelUtils.folder_context_id)
+        {
+            string folder_name;
+            if (!properties.lookup (PropertyQuery.KEY_NAME,             "s",    out folder_name))
+                assert_not_reached ();
+            add_row_from_label (_("Name"),                                          folder_name);
+
+            conflicting_key_warning_revealer.set_reveal_child (false);
+            hard_conflicting_key_error_revealer.set_reveal_child (false);
+            no_schema_warning.set_reveal_child (false);
+            one_choice_warning_revealer.set_reveal_child (false);
+
+            return;
+        }
+
         if (!properties.lookup (PropertyQuery.HASH,                     "u",    out current_key_info_hash))
             assert_not_reached ();
 
@@ -111,8 +128,6 @@ private class RegistryInfo : Grid, BrowsableView
             hard_conflicting_key_error_revealer.set_reveal_child (false);
         }
         no_schema_warning.set_reveal_child (!has_schema);
-
-        properties_list_box.@foreach ((widget) => widget.destroy ());
 
         // TODO g_variant_dict_lookup_value() return value is not annotated as nullable
         string type_code;

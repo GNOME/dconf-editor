@@ -29,7 +29,8 @@ internal enum RelocatableSchemasEnabledMappings
 internal enum ViewType {
     OBJECT,
     FOLDER,
-    SEARCH;
+    SEARCH,
+    CONFIG;
 
     internal static uint8 to_byte (ViewType type)
     {
@@ -38,6 +39,7 @@ internal enum ViewType {
             case ViewType.OBJECT: return 0;
             case ViewType.FOLDER: return 1;
             case ViewType.SEARCH: return 2;
+            case ViewType.CONFIG: return 3;
             default: assert_not_reached ();
         }
     }
@@ -49,6 +51,35 @@ internal enum ViewType {
             case 0: return ViewType.OBJECT;
             case 1: return ViewType.FOLDER;
             case 2: return ViewType.SEARCH;
+            case 3: return ViewType.CONFIG;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal static bool displays_objects_list (ViewType type)
+    {
+        switch (type)
+        {
+            case ViewType.OBJECT:
+            case ViewType.CONFIG:
+                return false;
+            case ViewType.FOLDER:
+            case ViewType.SEARCH:
+                return true;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal static bool displays_object_infos (ViewType type)
+    {
+        switch (type)
+        {
+            case ViewType.OBJECT:
+            case ViewType.CONFIG:
+                return true;
+            case ViewType.FOLDER:
+            case ViewType.SEARCH:
+                return false;
             default: assert_not_reached ();
         }
     }
@@ -462,6 +493,7 @@ private class DConfWindow : ApplicationWindow
 
         { "open-folder", open_folder, "s" },
         { "open-object", open_object, "(sq)" },
+        { "open-config", open_config, "s" },
         { "open-search", open_search, "s" },
         { "open-parent", open_parent, "s" },
 
@@ -527,6 +559,16 @@ private class DConfWindow : ApplicationWindow
         ((!) path_variant).@get ("(sq)", out full_name, out context_id);
 
         request_object (full_name, context_id);
+    }
+
+    private void open_config (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        path_widget.close_popovers ();
+
+        string full_name = ((!) path_variant).get_string ();    // TODO use current_path instead?
+
+        request_config (full_name);
     }
 
     private void open_search (SimpleAction action, Variant? search_variant)
@@ -689,6 +731,17 @@ private class DConfWindow : ApplicationWindow
         return path.has_prefix ("/") && path.contains ("//");
     }
 
+    private void request_config (string full_name)
+    {
+        browser_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
+                                          model.get_folder_properties (full_name),
+                                          true);
+        update_current_path (ViewType.CONFIG, strdup (full_name));
+
+        stop_search ();
+        // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+    }
+
     private void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         string fallback_path = model.get_fallback_path (full_name);
@@ -710,17 +763,21 @@ private class DConfWindow : ApplicationWindow
     private static GLib.ListStore create_key_model (string base_path, Variant? children)
     {
         GLib.ListStore key_model = new GLib.ListStore (typeof (SimpleSettingObject));
+
+        string name = ModelUtils.get_name (base_path);
+        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (ModelUtils.folder_context_id, name, base_path, false, true);
+        key_model.append (sso);
+
         if (children != null)
         {
             VariantIter iter = new VariantIter ((!) children);
             uint16 context_id;
-            string name;
             while (iter.next ("(qs)", out context_id, out name))
             {
                 if (ModelUtils.is_undefined_context_id (context_id))
                     assert_not_reached ();
-                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
-                ((!) key_model).append (sso);
+                sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
+                key_model.append (sso);
             }
         }
         return key_model;
@@ -767,7 +824,8 @@ private class DConfWindow : ApplicationWindow
             path_widget.prepare_search (mode, search);
         string search_text = search == null ? path_widget.text : (!) search;
         update_current_path (ViewType.SEARCH, search_text);
-        browser_view.select_row (selected_row);
+        if (mode != PathEntry.SearchMode.UNCLEAR)
+            browser_view.select_row (selected_row);
         if (!path_widget.entry_has_focus)
             path_widget.entry_grab_focus_without_selecting ();
     }
@@ -788,7 +846,7 @@ private class DConfWindow : ApplicationWindow
 
     private void update_current_path (ViewType type, string path)
     {
-        if (type != ViewType.SEARCH)
+        if (type == ViewType.OBJECT || type == ViewType.FOLDER)
         {
             saved_type = type;
             saved_view = path;
@@ -812,7 +870,7 @@ private class DConfWindow : ApplicationWindow
 
         GLib.Menu menu = new GLib.Menu ();
 
-        if (current_type == ViewType.OBJECT)   // TODO a better way to copy various representations of a key name/value/path
+        if (current_type == ViewType.OBJECT && !ModelUtils.is_folder_path (current_path))   // TODO a better way to copy various representations of a key name/value/path
         {
             Variant variant = new Variant.string (model.get_suggested_key_copy_text (current_path, browser_view.last_context_id));
             menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
@@ -979,25 +1037,22 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "g":   // usual shortcut for "next-match" in a SearchEntry; see also "Down"
-                    if (!path_widget.is_bookmarks_button_active
+                    if (!path_widget.has_popover ()
                      && info_button.active == false
                      && !revealer.get_modifications_list_state ())
                         return browser_view.down_pressed ();
                     return false;
                 case "G":   // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
-                    if (!path_widget.is_bookmarks_button_active
+                    if (!path_widget.has_popover ()
                      && info_button.active == false
                      && !revealer.get_modifications_list_state ())
                         return browser_view.up_pressed ();
                     return false;
 
-                case "i":
-                    if (revealer.reveal_child)
-                    {
-                        revealer.toggle_modifications_list ();
-                        return true;
-                    }
-                    return false;
+                case "i": 
+                    if (browser_view.current_view == ViewType.FOLDER)
+                        request_config (current_path);
+                    return true;
 
                 case "l":
                     if (path_widget.search_mode_enabled)
@@ -1019,7 +1074,7 @@ private class DConfWindow : ApplicationWindow
 
                 case "Return":
                 case "KP_Enter":
-                    if (info_button.active || path_widget.is_bookmarks_button_active)
+                    if (info_button.active || path_widget.has_popover ())
                         return false;
                     browser_view.discard_row_popover ();
                     browser_view.toggle_boolean_key ();
@@ -1031,7 +1086,7 @@ private class DConfWindow : ApplicationWindow
                 case "decimalpoint":
                 case "period":
                 case "KP_Decimal":
-                    if (info_button.active || path_widget.is_bookmarks_button_active)
+                    if (info_button.active || path_widget.has_popover ())
                         return false;
                     if (revealer.dismiss_selected_modification ())
                     {
@@ -1053,9 +1108,22 @@ private class DConfWindow : ApplicationWindow
 
         if ((event.state & Gdk.ModifierType.MOD1_MASK) != 0)
         {
+            if (name == "i")
+            {
+                if (revealer.reveal_child)
+                {
+                    revealer.toggle_modifications_list ();
+                    return true;
+                }
+                return false;
+            }
             if (name == "Up")
             {
-                go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+                bool shift = (event.state & Gdk.ModifierType.SHIFT_MASK) != 0;
+                if (!shift && browser_view.current_view == ViewType.CONFIG)
+                    request_folder (current_path);
+                else
+                    go_backward (shift);
                 return true;
             }
             if (name == "Down")
@@ -1068,18 +1136,28 @@ private class DConfWindow : ApplicationWindow
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
         if (name == "F10")
         {
+            if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
+            {
+                if (!focus_is_text_widget) // && browser_view.current_view != ViewType.SEARCH
+                {
+                    path_widget.toggle_pathbar_menu ();
+                    return true;
+                }
+                return false;
+            }
+
             browser_view.discard_row_popover ();
             path_widget.close_popovers ();
             return false;
         }
 
         if (name == "Up"    // see also <ctrl>G
-         && !path_widget.is_bookmarks_button_active
+         && !path_widget.has_popover ()
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.up_pressed ();
         if (name == "Down"  // see also <ctrl>g
-         && !path_widget.is_bookmarks_button_active
+         && !path_widget.has_popover ()
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.down_pressed ();
@@ -1098,6 +1176,11 @@ private class DConfWindow : ApplicationWindow
             if (path_widget.search_mode_enabled)
             {
                 stop_search ();
+                return true;
+            }
+            if (current_type == ViewType.CONFIG)
+            {
+                request_folder (current_path);
                 return true;
             }
             return false;
@@ -1124,7 +1207,7 @@ private class DConfWindow : ApplicationWindow
             return true;
         }
 
-        if (path_widget.is_bookmarks_button_active || info_button.active)
+        if (path_widget.has_popover () || info_button.active)
             return false;
 
         if (!path_widget.search_mode_enabled &&

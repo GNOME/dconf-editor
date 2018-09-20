@@ -47,12 +47,7 @@ private class ListBoxRowHeader : Grid
 
     internal ListBoxRowHeader (bool is_first_row, string? header_text)
     {
-        if (header_text == null)
-        {
-            if (is_first_row)
-                return;
-        }
-        else
+        if (header_text != null)
         {
             orientation = Orientation.VERTICAL;
 
@@ -66,6 +61,9 @@ private class ListBoxRowHeader : Grid
         }
 
         halign = Align.CENTER;
+
+        if (is_first_row)
+            return;
 
         Separator separator = new Separator (Orientation.HORIZONTAL);
         separator.visible = true;
@@ -126,6 +124,18 @@ private abstract class ClickableListBoxRow : EventBox
     }
 }
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/return-list-box-row.ui")]
+private class ReturnListBoxRow : ClickableListBoxRow
+{
+    [GtkChild] private Label folder_name_label;
+
+    internal ReturnListBoxRow (string _full_name, uint16 _context_id)
+    {
+        Object (full_name: _full_name, context_id: _context_id, search_result_mode: true);
+        folder_name_label.set_text (_("Go to “%s”").printf (_full_name));
+    }
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
 private class FolderListBoxRow : ClickableListBoxRow
 {
@@ -135,6 +145,18 @@ private class FolderListBoxRow : ClickableListBoxRow
     {
         Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
+    }
+}
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/config-list-box-row.ui")]
+private class ConfigListBoxRow : ClickableListBoxRow
+{
+    [GtkChild] private Label folder_name_label;
+
+    internal ConfigListBoxRow (string name, string path)
+    {
+        Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: false);
+        folder_name_label.set_text (_("Show informations about folder “%s”").printf (name));
     }
 }
 
@@ -404,11 +426,17 @@ private class ContextPopover : Popover
             /* Translators: "erase key" action in the right-click menu on a key without schema */
             case "erase":           action_text = _("Erase key");           break;
 
+            /* Translators: "go to" action in the right-click menu on a "go back" line during search */
+            case "go-back":         action_text = _("Go to this path");     break;
+
             /* Translators: "open folder" action in the right-click menu on a folder */
             case "open-folder":     action_text = _("Open");                break;
 
+            /* Translators: "open" action in the right-click menu on a "show folder info" row */
+            case "open-config":     action_text = _("Show informations");   break;
+
             /* Translators: "open search" action in the right-click menu on a search */
-            case "open-search":     action_text = _("Search");                break;
+            case "open-search":     action_text = _("Search");              break;
 
             /* Translators: "open parent folder" action in the right-click menu on a folder in a search result */
             case "open-parent":     action_text = _("Open parent folder");  break;

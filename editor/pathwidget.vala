@@ -85,6 +85,22 @@ private class PathWidget : Box
             leave_search_mode ();
     }
 
+    internal void close_popovers ()
+    {
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
+        pathbar.close_menu ();
+    }
+
+    internal bool has_popover ()
+    {
+        if (bookmarks_button.active)
+            return true;
+        if (pathbar.has_popover ())
+            return true;
+        return false;
+    }
+
     /* path bar */
     internal string complete_path { get { return pathbar.complete_path; }}
 
@@ -96,6 +112,11 @@ private class PathWidget : Box
     internal string get_selected_child (string fallback_path)
     {
         return pathbar.get_selected_child (fallback_path);
+    }
+
+    internal void toggle_pathbar_menu ()
+    {
+        pathbar.toggle_menu ();
     }
 
     /* path entry */
@@ -119,8 +140,6 @@ private class PathWidget : Box
     }
 
     /* bookmarks button */
-    internal bool is_bookmarks_button_active    { get { return bookmarks_button.active;     }}
-
     internal string [] get_bookmarks ()
     {
         return bookmarks_button.get_bookmarks ();
@@ -133,12 +152,6 @@ private class PathWidget : Box
 
     internal void   bookmark_current_path () {   bookmarks_button.bookmark_current_path (); }
     internal void unbookmark_current_path () { bookmarks_button.unbookmark_current_path (); }
-
-    internal void close_popovers ()
-    {
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
-    }
 
     internal void update_bookmark_icon (string bookmark, bool bookmark_exists, bool bookmark_has_schema = false, bool bookmark_is_default = false)
     {
