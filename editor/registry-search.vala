@@ -35,7 +35,8 @@ private class RegistrySearch : RegistryList
 
     internal override void select_first_row ()
     {
-        _select_first_row (key_list_box, (!) old_term);
+        if (old_term != null)   //happens when pasting an invalid path
+            _select_first_row (key_list_box, (!) old_term);
     }
 
     internal bool return_pressed ()
@@ -178,8 +179,13 @@ private class RegistrySearch : RegistryList
     internal void start_search (string term)
         requires (current_path_if_search_mode != null)
     {
-        if ((old_term != null && term == (!) old_term)
-         || DConfWindow.is_path_invalid (term))
+        if (DConfWindow.is_path_invalid (term))
+        {
+            if (old_term != null)
+                ensure_selection (key_list_box, (!) old_term);
+            return;
+        }
+        if (old_term != null && term == (!) old_term)
         {
             ensure_selection (key_list_box, (!) old_term);
             return;

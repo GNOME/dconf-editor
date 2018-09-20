@@ -94,7 +94,7 @@ private class PathEntry : Box
         switch (mode)
         {
             case SearchMode.EDIT_PATH_MOVE_END:
-                search_entry.text = current_path;
+                search_entry.text = search == null ? current_path : (!) search;
                 entry_grab_focus_without_selecting ();
                 return;
 

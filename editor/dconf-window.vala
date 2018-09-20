@@ -728,7 +728,7 @@ private class DConfWindow : ApplicationWindow
 
     public static bool is_path_invalid (string path)
     {
-        return path.has_prefix ("/") && path.contains ("//");
+        return path.has_prefix ("/") && (path.contains ("//") || path.contains (" "));
     }
 
     private void request_config (string full_name)
@@ -1065,6 +1065,18 @@ private class DConfWindow : ApplicationWindow
                     request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
                     return true;
 
+                case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
+                    if (!focus_is_text_widget)
+                    {
+                        Gdk.Display? display = Gdk.Display.get_default ();
+                        if (display == null)    // ?
+                            return false;
+                        string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
+                        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
+                        return true;
+                    }
+                    return false;
+
                 case "F1":
                     browser_view.discard_row_popover ();
                     if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
@@ -1102,7 +1114,7 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 default:
-                    break;  // TODO make <ctrl>v work; https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
+                    break;
             }
         }
 
