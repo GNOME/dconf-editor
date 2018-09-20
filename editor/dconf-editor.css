@@ -146,6 +146,17 @@
              .small-keys-list-rows .keys-list:dir(ltr) > row > .managed         { background-position:            0.55rem  center; }
              .small-keys-list-rows .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.55rem) center; }
 
+/* icon color */
+
+             .bookmarks list > row:not(:selected),
+             .keys-list      > row:not(:selected) > * { color:@theme_fg_color; }
+:backdrop    .bookmarks list > row:not(:selected),
+:backdrop    .keys-list      > row:not(:selected) > * { color:@theme_unfocused_fg_color; }
+/*           .bookmarks list > row:selected,                                                    TODO fails
+             .keys-list      > row:selected       > * { color:@theme_selected_fg_color; }       to work...
+:backdrop    .bookmarks list > row:selected,
+:backdrop    .keys-list      > row:selected       > * { color:@theme_unfocused_selected_fg_color; } */
+
 /* icon choice */
 
              row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
