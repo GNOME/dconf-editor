@@ -835,9 +835,9 @@ private class DConfWindow : ApplicationWindow
             menu.append_section (null, section);
         }
 
-        section = new GLib.Menu ();     // TODO not accessible in search mode
+        section = new GLib.Menu ();
         section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        section.append (_("About"), "app.about");   // TODO move as "win."
+        section.append (_("About Dconf Editor"), "app.about");   // TODO move as "win."
         section.freeze ();
         menu.append_section (null, section);
 
