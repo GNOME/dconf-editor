@@ -149,7 +149,7 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
-                <property name="title" translatable="yes" context="shortcut window">Show folder informations</property>
+                <property name="title" translatable="yes" context="shortcut window">Show folder properties</property>
                 <property name="accelerator">&lt;Primary&gt;i</property>
               </object>
             </child>

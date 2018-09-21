@@ -156,7 +156,7 @@ private class ConfigListBoxRow : ClickableListBoxRow
     internal ConfigListBoxRow (string name, string path)
     {
         Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: false);
-        folder_name_label.set_text (_("Show informations about folder “%s”").printf (name));
+        folder_name_label.set_text (_("Show “%s” folder properties").printf (name));
     }
 }
 
@@ -433,7 +433,7 @@ private class ContextPopover : Popover
             case "open-folder":     action_text = _("Open");                break;
 
             /* Translators: "open" action in the right-click menu on a "show folder info" row */
-            case "open-config":     action_text = _("Show informations");   break;
+            case "open-config":     action_text = _("Show properties");     break;
 
             /* Translators: "open search" action in the right-click menu on a search */
             case "open-search":     action_text = _("Search");              break;
