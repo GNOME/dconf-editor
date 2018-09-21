@@ -1072,7 +1072,10 @@ private class DConfWindow : ApplicationWindow
                         if (display == null)    // ?
                             return false;
                         string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
-                        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
+                        if (clipboard_content != null)
+                            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
+                        else
+                            request_search (true, PathEntry.SearchMode.SEARCH);
                         return true;
                     }
                     return false;
