@@ -88,8 +88,10 @@ private class RegistrySearch : RegistryList
             _select_first_row ((!) key_list_box, full_name);
     }
 
-    private static void _select_first_row (ListBox key_list_box, string term)
+    private static void _select_first_row (ListBox key_list_box, string _term)
     {
+        string term = _term.strip ();
+
         ListBoxRow? row;
         if (term.has_prefix ("/"))
         {
@@ -107,6 +109,12 @@ private class RegistrySearch : RegistryList
                         row = second_row;
                 }
             }
+        }
+        else if (term.length == 0)
+        {
+            row = key_list_box.get_row_at_index (0);
+            if (row == null)
+                assert_not_reached ();
         }
         else
         {
@@ -176,9 +184,11 @@ private class RegistrySearch : RegistryList
     private uint? search_source = null;
     private GLib.Queue<string> search_nodes = new GLib.Queue<string> ();
 
-    internal void start_search (string term)
+    internal void start_search (string _term)
         requires (current_path_if_search_mode != null)
     {
+        string term = _term.strip ();
+
         if (DConfWindow.is_path_invalid (term))
         {
             if (old_term != null)

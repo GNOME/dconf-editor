@@ -65,8 +65,10 @@ private class PathEntry : Box
     }
 
     private bool has_error_class = false;
-    internal void set_path (ViewType type, string path)
+    internal void set_path (ViewType type, string _path)
     {
+        string path = _path.strip ();
+
         if (!has_error_class && DConfWindow.is_path_invalid (path))
         {
             has_error_class = true;
