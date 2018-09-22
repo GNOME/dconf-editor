@@ -21,11 +21,13 @@ using Gtk;
 private class PathBar : Box
 {
     [GtkChild] private PathBarItem root_button;
+    private PathBarItem active_button;
 
     internal string complete_path { get; private set; default = ""; }
 
     construct
     {
+        active_button = root_button;
         add_slash_label ();
     }
 
@@ -33,42 +35,19 @@ private class PathBar : Box
     * * keyboard
     \*/
 
-    internal bool has_popover ()    // TODO urg
+    internal bool has_popover ()
     {
-        bool return_value = false;
-        @foreach ((child) => {
-                if (child is PathBarItem)
-                {
-                    PathBarItem item = (PathBarItem) child;
-                    if (item.is_active && item.has_popover ())
-                        return_value = true;
-                }
-            });
-        return return_value;
+        return active_button.has_popover ();
     }
 
-    internal void close_menu ()     // TODO urg
+    internal void close_menu ()
     {
-        @foreach ((child) => {
-                if (child is PathBarItem)
-                {
-                    PathBarItem item = (PathBarItem) child;
-                    if (item.is_active)
-                        item.close_menu ();
-                }
-            });
+        active_button.close_menu ();
     }
 
-    internal void toggle_menu ()    // TODO urg
+    internal void toggle_menu ()
     {
-        @foreach ((child) => {
-                if (child is PathBarItem)
-                {
-                    PathBarItem item = (PathBarItem) child;
-                    if (item.is_active)
-                        item.toggle_menu ();
-                }
-            });
+        active_button.toggle_menu ();
     }
 
     /*\
@@ -80,12 +59,8 @@ private class PathBar : Box
         if (type == ViewType.SEARCH)
             return;
 
-        update_cursors (type, path);
-
-        if (type == ViewType.CONFIG)
-            get_style_context ().add_class ("config");
-        else
-            get_style_context ().remove_class ("config");
+        update_active_button_cursor (type, ref active_button);
+        update_config_style_class (type == ViewType.CONFIG, get_style_context ());  // TODO create gtk_style_context_toggle_class()
 
         activate_item (root_button, path == "/");
 
@@ -157,6 +132,13 @@ private class PathBar : Box
 
         show_all ();
     }
+    private static inline void update_config_style_class (bool type_is_config, StyleContext context)
+    {
+        if (type_is_config)
+            context.add_class ("config");
+        else
+            context.remove_class ("config");
+    }
 
     internal string get_selected_child (string current_path)
     {
@@ -222,27 +204,18 @@ private class PathBar : Box
             });
     }
 
-    private void update_cursors (ViewType type, string current_path)
+    private static inline void update_active_button_cursor (ViewType type, ref PathBarItem active_button)
     {
-        bool active_button_has_action = type == ViewType.CONFIG;
-
-        @foreach ((child) => {
-                if (!(child is PathBarItem))
-                    return;
-                PathBarItem item = (PathBarItem) child;
-                if (!item.is_active)
-                    return;
-                if (active_button_has_action)
-                {
-                    item.set_cursor_type (PathBarItem.CursorType.POINTER);
-                    item.set_detailed_action_name (item.default_action);
-                }
-                else
-                {
-                    item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
-                    item.set_action_name ("ui.empty");
-                }
-            });
+        if (type == ViewType.CONFIG)
+        {
+            active_button.set_cursor_type (PathBarItem.CursorType.POINTER);
+            active_button.set_detailed_action_name (active_button.default_action);
+        }
+        else
+        {
+            active_button.set_cursor_type (PathBarItem.CursorType.CONTEXT);
+            active_button.set_action_name ("ui.empty");
+        }
     }
 
     /*\
@@ -256,28 +229,42 @@ private class PathBar : Box
 
     private void add_path_bar_item (string label, string complete_path, bool is_folder, bool block)
     {
-        PathBarItem path_bar_item;
-        if (is_folder)
-        {
-            Variant variant = new Variant.string (complete_path);
-            string _variant = variant.print (false);
-            path_bar_item = new PathBarItem (label, "ui.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
-        }
-        else
-        {
-            Variant variant = new Variant ("(sq)", complete_path, ModelUtils.undefined_context_id);
-            string _variant = variant.print (true);
-            path_bar_item = new PathBarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
-        }
+        PathBarItem path_bar_item = create_path_bar_item (label, complete_path, is_folder);
         add (path_bar_item);
         activate_item (path_bar_item, block);   // has to be after add()
     }
+    private static inline PathBarItem create_path_bar_item (string label, string complete_path, bool is_folder)
+    {
+        PathBarItem path_bar_item;
+        if (is_folder)
+            init_folder_path_bar_item (label, complete_path, out path_bar_item);
+        else
+            init_object_path_bar_item (label, complete_path, out path_bar_item);
+        return path_bar_item;
+    }
+    private static inline void init_folder_path_bar_item (string label, string complete_path, out PathBarItem path_bar_item)
+    {
+        Variant variant = new Variant.string (complete_path);
+        string _variant = variant.print (false);
+        path_bar_item = new PathBarItem (label, "ui.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
+    }
+    private static inline void init_object_path_bar_item (string label, string complete_path, out PathBarItem path_bar_item)
+    {
+        Variant variant = new Variant ("(sq)", complete_path, ModelUtils.undefined_context_id);
+        string _variant = variant.print (true);
+        path_bar_item = new PathBarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
+    }
 
-    private static void activate_item (PathBarItem item, bool state)   // never called when current_view is search
+    private void activate_item (PathBarItem item, bool state)   // never called when current_view is search
+    {
+        if (state)
+            active_button = item;
+        _activate_item (item, state);
+    }
+    private static inline void _activate_item (PathBarItem item, bool state)
     {
         if (state == item.is_active)
             return;
-
         if (state)
         {
             item.is_active = true;
