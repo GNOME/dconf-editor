@@ -34,6 +34,10 @@ private class ConfigurationEditor : Gtk.Application
                 "/org/gnome/desktop/app-folders/folders//"},
             {"org.gnome.desktop.notifications.application",
                 "/org/gnome/desktop/notifications/application//"},
+            {"org.gnome.libdevhelp-3.contents",
+                "/org/gnome/devhelp/state/main/contents/"},
+            {"org.gnome.libdevhelp-3.fonts",
+                "/org/gnome/devhelp/fonts/"},
             {"org.gnome.Epiphany.state",
                 "/org/gnome/epiphany/state/"},
             {"org.gnome.Epiphany.state",
@@ -123,7 +127,9 @@ private class ConfigurationEditor : Gtk.Application
             "org.gnome.settings-daemon.peripherals.wacom.tablet-button.deprecated",
             // TODO disable such schemas automatically?
             "com.gexperts.Tilix.SettingsList",
-            "org.gnome.Terminal.SettingsList"
+            "org.gnome.Terminal.SettingsList",
+            // TODO has no key, place here somehow automatically?
+            "org.gnome.libdevhelp-3"
         };
 
     private static bool disable_warning = false;
