@@ -59,7 +59,11 @@ private class PathBar : Box
         if (type == ViewType.SEARCH)
             return;
 
+        _set_path (type, path);
         update_active_button_cursor (type, ref active_button);
+    }
+    private void _set_path (ViewType type, string path)
+    {
         update_config_style_class (type == ViewType.CONFIG, get_style_context ());  // TODO create gtk_style_context_toggle_class()
 
         activate_item (root_button, path == "/");
