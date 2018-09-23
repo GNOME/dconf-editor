@@ -90,9 +90,25 @@ private class RegistryView : RegistryList
 
     internal override void select_first_row ()
     {
-        ListBoxRow? row = key_list_box.get_row_at_index (0);
-        if (row != null)
-            scroll_to_row ((!) row, true);
+        uint n_items = list_model.get_n_items ();
+        if (n_items == 0)
+            assert_not_reached ();
+
+        ListBoxRow? row;
+        if (n_items == 1)
+            row = key_list_box.get_row_at_index (0);
+        else
+        {
+            SimpleSettingObject sso = (SimpleSettingObject) list_model.get_object (n_items - 1);
+
+            if (ModelUtils.is_folder_context_id (sso.context_id)) // if do not contain at least one key
+                row = key_list_box.get_row_at_index (1);
+            else
+                row = key_list_box.get_row_at_index (0);
+        }
+        if (row == null)
+            assert_not_reached ();
+        scroll_to_row ((!) row, true);
     }
 
     /*\
