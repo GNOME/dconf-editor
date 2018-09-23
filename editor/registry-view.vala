@@ -97,6 +97,8 @@ private class RegistryView : RegistryList
         ListBoxRow? row;
         if (n_items == 1)
             row = key_list_box.get_row_at_index (0);
+        else if (n_items == 2)
+            row = key_list_box.get_row_at_index (1);
         else
         {
             SimpleSettingObject sso = (SimpleSettingObject) list_model.get_object (n_items - 1);
