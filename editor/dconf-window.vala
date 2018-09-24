@@ -566,6 +566,11 @@ private class DConfWindow : ApplicationWindow
     * * Path requests
     \*/
 
+    public static bool is_path_invalid (string path)
+    {
+        return path.has_prefix ("/") && path.contains ("//");
+    }
+
     private void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         string fallback_path = model.get_fallback_path (full_name);
