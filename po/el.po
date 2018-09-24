@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2018-08-17 19:33+0000\n"
-"PO-Revision-Date: 2018-09-03 01:44+0300\n"
+"PO-Revision-Date: 2018-09-05 02:02+0300\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
@@ -994,7 +994,7 @@ msgstr "Εμφάνιση αυτού του διαλόγου την επόμεν�
 #: editor/dconf-window.vala:428
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr ""
+msgstr "Ο φάκελος «%s» είναι τώρα κενός."
 
 #. GAction parameter type switch is a little touchy, see pathbar.vala
 #: editor/dconf-window.vala:438
@@ -1031,7 +1031,7 @@ msgstr ""
 #: editor/dconf-window.vala:1035
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr ""
+msgstr "Αδυναμία εύρεσης κλειδιού «%s»."
 
 #: editor/dconf-window.vala:1039
 #, c-format
@@ -1117,7 +1117,7 @@ msgstr ""
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Dismiss modification"
-msgstr ""
+msgstr "Απόρριψη τροποποίησης"
 
 #: editor/help-overlay.ui:99
 #, fuzzy
@@ -1128,7 +1128,7 @@ msgstr "Περιήγηση δένδρου"
 #: editor/help-overlay.ui:103
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "Άνοιγμα φακέλου root"
 
 #: editor/help-overlay.ui:110
 msgctxt "shortcut window"
