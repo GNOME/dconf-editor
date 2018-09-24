@@ -147,7 +147,8 @@ private class RegistrySearch : RegistryList
     internal void start_search (string term)
         requires (current_path_if_search_mode != null)
     {
-        if (old_term != null && term == (!) old_term)
+        if ((old_term != null && term == (!) old_term)
+         || DConfWindow.is_path_invalid (term))
         {
             ensure_selection (key_list_box);
             return;

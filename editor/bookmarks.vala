@@ -76,6 +76,10 @@ private class Bookmarks : MenuButton
         string [] unduplicated_bookmarks = {};
         foreach (string bookmark in all_bookmarks)
         {
+            if (!bookmark.has_prefix ("/"))
+                continue;
+            if (DConfWindow.is_path_invalid (bookmark))
+                continue;
             if (bookmark in unduplicated_bookmarks)
                 continue;
             unduplicated_bookmarks += bookmark;
@@ -166,6 +170,10 @@ private class Bookmarks : MenuButton
         string [] unduplicated_bookmarks = new string [0];
         foreach (string bookmark in bookmarks)
         {
+            if (!bookmark.has_prefix ("/"))
+                continue;
+            if (DConfWindow.is_path_invalid (bookmark))
+                continue;
             if (bookmark in unduplicated_bookmarks)
                 continue;
             unduplicated_bookmarks += bookmark;
