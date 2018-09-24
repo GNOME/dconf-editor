@@ -130,6 +130,13 @@
              .small-keys-list-rows .keys-list:dir(ltr) > row > .managed         { background-position:            0.55rem  center; }
              .small-keys-list-rows .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.55rem) center; }
 
+/* icon color */
+
+             .keys-list      > row:not(:selected) > * { color:@theme_fg_color; }
+:backdrop    .keys-list      > row:not(:selected) > * { color:@theme_unfocused_fg_color; }
+/*           .keys-list      > row:selected       > * { color:@theme_selected_fg_color; }               TODO fails
+:backdrop    .keys-list      > row:selected       > * { color:@theme_unfocused_selected_fg_color; }     to work... */
+
 /* icon choice */
 
 .keys-list > row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
