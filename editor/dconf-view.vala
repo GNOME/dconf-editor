@@ -263,31 +263,43 @@ private abstract class KeyEditorChildNumberCustom : Entry, KeyEditorChild
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
         deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
         inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
-        ulong entry_activate_handler = activate.connect (() => { if (test_value ()) child_activated (); });
+        ulong entry_activated_handler = activate.connect (() => { if (test_value ()) child_activated (); });
+        ulong entry_sensitive_handler = notify ["sensitive"].connect (set_error_class);
 
         destroy.connect (() => {
                 ref_buffer.disconnect (deleted_text_handler);
                 ref_buffer.disconnect (inserted_text_handler);
-                disconnect (entry_activate_handler);
+                disconnect (entry_activated_handler);
+                disconnect (entry_sensitive_handler);
             });
+    }
+
+    private bool value_has_error = false;
+    private void set_error_class ()
+    {
+        StyleContext context = get_style_context ();
+        if (value_has_error)
+        {
+            if (is_sensitive ())
+            {
+                if (!context.has_class ("error"))
+                    context.add_class ("error");
+            }
+            else if (context.has_class ("error"))
+                context.remove_class ("error");
+        }
+        else if (is_sensitive () && context.has_class ("error"))
+            context.remove_class ("error");
     }
 
     protected void show_error (bool show)
     {
-        StyleContext context = get_style_context ();
+        value_has_error = show;
         if (show)
-        {
-            // TODO "error" style class should not be active/visible when the default-value toggle is activated (and the entry inactive)
-            if (!context.has_class ("error"))
-                context.add_class ("error");
             secondary_icon_name = "dialog-error-symbolic";
-        }
         else
-        {
-            if (context.has_class ("error"))
-                context.remove_class ("error");
             set_icon_from_icon_name (EntryIconPosition.SECONDARY, null);
-        }
+        set_error_class ();
     }
 
     internal Variant get_variant ()
@@ -534,7 +546,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     private ulong inserted_text_handler = 0;
 
     internal KeyEditorChildNumberInt (Variant initial_value, string type_string, Variant? range_content_or_null)
-        requires (type_string == "y" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u" || type_string == "h")     // TODO type_string == "x" || type_string == "t" ||
+        requires (type_string == "y" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u" || type_string == "h")     // "x" and "t" are managed elsewhere
     {
         this.key_type = type_string;
 
@@ -608,7 +620,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
             case "n": return new Variant.int16  ((int16)  get_int64_from_entry ());
             case "q": return new Variant.uint16 ((uint16) get_int64_from_entry ());
             case "i": return new Variant.int32  ((int32)  get_int64_from_entry ());
-            case "u": return new Variant.uint32 ((uint32) get_int64_from_entry ()); // TODO also use get_value_as_int?
+            case "u": return new Variant.uint32 ((uint32) get_int64_from_entry ());
             case "h": return new Variant.handle ((int32)  get_int64_from_entry ());
             default: assert_not_reached ();
         }
