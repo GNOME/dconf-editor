@@ -19,7 +19,7 @@ using Gtk;
 
 private interface KeyEditorChild : Widget
 {
-    internal signal void value_has_changed (bool is_valid = true);
+    internal signal void value_has_changed (bool is_valid);
 
     internal abstract Variant get_variant ();
     internal signal void child_activated ();
@@ -75,7 +75,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
         reload ((!) gvariant);
         _popover.closed ();
 
-        value_has_changed ();
+        value_has_changed (true);
     }
 
     internal Variant get_variant ()
@@ -130,7 +130,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         requires (gvariant != null)
     {
         reload ((!) gvariant);
-        value_has_changed ();
+        value_has_changed (true);
     }
 
     internal void update_flags (string [] active_flags)
@@ -183,7 +183,7 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         reload ((!) gvariant);
         _popover.closed ();
 
-        value_has_changed ();
+        value_has_changed (true);
     }
 
     internal Variant get_variant ()
@@ -232,7 +232,7 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
 
-        button_true.toggled.connect (() => value_has_changed ());
+        button_true.toggled.connect (() => value_has_changed (true));
     }
 
     internal Variant get_variant ()
@@ -540,7 +540,12 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
 
 private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 {
+    private Variant variant;
+
     private string key_type;
+
+    private int64 min_int64;
+    private int64 max_int64;
 
     private ulong deleted_text_handler = 0;
     private ulong inserted_text_handler = 0;
@@ -548,22 +553,30 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     internal KeyEditorChildNumberInt (Variant initial_value, string type_string, Variant? range_content_or_null)
         requires (type_string == "y" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u" || type_string == "h")     // "x" and "t" are managed elsewhere
     {
+        this.variant = initial_value;
         this.key_type = type_string;
 
         this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
 
-        double min, max;
+        double min_double, max_double;
         if (range_content_or_null != null)
         {
-            min = get_variant_as_double (((!) range_content_or_null).get_child_value (0));
-            max = get_variant_as_double (((!) range_content_or_null).get_child_value (1));
+            Variant min_variant = ((!) range_content_or_null).get_child_value (0);
+            Variant max_variant = ((!) range_content_or_null).get_child_value (1);
+            min_double = get_variant_as_double (min_variant);
+            max_double = get_variant_as_double (max_variant);
+            min_int64  = get_variant_as_int64  (min_variant);
+            max_int64  = get_variant_as_int64  (max_variant);
         }
         else
-            get_min_and_max_double (out min, out max, type_string);
+        {
+            get_min_and_max_double (out min_double, out max_double, type_string);
+            get_min_and_max_int64  (out min_int64,  out max_int64,  type_string);
+        }
 
-        Adjustment adjustment = new Adjustment (get_variant_as_double (initial_value), min, max, 1.0, 5.0, 0.0);
+        Adjustment adjustment = new Adjustment (get_variant_as_double (initial_value), min_double, max_double, 1.0, 5.0, 0.0);
         this.configure (adjustment, 1.0, 0);
 
         this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
@@ -573,14 +586,16 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.width_chars = 30;
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
-        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed ());
-        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed ());
-        ulong entry_activate_handler = activate.connect (() => { update (); child_activated (); });
+        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
+        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
+        ulong entry_activated_handler = activate.connect (() => { if (test_value ()) child_activated (); update (); });
+        ulong entry_sensitive_handler = notify ["sensitive"].connect (set_error_class);
 
         destroy.connect (() => {
                 ref_buffer.disconnect (deleted_text_handler);
                 ref_buffer.disconnect (inserted_text_handler);
-                disconnect (entry_activate_handler);
+                disconnect (entry_activated_handler);
+                disconnect (entry_sensitive_handler);
             });
     }
 
@@ -594,6 +609,19 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
             case "i": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
             case "u": min = (double) uint32.MIN;    max = (double) uint32.MAX;  break;
             case "h": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
+            default: assert_not_reached ();
+        }
+    }
+    private static void get_min_and_max_int64 (out int64 min, out int64 max, string variant_type)
+    {
+        switch (variant_type)
+        {
+            case "y": min = (int64) uint8.MIN;      max = (int64) uint8.MAX;    break;
+            case "n": min = (int64) int16.MIN;      max = (int64) int16.MAX;    break;
+            case "q": min = (int64) uint16.MIN;     max = (int64) uint16.MAX;   break;
+            case "i": min = (int64) int32.MIN;      max = (int64) int32.MAX;    break;
+            case "u": min = (int64) uint32.MIN;     max = (int64) uint32.MAX;   break;
+            case "h": min = (int64) int32.MIN;      max = (int64) int32.MAX;    break;
             default: assert_not_reached ();
         }
     }
@@ -611,23 +639,23 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
             default: assert_not_reached ();
         }
     }
-
-    internal Variant get_variant ()   // TODO test_value against range
+    private static int64 get_variant_as_int64 (Variant variant)
     {
-        switch (key_type)
+        switch (variant.classify ())
         {
-            case "y": return new Variant.byte   ((uint8)  get_int64_from_entry ());
-            case "n": return new Variant.int16  ((int16)  get_int64_from_entry ());
-            case "q": return new Variant.uint16 ((uint16) get_int64_from_entry ());
-            case "i": return new Variant.int32  ((int32)  get_int64_from_entry ());
-            case "u": return new Variant.uint32 ((uint32) get_int64_from_entry ());
-            case "h": return new Variant.handle ((int32)  get_int64_from_entry ());
+            case Variant.Class.BYTE:    return (int64) variant.get_byte ();
+            case Variant.Class.INT16:   return (int64) variant.get_int16 ();
+            case Variant.Class.UINT16:  return (int64) variant.get_uint16 ();
+            case Variant.Class.INT32:   return (int64) variant.get_int32 ();
+            case Variant.Class.UINT32:  return (int64) variant.get_uint32 ();
+            case Variant.Class.HANDLE:  return (int64) variant.get_handle ();
             default: assert_not_reached ();
         }
     }
-    private int64 get_int64_from_entry ()
+
+    internal Variant get_variant ()
     {
-        return int64.parse (this.get_text ());
+        return variant;
     }
 
     private void set_lock (bool state)
@@ -650,6 +678,70 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         set_lock (true);
         this.set_value (get_variant_as_double (gvariant));
         set_lock (false);
+    }
+
+    private bool value_has_error = false;
+    private void set_error_class ()
+    {
+        StyleContext context = get_style_context ();
+        if (is_sensitive ())
+        {
+            if (value_has_error)
+            {
+                if (!context.has_class ("error"))
+                    context.add_class ("error");
+            }
+            else if (context.has_class ("error"))
+                context.remove_class ("error");
+        }
+        else if (context.has_class ("error"))
+            context.remove_class ("error");
+    }
+
+    private bool test_value ()
+    {
+        Variant? tmp_variant;
+        string tmp_text = this.text; // don't put in the try{} for correct C code
+        try
+        {
+            tmp_variant = Variant.parse (VariantType.INT64, tmp_text);
+        }
+        catch (VariantParseError e)
+        {
+            value_has_error = true;
+            set_error_class ();
+            return false;
+        }
+
+        int64 variant_value = ((!) tmp_variant).get_int64 ();
+        if ((variant_value < min_int64) || (variant_value > max_int64))
+        {
+            value_has_error = true;
+            set_error_class ();
+
+            return false;
+        }
+        else
+        {
+            value_has_error = false;
+            set_error_class ();
+
+            variant = get_variant_from_int64 (variant_value, key_type);
+            return true;
+        }
+    }
+    private static Variant get_variant_from_int64 (int64 int64_value, string key_type)
+    {
+        switch (key_type)
+        {
+            case "y": return new Variant.byte   ((uint8)  int64_value);
+            case "n": return new Variant.int16  ((int16)  int64_value);
+            case "q": return new Variant.uint16 ((uint16) int64_value);
+            case "i": return new Variant.int32  ((int32)  int64_value);
+            case "u": return new Variant.uint32 ((uint32) int64_value);
+            case "h": return new Variant.handle ((int32)  int64_value);
+            default: assert_not_reached ();
+        }
     }
 }
 
