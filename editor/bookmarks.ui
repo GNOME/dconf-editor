@@ -11,7 +11,7 @@
       <object class="GtkGrid">
         <property name="visible">True</property>
         <property name="column-spacing">12</property>
-        <property name="row-spacing">6</property>
+        <property name="row-spacing">0</property>
         <property name="margin">4</property>
         <child>
           <object class="GtkLabel" id="switch_label">
@@ -52,6 +52,9 @@
             <property name="max-content-height">300</property>
             <property name="propagate-natural-width">True</property>
             <property name="propagate-natural-height">True</property>
+            <style>
+              <class name="margin-top-6px"/>
+            </style>
             <child>
               <object class="GtkListBox" id="bookmarks_list_box">
                 <property name="visible">True</property>
@@ -70,6 +73,31 @@ be added here</property> <!-- line wrap wanted -->
           <packing>
             <property name="left-attach">0</property>
             <property name="top-attach">1</property>
+            <property name="width">2</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkRevealer" id="bookmarks_editable_revealer">
+            <property name="visible">True</property>
+            <property name="transition-type">slide-down</property>
+            <property name="transition-duration">300</property>
+            <property name="reveal-child">False</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="hexpand">True</property>
+                <property name="label" translatable="yes">The bookmarks list is not editable.</property>
+                <style>
+                  <class name="italic-label"/>
+                  <class name="margin-top-6px"/>
+                </style>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">2</property>
             <property name="width">2</property>
             <property name="height">1</property>
           </packing>

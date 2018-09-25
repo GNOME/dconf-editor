@@ -26,6 +26,7 @@ private class Bookmarks : MenuButton
     [GtkChild] private Image bookmarks_icon;
     [GtkChild] private Switch bookmarked_switch;
     [GtkChild] private Label switch_label;
+    [GtkChild] private Revealer bookmarks_editable_revealer;
 
     private string   current_path = "/";
     private ViewType current_type = ViewType.FOLDER;
@@ -44,13 +45,19 @@ private class Bookmarks : MenuButton
 
         settings = new GLib.Settings.with_path (schema_id, schema_path);
 
+        enable_remove = settings.is_writable ("bookmarks");
+
         ulong bookmarks_changed_handler = settings.changed ["bookmarks"].connect (on_bookmarks_changed);
         update_bookmarks (settings.get_value ("bookmarks"));
+
+        ulong bookmarks_writable_handler = settings.writable_changed ["bookmarks"].connect (set_switch_sensitivity);
+        set_switch_sensitivity ();
 
         ulong clicked_handler = clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
 
         destroy.connect (() => {
                 settings.disconnect (bookmarks_changed_handler);
+                settings.disconnect (bookmarks_writable_handler);
                 disconnect (clicked_handler);
             });
     }
@@ -60,6 +67,17 @@ private class Bookmarks : MenuButton
         Variant bookmarks_variant = _settings.get_value ("bookmarks");
         update_bookmarks (bookmarks_variant);
         update_icon_and_switch (bookmarks_variant);
+        set_switch_sensitivity ();
+    }
+
+    bool enable_remove = true;
+    private void set_switch_sensitivity ()
+    {
+        enable_remove = settings.is_writable ("bookmarks");
+        switch_label.set_sensitive (enable_remove);
+        bookmarked_switch.set_sensitive (enable_remove);
+        bookmarks_editable_revealer.set_reveal_child (!enable_remove);
+        bookmarks_list_box.@foreach ((widget) => ((Bookmark) widget).set_enable_remove (enable_remove));
     }
 
     /*\
@@ -199,6 +217,7 @@ private class Bookmarks : MenuButton
                 bookmarks_icon.icon_name = "starred-symbolic";
             update_switch_state (true, ref bookmarked_switch);
             bookmarked_switch.set_detailed_action_name ("bookmarks.unbookmark(" + variant.print (true) + ")");
+            bookmarked_switch.set_sensitive (enable_remove);
         }
         else
         {
@@ -206,6 +225,7 @@ private class Bookmarks : MenuButton
                 bookmarks_icon.icon_name = "non-starred-symbolic";
             update_switch_state (false, ref bookmarked_switch);
             bookmarked_switch.set_detailed_action_name ("bookmarks.bookmark(" + variant.print (true) + ")");
+            bookmarked_switch.set_sensitive (enable_remove);
         }
     }
     private static void update_switch_state (bool bookmarked, ref Switch bookmarked_switch)
@@ -219,9 +239,9 @@ private class Bookmarks : MenuButton
     private void update_bookmarks (Variant bookmarks_variant)
     {
         set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
-        create_bookmark_rows (bookmarks_variant, ref bookmarks_list_box, ref bookmarks_hashtable);
+        create_bookmark_rows (bookmarks_variant, enable_remove, ref bookmarks_list_box, ref bookmarks_hashtable);
     }
-    private static void create_bookmark_rows (Variant bookmarks_variant, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable)
+    private static void create_bookmark_rows (Variant bookmarks_variant, bool enable_remove, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable)
     {
         bookmarks_list_box.@foreach ((widget) => widget.destroy ());
         bookmarks_hashtable.remove_all ();
@@ -236,7 +256,7 @@ private class Bookmarks : MenuButton
                 continue;
             unduplicated_bookmarks += bookmark;
 
-            Bookmark bookmark_row = create_bookmark_row (bookmark);
+            Bookmark bookmark_row = create_bookmark_row (bookmark, enable_remove);
             bookmarks_list_box.add (bookmark_row);
             bookmarks_hashtable.insert (bookmark, bookmark_row);
         }
@@ -244,7 +264,7 @@ private class Bookmarks : MenuButton
         if (first_row != null)
             bookmarks_list_box.select_row ((!) first_row);
     }
-    private static inline Bookmark create_bookmark_row (string bookmark)
+    private static inline Bookmark create_bookmark_row (string bookmark, bool enable_remove)
     {
         Bookmark bookmark_row = new Bookmark (bookmark);
         if (bookmark.has_prefix ("?"))
@@ -262,6 +282,7 @@ private class Bookmarks : MenuButton
             Variant variant = new Variant.string (bookmark);
             bookmark_row.set_detailed_action_name ("ui.open-folder(" + variant.print (false) + ")");
         }
+        bookmark_row.set_enable_remove (enable_remove); // put it here as setting detailed action name makes the button sensitive
         bookmark_row.show ();
         return bookmark_row;
     }
@@ -331,5 +352,10 @@ private class Bookmark : ListBoxRow
         bookmark_label.set_label (bookmark_text);
         Variant variant = new Variant ("(sy)", bookmark_text, ViewType.to_byte (bookmark_type));
         destroy_button.set_detailed_action_name ("bookmarks.unbookmark(" + variant.print (true) + ")");
+    }
+
+    internal void set_enable_remove (bool new_sensitivity)
+    {
+        destroy_button.set_sensitive (new_sensitivity);
     }
 }
