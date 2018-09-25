@@ -1,3 +1,14 @@
+dconf-editor 3.30.1
+=====================
+
+New stable release update. Some bugs fixed, one small UI improvement when window
+is not on top, case ignored in search, and some new relocatable schemas handled.
+
+Translations updated:
+  Friulian: Fabio Tomat
+  Greek: Efstathios Iosifidis
+  Spanish: Daniel Mustieles
+
 dconf-editor 3.30.0
 =====================
 
