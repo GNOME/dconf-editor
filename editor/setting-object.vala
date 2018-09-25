@@ -144,9 +144,9 @@ private abstract class Key : SettingObject
                 max = (!) (nullable_max ?? "%llu".printf (uint64.MAX));
                 return;
             case "d":
-                string? nullable_min = "%'g".printf (double.MIN).locale_to_utf8 (-1, null, null, null);
+                string? nullable_min = "%'g".printf (-double.MAX).locale_to_utf8 (-1, null, null, null);    // see after
                 string? nullable_max = "%'g".printf (double.MAX).locale_to_utf8 (-1, null, null, null);
-                min = (!) (nullable_min ?? "%g".printf (double.MIN));
+                min = (!) (nullable_min ?? "%g".printf (-double.MAX));  // https://gitlab.gnome.org/GNOME/vala/issues/680
                 max = (!) (nullable_max ?? "%g".printf (double.MAX));
                 return;
             case "h":
