@@ -43,28 +43,28 @@ internal enum KeyConflict {     // transformed as uint8
 
 [Flags]
 internal enum PropertyQuery {   // transformed as uint16
-    HASH,
-    HAS_SCHEMA,
-    KEY_NAME,
-    TYPE_CODE,
+    HASH,           /* uint32  */
+    HAS_SCHEMA,     /* bool    */
+    KEY_NAME,       /* string  */
+    TYPE_CODE,      /* string  */
 
     // variable properties
-    KEY_VALUE,
+    KEY_VALUE,      /* variant */
 
     // GSettingsKey only fixed properties
-    FIXED_SCHEMA,
-    SCHEMA_ID,
-    SUMMARY,
-    DESCRIPTION,
-    DEFAULT_VALUE,
-    RANGE_TYPE,
-    RANGE_CONTENT,
-    MAXIMUM,
-    MINIMUM,
+    FIXED_SCHEMA,   /* bool    */
+    SCHEMA_ID,      /* string  */
+    SUMMARY,        /* string  */
+    DESCRIPTION,    /* string  */
+    DEFAULT_VALUE,  /* string! */
+    RANGE_TYPE,     /* byte    */
+    RANGE_CONTENT,  /* variant */
+    MAXIMUM,        /* string! */
+    MINIMUM,        /* string! */
 
     // GSettingsKey only variable properties
-    KEY_CONFLICT,
-    IS_DEFAULT
+    KEY_CONFLICT,   /* byte    */
+    IS_DEFAULT      /* bool    */
 }
 
 private class RegistryVariantDict : Object

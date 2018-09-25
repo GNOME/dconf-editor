@@ -25,6 +25,8 @@ private interface KeyEditorChild : Widget
     internal signal void child_activated ();
 
     internal abstract void reload (Variant gvariant);
+
+    protected const string out_of_range_text = _("Given value is out of range.");
 }
 
 private class KeyEditorChildSingle : Label, KeyEditorChild
@@ -332,7 +334,6 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
         this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
-        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));  // TODO change text for range
 
         this.text = initial_value.print (false);
 
@@ -350,6 +351,14 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
         connect_entry ();
     }
 
+    private void switch_icon_tooltip_text (bool range_error)
+    {
+        if (range_error)
+            set_icon_tooltip_text (EntryIconPosition.SECONDARY, out_of_range_text);
+        else
+            set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));
+    }
+
     protected override bool test_value ()
     {
         Variant? tmp_variant;
@@ -360,6 +369,7 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
         }
         catch (VariantParseError e)
         {
+            switch_icon_tooltip_text (false);
             show_error (true);
             return false;
         }
@@ -367,6 +377,7 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
         double variant_value = ((!) tmp_variant).get_double ();
         if ((variant_value < min) || (variant_value > max))
         {
+            switch_icon_tooltip_text (true);
             show_error (true);
             return false;
         }
@@ -391,7 +402,6 @@ private class KeyEditorChildNumberInt64 : KeyEditorChildNumberCustom
         this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
-        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type.")); // TODO custom text, including range 1/2
 
         this.text = initial_value.print (false);
 
@@ -409,6 +419,14 @@ private class KeyEditorChildNumberInt64 : KeyEditorChildNumberCustom
         connect_entry ();
     }
 
+    private void switch_icon_tooltip_text (bool range_error)
+    {
+        if (range_error)
+            set_icon_tooltip_text (EntryIconPosition.SECONDARY, out_of_range_text);
+        else
+            set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as 64-bit integer."));
+    }
+
     protected override bool test_value ()
     {
         Variant? tmp_variant;
@@ -419,13 +437,15 @@ private class KeyEditorChildNumberInt64 : KeyEditorChildNumberCustom
         }
         catch (VariantParseError e)
         {
+            switch_icon_tooltip_text (false);
             show_error (true);
             return false;
         }
 
-        double variant_value = ((!) tmp_variant).get_int64 ();
+        int64 variant_value = ((!) tmp_variant).get_int64 ();
         if ((variant_value < min) || (variant_value > max))
         {
+            switch_icon_tooltip_text (true);
             show_error (true);
             return false;
         }
@@ -450,7 +470,6 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
         this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
-        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type.")); // TODO custom text, including range 2/2
 
         this.text = initial_value.print (false);
 
@@ -468,6 +487,14 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
         connect_entry ();
     }
 
+    private void switch_icon_tooltip_text (bool range_error)
+    {
+        if (range_error)
+            set_icon_tooltip_text (EntryIconPosition.SECONDARY, out_of_range_text);
+        else
+            set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as unsigned 64-bit integer."));
+    }
+
     protected override bool test_value ()
     {
         Variant? tmp_variant;
@@ -478,13 +505,15 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
         }
         catch (VariantParseError e)
         {
+            switch_icon_tooltip_text (false);
             show_error (true);
             return false;
         }
 
-        double variant_value = ((!) tmp_variant).get_uint64 ();
+        uint64 variant_value = ((!) tmp_variant).get_uint64 ();
         if ((variant_value < min) || (variant_value > max))
         {
+            switch_icon_tooltip_text (true);
             show_error (true);
             return false;
         }
