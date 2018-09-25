@@ -343,7 +343,7 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
         }
         else
         {
-            min = double.MIN;
+            min = -double.MAX; // https://gitlab.gnome.org/GNOME/vala/issues/680
             max = double.MAX;
         }
 
