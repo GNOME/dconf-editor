@@ -60,6 +60,13 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Paste as search</property>
+                <property name="accelerator">&lt;Primary&gt;v</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Edit path</property>
                 <property name="accelerator">&lt;Primary&gt;l</property>
               </object>
