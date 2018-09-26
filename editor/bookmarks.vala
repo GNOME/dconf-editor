@@ -36,6 +36,7 @@ private class Bookmarks : MenuButton
     private GLib.Settings settings;
 
     private HashTable<string, Bookmark> bookmarks_hashtable = new HashTable<string, Bookmark> (str_hash, str_equal);
+    private Bookmark? last_row = null;
 
     construct
     {
@@ -111,6 +112,38 @@ private class Bookmarks : MenuButton
     }
 
     // keyboard call
+    internal void down_pressed ()
+    {
+        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
+        if (row == null)
+            row = bookmarks_list_box.get_row_at_index (0);
+        else
+            row = bookmarks_list_box.get_row_at_index (((!) row).get_index () + 1);
+
+        if (row == null)
+            return;
+        bookmarks_list_box.select_row ((!) row);
+        ((!) row).grab_focus ();
+    }
+    internal void up_pressed ()
+    {
+        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
+        if (row == null)
+            row = last_row;
+        else
+        {
+            int index = ((!) row).get_index ();
+            if (index <= 0)
+                return;
+            row = bookmarks_list_box.get_row_at_index (index - 1);
+        }
+
+        if (row == null)
+            return;
+        bookmarks_list_box.select_row ((!) row);
+        ((!) row).grab_focus ();
+    }
+
     internal void bookmark_current_path ()
     {
         if (bookmarked_switch.get_active ())
@@ -239,12 +272,13 @@ private class Bookmarks : MenuButton
     private void update_bookmarks (Variant bookmarks_variant)
     {
         set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
-        create_bookmark_rows (bookmarks_variant, enable_remove, ref bookmarks_list_box, ref bookmarks_hashtable);
+        create_bookmark_rows (bookmarks_variant, enable_remove, ref bookmarks_list_box, ref bookmarks_hashtable, ref last_row);
     }
-    private static void create_bookmark_rows (Variant bookmarks_variant, bool enable_remove, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable)
+    private static void create_bookmark_rows (Variant bookmarks_variant, bool enable_remove, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable, ref Bookmark? last_row)
     {
         bookmarks_list_box.@foreach ((widget) => widget.destroy ());
         bookmarks_hashtable.remove_all ();
+        last_row = null;
 
         string [] bookmarks = bookmarks_variant.get_strv ();
         string [] unduplicated_bookmarks = new string [0];
@@ -259,6 +293,7 @@ private class Bookmarks : MenuButton
             Bookmark bookmark_row = create_bookmark_row (bookmark, enable_remove);
             bookmarks_list_box.add (bookmark_row);
             bookmarks_hashtable.insert (bookmark, bookmark_row);
+            last_row = bookmark_row;
         }
         ListBoxRow? first_row = bookmarks_list_box.get_row_at_index (0);
         if (first_row != null)

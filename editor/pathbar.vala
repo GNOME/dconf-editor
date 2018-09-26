@@ -387,7 +387,7 @@ private class PathBarItem : Button
     private void generate_popover ()
     {
         GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "ui.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
+        menu.append (_("Copy current path"), "kbd.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
         menu.freeze ();
 
         popover = new Popover.from_model (this, (MenuModel) menu);

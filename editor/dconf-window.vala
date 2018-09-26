@@ -122,7 +122,8 @@ private class DConfWindow : ApplicationWindow
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
-        install_action_entries ();
+        install_ui_action_entries ();
+        install_kbd_action_entries ();
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -468,23 +469,23 @@ private class DConfWindow : ApplicationWindow
     }
 
     /*\
-    * * Action entries
+    * * Main UI action entries
     \*/
 
     private SimpleAction reload_search_action;
     private bool reload_search_next = true;
 
-    private void install_action_entries ()
+    private void install_ui_action_entries ()
     {
         SimpleActionGroup action_group = new SimpleActionGroup ();
-        action_group.add_action_entries (action_entries, this);
+        action_group.add_action_entries (ui_action_entries, this);
         insert_action_group ("ui", action_group);
 
         reload_search_action = (SimpleAction) action_group.lookup_action ("reload-search");
         reload_search_action.set_enabled (false);
     }
 
-    private const GLib.ActionEntry [] action_entries =
+    private const GLib.ActionEntry [] ui_action_entries =
     {
         { "empty", empty, "*" },
 
@@ -514,7 +515,6 @@ private class DConfWindow : ApplicationWindow
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "copy-path", copy_path },
         { "hide-notification", hide_notification }
     };
 
@@ -699,7 +699,54 @@ private class DConfWindow : ApplicationWindow
         invalidate_popovers_with_ui_reload ();
     }
 
-    private void copy_path (/* SimpleAction action, Variant? path_variant */)
+    private void hide_notification (/* SimpleAction action, Variant? variant */)
+    {
+        notification_revealer.set_reveal_child (false);
+    }
+
+    /*\
+    * * Keyboad action entries
+    \*/
+
+    private void install_kbd_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (kbd_action_entries, this);
+        insert_action_group ("kbd", action_group);
+    }
+
+    private const GLib.ActionEntry [] kbd_action_entries =
+    {
+        // keyboard calls
+        { "toggle-bookmark",    toggle_bookmark     },  // <P>b & <P>B
+        { "copy-path",          copy_path           },  // <P>C
+        { "bookmark",           bookmark            },  // <P>d
+        { "unbookmark",         unbookmark          },  // <P>D
+        { "toggle-search",      _toggle_search      },  // <P>f // TODO unduplicate names
+        { "next-match",         next_match          },  // <P>g // usual shortcut for "next-match"     in a SearchEntry; see also "Down"
+        { "previous-match",     previous_match      },  // <P>G // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
+        { "request-config",     _request_config     },  // <P>i // TODO fusion with ui.open-config?
+        { "modifications",      modifications_list  },  // <A>i
+        { "edit-path-end",      edit_path_end       },  // <P>l
+        { "edit-path-last",     edit_path_last      },  // <P>L
+
+        { "open-root",          open_root           },  // <S><A>Up
+        { "open-parent",        open_current_parent },  //    <A>Up
+        { "open-child",         open_child          },  //    <A>Down
+        { "open-last-child",    open_last_child     },  // <S><A>Down
+
+        { "toggle-boolean",     toggle_boolean      },  // <P>Return & <P>KP_Enter
+        { "set-to-default",     set_to_default      }   // <P>Delete & <P>KP_Delete & decimalpoint & period & KP_Decimal
+    };
+
+    private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
+    {
+        hide_hamburger_menu ();
+        browser_view.discard_row_popover ();
+        path_widget.click_bookmarks_button ();
+    }
+
+    private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
     {
         browser_view.discard_row_popover ();
 
@@ -717,9 +764,130 @@ private class DConfWindow : ApplicationWindow
         }
     }
 
-    private void hide_notification (/* SimpleAction action, Variant? variant */)
+    private void bookmark                               (/* SimpleAction action, Variant? variant */)
     {
-        notification_revealer.set_reveal_child (false);
+        hide_hamburger_menu ();
+        browser_view.discard_row_popover ();
+        path_widget.bookmark_current_path ();
+    }
+
+    private void unbookmark                             (/* SimpleAction action, Variant? variant */)
+    {
+        hide_hamburger_menu ();
+        browser_view.discard_row_popover ();
+        path_widget.unbookmark_current_path ();
+    }
+
+    private void _toggle_search                         (/* SimpleAction action, Variant? variant */)
+    {
+        path_widget.close_popovers ();  // should never be needed if path_widget.search_mode_enabled
+        hide_hamburger_menu ();         // should never be needed if path_widget.search_mode_enabled
+        browser_view.discard_row_popover ();   // could be needed if path_widget.search_mode_enabled
+
+        if (!path_widget.search_mode_enabled)
+            request_search (true, PathEntry.SearchMode.SEARCH);
+        else if (!path_widget.entry_has_focus)
+            path_widget.entry_grab_focus ();
+        else if (path_widget.text.has_prefix ("/"))
+            request_search (true, PathEntry.SearchMode.SEARCH);
+        else
+            stop_search ();
+    }
+
+    private void next_match                             (/* SimpleAction action, Variant? variant */)   // See also "Down"
+    {
+        if (path_widget.has_popover ()) // only for bookmarks popover, but let pathwidget handle that
+            path_widget.down_pressed ();
+        else if (info_button.active == false && !revealer.get_modifications_list_state ())
+            browser_view.down_pressed ();               // FIXME returns bool
+    }
+
+    private void previous_match                         (/* SimpleAction action, Variant? variant */)   // See also "Up"
+    {
+        if (path_widget.has_popover ()) // only for bookmarks popover, but let pathwidget handle that
+            path_widget.up_pressed ();
+        else if (info_button.active == false && !revealer.get_modifications_list_state ())
+            browser_view.up_pressed ();                 // FIXME returns bool
+    }
+
+    private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
+    {
+        if (browser_view.current_view == ViewType.FOLDER)
+            request_config (current_path);
+    }
+
+    private void modifications_list                     (/* SimpleAction action, Variant? variant */)
+    {
+        if (revealer.reveal_child)
+            revealer.toggle_modifications_list ();
+    }
+
+    private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
+    {
+        if (!path_widget.search_mode_enabled)
+            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
+    }
+
+    private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
+    {
+        if (!path_widget.search_mode_enabled)
+            request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
+    }
+
+    private void open_root                              (/* SimpleAction action, Variant? variant */)
+    {
+        go_backward (true);
+    }
+
+    private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
+    {
+        if (browser_view.current_view == ViewType.CONFIG)
+            request_folder (current_path);
+        else
+            go_backward (false);
+    }
+
+    private void open_child                             (/* SimpleAction action, Variant? variant */)
+    {
+        go_forward (false);
+    }
+
+    private void open_last_child                        (/* SimpleAction action, Variant? variant */)
+    {
+        go_forward (true);
+    }
+
+    private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
+    {
+        if (info_button.active || path_widget.has_popover ())
+            return;
+
+        browser_view.discard_row_popover ();
+        browser_view.toggle_boolean_key ();
+    }
+
+    private void set_to_default                         (/* SimpleAction action, Variant? variant */)
+    {
+        if (info_button.active || path_widget.has_popover ())
+            return;
+
+        if (revealer.dismiss_selected_modification ())
+        {
+            reload_view ();
+            return;
+        }
+        browser_view.discard_row_popover ();
+        string selected_row = browser_view.get_selected_row_name ();
+        if (selected_row.has_suffix ("/"))
+            reset_path ((!) selected_row, true);
+        else
+            browser_view.set_selected_to_default ();
+    }
+
+    private inline void hide_hamburger_menu ()
+    {
+        if (info_button.active)
+            info_button.active = false;
     }
 
     /*\
@@ -973,7 +1141,7 @@ private class DConfWindow : ApplicationWindow
     }
 
     [GtkCallback]
-    private bool on_key_press_event (Widget widget, Gdk.EventKey event)     // TODO better?
+    private bool on_key_press_event (Widget widget, Gdk.EventKey event)
     {
         uint keyval = event.keyval;
         string name = (!) (Gdk.keyval_name (keyval) ?? "");
@@ -985,19 +1153,11 @@ private class DConfWindow : ApplicationWindow
         {
             switch (name)
             {
-                case "b":
-                case "B":
-                    if (info_button.active)
-                        info_button.active = false;
-                    browser_view.discard_row_popover ();
-                    path_widget.click_bookmarks_button ();
-                    return true;
-
                 case "c":
-                    if (browser_view.current_view != ViewType.FOLDER)
-                        model.copy_action_called ();
-                    else if (focus_is_text_widget)
+                    if (focus_is_text_widget)
                         return false;
+
+                    model.copy_action_called ();
 
                     browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
 
@@ -1008,143 +1168,30 @@ private class DConfWindow : ApplicationWindow
                     application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
                     return true;
 
-                case "d":
-                    if (info_button.active)
-                        info_button.active = false;
-                    browser_view.discard_row_popover ();
-                    path_widget.bookmark_current_path ();
-                    return true;
-                case "D":
-                    if (info_button.active)
-                        info_button.active = false;
-                    browser_view.discard_row_popover ();
-                    path_widget.unbookmark_current_path ();
-                    return true;
+                case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX // TODO <Shift><Primary>v something?
+                    if (focus_is_text_widget)
+                        return false;
 
-                case "f":
-                    path_widget.close_popovers ();  // should never be needed if path_widget.search_mode_enabled
-                    if (info_button.active)         // should never happen if path_widget.search_mode_enabled
-                        info_button.active = false;
-                    browser_view.discard_row_popover ();   // could happen if path_widget.search_mode_enabled
-                    if (!path_widget.search_mode_enabled)
-                        request_search (true, PathEntry.SearchMode.SEARCH);
-                    else if (!path_widget.entry_has_focus)
-                        path_widget.entry_grab_focus ();
-                    else if (path_widget.text.has_prefix ("/"))
-                        request_search (true, PathEntry.SearchMode.SEARCH);
+                    Gdk.Display? display = Gdk.Display.get_default ();
+                    if (display == null)    // ?
+                        return false;
+
+                    string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
+                    if (clipboard_content != null)
+                        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
                     else
-                        stop_search ();
+                        request_search (true, PathEntry.SearchMode.SEARCH);
                     return true;
 
-                case "g":   // usual shortcut for "next-match" in a SearchEntry; see also "Down"
-                    if (!path_widget.has_popover ()
-                     && info_button.active == false
-                     && !revealer.get_modifications_list_state ())
-                        return browser_view.down_pressed ();
-                    return false;
-                case "G":   // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
-                    if (!path_widget.has_popover ()
-                     && info_button.active == false
-                     && !revealer.get_modifications_list_state ())
-                        return browser_view.up_pressed ();
-                    return false;
-
-                case "i": 
-                    if (browser_view.current_view == ViewType.FOLDER)
-                        request_config (current_path);
-                    return true;
-
-                case "l":
-                    if (path_widget.search_mode_enabled)
-                        return false;
-                    request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
-                    return true;
-                case "L":
-                    if (path_widget.search_mode_enabled)
-                        return false;
-                    request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
-                    return true;
-
-                case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
-                    if (!focus_is_text_widget)
-                    {
-                        Gdk.Display? display = Gdk.Display.get_default ();
-                        if (display == null)    // ?
-                            return false;
-                        string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
-                        if (clipboard_content != null)
-                            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
-                        else
-                            request_search (true, PathEntry.SearchMode.SEARCH);
-                        return true;
-                    }
-                    return false;
-
-                case "F1":
+                case "F1":  // TODO dance done to avoid <Primary>F1 to show help overlay
                     browser_view.discard_row_popover ();
                     if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
                         return false;   // help overlay
                     ((ConfigurationEditor) get_application ()).about_cb ();
                     return true;
 
-                case "Return":
-                case "KP_Enter":
-                    if (info_button.active || path_widget.has_popover ())
-                        return false;
-                    browser_view.discard_row_popover ();
-                    browser_view.toggle_boolean_key ();
-                    return true;
-
-                // case "BackSpace":    // ?
-                case "Delete":
-                case "KP_Delete":
-                case "decimalpoint":
-                case "period":
-                case "KP_Decimal":
-                    if (info_button.active || path_widget.has_popover ())
-                        return false;
-                    if (revealer.dismiss_selected_modification ())
-                    {
-                        reload_view ();
-                        return true;
-                    }
-                    browser_view.discard_row_popover ();
-                    string selected_row = browser_view.get_selected_row_name ();
-                    if (selected_row.has_suffix ("/"))
-                        reset_path ((!) selected_row, true);
-                    else
-                        browser_view.set_selected_to_default ();
-                    return true;
-
                 default:
                     break;
-            }
-        }
-
-        if ((event.state & Gdk.ModifierType.MOD1_MASK) != 0)
-        {
-            if (name == "i")
-            {
-                if (revealer.reveal_child)
-                {
-                    revealer.toggle_modifications_list ();
-                    return true;
-                }
-                return false;
-            }
-            if (name == "Up")
-            {
-                bool shift = (event.state & Gdk.ModifierType.SHIFT_MASK) != 0;
-                if (!shift && browser_view.current_view == ViewType.CONFIG)
-                    request_folder (current_path);
-                else
-                    go_backward (shift);
-                return true;
-            }
-            if (name == "Down")
-            {
-                go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
-                return true;
             }
         }
 
@@ -1166,12 +1213,16 @@ private class DConfWindow : ApplicationWindow
             return false;
         }
 
-        if (name == "Up"    // see also <ctrl>G
+        if (name == "Up"
+         && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
+         // see also <ctrl>G
          && !path_widget.has_popover ()
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
             return browser_view.up_pressed ();
-        if (name == "Down"  // see also <ctrl>g
+        if (name == "Down"
+         && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
+         // see also <ctrl>g
          && !path_widget.has_popover ()
          && info_button.active == false
          && !revealer.get_modifications_list_state ())
@@ -1206,8 +1257,7 @@ private class DConfWindow : ApplicationWindow
             if (browser_view.toggle_row_popover ())
             {
                 path_widget.close_popovers ();
-                if (info_button.active)
-                    info_button.active = false;
+                hide_hamburger_menu ();
             }
             else if (info_button.sensitive == false)
                 return true;
@@ -1222,7 +1272,7 @@ private class DConfWindow : ApplicationWindow
             return true;
         }
 
-        if (path_widget.has_popover () || info_button.active)
+        if (info_button.active || path_widget.has_popover ())
             return false;
 
         if (!path_widget.search_mode_enabled &&
@@ -1263,6 +1313,7 @@ private class DConfWindow : ApplicationWindow
         else
             request_folder (ModelUtils.get_parent_path (current_path), current_path.dup ());
     }
+
     private void go_forward (bool shift)
     {
         if (path_widget.search_mode_enabled)

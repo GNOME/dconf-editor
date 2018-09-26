@@ -190,7 +190,7 @@ private class ConfigurationEditor : Gtk.Application
 "\n    " + _("example: “ca.desrt.dconf-editor.Settings”") +
 
 "\n  RELOC_SCHEMA" +
-/* Translators: no need to put your translation of "relocatable" between quotation marks, that's done to highlight why the option is called "RELOC_SCHEMA" */
+/* Translators: no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA" */
 "\n    " + _("the name of a “relocatable” schema, without fixed path") +
 "\n    " + _("see list with the “--list-relocatable-schemas” option") +
 
@@ -292,9 +292,33 @@ private class ConfigurationEditor : Gtk.Application
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
-        set_accels_for_action ("ui.copy-path",          { "<Primary><Shift>c" });
-        set_accels_for_action ("app.quit",              { "<Primary>q" });
-        set_accels_for_action ("app.apply-and-quit",    { "<Primary><Shift>q" });
+        set_accels_for_action ("kbd.toggle-bookmark",   {        "<Primary>b",
+                                                          "<Shift><Primary>b" });
+        set_accels_for_action ("kbd.copy-path",         { "<Shift><Primary>c" });
+        set_accels_for_action ("kbd.bookmark",          {        "<Primary>d" });
+        set_accels_for_action ("kbd.unbookmark",        { "<Shift><Primary>d" });
+        set_accels_for_action ("kbd.toggle-search",     {        "<Primary>f" });   // TODO <Shift><Primary>f something?
+        set_accels_for_action ("kbd.next-match",        {        "<Primary>g" });
+        set_accels_for_action ("kbd.previous-match",    { "<Shift><Primary>g" });
+        set_accels_for_action ("kbd.request-config",    {        "<Primary>i" });   // <Shift><Primary>i is gtk editor
+        set_accels_for_action ("kbd.modifications",     {        "<Alt>i"     });
+        set_accels_for_action ("kbd.edit-path-end",     {        "<Primary>l" });
+        set_accels_for_action ("kbd.edit-path-last",    { "<Shift><Primary>l" });
+        set_accels_for_action ("app.quit",              {        "<Primary>q" });
+        set_accels_for_action ("app.apply-and-quit",    { "<Shift><Primary>q" });
+
+        set_accels_for_action ("kbd.open-root",         { "<Shift><Alt>Up"    });
+        set_accels_for_action ("kbd.open-parent",       {        "<Alt>Up"    });
+        set_accels_for_action ("kbd.open-child",        {        "<Alt>Down"  });
+        set_accels_for_action ("kbd.open-last-child",   { "<Shift><Alt>Down"  });
+
+        set_accels_for_action ("kbd.set-to-default",    { "<Primary>Delete",
+                                                          "<Primary>KP_Delete",
+                                                          "<Primary>decimalpoint",
+                                                          "<Primary>period",
+                                                          "<Primary>KP_Decimal" }); // TODO "BackSpace"?
+        set_accels_for_action ("kbd.toggle-boolean",    { "<Primary>Return",
+                                                          "<Primary>KP_Enter"   });
 
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");

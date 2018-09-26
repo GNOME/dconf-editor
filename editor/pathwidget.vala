@@ -101,6 +101,17 @@ private class PathWidget : Box
         return false;
     }
 
+    internal void down_pressed ()
+    {
+        if (bookmarks_button.active)
+            bookmarks_button.down_pressed ();
+    }
+    internal void up_pressed ()
+    {
+        if (bookmarks_button.active)
+            bookmarks_button.up_pressed ();
+    }
+
     /* path bar */
     internal string complete_path { get { return pathbar.complete_path; }}
 
