@@ -265,7 +265,7 @@ msgid ""
 "is pressed."
 msgstr ""
 "Per als usuaris amb ratolins que tenen els botons «Endavant» i «Endarrere» "
-"aquesta clau determinarà si es pren algun acció dins de la finestra del "
+"aquesta clau determinarà si es pren alguna acció dins de la finestra del "
 "navegador quan es prem una."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:157
@@ -374,8 +374,7 @@ msgid ""
 "used to pass around strings that may not be valid utf8."
 msgstr ""
 "Aquest és el tipus d'una matriu de bytestrings. El tipus bytestring s'usa en "
-"general per passar cadenes de caràcters a altre llocs que poden ser utf8 no "
-"vàlid."
+"general per passar cadenes de caràcters que poden no ser vàlides en utf8."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:236
 msgid "A D-Bus handle type, type ‘h’"
@@ -1132,7 +1131,7 @@ msgid ""
 "impossible to work with its value in a meaningful way."
 msgstr ""
 "Aquesta clau està definida de forma incompatible i usada per més d'un "
-"esquema. Es impossible treballar amb aquest valor d'una forma vàlida."
+"esquema. És impossible treballar amb aquest valor d'una forma vàlida."
 
 #: editor/registry-info.ui:106
 msgid ""
