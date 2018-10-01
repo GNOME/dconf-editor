@@ -120,8 +120,10 @@ private class DConfWindow : ApplicationWindow
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
 
-    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
+    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool _night_time, bool _dark_theme, bool _automatic_night_mode)
     {
+        init_night_mode (_night_time, _dark_theme, _automatic_night_mode);
+
         install_ui_action_entries ();
         install_kbd_action_entries ();
 
@@ -355,6 +357,52 @@ private class DConfWindow : ApplicationWindow
             get_style_context ().add_class ("hc-theme");
         else
             get_style_context ().remove_class ("hc-theme");
+    }
+
+    /*\
+    * * Night mode
+    \*/
+
+    private bool night_time = false;    // no need to use NightTime here (that allows an "Unknown" value)
+    private bool dark_theme = false;
+    private bool automatic_night_mode = false;
+
+    private void init_night_mode (bool _night_time, bool _dark_theme, bool _automatic_night_mode)
+    {
+        night_time = _night_time;
+        dark_theme = _dark_theme;
+        automatic_night_mode = _automatic_night_mode;
+    }
+
+    internal void night_time_changed (Object nlm, ParamSpec thing)
+    {
+        night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
+        update_hamburger_menu ();
+    }
+
+    internal void dark_theme_changed (Object nlm, ParamSpec thing)
+    {
+        dark_theme = ((NightLightMonitor) nlm).dark_theme;
+        update_hamburger_menu ();
+    }
+
+    internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
+    {
+        automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
+        // update menu not needed
+    }
+
+    private void append_or_not_night_mode_entry (ref GLib.Menu section)
+    {
+        if (!night_time)
+            return;
+
+        if (dark_theme)
+            section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
+        else if (automatic_night_mode)
+            section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
+        else
+            section.append (_("Use night mode"), "app.set-use-night-mode(true)");
     }
 
     /*\
@@ -1062,6 +1110,7 @@ private class DConfWindow : ApplicationWindow
         }
 
         section = new GLib.Menu ();
+        append_or_not_night_mode_entry (ref section);
         section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
         section.append (_("About Dconf Editor"), "app.about");   // TODO move as "win."
         section.freeze ();

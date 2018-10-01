@@ -191,6 +191,13 @@
       <description>When a folder only contains one subfolder and no keys, Dconf Editor can jump to that subfolder directly. This flag enables that behaviour.</description>
     </key>
   </schema>
+  <schema id="ca.desrt.dconf-editor.NightLight">
+    <key name="automatic-night-mode" type="b">
+      <default>false</default>
+      <summary>Follow system night light</summary>
+      <description>Use GNOME night light setting to activate night-mode.</description>
+    </key>
+  </schema>
   <schema id="ca.desrt.dconf-editor.Bookmarks">
     <key name="bookmarks" type="as">
       <default>[]</default>

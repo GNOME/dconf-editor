@@ -20,6 +20,9 @@ private class ConfigurationEditor : Gtk.Application
     internal static string [,] internal_mappings = {
             {"ca.desrt.dconf-editor.Bookmarks",
                 "/ca/desrt/dconf-editor/"},
+            {"ca.desrt.dconf-editor.NightLight",
+                "/ca/desrt/dconf-editor/"},
+
             {"ca.desrt.dconf-editor.Demo.EmptyRelocatable",
                 "/ca/desrt/dconf-editor/Demo/EmptyRelocatable/"}
         };
@@ -149,6 +152,7 @@ private class ConfigurationEditor : Gtk.Application
     private const GLib.ActionEntry [] action_entries =
     {
         // generic
+        { "set-use-night-mode", set_use_night_mode, "b" },
         { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
         { "about", about_cb },
 
@@ -320,6 +324,8 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("kbd.toggle-boolean",    { "<Primary>Return",
                                                           "<Primary>KP_Enter"   });
 
+        init_night_mode ();
+
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
         Gdk.Screen? screen = Gdk.Screen.get_default ();
@@ -344,6 +350,23 @@ private class ConfigurationEditor : Gtk.Application
         else                                                // called by default or with GSETTINGS_BACKEND=dconf
             info (_("Looks like the DConf settings backend is used, all looks good."));
     } */
+
+    /*\
+    * * Night mode
+    \*/
+
+    NightLightMonitor night_light_monitor;  // keep it here or it is unrefed
+
+    private void init_night_mode ()
+    {
+        night_light_monitor = new NightLightMonitor ("/ca/desrt/dconf-editor/");
+    }
+
+    private void set_use_night_mode (SimpleAction action, Variant? gvariant)
+        requires (gvariant != null)
+    {
+        night_light_monitor.set_use_night_mode (((!) gvariant).get_boolean ());
+    }
 
     /*\
     * * Window activation
@@ -480,8 +503,13 @@ private class ConfigurationEditor : Gtk.Application
 
     private Gtk.Window get_new_window (string? schema, string? path, string? key_name)
     {
-        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name);
+        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name, NightLightMonitor.NightTime.should_use_dark_theme (night_light_monitor.night_time), night_light_monitor.dark_theme, night_light_monitor.automatic_night_mode);
         add_window (window);
+
+        night_light_monitor.notify ["night-time"].connect (window.night_time_changed);
+        night_light_monitor.notify ["dark-theme"].connect (window.dark_theme_changed);
+        night_light_monitor.notify ["automatic-night-mode"].connect (window.automatic_night_mode_changed);
+
         return (Gtk.Window) window;
     }
 

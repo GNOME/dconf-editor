@@ -79,6 +79,7 @@ sources = files(
   'model-utils.vala',
   'modifications-handler.vala',
   'modifications-revealer.vala',
+  'night-light-monitor.vala',
   'pathbar.vala',
   'pathentry.vala',
   'pathwidget.vala',
