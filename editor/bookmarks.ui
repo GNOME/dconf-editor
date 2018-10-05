@@ -1,106 +1,265 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkImage" id="big_rows_icon">
+    <property name="visible">True</property>
+    <property name="icon-name">ca.desrt.dconf-editor.big-rows-symbolic</property>
+    <property name="icon-size">1</property>
+  </object>
+  <object class="GtkImage" id="small_rows_icon">
+    <property name="visible">True</property>
+    <property name="icon-name">ca.desrt.dconf-editor.small-rows-symbolic</property>
+    <property name="icon-size">1</property>
+  </object>
   <object class="GtkPopover" id="bookmarks_popover">
     <property name="width-request">350</property>
     <property name="height-request">300</property>
+    <signal name="key-press-event" handler="on_key_press_event"/>
     <style>
       <class name="bookmarks"/>
     </style>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
-        <property name="column-spacing">12</property>
-        <property name="row-spacing">0</property>
+        <property name="row-spacing">6</property>
         <property name="margin">4</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="switch_label">
+          <object class="GtkStack" id="edit_mode_stack">
             <property name="visible">True</property>
-            <property name="margin-start">6</property>
-            <property name="halign">start</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="bookmarked_switch">
-            <property name="visible">True</property>
-            <property name="halign">end</property>
-            <property name="action-name">ui.empty</property>
-            <property name="action-target">('',byte 255)</property>
-            <child internal-child="accessible">
-              <object class="AtkObject">
-                <property name="AtkObject::accessible-name" translatable="yes">Location bookmarked</property>
-                <property name="AtkObject::accessible-description" translatable="yes">Toggle to bookmark this location</property>
+            <child>
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="orientation">horizontal</property>
+                <property name="column-spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="switch_label">
+                    <property name="visible">True</property>
+                    <property name="margin-start">6</property>
+                    <property name="hexpand">True</property>
+                    <property name="halign">start</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSwitch" id="bookmarked_switch">
+                    <property name="visible">True</property>
+                    <property name="halign">end</property>
+                    <property name="action-name">ui.empty</property>
+                    <property name="action-target">('',byte 255)</property>
+                    <child internal-child="accessible">
+                      <object class="AtkObject">
+                        <property name="AtkObject::accessible-name" translatable="yes">Location bookmarked</property>
+                        <property name="AtkObject::accessible-description" translatable="yes">Toggle to bookmark this location</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
+              <packing>
+                <property name="name">edit-mode-off</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="hexpand">True</property>
+                <property name="valign">center</property>
+                <property name="orientation">horizontal</property>
+                <property name="column-spacing">3</property>
+                <child>
+                  <object class="GtkButton" id="leave_edit_mode_button">
+                    <property name="visible">True</property>
+                    <property name="action-name">bookmarks.leave-edit-mode</property>
+                    <style>
+                      <class name="image-button"/>
+                      <class name="flat"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">object-select-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="rows_size_button">
+                    <property name="visible">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="halign">start</property>
+                    <property name="action-name">bookmarks.set-small-rows</property>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="halign">end</property>
+                    <property name="margin-end">3</property> <!-- grid has already 3 as column spacing -->
+                    <style>
+                      <class name="linked"/>
+                    </style>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="action-name">bookmarks.move-top</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">go-top-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="action-name">bookmarks.move-up</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">go-up-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="action-name">bookmarks.move-down</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">go-down-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="action-name">bookmarks.move-bottom</property>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="icon-name">go-bottom-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="visible">True</property>
+                    <property name="halign">end</property>
+                    <property name="action-name">bookmarks.trash-bookmark</property>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">user-trash-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="name">edit-mode-on</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="halign">center</property>
+                <property name="label" translatable="yes">The bookmarks list is not editable.</property>
+                <style>
+                  <class name="italic-label"/>
+                </style>
+              </object>
+              <packing>
+                <property name="name">edit-mode-disabled</property>
+              </packing>
             </child>
           </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
-          </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow">
+          <object class="GtkOverlay">
             <property name="visible">True</property>
             <property name="expand">True</property>
-            <property name="window-placement">top-right</property>
-            <property name="hscrollbar-policy">never</property>
-            <property name="shadow-type">etched-in</property>
-            <property name="max-content-height">300</property>
-            <property name="propagate-natural-width">True</property>
-            <property name="propagate-natural-height">True</property>
-            <style>
-              <class name="margin-top-6px"/>
-            </style>
+            <property name="valign">fill</property>
             <child>
-              <object class="GtkListBox" id="bookmarks_list_box">
+              <object class="GtkScrolledWindow" id="scrolled">
                 <property name="visible">True</property>
-                <property name="activate-on-single-click">True</property>
-                <child type="placeholder">
-                  <object class="RegistryPlaceholder">
-                    <property name="label" translatable="yes">Bookmarks will
-be added here</property> <!-- line wrap wanted -->
-                    <property name="icon-name">starred-symbolic</property> <!-- or starred-symbolic? or dconf-editor-symbolic? -->
-                    <property name="big">False</property>
+                <property name="expand">True</property>
+                <!-- property name="window-placement">top-right</property -->
+                <property name="hscrollbar-policy">never</property>
+                <property name="shadow-type">etched-in</property>
+                <property name="max-content-height">300</property>
+                <property name="propagate-natural-width">True</property>
+                <property name="propagate-natural-height">True</property>
+                <child>
+                  <object class="GtkListBox" id="bookmarks_list_box">
+                    <property name="visible">True</property>
+                    <signal name="selected-rows-changed" handler="on_selection_changed"/>
+                    <style>
+                      <class name="padding-bottom"/>
+                    </style>
+                    <child type="placeholder">
+                      <object class="RegistryPlaceholder">
+                        <property name="label" translatable="yes">Bookmarks will&#xA;be added here</property>
+                        <property name="icon-name">starred-symbolic</property> <!-- or starred-symbolic? or dconf-editor-symbolic? -->
+                        <property name="big">False</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
             </child>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
-            <property name="width">2</property>
-            <property name="height">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkRevealer" id="bookmarks_editable_revealer">
-            <property name="visible">True</property>
-            <property name="transition-type">slide-down</property>
-            <property name="transition-duration">300</property>
-            <property name="reveal-child">False</property>
-            <child>
-              <object class="GtkLabel">
+            <child type="overlay">
+              <object class="GtkButton" id="enter_edit_mode_button">
                 <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="label" translatable="yes">The bookmarks list is not editable.</property>
+                <property name="halign">center</property>
+                <property name="valign">end</property>
+                <property name="width-request">200</property>
+                <property name="action-name">bookmarks.enter-edit-mode</property>
+                <property name="label" translatable="yes">Edit bookmarks list</property>
                 <style>
-                  <class name="italic-label"/>
-                  <class name="margin-top-6px"/>
+                  <class name="circular"/>
+                  <class name="edit-bookmarks-list"/>
                 </style>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
-            <property name="width">2</property>
-            <property name="height">1</property>
-          </packing>
         </child>
       </object>
     </child>

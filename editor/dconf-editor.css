@@ -24,30 +24,65 @@
 * * bookmarks
 \*/
 
-/* no transition as it would start at popover's opening */
-
-                      .bookmarks list > row { min-height:2.6rem; }
-.small-bookmarks-rows .bookmarks list > row { min-height:1.3rem; }
-
-.small-bookmarks-rows .bookmarks list > row > grid > button.circular.flat {
+/*                     .bookmarks list > row > grid > button.circular.flat {
+  transition:min-height 0.3s, padding 0.3s, margin 0.3s;
+}
+.small-bookmarks-rows.bookmarks list > row > grid > button.circular.flat {
   min-height:0;
   padding-bottom:1px;
   padding-top:1px;
   margin-top:-2px;
   margin-bottom:-2px;
+} */
+
+                      .bookmark          { background-repeat:no-repeat;
+                                           transition:all               0 ease,
+                                                      padding-left      0.3s,   /* small-rows; for ltr */
+                                                      margin-left       0.3s,   /* small-rows; for ltr */
+                                                      padding-right     0.3s,   /* small-rows; for rtl */
+                                                      margin-right      0.3s,   /* small-rows; for rtl */
+                                                      background-size   0.3s,   /* small-rows */
+                                                      min-height        0.3s;   /* small-rows */
+                                           background-size:1.5rem; min-height:2.6rem; }
+.small-bookmarks-rows .bookmark          { background-size:1.1rem; min-height:1.3rem; }
+
+                      .bookmark:dir(ltr) { margin-left :0.6rem; padding-left :2.2rem; margin-right:1rem; background-position:  0  center }
+                      .bookmark:dir(rtl) { margin-right:0.6rem; padding-right:2.2rem; margin-left :1rem; background-position:100% center }
+.small-bookmarks-rows .bookmark:dir(ltr) { margin-left :0.5rem; padding-left :1.7rem; }
+.small-bookmarks-rows .bookmark:dir(rtl) { margin-right:0.5rem; padding-right:1.7rem; }
+
+/* various hacks */
+
+.bookmarks separator {
+  margin-top:0;
+  margin-bottom:0;
 }
 
-                      .bookmark {
-  background-repeat:no-repeat;
-  background-size:1.5rem;
+.bookmarks                 .padding-bottom {
+  padding-bottom:0;
+  transition:padding-bottom 0.3s,
+             font-size      0.3s;
 }
-.small-bookmarks-rows .bookmark {
-  background-size:1.1rem;
+.bookmarks:not(.edit-mode) .padding-bottom:not(.empty-list) {
+  padding-bottom:2.4rem;
 }
-                      .bookmark:dir(ltr) { padding-left :2.2rem; background-position:0    center; }
-                      .bookmark:dir(rtl) { padding-right:2.2rem; background-position:100% center; }
-.small-bookmarks-rows .bookmark:dir(ltr) { padding-left :1.7rem; }
-.small-bookmarks-rows .bookmark:dir(rtl) { padding-right:1.7rem; }
+
+.edit-bookmarks-list {
+  padding-left:0.1rem;
+  padding-right:0.1rem;
+  padding-bottom:0.1rem;
+  border-radius:1.8rem 1.8rem 0 0;
+  border-bottom:none;
+
+  transition:all           0    ease,
+             margin-bottom 0.3s ease,
+             padding       0.3s ease;
+  margin-bottom:0;
+}
+
+.edit-bookmarks-list label {
+  transition:all 0 ease;
+}
 
 /*\
 * * pending change list popover
@@ -161,6 +196,7 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 
              row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
              row:active >                .folder               { background-image:-gtk-icontheme("folder-open-symbolic"); }
+             row        >          .erase.folder               { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
              row >                       .search               { background-image:-gtk-icontheme("edit-find-symbolic"); }
 
              row >                       .return               { background-image:-gtk-icontheme("edit-undo-symbolic"); }
@@ -327,8 +363,8 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 * * lists headers
 \*/
 
-.bookmarks > grid > scrolledwindow > viewport > list > row > grid > button,
-.bookmarks > grid > scrolledwindow > viewport > list > row > grid > label,
+/* .bookmarks > grid > overlay > scrolledwindow > viewport > list > row > grid > button, */
+.bookmarks > grid > overlay > scrolledwindow > viewport > list > row > grid > label,
 .delayed-settings-popover list > row > grid > label,
 .delayed-settings-popover list > row > grid > grid > label,
 .modifications-revealer button,
@@ -345,12 +381,12 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
              padding 0.3s,
              margin 0.3s;
 }
-.bookmarks > grid > scrolledwindow > viewport > list > row {
+/* .bookmarks > grid > overlay > scrolledwindow > viewport > list > row {
   transition:min-height 0.3s,
              font-size 0.3s,
              padding 0.3s,
              margin 0.3s;
-}
+} */
 
 .header-label {
   margin:0.45em 0.75em 0.2em;
@@ -476,8 +512,4 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 
 .big-popover {
   font-size:144%;
-}
-
-.margin-top-6px {
-  margin-top:6px;
 }

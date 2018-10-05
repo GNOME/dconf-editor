@@ -127,6 +127,8 @@ private class DConfWindow : ApplicationWindow
         install_ui_action_entries ();
         install_kbd_action_entries ();
 
+        path_widget.update_bookmarks_icons.connect (_update_bookmarks_icons);
+
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
@@ -307,8 +309,7 @@ private class DConfWindow : ApplicationWindow
     \*/
 
     private ulong small_keys_list_rows_handler = 0;
-    private ulong small_bookmarks_rows_handler = 0;
-
+    private bool has_small_keys_list_rows_class = false;
     private void set_css_styles ()
     {
         StyleContext context = get_style_context ();
@@ -316,24 +317,16 @@ private class DConfWindow : ApplicationWindow
                 bool small_rows = settings.get_boolean ("small-keys-list-rows");
                 if (small_rows)
                 {
-                    if (!context.has_class ("small-keys-list-rows")) context.add_class ("small-keys-list-rows");
+                    if (!has_small_keys_list_rows_class) context.add_class ("small-keys-list-rows");
                 }
-                else if (context.has_class ("small-keys-list-rows")) context.remove_class ("small-keys-list-rows");
+                else if (has_small_keys_list_rows_class) context.remove_class ("small-keys-list-rows");
+                has_small_keys_list_rows_class = small_rows;
                 browser_view.small_keys_list_rows = small_rows;
             });
-        small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
-                if (settings.get_boolean ("small-bookmarks-rows"))
-                {
-                    if (!context.has_class ("small-bookmarks-rows")) context.add_class ("small-bookmarks-rows");
-                }
-                else if (context.has_class ("small-bookmarks-rows")) context.remove_class ("small-bookmarks-rows");
-            });
-        bool small_rows = settings.get_boolean ("small-keys-list-rows");
-        if (small_rows)
+        has_small_keys_list_rows_class = settings.get_boolean ("small-keys-list-rows");
+        if (has_small_keys_list_rows_class)
             context.add_class ("small-keys-list-rows");
-        browser_view.small_keys_list_rows = small_rows;
-        if (settings.get_boolean ("small-bookmarks-rows"))
-            context.add_class ("small-bookmarks-rows");
+        browser_view.small_keys_list_rows = has_small_keys_list_rows_class;
 
         Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
         if (gtk_settings == null)
@@ -531,7 +524,6 @@ private class DConfWindow : ApplicationWindow
         settings.disconnect (behaviour_changed_handler);
         settings.disconnect (use_shortpaths_changed_handler);
         settings.disconnect (small_keys_list_rows_handler);
-        settings.disconnect (small_bookmarks_rows_handler);
 
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
@@ -694,6 +686,10 @@ private class DConfWindow : ApplicationWindow
     private void update_bookmarks_icons (SimpleAction action, Variant? bookmarks_variant)
         requires (bookmarks_variant != null)
     {
+        _update_bookmarks_icons ((!) bookmarks_variant);
+    }
+    private void _update_bookmarks_icons (Variant bookmarks_variant)
+    {
         string [] bookmarks = ((!) bookmarks_variant).get_strv ();
 
         if (bookmarks.length == 0)
@@ -701,27 +697,41 @@ private class DConfWindow : ApplicationWindow
 
         foreach (string bookmark in bookmarks)
         {
-            if (bookmark.has_prefix ("?"))
+            if (bookmark.has_prefix ("?"))  // TODO broken search
+            {
+                path_widget.update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
                 continue;
-            if (is_path_invalid (bookmark))
+            }
+            if (is_path_invalid (bookmark)) // TODO broken folder and broken object
                 continue;
-            if (ModelUtils.is_folder_path (bookmark))
-                continue;   // TODO check folder existence
 
             uint16 context_id;
             string name;
-            bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);
+            bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);    // TODO get_folder
+
+            if (context_id == ModelUtils.folder_context_id)
+            {
+                if (bookmark_exists)
+                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
+                else
+                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
+                continue;
+            }
+
             if (!bookmark_exists)
-                path_widget.update_bookmark_icon (bookmark, false);
+                path_widget.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
             else if (context_id == ModelUtils.dconf_context_id)
-                path_widget.update_bookmark_icon (bookmark, true, false);
+                path_widget.update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
             else
             {
                 RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
                 bool is_default;
                 if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
                     assert_not_reached ();
-                path_widget.update_bookmark_icon (bookmark, true, true, is_default);
+                if (is_default)
+                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
+                else
+                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
             }
         }
     }

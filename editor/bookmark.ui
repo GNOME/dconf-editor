@@ -3,11 +3,10 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="Bookmark" parent="GtkListBoxRow">
     <child>
-      <object class="GtkGrid" id="main_grid">
+      <object class="GtkGrid"> <!-- TODO remove? -->
         <property name="visible">True</property>
         <property name="orientation">horizontal</property>
-        <property name="column-spacing">2</property>
-        <property name="margin-start">8</property>
+        <property name="column-spacing">0</property>
         <style>
           <class name="bookmark"/>
         </style>
@@ -19,32 +18,6 @@
             <property name="vexpand">True</property>
             <property name="max-width-chars">42</property>
             <property name="ellipsize">PANGO_ELLIPSIZE_START</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton" id="destroy_button">
-            <property name="visible">True</property>
-            <property name="margin">2</property>
-            <property name="valign">center</property>
-            <property name="vexpand">True</property>
-            <style>
-              <class name="image-button"/>
-              <class name="circular"/>
-              <class name="flat"/>
-            </style>
-            <child internal-child="accessible">
-              <object class="AtkObject">
-                <property name="AtkObject::accessible-name" translatable="yes">Remove</property>
-                <property name="AtkObject::accessible-description" translatable="yes">Remove this bookmark</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">True</property>
-                <property name="icon-size">1</property>
-                <property name="icon-name">window-close-symbolic</property>
-              </object>
-            </child>
           </object>
         </child>
       </object>

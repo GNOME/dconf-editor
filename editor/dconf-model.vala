@@ -198,15 +198,19 @@ private abstract class SettingsModelCore : Object
     protected bool _get_object (string path, out uint16 context_id, out string name, bool watch)
     {
         SettingObject? object;
-        if (ModelUtils.is_key_path (path))
-            object = (SettingObject?) get_key (path, "");
-        else
+        bool is_folder_path = ModelUtils.is_folder_path (path);
+        if (is_folder_path)
             object = (SettingObject?) get_directory (path);
+        else
+            object = (SettingObject?) get_key (path, "");
 
         if (object == null)
         {
-            context_id = ModelUtils.undefined_context_id;   // garbage 1/2
-            name = "";                                      // garbage 2/2
+            if (is_folder_path)
+                context_id = ModelUtils.folder_context_id;
+            else
+                context_id = ModelUtils.undefined_context_id;   // garbage 1/2
+            name = "";                                          // garbage 2/2
             return false;
         }
 

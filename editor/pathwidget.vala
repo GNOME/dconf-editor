@@ -30,6 +30,12 @@ private class PathWidget : Box
     internal signal void search_changed ();
     internal signal void search_stopped ();
 
+    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
+    construct
+    {
+        bookmarks_button.update_bookmarks_icons.connect ((bookmarks_variant) => update_bookmarks_icons (bookmarks_variant));
+    }
+
     /*\
     * * search mode
     \*/
@@ -164,9 +170,9 @@ private class PathWidget : Box
     internal void   bookmark_current_path () {   bookmarks_button.bookmark_current_path (); }
     internal void unbookmark_current_path () { bookmarks_button.unbookmark_current_path (); }
 
-    internal void update_bookmark_icon (string bookmark, bool bookmark_exists, bool bookmark_has_schema = false, bool bookmark_is_default = false)
+    internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
-        bookmarks_button.update_bookmark_icon (bookmark, bookmark_exists, bookmark_has_schema, bookmark_is_default);
+        bookmarks_button.update_bookmark_icon (bookmark, icon);
     }
 
 /*      string [] tokens = full_name.split (" ");

@@ -138,11 +138,6 @@
       <summary>A flag to enable small rows for keys list</summary>
       <description>If “true”, the keys list use smaller rows.</description>
     </key>
-    <key name="small-bookmarks-rows" type="b">
-      <default>false</default>
-      <summary>A flag to enable small rows for bookmarks list</summary>
-      <description>If “true”, the bookmarks list use smaller rows.</description>
-    </key>
     <key name="behaviour" enum="ca.desrt.dconf-editor.Behaviour">
       <default>'always-confirm-implicit'</default>
       <summary>Change the behaviour of a key value change request</summary>
@@ -203,6 +198,11 @@
       <default>[]</default>
       <summary>A list of bookmarked paths</summary>
       <description>Contains all paths bookmarked by the user as an array of strings.</description>
+    </key>
+    <key name="small-bookmarks-rows" type="b">
+      <default>false</default>
+      <summary>A flag to enable small rows for bookmarks list</summary>
+      <description>If “true”, the bookmarks list use smaller rows.</description>
     </key>
   </schema>
   <enum id="ca.desrt.dconf-editor.DemoEnum">
