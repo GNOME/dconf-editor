@@ -67,6 +67,7 @@ install_data(
 
 sources = files(
   'bookmarks.vala',
+  'browser-headerbar.vala',
   'browser-infobar.vala',
   'browser-stack.vala',
   'browser-view.vala',
@@ -96,6 +97,7 @@ sources = files(
 resource_data = files(
   'bookmarks.ui',
   'bookmark.ui',
+  'browser-headerbar.ui',
   'browser-infobar.ui',
   'browser-stack.ui',
   'browser-view.ui',

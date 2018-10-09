@@ -316,6 +316,10 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("kbd.open-child",        {        "<Alt>Down"  });
         set_accels_for_action ("kbd.open-last-child",   { "<Shift><Alt>Down"  });
 
+        set_accels_for_action ("kbd.toggle-hamburger",  {          "F10"      });
+        set_accels_for_action ("kbd.escape",            {          "Escape"   });
+        set_accels_for_action ("kbd.menu",              {          "Menu"     });
+
         set_accels_for_action ("kbd.set-to-default",    { "<Primary>Delete",
                                                           "<Primary>KP_Delete",
                                                           "<Primary>decimalpoint",

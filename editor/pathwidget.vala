@@ -76,6 +76,18 @@ private class PathWidget : Box
     }
 
     /*\
+    * * phone mode
+    \*/
+
+    internal bool extra_small_window
+    {
+        set
+        {
+            bookmarks_button.active = false;
+        }
+    }
+
+    /*\
     * * proxy calls
     \*/
 
@@ -164,7 +176,8 @@ private class PathWidget : Box
 
     internal void click_bookmarks_button ()
     {
-        bookmarks_button.clicked ();
+        if (bookmarks_button.sensitive)
+            bookmarks_button.clicked ();
     }
 
     internal void   bookmark_current_path () {   bookmarks_button.bookmark_current_path (); }

@@ -108,8 +108,7 @@ private class DConfWindow : ApplicationWindow
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
-    [GtkChild] private MenuButton info_button;
-    [GtkChild] private PathWidget path_widget;
+    [GtkChild] private BrowserHeaderBar headerbar;
 
     [GtkChild] private BrowserView browser_view;
     [GtkChild] private ModificationsRevealer revealer;
@@ -127,7 +126,7 @@ private class DConfWindow : ApplicationWindow
         install_ui_action_entries ();
         install_kbd_action_entries ();
 
-        path_widget.update_bookmarks_icons.connect (_update_bookmarks_icons);
+        headerbar.update_bookmarks_icons.connect (_update_bookmarks_icons);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -163,9 +162,9 @@ private class DConfWindow : ApplicationWindow
 
             string saved_path = settings.get_string ("saved-pathbar-path");
             string fallback_path = model.get_fallback_path (saved_path);
-            /* path_widget.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
-            path_widget.update_ghosts (fallback_path);  // TODO allow a complete state restoration (including search and this) */
-            path_widget.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
+            /* headerbar.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
+            headerbar.update_ghosts (fallback_path);  // TODO allow a complete state restoration (including search and this) */
+            headerbar.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
         }
 
         SchemasUtility schemas_utility = new SchemasUtility ();
@@ -291,7 +290,7 @@ private class DConfWindow : ApplicationWindow
         else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
             reload_view ();
 
-        path_widget.update_ghosts (((SettingsModel) _model).get_fallback_path (path_widget.complete_path));
+        headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (headerbar.complete_path));
     }
     private void propagate_gkey_value_push (string full_name, uint16 context, Variant key_value, bool is_key_default)
     {
@@ -356,46 +355,29 @@ private class DConfWindow : ApplicationWindow
     * * Night mode
     \*/
 
-    private bool night_time = false;    // no need to use NightTime here (that allows an "Unknown" value)
-    private bool dark_theme = false;
-    private bool automatic_night_mode = false;
-
     private void init_night_mode (bool _night_time, bool _dark_theme, bool _automatic_night_mode)
     {
-        night_time = _night_time;
-        dark_theme = _dark_theme;
-        automatic_night_mode = _automatic_night_mode;
+        headerbar.night_time = _night_time;
+        headerbar.dark_theme = _dark_theme;
+        headerbar.automatic_night_mode = _automatic_night_mode;
     }
 
     internal void night_time_changed (Object nlm, ParamSpec thing)
     {
-        night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
-        update_hamburger_menu ();
+        headerbar.night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
+        headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
     }
 
     internal void dark_theme_changed (Object nlm, ParamSpec thing)
     {
-        dark_theme = ((NightLightMonitor) nlm).dark_theme;
-        update_hamburger_menu ();
+        headerbar.dark_theme = ((NightLightMonitor) nlm).dark_theme;
+        headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
     }
 
     internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
     {
-        automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
+        headerbar.automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
         // update menu not needed
-    }
-
-    private void append_or_not_night_mode_entry (ref GLib.Menu section)
-    {
-        if (!night_time)
-            return;
-
-        if (dark_theme)
-            section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
-        else if (automatic_night_mode)
-            section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
-        else
-            section.append (_("Use night mode"), "app.set-use-night-mode(true)");
     }
 
     /*\
@@ -447,6 +429,7 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = false;
                 context.remove_class ("extra-small-window");
+                headerbar.extra_small_window = false;
                 browser_view.extra_small_window = false;
             }
             context.remove_class ("small-window");
@@ -460,6 +443,7 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = true;
                 context.add_class ("extra-small-window");
+                headerbar.extra_small_window = true;
                 browser_view.extra_small_window = true;
             }
         }
@@ -470,6 +454,7 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = false;
                 context.remove_class ("extra-small-window");
+                headerbar.extra_small_window = false;
                 browser_view.extra_small_window = false;
             }
             context.add_class ("small-window");
@@ -482,6 +467,7 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = false;
                 context.remove_class ("extra-small-window");
+                headerbar.extra_small_window = false;
                 browser_view.extra_small_window = false;
             }
         }
@@ -527,7 +513,7 @@ private class DConfWindow : ApplicationWindow
 
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
-        settings.set_string ("saved-pathbar-path", path_widget.complete_path);
+        settings.set_string ("saved-pathbar-path", headerbar.complete_path);
         if (window_width <= 630)    settings.set_int ("window-width", 630);
         else                        settings.set_int ("window-width", window_width);
         if (window_height <= 420)   settings.set_int ("window-height", 420);
@@ -611,7 +597,7 @@ private class DConfWindow : ApplicationWindow
     private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        path_widget.close_popovers ();
+        headerbar.close_popovers ();
 
         string full_name = ((!) path_variant).get_string ();
 
@@ -621,7 +607,7 @@ private class DConfWindow : ApplicationWindow
     private void open_object (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        path_widget.close_popovers ();
+        headerbar.close_popovers ();
         revealer.hide_modifications_list ();
 
         string full_name;
@@ -634,7 +620,7 @@ private class DConfWindow : ApplicationWindow
     private void open_config (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        path_widget.close_popovers ();
+        headerbar.close_popovers ();
 
         string full_name = ((!) path_variant).get_string ();    // TODO use current_path instead?
 
@@ -644,7 +630,7 @@ private class DConfWindow : ApplicationWindow
     private void open_search (SimpleAction action, Variant? search_variant)
         requires (search_variant != null)
     {
-        path_widget.close_popovers ();
+        headerbar.close_popovers ();
 
         string search = ((!) search_variant).get_string ();
 
@@ -677,9 +663,9 @@ private class DConfWindow : ApplicationWindow
         requires (path_variant != null)
     {
         bool search_request = ((!) path_variant).get_boolean ();
-        if (search_request && !path_widget.search_mode_enabled)
+        if (search_request && !headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
-        else if (!search_request && path_widget.search_mode_enabled)
+        else if (!search_request && headerbar.search_mode_enabled)
             stop_search ();
     }
 
@@ -699,7 +685,7 @@ private class DConfWindow : ApplicationWindow
         {
             if (bookmark.has_prefix ("?"))  // TODO broken search
             {
-                path_widget.update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
+                headerbar.update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
                 continue;
             }
             if (is_path_invalid (bookmark)) // TODO broken folder and broken object
@@ -712,16 +698,16 @@ private class DConfWindow : ApplicationWindow
             if (context_id == ModelUtils.folder_context_id)
             {
                 if (bookmark_exists)
-                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
+                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
                 else
-                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
+                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
                 continue;
             }
 
             if (!bookmark_exists)
-                path_widget.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
+                headerbar.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
             else if (context_id == ModelUtils.dconf_context_id)
-                path_widget.update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
+                headerbar.update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
             else
             {
                 RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
@@ -729,9 +715,9 @@ private class DConfWindow : ApplicationWindow
                 if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
                     assert_not_reached ();
                 if (is_default)
-                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
+                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
                 else
-                    path_widget.update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
+                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
             }
         }
     }
@@ -823,22 +809,25 @@ private class DConfWindow : ApplicationWindow
         { "open-child",         open_child          },  //    <A>Down
         { "open-last-child",    open_last_child     },  // <S><A>Down
 
+        { "toggle-hamburger",   toggle_hamburger    },  // F10
+        { "escape",             escape_pressed      },  // Escape
+        { "menu",               menu_pressed        },  // Menu
+
         { "toggle-boolean",     toggle_boolean      },  // <P>Return & <P>KP_Enter
         { "set-to-default",     set_to_default      }   // <P>Delete & <P>KP_Delete & decimalpoint & period & KP_Decimal
     };
 
     private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
     {
-        hide_hamburger_menu ();
         browser_view.discard_row_popover ();
-        path_widget.click_bookmarks_button ();
+        headerbar.click_bookmarks_button ();
     }
 
     private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
     {
         browser_view.discard_row_popover ();
 
-        if (path_widget.search_mode_enabled)
+        if (headerbar.search_mode_enabled)
         {
             model.copy_action_called ();
             string selected_row_text = browser_view.get_copy_path_text () ?? saved_view;
@@ -854,29 +843,26 @@ private class DConfWindow : ApplicationWindow
 
     private void bookmark                               (/* SimpleAction action, Variant? variant */)
     {
-        hide_hamburger_menu ();
         browser_view.discard_row_popover ();
-        path_widget.bookmark_current_path ();
+        headerbar.bookmark_current_path ();
     }
 
     private void unbookmark                             (/* SimpleAction action, Variant? variant */)
     {
-        hide_hamburger_menu ();
         browser_view.discard_row_popover ();
-        path_widget.unbookmark_current_path ();
+        headerbar.unbookmark_current_path ();
     }
 
     private void _toggle_search                         (/* SimpleAction action, Variant? variant */)
     {
-        path_widget.close_popovers ();  // should never be needed if path_widget.search_mode_enabled
-        hide_hamburger_menu ();         // should never be needed if path_widget.search_mode_enabled
-        browser_view.discard_row_popover ();   // could be needed if path_widget.search_mode_enabled
+        headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
+        browser_view.discard_row_popover ();   // could be needed if headerbar.search_mode_enabled
 
-        if (!path_widget.search_mode_enabled)
+        if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.SEARCH);
-        else if (!path_widget.entry_has_focus)
-            path_widget.entry_grab_focus ();
-        else if (path_widget.text.has_prefix ("/"))
+        else if (!headerbar.entry_has_focus)
+            headerbar.entry_grab_focus (true);
+        else if (headerbar.text.has_prefix ("/"))
             request_search (true, PathEntry.SearchMode.SEARCH);
         else
             stop_search ();
@@ -884,17 +870,17 @@ private class DConfWindow : ApplicationWindow
 
     private void next_match                             (/* SimpleAction action, Variant? variant */)   // See also "Down"
     {
-        if (path_widget.has_popover ()) // only for bookmarks popover, but let pathwidget handle that
-            path_widget.down_pressed ();
-        else if (info_button.active == false && !revealer.get_modifications_list_state ())
+        if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
+            headerbar.down_pressed ();
+        else if (!revealer.get_modifications_list_state ())
             browser_view.down_pressed ();               // FIXME returns bool
     }
 
     private void previous_match                         (/* SimpleAction action, Variant? variant */)   // See also "Up"
     {
-        if (path_widget.has_popover ()) // only for bookmarks popover, but let pathwidget handle that
-            path_widget.up_pressed ();
-        else if (info_button.active == false && !revealer.get_modifications_list_state ())
+        if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
+            headerbar.up_pressed ();
+        else if (!revealer.get_modifications_list_state ())
             browser_view.up_pressed ();                 // FIXME returns bool
     }
 
@@ -912,13 +898,13 @@ private class DConfWindow : ApplicationWindow
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
-        if (!path_widget.search_mode_enabled)
+        if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
     }
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
     {
-        if (!path_widget.search_mode_enabled)
+        if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
     }
 
@@ -945,9 +931,33 @@ private class DConfWindow : ApplicationWindow
         go_forward (true);
     }
 
+    private void toggle_hamburger                       (/* SimpleAction action, Variant? variant */)
+    {
+        headerbar.toggle_hamburger_menu ();
+    }
+
+    private void escape_pressed                         (/* SimpleAction action, Variant? variant */)
+    {
+        if (headerbar.search_mode_enabled)
+            stop_search ();
+        else if (current_type == ViewType.CONFIG)
+            request_folder (current_path);
+    }
+
+    private void menu_pressed                           (/* SimpleAction action, Variant? variant */)
+    {
+        if (browser_view.toggle_row_popover ())
+            headerbar.close_popovers ();
+        else
+        {
+            headerbar.toggle_hamburger_menu ();
+            browser_view.discard_row_popover ();
+        }
+    }
+
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
     {
-        if (info_button.active || path_widget.has_popover ())
+        if (headerbar.has_popover ())
             return;
 
         browser_view.discard_row_popover ();
@@ -956,7 +966,7 @@ private class DConfWindow : ApplicationWindow
 
     private void set_to_default                         (/* SimpleAction action, Variant? variant */)
     {
-        if (info_button.active || path_widget.has_popover ())
+        if (headerbar.has_popover ())
             return;
 
         if (revealer.dismiss_selected_modification ())
@@ -970,12 +980,6 @@ private class DConfWindow : ApplicationWindow
             reset_path ((!) selected_row, true);
         else
             browser_view.set_selected_to_default ();
-    }
-
-    private inline void hide_hamburger_menu ()
-    {
-        if (info_button.active)
-            info_button.active = false;
     }
 
     /*\
@@ -995,7 +999,7 @@ private class DConfWindow : ApplicationWindow
         update_current_path (ViewType.CONFIG, strdup (full_name));
 
         stop_search ();
-        // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
     private void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
@@ -1009,12 +1013,12 @@ private class DConfWindow : ApplicationWindow
         update_current_path (ViewType.FOLDER, fallback_path);
 
         if (selected_or_empty == "")
-            browser_view.select_row (path_widget.get_selected_child (fallback_path));
+            browser_view.select_row (headerbar.get_selected_child (fallback_path));
         else
             browser_view.select_row (selected_or_empty);
 
         stop_search ();
-        // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
     private static GLib.ListStore create_key_model (string base_path, Variant? children)
     {
@@ -1053,7 +1057,7 @@ private class DConfWindow : ApplicationWindow
                     cannot_find_folder (full_name);
             }
             request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
-            path_widget.update_ghosts (model.get_fallback_path (path_widget.complete_path));
+            headerbar.update_ghosts (model.get_fallback_path (headerbar.complete_path));
         }
         else
         {
@@ -1064,7 +1068,7 @@ private class DConfWindow : ApplicationWindow
         }
 
         stop_search ();
-        // path_widget.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
     private void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null)
@@ -1073,17 +1077,17 @@ private class DConfWindow : ApplicationWindow
         if (reload)
         {
             reload_search_action.set_enabled (false);
-            browser_view.set_search_parameters (saved_view, path_widget.get_bookmarks ());
+            browser_view.set_search_parameters (saved_view, headerbar.get_bookmarks ());
             reload_search_next = false;
         }
         if (mode != PathEntry.SearchMode.UNCLEAR)
-            path_widget.prepare_search (mode, search);
-        string search_text = search == null ? path_widget.text : (!) search;
+            headerbar.prepare_search (mode, search);
+        string search_text = search == null ? headerbar.text : (!) search;
         update_current_path (ViewType.SEARCH, search_text);
         if (mode != PathEntry.SearchMode.UNCLEAR)
             browser_view.select_row (selected_row);
-        if (!path_widget.entry_has_focus)
-            path_widget.entry_grab_focus_without_selecting ();
+        if (!headerbar.entry_has_focus)
+            headerbar.entry_grab_focus (false);
     }
 
     private void reload_view ()
@@ -1116,59 +1120,16 @@ private class DConfWindow : ApplicationWindow
         current_path = path;
 
         browser_view.set_path (type, path);
-        path_widget.set_path (type, path);
-        invalidate_popovers_without_reload ();
-    }
-
-    private void update_hamburger_menu ()
-    {
-        GLib.Menu section;
-
-        GLib.Menu menu = new GLib.Menu ();
-
-        if (current_type == ViewType.OBJECT && !ModelUtils.is_folder_path (current_path))   // TODO a better way to copy various representations of a key name/value/path
-        {
-            Variant variant = new Variant.string (model.get_suggested_key_copy_text (current_path, browser_view.last_context_id));
-            menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
-        }
-        else if (current_type != ViewType.SEARCH)
-        {
-            section = new GLib.Menu ();
-            Variant variant = new Variant.string (current_path);
-            section.append (_("Reset visible keys"), "ui.reset-visible(" + variant.print (false) + ")");
-            section.append (_("Reset view recursively"), "ui.reset-recursive(" + variant.print (false) + ")");
-            section.freeze ();
-            menu.append_section (null, section);
-        }
-
-        if (!modifications_handler.get_current_delay_mode ())
-        {
-            section = new GLib.Menu ();
-            section.append (_("Enter delay mode"), "ui.enter-delay-mode");
-            section.freeze ();
-            menu.append_section (null, section);
-        }
-
-        section = new GLib.Menu ();
-        append_or_not_night_mode_entry (ref section);
-        section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        section.append (_("About Dconf Editor"), "app.about");   // TODO move as "win."
-        section.freeze ();
-        menu.append_section (null, section);
-
-        menu.freeze ();
-        info_button.set_menu_model ((MenuModel) menu);
+        headerbar.set_path (type, path);
+        headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
     }
 
     private void invalidate_popovers_with_ui_reload ()
     {
-        browser_view.hide_or_show_toggles (!modifications_handler.get_current_delay_mode ());
-        invalidate_popovers_without_reload ();
-    }
-    private void invalidate_popovers_without_reload ()
-    {
+        bool delay_mode = modifications_handler.get_current_delay_mode ();
+        browser_view.hide_or_show_toggles (!delay_mode);
         browser_view.invalidate_popovers ();
-        update_hamburger_menu ();
+        headerbar.update_hamburger_menu (delay_mode);
     }
 
     /*\
@@ -1196,7 +1157,7 @@ private class DConfWindow : ApplicationWindow
 
     private void stop_search ()
     {
-        if (path_widget.search_mode_enabled)
+        if (headerbar.search_mode_enabled)
             search_stopped_cb ();
     }
 
@@ -1285,86 +1246,42 @@ private class DConfWindow : ApplicationWindow
         }
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
-        if (name == "F10")
+        if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
         {
-            if ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
-            {
-                if (!focus_is_text_widget) // && browser_view.current_view != ViewType.SEARCH
-                {
-                    path_widget.toggle_pathbar_menu ();
-                    return true;
-                }
+            if (focus_is_text_widget) // && browser_view.current_view != ViewType.SEARCH
                 return false;
-            }
 
-            browser_view.discard_row_popover ();
-            path_widget.close_popovers ();
-            return false;
+            headerbar.toggle_pathbar_menu ();
+            return true;
         }
 
+        /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
         if (name == "Up"
          && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
          // see also <ctrl>G
-         && !path_widget.has_popover ()
-         && info_button.active == false
+         && !headerbar.has_popover ()
          && !revealer.get_modifications_list_state ())
             return browser_view.up_pressed ();
         if (name == "Down"
          && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
          // see also <ctrl>g
-         && !path_widget.has_popover ()
-         && info_button.active == false
+         && !headerbar.has_popover ()
          && !revealer.get_modifications_list_state ())
             return browser_view.down_pressed ();
 
         if (name == "Return" || name == "KP_Enter")
         {
             if (browser_view.current_view == ViewType.SEARCH
-             && path_widget.entry_has_focus
+             && headerbar.entry_has_focus
              && browser_view.return_pressed ())
                 return true;
             return false;
         }
 
-        if (name == "Escape")
-        {
-            if (path_widget.search_mode_enabled)
-            {
-                stop_search ();
-                return true;
-            }
-            if (current_type == ViewType.CONFIG)
-            {
-                request_folder (current_path);
-                return true;
-            }
-            return false;
-        }
-
-        if (name == "Menu")
-        {
-            if (browser_view.toggle_row_popover ())
-            {
-                path_widget.close_popovers ();
-                hide_hamburger_menu ();
-            }
-            else if (info_button.sensitive == false)
-                return true;
-            else if (info_button.active == false)
-            {
-                path_widget.close_popovers ();
-                browser_view.discard_row_popover ();
-                info_button.active = true;
-            }
-            else
-                info_button.active = false;
-            return true;
-        }
-
-        if (info_button.active || path_widget.has_popover ())
+        if (headerbar.has_popover ())
             return false;
 
-        if (!path_widget.search_mode_enabled &&
+        if (!headerbar.search_mode_enabled &&
             // see gtk_search_entry_is_keynav() in gtk+/gtk/gtksearchentry.c:388
             (keyval == Gdk.Key.Tab          || keyval == Gdk.Key.KP_Tab         ||
              keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
@@ -1383,7 +1300,7 @@ private class DConfWindow : ApplicationWindow
          && (event.is_modifier == 0)
          && (event.length != 0)
 //       && (name != "F10")     // else <Shift>F10 toggles the search_entry popup; see if a976aa9740 fixes that in Gtk+ 4
-         && (path_widget.handle_event (event)))
+         && (headerbar.handle_event (event)))
             return true;
 
         return false;
@@ -1391,7 +1308,7 @@ private class DConfWindow : ApplicationWindow
 
     private void go_backward (bool shift)
     {
-        if (path_widget.search_mode_enabled)
+        if (headerbar.search_mode_enabled)
             return;
 
         browser_view.discard_row_popover ();
@@ -1405,10 +1322,10 @@ private class DConfWindow : ApplicationWindow
 
     private void go_forward (bool shift)
     {
-        if (path_widget.search_mode_enabled)
+        if (headerbar.search_mode_enabled)
             return;
 
-        string complete_path = path_widget.complete_path;
+        string complete_path = headerbar.complete_path;
 
         browser_view.discard_row_popover ();
         if (current_path == complete_path)  // TODO something?

@@ -222,6 +222,7 @@ private class BrowserView : Grid
     {
         current_child.set_path (type, path);
         modifications_handler.path_changed ();
+        invalidate_popovers ();
     }
 
     /*\
