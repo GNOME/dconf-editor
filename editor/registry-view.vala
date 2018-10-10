@@ -110,7 +110,7 @@ private class RegistryView : RegistryList
         }
         if (row == null)
             assert_not_reached ();
-        scroll_to_row ((!) row, true);
+        select_row_and_if_true_grab_focus ((!) row, true);
     }
 
     /*\

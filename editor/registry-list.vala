@@ -23,6 +23,7 @@ private abstract class RegistryList : Grid, BrowsableView
     [GtkChild] protected ListBox key_list_box;
     [GtkChild] protected RegistryPlaceholder placeholder;
     [GtkChild] private ScrolledWindow scrolled;
+    private Adjustment adjustment;
 
     protected bool search_mode { private get; set; }
     protected string? current_path_if_search_mode = null;   // TODO only used in search mode
@@ -33,6 +34,11 @@ private abstract class RegistryList : Grid, BrowsableView
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
     internal ModificationsHandler modifications_handler { protected get; set; }
+
+    construct
+    {
+        adjustment = key_list_box.get_adjustment ();
+    }
 
     private bool _small_keys_list_rows;
     internal bool small_keys_list_rows
@@ -48,16 +54,59 @@ private abstract class RegistryList : Grid, BrowsableView
         }
     }
 
-    protected void scroll_to_row (ListBoxRow row, bool grab_focus)
+    protected void select_row_and_if_true_grab_focus (ListBoxRow row, bool grab_focus)
     {
         key_list_box.select_row (row);
         if (grab_focus)
             row.grab_focus ();
+    }
 
+    private enum ScrollToRowBehaviour {
+        CENTER,
+        SCROLL_UP,
+        SCROLL_DOWN
+    }
+    private void scroll_to_row (ListBoxRow row, ScrollToRowBehaviour behaviour)
+    {
+        int adjustment_value = (int) adjustment.get_value ();
         Allocation list_allocation, row_allocation;
         scrolled.get_allocation (out list_allocation);
         row.get_allocation (out row_allocation);
-        key_list_box.get_adjustment ().set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+
+        int row_bottom_limit = row_allocation.y - list_allocation.height;
+        int row_top_limit    = row_allocation.y + row_allocation.height;
+
+        if ((adjustment_value < row_bottom_limit)
+         || (adjustment_value > row_top_limit))
+        {
+            adjustment.set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+            return;
+        }
+
+        row_bottom_limit += row_allocation.height + 40;
+        row_top_limit /* -= row_allocation.height + 40; */ = row_allocation.y - 40;
+
+        switch (behaviour)
+        {
+            case ScrollToRowBehaviour.CENTER:
+                if ((adjustment_value <   row_bottom_limit)
+                 || (adjustment_value >   row_top_limit))
+                    adjustment.set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+                return;
+
+            case ScrollToRowBehaviour.SCROLL_DOWN:
+                if (adjustment_value <    row_bottom_limit)
+                    adjustment.set_value (row_bottom_limit);
+                return;
+
+            case ScrollToRowBehaviour.SCROLL_UP:
+                if (adjustment_value >    row_top_limit)
+                    adjustment.set_value (row_top_limit);
+                return;
+
+            default:
+                assert_not_reached ();
+        }
     }
 
     internal void invalidate_popovers ()
@@ -113,7 +162,10 @@ private abstract class RegistryList : Grid, BrowsableView
         check_resize ();
         ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (list_model, selected, context_id));
         if (row != null)
-            scroll_to_row ((!) row, grab_focus);
+        {
+            select_row_and_if_true_grab_focus ((!) row, grab_focus);
+            scroll_to_row ((!) row, ScrollToRowBehaviour.CENTER);
+        }
     }
     private static int get_row_position (GLib.ListStore list_model, string selected, uint16 context_id)
     {
@@ -173,9 +225,12 @@ private abstract class RegistryList : Grid, BrowsableView
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
 
         if (row.right_click_popover_visible ())
+        {
             row.hide_right_click_popover ();
-        else
-            show_right_click_popover (row, null);
+            return true;
+        }
+
+        show_right_click_popover (row, null);
         return true;
     }
 
@@ -264,19 +319,23 @@ private abstract class RegistryList : Grid, BrowsableView
 
             if (row != null)
             {
+                scroll_to_row ((!) row, is_down ? ScrollToRowBehaviour.SCROLL_DOWN : ScrollToRowBehaviour.SCROLL_UP);
                 if (search_mode)
                 {
                     Container list_box = (Container) ((!) selected_row).get_parent ();
-                    scroll_to_row ((!) row, list_box.get_focus_child () != null);
+                    select_row_and_if_true_grab_focus ((!) row, list_box.get_focus_child () != null);
                 }
                 else
-                    scroll_to_row ((!) row, true);
+                    select_row_and_if_true_grab_focus ((!) row, true);
             }
             return true;
         }
         else if (n_items >= 1)
         {
-            key_list_box.select_row (key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1));
+            selected_row = key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1);
+            if (selected_row == null)
+                return false;
+            select_row_and_if_true_grab_focus ((!) selected_row, true);
             return true;
         }
         return false;
@@ -501,10 +560,8 @@ private abstract class RegistryList : Grid, BrowsableView
     {
         ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();    // is a ListBoxRowWrapper
         // ListBox list_box = (ListBox) list_box_row.get_parent ();     // instead of key_list_box
-        key_list_box.select_row (list_box_row);
 
-        if (!search_mode)
-            list_box_row.grab_focus ();
+        select_row_and_if_true_grab_focus (list_box_row, !search_mode);
 
         if (event.button == Gdk.BUTTON_SECONDARY)
         {
@@ -591,11 +648,38 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private void show_right_click_popover (ClickableListBoxRow row, int? nullable_event_x)
     {
+        int adjustment_value = (int) adjustment.get_value ();
+        Allocation list_allocation, row_allocation;
+        scrolled.get_allocation (out list_allocation);
+        row.get_allocation (out row_allocation);
+
+        bool position_to_top;
+        if ((row_allocation.y > adjustment_value + list_allocation.height)
+         || (row_allocation.y + row_allocation.height < adjustment_value))
+        {
+            if (nullable_event_x != null)   // called from mouse, so the row should be visible...
+                assert_not_reached ();
+            adjustment.set_value (row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 2.0));
+            position_to_top = false;
+        }
+        else if (adjustment_value < row_allocation.y - list_allocation.height + row_allocation.height)
+        {
+            adjustment.set_value   (row_allocation.y - list_allocation.height + row_allocation.height);
+            position_to_top = true;
+        }
+        else if (adjustment_value > row_allocation.y)
+        {
+            adjustment.set_value   (row_allocation.y);
+            position_to_top = false;
+        }
+        else
+            position_to_top = row_allocation.y > adjustment_value + (int) (list_allocation.height / 2.0);
+
         generate_popover_if_needed (row, modifications_handler);
-        place_popover (row, nullable_event_x);
+        place_popover (row, nullable_event_x, position_to_top);
         rows_possibly_with_popover.append (row);
     }
-    private static void place_popover (ClickableListBoxRow row, int? nullable_event_x)
+    private static void place_popover (ClickableListBoxRow row, int? nullable_event_x, bool position_to_top)
     {
         int event_x;
         if (nullable_event_x == null)
@@ -603,8 +687,11 @@ private abstract class RegistryList : Grid, BrowsableView
         else
             event_x = (!) nullable_event_x;
 
-        Gdk.Rectangle rect = { x:event_x, y:row.get_allocated_height (), width:0, height:0 };
+        int event_y = position_to_top ? 2 : row.get_allocated_height () - 2;
+
+        Gdk.Rectangle rect = { x:event_x, y:event_y, width:0, height:0 };
         ((!) row.nullable_popover).set_pointing_to (rect);
+        ((!) row.nullable_popover).set_position (position_to_top ? PositionType.TOP : PositionType.BOTTOM);
         ((!) row.nullable_popover).popup ();
     }
 
