@@ -20,13 +20,45 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathwidget.ui")]
 private class PathWidget : Box
 {
-    [GtkChild] private ToggleButton search_toggle;
+    [GtkChild] private ModelButton  search_toggle;  // most window size button
+    [GtkChild] private ModelButton  search_button;  // extra-small-window only
     [GtkChild] private Stack        pathbar_stack;
+    [GtkChild] private Grid         pathbar_grid;
     [GtkChild] private PathBar      pathbar;
     [GtkChild] private PathEntry    searchentry;
 
     internal signal void search_changed ();
     internal signal void search_stopped ();
+
+    private ThemedIcon search_icon = new ThemedIcon.from_names ({"edit-find-symbolic"});
+    construct
+    {
+        search_toggle.icon = search_icon;
+        search_button.icon = search_icon;
+    }
+
+    private bool _extra_small_window = false;
+    internal bool extra_small_window
+    {
+        private get { return _extra_small_window; }
+        internal set
+        {
+            _extra_small_window = value;
+
+            if (value)
+            {
+                search_toggle.hide ();
+                search_button.show ();
+            }
+            else
+            {
+                search_button.hide ();
+                search_toggle.show ();
+            }
+
+            searchentry.extra_small_window = value;
+        }
+    }
 
     /*\
     * * search mode
@@ -37,7 +69,6 @@ private class PathWidget : Box
     private void enter_search_mode ()
     {
         search_mode_enabled = true;
-        search_toggle.active = true;
         search_toggle.set_action_target_value (false);
         pathbar_stack.set_visible_child (searchentry);
     }
@@ -45,9 +76,8 @@ private class PathWidget : Box
     private void leave_search_mode ()
     {
         search_mode_enabled = false;
-        search_toggle.active = false;
         search_toggle.set_action_target_value (true);
-        pathbar_stack.set_visible_child (pathbar);
+        pathbar_stack.set_visible_child (pathbar_grid);
     }
 
     /*\

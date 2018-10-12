@@ -559,7 +559,10 @@ private class DConfWindow : ApplicationWindow
         { "reload-object", reload_object },
         { "reload-search", reload_search },
 
-        { "toggle-search", toggle_search, "b" },
+        { "hide-search",   hide_search },
+        { "show-search",   show_search },
+
+        { "toggle-search", toggle_search, "b", "false" },
         { "update-bookmarks-icons", update_bookmarks_icons, "as" },
 
         { "show-in-window-bookmarks", show_in_window_bookmarks },
@@ -668,10 +671,21 @@ private class DConfWindow : ApplicationWindow
         request_search (true);
     }
 
+    private void hide_search (/* SimpleAction action, Variant? path_variant */)
+    {
+        stop_search ();
+    }
+
+    private void show_search (/* SimpleAction action, Variant? path_variant */)
+    {
+        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+    }
+
     private void toggle_search (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
         bool search_request = ((!) path_variant).get_boolean ();
+        action.change_state (search_request);
         if (search_request && !headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
         else if (!search_request && headerbar.search_mode_enabled)

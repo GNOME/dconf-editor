@@ -20,12 +20,55 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathentry.ui")]
 private class PathEntry : Box
 {
-    [GtkChild] SearchEntry search_entry;
+    [GtkChild] private Button       hide_search_button;
+    [GtkChild] private Button       reload_search_button;
+
+    [GtkChild] private SearchEntry  search_entry;
 
     private string current_path = "";
 
     internal string text { get { return search_entry.text; }}
     internal bool entry_has_focus { get { return search_entry.has_focus; }}
+
+    private ulong can_reload_handler = 0;
+    private bool _extra_small_window = false;
+    internal bool extra_small_window
+    {
+        private get { return _extra_small_window; }
+        internal set
+        {
+            _extra_small_window = value;
+
+            if (value)
+            {
+                can_reload_handler = reload_search_button.notify ["sensitive"].connect (() => {
+                        if (reload_search_button.sensitive)
+                        {
+                            hide_search_button.hide ();
+                            reload_search_button.show ();
+                        }
+                        else
+                        {
+                            reload_search_button.hide ();
+                            hide_search_button.show ();
+                        }
+                    });
+
+                if (!reload_search_button.sensitive)
+                {
+                    reload_search_button.hide ();
+                    hide_search_button.show ();
+                }
+            }
+            else
+            {
+                reload_search_button.disconnect (can_reload_handler);
+
+                hide_search_button.hide ();
+                reload_search_button.show ();
+            }
+        }
+    }
 
     internal enum SearchMode {
         UNCLEAR,

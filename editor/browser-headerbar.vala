@@ -40,6 +40,7 @@ private class BrowserHeaderBar : HeaderBar
         set
         {
             _extra_small_window = value;
+
             bookmarks_button.active = false;
             if (value)
             {
@@ -53,6 +54,8 @@ private class BrowserHeaderBar : HeaderBar
                 hide_in_window_bookmarks ();
             }
             update_hamburger_menu (delay_mode);
+
+            path_widget.extra_small_window = value;
         }
     }
 
