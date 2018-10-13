@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/ca/desrt/dconf-editor/ui">
+    <file preprocess="xml-stripblanks">adaptative-pathbar.ui</file>
     <file preprocess="xml-stripblanks">bookmark.ui</file>
     <file preprocess="xml-stripblanks">bookmarks.ui</file>
     <file preprocess="xml-stripblanks">browser-headerbar.ui</file>
@@ -13,9 +14,9 @@
     <file preprocess="xml-stripblanks">delayed-setting-view.ui</file>
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
+    <file preprocess="xml-stripblanks">large-pathbar.ui</file>
+    <file preprocess="xml-stripblanks">large-pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">modifications-revealer.ui</file>
-    <file preprocess="xml-stripblanks">pathbar.ui</file>
-    <file preprocess="xml-stripblanks">pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">pathentry.ui</file>
     <file preprocess="xml-stripblanks">pathwidget.ui</file>
     <file preprocess="xml-stripblanks">property-row.ui</file>
@@ -24,6 +25,7 @@
     <file preprocess="xml-stripblanks">registry-view.ui</file>
     <file preprocess="xml-stripblanks">return-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">search-list-box-row.ui</file>
+    <file preprocess="xml-stripblanks">short-pathbar.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
     <file preprocess="xml-stripblanks">help-overlay.ui</file>

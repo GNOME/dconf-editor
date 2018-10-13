@@ -66,6 +66,7 @@ install_data(
 )
 
 sources = files(
+  'adaptative-pathbar.vala',
   'bookmarks.vala',
   'browser-headerbar.vala',
   'browser-infobar.vala',
@@ -77,11 +78,11 @@ sources = files(
   'dconf-window.vala',
   'delayed-setting-view.vala',
   'key-list-box-row.vala',
+  'large-pathbar.vala',
   'model-utils.vala',
   'modifications-handler.vala',
   'modifications-revealer.vala',
   'night-light-monitor.vala',
-  'pathbar.vala',
   'pathentry.vala',
   'pathwidget.vala',
   'registry-info.vala',
@@ -91,10 +92,12 @@ sources = files(
   'registry-view.vala',
   'schemas-utility.vala',
   'setting-object.vala',
+  'short-pathbar.vala',
   'source-manager.vala'
 )
 
 resource_data = files(
+  'adaptative-pathbar.ui',
   'bookmarks.ui',
   'bookmark.ui',
   'browser-headerbar.ui',
@@ -108,9 +111,9 @@ resource_data = files(
   'folder-list-box-row.ui',
   'help-overlay.ui',
   'key-list-box-row.ui',
+  'large-pathbar-item.ui',
+  'large-pathbar.ui',
   'modifications-revealer.ui',
-  'pathbar-item.ui',
-  'pathbar.ui',
   'pathentry.ui',
   'pathwidget.ui',
   'property-row.ui',
@@ -118,7 +121,8 @@ resource_data = files(
   'registry-placeholder.ui',
   'registry-view.ui',
   'return-list-box-row.ui',
-  'search-list-box-row.ui'
+  'search-list-box-row.ui',
+  'short-pathbar.ui'
 )
 
 sources += gnome.compile_resources(

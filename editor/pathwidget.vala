@@ -20,12 +20,12 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathwidget.ui")]
 private class PathWidget : Box
 {
-    [GtkChild] private ModelButton  search_toggle;  // most window size button
-    [GtkChild] private ModelButton  search_button;  // extra-small-window only
-    [GtkChild] private Stack        pathbar_stack;
-    [GtkChild] private Grid         pathbar_grid;
-    [GtkChild] private PathBar      pathbar;
-    [GtkChild] private PathEntry    searchentry;
+    [GtkChild] private ModelButton          search_toggle;      // most window size button
+    [GtkChild] private ModelButton          search_button;      // extra-small-window only
+    [GtkChild] private Stack                pathwidget_stack;
+    [GtkChild] private Grid                 pathbar_grid;
+    [GtkChild] private AdaptativePathbar    pathbar;
+    [GtkChild] private PathEntry            searchentry;
 
     internal signal void search_changed ();
     internal signal void search_stopped ();
@@ -44,6 +44,8 @@ private class PathWidget : Box
         internal set
         {
             _extra_small_window = value;
+
+            pathbar.extra_small_window = value;
 
             if (value)
             {
@@ -70,14 +72,14 @@ private class PathWidget : Box
     {
         search_mode_enabled = true;
         search_toggle.set_action_target_value (false);
-        pathbar_stack.set_visible_child (searchentry);
+        pathwidget_stack.set_visible_child (searchentry);
     }
 
     private void leave_search_mode ()
     {
         search_mode_enabled = false;
         search_toggle.set_action_target_value (true);
-        pathbar_stack.set_visible_child (pathbar_grid);
+        pathwidget_stack.set_visible_child (pathbar_grid);
     }
 
     /*\

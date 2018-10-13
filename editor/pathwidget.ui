@@ -4,7 +4,7 @@
   <template class="PathWidget" parent="GtkBox">
     <property name="spacing">6</property>
     <child>
-      <object class="GtkStack" id="pathbar_stack">
+      <object class="GtkStack" id="pathwidget_stack">
         <property name="visible">True</property>
         <property name="valign">center</property>
         <property name="visible-child">pathbar_grid</property> <!-- uses the "id" attribute -->
@@ -26,7 +26,7 @@
           <object class="GtkGrid" id="pathbar_grid">
             <property name="visible">True</property>
             <child>
-              <object class="PathBar" id="pathbar">
+              <object class="AdaptativePathbar" id="pathbar">
                 <property name="visible">True</property>
                 <property name="valign">center</property>
               </object>

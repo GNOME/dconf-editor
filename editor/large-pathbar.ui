@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="PathBar" parent="GtkBox">
+  <template class="LargePathbar" parent="GtkBox">
     <property name="orientation">horizontal</property>
     <style>
       <class name="pathbar"/>
     </style>
     <child>
-      <object class="PathBarItem" id="root_button">
+      <object class="LargePathbarItem" id="root_button">
         <property name="visible">True</property>
         <property name="action-name">ui.open-folder</property>
         <property name="alternative-action">ui.open-folder('/')</property>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="PathBarItem" parent="GtkButton">
+  <template class="LargePathbarItem" parent="GtkButton">
     <property name="focus-on-click">False</property>
     <signal name="clicked" handler="update_cursor"/>
     <child>

@@ -17,11 +17,11 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar.ui")]
-private class PathBar : Box
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/large-pathbar.ui")]
+private class LargePathbar : Box, Pathbar
 {
-    [GtkChild] private PathBarItem root_button;
-    private PathBarItem active_button;
+    [GtkChild] private LargePathbarItem root_button;
+    private LargePathbarItem active_button;
 
     internal string complete_path { get; private set; default = ""; }
 
@@ -84,7 +84,7 @@ private class PathBar : Box
                     return;
                 }
 
-                PathBarItem item = (PathBarItem) child;
+                LargePathbarItem item = (LargePathbarItem) child;
 
                 if (maintain_all)
                 {
@@ -134,7 +134,7 @@ private class PathBar : Box
             }
         }
 
-        show_all ();
+        @foreach ((child) => child.show ());
     }
     private static inline void update_config_style_class (bool type_is_config, StyleContext context)
     {
@@ -157,9 +157,9 @@ private class PathBar : Box
         string action_target = "";
         @foreach ((child) => {
                 StyleContext context = child.get_style_context ();
-                if (child is PathBarItem)
+                if (child is LargePathbarItem)
                 {
-                    PathBarItem item = (PathBarItem) child;
+                    LargePathbarItem item = (LargePathbarItem) child;
                     Variant? variant = item.get_action_target_value ();
                     if (variant == null)
                         assert_not_reached ();
@@ -175,12 +175,12 @@ private class PathBar : Box
                     {
                         if (is_search)
                         {
-                            item.set_cursor_type (PathBarItem.CursorType.POINTER);
+                            item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
                             item.set_detailed_action_name (item.default_action);
                         }
                         else
                         {
-                            item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
+                            item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
                             item.set_action_name ("ui.empty");
                         }
                         if (non_ghost_path.has_prefix (action_target))
@@ -190,13 +190,13 @@ private class PathBar : Box
                     }
                     else if (non_ghost_path.has_prefix (action_target))
                     {
-                        item.set_cursor_type (PathBarItem.CursorType.POINTER);
+                        item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
                         item.set_detailed_action_name (item.default_action);
                         context.remove_class ("inexistent");
                     }
                     else
                     {
-                        item.set_cursor_type (PathBarItem.CursorType.DEFAULT);
+                        item.set_cursor_type (LargePathbarItem.CursorType.DEFAULT);
                         item.set_detailed_action_name (item.alternative_action);
                         context.add_class ("inexistent");
                     }
@@ -208,16 +208,16 @@ private class PathBar : Box
             });
     }
 
-    private static inline void update_active_button_cursor (ViewType type, ref PathBarItem active_button)
+    private static inline void update_active_button_cursor (ViewType type, ref LargePathbarItem active_button)
     {
         if (type == ViewType.CONFIG)
         {
-            active_button.set_cursor_type (PathBarItem.CursorType.POINTER);
+            active_button.set_cursor_type (LargePathbarItem.CursorType.POINTER);
             active_button.set_detailed_action_name (active_button.default_action);
         }
         else
         {
-            active_button.set_cursor_type (PathBarItem.CursorType.CONTEXT);
+            active_button.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
             active_button.set_action_name ("ui.empty");
         }
     }
@@ -233,61 +233,61 @@ private class PathBar : Box
 
     private void add_path_bar_item (string label, string complete_path, bool is_folder, bool block)
     {
-        PathBarItem path_bar_item = create_path_bar_item (label, complete_path, is_folder);
+        LargePathbarItem path_bar_item = create_path_bar_item (label, complete_path, is_folder);
         add (path_bar_item);
         activate_item (path_bar_item, block);   // has to be after add()
     }
-    private static inline PathBarItem create_path_bar_item (string label, string complete_path, bool is_folder)
+    private static inline LargePathbarItem create_path_bar_item (string label, string complete_path, bool is_folder)
     {
-        PathBarItem path_bar_item;
+        LargePathbarItem path_bar_item;
         if (is_folder)
             init_folder_path_bar_item (label, complete_path, out path_bar_item);
         else
             init_object_path_bar_item (label, complete_path, out path_bar_item);
         return path_bar_item;
     }
-    private static inline void init_folder_path_bar_item (string label, string complete_path, out PathBarItem path_bar_item)
+    private static inline void init_folder_path_bar_item (string label, string complete_path, out LargePathbarItem path_bar_item)
     {
         Variant variant = new Variant.string (complete_path);
         string _variant = variant.print (false);
-        path_bar_item = new PathBarItem (label, "ui.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
+        path_bar_item = new LargePathbarItem (label, "ui.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
     }
-    private static inline void init_object_path_bar_item (string label, string complete_path, out PathBarItem path_bar_item)
+    private static inline void init_object_path_bar_item (string label, string complete_path, out LargePathbarItem path_bar_item)
     {
         Variant variant = new Variant ("(sq)", complete_path, ModelUtils.undefined_context_id);
         string _variant = variant.print (true);
-        path_bar_item = new PathBarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
+        path_bar_item = new LargePathbarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
     }
 
-    private void activate_item (PathBarItem item, bool state)   // never called when current_view is search
+    private void activate_item (LargePathbarItem item, bool state)   // never called when current_view is search
     {
         if (state)
             active_button = item;
         _activate_item (item, state);
     }
-    private static inline void _activate_item (PathBarItem item, bool state)
+    private static inline void _activate_item (LargePathbarItem item, bool state)
     {
         if (state == item.is_active)
             return;
         if (state)
         {
             item.is_active = true;
-            item.set_cursor_type (PathBarItem.CursorType.CONTEXT);
+            item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
             item.set_action_name ("ui.empty");
             item.get_style_context ().add_class ("active");
         }
         else
         {
             item.is_active = false;
-            item.set_cursor_type (PathBarItem.CursorType.POINTER);
+            item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
             item.set_detailed_action_name (item.default_action);
             item.get_style_context ().remove_class ("active");
         }
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbar-item.ui")]
-private class PathBarItem : Button
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/large-pathbar-item.ui")]
+private class LargePathbarItem : Button
 {
     public bool is_active { internal get; internal set; default = false; }
 
@@ -355,7 +355,7 @@ private class PathBarItem : Button
         ((!) popover).popup ();
     }
 
-    internal PathBarItem (string label, string _default_action, string _alternative_action)
+    internal LargePathbarItem (string label, string _default_action, string _alternative_action)
     {
         Object (text_string: label, default_action: _default_action, alternative_action: _alternative_action);
         text_label.set_text (label);
@@ -387,7 +387,7 @@ private class PathBarItem : Button
     private void generate_popover ()
     {
         GLib.Menu menu = new GLib.Menu ();
-        menu.append (_("Copy current path"), "kbd.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
+        Pathbar.add_copy_path_entry (ref menu);
         menu.freeze ();
 
         popover = new Popover.from_model (this, (MenuModel) menu);

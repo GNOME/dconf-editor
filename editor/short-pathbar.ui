@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="ShortPathbar" parent="GtkGrid">
+    <property name="orientation">horizontal</property>
+    <property name="column-spacing">6</property>
+    <child>
+      <object class="GtkMenuButton" id="menu_button">
+        <property name="visible">True</property>
+        <style>
+          <class name="image-button"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+        <!-- child internal-child="accessible">
+          <object class="AtkObject">
+            <property name="AtkObject::accessible-name" translatable="yes">Search</property>
+            <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
+          </object>
+        </child -->
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="view_label">
+        <property name="visible">True</property>
+        <property name="xalign">0</property>
+        <property name="ellipsize">end</property>
+      </object>
+    </child>
+  </template>
+</interface>
