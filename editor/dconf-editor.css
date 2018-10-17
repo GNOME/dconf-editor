@@ -245,11 +245,11 @@
 }
 
 /* pathbar internals */
-.pathbar > label {
-  color:alpha(currentColor,0.8);
+.pathbar          > label {
+  opacity:0.55;
 }
-.pathbar > label:backdrop {
-  color:alpha(currentColor,0.9);
+.pathbar:backdrop > label {
+  opacity:0.8;
 }
 
 .pathbar > button {
@@ -312,12 +312,14 @@
 }
 
 /* inexistent items */
-.pathbar > label,
-.pathbar > button.inexistent:not(.active) > label.item {
-  color:@insensitive_fg_color;
+.pathbar          > button.inexistent:not(.active)       > label.item {
+  opacity:0.7;
+}
+.pathbar:backdrop > button.inexistent:not(.active)       > label.item {
+  opacity:1.0;
 }
 
-.pathbar > button.inexistent:not(.active):hover > label.item {
+.pathbar          > button.inexistent:not(.active):hover > label.item {
   border-bottom-color:transparent;
 }
 
