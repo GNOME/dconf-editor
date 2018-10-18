@@ -536,6 +536,8 @@ private class DConfWindow : ApplicationWindow
     * * Main UI action entries
     \*/
 
+    private SimpleAction open_path_action;
+
     private SimpleAction reload_search_action;
     private bool reload_search_next = true;
 
@@ -544,6 +546,8 @@ private class DConfWindow : ApplicationWindow
         SimpleActionGroup action_group = new SimpleActionGroup ();
         action_group.add_action_entries (ui_action_entries, this);
         insert_action_group ("ui", action_group);
+
+        open_path_action = (SimpleAction) action_group.lookup_action ("open-path");
 
         reload_search_action = (SimpleAction) action_group.lookup_action ("reload-search");
         reload_search_action.set_enabled (false);
@@ -562,6 +566,8 @@ private class DConfWindow : ApplicationWindow
         { "open-config", open_config, "s" },
         { "open-search", open_search, "s" },
         { "open-parent", open_parent, "s" },
+
+        { "open-path", open_path, "(sq)", "('/',uint16 " + ModelUtils.folder_context_id_string + ")" },
 
         { "reload-folder", reload_folder },
         { "reload-object", reload_object },
@@ -662,6 +668,25 @@ private class DConfWindow : ApplicationWindow
 
         string full_name = ((!) path_variant).get_string ();
         request_folder (ModelUtils.get_parent_path (full_name), full_name);
+    }
+
+    private void open_path (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        hide_in_window_bookmarks ();
+        headerbar.close_popovers ();
+        revealer.hide_modifications_list ();
+
+        string full_name;
+        uint16 context_id;
+        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
+
+        action.set_state ((!) path_variant);
+
+        if (ModelUtils.is_folder_context_id (context_id))
+            request_folder (full_name, "");
+        else
+            request_object (full_name, context_id);
     }
 
     private void reload_folder (/* SimpleAction action, Variant? path_variant */)
@@ -1176,6 +1201,9 @@ private class DConfWindow : ApplicationWindow
         browser_view.set_path (type, path);
         headerbar.set_path (type, path);
         headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
+
+        Variant variant = new Variant ("(sq)", path, (type == ViewType.FOLDER) || (type == ViewType.CONFIG) ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id);
+        open_path_action.set_state (variant);
     }
 
     private void invalidate_popovers_with_ui_reload ()

@@ -66,22 +66,36 @@ private class ShortPathbar : Grid, Pathbar
         GLib.Menu menu = new GLib.Menu ();
         GLib.Menu section = new GLib.Menu ();
 
-        string [] split = ModelUtils.get_parent_path (path).split ("/", /* max tokens disabled */ 0);
+        string [] split = complete_path.split ("/", /* max tokens disabled */ 0);
         if (split.length < 2)
             assert_not_reached ();
-        split = split [1:split.length - 1];    // excludes initial and last ""
+        string last = split [split.length - 1];
+        split = split [1:split.length - 1];    // excludes initial "" and either last "" or key name
 
         // slash folder
         string tmp_path = "/";
 
-        if (path != "/")
-            menu.append ("/", "ui.open-folder('/')");
+        if (complete_path != "/")
+            menu.append ("/", "ui.open-path(('/',uint16 " + ModelUtils.folder_context_id_string + "))");
 
-        // parent folders
+        // other folders
         foreach (string item in split)
         {
             tmp_path += item + "/";
-            menu.append (item, "ui.open-folder('" + tmp_path + "')");  // TODO append or prepend?
+            Variant variant = new Variant ("(sq)", tmp_path, ModelUtils.folder_context_id);
+            menu.append (item, "ui.open-path(" + variant.print (true) + ")");  // TODO append or prepend?
+        }
+
+        // key or nothing
+        if (last != "")
+        {
+            bool is_folder = ModelUtils.is_folder_path (complete_path);
+            uint16 context_id = is_folder ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id;
+            tmp_path += last;
+            if (is_folder)
+                tmp_path += "/";
+            Variant variant = new Variant ("(sq)", tmp_path, context_id);
+            menu.append (last, "ui.open-path(" + variant.print (true) + ")");
         }
 
         section.freeze ();
