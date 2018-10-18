@@ -361,6 +361,19 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 }
 
 /*\
+* * search entry
+\*/
+
+.extra-small-window .search-entry:dir(rtl) > image.right,
+.extra-small-window .search-entry:dir(ltr) > image.left {
+  margin-left:0;
+  margin-right:0;
+  padding-left:0;
+  padding-right:0;
+  min-width:0;
+}
+
+/*\
 * * text formating
 \*/
 

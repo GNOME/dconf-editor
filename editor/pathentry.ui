@@ -13,6 +13,9 @@
         <property name="visible">True</property>
         <property name="hexpand">True</property>
         <!-- "next-match" (<ctrl>g) and "previous-match" (<ctrl>G) are handled in dconf-window.vala -->
+        <style>
+          <class name="search-entry"/>
+        </style>
       </object>
     </child>
     <!-- child>

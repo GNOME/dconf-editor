@@ -41,6 +41,8 @@ private class PathEntry : Box
 
             if (value)
             {
+                search_entry.set_icon_from_pixbuf (EntryIconPosition.PRIMARY, null);
+
                 can_reload_handler = reload_search_button.notify ["sensitive"].connect (() => {
                         if (reload_search_button.sensitive)
                         {
@@ -62,6 +64,8 @@ private class PathEntry : Box
             }
             else
             {
+                search_entry.set_icon_from_icon_name (EntryIconPosition.PRIMARY, "edit-find-symbolic");
+
                 reload_search_button.disconnect (can_reload_handler);
 
                 hide_search_button.hide ();
