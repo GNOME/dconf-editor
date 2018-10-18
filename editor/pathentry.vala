@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathentry.ui")]
-private class PathEntry : Box
+private class PathEntry : Box, AdaptativeWidget
 {
     [GtkChild] private Button       hide_search_button;
     [GtkChild] private Button       reload_search_button;
@@ -31,46 +31,39 @@ private class PathEntry : Box
     internal bool entry_has_focus { get { return search_entry.has_focus; }}
 
     private ulong can_reload_handler = 0;
-    private bool _extra_small_window = false;
-    internal bool extra_small_window
+    private void set_extra_small_window_state (bool new_value)
     {
-        private get { return _extra_small_window; }
-        internal set
+        if (new_value)
         {
-            _extra_small_window = value;
+            search_entry.set_icon_from_pixbuf (EntryIconPosition.PRIMARY, null);
 
-            if (value)
+            can_reload_handler = reload_search_button.notify ["sensitive"].connect (() => {
+                    if (reload_search_button.sensitive)
+                    {
+                        hide_search_button.hide ();
+                        reload_search_button.show ();
+                    }
+                    else
+                    {
+                        reload_search_button.hide ();
+                        hide_search_button.show ();
+                    }
+                });
+
+            if (!reload_search_button.sensitive)
             {
-                search_entry.set_icon_from_pixbuf (EntryIconPosition.PRIMARY, null);
-
-                can_reload_handler = reload_search_button.notify ["sensitive"].connect (() => {
-                        if (reload_search_button.sensitive)
-                        {
-                            hide_search_button.hide ();
-                            reload_search_button.show ();
-                        }
-                        else
-                        {
-                            reload_search_button.hide ();
-                            hide_search_button.show ();
-                        }
-                    });
-
-                if (!reload_search_button.sensitive)
-                {
-                    reload_search_button.hide ();
-                    hide_search_button.show ();
-                }
+                reload_search_button.hide ();
+                hide_search_button.show ();
             }
-            else
-            {
-                search_entry.set_icon_from_icon_name (EntryIconPosition.PRIMARY, "edit-find-symbolic");
+        }
+        else
+        {
+            search_entry.set_icon_from_icon_name (EntryIconPosition.PRIMARY, "edit-find-symbolic");
 
-                reload_search_button.disconnect (can_reload_handler);
+            reload_search_button.disconnect (can_reload_handler);
 
-                hide_search_button.hide ();
-                reload_search_button.show ();
-            }
+            hide_search_button.hide ();
+            reload_search_button.show ();
         }
     }
 

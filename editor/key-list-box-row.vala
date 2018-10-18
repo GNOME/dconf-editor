@@ -219,27 +219,24 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    private bool _extra_small_window = false;
-    internal bool extra_small_window
+    private bool extra_small_window = false;
+    internal void set_extra_small_window_state (bool new_value)
     {
-        set
+        extra_small_window = new_value;
+        if (new_value)
         {
-            _extra_small_window = value;
-            if (value)
-            {
-                if (boolean_switch != null)
-                    ((!) boolean_switch).hide ();
-                key_value_label.hide ();
-                key_type_label.show ();
-            }
+            if (boolean_switch != null)
+                ((!) boolean_switch).hide ();
+            key_value_label.hide ();
+            key_type_label.show ();
+        }
+        else
+        {
+            key_type_label.hide ();
+            if (_use_switch && !delay_mode)
+                ((!) boolean_switch).show ();
             else
-            {
-                key_type_label.hide ();
-                if (_use_switch && !delay_mode)
-                    ((!) boolean_switch).show ();
-                else
-                    key_value_label.show ();
-            }
+                key_value_label.show ();
         }
     }
 
@@ -386,7 +383,7 @@ private class KeyListBoxRow : ClickableListBoxRow
     private void hide_or_show_switch ()
         requires (boolean_switch != null)
     {
-        if (_extra_small_window)
+        if (extra_small_window)
         {
             key_value_label.hide ();
             ((!) boolean_switch).hide ();

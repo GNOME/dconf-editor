@@ -18,24 +18,19 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-pathbar.ui")]
-private class AdaptativePathbar : Stack, Pathbar
+private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 {
     [GtkChild] private LargePathbar large_pathbar;
     [GtkChild] private ShortPathbar short_pathbar;
 
-    private bool _extra_small_window = false;
-    internal bool extra_small_window
+    private bool extra_small_window = false;
+    private void set_extra_small_window_state (bool new_value)
     {
-        private get { return _extra_small_window; }
-        internal set
-        {
-            _extra_small_window = value;
-
-            if (value)
-                set_visible_child (short_pathbar);
-            else
-                set_visible_child (large_pathbar);
-        }
+        extra_small_window = new_value;
+        if (new_value)
+            set_visible_child (short_pathbar);
+        else
+            set_visible_child (large_pathbar);
     }
 
     internal string get_complete_path ()
@@ -60,7 +55,7 @@ private class AdaptativePathbar : Stack, Pathbar
 
     internal void toggle_menu ()
     {
-        if (_extra_small_window)
+        if (extra_small_window)
             short_pathbar.toggle_menu ();
         else
             large_pathbar.toggle_menu ();

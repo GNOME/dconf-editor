@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-headerbar.ui")]
-private class BrowserHeaderBar : HeaderBar
+private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 {
     [GtkChild] private MenuButton   info_button;
     [GtkChild] private PathWidget   path_widget;
@@ -33,30 +33,26 @@ private class BrowserHeaderBar : HeaderBar
     internal signal void search_stopped ();
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
 
-    private bool _extra_small_window = false;
-    internal bool extra_small_window
+    private bool extra_small_window = false;
+    private void set_extra_small_window_state (bool new_value)
     {
-        get { return _extra_small_window; }
-        set
+        extra_small_window = new_value;
+
+        bookmarks_button.active = false;
+        if (new_value)
         {
-            _extra_small_window = value;
-
-            bookmarks_button.active = false;
-            if (value)
-            {
-                bookmarks_button.sensitive = false;
-                bookmarks_revealer.set_reveal_child (false);
-            }
-            else
-            {
-                bookmarks_button.sensitive = true;
-                bookmarks_revealer.set_reveal_child (true);
-                hide_in_window_bookmarks ();
-            }
-            update_hamburger_menu (delay_mode);
-
-            path_widget.extra_small_window = value;
+            bookmarks_button.sensitive = false;
+            bookmarks_revealer.set_reveal_child (false);
         }
+        else
+        {
+            bookmarks_button.sensitive = true;
+            bookmarks_revealer.set_reveal_child (true);
+            hide_in_window_bookmarks ();
+        }
+        update_hamburger_menu (delay_mode);
+
+        path_widget.set_extra_small_window_state (new_value);
     }
 
     internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}

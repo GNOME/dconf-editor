@@ -85,6 +85,11 @@ internal enum ViewType {
     }
 }
 
+private interface AdaptativeWidget
+{
+    internal abstract void set_extra_small_window_state (bool new_value);
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
 private class DConfWindow : ApplicationWindow
 {
@@ -429,8 +434,8 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = false;
                 context.remove_class ("extra-small-window");
-                headerbar.extra_small_window = false;
-                browser_view.extra_small_window = false;
+                headerbar.set_extra_small_window_state (false);
+                browser_view.set_extra_small_window_state (false);
             }
             context.remove_class ("small-window");
             context.add_class ("large-window");
@@ -445,8 +450,8 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = true;
                 context.add_class ("extra-small-window");
-                headerbar.extra_small_window = true;
-                browser_view.extra_small_window = true;
+                headerbar.set_extra_small_window_state (true);
+                browser_view.set_extra_small_window_state (true);
             }
             notification_revealer.hexpand = true;
             notification_revealer.halign = Align.FILL;
@@ -458,8 +463,8 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = false;
                 context.remove_class ("extra-small-window");
-                headerbar.extra_small_window = false;
-                browser_view.extra_small_window = false;
+                headerbar.set_extra_small_window_state (false);
+                browser_view.set_extra_small_window_state (false);
             }
             context.add_class ("small-window");
             notification_revealer.hexpand = true;
@@ -473,8 +478,8 @@ private class DConfWindow : ApplicationWindow
             {
                 extra_small_window = false;
                 context.remove_class ("extra-small-window");
-                headerbar.extra_small_window = false;
-                browser_view.extra_small_window = false;
+                headerbar.set_extra_small_window_state (false);
+                browser_view.set_extra_small_window_state (false);
             }
             notification_revealer.hexpand = false;
             notification_revealer.halign = Align.CENTER;

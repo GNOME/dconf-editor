@@ -49,7 +49,7 @@ private class SimpleSettingObject : Object
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
-private class BrowserView : Stack
+private class BrowserView : Stack, AdaptativeWidget
 {
     internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
 
@@ -60,7 +60,13 @@ private class BrowserView : Stack
     private GLib.ListStore? key_model = null;
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
-    internal bool extra_small_window   { set { current_child.extra_small_window = value; if (!value) hide_in_window_bookmarks (); }}
+
+    private void set_extra_small_window_state (bool new_value)
+    {
+        current_child.set_extra_small_window_state (new_value);
+        if (!new_value)
+            hide_in_window_bookmarks ();
+    }
 
     private ModificationsHandler _modifications_handler;
     internal ModificationsHandler modifications_handler

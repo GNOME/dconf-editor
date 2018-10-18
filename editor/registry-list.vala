@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
-private abstract class RegistryList : Grid, BrowsableView
+private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 {
     [GtkChild] protected ListBox key_list_box;
     [GtkChild] protected RegistryPlaceholder placeholder;
@@ -54,18 +54,15 @@ private abstract class RegistryList : Grid, BrowsableView
         }
     }
 
-    private bool _extra_small_window;
-    internal bool extra_small_window
+    private bool extra_small_window = false;
+    private void set_extra_small_window_state (bool new_value)
     {
-        set
-        {
-            _extra_small_window = value;
-            key_list_box.foreach ((row) => {
-                    Widget? row_child = ((ListBoxRow) row).get_child ();
-                    if (row_child != null && (!) row_child is KeyListBoxRow)
-                        ((KeyListBoxRow) (!) row_child).extra_small_window = value;
-                });
-        }
+        extra_small_window = new_value;
+        key_list_box.@foreach ((row) => {
+                Widget? row_child = ((ListBoxRow) row).get_child ();
+                if (row_child != null && (!) row_child is KeyListBoxRow)
+                    ((KeyListBoxRow) (!) row_child).set_extra_small_window_state (new_value);
+            });
     }
 
     protected void select_row_and_if_true_grab_focus (ListBoxRow row, bool grab_focus)
@@ -394,7 +391,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
             KeyListBoxRow key_row = create_key_list_box_row (full_name, context_id, properties, modifications_handler.get_current_delay_mode (), search_mode_non_local_result);
             key_row.small_keys_list_rows = _small_keys_list_rows;
-            key_row.extra_small_window = _extra_small_window;
+            key_row.set_extra_small_window_state (extra_small_window);
 
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect ((_modifications_handler) => set_delayed_icon (_modifications_handler, key_row));
             set_delayed_icon (modifications_handler, key_row);

@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-stack.ui")]
-private class BrowserStack : Grid
+private class BrowserStack : Grid, AdaptativeWidget
 {
     [GtkChild] private Stack stack;
     [GtkChild] private RegistryView folder_view;
@@ -36,13 +36,10 @@ private class BrowserStack : Grid
         }
     }
 
-    internal bool extra_small_window
+    private void set_extra_small_window_state (bool new_value)
     {
-        set
-        {
-            folder_view.extra_small_window = value;
-            search_view.extra_small_window = value;
-        }
+        folder_view.set_extra_small_window_state (new_value);
+        search_view.set_extra_small_window_state (new_value);
     }
 
     internal ModificationsHandler modifications_handler
