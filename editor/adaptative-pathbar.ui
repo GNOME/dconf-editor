@@ -3,6 +3,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="AdaptativePathbar" parent="GtkStack">
     <property name="hexpand">True</property>
+    <property name="hhomogeneous">False</property>
     <child>
       <object class="LargePathbar" id="large_pathbar">
         <property name="visible">True</property>
