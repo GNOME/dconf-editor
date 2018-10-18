@@ -127,7 +127,10 @@ private class PathWidget : Box
     }
 
     /* path bar */
-    internal string complete_path { get { return pathbar.complete_path; }}
+    internal string get_complete_path ()
+    {
+        return pathbar.get_complete_path ();
+    }
 
     internal void update_ghosts (string fallback_path)
     {

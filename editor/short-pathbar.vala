@@ -20,6 +20,12 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/short-pathbar.ui")]
 private class ShortPathbar : Grid, Pathbar
 {
+    private string complete_path = "";
+    internal string get_complete_path ()
+    {
+        return complete_path;
+    }
+
     [GtkChild] private MenuButton   menu_button;
     [GtkChild] private Label        view_label;
 
@@ -51,6 +57,10 @@ private class ShortPathbar : Grid, Pathbar
         if (type == ViewType.SEARCH)
             return;
 
+        if (!path.has_suffix ("/")
+         || !complete_path.has_prefix (path))
+            complete_path = path;
+
         view_label.set_text (ModelUtils.get_name (path));
 
         GLib.Menu menu = new GLib.Menu ();
@@ -62,7 +72,7 @@ private class ShortPathbar : Grid, Pathbar
         split = split [1:split.length - 1];    // excludes initial and last ""
 
         // slash folder
-        string complete_path = "/";
+        string tmp_path = "/";
 
         if (path != "/")
             menu.append ("/", "ui.open-folder('/')");
@@ -70,8 +80,8 @@ private class ShortPathbar : Grid, Pathbar
         // parent folders
         foreach (string item in split)
         {
-            complete_path += item + "/";
-            menu.append (item, "ui.open-folder('" + complete_path + "')");  // TODO append or prepend?
+            tmp_path += item + "/";
+            menu.append (item, "ui.open-folder('" + tmp_path + "')");  // TODO append or prepend?
         }
 
         section.freeze ();

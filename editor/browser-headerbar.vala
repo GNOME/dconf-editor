@@ -60,10 +60,10 @@ private class BrowserHeaderBar : HeaderBar
     }
 
     internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
-    internal string complete_path       { get { return path_widget.complete_path; }}
     internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
     internal string text                { get { return path_widget.text; }}
 
+    internal string get_complete_path ()    { return path_widget.get_complete_path (); }
     internal void toggle_pathbar_menu ()    { path_widget.toggle_pathbar_menu (); }
     internal string [] get_bookmarks ()     { return bookmarks_button.get_bookmarks (); }
 

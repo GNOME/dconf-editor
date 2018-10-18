@@ -290,7 +290,7 @@ private class DConfWindow : ApplicationWindow
         else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
             reload_view ();
 
-        headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (headerbar.complete_path));
+        headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (headerbar.get_complete_path ()));
     }
     private void propagate_gkey_value_push (string full_name, uint16 context, Variant key_value, bool is_key_default)
     {
@@ -513,7 +513,7 @@ private class DConfWindow : ApplicationWindow
 
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
-        settings.set_string ("saved-pathbar-path", headerbar.complete_path);
+        settings.set_string ("saved-pathbar-path", headerbar.get_complete_path ());
         if (window_width <= 630)    settings.set_int ("window-width", 630);
         else                        settings.set_int ("window-width", window_width);
         if (window_height <= 420)   settings.set_int ("window-height", 420);
@@ -1103,7 +1103,7 @@ private class DConfWindow : ApplicationWindow
                     cannot_find_folder (full_name);
             }
             request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
-            headerbar.update_ghosts (model.get_fallback_path (headerbar.complete_path));
+            headerbar.update_ghosts (model.get_fallback_path (headerbar.get_complete_path ()));
         }
         else
         {
@@ -1371,7 +1371,7 @@ private class DConfWindow : ApplicationWindow
         if (headerbar.search_mode_enabled)
             return;
 
-        string complete_path = headerbar.complete_path;
+        string complete_path = headerbar.get_complete_path ();
 
         browser_view.discard_row_popover ();
         if (current_path == complete_path)  // TODO something?

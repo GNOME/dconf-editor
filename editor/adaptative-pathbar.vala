@@ -38,7 +38,10 @@ private class AdaptativePathbar : Stack, Pathbar
         }
     }
 
-    internal string complete_path { get { return large_pathbar.complete_path; }}
+    internal string get_complete_path ()
+    {
+        return large_pathbar.get_complete_path ();  // or the short_pathbar one; do not require their equality, it warns on window closing
+    }
 
     /*\
     * * keyboard
@@ -78,15 +81,34 @@ private class AdaptativePathbar : Stack, Pathbar
         large_pathbar.update_ghosts (non_ghost_path, is_search);
         short_pathbar.update_ghosts (non_ghost_path, is_search);
     }
-
-    internal string get_selected_child (string current_path)
-    {
-        return large_pathbar.get_selected_child (current_path);
-    }
 }
 
 private interface Pathbar
 {
+    /* simple proxy calls */
+    internal abstract bool has_popover ();
+    internal abstract void close_menu ();
+    internal abstract void toggle_menu ();
+
+    internal abstract void set_path (ViewType type, string path);
+    internal abstract void update_ghosts (string non_ghost_path, bool is_search);
+
+    /* complex proxy calls */
+    internal abstract string get_complete_path ();
+
+    internal virtual string get_selected_child (string current_path)
+    {
+        return _get_selected_child (current_path, get_complete_path ());
+    }
+    private static string _get_selected_child (string current_path, string complete_path)
+    {
+        if (!complete_path.has_prefix (current_path) || complete_path == current_path)
+            return "";
+        int index_of_last_slash = complete_path.index_of ("/", current_path.length);
+        return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
+    }
+
+    /* called from inside the pathbar, by ShortPathbar and LargePathbarItem (so cannot make "protected") */
     internal static void add_copy_path_entry (ref GLib.Menu section)
     {
         section.append (_("Copy current path"), "kbd.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"

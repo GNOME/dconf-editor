@@ -23,7 +23,11 @@ private class LargePathbar : Box, Pathbar
     [GtkChild] private LargePathbarItem root_button;
     private LargePathbarItem active_button;
 
-    internal string complete_path { get; private set; default = ""; }
+    private string complete_path = "";
+    internal string get_complete_path ()
+    {
+        return complete_path;
+    }
 
     construct
     {
@@ -142,14 +146,6 @@ private class LargePathbar : Box, Pathbar
             context.add_class ("config");
         else
             context.remove_class ("config");
-    }
-
-    internal string get_selected_child (string current_path)
-    {
-        if (!complete_path.has_prefix (current_path) || complete_path == current_path)
-            return "";
-        int index_of_last_slash = complete_path.index_of ("/", current_path.length);
-        return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
     }
 
     internal void update_ghosts (string non_ghost_path, bool is_search)
