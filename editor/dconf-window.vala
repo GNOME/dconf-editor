@@ -124,6 +124,12 @@ private class DConfWindow : ApplicationWindow
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
 
+    private StyleContext context;
+    construct
+    {
+        context = get_style_context ();
+    }
+
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool _night_time, bool _dark_theme, bool _automatic_night_mode)
     {
         init_night_mode (_night_time, _dark_theme, _automatic_night_mode);
@@ -246,7 +252,7 @@ private class DConfWindow : ApplicationWindow
         else
             request_object (startup_path, ModelUtils.undefined_context_id, true);
 
-        Timeout.add (300, () => { this.get_style_context ().remove_class ("startup"); return Source.REMOVE; });
+        Timeout.add (300, () => { context.remove_class ("startup"); return Source.REMOVE; });
     }
 
     private void prepare_model ()
@@ -297,10 +303,10 @@ private class DConfWindow : ApplicationWindow
 
         headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (headerbar.get_complete_path ()));
     }
-    private void propagate_gkey_value_push (string full_name, uint16 context, Variant key_value, bool is_key_default)
+    private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        browser_view.gkey_value_push (full_name, context, key_value, is_key_default);
-        revealer.gkey_value_push     (full_name, context, key_value, is_key_default);
+        browser_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
+        revealer.gkey_value_push     (full_name, context_id, key_value, is_key_default);
     }
     private void propagate_dkey_value_push (string full_name, Variant? key_value_or_null)
     {
@@ -316,7 +322,6 @@ private class DConfWindow : ApplicationWindow
     private bool has_small_keys_list_rows_class = false;
     private void set_css_styles ()
     {
-        StyleContext context = get_style_context ();
         small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
                 bool small_rows = settings.get_boolean ("small-keys-list-rows");
                 if (small_rows)
@@ -351,9 +356,9 @@ private class DConfWindow : ApplicationWindow
             return;
         highcontrast_state = highcontrast_new_state;
         if (highcontrast_state)
-            get_style_context ().add_class ("hc-theme");
+            context.add_class ("hc-theme");
         else
-            get_style_context ().remove_class ("hc-theme");
+            context.remove_class ("hc-theme");
     }
 
     /*\
@@ -427,7 +432,6 @@ private class DConfWindow : ApplicationWindow
     {
         /* responsive design */
 
-        StyleContext context = get_style_context ();
         if (allocation.width > MAX_ROW_WIDTH + 42)
         {
             if (extra_small_window)
