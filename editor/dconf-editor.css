@@ -374,6 +374,15 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 }
 
 /*\
+* * app notification
+\*/
+
+.extra-small-window .app-notification,
+      .small-window .app-notification {
+  border-radius:0;
+}
+
+/*\
 * * text formating
 \*/
 

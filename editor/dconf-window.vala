@@ -434,6 +434,8 @@ private class DConfWindow : ApplicationWindow
             }
             context.remove_class ("small-window");
             context.add_class ("large-window");
+            notification_revealer.hexpand = false;
+            notification_revealer.halign = Align.CENTER;
         }
         else if (allocation.width < 590)
         {
@@ -446,6 +448,8 @@ private class DConfWindow : ApplicationWindow
                 headerbar.extra_small_window = true;
                 browser_view.extra_small_window = true;
             }
+            notification_revealer.hexpand = true;
+            notification_revealer.halign = Align.FILL;
         }
         else if (allocation.width < 787)
         {
@@ -458,6 +462,8 @@ private class DConfWindow : ApplicationWindow
                 browser_view.extra_small_window = false;
             }
             context.add_class ("small-window");
+            notification_revealer.hexpand = true;
+            notification_revealer.halign = Align.FILL;
         }
         else
         {
@@ -470,6 +476,8 @@ private class DConfWindow : ApplicationWindow
                 headerbar.extra_small_window = false;
                 browser_view.extra_small_window = false;
             }
+            notification_revealer.hexpand = false;
+            notification_revealer.halign = Align.CENTER;
         }
 
         /* save size */
