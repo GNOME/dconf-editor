@@ -537,6 +537,7 @@ private class DConfWindow : ApplicationWindow
     \*/
 
     private SimpleAction open_path_action;
+    private SimpleAction disabled_state_action;
 
     private SimpleAction reload_search_action;
     private bool reload_search_next = true;
@@ -547,6 +548,9 @@ private class DConfWindow : ApplicationWindow
         action_group.add_action_entries (ui_action_entries, this);
         insert_action_group ("ui", action_group);
 
+        disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state");
+        disabled_state_action.set_enabled (false);
+
         open_path_action = (SimpleAction) action_group.lookup_action ("open-path");
 
         reload_search_action = (SimpleAction) action_group.lookup_action ("reload-search");
@@ -555,8 +559,9 @@ private class DConfWindow : ApplicationWindow
 
     private const GLib.ActionEntry [] ui_action_entries =
     {
-        { "empty",      empty, "*" },
-        { "empty-null", empty },
+        { "empty",          empty, "*" },
+        { "empty-null",     empty },
+        { "disabled-state", empty, "(sq)", "('',uint16 65535)" },
 
         { "notify-folder-emptied", notify_folder_emptied, "s" },
         { "notify-object-deleted", notify_object_deleted, "(sq)" },
@@ -1204,6 +1209,7 @@ private class DConfWindow : ApplicationWindow
 
         Variant variant = new Variant ("(sq)", path, (type == ViewType.FOLDER) || (type == ViewType.CONFIG) ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id);
         open_path_action.set_state (variant);
+        disabled_state_action.set_state (variant);
     }
 
     private void invalidate_popovers_with_ui_reload ()

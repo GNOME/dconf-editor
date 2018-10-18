@@ -20,6 +20,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/short-pathbar.ui")]
 private class ShortPathbar : Grid, Pathbar
 {
+    private string non_ghost_path = "";
+
     private string complete_path = "";
     internal string get_complete_path ()
     {
@@ -59,11 +61,34 @@ private class ShortPathbar : Grid, Pathbar
 
         if (!path.has_suffix ("/")
          || !complete_path.has_prefix (path))
+        {
             complete_path = path;
+            non_ghost_path = path;
+        }
 
         view_label.set_text (ModelUtils.get_name (path));
+        update_menu ();
+    }
 
-        GLib.Menu menu = new GLib.Menu ();
+    internal void update_ghosts (string _non_ghost_path, bool is_search)
+    {
+        non_ghost_path = _non_ghost_path;
+        update_menu ();
+    }
+
+    /*\
+    * * menu creation
+    \*/
+
+    private void update_menu ()
+    {
+        GLib.Menu menu;
+        _update_menu (complete_path, non_ghost_path, out menu);
+        menu_button.set_menu_model (menu);
+    }
+    private static void _update_menu (string complete_path, string non_ghost_path, out GLib.Menu menu)
+    {
+        menu = new GLib.Menu ();
         GLib.Menu section = new GLib.Menu ();
 
         string [] split = complete_path.split ("/", /* max tokens disabled */ 0);
@@ -83,19 +108,26 @@ private class ShortPathbar : Grid, Pathbar
         {
             tmp_path += item + "/";
             Variant variant = new Variant ("(sq)", tmp_path, ModelUtils.folder_context_id);
-            menu.append (item, "ui.open-path(" + variant.print (true) + ")");  // TODO append or prepend?
+            if (non_ghost_path.has_prefix (tmp_path))
+                menu.append (item, "ui.open-path(" + variant.print (true) + ")");  // TODO append or prepend?
+            else
+                menu.append (item, "ui.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
         }
 
         // key or nothing
         if (last != "")
         {
             bool is_folder = ModelUtils.is_folder_path (complete_path);
-            uint16 context_id = is_folder ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id;
             tmp_path += last;
             if (is_folder)
                 tmp_path += "/";
+
+            uint16 context_id = is_folder ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id;
             Variant variant = new Variant ("(sq)", tmp_path, context_id);
-            menu.append (last, "ui.open-path(" + variant.print (true) + ")");
+            if (non_ghost_path.has_prefix (tmp_path))   // FIXME problem if key and folder named similarly
+                menu.append (last, "ui.open-path(" + variant.print (true) + ")");
+            else
+                menu.append (last, "ui.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
         }
 
         section.freeze ();
@@ -109,10 +141,5 @@ private class ShortPathbar : Grid, Pathbar
         menu.append_section (null, section);
 
         menu.freeze ();
-        menu_button.set_menu_model (menu);
-    }
-
-    internal void update_ghosts (string non_ghost_path, bool is_search)
-    {
     }
 }
