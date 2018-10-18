@@ -112,6 +112,7 @@ resource_data = files(
   'help-overlay.ui',
   'key-list-box-row.ui',
   'large-pathbar-item.ui',
+  'large-pathbar.css',
   'large-pathbar.ui',
   'modifications-revealer.ui',
   'pathentry.ui',

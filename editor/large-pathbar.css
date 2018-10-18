@@ -1,0 +1,173 @@
+/*
+  This file is part of Dconf Editor
+
+  Dconf Editor is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Dconf Editor is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+/*\
+* * main large-window stuff
+\*/
+
+              .pathbar {
+  /* nautilus/src/resources/css/Adwaita.css:71 .path-bar-box uses 200ms */
+  transition: border-color     0.3s,
+              background-color 0.3s;
+  border-color:transparent;
+
+  border-width:1px;
+  border-style:solid;
+  border-radius:3px;
+
+  padding:0;
+  margin:6px 0;
+}
+
+.large-window .pathbar {
+  /* like in nautilus/src/resources/css/Adwaita.css:75
+     .path-bar-box.width-maximized */
+  border-color:@borders;
+}
+
+.large-window .pathbar:not(:backdrop) {
+  /* like in nautilus/src/resources/css/Adwaita.css:79
+     .path-bar-box.width-maximized:not(:backdrop) */
+  background-color:@theme_bg_color;
+}
+
+/*\
+* * items generic init and hacks
+\*/
+
+/* transition hacks */
+box.pathbar         > button,
+box.pathbar         > label {
+  transition:all 0 ease;
+}
+
+/* button config */
+.pathbar            > button {
+  padding:0 0.1em;
+  margin :0 0.1em;
+
+  outline-offset:-4px;
+
+  border-radius:0;
+
+  border:none;
+  border-color:transparent;
+  box-shadow:none;
+  background:none;
+  background-color:transparent;
+  color:currentColor;
+}
+
+/* items hacks */
+.small-window.startup .pathbar  > button                        > label.item { /* class remove after 0.3s */
+  transition:padding             0s;
+}
+
+.small-window .pathbar          > button                        > label.item {
+  padding:2px 1px;
+}
+
+/*\
+* * border bottom
+\*/
+
+.pathbar                > button                                > label.item {
+  border-width:3px 2px;
+  border-radius:0;
+  padding:2px 4px;
+  border-style:solid;
+  border-color:transparent;
+  transition:border-bottom-color 0.3s,
+             padding             0.2s;  /* needs to be a bit faster */
+}
+
+.pathbar                > button:hover                          > label.item {
+  border-bottom-color:@borders;
+}
+
+.pathbar                > button.active                         > label.item,
+.pathbar                > button.active:hover                   > label.item,
+.pathbar                > button.active.inexistent              > label.item,
+.pathbar                > button.active.inexistent:hover        > label.item {
+  border-bottom-color:@theme_selected_bg_color;
+}
+
+.pathbar:backdrop       > button.active                         > label.item,
+.pathbar:backdrop       > button.active:hover                   > label.item,
+.pathbar:backdrop       > button.active.inexistent              > label.item,
+.pathbar:backdrop       > button.active.inexistent:hover        > label.item {
+  border-bottom-color:@borders;
+}
+
+.pathbar                > button.inexistent:not(.active):hover  > label.item {
+  border-bottom-color:transparent;
+}
+
+.pathbar.config         > button.active                         > label.item {
+  border-bottom-style:dashed;
+}
+
+/*\
+* * root button
+\*/
+
+/* general stuff */
+              .pathbar  > button.root-button                    > label.item {
+  padding-left:3px;
+  transition:border-width 0 ease, padding 0 ease;
+  background-position:50% center;
+  margin-left:0;
+  margin-right:0;
+  background-image:-gtk-icontheme("ca.desrt.dconf-editor-symbolic");
+  background-size:1.1rem;
+  background-repeat:no-repeat;
+  min-width:1.1rem;
+}
+
+.large-window .pathbar  > button.root-button                    > label.item {
+  padding-left:5px;
+  border-left-width:0;
+  background-position:60% center;
+}
+
+/* rtl/ltr specificities */
+.pathbar:dir(ltr)       > button.root-button { padding-left :0; margin-left :0; }
+.pathbar:dir(rtl)       > button.root-button { padding-right:0; margin-right:0; }
+
+/*\
+* * special texts "colors"
+\*/
+
+/* slash */
+.pathbar                > label {
+  opacity:0.55;
+}
+.pathbar:backdrop       > label {
+  opacity:0.8;
+}
+
+/* removed paths */
+.pathbar                > button.inexistent:not(.active)        > label.item {
+  opacity:0.7;
+}
+.pathbar:backdrop       > button.inexistent:not(.active)        > label.item {
+  opacity:1.0;
+}
+
+/*\
+* * the end
+\*/
