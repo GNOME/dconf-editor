@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="dconf-editor">
+  <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkImage" id="big_rows_icon">
+    <property name="visible">True</property>
+    <property name="icon-name">ca.desrt.dconf-editor.big-rows-symbolic</property>
+    <property name="icon-size">1</property>
+  </object>
+  <object class="GtkImage" id="small_rows_icon">
+    <property name="visible">True</property>
+    <property name="icon-name">ca.desrt.dconf-editor.small-rows-symbolic</property>
+    <property name="icon-size">1</property>
+  </object>
+  <template class="BookmarksController" parent="GtkGrid">
+    <property name="hexpand">True</property>
+    <property name="valign">center</property>
+    <property name="orientation">horizontal</property>
+    <property name="column-spacing">6</property>
+    <child>
+      <object class="GtkButton">
+        <property name="visible">True</property>
+        <property name="halign">start</property>
+        <property name="action-name">bookmarks.trash-bookmark</property>
+        <style>
+          <class name="image-button"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">user-trash-symbolic</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="halign">start</property>
+        <style>
+          <class name="linked"/>
+        </style>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="action-name">bookmarks.move-top</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">go-top-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="action-name">bookmarks.move-up</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">go-up-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="action-name">bookmarks.move-down</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">go-down-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="action-name">bookmarks.move-bottom</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">go-bottom-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="rows_size_button">
+        <property name="hexpand">True</property>
+        <property name="halign">end</property>
+        <property name="action-name">bookmarks.set-small-rows</property>
+        <style>
+          <class name="image-button"/>
+        </style>
+      </object>
+    </child>
+  </template>
+</interface>

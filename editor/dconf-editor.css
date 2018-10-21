@@ -60,30 +60,31 @@
   margin-bottom:0;
 }
 
-.bookmarks                 .padding-bottom {
+.bookmarks .padding-bottom {
   padding-bottom:0;
   transition:padding-bottom 0.3s,
              font-size      0.3s;
 }
-.bookmarks:not(.edit-mode) .padding-bottom:not(.empty-list) {
-  padding-bottom:2.4rem;
+.bookmarks .padding-bottom:not(.empty-list) {
+  padding-bottom:2.8rem;
 }
 
-.edit-bookmarks-list {
-  padding-left:0.1rem;
-  padding-right:0.1rem;
-  padding-bottom:0.1rem;
-  border-radius:1.8rem 1.8rem 0 0;
-  border-bottom:none;
-
-  transition:all           0    ease,
-             margin-bottom 0.3s ease,
-             padding       0.3s ease;
-  margin-bottom:0;
+.linked-circular {
+  margin-bottom:0.3rem;
 }
 
-.edit-bookmarks-list label {
-  transition:all 0 ease;
+.linked-circular:dir(rtl) .right-on-ltr,
+.linked-circular:dir(ltr) .left-on-ltr {
+  border-radius:2rem 0 0 2rem;
+  -gtk-outline-top-left-radius:2rem;
+  -gtk-outline-bottom-left-radius:2rem;
+}
+
+.linked-circular:dir(ltr) .right-on-ltr,
+.linked-circular:dir(rtl) .left-on-ltr {
+  border-radius:0 2rem 2rem 0;
+  -gtk-outline-top-right-radius:2rem;
+  -gtk-outline-bottom-right-radius:2rem;
 }
 
 /* hack: fix the double space when the child of the revealer is hidden; 6px is the spacing of the centerwidget box */

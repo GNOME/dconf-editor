@@ -41,12 +41,8 @@ private class Bookmarks : MenuButton
     [GtkChild] private Label switch_label;
 
     [GtkChild] private Stack edit_mode_stack;
-    [GtkChild] private Button rows_size_button;
-    [GtkChild] private Image big_rows_icon;
-    [GtkChild] private Image small_rows_icon;
-
-    [GtkChild] private Button enter_edit_mode_button;
-    [GtkChild] private Button leave_edit_mode_button;
+    [GtkChild] private Box edit_mode_box;
+    [GtkChild] private BookmarksController bookmarks_controller;
 
     private string   current_path = "/";
     private ViewType current_type = ViewType.FOLDER;
@@ -100,12 +96,12 @@ private class Bookmarks : MenuButton
                 }
                 else if (has_small_bookmarks_rows_class) context.remove_class ("small-bookmarks-rows");
                 has_small_bookmarks_rows_class = small_bookmarks_rows;
-                update_rows_size_button_icon (small_bookmarks_rows);
+                bookmarks_controller.update_rows_size_button_icon (small_bookmarks_rows);
             });
         has_small_bookmarks_rows_class = settings.get_boolean ("small-bookmarks-rows");
         if (has_small_bookmarks_rows_class)
             context.add_class ("small-bookmarks-rows");
-        update_rows_size_button_icon (has_small_bookmarks_rows_class);
+        bookmarks_controller.update_rows_size_button_icon (has_small_bookmarks_rows_class);
     }
 
     private void on_bookmarks_changed (GLib.Settings _settings, string key)
@@ -307,6 +303,7 @@ private class Bookmarks : MenuButton
     private SimpleAction move_down_action;
     private SimpleAction move_bottom_action;
     private SimpleAction trash_bookmark_action;
+    private SimpleAction edit_mode_state_action;
 
     private void update_actions ()
         requires (actions_init_done)
@@ -355,13 +352,13 @@ private class Bookmarks : MenuButton
         move_down_action        = (SimpleAction) action_group.lookup_action ("move-down");
         move_bottom_action      = (SimpleAction) action_group.lookup_action ("move-bottom");
         trash_bookmark_action   = (SimpleAction) action_group.lookup_action ("trash-bookmark");
+        edit_mode_state_action  = (SimpleAction) action_group.lookup_action ("set-edit-mode");
         actions_init_done = true;
     }
 
     private const GLib.ActionEntry [] action_entries =
     {
-        { "enter-edit-mode", enter_edit_mode },
-        { "leave-edit-mode", leave_edit_mode },
+        { "set-edit-mode", set_edit_mode, "b", "false" },
 
         { "trash-bookmark", trash_bookmark },
         { "set-small-rows", set_small_rows },
@@ -375,22 +372,37 @@ private class Bookmarks : MenuButton
         { "unbookmark",  unbookmark, "(sy)" }
     };
 
-    private void enter_edit_mode (/* SimpleAction action, Variant? variant */)
+    private void set_edit_mode (SimpleAction action, Variant? variant)
+        requires (variant != null)
     {
-        enter_edit_mode_button.hide ();
-        bookmarks_popover.get_style_context ().add_class ("edit-mode");
+        bool new_state = ((!) variant).get_boolean ();
+        action.set_state (new_state);
+
+        if (new_state)
+            enter_edit_mode ();
+        else
+            leave_edit_mode ();
+    }
+
+    private void enter_edit_mode ()
+    {
+        edit_mode_state_action.set_state (true);
+
         update_actions ();
 
         edit_mode_stack.set_visible_child_name ("edit-mode-on");
-        leave_edit_mode_button.grab_focus ();
+        bookmarks_list_box.grab_focus ();
 
         bookmarks_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (false); });
         bookmarks_list_box.set_activate_on_single_click (false);
         bookmarks_list_box.set_selection_mode (SelectionMode.MULTIPLE);
     }
 
-    private void leave_edit_mode (/* used both as action and method */)
+    [GtkCallback]
+    private void leave_edit_mode (/* used both as action and callback */)
     {
+        edit_mode_state_action.set_state (false);
+
         ListBoxRow? row = (ListBoxRow?) bookmarks_list_box.get_focus_child ();  // broken, the child needs to have the global focus...
         bool give_focus_to_switch = row == null;
         if (give_focus_to_switch)
@@ -404,9 +416,6 @@ private class Bookmarks : MenuButton
         bookmarks_list_box.set_selection_mode (SelectionMode.SINGLE);
 
         edit_mode_stack.set_visible_child_name ("edit-mode-off");
-
-        bookmarks_popover.get_style_context ().remove_class ("edit-mode");
-        enter_edit_mode_button.show ();
 
         if (row != null)
             select_row_for_real ((!) row);
@@ -455,14 +464,7 @@ private class Bookmarks : MenuButton
 
     private void set_small_rows (/* SimpleAction action, Variant? variant */)
     {
-        settings.set_boolean ("small-bookmarks-rows", rows_size_button.get_image () == small_rows_icon);
-    }
-    private void update_rows_size_button_icon (bool small_bookmarks_rows)
-    {
-        if (small_bookmarks_rows)
-            rows_size_button.set_image (big_rows_icon);
-        else
-            rows_size_button.set_image (small_rows_icon);
+        settings.set_boolean ("small-bookmarks-rows", bookmarks_controller.get_small_rows_state ());
     }
 
     private void move_top       (/* SimpleAction action, Variant? variant */)
@@ -687,7 +689,7 @@ private class Bookmarks : MenuButton
                 has_empty_list_class = true;
             }
 
-            enter_edit_mode_button.hide ();
+            edit_mode_box.hide ();
         }
         else
         {
@@ -697,9 +699,7 @@ private class Bookmarks : MenuButton
                 has_empty_list_class = false;
             }
 
-            string? visible_child_name = edit_mode_stack.get_visible_child_name (); // do it like that
-            if (visible_child_name != null && (!) visible_child_name == "edit-mode-off")
-                enter_edit_mode_button.show ();
+            edit_mode_box.show ();
         }
     }
     private static void create_bookmark_rows (Variant bookmarks_variant, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable, ref Bookmark? last_row, ref uint n_bookmarks)

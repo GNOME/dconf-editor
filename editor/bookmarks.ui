@@ -61,137 +61,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkGrid">
+              <object class="BookmarksController" id="bookmarks_controller">
                 <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="valign">center</property>
-                <property name="orientation">horizontal</property>
-                <property name="column-spacing">3</property>
-                <child>
-                  <object class="GtkButton" id="leave_edit_mode_button">
-                    <property name="visible">True</property>
-                    <property name="action-name">bookmarks.leave-edit-mode</property>
-                    <style>
-                      <class name="image-button"/>
-                      <class name="flat"/>
-                    </style>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="icon-name">object-select-symbolic</property>
-                        <property name="icon-size">1</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkSeparator">
-                    <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="rows_size_button">
-                    <property name="visible">True</property>
-                    <property name="hexpand">True</property>
-                    <property name="halign">start</property>
-                    <property name="action-name">bookmarks.set-small-rows</property>
-                    <style>
-                      <class name="image-button"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="halign">end</property>
-                    <property name="margin-end">3</property> <!-- grid has already 3 as column spacing -->
-                    <style>
-                      <class name="linked"/>
-                    </style>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="action-name">bookmarks.move-top</property>
-                        <style>
-                          <class name="image-button"/>
-                        </style>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="icon-name">go-top-symbolic</property>
-                            <property name="icon-size">1</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="action-name">bookmarks.move-up</property>
-                        <style>
-                          <class name="image-button"/>
-                        </style>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="icon-name">go-up-symbolic</property>
-                            <property name="icon-size">1</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="action-name">bookmarks.move-down</property>
-                        <style>
-                          <class name="image-button"/>
-                        </style>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="icon-name">go-down-symbolic</property>
-                            <property name="icon-size">1</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="action-name">bookmarks.move-bottom</property>
-                        <style>
-                          <class name="image-button"/>
-                        </style>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="icon-name">go-bottom-symbolic</property>
-                            <property name="icon-size">1</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="visible">True</property>
-                    <property name="halign">end</property>
-                    <property name="action-name">bookmarks.trash-bookmark</property>
-                    <style>
-                      <class name="image-button"/>
-                    </style>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="icon-name">user-trash-symbolic</property>
-                        <property name="icon-size">1</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
+                <property name="show-rows-size-button">True</property>
               </object>
               <packing>
                 <property name="name">edit-mode-on</property>
@@ -246,17 +118,45 @@
               </object>
             </child>
             <child type="overlay">
-              <object class="GtkButton" id="enter_edit_mode_button">
+              <object class="GtkBox" id="edit_mode_box">
                 <property name="visible">True</property>
                 <property name="halign">center</property>
                 <property name="valign">end</property>
                 <property name="width-request">200</property>
-                <property name="action-name">bookmarks.enter-edit-mode</property>
-                <property name="label" translatable="yes">Edit bookmarks list</property>
                 <style>
-                  <class name="circular"/>
-                  <class name="edit-bookmarks-list"/>
+                  <class name="linked"/>
+                  <class name="linked-circular"/>
                 </style>
+                <child>
+                  <object class="GtkModelButton">
+                    <property name="visible">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="centered">True</property>
+                    <property name="iconic">True</property>
+                    <property name="focus-on-click">False</property>
+                    <property name="action-name">bookmarks.set-edit-mode</property>
+                    <property name="action-target">false</property>
+                    <property name="text" translatable="yes">Use</property>
+                    <style>
+                      <class name="left-on-ltr"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkModelButton">
+                    <property name="visible">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="centered">True</property>
+                    <property name="iconic">True</property>
+                    <property name="focus-on-click">False</property>
+                    <property name="action-name">bookmarks.set-edit-mode</property>
+                    <property name="action-target">true</property>
+                    <property name="text" translatable="yes">Edit</property>
+                    <style>
+                      <class name="right-on-ltr"/>
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -266,6 +166,7 @@
   </object>
   <template class="Bookmarks" parent="GtkMenuButton">
     <property name="popover">bookmarks_popover</property>
+    <signal name="clicked" handler="leave_edit_mode"/>
 <!--    <style>
       <class name="image-button"/>  TODO bug https://bugzilla.gnome.org/show_bug.cgi?id=756731
     </style> -->

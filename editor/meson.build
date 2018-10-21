@@ -68,6 +68,7 @@ install_data(
 sources = files(
   'adaptative-pathbar.vala',
   'bookmarks.vala',
+  'bookmarks-controller.vala',
   'browser-headerbar.vala',
   'browser-infobar.vala',
   'browser-stack.vala',
@@ -99,6 +100,7 @@ sources = files(
 resource_data = files(
   'adaptative-pathbar.ui',
   'bookmarks.ui',
+  'bookmarks-controller.ui',
   'bookmark.ui',
   'browser-headerbar.ui',
   'browser-infobar.ui',
