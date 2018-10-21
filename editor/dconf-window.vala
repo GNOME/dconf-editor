@@ -1052,7 +1052,12 @@ private class DConfWindow : ApplicationWindow
     private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
     {
         browser_view.discard_row_popover ();
-        headerbar.click_bookmarks_button ();
+        if (!extra_small_window)
+            headerbar.click_bookmarks_button ();
+        else if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else
+            show_in_window_bookmarks ();
     }
 
     private void copy_path                              (/* SimpleAction action, Variant? path_variant */)

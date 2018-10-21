@@ -202,7 +202,7 @@ private class BrowserView : Stack, AdaptativeWidget
     * * bookmarks
     \*/
 
-    private bool in_window_bookmarks = false;
+    internal bool in_window_bookmarks { internal get; private set; default = false; }
 
     [GtkChild] private BookmarksList bookmarks_list;
     [GtkChild] private Grid          current_child_grid;
