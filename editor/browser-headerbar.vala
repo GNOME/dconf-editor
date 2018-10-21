@@ -236,7 +236,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         else if (current_type != ViewType.SEARCH) */
 
         if (extra_small_window)
-            append_bookmark_section (current_type, current_path, Bookmarks.get_bookmark_name (current_path, current_type) in get_bookmarks (), in_window_bookmarks, ref menu);
+            append_bookmark_section (current_type, current_path, BookmarksList.get_bookmark_name (current_path, current_type) in get_bookmarks (), in_window_bookmarks, ref menu);
 
         if (!in_window_bookmarks)
             append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);

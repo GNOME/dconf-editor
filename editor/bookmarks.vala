@@ -44,11 +44,43 @@ private class Bookmarks : MenuButton
     private ViewType current_type = ViewType.FOLDER;
 
     private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
-    public string schema_path { private get; internal construct; }
-    private GLib.Settings settings;
-    ulong bookmarks_changed_handler = 0;
+    GLib.Settings settings;
+    public string schema_path
+    {
+        construct
+        {
+            bookmarks_list.schema_path = value;
+
+            settings = new GLib.Settings.with_path (schema_id, value);
+
+            StyleContext context = bookmarks_popover.get_style_context ();
+            bool has_small_bookmarks_rows_class = false;
+            ulong small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
+                    bool small_bookmarks_rows = settings.get_boolean ("small-bookmarks-rows");
+                    if (small_bookmarks_rows)
+                    {
+                        if (!has_small_bookmarks_rows_class) context.add_class ("small-bookmarks-rows");
+                    }
+                    else if (has_small_bookmarks_rows_class) context.remove_class ("small-bookmarks-rows");
+                    has_small_bookmarks_rows_class = small_bookmarks_rows;
+                    bookmarks_controller.update_rows_size_button_icon (small_bookmarks_rows);
+                });
+
+            has_small_bookmarks_rows_class = settings.get_boolean ("small-bookmarks-rows");
+            if (has_small_bookmarks_rows_class)
+                context.add_class ("small-bookmarks-rows");
+            bookmarks_controller.update_rows_size_button_icon (has_small_bookmarks_rows_class);
+
+            destroy.connect (() => settings.disconnect (small_bookmarks_rows_handler));
+        }
+    }
 
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
+    [GtkCallback]
+    private void on_update_bookmarks_icons (Variant bookmarks_variant)
+    {
+        update_bookmarks_icons (bookmarks_variant);
+    }
 
     construct
     {
@@ -56,57 +88,34 @@ private class Bookmarks : MenuButton
 
         install_action_entries ();
 
-        settings = new GLib.Settings.with_path (schema_id, schema_path);
-        set_css_classes ();
-
-        bookmarks_changed_handler = settings.changed ["bookmarks"].connect (on_bookmarks_changed);
-        update_bookmarks (settings.get_value ("bookmarks"));
-
-        ulong bookmarks_writable_handler = settings.writable_changed ["bookmarks"].connect (set_switch_sensitivity);
-        set_switch_sensitivity ();
-
-        ulong clicked_handler = clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
-
-        destroy.connect (() => {
-                settings.disconnect (small_bookmarks_rows_handler);
-                settings.disconnect (bookmarks_changed_handler);
-                settings.disconnect (bookmarks_writable_handler);
-                disconnect (clicked_handler);
-            });
+        clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
     }
 
-    private ulong small_bookmarks_rows_handler = 0;
-    private bool has_small_bookmarks_rows_class = false;
-    private void set_css_classes ()
+    [GtkCallback]
+    private void on_bookmarks_changed (Variant bookmarks_variant, bool writable)
     {
-        StyleContext context = bookmarks_popover.get_style_context ();
-        small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
-                bool small_bookmarks_rows = settings.get_boolean ("small-bookmarks-rows");
-                if (small_bookmarks_rows)
-                {
-                    if (!has_small_bookmarks_rows_class) context.add_class ("small-bookmarks-rows");
-                }
-                else if (has_small_bookmarks_rows_class) context.remove_class ("small-bookmarks-rows");
-                has_small_bookmarks_rows_class = small_bookmarks_rows;
-                bookmarks_controller.update_rows_size_button_icon (small_bookmarks_rows);
-            });
-        has_small_bookmarks_rows_class = settings.get_boolean ("small-bookmarks-rows");
-        if (has_small_bookmarks_rows_class)
-            context.add_class ("small-bookmarks-rows");
-        bookmarks_controller.update_rows_size_button_icon (has_small_bookmarks_rows_class);
-    }
+        set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
 
-    private void on_bookmarks_changed (GLib.Settings _settings, string key)
-    {
-        Variant bookmarks_variant = _settings.get_value ("bookmarks");
-        update_bookmarks (bookmarks_variant);
+        if (bookmarks_variant.get_strv ().length == 0)
+        {
+            string? visible_child_name = edit_mode_stack.get_visible_child_name (); // do it like that
+            if (visible_child_name != null && (!) visible_child_name == "edit-mode-on")
+                leave_edit_mode ();
+        }
+
         update_icon_and_switch (bookmarks_variant);
-        set_switch_sensitivity ();
+        set_switch_sensitivity (writable);
     }
 
-    private void set_switch_sensitivity ()
+    [GtkCallback]
+    private void on_writability_changed (bool writable)
     {
-        if (settings.is_writable ("bookmarks"))
+        set_switch_sensitivity (writable);
+    }
+
+    private void set_switch_sensitivity (bool writable)
+    {
+        if (writable)
         {
             string? visible_child_name = edit_mode_stack.get_visible_child_name (); // do it like that
             if (visible_child_name != null && (!) visible_child_name == "edit-mode-disabled")
@@ -177,23 +186,13 @@ private class Bookmarks : MenuButton
         current_path = path;
         current_type = type;
 
-        update_icon_and_switch (settings.get_value ("bookmarks"));
+        update_icon_and_switch (bookmarks_list.get_bookmarks_as_variant ());
     }
 
     // for search
     internal string [] get_bookmarks ()
     {
-        string [] all_bookmarks = settings.get_strv ("bookmarks");
-        string [] unduplicated_bookmarks = {};
-        foreach (string bookmark in all_bookmarks)
-        {
-            if (DConfWindow.is_path_invalid (bookmark))
-                continue;
-            if (bookmark in unduplicated_bookmarks)
-                continue;
-            unduplicated_bookmarks += bookmark;
-        }
-        return unduplicated_bookmarks;
+        return bookmarks_list.get_bookmarks_as_array ();
     }
 
     // keyboard call
@@ -214,14 +213,14 @@ private class Bookmarks : MenuButton
     {
         if (bookmarked_switch.get_active ())
             return;
-        append_bookmark (settings, get_bookmark_name (current_path, current_type));
+        bookmarks_list.append_bookmark (current_path, current_type);
     }
 
     internal void unbookmark_current_path ()
     {
         if (!bookmarked_switch.get_active ())
             return;
-        remove_bookmark (settings, get_bookmark_name (current_path, current_type));
+        bookmarks_list.remove_bookmark (current_path, current_type);
     }
 
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
@@ -342,11 +341,7 @@ private class Bookmarks : MenuButton
 
     private void trash_bookmark (/* SimpleAction action, Variant? variant */)
     {
-        string [] bookmarks_to_remove;
-        bookmarks_list.trash_bookmark (out bookmarks_to_remove);
-
-        remove_bookmarks (settings, bookmarks_to_remove);
-        update_bookmarks_icons (settings.get_value ("bookmarks"));
+        bookmarks_list.trash_bookmark ();
     }
 
     private void set_small_rows (/* SimpleAction action, Variant? variant */)
@@ -356,30 +351,22 @@ private class Bookmarks : MenuButton
 
     private void move_top       (/* SimpleAction action, Variant? variant */)
     {
-        if (bookmarks_list.move_top ())
-            return;
-        update_bookmarks_after_move ();
+        bookmarks_list.move_top ();
     }
 
     private void move_up        (/* SimpleAction action, Variant? variant */)
     {
-        if (bookmarks_list.move_up ())
-            return;
-        update_bookmarks_after_move ();
+        bookmarks_list.move_up ();
     }
 
     private void move_down      (/* SimpleAction action, Variant? variant */)
     {
-        if (bookmarks_list.move_down ())
-            return;
-        update_bookmarks_after_move ();
+        bookmarks_list.move_down ();
     }
 
     private void move_bottom    (/* SimpleAction action, Variant? variant */)
     {
-        if (bookmarks_list.move_bottom ())
-            return;
-        update_bookmarks_after_move ();
+        bookmarks_list.move_bottom ();
     }
 
     private void bookmark (SimpleAction action, Variant? path_variant)
@@ -390,7 +377,7 @@ private class Bookmarks : MenuButton
         string bookmark;
         uint8 type;
         ((!) path_variant).@get ("(sy)", out bookmark, out type);
-        append_bookmark (settings, get_bookmark_name (bookmark, ViewType.from_byte (type)));
+        bookmarks_list.append_bookmark (bookmark, ViewType.from_byte (type));
     }
 
     private void unbookmark (SimpleAction action, Variant? path_variant)
@@ -401,27 +388,12 @@ private class Bookmarks : MenuButton
         string bookmark;
         uint8 type;
         ((!) path_variant).@get ("(sy)", out bookmark, out type);
-        remove_bookmark (settings, get_bookmark_name (bookmark, ViewType.from_byte (type)));
+        bookmarks_list.remove_bookmark (bookmark, ViewType.from_byte (type));
     }
 
     /*\
     * * Bookmarks management
     \*/
-
-    private void update_bookmarks_after_move ()
-    {
-        string [] new_bookmarks = bookmarks_list.get_bookmarks ();
-
-        string [] old_bookmarks = settings.get_strv ("bookmarks");  // be cool :-)
-        foreach (string bookmark in old_bookmarks)
-            if (!(bookmark in new_bookmarks))
-                new_bookmarks += bookmark;
-
-        SignalHandler.block (settings, bookmarks_changed_handler);
-        settings.set_strv ("bookmarks", new_bookmarks);
-        GLib.Settings.sync ();   // TODO better? really needed?
-        SignalHandler.unblock (settings, bookmarks_changed_handler);
-    }
 
     private const string bookmark_this_search_text = _("Bookmark this Search");
     private const string bookmark_this_location_text = _("Bookmark this Location");
@@ -436,7 +408,7 @@ private class Bookmarks : MenuButton
     private void update_icon_and_switch (Variant bookmarks_variant)
     {
         Variant variant = new Variant ("(sy)", current_path, ViewType.to_byte (current_type));
-        string bookmark_name = get_bookmark_name (current_path, current_type);
+        string bookmark_name = BookmarksList.get_bookmark_name (current_path, current_type);
         if (bookmark_name in bookmarks_variant.get_strv ())
         {
             if (bookmarks_icon.icon_name != "starred-symbolic")
@@ -458,59 +430,5 @@ private class Bookmarks : MenuButton
             return;
         bookmarked_switch.set_detailed_action_name ("ui.empty(('',byte 255))");
         bookmarked_switch.active = bookmarked;
-    }
-
-    private void update_bookmarks (Variant bookmarks_variant)
-    {
-        set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
-        bool no_bookmarks = bookmarks_list.create_bookmark_rows (bookmarks_variant);
-        if (no_bookmarks)
-        {
-            string? visible_child_name = edit_mode_stack.get_visible_child_name (); // do it like that
-            if (visible_child_name != null && (!) visible_child_name == "edit-mode-on")
-                leave_edit_mode ();
-        }
-    }
-
-    private static void append_bookmark (GLib.Settings settings, string bookmark_name)
-    {
-        string [] bookmarks = settings.get_strv ("bookmarks");
-        if (bookmark_name in bookmarks)
-            return;
-
-        bookmarks += bookmark_name;
-        settings.set_strv ("bookmarks", bookmarks);
-    }
-
-    private static void remove_bookmark (GLib.Settings settings, string bookmark_name)
-    {
-        string [] old_bookmarks = settings.get_strv ("bookmarks");
-        if (!(bookmark_name in old_bookmarks))
-            return;
-
-        string [] new_bookmarks = new string [0];
-        foreach (string bookmark in old_bookmarks)
-            if (bookmark != bookmark_name && !(bookmark in new_bookmarks))
-                new_bookmarks += bookmark;
-        settings.set_strv ("bookmarks", new_bookmarks);
-    }
-
-    private static void remove_bookmarks (GLib.Settings settings, string [] bookmarks_to_remove)
-    {
-        string [] old_bookmarks = settings.get_strv ("bookmarks");
-
-        string [] new_bookmarks = new string [0];
-        foreach (string bookmark in old_bookmarks)
-            if (!(bookmark in bookmarks_to_remove) && !(bookmark in new_bookmarks))
-                new_bookmarks += bookmark;
-        settings.set_strv ("bookmarks", new_bookmarks);
-    }
-
-    internal static inline string get_bookmark_name (string path, ViewType type)
-    {
-        if (type == ViewType.SEARCH)
-            return "?" + path;
-        else
-            return path;
     }
 }

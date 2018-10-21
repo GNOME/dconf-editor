@@ -89,7 +89,10 @@
             <property name="visible">True</property>
             <property name="allow-edit">True</property>
             <property name="big-placeholder">False</property>
-            <signal name="selection-changed" handler="on_selection_changed"/>
+            <signal name="writability-changed" handler="on_writability_changed"/>
+            <signal name="bookmarks-changed"   handler="on_bookmarks_changed"/>
+            <signal name="selection-changed"   handler="on_selection_changed"/>
+            <signal name="update_bookmarks_icons" handler="on_update_bookmarks_icons"/>
           </object>
         </child>
       </object>
