@@ -292,9 +292,12 @@ private class KeyListBoxRow : ClickableListBoxRow
 
     internal void toggle_boolean_key ()
     {
+        if (type_string != "b")
+            return;
         if (boolean_switch == null)
             return;
-        ((!) boolean_switch).activate ();
+        bool state = ((!) boolean_switch).get_active ();
+        ((!) boolean_switch).set_active (!state);
     }
 
     internal void change_dismissed ()

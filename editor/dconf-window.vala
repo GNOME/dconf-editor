@@ -1205,6 +1205,8 @@ private class DConfWindow : ApplicationWindow
     {
         if (headerbar.has_popover ())
             return;
+        if (browser_view.in_window_bookmarks)
+            return;
 
         browser_view.discard_row_popover ();
         browser_view.toggle_boolean_key ();
@@ -1213,6 +1215,8 @@ private class DConfWindow : ApplicationWindow
     private void set_to_default                         (/* SimpleAction action, Variant? variant */)
     {
         if (headerbar.has_popover ())
+            return;
+        if (browser_view.in_window_bookmarks)
             return;
 
         if (revealer.dismiss_selected_modification ())
