@@ -812,6 +812,8 @@ private class DConfWindow : ApplicationWindow
 
     private void hide_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
     {
+        if (browser_view.in_window_bookmarks_edit_mode)
+            leave_edit_mode ();     // TODO place after
         headerbar.hide_in_window_bookmarks ();
         browser_view.hide_in_window_bookmarks ();
     }
@@ -959,7 +961,7 @@ private class DConfWindow : ApplicationWindow
 
     private void enter_edit_mode ()
     {
-        edit_mode_state_action.set_state (true);
+        // edit_mode_state_action.change_state (true);
 
         update_actions ();
 
@@ -1175,7 +1177,14 @@ private class DConfWindow : ApplicationWindow
 
     private void escape_pressed                         (/* SimpleAction action, Variant? variant */)
     {
-        if (headerbar.search_mode_enabled)
+        if (browser_view.in_window_bookmarks)
+        {
+            if (browser_view.in_window_bookmarks_edit_mode)
+                leave_edit_mode ();
+            else
+                hide_in_window_bookmarks ();
+        }
+        else if (headerbar.search_mode_enabled)
             stop_search ();
         else if (current_type == ViewType.CONFIG)
             request_folder (current_path);
@@ -1434,6 +1443,9 @@ private class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)
     {
+        if (browser_view.in_window_bookmarks)
+            return false;
+
         uint keyval = event.keyval;
         string name = (!) (Gdk.keyval_name (keyval) ?? "");
 

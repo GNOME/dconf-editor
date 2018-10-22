@@ -202,7 +202,8 @@ private class BrowserView : Stack, AdaptativeWidget
     * * bookmarks
     \*/
 
-    internal bool in_window_bookmarks { internal get; private set; default = false; }
+    internal bool in_window_bookmarks           { internal get; private set; default = false; }
+    internal bool in_window_bookmarks_edit_mode { internal get; private set; default = false; }
 
     [GtkChild] private BookmarksList bookmarks_list;
     [GtkChild] private Grid          current_child_grid;
@@ -229,6 +230,8 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal void hide_in_window_bookmarks ()
     {
+        if (in_window_bookmarks_edit_mode)
+            leave_bookmarks_edit_mode ();
         in_window_bookmarks = false;
         set_visible_child (current_child_grid);
     }
@@ -237,11 +240,13 @@ private class BrowserView : Stack, AdaptativeWidget
         requires (in_window_bookmarks == true)
     {
         bookmarks_list.enter_edit_mode ();
+        in_window_bookmarks_edit_mode = true;
     }
 
     internal bool leave_bookmarks_edit_mode ()
         requires (in_window_bookmarks == true)
     {
+        in_window_bookmarks_edit_mode = false;
         return bookmarks_list.leave_edit_mode ();
     }
 
