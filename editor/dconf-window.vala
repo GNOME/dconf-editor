@@ -1064,6 +1064,9 @@ private class DConfWindow : ApplicationWindow
 
     private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
     {
+        if (browser_view.in_window_bookmarks) // TODO better
+            return;
+
         browser_view.discard_row_popover ();
 
         if (headerbar.search_mode_enabled)
@@ -1082,18 +1085,27 @@ private class DConfWindow : ApplicationWindow
 
     private void bookmark                               (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks) // TODO better
+            return;
+
         browser_view.discard_row_popover ();
         headerbar.bookmark_current_path ();
     }
 
     private void unbookmark                             (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks) // TODO better
+            return;
+
         browser_view.discard_row_popover ();
         headerbar.unbookmark_current_path ();
     }
 
     private void _toggle_search                         (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks) // TODO better
+            return;
+
         headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
         browser_view.discard_row_popover ();   // could be needed if headerbar.search_mode_enabled
 
@@ -1125,35 +1137,53 @@ private class DConfWindow : ApplicationWindow
 
     private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
     {
+        if (browser_view.in_window_bookmarks) // TODO better
+            return;
+
         if (browser_view.current_view == ViewType.FOLDER)
             request_config (current_path);
     }
 
     private void modifications_list                     (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         if (revealer.reveal_child)
             revealer.toggle_modifications_list ();
     }
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
     }
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
     }
 
     private void open_root                              (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         go_backward (true);
     }
 
     private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         if (browser_view.current_view == ViewType.CONFIG)
             request_folder (current_path);
         else
@@ -1162,11 +1192,17 @@ private class DConfWindow : ApplicationWindow
 
     private void open_child                             (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         go_forward (false);
     }
 
     private void open_last_child                        (/* SimpleAction action, Variant? variant */)
     {
+        if (browser_view.in_window_bookmarks)
+            return;
+
         go_forward (true);
     }
 
@@ -1192,7 +1228,7 @@ private class DConfWindow : ApplicationWindow
 
     private void menu_pressed                           (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.toggle_row_popover ())
+        if (browser_view.toggle_row_popover ()) // handles in-window bookmarks
             headerbar.close_popovers ();
         else
         {

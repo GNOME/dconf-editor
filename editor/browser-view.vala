@@ -422,7 +422,12 @@ private class BrowserView : Stack, AdaptativeWidget
             return current_child.down_pressed ();
     }
 
-    internal bool toggle_row_popover () { return current_child.toggle_row_popover (); }   // Menu
+    internal bool toggle_row_popover ()     // Menu
+    {
+        if (in_window_bookmarks)
+            return false;
+        return current_child.toggle_row_popover ();
+    }
 
     internal void toggle_boolean_key ()      { current_child.toggle_boolean_key ();      }
     internal void set_selected_to_default () { current_child.set_selected_to_default (); }
