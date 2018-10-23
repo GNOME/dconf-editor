@@ -365,13 +365,37 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 * * search entry
 \*/
 
-.extra-small-window .search-entry:dir(rtl) > image.right,
-.extra-small-window .search-entry:dir(ltr) > image.left {
-  margin-left:0;
-  margin-right:0;
-  padding-left:0;
+.extra-small-window .search-entry          > image {
+  padding-left :0;
   padding-right:0;
   min-width:0;
+}
+
+/* hide search image */
+.extra-small-window .search-entry:dir(rtl) > image.right,
+.extra-small-window .search-entry:dir(ltr) > image.left {
+  margin-left :0;
+  margin-right:0;
+}
+
+/* clear-text button: give more place for text */
+.extra-small-window .search-entry:dir(ltr) > image.right{
+  margin-right:0;
+  margin-left :4px;     /* instead of 6px */
+}
+.extra-small-window .search-entry:dir(rtl) > image.left {
+  margin-left :0;
+  margin-right:4px;     /* instead of 6px */
+}
+
+/* allows 3px less */
+.extra-small-window .search-entry:dir(ltr) {
+  padding-left :6px;    /* instead of 8px */
+  padding-right:7px;    /* instead of 8px */
+}
+.extra-small-window .search-entry:dir(rtl) {
+  padding-right:6px;    /* instead of 8px */
+  padding-left :7px;    /* instead of 8px */
 }
 
 /*\
