@@ -158,22 +158,29 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     [GtkChild] private Stack                bookmarks_stack;
     [GtkChild] private Label                bookmarks_label;
     [GtkChild] private BookmarksController  bookmarks_controller;
+    [GtkChild] private Button               hide_in_window_bookmarks_button;
+    [GtkChild] private Separator            bookmarks_actions_separator;
 
     bool in_window_bookmarks = false;
 
     internal void show_in_window_bookmarks ()
     {
         in_window_bookmarks = true;
+        info_button.hide ();
+        bookmarks_actions_separator.hide ();
         bookmarks_stack.hexpand = false;    // hack 1/3
         bookmarks_stack.set_visible_child (bookmarks_label);
-        update_hamburger_menu ();
+        hide_in_window_bookmarks_button.show ();
     }
 
     internal void hide_in_window_bookmarks ()
     {
+        hide_in_window_bookmarks_button.hide ();
+        bookmarks_actions_separator.hide ();
         in_window_bookmarks = false;
         bookmarks_stack.hexpand = false;    // hack 2/3
         bookmarks_stack.set_visible_child (path_widget);
+        info_button.show ();
         update_hamburger_menu ();
     }
 
@@ -181,6 +188,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         requires (in_window_bookmarks == true)
     {
         bookmarks_stack.hexpand = true;     // hack 3/3
+        bookmarks_actions_separator.show ();
         bookmarks_stack.set_visible_child (bookmarks_controller);
     }
 
@@ -262,7 +270,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         GLib.Menu section = new GLib.Menu ();
 
         if (in_window_bookmarks)
-            section.append (_("Hide bookmarks"), "ui.hide-in-window-bookmarks");
+            section.append (_("Hide bookmarks"), "ui.hide-in-window-bookmarks");    // button hidden in current design
         else
         {
             if (is_in_bookmarks)

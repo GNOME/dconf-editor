@@ -4,6 +4,27 @@
   <template class="BrowserHeaderBar" parent="GtkHeaderBar">
     <property name="show-close-button">True</property>
     <property name="has-subtitle">False</property>
+    <child>
+      <object class="GtkButton" id="hide_in_window_bookmarks_button">
+        <property name="visible">False</property>
+        <property name="action-name">ui.hide-in-window-bookmarks</property>
+        <style>
+          <class name="image-button"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">go-previous-symbolic</property> <!-- TODO 3/3 dialog-information-symbolic -->
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparator" id="bookmarks_actions_separator">
+        <property name="visible">False</property>
+      </object>
+    </child>
     <child type="title">
       <object class="GtkBox">
         <property name="visible">True</property>
