@@ -2,15 +2,15 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2012–2017.
+# Matej Urbančič <mateju@svn.gnome.org>, 2012–2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
 "editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-03-26 11:48+0000\n"
-"PO-Revision-Date: 2018-03-27 21:55+0200\n"
+"POT-Creation-Date: 2018-05-26 14:22+0000\n"
+"PO-Revision-Date: 2018-05-31 20:14+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -59,8 +59,6 @@ msgid "Remove this bookmark"
 msgstr "Odstrani zaznamek"
 
 #: editor/browser-view.vala:47
-#, fuzzy
-#| msgid "Sort preferences have changed. Do you want to reload the view?"
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr ""
 "Nastavitve razvrščanja so spremenjene. Ali želite ponovno naložiti pogled?"
@@ -70,22 +68,16 @@ msgid "Refresh"
 msgstr "Osveži"
 
 #: editor/browser-view.vala:49
-#, fuzzy
-#| msgid "Sort preferences have changed. Do you want to reload the view?"
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr ""
-"Nastavitve razvrščanja so spremenjene. Ali želite ponovno naložiti pogled?"
+msgstr "Vsebina mape je spremenjena. Ali želite ponovno naložiti pogled?"
 
 #: editor/browser-view.vala:50 editor/browser-view.vala:52
 msgid "Reload"
 msgstr "Ponovno naloži"
 
 #: editor/browser-view.vala:51
-#, fuzzy
-#| msgid "Sort preferences have changed. Do you want to reload the view?"
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
-"Nastavitve razvrščanja so spremenjene. Ali želite ponovno naložiti pogled?"
+msgstr "Lastnosti ključa so spremenjene. Ali želite ponovno naložiti pogled?"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -121,6 +113,11 @@ msgstr "Prebrskaj med ključi, ki jih uporabljajo nameščeni programi"
 msgid "Read keys descriptions and edit their values"
 msgstr "Preberi opise ključev in uredi vrednosti"
 
+#. a translatable version of project_group
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+msgid "The GNOME Project"
+msgstr "Projekt GNOME"
+
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
 #: editor/dconf-editor.vala:262 editor/dconf-editor.vala:476
 msgid "dconf Editor"
@@ -141,7 +138,6 @@ msgstr "nastavitve;konfiguracija;sistem;prilagajanje;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: editor/ca.desrt.dconf-editor.desktop.in:15
-#| msgid "dconf-editor"
 msgid "ca.desrt.dconf-editor"
 msgstr "ca.desrt.dconf-editor"
 
@@ -260,7 +256,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:151
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr ""
+msgstr "Uporabi dogodke gumbov miške »Nazaj« in »Naprej«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid ""
@@ -268,10 +264,12 @@ msgid ""
 "will determine if any action is taken inside of a browser window when either "
 "is pressed."
 msgstr ""
+"Za miške, ki imajo na voljo gumba »Naprej« in »Nazaj« in podpirajo ti "
+"funkciji, lahko ključ določi delovanje gumbov znotraj okna brskalnika."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:157
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr ""
+msgstr "Gumb miške za izvedbo ukaza »Nazaj« v oknu brskalnika"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:158
 msgid ""
@@ -279,10 +277,13 @@ msgid ""
 "will set which button activates the “Back” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr ""
+"Za miške, ki imajo na voljo gumba »Naprej« in »Nazaj« in podpirajo ti "
+"funkciji, lahko ključ določi izvedbo ukaza »Nazaj« znotraj okna brskalnika. "
+"Dovoljene vrednosti so med 6 in 14."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:163
 msgid "Mouse button to activate the “Forward” command in browser window"
-msgstr ""
+msgstr "Gumb miške za izvedbo ukaza »Naprej« v oknu brskalnika"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:164
 msgid ""
@@ -290,10 +291,13 @@ msgid ""
 "will set which button activates the “Forward” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr ""
+"Za miške, ki imajo na voljo gumba »Naprej« in »Nazaj« in podpirajo ti "
+"funkciji, lahko ključ določi izvedbo ukaza »Naprej« znotraj okna brskalnika. "
+"Dovoljene vrednosti so med 6 in 14."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "A flag to check for added or removed schemas"
-msgstr ""
+msgstr "Zastavica za preverjanje dodanih oziroma odstranjenih shem"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:169
 msgid ""
@@ -303,10 +307,15 @@ msgid ""
 "be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
 msgstr ""
+"Urejevalnik Dconf lahko nadzoruje dodajanje in odstranjevanje shem na več "
+"mestih. Opravilo se izvaja vsake tri sekunde, če se seznam shem spreminja. "
+"Ker tak pristop ni ravno optimalen, je mogoče možnost onemogočiti z "
+"nastavitvijo na vrednost »napak«. Možnost bo odstranjena, ko bo ugotovljen "
+"boljši način za to opravilo."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Enabled relocatable schema mapping facilities"
-msgstr ""
+msgstr "Omogočene so premakljive zmožnosti preslikave shem"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:174
 msgid ""
@@ -406,12 +415,6 @@ msgid "A D-Bus handle type, type ‘h’"
 msgstr "Ročnik vodila D-Bus, vrste »h«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:237
-#, fuzzy
-#| msgid ""
-#| "The handle type is a 32bit signed integer value that is, by convention, "
-#| "used as an index into an array of file descriptors that are sent "
-#| "alongside a D-Bus message. If you are not interacting with D-Bus, then "
-#| "there is no reason to make use of this type."
 msgid ""
 "The handle type is a 32-bit signed integer value that is, by convention, "
 "used as an index into an array of file descriptors that are sent alongside a "
@@ -419,8 +422,8 @@ msgid ""
 "reason to make use of this type."
 msgstr ""
 "Ročnik je 32-bitno podpisano celo število, ki je po pretvorbi uporabljeno "
-"kot kazalo za polje opisnika datoteke, poslano skupaj s sporočilom D-Bus. V "
-"kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
+"kot kazalo za polje opisnika datoteke, poslano skupaj s sporočilom vodila D-"
+"Bus. V kolikor z vodilom ni posebnih povezav, te vrste ni treba določati."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:241
 msgid "A D-Bus object path, type ‘o’"
@@ -488,8 +491,6 @@ msgid "A short integer, type ‘n’"
 msgstr "Kratko celo število, vpis »n«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:267
-#, fuzzy
-#| msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "16-bitno podpisano celo število. Oglejte si tudi ključ »integer-16-unsigned«."
@@ -509,8 +510,6 @@ msgid "An unsigned short integer, type ‘q’"
 msgstr "Nepodpisano kratko celo število vrste »q«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:277
-#, fuzzy
-#| msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-16-signed«."
@@ -521,8 +520,6 @@ msgid "An usual integer, type ‘i’"
 msgstr "Običajno celo število vrste »i«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
-#, fuzzy
-#| msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32-bitno podpisano celo število. Oglejte si tudi ključ »integer-32-unsigned«."
@@ -532,8 +529,6 @@ msgid "An unsigned usual integer, type ‘u’"
 msgstr "Nepodpisano običajno celo število, vpis »u«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:287
-#, fuzzy
-#| msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-32-signed«."
@@ -543,8 +538,6 @@ msgid "A long integer, type ‘x’"
 msgstr "Dolgo celo število vrste »x«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:292
-#, fuzzy
-#| msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64-bitno podpisano celo število. Oglejte si tudi ključ »integer-64-unsigned«."
@@ -554,8 +547,6 @@ msgid "An unsigned long integer, type ‘t’"
 msgstr "Nepodpisano dolgo celo število, vpis »t«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:297
-#, fuzzy
-#| msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64-bitno nepodpisano celo število. Oglejte si tudi ključ »integer-64-signed«"
@@ -579,19 +570,14 @@ msgid "A custom type, here ‘(ii)’"
 msgstr "Vrsta po meri, tukaj »(ii)«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:309
-#, fuzzy
-#| msgid ""
-#| "Dconf Editor lets you edit any settings type supported by GSettings, "
-#| "falling back on a string entry when it doesn’t have a better way to do. "
-#| "Here is a tuple of two 32bit signed integers."
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32-bit signed integers."
 msgstr ""
 "Urejevalnik Dconf omogoča urejanje katerekoli nastavitve, ki jo podpira "
-"okolje GSettings, se pa nastavitev povrne na vpisano vrednost, če ni drugače "
-"navedeno. Navedeno je urejen 32-bitni seznam."
+"okolje GSettings, se pa nastavitev povrne na privzeto vrednost, če ni "
+"drugače navedeno. Naveden je seznam 32-bitnih podpisanih celih števil."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:313
 msgid "A string, type ‘s’"
@@ -782,10 +768,8 @@ msgid "Print release version and exit"
 msgstr "Izpiši različico programa in končaj"
 
 #: editor/dconf-editor.vala:135
-#, fuzzy
-#| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
-msgstr "Izpiši različico programa in končaj"
+msgstr "Izpiši prenosljivo shemo in končaj"
 
 #: editor/dconf-editor.vala:137
 msgid "Do not show initial warning"
@@ -793,23 +777,23 @@ msgstr "Ne pokaži začetnega opozorila"
 
 #: editor/dconf-editor.vala:139
 msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-msgstr ""
+msgstr "[POT|DOLOČENA_SHEMA [KLJUČ]|PRENOSLJIVA_SHEMA:POT [KLJUČ]]"
 
 #: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
-msgstr ""
+msgstr "Znane nameščene sheme:"
 
 #: editor/dconf-editor.vala:234
 msgid "No known schemas installed."
-msgstr ""
+msgstr "Ni znanih nameščenih shem."
 
 #: editor/dconf-editor.vala:238
 msgid "Known schemas skipped:"
-msgstr ""
+msgstr "Preskočene znane sheme:"
 
 #: editor/dconf-editor.vala:243
 msgid "No known schemas skipped."
-msgstr ""
+msgstr "Ni preskočenih znanih shem."
 
 #: editor/dconf-editor.vala:247
 msgid "Unknown schemas:"
@@ -821,27 +805,28 @@ msgstr "Ni nobene neprepoznane sheme."
 
 #: editor/dconf-editor.vala:323
 msgid "Only one window can be opened for now.\n"
-msgstr ""
+msgstr "Trenutno je mogoče odpreti le eno okno.\n"
 
 #: editor/dconf-editor.vala:342
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "Neustrezen zapis: podano je preveliko število argumentov.\n"
 
 #: editor/dconf-editor.vala:352
 msgid "Cannot understand second argument in this context.\n"
-msgstr ""
+msgstr "Neustrezen zapis drugega argumenta v tem kontekstu.\n"
 
 #: editor/dconf-editor.vala:372
 msgid "Cannot understand: slash character in second argument.\n"
-msgstr ""
+msgstr "Neustrezen zapis: nepačno postavljena poševnica v drugem argumentu.\n"
 
 #: editor/dconf-editor.vala:386
 msgid "Schema path should start and end with a “/”.\n"
-msgstr ""
+msgstr "Pot sheme se mora začeti in končati z desno poševnico » / «.\n"
 
 #: editor/dconf-editor.vala:399
 msgid "Cannot understand: space character in argument.\n"
 msgstr ""
+"Neustrezen zapis: napačno postavljen presledni znak v drugem argumentu.\n"
 
 #. #. * * Copy action
 #. #: editor/dconf-editor.vala:423
@@ -850,7 +835,7 @@ msgstr "Kopirano v odložišče"
 
 #: editor/dconf-editor.vala:478
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr ""
+msgstr "Grafični pregledovalnik in urejevalnik notranjih nastavitev programov."
 
 #: editor/dconf-editor.vala:479
 msgid ""
@@ -873,7 +858,7 @@ msgstr "%s (ključ je izbrisan)"
 
 #: editor/dconf-view.vala:259
 msgid "Failed to parse as double."
-msgstr ""
+msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
 
 #: editor/dconf-view.vala:512 editor/dconf-view.vala:605
 msgid "This value is invalid for the key type."
@@ -881,15 +866,15 @@ msgstr "Vrednost je za to vrsto ključa neveljavna."
 
 #: editor/dconf-window.vala:115
 msgid "Schema is relocatable, a path is needed."
-msgstr ""
+msgstr "Shema je prenosljiva, treba pa je navesti pot."
 
 #: editor/dconf-window.vala:127
 msgid "Startup mappings are disabled."
-msgstr ""
+msgstr "Zagonsko preslikovanje je onemogočeno."
 
 #: editor/dconf-window.vala:141
 msgid "Schema is not installed on given path."
-msgstr ""
+msgstr "Shema ni nameščena na podani poti."
 
 #: editor/dconf-window.vala:156
 #, c-format
@@ -948,6 +933,8 @@ msgstr "Vpis način zamika"
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
+"Isti gumb miške je nastavljen za vračanje in nadaljevanje, zato ukaza ni "
+"mogoče izvesti."
 
 #: editor/dconf-window.vala:997
 #, c-format
@@ -955,10 +942,9 @@ msgid "Cannot find key “%s”."
 msgstr "Ni mogoče najti ključa »%s«."
 
 #: editor/dconf-window.vala:1001
-#, fuzzy, c-format
-#| msgid "Cannot find folder “%s”."
+#, c-format
 msgid "There’s nothing in requested folder “%s”."
-msgstr "Ni mogoče najti mape »%s«."
+msgstr "V zahtevani mapi »%s« ni vsebine."
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
@@ -1029,12 +1015,12 @@ msgstr "Odpre dejanja seznama ključev"
 #: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
-msgstr ""
+msgstr "Preklopi seznam sprememb"
 
 #: editor/help-overlay.ui:83
 msgctxt "shortcut window"
 msgid "Open selected row key"
-msgstr ""
+msgstr "Odpre izbran ključ vrstice"
 
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
@@ -1116,7 +1102,7 @@ msgstr "Ni podanega povzetka"
 
 #: editor/key-list-box-row.vala:481
 msgid "conflicting keys"
-msgstr ""
+msgstr "ključi v sporu"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:646
@@ -1181,7 +1167,7 @@ msgstr "Uveljavi"
 
 #: editor/modifications-revealer.ui:104
 msgid "Delayed setting changes will be shown here"
-msgstr ""
+msgstr "Zakasnjene spremembe nastavitve bodo pokazane na tem mestu."
 
 #: editor/modifications-revealer.vala:115
 #: editor/modifications-revealer.vala:279
@@ -1262,30 +1248,28 @@ msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
+"Ključ je določen in uporabljen v več kot eni shemi. To lahko povzroči "
+"napake. Vrednost urejate na lastno odgovornost."
 
 #: editor/registry-info.ui:69
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
 msgstr ""
+"Ključ je neskladno določen in uporabljen v več kot eni shemi. Vrednosti ni "
+"mogoče obravnavati na pomenski način."
 
 #: editor/registry-info.ui:106
-#, fuzzy
-#| msgid ""
-#| "No schema available. Dconf Editor can’t find a schema associated with "
-#| "this key. The application that installed this key may have been removed, "
-#| "may have stop the use of this key, or may use a relocatable schema for "
-#| "defining its keys."
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
 "Editor can’t find one associated with this key. If the application that was "
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
 msgstr ""
-"Na voljo ni ustrezne sheme. Urejevalnik ne prepozna sheme, vezane na ta "
-"ključ. Program, ki je ustvaril ključ, je morda odstranjen, lahko je s "
-"posodobitvijo ta ključ postal opuščen, ali pa po novem uporablja novo "
-"dodeljeno shemo za določanje ključev."
+"Na voljo ni nobene sheme. Shema je določilo, ki opisuje ključ, program "
+"Urejevalnik Dconf pa ne prepozna nobene sheme, povezane s tem ključem. "
+"Program, ki je uporablja ključ, je morda odstranjen ali pa je opuščen s "
+"posodobitvijo."
 
 #: editor/registry-info.ui:149
 msgid ""
@@ -1307,7 +1291,7 @@ msgstr ""
 
 #: editor/registry-info.vala:114
 msgid "Defined by"
-msgstr ""
+msgstr "Določeno z"
 
 #: editor/registry-info.vala:116
 msgid "Schema"
@@ -1347,6 +1331,8 @@ msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
 msgstr ""
+"Zaznane so definicije ključa, ki so v sporu. Pridobivanje vrednosti bi bilo "
+"problematično ali brez pomena."
 
 #: editor/registry-info.vala:161
 msgid "Current value"
@@ -1366,6 +1352,8 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"Uporabi piko kot ločilnik decimalne vrednosti in ne uporabi ločilnika "
+"tisočic. Uporabiti je mogoče zapis X.Ye+Z."
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:414
@@ -1406,7 +1394,7 @@ msgstr "Mape"
 
 #: editor/registry-search.vala:449
 msgid "Keys"
-msgstr ""
+msgstr "Ključi"
 
 #: editor/registry-view.vala:184
 msgid "No keys in this path"
@@ -1414,7 +1402,7 @@ msgstr "Na tej poti ni ključev"
 
 #: editor/registry-view.vala:251
 msgid "Keys not defined by a schema"
-msgstr ""
+msgstr "Ključi, ki niso določeni s shemo"
 
 #: editor/setting-object.vala:65
 msgid "Boolean"
@@ -1488,18 +1476,15 @@ msgstr "nič"
 
 #: editor/setting-object.vala:268
 msgid "DConf backend"
-msgstr ""
+msgstr "Ozadnji program DConf"
 
 #: editor/setting-object.vala:341
 msgid "Relocatable schema"
-msgstr ""
+msgstr "Prenosljiva shema"
 
 #: editor/setting-object.vala:341
 msgid "Schema with path"
-msgstr ""
-
-#~ msgid "The GNOME Project"
-#~ msgstr "Projekt GNOME"
+msgstr "Shema s potjo"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
