@@ -49,7 +49,7 @@ private class SimpleSettingObject : Object
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
-private class BrowserView : Grid
+private class BrowserView : Stack
 {
     internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
 
@@ -60,7 +60,7 @@ private class BrowserView : Grid
     private GLib.ListStore? key_model = null;
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
-    internal bool extra_small_window   { set { current_child.extra_small_window = value; }}
+    internal bool extra_small_window   { set { current_child.extra_small_window = value; if (!value) hide_in_window_bookmarks (); }}
 
     private ModificationsHandler _modifications_handler;
     internal ModificationsHandler modifications_handler
@@ -190,6 +190,79 @@ private class BrowserView : Grid
             modifications_handler.set_to_default (full_name, context_id);
         else
             modifications_handler.set_gsettings_key_value (full_name, context_id, new Variant.boolean (key_value_request));
+    }
+
+    /*\
+    * * bookmarks
+    \*/
+
+    [GtkChild] private ListBox bookmarks_list_box;
+    [GtkChild] private Grid    current_child_grid;
+
+    private HashTable<string, Bookmark> bookmarks_hashtable = new HashTable<string, Bookmark> (str_hash, str_equal);
+    private string [] old_bookmarks = new string [0];
+
+    internal void show_in_window_bookmarks (string [] bookmarks)
+    {
+        if (bookmarks != old_bookmarks)
+        {
+            bookmarks_list_box.@foreach ((widget) => widget.destroy ());
+            bookmarks_hashtable.remove_all ();
+
+            foreach (string bookmark in bookmarks)
+            {
+                Bookmark bookmark_row = new Bookmark (bookmark);
+                bookmark_row.show ();
+                bookmarks_hashtable.insert (bookmark, bookmark_row);
+                bookmarks_list_box.add (bookmark_row);
+            }
+        }
+        old_bookmarks = bookmarks;
+        set_visible_child (bookmarks_list_box);
+    }
+
+    internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
+    {
+        Bookmark? bookmark_row = bookmarks_hashtable.lookup (bookmark);
+        if (bookmark_row == null)
+            return;
+        Widget? bookmark_grid = ((!) bookmark_row).get_child ();
+        if (bookmark_grid == null)
+            assert_not_reached ();
+        _update_bookmark_icon (((!) bookmark_grid).get_style_context (), icon);
+    }
+    private static inline void _update_bookmark_icon (StyleContext context, BookmarkIcon icon)
+    {
+        switch (icon)
+        {
+            case BookmarkIcon.VALID_FOLDER: context.add_class ("folder");
+                return;
+            case BookmarkIcon.EMPTY_FOLDER: context.add_class ("folder");
+                                            context.add_class ("erase");
+                return;
+            case BookmarkIcon.SEARCH:       context.add_class ("search");
+                return;
+            case BookmarkIcon.EMPTY_OBJECT: context.add_class ("key");
+                                            context.add_class ("dconf-key");
+                                            context.add_class ("erase");
+                return;
+            case BookmarkIcon.DCONF_OBJECT: context.add_class ("key");
+                                            context.add_class ("dconf-key");
+                return;
+            case BookmarkIcon.KEY_DEFAULTS: context.add_class ("key");
+                                            context.add_class ("gsettings-key");
+                return;
+            case BookmarkIcon.EDITED_VALUE: context.add_class ("key");
+                                            context.add_class ("gsettings-key");
+                                            context.add_class ("edited");
+                return;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal void hide_in_window_bookmarks ()
+    {
+        set_visible_child (current_child_grid);
     }
 
     /*\

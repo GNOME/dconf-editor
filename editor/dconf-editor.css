@@ -84,6 +84,13 @@
   transition:all 0 ease;
 }
 
+/* hack: fix the double space when the child of the revealer is hidden; 6px is the spacing of the centerwidget box */
+.centerwidget:dir(ltr) .headerbar-revealer { padding-right:6px; }
+.centerwidget:dir(rtl) .headerbar-revealer { padding-left :6px; }
+
+.centerwidget:dir(ltr)                     { margin-right:-6px; }
+.centerwidget:dir(rtl)                     { margin-left :-6px; }
+
 /*\
 * * pending change list popover
 \*/

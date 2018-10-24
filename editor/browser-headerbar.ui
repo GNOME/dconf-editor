@@ -5,12 +5,55 @@
     <property name="show-close-button">True</property>
     <property name="has-subtitle">False</property>
     <child type="title">
-      <object class="PathWidget" id="path_widget">
+      <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="hexpand">False</property>
-        <signal name="search-changed" handler="search_changed_cb"/>
-        <signal name="search-stopped" handler="search_stopped_cb"/>
-        <signal name="update-bookmarks-icons" handler="update_bookmarks_icons_cb"/>
+        <property name="spacing">6</property>
+        <style>
+          <class name="centerwidget"/>
+        </style>
+        <child>
+          <object class="GtkStack" id="bookmarks_stack">
+            <property name="visible">True</property>
+            <property name="hhomogeneous">False</property>
+            <child>
+              <object class="PathWidget" id="path_widget">
+                <property name="visible">True</property>
+                <property name="hexpand">False</property>
+                <signal name="search-changed" handler="search_changed_cb"/>
+                <signal name="search-stopped" handler="search_stopped_cb"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="bookmarks_label">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Bookmarks</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkRevealer" id="bookmarks_revealer">
+            <property name="visible">True</property>
+            <property name="transition-type">slide-left</property>
+            <property name="reveal-child">True</property>
+            <style>
+              <class name="headerbar-revealer"/>
+            </style>
+            <child>
+              <object class="Bookmarks" id="bookmarks_button">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="focus-on-click">False</property>
+                <property name="schema-path">/ca/desrt/dconf-editor/</property>
+                <!-- <accelerator key="B" signal="activate" modifiers="GDK_CONTROL_MASK"/> TODO -->
+                <signal name="update-bookmarks-icons" handler="update_bookmarks_icons_cb"/>
+                <style>
+                  <class name="image-button"/> <!-- TODO https://bugzilla.gnome.org/show_bug.cgi?id=756731 -->
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
     <child>

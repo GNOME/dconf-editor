@@ -20,8 +20,11 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-headerbar.ui")]
 private class BrowserHeaderBar : HeaderBar
 {
-    [GtkChild] private MenuButton info_button;
-    [GtkChild] private PathWidget path_widget;
+    [GtkChild] private MenuButton   info_button;
+    [GtkChild] private PathWidget   path_widget;
+
+    [GtkChild] private Revealer     bookmarks_revealer;
+    [GtkChild] private Bookmarks    bookmarks_button;
 
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
@@ -30,7 +33,28 @@ private class BrowserHeaderBar : HeaderBar
     internal signal void search_stopped ();
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
 
-    internal bool extra_small_window    { set { path_widget.extra_small_window = value; }}
+    private bool _extra_small_window = false;
+    internal bool extra_small_window
+    {
+        get { return _extra_small_window; }
+        set
+        {
+            _extra_small_window = value;
+            bookmarks_button.active = false;
+            if (value)
+            {
+                bookmarks_button.sensitive = false;
+                bookmarks_revealer.set_reveal_child (false);
+            }
+            else
+            {
+                bookmarks_button.sensitive = true;
+                bookmarks_revealer.set_reveal_child (true);
+                hide_in_window_bookmarks ();
+            }
+            update_hamburger_menu (delay_mode);
+        }
+    }
 
     internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
     internal string complete_path       { get { return path_widget.complete_path; }}
@@ -38,9 +62,9 @@ private class BrowserHeaderBar : HeaderBar
     internal string text                { get { return path_widget.text; }}
 
     internal void toggle_pathbar_menu ()    { path_widget.toggle_pathbar_menu (); }
-    internal string [] get_bookmarks ()     { return path_widget.get_bookmarks (); }
+    internal string [] get_bookmarks ()     { return bookmarks_button.get_bookmarks (); }
 
-    internal void update_bookmark_icon (string bookmark, BookmarkIcon icon) { path_widget.update_bookmark_icon (bookmark, icon); }
+    internal void update_bookmark_icon (string bookmark, BookmarkIcon icon) { bookmarks_button.update_bookmark_icon (bookmark, icon); }
     internal void update_ghosts (string fallback_path)                      { path_widget.update_ghosts (fallback_path); }
     internal void prepare_search (PathEntry.SearchMode mode, string? search){ path_widget.prepare_search (mode, search); }
     internal string get_selected_child (string fallback_path)               { return path_widget.get_selected_child (fallback_path); }
@@ -59,10 +83,13 @@ private class BrowserHeaderBar : HeaderBar
         current_path = path;
 
         path_widget.set_path (type, path);
+        bookmarks_button.set_path (type, path);
     }
 
     internal bool has_popover ()
     {
+        if (bookmarks_button.active)
+            return true;
         if (info_button.active)
             return true;
         if (path_widget.has_popover ())
@@ -79,38 +106,100 @@ private class BrowserHeaderBar : HeaderBar
     {
         if (info_button.active)
             return;
-        path_widget.down_pressed ();
+        if (bookmarks_button.active)
+            bookmarks_button.down_pressed ();
     }
 
     internal void up_pressed ()
     {
         if (info_button.active)
             return;
-        path_widget.up_pressed ();
+        if (bookmarks_button.active)
+            bookmarks_button.up_pressed ();
     }
 
     internal void close_popovers ()
     {
         hide_hamburger_menu ();
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
         path_widget.close_popovers ();
     }
 
     internal void click_bookmarks_button ()
     {
         hide_hamburger_menu ();
-        path_widget.click_bookmarks_button ();
+        if (bookmarks_button.sensitive)
+            bookmarks_button.clicked ();
     }
 
     internal void bookmark_current_path ()
     {
         hide_hamburger_menu ();
-        path_widget.bookmark_current_path ();
+        bookmarks_button.bookmark_current_path ();
+        update_hamburger_menu ();
     }
 
     internal void unbookmark_current_path ()
     {
         hide_hamburger_menu ();
-        path_widget.unbookmark_current_path ();
+        bookmarks_button.unbookmark_current_path ();
+        update_hamburger_menu ();
+    }
+
+    construct
+    {
+        install_action_entries ();
+    }
+
+    /*\
+    * * in-window bookmarks
+    \*/
+
+    [GtkChild] private Stack bookmarks_stack;
+    [GtkChild] private Label bookmarks_label;
+
+    bool in_window_bookmarks = false;
+
+    internal void show_in_window_bookmarks ()
+    {
+        in_window_bookmarks = true;
+        bookmarks_stack.set_visible_child (bookmarks_label);
+        update_hamburger_menu ();
+    }
+
+    internal void hide_in_window_bookmarks ()
+    {
+        in_window_bookmarks = false;
+        bookmarks_stack.set_visible_child (path_widget);
+        update_hamburger_menu ();
+    }
+
+    /*\
+    * * action entries
+    \*/
+
+    private void install_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("headerbar", action_group);
+    }
+
+    private const GLib.ActionEntry [] action_entries =
+    {
+        {   "bookmark-current",   bookmark_current },
+        { "unbookmark-current", unbookmark_current }
+    };
+
+    private void bookmark_current (/* SimpleAction action, Variant? variant */)
+    {
+        bookmark_current_path ();
+    }
+
+    private void unbookmark_current (/* SimpleAction action, Variant? variant */)
+    {
+        unbookmark_current_path ();
     }
 
     /*\
@@ -132,8 +221,12 @@ private class BrowserHeaderBar : HeaderBar
         info_button.active = !info_button.active;
     }
 
-    internal void update_hamburger_menu (bool delay_mode)
+    private bool delay_mode = false;
+    internal void update_hamburger_menu (bool? new_delay_mode = null)
     {
+        if (new_delay_mode != null)
+            delay_mode = (!) new_delay_mode;
+
         GLib.Menu menu = new GLib.Menu ();
 
 /*        if (current_type == ViewType.OBJECT && !ModelUtils.is_folder_path (current_path))   // TODO a better way to copy various representations of a key name/value/path
@@ -143,11 +236,35 @@ private class BrowserHeaderBar : HeaderBar
         }
         else if (current_type != ViewType.SEARCH) */
 
-        append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);
+        if (extra_small_window)
+            append_bookmark_section (current_type, current_path, Bookmarks.get_bookmark_name (current_path, current_type) in get_bookmarks (), in_window_bookmarks, ref menu);
+
+        if (!in_window_bookmarks)
+            append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);
+
         append_app_actions_section (night_time, dark_theme, automatic_night_mode, ref menu);
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
+    }
+
+    private static void append_bookmark_section (ViewType current_type, string current_path, bool is_in_bookmarks, bool in_window_bookmarks, ref GLib.Menu menu)
+    {
+        GLib.Menu section = new GLib.Menu ();
+
+        if (in_window_bookmarks)
+            section.append (_("Hide bookmarks"), "ui.hide-in-window-bookmarks");
+        else
+        {
+            if (is_in_bookmarks)
+                section.append (_("Unbookmark"), "headerbar.unbookmark-current");
+            else
+                section.append (_("Bookmark"), "headerbar.bookmark-current");
+
+            section.append (_("Show bookmarks"), "ui.show-in-window-bookmarks");
+        }
+        section.freeze ();
+        menu.append_section (null, section);
     }
 
     private static void append_or_not_delay_mode_section (bool delay_mode, bool is_folder_view, string current_path, ref GLib.Menu menu)
@@ -184,10 +301,15 @@ private class BrowserHeaderBar : HeaderBar
             return;
 
         if (dark_theme)
+            /* Translators: there are three related actions: "use", "reuse" and "pause" */
             section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
+
         else if (auto_night)
+            /* Translators: there are three related actions: "use", "reuse" and "pause" */
             section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
+
         else
+            /* Translators: there are three related actions: "use", "reuse" and "pause" */
             section.append (_("Use night mode"), "app.set-use-night-mode(true)");
     }
 

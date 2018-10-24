@@ -248,14 +248,14 @@ private class Bookmarks : MenuButton
     {
         if (bookmarked_switch.get_active ())
             return;
-        append_bookmark (settings, current_path, current_type);
+        append_bookmark (settings, get_bookmark_name (current_path, current_type));
     }
 
     internal void unbookmark_current_path ()
     {
         if (!bookmarked_switch.get_active ())
             return;
-        remove_bookmark (settings, current_path, current_type);
+        remove_bookmark (settings, get_bookmark_name (current_path, current_type));
     }
 
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
@@ -599,7 +599,7 @@ private class Bookmarks : MenuButton
         string bookmark;
         uint8 type;
         ((!) path_variant).@get ("(sy)", out bookmark, out type);
-        append_bookmark (settings, bookmark, ViewType.from_byte (type));
+        append_bookmark (settings, get_bookmark_name (bookmark, ViewType.from_byte (type)));
     }
 
     private void unbookmark (SimpleAction action, Variant? path_variant)
@@ -610,7 +610,7 @@ private class Bookmarks : MenuButton
         string bookmark;
         uint8 type;
         ((!) path_variant).@get ("(sy)", out bookmark, out type);
-        remove_bookmark (settings, bookmark, ViewType.from_byte (type));
+        remove_bookmark (settings, get_bookmark_name (bookmark, ViewType.from_byte (type)));
     }
 
     /*\
@@ -742,9 +742,8 @@ private class Bookmarks : MenuButton
             bookmarks_list_box.select_row ((!) selected_row);
     }
 
-    private static void append_bookmark (GLib.Settings settings, string path, ViewType type)
+    private static void append_bookmark (GLib.Settings settings, string bookmark_name)
     {
-        string bookmark_name = get_bookmark_name (path, type);
         string [] bookmarks = settings.get_strv ("bookmarks");
         if (bookmark_name in bookmarks)
             return;
@@ -753,12 +752,7 @@ private class Bookmarks : MenuButton
         settings.set_strv ("bookmarks", bookmarks);
     }
 
-    private static void remove_bookmark (GLib.Settings settings, string path, ViewType type)
-    {
-        string bookmark_name = get_bookmark_name (path, type);
-        _remove_bookmark (settings, bookmark_name);
-    }
-    private static inline void _remove_bookmark (GLib.Settings settings, string bookmark_name)
+    private static void remove_bookmark (GLib.Settings settings, string bookmark_name)
     {
         string [] old_bookmarks = settings.get_strv ("bookmarks");
         if (!(bookmark_name in old_bookmarks))
@@ -782,7 +776,7 @@ private class Bookmarks : MenuButton
         settings.set_strv ("bookmarks", new_bookmarks);
     }
 
-    private static inline string get_bookmark_name (string path, ViewType type)
+    internal static inline string get_bookmark_name (string path, ViewType type)
     {
         if (type == ViewType.SEARCH)
             return "?" + path;

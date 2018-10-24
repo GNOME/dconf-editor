@@ -25,16 +25,8 @@ private class PathWidget : Box
     [GtkChild] private PathBar      pathbar;
     [GtkChild] private PathEntry    searchentry;
 
-    [GtkChild] private Bookmarks    bookmarks_button;
-
     internal signal void search_changed ();
     internal signal void search_stopped ();
-
-    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
-    construct
-    {
-        bookmarks_button.update_bookmarks_icons.connect ((bookmarks_variant) => update_bookmarks_icons (bookmarks_variant));
-    }
 
     /*\
     * * search mode
@@ -76,18 +68,6 @@ private class PathWidget : Box
     }
 
     /*\
-    * * phone mode
-    \*/
-
-    internal bool extra_small_window
-    {
-        set
-        {
-            bookmarks_button.active = false;
-        }
-    }
-
-    /*\
     * * proxy calls
     \*/
 
@@ -95,7 +75,6 @@ private class PathWidget : Box
     {
         pathbar.set_path (type, path);
         searchentry.set_path (type, path);
-        bookmarks_button.set_path (type, path);
 
         if (type == ViewType.SEARCH && !search_mode_enabled)
             enter_search_mode ();
@@ -105,29 +84,14 @@ private class PathWidget : Box
 
     internal void close_popovers ()
     {
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
         pathbar.close_menu ();
     }
 
     internal bool has_popover ()
     {
-        if (bookmarks_button.active)
-            return true;
         if (pathbar.has_popover ())
             return true;
         return false;
-    }
-
-    internal void down_pressed ()
-    {
-        if (bookmarks_button.active)
-            bookmarks_button.down_pressed ();
-    }
-    internal void up_pressed ()
-    {
-        if (bookmarks_button.active)
-            bookmarks_button.up_pressed ();
     }
 
     /* path bar */
@@ -168,26 +132,6 @@ private class PathWidget : Box
         searchentry.prepare (mode, search);
     }
 
-    /* bookmarks button */
-    internal string [] get_bookmarks ()
-    {
-        return bookmarks_button.get_bookmarks ();
-    }
-
-    internal void click_bookmarks_button ()
-    {
-        if (bookmarks_button.sensitive)
-            bookmarks_button.clicked ();
-    }
-
-    internal void   bookmark_current_path () {   bookmarks_button.bookmark_current_path (); }
-    internal void unbookmark_current_path () { bookmarks_button.unbookmark_current_path (); }
-
-    internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
-    {
-        bookmarks_button.update_bookmark_icon (bookmark, icon);
-    }
-
 /*      string [] tokens = full_name.split (" ");
         uint index = 0;
         string token;
@@ -203,12 +147,12 @@ private class PathWidget : Box
         } */
 
     /*\
-    * * sizing
+    * * sizing; TODO should be set by the center box of the headerbar, not by one of its child...
     \*/
 
     internal override void get_preferred_width (out int minimum_width, out int natural_width)
     {
         base.get_preferred_width (out minimum_width, out natural_width);
-        natural_width = MAX_ROW_WIDTH;  // see key-list-box-row.vala
+        natural_width = MAX_ROW_WIDTH - 38;  // see key-list-box-row.vala
     }
 }

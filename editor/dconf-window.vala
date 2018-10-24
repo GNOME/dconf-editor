@@ -126,7 +126,7 @@ private class DConfWindow : ApplicationWindow
         install_ui_action_entries ();
         install_kbd_action_entries ();
 
-        headerbar.update_bookmarks_icons.connect (_update_bookmarks_icons);
+        headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -365,13 +365,13 @@ private class DConfWindow : ApplicationWindow
     internal void night_time_changed (Object nlm, ParamSpec thing)
     {
         headerbar.night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
-        headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
+        headerbar.update_hamburger_menu ();
     }
 
     internal void dark_theme_changed (Object nlm, ParamSpec thing)
     {
         headerbar.dark_theme = ((NightLightMonitor) nlm).dark_theme;
-        headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
+        headerbar.update_hamburger_menu ();
     }
 
     internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
@@ -543,7 +543,8 @@ private class DConfWindow : ApplicationWindow
 
     private const GLib.ActionEntry [] ui_action_entries =
     {
-        { "empty", empty, "*" },
+        { "empty",      empty, "*" },
+        { "empty-null", empty },
 
         { "notify-folder-emptied", notify_folder_emptied, "s" },
         { "notify-object-deleted", notify_object_deleted, "(sq)" },
@@ -560,6 +561,9 @@ private class DConfWindow : ApplicationWindow
 
         { "toggle-search", toggle_search, "b" },
         { "update-bookmarks-icons", update_bookmarks_icons, "as" },
+
+        { "show-in-window-bookmarks", show_in_window_bookmarks },
+        { "hide-in-window-bookmarks", hide_in_window_bookmarks },
 
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
@@ -597,6 +601,7 @@ private class DConfWindow : ApplicationWindow
     private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
 
         string full_name = ((!) path_variant).get_string ();
@@ -607,6 +612,7 @@ private class DConfWindow : ApplicationWindow
     private void open_object (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
 
@@ -630,6 +636,7 @@ private class DConfWindow : ApplicationWindow
     private void open_search (SimpleAction action, Variant? search_variant)
         requires (search_variant != null)
     {
+        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
 
         string search = ((!) search_variant).get_string ();
@@ -640,6 +647,8 @@ private class DConfWindow : ApplicationWindow
     private void open_parent (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        hide_in_window_bookmarks ();
+
         string full_name = ((!) path_variant).get_string ();
         request_folder (ModelUtils.get_parent_path (full_name), full_name);
     }
@@ -672,12 +681,14 @@ private class DConfWindow : ApplicationWindow
     private void update_bookmarks_icons (SimpleAction action, Variant? bookmarks_variant)
         requires (bookmarks_variant != null)
     {
-        _update_bookmarks_icons ((!) bookmarks_variant);
+        update_bookmarks_icons_from_variant ((!) bookmarks_variant);
     }
-    private void _update_bookmarks_icons (Variant bookmarks_variant)
+    private void update_bookmarks_icons_from_variant (Variant variant)
     {
-        string [] bookmarks = ((!) bookmarks_variant).get_strv ();
-
+        update_bookmarks_icons_from_array (variant.get_strv ());
+    }
+    private void update_bookmarks_icons_from_array (string [] bookmarks)
+    {
         if (bookmarks.length == 0)
             return;
 
@@ -685,7 +696,7 @@ private class DConfWindow : ApplicationWindow
         {
             if (bookmark.has_prefix ("?"))  // TODO broken search
             {
-                headerbar.update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
+                update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
                 continue;
             }
             if (is_path_invalid (bookmark)) // TODO broken folder and broken object
@@ -698,16 +709,16 @@ private class DConfWindow : ApplicationWindow
             if (context_id == ModelUtils.folder_context_id)
             {
                 if (bookmark_exists)
-                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
+                    update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
                 else
-                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
+                    update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
                 continue;
             }
 
             if (!bookmark_exists)
-                headerbar.update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
+                update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
             else if (context_id == ModelUtils.dconf_context_id)
-                headerbar.update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
+                update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
             else
             {
                 RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
@@ -715,11 +726,32 @@ private class DConfWindow : ApplicationWindow
                 if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
                     assert_not_reached ();
                 if (is_default)
-                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
+                    update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
                 else
-                    headerbar.update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
+                    update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
             }
         }
+    }
+    private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
+    {
+        if (extra_small_window)
+            browser_view.update_bookmark_icon (bookmark, icon);
+        else
+            headerbar.update_bookmark_icon (bookmark, icon);
+    }
+
+    private void show_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.show_in_window_bookmarks ();
+        string [] bookmarks = headerbar.get_bookmarks ();
+        browser_view.show_in_window_bookmarks (bookmarks);
+        update_bookmarks_icons_from_array (bookmarks);
+    }
+
+    private void hide_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.hide_in_window_bookmarks ();
+        browser_view.hide_in_window_bookmarks ();
     }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)
