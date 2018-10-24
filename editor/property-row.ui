@@ -5,18 +5,19 @@
     <property name="visible">True</property>
     <property name="halign">center</property>
     <child>
-      <object class="GtkGrid" id="grid">
+      <object class="GtkOverlay" id="overlay">
         <property name="visible">True</property>
-        <property name="orientation">horizontal</property>
-        <child>
+        <child type="overlay">
           <object class="GtkLabel" id="name_label">
             <property name="visible">True</property>
+            <property name="hexpand">False</property>
+            <property name="halign">start</property>
             <property name="valign">start</property>
             <property name="vexpand">true</property>
             <property name="xalign">1</property>
             <property name="yalign">0</property>
             <style>
-              <class name="greyed-label"/>
+              <class name="property-name-label"/>
             </style>
           </object>
         </child>

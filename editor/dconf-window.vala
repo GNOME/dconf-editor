@@ -449,18 +449,27 @@ private class DConfWindow : ApplicationWindow
         StyleContext context = get_style_context ();
         if (allocation.width > MAX_ROW_WIDTH + 42)
         {
+            context.remove_class ("extra-small-window");
             context.remove_class ("small-window");
             context.add_class ("large-window");
+        }
+        else if (allocation.width < 590)
+        {
+            context.remove_class ("large-window");
+            context.add_class ("small-window");
+            context.add_class ("extra-small-window");
         }
         else if (allocation.width < 787)
         {
             context.remove_class ("large-window");
+            context.remove_class ("extra-small-window");
             context.add_class ("small-window");
         }
         else
         {
             context.remove_class ("large-window");
             context.remove_class ("small-window");
+            context.remove_class ("extra-small-window");
         }
 
         /* save size */

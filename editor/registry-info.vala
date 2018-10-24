@@ -216,6 +216,7 @@ private class RegistryInfo : Grid, BrowsableView
         current_value_label.xalign = 0;
         current_value_label.yalign = 0;
         current_value_label.wrap = true;
+        current_value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         current_value_label.hexpand = true;
         current_value_label.show ();
         add_row_from_widget (_("Current value"), current_value_label);
@@ -594,7 +595,7 @@ private class RegistryInfo : Grid, BrowsableView
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
 private class PropertyRow : ListBoxRowWrapper
 {
-    [GtkChild] private Grid grid;
+    [GtkChild] private Overlay overlay;
     [GtkChild] private Label name_label;
 
     private Widget? value_widget = null;
@@ -605,14 +606,21 @@ private class PropertyRow : ListBoxRowWrapper
 
         Label value_label = new Label (property_value);
         value_widget = value_label;
+        value_label.hexpand = true;
+        value_label.halign = Align.FILL;
         value_label.valign = Align.START;
         value_label.xalign = 0;
         value_label.yalign = 0;
         value_label.wrap = true;
+        value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+
+        StyleContext context = value_label.get_style_context ();
         if (use_italic)
-            value_label.get_style_context ().add_class ("italic-label");
+            context.add_class ("italic-label");
+        context.add_class ("property-value");
+
         value_label.show ();
-        grid.attach (value_label, 1, 0, 1, 1);
+        overlay.add (value_label);
     }
 
     internal PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
@@ -622,17 +630,25 @@ private class PropertyRow : ListBoxRowWrapper
         if (widget is Label)    // TODO handle other rows
             value_widget = widget;
 
-        grid.attach (widget, 1, 0, 1, 1);
-        widget.valign = Align.CENTER;
+        Grid grid = new Grid ();
+        grid.orientation = Orientation.VERTICAL;
+        grid.add (widget);
+
+        StyleContext context = grid.get_style_context ();
+        context.add_class ("property-value");
 
         if (warning != null)
         {
             ((!) warning).hexpand = true;
             ((!) warning).halign = Align.CENTER;
+            ((!) warning).get_style_context ().add_class ("property-warning");
             ((!) warning).show ();
-            grid.row_spacing = 4;
-            grid.attach ((!) warning, 0, 1, 2, 1);
+            grid.add ((!) warning);
         }
+
+        grid.show ();
+        overlay.add (grid);
+        grid.valign = Align.CENTER;
     }
 
     internal string? get_copy_text ()

@@ -108,7 +108,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         this.orientation = Orientation.HORIZONTAL;
         this.column_spacing = 8;
 
-        MenuButton button = new MenuButton ();
+        MenuButton button = new MenuButton ();  // TODO change icon when popover will go up
         button.visible = true;
         button.use_popover = true;
         button.halign = Align.START;
@@ -583,7 +583,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         this.snap_to_ticks = true;
         this.numeric = true;
         this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
-        this.width_chars = 30;
+        this.max_width_chars = 30;
 
         EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
         deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
@@ -803,6 +803,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 
         Label error_label = new Label (_("This value is invalid for the key type."));
         error_label.visible = true;
+        error_label.wrap = true;
         error_bar.pack_start (error_label);
 
         text_view.buffer.text = initial_value.print (false);

@@ -32,6 +32,7 @@
             <property name="visible">True</property>
             <property name="margin-start">6</property><!-- GtkActionBar creates a GtkBox which "spacing" property is not editable -->
             <property name="margin-end">6</property>
+            <property name="ellipsize">end</property>
           </object>
         </child>
         <child>
