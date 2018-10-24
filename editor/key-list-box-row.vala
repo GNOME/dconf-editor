@@ -54,6 +54,7 @@ private class ListBoxRowHeader : Grid
             Label label = new Label ((!) header_text);
             label.visible = true;
             label.halign = Align.START;
+            label.set_ellipsize (Pango.EllipsizeMode.END);
             StyleContext context = label.get_style_context ();
             context.add_class ("dim-label");
             context.add_class ("header-label");
@@ -177,6 +178,7 @@ private class KeyListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Grid key_name_and_value_grid;
     [GtkChild] private Label key_name_label;
+    [GtkChild] private Label key_type_label;
     [GtkChild] private Label key_value_label;
     [GtkChild] private Label key_info_label;
     private Switch? boolean_switch = null;
@@ -217,6 +219,30 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
+    private bool _extra_small_window = false;
+    internal bool extra_small_window
+    {
+        set
+        {
+            _extra_small_window = value;
+            if (value)
+            {
+                if (boolean_switch != null)
+                    ((!) boolean_switch).hide ();
+                key_value_label.hide ();
+                key_type_label.show ();
+            }
+            else
+            {
+                key_type_label.hide ();
+                if (_use_switch && !delay_mode)
+                    ((!) boolean_switch).show ();
+                else
+                    key_value_label.show ();
+            }
+        }
+    }
+
     construct
     {
         if (has_schema)
@@ -228,6 +254,7 @@ private class KeyListBoxRow : ClickableListBoxRow
         {
             boolean_switch = new Switch ();
             ((!) boolean_switch).can_focus = false;
+            ((!) boolean_switch).halign = Align.END;
             ((!) boolean_switch).valign = Align.CENTER;
             if (has_schema)
                 ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',uint16 0,true,true))");
@@ -325,22 +352,25 @@ private class KeyListBoxRow : ClickableListBoxRow
     * * Updating
     \*/
 
-    internal void update_label (string key_value_string, bool italic)
+    private bool key_value_label_has_italic_label_class = false;
+    private bool key_type_label_has_italic_label_class = false;
+    internal void update_label (string key_value_string, bool key_value_italic, string key_type_string, bool key_type_italic)
     {
-        if (italic)
+        if (key_value_italic)
         {
-            StyleContext context = key_value_label.get_style_context ();
-            if (!context.has_class ("italic-label"))
-                context.add_class ("italic-label");
+            if (!key_value_label_has_italic_label_class) key_value_label.get_style_context ().add_class ("italic-label");
         }
-        else
-        {
-            StyleContext context = key_value_label.get_style_context ();
-            if (context.has_class ("italic-label"))
-                context.remove_class ("italic-label");
-        }
-
+        else if (key_value_label_has_italic_label_class) key_value_label.get_style_context ().remove_class ("italic-label");
+        key_value_label_has_italic_label_class = key_value_italic;
         key_value_label.set_label (key_value_string);
+
+        if (key_type_italic)
+        {
+            if (!key_type_label_has_italic_label_class) key_type_label.get_style_context ().add_class ("italic-label");
+        }
+        else if (key_type_label_has_italic_label_class) key_type_label.get_style_context ().remove_class ("italic-label");
+        key_type_label_has_italic_label_class = key_type_italic;
+        key_type_label.set_label (key_type_string);
     }
 
     private bool _use_switch = false;
@@ -356,14 +386,22 @@ private class KeyListBoxRow : ClickableListBoxRow
     private void hide_or_show_switch ()
         requires (boolean_switch != null)
     {
-        if (_use_switch && !delay_mode)
+        if (_extra_small_window)
         {
             key_value_label.hide ();
+            ((!) boolean_switch).hide ();
+            key_type_label.show ();
+        }
+        else if (_use_switch && !delay_mode)
+        {
+            key_value_label.hide ();
+            key_type_label.hide ();
             ((!) boolean_switch).show ();
         }
         else
         {
             ((!) boolean_switch).hide ();
+            key_type_label.hide ();
             key_value_label.show ();
         }
     }

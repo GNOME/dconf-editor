@@ -162,7 +162,7 @@ private class RegistryInfo : Grid, BrowsableView
                                 tmp_bool);
         }
         /* Translators: as in datatype (integer, boolean, string, etc.) */
-        add_row_from_label (_("Type"),                                              Key.key_to_description (type_code));
+        add_row_from_label (_("Type"),                                              ModelUtils.key_to_description (type_code, true));
 
         bool range_type_is_range = false;
         uint8 range_type;

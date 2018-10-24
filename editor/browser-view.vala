@@ -60,6 +60,7 @@ private class BrowserView : Grid
     private GLib.ListStore? key_model = null;
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
+    internal bool extra_small_window   { set { current_child.extra_small_window = value; }}
 
     private ModificationsHandler _modifications_handler;
     internal ModificationsHandler modifications_handler

@@ -441,6 +441,7 @@ private class DConfWindow : ApplicationWindow
         return false;
     }
 
+    private bool extra_small_window = false;
     [GtkCallback]
     private void on_size_allocate (Allocation allocation)
     {
@@ -449,7 +450,12 @@ private class DConfWindow : ApplicationWindow
         StyleContext context = get_style_context ();
         if (allocation.width > MAX_ROW_WIDTH + 42)
         {
-            context.remove_class ("extra-small-window");
+            if (extra_small_window)
+            {
+                extra_small_window = false;
+                context.remove_class ("extra-small-window");
+                browser_view.extra_small_window = false;
+            }
             context.remove_class ("small-window");
             context.add_class ("large-window");
         }
@@ -457,19 +463,34 @@ private class DConfWindow : ApplicationWindow
         {
             context.remove_class ("large-window");
             context.add_class ("small-window");
-            context.add_class ("extra-small-window");
+            if (!extra_small_window)
+            {
+                extra_small_window = true;
+                context.add_class ("extra-small-window");
+                browser_view.extra_small_window = true;
+            }
         }
         else if (allocation.width < 787)
         {
             context.remove_class ("large-window");
-            context.remove_class ("extra-small-window");
+            if (extra_small_window)
+            {
+                extra_small_window = false;
+                context.remove_class ("extra-small-window");
+                browser_view.extra_small_window = false;
+            }
             context.add_class ("small-window");
         }
         else
         {
             context.remove_class ("large-window");
             context.remove_class ("small-window");
-            context.remove_class ("extra-small-window");
+            if (extra_small_window)
+            {
+                extra_small_window = false;
+                context.remove_class ("extra-small-window");
+                browser_view.extra_small_window = false;
+            }
         }
 
         /* save size */

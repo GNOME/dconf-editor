@@ -54,6 +54,20 @@ private abstract class RegistryList : Grid, BrowsableView
         }
     }
 
+    private bool _extra_small_window;
+    internal bool extra_small_window
+    {
+        set
+        {
+            _extra_small_window = value;
+            key_list_box.foreach ((row) => {
+                    Widget? row_child = ((ListBoxRow) row).get_child ();
+                    if (row_child != null && (!) row_child is KeyListBoxRow)
+                        ((KeyListBoxRow) (!) row_child).extra_small_window = value;
+                });
+        }
+    }
+
     protected void select_row_and_if_true_grab_focus (ListBoxRow row, bool grab_focus)
     {
         key_list_box.select_row (row);
@@ -380,6 +394,7 @@ private abstract class RegistryList : Grid, BrowsableView
 
             KeyListBoxRow key_row = create_key_list_box_row (full_name, context_id, properties, modifications_handler.get_current_delay_mode (), search_mode_non_local_result);
             key_row.small_keys_list_rows = _small_keys_list_rows;
+            key_row.extra_small_window = _extra_small_window;
 
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect ((_modifications_handler) => set_delayed_icon (_modifications_handler, key_row));
             set_delayed_icon (modifications_handler, key_row);
@@ -444,7 +459,7 @@ private abstract class RegistryList : Grid, BrowsableView
             else if (key_conflict == KeyConflict.HARD)
             {
                 row.get_style_context ().add_class ("hard-conflict");
-                row.update_label (_("conflicting keys"), true);
+                row.update_label (_("conflicting keys"), true, _("conflict"), true);
                 if (type_code == "b")
                     row.use_switch (false);
             }
@@ -532,14 +547,20 @@ private abstract class RegistryList : Grid, BrowsableView
             css_context.remove_class ("edited");
         else
             css_context.add_class ("edited");
-        row.update_label (Key.cool_text_value_from_variant (key_value), false);
+
+        string key_value_text = Key.cool_text_value_from_variant (key_value);
+        string key_type_label;
+        bool key_type_italic;
+        get_type_or_value (type_string, key_value_text, out key_type_label, out key_type_italic);
+
+        row.update_label (key_value_text, false, key_type_label, key_type_italic);
     }
 
     private static void update_dconf_row (KeyListBoxRow row, string type_string, Variant? key_value)
     {
         if (key_value == null)
         {
-            row.update_label (_("Key erased."), true);
+            row.update_label (_("key erased"), true, _("erased"), true);
             if (type_string == "b")
                 row.use_switch (false);
         }
@@ -552,7 +573,30 @@ private abstract class RegistryList : Grid, BrowsableView
                 row.update_switch (key_value_boolean, "bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
                 row.use_switch (true);
             }
-            row.update_label (Key.cool_text_value_from_variant ((!) key_value), false);
+
+            string key_value_text = Key.cool_text_value_from_variant ((!) key_value);
+            string key_type_label;
+            bool key_type_italic;
+            get_type_or_value (type_string, key_value_text, out key_type_label, out key_type_italic);
+            row.update_label (key_value_text, false, key_type_label, key_type_italic);
+        }
+    }
+
+    private static void get_type_or_value (string type_string, string key_value_text, out string key_type_label, out bool key_type_italic)
+    {
+        if (type_string == "b" || type_string == "mb" || type_string == "y" || type_string == "h" || type_string == "g" || type_string == "d" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u")
+        {
+            key_type_label = key_value_text;
+            key_type_italic = false;
+        }
+        else
+        {
+            key_type_label = ModelUtils.key_to_description (type_string, false);
+            if ((type_string != "<enum>")
+             && (type_string != "<flags>")
+             && (key_type_label == type_string || key_type_label.length > 12))
+                key_type_label = _("type “%s”").printf (type_string);
+            key_type_italic = true;
         }
     }
 

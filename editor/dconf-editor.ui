@@ -4,8 +4,8 @@
   <template class="DConfWindow" parent="GtkApplicationWindow">
     <property name="visible">False</property>
     <property name="title" translatable="yes">dconf Editor</property>
-    <property name="height-request">420</property>
-    <property name="width-request">550</property>
+    <property name="height-request">290</property> <!-- 294 max for Purism Librem 5 landscape -->
+    <property name="width-request">550</property>  <!-- 360 max for Purism Librem 5 portrait -->
     <signal name="key-press-event" handler="on_key_press_event"/>
     <signal name="button-press-event" handler="on_button_press_event"/>
     <signal name="window-state-event" handler="on_window_state_event"/>

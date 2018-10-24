@@ -56,48 +56,6 @@ private abstract class Key : SettingObject
     internal signal void value_changed ();
     internal ulong key_value_changed_handler = 0;
 
-    internal static string key_to_description (string type)   // TODO move in model-utils.vala
-    {
-        switch (type)
-        {
-            case "b":
-                return _("Boolean");
-            case "s":
-                return _("String");
-            case "as":
-                return _("String array");
-            case "<enum>":
-                return _("Enumeration");
-            case "<flags>":
-                return _("Flags");
-            case "d":
-                return _("Double");
-            case "h":
-                /* Translators: this handle type is an index; you may maintain the word "handle" */
-                return _("D-Bus handle type");
-            case "o":
-                return _("D-Bus object path");
-            case "ao":
-                return _("D-Bus object path array");
-            case "g":
-                return _("D-Bus signature");
-            case "y":       // TODO byte, bytestring, bytestring array
-            case "n":
-            case "q":
-            case "i":
-            case "u":
-            case "x":
-            case "t":
-                return _("Integer");
-            case "v":
-                return _("Variant");
-            case "()":
-                return _("Empty tuple");
-            default:
-                return type;
-        }
-    }
-
     protected static void get_min_and_max_string (out string min, out string max, string type_string)
     {
         switch (type_string)

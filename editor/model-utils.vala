@@ -195,4 +195,129 @@ namespace ModelUtils
         else
             return base_path + name;
     }
+
+    /*\
+    * * Types translations
+    \*/
+
+    internal static string key_to_description (string type, bool capitalized)
+    {
+        string untranslated1 = key_to_untranslated_description (type, capitalized);
+        string test = _(untranslated1);
+        if (test != untranslated1)
+            return test;
+
+        string untranslated2 = key_to_untranslated_description (type, !capitalized);
+        test = _(untranslated2);
+        if (test != untranslated2)
+            return test;
+
+        return untranslated1;
+    }
+
+    private static string key_to_untranslated_description (string type, bool capitalized)
+    {
+        switch (type)   // TODO byte, bytestring, bytestring array
+        {
+            case "b":       return capitalized ? "Boolean"      : "boolean";
+            case "s":       return capitalized ? "String"       : "string";
+            case "as":      return capitalized ? "String array" : "string array";
+            case "<enum>":  return capitalized ? "Enumeration"  : "enumeration";
+            case "<flags>": return capitalized ? "Flags"        : "flags";
+            case "d":       return capitalized ? "Double"       : "double";
+            case "h":       return "D-Bus handle type";
+            case "o":       return "D-Bus object path";
+            case "ao":      return "D-Bus object path array";
+            case "g":       return "D-Bus signature";
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":       return capitalized ? "Integer"      : "integer";
+            case "v":       return capitalized ? "Variant"      : "variant";
+            case "()":      return capitalized ? "Empty tuple"  : "empty tuple";
+            default:
+                return type;
+        }
+    }
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _B_ = _("Boolean");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _b_ = _("boolean");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _S_ = _("String");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _s_ = _("string");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _As_ = _("String array");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _as_ = _("string array");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _Enum_ = _("Enumeration");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _enum_ = _("enumeration");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _Flags_ = _("Flags");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _flags_ = _("flags");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _D_ = _("Double");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _d_ = _("double");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
+    private const string _H_ = _("D-Bus handle type");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
+    private const string _h_ = _("D-Bus handle type");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _O_ = _("D-Bus object path");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _o_ = _("D-Bus object path");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _Ao_ = _("D-Bus object path array");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _ao_ = _("D-Bus object path array");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _G_ = _("D-Bus signature");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _g_ = _("D-Bus signature");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _Integer_ = _("Integer");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _integer_ = _("integer");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _V_ = _("Variant");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _v_ = _("variant");
+
+    /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+    private const string _Empty_tuple_ = _("Empty tuple");
+
+    /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+    private const string _empty_tuple_ = _("empty tuple");
 }

@@ -36,6 +36,15 @@ private class BrowserStack : Grid
         }
     }
 
+    internal bool extra_small_window
+    {
+        set
+        {
+            folder_view.extra_small_window = value;
+            search_view.extra_small_window = value;
+        }
+    }
+
     internal ModificationsHandler modifications_handler
     {
         set {

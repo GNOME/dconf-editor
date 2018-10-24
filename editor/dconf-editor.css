@@ -106,8 +106,8 @@
                                    .keys-list:dir(ltr) > row > .key    > grid { padding-left: 10px; padding-right:20px; } /* looks cool */
                                    .keys-list:dir(rtl) > row > .key    > grid { padding-right:10px; padding-left: 20px; }
 
-                                   .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
-                                   .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
+window:not(.extra-small-window)    .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
+window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
 
 /* technical padding: icon visual padding + icon size + some padding */
                                    .keys-list          > row > .managed > grid  { transition:padding-left  0.3s,
