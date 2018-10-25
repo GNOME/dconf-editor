@@ -24,10 +24,9 @@
               <class name="padding-bottom"/>
             </style>
             <child type="placeholder">
-              <object class="RegistryPlaceholder">
+              <object class="RegistryPlaceholder" id="placeholder">
                 <property name="label" translatable="yes">Bookmarks will&#xA;be added here</property>
                 <property name="icon-name">starred-symbolic</property> <!-- or starred-symbolic? or dconf-editor-symbolic? -->
-                <property name="big">False</property>
               </object>
             </child>
           </object>

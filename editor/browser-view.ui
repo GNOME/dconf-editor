@@ -21,8 +21,10 @@
       </object>
     </child>
     <child>
-      <object class="GtkListBox" id="bookmarks_list_box">
+      <object class="BookmarksList" id="bookmarks_list">
         <property name="visible">True</property>
+        <property name="allow-edit">False</property>
+        <property name="big-placeholder">True</property>
       </object>
     </child>
   </template>

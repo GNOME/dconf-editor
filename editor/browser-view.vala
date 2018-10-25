@@ -202,72 +202,34 @@ private class BrowserView : Stack, AdaptativeWidget
     * * bookmarks
     \*/
 
-    [GtkChild] private ListBox bookmarks_list_box;
-    [GtkChild] private Grid    current_child_grid;
+    private bool in_window_bookmarks = false;
 
-    private HashTable<string, Bookmark> bookmarks_hashtable = new HashTable<string, Bookmark> (str_hash, str_equal);
+    [GtkChild] private BookmarksList bookmarks_list;
+    [GtkChild] private Grid          current_child_grid;
+
     private string [] old_bookmarks = new string [0];
 
     internal void show_in_window_bookmarks (string [] bookmarks)
     {
         if (bookmarks != old_bookmarks)
         {
-            bookmarks_list_box.@foreach ((widget) => widget.destroy ());
-            bookmarks_hashtable.remove_all ();
+            Variant variant = new Variant.strv (bookmarks);
+            bookmarks_list.create_bookmark_rows (variant);
 
-            foreach (string bookmark in bookmarks)
-            {
-                Bookmark bookmark_row = new Bookmark (bookmark);
-                bookmark_row.show ();
-                bookmarks_hashtable.insert (bookmark, bookmark_row);
-                bookmarks_list_box.add (bookmark_row);
-            }
+            old_bookmarks = bookmarks;
         }
-        old_bookmarks = bookmarks;
-        set_visible_child (bookmarks_list_box);
+        set_visible_child (bookmarks_list);
+        in_window_bookmarks = true;
     }
 
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
-        Bookmark? bookmark_row = bookmarks_hashtable.lookup (bookmark);
-        if (bookmark_row == null)
-            return;
-        Widget? bookmark_grid = ((!) bookmark_row).get_child ();
-        if (bookmark_grid == null)
-            assert_not_reached ();
-        _update_bookmark_icon (((!) bookmark_grid).get_style_context (), icon);
-    }
-    private static inline void _update_bookmark_icon (StyleContext context, BookmarkIcon icon)
-    {
-        switch (icon)
-        {
-            case BookmarkIcon.VALID_FOLDER: context.add_class ("folder");
-                return;
-            case BookmarkIcon.EMPTY_FOLDER: context.add_class ("folder");
-                                            context.add_class ("erase");
-                return;
-            case BookmarkIcon.SEARCH:       context.add_class ("search");
-                return;
-            case BookmarkIcon.EMPTY_OBJECT: context.add_class ("key");
-                                            context.add_class ("dconf-key");
-                                            context.add_class ("erase");
-                return;
-            case BookmarkIcon.DCONF_OBJECT: context.add_class ("key");
-                                            context.add_class ("dconf-key");
-                return;
-            case BookmarkIcon.KEY_DEFAULTS: context.add_class ("key");
-                                            context.add_class ("gsettings-key");
-                return;
-            case BookmarkIcon.EDITED_VALUE: context.add_class ("key");
-                                            context.add_class ("gsettings-key");
-                                            context.add_class ("edited");
-                return;
-            default: assert_not_reached ();
-        }
+        bookmarks_list.update_bookmark_icon (bookmark, icon);
     }
 
     internal void hide_in_window_bookmarks ()
     {
+        in_window_bookmarks = false;
         set_visible_child (current_child_grid);
     }
 
@@ -382,8 +344,26 @@ private class BrowserView : Stack, AdaptativeWidget
 
     // keyboard
     internal bool return_pressed ()   { return current_child.return_pressed ();   }
-    internal bool up_pressed ()       { return current_child.up_pressed ();       }
-    internal bool down_pressed ()     { return current_child.down_pressed ();     }
+    internal bool up_pressed ()
+    {
+        if (in_window_bookmarks)
+        {
+            bookmarks_list.up_pressed ();
+            return true;
+        }
+        else
+            return current_child.up_pressed ();
+    }
+    internal bool down_pressed ()
+    {
+        if (in_window_bookmarks)
+        {
+            bookmarks_list.down_pressed ();
+            return true;
+        }
+        else
+            return current_child.down_pressed ();
+    }
 
     internal bool toggle_row_popover () { return current_child.toggle_row_popover (); }   // Menu
 

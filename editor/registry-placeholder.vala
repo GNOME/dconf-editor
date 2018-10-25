@@ -25,18 +25,25 @@ private class RegistryPlaceholder : Grid
 
     public string label     { internal construct set { placeholder_label.label = value; }}
     public string icon_name { private get; internal construct; }
-    public bool big         { private get; internal construct; default = false; }
+    public bool big
+    {
+        internal construct set
+        {
+            if (value)
+            {
+                placeholder_image.pixel_size = 72;
+                get_style_context ().add_class ("big-popover");
+            }
+            else
+            {
+                placeholder_image.pixel_size = 36;
+                get_style_context ().remove_class ("big-popover");
+            }
+        }
+    }
 
     construct
     {
-        if (big)
-        {
-            placeholder_image.pixel_size = 72;
-            get_style_context ().add_class ("big-popover");
-        }
-        else
-            placeholder_image.pixel_size = 36;
-
         placeholder_image.icon_name = icon_name;
     }
 }

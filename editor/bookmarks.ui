@@ -87,6 +87,8 @@
         <child>
           <object class="BookmarksList" id="bookmarks_list">
             <property name="visible">True</property>
+            <property name="allow-edit">True</property>
+            <property name="big-placeholder">False</property>
             <signal name="selection-changed" handler="on_selection_changed"/>
           </object>
         </child>

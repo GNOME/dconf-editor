@@ -24,6 +24,11 @@ private class BookmarksList : Overlay
     [GtkChild] private ListBox          bookmarks_list_box;
     [GtkChild] private Box              edit_mode_box;
 
+    public bool allow_edit      { private get; internal construct; }
+
+    [GtkChild] private RegistryPlaceholder placeholder;
+    public bool big_placeholder { internal construct { placeholder.big = value; }}
+
     private HashTable<string, Bookmark> bookmarks_hashtable = new HashTable<string, Bookmark> (str_hash, str_equal);
     private Bookmark? last_row = null;
     private uint n_bookmarks = 0;
@@ -427,6 +432,9 @@ private class BookmarksList : Overlay
     [GtkCallback]
     private void on_content_changed ()
     {
+        if (!allow_edit)
+            return;
+
         List<weak Widget> widgets = bookmarks_list_box.get_children ();
         if (widgets.length () == 0)
             edit_mode_box.hide ();
