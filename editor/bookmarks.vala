@@ -32,17 +32,13 @@ internal enum BookmarkIcon {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
 private class Bookmarks : MenuButton
 {
-    [GtkChild] private ListBox bookmarks_list_box;
-    [GtkChild] private ScrolledWindow scrolled;
-    [GtkChild] private Popover bookmarks_popover;
-
-    [GtkChild] private Image bookmarks_icon;
-    [GtkChild] private Switch bookmarked_switch;
-    [GtkChild] private Label switch_label;
-
-    [GtkChild] private Stack edit_mode_stack;
-    [GtkChild] private Box edit_mode_box;
-    [GtkChild] private BookmarksController bookmarks_controller;
+    [GtkChild] private Image                bookmarks_icon;
+    [GtkChild] private Popover              bookmarks_popover;
+    [GtkChild] private Stack                edit_mode_stack;
+    [GtkChild] private BookmarksList        bookmarks_list;
+    [GtkChild] private Switch               bookmarked_switch;
+    [GtkChild] private Label                switch_label;
+    [GtkChild] private BookmarksController  bookmarks_controller;
 
     private string   current_path = "/";
     private ViewType current_type = ViewType.FOLDER;
@@ -51,10 +47,6 @@ private class Bookmarks : MenuButton
     public string schema_path { private get; internal construct; }
     private GLib.Settings settings;
     ulong bookmarks_changed_handler = 0;
-
-    private HashTable<string, Bookmark> bookmarks_hashtable = new HashTable<string, Bookmark> (str_hash, str_equal);
-    private Bookmark? last_row = null;
-    private uint n_bookmarks = 0;
 
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
 
@@ -123,7 +115,7 @@ private class Bookmarks : MenuButton
         else
         {
             edit_mode_stack.set_visible_child_name ("edit-mode-disabled");
-            bookmarks_list_box.grab_focus ();
+            bookmarks_list.grab_focus ();
         }
     }
 
@@ -146,12 +138,12 @@ private class Bookmarks : MenuButton
             {
                 if (name == "a")
                 {
-                    bookmarks_list_box.select_all ();
+                    bookmarks_list.select_all ();
                     return true;
                 }
                 if (name == "A")
                 {
-                    bookmarks_list_box.unselect_all ();
+                    bookmarks_list.unselect_all ();
                     return true;
                 }
             }
@@ -209,35 +201,13 @@ private class Bookmarks : MenuButton
     internal void down_pressed ()
         requires (active)
     {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            row = bookmarks_list_box.get_row_at_index (0);
-        else
-            row = bookmarks_list_box.get_row_at_index (((!) row).get_index () + 1);
-
-        if (row == null)
-            return;
-        bookmarks_list_box.select_row ((!) row);
-        ((!) row).grab_focus ();
+        bookmarks_list.down_pressed ();
     }
+
     internal void up_pressed ()
         requires (active)
     {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            row = last_row;
-        else
-        {
-            int index = ((!) row).get_index ();
-            if (index <= 0)
-                return;
-            row = bookmarks_list_box.get_row_at_index (index - 1);
-        }
-
-        if (row == null)
-            return;
-        bookmarks_list_box.select_row ((!) row);
-        ((!) row).grab_focus ();
+        bookmarks_list.up_pressed ();
     }
 
     internal void bookmark_current_path ()
@@ -256,41 +226,7 @@ private class Bookmarks : MenuButton
 
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
-        Bookmark? bookmark_row = bookmarks_hashtable.lookup (bookmark);
-        if (bookmark_row == null)
-            return;
-        Widget? bookmark_grid = ((!) bookmark_row).get_child ();
-        if (bookmark_grid == null)
-            assert_not_reached ();
-        _update_bookmark_icon (((!) bookmark_grid).get_style_context (), icon);
-    }
-    private static inline void _update_bookmark_icon (StyleContext context, BookmarkIcon icon)
-    {
-        switch (icon)
-        {
-            case BookmarkIcon.VALID_FOLDER: context.add_class ("folder");
-                return;
-            case BookmarkIcon.EMPTY_FOLDER: context.add_class ("folder");
-                                            context.add_class ("erase");
-                return;
-            case BookmarkIcon.SEARCH:       context.add_class ("search");
-                return;
-            case BookmarkIcon.EMPTY_OBJECT: context.add_class ("key");
-                                            context.add_class ("dconf-key");
-                                            context.add_class ("erase");
-                return;
-            case BookmarkIcon.DCONF_OBJECT: context.add_class ("key");
-                                            context.add_class ("dconf-key");
-                return;
-            case BookmarkIcon.KEY_DEFAULTS: context.add_class ("key");
-                                            context.add_class ("gsettings-key");
-                return;
-            case BookmarkIcon.EDITED_VALUE: context.add_class ("key");
-                                            context.add_class ("gsettings-key");
-                                            context.add_class ("edited");
-                return;
-            default: assert_not_reached ();
-        }
+        bookmarks_list.update_bookmark_icon (bookmark, icon);
     }
 
     /*\
@@ -308,11 +244,10 @@ private class Bookmarks : MenuButton
     private void update_actions ()
         requires (actions_init_done)
     {
-        List<weak ListBoxRow> selected_rows = bookmarks_list_box.get_selected_rows ();
-        uint n_selected_rows = selected_rows.length ();
+        BookmarksList.SelectionState selection_state = bookmarks_list.get_selection_state ();
 
-        bool has_selected_items = n_selected_rows > 0;
-        bool has_one_selected_item = n_selected_rows == 1;
+        bool has_selected_items = selection_state != BookmarksList.SelectionState.EMPTY;
+        bool has_one_selected_item = has_selected_items && (selection_state != BookmarksList.SelectionState.MULTIPLE);
 
         bool enable_move_top_action     = has_one_selected_item;    // TODO has_selected_items;
         bool enable_move_up_action      = has_one_selected_item;
@@ -321,13 +256,12 @@ private class Bookmarks : MenuButton
 
         if (has_one_selected_item)
         {
-            int index = selected_rows.nth_data (0).get_index ();
-            if (index == 0)
+            if (selection_state == BookmarksList.SelectionState.UNIQUE || selection_state == BookmarksList.SelectionState.FIRST)
             {
                 enable_move_top_action = false;
                 enable_move_up_action = false;
             }
-            if (bookmarks_list_box.get_row_at_index (index + 1) == null)
+            if (selection_state == BookmarksList.SelectionState.UNIQUE || selection_state == BookmarksList.SelectionState.LAST)
             {
                 enable_move_down_action = false;
                 enable_move_bottom_action = false;
@@ -391,11 +325,7 @@ private class Bookmarks : MenuButton
         update_actions ();
 
         edit_mode_stack.set_visible_child_name ("edit-mode-on");
-        bookmarks_list_box.grab_focus ();
-
-        bookmarks_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (false); });
-        bookmarks_list_box.set_activate_on_single_click (false);
-        bookmarks_list_box.set_selection_mode (SelectionMode.MULTIPLE);
+        bookmarks_list.enter_edit_mode ();
     }
 
     [GtkCallback]
@@ -403,60 +333,17 @@ private class Bookmarks : MenuButton
     {
         edit_mode_state_action.set_state (false);
 
-        ListBoxRow? row = (ListBoxRow?) bookmarks_list_box.get_focus_child ();  // broken, the child needs to have the global focus...
-        bool give_focus_to_switch = row == null;
-        if (give_focus_to_switch)
-        {
-            List<weak ListBoxRow> selected_rows = bookmarks_list_box.get_selected_rows ();
-            row = selected_rows.nth_data (0);
-        }
-
-        bookmarks_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (true); });
-        bookmarks_list_box.set_activate_on_single_click (true);
-        bookmarks_list_box.set_selection_mode (SelectionMode.SINGLE);
-
+        bool give_focus_to_switch = bookmarks_list.leave_edit_mode ();
         edit_mode_stack.set_visible_child_name ("edit-mode-off");
 
-        if (row != null)
-            select_row_for_real ((!) row);
         if (give_focus_to_switch)
             bookmarked_switch.grab_focus ();
     }
 
     private void trash_bookmark (/* SimpleAction action, Variant? variant */)
     {
-        ListBoxRow? row = (ListBoxRow?) bookmarks_list_box.get_focus_child ();
-        bool focused_row_will_survive = row != null && !((!) row).is_selected ();
-
-        string [] bookmarks_to_remove = new string [0];
-        int upper_index = int.MAX;
-        bookmarks_list_box.selected_foreach ((_list_box, selected_row) => {
-                if (!(selected_row is Bookmark))
-                    assert_not_reached ();
-                bookmarks_to_remove += ((Bookmark) selected_row).bookmark_name;
-
-                if (focused_row_will_survive)
-                    return;
-
-                int index = selected_row.get_index ();
-                if (upper_index > index)
-                    upper_index = index;
-            });
-        if (upper_index == int.MAX)
-            assert_not_reached ();
-
-        if (!focused_row_will_survive)
-        {
-            row = bookmarks_list_box.get_row_at_index (upper_index + 1);
-            if (row == null)
-            {
-                if (upper_index > 0)
-                    row = bookmarks_list_box.get_row_at_index (upper_index - 1);
-                // TODO else quit mode
-            }
-        }
-        if (row != null)
-            bookmarks_list_box.select_row ((!) row);
+        string [] bookmarks_to_remove;
+        bookmarks_list.trash_bookmark (out bookmarks_to_remove);
 
         remove_bookmarks (settings, bookmarks_to_remove);
         update_bookmarks_icons (settings.get_value ("bookmarks"));
@@ -469,128 +356,30 @@ private class Bookmarks : MenuButton
 
     private void move_top       (/* SimpleAction action, Variant? variant */)
     {
-//        bookmarks_list_box.selected_foreach ((_list_box, selected_row) => {
-
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            return; // TODO assert_not_reached?
-
-        int index = ((!) row).get_index ();
-        if (index < 0)
-            assert_not_reached ();
-
-        if (index == 0)
+        if (bookmarks_list.move_top ())
             return;
-        bookmarks_list_box.remove ((!) row);
-        bookmarks_list_box.prepend ((!) row);
-        select_row_for_real ((!) row);
-
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
-        adjustment.set_value (adjustment.get_lower ());
-
         update_bookmarks_after_move ();
     }
 
     private void move_up        (/* SimpleAction action, Variant? variant */)
     {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            return; // TODO assert_not_reached?
-
-        int index = ((!) row).get_index ();
-        if (index < 0)
-            assert_not_reached ();
-
-        if (index == 0)
+        if (bookmarks_list.move_up ())
             return;
-
-        ListBoxRow? prev_row = bookmarks_list_box.get_row_at_index (index - 1);
-        if (prev_row == null)
-            assert_not_reached ();
-
-        Allocation list_allocation, row_allocation;
-        scrolled.get_allocation (out list_allocation);
-        Widget? row_child = ((!) prev_row).get_child ();    // using prev_row as the allocation is not updated anyway
-        if (row_child == null)
-            assert_not_reached ();
-        ((!) row_child).get_allocation (out row_allocation);
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
-        int proposed_adjustemnt_value = row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 3.0);
-        bool should_adjust = adjustment.get_value () > proposed_adjustemnt_value;
-
-        bookmarks_list_box.unselect_row ((!) row);
-        bookmarks_list_box.remove ((!) prev_row);
-
-        if (should_adjust)
-            adjustment.set_value (proposed_adjustemnt_value);
-
-        bookmarks_list_box.insert ((!) prev_row, index);
-        bookmarks_list_box.select_row ((!) row);
-
         update_bookmarks_after_move ();
     }
 
     private void move_down      (/* SimpleAction action, Variant? variant */)
     {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            return; // TODO assert_not_reached?
-
-        int index = ((!) row).get_index ();
-        if (index < 0)
-            assert_not_reached ();
-
-        ListBoxRow? next_row = bookmarks_list_box.get_row_at_index (index + 1);
-        if (next_row == null)
+        if (bookmarks_list.move_down ())
             return;
-
-        Allocation list_allocation, row_allocation;
-        scrolled.get_allocation (out list_allocation);
-        Widget? row_child = ((!) next_row).get_child ();    // using next_row as the allocation is not updated
-        if (row_child == null)
-            assert_not_reached ();
-        ((!) row_child).get_allocation (out row_allocation);
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
-        int proposed_adjustemnt_value = row_allocation.y + (int) (2 * (row_allocation.height - list_allocation.height) / 3.0);
-        bool should_adjust = adjustment.get_value () < proposed_adjustemnt_value;
-
-        bookmarks_list_box.unselect_row ((!) row);
-        bookmarks_list_box.remove ((!) next_row);
-
-        if (should_adjust)
-            adjustment.set_value (proposed_adjustemnt_value);
-
-        bookmarks_list_box.insert ((!) next_row, index);
-        bookmarks_list_box.select_row ((!) row);
-
         update_bookmarks_after_move ();
     }
 
     private void move_bottom    (/* SimpleAction action, Variant? variant */)
     {
-//        bookmarks_list_box.selected_foreach ((_list_box, selected_row) => {
-
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            return; // TODO assert_not_reached?
-
-        int index = ((!) row).get_index ();
-        if (index < 0)
-            assert_not_reached ();
-
-        bookmarks_list_box.remove ((!) row);
-        bookmarks_list_box.insert ((!) row, -1);
-        select_row_for_real ((!) row);
-
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
-        adjustment.set_value (adjustment.get_upper ());
-
+        if (bookmarks_list.move_bottom ())
+            return;
         update_bookmarks_after_move ();
-    }
-    private void select_row_for_real (ListBoxRow row)   // ahem...
-    {
-        bookmarks_list_box.unselect_row (row);
-        bookmarks_list_box.select_row (row);
     }
 
     private void bookmark (SimpleAction action, Variant? path_variant)
@@ -621,8 +410,7 @@ private class Bookmarks : MenuButton
 
     private void update_bookmarks_after_move ()
     {
-        string [] new_bookmarks = new string [0];
-        bookmarks_list_box.@foreach ((widget) => { new_bookmarks += ((Bookmark) widget).bookmark_name; });
+        string [] new_bookmarks = bookmarks_list.get_bookmarks ();
 
         string [] old_bookmarks = settings.get_strv ("bookmarks");  // be cool :-)
         foreach (string bookmark in old_bookmarks)
@@ -672,74 +460,16 @@ private class Bookmarks : MenuButton
         bookmarked_switch.active = bookmarked;
     }
 
-    private bool has_empty_list_class = false;
     private void update_bookmarks (Variant bookmarks_variant)
     {
         set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
-        create_bookmark_rows (bookmarks_variant, ref bookmarks_list_box, ref bookmarks_hashtable, ref last_row, ref n_bookmarks);
-        if (n_bookmarks == 0)
+        bool no_bookmarks = bookmarks_list.create_bookmark_rows (bookmarks_variant);
+        if (no_bookmarks)
         {
             string? visible_child_name = edit_mode_stack.get_visible_child_name (); // do it like that
             if (visible_child_name != null && (!) visible_child_name == "edit-mode-on")
                 leave_edit_mode ();
-
-            if (!has_empty_list_class)
-            {
-                bookmarks_list_box.get_style_context ().add_class ("empty-list");
-                has_empty_list_class = true;
-            }
-
-            edit_mode_box.hide ();
         }
-        else
-        {
-            if (has_empty_list_class)
-            {
-                bookmarks_list_box.get_style_context ().remove_class ("empty-list");
-                has_empty_list_class = false;
-            }
-
-            edit_mode_box.show ();
-        }
-    }
-    private static void create_bookmark_rows (Variant bookmarks_variant, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable, ref Bookmark? last_row, ref uint n_bookmarks)
-    {
-        string saved_bookmark_name = "";
-        ListBoxRow? selected_row = bookmarks_list_box.get_selected_row ();
-        if (selected_row != null && ((!) selected_row) is Bookmark)
-            saved_bookmark_name = ((Bookmark) (!) selected_row).bookmark_name;
-        selected_row = null;
-
-        bookmarks_list_box.@foreach ((widget) => widget.destroy ());
-        bookmarks_hashtable.remove_all ();
-        last_row = null;
-        n_bookmarks = 0;
-
-        string [] bookmarks = bookmarks_variant.get_strv ();
-        string [] unduplicated_bookmarks = new string [0];
-        foreach (string bookmark in bookmarks)
-        {
-            if (DConfWindow.is_path_invalid (bookmark))
-                continue;
-            if (bookmark in unduplicated_bookmarks)
-                continue;
-            unduplicated_bookmarks += bookmark;
-
-            Bookmark bookmark_row = new Bookmark (bookmark);
-            bookmarks_list_box.add (bookmark_row);
-            bookmark_row.show ();
-            bookmarks_hashtable.insert (bookmark, bookmark_row);
-            last_row = bookmark_row;
-
-            if (saved_bookmark_name == bookmark)
-                selected_row = bookmark_row;
-            n_bookmarks ++;
-        }
-
-        if (selected_row == null)
-            selected_row = bookmarks_list_box.get_row_at_index (0);
-        if (selected_row != null)
-            bookmarks_list_box.select_row ((!) selected_row);
     }
 
     private static void append_bookmark (GLib.Settings settings, string bookmark_name)
@@ -782,96 +512,5 @@ private class Bookmarks : MenuButton
             return "?" + path;
         else
             return path;
-    }
-}
-
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
-private class Bookmark : ListBoxRow
-{
-    [GtkChild] private Label bookmark_label;
-
-    public string bookmark_name { internal get; internal construct; }
-
-    construct
-    {
-        string bookmark_text;
-        ViewType bookmark_type;
-        parse_bookmark_name (bookmark_name, out bookmark_text, out bookmark_type);
-
-        construct_actions_names (bookmark_text, bookmark_type, out detailed_action_name, out inactive_action_name);
-        set_actionable (true);
-
-        bookmark_label.set_label (bookmark_text);
-    }
-
-    internal Bookmark (string bookmark_name)
-    {
-        Object (bookmark_name: bookmark_name);
-    }
-
-    internal void set_actionable (bool actionable)
-    {
-        if (actionable)
-            set_detailed_action_name (detailed_action_name);
-        else
-            set_detailed_action_name (inactive_action_name);
-    }
-
-    /*\
-    * * Actions names
-    \*/
-
-    private string detailed_action_name;
-    private string inactive_action_name;
-
-    private static void construct_actions_names (string     bookmark_text,
-                                                 ViewType   bookmark_type,
-                                             out string     detailed_action_name,
-                                             out string     inactive_action_name)
-    {
-        switch (bookmark_type)
-        {
-            case ViewType.SEARCH:
-                Variant variant = new Variant.string (bookmark_text);
-                detailed_action_name = "ui.open-search(" + variant.print (false) + ")";
-                inactive_action_name = "ui.empty('')";
-                return;
-
-            case ViewType.FOLDER:
-                Variant variant = new Variant.string (bookmark_text);
-                detailed_action_name = "ui.open-folder(" + variant.print (false) + ")";
-                inactive_action_name = "ui.empty('')";
-                return;
-
-            case ViewType.OBJECT:
-                Variant variant = new Variant ("(sq)", bookmark_text, ModelUtils.undefined_context_id);  // TODO save context
-                detailed_action_name = "ui.open-object(" + variant.print (true) + ")";
-                inactive_action_name = "ui.empty(('',uint16 65535))";
-                return;
-
-            case ViewType.CONFIG:
-            default: assert_not_reached ();
-        }
-    }
-
-    private static void parse_bookmark_name (string     bookmark_name,
-                                         out string     bookmark_text,
-                                         out ViewType   bookmark_type)
-    {
-        if (bookmark_name.has_prefix ("?"))
-        {
-            bookmark_text = bookmark_name.slice (1, bookmark_name.length);
-            bookmark_type = ViewType.SEARCH;
-        }
-        else if (ModelUtils.is_folder_path (bookmark_name))
-        {
-            bookmark_text = bookmark_name;
-            bookmark_type = ViewType.FOLDER;
-        }
-        else
-        {
-            bookmark_text = bookmark_name;
-            bookmark_type = ViewType.OBJECT;
-        }
     }
 }

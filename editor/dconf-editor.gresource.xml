@@ -5,6 +5,7 @@
     <file preprocess="xml-stripblanks">bookmark.ui</file>
     <file preprocess="xml-stripblanks">bookmarks.ui</file>
     <file preprocess="xml-stripblanks">bookmarks-controller.ui</file>
+    <file preprocess="xml-stripblanks">bookmarks-list.ui</file>
     <file preprocess="xml-stripblanks">browser-headerbar.ui</file>
     <file preprocess="xml-stripblanks">browser-infobar.ui</file>
     <file preprocess="xml-stripblanks">browser-stack.ui</file>
