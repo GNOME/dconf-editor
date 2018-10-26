@@ -23,6 +23,7 @@
     <child>
       <object class="BookmarksList" id="bookmarks_list">
         <property name="visible">True</property>
+        <property name="needs-shadows">False</property>
         <property name="big-placeholder">True</property>
         <property name="edit-mode-action-prefix">bmk</property>
         <property name="schema-path">/ca/desrt/dconf-editor/</property>

@@ -88,6 +88,7 @@
         <child>
           <object class="BookmarksList" id="bookmarks_list">
             <property name="visible">True</property>
+            <property name="needs-shadows">True</property>
             <property name="big-placeholder">False</property>
             <property name="edit-mode-action-prefix">bookmarks</property>
             <signal name="writability-changed"    handler="on_writability_changed"/>

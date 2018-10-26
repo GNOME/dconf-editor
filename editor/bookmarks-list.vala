@@ -36,6 +36,17 @@ private class BookmarksList : Overlay
         }
     }
 
+    public bool needs_shadows
+    {
+        construct
+        {
+            if (value)
+                scrolled.shadow_type = ShadowType.ETCHED_IN;
+            else
+                scrolled.shadow_type = ShadowType.NONE;
+        }
+    }
+
     [GtkChild] private RegistryPlaceholder placeholder;
     public bool big_placeholder { internal construct { placeholder.big = value; }}
 
