@@ -35,14 +35,12 @@ private class ModificationsRevealer : Revealer
     [GtkChild] private ModelButton apply_button;
     [GtkChild] private MenuButton delayed_list_button;
     [GtkChild] private Popover delayed_settings_list_popover;
-    [GtkChild] private ListBox delayed_settings_listbox;
+    [GtkChild] private ModificationsList modifications_list;
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 
     construct
     {
-        delayed_settings_listbox.set_header_func (delayed_setting_row_update_header);
-
         apply_button.icon = null;
         apply_button.get_style_context ().add_class ("text-button");
     }
@@ -141,13 +139,10 @@ private class ModificationsRevealer : Revealer
         if (!delayed_list_button.active)
             return false;
 
-        ListBoxRow? selected_row = delayed_settings_listbox.get_selected_row ();
-        if (selected_row == null)
-            return false;
-
-        modifications_handler.dismiss_change (((DelayedSettingView) (!) ((!) selected_row).get_child ()).full_name);
-        update ();
-        return true;
+        bool dismissed = modifications_list.dismiss_selected_modification (modifications_handler);
+        if (dismissed)
+            update ();
+        return dismissed;
     }
 
     internal void hide_modifications_list ()
@@ -222,72 +217,18 @@ private class ModificationsRevealer : Revealer
         return wrapper;
     }
 
-    private void delayed_setting_row_update_header (ListBoxRow row, ListBoxRow? before)
-    {
-        string row_key_name = ((DelayedSettingView) row.get_child ()).full_name;
-        bool add_location_header = false;
-        if (before == null)
-            add_location_header = true;
-        else
-        {
-            string before_key_name = ((DelayedSettingView) ((!) before).get_child ()).full_name;
-
-            if (ModelUtils.get_parent_path (row_key_name) != ModelUtils.get_parent_path (before_key_name))
-                add_location_header = true;
-        }
-
-        if (add_location_header)
-        {
-            Grid location_header = new Grid ();
-            location_header.show ();
-            location_header.orientation = Orientation.VERTICAL;
-
-            Label location_header_label = new Label (ModelUtils.get_parent_path (row_key_name));
-            location_header_label.show ();
-            location_header_label.hexpand = true;
-            location_header_label.halign = Align.START;
-
-            StyleContext context = location_header_label.get_style_context ();
-            context.add_class ("dim-label");
-            context.add_class ("bold-label");
-            context.add_class ("list-row-header");
-
-            location_header.add (location_header_label);
-
-            Separator separator_header = new Separator (Orientation.HORIZONTAL);
-            separator_header.show ();
-            location_header.add (separator_header);
-
-            row.set_header (location_header);
-        }
-        else
-        {
-            Separator separator_header = new Separator (Orientation.HORIZONTAL);
-            separator_header.show ();
-            row.set_header (separator_header);
-        }
-    }
-
     /*\
     * * Updating values; TODO only works for watched keys...
     \*/
 
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        delayed_settings_listbox.foreach ((widget) => {
-                DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
-                if (row.full_name == full_name && row.context_id == context_id)
-                    row.update_gsettings_key_current_value (key_value, is_key_default);
-            });
+        modifications_list.gkey_value_push (full_name, context_id, key_value, is_key_default);
     }
 
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
-        delayed_settings_listbox.foreach ((widget) => {
-                DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
-                if (row.full_name == full_name)
-                    row.update_dconf_key_current_value (key_value_or_null);
-            });
+        modifications_list.dkey_value_push (full_name, key_value_or_null);
     }
 
     /*\
@@ -296,12 +237,11 @@ private class ModificationsRevealer : Revealer
 
     private void update ()
     {
-        GLib.ListStore modifications_list = modifications_handler.get_delayed_settings ();
-        delayed_settings_listbox.bind_model (modifications_list, delayed_setting_row_create);
-        if (modifications_list.get_n_items () == 0)
+        GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
+        modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
+
+        if (modifications_liststore.get_n_items () == 0)
             delayed_settings_list_popover.popdown ();
-        else
-            delayed_settings_listbox.select_row ((!) delayed_settings_listbox.get_row_at_index (0));
 
         if (modifications_handler.mode == ModificationsMode.NONE)
         {
