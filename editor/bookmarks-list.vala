@@ -24,7 +24,17 @@ private class BookmarksList : Overlay
     [GtkChild] private ListBox          bookmarks_list_box;
     [GtkChild] private Box              edit_mode_box;
 
-    public bool allow_edit      { private get; internal construct; }
+    [GtkChild] private ModelButton enter_edit_mode_button;
+    [GtkChild] private ModelButton leave_edit_mode_button;
+    public string edit_mode_action_prefix
+    {
+        construct
+        {
+            // TODO sanitize "value"
+            enter_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(true)");
+            leave_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(false)");
+        }
+    }
 
     [GtkChild] private RegistryPlaceholder placeholder;
     public bool big_placeholder { internal construct { placeholder.big = value; }}
@@ -44,9 +54,13 @@ private class BookmarksList : Overlay
             settings = new GLib.Settings.with_path (schema_id, value);
 
             bookmarks_changed_handler = settings.changed ["bookmarks"].connect (on_bookmarks_changed);
-            create_bookmark_rows (settings.get_value ("bookmarks"));
-
             ulong bookmarks_writable_handler = settings.writable_changed ["bookmarks"].connect (on_writability_changed);
+
+            Variant bookmarks_variant = settings.get_value ("bookmarks");
+            bool is_writable = settings.is_writable ("bookmarks");
+
+            create_bookmark_rows (bookmarks_variant);
+            edit_mode_box.set_visible (is_writable && !has_empty_list_class);
 
             bookmarks_changed (settings.get_value ("bookmarks"), settings.is_writable ("bookmarks"));
 
@@ -68,7 +82,9 @@ private class BookmarksList : Overlay
     internal signal void writability_changed (bool writable);
     private void on_writability_changed (GLib.Settings _settings, string key)
     {
-        writability_changed (_settings.is_writable (key));
+        bool is_writable = _settings.is_writable (key);
+        writability_changed (is_writable);
+        edit_mode_box.set_visible (is_writable);
     }
 
     internal signal void selection_changed ();
@@ -485,9 +501,6 @@ private class BookmarksList : Overlay
     [GtkCallback]
     private void on_content_changed ()
     {
-        if (!allow_edit)
-            return;
-
         List<weak Widget> widgets = bookmarks_list_box.get_children ();
         if (widgets.length () == 0)
             edit_mode_box.hide ();

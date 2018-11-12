@@ -17,10 +17,9 @@
     <property name="orientation">horizontal</property>
     <property name="column-spacing">6</property>
     <child>
-      <object class="GtkButton">
+      <object class="GtkButton" id="trash_bookmark_button">
         <property name="visible">True</property>
         <property name="halign">start</property>
-        <property name="action-name">bookmarks.trash-bookmark</property>
         <style>
           <class name="image-button"/>
         </style>
@@ -41,9 +40,8 @@
           <class name="linked"/>
         </style>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="move_top_button">
             <property name="visible">True</property>
-            <property name="action-name">bookmarks.move-top</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -57,9 +55,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="move_up_button">
             <property name="visible">True</property>
-            <property name="action-name">bookmarks.move-up</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -73,9 +70,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="move_down_button">
             <property name="visible">True</property>
-            <property name="action-name">bookmarks.move-down</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -89,9 +85,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="move_bottom_button">
             <property name="visible">True</property>
-            <property name="action-name">bookmarks.move-bottom</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -110,7 +105,7 @@
       <object class="GtkButton" id="rows_size_button">
         <property name="hexpand">True</property>
         <property name="halign">end</property>
-        <property name="action-name">bookmarks.set-small-rows</property>
+        <property name="action-name">bookmarks.set-small-rows</property> <!-- only used from popover, so keep this action -->
         <style>
           <class name="image-button"/>
         </style>

@@ -155,14 +155,16 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     * * in-window bookmarks
     \*/
 
-    [GtkChild] private Stack bookmarks_stack;
-    [GtkChild] private Label bookmarks_label;
+    [GtkChild] private Stack                bookmarks_stack;
+    [GtkChild] private Label                bookmarks_label;
+    [GtkChild] private BookmarksController  bookmarks_controller;
 
     bool in_window_bookmarks = false;
 
     internal void show_in_window_bookmarks ()
     {
         in_window_bookmarks = true;
+        bookmarks_stack.hexpand = false;    // hack 1/3
         bookmarks_stack.set_visible_child (bookmarks_label);
         update_hamburger_menu ();
     }
@@ -170,8 +172,16 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal void hide_in_window_bookmarks ()
     {
         in_window_bookmarks = false;
+        bookmarks_stack.hexpand = false;    // hack 2/3
         bookmarks_stack.set_visible_child (path_widget);
         update_hamburger_menu ();
+    }
+
+    internal void edit_in_window_bookmarks ()
+        requires (in_window_bookmarks == true)
+    {
+        bookmarks_stack.hexpand = true;     // hack 3/3
+        bookmarks_stack.set_visible_child (bookmarks_controller);
     }
 
     /*\

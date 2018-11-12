@@ -233,6 +233,58 @@ private class BrowserView : Stack, AdaptativeWidget
         set_visible_child (current_child_grid);
     }
 
+    internal void enter_bookmarks_edit_mode ()
+        requires (in_window_bookmarks == true)
+    {
+        bookmarks_list.enter_edit_mode ();
+    }
+
+    internal bool leave_bookmarks_edit_mode ()
+        requires (in_window_bookmarks == true)
+    {
+        return bookmarks_list.leave_edit_mode ();
+    }
+
+    internal BookmarksList.SelectionState get_bookmarks_selection_state ()
+    {
+        return bookmarks_list.get_selection_state ();
+    }
+
+    internal void trash_bookmark ()
+    {
+        bookmarks_list.trash_bookmark ();
+    }
+
+    internal void move_top ()
+    {
+        bookmarks_list.move_top ();
+    }
+
+    internal void move_up ()
+    {
+        bookmarks_list.move_up ();
+    }
+
+    internal void move_down ()
+    {
+        bookmarks_list.move_down ();
+    }
+
+    internal void move_bottom ()
+    {
+        bookmarks_list.move_bottom ();
+    }
+
+    [GtkCallback]
+    private void on_selection_changed ()
+    {
+        if (!in_window_bookmarks)
+            return;
+        bookmarks_selection_changed ();
+    }
+
+    internal signal void bookmarks_selection_changed ();
+
     /*\
     * * Views
     \*/

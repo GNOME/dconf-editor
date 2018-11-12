@@ -64,6 +64,7 @@
               <object class="BookmarksController" id="bookmarks_controller">
                 <property name="visible">True</property>
                 <property name="show-rows-size-button">True</property>
+                <property name="controller-action-prefix">bookmarks</property>
               </object>
               <packing>
                 <property name="name">edit-mode-on</property>
@@ -87,11 +88,11 @@
         <child>
           <object class="BookmarksList" id="bookmarks_list">
             <property name="visible">True</property>
-            <property name="allow-edit">True</property>
             <property name="big-placeholder">False</property>
-            <signal name="writability-changed" handler="on_writability_changed"/>
-            <signal name="bookmarks-changed"   handler="on_bookmarks_changed"/>
-            <signal name="selection-changed"   handler="on_selection_changed"/>
+            <property name="edit-mode-action-prefix">bookmarks</property>
+            <signal name="writability-changed"    handler="on_writability_changed"/>
+            <signal name="bookmarks-changed"      handler="on_bookmarks_changed"/>
+            <signal name="selection-changed"      handler="on_selection_changed"/>
             <signal name="update_bookmarks_icons" handler="on_update_bookmarks_icons"/>
           </object>
         </child>

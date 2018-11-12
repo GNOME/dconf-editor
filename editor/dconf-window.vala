@@ -136,6 +136,7 @@ private class DConfWindow : ApplicationWindow
 
         install_ui_action_entries ();
         install_kbd_action_entries ();
+        install_bmk_action_entries ();
 
         headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
 
@@ -869,6 +870,144 @@ private class DConfWindow : ApplicationWindow
     private void hide_notification (/* SimpleAction action, Variant? variant */)
     {
         notification_revealer.set_reveal_child (false);
+    }
+
+    /*\
+    * * bookmarks action entries
+    \*/
+
+    bool actions_init_done = false;
+    private SimpleAction move_top_action;
+    private SimpleAction move_up_action;
+    private SimpleAction move_down_action;
+    private SimpleAction move_bottom_action;
+    private SimpleAction trash_bookmark_action;
+    private SimpleAction edit_mode_state_action;
+
+    private void update_actions ()
+        requires (actions_init_done)
+    {
+        BookmarksList.SelectionState selection_state = browser_view.get_bookmarks_selection_state ();
+
+        bool has_selected_items = selection_state != BookmarksList.SelectionState.EMPTY;
+        bool has_one_selected_item = has_selected_items && (selection_state != BookmarksList.SelectionState.MULTIPLE);
+
+        bool enable_move_top_action     = has_one_selected_item;    // TODO has_selected_items;
+        bool enable_move_up_action      = has_one_selected_item;
+        bool enable_move_down_action    = has_one_selected_item;
+        bool enable_move_bottom_action  = has_one_selected_item;    // TODO has_selected_items;
+
+        if (has_one_selected_item)
+        {
+            if (selection_state == BookmarksList.SelectionState.UNIQUE || selection_state == BookmarksList.SelectionState.FIRST)
+            {
+                enable_move_top_action = false;
+                enable_move_up_action = false;
+            }
+            if (selection_state == BookmarksList.SelectionState.UNIQUE || selection_state == BookmarksList.SelectionState.LAST)
+            {
+                enable_move_down_action = false;
+                enable_move_bottom_action = false;
+            }
+        }
+
+               move_up_action.set_enabled (enable_move_up_action);
+              move_top_action.set_enabled (enable_move_top_action);
+             move_down_action.set_enabled (enable_move_down_action);
+           move_bottom_action.set_enabled (enable_move_bottom_action);
+        trash_bookmark_action.set_enabled (has_selected_items);
+    }
+
+    private void install_bmk_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (bmk_action_entries, this);
+        insert_action_group ("bmk", action_group);
+
+        move_top_action         = (SimpleAction) action_group.lookup_action ("move-top");
+        move_up_action          = (SimpleAction) action_group.lookup_action ("move-up");
+        move_down_action        = (SimpleAction) action_group.lookup_action ("move-down");
+        move_bottom_action      = (SimpleAction) action_group.lookup_action ("move-bottom");
+        trash_bookmark_action   = (SimpleAction) action_group.lookup_action ("trash-bookmark");
+        edit_mode_state_action  = (SimpleAction) action_group.lookup_action ("set-edit-mode");
+        actions_init_done = true;
+    }
+
+    private const GLib.ActionEntry [] bmk_action_entries =
+    {
+        { "set-edit-mode", set_edit_mode, "b", "false" },
+
+        { "trash-bookmark", trash_bookmark },
+
+        { "move-top",    move_top    },
+        { "move-up",     move_up     },
+        { "move-down",   move_down   },
+        { "move-bottom", move_bottom }
+    };
+
+    private void set_edit_mode (SimpleAction action, Variant? variant)
+        requires (variant != null)
+    {
+        bool new_state = ((!) variant).get_boolean ();
+        action.set_state (new_state);
+
+        if (new_state)
+            enter_edit_mode ();
+        else
+            leave_edit_mode ();
+    }
+
+    private void enter_edit_mode ()
+    {
+        edit_mode_state_action.set_state (true);
+
+        update_actions ();
+
+        headerbar.edit_in_window_bookmarks ();
+        browser_view.enter_bookmarks_edit_mode ();
+    }
+
+    private void leave_edit_mode ()
+    {
+        edit_mode_state_action.set_state (false);
+
+        bool give_focus_to_info_button = browser_view.leave_bookmarks_edit_mode ();
+        headerbar.show_in_window_bookmarks ();
+
+/*        if (give_focus_to_info_button)
+            info_button.grab_focus (); */
+    }
+
+    private void trash_bookmark (/* SimpleAction action, Variant? variant */)
+    {
+        browser_view.trash_bookmark ();
+//        update_bookmarks_icons_from_array (new_bookmarks);
+    }
+
+    private void move_top       (/* SimpleAction action, Variant? variant */)
+    {
+        browser_view.move_top ();
+    }
+
+    private void move_up        (/* SimpleAction action, Variant? variant */)
+    {
+        browser_view.move_up ();
+    }
+
+    private void move_down      (/* SimpleAction action, Variant? variant */)
+    {
+        browser_view.move_down ();
+    }
+
+    private void move_bottom    (/* SimpleAction action, Variant? variant */)
+    {
+        browser_view.move_bottom ();
+    }
+
+    [GtkCallback]
+    private void on_bookmarks_selection_changed ()
+    {
+        update_actions ();
     }
 
     /*\

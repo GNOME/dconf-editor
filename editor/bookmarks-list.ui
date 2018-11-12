@@ -44,14 +44,12 @@
           <class name="linked-circular"/>
         </style>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkModelButton" id="leave_edit_mode_button">
             <property name="visible">True</property>
             <property name="hexpand">True</property>
             <property name="centered">True</property>
             <property name="iconic">True</property>
             <property name="focus-on-click">False</property>
-            <property name="action-name">bookmarks.set-edit-mode</property>
-            <property name="action-target">false</property>
             <property name="text" translatable="yes">Use</property>
             <style>
               <class name="left-on-ltr"/>
@@ -59,14 +57,12 @@
           </object>
         </child>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkModelButton" id="enter_edit_mode_button">
             <property name="visible">True</property>
             <property name="hexpand">True</property>
             <property name="centered">True</property>
             <property name="iconic">True</property>
             <property name="focus-on-click">False</property>
-            <property name="action-name">bookmarks.set-edit-mode</property>
-            <property name="action-target">true</property>
             <property name="text" translatable="yes">Edit</property>
             <style>
               <class name="right-on-ltr"/>

@@ -26,6 +26,24 @@ private class BookmarksController : Grid
     [GtkChild] private Button rows_size_button;
     public bool show_rows_size_button { private get; construct; default = false; }
 
+    [GtkChild] private Button trash_bookmark_button;
+    [GtkChild] private Button move_top_button;
+    [GtkChild] private Button move_up_button;
+    [GtkChild] private Button move_down_button;
+    [GtkChild] private Button move_bottom_button;
+    public string controller_action_prefix
+    {
+        construct
+        {
+            // TODO sanitize "value"
+            trash_bookmark_button.set_detailed_action_name (value + ".trash-bookmark");
+            move_top_button.set_detailed_action_name (value + ".move-top");
+            move_up_button.set_detailed_action_name (value + ".move-up");
+            move_down_button.set_detailed_action_name (value + ".move-down");
+            move_bottom_button.set_detailed_action_name (value + ".move-bottom");
+        }
+    }
+
     construct
     {
         if (show_rows_size_button)      // TODO construct instead of hiding
