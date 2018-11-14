@@ -1,8 +1,12 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
+editor/adaptative-pathbar.vala
+editor/bookmarks-list.vala
 editor/bookmarks.ui
 editor/bookmarks.vala
 editor/bookmark.ui
+editor/browser-headerbar.ui
+editor/browser-headerbar.vala
 editor/browser-view.ui
 editor/browser-view.vala
 editor/ca.desrt.dconf-editor.appdata.xml.in
@@ -17,9 +21,10 @@ editor/delayed-setting-view.ui
 editor/delayed-setting-view.vala
 editor/help-overlay.ui
 editor/key-list-box-row.vala
+editor/model-utils.vala
+editor/modifications-list.vala
 editor/modifications-revealer.ui
 editor/modifications-revealer.vala
-editor/pathbar.vala
 editor/pathentry.ui
 editor/pathwidget.ui
 editor/registry-info.ui
@@ -28,3 +33,4 @@ editor/registry-list.vala
 editor/registry-search.vala
 editor/registry-view.vala
 editor/setting-object.vala
+editor/short-pathbar.ui
