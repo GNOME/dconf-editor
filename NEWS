@@ -1,3 +1,17 @@
+dconf-editor 3.31.2
+=====================
+
+Many changes in the UI (rough edges), including a great new editable pathbar, an
+improved bookmarks popover, a night mode, and (in progress) an ability to run on
+really small screens (phones like the future Librem 5 by Purism).
+
+Translations updated:
+  Catalan: Jordi Mas
+  Chinese (Taiwan): Yi-Jyun Pan
+  Czech: Marek Cernocky
+  Malayalam: Anish Sheela
+  Serbian: Марко М. Костић (Marko M. Kostić)
+
 dconf-editor 3.30.2
 =====================
 
