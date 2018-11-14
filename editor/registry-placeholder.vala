@@ -46,4 +46,9 @@ private class RegistryPlaceholder : Grid
     {
         placeholder_image.icon_name = icon_name;
     }
+
+    internal RegistryPlaceholder (string _icon_name, string _label, bool _big)
+    {
+        Object (icon_name:_icon_name, label: _label, big: _big);
+    }
 }

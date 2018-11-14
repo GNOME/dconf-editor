@@ -17,46 +17,23 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks-list.ui")]
-private class BookmarksList : Overlay
+private class BookmarksList : OverlayedList
 {
-    [GtkChild] private ScrolledWindow   scrolled;
-    [GtkChild] private ListBox          bookmarks_list_box;
-    [GtkChild] private Box              edit_mode_box;
-
-    [GtkChild] private ModelButton enter_edit_mode_button;
-    [GtkChild] private ModelButton leave_edit_mode_button;
-    public string edit_mode_action_prefix
-    {
-        construct
-        {
-            // TODO sanitize "value"
-            enter_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(true)");
-            leave_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(false)");
-        }
-    }
-
-    public bool needs_shadows
-    {
-        construct
-        {
-            if (value)
-                scrolled.shadow_type = ShadowType.ETCHED_IN;
-            else
-                scrolled.shadow_type = ShadowType.NONE;
-        }
-    }
-
-    [GtkChild] private RegistryPlaceholder placeholder;
-    public bool big_placeholder { internal construct { placeholder.big = value; }}
-
     private HashTable<string, Bookmark> bookmarks_hashtable = new HashTable<string, Bookmark> (str_hash, str_equal);
-    private Bookmark? last_row = null;
-    private uint n_bookmarks = 0;
 
     private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
     private GLib.Settings settings;
     ulong bookmarks_changed_handler = 0;
+
+    construct
+    {
+        placeholder_icon = "starred-symbolic";
+        placeholder_text = _("Bookmarks will\nbe added here");
+        add_placeholder ();
+
+        first_mode_name = _("Use");
+        second_mode_name = _("Edit");
+    }
 
     public string schema_path
     {
@@ -71,9 +48,9 @@ private class BookmarksList : Overlay
             bool is_writable = settings.is_writable ("bookmarks");
 
             create_bookmark_rows (bookmarks_variant);
-            edit_mode_box.set_visible (is_writable && !has_empty_list_class);
+            change_editability (is_writable);
 
-            bookmarks_changed (settings.get_value ("bookmarks"), settings.is_writable ("bookmarks"));
+            bookmarks_changed (bookmarks_variant, is_writable);
 
             destroy.connect (() => {
                     settings.disconnect (bookmarks_changed_handler);
@@ -83,10 +60,12 @@ private class BookmarksList : Overlay
     }
 
     internal signal void bookmarks_changed (Variant bookmarks_variant, bool writable);
+    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
     private void on_bookmarks_changed (GLib.Settings _settings, string key)
     {
         Variant bookmarks_variant = _settings.get_value (key);
         create_bookmark_rows (bookmarks_variant);
+        update_bookmarks_icons (bookmarks_variant); // FIXME flickering
         bookmarks_changed (bookmarks_variant, _settings.is_writable (key));
     }
 
@@ -95,65 +74,32 @@ private class BookmarksList : Overlay
     {
         bool is_writable = _settings.is_writable (key);
         writability_changed (is_writable);
-        edit_mode_box.set_visible (is_writable);
-    }
-
-    internal signal void selection_changed ();
-
-    internal enum SelectionState {
-        EMPTY,
-        UNIQUE,
-        FIRST,
-        LAST,
-        MIDDLE,
-        MULTIPLE
-    }
-
-    internal SelectionState get_selection_state ()
-    {
-        List<weak ListBoxRow> selected_rows = bookmarks_list_box.get_selected_rows ();
-        uint n_selected_rows = selected_rows.length ();
-
-        if (n_selected_rows == 0)
-            return SelectionState.EMPTY;
-        if (n_selected_rows >= 2)
-            return SelectionState.MULTIPLE;
-
-        int index = selected_rows.nth_data (0).get_index ();
-        bool is_first = index == 0;
-        bool is_last = bookmarks_list_box.get_row_at_index (index + 1) == null;
-        if (is_first && is_last)
-            return SelectionState.UNIQUE;
-        if (is_first)
-            return SelectionState.FIRST;
-        if (is_last)
-            return SelectionState.LAST;
-        return SelectionState.MIDDLE;
+        change_editability (is_writable);
     }
 
     internal void enter_edit_mode ()
     {
-        bookmarks_list_box.grab_focus ();
+        main_list_box.grab_focus ();
 
-        bookmarks_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (false); });
-        bookmarks_list_box.set_activate_on_single_click (false);
-        bookmarks_list_box.set_selection_mode (SelectionMode.MULTIPLE);
+        main_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (false); });
+        main_list_box.set_activate_on_single_click (false);
+        main_list_box.set_selection_mode (SelectionMode.MULTIPLE);
     }
 
     internal bool leave_edit_mode ()
     {
 
-        ListBoxRow? row = (ListBoxRow?) bookmarks_list_box.get_focus_child ();  // broken, the child needs to have the global focus...
+        ListBoxRow? row = (ListBoxRow?) main_list_box.get_focus_child ();  // broken, the child needs to have the global focus...
         bool give_focus_to_switch = row == null;
         if (give_focus_to_switch)
         {
-            List<weak ListBoxRow> selected_rows = bookmarks_list_box.get_selected_rows ();
+            List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
             row = selected_rows.nth_data (0);
         }
 
-        bookmarks_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (true); });
-        bookmarks_list_box.set_activate_on_single_click (true);
-        bookmarks_list_box.set_selection_mode (SelectionMode.SINGLE);
+        main_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (true); });
+        main_list_box.set_activate_on_single_click (true);
+        main_list_box.set_selection_mode (SelectionMode.SINGLE);
 
         if (row != null)
             select_row_for_real ((!) row);
@@ -181,39 +127,21 @@ private class BookmarksList : Overlay
         return unduplicated_bookmarks;
     }
 
-    private bool has_empty_list_class = false;
     internal bool create_bookmark_rows (Variant bookmarks_variant)
     {
-        _create_bookmark_rows (bookmarks_variant, ref bookmarks_list_box, ref bookmarks_hashtable, ref last_row, ref n_bookmarks);
-        bool no_bookmarks = n_bookmarks == 0;
-
-        if (no_bookmarks && !has_empty_list_class)
-        {
-            bookmarks_list_box.get_style_context ().add_class ("empty-list");
-            has_empty_list_class = true;
-            edit_mode_box.hide ();
-        }
-        else if (!no_bookmarks && has_empty_list_class)
-        {
-            bookmarks_list_box.get_style_context ().remove_class ("empty-list");
-            has_empty_list_class = false;
-            edit_mode_box.show ();
-        }
-
-        return no_bookmarks;
+        _create_bookmark_rows (bookmarks_variant, ref main_list_store, ref main_list_box, ref bookmarks_hashtable);
+        return n_items == 0;
     }
-    private static void _create_bookmark_rows (Variant bookmarks_variant, ref ListBox bookmarks_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable, ref Bookmark? last_row, ref uint n_bookmarks)
+    private static void _create_bookmark_rows (Variant bookmarks_variant, ref GLib.ListStore main_list_store, ref ListBox main_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable)
     {
         string saved_bookmark_name = "";
-        ListBoxRow? selected_row = bookmarks_list_box.get_selected_row ();
+        ListBoxRow? selected_row = main_list_box.get_selected_row ();
         if (selected_row != null && ((!) selected_row) is Bookmark)
             saved_bookmark_name = ((Bookmark) (!) selected_row).bookmark_name;
         selected_row = null;
 
-        bookmarks_list_box.@foreach ((widget) => widget.destroy ());
+        main_list_store.remove_all ();
         bookmarks_hashtable.remove_all ();
-        last_row = null;
-        n_bookmarks = 0;
 
         string [] bookmarks = bookmarks_variant.get_strv ();
         string [] unduplicated_bookmarks = new string [0];
@@ -226,20 +154,18 @@ private class BookmarksList : Overlay
             unduplicated_bookmarks += bookmark;
 
             Bookmark bookmark_row = new Bookmark (bookmark);
-            bookmarks_list_box.add (bookmark_row);
+            main_list_store.append (bookmark_row);
             bookmark_row.show ();
             bookmarks_hashtable.insert (bookmark, bookmark_row);
-            last_row = bookmark_row;
 
             if (saved_bookmark_name == bookmark)
                 selected_row = bookmark_row;
-            n_bookmarks ++;
         }
 
         if (selected_row == null)
-            selected_row = bookmarks_list_box.get_row_at_index (0);
+            selected_row = main_list_box.get_row_at_index (0);
         if (selected_row != null)
-            bookmarks_list_box.select_row ((!) selected_row);
+            main_list_box.select_row ((!) selected_row);
     }
 
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
@@ -282,65 +208,17 @@ private class BookmarksList : Overlay
     }
 
     /*\
-    * * keyboard
-    \*/
-
-    internal void down_pressed ()
-    {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            row = bookmarks_list_box.get_row_at_index (0);
-        else
-            row = bookmarks_list_box.get_row_at_index (((!) row).get_index () + 1);
-
-        if (row == null)
-            return;
-        bookmarks_list_box.select_row ((!) row);
-        ((!) row).grab_focus ();
-    }
-
-    internal void up_pressed ()
-    {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
-        if (row == null)
-            row = last_row;
-        else
-        {
-            int index = ((!) row).get_index ();
-            if (index <= 0)
-                return;
-            row = bookmarks_list_box.get_row_at_index (index - 1);
-        }
-
-        if (row == null)
-            return;
-        bookmarks_list_box.select_row ((!) row);
-        ((!) row).grab_focus ();
-    }
-
-    internal void select_all ()
-    {
-        bookmarks_list_box.select_all ();
-    }
-
-    internal void unselect_all ()
-    {
-        bookmarks_list_box.unselect_all ();
-    }
-
-    /*\
     * * remote action entries
     \*/
 
-    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
     internal void trash_bookmark ()
     {
-        ListBoxRow? row = (ListBoxRow?) bookmarks_list_box.get_focus_child ();
+        ListBoxRow? row = (ListBoxRow?) main_list_box.get_focus_child ();
         bool focused_row_will_survive = row != null && !((!) row).is_selected ();
 
         string [] bookmarks_to_remove = new string [0];
         int upper_index = int.MAX;
-        bookmarks_list_box.selected_foreach ((_list_box, selected_row) => {
+        main_list_box.selected_foreach ((_list_box, selected_row) => {
                 if (!(selected_row is Bookmark))
                     assert_not_reached ();
                 bookmarks_to_remove += ((Bookmark) selected_row).bookmark_name;
@@ -357,16 +235,16 @@ private class BookmarksList : Overlay
 
         if (!focused_row_will_survive)
         {
-            row = bookmarks_list_box.get_row_at_index (upper_index + 1);
+            row = main_list_box.get_row_at_index (upper_index + 1);
             if (row == null)
             {
                 if (upper_index > 0)
-                    row = bookmarks_list_box.get_row_at_index (upper_index - 1);
+                    row = main_list_box.get_row_at_index (upper_index - 1);
                 // TODO else quit mode
             }
         }
         if (row != null)
-            bookmarks_list_box.select_row ((!) row);
+            main_list_box.select_row ((!) row);
 
         remove_bookmarks (settings, bookmarks_to_remove);
         update_bookmarks_icons (settings.get_value ("bookmarks"));
@@ -374,9 +252,9 @@ private class BookmarksList : Overlay
 
     internal void move_top ()
     {
-//        bookmarks_list_box.selected_foreach ((_list_box, selected_row) => {
+//        main_list_box.selected_foreach ((_list_box, selected_row) => {
 
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
+        ListBoxRow? row = main_list_box.get_selected_row ();
         if (row == null)
             return; // TODO assert_not_reached?
 
@@ -386,19 +264,34 @@ private class BookmarksList : Overlay
 
         if (index == 0)
             return;
-        bookmarks_list_box.remove ((!) row);
-        bookmarks_list_box.prepend ((!) row);
-        select_row_for_real ((!) row);
 
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
+        string [] old_bookmarks = settings.get_strv ("bookmarks");
+        string [] new_bookmarks = new string [0];
+        uint position = 0;
+
+        new_bookmarks += old_bookmarks [index];
+        foreach (string bookmark in old_bookmarks)
+        {
+            if (index != position)
+                new_bookmarks += bookmark;
+            position++;
+        }
+
+        SignalHandler.block (main_list_store, content_changed_handler);
+        SignalHandler.block (settings, bookmarks_changed_handler);
+        settings.set_strv ("bookmarks", new_bookmarks);
+        GLib.Settings.sync ();   // TODO better? really needed?
+        SignalHandler.unblock (settings, bookmarks_changed_handler);
+        SignalHandler.unblock (main_list_store, content_changed_handler);
+        on_bookmarks_changed (settings, "bookmarks");
+
+        Adjustment adjustment = main_list_box.get_adjustment ();
         adjustment.set_value (adjustment.get_lower ());
-
-        update_bookmarks_after_move ();
     }
 
     internal void move_up ()
     {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
+        ListBoxRow? row = main_list_box.get_selected_row ();
         if (row == null)
             return; // TODO assert_not_reached?
 
@@ -409,7 +302,7 @@ private class BookmarksList : Overlay
         if (index == 0)
             return;
 
-        ListBoxRow? prev_row = bookmarks_list_box.get_row_at_index (index - 1);
+        ListBoxRow? prev_row = main_list_box.get_row_at_index (index - 1);
         if (prev_row == null)
             assert_not_reached ();
 
@@ -419,25 +312,51 @@ private class BookmarksList : Overlay
         if (row_child == null)
             assert_not_reached ();
         ((!) row_child).get_allocation (out row_allocation);
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
-        int proposed_adjustemnt_value = row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 3.0);
-        bool should_adjust = adjustment.get_value () > proposed_adjustemnt_value;
+//        Adjustment adjustment = main_list_box.get_adjustment ();
+//        int proposed_adjustment_value = row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 3.0);
+//        bool should_adjust = adjustment.get_value () > proposed_adjustment_value;
 
-        bookmarks_list_box.unselect_row ((!) row);
-        bookmarks_list_box.remove ((!) prev_row);
+        string [] old_bookmarks = settings.get_strv ("bookmarks");
+        string [] new_bookmarks = new string [0];
+        uint position = 0;
 
-        if (should_adjust)
-            adjustment.set_value (proposed_adjustemnt_value);
+        foreach (string bookmark in old_bookmarks)
+        {
+            if (index == position + 1)
+                new_bookmarks += old_bookmarks [index];
+            if (index != position)
+                new_bookmarks += bookmark;
+            position++;
+        }
 
-        bookmarks_list_box.insert ((!) prev_row, index);
-        bookmarks_list_box.select_row ((!) row);
+        SignalHandler.block (main_list_store, content_changed_handler);
+        SignalHandler.block (settings, bookmarks_changed_handler);
+        settings.set_strv ("bookmarks", new_bookmarks);
+        GLib.Settings.sync ();   // TODO better? really needed?
+        SignalHandler.unblock (settings, bookmarks_changed_handler);
+        SignalHandler.unblock (main_list_store, content_changed_handler);
+        on_bookmarks_changed (settings, "bookmarks");
 
-        update_bookmarks_after_move ();
+//        main_list_box.unselect_row ((!) row);
+
+//        SignalHandler.block (main_list_store, content_changed_handler);
+//        main_list_store.remove (index - 1);
+//        main_list_box.remove ((!) prev_row);
+
+//        if (should_adjust)
+//            adjustment.set_value (proposed_adjustment_value);
+
+//        main_list_store.insert (index, (!) prev_row);
+//        SignalHandler.unblock (main_list_store, content_changed_handler);
+
+//        main_list_box.select_row ((!) row);
+
+//        update_bookmarks_after_move ();
     }
 
     internal void move_down ()
     {
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
+        ListBoxRow? row = main_list_box.get_selected_row ();
         if (row == null)
             return; // TODO assert_not_reached?
 
@@ -445,7 +364,7 @@ private class BookmarksList : Overlay
         if (index < 0)
             assert_not_reached ();
 
-        ListBoxRow? next_row = bookmarks_list_box.get_row_at_index (index + 1);
+        ListBoxRow? next_row = main_list_box.get_row_at_index (index + 1);
         if (next_row == null)
             return;
 
@@ -455,27 +374,53 @@ private class BookmarksList : Overlay
         if (row_child == null)
             assert_not_reached ();
         ((!) row_child).get_allocation (out row_allocation);
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
-        int proposed_adjustemnt_value = row_allocation.y + (int) (2 * (row_allocation.height - list_allocation.height) / 3.0);
-        bool should_adjust = adjustment.get_value () < proposed_adjustemnt_value;
+//        Adjustment adjustment = main_list_box.get_adjustment ();
+//        int proposed_adjustment_value = row_allocation.y + (int) (2 * (row_allocation.height - list_allocation.height) / 3.0);
+//        bool should_adjust = adjustment.get_value () < proposed_adjustment_value;
 
-        bookmarks_list_box.unselect_row ((!) row);
-        bookmarks_list_box.remove ((!) next_row);
+        string [] old_bookmarks = settings.get_strv ("bookmarks");
+        string [] new_bookmarks = new string [0];
+        uint position = 0;
 
-        if (should_adjust)
-            adjustment.set_value (proposed_adjustemnt_value);
+        foreach (string bookmark in old_bookmarks)
+        {
+            if (index != position)
+                new_bookmarks += bookmark;
+            if (position == index + 1)
+                new_bookmarks += old_bookmarks [index];
+            position++;
+        }
 
-        bookmarks_list_box.insert ((!) next_row, index);
-        bookmarks_list_box.select_row ((!) row);
+        SignalHandler.block (main_list_store, content_changed_handler);
+        SignalHandler.block (settings, bookmarks_changed_handler);
+        settings.set_strv ("bookmarks", new_bookmarks);
+        GLib.Settings.sync ();   // TODO better? really needed?
+        SignalHandler.unblock (settings, bookmarks_changed_handler);
+        SignalHandler.unblock (main_list_store, content_changed_handler);
+        on_bookmarks_changed (settings, "bookmarks");
 
-        update_bookmarks_after_move ();
+//        main_list_box.unselect_row ((!) row);
+
+//        SignalHandler.block (main_list_store, content_changed_handler);
+//        main_list_store.remove (index - 1);
+//        main_list_box.remove ((!) next_row);
+
+//        if (should_adjust)
+//            adjustment.set_value (proposed_adjustment_value);
+
+//        main_list_store.insert (index, (!) next_row);
+//        SignalHandler.unblock (main_list_store, content_changed_handler);
+
+//        main_list_box.select_row ((!) row);
+
+//        update_bookmarks_after_move ();
     }
 
     internal void move_bottom ()
     {
-//        bookmarks_list_box.selected_foreach ((_list_box, selected_row) => {
+//        main_list_box.selected_foreach ((_list_box, selected_row) => {
 
-        ListBoxRow? row = bookmarks_list_box.get_selected_row ();
+        ListBoxRow? row = main_list_box.get_selected_row ();
         if (row == null)
             return; // TODO assert_not_reached?
 
@@ -483,48 +428,37 @@ private class BookmarksList : Overlay
         if (index < 0)
             assert_not_reached ();
 
-        bookmarks_list_box.remove ((!) row);
-        bookmarks_list_box.insert ((!) row, -1);
-        select_row_for_real ((!) row);
+        string [] old_bookmarks = settings.get_strv ("bookmarks");
+        string [] new_bookmarks = new string [0];
+        uint position = 0;
 
-        Adjustment adjustment = bookmarks_list_box.get_adjustment ();
+        foreach (string bookmark in old_bookmarks)
+        {
+            if (index != position)
+                new_bookmarks += bookmark;
+            position++;
+        }
+        new_bookmarks += old_bookmarks [index];
+
+        SignalHandler.block (main_list_store, content_changed_handler);
+        SignalHandler.block (settings, bookmarks_changed_handler);
+        settings.set_strv ("bookmarks", new_bookmarks);
+        GLib.Settings.sync ();   // TODO better? really needed?
+        SignalHandler.unblock (settings, bookmarks_changed_handler);
+        SignalHandler.unblock (main_list_store, content_changed_handler);
+        on_bookmarks_changed (settings, "bookmarks");
+
+        Adjustment adjustment = main_list_box.get_adjustment ();
         adjustment.set_value (adjustment.get_upper ());
-
-        update_bookmarks_after_move ();
     }
 
-    private void select_row_for_real (ListBoxRow row)   // ahem...
-    {
-        bookmarks_list_box.unselect_row (row);
-        bookmarks_list_box.select_row (row);
-    }
-
-    /*\
-    * * callbacks
-    \*/
-
-    [GtkCallback]
-    private void on_selection_changed ()
-    {
-        selection_changed ();
-    }
-
-    [GtkCallback]
-    private void on_content_changed ()
-    {
-        List<weak Widget> widgets = bookmarks_list_box.get_children ();
-        if (widgets.length () == 0)
-            edit_mode_box.hide ();
-        else
-            edit_mode_box.show ();
-    }
     /*\
     * * Bookmarks management
     \*/
 
-    private void update_bookmarks_after_move ()
+/*    private void update_bookmarks_after_move ()
     {
-        string [] new_bookmarks = get_bookmarks_list (ref bookmarks_list_box);
+        string [] new_bookmarks = get_bookmarks_list (ref main_list_box);
 
         string [] old_bookmarks = settings.get_strv ("bookmarks");  // be cool :-)
         foreach (string bookmark in old_bookmarks)
@@ -536,12 +470,12 @@ private class BookmarksList : Overlay
         GLib.Settings.sync ();   // TODO better? really needed?
         SignalHandler.unblock (settings, bookmarks_changed_handler);
     }
-    private static string [] get_bookmarks_list (ref ListBox bookmarks_list_box)
+    private static string [] get_bookmarks_list (ref ListBox main_list_box)
     {
         string [] bookmarks = new string [0];
-        bookmarks_list_box.@foreach ((widget) => { bookmarks += ((Bookmark) widget).bookmark_name; });
+        main_list_box.@foreach ((widget) => { bookmarks += ((Bookmark) widget).bookmark_name; });
         return bookmarks;
-    }
+    } */
 
     internal void append_bookmark (string bookmark, ViewType type)
     {

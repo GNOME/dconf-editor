@@ -28,6 +28,7 @@
         <property name="edit-mode-action-prefix">bmk</property>
         <property name="schema-path">/ca/desrt/dconf-editor/</property>
         <signal name="selection-changed" handler="on_selection_changed"/>
+        <signal name="update_bookmarks_icons" handler="on_update_bookmarks_icons"/>
       </object>
     </child>
   </template>

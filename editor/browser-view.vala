@@ -250,7 +250,7 @@ private class BrowserView : Stack, AdaptativeWidget
         return bookmarks_list.leave_edit_mode ();
     }
 
-    internal BookmarksList.SelectionState get_bookmarks_selection_state ()
+    internal OverlayedList.SelectionState get_bookmarks_selection_state ()
     {
         return bookmarks_list.get_selection_state ();
     }
@@ -289,6 +289,13 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     internal signal void bookmarks_selection_changed ();
+
+    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
+    [GtkCallback]
+    private void on_update_bookmarks_icons (Variant bookmarks_variant)
+    {
+        update_bookmarks_icons (bookmarks_variant);
+    }
 
     /*\
     * * Views

@@ -139,6 +139,7 @@ private class DConfWindow : ApplicationWindow
         install_bmk_action_entries ();
 
         headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -889,10 +890,10 @@ private class DConfWindow : ApplicationWindow
     private void update_actions ()
         requires (actions_init_done)
     {
-        BookmarksList.SelectionState selection_state = browser_view.get_bookmarks_selection_state ();
+        OverlayedList.SelectionState selection_state = browser_view.get_bookmarks_selection_state ();
 
-        bool has_selected_items = selection_state != BookmarksList.SelectionState.EMPTY;
-        bool has_one_selected_item = has_selected_items && (selection_state != BookmarksList.SelectionState.MULTIPLE);
+        bool has_selected_items = selection_state != OverlayedList.SelectionState.EMPTY;
+        bool has_one_selected_item = has_selected_items && (selection_state != OverlayedList.SelectionState.MULTIPLE);
 
         bool enable_move_top_action     = has_one_selected_item;    // TODO has_selected_items;
         bool enable_move_up_action      = has_one_selected_item;
@@ -901,12 +902,12 @@ private class DConfWindow : ApplicationWindow
 
         if (has_one_selected_item)
         {
-            if (selection_state == BookmarksList.SelectionState.UNIQUE || selection_state == BookmarksList.SelectionState.FIRST)
+            if (selection_state == OverlayedList.SelectionState.UNIQUE || selection_state == OverlayedList.SelectionState.FIRST)
             {
                 enable_move_top_action = false;
                 enable_move_up_action = false;
             }
-            if (selection_state == BookmarksList.SelectionState.UNIQUE || selection_state == BookmarksList.SelectionState.LAST)
+            if (selection_state == OverlayedList.SelectionState.UNIQUE || selection_state == OverlayedList.SelectionState.LAST)
             {
                 enable_move_down_action = false;
                 enable_move_bottom_action = false;

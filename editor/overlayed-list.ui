@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="BookmarksList" parent="GtkOverlay">
+  <template class="OverlayedList" parent="GtkOverlay">
     <property name="expand">True</property>
     <property name="valign">fill</property>
     <child>
@@ -14,20 +14,12 @@
         <property name="propagate-natural-width">True</property>
         <property name="propagate-natural-height">True</property>
         <child>
-          <object class="GtkListBox" id="bookmarks_list_box">
+          <object class="GtkListBox" id="main_list_box">
             <property name="visible">True</property>
             <signal name="selected-rows-changed" handler="on_selection_changed"/>
-            <signal name="add" handler="on_content_changed"/>
-            <signal name="remove" handler="on_content_changed"/>
             <style>
               <class name="padding-bottom"/>
             </style>
-            <child type="placeholder">
-              <object class="RegistryPlaceholder" id="placeholder">
-                <property name="label" translatable="yes">Bookmarks will&#xA;be added here</property>
-                <property name="icon-name">starred-symbolic</property> <!-- or starred-symbolic? or dconf-editor-symbolic? -->
-              </object>
-            </child>
           </object>
         </child>
       </object>
@@ -49,7 +41,6 @@
             <property name="centered">True</property>
             <property name="iconic">True</property>
             <property name="focus-on-click">False</property>
-            <property name="text" translatable="yes">Use</property>
             <style>
               <class name="left-on-ltr"/>
             </style>
@@ -62,7 +53,6 @@
             <property name="centered">True</property>
             <property name="iconic">True</property>
             <property name="focus-on-click">False</property>
-            <property name="text" translatable="yes">Edit</property>
             <style>
               <class name="right-on-ltr"/>
             </style>
