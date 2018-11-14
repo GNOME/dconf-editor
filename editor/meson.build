@@ -119,7 +119,6 @@ resource_data = files(
   'large-pathbar-item.ui',
   'large-pathbar.css',
   'large-pathbar.ui',
-  'modifications-list.ui',
   'modifications-revealer.ui',
   'overlayed-list.ui',
   'pathentry.ui',

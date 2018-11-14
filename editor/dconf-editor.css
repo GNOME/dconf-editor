@@ -102,12 +102,12 @@
 
 .delayed-list .list-row-header { padding:5px; padding-top:10px; }
 
-.delayed-list          > row              { padding:10px; }
-.delayed-list          > row .key-name    { padding-bottom:5px; }
-.delayed-list:dir(ltr) > row .diff-bullet { padding-left:20px; padding-right:6px; }
-.delayed-list:dir(rtl) > row .diff-bullet { padding-right:20px; padding-left:6px; }
-.delayed-list:dir(ltr) > row .value-label { padding-right:6px; }
-.delayed-list:dir(rtl) > row .value-label { padding-left:6px; }
+.delayed-list          > scrolledwindow > viewport > list > row              { padding:10px; }
+.delayed-list          > scrolledwindow > viewport > list > row .key-name    { padding-bottom:5px; }
+.delayed-list:dir(ltr) > scrolledwindow > viewport > list > row .diff-bullet { padding-left:20px; padding-right:6px; }
+.delayed-list:dir(rtl) > scrolledwindow > viewport > list > row .diff-bullet { padding-right:20px; padding-left:6px; }
+.delayed-list:dir(ltr) > scrolledwindow > viewport > list > row .value-label { padding-right:6px; }
+.delayed-list:dir(rtl) > scrolledwindow > viewport > list > row .value-label { padding-left:6px; }
 
 /*\
 * * lists rows height and icon
