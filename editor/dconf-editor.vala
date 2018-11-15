@@ -328,6 +328,9 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("kbd.toggle-boolean",    { "<Primary>Return",
                                                           "<Primary>KP_Enter"   });
 
+     // set_accels_for_action ("app.about",             { "<Shift><Primary>F1"  }); // TODO report bug: needs a dance in the window
+        set_accels_for_action ("win.show-help-overlay", {                 "F1"  }); // "<Primary>F1" is automatically done
+
         init_night_mode ();
 
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();

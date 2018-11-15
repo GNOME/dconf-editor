@@ -1601,16 +1601,18 @@ private class DConfWindow : ApplicationWindow
                         request_search (true, PathEntry.SearchMode.SEARCH);
                     return true;
 
-                case "F1":  // TODO dance done to avoid <Primary>F1 to show help overlay
-                    browser_view.discard_row_popover ();
-                    if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
-                        return false;   // help overlay
-                    ((ConfigurationEditor) get_application ()).about_cb ();
-                    return true;
-
                 default:
                     break;
             }
+        }
+
+        if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
+        {
+            browser_view.discard_row_popover ();
+            if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
+                return false;   // help overlay
+            ((ConfigurationEditor) get_application ()).about_cb ();
+            return true;
         }
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
