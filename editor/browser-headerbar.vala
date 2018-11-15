@@ -370,7 +370,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         if (!in_window_bookmarks)
             append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);
 
-        append_app_actions_section (night_time, dark_theme, automatic_night_mode, ref menu);
+        append_app_actions_section (night_time, dark_theme, automatic_night_mode, extra_small_window, ref menu);
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
@@ -413,11 +413,12 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         menu.append_section (null, section);
     }
 
-    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, ref GLib.Menu menu)
+    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, bool extra_small_window, ref GLib.Menu menu)
     {
         GLib.Menu section = new GLib.Menu ();
         append_or_not_night_mode_entry (night_time, dark_theme, auto_night, ref section);
-        section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
+        if (!extra_small_window)    // TODO else...
+            section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
         section.append (_("About Dconf Editor"), "app.about");   // TODO move as "win."
         section.freeze ();
         menu.append_section (null, section);
