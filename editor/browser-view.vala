@@ -564,7 +564,13 @@ private class BrowserView : Stack, AdaptativeWidget
 
     // current row property
     internal string get_selected_row_name () { return current_child.get_selected_row_name (); }
-    internal string? get_copy_text ()        { return current_child.get_copy_text ();         }
+    internal string? get_copy_text ()
+    {
+        if (in_window_about)
+            return about_list.get_copy_text (); // TODO copying logo...
+        else
+            return current_child.get_copy_text ();
+    }
     internal string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
 
     // values changes

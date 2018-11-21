@@ -1666,6 +1666,9 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX // TODO <Shift><Primary>v something?
+                    if (browser_view.in_window_about)
+                        return false;
+
                     if (focus_is_text_widget)
                         return false;
 
@@ -1684,6 +1687,9 @@ private class DConfWindow : ApplicationWindow
                     break;
             }
         }
+
+        if (browser_view.in_window_about)
+            return false;
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
         if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
