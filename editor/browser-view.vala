@@ -200,6 +200,31 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     /*\
+    * * in-window about
+    \*/
+
+    internal bool in_window_about                   { internal get; private set; default = false; }
+
+    [GtkChild] private AboutList about_list;
+
+    internal void show_in_window_about ()
+    {
+        if (in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else if (in_window_modifications)
+            hide_in_window_modifications ();
+
+        set_visible_child (about_list);
+        in_window_about = true;
+    }
+
+    internal void hide_in_window_about ()
+    {
+        in_window_about = false;
+        set_visible_child (current_child_grid);
+    }
+
+    /*\
     * * modifications
     \*/
 
@@ -211,6 +236,8 @@ private class BrowserView : Stack, AdaptativeWidget
     {
         if (in_window_bookmarks)
             hide_in_window_bookmarks ();
+        else if (in_window_about)
+            hide_in_window_about ();
 
         set_visible_child (modifications_list);
         in_window_modifications = true;
@@ -304,6 +331,8 @@ private class BrowserView : Stack, AdaptativeWidget
     {
         if (in_window_modifications)
             hide_in_window_modifications ();
+        else if (in_window_about)
+            hide_in_window_about ();
 
         if (bookmarks != old_bookmarks)
         {

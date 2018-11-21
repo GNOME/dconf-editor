@@ -66,6 +66,7 @@ install_data(
 )
 
 sources = files(
+  'about-list.vala',
   'adaptative-pathbar.vala',
   'bookmarks.vala',
   'bookmarks-controller.vala',

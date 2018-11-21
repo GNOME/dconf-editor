@@ -41,6 +41,22 @@
         </child>
       </object>
     </child>
+    <child>
+      <object class="GtkButton" id="hide_about_button">
+        <property name="visible">False</property>
+        <property name="action-name">ui.hide-in-window-about</property>
+        <style>
+          <class name="image-button"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">go-previous-symbolic</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
     <!-- child>
       <object class="GtkButton" id="apply_modifications_button">
         <property name="visible">False</property>
@@ -117,6 +133,12 @@
               <object class="GtkLabel" id="modifications_label">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Pending</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="about_label">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">About</property>
               </object>
             </child>
           </object>

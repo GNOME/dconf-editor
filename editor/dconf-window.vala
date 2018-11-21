@@ -619,6 +619,8 @@ private class DConfWindow : ApplicationWindow
         { "show-in-window-modifications",   show_in_window_modifications },
         { "hide-in-window-modifications",   hide_in_window_modifications },
 
+        { "hide-in-window-about",           hide_in_window_about },
+
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
 
@@ -629,7 +631,8 @@ private class DConfWindow : ApplicationWindow
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "hide-notification", hide_notification }
+        { "hide-notification", hide_notification },
+        { "about", about_cb }
     };
 
     private void empty (/* SimpleAction action, Variant? variant */) {}
@@ -670,6 +673,7 @@ private class DConfWindow : ApplicationWindow
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
         hide_in_window_modifications ();
+        hide_in_window_about ();
 
         string full_name;
         uint16 context_id;
@@ -715,6 +719,7 @@ private class DConfWindow : ApplicationWindow
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
         hide_in_window_modifications ();
+        hide_in_window_about ();
 
         string full_name;
         uint16 context_id;
@@ -854,6 +859,12 @@ private class DConfWindow : ApplicationWindow
         browser_view.hide_in_window_modifications ();
     }
 
+    private void hide_in_window_about (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.hide_in_window_about ();
+        browser_view.hide_in_window_about ();
+    }
+
     private void reset_recursively (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
@@ -910,6 +921,37 @@ private class DConfWindow : ApplicationWindow
     private void hide_notification (/* SimpleAction action, Variant? variant */)
     {
         notification_revealer.set_reveal_child (false);
+    }
+
+    private void about_cb ()    // register as "win.about"?
+    {
+        if (extra_small_window)
+        {
+            if (browser_view.in_window_about)
+                hide_in_window_about ();
+            else
+            {
+                headerbar.show_in_window_about ();
+                browser_view.show_in_window_about ();
+            }
+        }
+        else    // TODO hide the dialog if visible
+        {
+            string [] authors = AboutDialogInfos.authors;
+            Gtk.show_about_dialog (this,
+                                   "program-name",          AboutDialogInfos.program_name,
+                                   "version",               AboutDialogInfos.version,
+                                   "comments",              AboutDialogInfos.comments,
+                                   "copyright",             AboutDialogInfos.copyright,
+                                   "license-type",          AboutDialogInfos.license_type,
+                                   "wrap-license", true,
+                                   "authors",               authors,
+                                   "translator-credits",    AboutDialogInfos.translator_credits,
+                                   "logo-icon-name",        AboutDialogInfos.logo_icon_name,
+                                   "website",               AboutDialogInfos.website,
+                                   "website-label",         AboutDialogInfos.website_label,
+                                   null);
+        }
     }
 
     /*\
@@ -1106,6 +1148,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)   // TODO better
             return;
+        if (browser_view.in_window_about)           // TODO better
+            return;
 
         browser_view.discard_row_popover ();
 
@@ -1129,6 +1173,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)   // TODO better
             return;
+        if (browser_view.in_window_about)           // TODO better
+            return;
 
         browser_view.discard_row_popover ();
         headerbar.bookmark_current_path ();
@@ -1140,6 +1186,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)   // TODO better
             return;
+        if (browser_view.in_window_about)           // TODO better
+            return;
 
         browser_view.discard_row_popover ();
         headerbar.unbookmark_current_path ();
@@ -1150,6 +1198,8 @@ private class DConfWindow : ApplicationWindow
         if (browser_view.in_window_bookmarks)       // TODO better
             return;
         if (browser_view.in_window_modifications)   // TODO better
+            return;
+        if (browser_view.in_window_about)           // TODO better
             return;
 
         headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
@@ -1187,6 +1237,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)   // TODO better
             return;
+        if (browser_view.in_window_about)           // TODO better
+            return;
 
         if (browser_view.current_view == ViewType.FOLDER)
             request_config (current_path);
@@ -1214,6 +1266,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)
             return;
+        if (browser_view.in_window_about)
+            return;
 
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
@@ -1224,6 +1278,8 @@ private class DConfWindow : ApplicationWindow
         if (browser_view.in_window_bookmarks)
             return;
         if (browser_view.in_window_modifications)
+            return;
+        if (browser_view.in_window_about)
             return;
 
         if (!headerbar.search_mode_enabled)
@@ -1236,6 +1292,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)
             return;
+        if (browser_view.in_window_about)
+            return;
 
         go_backward (true);
     }
@@ -1245,6 +1303,8 @@ private class DConfWindow : ApplicationWindow
         if (browser_view.in_window_bookmarks)
             return;
         if (browser_view.in_window_modifications)
+            return;
+        if (browser_view.in_window_about)
             return;
 
         if (browser_view.current_view == ViewType.CONFIG)
@@ -1259,6 +1319,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)
             return;
+        if (browser_view.in_window_about)
+            return;
 
         go_forward (false);
     }
@@ -1268,6 +1330,8 @@ private class DConfWindow : ApplicationWindow
         if (browser_view.in_window_bookmarks)
             return;
         if (browser_view.in_window_modifications)
+            return;
+        if (browser_view.in_window_about)
             return;
 
         go_forward (true);
@@ -1289,6 +1353,8 @@ private class DConfWindow : ApplicationWindow
         }
         else if (browser_view.in_window_modifications)
             hide_in_window_modifications ();
+        else if (browser_view.in_window_about)
+            hide_in_window_about ();
         else if (headerbar.search_mode_enabled)
             stop_search ();
         else if (current_type == ViewType.CONFIG)
@@ -1314,6 +1380,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_modifications)
             return;
+        if (browser_view.in_window_about)
+            return;
 
         browser_view.discard_row_popover ();
         browser_view.toggle_boolean_key ();
@@ -1326,6 +1394,8 @@ private class DConfWindow : ApplicationWindow
         if (browser_view.in_window_bookmarks)
             return;
         if (browser_view.in_window_modifications)
+            return;
+        if (browser_view.in_window_about)
             return;
 
         if (revealer.dismiss_selected_modification ())
@@ -1556,13 +1626,22 @@ private class DConfWindow : ApplicationWindow
     [GtkCallback]
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)
     {
+        uint keyval = event.keyval;
+        string name = (!) (Gdk.keyval_name (keyval) ?? "");
+
+        if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
+        {
+            browser_view.discard_row_popover ();
+            if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
+                return false;   // help overlay
+            about_cb ();
+            return true;
+        }
+
         if (browser_view.in_window_bookmarks)
             return false;
         if (browser_view.in_window_modifications)
             return false;
-
-        uint keyval = event.keyval;
-        string name = (!) (Gdk.keyval_name (keyval) ?? "");
 
         Widget? focus = get_focus ();
         bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
@@ -1604,15 +1683,6 @@ private class DConfWindow : ApplicationWindow
                 default:
                     break;
             }
-        }
-
-        if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
-        {
-            browser_view.discard_row_popover ();
-            if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
-                return false;   // help overlay
-            ((ConfigurationEditor) get_application ()).about_cb ();
-            return true;
         }
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
@@ -1741,4 +1811,22 @@ private class DConfWindow : ApplicationWindow
     {
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
     }
+}
+
+namespace AboutDialogInfos
+{
+    // strings
+    internal const string program_name = _("dconf Editor");
+    internal const string version = Config.VERSION;
+    internal const string comments = _("A graphical viewer and editor of applications’ internal settings.");
+    internal const string copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2018 – Arnaud Bonatti\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger");
+    /* Translators: This string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
+    internal const string translator_credits = _("translator-credits");
+
+    // various
+    internal const string logo_icon_name = "ca.desrt.dconf-editor";
+    internal const string website = "https://wiki.gnome.org/Apps/DconfEditor";
+    internal const string website_label = "Page on GNOME wiki";
+    internal const string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
+    internal const License license_type = License.GPL_3_0; /* means "version 3.0 or later" */
 }

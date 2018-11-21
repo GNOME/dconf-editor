@@ -110,6 +110,18 @@
 .delayed-list:dir(rtl) > scrolledwindow > viewport > list > row .value-label { padding-left:6px; }
 
 /*\
+* * in-window about
+\*/
+
+.about-list            > scrolledwindow > viewport > list {
+  padding-bottom:3rem;
+}
+.about-list            > scrolledwindow > viewport > list > row {
+  padding:4px;
+  min-height:1.3rem;
+}
+
+/*\
 * * lists rows height and icon
 \*/
 
@@ -411,6 +423,12 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
 * * text formating
 \*/
 
+.small-label {
+  font-size:small;
+}
+.bold-label {
+  font-weight:bold;
+}
 .italic-label {
   font-style:italic;
 }

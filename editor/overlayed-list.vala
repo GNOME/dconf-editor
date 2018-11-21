@@ -185,7 +185,7 @@ private abstract class OverlayedList : Overlay
     protected ulong content_changed_handler = 0;
 
     protected uint n_items { protected get; private set; default = 0; }
-    private bool is_editable = true;
+    private bool is_editable = false;
 
     protected void change_editability (bool new_value)
     {

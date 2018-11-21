@@ -51,6 +51,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
             bookmarks_button.sensitive = true;
             bookmarks_revealer.set_reveal_child (true);
             hide_in_window_bookmarks ();
+            hide_in_window_about ();
         }
         update_hamburger_menu (delay_mode);
         update_modifications_button ();
@@ -156,6 +157,41 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     }
 
     /*\
+    * * in-window about
+    \*/
+
+    [GtkChild] private Label    about_label;
+    [GtkChild] private Button   hide_about_button;
+
+    bool in_window_about = false;
+
+    internal void show_in_window_about ()
+    {
+        if (in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else if (in_window_modifications)
+            hide_in_window_modifications ();
+
+        in_window_about = true;
+        update_modifications_button ();
+        info_button.hide ();
+        hide_about_button.show ();
+        bookmarks_stack.hexpand = false;    // hack 1/7
+        title_stack.set_visible_child (about_label);
+    }
+
+    internal void hide_in_window_about ()
+    {
+        hide_about_button.hide ();
+        bookmarks_stack.hexpand = false;    // hack 2/7
+        title_stack.set_visible_child (path_widget);
+        in_window_about = false;
+        if (extra_small_window)
+            modifications_separator.show ();
+        info_button.show ();
+    }
+
+    /*\
     * * in-window modifications
     \*/
 
@@ -193,7 +229,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
                 show_modifications_button.hide ();
                 modifications_separator.hide ();
             }
-            else if (in_window_bookmarks)
+            else if (in_window_bookmarks || in_window_about)
             {
                 show_modifications_button.show ();
                 modifications_separator.hide ();
@@ -218,6 +254,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     {
         if (in_window_bookmarks)
             hide_in_window_bookmarks ();
+        else if (in_window_about)
+            hide_in_window_about ();
 
         in_window_modifications = true;
         info_button.hide ();
@@ -225,7 +263,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         show_modifications_button.hide ();
         modifications_actions_button.show ();
         hide_modifications_button.show ();
-        bookmarks_stack.hexpand = false;    // hack 1/5
+        bookmarks_stack.hexpand = false;    // hack 3/7
         title_stack.set_visible_child (modifications_label);
     }
 
@@ -238,7 +276,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
             show_modifications_button.show ();
             modifications_separator.show ();
         }
-        bookmarks_stack.hexpand = false;    // hack 2/5
+        bookmarks_stack.hexpand = false;    // hack 4/7
         title_stack.set_visible_child (path_widget);
         in_window_modifications = false;
         info_button.show ();
@@ -268,12 +306,14 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     {
         if (in_window_modifications)
             hide_in_window_modifications ();
+        else if (in_window_about)
+            hide_in_window_about ();
 
         in_window_bookmarks = true;
         update_modifications_button ();
         info_button.hide ();
         bookmarks_actions_separator.hide ();
-        bookmarks_stack.hexpand = false;    // hack 3/5
+        bookmarks_stack.hexpand = false;    // hack 5/7
         title_stack.set_visible_child (bookmarks_stack);
         bookmarks_stack.set_visible_child (bookmarks_label);
         hide_in_window_bookmarks_button.show ();
@@ -285,7 +325,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         bookmarks_actions_separator.hide ();
         in_window_bookmarks = false;
         update_modifications_button ();
-        bookmarks_stack.hexpand = false;    // hack 4/5
+        bookmarks_stack.hexpand = false;    // hack 6/7
         title_stack.set_visible_child (path_widget);
         bookmarks_stack.set_visible_child (bookmarks_label);
         info_button.show ();
@@ -295,7 +335,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal void edit_in_window_bookmarks ()
         requires (in_window_bookmarks == true)
     {
-        bookmarks_stack.hexpand = true;     // hack 5/5
+        bookmarks_stack.hexpand = true;     // hack 7/7
         bookmarks_actions_separator.show ();
         bookmarks_stack.set_visible_child (bookmarks_controller);
     }
@@ -419,7 +459,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         append_or_not_night_mode_entry (night_time, dark_theme, auto_night, ref section);
         if (!extra_small_window)    // TODO else...
             section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        section.append (_("About Dconf Editor"), "app.about");   // TODO move as "win."
+        section.append (_("About Dconf Editor"), "ui.about");
         section.freeze ();
         menu.append_section (null, section);
     }

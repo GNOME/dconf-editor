@@ -34,9 +34,17 @@
     <child>
       <object class="ModificationsList" id="modifications_list">
         <property name="visible">True</property>
+        <property name="needs-shadows">False</property>
         <property name="big-placeholder">True</property>
-        <property name="edit-mode-action-prefix">bmk</property>
         <signal name="selection-changed" handler="on_modifications_selection_changed"/>
+      </object>
+    </child>
+    <child>
+      <object class="AboutList" id="about_list">
+        <property name="visible">True</property>
+        <property name="needs-shadows">False</property>
+        <property name="big-placeholder">True</property>
+        <property name="edit-mode-action-prefix">about</property>
       </object>
     </child>
   </template>

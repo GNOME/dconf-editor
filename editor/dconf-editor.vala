@@ -154,7 +154,6 @@ private class ConfigurationEditor : Gtk.Application
         // generic
         { "set-use-night-mode", set_use_night_mode, "b" },
         { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
-        { "about", about_cb },
 
         // quit
         { "quit",           quit_if_no_pending_changes },
@@ -569,27 +568,6 @@ private class ConfigurationEditor : Gtk.Application
     /*\
     * * App-menu callbacks
     \*/
-
-    internal void about_cb ()
-    {
-        string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
-        Gtk.Window? window = get_active_window ();
-        if (window == null)
-            return;
-        Gtk.show_about_dialog ((!) window,
-                               "program-name", _("dconf Editor"),
-                               "version", Config.VERSION,
-                               "comments", _("A graphical viewer and editor of applications’ internal settings."),
-                               "copyright", _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2018 – Arnaud Bonatti\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger"),
-                               "license-type", Gtk.License.GPL_3_0, /* means "version 3.0 or later" */
-                               "wrap-license", true,
-                               "authors", authors,
-                               /* Translators: This string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
-                               "translator-credits", _("translator-credits"),
-                               "logo-icon-name", "ca.desrt.dconf-editor",
-                               "website", "https://wiki.gnome.org/Apps/DconfEditor",
-                               null);
-    }
 
     private void quit_if_no_pending_changes ()
     {
