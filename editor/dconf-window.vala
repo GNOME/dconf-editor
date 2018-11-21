@@ -1638,8 +1638,6 @@ private class DConfWindow : ApplicationWindow
             return true;
         }
 
-        if (browser_view.in_window_bookmarks)
-            return false;
         if (browser_view.in_window_modifications)
             return false;
 
@@ -1666,6 +1664,8 @@ private class DConfWindow : ApplicationWindow
                     return true;
 
                 case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX // TODO <Shift><Primary>v something?
+                    if (browser_view.in_window_bookmarks)
+                        return false;
                     if (browser_view.in_window_about)
                         return false;
 
@@ -1688,6 +1688,8 @@ private class DConfWindow : ApplicationWindow
             }
         }
 
+        if (browser_view.in_window_bookmarks)
+            return false;
         if (browser_view.in_window_about)
             return false;
 

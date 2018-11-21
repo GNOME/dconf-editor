@@ -107,6 +107,17 @@ private class BookmarksList : OverlayedList
         return give_focus_to_switch;
     }
 
+    internal string? get_copy_text ()
+    {
+        List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
+        if (selected_rows.length () != 1)
+            return null;
+        ListBoxRow row = selected_rows.nth_data (0);
+        if (!(row is Bookmark))
+            assert_not_reached ();
+        return ((Bookmark) row).bookmark_name;  // FIXME row should keep focus
+    }
+
     internal Variant get_bookmarks_as_variant ()
     {
         return settings.get_value ("bookmarks");

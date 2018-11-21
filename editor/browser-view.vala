@@ -566,6 +566,8 @@ private class BrowserView : Stack, AdaptativeWidget
     internal string get_selected_row_name () { return current_child.get_selected_row_name (); }
     internal string? get_copy_text ()
     {
+        if (in_window_bookmarks)
+            return bookmarks_list.get_copy_text ();
         if (in_window_about)
             return about_list.get_copy_text (); // TODO copying logo...
         else
