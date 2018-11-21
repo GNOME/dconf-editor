@@ -383,7 +383,10 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
     internal void toggle_hamburger_menu ()
     {
-        info_button.active = !info_button.active;
+        if (modifications_actions_button.visible)
+            modifications_actions_button.active = !modifications_actions_button.active;
+        else if (info_button.visible)
+            info_button.active = !info_button.active;
     }
 
     private bool delay_mode = false;
