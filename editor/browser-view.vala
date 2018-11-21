@@ -214,6 +214,7 @@ private class BrowserView : Stack, AdaptativeWidget
         else if (in_window_modifications)
             hide_in_window_modifications ();
 
+        about_list.reset ();
         set_visible_child (about_list);
         in_window_about = true;
     }

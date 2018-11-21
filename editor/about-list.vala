@@ -33,15 +33,25 @@ private class AboutList : OverlayedList
         show_apropos ();
     }
 
+    internal void reset ()
+    {
+        edit_mode_action.set_state (false);
+        show_apropos ();
+    }
+
     /*\
     * * Action entries
     \*/
+
+    SimpleAction edit_mode_action;
 
     private void install_action_entries ()
     {
         SimpleActionGroup action_group = new SimpleActionGroup ();
         action_group.add_action_entries (action_entries, this);
         insert_action_group ("about", action_group);
+
+        edit_mode_action = (SimpleAction) action_group.lookup_action ("set-edit-mode");
     }
 
     private const GLib.ActionEntry [] action_entries =
