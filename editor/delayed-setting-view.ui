@@ -66,6 +66,7 @@
             <property name="visible">True</property>
             <property name="halign">start</property>
             <property name="ellipsize">end</property>
+            <property name="max-width-chars">42</property>
             <style>
               <class name="value-label"/>
             </style>
@@ -111,6 +112,7 @@
             <property name="visible">True</property>
             <property name="halign">start</property>
             <property name="ellipsize">end</property>
+            <property name="max-width-chars">42</property>
             <style>
               <class name="value-label"/>
             </style>
