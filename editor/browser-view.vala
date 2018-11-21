@@ -77,6 +77,7 @@ private class BrowserView : Stack, AdaptativeWidget
             current_child.modifications_handler = value;
             sorting_options = new SortingOptions (value.model);
             sorting_options.notify ["case-sensitive"].connect (on_case_sensitive_changed);
+            _modifications_handler.delayed_changes_changed.connect (update_in_window_modifications);
         }
     }
     private void on_case_sensitive_changed ()
@@ -199,6 +200,95 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     /*\
+    * * modifications
+    \*/
+
+    internal bool in_window_modifications           { internal get; private set; default = false; }
+
+    [GtkChild] private ModificationsList modifications_list;
+
+    internal void show_in_window_modifications ()
+    {
+        if (in_window_bookmarks)
+            hide_in_window_bookmarks ();
+
+        set_visible_child (modifications_list);
+        in_window_modifications = true;
+    }
+
+    internal void hide_in_window_modifications ()
+    {
+        in_window_modifications = false;
+        set_visible_child (current_child_grid);
+    }
+
+    private void update_in_window_modifications ()
+    {
+        GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
+        modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
+
+        if (modifications_handler.mode == ModificationsMode.NONE)
+            hide_in_window_modifications ();
+    }
+    private Widget delayed_setting_row_create (Object object)
+    {
+        string full_name = ((SimpleSettingObject) object).full_name;
+        uint16 context_id = ((SimpleSettingObject) object).context_id;
+
+        SettingsModel model = modifications_handler.model;
+
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
+
+        bool has_schema;
+        if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
+            assert_not_reached ();
+
+        bool has_schema_and_is_default;
+        if (!has_schema)
+            has_schema_and_is_default = false;
+        else if (!properties.lookup (PropertyQuery.IS_DEFAULT,          "b",    out has_schema_and_is_default))
+            assert_not_reached ();
+
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
+        string? cool_planned_value = null;
+        if (planned_value != null)
+            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value);
+
+        string? cool_default_value = null;
+        if (has_schema
+         && !properties.lookup (PropertyQuery.DEFAULT_VALUE,            "s",    out cool_default_value))
+            assert_not_reached ();
+
+        Variant key_value;
+        if (!properties.lookup (PropertyQuery.KEY_VALUE,                "v",    out key_value))
+            assert_not_reached ();
+
+        properties.clear ();
+
+        DelayedSettingView view = new DelayedSettingView (((SimpleSettingObject) object).name,
+                                                          full_name,
+                                                          context_id,
+                                                          has_schema_and_is_default,    // at row creation, key is never ghost
+                                                          key_value,
+                                                          cool_planned_value,
+                                                          cool_default_value);
+
+        ListBoxRow wrapper = new ListBoxRow ();
+        wrapper.add (view);
+        if (modifications_handler.get_current_delay_mode ())
+        {
+            Variant variant = new Variant ("(sq)", full_name, context_id);
+            wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");
+        }
+        return wrapper;
+    }
+
+    [GtkCallback]
+    private void on_modifications_selection_changed ()
+    {
+    }
+
+    /*\
     * * bookmarks
     \*/
 
@@ -212,6 +302,9 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal void show_in_window_bookmarks (string [] bookmarks)
     {
+        if (in_window_modifications)
+            hide_in_window_modifications ();
+
         if (bookmarks != old_bookmarks)
         {
             Variant variant = new Variant.strv (bookmarks);
@@ -281,7 +374,7 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     [GtkCallback]
-    private void on_selection_changed ()
+    private void on_bookmarks_selection_changed ()
     {
         if (!in_window_bookmarks)
             return;

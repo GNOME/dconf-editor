@@ -147,6 +147,20 @@ private class DConfWindow : ApplicationWindow
         modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
+        modifications_handler.delayed_changes_changed.connect (() => {
+                if (!extra_small_window)
+                    return;
+
+                uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
+                if (total_changes_count == 0)
+                    headerbar.set_apply_modifications_button_sensitive (false);
+                else
+                {
+                    if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count != 1)
+                        assert_not_reached ();
+                    headerbar.set_apply_modifications_button_sensitive (true);
+                }
+            });
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -442,6 +456,7 @@ private class DConfWindow : ApplicationWindow
                 context.remove_class ("extra-small-window");
                 headerbar.set_extra_small_window_state (false);
                 browser_view.set_extra_small_window_state (false);
+                revealer.set_extra_small_window_state (false);
             }
             context.remove_class ("small-window");
             context.add_class ("large-window");
@@ -458,6 +473,7 @@ private class DConfWindow : ApplicationWindow
                 context.add_class ("extra-small-window");
                 headerbar.set_extra_small_window_state (true);
                 browser_view.set_extra_small_window_state (true);
+                revealer.set_extra_small_window_state (true);
             }
             notification_revealer.hexpand = true;
             notification_revealer.halign = Align.FILL;
@@ -471,6 +487,7 @@ private class DConfWindow : ApplicationWindow
                 context.remove_class ("extra-small-window");
                 headerbar.set_extra_small_window_state (false);
                 browser_view.set_extra_small_window_state (false);
+                revealer.set_extra_small_window_state (false);
             }
             context.add_class ("small-window");
             notification_revealer.hexpand = true;
@@ -486,6 +503,7 @@ private class DConfWindow : ApplicationWindow
                 context.remove_class ("extra-small-window");
                 headerbar.set_extra_small_window_state (false);
                 browser_view.set_extra_small_window_state (false);
+                revealer.set_extra_small_window_state (false);
             }
             notification_revealer.hexpand = false;
             notification_revealer.halign = Align.CENTER;
@@ -595,8 +613,11 @@ private class DConfWindow : ApplicationWindow
         { "toggle-search", toggle_search, "b", "false" },
         { "update-bookmarks-icons", update_bookmarks_icons, "as" },
 
-        { "show-in-window-bookmarks", show_in_window_bookmarks },
-        { "hide-in-window-bookmarks", hide_in_window_bookmarks },
+        { "show-in-window-bookmarks",       show_in_window_bookmarks },
+        { "hide-in-window-bookmarks",       hide_in_window_bookmarks },
+
+        { "show-in-window-modifications",   show_in_window_modifications },
+        { "hide-in-window-modifications",   hide_in_window_modifications },
 
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
@@ -648,6 +669,7 @@ private class DConfWindow : ApplicationWindow
         hide_in_window_bookmarks ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
+        hide_in_window_modifications ();
 
         string full_name;
         uint16 context_id;
@@ -692,6 +714,7 @@ private class DConfWindow : ApplicationWindow
         hide_in_window_bookmarks ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
+        hide_in_window_modifications ();
 
         string full_name;
         uint16 context_id;
@@ -819,6 +842,18 @@ private class DConfWindow : ApplicationWindow
         browser_view.hide_in_window_bookmarks ();
     }
 
+    private void show_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.show_in_window_modifications ();
+        browser_view.show_in_window_modifications ();
+    }
+
+    private void hide_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.hide_in_window_modifications ();
+        browser_view.hide_in_window_modifications ();
+    }
+
     private void reset_recursively (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
@@ -846,6 +881,8 @@ private class DConfWindow : ApplicationWindow
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.apply_delayed_settings ();
+        if (extra_small_window)
+            hide_in_window_modifications ();
         invalidate_popovers_with_ui_reload ();
     }
 
@@ -1065,7 +1102,9 @@ private class DConfWindow : ApplicationWindow
 
     private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_bookmarks) // TODO better
+        if (browser_view.in_window_bookmarks)       // TODO better
+            return;
+        if (browser_view.in_window_modifications)   // TODO better
             return;
 
         browser_view.discard_row_popover ();
@@ -1086,7 +1125,9 @@ private class DConfWindow : ApplicationWindow
 
     private void bookmark                               (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks) // TODO better
+        if (browser_view.in_window_bookmarks)       // TODO better
+            return;
+        if (browser_view.in_window_modifications)   // TODO better
             return;
 
         browser_view.discard_row_popover ();
@@ -1095,7 +1136,9 @@ private class DConfWindow : ApplicationWindow
 
     private void unbookmark                             (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks) // TODO better
+        if (browser_view.in_window_bookmarks)       // TODO better
+            return;
+        if (browser_view.in_window_modifications)   // TODO better
             return;
 
         browser_view.discard_row_popover ();
@@ -1104,7 +1147,9 @@ private class DConfWindow : ApplicationWindow
 
     private void _toggle_search                         (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks) // TODO better
+        if (browser_view.in_window_bookmarks)       // TODO better
+            return;
+        if (browser_view.in_window_modifications)   // TODO better
             return;
 
         headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
@@ -1124,7 +1169,7 @@ private class DConfWindow : ApplicationWindow
     {
         if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
             headerbar.down_pressed ();
-        else if (!revealer.get_modifications_list_state ())
+        else if (!revealer.get_modifications_list_state () && !browser_view.in_window_modifications)
             browser_view.down_pressed ();               // FIXME returns bool
     }
 
@@ -1132,13 +1177,15 @@ private class DConfWindow : ApplicationWindow
     {
         if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
             headerbar.up_pressed ();
-        else if (!revealer.get_modifications_list_state ())
+        else if (!revealer.get_modifications_list_state () && !browser_view.in_window_modifications)
             browser_view.up_pressed ();                 // FIXME returns bool
     }
 
     private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
     {
-        if (browser_view.in_window_bookmarks) // TODO better
+        if (browser_view.in_window_bookmarks)       // TODO better
+            return;
+        if (browser_view.in_window_modifications)   // TODO better
             return;
 
         if (browser_view.current_view == ViewType.FOLDER)
@@ -1147,16 +1194,25 @@ private class DConfWindow : ApplicationWindow
 
     private void modifications_list                     (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-
-        if (revealer.reveal_child)
-            revealer.toggle_modifications_list ();
+        if (modifications_handler.get_current_delay_mode ())
+        {
+            if (extra_small_window)
+            {
+                if (browser_view.in_window_modifications)
+                    hide_in_window_modifications ();
+                else
+                    show_in_window_modifications ();
+            }
+            else
+                revealer.toggle_modifications_list ();
+        }
     }
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
         if (browser_view.in_window_bookmarks)
+            return;
+        if (browser_view.in_window_modifications)
             return;
 
         if (!headerbar.search_mode_enabled)
@@ -1167,6 +1223,8 @@ private class DConfWindow : ApplicationWindow
     {
         if (browser_view.in_window_bookmarks)
             return;
+        if (browser_view.in_window_modifications)
+            return;
 
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
@@ -1176,6 +1234,8 @@ private class DConfWindow : ApplicationWindow
     {
         if (browser_view.in_window_bookmarks)
             return;
+        if (browser_view.in_window_modifications)
+            return;
 
         go_backward (true);
     }
@@ -1183,6 +1243,8 @@ private class DConfWindow : ApplicationWindow
     private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
     {
         if (browser_view.in_window_bookmarks)
+            return;
+        if (browser_view.in_window_modifications)
             return;
 
         if (browser_view.current_view == ViewType.CONFIG)
@@ -1195,6 +1257,8 @@ private class DConfWindow : ApplicationWindow
     {
         if (browser_view.in_window_bookmarks)
             return;
+        if (browser_view.in_window_modifications)
+            return;
 
         go_forward (false);
     }
@@ -1202,6 +1266,8 @@ private class DConfWindow : ApplicationWindow
     private void open_last_child                        (/* SimpleAction action, Variant? variant */)
     {
         if (browser_view.in_window_bookmarks)
+            return;
+        if (browser_view.in_window_modifications)
             return;
 
         go_forward (true);
@@ -1221,6 +1287,8 @@ private class DConfWindow : ApplicationWindow
             else
                 hide_in_window_bookmarks ();
         }
+        else if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
         else if (headerbar.search_mode_enabled)
             stop_search ();
         else if (current_type == ViewType.CONFIG)
@@ -1244,6 +1312,8 @@ private class DConfWindow : ApplicationWindow
             return;
         if (browser_view.in_window_bookmarks)
             return;
+        if (browser_view.in_window_modifications)
+            return;
 
         browser_view.discard_row_popover ();
         browser_view.toggle_boolean_key ();
@@ -1254,6 +1324,8 @@ private class DConfWindow : ApplicationWindow
         if (headerbar.has_popover ())
             return;
         if (browser_view.in_window_bookmarks)
+            return;
+        if (browser_view.in_window_modifications)
             return;
 
         if (revealer.dismiss_selected_modification ())
@@ -1485,6 +1557,8 @@ private class DConfWindow : ApplicationWindow
     private bool on_key_press_event (Widget widget, Gdk.EventKey event)
     {
         if (browser_view.in_window_bookmarks)
+            return false;
+        if (browser_view.in_window_modifications)
             return false;
 
         uint keyval = event.keyval;

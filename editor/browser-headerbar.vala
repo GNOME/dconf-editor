@@ -26,6 +26,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     [GtkChild] private Revealer     bookmarks_revealer;
     [GtkChild] private Bookmarks    bookmarks_button;
 
+    [GtkChild] private Stack        title_stack;
+
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
 
@@ -51,6 +53,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
             hide_in_window_bookmarks ();
         }
         update_hamburger_menu (delay_mode);
+        update_modifications_button ();
 
         path_widget.set_extra_small_window_state (new_value);
     }
@@ -149,6 +152,104 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     construct
     {
         install_action_entries ();
+        construct_modifications_actions_button_menu ();
+    }
+
+    /*\
+    * * in-window modifications
+    \*/
+
+    [GtkChild] private Label        modifications_label;
+    [GtkChild] private Separator    modifications_separator;
+    [GtkChild] private Button       show_modifications_button;
+    [GtkChild] private Button       hide_modifications_button;
+    [GtkChild] private MenuButton   modifications_actions_button;
+
+    bool in_window_modifications = false;
+
+    GLib.Menu changes_pending_menu;
+    GLib.Menu quit_delayed_mode_menu;
+    private void construct_modifications_actions_button_menu ()
+    {
+        changes_pending_menu = new GLib.Menu ();
+        changes_pending_menu.append (_("Apply all"), "ui.apply-delayed-settings");
+        changes_pending_menu.append (_("Dismiss all"), "ui.dismiss-delayed-settings");
+        changes_pending_menu.freeze ();
+
+        quit_delayed_mode_menu = new GLib.Menu ();
+        quit_delayed_mode_menu.append (_("Quit mode"), "ui.dismiss-delayed-settings");
+        quit_delayed_mode_menu.freeze ();
+
+        modifications_actions_button.set_menu_model (changes_pending_menu);
+    }
+
+    private void update_modifications_button ()
+    {
+        if (extra_small_window && delay_mode)
+        {
+            set_show_close_button (false);
+            if (in_window_modifications)
+            {
+                show_modifications_button.hide ();
+                modifications_separator.hide ();
+            }
+            else if (in_window_bookmarks)
+            {
+                show_modifications_button.show ();
+                modifications_separator.hide ();
+            }
+            else
+            {
+                show_modifications_button.show ();
+                modifications_separator.show ();
+            }
+        }
+        else
+        {
+            if (in_window_modifications)
+                hide_in_window_modifications ();
+            show_modifications_button.hide ();
+            modifications_separator.hide ();
+            set_show_close_button (true);
+        }
+    }
+
+    internal void show_in_window_modifications ()
+    {
+        if (in_window_bookmarks)
+            hide_in_window_bookmarks ();
+
+        in_window_modifications = true;
+        info_button.hide ();
+        modifications_separator.hide ();
+        show_modifications_button.hide ();
+        modifications_actions_button.show ();
+        hide_modifications_button.show ();
+        bookmarks_stack.hexpand = false;    // hack 1/5
+        title_stack.set_visible_child (modifications_label);
+    }
+
+    internal void hide_in_window_modifications ()
+    {
+        hide_modifications_button.hide ();
+        modifications_actions_button.hide ();
+        if (extra_small_window)
+        {
+            show_modifications_button.show ();
+            modifications_separator.show ();
+        }
+        bookmarks_stack.hexpand = false;    // hack 2/5
+        title_stack.set_visible_child (path_widget);
+        in_window_modifications = false;
+        info_button.show ();
+    }
+
+    internal void set_apply_modifications_button_sensitive (bool new_value)
+    {
+        if (new_value)
+            modifications_actions_button.set_menu_model (changes_pending_menu);
+        else
+            modifications_actions_button.set_menu_model (quit_delayed_mode_menu);
     }
 
     /*\
@@ -165,10 +266,15 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
     internal void show_in_window_bookmarks ()
     {
+        if (in_window_modifications)
+            hide_in_window_modifications ();
+
         in_window_bookmarks = true;
+        update_modifications_button ();
         info_button.hide ();
         bookmarks_actions_separator.hide ();
-        bookmarks_stack.hexpand = false;    // hack 1/3
+        bookmarks_stack.hexpand = false;    // hack 3/5
+        title_stack.set_visible_child (bookmarks_stack);
         bookmarks_stack.set_visible_child (bookmarks_label);
         hide_in_window_bookmarks_button.show ();
     }
@@ -178,8 +284,10 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         hide_in_window_bookmarks_button.hide ();
         bookmarks_actions_separator.hide ();
         in_window_bookmarks = false;
-        bookmarks_stack.hexpand = false;    // hack 2/3
-        bookmarks_stack.set_visible_child (path_widget);
+        update_modifications_button ();
+        bookmarks_stack.hexpand = false;    // hack 4/5
+        title_stack.set_visible_child (path_widget);
+        bookmarks_stack.set_visible_child (bookmarks_label);
         info_button.show ();
         update_hamburger_menu ();
     }
@@ -187,7 +295,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal void edit_in_window_bookmarks ()
         requires (in_window_bookmarks == true)
     {
-        bookmarks_stack.hexpand = true;     // hack 3/3
+        bookmarks_stack.hexpand = true;     // hack 5/5
         bookmarks_actions_separator.show ();
         bookmarks_stack.set_visible_child (bookmarks_controller);
     }
@@ -242,7 +350,10 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal void update_hamburger_menu (bool? new_delay_mode = null)
     {
         if (new_delay_mode != null)
+        {
             delay_mode = (!) new_delay_mode;
+            update_modifications_button ();
+        }
 
         GLib.Menu menu = new GLib.Menu ();
 

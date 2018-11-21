@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
-private class ModificationsRevealer : Revealer
+private class ModificationsRevealer : Revealer, AdaptativeWidget
 {
     private ModificationsHandler _modifications_handler;
     internal ModificationsHandler modifications_handler
@@ -29,6 +29,13 @@ private class ModificationsRevealer : Revealer
             _modifications_handler = value;
             _modifications_handler.delayed_changes_changed.connect (update);
         }
+    }
+
+    private bool extra_small_window = false;
+    private void set_extra_small_window_state (bool new_value)
+    {
+        extra_small_window = new_value;
+        update ();
     }
 
     [GtkChild] private Label label;
@@ -237,6 +244,12 @@ private class ModificationsRevealer : Revealer
 
     private void update ()
     {
+        if (extra_small_window)
+        {
+            set_reveal_child (false);
+            return;
+        }
+
         GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
         modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
 
