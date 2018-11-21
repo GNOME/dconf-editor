@@ -568,6 +568,8 @@ private class BrowserView : Stack, AdaptativeWidget
     {
         if (in_window_bookmarks)
             return bookmarks_list.get_copy_text ();
+        if (in_window_modifications)
+            return modifications_list.get_copy_text ();
         if (in_window_about)
             return about_list.get_copy_text (); // TODO copying logo...
         else
