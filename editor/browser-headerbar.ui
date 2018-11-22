@@ -168,6 +168,25 @@
       </object>
     </child>
     <child>
+      <object class="GtkMenuButton" id="quit_button">
+        <property name="visible">False</property>
+        <property name="action-name">app.quit</property>
+        <style>
+          <class name="titlebutton"/>
+        </style>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon-name">window-close-symbolic</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">end</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkButton" id="show_modifications_button">
         <property name="visible">False</property>
         <property name="action-name">ui.show-in-window-modifications</property>

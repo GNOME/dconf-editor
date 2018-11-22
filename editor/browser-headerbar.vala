@@ -199,6 +199,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     [GtkChild] private Separator    modifications_separator;
     [GtkChild] private Button       show_modifications_button;
     [GtkChild] private Button       hide_modifications_button;
+    [GtkChild] private Button       quit_button;
     [GtkChild] private MenuButton   modifications_actions_button;
 
     bool in_window_modifications = false;
@@ -221,29 +222,39 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
     private void update_modifications_button ()
     {
-        if (extra_small_window && delay_mode)
+        if (extra_small_window)
         {
             set_show_close_button (false);
             if (in_window_modifications)
             {
+                quit_button.hide ();
                 show_modifications_button.hide ();
-                modifications_separator.hide ();
-            }
-            else if (in_window_bookmarks || in_window_about)
-            {
-                show_modifications_button.show ();
                 modifications_separator.hide ();
             }
             else
             {
-                show_modifications_button.show ();
-                modifications_separator.show ();
+                if (delay_mode)
+                {
+                    quit_button.hide ();
+                    show_modifications_button.show ();
+                }
+                else
+                {
+                    show_modifications_button.hide ();
+                    quit_button.show ();
+                }
+
+                if (in_window_bookmarks || in_window_about)
+                    modifications_separator.hide ();
+                else
+                    modifications_separator.show ();
             }
         }
         else
         {
             if (in_window_modifications)
                 hide_in_window_modifications ();
+            quit_button.hide ();
             show_modifications_button.hide ();
             modifications_separator.hide ();
             set_show_close_button (true);
