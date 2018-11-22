@@ -1835,7 +1835,7 @@ namespace AboutDialogInfos
     // various
     internal const string logo_icon_name = "ca.desrt.dconf-editor";
     internal const string website = "https://wiki.gnome.org/Apps/DconfEditor";
-    internal const string website_label = "Page on GNOME wiki";
+    internal const string website_label = _("Page on GNOME wiki");
     internal const string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
     internal const License license_type = License.GPL_3_0; /* means "version 3.0 or later" */
 }
