@@ -1,5 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
+editor/about-list.vala
 editor/adaptative-pathbar.vala
 editor/bookmarks-list.vala
 editor/bookmarks.ui

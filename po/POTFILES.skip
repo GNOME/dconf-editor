@@ -1,5 +1,6 @@
 # List of source files that should *not* be translated.
 # Please keep this file sorted alphabetically.
+editor/about-list.c
 editor/adaptative-pathbar.c
 editor/bookmarks.c
 editor/bookmarks-list.c
