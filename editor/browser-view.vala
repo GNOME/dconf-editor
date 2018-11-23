@@ -709,8 +709,8 @@ private class SettingComparator : Object
     {
         uint16 a_place = sorted_context_id [a.context_id - ModelUtils.special_context_id_number];
         uint16 b_place = sorted_context_id [b.context_id - ModelUtils.special_context_id_number];
-        if (a_place == b_place)
-            assert_not_reached ();
+        if (a_place == b_place) // FIXME assert_not_reached() should be good, but crash happens if opening app on a key from a folder with
+            return 0;           // multiple schemas installed (e.g. '/ca/desrt/dconf-editor/bookmarks'), and immediately opening search
         return a_place < b_place ? -1 : 1;
     }
 }
