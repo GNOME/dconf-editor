@@ -37,22 +37,28 @@ private class PathWidget : Box, AdaptativeWidget
         search_button.icon = search_icon;
     }
 
-    private void set_extra_small_window_state (bool new_value)
+    private bool thin_window;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        pathbar.set_extra_small_window_state (new_value);
+        pathbar.set_window_size (new_size);
 
-        if (new_value)
+        bool _thin_window = AdaptativeWidget.WindowSize.is_thin (new_size);
+        if (thin_window != _thin_window)
         {
-            search_toggle.hide ();
-            search_button.show ();
-        }
-        else
-        {
-            search_button.hide ();
-            search_toggle.show ();
+            thin_window = _thin_window;
+            if (thin_window)
+            {
+                search_toggle.hide ();
+                search_button.show ();
+            }
+            else
+            {
+                search_button.hide ();
+                search_toggle.show ();
+            }
         }
 
-        searchentry.set_extra_small_window_state (new_value);
+        searchentry.set_window_size (new_size);
     }
 
     /*\

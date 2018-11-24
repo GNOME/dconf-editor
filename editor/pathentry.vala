@@ -31,9 +31,15 @@ private class PathEntry : Box, AdaptativeWidget
     internal bool entry_has_focus { get { return search_entry.has_focus; }}
 
     private ulong can_reload_handler = 0;
-    private void set_extra_small_window_state (bool new_value)
+    private bool thin_window = false;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        if (new_value)
+        bool _thin_window = AdaptativeWidget.WindowSize.is_thin (new_size);
+        if (_thin_window == thin_window)
+            return;
+        thin_window = _thin_window;
+
+        if (thin_window)
         {
             search_entry.set_icon_from_pixbuf (EntryIconPosition.PRIMARY, null);
 

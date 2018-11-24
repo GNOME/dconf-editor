@@ -61,11 +61,23 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
 
-    private void set_extra_small_window_state (bool new_value)
+    private bool phone_window = false;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        current_child.set_extra_small_window_state (new_value);
-        if (!new_value)
-            hide_in_window_bookmarks ();
+        current_child.set_window_size (new_size);
+        bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
+        if (phone_window == _phone_window)
+            return;
+        if (phone_window)
+        {
+            if (in_window_bookmarks)
+                hide_in_window_bookmarks ();
+            else if (in_window_modifications)
+                hide_in_window_modifications ();
+            else if (in_window_about)
+                hide_in_window_about ();
+        }
+        phone_window = _phone_window;
     }
 
     private ModificationsHandler _modifications_handler;
@@ -220,6 +232,7 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     internal void hide_in_window_about ()
+        requires (in_window_about == true)
     {
         in_window_about = false;
         set_visible_child (current_child_grid);
@@ -245,6 +258,7 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     internal void hide_in_window_modifications ()
+        requires (in_window_modifications == true)
     {
         in_window_modifications = false;
         set_visible_child (current_child_grid);
@@ -255,7 +269,7 @@ private class BrowserView : Stack, AdaptativeWidget
         GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
         modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
 
-        if (modifications_handler.mode == ModificationsMode.NONE)
+        if (in_window_modifications && modifications_handler.mode == ModificationsMode.NONE)
             hide_in_window_modifications ();
     }
     private Widget delayed_setting_row_create (Object object)
@@ -352,6 +366,7 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     internal void hide_in_window_bookmarks ()
+        requires (in_window_bookmarks == true)
     {
         if (in_window_bookmarks_edit_mode)
             leave_bookmarks_edit_mode ();

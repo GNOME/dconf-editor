@@ -54,14 +54,14 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
     }
 
-    private bool extra_small_window = false;
-    private void set_extra_small_window_state (bool new_value)
+    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        extra_small_window = new_value;
+        window_size = new_size;
         key_list_box.@foreach ((row) => {
                 Widget? row_child = ((ListBoxRow) row).get_child ();
                 if (row_child != null && (!) row_child is KeyListBoxRow)
-                    ((KeyListBoxRow) (!) row_child).set_extra_small_window_state (new_value);
+                    ((KeyListBoxRow) (!) row_child).set_window_size (new_size);
             });
     }
 
@@ -391,7 +391,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
             KeyListBoxRow key_row = create_key_list_box_row (full_name, context_id, properties, modifications_handler.get_current_delay_mode (), search_mode_non_local_result);
             key_row.small_keys_list_rows = _small_keys_list_rows;
-            key_row.set_extra_small_window_state (extra_small_window);
+            key_row.set_window_size (window_size);
 
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect ((_modifications_handler) => set_delayed_icon (_modifications_handler, key_row));
             set_delayed_icon (modifications_handler, key_row);

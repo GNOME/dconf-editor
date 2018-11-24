@@ -31,10 +31,14 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         }
     }
 
-    private bool extra_small_window = false;
-    private void set_extra_small_window_state (bool new_value)
+    private bool phone_window = false;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        extra_small_window = new_value;
+        bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
+        if (phone_window == _phone_window)
+            return;
+        phone_window = _phone_window;
+
         update ();
     }
 
@@ -244,7 +248,7 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
 
     private void update ()
     {
-        if (extra_small_window)
+        if (phone_window)
         {
             set_reveal_child (false);
             return;

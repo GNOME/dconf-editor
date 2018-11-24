@@ -36,10 +36,10 @@ private class BrowserStack : Grid, AdaptativeWidget
         }
     }
 
-    private void set_extra_small_window_state (bool new_value)
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        folder_view.set_extra_small_window_state (new_value);
-        search_view.set_extra_small_window_state (new_value);
+        folder_view.set_window_size (new_size);
+        search_view.set_window_size (new_size);
     }
 
     internal ModificationsHandler modifications_handler

@@ -23,11 +23,15 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     [GtkChild] private LargePathbar large_pathbar;
     [GtkChild] private ShortPathbar short_pathbar;
 
-    private bool extra_small_window = false;
-    private void set_extra_small_window_state (bool new_value)
+    private bool thin_window = false;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        extra_small_window = new_value;
-        if (new_value)
+        bool _thin_window = AdaptativeWidget.WindowSize.is_thin (new_size);
+        if (_thin_window == thin_window)
+            return;
+        thin_window = _thin_window;
+
+        if (_thin_window)
             set_visible_child (short_pathbar);
         else
             set_visible_child (large_pathbar);
@@ -55,7 +59,7 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 
     internal void toggle_menu ()
     {
-        if (extra_small_window)
+        if (thin_window)
             short_pathbar.toggle_menu ();
         else
             large_pathbar.toggle_menu ();

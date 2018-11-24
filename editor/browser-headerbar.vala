@@ -35,28 +35,36 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal signal void search_stopped ();
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
 
-    private bool extra_small_window = false;
-    private void set_extra_small_window_state (bool new_value)
+    private bool phone_window = false;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        extra_small_window = new_value;
+        bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
+        if (phone_window != _phone_window)
+        {
+            phone_window = _phone_window;
+            if (phone_window)
+            {
+                bookmarks_button.active = false;
+                bookmarks_button.sensitive = false;
+                bookmarks_revealer.set_reveal_child (false);
+            }
+            else
+            {
+                bookmarks_button.sensitive = true;
+                bookmarks_revealer.set_reveal_child (true);
+                if (in_window_bookmarks)
+                    hide_in_window_bookmarks ();
+                else if (in_window_modifications)
+                    hide_in_window_modifications ();
+                else if (in_window_about)
+                    hide_in_window_about ();
+            }
+        }
 
-        bookmarks_button.active = false;
-        if (new_value)
-        {
-            bookmarks_button.sensitive = false;
-            bookmarks_revealer.set_reveal_child (false);
-        }
-        else
-        {
-            bookmarks_button.sensitive = true;
-            bookmarks_revealer.set_reveal_child (true);
-            hide_in_window_bookmarks ();
-            hide_in_window_about ();
-        }
         update_hamburger_menu (delay_mode);
         update_modifications_button ();
 
-        path_widget.set_extra_small_window_state (new_value);
+        path_widget.set_window_size (new_size);
     }
 
     internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
@@ -181,12 +189,13 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     }
 
     internal void hide_in_window_about ()
+        requires (in_window_about == true)
     {
         hide_about_button.hide ();
         bookmarks_stack.hexpand = false;    // hack 2/7
         title_stack.set_visible_child (path_widget);
         in_window_about = false;
-        if (extra_small_window)
+        if (phone_window)
             modifications_separator.show ();
         info_button.show ();
     }
@@ -222,7 +231,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
     private void update_modifications_button ()
     {
-        if (extra_small_window)
+        if (phone_window)
         {
             set_show_close_button (false);
             if (in_window_modifications)
@@ -279,10 +288,11 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     }
 
     internal void hide_in_window_modifications ()
+        requires (in_window_modifications == true)
     {
         hide_modifications_button.hide ();
         modifications_actions_button.hide ();
-        if (extra_small_window)
+        if (phone_window)
         {
             show_modifications_button.show ();
             modifications_separator.show ();
@@ -331,6 +341,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     }
 
     internal void hide_in_window_bookmarks ()
+        requires (in_window_bookmarks == true)
     {
         hide_in_window_bookmarks_button.hide ();
         bookmarks_actions_separator.hide ();
@@ -418,13 +429,13 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         }
         else if (current_type != ViewType.SEARCH) */
 
-        if (extra_small_window)
+        if (phone_window)
             append_bookmark_section (current_type, current_path, BookmarksList.get_bookmark_name (current_path, current_type) in get_bookmarks (), in_window_bookmarks, ref menu);
 
         if (!in_window_bookmarks)
             append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);
 
-        append_app_actions_section (night_time, dark_theme, automatic_night_mode, extra_small_window, ref menu);
+        append_app_actions_section (night_time, dark_theme, automatic_night_mode, phone_window, ref menu);
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
@@ -467,11 +478,11 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         menu.append_section (null, section);
     }
 
-    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, bool extra_small_window, ref GLib.Menu menu)
+    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, bool phone_window, ref GLib.Menu menu)
     {
         GLib.Menu section = new GLib.Menu ();
         append_or_not_night_mode_entry (night_time, dark_theme, auto_night, ref section);
-        if (!extra_small_window)    // TODO else...
+        if (!phone_window)    // TODO else...
             section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
         section.append (_("About Dconf Editor"), "ui.about");
         section.freeze ();

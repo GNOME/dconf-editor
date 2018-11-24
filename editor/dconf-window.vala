@@ -86,8 +86,44 @@ internal enum ViewType {
 }
 
 private interface AdaptativeWidget
-{
-    internal abstract void set_extra_small_window_state (bool new_value);
+{ /*
+     ┏━━━━━━━┳━━━━━━━┳━━━━━──╴
+     ┃       ┃       ┃
+     ┃ phone ┃ phone ┃ extra
+     ┃ vert. ┃ hztl. ┃ flat
+     ┠╌╌╌╌╌╌╌╊━━━━━━━┻━━━━╾──╴
+     ┃       ┃
+     ┃       ┃
+     ┣━━━━━━━┫     usual
+     ┃ extra ┃     size
+     ╿ thin  │
+     ╵       ╵             */
+
+    internal enum WindowSize {
+        START_SIZE,
+        USUAL_SIZE,
+        PHONE_VERT,
+        PHONE_HZTL,
+        EXTRA_THIN,
+        EXTRA_FLAT;
+
+        internal static inline bool is_phone (WindowSize window_size)
+        {
+            return (window_size != USUAL_SIZE) && (window_size != EXTRA_FLAT);
+        }
+
+        internal static inline bool is_thin (WindowSize window_size)
+        {
+            return (window_size == PHONE_VERT) || (window_size == EXTRA_THIN);
+        }
+
+        internal static inline bool is_fun (WindowSize window_size)
+        {
+            return (window_size == PHONE_HZTL) || (window_size == EXTRA_FLAT);
+        }
+    }
+
+    internal abstract void set_window_size (WindowSize new_size);
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
@@ -148,7 +184,7 @@ private class DConfWindow : ApplicationWindow
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
         modifications_handler.delayed_changes_changed.connect (() => {
-                if (!extra_small_window)
+                if (!AdaptativeWidget.WindowSize.is_phone (window_size))
                     return;
 
                 uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
@@ -442,69 +478,91 @@ private class DConfWindow : ApplicationWindow
         return false;
     }
 
-    private bool extra_small_window = false;
+    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
+    private void set_window_size (AdaptativeWidget.WindowSize new_window_size)
+        requires (new_window_size != AdaptativeWidget.WindowSize.START_SIZE)
+    {
+        if (window_size == new_window_size)
+            return;
+        window_size = new_window_size;
+        headerbar.set_window_size (new_window_size);
+        browser_view.set_window_size (new_window_size);
+        revealer.set_window_size (new_window_size);
+    }
+
+    private bool has_extra_small_window_class = false;
+    private bool has_small_window_class = false;
+    private bool has_large_window_class = false;
+    private void set_style_classes (bool extra_small_window, bool small_window, bool large_window)
+    {
+        // remove first
+        if (has_extra_small_window_class && !extra_small_window)
+            set_style_class ("extra-small-window", extra_small_window, ref has_extra_small_window_class);
+        if (has_small_window_class && !small_window)
+            set_style_class ("small-window", small_window, ref has_small_window_class);
+
+        if (large_window != has_large_window_class)
+            set_style_class ("large-window", large_window, ref has_large_window_class);
+        if (small_window != has_small_window_class)
+            set_style_class ("small-window", small_window, ref has_small_window_class);
+        if (extra_small_window != has_extra_small_window_class)
+            set_style_class ("extra-small-window", extra_small_window, ref has_extra_small_window_class);
+    }
+    private inline void set_style_class (string class_name, bool new_state, ref bool old_state)
+    {
+        old_state = new_state;
+        if (new_state)
+            context.add_class (class_name);
+        else
+            context.remove_class (class_name);
+    }
+
     [GtkCallback]
     private void on_size_allocate (Allocation allocation)
     {
         /* responsive design */
 
-        if (allocation.width > MAX_ROW_WIDTH + 42)
+        int height = allocation.height;
+        int width = allocation.width;
+        bool is_thin_window = width < 787;
+
+        if (width < 590)
         {
-            if (extra_small_window)
-            {
-                extra_small_window = false;
-                context.remove_class ("extra-small-window");
-                headerbar.set_extra_small_window_state (false);
-                browser_view.set_extra_small_window_state (false);
-                revealer.set_extra_small_window_state (false);
-            }
-            context.remove_class ("small-window");
-            context.add_class ("large-window");
+            if (height < 787)   set_window_size (AdaptativeWidget.WindowSize.PHONE_VERT);
+            else                set_window_size (AdaptativeWidget.WindowSize.EXTRA_THIN);
+        }
+        else if (height < 400)
+        {
+            if (is_thin_window) set_window_size (AdaptativeWidget.WindowSize.PHONE_HZTL);
+            else                set_window_size (AdaptativeWidget.WindowSize.EXTRA_FLAT);
+        }
+        else                    set_window_size (AdaptativeWidget.WindowSize.USUAL_SIZE);
+
+        if (width > MAX_ROW_WIDTH + 42)
+        {
+            set_style_classes (false, false, true);
+
             notification_revealer.hexpand = false;
             notification_revealer.halign = Align.CENTER;
         }
-        else if (allocation.width < 590)
+        else if (width < 590)
         {
-            context.remove_class ("large-window");
-            context.add_class ("small-window");
-            if (!extra_small_window)
-            {
-                extra_small_window = true;
-                context.add_class ("extra-small-window");
-                headerbar.set_extra_small_window_state (true);
-                browser_view.set_extra_small_window_state (true);
-                revealer.set_extra_small_window_state (true);
-            }
+            set_style_classes (true, true, false);
+
             notification_revealer.hexpand = true;
             notification_revealer.halign = Align.FILL;
         }
-        else if (allocation.width < 787)
+        else if (is_thin_window)
         {
-            context.remove_class ("large-window");
-            if (extra_small_window)
-            {
-                extra_small_window = false;
-                context.remove_class ("extra-small-window");
-                headerbar.set_extra_small_window_state (false);
-                browser_view.set_extra_small_window_state (false);
-                revealer.set_extra_small_window_state (false);
-            }
-            context.add_class ("small-window");
+            set_style_classes (false, true, false);
+
             notification_revealer.hexpand = true;
             notification_revealer.halign = Align.FILL;
         }
         else
         {
-            context.remove_class ("large-window");
-            context.remove_class ("small-window");
-            if (extra_small_window)
-            {
-                extra_small_window = false;
-                context.remove_class ("extra-small-window");
-                headerbar.set_extra_small_window_state (false);
-                browser_view.set_extra_small_window_state (false);
-                revealer.set_extra_small_window_state (false);
-            }
+            set_style_classes (false, false, false);
+
             notification_revealer.hexpand = false;
             notification_revealer.halign = Align.CENTER;
         }
@@ -658,8 +716,9 @@ private class DConfWindow : ApplicationWindow
     private void open_folder (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
 
         string full_name = ((!) path_variant).get_string ();
 
@@ -669,11 +728,12 @@ private class DConfWindow : ApplicationWindow
     private void open_object (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
-        hide_in_window_modifications ();
-        hide_in_window_about ();
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
 
         string full_name;
         uint16 context_id;
@@ -695,8 +755,9 @@ private class DConfWindow : ApplicationWindow
     private void open_search (SimpleAction action, Variant? search_variant)
         requires (search_variant != null)
     {
-        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
 
         string search = ((!) search_variant).get_string ();
 
@@ -706,7 +767,8 @@ private class DConfWindow : ApplicationWindow
     private void open_parent (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        hide_in_window_bookmarks ();
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
 
         string full_name = ((!) path_variant).get_string ();
         request_folder (ModelUtils.get_parent_path (full_name), full_name);
@@ -715,11 +777,12 @@ private class DConfWindow : ApplicationWindow
     private void open_path (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        hide_in_window_bookmarks ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
-        hide_in_window_modifications ();
-        hide_in_window_about ();
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
 
         string full_name;
         uint16 context_id;
@@ -825,7 +888,7 @@ private class DConfWindow : ApplicationWindow
     }
     private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
-        if (extra_small_window)
+        if (AdaptativeWidget.WindowSize.is_phone (window_size))
             browser_view.update_bookmark_icon (bookmark, icon);
         else
             headerbar.update_bookmark_icon (bookmark, icon);
@@ -840,6 +903,7 @@ private class DConfWindow : ApplicationWindow
     }
 
     private void hide_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
+        requires (browser_view.in_window_bookmarks == true)
     {
         if (browser_view.in_window_bookmarks_edit_mode)
             leave_edit_mode ();     // TODO place after
@@ -854,12 +918,14 @@ private class DConfWindow : ApplicationWindow
     }
 
     private void hide_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
+        requires (browser_view.in_window_modifications == true)
     {
         headerbar.hide_in_window_modifications ();
         browser_view.hide_in_window_modifications ();
     }
 
     private void hide_in_window_about (/* SimpleAction action, Variant? path_variant */)
+        requires (browser_view.in_window_about == true)
     {
         headerbar.hide_in_window_about ();
         browser_view.hide_in_window_about ();
@@ -891,14 +957,16 @@ private class DConfWindow : ApplicationWindow
 
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        modifications_handler.apply_delayed_settings ();
-        if (extra_small_window)
+        if (browser_view.in_window_modifications)
             hide_in_window_modifications ();
+        modifications_handler.apply_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
 
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
+        if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
@@ -925,18 +993,8 @@ private class DConfWindow : ApplicationWindow
 
     private void about_cb ()    // register as "win.about"?
     {
-        if (extra_small_window)
-        {
-            if (browser_view.in_window_about)
-                hide_in_window_about ();
-            else
-            {
-                headerbar.show_in_window_about ();
-                browser_view.show_in_window_about ();
-            }
-        }
-        else    // TODO hide the dialog if visible
-        {
+        if (!AdaptativeWidget.WindowSize.is_phone (window_size))
+        {   // TODO hide the dialog if visible
             string [] authors = AboutDialogInfos.authors;
             Gtk.show_about_dialog (this,
                                    "program-name",          AboutDialogInfos.program_name,
@@ -952,6 +1010,15 @@ private class DConfWindow : ApplicationWindow
                                    "website-label",         AboutDialogInfos.website_label,
                                    null);
         }
+        else if (browser_view.in_window_about)
+            hide_in_window_about ();
+        else
+            show_in_window_about ();
+    }
+    private inline void show_in_window_about ()
+    {
+        headerbar.show_in_window_about ();
+        browser_view.show_in_window_about ();
     }
 
     /*\
@@ -1134,7 +1201,7 @@ private class DConfWindow : ApplicationWindow
     private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
     {
         browser_view.discard_row_popover ();
-        if (!extra_small_window)
+        if (!AdaptativeWidget.WindowSize.is_phone (window_size))
             headerbar.click_bookmarks_button ();
         else if (browser_view.in_window_bookmarks)
             hide_in_window_bookmarks ();
@@ -1246,18 +1313,15 @@ private class DConfWindow : ApplicationWindow
 
     private void modifications_list                     (/* SimpleAction action, Variant? variant */)
     {
-        if (modifications_handler.get_current_delay_mode ())
-        {
-            if (extra_small_window)
-            {
-                if (browser_view.in_window_modifications)
-                    hide_in_window_modifications ();
-                else
-                    show_in_window_modifications ();
-            }
-            else
-                revealer.toggle_modifications_list ();
-        }
+        if (!modifications_handler.get_current_delay_mode ())
+            return;
+
+        if (!AdaptativeWidget.WindowSize.is_phone (window_size))
+            revealer.toggle_modifications_list ();
+        else if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
+        else
+            show_in_window_modifications ();
     }
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)

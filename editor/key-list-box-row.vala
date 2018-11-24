@@ -174,7 +174,7 @@ private class SearchListBoxRow : ClickableListBoxRow
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
-private class KeyListBoxRow : ClickableListBoxRow
+private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
 {
     [GtkChild] private Grid key_name_and_value_grid;
     [GtkChild] private Label key_name_label;
@@ -219,11 +219,15 @@ private class KeyListBoxRow : ClickableListBoxRow
         }
     }
 
-    private bool extra_small_window = false;
-    internal void set_extra_small_window_state (bool new_value)
+    private bool thin_window = false;
+    internal void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        extra_small_window = new_value;
-        if (new_value)
+        bool _thin_window = AdaptativeWidget.WindowSize.is_thin (new_size);
+        if (thin_window == _thin_window)
+            return;
+        thin_window = _thin_window;
+
+        if (thin_window)
         {
             if (boolean_switch != null)
                 ((!) boolean_switch).hide ();
@@ -386,7 +390,7 @@ private class KeyListBoxRow : ClickableListBoxRow
     private void hide_or_show_switch ()
         requires (boolean_switch != null)
     {
-        if (extra_small_window)
+        if (thin_window)
         {
             key_value_label.hide ();
             ((!) boolean_switch).hide ();
