@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/overlayed-list.ui")]
-private abstract class OverlayedList : Overlay
+private abstract class OverlayedList : Overlay, AdaptativeWidget
 {
     [GtkChild] protected ListBox        main_list_box;
                private StyleContext     main_list_box_context;
@@ -34,6 +34,7 @@ private abstract class OverlayedList : Overlay
     construct
     {
         main_list_box_context = main_list_box.get_style_context ();
+        main_context = get_style_context ();
         connect_handlers ();
         main_list_box.bind_model (main_list_store, create_rows);
     }
@@ -76,6 +77,33 @@ private abstract class OverlayedList : Overlay
     {
         RegistryPlaceholder placeholder = new RegistryPlaceholder (placeholder_icon, placeholder_text, big_placeholder);
         main_list_box.set_placeholder (placeholder);
+    }
+
+    /*\
+    * * responsive design
+    \*/
+
+    private StyleContext main_context;
+    internal void set_window_size (AdaptativeWidget.WindowSize new_size)
+    {
+        if (!AdaptativeWidget.WindowSize.is_thin (new_size) && AdaptativeWidget.WindowSize.is_fun (new_size))
+        {
+            main_context.remove_class ("vertical");
+            edit_mode_box.halign = Align.END;
+            edit_mode_box.valign = Align.CENTER;
+            edit_mode_box.orientation = Orientation.VERTICAL;
+            edit_mode_box.width_request = 160;
+            main_context.add_class ("horizontal");
+        }
+        else
+        {
+            main_context.remove_class ("horizontal");
+            edit_mode_box.halign = Align.CENTER;
+            edit_mode_box.valign = Align.END;
+            edit_mode_box.orientation = Orientation.HORIZONTAL;
+            edit_mode_box.width_request = 200;
+            main_context.add_class ("vertical");
+        }
     }
 
     /*\

@@ -60,31 +60,56 @@
   margin-bottom:0;
 }
 
-.bookmarks .padding-bottom {
+  .vertical.overlayed-list:not(.delayed-list)          > scrolledwindow > viewport > list {
   padding-bottom:0;
   transition:padding-bottom 0.3s,
              font-size      0.3s;
 }
-.bookmarks .padding-bottom:not(.empty-list) {
-  padding-bottom:2.8rem;
+  .vertical.overlayed-list:not(.delayed-list)          > scrolledwindow > viewport > list:not(.empty-list) {
+  padding-bottom:3rem;
 }
-
-.linked-circular {
+  .vertical.overlayed-list:not(.delayed-list)          > .linked-circular {
   margin-bottom:0.3rem;
 }
 
-.linked-circular:dir(rtl) .right-on-ltr,
-.linked-circular:dir(ltr) .left-on-ltr {
+.horizontal.overlayed-list:dir(ltr):not(.delayed-list) > scrolledwindow > viewport > list > row {
+  padding-right:calc(160px+1rem); /* width-request of edit_mode_box + a bit */
+}
+.horizontal.overlayed-list:dir(rtl):not(.delayed-list) > scrolledwindow > viewport > list > row {
+  padding-left :calc(160px+1rem); /* width-request of edit_mode_box + a bit */
+}
+.horizontal.overlayed-list:dir(ltr):not(.delayed-list) > .linked-circular {
+  margin-right:1.5rem;
+}
+.horizontal.overlayed-list:dir(rtl):not(.delayed-list) > .linked-circular {
+  margin-left :1.5rem;
+}
+
+  .vertical.overlayed-list:dir(rtl) > .linked-circular > .right-on-ltr,
+  .vertical.overlayed-list:dir(ltr) > .linked-circular > .left-on-ltr {
   border-radius:2rem 0 0 2rem;
-  -gtk-outline-top-left-radius:2rem;
+  -gtk-outline-top-left-radius   :2rem;
   -gtk-outline-bottom-left-radius:2rem;
 }
 
-.linked-circular:dir(ltr) .right-on-ltr,
-.linked-circular:dir(rtl) .left-on-ltr {
+  .vertical.overlayed-list:dir(ltr) > .linked-circular > .right-on-ltr,
+  .vertical.overlayed-list:dir(rtl) > .linked-circular > .left-on-ltr {
   border-radius:0 2rem 2rem 0;
-  -gtk-outline-top-right-radius:2rem;
+  -gtk-outline-top-right-radius   :2rem;
   -gtk-outline-bottom-right-radius:2rem;
+}
+
+.horizontal.overlayed-list:dir(rtl) > .linked-circular > .right-on-ltr,
+.horizontal.overlayed-list:dir(ltr) > .linked-circular > .left-on-ltr {
+  border-radius:1.5rem 1.5rem 0 0;
+  -gtk-outline-top-right-radius:1.4rem;
+  -gtk-outline-top-left-radius :1.4rem;
+}
+.horizontal.overlayed-list:dir(ltr) > .linked-circular > .right-on-ltr,
+.horizontal.overlayed-list:dir(rtl) > .linked-circular > .left-on-ltr {
+  border-radius:0 0 1.5rem 1.5rem;
+  -gtk-outline-bottom-right-radius:1.4rem;
+  -gtk-outline-bottom-left-radius :1.4rem;
 }
 
 /* hack: fix the double space when the child of the revealer is hidden; 6px is the spacing of the centerwidget box */
@@ -117,9 +142,6 @@
 * * in-window about
 \*/
 
-.about-list            > scrolledwindow > viewport > list {
-  padding-bottom:3rem;
-}
 .about-list            > scrolledwindow > viewport > list > row {
   padding:4px;
   min-height:1.3rem;

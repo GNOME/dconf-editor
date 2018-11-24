@@ -4,6 +4,10 @@
   <template class="OverlayedList" parent="GtkOverlay">
     <property name="expand">True</property>
     <property name="valign">fill</property>
+    <style>
+      <class name="overlayed-list"/>
+      <class name="vertical"/>
+    </style>
     <child>
       <object class="GtkScrolledWindow" id="scrolled">
         <property name="visible">True</property>
@@ -17,9 +21,6 @@
           <object class="GtkListBox" id="main_list_box">
             <property name="visible">True</property>
             <signal name="selected-rows-changed" handler="on_selection_changed"/>
-            <style>
-              <class name="padding-bottom"/>
-            </style>
           </object>
         </child>
       </object>

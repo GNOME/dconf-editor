@@ -65,6 +65,10 @@ private class BrowserView : Stack, AdaptativeWidget
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         current_child.set_window_size (new_size);
+        bookmarks_list.set_window_size (new_size);
+        modifications_list.set_window_size (new_size);
+        about_list.set_window_size (new_size);
+
         bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
         if (phone_window == _phone_window)
             return;
