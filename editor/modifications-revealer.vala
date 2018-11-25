@@ -31,16 +31,36 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         }
     }
 
+    StyleContext apply_button_context;
     private bool disable_action_bar = false;
+    private bool short_size_button = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
                                 || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-        if (disable_action_bar == _disable_action_bar)
-            return;
-        disable_action_bar = _disable_action_bar;
+        if (disable_action_bar != _disable_action_bar)
+        {
+            disable_action_bar = _disable_action_bar;
+            update ();
+        }
 
-        update ();
+        bool _short_size_button = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
+        if (short_size_button != _short_size_button)
+        {
+            short_size_button = _short_size_button;
+            if (_short_size_button)
+            {
+                apply_button_context.remove_class ("text-button");
+                apply_button.icon = apply_button_icon;
+                apply_button_context.add_class ("image-button");
+            }
+            else
+            {
+                apply_button_context.remove_class ("image-button");
+                apply_button.icon = null;
+                apply_button_context.add_class ("text-button");
+            }
+        }
     }
 
     [GtkChild] private Label label;
@@ -53,36 +73,9 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
 
     construct
     {
+        apply_button_context = apply_button.get_style_context ();
         apply_button.icon = null;
         apply_button.get_style_context ().add_class ("text-button");
-    }
-
-    /*\
-    * * Window management callbacks
-    \*/
-
-    [GtkCallback]
-    private void on_size_allocate (Allocation allocation)   // TODO remaining warnings printed on redim when allocation width passes 900
-    {
-        StyleContext context = apply_button.get_style_context ();
-        if (allocation.width < 900)
-        {
-            if (apply_button.icon == null)
-            {
-                context.remove_class ("text-button");
-                apply_button.icon = apply_button_icon;
-                context.add_class ("image-button");
-            }
-        }
-        else
-        {
-            if (apply_button.icon != null)
-            {
-                context.remove_class ("image-button");
-                apply_button.icon = null;
-                context.add_class ("text-button");
-            }
-        }
     }
 
     /*\

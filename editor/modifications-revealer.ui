@@ -3,7 +3,6 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="ModificationsRevealer" parent="GtkRevealer">
     <property name="reveal-child">False</property>
-    <signal name="size-allocate" handler="on_size_allocate"/>
     <child>
       <object class="GtkActionBar">
         <property name="visible">True</property>
