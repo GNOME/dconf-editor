@@ -35,31 +35,33 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal signal void search_stopped ();
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
 
-    private bool phone_window = false;
+    private bool disable_popovers = false;
+    private bool disable_action_bar = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
-        if (phone_window != _phone_window)
+        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
+                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        if (disable_popovers != _disable_popovers)
         {
-            phone_window = _phone_window;
-            if (phone_window)
+            disable_popovers = _disable_popovers;
+            if (_disable_popovers)
             {
                 bookmarks_button.active = false;
+
                 bookmarks_button.sensitive = false;
                 bookmarks_revealer.set_reveal_child (false);
             }
             else
             {
                 bookmarks_button.sensitive = true;
+                if (!in_window_modifications)
+                    bookmarks_button.show ();
                 bookmarks_revealer.set_reveal_child (true);
-                if (in_window_bookmarks)
-                    hide_in_window_bookmarks ();
-                else if (in_window_modifications)
-                    hide_in_window_modifications ();
-                else if (in_window_about)
-                    hide_in_window_about ();
             }
         }
+
+        disable_action_bar = _disable_popovers
+                          || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
 
         update_hamburger_menu (delay_mode);
         update_modifications_button ();
@@ -195,7 +197,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         bookmarks_stack.hexpand = false;    // hack 2/7
         title_stack.set_visible_child (path_widget);
         in_window_about = false;
-        if (phone_window)
+        if (disable_action_bar)
             modifications_separator.show ();
         info_button.show ();
     }
@@ -231,7 +233,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
     private void update_modifications_button ()
     {
-        if (phone_window)
+        if (disable_action_bar)
         {
             set_show_close_button (false);
             if (in_window_modifications)
@@ -281,6 +283,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         info_button.hide ();
         modifications_separator.hide ();
         show_modifications_button.hide ();
+        if (disable_action_bar && !disable_popovers)
+            bookmarks_button.hide ();
         modifications_actions_button.show ();
         hide_modifications_button.show ();
         bookmarks_stack.hexpand = false;    // hack 3/7
@@ -292,11 +296,13 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     {
         hide_modifications_button.hide ();
         modifications_actions_button.hide ();
-        if (phone_window)
+        if (disable_action_bar)
         {
             show_modifications_button.show ();
             modifications_separator.show ();
         }
+        if (!disable_popovers)
+            bookmarks_button.show ();
         bookmarks_stack.hexpand = false;    // hack 4/7
         title_stack.set_visible_child (path_widget);
         in_window_modifications = false;
@@ -429,13 +435,13 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         }
         else if (current_type != ViewType.SEARCH) */
 
-        if (phone_window)
+        if (disable_popovers)
             append_bookmark_section (current_type, current_path, BookmarksList.get_bookmark_name (current_path, current_type) in get_bookmarks (), in_window_bookmarks, ref menu);
 
         if (!in_window_bookmarks)
             append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);
 
-        append_app_actions_section (night_time, dark_theme, automatic_night_mode, phone_window, ref menu);
+        append_app_actions_section (night_time, dark_theme, automatic_night_mode, disable_popovers, ref menu);
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
@@ -478,11 +484,11 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         menu.append_section (null, section);
     }
 
-    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, bool phone_window, ref GLib.Menu menu)
+    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, bool disable_popovers, ref GLib.Menu menu)
     {
         GLib.Menu section = new GLib.Menu ();
         append_or_not_night_mode_entry (night_time, dark_theme, auto_night, ref section);
-        if (!phone_window)    // TODO else...
+        if (!disable_popovers)    // TODO else...
             section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
         section.append (_("About Dconf Editor"), "ui.about");
         section.freeze ();

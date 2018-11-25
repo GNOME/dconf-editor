@@ -85,49 +85,8 @@ internal enum ViewType {
     }
 }
 
-private interface AdaptativeWidget
-{ /*
-     ┏━━━━━━━┳━━━━━━━┳━━━━━──╴
-     ┃       ┃       ┃
-     ┃ phone ┃ phone ┃ extra
-     ┃ vert. ┃ hztl. ┃ flat
-     ┠╌╌╌╌╌╌╌╊━━━━━━━┻━━━━╾──╴
-     ┃       ┃
-     ┃       ┃
-     ┣━━━━━━━┫     usual
-     ┃ extra ┃     size
-     ╿ thin  │
-     ╵       ╵             */
-
-    internal enum WindowSize {
-        START_SIZE,
-        USUAL_SIZE,
-        PHONE_VERT,
-        PHONE_HZTL,
-        EXTRA_THIN,
-        EXTRA_FLAT;
-
-        internal static inline bool is_phone (WindowSize window_size)
-        {
-            return (window_size != USUAL_SIZE) && (window_size != EXTRA_FLAT);
-        }
-
-        internal static inline bool is_thin (WindowSize window_size)
-        {
-            return (window_size == PHONE_VERT) || (window_size == EXTRA_THIN);
-        }
-
-        internal static inline bool is_fun (WindowSize window_size)
-        {
-            return (window_size == PHONE_HZTL) || (window_size == EXTRA_FLAT);
-        }
-    }
-
-    internal abstract void set_window_size (WindowSize new_size);
-}
-
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
-private class DConfWindow : ApplicationWindow
+private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 {
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
@@ -137,11 +96,6 @@ private class DConfWindow : ApplicationWindow
 
     private SettingsModel model = new SettingsModel ();
     private ModificationsHandler modifications_handler;
-
-    private int window_width = 0;
-    private int window_height = 0;
-    private bool window_is_maximized = false;
-    private bool window_is_tiled = false;
 
     internal bool mouse_extra_buttons   { private get; set; default = true; }
     internal int mouse_back_button      { private get; set; default = 8; }
@@ -154,16 +108,25 @@ private class DConfWindow : ApplicationWindow
     [GtkChild] private BrowserView browser_view;
     [GtkChild] private ModificationsRevealer revealer;
 
-    [GtkChild] private Revealer notification_revealer;
-    [GtkChild] private Label notification_label;
+    [GtkChild] private NotificationsRevealer notifications_revealer;
 
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
+
+    private ulong headerbar_update_bookmarks_icons_handler = 0;
+    private ulong browserview_update_bookmarks_icons_handler = 0;
+
+    private ulong delayed_changes_changed_handler = 0;
 
     private StyleContext context;
     construct
     {
         context = get_style_context ();
+
+        adaptative_children.append (headerbar);
+        adaptative_children.append (browser_view);
+        adaptative_children.append (revealer);
+        adaptative_children.append (this);
     }
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool _night_time, bool _dark_theme, bool _automatic_night_mode)
@@ -174,8 +137,8 @@ private class DConfWindow : ApplicationWindow
         install_kbd_action_entries ();
         install_bmk_action_entries ();
 
-        headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
-        browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        browserview_update_bookmarks_icons_handler = browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -183,8 +146,9 @@ private class DConfWindow : ApplicationWindow
         modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
-        modifications_handler.delayed_changes_changed.connect (() => {
-                if (!AdaptativeWidget.WindowSize.is_phone (window_size))
+        delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
+                if (!AdaptativeWidget.WindowSize.is_extra_thin (window_size)
+                 && !AdaptativeWidget.WindowSize.is_extra_flat (window_size))
                     return;
 
                 uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
@@ -203,10 +167,6 @@ private class DConfWindow : ApplicationWindow
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
-
-        if (settings.get_boolean ("window-is-maximized"))
-            maximize ();
-        set_default_size (settings.get_int ("window-width"), settings.get_int ("window-height"));
 
         set_css_styles ();
 
@@ -303,13 +263,16 @@ private class DConfWindow : ApplicationWindow
             request_object (startup_path, ModelUtils.undefined_context_id, true, (!) schema);
         else
             request_object (startup_path, ModelUtils.undefined_context_id, true);
-
-        Timeout.add (300, () => { context.remove_class ("startup"); return Source.REMOVE; });
     }
 
+    ulong paths_changed_handler = 0;
+    ulong gkey_value_push_handler = 0;
+    ulong dkey_value_push_handler = 0;
+    ulong settings_user_paths_changed_handler = 0;
+    ulong settings_enabled_mappings_changed_handler = 0;
     private void prepare_model ()
     {
-        settings.changed ["relocatable-schemas-user-paths"].connect (() => {
+        settings_user_paths_changed_handler = settings.changed ["relocatable-schemas-user-paths"].connect (() => {
                 RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
                 if (!(RelocatableSchemasEnabledMappings.USER in enabled_mappings_flags))
                     return;
@@ -320,7 +283,7 @@ private class DConfWindow : ApplicationWindow
                                                         RelocatableSchemasEnabledMappings.STARTUP  in enabled_mappings_flags,
                                                         settings.get_value ("relocatable-schemas-user-paths"));
             });
-        settings.changed ["relocatable-schemas-enabled-mappings"].connect (() => {
+        settings_enabled_mappings_changed_handler = settings.changed ["relocatable-schemas-enabled-mappings"].connect (() => {
                 RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
                 model.refresh_relocatable_schema_paths (RelocatableSchemasEnabledMappings.USER     in enabled_mappings_flags,
                                                         RelocatableSchemasEnabledMappings.BUILT_IN in enabled_mappings_flags,
@@ -339,9 +302,9 @@ private class DConfWindow : ApplicationWindow
         settings.bind ("refresh-settings-schema-source", model, "refresh-source", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         model.finalize_model ();
 
-        model.paths_changed.connect (on_paths_changed);
-        model.gkey_value_push.connect (propagate_gkey_value_push);
-        model.dkey_value_push.connect (propagate_dkey_value_push);
+        paths_changed_handler = model.paths_changed.connect (on_paths_changed);
+        gkey_value_push_handler = model.gkey_value_push.connect (propagate_gkey_value_push);
+        dkey_value_push_handler = model.dkey_value_push.connect (propagate_dkey_value_push);
     }
     private void on_paths_changed (SettingsModelCore _model, GenericSet<string> unused, bool internal_changes)
     {
@@ -388,29 +351,6 @@ private class DConfWindow : ApplicationWindow
         if (has_small_keys_list_rows_class)
             context.add_class ("small-keys-list-rows");
         browser_view.small_keys_list_rows = has_small_keys_list_rows_class;
-
-        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
-        if (gtk_settings == null)
-            return;
-        ((!) gtk_settings).notify ["gtk-theme-name"].connect (update_highcontrast_state);
-        update_highcontrast_state ();
-    }
-
-    private bool highcontrast_state = false;
-    private void update_highcontrast_state ()
-    {
-        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
-        if (gtk_settings == null)
-            return;
-
-        bool highcontrast_new_state = "HighContrast" in ((!) gtk_settings).gtk_theme_name;
-        if (highcontrast_new_state == highcontrast_state)
-            return;
-        highcontrast_state = highcontrast_new_state;
-        if (highcontrast_state)
-            context.add_class ("hc-theme");
-        else
-            context.remove_class ("hc-theme");
     }
 
     /*\
@@ -466,120 +406,6 @@ private class DConfWindow : ApplicationWindow
         dialog.destroy ();
     }
 
-    [GtkCallback]
-    private bool on_window_state_event (Widget widget, Gdk.EventWindowState event)
-    {
-        if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
-            window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
-        /* We don’t save this state, but track it for saving size allocation */
-        if ((event.changed_mask & Gdk.WindowState.TILED) != 0)
-            window_is_tiled = (event.new_window_state & Gdk.WindowState.TILED) != 0;
-
-        return false;
-    }
-
-    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
-    private void set_window_size (AdaptativeWidget.WindowSize new_window_size)
-        requires (new_window_size != AdaptativeWidget.WindowSize.START_SIZE)
-    {
-        if (window_size == new_window_size)
-            return;
-        window_size = new_window_size;
-        headerbar.set_window_size (new_window_size);
-        browser_view.set_window_size (new_window_size);
-        revealer.set_window_size (new_window_size);
-    }
-
-    private bool has_extra_small_window_class = false;
-    private bool has_small_window_class = false;
-    private bool has_large_window_class = false;
-    private void set_style_classes (bool extra_small_window, bool small_window, bool large_window)
-    {
-        // remove first
-        if (has_extra_small_window_class && !extra_small_window)
-            set_style_class ("extra-small-window", extra_small_window, ref has_extra_small_window_class);
-        if (has_small_window_class && !small_window)
-            set_style_class ("small-window", small_window, ref has_small_window_class);
-
-        if (large_window != has_large_window_class)
-            set_style_class ("large-window", large_window, ref has_large_window_class);
-        if (small_window != has_small_window_class)
-            set_style_class ("small-window", small_window, ref has_small_window_class);
-        if (extra_small_window != has_extra_small_window_class)
-            set_style_class ("extra-small-window", extra_small_window, ref has_extra_small_window_class);
-    }
-    private inline void set_style_class (string class_name, bool new_state, ref bool old_state)
-    {
-        old_state = new_state;
-        if (new_state)
-            context.add_class (class_name);
-        else
-            context.remove_class (class_name);
-    }
-
-    [GtkCallback]
-    private void on_size_allocate (Allocation allocation)
-    {
-        /* responsive design */
-
-        int height = allocation.height;
-        int width = allocation.width;
-        bool is_thin_window = width < 787;
-
-        if (width < 590)
-        {
-            if (height < 787)   set_window_size (AdaptativeWidget.WindowSize.PHONE_VERT);
-            else                set_window_size (AdaptativeWidget.WindowSize.EXTRA_THIN);
-        }
-        else if (height < 400)
-        {
-            if (is_thin_window) set_window_size (AdaptativeWidget.WindowSize.PHONE_HZTL);
-            else                set_window_size (AdaptativeWidget.WindowSize.EXTRA_FLAT);
-        }
-        else                    set_window_size (AdaptativeWidget.WindowSize.USUAL_SIZE);
-
-        if (width > MAX_ROW_WIDTH + 42)
-        {
-            set_style_classes (false, false, true);
-
-            notification_revealer.hexpand = false;
-            notification_revealer.halign = Align.CENTER;
-        }
-        else if (width < 590)
-        {
-            set_style_classes (true, true, false);
-
-            notification_revealer.hexpand = true;
-            notification_revealer.halign = Align.FILL;
-        }
-        else if (is_thin_window)
-        {
-            set_style_classes (false, true, false);
-
-            notification_revealer.hexpand = true;
-            notification_revealer.halign = Align.FILL;
-        }
-        else
-        {
-            set_style_classes (false, false, false);
-
-            notification_revealer.hexpand = false;
-            notification_revealer.halign = Align.CENTER;
-        }
-
-        /* save size */
-
-        if (window_is_maximized || window_is_tiled)
-            return;
-        int? _window_width = null;
-        int? _window_height = null;
-        get_size (out _window_width, out _window_height);
-        if (_window_width == null || _window_height == null)
-            return;
-        window_width = (!) _window_width;
-        window_height = (!) _window_height;
-    }
-
     internal bool quit_if_no_pending_changes ()
     {
         if (modifications_handler.has_pending_changes ())
@@ -602,6 +428,18 @@ private class DConfWindow : ApplicationWindow
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
+        modifications_handler.disconnect (delayed_changes_changed_handler);
+
+        headerbar.disconnect (headerbar_update_bookmarks_icons_handler);
+        browser_view.disconnect (browserview_update_bookmarks_icons_handler);
+
+        settings.disconnect (settings_user_paths_changed_handler);
+        settings.disconnect (settings_enabled_mappings_changed_handler);
+
+        model.disconnect (paths_changed_handler);
+        model.disconnect (gkey_value_push_handler);
+        model.disconnect (dkey_value_push_handler);
+
         settings.disconnect (behaviour_changed_handler);
         settings.disconnect (use_shortpaths_changed_handler);
         settings.disconnect (small_keys_list_rows_handler);
@@ -609,11 +447,6 @@ private class DConfWindow : ApplicationWindow
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
         settings.set_string ("saved-pathbar-path", headerbar.get_complete_path ());
-        if (window_width <= 630)    settings.set_int ("window-width", 630);
-        else                        settings.set_int ("window-width", window_width);
-        if (window_height <= 420)   settings.set_int ("window-height", 420);
-        else                        settings.set_int ("window-height", window_height);
-        settings.set_boolean ("window-is-maximized", window_is_maximized);
         settings.apply ();
 
         base.destroy ();
@@ -888,7 +721,8 @@ private class DConfWindow : ApplicationWindow
     }
     private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
-        if (AdaptativeWidget.WindowSize.is_phone (window_size))
+        if (AdaptativeWidget.WindowSize.is_extra_thin (window_size)
+         || AdaptativeWidget.WindowSize.is_extra_flat (window_size))
             browser_view.update_bookmark_icon (bookmark, icon);
         else
             headerbar.update_bookmark_icon (bookmark, icon);
@@ -988,12 +822,13 @@ private class DConfWindow : ApplicationWindow
 
     private void hide_notification (/* SimpleAction action, Variant? variant */)
     {
-        notification_revealer.set_reveal_child (false);
+        notifications_revealer.hide_notification ();
     }
 
     private void about_cb ()    // register as "win.about"?
     {
-        if (!AdaptativeWidget.WindowSize.is_phone (window_size))
+        if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
+         && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
         {   // TODO hide the dialog if visible
             string [] authors = AboutDialogInfos.authors;
             Gtk.show_about_dialog (this,
@@ -1019,6 +854,35 @@ private class DConfWindow : ApplicationWindow
     {
         headerbar.show_in_window_about ();
         browser_view.show_in_window_about ();
+    }
+
+    /*\
+    * * adaptative stuff that needs to be there
+    \*/
+
+    private bool disable_popovers = false;
+    private bool disable_action_bar = false;
+    private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    {
+        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
+                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        if (disable_popovers != _disable_popovers)
+        {
+            disable_popovers = _disable_popovers;
+            if (browser_view.in_window_bookmarks)
+                hide_in_window_bookmarks ();
+            else if (browser_view.in_window_about)
+                hide_in_window_about ();
+        }
+
+        bool _disable_action_bar = _disable_popovers
+                                || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+        if (disable_action_bar != _disable_action_bar)
+        {
+            disable_action_bar = _disable_action_bar;
+            if (browser_view.in_window_modifications)
+                hide_in_window_modifications ();
+        }
     }
 
     /*\
@@ -1201,8 +1065,13 @@ private class DConfWindow : ApplicationWindow
     private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
     {
         browser_view.discard_row_popover ();
-        if (!AdaptativeWidget.WindowSize.is_phone (window_size))
+        if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
+         && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
+        {
+            if (browser_view.in_window_modifications)
+                hide_in_window_modifications ();
             headerbar.click_bookmarks_button ();
+        }
         else if (browser_view.in_window_bookmarks)
             hide_in_window_bookmarks ();
         else
@@ -1316,7 +1185,8 @@ private class DConfWindow : ApplicationWindow
         if (!modifications_handler.get_current_delay_mode ())
             return;
 
-        if (!AdaptativeWidget.WindowSize.is_phone (window_size))
+        if (!AdaptativeWidget.WindowSize.is_extra_thin (window_size)
+         && !AdaptativeWidget.WindowSize.is_extra_flat (window_size))
             revealer.toggle_modifications_list ();
         else if (browser_view.in_window_modifications)
             hide_in_window_modifications ();
@@ -1872,8 +1742,7 @@ private class DConfWindow : ApplicationWindow
 
     private void show_notification (string notification)
     {
-        notification_label.set_text (notification);
-        notification_revealer.set_reveal_child (true);
+        notifications_revealer.show_notification (notification);
     }
 
     private void cannot_find_key (string full_name)

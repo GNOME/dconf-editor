@@ -68,6 +68,7 @@ install_data(
 sources = files(
   'about-list.vala',
   'adaptative-pathbar.vala',
+  'adaptative-window.vala',
   'bookmarks.vala',
   'bookmarks-controller.vala',
   'bookmarks-list.vala',
@@ -87,6 +88,7 @@ sources = files(
   'modifications-list.vala',
   'modifications-revealer.vala',
   'night-light-monitor.vala',
+  'notifications-revealer.vala',
   'overlayed-list.vala',
   'pathentry.vala',
   'pathwidget.vala',
@@ -121,6 +123,7 @@ resource_data = files(
   'large-pathbar.css',
   'large-pathbar.ui',
   'modifications-revealer.ui',
+  'notifications-revealer.ui',
   'overlayed-list.ui',
   'pathentry.ui',
   'pathwidget.ui',

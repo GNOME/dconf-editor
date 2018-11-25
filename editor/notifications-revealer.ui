@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="dconf-editor">
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="NotificationsRevealer" parent="GtkRevealer">
+    <property name="halign">center</property>
+    <property name="valign">start</property>
+    <child>
+      <object class="GtkFrame">
+        <property name="visible">True</property>
+        <style>
+          <class name="app-notification"/>
+        </style>
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="column-spacing">20</property>
+            <child>
+              <object class="GtkLabel" id="notification_label">
+                <property name="visible">True</property>
+                <property name="wrap">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="visible">True</property>
+                <property name="focus-on-click">False</property>
+                <property name="relief">none</property>
+                <property name="action-name">ui.hide-notification</property>
+                <style>
+                  <class name="image-button"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">window-close-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

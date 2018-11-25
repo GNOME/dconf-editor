@@ -19,6 +19,7 @@
     <file preprocess="xml-stripblanks">large-pathbar.ui</file>
     <file preprocess="xml-stripblanks">large-pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">modifications-revealer.ui</file>
+    <file preprocess="xml-stripblanks">notifications-revealer.ui</file>
     <file preprocess="xml-stripblanks">overlayed-list.ui</file>
     <file preprocess="xml-stripblanks">pathentry.ui</file>
     <file preprocess="xml-stripblanks">pathwidget.ui</file>

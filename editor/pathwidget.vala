@@ -42,11 +42,11 @@ private class PathWidget : Box, AdaptativeWidget
     {
         pathbar.set_window_size (new_size);
 
-        bool _thin_window = AdaptativeWidget.WindowSize.is_thin (new_size);
+        bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
         if (thin_window != _thin_window)
         {
             thin_window = _thin_window;
-            if (thin_window)
+            if (_thin_window)
             {
                 search_toggle.hide ();
                 search_button.show ();

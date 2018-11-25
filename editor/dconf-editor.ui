@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="DConfWindow" parent="GtkApplicationWindow">
+  <template class="DConfWindow" parent="AdaptativeWindow">
     <property name="visible">False</property>
     <property name="title" translatable="yes">dconf Editor</property>
     <property name="height-request">283</property> <!-- 294 max for Purism Librem 5 landscape -->
     <property name="width-request">349</property>  <!-- 360 max for Purism Librem 5 portrait -->
     <signal name="key-press-event" handler="on_key_press_event"/>
     <signal name="button-press-event" handler="on_button_press_event"/>
-    <signal name="window-state-event" handler="on_window_state_event"/>
-    <signal name="size-allocate" handler="on_size_allocate"/>
     <signal name="destroy" handler="on_destroy"/>
     <style>
       <class name="dconf-editor"/>
-      <class name="startup"/>
     </style>
     <child type="titlebar">
       <object class="BrowserHeaderBar" id="headerbar">
@@ -44,48 +41,8 @@
           </object>
         </child>
         <child type="overlay">
-          <object class="GtkRevealer" id="notification_revealer">
+          <object class="NotificationsRevealer" id="notifications_revealer">
             <property name="visible">True</property>
-            <property name="halign">center</property>
-            <property name="valign">start</property>
-            <child>
-              <object class="GtkFrame">
-                <property name="visible">True</property>
-                <style>
-                  <class name="app-notification"/>
-                </style>
-                <child>
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="column-spacing">20</property>
-                    <child>
-                      <object class="GtkLabel" id="notification_label">
-                        <property name="visible">True</property>
-                        <property name="wrap">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="relief">none</property>
-                        <property name="action-name">ui.hide-notification</property>
-                        <style>
-                          <class name="image-button"/>
-                        </style>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="icon-name">window-close-symbolic</property>
-                            <property name="icon-size">1</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
           </object>
         </child>
       </object>

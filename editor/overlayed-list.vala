@@ -86,7 +86,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     private StyleContext main_context;
     internal void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        if (!AdaptativeWidget.WindowSize.is_thin (new_size) && AdaptativeWidget.WindowSize.is_fun (new_size))
+        if (!AdaptativeWidget.WindowSize.is_extra_thin (new_size) && AdaptativeWidget.WindowSize.is_extra_flat (new_size))
         {
             main_context.remove_class ("vertical");
             edit_mode_box.halign = Align.END;

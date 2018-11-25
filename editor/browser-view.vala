@@ -61,27 +61,12 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
 
-    private bool phone_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         current_child.set_window_size (new_size);
         bookmarks_list.set_window_size (new_size);
         modifications_list.set_window_size (new_size);
         about_list.set_window_size (new_size);
-
-        bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
-        if (phone_window == _phone_window)
-            return;
-        if (phone_window)
-        {
-            if (in_window_bookmarks)
-                hide_in_window_bookmarks ();
-            else if (in_window_modifications)
-                hide_in_window_modifications ();
-            else if (in_window_about)
-                hide_in_window_about ();
-        }
-        phone_window = _phone_window;
     }
 
     private ModificationsHandler _modifications_handler;

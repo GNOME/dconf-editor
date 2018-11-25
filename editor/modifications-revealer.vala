@@ -31,13 +31,14 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         }
     }
 
-    private bool phone_window = false;
+    private bool disable_action_bar = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        bool _phone_window = AdaptativeWidget.WindowSize.is_phone (new_size);
-        if (phone_window == _phone_window)
+        bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
+                                || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+        if (disable_action_bar == _disable_action_bar)
             return;
-        phone_window = _phone_window;
+        disable_action_bar = _disable_action_bar;
 
         update ();
     }
@@ -248,7 +249,7 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
 
     private void update ()
     {
-        if (phone_window)
+        if (disable_action_bar)
         {
             set_reveal_child (false);
             return;

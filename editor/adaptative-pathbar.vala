@@ -26,8 +26,8 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     private bool thin_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        bool _thin_window = AdaptativeWidget.WindowSize.is_thin (new_size);
-        if (_thin_window == thin_window)
+        bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        if (thin_window == _thin_window)
             return;
         thin_window = _thin_window;
 
