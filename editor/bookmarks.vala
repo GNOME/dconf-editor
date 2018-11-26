@@ -169,10 +169,8 @@ private class Bookmarks : MenuButton
     [GtkCallback]
     private void on_selection_changed ()
     {
-        string? visible_child_name = edit_mode_stack.get_visible_child_name ();         // TODO edit_mode_on private boolean
-        if (visible_child_name == null || (!) visible_child_name == "edit-mode-off")
-            return;
-        update_actions ();
+        if (actions_init_done)
+            update_actions ();
     }
 
     /*\
@@ -311,8 +309,6 @@ private class Bookmarks : MenuButton
     private void enter_edit_mode ()
     {
         edit_mode_state_action.set_state (true);
-
-        update_actions ();
 
         edit_mode_stack.set_visible_child_name ("edit-mode-on");
         bookmarks_list.enter_edit_mode ();
