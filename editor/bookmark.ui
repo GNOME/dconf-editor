@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="Bookmark" parent="GtkListBoxRow">
+  <template class="Bookmark" parent="OverlayedListRow">
     <child>
       <object class="GtkGrid"> <!-- TODO remove? -->
         <property name="visible">True</property>

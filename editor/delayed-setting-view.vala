@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/delayed-setting-view.ui")]
-private class DelayedSettingView : ListBoxRow
+private class DelayedSettingView : OverlayedListRow
 {
     [GtkChild] private Label key_name_label;
     [GtkChild] private Label key_value_label;
@@ -48,6 +48,11 @@ private class DelayedSettingView : ListBoxRow
             update_gsettings_key_current_value (key_value, has_schema_and_is_default);
             update_gsettings_key_planned_value (cool_planned_value, (!) cool_default_value);
         }
+    }
+
+    internal override string? get_copy_text ()
+    {
+        return full_name;
     }
 
     /*\

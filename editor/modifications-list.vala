@@ -109,17 +109,6 @@ private class ModificationsList : OverlayedList
             main_list_box.select_row ((!) first_row);
     }
 
-    internal string? get_copy_text ()
-    {
-        List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
-        if (selected_rows.length () != 1)
-            return null;
-        ListBoxRow row = selected_rows.nth_data (0);
-        if (!(row is DelayedSettingView))
-            assert_not_reached ();
-        return ((DelayedSettingView) row).full_name;  // FIXME row should keep focus
-    }
-
     /*\
     * * Updating values; TODO only works for watched keys...
     \*/

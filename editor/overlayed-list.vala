@@ -191,6 +191,32 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
         adjustment.set_value (adjustment.get_upper ());
     }
 
+    internal string? get_copy_text ()
+    {
+        List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
+        OverlayedListRow row;
+        switch (selected_rows.length ())
+        {
+            case 0:
+                Widget? focus_child = main_list_box.get_focus_child ();
+                if (focus_child == null)
+                    return null;
+                if (!((!) focus_child is OverlayedListRow))
+                    assert_not_reached ();
+                row = (OverlayedListRow) (!) focus_child;
+                break;
+            case 1:
+                ListBoxRow selected_row = selected_rows.nth_data (0);
+                if (!(selected_row is OverlayedListRow))
+                    assert_not_reached ();
+                row = (OverlayedListRow) selected_row;
+                break;
+            default:
+                return null;
+        }
+        return row.get_copy_text ();  // FIXME row should keep focus
+    }
+
     /*\
     * * selection state
     \*/
@@ -277,9 +303,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     {
         content_changed_handler = main_list_store.items_changed.connect (on_content_changed);
 
-        destroy.connect (() => {
-                main_list_store.disconnect (content_changed_handler);
-            });
+        destroy.connect (() => main_list_store.disconnect (content_changed_handler));
     }
 
     private void on_content_changed (GLib.ListModel main_list_model, uint position, uint removed, uint added)
@@ -309,4 +333,9 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     {
         edit_mode_box.visible = is_editable && n_items != 0;
     }
+}
+
+private abstract class OverlayedListRow : ListBoxRow
+{
+    internal abstract string? get_copy_text ();
 }

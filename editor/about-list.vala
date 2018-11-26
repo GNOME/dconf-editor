@@ -39,29 +39,6 @@ private class AboutList : OverlayedList
         show_apropos ();
     }
 
-    internal string? get_copy_text ()
-    {
-        string? nullable_selection = Clipboard.@get (Gdk.SELECTION_PRIMARY).wait_for_text ();
-        if (nullable_selection != null)
-        {
-             string selection = ((!) nullable_selection).dup ();
-             if (selection != "")
-                return selection;
-        }
-
-        Widget? focus_child = main_list_box.get_focus_child ();
-        if (focus_child == null)
-            return null;
-        Widget? child = ((Bin) (!) focus_child).get_child ();
-        if (child == null || !((!) child is AboutListItem))
-            assert_not_reached ();
-
-        string? copy_text = ((AboutListItem) (!) child).copy_text;
-        if (copy_text == null)
-            return null;
-        return ((!) copy_text).dup ();
-    }
-
     /*\
     * * Action entries
     \*/
@@ -132,9 +109,21 @@ private class AboutList : OverlayedList
     }
 }
 
-private class AboutListItem : Grid
+private class AboutListItem : OverlayedListRow
 {
     public string? copy_text { internal get; construct; default = null; }
+
+    internal override string? get_copy_text ()
+    {
+        string? nullable_selection = Clipboard.@get (Gdk.SELECTION_PRIMARY).wait_for_text ();
+        if (nullable_selection != null)
+        {
+             string selection = ((!) nullable_selection).dup ();
+             if (selection != "" && copy_text != null && selection in (!) copy_text)
+                return selection;
+        }
+        return copy_text;
+    }
 
     internal AboutListItem.from_label (string text, string? css_class = null)
     {
@@ -184,7 +173,10 @@ private class AboutListItem : Grid
     {
         Object (copy_text: text);
 
-        this.orientation = Orientation.VERTICAL;
+        Grid grid = new Grid ();
+        grid.orientation = Orientation.VERTICAL;
+        grid.visible = true;
+        add (grid);
 
         Label label = new Label (title);
         label.visible = true;
@@ -192,7 +184,7 @@ private class AboutListItem : Grid
         label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         label.wrap = true;
         label.get_style_context ().add_class ("bold-label");
-        add (label);
+        grid.add (label);
 
         label = new Label (text);
         label.visible = true;
@@ -202,6 +194,6 @@ private class AboutListItem : Grid
         label.selectable = true;
         label.get_style_context ().add_class ("small-label");
         label.justify = Justification.CENTER;
-        add (label);
+        grid.add (label);
     }
 }
