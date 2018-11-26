@@ -177,11 +177,16 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     internal enum SelectionState {
         EMPTY,
+        // one
         UNIQUE,
         FIRST,
         LAST,
         MIDDLE,
-        MULTIPLE
+        // multiple
+        MULTIPLE,
+        MULTIPLE_FIRST,
+        MULTIPLE_LAST,
+        ALL
     }
 
     internal SelectionState get_selection_state ()
@@ -192,7 +197,26 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
         if (n_selected_rows == 0)
             return SelectionState.EMPTY;
         if (n_selected_rows >= 2)
+        {
+            uint n_items = main_list_store.get_n_items ();
+            if (n_selected_rows == n_items)
+                return SelectionState.ALL;
+            uint first_items = 0;
+            uint last_items = 0;
+            uint first_of_the_last_items_index = n_items - n_selected_rows;
+            selected_rows.foreach ((row) => {
+                    uint index = row.get_index ();
+                    if (index < n_selected_rows)
+                        first_items++;
+                    if (index >= first_of_the_last_items_index)
+                        last_items++;
+                });
+            if (first_items == n_selected_rows)
+                return SelectionState.MULTIPLE_FIRST;
+            if (last_items == n_selected_rows)
+                return SelectionState.MULTIPLE_LAST;
             return SelectionState.MULTIPLE;
+        }
 
         int index = selected_rows.nth_data (0).get_index ();
         bool is_first = index == 0;

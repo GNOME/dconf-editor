@@ -900,35 +900,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     private void update_actions ()
         requires (actions_init_done)
     {
-        OverlayedList.SelectionState selection_state = browser_view.get_bookmarks_selection_state ();
-
-        bool has_selected_items = selection_state != OverlayedList.SelectionState.EMPTY;
-        bool has_one_selected_item = has_selected_items && (selection_state != OverlayedList.SelectionState.MULTIPLE);
-
-        bool enable_move_top_action     = has_one_selected_item;    // TODO has_selected_items;
-        bool enable_move_up_action      = has_one_selected_item;
-        bool enable_move_down_action    = has_one_selected_item;
-        bool enable_move_bottom_action  = has_one_selected_item;    // TODO has_selected_items;
-
-        if (has_one_selected_item)
-        {
-            if (selection_state == OverlayedList.SelectionState.UNIQUE || selection_state == OverlayedList.SelectionState.FIRST)
-            {
-                enable_move_top_action = false;
-                enable_move_up_action = false;
-            }
-            if (selection_state == OverlayedList.SelectionState.UNIQUE || selection_state == OverlayedList.SelectionState.LAST)
-            {
-                enable_move_down_action = false;
-                enable_move_bottom_action = false;
-            }
-        }
-
-               move_up_action.set_enabled (enable_move_up_action);
-              move_top_action.set_enabled (enable_move_top_action);
-             move_down_action.set_enabled (enable_move_down_action);
-           move_bottom_action.set_enabled (enable_move_bottom_action);
-        trash_bookmark_action.set_enabled (has_selected_items);
+        Bookmarks._update_actions (browser_view.get_bookmarks_selection_state (), ref move_top_action, ref move_up_action, ref move_down_action, ref move_bottom_action, ref trash_bookmark_action);
     }
 
     private void install_bmk_action_entries ()

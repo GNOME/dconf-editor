@@ -243,35 +243,26 @@ private class Bookmarks : MenuButton
     private void update_actions ()
         requires (actions_init_done)
     {
-        OverlayedList.SelectionState selection_state = bookmarks_list.get_selection_state ();
+        _update_actions (bookmarks_list.get_selection_state (), ref move_top_action, ref move_up_action, ref move_down_action, ref move_bottom_action, ref trash_bookmark_action);
+    }
 
-        bool has_selected_items = selection_state != OverlayedList.SelectionState.EMPTY;
-        bool has_one_selected_item = has_selected_items && (selection_state != OverlayedList.SelectionState.MULTIPLE);
+    internal static void _update_actions (OverlayedList.SelectionState selection_state, ref SimpleAction move_top_action, ref SimpleAction move_up_action, ref SimpleAction move_down_action, ref SimpleAction move_bottom_action, ref SimpleAction trash_bookmark_action)
+    {
+        trash_bookmark_action.set_enabled (selection_state != OverlayedList.SelectionState.EMPTY);
 
-        bool enable_move_top_action     = has_one_selected_item;    // TODO has_selected_items;
-        bool enable_move_up_action      = has_one_selected_item;
-        bool enable_move_down_action    = has_one_selected_item;
-        bool enable_move_bottom_action  = has_one_selected_item;    // TODO has_selected_items;
+        bool one_middle_selection = selection_state == OverlayedList.SelectionState.MIDDLE;
+        bool enable_move_up_action      = one_middle_selection || (selection_state == OverlayedList.SelectionState.LAST);
+        bool enable_move_down_action    = one_middle_selection || (selection_state == OverlayedList.SelectionState.FIRST);
+        move_up_action.set_enabled     (enable_move_up_action);
+        move_down_action.set_enabled   (enable_move_down_action);
 
-        if (has_one_selected_item)
-        {
-            if (selection_state == OverlayedList.SelectionState.UNIQUE || selection_state == OverlayedList.SelectionState.FIRST)
-            {
-                enable_move_top_action = false;
-                enable_move_up_action = false;
-            }
-            if (selection_state == OverlayedList.SelectionState.UNIQUE || selection_state == OverlayedList.SelectionState.LAST)
-            {
-                enable_move_down_action = false;
-                enable_move_bottom_action = false;
-            }
-        }
-
-               move_up_action.set_enabled (enable_move_up_action);
-              move_top_action.set_enabled (enable_move_top_action);
-             move_down_action.set_enabled (enable_move_down_action);
-           move_bottom_action.set_enabled (enable_move_bottom_action);
-        trash_bookmark_action.set_enabled (has_selected_items);
+        bool multiple_middle_selections = selection_state == OverlayedList.SelectionState.MULTIPLE;
+        move_top_action.set_enabled    ((selection_state == OverlayedList.SelectionState.MULTIPLE_LAST)
+                                        || multiple_middle_selections
+                                        || enable_move_up_action);
+        move_bottom_action.set_enabled ((selection_state == OverlayedList.SelectionState.MULTIPLE_FIRST)
+                                        || multiple_middle_selections
+                                        || enable_move_down_action);
     }
 
     private void install_action_entries ()
