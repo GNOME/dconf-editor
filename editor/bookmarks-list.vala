@@ -265,13 +265,7 @@ private class BookmarksList : OverlayedList
 
     internal void move_top ()
     {
-        int [] indices = {};
-        main_list_box.selected_foreach ((_list_box, selected_row) => {
-                int index = selected_row.get_index ();
-                if (index < 0)
-                    assert_not_reached ();
-                indices += index;
-            });
+        int [] indices = get_selected_rows_indices ();
 
         string [] old_bookmarks = settings.get_strv ("bookmarks");
         string [] new_bookmarks = new string [0];
@@ -287,23 +281,18 @@ private class BookmarksList : OverlayedList
         }
 
         set_new_bookmarks (new_bookmarks);
-
-        Adjustment adjustment = main_list_box.get_adjustment ();
-        adjustment.set_value (adjustment.get_lower ());
+        scroll_top ();
     }
 
     internal void move_up ()
     {
-        ListBoxRow? row = main_list_box.get_selected_row ();
-        if (row == null)
+        int [] indices = get_selected_rows_indices ();
+        if (indices.length != 1)
             return; // TODO assert_not_reached?
-
-        int index = ((!) row).get_index ();
-        if (index < 0)
-            assert_not_reached ();
+        int index = indices [0];
 
         if (index == 0)
-            return;
+            return; // TODO assert_not_reached?
 
         ListBoxRow? prev_row = main_list_box.get_row_at_index (index - 1);
         if (prev_row == null)
@@ -353,17 +342,14 @@ private class BookmarksList : OverlayedList
 
     internal void move_down ()
     {
-        ListBoxRow? row = main_list_box.get_selected_row ();
-        if (row == null)
+        int [] indices = get_selected_rows_indices ();
+        if (indices.length != 1)
             return; // TODO assert_not_reached?
-
-        int index = ((!) row).get_index ();
-        if (index < 0)
-            assert_not_reached ();
+        int index = indices [0];
 
         ListBoxRow? next_row = main_list_box.get_row_at_index (index + 1);
         if (next_row == null)
-            return;
+            return; // TODO assert_not_reached?
 
         Allocation list_allocation, row_allocation;
         scrolled.get_allocation (out list_allocation);
@@ -409,13 +395,7 @@ private class BookmarksList : OverlayedList
 
     internal void move_bottom ()
     {
-        int [] indices = {};
-        main_list_box.selected_foreach ((_list_box, selected_row) => {
-                int index = selected_row.get_index ();
-                if (index < 0)
-                    assert_not_reached ();
-                indices += index;
-            });
+        int [] indices = get_selected_rows_indices ();
 
         string [] old_bookmarks = settings.get_strv ("bookmarks");
         string [] new_bookmarks = new string [0];
@@ -431,9 +411,7 @@ private class BookmarksList : OverlayedList
             new_bookmarks += old_bookmarks [index];
 
         set_new_bookmarks (new_bookmarks);
-
-        Adjustment adjustment = main_list_box.get_adjustment ();
-        adjustment.set_value (adjustment.get_upper ());
+        scroll_bottom ();
     }
 
     private void set_new_bookmarks (string [] new_bookmarks)

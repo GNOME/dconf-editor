@@ -164,6 +164,34 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     }
 
     /*\
+    * * utilities
+    \*/
+
+    protected int [] get_selected_rows_indices ()
+    {
+        int [] indices = new int [0];
+        main_list_box.selected_foreach ((_list_box, selected_row) => {
+                int index = selected_row.get_index ();
+                if (index < 0)
+                    assert_not_reached ();
+                indices += index;
+            });
+        return indices;
+    }
+
+    protected void scroll_top ()
+    {
+        Adjustment adjustment = main_list_box.get_adjustment ();
+        adjustment.set_value (adjustment.get_lower ());
+    }
+
+    protected void scroll_bottom ()
+    {
+        Adjustment adjustment = main_list_box.get_adjustment ();
+        adjustment.set_value (adjustment.get_upper ());
+    }
+
+    /*\
     * * selection state
     \*/
 
