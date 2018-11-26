@@ -144,10 +144,13 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         if (!delayed_list_button.active)
             return false;
 
-        bool dismissed = modifications_list.dismiss_selected_modification (modifications_handler);
-        if (dismissed)
-            update ();
-        return dismissed;
+        string? selected_row_name = modifications_list.get_selected_row_name ();
+        if (selected_row_name == null)
+            return false;
+
+        modifications_handler.dismiss_change ((!) selected_row_name);
+        update ();
+        return true;
     }
 
     internal void hide_modifications_list ()

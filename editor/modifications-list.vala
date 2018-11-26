@@ -87,14 +87,12 @@ private class ModificationsList : OverlayedList
     * * Modifications list public functions
     \*/
 
-    internal bool dismiss_selected_modification (ModificationsHandler modifications_handler)
+    internal string? get_selected_row_name ()
     {
         ListBoxRow? selected_row = main_list_box.get_selected_row ();
         if (selected_row == null)
-            return false;
-
-        modifications_handler.dismiss_change (((DelayedSettingView) (!) selected_row).full_name);
-        return true;
+            return null;
+        return ((DelayedSettingView) (!) selected_row).full_name;
     }
 
     internal void bind_model (GLib.ListStore modifications, ListBoxCreateWidgetFunc delayed_setting_row_create)
@@ -115,7 +113,7 @@ private class ModificationsList : OverlayedList
 
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        main_list_box.foreach ((widget) => {
+        main_list_box.@foreach ((widget) => {
                 DelayedSettingView row = (DelayedSettingView) widget;
                 if (row.full_name == full_name && row.context_id == context_id)
                     row.update_gsettings_key_current_value (key_value, is_key_default);
@@ -124,7 +122,7 @@ private class ModificationsList : OverlayedList
 
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
-        main_list_box.foreach ((widget) => {
+        main_list_box.@foreach ((widget) => {
                 DelayedSettingView row = (DelayedSettingView) widget;
                 if (row.full_name == full_name)
                     row.update_dconf_key_current_value (key_value_or_null);
