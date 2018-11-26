@@ -171,9 +171,12 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
 
     private Widget delayed_setting_row_create (Object object)
     {
-        string full_name = ((SimpleSettingObject) object).full_name;
-        uint16 context_id = ((SimpleSettingObject) object).context_id;
+        SimpleSettingObject sso = (SimpleSettingObject) object;
+        return create_delayed_setting_row (modifications_handler, sso.name, sso.full_name, sso.context_id);
+    }
 
+    internal static Widget create_delayed_setting_row (ModificationsHandler modifications_handler, string name, string full_name, uint16 context_id)
+    {
         SettingsModel model = modifications_handler.model;
 
         RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
@@ -204,7 +207,7 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
 
         properties.clear ();
 
-        DelayedSettingView view = new DelayedSettingView (((SimpleSettingObject) object).name,
+        DelayedSettingView view = new DelayedSettingView (name,
                                                           full_name,
                                                           context_id,
                                                           has_schema_and_is_default,    // at row creation, key is never ghost
@@ -212,14 +215,13 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
                                                           cool_planned_value,
                                                           cool_default_value);
 
-        ListBoxRow wrapper = new ListBoxRow ();
-        wrapper.add (view);
         if (modifications_handler.get_current_delay_mode ())
         {
             Variant variant = new Variant ("(sq)", full_name, context_id);
-            wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");
+            view.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");
         }
-        return wrapper;
+        view.show ();
+        return view;
     }
 
     /*\

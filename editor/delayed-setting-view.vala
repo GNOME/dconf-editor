@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/delayed-setting-view.ui")]
-private class DelayedSettingView : Grid
+private class DelayedSettingView : ListBoxRow
 {
     [GtkChild] private Label key_name_label;
     [GtkChild] private Label key_value_label;

@@ -263,55 +263,8 @@ private class BrowserView : Stack, AdaptativeWidget
     }
     private Widget delayed_setting_row_create (Object object)
     {
-        string full_name = ((SimpleSettingObject) object).full_name;
-        uint16 context_id = ((SimpleSettingObject) object).context_id;
-
-        SettingsModel model = modifications_handler.model;
-
-        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.HAS_SCHEMA & PropertyQuery.IS_DEFAULT & PropertyQuery.DEFAULT_VALUE & PropertyQuery.KEY_VALUE)));
-
-        bool has_schema;
-        if (!properties.lookup (PropertyQuery.HAS_SCHEMA,               "b",    out has_schema))
-            assert_not_reached ();
-
-        bool has_schema_and_is_default;
-        if (!has_schema)
-            has_schema_and_is_default = false;
-        else if (!properties.lookup (PropertyQuery.IS_DEFAULT,          "b",    out has_schema_and_is_default))
-            assert_not_reached ();
-
-        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
-        string? cool_planned_value = null;
-        if (planned_value != null)
-            cool_planned_value = Key.cool_text_value_from_variant ((!) planned_value);
-
-        string? cool_default_value = null;
-        if (has_schema
-         && !properties.lookup (PropertyQuery.DEFAULT_VALUE,            "s",    out cool_default_value))
-            assert_not_reached ();
-
-        Variant key_value;
-        if (!properties.lookup (PropertyQuery.KEY_VALUE,                "v",    out key_value))
-            assert_not_reached ();
-
-        properties.clear ();
-
-        DelayedSettingView view = new DelayedSettingView (((SimpleSettingObject) object).name,
-                                                          full_name,
-                                                          context_id,
-                                                          has_schema_and_is_default,    // at row creation, key is never ghost
-                                                          key_value,
-                                                          cool_planned_value,
-                                                          cool_default_value);
-
-        ListBoxRow wrapper = new ListBoxRow ();
-        wrapper.add (view);
-        if (modifications_handler.get_current_delay_mode ())
-        {
-            Variant variant = new Variant ("(sq)", full_name, context_id);
-            wrapper.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");
-        }
-        return wrapper;
+        SimpleSettingObject sso = (SimpleSettingObject) object;
+        return ModificationsRevealer.create_delayed_setting_row (modifications_handler, sso.name, sso.full_name, sso.context_id);
     }
 
     [GtkCallback]

@@ -33,15 +33,19 @@ private class ModificationsList : OverlayedList
         main_list_box.set_header_func (delayed_setting_row_update_header);
     }
 
-    private static void delayed_setting_row_update_header (ListBoxRow row, ListBoxRow? before)
+    private static void delayed_setting_row_update_header (ListBoxRow _row, ListBoxRow? before)
     {
-        string row_key_name = ((DelayedSettingView) row.get_child ()).full_name;
+        if (!(_row is DelayedSettingView))
+            assert_not_reached ();
+
+        DelayedSettingView row = (DelayedSettingView) (!) _row;
+        string row_key_name = ((DelayedSettingView) row).full_name;
         bool add_location_header = false;
         if (before == null)
             add_location_header = true;
         else
         {
-            string before_key_name = ((DelayedSettingView) ((!) before).get_child ()).full_name;
+            string before_key_name = ((DelayedSettingView) (!) before).full_name;
 
             if (ModelUtils.get_parent_path (row_key_name) != ModelUtils.get_parent_path (before_key_name))
                 add_location_header = true;
@@ -89,7 +93,7 @@ private class ModificationsList : OverlayedList
         if (selected_row == null)
             return false;
 
-        modifications_handler.dismiss_change (((DelayedSettingView) (!) ((!) selected_row).get_child ()).full_name);
+        modifications_handler.dismiss_change (((DelayedSettingView) (!) selected_row).full_name);
         return true;
     }
 
@@ -111,10 +115,9 @@ private class ModificationsList : OverlayedList
         if (selected_rows.length () != 1)
             return null;
         ListBoxRow row = selected_rows.nth_data (0);
-        Widget? child = row.get_child ();
-        if (child == null || !((!) child is DelayedSettingView))
+        if (!(row is DelayedSettingView))
             assert_not_reached ();
-        return ((DelayedSettingView) (!) child).full_name;  // FIXME row should keep focus
+        return ((DelayedSettingView) row).full_name;  // FIXME row should keep focus
     }
 
     /*\
@@ -124,7 +127,7 @@ private class ModificationsList : OverlayedList
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
         main_list_box.foreach ((widget) => {
-                DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
+                DelayedSettingView row = (DelayedSettingView) widget;
                 if (row.full_name == full_name && row.context_id == context_id)
                     row.update_gsettings_key_current_value (key_value, is_key_default);
             });
@@ -133,7 +136,7 @@ private class ModificationsList : OverlayedList
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         main_list_box.foreach ((widget) => {
-                DelayedSettingView row = (DelayedSettingView) ((Bin) widget).get_child ();
+                DelayedSettingView row = (DelayedSettingView) widget;
                 if (row.full_name == full_name)
                     row.update_dconf_key_current_value (key_value_or_null);
             });
