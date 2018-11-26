@@ -37,6 +37,8 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     construct
     {
+        register_size_allocate ();
+
         adjustment = key_list_box.get_adjustment ();
     }
 
@@ -221,6 +223,46 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             else
                 context.remove_class ("erase");
         }
+    }
+
+    /*\
+    * * close row popover on resize
+    \*/
+
+    private int width = -1;
+    private int height = -1;
+
+    private inline void register_size_allocate ()
+    {
+        size_allocate.connect (on_size_allocate);
+    }
+
+    private void on_size_allocate (Allocation allocation)
+    {
+        if (width != allocation.width)
+        {
+            width = allocation.width;
+            if (height != allocation.height)
+                height = allocation.height;
+            hide_right_click_popover ();
+        }
+        else if (height != allocation.height)
+        {
+            height = allocation.height;
+            hide_right_click_popover ();
+        }
+    }
+
+    private void hide_right_click_popover ()
+    {
+        ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
+        if (selected_row == null)
+            return;
+
+        ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
+
+        if (row.right_click_popover_visible ())
+            row.hide_right_click_popover ();
     }
 
     /*\

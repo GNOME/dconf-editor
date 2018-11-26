@@ -81,25 +81,6 @@ private abstract class ClickableListBoxRow : EventBox
     public uint16 context_id        { internal get; protected construct; }
 
     /*\
-    * * Dismiss popover on window resize
-    \*/
-
-    private int width;
-
-    construct
-    {
-        size_allocate.connect (on_size_allocate);
-    }
-
-    private void on_size_allocate (Allocation allocation)
-    {
-        if (allocation.width == width)
-            return;
-        hide_right_click_popover ();
-        width = allocation.width;
-    }
-
-    /*\
     * * right click popover stuff
     \*/
 
