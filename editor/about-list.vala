@@ -30,13 +30,13 @@ private class AboutList : OverlayedList
         second_mode_name = _("Credits");
         change_editability (true);
 
-        show_apropos ();
+        show_apropos (ref main_list_store);
     }
 
     internal void reset ()
     {
         edit_mode_action.set_state (false);
-        show_apropos ();
+        show_apropos (ref main_list_store);
     }
 
     /*\
@@ -66,12 +66,12 @@ private class AboutList : OverlayedList
         action.set_state (new_state);
 
         if (new_state)
-            show_credits ();
+            show_credits (ref main_list_store);
         else
-            show_apropos ();
+            show_apropos (ref main_list_store);
     }
 
-    private void show_apropos ()
+    private static inline void show_apropos (ref GLib.ListStore main_list_store)
     {
         main_list_store.remove_all ();
         main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name));
@@ -87,7 +87,7 @@ private class AboutList : OverlayedList
         main_list_store.append (new AboutListItem.from_link         ("https://www.gnu.org/licenses/gpl-3.0.html", _("GNU General Public License\nversion 3 or later")));    // TODO better
     }
 
-    private void show_credits ()
+    private static inline void show_credits (ref GLib.ListStore main_list_store)
     {
         main_list_store.remove_all ();
         main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name));

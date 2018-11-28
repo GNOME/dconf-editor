@@ -87,23 +87,27 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     internal void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         if (!AdaptativeWidget.WindowSize.is_extra_thin (new_size) && AdaptativeWidget.WindowSize.is_extra_flat (new_size))
-        {
-            main_context.remove_class ("vertical");
-            edit_mode_box.halign = Align.END;
-            edit_mode_box.valign = Align.CENTER;
-            edit_mode_box.orientation = Orientation.VERTICAL;
-            edit_mode_box.width_request = 160;
-            main_context.add_class ("horizontal");
-        }
+            set_horizontal (ref main_context, ref edit_mode_box);
         else
-        {
-            main_context.remove_class ("horizontal");
-            edit_mode_box.halign = Align.CENTER;
-            edit_mode_box.valign = Align.END;
-            edit_mode_box.orientation = Orientation.HORIZONTAL;
-            edit_mode_box.width_request = 200;
-            main_context.add_class ("vertical");
-        }
+            set_vertical (ref main_context, ref edit_mode_box);
+    }
+    private static inline void set_horizontal (ref StyleContext main_context, ref Box edit_mode_box)
+    {
+        main_context.remove_class ("vertical");
+        edit_mode_box.halign = Align.END;
+        edit_mode_box.valign = Align.CENTER;
+        edit_mode_box.orientation = Orientation.VERTICAL;
+        edit_mode_box.width_request = 160;
+        main_context.add_class ("horizontal");
+    }
+    private static inline void set_vertical (ref StyleContext main_context, ref Box edit_mode_box)
+    {
+        main_context.remove_class ("horizontal");
+        edit_mode_box.halign = Align.CENTER;
+        edit_mode_box.valign = Align.END;
+        edit_mode_box.orientation = Orientation.HORIZONTAL;
+        edit_mode_box.width_request = 200;
+        main_context.add_class ("vertical");
     }
 
     /*\
@@ -112,7 +116,11 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     internal void down_pressed ()
     {
-        ListBoxRow? row = main_list_box.get_selected_row ();
+        _down_pressed (ref main_list_box);
+    }
+    private static inline void _down_pressed (ref ListBox main_list_box)
+    {
+        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows
         if (row == null)
             row = main_list_box.get_row_at_index (0);
         else
@@ -126,10 +134,14 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     internal void up_pressed ()
     {
+        _up_pressed (n_items, ref main_list_box);
+    }
+    private static inline void _up_pressed (uint n_items, ref ListBox main_list_box)
+    {
         if (n_items == 0)
             return;
 
-        ListBoxRow? row = main_list_box.get_selected_row ();
+        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows
         if (row == null)
             row = main_list_box.get_row_at_index ((int) n_items - 1);
         else
@@ -169,6 +181,10 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     protected int [] get_selected_rows_indices ()
     {
+        return _get_selected_rows_indices (ref main_list_box);
+    }
+    private static inline int [] _get_selected_rows_indices (ref ListBox main_list_box)
+    {
         int [] indices = new int [0];
         main_list_box.selected_foreach ((_list_box, selected_row) => {
                 int index = selected_row.get_index ();
@@ -192,6 +208,10 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     }
 
     internal string? get_copy_text ()
+    {
+        return _get_copy_text (ref main_list_box);
+    }
+    private static inline string? _get_copy_text (ref ListBox main_list_box)
     {
         List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
         OverlayedListRow row;
@@ -244,6 +264,10 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     }
 
     internal SelectionState get_selection_state ()
+    {
+        return _get_selection_state (ref main_list_box, ref main_list_store);
+    }
+    private static inline SelectionState _get_selection_state (ref ListBox main_list_box, ref GLib.ListStore main_list_store)
     {
         List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
         uint n_selected_rows = selected_rows.length ();
