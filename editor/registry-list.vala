@@ -415,9 +415,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
         if (search_mode && current_path_if_search_mode == null)
             assert_not_reached ();
-        bool search_mode_non_local_result = search_mode
-                                         && (search_is_path_search
-                                          || ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode);
+        bool search_mode_non_local_result = search_mode && ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
         if (setting_object.is_config)
         {
@@ -429,7 +427,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
         else if (ModelUtils.is_folder_context_id (context_id))
         {
-            row = new FolderListBoxRow (setting_object.name, full_name, search_mode_non_local_result);
+            row = new FolderListBoxRow (setting_object.name, full_name, search_mode && search_is_path_search, search_mode_non_local_result);
         }
         else if (setting_object.is_search)
         {
@@ -560,7 +558,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         {
             wrapper.get_style_context ().add_class ("f-or-s-row");
             if (row is FolderListBoxRow)
-                wrapper.action_name = "ui.open-folder";
+            {
+                if (((FolderListBoxRow) row).path_search)
+                    wrapper.action_name = "ui.next-search";
+                else
+                    wrapper.action_name = "ui.open-folder";
+            }
             else if (row is ConfigListBoxRow)
                 wrapper.action_name = "ui.open-config";
             else assert_not_reached ();

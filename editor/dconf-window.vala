@@ -490,6 +490,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         { "open-object", open_object, "(sq)" },
         { "open-config", open_config, "s" },
         { "open-search", open_search, "s" },
+        { "next-search", next_search, "s" },
         { "open-parent", open_parent, "s" },
 
         { "open-path", open_path, "(sq)", "('/',uint16 " + ModelUtils.folder_context_id_string + ")" },
@@ -595,6 +596,15 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         string search = ((!) search_variant).get_string ();
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL, search);
+    }
+
+    private void next_search (SimpleAction action, Variant? search_variant)
+        requires (search_variant != null)
+    {
+        saved_type = ViewType.FOLDER;
+        saved_view = ((!) search_variant).get_string ();
+
+        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, saved_view);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
@@ -1449,6 +1459,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         {
             saved_type = type;
             saved_view = path;
+            reload_search_next = true;
         }
         else if (current_type == ViewType.FOLDER)
             saved_selection = browser_view.get_selected_row_name ();

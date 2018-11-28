@@ -123,9 +123,11 @@ private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
 
-    internal FolderListBoxRow (string label, string path, bool search_result_mode)
+    public bool path_search { internal get; internal construct; }
+
+    internal FolderListBoxRow (string label, string path, bool path_search, bool search_result_mode)
     {
-        Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: search_result_mode);
+        Object (full_name: path, context_id: ModelUtils.folder_context_id, path_search: path_search, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
     }
 }
