@@ -17,11 +17,46 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-pathbar.ui")]
 private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 {
-    [GtkChild] private LargePathbar large_pathbar;
-    [GtkChild] private ShortPathbar short_pathbar;
+    construct
+    {
+        hexpand = true;
+        hhomogeneous = false;
+    }
+
+    /*\
+    * * pathbars creation
+    \*/
+
+    private bool is_startup = true;
+    private bool large_pathbar_created = false;
+    private bool short_pathbar_created = false;
+
+    private LargePathbar large_pathbar;
+    private ShortPathbar short_pathbar;
+
+    private void create_large_pathbar ()
+    {
+        large_pathbar = new LargePathbar ();
+        large_pathbar.valign = Align.CENTER;
+        large_pathbar.show ();
+        add (large_pathbar);
+        large_pathbar_created = true;
+    }
+
+    private void create_short_pathbar ()
+    {
+        short_pathbar = new ShortPathbar ();
+        short_pathbar.valign = Align.CENTER;
+        short_pathbar.show ();
+        add (short_pathbar);
+        short_pathbar_created = true;
+    }
+
+    /*\
+    * * window size state
+    \*/
 
     private bool thin_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
@@ -31,15 +66,54 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
             return;
         thin_window = _thin_window;
 
+        if (is_startup)
+            return;
+
         if (_thin_window)
+        {
+            if (!short_pathbar_created)
+            {
+                create_short_pathbar ();
+                short_pathbar.set_path (current_type, current_path);
+            }
             set_visible_child (short_pathbar);
+        }
         else
+        {
+            if (!large_pathbar_created)
+            {
+                create_large_pathbar ();
+                large_pathbar.set_path (current_type, current_path);
+            }
             set_visible_child (large_pathbar);
+        }
     }
 
-    internal string get_complete_path ()
+    /*\
+    * * current path state
+    \*/
+
+    private ViewType current_type;
+    private string current_path;
+
+    internal void set_path (ViewType type, string path)
     {
-        return large_pathbar.get_complete_path ();  // or the short_pathbar one; do not require their equality, it warns on window closing
+        current_type = type;
+        current_path = path;
+
+        if (is_startup)
+        {
+            is_startup = false;
+            if (thin_window)
+                create_short_pathbar ();
+            else
+                create_large_pathbar ();
+        }
+
+        if (large_pathbar_created)
+            large_pathbar.set_path (type, path);
+        if (short_pathbar_created)
+            short_pathbar.set_path (type, path);
     }
 
     /*\
@@ -48,37 +122,53 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 
     internal bool has_popover ()
     {
-        return large_pathbar.has_popover () || short_pathbar.has_popover ();
+        return (large_pathbar_created && large_pathbar.has_popover ())
+            || (short_pathbar_created && short_pathbar.has_popover ());
     }
 
     internal void close_menu ()
     {
-        large_pathbar.close_menu ();
-        short_pathbar.close_menu ();
+        if (large_pathbar_created)
+            large_pathbar.close_menu ();
+        if (short_pathbar_created)
+            short_pathbar.close_menu ();
     }
 
     internal void toggle_menu ()
     {
         if (thin_window)
+        {
+            if (!short_pathbar_created)
+                assert_not_reached ();
             short_pathbar.toggle_menu ();
+        }
         else
+        {
+            if (!large_pathbar_created)
+                assert_not_reached ();
             large_pathbar.toggle_menu ();
+        }
     }
 
     /*\
-    * * main public calls
+    * * public calls
     \*/
 
-    internal void set_path (ViewType type, string path)
+    internal string get_complete_path ()
     {
-        large_pathbar.set_path (type, path);
-        short_pathbar.set_path (type, path);
+        if (large_pathbar_created)
+            return large_pathbar.get_complete_path ();
+        else if (short_pathbar_created)
+            return short_pathbar.get_complete_path ();
+        assert_not_reached ();
     }
 
     internal void update_ghosts (string non_ghost_path, bool is_search)
     {
-        large_pathbar.update_ghosts (non_ghost_path, is_search);
-        short_pathbar.update_ghosts (non_ghost_path, is_search);
+        if (large_pathbar_created)
+            large_pathbar.update_ghosts (non_ghost_path, is_search);
+        if (short_pathbar_created)
+            short_pathbar.update_ghosts (non_ghost_path, is_search);
     }
 }
 

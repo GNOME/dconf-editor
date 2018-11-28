@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/ca/desrt/dconf-editor/ui">
-    <file preprocess="xml-stripblanks">adaptative-pathbar.ui</file>
     <file preprocess="xml-stripblanks">bookmark.ui</file>
     <file preprocess="xml-stripblanks">bookmarks.ui</file>
     <file preprocess="xml-stripblanks">bookmarks-controller.ui</file>

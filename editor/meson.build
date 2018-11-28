@@ -104,7 +104,6 @@ sources = files(
 )
 
 resource_data = files(
-  'adaptative-pathbar.ui',
   'bookmarks.ui',
   'bookmarks-controller.ui',
   'bookmark.ui',
