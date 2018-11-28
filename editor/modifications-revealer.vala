@@ -136,6 +136,20 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
     }
 
     /*\
+    * * keyboard calls
+    \*/
+
+    internal void next_match ()
+    {
+        modifications_list.next_match ();
+    }
+
+    internal void previous_match ()
+    {
+        modifications_list.previous_match ();
+    }
+
+    /*\
     * * Modifications list public functions
     \*/
 

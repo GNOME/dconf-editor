@@ -115,20 +115,20 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         return path_widget.handle_event (event);
     }
 
-    internal void down_pressed ()
+    internal void next_match ()
     {
         if (info_button.active)
             return;
         if (bookmarks_button.active)
-            bookmarks_button.down_pressed ();
+            bookmarks_button.next_match ();
     }
 
-    internal void up_pressed ()
+    internal void previous_match ()
     {
         if (info_button.active)
             return;
         if (bookmarks_button.active)
-            bookmarks_button.up_pressed ();
+            bookmarks_button.previous_match ();
     }
 
     internal void close_popovers ()

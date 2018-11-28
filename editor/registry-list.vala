@@ -352,7 +352,15 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         ((!) selected_row).grab_focus ();
     }
 
-    internal bool up_or_down_pressed (bool is_down)
+    internal bool next_match ()
+    {
+        return next_or_previous_match (true);
+    }
+    internal bool previous_match ()
+    {
+        return next_or_previous_match (false);
+    }
+    private bool next_or_previous_match (bool is_next)
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         uint n_items = list_model.get_n_items ();
@@ -365,14 +373,14 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
             int position = ((!) selected_row).get_index ();
             ListBoxRow? row = null;
-            if (!is_down && (position >= 1))
+            if (!is_next && (position >= 1))
                 row = key_list_box.get_row_at_index (position - 1);
-            if (is_down && (position < n_items - 1))
+            if (is_next && (position < n_items - 1))
                 row = key_list_box.get_row_at_index (position + 1);
 
             if (row != null)
             {
-                scroll_to_row ((!) row, is_down ? ScrollToRowBehaviour.SCROLL_DOWN : ScrollToRowBehaviour.SCROLL_UP);
+                scroll_to_row ((!) row, is_next ? ScrollToRowBehaviour.SCROLL_DOWN : ScrollToRowBehaviour.SCROLL_UP);
                 if (search_mode)
                 {
                     Container list_box = (Container) ((!) selected_row).get_parent ();
@@ -385,7 +393,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
         else if (n_items >= 1)
         {
-            selected_row = key_list_box.get_row_at_index (is_down ? 0 : (int) n_items - 1);
+            selected_row = key_list_box.get_row_at_index (is_next ? 0 : (int) n_items - 1);
             if (selected_row == null)
                 return false;
             select_row_and_if_true_grab_focus ((!) selected_row, true);

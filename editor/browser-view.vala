@@ -488,25 +488,39 @@ private class BrowserView : Stack, AdaptativeWidget
 
     // keyboard
     internal bool return_pressed ()   { return current_child.return_pressed ();   }
-    internal bool up_pressed ()
+    internal bool next_match ()
     {
         if (in_window_bookmarks)
         {
-            bookmarks_list.up_pressed ();
+            bookmarks_list.next_match ();
             return true;
         }
+        else if (in_window_modifications)
+        {
+            modifications_list.next_match ();
+            return true;
+        }
+        else if (in_window_about)
+            return true;
         else
-            return current_child.up_pressed ();
+            return current_child.next_match ();
     }
-    internal bool down_pressed ()
+    internal bool previous_match ()
     {
         if (in_window_bookmarks)
         {
-            bookmarks_list.down_pressed ();
+            bookmarks_list.previous_match ();
             return true;
         }
+        else if (in_window_modifications)
+        {
+            modifications_list.previous_match ();
+            return true;
+        }
+        else if (in_window_about)
+            return true;
         else
-            return current_child.down_pressed ();
+            return current_child.previous_match ();
     }
 
     internal bool toggle_row_popover ()     // Menu

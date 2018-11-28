@@ -216,17 +216,17 @@ private class BrowserStack : Grid, AdaptativeWidget
         return search_view.return_pressed ();
     }
 
-    internal bool up_pressed ()
+    internal bool next_match ()
     {
         if (ViewType.displays_objects_list (current_view))
-            return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (false);
+            return ((RegistryList) stack.get_visible_child ()).next_match ();
         return false;
     }
 
-    internal bool down_pressed ()
+    internal bool previous_match ()
     {
         if (ViewType.displays_objects_list (current_view))
-            return ((RegistryList) stack.get_visible_child ()).up_or_down_pressed (true);
+            return ((RegistryList) stack.get_visible_child ()).previous_match ();
         return false;
     }
 }

@@ -195,16 +195,16 @@ private class Bookmarks : MenuButton
 
     // keyboard call
 
-    internal void down_pressed ()
+    internal void next_match ()
         requires (active)
     {
-        bookmarks_list.down_pressed ();
+        bookmarks_list.next_match ();
     }
 
-    internal void up_pressed ()
+    internal void previous_match ()
         requires (active)
     {
-        bookmarks_list.up_pressed ();
+        bookmarks_list.previous_match ();
     }
 
     internal void bookmark_current_path ()

@@ -1126,17 +1126,21 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     private void next_match                             (/* SimpleAction action, Variant? variant */)   // See also "Down"
     {
         if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
-            headerbar.down_pressed ();
-        else if (!revealer.get_modifications_list_state () && !browser_view.in_window_modifications)
-            browser_view.down_pressed ();               // FIXME returns bool
+            headerbar.next_match ();
+        else if (revealer.get_modifications_list_state ())
+            revealer.next_match ();
+        else
+            browser_view.next_match ();             // FIXME returns bool
     }
 
     private void previous_match                         (/* SimpleAction action, Variant? variant */)   // See also "Up"
     {
         if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
-            headerbar.up_pressed ();
-        else if (!revealer.get_modifications_list_state () && !browser_view.in_window_modifications)
-            browser_view.up_pressed ();                 // FIXME returns bool
+            headerbar.previous_match ();
+        else if (revealer.get_modifications_list_state ())
+            revealer.previous_match ();
+        else
+            browser_view.previous_match ();         // FIXME returns bool
     }
 
     private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
@@ -1611,18 +1615,18 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         }
 
         /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
-        if (name == "Up"
-         && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
-         // see also <ctrl>G
-         && !headerbar.has_popover ()
-         && !revealer.get_modifications_list_state ())
-            return browser_view.up_pressed ();
         if (name == "Down"
          && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
          // see also <ctrl>g
          && !headerbar.has_popover ()
          && !revealer.get_modifications_list_state ())
-            return browser_view.down_pressed ();
+            return browser_view.next_match ();
+        if (name == "Up"
+         && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
+         // see also <ctrl>G
+         && !headerbar.has_popover ()
+         && !revealer.get_modifications_list_state ())
+            return browser_view.previous_match ();
 
         if (name == "Return" || name == "KP_Enter")
         {

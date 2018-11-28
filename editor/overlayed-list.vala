@@ -114,13 +114,13 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     * * keyboard
     \*/
 
-    internal void down_pressed ()
+    internal void next_match ()
     {
-        _down_pressed (ref main_list_box);
+        _next_match (ref main_list_box);
     }
-    private static inline void _down_pressed (ref ListBox main_list_box)
+    private static inline void _next_match (ref ListBox main_list_box)
     {
-        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows
+        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows and focus-only lists
         if (row == null)
             row = main_list_box.get_row_at_index (0);
         else
@@ -132,16 +132,17 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
         ((!) row).grab_focus ();
     }
 
-    internal void up_pressed ()
+    internal void previous_match ()
     {
-        _up_pressed (n_items, ref main_list_box);
+        _previous_match (ref main_list_box);
     }
-    private static inline void _up_pressed (uint n_items, ref ListBox main_list_box)
+    private static inline void _previous_match (ref ListBox main_list_box)
     {
+        uint n_items = main_list_box.get_children ().length ();  // FIXME OverlayedList.n_items is unreliable
         if (n_items == 0)
             return;
 
-        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows
+        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows and focus-only lists
         if (row == null)
             row = main_list_box.get_row_at_index ((int) n_items - 1);
         else
