@@ -5,9 +5,8 @@
     <property name="show-close-button">True</property>
     <property name="has-subtitle">False</property>
     <child>
-      <object class="GtkButton" id="hide_in_window_bookmarks_button">
+      <object class="GtkButton" id="go_back_button">
         <property name="visible">False</property>
-        <property name="action-name">ui.hide-in-window-bookmarks</property>
         <style>
           <class name="image-button"/>
         </style>
@@ -21,40 +20,8 @@
       </object>
     </child>
     <child>
-      <object class="GtkSeparator" id="bookmarks_actions_separator">
+      <object class="GtkSeparator" id="ltr_left_separator">
         <property name="visible">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkButton" id="hide_modifications_button">
-        <property name="visible">False</property>
-        <property name="action-name">ui.hide-in-window-modifications</property>
-        <style>
-          <class name="image-button"/>
-        </style>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">go-previous-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkButton" id="hide_about_button">
-        <property name="visible">False</property>
-        <property name="action-name">ui.hide-in-window-about</property>
-        <style>
-          <class name="image-button"/>
-        </style>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">go-previous-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
       </object>
     </child>
     <!-- child>
@@ -130,15 +97,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkLabel" id="modifications_label">
+              <object class="GtkLabel" id="title_label">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Pending</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="about_label">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">About</property>
               </object>
             </child>
           </object>
@@ -206,7 +166,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkSeparator" id="modifications_separator">
+      <object class="GtkSeparator" id="ltr_right_separator">
         <property name="visible">False</property>
         <property name="orientation">vertical</property>
         <style>
