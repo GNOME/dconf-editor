@@ -127,7 +127,10 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
             row = main_list_box.get_row_at_index (((!) row).get_index () + 1);
 
         if (row == null)
+        {
+            _scroll_bottom (ref main_list_box);
             return;
+        }
         main_list_box.select_row ((!) row);
         ((!) row).grab_focus ();
     }
@@ -198,11 +201,19 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     protected void scroll_top ()
     {
+        _scroll_top (ref main_list_box);
+    }
+    private static inline void _scroll_top (ref ListBox main_list_box)
+    {
         Adjustment adjustment = main_list_box.get_adjustment ();
         adjustment.set_value (adjustment.get_lower ());
     }
 
     protected void scroll_bottom ()
+    {
+        _scroll_bottom (ref main_list_box);
+    }
+    private static inline void _scroll_bottom (ref ListBox main_list_box)
     {
         Adjustment adjustment = main_list_box.get_adjustment ();
         adjustment.set_value (adjustment.get_upper ());
