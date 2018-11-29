@@ -310,6 +310,7 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("kbd.edit-path-last",    { "<Shift><Primary>l" });
         set_accels_for_action ("app.quit",              {        "<Primary>q" });
         set_accels_for_action ("app.apply-and-quit",    { "<Shift><Primary>q" });
+        set_accels_for_action ("kbd.paste",             {        "<Primary>v" });   // TODO <Shift><Primary>v something?    // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
 
         set_accels_for_action ("kbd.open-root",         { "<Shift><Alt>Up"    });
         set_accels_for_action ("kbd.open-parent",       {        "<Alt>Up"    });

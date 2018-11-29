@@ -1031,6 +1031,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         { "modifications",      modifications_list  },  // <A>i
         { "edit-path-end",      edit_path_end       },  // <P>l
         { "edit-path-last",     edit_path_last      },  // <P>L
+        { "paste",              paste               },  // <P>v
 
         { "open-root",          open_root           },  // <S><A>Up
         { "open-parent",        open_current_parent },  //    <A>Up
@@ -1241,6 +1242,41 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
+    }
+
+    private void paste                                  (/* SimpleAction action, Variant? variant */)
+    {
+        if (browser_view.in_window_bookmarks)
+            return;
+        if (browser_view.in_window_modifications)
+            return;
+        if (browser_view.in_window_about)
+            return;
+
+        Widget? focus = get_focus ();
+        if (focus != null)
+        {
+            if ((!) focus is Entry)
+            {
+                ((Entry) (!) focus).paste_clipboard ();
+                return;
+            }
+            if ((!) focus is TextView)
+            {
+                ((TextView) (!) focus).paste_clipboard ();
+                return;
+            }
+        }
+
+        Gdk.Display? display = Gdk.Display.get_default ();
+        if (display == null)    // ?
+            return;
+
+        string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
+        if (clipboard_content != null)
+            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
+        else
+            request_search (true, PathEntry.SearchMode.SEARCH);
     }
 
     private void open_root                              (/* SimpleAction action, Variant? variant */)
@@ -1596,40 +1632,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             return true;
         }
 
-        Widget? focus = get_focus ();
-        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
-
-        if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
-        {
-            switch (name)
-            {
-                case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX // TODO <Shift><Primary>v something?
-                    if (browser_view.in_window_bookmarks)
-                        return false;
-                    if (browser_view.in_window_modifications)
-                        return false;
-                    if (browser_view.in_window_about)
-                        return false;
-
-                    if (focus_is_text_widget)
-                        return false;
-
-                    Gdk.Display? display = Gdk.Display.get_default ();
-                    if (display == null)    // ?
-                        return false;
-
-                    string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
-                    if (clipboard_content != null)
-                        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
-                    else
-                        request_search (true, PathEntry.SearchMode.SEARCH);
-                    return true;
-
-                default:
-                    break;
-            }
-        }
-
         /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
         if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
             return _next_match ();
@@ -1642,6 +1644,9 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             return false;
         if (browser_view.in_window_about)
             return false;
+
+        Widget? focus = get_focus ();
+        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
         if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
