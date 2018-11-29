@@ -26,6 +26,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     [GtkChild] private Revealer     bookmarks_revealer;
     [GtkChild] private Bookmarks    bookmarks_button;
 
+    [GtkChild] private Box          center_box;
     [GtkChild] private Stack        title_stack;
     [GtkChild] private Label        title_label;
 
@@ -167,6 +168,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
     construct
     {
+        center_box.valign = Align.FILL;
         install_action_entries ();
         construct_modifications_actions_button_menu ();
     }

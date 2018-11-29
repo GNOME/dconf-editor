@@ -2,11 +2,12 @@
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <template class="PathWidget" parent="GtkBox">
+    <property name="valign">fill</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkStack" id="pathwidget_stack">
         <property name="visible">True</property>
-        <property name="valign">center</property>
+        <property name="valign">fill</property>
         <property name="visible-child">pathbar_grid</property> <!-- uses the "id" attribute -->
         <property name="transition-duration">300</property>
         <property name="transition-type">crossfade</property>
@@ -28,7 +29,7 @@
             <child>
               <object class="AdaptativePathbar" id="pathbar">
                 <property name="visible">True</property>
-                <property name="valign">center</property>
+                <property name="valign">fill</property>
               </object>
             </child>
             <child>

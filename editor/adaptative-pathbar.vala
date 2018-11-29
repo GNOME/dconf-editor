@@ -39,7 +39,8 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     private void create_large_pathbar ()
     {
         large_pathbar = new LargePathbar ();
-        large_pathbar.valign = Align.CENTER;
+        large_pathbar.valign = Align.FILL;
+        large_pathbar.vexpand = true;
         large_pathbar.show ();
         add (large_pathbar);
         large_pathbar_created = true;
