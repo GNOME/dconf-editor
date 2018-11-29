@@ -1681,7 +1681,9 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         if (headerbar.search_mode_enabled)
             return;
 
+        headerbar.close_popovers ();        // by symmetry with go_forward()
         browser_view.discard_row_popover ();
+
         if (current_path == "/")
             return;
         if (shift)
@@ -1697,7 +1699,9 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
         string complete_path = headerbar.get_complete_path ();
 
+        headerbar.close_popovers ();
         browser_view.discard_row_popover ();
+
         if (current_path == complete_path)  // TODO something?
             return;
 
