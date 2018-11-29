@@ -1032,6 +1032,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         { "edit-path-end",      edit_path_end       },  // <P>l
         { "edit-path-last",     edit_path_last      },  // <P>L
         { "paste",              paste               },  // <P>v
+        { "paste-force",        paste_force         },  // <P>V
 
         { "open-root",          open_root           },  // <S><A>Up
         { "open-parent",        open_current_parent },  //    <A>Up
@@ -1268,6 +1269,10 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             }
         }
 
+        search_clipboard_content ();
+    }
+    private void search_clipboard_content ()
+    {
         Gdk.Display? display = Gdk.Display.get_default ();
         if (display == null)    // ?
             return;
@@ -1277,6 +1282,18 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
         else
             request_search (true, PathEntry.SearchMode.SEARCH);
+    }
+
+    private void paste_force                            (/* SimpleAction action, Variant? variant */)
+    {
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
+        else if (browser_view.in_window_about)
+            hide_in_window_about ();
+
+        search_clipboard_content ();
     }
 
     private void open_root                              (/* SimpleAction action, Variant? variant */)
@@ -1645,13 +1662,11 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         if (browser_view.in_window_about)
             return false;
 
-        Widget? focus = get_focus ();
-        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
-
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
         if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
         {
-            if (focus_is_text_widget) // && browser_view.current_view != ViewType.SEARCH
+            Widget? focus = get_focus ();
+            if (focus != null && (((!) focus is Entry) || ((!) focus is TextView))) // && browser_view.current_view != ViewType.SEARCH
                 return false;
 
             headerbar.toggle_pathbar_menu ();
@@ -1685,6 +1700,8 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
              name == "space" || name == "KP_Space"))
             return false;
 
+        Widget? focus = get_focus ();
+        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
         if ((!focus_is_text_widget)
          && (event.is_modifier == 0)
          && (event.length != 0)
