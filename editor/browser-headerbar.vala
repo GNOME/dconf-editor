@@ -210,6 +210,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         if (disable_action_bar)
             ltr_right_separator.show ();
         info_button.show ();
+        if (path_widget.search_mode_enabled)
+            path_widget.entry_grab_focus_without_selecting ();
     }
 
     /*\
@@ -316,6 +318,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         title_stack.set_visible_child (path_widget);
         in_window_modifications = false;
         info_button.show ();
+        if (path_widget.search_mode_enabled)
+            path_widget.entry_grab_focus_without_selecting ();
     }
 
     internal void set_apply_modifications_button_sensitive (bool new_value)
@@ -366,6 +370,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         bookmarks_stack.set_visible_child (bookmarks_label);
         info_button.show ();
         update_hamburger_menu ();
+        if (path_widget.search_mode_enabled)
+            path_widget.entry_grab_focus_without_selecting ();
     }
 
     internal void edit_in_window_bookmarks ()
