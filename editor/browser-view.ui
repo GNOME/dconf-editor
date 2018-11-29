@@ -31,13 +31,5 @@
         <signal name="update_bookmarks_icons" handler="on_update_bookmarks_icons"/>
       </object>
     </child>
-    <child>
-      <object class="ModificationsList" id="modifications_list">
-        <property name="visible">True</property>
-        <property name="needs-shadows">False</property>
-        <property name="big-placeholder">True</property>
-        <signal name="selection-changed" handler="on_modifications_selection_changed"/>
-      </object>
-    </child>
   </template>
 </interface>

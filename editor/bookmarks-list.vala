@@ -35,6 +35,10 @@ private class BookmarksList : OverlayedList
         second_mode_name = _("Edit");
     }
 
+    internal override void reset ()
+    {
+    }
+
     public string schema_path
     {
         internal set

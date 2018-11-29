@@ -38,7 +38,7 @@ private class AboutList : OverlayedList
         Object (needs_shadows: needs_shadows, big_placeholder: big_placeholder, edit_mode_action_prefix: "about");
     }
 
-    internal void reset ()
+    internal override void reset ()
     {
         edit_mode_action.set_state (false);
         show_apropos (ref main_list_store);

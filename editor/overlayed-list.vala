@@ -369,6 +369,8 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     {
         edit_mode_box.visible = is_editable && n_items != 0;
     }
+
+    internal abstract void reset ();
 }
 
 private abstract class OverlayedListRow : ListBoxRow

@@ -67,7 +67,8 @@ private class BrowserView : Stack, AdaptativeWidget
         window_size = new_size;
         current_child.set_window_size (new_size);
         bookmarks_list.set_window_size (new_size);
-        modifications_list.set_window_size (new_size);
+        if (modifications_list_created)
+            modifications_list.set_window_size (new_size);
         if (about_list_created)
             about_list.set_window_size (new_size);
     }
@@ -250,14 +251,28 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal bool in_window_modifications           { internal get; private set; default = false; }
 
-    [GtkChild] private ModificationsList modifications_list;
+    private bool modifications_list_created = false;
+    private ModificationsList modifications_list;
+
+    private void create_modifications_list ()
+    {
+        modifications_list = new ModificationsList (false, true);
+        modifications_list.set_window_size (window_size);
+        // modifications_list.selection_changed.connect (() => ...);
+        modifications_list.show ();
+        add (modifications_list);
+        modifications_list_created = true;
+    }
 
     internal void show_in_window_modifications ()
+        requires (modifications_list_created == true)
     {
         if (in_window_bookmarks)
             hide_in_window_bookmarks ();
         else if (in_window_about)
             hide_in_window_about ();
+
+        modifications_list.reset ();
 
         set_visible_child (modifications_list);
         in_window_modifications = true;
@@ -272,6 +287,9 @@ private class BrowserView : Stack, AdaptativeWidget
 
     private void update_in_window_modifications ()
     {
+        if (!modifications_list_created)
+            create_modifications_list ();
+
         GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
         modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
 
@@ -282,11 +300,6 @@ private class BrowserView : Stack, AdaptativeWidget
     {
         SimpleSettingObject sso = (SimpleSettingObject) object;
         return ModificationsRevealer.create_delayed_setting_row (modifications_handler, sso.name, sso.full_name, sso.context_id);
-    }
-
-    [GtkCallback]
-    private void on_modifications_selection_changed ()
-    {
     }
 
     /*\
@@ -307,6 +320,8 @@ private class BrowserView : Stack, AdaptativeWidget
             hide_in_window_modifications ();
         else if (in_window_about)
             hide_in_window_about ();
+
+        bookmarks_list.reset ();
 
         if (bookmarks != old_bookmarks)
         {

@@ -33,6 +33,17 @@ private class ModificationsList : OverlayedList
         main_list_box.set_header_func (delayed_setting_row_update_header);
     }
 
+    internal ModificationsList (bool needs_shadows, bool big_placeholder)
+    {
+        Object (needs_shadows: needs_shadows, big_placeholder: big_placeholder);
+    }
+
+    internal override void reset ()
+    {
+        scroll_top ();      // FIXME doesn't work if selected row is not the first
+        select_first_row (main_list_box);
+    }
+
     private static void delayed_setting_row_update_header (ListBoxRow _row, ListBoxRow? before)
     {
         if (!(_row is DelayedSettingView))
