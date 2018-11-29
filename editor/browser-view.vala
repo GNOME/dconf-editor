@@ -61,12 +61,15 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
 
+    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
+        window_size = new_size;
         current_child.set_window_size (new_size);
         bookmarks_list.set_window_size (new_size);
         modifications_list.set_window_size (new_size);
-        about_list.set_window_size (new_size);
+        if (about_list_created)
+            about_list.set_window_size (new_size);
     }
 
     private ModificationsHandler _modifications_handler;
@@ -206,7 +209,17 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal bool in_window_about                   { internal get; private set; default = false; }
 
-    [GtkChild] private AboutList about_list;
+    private bool about_list_created = false;
+    private AboutList about_list;
+
+    private void create_about_list ()
+    {
+        about_list = new AboutList (false, true);
+        about_list.set_window_size (window_size);
+        about_list.show ();
+        add (about_list);
+        about_list_created = true;
+    }
 
     internal void show_in_window_about ()
     {
@@ -215,7 +228,11 @@ private class BrowserView : Stack, AdaptativeWidget
         else if (in_window_modifications)
             hide_in_window_modifications ();
 
-        about_list.reset ();
+        if (about_list_created)
+            about_list.reset ();
+        else
+            create_about_list ();
+
         set_visible_child (about_list);
         in_window_about = true;
     }
