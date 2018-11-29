@@ -152,82 +152,82 @@
 \*/
 
 /* row height */
-                                   .keys-list          > row         { transition:min-height 0.3s,
-                                                                                  margin-left 0.3s, margin-right 0.3s,
-                                                                                  padding-left 0.3s, padding-right 0.3s,
-                                                                               /* margin 0.3s,
-                                                                                  padding 0.3s, cause stuttering in the transition */
-                                                                                  border-radius 0.3s; }
-                                /* .keys-list          > row:hover,
-                                   .keys-list          > row:selected{ transition:min-height 0.3s,
+                                    .keys-list          > row         { transition:min-height 0.3s,
+                                                                                   margin-left 0.3s, margin-right 0.3s,
+                                                                                   padding-left 0.3s, padding-right 0.3s,
+                                                                                /* margin 0.3s,
+                                                                                   padding 0.3s, cause stuttering in the transition */
+                                                                                   border-radius 0.3s; }
+                                /*  .keys-list          > row:hover,
+                                    .keys-list          > row:selected{ transition:min-height 0.3s,
                                                                                   margin 0.3s,
                                                                                   padding 0.3s,
                                                                                   border-radius 0.3s; } stuttering of a single row is almost bearable */
 
-                                   .keys-list          > .key-row    { min-height:4.2em; }
-                                   .keys-list          > .f-or-s-row { min-height:2.1em; }
-                                   .keys-list          > row         { margin:0;      padding-top:0.25em; padding-bottom:0.25em; }
-.large-window                      .keys-list          > row         { margin:0.25em; padding-top:0;      padding-bottom:0;      }
+                                    .keys-list          > .key-row    { min-height:4.2em; }
+                                    .keys-list          > .f-or-s-row { min-height:2.1em; }
+                                    .keys-list          > row         { margin:0;      padding-top:0.25em; padding-bottom:0.25em; }
+.large-window                       .keys-list          > row         { margin:0.25em; padding-top:0;      padding-bottom:0;      }
 
-             .small-keys-list-rows .keys-list          > .key-row    { min-height:2.5em; }
-             .small-keys-list-rows .keys-list          > .f-or-s-row { min-height:1.5em; }
-             .small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
-.large-window.small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
+              .small-keys-list-rows .keys-list          > .key-row    { min-height:2.5em; }
+              .small-keys-list-rows .keys-list          > .f-or-s-row { min-height:1.5em; }
+              .small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
+.large-window .small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 
-    .hc-theme                      .keys-list          > row         { padding-top:0.5em; padding-bottom:0.5em; }
-    .hc-theme.large-window         .keys-list          > row         { padding-top:calc(0.25em + 1px); padding-bottom:calc(0.25em + 1px); }
-    .hc-theme.small-keys-list-rows .keys-list          > row         { padding-top:0.4em; padding-bottom:0.4em; }
+    .hc-theme                       .keys-list          > row         { padding-top:0.5em; padding-bottom:0.5em; }
+    .hc-theme.large-window          .keys-list          > row         { padding-top:calc(0.25em + 1px); padding-bottom:calc(0.25em + 1px); }
+    .hc-theme .small-keys-list-rows .keys-list          > row         { padding-top:0.4em; padding-bottom:0.4em; }
 
 /* round borders for large windows */
 
-.large-window                      .keys-list          > row        { border-radius:0.5em;
+.large-window                       .keys-list          > row        { border-radius:0.5em;
                                                                       -gtk-outline-radius:calc(0.5em - 1px); }
-.large-window.small-keys-list-rows .keys-list          > row        { border-radius:0;
+.large-window .small-keys-list-rows .keys-list          > row        { border-radius:0;
                                                                       -gtk-outline-radius:2px; /* gtk+ defaults */ }
 
 /* visual padding */
-                                   .keys-list:dir(ltr) > row > .key    > grid { padding-left: 10px; padding-right:20px; } /* looks cool */
-                                   .keys-list:dir(rtl) > row > .key    > grid { padding-right:10px; padding-left: 20px; }
+                                    .keys-list:dir(ltr) > row > .key    > grid { padding-left: 10px; padding-right:20px; } /* cool  8-) */
+                                    .keys-list:dir(rtl) > row > .key    > grid { padding-right:10px; padding-left: 20px; }
 
-window:not(.extra-small-window)    .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
-window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
+window:not(.extra-small-window)     .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
+window:not(.extra-small-window)     .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
 
 /* technical padding: icon visual padding + icon size + some padding */
-                                   .keys-list          > row > .managed > grid  { transition:padding-left  0.3s,
-                                                                                             padding-right 0.3s; /* warning: ltr/rtl */ }
+                                    .keys-list          > row > .managed > grid  { transition:padding-left  0.3s,
+                                                                                              padding-right 0.3s; /* warning: ltr/rtl */ }
 
-                                   .keys-list:dir(ltr) > row > .managed > grid  { padding-left:  3rem; }
-             .small-keys-list-rows .keys-list:dir(ltr) > row > .managed > grid  { padding-left:  2.25rem; }
-                                   .keys-list:dir(rtl) > row > .managed > grid  { padding-right: 3rem; }
-             .small-keys-list-rows .keys-list:dir(rtl) > row > .manadeg > grid  { padding-right: 2.25rem; }
+                                    .keys-list:dir(ltr) > row > .managed > grid  { padding-left:  3rem; }
+              .small-keys-list-rows .keys-list:dir(ltr) > row > .managed > grid  { padding-left:  2.25rem; }
+                                    .keys-list:dir(rtl) > row > .managed > grid  { padding-right: 3rem; }
+              .small-keys-list-rows .keys-list:dir(rtl) > row > .manadeg > grid  { padding-right: 2.25rem; }
 
 /* grid spacing and padding-end */
-                                   .keys-list:dir(ltr) > row > .managed > grid > label { padding-right: 0.5em; }
-                                   .keys-list:dir(rtl) > row > .managed > grid > label { padding-left:  0.5em; }
+                                    .keys-list:dir(ltr) > row > .managed > grid > label { padding-right: 0.5em; }
+                                    .keys-list:dir(rtl) > row > .managed > grid > label { padding-left:  0.5em; }
 
 /* technical labels placing */
-                                   .keys-list          > row                   label.key-name { transition:min-width 0.3s,
-                                                                                                           font-size 0.3s; }
+                                    .keys-list          > row                   label.key-name { transition:min-width 0.3s,
+                                                                                                            font-size 0.3s; }
 
-                                   .keys-list          > row > .managed > grid > label.key-name { min-width: 222px; }
-.large-window                      .keys-list          > row > .managed > grid > label.key-name { min-width: 250px; }
+                                    .keys-list          > row > .managed > grid > label.key-name { min-width: 222px; }
+.large-window                       .keys-list          > row > .managed > grid > label.key-name { min-width: 250px; }
 
 /* icons place */
-                                   .keys-list          > row > .managed         { background-repeat:no-repeat;
-                                                                                  transition:background-size     0.3s,
-                                                                                             background-position 0.3s; }
+                                    .keys-list          > row > .managed         { background-repeat:no-repeat;
+                                                                                   transition:background-size     0.3s,
+                                                                                              background-position 0.3s; }
 
-                                   .keys-list          > row > .managed         { background-size:1.5rem; } /* ~22px usually */
-                                   .keys-list:dir(ltr) > row > .managed         { background-position:            0.75rem  center; }
-                                   .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.75rem) center; }
+                                    .keys-list          > row > .managed         { background-size:1.5rem; } /* ~22px usually */
+                                    .keys-list:dir(ltr) > row > .managed         { background-position:            0.75rem  center; }
+                                    .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.75rem) center; }
 
-                                   .keys-list          > row > .managed.small   { background-size:1.1rem; } /* ~16px usually, base size */
-                                   .keys-list:dir(ltr) > row > .managed.small   { background-position:            0.95rem  center; }
-                                   .keys-list:dir(rtl) > row > .managed.small   { background-position:calc(100% - 0.95rem) center; }
+                                    .keys-list          > row > .managed.small   { background-size:1.1rem; } /* ~16px, icons base size */
+                                    .keys-list:dir(ltr) > row > .managed.small   { background-position:            0.95rem  center; }
+                                    .keys-list:dir(rtl) > row > .managed.small   { background-position:calc(100% - 0.95rem) center; }
 
-             .small-keys-list-rows .keys-list          > row > .managed         { background-size:1.1rem; } /* ~16px usually, base size */
-             .small-keys-list-rows .keys-list:dir(ltr) > row > .managed         { background-position:            0.55rem  center; }
-             .small-keys-list-rows .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.55rem) center; }
+              .small-keys-list-rows .keys-list          > row > .managed         { background-size:1.1rem; } /* ~16px, icons base size */
+              .small-keys-list-rows .keys-list:dir(ltr) > row > .managed         { background-position:            0.55rem  center; }
+              .small-keys-list-rows .keys-list:dir(rtl) > row > .managed         { background-position:calc(100% - 0.55rem) center; }
 
 /* icon color */
 
@@ -344,8 +344,8 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
   margin-bottom:0.6rem;
 }
 
-.small-keys-list-rows                          .property-name-label,
-.small-keys-list-rows:not(.extra-small-window) .property-value {
+                                .small-keys-list-rows .property-name-label,
+window:not(.extra-small-window) .small-keys-list-rows .property-value {
   margin-top   :0.3rem;
   margin-bottom:0.3rem;
 }
@@ -365,31 +365,31 @@ window:not(.extra-small-window)    .keys-list:dir(rtl) > row > .key    > grid > 
                    :backdrop .property-name-label:disabled,
 .extra-small-window:backdrop .property-name-label:disabled { color:@unfocused_insensitive_color; }
 
-                                         .property-value          { margin-left  : 1.0rem;
-                                                                    margin-right : 1.0rem;
-                                                                    transition:margin-top    0.3s,   /* both */
-                                                                               margin-bottom 0.3s,   /* small-keys-list-rows */
-                                                                               margin-left   0.5s,   /* extra-small-window */
-                                                                               margin-right  0.5s;   /* extra-small-window */
+                                          .property-value          { margin-left  : 1.0rem;
+                                                                     margin-right : 1.0rem;
+                                                                     transition:margin-top    0.3s,   /* both */
+                                                                                margin-bottom 0.3s,   /* small-keys-list-rows */
+                                                                                margin-left   0.5s,   /* extra-small-window */
+                                                                                margin-right  0.5s;   /* extra-small-window */
 
-                                                                    margin-top   : 0.6rem;
-                                                                    margin-bottom: 0.6rem; }
+                                                                     margin-top   : 0.6rem;
+                                                                     margin-bottom: 0.6rem; }
 
-                     .extra-small-window .property-value          { margin-top   : 2.2rem; }
-.small-keys-list-rows.extra-small-window .property-value          { margin-top   : 1.9rem; }
+.extra-small-window                       .property-value          { margin-top   : 2.2rem; }
+.extra-small-window .small-keys-list-rows .property-value          { margin-top   : 1.9rem; }
 
-                                         .property-value:dir(ltr) { margin-left  :15.0rem; }
-                                         .property-value:dir(rtl) { margin-right :15.0rem; }
-                     .extra-small-window .property-value:dir(ltr) { margin-left  : 1.0rem; }
-                     .extra-small-window .property-value:dir(rtl) { margin-right : 1.0rem; }
+                                          .property-value:dir(ltr) { margin-left  :15.0rem; }
+                                          .property-value:dir(rtl) { margin-right :15.0rem; }
+.extra-small-window                       .property-value:dir(ltr) { margin-left  : 1.0rem; }
+.extra-small-window                       .property-value:dir(rtl) { margin-right : 1.0rem; }
 
-                    .properties-list .property-warning          { padding-top:0.6rem;
-                                                                  transition:margin-left  0.3s, /* for ltr */
-                                                                             margin-right 0.3s; /* for rtl */ }
-                    .properties-list .property-warning:dir(ltr) { margin-left :-7.5rem; }
-                    .properties-list .property-warning:dir(rtl) { margin-right:-7.5rem; }
-.extra-small-window .properties-list .property-warning:dir(ltr) { margin-left : 0; }
-.extra-small-window .properties-list .property-warning:dir(ltr) { margin-right: 0; }
+                      .properties-list  .property-warning          { padding-top:0.6rem;
+                                                                     transition:margin-left  0.3s, /* for ltr */
+                                                                                margin-right 0.3s; /* for rtl */ }
+                      .properties-list  .property-warning:dir(ltr) { margin-left :-7.5rem; }
+                      .properties-list  .property-warning:dir(rtl) { margin-right:-7.5rem; }
+.extra-small-window   .properties-list  .property-warning:dir(ltr) { margin-left : 0; }
+.extra-small-window   .properties-list  .property-warning:dir(ltr) { margin-right: 0; }
 
 .key-editor-child-array {
   min-height:10em;

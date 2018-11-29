@@ -59,8 +59,6 @@ private class BrowserView : Stack, AdaptativeWidget
     private SortingOptions sorting_options;
     private GLib.ListStore? key_model = null;
 
-    internal bool small_keys_list_rows { set { current_child.small_keys_list_rows = value; }}
-
     private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {

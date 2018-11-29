@@ -27,15 +27,6 @@ private class BrowserStack : Grid, AdaptativeWidget
 
     internal ViewType current_view { get; private set; default = ViewType.FOLDER; }
 
-    internal bool small_keys_list_rows
-    {
-        set
-        {
-            folder_view.small_keys_list_rows = value;
-            search_view.small_keys_list_rows = value;
-        }
-    }
-
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         folder_view.set_window_size (new_size);
@@ -44,11 +35,39 @@ private class BrowserStack : Grid, AdaptativeWidget
 
     internal ModificationsHandler modifications_handler
     {
-        set {
+        set
+        {
             folder_view.modifications_handler = value;
             object_view.modifications_handler = value;
             search_view.modifications_handler = value;
         }
+    }
+
+    construct
+    {
+        StyleContext context = get_style_context ();
+        GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+        bool has_small_keys_list_rows_class = settings.get_boolean ("small-keys-list-rows");
+
+        ulong small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect ((_settings, key_name) => {
+                bool small_rows = _settings.get_boolean (key_name);
+                if (small_rows)
+                {
+                    if (!has_small_keys_list_rows_class) context.add_class ("small-keys-list-rows");
+                }
+                else if (has_small_keys_list_rows_class) context.remove_class ("small-keys-list-rows");
+                has_small_keys_list_rows_class = small_rows;
+
+                folder_view.small_keys_list_rows = small_rows;
+                search_view.small_keys_list_rows = small_rows;
+            });
+
+        if (has_small_keys_list_rows_class)
+            context.add_class ("small-keys-list-rows");
+        folder_view.small_keys_list_rows = has_small_keys_list_rows_class;
+        search_view.small_keys_list_rows = has_small_keys_list_rows_class;
+
+        destroy.connect (() => settings.disconnect (small_keys_list_rows_handler));
     }
 
     /*\

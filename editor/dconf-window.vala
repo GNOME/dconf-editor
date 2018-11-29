@@ -168,8 +168,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
 
-        set_css_styles ();
-
         settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
         settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -330,30 +328,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     }
 
     /*\
-    * * CSS styles
-    \*/
-
-    private ulong small_keys_list_rows_handler = 0;
-    private bool has_small_keys_list_rows_class = false;
-    private void set_css_styles ()
-    {
-        small_keys_list_rows_handler = settings.changed ["small-keys-list-rows"].connect (() => {
-                bool small_rows = settings.get_boolean ("small-keys-list-rows");
-                if (small_rows)
-                {
-                    if (!has_small_keys_list_rows_class) context.add_class ("small-keys-list-rows");
-                }
-                else if (has_small_keys_list_rows_class) context.remove_class ("small-keys-list-rows");
-                has_small_keys_list_rows_class = small_rows;
-                browser_view.small_keys_list_rows = small_rows;
-            });
-        has_small_keys_list_rows_class = settings.get_boolean ("small-keys-list-rows");
-        if (has_small_keys_list_rows_class)
-            context.add_class ("small-keys-list-rows");
-        browser_view.small_keys_list_rows = has_small_keys_list_rows_class;
-    }
-
-    /*\
     * * Night mode
     \*/
 
@@ -442,7 +416,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
         settings.disconnect (behaviour_changed_handler);
         settings.disconnect (use_shortpaths_changed_handler);
-        settings.disconnect (small_keys_list_rows_handler);
 
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
