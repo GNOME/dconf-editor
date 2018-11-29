@@ -1016,6 +1016,11 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         insert_action_group ("kbd", action_group);
     }
 
+    private bool is_in_in_window_mode ()
+    {
+        return (browser_view.in_window_bookmarks || browser_view.in_window_modifications || browser_view.in_window_about);
+    }
+
     private const GLib.ActionEntry [] kbd_action_entries =
     {
         // keyboard calls
@@ -1093,11 +1098,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_bookmarks)       // TODO better
-            return;
-        if (browser_view.in_window_modifications)   // TODO better
-            return;
-        if (browser_view.in_window_about)           // TODO better
+        if (is_in_in_window_mode ())        // TODO better
             return;
 
         browser_view.discard_row_popover ();
@@ -1118,11 +1119,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void bookmark                               (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)       // TODO better
-            return;
-        if (browser_view.in_window_modifications)   // TODO better
-            return;
-        if (browser_view.in_window_about)           // TODO better
+        if (is_in_in_window_mode ())        // TODO better
             return;
 
         browser_view.discard_row_popover ();
@@ -1131,11 +1128,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void unbookmark                             (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)       // TODO better
-            return;
-        if (browser_view.in_window_modifications)   // TODO better
-            return;
-        if (browser_view.in_window_about)           // TODO better
+        if (is_in_in_window_mode ())        // TODO better
             return;
 
         browser_view.discard_row_popover ();
@@ -1144,11 +1137,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void _toggle_search                         (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)       // TODO better
-            return;
-        if (browser_view.in_window_modifications)   // TODO better
-            return;
-        if (browser_view.in_window_about)           // TODO better
+        if (is_in_in_window_mode ())        // TODO better
             return;
 
         headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
@@ -1194,11 +1183,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
     {
-        if (browser_view.in_window_bookmarks)       // TODO better
-            return;
-        if (browser_view.in_window_modifications)   // TODO better
-            return;
-        if (browser_view.in_window_about)           // TODO better
+        if (is_in_in_window_mode ())        // TODO better
             return;
 
         if (browser_view.current_view == ViewType.FOLDER)
@@ -1221,11 +1206,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         if (!headerbar.search_mode_enabled)
@@ -1234,11 +1215,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         if (!headerbar.search_mode_enabled)
@@ -1247,11 +1224,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void paste                                  (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         Widget? focus = get_focus ();
@@ -1298,11 +1271,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void open_root                              (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         go_backward (true);
@@ -1310,11 +1279,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         if (browser_view.current_view == ViewType.CONFIG)
@@ -1325,11 +1290,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void open_child                             (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         go_forward (false);
@@ -1337,11 +1298,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void open_last_child                        (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         go_forward (true);
@@ -1386,11 +1343,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     {
         if (headerbar.has_popover ())
             return;
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         browser_view.discard_row_popover ();
@@ -1401,11 +1354,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     {
         if (headerbar.has_popover ())
             return;
-        if (browser_view.in_window_bookmarks)
-            return;
-        if (browser_view.in_window_modifications)
-            return;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return;
 
         if (revealer.dismiss_selected_modification ())
@@ -1655,11 +1604,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         if (name == "Up"   && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>G
             return _previous_match ();
 
-        if (browser_view.in_window_bookmarks)
-            return false;
-        if (browser_view.in_window_modifications)
-            return false;
-        if (browser_view.in_window_about)
+        if (is_in_in_window_mode ())
             return false;
 
         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
