@@ -1020,6 +1020,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     {
         // keyboard calls
         { "toggle-bookmark",    toggle_bookmark     },  // <P>b & <P>B
+        { "copy",               copy                },  // <P>c
         { "copy-path",          copy_path           },  // <P>C
         { "bookmark",           bookmark            },  // <P>d
         { "unbookmark",         unbookmark          },  // <P>D
@@ -1058,6 +1059,34 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             hide_in_window_bookmarks ();
         else
             show_in_window_bookmarks ();
+    }
+
+    private void copy                                   (/* SimpleAction action, Variant? path_variant */)
+    {
+        Widget? focus = get_focus ();
+        if (focus != null)
+        {
+            if ((!) focus is Entry)
+            {
+                ((Entry) (!) focus).copy_clipboard ();
+                return;
+            }
+            if ((!) focus is TextView)
+            {
+                ((TextView) (!) focus).copy_clipboard ();
+                return;
+            }
+        }
+
+        model.copy_action_called ();
+
+        browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
+
+        string? selected_row_text = browser_view.get_copy_text ();
+        if (selected_row_text == null && current_type == ViewType.OBJECT)
+            selected_row_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
+        ConfigurationEditor application = (ConfigurationEditor) get_application ();
+        application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
     }
 
     private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
@@ -1574,21 +1603,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         {
             switch (name)
             {
-                case "c":
-                    if (focus_is_text_widget)
-                        return false;
-
-                    model.copy_action_called ();
-
-                    browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
-
-                    string? selected_row_text = browser_view.get_copy_text ();
-                    if (selected_row_text == null && current_type == ViewType.OBJECT)
-                        selected_row_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
-                    ConfigurationEditor application = (ConfigurationEditor) get_application ();
-                    application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
-                    return true;
-
                 case "v":   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX // TODO <Shift><Primary>v something?
                     if (browser_view.in_window_bookmarks)
                         return false;

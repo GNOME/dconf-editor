@@ -297,6 +297,7 @@ private class ConfigurationEditor : Gtk.Application
         add_action_entries (action_entries, this);
         set_accels_for_action ("kbd.toggle-bookmark",   {        "<Primary>b",
                                                           "<Shift><Primary>b" });
+        set_accels_for_action ("kbd.copy",              {        "<Primary>c" });
         set_accels_for_action ("kbd.copy-path",         { "<Shift><Primary>c" });
         set_accels_for_action ("kbd.bookmark",          {        "<Primary>d" });
         set_accels_for_action ("kbd.unbookmark",        { "<Shift><Primary>d" });
