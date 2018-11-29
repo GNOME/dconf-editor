@@ -1135,22 +1135,30 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void next_match                             (/* SimpleAction action, Variant? variant */)   // See also "Down"
     {
-        if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
-            headerbar.next_match ();
-        else if (revealer.get_modifications_list_state ())
-            revealer.next_match ();
+        _next_match ();         // NOTE returns bool
+    }
+    private bool _next_match ()
+    {
+        if (headerbar.has_popover ())                   // for bookmarks popover
+            return headerbar.next_match ();
+        if (revealer.get_modifications_list_state ())   // for modifications popover
+            return revealer.next_match ();
         else
-            browser_view.next_match ();             // FIXME returns bool
+            return browser_view.next_match ();          // for in-window things and main list
     }
 
     private void previous_match                         (/* SimpleAction action, Variant? variant */)   // See also "Up"
     {
-        if (headerbar.has_popover ()) // for bookmarks popover, let headerbar handle that
-            headerbar.previous_match ();
-        else if (revealer.get_modifications_list_state ())
-            revealer.previous_match ();
+        _previous_match ();     // NOTE returns bool
+    }
+    private bool _previous_match ()
+    {
+        if (headerbar.has_popover ())                   // for bookmarks popover
+            return headerbar.previous_match ();
+        if (revealer.get_modifications_list_state ())   // for modifications popover
+            return revealer.previous_match ();
         else
-            browser_view.previous_match ();         // FIXME returns bool
+            return browser_view.previous_match ();      // for in-window things and main list
     }
 
     private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
@@ -1608,6 +1616,12 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             }
         }
 
+        /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
+        if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
+            return _next_match ();
+        if (name == "Up"   && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>G
+            return _previous_match ();
+
         if (browser_view.in_window_bookmarks)
             return false;
         if (browser_view.in_window_modifications)
@@ -1624,20 +1638,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             headerbar.toggle_pathbar_menu ();
             return true;
         }
-
-        /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
-        if (name == "Down"
-         && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
-         // see also <ctrl>g
-         && !headerbar.has_popover ()
-         && !revealer.get_modifications_list_state ())
-            return browser_view.next_match ();
-        if (name == "Up"
-         && (event.state & Gdk.ModifierType.MOD1_MASK) == 0
-         // see also <ctrl>G
-         && !headerbar.has_popover ()
-         && !revealer.get_modifications_list_state ())
-            return browser_view.previous_match ();
 
         if (name == "Return" || name == "KP_Enter")
         {

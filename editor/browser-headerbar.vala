@@ -121,20 +121,24 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         return path_widget.handle_event (event);
     }
 
-    internal void next_match ()
+    internal bool next_match ()
     {
         if (info_button.active)
-            return;
+            return false;
         if (bookmarks_button.active)
-            bookmarks_button.next_match ();
+            return bookmarks_button.next_match ();
+        else
+            return false;
     }
 
-    internal void previous_match ()
+    internal bool previous_match ()
     {
         if (info_button.active)
-            return;
+            return false;
         if (bookmarks_button.active)
-            bookmarks_button.previous_match ();
+            return bookmarks_button.previous_match ();
+        else
+            return false;
     }
 
     internal void close_popovers ()

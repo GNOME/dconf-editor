@@ -139,14 +139,14 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
     * * keyboard calls
     \*/
 
-    internal void next_match ()
+    internal bool next_match ()
     {
-        modifications_list.next_match ();
+        return modifications_list.next_match ();
     }
 
-    internal void previous_match ()
+    internal bool previous_match ()
     {
-        modifications_list.previous_match ();
+        return modifications_list.previous_match ();
     }
 
     /*\

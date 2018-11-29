@@ -523,34 +523,22 @@ private class BrowserView : Stack, AdaptativeWidget
     internal bool next_match ()
     {
         if (in_window_bookmarks)
-        {
-            bookmarks_list.next_match ();
-            return true;
-        }
-        else if (in_window_modifications)
-        {
-            modifications_list.next_match ();
-            return true;
-        }
-        else if (in_window_about)
-            return true;
+            return bookmarks_list.next_match ();
+        if (in_window_modifications)
+            return modifications_list.next_match ();
+        if (in_window_about)
+            return false;       // TODO scroll down at last line
         else
             return current_child.next_match ();
     }
     internal bool previous_match ()
     {
         if (in_window_bookmarks)
-        {
-            bookmarks_list.previous_match ();
-            return true;
-        }
-        else if (in_window_modifications)
-        {
-            modifications_list.previous_match ();
-            return true;
-        }
-        else if (in_window_about)
-            return true;
+            return bookmarks_list.previous_match ();
+        if (in_window_modifications)
+            return modifications_list.previous_match ();
+        if (in_window_about)
+            return false;
         else
             return current_child.previous_match ();
     }

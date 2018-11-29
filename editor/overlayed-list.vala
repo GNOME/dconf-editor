@@ -114,11 +114,11 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     * * keyboard
     \*/
 
-    internal void next_match ()
+    internal bool next_match ()
     {
-        _next_match (ref main_list_box);
+        return _next_match (ref main_list_box);
     }
-    private static inline void _next_match (ref ListBox main_list_box)
+    private static inline bool _next_match (ref ListBox main_list_box)
     {
         ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows and focus-only lists
         if (row == null)
@@ -129,21 +129,22 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
         if (row == null)
         {
             _scroll_bottom (ref main_list_box);
-            return;
+            return false;
         }
         main_list_box.select_row ((!) row);
         ((!) row).grab_focus ();
+        return true;
     }
 
-    internal void previous_match ()
+    internal bool previous_match ()
     {
-        _previous_match (ref main_list_box);
+        return _previous_match (ref main_list_box);
     }
-    private static inline void _previous_match (ref ListBox main_list_box)
+    private static inline bool _previous_match (ref ListBox main_list_box)
     {
         uint n_items = main_list_box.get_children ().length ();  // FIXME OverlayedList.n_items is unreliable
         if (n_items == 0)
-            return;
+            return false;
 
         ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows and focus-only lists
         if (row == null)
@@ -152,7 +153,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
         {
             int index = ((!) row).get_index ();
             if (index <= 0)
-                return;
+                return false;
             row = main_list_box.get_row_at_index (index - 1);
         }
 
@@ -161,6 +162,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
         main_list_box.select_row ((!) row);
         ((!) row).grab_focus ();
+        return true;
     }
 
     internal void select_all ()
