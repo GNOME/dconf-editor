@@ -104,11 +104,11 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
     [GtkChild] private BrowserHeaderBar headerbar;
-
     [GtkChild] private BrowserView browser_view;
-    [GtkChild] private ModificationsRevealer revealer;
-
     [GtkChild] private NotificationsRevealer notifications_revealer;
+
+    [GtkChild] private Grid main_grid;
+    private ModificationsRevealer revealer;
 
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
@@ -122,6 +122,10 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     construct
     {
         context = get_style_context ();
+
+        revealer = new ModificationsRevealer ();
+        revealer.visible = true;
+        main_grid.add (revealer);
 
         adaptative_children.append (headerbar);
         adaptative_children.append (browser_view);
