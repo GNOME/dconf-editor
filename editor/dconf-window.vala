@@ -496,7 +496,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "hide-notification", hide_notification },
         { "about", about_cb }
     };
 
@@ -801,11 +800,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     {
         modifications_handler.erase_dconf_key (((!) path_variant).get_string ());
         invalidate_popovers_with_ui_reload ();
-    }
-
-    private void hide_notification (/* SimpleAction action, Variant? variant */)
-    {
-        notifications_revealer.hide_notification ();
     }
 
     private void about_cb ()    // register as "win.about"?

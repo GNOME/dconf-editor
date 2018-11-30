@@ -22,15 +22,19 @@ private class NotificationsRevealer : Revealer, AdaptativeWidget
 {
     [GtkChild] private Label notification_label;
 
+    construct
+    {
+        install_action_entries ();
+    }
+
+    /*\
+    * * internal calls
+    \*/
+
     internal void show_notification (string notification)
     {
         notification_label.set_text (notification);
         set_reveal_child (true);
-    }
-
-    internal void hide_notification ()
-    {
-        set_reveal_child (false);
     }
 
     private bool is_thin = false;
@@ -51,5 +55,26 @@ private class NotificationsRevealer : Revealer, AdaptativeWidget
             hexpand = false;
             halign = Align.CENTER;
         }
+    }
+
+    /*\
+    * * action entries
+    \*/
+
+    private void install_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (action_entries, this);
+        insert_action_group ("notification", action_group);
+    }
+
+    private const GLib.ActionEntry [] action_entries =
+    {
+        { "hide", hide_notification }
+    };
+
+    private void hide_notification (/* SimpleAction action, Variant? variant */)
+    {
+        set_reveal_child (false);
     }
 }
