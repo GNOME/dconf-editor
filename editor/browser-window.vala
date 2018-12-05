@@ -40,10 +40,10 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         init_night_mode ();
         bind_mouse_config ();
 
-        adaptative_children.append (headerbar);
-        adaptative_children.append (browser_view);
-        adaptative_children.append (notifications_revealer);
-        adaptative_children.append (this);
+        add_adaptative_child (headerbar);
+        add_adaptative_child (browser_view);
+        add_adaptative_child (notifications_revealer);
+        add_adaptative_child (this);
     }
 
     /*\

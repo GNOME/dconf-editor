@@ -123,7 +123,12 @@ private class AdaptativeWindow : ApplicationWindow
     \*/
 
     protected AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
-    protected List<AdaptativeWidget> adaptative_children = new List<AdaptativeWidget> ();
+
+    private List<AdaptativeWidget> adaptative_children = new List<AdaptativeWidget> ();
+    protected void add_adaptative_child (AdaptativeWidget child)
+    {
+        adaptative_children.append (child);
+    }
 
     private void update_adaptative_children (ref int width, ref int height)
     {

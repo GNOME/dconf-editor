@@ -318,7 +318,7 @@ private class DConfWindow : BrowserWindow
         revealer = new ModificationsRevealer ();
         revealer.visible = true;
         main_grid.add (revealer);
-        adaptative_children.append (revealer);
+        add_adaptative_child (revealer);
     }
 
     /*\
