@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-headerbar.ui")]
-private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
+private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
 {
     [GtkChild] private MenuButton   info_button;
     [GtkChild] private PathWidget   path_widget;
@@ -433,10 +433,6 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     * * hamburger menu
     \*/
 
-    internal bool night_time            { private get; internal set; default = false; }    // no need to use NightTime here (that allows an "Unknown" value)
-    internal bool dark_theme            { private get; internal set; default = false; }
-    internal bool automatic_night_mode  { private get; internal set; default = false; }
-
     private inline void hide_hamburger_menu ()
     {
         if (info_button.active)
@@ -451,7 +447,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
             info_button.active = !info_button.active;
     }
 
-    internal void update_hamburger_menu ()
+    protected override void update_hamburger_menu ()
     {
         GLib.Menu menu = new GLib.Menu ();
 
@@ -468,7 +464,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         if (!in_window_bookmarks)
             append_or_not_delay_mode_section (delay_mode, current_type == ViewType.FOLDER, current_path, ref menu);
 
-        append_app_actions_section (night_time, dark_theme, automatic_night_mode, disable_popovers, ref menu);
+        append_app_actions_section (ref menu);
 
         menu.freeze ();
         info_button.set_menu_model ((MenuModel) menu);
@@ -511,33 +507,19 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         menu.append_section (null, section);
     }
 
-    private static void append_app_actions_section (bool night_time, bool dark_theme, bool auto_night, bool disable_popovers, ref GLib.Menu menu)
+    private void append_app_actions_section (ref GLib.Menu menu)
     {
         GLib.Menu section = new GLib.Menu ();
-        append_or_not_night_mode_entry (night_time, dark_theme, auto_night, ref section);
-        if (!disable_popovers)    // TODO else...
-            section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        section.append (_("About Dconf Editor"), "browser.about");
+        append_or_not_night_mode_entry (ref section);
+        _append_app_actions_section (!disable_popovers, ref section);
         section.freeze ();
         menu.append_section (null, section);
     }
-
-    private static void append_or_not_night_mode_entry (bool night_time, bool dark_theme, bool auto_night, ref GLib.Menu section)
+    private static void _append_app_actions_section (bool has_keyboard_shortcuts, ref GLib.Menu section)
     {
-        if (!night_time)
-            return;
-
-        if (dark_theme)
-            /* Translators: there are three related actions: "use", "reuse" and "pause" */
-            section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
-
-        else if (auto_night)
-            /* Translators: there are three related actions: "use", "reuse" and "pause" */
-            section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
-
-        else
-            /* Translators: there are three related actions: "use", "reuse" and "pause" */
-            section.append (_("Use night mode"), "app.set-use-night-mode(true)");
+        if (has_keyboard_shortcuts)    // FIXME is used also for hiding keyboard shortcuts in small window
+            section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
+        section.append (_("About Dconf Editor"), "browser.about");
     }
 
     /*\

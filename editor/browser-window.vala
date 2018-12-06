@@ -28,16 +28,24 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     protected string    saved_view      = "/";
     protected string    saved_selection = "";
 
-    [GtkChild] protected BrowserHeaderBar headerbar;
-    [GtkChild] protected BrowserView      browser_view;
-    [GtkChild] protected Grid             main_grid;
+    [GtkChild] protected Grid main_grid;
+               protected BrowserHeaderBar headerbar;
+               protected BrowserView      browser_view;
 
     construct
     {
+        headerbar = (BrowserHeaderBar) adaptative_headerbar;
+        headerbar.search_changed.connect (search_changed_cb);
+        headerbar.search_stopped.connect (search_stopped_cb);
+
+        browser_view = new BrowserView ();
+        browser_view.vexpand = true;
+        browser_view.visible = true;
+        main_grid.add (browser_view);
+
         install_browser_action_entries ();
         install_key_action_entries ();
 
-        init_night_mode ();
         bind_mouse_config ();
 
         add_adaptative_child (headerbar);
@@ -344,13 +352,11 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     * * search callbacks
     \*/
 
-    [GtkCallback]
     private void search_changed_cb ()
     {
         request_search (reload_search_next);
     }
 
-    [GtkCallback]
     private void search_stopped_cb ()
     {
         browser_view.row_grab_focus ();
@@ -873,42 +879,6 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
             return true;
         }
         return false;
-    }
-
-    /*\
-    * * night mode
-    \*/
-
-    // for construct only
-    public bool initial_night_time           { private get; protected construct; }
-    public bool initial_dark_theme           { private get; protected construct; }
-    public bool initial_automatic_night_mode { private get; protected construct; }
-
-    private void init_night_mode ()
-    {
-        headerbar.night_time           = initial_night_time;
-        headerbar.dark_theme           = initial_dark_theme;
-        headerbar.automatic_night_mode = initial_automatic_night_mode;
-        // menu is already updated three times at startup, let's not add one
-    }
-
-    // for updates
-    internal void night_time_changed (Object nlm, ParamSpec thing)
-    {
-        headerbar.night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
-        headerbar.update_hamburger_menu ();
-    }
-
-    internal void dark_theme_changed (Object nlm, ParamSpec thing)
-    {
-        headerbar.dark_theme = ((NightLightMonitor) nlm).dark_theme;
-        headerbar.update_hamburger_menu ();
-    }
-
-    internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
-    {
-        headerbar.automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
-        // update menu not needed
     }
 
     /*\

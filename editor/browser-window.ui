@@ -8,13 +8,6 @@
     <signal name="key-press-event" handler="on_key_press_event"/>
     <signal name="button-press-event" handler="on_button_press_event"/>
     <signal name="destroy" handler="on_destroy"/>
-    <child type="titlebar">
-      <object class="BrowserHeaderBar" id="headerbar">
-        <property name="visible">True</property>
-        <signal name="search-changed" handler="search_changed_cb"/>
-        <signal name="search-stopped" handler="search_stopped_cb"/>
-      </object>
-    </child>
     <child>
       <object class="GtkOverlay">
         <property name="visible">True</property>
@@ -22,12 +15,6 @@
           <object class="GtkGrid" id="main_grid">
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
-            <child>
-              <object class="BrowserView" id="browser_view">
-                <property name="visible">True</property>
-                <property name="vexpand">True</property>
-              </object>
-            </child>
           </object>
         </child>
         <child type="overlay">

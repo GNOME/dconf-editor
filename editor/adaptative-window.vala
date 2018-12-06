@@ -68,14 +68,83 @@ private interface AdaptativeWidget : Object
     internal abstract void set_window_size (WindowSize new_size);
 }
 
-private class AdaptativeWindow : ApplicationWindow
+private abstract class AdaptativeHeaderBar : HeaderBar
 {
+    /*\
+    * * manage night mode
+    \*/
+
+    private bool night_time = false;   // no need to use NightTime here (that allows an "Unknown" value)
+    internal void set_night_time (bool _night_time)
+    {
+        night_time = _night_time;
+        update_hamburger_menu ();
+    }
+    private bool dark_theme = false;
+    internal void set_dark_theme (bool _dark_theme)
+    {
+        dark_theme = _dark_theme;
+        update_hamburger_menu ();
+    }
+    private bool automatic_night_mode = false;
+    internal void set_automatic_night_mode (bool _automatic_night_mode)
+    {
+        automatic_night_mode = _automatic_night_mode;
+        // menu update not needed
+    }
+
+    internal void init_night_mode (bool _night_time, bool _dark_theme, bool _automatic_night_mode)
+    {
+        night_time           = _night_time;
+        dark_theme           = _dark_theme;
+        automatic_night_mode = _automatic_night_mode;
+        // menu is already updated three times at startup, let's not add one
+    }
+
+    /*\
+    * * hamburger menu
+    \*/
+
+    protected abstract void update_hamburger_menu ();
+
+    protected void append_or_not_night_mode_entry (ref GLib.Menu section)
+    {
+        _append_or_not_night_mode_entry (night_time, dark_theme, automatic_night_mode, ref section);
+    }
+    private static void _append_or_not_night_mode_entry (bool night_time, bool dark_theme, bool auto_night, ref GLib.Menu section)
+    {
+        if (!night_time)
+            return;
+
+        if (dark_theme)
+            /* Translators: there are three related actions: "use", "reuse" and "pause" */
+            section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
+
+        else if (auto_night)
+            /* Translators: there are three related actions: "use", "reuse" and "pause" */
+            section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
+
+        else
+            /* Translators: there are three related actions: "use", "reuse" and "pause" */
+            section.append (_("Use night mode"), "app.set-use-night-mode(true)");
+    }
+}
+
+private abstract class AdaptativeWindow : ApplicationWindow
+{
+    public AdaptativeHeaderBar adaptative_headerbar { protected get; protected construct; }
+
     private StyleContext context;
 
     construct
     {
         context = get_style_context ();
         context.add_class ("startup");
+
+        adaptative_headerbar.show ();
+        set_titlebar (adaptative_headerbar);
+
+        init_night_mode ();
 
         manage_high_contrast ();
 
@@ -270,5 +339,35 @@ private class AdaptativeWindow : ApplicationWindow
             context.add_class ("hc-theme");
         else
             context.remove_class ("hc-theme");
+    }
+
+    /*\
+    * * manage night mode
+    \*/
+
+    // for construct only
+    public bool initial_night_time           { private get; protected construct; }
+    public bool initial_dark_theme           { private get; protected construct; }
+    public bool initial_automatic_night_mode { private get; protected construct; }
+
+    private void init_night_mode ()
+    {
+        adaptative_headerbar.init_night_mode (initial_night_time, initial_dark_theme, initial_automatic_night_mode);
+    }
+
+    // for updates
+    internal void night_time_changed (Object nlm, ParamSpec thing)
+    {
+        adaptative_headerbar.set_night_time (NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time));
+    }
+
+    internal void dark_theme_changed (Object nlm, ParamSpec thing)
+    {
+        adaptative_headerbar.set_dark_theme (((NightLightMonitor) nlm).dark_theme);
+    }
+
+    internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
+    {
+        adaptative_headerbar.set_automatic_night_mode (((NightLightMonitor) nlm).automatic_night_mode);
     }
 }
