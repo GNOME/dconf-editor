@@ -497,6 +497,11 @@ private class DConfWindow : BrowserWindow
 
     private void show_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
     {
+        if (browser_view.in_window_modifications == true)
+            hide_in_window_modifications ();
+        else if (in_window_about)
+            hide_in_window_about ();
+
         headerbar.show_in_window_bookmarks ();
         string [] bookmarks = headerbar.get_bookmarks ();
         browser_view.show_in_window_bookmarks (bookmarks);
@@ -514,6 +519,11 @@ private class DConfWindow : BrowserWindow
 
     private void show_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
     {
+        if (browser_view.in_window_bookmarks == true)
+            hide_in_window_bookmarks ();
+        else if (in_window_about)
+            hide_in_window_about ();
+
         headerbar.show_in_window_modifications ();
         browser_view.show_in_window_modifications ();
     }

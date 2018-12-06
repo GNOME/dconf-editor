@@ -745,6 +745,8 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     private inline void show_in_window_about ()
         requires (in_window_about == false)
     {
+        close_in_window_panels ();
+
         in_window_about = true;
         headerbar.show_in_window_about ();
         browser_view.show_in_window_about ();

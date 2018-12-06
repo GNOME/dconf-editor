@@ -79,28 +79,16 @@
               </object>
             </child>
             <child>
-              <object class="GtkStack" id="bookmarks_stack">
+              <object class="GtkLabel" id="title_label">
                 <property name="visible">True</property>
-                <property name="hhomogeneous">False</property>
-                <child>
-                  <object class="GtkLabel" id="bookmarks_label">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Bookmarks</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="BookmarksController" id="bookmarks_controller">
-                    <property name="visible">True</property>
-                    <property name="hexpand">False</property>
-                    <property name="show-rows-size-button">False</property>
-                    <property name="controller-action-prefix">bmk</property>
-                  </object>
-                </child>
               </object>
             </child>
             <child>
-              <object class="GtkLabel" id="title_label">
+              <object class="BookmarksController" id="bookmarks_controller">
                 <property name="visible">True</property>
+                <property name="hexpand">True</property>
+                <property name="show-rows-size-button">False</property>
+                <property name="controller-action-prefix">bmk</property>
               </object>
             </child>
           </object>

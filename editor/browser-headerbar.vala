@@ -215,7 +215,6 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
         info_button.hide ();
         go_back_button.set_action_name ("browser.hide-in-window-about");
         go_back_button.show ();
-        bookmarks_stack.hexpand = false;    // hack 1/7
         title_label.set_label (_("About"));
         title_stack.set_visible_child (title_label);
     }
@@ -224,9 +223,8 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
         requires (in_window_about == true)
     {
         go_back_button.hide ();
-        bookmarks_stack.hexpand = false;    // hack 2/7
-        title_stack.set_visible_child (path_widget);
         in_window_about = false;
+        title_stack.set_visible_child (path_widget);
         if (disable_action_bar)
             ltr_right_separator.show ();
         info_button.show ();
@@ -317,7 +315,6 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
         modifications_actions_button.show ();
         go_back_button.set_action_name ("ui.hide-in-window-modifications");
         go_back_button.show ();
-        bookmarks_stack.hexpand = false;    // hack 3/7
         title_label.set_label (_("Pending"));
         title_stack.set_visible_child (title_label);
     }
@@ -334,9 +331,8 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
         }
         if (!disable_popovers)
             bookmarks_button.show ();
-        bookmarks_stack.hexpand = false;    // hack 4/7
-        title_stack.set_visible_child (path_widget);
         in_window_modifications = false;
+        title_stack.set_visible_child (path_widget);
         info_button.show ();
         if (path_widget.search_mode_enabled)
             path_widget.entry_grab_focus_without_selecting ();
@@ -354,8 +350,6 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
     * * in-window bookmarks
     \*/
 
-    [GtkChild] private Stack                bookmarks_stack;
-    [GtkChild] private Label                bookmarks_label;
     [GtkChild] private BookmarksController  bookmarks_controller;
 
     bool in_window_bookmarks = false;
@@ -371,9 +365,8 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
         update_modifications_button ();
         info_button.hide ();
         ltr_left_separator.hide ();
-        bookmarks_stack.hexpand = false;    // hack 5/7
-        title_stack.set_visible_child (bookmarks_stack);
-        bookmarks_stack.set_visible_child (bookmarks_label);
+        title_label.set_label (_("Bookmarks"));
+        title_stack.set_visible_child (title_label);
         go_back_button.set_action_name ("ui.hide-in-window-bookmarks");
         go_back_button.show ();
     }
@@ -384,10 +377,8 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
         go_back_button.hide ();
         ltr_left_separator.hide ();
         in_window_bookmarks = false;
-        update_modifications_button ();
-        bookmarks_stack.hexpand = false;    // hack 6/7
         title_stack.set_visible_child (path_widget);
-        bookmarks_stack.set_visible_child (bookmarks_label);
+        update_modifications_button ();
         info_button.show ();
         update_hamburger_menu ();
         if (path_widget.search_mode_enabled)
@@ -397,9 +388,8 @@ private class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
     internal void edit_in_window_bookmarks ()
         requires (in_window_bookmarks == true)
     {
-        bookmarks_stack.hexpand = true;     // hack 7/7
         ltr_left_separator.show ();
-        bookmarks_stack.set_visible_child (bookmarks_controller);
+        title_stack.set_visible_child (bookmarks_controller);
     }
 
     /*\
