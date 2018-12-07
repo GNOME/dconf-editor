@@ -904,6 +904,7 @@ private class DConfWindow : BrowserWindow
 
     protected override void close_in_window_panels ()
     {
+        hide_notification ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
         if (browser_view.in_window_bookmarks)

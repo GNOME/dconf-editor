@@ -343,6 +343,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     // action
     protected virtual void close_in_window_panels ()
     {
+        hide_notification ();
         headerbar.close_popovers ();
         if (in_window_about)
             hide_in_window_about ();
@@ -892,5 +893,10 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     protected void show_notification (string notification)
     {
         notifications_revealer.show_notification (notification);
+    }
+
+    protected void hide_notification ()
+    {
+        notifications_revealer.hide_notification ();
     }
 }

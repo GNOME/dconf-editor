@@ -73,7 +73,7 @@ private class NotificationsRevealer : Revealer, AdaptativeWidget
         { "hide", hide_notification }
     };
 
-    private void hide_notification (/* SimpleAction action, Variant? variant */)
+    internal void hide_notification (/* SimpleAction action, Variant? variant */)
     {
         set_reveal_child (false);
     }
