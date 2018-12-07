@@ -21,7 +21,6 @@ using Gtk;
 private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 {
     [GtkChild] protected ListBox key_list_box;
-    [GtkChild] protected RegistryPlaceholder placeholder;
     [GtkChild] private ScrolledWindow scrolled;
     private Adjustment adjustment;
 
@@ -35,8 +34,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     internal ModificationsHandler modifications_handler { protected get; set; }
 
+    [GtkChild] private RegistryPlaceholder placeholder;
+    public abstract string placeholder_label { protected get; }
+
     construct
     {
+        placeholder.label = placeholder_label;
         register_size_allocate ();
 
         adjustment = key_list_box.get_adjustment ();

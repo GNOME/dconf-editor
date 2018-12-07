@@ -19,10 +19,11 @@ using Gtk;
 
 private class RegistryView : RegistryList
 {
+    public override string placeholder_label { protected get { return _("No keys in this path"); }}
+
     construct
     {
         search_mode = false;
-        placeholder.label = _("No keys in this path");
         key_list_box.set_header_func (update_row_header);
     }
 

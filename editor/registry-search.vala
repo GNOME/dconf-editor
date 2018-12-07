@@ -22,10 +22,11 @@ private class RegistrySearch : RegistryList
     private string [] bookmarks;
     private SortingOptions sorting_options;
 
+    public override string placeholder_label { protected get { return _("No matches"); }}
+
     construct
     {
         search_mode = true;
-        placeholder.label = _("No matches");
         key_list_box.set_header_func (update_row_header);
     }
 
