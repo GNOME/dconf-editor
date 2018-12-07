@@ -28,9 +28,8 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     protected string    saved_view      = "/";
     protected string    saved_selection = "";
 
-    [GtkChild] protected Grid main_grid;
-               private   BrowserHeaderBar headerbar;
-               protected BrowserView      browser_view;
+    private   BrowserHeaderBar headerbar;
+    protected BrowserView      browser_view;
 
     construct
     {
@@ -41,7 +40,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         browser_view = new BrowserView ();
         browser_view.vexpand = true;
         browser_view.visible = true;
-        main_grid.add (browser_view);
+        add_to_main_grid (browser_view);
 
         install_browser_action_entries ();
         install_key_action_entries ();
@@ -52,6 +51,17 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         add_adaptative_child (browser_view);
         add_adaptative_child (notifications_revealer);
         add_adaptative_child (this);
+    }
+
+    /*\
+    * * main grid
+    \*/
+
+    [GtkChild] private Grid main_grid;
+
+    protected void add_to_main_grid (Widget widget)
+    {
+        main_grid.add (widget);
     }
 
     /*\
