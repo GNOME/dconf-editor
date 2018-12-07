@@ -21,7 +21,7 @@ using Gtk;
 private class ModificationsRevealer : Revealer, AdaptativeWidget
 {
     private ModificationsHandler _modifications_handler;
-    internal ModificationsHandler modifications_handler
+    [CCode (notify = false)] internal ModificationsHandler modifications_handler
     {
         private get { return _modifications_handler; }
         set

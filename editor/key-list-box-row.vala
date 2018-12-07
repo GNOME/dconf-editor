@@ -75,10 +75,10 @@ private class ListBoxRowHeader : Grid
 
 private abstract class ClickableListBoxRow : EventBox
 {
-    public bool search_result_mode  { internal get; protected construct; default = false; }
+    [CCode (notify = false)] public bool search_result_mode  { internal get; protected construct; default = false; }
 
-    public string full_name         { internal get; protected construct; }
-    public uint16 context_id        { internal get; protected construct; }
+    [CCode (notify = false)] public string full_name         { internal get; protected construct; }
+    [CCode (notify = false)] public uint16 context_id        { internal get; protected construct; }
 
     /*\
     * * right click popover stuff
@@ -123,7 +123,7 @@ private class FolderListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private Label folder_name_label;
 
-    public bool path_search { internal get; internal construct; }
+    [CCode (notify = false)] public bool path_search { internal get; internal construct; }
 
     internal FolderListBoxRow (string label, string path, bool path_search, bool search_result_mode)
     {
@@ -166,12 +166,12 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
     [GtkChild] private Label key_info_label;
     private Switch? boolean_switch = null;
 
-    public string key_name    { internal get; internal construct; }
-    public string type_string { internal get; internal construct; }
-    public bool has_schema    { internal get; internal construct; }
+    [CCode (notify = false)] public string key_name    { internal get; internal construct; }
+    [CCode (notify = false)] public string type_string { internal get; internal construct; }
+    [CCode (notify = false)] public bool has_schema    { internal get; internal construct; }
 
     private bool _delay_mode = false;
-    internal bool delay_mode
+    [CCode (notify = false)] internal bool delay_mode
     {
         private get
         {
@@ -185,7 +185,7 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
         }
     }
 
-    internal bool small_keys_list_rows
+    [CCode (notify = false)] internal bool small_keys_list_rows
     {
         set
         {

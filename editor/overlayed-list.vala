@@ -47,7 +47,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     [GtkChild] private ModelButton enter_edit_mode_button;
     [GtkChild] private ModelButton leave_edit_mode_button;
-    public string edit_mode_action_prefix
+    [CCode (notify = false)] public string edit_mode_action_prefix
     {
         construct
         {
@@ -56,10 +56,10 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
             leave_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(false)");
         }
     }
-    public string first_mode_name   { protected set { leave_edit_mode_button.text = value; }}
-    public string second_mode_name  { protected set { enter_edit_mode_button.text = value; }}
+    [CCode (notify = false)] public string first_mode_name   { protected set { leave_edit_mode_button.text = value; }}
+    [CCode (notify = false)] public string second_mode_name  { protected set { enter_edit_mode_button.text = value; }}
 
-    public bool needs_shadows
+    [CCode (notify = false)] public bool needs_shadows
     {
         construct
         {
@@ -72,7 +72,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     protected string placeholder_icon;
     protected string placeholder_text;
-    public bool big_placeholder { private get; internal construct; }
+    [CCode (notify = false)] public bool big_placeholder { private get; internal construct; }
     protected void add_placeholder ()
     {
         RegistryPlaceholder placeholder = new RegistryPlaceholder (placeholder_icon, placeholder_text, big_placeholder);
@@ -328,7 +328,7 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
     protected ulong content_changed_handler = 0;
 
-    protected uint n_items { protected get; private set; default = 0; }
+    [CCode (notify = false)] protected uint n_items { protected get; private set; default = 0; }
     private bool is_editable = false;
 
     protected void change_editability (bool new_value)

@@ -18,14 +18,14 @@
 private abstract class SettingsModelCore : Object
 {
     private SourceManager source_manager = new SourceManager ();
-    internal bool refresh_source { get; set; default = true; }
+    [CCode (notify = false)] internal bool refresh_source { private get; internal set; default = true; }
 
     private DConf.Client client = new DConf.Client ();
     private string? last_change_tag = null;
     protected bool copy_action = false;
     private bool gsettings_change = false;
 
-    internal bool use_shortpaths { private get; set; default = false; }
+    [CCode (notify = false)] internal bool use_shortpaths { private get; internal set; default = false; }
 
     internal signal void paths_changed (GenericSet<string> modified_path_specs, bool internal_changes);
     private bool paths_has_changed = false;

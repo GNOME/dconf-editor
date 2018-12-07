@@ -27,8 +27,8 @@ private class PathEntry : Box, AdaptativeWidget
 
     private string current_path = "";
 
-    internal string text { get { return search_entry.text; }}
-    internal bool entry_has_focus { get { return search_entry.has_focus; }}
+    [CCode (notify = false)] internal string text { get { return search_entry.text; }}
+    [CCode (notify = false)] internal bool entry_has_focus { get { return search_entry.has_focus; }}
 
     private ulong can_reload_handler = 0;
     private bool thin_window = false;

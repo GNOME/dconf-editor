@@ -27,6 +27,25 @@ private interface KeyEditorChild : Widget
     internal abstract void reload (Variant gvariant);
 
     protected const string out_of_range_text = _("Given value is out of range.");
+
+    /*\
+    * * for entries and textviews
+    \*/
+
+    protected static void set_lock_on (Object buffer, ulong deleted_text_handler, ulong inserted_text_handler)
+        requires (deleted_text_handler != 0)
+        requires (inserted_text_handler != 0)
+    {
+        SignalHandler.block (buffer, deleted_text_handler);
+        SignalHandler.block (buffer, inserted_text_handler);
+    }
+    protected static void set_lock_off (Object buffer, ulong deleted_text_handler, ulong inserted_text_handler)
+        requires (deleted_text_handler != 0)
+        requires (inserted_text_handler != 0)
+    {
+        SignalHandler.unblock (buffer, deleted_text_handler);
+        SignalHandler.unblock (buffer, inserted_text_handler);
+    }
 }
 
 private class KeyEditorChildSingle : Label, KeyEditorChild
@@ -307,28 +326,13 @@ private abstract class KeyEditorChildNumberCustom : Entry, KeyEditorChild
         return variant;
     }
 
-    private void set_lock (bool state)
-        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
-    {
-        if (state)
-        {
-            SignalHandler.block (buffer, deleted_text_handler);
-            SignalHandler.block (buffer, inserted_text_handler);
-        }
-        else
-        {
-            SignalHandler.unblock (buffer, deleted_text_handler);
-            SignalHandler.unblock (buffer, inserted_text_handler);
-        }
-    }
-
     internal void reload (Variant gvariant)
     {
-        set_lock (true);
+        KeyEditorChild.set_lock_on (buffer, deleted_text_handler, inserted_text_handler);
         this.text = gvariant.print (false);
         if (!test_value ())
             assert_not_reached ();
-        set_lock (false);
+        KeyEditorChild.set_lock_off (buffer, deleted_text_handler, inserted_text_handler);
     }
 
     protected abstract bool test_value ();
@@ -658,26 +662,11 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         return variant;
     }
 
-    private void set_lock (bool state)
-        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
-    {
-        if (state)
-        {
-            SignalHandler.block (buffer, deleted_text_handler);
-            SignalHandler.block (buffer, inserted_text_handler);
-        }
-        else
-        {
-            SignalHandler.unblock (buffer, deleted_text_handler);
-            SignalHandler.unblock (buffer, inserted_text_handler);
-        }
-    }
-
     internal void reload (Variant gvariant)       // TODO "key_editor_child_number_int_real_reload: assertion 'gvariant != NULL' failed" two times when ghosting a key
     {
-        set_lock (true);
+        KeyEditorChild.set_lock_on (buffer, deleted_text_handler, inserted_text_handler);
         this.set_value (get_variant_as_double (gvariant));
-        set_lock (false);
+        KeyEditorChild.set_lock_off (buffer, deleted_text_handler, inserted_text_handler);
     }
 
     private bool value_has_error = false;
@@ -864,28 +853,13 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         return variant;
     }
 
-    private void set_lock (bool state)
-        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
-    {
-        if (state)
-        {
-            SignalHandler.block (text_view.buffer, deleted_text_handler);
-            SignalHandler.block (text_view.buffer, inserted_text_handler);
-        }
-        else
-        {
-            SignalHandler.unblock (text_view.buffer, deleted_text_handler);
-            SignalHandler.unblock (text_view.buffer, inserted_text_handler);
-        }
-    }
-
     internal void reload (Variant gvariant)
     {
-        set_lock (true);
+        KeyEditorChild.set_lock_on (text_view.buffer, deleted_text_handler, inserted_text_handler);
         text_view.buffer.text = gvariant.print (false);
         if (!test_value ())
             assert_not_reached ();
-        set_lock (false);
+        KeyEditorChild.set_lock_off (text_view.buffer, deleted_text_handler, inserted_text_handler);
     }
 }
 
@@ -965,27 +939,12 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         return variant;
     }
 
-    private void set_lock (bool state)
-        requires (deleted_text_handler != 0 && inserted_text_handler != 0)
-    {
-        if (state)
-        {
-            SignalHandler.block (buffer, deleted_text_handler);
-            SignalHandler.block (buffer, inserted_text_handler);
-        }
-        else
-        {
-            SignalHandler.unblock (buffer, deleted_text_handler);
-            SignalHandler.unblock (buffer, inserted_text_handler);
-        }
-    }
-
     internal void reload (Variant gvariant)
     {
-        set_lock (true);
+        KeyEditorChild.set_lock_on (buffer, deleted_text_handler, inserted_text_handler);
         this.text = is_string ? gvariant.get_string () : gvariant.print (false);
         if (!test_value ())
             assert_not_reached ();
-        set_lock (false);
+        KeyEditorChild.set_lock_off (buffer, deleted_text_handler, inserted_text_handler);
     }
 }

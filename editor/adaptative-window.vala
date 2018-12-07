@@ -132,7 +132,7 @@ private abstract class AdaptativeHeaderBar : HeaderBar
 
 private abstract class AdaptativeWindow : ApplicationWindow
 {
-    public AdaptativeHeaderBar adaptative_headerbar { protected get; protected construct; }
+    [CCode (notify = false)] public AdaptativeHeaderBar adaptative_headerbar { protected get; protected construct; }
 
     private StyleContext context;
 
@@ -346,9 +346,9 @@ private abstract class AdaptativeWindow : ApplicationWindow
     \*/
 
     // for construct only
-    public bool initial_night_time           { private get; protected construct; }
-    public bool initial_dark_theme           { private get; protected construct; }
-    public bool initial_automatic_night_mode { private get; protected construct; }
+    [CCode (notify = false)] public bool initial_night_time           { private get; protected construct; }
+    [CCode (notify = false)] public bool initial_dark_theme           { private get; protected construct; }
+    [CCode (notify = false)] public bool initial_automatic_night_mode { private get; protected construct; }
 
     private void init_night_mode ()
     {

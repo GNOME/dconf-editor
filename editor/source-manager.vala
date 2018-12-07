@@ -17,7 +17,7 @@
 
 private class SourceManager : Object
 {
-    internal SchemaPathTree cached_schemas { get; private set; default = new SchemaPathTree ("/"); } // prefix tree for quick lookup and diff'ing on changes
+    [CCode (notify = false)] internal SchemaPathTree cached_schemas { internal get; private set; default = new SchemaPathTree ("/"); } // prefix tree for quick lookup and diff'ing on changes
 
     /*\
     * * Schema source

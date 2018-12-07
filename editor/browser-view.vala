@@ -19,16 +19,16 @@ using Gtk;
 
 private class SimpleSettingObject : Object
 {
-    public bool is_pinned           { internal get; internal construct; }
+    [CCode (notify = false)] public bool is_pinned           { internal get; internal construct; }
 
-    public bool is_config           { internal get; private construct; }
-    public bool is_search           { internal get; internal construct; }
+    [CCode (notify = false)] public bool is_config           { internal get; private construct; }
+    [CCode (notify = false)] public bool is_search           { internal get; internal construct; }
 
-    public uint16 context_id        { internal get; internal construct; }
-    public string name              { internal get; internal construct; }
-    public string full_name         { internal get; internal construct; }
+    [CCode (notify = false)] public uint16 context_id        { internal get; internal construct; }
+    [CCode (notify = false)] public string name              { internal get; internal construct; }
+    [CCode (notify = false)] public string full_name         { internal get; internal construct; }
 
-    public string casefolded_name   { internal get; private construct; }
+    [CCode (notify = false)] public string casefolded_name   { internal get; private construct; }
 
     construct
     {
@@ -51,7 +51,7 @@ private class SimpleSettingObject : Object
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
 private class BrowserView : Stack, AdaptativeWidget
 {
-    internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
+    [CCode (notify = false)] internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
 
     [GtkChild] private BrowserInfoBar info_bar;
     [GtkChild] private BrowserStack current_child;
@@ -72,7 +72,7 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     private ModificationsHandler _modifications_handler;
-    internal ModificationsHandler modifications_handler
+    [CCode (notify = false)] internal ModificationsHandler modifications_handler
     {
         private get { return _modifications_handler; }
         set {
@@ -252,7 +252,7 @@ private class BrowserView : Stack, AdaptativeWidget
     * * modifications
     \*/
 
-    internal bool in_window_modifications           { internal get; private set; default = false; }
+    [CCode (notify = false)] internal bool in_window_modifications           { internal get; private set; default = false; }
 
     private bool modifications_list_created = false;
     private ModificationsList modifications_list;
@@ -309,8 +309,8 @@ private class BrowserView : Stack, AdaptativeWidget
     * * bookmarks
     \*/
 
-    internal bool in_window_bookmarks           { internal get; private set; default = false; }
-    internal bool in_window_bookmarks_edit_mode { internal get; private set; default = false; }
+    [CCode (notify = false)] internal bool in_window_bookmarks           { internal get; private set; default = false; }
+    [CCode (notify = false)] internal bool in_window_bookmarks_edit_mode { internal get; private set; default = false; }
 
     [GtkChild] private BookmarksList bookmarks_list;
     [GtkChild] private Grid          current_child_grid;
@@ -513,7 +513,7 @@ private class BrowserView : Stack, AdaptativeWidget
         current_child.row_grab_focus ();
     }
 
-    internal ViewType current_view { get { return current_child.current_view; }}
+    [CCode (notify = false)] internal ViewType current_view { get { return current_child.current_view; }}
 
     // popovers invalidation and toggles hiding/revealing
     internal void discard_row_popover () { current_child.discard_row_popover (); }
@@ -588,10 +588,10 @@ private class BrowserView : Stack, AdaptativeWidget
 
 private class SortingOptions : Object
 {
-    public SettingsModel model { private get; construct; }
+    [CCode (notify = false)] public SettingsModel model { private get; construct; }
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
-    internal bool case_sensitive { get; set; default = false; }
+    [CCode (notify = true)] internal bool case_sensitive { get; set; default = false; }
 
     construct
     {

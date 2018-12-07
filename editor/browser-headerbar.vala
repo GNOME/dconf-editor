@@ -62,9 +62,9 @@ private abstract class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
     protected virtual void disable_popovers_changed () {}
     protected abstract void update_modifications_button ();
 
-    internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
-    internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
-    internal string text                { get { return path_widget.text; }}
+    [CCode (notify = false)] internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
+    [CCode (notify = false)] internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
+    [CCode (notify = false)] internal string text                { get { return path_widget.text; }}
 
     internal string get_complete_path ()    { return path_widget.get_complete_path (); }
     internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)

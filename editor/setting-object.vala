@@ -17,8 +17,8 @@
 
 private abstract class SettingObject : Object
 {
-    public string name          { internal get; protected construct; }
-    public string full_name     { internal get; protected construct; }
+    [CCode (notify = false)] public string name          { internal get; protected construct; }
+    [CCode (notify = false)] public string full_name     { internal get; protected construct; }
 }
 
 private class Directory : SettingObject
@@ -31,10 +31,10 @@ private class Directory : SettingObject
 
 private abstract class Key : SettingObject
 {
-    internal string type_string { get; protected set; default = "*"; }
+    [CCode (notify = false)] internal string type_string { get; protected set; default = "*"; }
 
-    internal uint key_hash { internal get; private set; default = 0; }
-    internal Variant? all_fixed_properties { internal get; private set; default = null; }
+    [CCode (notify = false)] internal uint key_hash { internal get; private set; default = 0; }
+    [CCode (notify = false)] internal Variant? all_fixed_properties { internal get; private set; default = null; }
     internal static void generate_key_fixed_properties (Key key)
         requires (key.key_hash == 0)
         requires (key.all_fixed_properties == null)
@@ -277,17 +277,17 @@ private class GSettingsKey : Key
 {
     internal KeyConflict key_conflict = KeyConflict.NONE;
 
-    public string? schema_path      { private get; internal construct; }
-    public string summary           { private get; internal construct; }
-    public string description       { private get; internal construct; }
-    public string schema_id        { internal get; internal construct; }
-    public Variant default_value   { internal get; internal construct; }
-    public RangeType range_type    { internal get; internal construct; }
-    public Variant range_content   { internal get; internal construct; }
+    [CCode (notify = false)] public string? schema_path      { private get; internal construct; }
+    [CCode (notify = false)] public string summary           { private get; internal construct; }
+    [CCode (notify = false)] public string description       { private get; internal construct; }
+    [CCode (notify = false)] public string schema_id        { internal get; internal construct; }
+    [CCode (notify = false)] public Variant default_value   { internal get; internal construct; }
+    [CCode (notify = false)] public RangeType range_type    { internal get; internal construct; }
+    [CCode (notify = false)] public Variant range_content   { internal get; internal construct; }
 
-    public GLib.Settings settings  { internal get; internal construct; }
+    [CCode (notify = false)] public GLib.Settings settings  { internal get; internal construct; }
 
-    internal string descriptor {
+    [CCode (notify = false)] internal string descriptor {
         owned get {
             string parent_path;
             if (full_name.length < 2)

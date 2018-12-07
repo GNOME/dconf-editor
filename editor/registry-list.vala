@@ -24,7 +24,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
     [GtkChild] private ScrolledWindow scrolled;
     private Adjustment adjustment;
 
-    protected bool search_mode { private get; set; }
+    [CCode (notify = false)] protected bool search_mode { private get; protected set; }
     protected string? current_path_if_search_mode = null;   // TODO only used in search mode
     protected bool search_is_path_search = false;           // TODO only used in search mode
 
@@ -32,10 +32,10 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     private GLib.ListStore rows_possibly_with_popover = new GLib.ListStore (typeof (ClickableListBoxRow));
 
-    internal ModificationsHandler modifications_handler { protected get; set; }
+    [CCode (notify = false)] internal ModificationsHandler modifications_handler { protected get; set; }
 
     [GtkChild] private RegistryPlaceholder placeholder;
-    public abstract string placeholder_label { protected get; }
+    [CCode (notify = false)] public abstract string placeholder_label { protected get; }
 
     construct
     {
@@ -46,7 +46,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
     }
 
     private bool _small_keys_list_rows;
-    internal bool small_keys_list_rows
+    [CCode (notify = false)] internal bool small_keys_list_rows
     {
         set
         {

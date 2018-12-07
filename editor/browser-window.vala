@@ -743,7 +743,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     }
 
     // in-window about
-    protected bool in_window_about { protected get; private set; default = false; }
+    [CCode (notify = false)] protected bool in_window_about { protected get; private set; default = false; }
 
     private void toggle_in_window_about ()
     {
@@ -853,9 +853,9 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     * * mouse callback
     \*/
 
-    protected bool mouse_use_extra_buttons  { private get; protected set; default = true; }
-    protected int  mouse_back_button        { private get; protected set; default = 8; }
-    protected int  mouse_forward_button     { private get; protected set; default = 9; }
+    [CCode (notify = false)] protected bool mouse_use_extra_buttons  { private get; protected set; default = true; }
+    [CCode (notify = false)] protected int  mouse_back_button        { private get; protected set; default = 8; }
+    [CCode (notify = false)] protected int  mouse_forward_button     { private get; protected set; default = 9; }
 
     private void bind_mouse_config ()
     {

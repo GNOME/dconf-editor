@@ -22,7 +22,7 @@ private class RegistrySearch : RegistryList
     private string [] bookmarks;
     private SortingOptions sorting_options;
 
-    public override string placeholder_label { protected get { return _("No matches"); }}
+    [CCode (notify = false)] public override string placeholder_label { protected get { return _("No matches"); }}
 
     construct
     {

@@ -27,8 +27,8 @@ private class DelayedSettingView : OverlayedListRow
     [GtkChild] private Label planned_value_default;
     [GtkChild] private Button cancel_change_button;
 
-    public string full_name     { internal get; internal construct; }
-    public uint16 context_id    { internal get; internal construct; }
+    [CCode (notify = false)] public string full_name     { internal get; internal construct; }
+    [CCode (notify = false)] public uint16 context_id    { internal get; internal construct; }
 
     internal DelayedSettingView (string name, string _full_name, uint16 _context_id, bool has_schema_and_is_default, Variant key_value, string? cool_planned_value, string? cool_default_value)
     {

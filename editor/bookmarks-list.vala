@@ -499,7 +499,7 @@ private class Bookmark : OverlayedListRow
 {
     [GtkChild] private Label bookmark_label;
 
-    public string bookmark_name { internal get; internal construct; }
+    [CCode (notify = false)] public string bookmark_name { internal get; internal construct; }
 
     construct
     {

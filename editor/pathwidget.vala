@@ -65,7 +65,7 @@ private class PathWidget : Box, AdaptativeWidget
     * * search mode
     \*/
 
-    internal bool search_mode_enabled { get; private set; default = false; }
+    [CCode (notify = false)] internal bool search_mode_enabled { internal get; private set; default = false; }
 
     private void enter_search_mode ()
     {
@@ -151,10 +151,10 @@ private class PathWidget : Box, AdaptativeWidget
     }
 
     /* path entry */
-    internal string text                   { get { return searchentry.text; }}
-    internal bool entry_has_focus          { get { return searchentry.entry_has_focus; }}
-    internal void entry_grab_focus ()                   { searchentry.entry_grab_focus (); }
-    internal void entry_grab_focus_without_selecting () { searchentry.entry_grab_focus_without_selecting (); }
+    [CCode (notify = false)] internal string text           { get { return searchentry.text; }}
+    [CCode (notify = false)] internal bool entry_has_focus  { get { return searchentry.entry_has_focus; }}
+    internal void entry_grab_focus ()                       { searchentry.entry_grab_focus (); }
+    internal void entry_grab_focus_without_selecting ()     { searchentry.entry_grab_focus_without_selecting (); }
 
     internal bool handle_event (Gdk.EventKey event)
     {

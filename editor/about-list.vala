@@ -117,7 +117,7 @@ private class AboutList : OverlayedList
 
 private class AboutListItem : OverlayedListRow
 {
-    public string? copy_text { internal get; construct; default = null; }
+    [CCode (notify = false)] public string? copy_text { internal get; construct; default = null; }
 
     internal override string? get_copy_text ()
     {

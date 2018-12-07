@@ -30,21 +30,21 @@ internal enum ModificationsMode {
 
 private class ModificationsHandler : Object
 {
-    internal ModificationsMode mode { get; set; default=ModificationsMode.NONE; }
+    [CCode (notify = false)] internal ModificationsMode mode { internal get; private set; default = ModificationsMode.NONE; }
 
     private HashTable<string, Variant?> keys_awaiting_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
 
     private GenericSet<string> dconf_changes_set = new GenericSet<string> (str_hash, str_equal);
     private HashTable<string, uint16> gsettings_changes_set = new HashTable<string, uint16> (str_hash, str_equal);
-    internal uint dconf_changes_count { get { return dconf_changes_set.length; }}
-    internal uint gsettings_changes_count { get { return gsettings_changes_set.length; }}
+    [CCode (notify = false)] internal uint dconf_changes_count     { internal get { return dconf_changes_set.length; }}
+    [CCode (notify = false)] internal uint gsettings_changes_count { internal get { return gsettings_changes_set.length; }}
 
     public SettingsModel model { internal get; internal construct; }
 
     internal signal void leave_delay_mode ();
     internal signal void delayed_changes_changed ();
 
-    internal Behaviour behaviour { get; set; }
+    [CCode (notify = false)] internal Behaviour behaviour { internal get; internal set; }
 
     internal ModificationsHandler (SettingsModel model)
     {

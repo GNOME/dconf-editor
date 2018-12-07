@@ -19,7 +19,7 @@ using Gtk;
 
 private class RegistryView : RegistryList
 {
-    public override string placeholder_label { protected get { return _("No keys in this path"); }}
+    [CCode (notify = false)] public override string placeholder_label { protected get { return _("No keys in this path"); }}
 
     construct
     {

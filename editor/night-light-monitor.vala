@@ -44,7 +44,7 @@ private class NightLightMonitor : Object
     * * Public interface
     \*/
 
-    public string schema_path { private get; internal construct; }
+    [CCode (notify = false)] public string schema_path { private get; internal construct; }
 
     public enum NightTime {
         UNKNOWN,
@@ -56,9 +56,9 @@ private class NightLightMonitor : Object
             return state == NightTime.NIGHT;
         }
     }
-    public NightTime  night_time            { internal get; private construct set; default = NightTime.UNKNOWN; }
-    public bool       dark_theme            { internal get; private construct set; default = false; }
-    public bool       automatic_night_mode  { internal get; private construct set; default = false; }
+    [CCode (notify = true)] public NightTime  night_time            { internal get; private construct set; default = NightTime.UNKNOWN; }
+    [CCode (notify = true)] public bool       dark_theme            { internal get; private construct set; default = false; }
+    [CCode (notify = true)] public bool       automatic_night_mode  { internal get; private construct set; default = false; }
 
     internal NightLightMonitor (string _schema_path)
     {

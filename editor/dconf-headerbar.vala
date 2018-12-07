@@ -22,7 +22,7 @@ private class DConfHeaderBar : BrowserHeaderBar
     private Bookmarks bookmarks_button;
 
     private bool _delay_mode = false;
-    internal bool delay_mode
+    [CCode (notify = false)] internal bool delay_mode
     {
         private  get { return _delay_mode; }
         internal set

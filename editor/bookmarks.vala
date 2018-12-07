@@ -45,7 +45,7 @@ private class Bookmarks : MenuButton
 
     private string schema_id = "ca.desrt.dconf-editor.Bookmarks";   // TODO move in a library
     GLib.Settings settings;
-    public string schema_path
+    [CCode (notify = false)] public string schema_path
     {
         construct
         {

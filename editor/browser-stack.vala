@@ -25,7 +25,7 @@ private class BrowserStack : Grid, AdaptativeWidget
     [GtkChild] private RegistryInfo object_view;
     [GtkChild] private RegistrySearch search_view;
 
-    internal ViewType current_view { get; private set; default = ViewType.FOLDER; }
+    [CCode (notify = false)] internal ViewType current_view { get; private set; default = ViewType.FOLDER; }
 
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
@@ -33,7 +33,7 @@ private class BrowserStack : Grid, AdaptativeWidget
         search_view.set_window_size (new_size);
     }
 
-    internal ModificationsHandler modifications_handler
+    [CCode (notify = false)] internal ModificationsHandler modifications_handler
     {
         set
         {

@@ -331,11 +331,11 @@ private class InvisibleButton : Button
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/large-pathbar-item.ui")]
 private class LargePathbarItem : Button
 {
-    public bool is_active { internal get; internal set; default = false; }
+    [CCode (notify = false)] public bool is_active { internal get; internal set; default = false; }
 
-    public string alternative_action { internal get; internal construct; }
-    public string default_action     { internal get; internal construct; }
-    public string text_string        { internal get; internal construct; }
+    [CCode (notify = false)] public string alternative_action { internal get; internal construct; }
+    [CCode (notify = false)] public string default_action     { internal get; internal construct; }
+    [CCode (notify = false)] public string text_string        { internal get; internal construct; }
  
     [GtkChild] private Label text_label;
     private Popover? popover = null;

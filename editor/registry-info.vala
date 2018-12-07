@@ -32,11 +32,11 @@ private class RegistryInfo : Grid, BrowsableView
 
     private Label current_value_label;
 
-    internal ModificationsHandler modifications_handler { private get; set; }
+    [CCode (notify = false)] internal ModificationsHandler modifications_handler { private get; set; }
 
     private uint current_key_info_hash = 0;
-    internal string full_name   { get; private set; default = ""; }
-    internal uint16 context_id  { get; private set; default = ModelUtils.undefined_context_id; }
+    [CCode (notify = false)] internal string full_name   { get; private set; default = ""; }
+    [CCode (notify = false)] internal uint16 context_id  { get; private set; default = ModelUtils.undefined_context_id; }
 
     /*\
     * * Cleaning
