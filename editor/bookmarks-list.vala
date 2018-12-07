@@ -547,20 +547,20 @@ private class Bookmark : OverlayedListRow
         {
             case ViewType.SEARCH:
                 Variant variant = new Variant.string (bookmark_text);
-                detailed_action_name = "ui.open-search(" + variant.print (false) + ")";
-                inactive_action_name = "ui.empty('')";
+                detailed_action_name = "browser.open-search(" + variant.print (false) + ")";
+                inactive_action_name = "browser.empty('')";
                 return;
 
             case ViewType.FOLDER:
                 Variant variant = new Variant.string (bookmark_text);
-                detailed_action_name = "ui.open-folder(" + variant.print (false) + ")";
-                inactive_action_name = "ui.empty('')";
+                detailed_action_name = "browser.open-folder(" + variant.print (false) + ")";
+                inactive_action_name = "browser.empty('')";
                 return;
 
             case ViewType.OBJECT:
                 Variant variant = new Variant ("(sq)", bookmark_text, ModelUtils.undefined_context_id);  // TODO save context
-                detailed_action_name = "ui.open-object(" + variant.print (true) + ")";
-                inactive_action_name = "ui.empty(('',uint16 65535))";
+                detailed_action_name = "browser.open-object(" + variant.print (true) + ")";
+                inactive_action_name = "browser.empty(('',uint16 65535))";
                 return;
 
             case ViewType.CONFIG:

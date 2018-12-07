@@ -28,6 +28,16 @@ private class LargePathbar : Box, Pathbar
     {
         return complete_path;
     }
+    private string fallback_path = "";
+    internal void get_fallback_path_and_complete_path (out string _fallback_path, out string _complete_path)
+    {
+        if (fallback_path != "" && ModelUtils.is_folder_path (fallback_path) && complete_path.has_prefix (fallback_path))
+            _fallback_path = fallback_path;
+        else
+            _fallback_path = complete_path;
+
+        _complete_path = complete_path;
+    }
 
     construct
     {
@@ -67,7 +77,7 @@ private class LargePathbar : Box, Pathbar
         if (invisible_button != null)
         {
             Variant variant = new Variant.string (complete_path);
-            ((!) invisible_button).set_detailed_action_name ("ui.open-search(" + variant.print (false) + ")");
+            ((!) invisible_button).set_detailed_action_name ("browser.open-search(" + variant.print (false) + ")");
         }
         update_active_button_cursor (type, ref active_button);
     }
@@ -163,6 +173,7 @@ private class LargePathbar : Box, Pathbar
 
     internal void update_ghosts (string non_ghost_path, bool is_search)
     {
+        fallback_path = non_ghost_path;
         string action_target = "";
         @foreach ((child) => {
                 StyleContext context = child.get_style_context ();
@@ -190,7 +201,7 @@ private class LargePathbar : Box, Pathbar
                         else
                         {
                             item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
-                            item.set_action_name ("ui.empty");
+                            item.set_action_name ("browser.empty");
                         }
                         if (non_ghost_path.has_prefix (action_target))
                             context.remove_class ("inexistent");
@@ -227,7 +238,7 @@ private class LargePathbar : Box, Pathbar
         else
         {
             active_button.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
-            active_button.set_action_name ("ui.empty");
+            active_button.set_action_name ("browser.empty");
         }
     }
 
@@ -267,13 +278,13 @@ private class LargePathbar : Box, Pathbar
     {
         Variant variant = new Variant.string (complete_path);
         string _variant = variant.print (false);
-        path_bar_item = new LargePathbarItem (label, "ui.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
+        path_bar_item = new LargePathbarItem (label, "browser.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
     }
     private static inline void init_object_path_bar_item (string label, string complete_path, out LargePathbarItem path_bar_item)
     {
         Variant variant = new Variant ("(sq)", complete_path, ModelUtils.undefined_context_id);
         string _variant = variant.print (true);
-        path_bar_item = new LargePathbarItem (label, "ui.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
+        path_bar_item = new LargePathbarItem (label, "browser.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
     }
 
     private void activate_item (LargePathbarItem item, bool state)   // never called when current_view is search
@@ -290,7 +301,7 @@ private class LargePathbar : Box, Pathbar
         {
             item.is_active = true;
             item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
-            item.set_action_name ("ui.empty");
+            item.set_action_name ("browser.empty");
             item.get_style_context ().add_class ("active");
         }
         else
@@ -307,7 +318,7 @@ private class InvisibleButton : Button
 {
     construct
     {
-        set_detailed_action_name ("ui.open-search('/')");
+        set_detailed_action_name ("browser.open-search('/')");
         hexpand = true;
         vexpand = true;
         can_focus = false;

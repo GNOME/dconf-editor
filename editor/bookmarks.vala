@@ -415,7 +415,7 @@ private class Bookmarks : MenuButton
     {
         if (bookmarked == bookmarked_switch.active)
             return;
-        bookmarked_switch.set_detailed_action_name ("ui.empty(('',byte 255))");
+        bookmarked_switch.set_detailed_action_name ("browser.empty(('',byte 255))");
         bookmarked_switch.active = bookmarked;
     }
 }

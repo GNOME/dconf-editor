@@ -241,9 +241,9 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
             ((!) boolean_switch).halign = Align.END;
             ((!) boolean_switch).valign = Align.CENTER;
             if (has_schema)
-                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',uint16 0,true,true))");
+                ((!) boolean_switch).set_detailed_action_name ("browser.empty(('',uint16 0,true,true))");
             else
-                ((!) boolean_switch).set_detailed_action_name ("ui.empty(('',true))");
+                ((!) boolean_switch).set_detailed_action_name ("browser.empty(('',true))");
 
             _use_switch = true;
             hide_or_show_switch ();
@@ -396,7 +396,7 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
     internal void update_switch (bool key_value_boolean, string detailed_action_name)
         requires (boolean_switch != null)
     {
-        ((!) boolean_switch).set_action_name ("ui.empty");
+        ((!) boolean_switch).set_action_name ("browser.empty");
         ((!) boolean_switch).set_active (key_value_boolean);
         ((!) boolean_switch).set_detailed_action_name (detailed_action_name);
     }

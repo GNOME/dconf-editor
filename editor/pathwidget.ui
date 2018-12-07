@@ -41,7 +41,7 @@
                 <property name="focus-on-click">False</property>
                 <property name="iconic">True</property>
                 <property name="centered">True</property>
-                <property name="action-name">ui.show-search</property>
+                <property name="action-name">browser.show-search</property>
                 <style>
                   <class name="image-button"/>
                 </style>
@@ -69,7 +69,7 @@
         <property name="focus-on-click">False</property>
         <property name="iconic">True</property>
         <property name="centered">True</property>
-        <property name="action-name">ui.toggle-search</property>
+        <property name="action-name">browser.toggle-search</property>
         <property name="action-target">true</property>
         <style>
           <class name="image-button"/>

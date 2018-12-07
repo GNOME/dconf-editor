@@ -37,6 +37,20 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     private ViewType current_type = ViewType.FOLDER;
     private string current_path = "/";
 
+    private bool _delay_mode = false;
+    internal bool delay_mode
+    {
+        private  get { return _delay_mode; }
+        internal set
+        {
+            if (_delay_mode == value)
+                return;
+            _delay_mode = value;
+            update_modifications_button ();
+            update_hamburger_menu ();
+        }
+    }
+
     internal signal void search_changed ();
     internal signal void search_stopped ();
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
@@ -69,7 +83,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         disable_action_bar = _disable_popovers
                           || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
 
-        update_hamburger_menu (delay_mode);
+        update_hamburger_menu ();
         update_modifications_button ();
 
         path_widget.set_window_size (new_size);
@@ -80,6 +94,10 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
     internal string text                { get { return path_widget.text; }}
 
     internal string get_complete_path ()    { return path_widget.get_complete_path (); }
+    internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)
+    {
+        path_widget.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
+    }
     internal void toggle_pathbar_menu ()    { path_widget.toggle_pathbar_menu (); }
     internal string [] get_bookmarks ()     { return bookmarks_button.get_bookmarks (); }
 
@@ -103,6 +121,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
 
         path_widget.set_path (type, path);
         bookmarks_button.set_path (type, path);
+
+        update_hamburger_menu ();
     }
 
     internal bool has_popover ()
@@ -193,7 +213,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         in_window_about = true;
         update_modifications_button ();
         info_button.hide ();
-        go_back_button.set_action_name ("ui.hide-in-window-about");
+        go_back_button.set_action_name ("browser.hide-in-window-about");
         go_back_button.show ();
         bookmarks_stack.hexpand = false;    // hack 1/7
         title_label.set_label (_("About"));
@@ -431,15 +451,8 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
             info_button.active = !info_button.active;
     }
 
-    private bool delay_mode = false;
-    internal void update_hamburger_menu (bool? new_delay_mode = null)
+    internal void update_hamburger_menu ()
     {
-        if (new_delay_mode != null)
-        {
-            delay_mode = (!) new_delay_mode;
-            update_modifications_button ();
-        }
-
         GLib.Menu menu = new GLib.Menu ();
 
 /*        if (current_type == ViewType.OBJECT && !ModelUtils.is_folder_path (current_path))   // TODO a better way to copy various representations of a key name/value/path
@@ -504,7 +517,7 @@ private class BrowserHeaderBar : HeaderBar, AdaptativeWidget
         append_or_not_night_mode_entry (night_time, dark_theme, auto_night, ref section);
         if (!disable_popovers)    // TODO else...
             section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        section.append (_("About Dconf Editor"), "ui.about");
+        section.append (_("About Dconf Editor"), "browser.about");
         section.freeze ();
         menu.append_section (null, section);
     }

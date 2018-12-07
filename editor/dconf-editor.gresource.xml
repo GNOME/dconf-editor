@@ -8,9 +8,9 @@
     <file preprocess="xml-stripblanks">browser-infobar.ui</file>
     <file preprocess="xml-stripblanks">browser-stack.ui</file>
     <file preprocess="xml-stripblanks">browser-view.ui</file>
+    <file preprocess="xml-stripblanks">browser-window.ui</file>
     <file preprocess="xml-stripblanks">config-list-box-row.ui</file>
     <file>dconf-editor.css</file>
-    <file preprocess="xml-stripblanks">dconf-editor.ui</file>
     <file preprocess="xml-stripblanks">delayed-setting-view.ui</file>
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>

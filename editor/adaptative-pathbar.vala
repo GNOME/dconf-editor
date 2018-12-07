@@ -164,6 +164,16 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
         assert_not_reached ();
     }
 
+    internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)
+    {
+        if (large_pathbar_created)
+            large_pathbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
+        else if (short_pathbar_created)
+            short_pathbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
+        else
+            assert_not_reached ();
+    }
+
     internal void update_ghosts (string non_ghost_path, bool is_search)
     {
         if (large_pathbar_created)
@@ -185,6 +195,7 @@ private interface Pathbar
 
     /* complex proxy calls */
     internal abstract string get_complete_path ();
+    internal abstract void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path);
 
     internal virtual string get_selected_child (string current_path)
     {
@@ -201,6 +212,6 @@ private interface Pathbar
     /* called from inside the pathbar, by ShortPathbar and LargePathbarItem (so cannot make "protected") */
     internal static void add_copy_path_entry (ref GLib.Menu section)
     {
-        section.append (_("Copy current path"), "kbd.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
+        section.append (_("Copy current path"), "key.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
     }
 }

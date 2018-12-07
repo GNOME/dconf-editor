@@ -297,30 +297,30 @@ private class ConfigurationEditor : Gtk.Application
         add_action_entries (action_entries, this);
         set_accels_for_action ("kbd.toggle-bookmark",   {        "<Primary>b",
                                                           "<Shift><Primary>b" });
-        set_accels_for_action ("kbd.copy",              {        "<Primary>c" });
-        set_accels_for_action ("kbd.copy-path",         { "<Shift><Primary>c" });
+        set_accels_for_action ("key.copy",              {        "<Primary>c" });
+        set_accels_for_action ("key.copy-path",         { "<Shift><Primary>c" });
         set_accels_for_action ("kbd.bookmark",          {        "<Primary>d" });
         set_accels_for_action ("kbd.unbookmark",        { "<Shift><Primary>d" });
-        set_accels_for_action ("kbd.toggle-search",     {        "<Primary>f" });   // TODO <Shift><Primary>f something?
-        set_accels_for_action ("kbd.next-match",        {        "<Primary>g" });
-        set_accels_for_action ("kbd.previous-match",    { "<Shift><Primary>g" });
-        set_accels_for_action ("kbd.request-config",    {        "<Primary>i" });   // <Shift><Primary>i is gtk editor
+        set_accels_for_action ("key.toggle-search",     {        "<Primary>f" });   // TODO <Shift><Primary>f something?
+        set_accels_for_action ("key.next-match",        {        "<Primary>g" });
+        set_accels_for_action ("key.previous-match",    { "<Shift><Primary>g" });
+        set_accels_for_action ("key.request-config",    {        "<Primary>i" });   // <Shift><Primary>i is gtk editor
         set_accels_for_action ("kbd.modifications",     {        "<Alt>i"     });
-        set_accels_for_action ("kbd.edit-path-end",     {        "<Primary>l" });
-        set_accels_for_action ("kbd.edit-path-last",    { "<Shift><Primary>l" });
+        set_accels_for_action ("key.edit-path-end",     {        "<Primary>l" });
+        set_accels_for_action ("key.edit-path-last",    { "<Shift><Primary>l" });
         set_accels_for_action ("app.quit",              {        "<Primary>q" });
         set_accels_for_action ("app.apply-and-quit",    { "<Shift><Primary>q" });
-        set_accels_for_action ("kbd.paste",             {        "<Primary>v" });   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
-        set_accels_for_action ("kbd.paste-force",       { "<Shift><Primary>v" });
+        set_accels_for_action ("key.paste",             {        "<Primary>v" });   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
+        set_accels_for_action ("key.paste-force",       { "<Shift><Primary>v" });
 
-        set_accels_for_action ("kbd.open-root",         { "<Shift><Alt>Up"    });
-        set_accels_for_action ("kbd.open-parent",       {        "<Alt>Up"    });
-        set_accels_for_action ("kbd.open-child",        {        "<Alt>Down"  });
-        set_accels_for_action ("kbd.open-last-child",   { "<Shift><Alt>Down"  });
+        set_accels_for_action ("key.open-root",         { "<Shift><Alt>Up"    });
+        set_accels_for_action ("key.open-parent",       {        "<Alt>Up"    });
+        set_accels_for_action ("key.open-child",        {        "<Alt>Down"  });
+        set_accels_for_action ("key.open-last-child",   { "<Shift><Alt>Down"  });
 
-        set_accels_for_action ("kbd.toggle-hamburger",  {          "F10"      });
+        set_accels_for_action ("key.toggle-hamburger",  {          "F10"      });
         set_accels_for_action ("kbd.escape",            {          "Escape"   });
-        set_accels_for_action ("kbd.menu",              {          "Menu"     });
+        set_accels_for_action ("key.menu",              {          "Menu"     });
 
         set_accels_for_action ("kbd.set-to-default",    { "<Primary>Delete",
                                                           "<Primary>KP_Delete",

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="DConfWindow" parent="AdaptativeWindow">
+  <template class="BrowserWindow" parent="AdaptativeWindow">
     <property name="visible">False</property>
-    <property name="title" translatable="yes">dconf Editor</property>
     <property name="height-request">283</property> <!-- 294 max for Purism Librem 5 landscape -->
     <property name="width-request">349</property>  <!-- 360 max for Purism Librem 5 portrait -->
     <signal name="key-press-event" handler="on_key_press_event"/>
     <signal name="button-press-event" handler="on_button_press_event"/>
     <signal name="destroy" handler="on_destroy"/>
-    <style>
-      <class name="dconf-editor"/>
-    </style>
     <child type="titlebar">
       <object class="BrowserHeaderBar" id="headerbar">
         <property name="visible">True</property>
@@ -30,7 +26,6 @@
               <object class="BrowserView" id="browser_view">
                 <property name="visible">True</property>
                 <property name="vexpand">True</property>
-                <signal name="bookmarks-selection-changed" handler="on_bookmarks_selection_changed"/>
               </object>
             </child>
           </object>

@@ -235,7 +235,7 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         if (modifications_handler.get_current_delay_mode ())
         {
             Variant variant = new Variant ("(sq)", full_name, context_id);
-            view.set_detailed_action_name ("ui.open-object(" + variant.print (true) + ")");
+            view.set_detailed_action_name ("browser.open-object(" + variant.print (true) + ")");
         }
         view.show ();
         return view;

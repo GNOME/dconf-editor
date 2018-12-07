@@ -537,7 +537,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         if (row is SearchListBoxRow)
         {
             wrapper.get_style_context ().add_class ("f-or-s-row");
-            wrapper.action_name = "ui.open-search";
+            wrapper.action_name = "browser.open-search";
             wrapper.set_action_target ("s", row.full_name);
         }
         else if (row is ReturnListBoxRow)
@@ -545,12 +545,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             wrapper.get_style_context ().add_class ("f-or-s-row");
             if (ModelUtils.is_folder_context_id (row.context_id))
             {
-                wrapper.action_name = "ui.open-folder";
+                wrapper.action_name = "browser.open-folder";
                 wrapper.set_action_target ("s", row.full_name);
             }
             else
             {
-                wrapper.action_name = "ui.open-object";
+                wrapper.action_name = "browser.open-object";
                 wrapper.set_action_target ("(sq)", row.full_name, row.context_id);
             }
         }
@@ -560,19 +560,19 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             if (row is FolderListBoxRow)
             {
                 if (((FolderListBoxRow) row).path_search)
-                    wrapper.action_name = "ui.next-search";
+                    wrapper.action_name = "browser.next-search";
                 else
-                    wrapper.action_name = "ui.open-folder";
+                    wrapper.action_name = "browser.open-folder";
             }
             else if (row is ConfigListBoxRow)
-                wrapper.action_name = "ui.open-config";
+                wrapper.action_name = "browser.open-config";
             else assert_not_reached ();
             wrapper.set_action_target ("s", row.full_name);
         }
         else if (row is KeyListBoxRow)
         {
             wrapper.get_style_context ().add_class ("key-row");
-            wrapper.action_name = "ui.open-object";
+            wrapper.action_name = "browser.open-object";
             wrapper.set_action_target ("(sq)", row.full_name, row.context_id);
         }
         else assert_not_reached ();
@@ -842,7 +842,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         ContextPopover popover = (!) row.nullable_popover;
         Variant variant = new Variant.string (row.full_name);
 
-        popover.new_gaction ("open-search", "ui.open-search(" + variant.print (false) + ")");
+        popover.new_gaction ("open-search", "browser.open-search(" + variant.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
 
         return true;
@@ -856,7 +856,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         ContextPopover popover = (!) row.nullable_popover;
         Variant variant = new Variant.string (row.full_name);
 
-        popover.new_gaction ("open-config", "ui.open-config(" + variant.print (false) + ")");
+        popover.new_gaction ("open-config", "browser.open-config(" + variant.print (false) + ")");
 //        popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
 
         return true;
@@ -871,12 +871,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         if (row.context_id == ModelUtils.folder_context_id)
         {
             Variant variant = new Variant.string (row.full_name);
-            popover.new_gaction ("go-back", "ui.open-folder(" + variant.print (false) + ")");
+            popover.new_gaction ("go-back", "browser.open-folder(" + variant.print (false) + ")");
         }
         else
         {
             Variant variant_sq = new Variant ("(sq)", row.full_name, row.context_id);
-            popover.new_gaction ("go-back", "ui.open-object(" + variant_sq.print (true) + ")");
+            popover.new_gaction ("go-back", "browser.open-object(" + variant_sq.print (true) + ")");
         }
 
         return true;
@@ -892,11 +892,11 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
         if (row.search_result_mode)
         {
-            popover.new_gaction ("open-parent", "ui.open-parent(" + variant.print (false) + ")");
+            popover.new_gaction ("open-parent", "browser.open-parent(" + variant.print (false) + ")");
             popover.new_section ();
         }
 
-        popover.new_gaction ("open-folder", "ui.open-folder(" + variant.print (false) + ")");
+        popover.new_gaction ("open-folder", "browser.open-folder(" + variant.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
 
         popover.new_section ();
@@ -939,13 +939,13 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
         if (row.search_result_mode)
         {
-            popover.new_gaction ("open-parent", "ui.open-parent(" + variant_s.print (false) + ")");
+            popover.new_gaction ("open-parent", "browser.open-parent(" + variant_s.print (false) + ")");
             popover.new_section ();
         }
 
         if (key_conflict == KeyConflict.HARD)
         {
-            popover.new_gaction ("detail", "ui.open-object(" + variant_sq.print (true) + ")");
+            popover.new_gaction ("detail", "browser.open-object(" + variant_sq.print (true) + ")");
             popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
             properties.clear ();
             return true; // anything else is value-related, so we are done
@@ -955,7 +955,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         bool planned_change = modifications_handler.key_has_planned_change (full_name);
         Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
 
-        popover.new_gaction ("customize", "ui.open-object(" + variant_sq.print (true) + ")");
+        popover.new_gaction ("customize", "browser.open-object(" + variant_sq.print (true) + ")");
         popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
 
         if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
@@ -1047,11 +1047,11 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
         if (row.search_result_mode)
         {
-            popover.new_gaction ("open-parent", "ui.open-parent(" + variant_s.print (false) + ")");
+            popover.new_gaction ("open-parent", "browser.open-parent(" + variant_s.print (false) + ")");
             popover.new_section ();
         }
 
-        popover.new_gaction ("customize", "ui.open-object(" + variant_sq.print (true) + ")");
+        popover.new_gaction ("customize", "browser.open-object(" + variant_sq.print (true) + ")");
         popover.new_gaction ("copy", "app.copy(" + copy_text_variant.print (false) + ")");
 
         bool planned_change = modifications_handler.key_has_planned_change (row.full_name);

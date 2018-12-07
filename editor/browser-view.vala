@@ -100,9 +100,14 @@ private class BrowserView : Stack, AdaptativeWidget
         info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"),
                                                   _("Refresh"), "bro.refresh-folder");
         info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"),
-                                                  _("Reload"), "ui.reload-folder");
+                                                  _("Reload"), "browser.reload-folder");
         info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"),
-                                                  _("Reload"), "ui.reload-object");   // TODO also for key removing?
+                                                  _("Reload"), "browser.reload-object");   // TODO also for key removing?
+    }
+
+    internal bool is_in_in_window_mode ()
+    {
+        return (in_window_bookmarks || in_window_modifications || in_window_about);
     }
 
     /*\
@@ -206,7 +211,7 @@ private class BrowserView : Stack, AdaptativeWidget
     * * in-window about
     \*/
 
-    internal bool in_window_about                   { internal get; private set; default = false; }
+    private bool in_window_about = false;
 
     private bool about_list_created = false;
     private AboutList about_list;

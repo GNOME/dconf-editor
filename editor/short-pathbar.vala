@@ -27,6 +27,15 @@ private class ShortPathbar : Grid, Pathbar
     {
         return complete_path;
     }
+    internal void get_fallback_path_and_complete_path (out string _fallback_path, out string _complete_path)
+    {
+        if (non_ghost_path != "" && ModelUtils.is_folder_path (non_ghost_path) && complete_path.has_prefix (non_ghost_path))
+            _fallback_path = non_ghost_path;
+        else
+            _fallback_path = complete_path;
+
+        _complete_path = complete_path;
+    }
 
     [GtkChild] private MenuButton   menu_button;
     [GtkChild] private Label        view_label;
@@ -101,7 +110,7 @@ private class ShortPathbar : Grid, Pathbar
         string tmp_path = "/";
 
         if (complete_path != "/")
-            menu.append ("/", "ui.open-path(('/',uint16 " + ModelUtils.folder_context_id_string + "))");
+            menu.append ("/", "browser.open-path(('/',uint16 " + ModelUtils.folder_context_id_string + "))");
 
         // other folders
         foreach (string item in split)
@@ -109,9 +118,9 @@ private class ShortPathbar : Grid, Pathbar
             tmp_path += item + "/";
             Variant variant = new Variant ("(sq)", tmp_path, ModelUtils.folder_context_id);
             if (non_ghost_path.has_prefix (tmp_path))
-                menu.append (item, "ui.open-path(" + variant.print (true) + ")");  // TODO append or prepend?
+                menu.append (item, "browser.open-path(" + variant.print (true) + ")");  // TODO append or prepend?
             else
-                menu.append (item, "ui.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
+                menu.append (item, "browser.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
         }
 
         // key or nothing
@@ -125,9 +134,9 @@ private class ShortPathbar : Grid, Pathbar
             uint16 context_id = is_folder ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id;
             Variant variant = new Variant ("(sq)", tmp_path, context_id);
             if (non_ghost_path.has_prefix (tmp_path))   // FIXME problem if key and folder named similarly
-                menu.append (last, "ui.open-path(" + variant.print (true) + ")");
+                menu.append (last, "browser.open-path(" + variant.print (true) + ")");
             else
-                menu.append (last, "ui.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
+                menu.append (last, "browser.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
         }
 
         section.freeze ();

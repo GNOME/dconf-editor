@@ -33,7 +33,7 @@
     <child>
       <object class="GtkButton" id="hide_search_button">
         <property name="visible">False</property>
-        <property name="action-name">ui.hide-search</property>
+        <property name="action-name">browser.hide-search</property>
         <style>
           <class name="image-button"/>
         </style>
@@ -54,7 +54,7 @@
     <child>
       <object class="GtkButton" id="reload_search_button">
         <property name="visible">True</property>
-        <property name="action-name">ui.reload-search</property>
+        <property name="action-name">browser.reload-search</property>
         <style>
           <class name="image-button"/>
           <class name="suggested-action"/>

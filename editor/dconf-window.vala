@@ -85,30 +85,12 @@ internal enum ViewType {
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-editor.ui")]
-private class DConfWindow : AdaptativeWindow, AdaptativeWidget
+private class DConfWindow : BrowserWindow
 {
-    private ViewType current_type = ViewType.FOLDER;
-    private string current_path = "/";
-    private ViewType saved_type = ViewType.FOLDER;
-    private string saved_view = "/";
-    private string saved_selection = "";
-
     private SettingsModel model = new SettingsModel ();
     private ModificationsHandler modifications_handler;
 
-    internal bool mouse_extra_buttons   { private get; set; default = true; }
-    internal int mouse_back_button      { private get; set; default = 8; }
-    internal int mouse_forward_button   { private get; set; default = 9; }
-
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
-
-    [GtkChild] private BrowserHeaderBar headerbar;
-    [GtkChild] private BrowserView browser_view;
-    [GtkChild] private NotificationsRevealer notifications_revealer;
-
-    [GtkChild] private Grid main_grid;
-    private ModificationsRevealer revealer;
 
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
@@ -117,29 +99,27 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     private ulong browserview_update_bookmarks_icons_handler = 0;
 
     private ulong delayed_changes_changed_handler = 0;
+    private ulong bookmarks_selection_changed_handler = 0;
 
     private StyleContext context;
     construct
     {
+        title = _("dconf Editor");
         context = get_style_context ();
+        context.add_class ("dconf-editor");
 
-        revealer = new ModificationsRevealer ();
-        revealer.visible = true;
-        main_grid.add (revealer);
-
-        adaptative_children.append (headerbar);
-        adaptative_children.append (browser_view);
-        adaptative_children.append (revealer);
-        adaptative_children.append (this);
-    }
-
-    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool _night_time, bool _dark_theme, bool _automatic_night_mode)
-    {
-        init_night_mode (_night_time, _dark_theme, _automatic_night_mode);
+        create_modifications_revealer ();
 
         install_ui_action_entries ();
         install_kbd_action_entries ();
         install_bmk_action_entries ();
+
+        bookmarks_selection_changed_handler = browser_view.bookmarks_selection_changed.connect (on_bookmarks_selection_changed);
+    }
+
+    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool night_time, bool dark_theme, bool automatic_night_mode)
+    {
+        Object (initial_night_time: night_time, initial_dark_theme: dark_theme, initial_automatic_night_mode: automatic_night_mode);
 
         headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
         browserview_update_bookmarks_icons_handler = browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
@@ -171,10 +151,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
         if (!disable_warning && settings.get_boolean ("show-warning"))
             show.connect (show_initial_warning);
-
-        settings.bind ("mouse-use-extra-buttons", this, "mouse-extra-buttons", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
-        settings.bind ("mouse-back-button", this, "mouse-back-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
-        settings.bind ("mouse-forward-button", this, "mouse-forward-button", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         /* init current_path */
         bool restore_view = settings.get_boolean ("restore-view");
@@ -332,36 +308,21 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     }
 
     /*\
-    * * Night mode
+    * * ModificationsRevealer
     \*/
 
-    private void init_night_mode (bool _night_time, bool _dark_theme, bool _automatic_night_mode)
-    {
-        headerbar.night_time = _night_time;
-        headerbar.dark_theme = _dark_theme;
-        headerbar.automatic_night_mode = _automatic_night_mode;
-    }
+    private ModificationsRevealer revealer;
 
-    internal void night_time_changed (Object nlm, ParamSpec thing)
+    private void create_modifications_revealer ()
     {
-        headerbar.night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
-        headerbar.update_hamburger_menu ();
-    }
-
-    internal void dark_theme_changed (Object nlm, ParamSpec thing)
-    {
-        headerbar.dark_theme = ((NightLightMonitor) nlm).dark_theme;
-        headerbar.update_hamburger_menu ();
-    }
-
-    internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
-    {
-        headerbar.automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
-        // update menu not needed
+        revealer = new ModificationsRevealer ();
+        revealer.visible = true;
+        main_grid.add (revealer);
+        adaptative_children.append (revealer);
     }
 
     /*\
-    * * Window management callbacks
+    * * initial warning
     \*/
 
     private void show_initial_warning ()
@@ -384,6 +345,10 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         dialog.destroy ();
     }
 
+    /*\
+    * * quitting
+    \*/
+
     internal bool quit_if_no_pending_changes ()
     {
         if (modifications_handler.has_pending_changes ())
@@ -401,11 +366,11 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         destroy ();
     }
 
-    [GtkCallback]
-    private void on_destroy ()
+    protected override void before_destroy ()
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
+        browser_view.disconnect (bookmarks_selection_changed_handler);
         modifications_handler.disconnect (delayed_changes_changed_handler);
 
         headerbar.disconnect (headerbar_update_bookmarks_icons_handler);
@@ -425,71 +390,21 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         settings.set_string ("saved-view", saved_view);
         settings.set_string ("saved-pathbar-path", headerbar.get_complete_path ());
         settings.apply ();
-
-        base.destroy ();
     }
 
     /*\
     * * Main UI action entries
     \*/
 
-    private SimpleAction open_path_action;
-    private SimpleAction disabled_state_action;
-
-    private SimpleAction reload_search_action;
-    private bool reload_search_next = true;
-
     private void install_ui_action_entries ()
     {
         SimpleActionGroup action_group = new SimpleActionGroup ();
         action_group.add_action_entries (ui_action_entries, this);
         insert_action_group ("ui", action_group);
-
-        disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state");
-        disabled_state_action.set_enabled (false);
-
-        open_path_action = (SimpleAction) action_group.lookup_action ("open-path");
-
-        reload_search_action = (SimpleAction) action_group.lookup_action ("reload-search");
-        reload_search_action.set_enabled (false);
     }
 
     private const GLib.ActionEntry [] ui_action_entries =
     {
-        { "empty",          empty, "*" },
-        { "empty-null",     empty },
-        { "disabled-state", empty, "(sq)", "('',uint16 65535)" },
-
-        { "notify-folder-emptied", notify_folder_emptied, "s" },
-        { "notify-object-deleted", notify_object_deleted, "(sq)" },
-
-        { "open-folder", open_folder, "s" },
-        { "open-object", open_object, "(sq)" },
-        { "open-config", open_config, "s" },
-        { "open-search", open_search, "s" },
-        { "next-search", next_search, "s" },
-        { "open-parent", open_parent, "s" },
-
-        { "open-path", open_path, "(sq)", "('/',uint16 " + ModelUtils.folder_context_id_string + ")" },
-
-        { "reload-folder", reload_folder },
-        { "reload-object", reload_object },
-        { "reload-search", reload_search },
-
-        { "hide-search",   hide_search },
-        { "show-search",   show_search },
-
-        { "toggle-search", toggle_search, "b", "false" },
-        { "update-bookmarks-icons", update_bookmarks_icons, "as" },
-
-        { "show-in-window-bookmarks",       show_in_window_bookmarks },
-        { "hide-in-window-bookmarks",       hide_in_window_bookmarks },
-
-        { "show-in-window-modifications",   show_in_window_modifications },
-        { "hide-in-window-modifications",   hide_in_window_modifications },
-
-        { "hide-in-window-about",           hide_in_window_about },
-
         { "reset-recursive", reset_recursively, "s" },
         { "reset-visible", reset_visible, "s" },
 
@@ -500,256 +415,17 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "about", about_cb }
+        { "show-in-window-bookmarks",       show_in_window_bookmarks },
+        { "hide-in-window-bookmarks",       hide_in_window_bookmarks },
+
+        { "show-in-window-modifications",   show_in_window_modifications },
+        { "hide-in-window-modifications",   hide_in_window_modifications },
+
+        { "update-bookmarks-icons", update_bookmarks_icons, "as" },
+
+        { "notify-folder-emptied", notify_folder_emptied, "s" },
+        { "notify-object-deleted", notify_object_deleted, "(sq)" }
     };
-
-    private void empty (/* SimpleAction action, Variant? variant */) {}
-
-    private void notify_folder_emptied (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        string full_name = ((!) path_variant).get_string ();
-
-        show_notification (_("Folder “%s” is now empty.").printf (full_name));
-    }
-
-    private void notify_object_deleted (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        string full_name;
-        uint16 unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
-        ((!) path_variant).@get ("(sq)", out full_name, out unused);
-
-        show_notification (_("Key “%s” has been deleted.").printf (full_name));
-    }
-
-    private void open_folder (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        headerbar.close_popovers ();
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-
-        string full_name = ((!) path_variant).get_string ();
-
-        request_folder (full_name, "");
-    }
-
-    private void open_object (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        headerbar.close_popovers ();
-        revealer.hide_modifications_list ();
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-        else if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
-
-        string full_name;
-        uint16 context_id;
-        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
-
-        request_object (full_name, context_id);
-    }
-
-    private void open_config (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        headerbar.close_popovers ();
-
-        string full_name = ((!) path_variant).get_string ();    // TODO use current_path instead?
-
-        request_config (full_name);
-    }
-
-    private void open_search (SimpleAction action, Variant? search_variant)
-        requires (search_variant != null)
-    {
-        headerbar.close_popovers ();
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-
-        string search = ((!) search_variant).get_string ();
-
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL, search);
-    }
-
-    private void next_search (SimpleAction action, Variant? search_variant)
-        requires (search_variant != null)
-    {
-        saved_type = ViewType.FOLDER;
-        saved_view = ((!) search_variant).get_string ();
-
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, saved_view);
-    }
-
-    private void open_parent (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-
-        string full_name = ((!) path_variant).get_string ();
-        request_folder (ModelUtils.get_parent_path (full_name), full_name);
-    }
-
-    private void open_path (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        headerbar.close_popovers ();
-        revealer.hide_modifications_list ();
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-        else if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
-
-        string full_name;
-        uint16 context_id;
-        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
-
-        action.set_state ((!) path_variant);
-
-        if (ModelUtils.is_folder_context_id (context_id))
-            request_folder (full_name, "");
-        else
-            request_object (full_name, context_id);
-    }
-
-    private void reload_folder (/* SimpleAction action, Variant? path_variant */)
-    {
-        request_folder (current_path, browser_view.get_selected_row_name ());
-    }
-
-    private void reload_object (/* SimpleAction action, Variant? path_variant */)
-    {
-        request_object (current_path, ModelUtils.undefined_context_id, false);
-    }
-
-    private void reload_search (/* SimpleAction action, Variant? path_variant */)
-    {
-        request_search (true);
-    }
-
-    private void hide_search (/* SimpleAction action, Variant? path_variant */)
-    {
-        stop_search ();
-    }
-
-    private void show_search (/* SimpleAction action, Variant? path_variant */)
-    {
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
-    }
-
-    private void toggle_search (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        bool search_request = ((!) path_variant).get_boolean ();
-        action.change_state (search_request);
-        if (search_request && !headerbar.search_mode_enabled)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
-        else if (!search_request && headerbar.search_mode_enabled)
-            stop_search ();
-    }
-
-    private void update_bookmarks_icons (SimpleAction action, Variant? bookmarks_variant)
-        requires (bookmarks_variant != null)
-    {
-        update_bookmarks_icons_from_variant ((!) bookmarks_variant);
-    }
-    private void update_bookmarks_icons_from_variant (Variant variant)
-    {
-        update_bookmarks_icons_from_array (variant.get_strv ());
-    }
-    private void update_bookmarks_icons_from_array (string [] bookmarks)
-    {
-        if (bookmarks.length == 0)
-            return;
-
-        foreach (string bookmark in bookmarks)
-        {
-            if (bookmark.has_prefix ("?"))  // TODO broken search
-            {
-                update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
-                continue;
-            }
-            if (is_path_invalid (bookmark)) // TODO broken folder and broken object
-                continue;
-
-            uint16 context_id;
-            string name;
-            bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);    // TODO get_folder
-
-            if (context_id == ModelUtils.folder_context_id)
-            {
-                if (bookmark_exists)
-                    update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
-                else
-                    update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
-                continue;
-            }
-
-            if (!bookmark_exists)
-                update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
-            else if (context_id == ModelUtils.dconf_context_id)
-                update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
-            else
-            {
-                RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
-                bool is_default;
-                if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
-                    assert_not_reached ();
-                if (is_default)
-                    update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
-                else
-                    update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
-            }
-        }
-    }
-    private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
-    {
-        if (AdaptativeWidget.WindowSize.is_extra_thin (window_size)
-         || AdaptativeWidget.WindowSize.is_extra_flat (window_size))
-            browser_view.update_bookmark_icon (bookmark, icon);
-        else
-            headerbar.update_bookmark_icon (bookmark, icon);
-    }
-
-    private void show_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
-    {
-        headerbar.show_in_window_bookmarks ();
-        string [] bookmarks = headerbar.get_bookmarks ();
-        browser_view.show_in_window_bookmarks (bookmarks);
-        update_bookmarks_icons_from_array (bookmarks);
-    }
-
-    private void hide_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
-        requires (browser_view.in_window_bookmarks == true)
-    {
-        if (browser_view.in_window_bookmarks_edit_mode)
-            leave_edit_mode ();     // TODO place after
-        headerbar.hide_in_window_bookmarks ();
-        browser_view.hide_in_window_bookmarks ();
-    }
-
-    private void show_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
-    {
-        headerbar.show_in_window_modifications ();
-        browser_view.show_in_window_modifications ();
-    }
-
-    private void hide_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
-        requires (browser_view.in_window_modifications == true)
-    {
-        headerbar.hide_in_window_modifications ();
-        browser_view.hide_in_window_modifications ();
-    }
-
-    private void hide_in_window_about (/* SimpleAction action, Variant? path_variant */)
-        requires (browser_view.in_window_about == true)
-    {
-        headerbar.hide_in_window_about ();
-        browser_view.hide_in_window_about ();
-    }
 
     private void reset_recursively (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
@@ -806,44 +482,125 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         invalidate_popovers_with_ui_reload ();
     }
 
-    private void about_cb ()    // register as "win.about"?
+    private void invalidate_popovers_with_ui_reload ()
     {
-        if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
-         && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
-        {   // TODO hide the dialog if visible
-            string [] authors = AboutDialogInfos.authors;
-            Gtk.show_about_dialog (this,
-                                   "program-name",          AboutDialogInfos.program_name,
-                                   "version",               AboutDialogInfos.version,
-                                   "comments",              AboutDialogInfos.comments,
-                                   "copyright",             AboutDialogInfos.copyright,
-                                   "license-type",          AboutDialogInfos.license_type,
-                                   "wrap-license", true,
-                                   "authors",               authors,
-                                   "translator-credits",    AboutDialogInfos.translator_credits,
-                                   "logo-icon-name",        AboutDialogInfos.logo_icon_name,
-                                   "website",               AboutDialogInfos.website,
-                                   "website-label",         AboutDialogInfos.website_label,
-                                   null);
-        }
-        else if (browser_view.in_window_about)
-            hide_in_window_about ();
-        else
-            show_in_window_about ();
-    }
-    private inline void show_in_window_about ()
-    {
-        headerbar.show_in_window_about ();
-        browser_view.show_in_window_about ();
+        bool delay_mode = modifications_handler.get_current_delay_mode ();
+        browser_view.hide_or_show_toggles (!delay_mode);
+        browser_view.invalidate_popovers ();
+        headerbar.delay_mode = delay_mode;
     }
 
     /*\
-    * * adaptative stuff that needs to be there
+    * * showing or hiding panels
+    \*/
+
+    private void show_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.show_in_window_bookmarks ();
+        string [] bookmarks = headerbar.get_bookmarks ();
+        browser_view.show_in_window_bookmarks (bookmarks);
+        update_bookmarks_icons_from_array (bookmarks);
+    }
+
+    private void hide_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
+        requires (browser_view.in_window_bookmarks == true)
+    {
+        if (browser_view.in_window_bookmarks_edit_mode)
+            leave_edit_mode ();     // TODO place after
+        headerbar.hide_in_window_bookmarks ();
+        browser_view.hide_in_window_bookmarks ();
+    }
+
+    private void show_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.show_in_window_modifications ();
+        browser_view.show_in_window_modifications ();
+    }
+
+    private void hide_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
+        requires (browser_view.in_window_modifications == true)
+    {
+        headerbar.hide_in_window_modifications ();
+        browser_view.hide_in_window_modifications ();
+    }
+
+    /*\
+    * * updating bookmarks icons
+    \*/
+
+    private void update_bookmarks_icons (SimpleAction action, Variant? bookmarks_variant)
+        requires (bookmarks_variant != null)
+    {
+        update_bookmarks_icons_from_variant ((!) bookmarks_variant);
+    }
+
+    private void update_bookmarks_icons_from_variant (Variant variant)
+    {
+        update_bookmarks_icons_from_array (variant.get_strv ());
+    }
+
+    private void update_bookmarks_icons_from_array (string [] bookmarks)
+    {
+        if (bookmarks.length == 0)
+            return;
+
+        foreach (string bookmark in bookmarks)
+        {
+            if (bookmark.has_prefix ("?"))  // TODO broken search
+            {
+                update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
+                continue;
+            }
+            if (is_path_invalid (bookmark)) // TODO broken folder and broken object
+                continue;
+
+            uint16 context_id;
+            string name;
+            bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);    // TODO get_folder
+
+            if (context_id == ModelUtils.folder_context_id)
+            {
+                if (bookmark_exists)
+                    update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
+                else
+                    update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
+                continue;
+            }
+
+            if (!bookmark_exists)
+                update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
+            else if (context_id == ModelUtils.dconf_context_id)
+                update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
+            else
+            {
+                RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
+                bool is_default;
+                if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
+                    assert_not_reached ();
+                if (is_default)
+                    update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
+                else
+                    update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
+            }
+        }
+    }
+
+    private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
+    {
+        if (AdaptativeWidget.WindowSize.is_extra_thin (window_size)
+         || AdaptativeWidget.WindowSize.is_extra_flat (window_size))
+            browser_view.update_bookmark_icon (bookmark, icon);
+        else
+            headerbar.update_bookmark_icon (bookmark, icon);
+    }
+
+    /*\
+    * * adaptative stuff
     \*/
 
     private bool disable_popovers = false;
     private bool disable_action_bar = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    protected override void chain_set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
                               || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
@@ -852,8 +609,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             disable_popovers = _disable_popovers;
             if (browser_view.in_window_bookmarks)
                 hide_in_window_bookmarks ();
-            else if (browser_view.in_window_about)
-                hide_in_window_about ();
         }
 
         bool _disable_action_bar = _disable_popovers
@@ -970,7 +725,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         browser_view.move_bottom ();
     }
 
-    [GtkCallback]
     private void on_bookmarks_selection_changed ()
     {
         update_actions ();
@@ -987,37 +741,14 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         insert_action_group ("kbd", action_group);
     }
 
-    private bool is_in_in_window_mode ()
-    {
-        return (browser_view.in_window_bookmarks || browser_view.in_window_modifications || browser_view.in_window_about);
-    }
-
     private const GLib.ActionEntry [] kbd_action_entries =
     {
-        // keyboard calls
         { "toggle-bookmark",    toggle_bookmark     },  // <P>b & <P>B
-        { "copy",               copy                },  // <P>c
-        { "copy-path",          copy_path           },  // <P>C
         { "bookmark",           bookmark            },  // <P>d
         { "unbookmark",         unbookmark          },  // <P>D
-        { "toggle-search",      _toggle_search      },  // <P>f // TODO unduplicate names
-        { "next-match",         next_match          },  // <P>g // usual shortcut for "next-match"     in a SearchEntry; see also "Down"
-        { "previous-match",     previous_match      },  // <P>G // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
-        { "request-config",     _request_config     },  // <P>i // TODO fusion with ui.open-config?
         { "modifications",      modifications_list  },  // <A>i
-        { "edit-path-end",      edit_path_end       },  // <P>l
-        { "edit-path-last",     edit_path_last      },  // <P>L
-        { "paste",              paste               },  // <P>v
-        { "paste-force",        paste_force         },  // <P>V
 
-        { "open-root",          open_root           },  // <S><A>Up
-        { "open-parent",        open_current_parent },  //    <A>Up
-        { "open-child",         open_child          },  //    <A>Down
-        { "open-last-child",    open_last_child     },  // <S><A>Down
-
-        { "toggle-hamburger",   toggle_hamburger    },  // F10
         { "escape",             escape_pressed      },  // Escape
-        { "menu",               menu_pressed        },  // Menu
 
         { "toggle-boolean",     toggle_boolean      },  // <P>Return & <P>KP_Enter
         { "set-to-default",     set_to_default      }   // <P>Delete & <P>KP_Delete & decimalpoint & period & KP_Decimal
@@ -1039,55 +770,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             show_in_window_bookmarks ();
     }
 
-    private void copy                                   (/* SimpleAction action, Variant? path_variant */)
-    {
-        Widget? focus = get_focus ();
-        if (focus != null)
-        {
-            if ((!) focus is Entry)
-            {
-                ((Entry) (!) focus).copy_clipboard ();
-                return;
-            }
-            if ((!) focus is TextView)
-            {
-                ((TextView) (!) focus).copy_clipboard ();
-                return;
-            }
-        }
-
-        model.copy_action_called ();
-
-        browser_view.discard_row_popover (); // TODO avoid duplicate get_selected_row () call
-
-        string? selected_row_text = browser_view.get_copy_text ();
-        if (selected_row_text == null && current_type == ViewType.OBJECT)
-            selected_row_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
-        ConfigurationEditor application = (ConfigurationEditor) get_application ();
-        application.copy (selected_row_text == null ? current_path : (!) selected_row_text);
-    }
-
-    private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (is_in_in_window_mode ())        // TODO better
-            return;
-
-        browser_view.discard_row_popover ();
-
-        if (headerbar.search_mode_enabled)
-        {
-            model.copy_action_called ();
-            string selected_row_text = browser_view.get_copy_path_text () ?? saved_view;
-            ((ConfigurationEditor) get_application ()).copy (selected_row_text);
-        }
-        else
-        {
-            if (browser_view.current_view == ViewType.OBJECT)
-                model.copy_action_called ();
-            ((ConfigurationEditor) get_application ()).copy (current_path);
-        }
-    }
-
     private void bookmark                               (/* SimpleAction action, Variant? variant */)
     {
         if (is_in_in_window_mode ())        // TODO better
@@ -1106,61 +788,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         headerbar.unbookmark_current_path ();
     }
 
-    private void _toggle_search                         (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())        // TODO better
-            return;
-
-        headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
-        browser_view.discard_row_popover ();   // could be needed if headerbar.search_mode_enabled
-
-        if (!headerbar.search_mode_enabled)
-            request_search (true, PathEntry.SearchMode.SEARCH);
-        else if (!headerbar.entry_has_focus)
-            headerbar.entry_grab_focus (true);
-        else if (headerbar.text.has_prefix ("/"))
-            request_search (true, PathEntry.SearchMode.SEARCH);
-        else
-            stop_search ();
-    }
-
-    private void next_match                             (/* SimpleAction action, Variant? variant */)   // See also "Down"
-    {
-        _next_match ();         // NOTE returns bool
-    }
-    private bool _next_match ()
-    {
-        if (headerbar.has_popover ())                   // for bookmarks popover
-            return headerbar.next_match ();
-        if (revealer.get_modifications_list_state ())   // for modifications popover
-            return revealer.next_match ();
-        else
-            return browser_view.next_match ();          // for in-window things and main list
-    }
-
-    private void previous_match                         (/* SimpleAction action, Variant? variant */)   // See also "Up"
-    {
-        _previous_match ();     // NOTE returns bool
-    }
-    private bool _previous_match ()
-    {
-        if (headerbar.has_popover ())                   // for bookmarks popover
-            return headerbar.previous_match ();
-        if (revealer.get_modifications_list_state ())   // for modifications popover
-            return revealer.previous_match ();
-        else
-            return browser_view.previous_match ();      // for in-window things and main list
-    }
-
-    private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
-    {
-        if (is_in_in_window_mode ())        // TODO better
-            return;
-
-        if (browser_view.current_view == ViewType.FOLDER)
-            request_config (current_path);
-    }
-
     private void modifications_list                     (/* SimpleAction action, Variant? variant */)
     {
         if (!modifications_handler.get_current_delay_mode ())
@@ -1175,111 +802,6 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             show_in_window_modifications ();
     }
 
-    private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        if (!headerbar.search_mode_enabled)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
-    }
-
-    private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        if (!headerbar.search_mode_enabled)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
-    }
-
-    private void paste                                  (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        Widget? focus = get_focus ();
-        if (focus != null)
-        {
-            if ((!) focus is Entry)
-            {
-                ((Entry) (!) focus).paste_clipboard ();
-                return;
-            }
-            if ((!) focus is TextView)
-            {
-                ((TextView) (!) focus).paste_clipboard ();
-                return;
-            }
-        }
-
-        search_clipboard_content ();
-    }
-    private void search_clipboard_content ()
-    {
-        Gdk.Display? display = Gdk.Display.get_default ();
-        if (display == null)    // ?
-            return;
-
-        string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
-        if (clipboard_content != null)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
-        else
-            request_search (true, PathEntry.SearchMode.SEARCH);
-    }
-
-    private void paste_force                            (/* SimpleAction action, Variant? variant */)
-    {
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-        else if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
-        else if (browser_view.in_window_about)
-            hide_in_window_about ();
-
-        search_clipboard_content ();
-    }
-
-    private void open_root                              (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        go_backward (true);
-    }
-
-    private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        if (browser_view.current_view == ViewType.CONFIG)
-            request_folder (current_path);
-        else
-            go_backward (false);
-    }
-
-    private void open_child                             (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        go_forward (false);
-    }
-
-    private void open_last_child                        (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())
-            return;
-
-        go_forward (true);
-    }
-
-    private void toggle_hamburger                       (/* SimpleAction action, Variant? variant */)
-    {
-        headerbar.toggle_hamburger_menu ();
-    }
-
     private void escape_pressed                         (/* SimpleAction action, Variant? variant */)
     {
         if (browser_view.in_window_bookmarks)
@@ -1291,7 +813,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         }
         else if (browser_view.in_window_modifications)
             hide_in_window_modifications ();
-        else if (browser_view.in_window_about)
+        else if (in_window_about)
             hide_in_window_about ();
         else if (headerbar.search_mode_enabled)
             stop_search ();
@@ -1299,22 +821,9 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
             request_folder (current_path);
     }
 
-    private void menu_pressed                           (/* SimpleAction action, Variant? variant */)
-    {
-        if (browser_view.toggle_row_popover ()) // handles in-window bookmarks
-            headerbar.close_popovers ();
-        else
-        {
-            headerbar.toggle_hamburger_menu ();
-            browser_view.discard_row_popover ();
-        }
-    }
-
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
     {
-        if (headerbar.has_popover ())
-            return;
-        if (is_in_in_window_mode ())
+        if (row_action_blocked ())
             return;
 
         browser_view.discard_row_popover ();
@@ -1323,9 +832,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
 
     private void set_to_default                         (/* SimpleAction action, Variant? variant */)
     {
-        if (headerbar.has_popover ())
-            return;
-        if (is_in_in_window_mode ())
+        if (row_action_blocked ())
             return;
 
         if (revealer.dismiss_selected_modification ())
@@ -1342,15 +849,63 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
     }
 
     /*\
+    * * keyboard calls helpers
+    \*/
+
+    protected override bool intercept_next_match (out bool interception_result)
+    {
+        if (headerbar.has_popover ())                   // for bookmarks popover
+        {
+            interception_result = headerbar.next_match ();
+            return true;
+        }
+        if (revealer.get_modifications_list_state ())   // for modifications popover
+        {
+            interception_result = revealer.next_match ();
+            return true;
+        }
+        interception_result = false; // garbage
+        return false;
+    }
+
+    protected override bool intercept_previous_match (out bool interception_result)
+    {
+        if (headerbar.has_popover ())                   // for bookmarks popover
+        {
+            interception_result = headerbar.previous_match ();
+            return true;
+        }
+        if (revealer.get_modifications_list_state ())   // for modifications popover
+        {
+            interception_result = revealer.previous_match ();
+            return true;
+        }
+        interception_result = false; // garbage
+        return false;
+    }
+
+    /*\
     * * Path requests
     \*/
+
+    protected override void close_in_window_panels ()
+    {
+        headerbar.close_popovers ();
+        revealer.hide_modifications_list ();
+        if (browser_view.in_window_bookmarks)
+            hide_in_window_bookmarks ();
+        else if (browser_view.in_window_modifications)
+            hide_in_window_modifications ();
+        else if (in_window_about)
+            hide_in_window_about ();
+    }
 
     public static bool is_path_invalid (string path)
     {
         return path.has_prefix ("/") && (path.contains ("//") || path.contains (" "));
     }
 
-    private void request_config (string full_name)
+    protected override void request_config (string full_name)
     {
         browser_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
                                           model.get_folder_properties (full_name),
@@ -1361,7 +916,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
+    protected override void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         string fallback_path = model.get_fallback_path (full_name);
 
@@ -1402,7 +957,7 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         return key_model;
     }
 
-    private void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "")
+    protected override void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "")
     {
         context_id = model.get_fallback_context (full_name, context_id, schema_id);
 
@@ -1430,268 +985,61 @@ private class DConfWindow : AdaptativeWindow, AdaptativeWidget
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    private void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null)
-    {
-        string selected_row = browser_view.get_selected_row_name ();
-        if (reload)
-        {
-            reload_search_action.set_enabled (false);
-            browser_view.set_search_parameters (saved_view, headerbar.get_bookmarks ());
-            reload_search_next = false;
-        }
-        if (mode != PathEntry.SearchMode.UNCLEAR)
-            headerbar.prepare_search (mode, search);
-        string search_text = search == null ? headerbar.text : (!) search;
-        update_current_path (ViewType.SEARCH, search_text);
-        if (mode != PathEntry.SearchMode.UNCLEAR)
-            browser_view.select_row (selected_row);
-        if (!headerbar.entry_has_focus)
-            headerbar.entry_grab_focus (false);
-    }
-
-    private void reload_view ()
-    {
-        if (browser_view.current_view == ViewType.FOLDER)
-            request_folder (current_path, browser_view.get_selected_row_name ());
-        else if (browser_view.current_view == ViewType.OBJECT)
-            request_object (current_path, ModelUtils.undefined_context_id, false);
-        else if (browser_view.current_view == ViewType.SEARCH)
-            request_search (true);
-    }
-
     /*\
-    * * Path changing
+    * * navigation helpers
     \*/
 
-    private void update_current_path (ViewType type, string path)
+    protected override string get_copy_text ()
     {
-        if (type == ViewType.OBJECT || type == ViewType.FOLDER)
-        {
-            saved_type = type;
-            saved_view = path;
-            reload_search_next = true;
-        }
-        else if (current_type == ViewType.FOLDER)
-            saved_selection = browser_view.get_selected_row_name ();
-        else if (current_type == ViewType.OBJECT)
-            saved_selection = "";
+        model.copy_action_called ();
 
-        current_type = type;
-        current_path = path;
-
-        browser_view.set_path (type, path);
-        headerbar.set_path (type, path);
-        headerbar.update_hamburger_menu (modifications_handler.get_current_delay_mode ());
-
-        Variant variant = new Variant ("(sq)", path, (type == ViewType.FOLDER) || (type == ViewType.CONFIG) ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id);
-        open_path_action.set_state (variant);
-        disabled_state_action.set_state (variant);
+        string? selected_row_text = browser_view.get_copy_text ();
+        if (selected_row_text == null && current_type == ViewType.OBJECT)
+            selected_row_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
+        return selected_row_text == null ? current_path : (!) selected_row_text;
     }
 
-    private void invalidate_popovers_with_ui_reload ()
-    {
-        bool delay_mode = modifications_handler.get_current_delay_mode ();
-        browser_view.hide_or_show_toggles (!delay_mode);
-        browser_view.invalidate_popovers ();
-        headerbar.update_hamburger_menu (delay_mode);
-    }
-
-    /*\
-    * * Search callbacks
-    \*/
-
-    [GtkCallback]
-    private void search_changed_cb ()
-    {
-        request_search (reload_search_next);
-    }
-
-    [GtkCallback]
-    private void search_stopped_cb ()
-    {
-        browser_view.row_grab_focus ();
-
-        reload_search_action.set_enabled (false);
-        if (saved_type == ViewType.FOLDER)
-            request_folder (saved_view, saved_selection);
-        else
-            update_current_path (saved_type, strdup (saved_view));
-        reload_search_next = true;
-    }
-
-    private void stop_search ()
+    protected override string get_copy_path_text ()
     {
         if (headerbar.search_mode_enabled)
-            search_stopped_cb ();
+        {
+            model.copy_action_called ();
+            return browser_view.get_copy_path_text () ?? saved_view;
+        }
+
+        if (browser_view.current_view == ViewType.OBJECT)
+            model.copy_action_called ();
+
+        return current_path;
     }
 
     /*\
-    * * Global callbacks
+    * * Non-existant path notifications // TODO unduplicate
     \*/
 
-    [GtkCallback]
-    private bool on_button_press_event (Widget widget, Gdk.EventButton event)
+    private void notify_folder_emptied (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
     {
-        if (!mouse_extra_buttons)
-            return false;
+        string full_name = ((!) path_variant).get_string ();
 
-        if (event.button == mouse_back_button)
-        {
-            if (mouse_back_button == mouse_forward_button)
-            {
-                warning (_("The same mouse button is set for going backward and forward. Doing nothing."));
-                return false;
-            }
-
-            go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
-            return true;
-        }
-        if (event.button == mouse_forward_button)
-        {
-            go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
-            return true;
-        }
-        return false;
+        show_notification (_("Folder “%s” is now empty.").printf (full_name));
     }
 
-    [GtkCallback]
-    private bool on_key_press_event (Widget widget, Gdk.EventKey event)
+    private void notify_object_deleted (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
     {
-        uint keyval = event.keyval;
-        string name = (!) (Gdk.keyval_name (keyval) ?? "");
+        string full_name;
+        uint16 unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
+        ((!) path_variant).@get ("(sq)", out full_name, out unused);
 
-        if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
-        {
-            browser_view.discard_row_popover ();
-            if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
-                return false;   // help overlay
-            about_cb ();
-            return true;
-        }
-
-        /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
-        if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
-            return _next_match ();
-        if (name == "Up"   && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>G
-            return _previous_match ();
-
-        if (is_in_in_window_mode ())
-            return false;
-
-        /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
-        if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
-        {
-            Widget? focus = get_focus ();
-            if (focus != null && (((!) focus is Entry) || ((!) focus is TextView))) // && browser_view.current_view != ViewType.SEARCH
-                return false;
-
-            headerbar.toggle_pathbar_menu ();
-            return true;
-        }
-
-        if (name == "Return" || name == "KP_Enter")
-        {
-            if (browser_view.current_view == ViewType.SEARCH
-             && headerbar.entry_has_focus
-             && browser_view.return_pressed ())
-                return true;
-            return false;
-        }
-
-        if (headerbar.has_popover ())
-            return false;
-
-        if (!headerbar.search_mode_enabled &&
-            // see gtk_search_entry_is_keynav() in gtk+/gtk/gtksearchentry.c:388
-            (keyval == Gdk.Key.Tab          || keyval == Gdk.Key.KP_Tab         ||
-             keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
-             keyval == Gdk.Key.Down         || keyval == Gdk.Key.KP_Down        ||
-             keyval == Gdk.Key.Left         || keyval == Gdk.Key.KP_Left        ||
-             keyval == Gdk.Key.Right        || keyval == Gdk.Key.KP_Right       ||
-             keyval == Gdk.Key.Home         || keyval == Gdk.Key.KP_Home        ||
-             keyval == Gdk.Key.End          || keyval == Gdk.Key.KP_End         ||
-             keyval == Gdk.Key.Page_Up      || keyval == Gdk.Key.KP_Page_Up     ||
-             keyval == Gdk.Key.Page_Down    || keyval == Gdk.Key.KP_Page_Down   ||
-             ((event.state & (Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.MOD1_MASK)) != 0) ||
-             name == "space" || name == "KP_Space"))
-            return false;
-
-        Widget? focus = get_focus ();
-        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
-        if ((!focus_is_text_widget)
-         && (event.is_modifier == 0)
-         && (event.length != 0)
-//       && (name != "F10")     // else <Shift>F10 toggles the search_entry popup; see if a976aa9740 fixes that in Gtk+ 4
-         && (headerbar.handle_event (event)))
-            return true;
-
-        return false;
-    }
-
-    private void go_backward (bool shift)
-    {
-        if (headerbar.search_mode_enabled)
-            return;
-
-        headerbar.close_popovers ();        // by symmetry with go_forward()
-        browser_view.discard_row_popover ();
-
-        if (current_path == "/")
-            return;
-        if (shift)
-            request_folder ("/");
-        else
-            request_folder (ModelUtils.get_parent_path (current_path), current_path.dup ());
-    }
-
-    private void go_forward (bool shift)
-    {
-        if (headerbar.search_mode_enabled)
-            return;
-
-        string complete_path = headerbar.get_complete_path ();
-
-        headerbar.close_popovers ();
-        browser_view.discard_row_popover ();
-
-        if (current_path == complete_path)  // TODO something?
-            return;
-
-        if (shift)
-        {
-            string fallback_path = model.get_fallback_path (complete_path);
-            if (ModelUtils.is_key_path (fallback_path))
-                request_object (fallback_path);
-            else if (fallback_path != current_path)
-                request_folder (fallback_path);
-            else
-                request_folder (complete_path);
-        }
-        else
-        {
-            int index_of_last_slash = complete_path.index_of ("/", ((!) current_path).length);
-            if (index_of_last_slash != -1)
-                request_folder (complete_path.slice (0, index_of_last_slash + 1));
-            else if (ModelUtils.is_key_path (complete_path))
-                request_object (complete_path);
-            else
-                request_folder (complete_path);
-        }
-    }
-
-    /*\
-    * * Non-existant path notifications
-    \*/
-
-    private void show_notification (string notification)
-    {
-        notifications_revealer.show_notification (notification);
+        show_notification (_("Key “%s” has been deleted.").printf (full_name));
     }
 
     private void cannot_find_key (string full_name)
     {
         show_notification (_("Cannot find key “%s”.").printf (full_name));
     }
+
     private void cannot_find_folder (string full_name)
     {
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));

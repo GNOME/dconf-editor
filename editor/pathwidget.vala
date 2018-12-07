@@ -130,6 +130,10 @@ private class PathWidget : Box, AdaptativeWidget
     {
         return pathbar.get_complete_path ();
     }
+    internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)
+    {
+        pathbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
+    }
 
     internal void update_ghosts (string fallback_path)
     {
