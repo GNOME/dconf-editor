@@ -78,6 +78,7 @@ sources = files(
   'browser-view.vala',
   'browser-window.vala',
   'dconf-editor.vala',
+  'dconf-headerbar.vala',
   'dconf-model.vala',
   'dconf-view.vala',
   'dconf-window.vala',

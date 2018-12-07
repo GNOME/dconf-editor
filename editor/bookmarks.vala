@@ -91,6 +91,11 @@ private class Bookmarks : MenuButton
         clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
     }
 
+    internal Bookmarks (string _schema_path)
+    {
+        Object (schema_path: _schema_path);
+    }
+
     [GtkCallback]
     private void on_bookmarks_changed (Variant bookmarks_variant, bool writable)
     {

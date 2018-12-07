@@ -52,6 +52,11 @@ private class BookmarksController : Grid
             rows_size_button.hide ();
     }
 
+    internal BookmarksController (string _controller_action_prefix, bool _show_rows_size_button)
+    {
+        Object (controller_action_prefix: _controller_action_prefix, show_rows_size_button: _show_rows_size_button);
+    }
+
     internal void update_rows_size_button_icon (bool small_bookmarks_rows)
     {
         if (small_bookmarks_rows)

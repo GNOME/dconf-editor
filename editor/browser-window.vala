@@ -29,7 +29,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     protected string    saved_selection = "";
 
     [GtkChild] protected Grid main_grid;
-               protected BrowserHeaderBar headerbar;
+               private   BrowserHeaderBar headerbar;
                protected BrowserView      browser_view;
 
     construct
@@ -299,7 +299,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         if (reload)
         {
             reload_search_action.set_enabled (false);
-            browser_view.set_search_parameters (saved_view, headerbar.get_bookmarks ());
+            browser_view.set_search_parameters (saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
             reload_search_next = false;
         }
         if (mode != PathEntry.SearchMode.UNCLEAR)

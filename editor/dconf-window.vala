@@ -101,6 +101,8 @@ private class DConfWindow : BrowserWindow
     private ulong delayed_changes_changed_handler = 0;
     private ulong bookmarks_selection_changed_handler = 0;
 
+    private DConfHeaderBar headerbar;
+
     private StyleContext context;
     construct
     {
@@ -119,8 +121,9 @@ private class DConfWindow : BrowserWindow
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool night_time, bool dark_theme, bool automatic_night_mode)
     {
-        BrowserHeaderBar headerbar = new BrowserHeaderBar ();
-        Object (initial_night_time: night_time, initial_dark_theme: dark_theme, initial_automatic_night_mode: automatic_night_mode, adaptative_headerbar: (AdaptativeHeaderBar) headerbar);
+        DConfHeaderBar _headerbar = new DConfHeaderBar ();
+        Object (initial_night_time: night_time, initial_dark_theme: dark_theme, initial_automatic_night_mode: automatic_night_mode, adaptative_headerbar: (AdaptativeHeaderBar) _headerbar);
+        headerbar = _headerbar;
 
         headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
         browserview_update_bookmarks_icons_handler = browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);

@@ -25,44 +25,12 @@
         <property name="visible">False</property>
       </object>
     </child>
-    <!-- child>
-      <object class="GtkButton" id="apply_modifications_button">
-        <property name="visible">False</property>
-        <property name="action-name">ui.apply-modifications</property>
-        <style>
-          <class name="image-button"/>
-          <class name="suggested-action"/>
-        </style>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">object-select-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
-      </object>
-    </child -->
-    <!-- child>
-      <object class="GtkButton" id="dismiss_modification_button">
-        <property name="visible">False</property>
-        <property name="action-name">ui.dismiss-modifications</property>
-        <style>
-          <class name="image-button"/>
-        </style>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">list-remove-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
-      </object>
-    </child -->
     <child type="title">
       <object class="GtkBox" id="center_box">
         <property name="visible">True</property>
         <property name="valign">fill</property>
         <property name="spacing">6</property>
+        <property name="hexpand">False</property> <!-- or "hexpand-set">true... that's horrible -->
         <style>
           <class name="centerwidget"/>
         </style>
@@ -70,6 +38,7 @@
           <object class="GtkStack" id="title_stack">
             <property name="visible">True</property>
             <property name="hhomogeneous">False</property>
+            <property name="hexpand">True</property>
             <child>
               <object class="PathWidget" id="path_widget">
                 <property name="visible">True</property>
@@ -81,36 +50,6 @@
             <child>
               <object class="GtkLabel" id="title_label">
                 <property name="visible">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="BookmarksController" id="bookmarks_controller">
-                <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="show-rows-size-button">False</property>
-                <property name="controller-action-prefix">bmk</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkRevealer" id="bookmarks_revealer">
-            <property name="visible">True</property>
-            <property name="transition-type">slide-left</property>
-            <property name="reveal-child">True</property>
-            <style>
-              <class name="headerbar-revealer"/>
-            </style>
-            <child>
-              <object class="Bookmarks" id="bookmarks_button">
-                <property name="visible">True</property>
-                <property name="valign">center</property>
-                <property name="focus-on-click">False</property>
-                <property name="schema-path">/ca/desrt/dconf-editor/</property>
-                <signal name="update-bookmarks-icons" handler="update_bookmarks_icons_cb"/>
-                <style>
-                  <class name="image-button"/> <!-- TODO https://bugzilla.gnome.org/show_bug.cgi?id=756731 -->
-                </style>
               </object>
             </child>
           </object>
@@ -138,51 +77,12 @@
       </packing>
     </child>
     <child>
-      <object class="GtkButton" id="show_modifications_button">
-        <property name="visible">False</property>
-        <property name="valign">center</property>
-        <property name="action-name">ui.show-in-window-modifications</property>
-        <style>
-          <class name="titlebutton"/>
-        </style>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">document-open-recent-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
-      </object>
-      <packing>
-        <property name="pack-type">end</property>
-      </packing>
-    </child>
-    <child>
       <object class="GtkSeparator" id="ltr_right_separator">
         <property name="visible">False</property>
         <property name="orientation">vertical</property>
         <style>
           <class name="titlebutton"/>
         </style>
-      </object>
-      <packing>
-        <property name="pack-type">end</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkMenuButton" id="modifications_actions_button">
-        <property name="visible">False</property>
-        <property name="valign">center</property>
-        <style>
-          <class name="image-button"/>
-        </style>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">view-more-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
       </object>
       <packing>
         <property name="pack-type">end</property>
