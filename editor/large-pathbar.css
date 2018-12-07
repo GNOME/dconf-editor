@@ -19,30 +19,31 @@
 * * main large-window stuff
 \*/
 
-              .pathbar {
-  /* nautilus/src/resources/css/Adwaita.css:71 .path-bar-box uses 200ms */
-  transition: border-color     0.3s,
-              background-color 0.3s;
-  border-color:transparent;
-
+                       .pathbar {
   border-width:1px;
   border-style:solid;
   border-radius:3px;
 
   padding:0;
   margin:6px 0;
+
+  /* nautilus/src/resources/css/Adwaita.css:71 .path-bar-box uses 200ms */
+  transition: background-color 0.3s,
+              color            0.3s,
+              border-color     0.3s;
+  border-color:transparent;
 }
 
-.large-window .pathbar {
-  /* like in nautilus/src/resources/css/Adwaita.css:75
-     .path-bar-box.width-maximized */
-  border-color:@borders;
-}
-
-.large-window .pathbar:not(:backdrop) {
-  /* like in nautilus/src/resources/css/Adwaita.css:79
-     .path-bar-box.width-maximized:not(:backdrop) */
+.large-window          .pathbar {
   background-color:@theme_bg_color;
+  color           :@theme_fg_color;
+  border-color    :@borders;
+}
+
+.large-window:backdrop .pathbar {
+  background-color:@theme_unfocused_bg_color;
+  color           :@theme_unfocused_fg_color;
+  border-color    :@unfocused_borders;
 }
 
 /*\
