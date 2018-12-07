@@ -287,16 +287,16 @@ private class BookmarksList : OverlayedList
         if (index == 0)
             return; // TODO assert_not_reached?
 
-        ListBoxRow? prev_row = main_list_box.get_row_at_index (index - 1);
-        if (prev_row == null)
-            assert_not_reached ();
-
-        Allocation list_allocation, row_allocation;
-        scrolled.get_allocation (out list_allocation);
-        Widget? row_child = ((!) prev_row).get_child ();    // using prev_row as the allocation is not updated anyway
-        if (row_child == null)
-            assert_not_reached ();
-        ((!) row_child).get_allocation (out row_allocation);
+//        ListBoxRow? prev_row = main_list_box.get_row_at_index (index - 1);
+//        if (prev_row == null)
+//            assert_not_reached ();
+//
+//        Allocation list_allocation, row_allocation;
+//        scrolled.get_allocation (out list_allocation);
+//        Widget? row_child = ((!) prev_row).get_child ();    // using prev_row as the allocation is not updated anyway
+//        if (row_child == null)
+//            assert_not_reached ();
+//        ((!) row_child).get_allocation (out row_allocation);
 //        Adjustment adjustment = main_list_box.get_adjustment ();
 //        int proposed_adjustment_value = row_allocation.y + (int) ((row_allocation.height - list_allocation.height) / 3.0);
 //        bool should_adjust = adjustment.get_value () > proposed_adjustment_value;
@@ -340,16 +340,16 @@ private class BookmarksList : OverlayedList
             return; // TODO assert_not_reached?
         int index = indices [0];
 
-        ListBoxRow? next_row = main_list_box.get_row_at_index (index + 1);
-        if (next_row == null)
-            return; // TODO assert_not_reached?
-
-        Allocation list_allocation, row_allocation;
-        scrolled.get_allocation (out list_allocation);
-        Widget? row_child = ((!) next_row).get_child ();    // using next_row as the allocation is not updated
-        if (row_child == null)
-            assert_not_reached ();
-        ((!) row_child).get_allocation (out row_allocation);
+//        ListBoxRow? next_row = main_list_box.get_row_at_index (index + 1);
+//        if (next_row == null)
+//            return; // TODO assert_not_reached?
+//
+//        Allocation list_allocation, row_allocation;
+//        scrolled.get_allocation (out list_allocation);
+//        Widget? row_child = ((!) next_row).get_child ();    // using next_row as the allocation is not updated
+//        if (row_child == null)
+//            assert_not_reached ();
+//        ((!) row_child).get_allocation (out row_allocation);
 //        Adjustment adjustment = main_list_box.get_adjustment ();
 //        int proposed_adjustment_value = row_allocation.y + (int) (2 * (row_allocation.height - list_allocation.height) / 3.0);
 //        bool should_adjust = adjustment.get_value () < proposed_adjustment_value;

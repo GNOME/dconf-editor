@@ -21,10 +21,10 @@ using Gtk;
 private abstract class OverlayedList : Overlay, AdaptativeWidget
 {
     [GtkChild] protected ListBox        main_list_box;
-               private StyleContext     main_list_box_context;
+               private   StyleContext   main_list_box_context;
                protected GLib.ListStore main_list_store = new GLib.ListStore (typeof (Widget));
 
-    [GtkChild] protected ScrolledWindow scrolled;
+    [GtkChild] private   ScrolledWindow scrolled;
     [GtkChild] private   Box            edit_mode_box;
 
     /*\
