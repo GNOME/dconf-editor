@@ -68,37 +68,53 @@ private interface AdaptativeWidget : Object
     internal abstract void set_window_size (WindowSize new_size);
 }
 
-private abstract class AdaptativeHeaderBar : HeaderBar
+private abstract class NightTimeAwareHeaderBar : HeaderBar
 {
+    private bool night_time           = false; // no need to use NightTime here (that allows an "Unknown" value)
+    private bool dark_theme           = false;
+    private bool automatic_night_mode = false;
+
     /*\
-    * * manage night mode
+    * * construct
     \*/
 
-    private bool night_time = false;   // no need to use NightTime here (that allows an "Unknown" value)
-    internal void set_night_time (bool _night_time)
+    [CCode (notify = false)] public NightLightMonitor night_light_monitor
     {
-        night_time = _night_time;
-        update_hamburger_menu ();
-    }
-    private bool dark_theme = false;
-    internal void set_dark_theme (bool _dark_theme)
-    {
-        dark_theme = _dark_theme;
-        update_hamburger_menu ();
-    }
-    private bool automatic_night_mode = false;
-    internal void set_automatic_night_mode (bool _automatic_night_mode)
-    {
-        automatic_night_mode = _automatic_night_mode;
-        // menu update not needed
+        protected construct
+        {
+            night_time = NightLightMonitor.NightTime.should_use_dark_theme (value.night_time);
+            dark_theme = value.dark_theme;
+            automatic_night_mode = value.automatic_night_mode;
+            // menu is already updated three times at startup, let's not add one
+
+            ulong night_time_handler = value.notify ["night-time"].connect (night_time_changed);
+            ulong dark_theme_handler = value.notify ["dark-theme"].connect (dark_theme_changed);
+            ulong auto_night_handler = value.notify ["automatic-night-mode"].connect (automatic_night_mode_changed);
+
+            destroy.connect (() => {
+                    value.disconnect (night_time_handler);
+                    value.disconnect (dark_theme_handler);
+                    value.disconnect (auto_night_handler);
+                });
+        }
     }
 
-    internal void init_night_mode (bool _night_time, bool _dark_theme, bool _automatic_night_mode)
+    private void night_time_changed (Object nlm, ParamSpec thing)
     {
-        night_time           = _night_time;
-        dark_theme           = _dark_theme;
-        automatic_night_mode = _automatic_night_mode;
-        // menu is already updated three times at startup, let's not add one
+        night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
+        update_hamburger_menu ();
+    }
+
+    private void dark_theme_changed (Object nlm, ParamSpec thing)
+    {
+        dark_theme = ((NightLightMonitor) nlm).dark_theme;
+        update_hamburger_menu ();
+    }
+
+    private void automatic_night_mode_changed (Object nlm, ParamSpec thing)
+    {
+        automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
+        // menu update not needed
     }
 
     /*\
@@ -132,7 +148,7 @@ private abstract class AdaptativeHeaderBar : HeaderBar
 
 private abstract class AdaptativeWindow : ApplicationWindow
 {
-    [CCode (notify = false)] public AdaptativeHeaderBar adaptative_headerbar { protected get; protected construct; }
+    [CCode (notify = false)] public NightTimeAwareHeaderBar nta_headerbar { protected get; protected construct; }
 
     private StyleContext context;
 
@@ -141,10 +157,8 @@ private abstract class AdaptativeWindow : ApplicationWindow
         context = get_style_context ();
         context.add_class ("startup");
 
-        adaptative_headerbar.show ();
-        set_titlebar (adaptative_headerbar);
-
-        init_night_mode ();
+        nta_headerbar.show ();
+        set_titlebar (nta_headerbar);
 
         manage_high_contrast ();
 
@@ -339,35 +353,5 @@ private abstract class AdaptativeWindow : ApplicationWindow
             context.add_class ("hc-theme");
         else
             context.remove_class ("hc-theme");
-    }
-
-    /*\
-    * * manage night mode
-    \*/
-
-    // for construct only
-    [CCode (notify = false)] public bool initial_night_time           { private get; protected construct; }
-    [CCode (notify = false)] public bool initial_dark_theme           { private get; protected construct; }
-    [CCode (notify = false)] public bool initial_automatic_night_mode { private get; protected construct; }
-
-    private void init_night_mode ()
-    {
-        adaptative_headerbar.init_night_mode (initial_night_time, initial_dark_theme, initial_automatic_night_mode);
-    }
-
-    // for updates
-    internal void night_time_changed (Object nlm, ParamSpec thing)
-    {
-        adaptative_headerbar.set_night_time (NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time));
-    }
-
-    internal void dark_theme_changed (Object nlm, ParamSpec thing)
-    {
-        adaptative_headerbar.set_dark_theme (((NightLightMonitor) nlm).dark_theme);
-    }
-
-    internal void automatic_night_mode_changed (Object nlm, ParamSpec thing)
-    {
-        adaptative_headerbar.set_automatic_night_mode (((NightLightMonitor) nlm).automatic_night_mode);
     }
 }

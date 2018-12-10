@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-headerbar.ui")]
-private abstract class BrowserHeaderBar : AdaptativeHeaderBar, AdaptativeWidget
+private abstract class BrowserHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 {
     [GtkChild] protected MenuButton info_button;
     [GtkChild] protected PathWidget path_widget;

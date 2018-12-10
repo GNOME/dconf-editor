@@ -512,12 +512,8 @@ private class ConfigurationEditor : Gtk.Application
 
     private Gtk.Window get_new_window (string? schema, string? path, string? key_name)
     {
-        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name, NightLightMonitor.NightTime.should_use_dark_theme (night_light_monitor.night_time), night_light_monitor.dark_theme, night_light_monitor.automatic_night_mode);
+        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name, night_light_monitor);
         add_window (window);
-
-        night_light_monitor.notify ["night-time"].connect (window.night_time_changed);
-        night_light_monitor.notify ["dark-theme"].connect (window.dark_theme_changed);
-        night_light_monitor.notify ["automatic-night-mode"].connect (window.automatic_night_mode_changed);
 
         return (Gtk.Window) window;
     }

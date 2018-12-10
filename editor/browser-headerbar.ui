@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="BrowserHeaderBar" parent="AdaptativeHeaderBar">
+  <template class="BrowserHeaderBar" parent="NightTimeAwareHeaderBar">
     <property name="show-close-button">True</property>
     <property name="has-subtitle">False</property>
     <child>

@@ -46,6 +46,11 @@ private class DConfHeaderBar : BrowserHeaderBar
         construct_modifications_actions_button_menu ();
     }
 
+    internal DConfHeaderBar (NightLightMonitor _night_light_monitor)
+    {
+        Object (night_light_monitor: _night_light_monitor);
+    }
+
     /*\
     * * bookmarks revealer
     \*/

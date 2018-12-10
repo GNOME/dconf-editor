@@ -33,7 +33,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
 
     construct
     {
-        headerbar = (BrowserHeaderBar) adaptative_headerbar;
+        headerbar = (BrowserHeaderBar) nta_headerbar;
         headerbar.search_changed.connect (search_changed_cb);
         headerbar.search_stopped.connect (search_stopped_cb);
 

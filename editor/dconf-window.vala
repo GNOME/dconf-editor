@@ -119,10 +119,10 @@ private class DConfWindow : BrowserWindow
         bookmarks_selection_changed_handler = browser_view.bookmarks_selection_changed.connect (on_bookmarks_selection_changed);
     }
 
-    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, bool night_time, bool dark_theme, bool automatic_night_mode)
+    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, NightLightMonitor night_light_monitor)
     {
-        DConfHeaderBar _headerbar = new DConfHeaderBar ();
-        Object (initial_night_time: night_time, initial_dark_theme: dark_theme, initial_automatic_night_mode: automatic_night_mode, adaptative_headerbar: (AdaptativeHeaderBar) _headerbar);
+        DConfHeaderBar _headerbar = new DConfHeaderBar (night_light_monitor);
+        Object (nta_headerbar: (NightTimeAwareHeaderBar) _headerbar);
         headerbar = _headerbar;
 
         headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
