@@ -118,6 +118,20 @@ private abstract class NightTimeAwareHeaderBar : HeaderBar
     }
 
     /*\
+    * * high-contrast state
+    \*/
+
+    private bool highcontrast_state = false;
+
+    internal void set_highcontrast_state (bool highcontrast_new_state)
+    {
+        if (highcontrast_state == highcontrast_new_state)
+            return;
+        highcontrast_state = highcontrast_new_state;
+        update_hamburger_menu ();
+    }
+
+    /*\
     * * hamburger menu
     \*/
 
@@ -125,13 +139,11 @@ private abstract class NightTimeAwareHeaderBar : HeaderBar
 
     protected void append_or_not_night_mode_entry (ref GLib.Menu section)
     {
-        _append_or_not_night_mode_entry (night_time, dark_theme, automatic_night_mode, ref section);
+        if (night_time && !highcontrast_state)
+            append_night_mode_entry (dark_theme, automatic_night_mode, ref section);
     }
-    private static void _append_or_not_night_mode_entry (bool night_time, bool dark_theme, bool auto_night, ref GLib.Menu section)
+    private static inline void append_night_mode_entry (bool dark_theme, bool auto_night, ref GLib.Menu section)
     {
-        if (!night_time)
-            return;
-
         if (dark_theme)
             /* Translators: there are three related actions: "use", "reuse" and "pause" */
             section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
@@ -339,17 +351,24 @@ private abstract class AdaptativeWindow : ApplicationWindow
 
         Gtk.Settings gtk_settings = (!) nullable_gtk_settings;
         gtk_settings.notify ["gtk-theme-name"].connect (update_highcontrast_state);
-        update_highcontrast_state (gtk_settings);
+        _update_highcontrast_state (gtk_settings);
+    }
+
+    private void update_highcontrast_state (Object gtk_settings, ParamSpec unused)
+    {
+        _update_highcontrast_state ((Gtk.Settings) gtk_settings);
     }
 
     private bool highcontrast_state = false;
-    private void update_highcontrast_state (Object gtk_settings, ParamSpec? unused = null)
+    private void _update_highcontrast_state (Gtk.Settings gtk_settings)
     {
-        bool highcontrast_new_state = "HighContrast" in ((Gtk.Settings) gtk_settings).gtk_theme_name;
+        bool highcontrast_new_state = "HighContrast" in gtk_settings.gtk_theme_name;
         if (highcontrast_new_state == highcontrast_state)
             return;
         highcontrast_state = highcontrast_new_state;
-        if (highcontrast_state)
+        nta_headerbar.set_highcontrast_state (highcontrast_new_state);
+
+        if (highcontrast_new_state)
             context.add_class ("hc-theme");
         else
             context.remove_class ("hc-theme");
