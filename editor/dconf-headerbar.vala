@@ -435,33 +435,20 @@ private class DConfHeaderBar : BrowserHeaderBar
 
     private void update_modifications_button ()
     {
-        if (disable_action_bar)
-        {
-            set_show_close_button (false);
-            if (modifications_mode_on)
-            {
-                ltr_right_separator.hide ();
-                quit_button_stack.hide ();
-            }
-            else
-            {
-                quit_button_stack.show ();
-                if (delay_mode)
-                    quit_button_stack.set_visible_child (show_modifications_button);
-                else
-                    quit_button_stack.set_visible_child_name ("quit-button");
+        if (!disable_action_bar)
+            return;
 
-                if (use_bookmarks_mode_on || edit_bookmarks_mode_on || about_mode_on)
-                    ltr_right_separator.hide ();
-                else
-                    ltr_right_separator.show ();
-            }
+        if (modifications_mode_on)
+        {
+            quit_button_stack.hide ();
         }
         else
         {
-            quit_button_stack.hide ();
-            ltr_right_separator.hide ();
-            set_show_close_button (true);
+            quit_button_stack.show ();
+            if (delay_mode)
+                quit_button_stack.set_visible_child (show_modifications_button);
+            else
+                quit_button_stack.set_visible_child_name ("quit-button");
         }
     }
 

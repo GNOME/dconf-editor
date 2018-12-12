@@ -26,8 +26,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     {
         center_box.valign = Align.FILL;
 
-        register_default_mode ();
-        register_about_mode ();
+        register_modes ();
     }
 
     /*\
@@ -41,8 +40,24 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         disable_popovers   = AdaptativeWidget.WindowSize.is_phone_size (new_size)
                           || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
 
-        disable_action_bar = disable_popovers
-                          || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+        bool _disable_action_bar = disable_popovers
+                                || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+        if (disable_action_bar != _disable_action_bar)
+        {
+            disable_action_bar = _disable_action_bar;
+            if (disable_action_bar)
+            {
+                set_show_close_button (false);
+                quit_button_stack.show ();
+                ltr_right_separator.visible = current_mode_id == default_mode_id;
+            }
+            else
+            {
+                ltr_right_separator.hide ();
+                quit_button_stack.hide ();
+                set_show_close_button (true);
+            }
+        }
 
         update_hamburger_menu ();
     }
@@ -165,16 +180,29 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         }
     }
 
+    private uint8 current_mode_id = default_mode_id;
+    private void register_modes ()
+    {
+        register_default_mode ();
+        register_about_mode ();
+
+        this.change_mode.connect (update_current_mode_id);
+    }
+    private void update_current_mode_id (uint8 requested_mode_id)
+    {
+        current_mode_id = requested_mode_id;
+    }
+
     /*\
     * * default widgets
     \*/
 
-    [GtkChild] private Button       go_back_button;
-    [GtkChild] private Separator    ltr_left_separator;
-    [GtkChild] private Label        title_label;
-    [GtkChild] private MenuButton   info_button;
+    [GtkChild] private   Button     go_back_button;
+    [GtkChild] private   Separator  ltr_left_separator;
+    [GtkChild] private   Label      title_label;
+    [GtkChild] private   MenuButton info_button;
+    [GtkChild] private   Separator  ltr_right_separator;
 
-    [GtkChild] protected Separator  ltr_right_separator;    // TODO make private
     [GtkChild] protected Stack      quit_button_stack;
 
     protected void set_default_widgets_states (bool     show_go_back_button,
@@ -236,7 +264,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     \*/
 
     private uint8 about_mode_id = 0;
-    protected bool about_mode_on = false;   // TODO make private
+    private bool about_mode_on = false;
 
     internal void show_about_view ()
         requires (about_mode_id > 0)
