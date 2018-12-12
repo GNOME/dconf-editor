@@ -419,11 +419,9 @@ private class DConfWindow : BrowserWindow
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "show-in-window-bookmarks",       show_in_window_bookmarks },
-        { "hide-in-window-bookmarks",       hide_in_window_bookmarks },
+        { "show-in-window-bookmarks",       show_use_bookmarks_view },
 
-        { "show-in-window-modifications",   show_in_window_modifications },
-        { "hide-in-window-modifications",   hide_in_window_modifications },
+        { "show-in-window-modifications",   show_modifications_view },
 
         { "update-bookmarks-icons", update_bookmarks_icons, "as" },
 
@@ -458,7 +456,7 @@ private class DConfWindow : BrowserWindow
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
+            show_default_view ();
         modifications_handler.apply_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
@@ -466,7 +464,7 @@ private class DConfWindow : BrowserWindow
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
         if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
+            show_default_view ();
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
@@ -498,44 +496,42 @@ private class DConfWindow : BrowserWindow
     * * showing or hiding panels
     \*/
 
-    private void show_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
+    protected override void show_default_view ()
     {
-        if (browser_view.in_window_modifications == true)
-            hide_in_window_modifications ();
-        else if (in_window_about)
-            hide_in_window_about ();
+        if (browser_view.in_window_bookmarks)
+        {
+            if (browser_view.in_window_bookmarks_edit_mode)
+                leave_edit_mode ();     // TODO place after
+            headerbar.show_default_view ();
+            browser_view.hide_in_window_bookmarks ();
+        }
+        else if (browser_view.in_window_modifications)
+        {
+            headerbar.show_default_view ();
+            browser_view.hide_in_window_modifications ();
+        }
+        else
+            base.show_default_view ();
+    }
 
-        headerbar.show_in_window_bookmarks ();
+    private void show_use_bookmarks_view (/* SimpleAction action, Variant? path_variant */)
+    {
+        if (browser_view.in_window_modifications || in_window_about)
+            show_default_view ();
+
+        headerbar.show_use_bookmarks_view ();
         string [] bookmarks = headerbar.get_bookmarks ();
         browser_view.show_in_window_bookmarks (bookmarks);
         update_bookmarks_icons_from_array (bookmarks);
     }
 
-    private void hide_in_window_bookmarks (/* SimpleAction action, Variant? path_variant */)
-        requires (browser_view.in_window_bookmarks == true)
+    private void show_modifications_view (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_bookmarks_edit_mode)
-            leave_edit_mode ();     // TODO place after
-        headerbar.hide_in_window_bookmarks ();
-        browser_view.hide_in_window_bookmarks ();
-    }
+        if (browser_view.in_window_bookmarks || in_window_about)
+            show_default_view ();
 
-    private void show_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (browser_view.in_window_bookmarks == true)
-            hide_in_window_bookmarks ();
-        else if (in_window_about)
-            hide_in_window_about ();
-
-        headerbar.show_in_window_modifications ();
+        headerbar.show_modifications_view ();
         browser_view.show_in_window_modifications ();
-    }
-
-    private void hide_in_window_modifications (/* SimpleAction action, Variant? path_variant */)
-        requires (browser_view.in_window_modifications == true)
-    {
-        headerbar.hide_in_window_modifications ();
-        browser_view.hide_in_window_modifications ();
     }
 
     /*\
@@ -622,7 +618,7 @@ private class DConfWindow : BrowserWindow
         {
             disable_popovers = _disable_popovers;
             if (browser_view.in_window_bookmarks)
-                hide_in_window_bookmarks ();
+                show_default_view ();
         }
 
         bool _disable_action_bar = _disable_popovers
@@ -631,7 +627,7 @@ private class DConfWindow : BrowserWindow
         {
             disable_action_bar = _disable_action_bar;
             if (browser_view.in_window_modifications)
-                hide_in_window_modifications ();
+                show_default_view ();
         }
     }
 
@@ -698,7 +694,7 @@ private class DConfWindow : BrowserWindow
 
         update_actions ();
 
-        headerbar.edit_in_window_bookmarks ();
+        headerbar.show_edit_bookmarks_view ();
         browser_view.enter_bookmarks_edit_mode ();
     }
 
@@ -707,7 +703,7 @@ private class DConfWindow : BrowserWindow
         edit_mode_state_action.set_state (false);
 
         bool give_focus_to_info_button = browser_view.leave_bookmarks_edit_mode ();
-        headerbar.show_in_window_bookmarks ();
+        headerbar.show_use_bookmarks_view ();
 
 /*        if (give_focus_to_info_button)
             info_button.grab_focus (); */
@@ -775,13 +771,13 @@ private class DConfWindow : BrowserWindow
          && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
         {
             if (browser_view.in_window_modifications)
-                hide_in_window_modifications ();
+                show_default_view ();
             headerbar.click_bookmarks_button ();
         }
         else if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
+            show_default_view ();
         else
-            show_in_window_bookmarks ();
+            show_use_bookmarks_view ();
     }
 
     private void bookmark                               (/* SimpleAction action, Variant? variant */)
@@ -811,9 +807,9 @@ private class DConfWindow : BrowserWindow
          && !AdaptativeWidget.WindowSize.is_extra_flat (window_size))
             revealer.toggle_modifications_list ();
         else if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
+            show_default_view ();
         else
-            show_in_window_modifications ();
+            show_modifications_view ();
     }
 
     private void escape_pressed                         (/* SimpleAction action, Variant? variant */)
@@ -823,12 +819,10 @@ private class DConfWindow : BrowserWindow
             if (browser_view.in_window_bookmarks_edit_mode)
                 leave_edit_mode ();
             else
-                hide_in_window_bookmarks ();
+                show_default_view ();
         }
-        else if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
-        else if (in_window_about)
-            hide_in_window_about ();
+        else if (browser_view.in_window_modifications || in_window_about)
+            show_default_view ();
         else if (headerbar.search_mode_enabled)
             stop_search ();
         else if (current_type == ViewType.CONFIG)
@@ -907,12 +901,8 @@ private class DConfWindow : BrowserWindow
         hide_notification ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
-        if (browser_view.in_window_bookmarks)
-            hide_in_window_bookmarks ();
-        else if (browser_view.in_window_modifications)
-            hide_in_window_modifications ();
-        else if (in_window_about)
-            hide_in_window_about ();
+        if (browser_view.in_window_bookmarks || browser_view.in_window_modifications || in_window_about)
+            show_default_view ();
     }
 
     public static bool is_path_invalid (string path)

@@ -91,29 +91,29 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
 
     private const GLib.ActionEntry [] browser_action_entries =
     {
-        { "empty",          empty, "*" },
-        { "empty-null",     empty },
-        { "disabled-state", empty, "(sq)", "('',uint16 65535)" },
+        { "empty",              empty, "*" },
+        { "empty-null",         empty },
+        { "disabled-state",     empty, "(sq)", "('',uint16 65535)" },
 
-        { "open-folder", open_folder, "s" },
-        { "open-object", open_object, "(sq)" },
-        { "open-config", open_config, "s" },
-        { "open-search", open_search, "s" },
-        { "next-search", next_search, "s" },
-        { "open-parent", open_parent, "s" },
+        { "open-folder",        open_folder, "s" },
+        { "open-object",        open_object, "(sq)" },
+        { "open-config",        open_config, "s" },
+        { "open-search",        open_search, "s" },
+        { "next-search",        next_search, "s" },
+        { "open-parent",        open_parent, "s" },
 
-        { "open-path", open_path, "(sq)", "('/',uint16 " + ModelUtils.folder_context_id_string + ")" },
+        { "open-path",          open_path, "(sq)", "('/',uint16 " + ModelUtils.folder_context_id_string + ")" },
 
-        { "reload-folder", reload_folder },
-        { "reload-object", reload_object },
-        { "reload-search", reload_search },
+        { "reload-folder",      reload_folder },
+        { "reload-object",      reload_object },
+        { "reload-search",      reload_search },
 
-        { "hide-search",   hide_search },
-        { "show-search",   show_search },
-        { "toggle-search", toggle_search, "b", "false" },
+        { "hide-search",        hide_search },
+        { "show-search",        show_search },
+        { "toggle-search",      toggle_search, "b", "false" },
 
-        { "hide-in-window-about",           hide_in_window_about },
-        { "about",                          about }
+        { "show-default-panel", show_default_view },
+        { "about",              about }
     };
 
     private void empty (/* SimpleAction action, Variant? variant */) {}
@@ -263,7 +263,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         {
             disable_popovers = _disable_popovers;
             if (in_window_about)
-                hide_in_window_about ();
+                show_default_view ();
         }
 
         chain_set_window_size (new_size);
@@ -356,7 +356,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         hide_notification ();
         headerbar.close_popovers ();
         if (in_window_about)
-            hide_in_window_about ();
+            show_default_view ();
     }
 
     /*\
@@ -748,27 +748,31 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     private void toggle_in_window_about ()
     {
         if (in_window_about)
-            hide_in_window_about ();
+            show_default_view ();
         else
-            show_in_window_about ();
+            show_about_view ();
     }
 
-    private inline void show_in_window_about ()
+    private inline void show_about_view ()
         requires (in_window_about == false)
     {
         close_in_window_panels ();
 
         in_window_about = true;
-        headerbar.show_in_window_about ();
+        headerbar.show_about_view ();
         browser_view.show_in_window_about ();
     }
 
-    protected void hide_in_window_about (/* SimpleAction action, Variant? path_variant */)
-        requires (in_window_about == true)
+    protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)
     {
-        in_window_about = false;
-        headerbar.hide_in_window_about ();
-        browser_view.hide_in_window_about ();
+        if (in_window_about)
+        {
+            in_window_about = false;
+            headerbar.show_default_view ();
+            browser_view.hide_in_window_about ();
+        }
+        else
+            assert_not_reached ();
     }
 
     /*\

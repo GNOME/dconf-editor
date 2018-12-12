@@ -69,6 +69,7 @@ sources = files(
   'about-list.vala',
   'adaptative-pathbar.vala',
   'adaptative-window.vala',
+  'base-headerbar.vala',
   'bookmarks.vala',
   'bookmarks-controller.vala',
   'bookmarks-list.vala',
@@ -106,10 +107,10 @@ sources = files(
 )
 
 resource_data = files(
+  'base-headerbar.ui',
   'bookmarks.ui',
   'bookmarks-controller.ui',
   'bookmark.ui',
-  'browser-headerbar.ui',
   'browser-infobar.ui',
   'browser-stack.ui',
   'browser-view.ui',

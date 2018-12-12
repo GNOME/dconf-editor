@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="BrowserHeaderBar" parent="NightTimeAwareHeaderBar">
+  <template class="BaseHeaderBar" parent="NightTimeAwareHeaderBar">
     <property name="show-close-button">True</property>
     <property name="has-subtitle">False</property>
     <child>
       <object class="GtkButton" id="go_back_button">
         <property name="visible">False</property>
         <property name="valign">center</property>
+        <property name="action-name">browser.show-default-panel</property>
         <style>
           <class name="image-button"/>
         </style>
@@ -35,41 +36,34 @@
           <class name="centerwidget"/>
         </style>
         <child>
-          <object class="GtkStack" id="title_stack">
-            <property name="visible">True</property>
-            <property name="hhomogeneous">False</property>
-            <property name="hexpand">True</property>
-            <child>
-              <object class="PathWidget" id="path_widget">
-                <property name="visible">True</property>
-                <property name="hexpand">False</property>
-                <signal name="search-changed" handler="search_changed_cb"/>
-                <signal name="search-stopped" handler="search_stopped_cb"/>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="title_label">
-                <property name="visible">True</property>
-              </object>
-            </child>
+          <object class="GtkLabel" id="title_label">
+            <property name="visible">False</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <object class="GtkMenuButton" id="quit_button">
+      <object class="GtkStack" id="quit_button_stack">
         <property name="visible">False</property>
-        <property name="valign">center</property>
-        <property name="action-name">app.quit</property>
-        <style>
-          <class name="titlebutton"/>
-        </style>
         <child>
-          <object class="GtkImage">
+          <object class="GtkButton">
             <property name="visible">True</property>
-            <property name="icon-name">window-close-symbolic</property>
-            <property name="icon-size">1</property>
+            <property name="valign">center</property>
+            <property name="action-name">app.quit</property>
+            <style>
+              <class name="titlebutton"/>
+            </style>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">window-close-symbolic</property>
+                <property name="icon-size">1</property>
+              </object>
+            </child>
           </object>
+          <packing>
+            <property name="name">quit-button</property>
+          </packing>
         </child>
       </object>
       <packing>

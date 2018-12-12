@@ -17,50 +17,13 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-headerbar.ui")]
-private abstract class BrowserHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
+private abstract class BrowserHeaderBar : BaseHeaderBar
 {
-    [GtkChild] protected MenuButton info_button;
-    [GtkChild] protected PathWidget path_widget;
-
-    [GtkChild] protected Box        center_box;
-    [GtkChild] protected Stack      title_stack;
-    [GtkChild] protected Label      title_label;
-
-    [GtkChild] protected Button     go_back_button;
-    [GtkChild] protected Separator  ltr_left_separator;
-    [GtkChild] protected Separator  ltr_right_separator;
-
-    [GtkChild] protected Button     quit_button;
-
     protected ViewType current_type = ViewType.FOLDER;
     protected string current_path = "/";
 
     internal signal void search_changed ();
     internal signal void search_stopped ();
-
-    protected bool disable_popovers = false;
-    protected bool disable_action_bar = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (disable_popovers != _disable_popovers)
-        {
-            disable_popovers = _disable_popovers;
-            disable_popovers_changed ();
-        }
-
-        disable_action_bar = _disable_popovers
-                          || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-
-        update_hamburger_menu ();
-        update_modifications_button ();
-
-        path_widget.set_window_size (new_size);
-    }
-    protected virtual void disable_popovers_changed () {}
-    protected abstract void update_modifications_button ();
 
     [CCode (notify = false)] internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
     [CCode (notify = false)] internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
@@ -90,131 +53,77 @@ private abstract class BrowserHeaderBar : NightTimeAwareHeaderBar, AdaptativeWid
         return path_widget.handle_event (event);
     }
 
+    /*\
+    * * path widget
+    \*/
+
+    protected PathWidget path_widget;
+
     construct
     {
-        center_box.valign = Align.FILL;
+        add_path_widget ();
+
+        this.change_mode.connect (mode_changed_browser);
     }
 
-    /*\
-    * * in-window about
-    \*/
-
-    protected bool in_window_about = false;
-
-    protected virtual void close_in_window_panels () {}
-    internal void show_in_window_about ()
+    private void add_path_widget ()
     {
-        close_in_window_panels ();
+        path_widget = new PathWidget ();
+        path_widget.hexpand = false;
 
-        in_window_about = true;
-        update_modifications_button ();
-        info_button.hide ();
-        go_back_button.set_action_name ("browser.hide-in-window-about");
-        go_back_button.show ();
-        title_label.set_label (_("About"));
-        title_stack.set_visible_child (title_label);
+        path_widget.search_changed.connect (search_changed_cb);
+        path_widget.search_stopped.connect (search_stopped_cb);
+
+        path_widget.visible = true;
+        center_box.add (path_widget);
     }
 
-    internal void hide_in_window_about ()
-        requires (in_window_about == true)
-    {
-        go_back_button.hide ();
-        in_window_about = false;
-        title_stack.set_visible_child (path_widget);
-        if (disable_action_bar)
-            ltr_right_separator.show ();
-        info_button.show ();
-        if (path_widget.search_mode_enabled)
-            path_widget.entry_grab_focus_without_selecting ();
-    }
-
-    /*\
-    * * hamburger menu
-    \*/
-
-    protected inline void hide_hamburger_menu ()
-    {
-        if (info_button.active)
-            info_button.active = false;
-    }
-
-    protected override void update_hamburger_menu ()
-    {
-        GLib.Menu menu = new GLib.Menu ();
-
-/*        if (current_type == ViewType.OBJECT && !ModelUtils.is_folder_path (current_path))   // TODO a better way to copy various representations of a key name/value/path
-        {
-            Variant variant = new Variant.string (model.get_suggested_key_copy_text (current_path, browser_view.last_context_id));
-            menu.append (_("Copy descriptor"), "app.copy(" + variant.print (false) + ")");
-        }
-        else if (current_type != ViewType.SEARCH) */
-
-        populate_menu (ref menu);
-
-        append_app_actions_section (ref menu);
-
-        menu.freeze ();
-        info_button.set_menu_model ((MenuModel) menu);
-    }
-
-    protected virtual void populate_menu (ref GLib.Menu menu) {}
-
-    private void append_app_actions_section (ref GLib.Menu menu)
-    {
-        GLib.Menu section = new GLib.Menu ();
-        append_or_not_night_mode_entry (ref section);
-        _append_app_actions_section (!disable_popovers, ref section);
-        section.freeze ();
-        menu.append_section (null, section);
-    }
-    private static void _append_app_actions_section (bool has_keyboard_shortcuts, ref GLib.Menu section)
-    {
-        if (has_keyboard_shortcuts)    // FIXME is used also for hiding keyboard shortcuts in small window
-            section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        section.append (_("About Dconf Editor"), "browser.about");
-    }
-
-    /*\
-    * * proxy callbacks
-    \*/
-
-    [GtkCallback]
     private void search_changed_cb ()
     {
         search_changed ();
     }
-    [GtkCallback]
+
     private void search_stopped_cb ()
     {
         search_stopped ();
+    }
+
+    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    {
+        base.set_window_size (new_size);
+        path_widget.set_window_size (new_size);
+    }
+
+    private void mode_changed_browser (uint8 mode_id)
+    {
+        if (mode_id == default_mode_id)
+        {
+            path_widget.show ();
+            if (path_widget.search_mode_enabled)
+                path_widget.entry_grab_focus_without_selecting ();
+        }
+        else
+        {
+            path_widget.hide ();
+        }
     }
 
     /*\
     * *
     \*/
 
-    internal virtual void close_popovers ()
+    internal override void close_popovers ()
     {
         hide_hamburger_menu ();
         path_widget.close_popovers ();
     }
 
-    internal virtual bool has_popover ()
+    internal override bool has_popover ()
     {
-        if (info_button.active)
+        if (base.has_popover ())
             return true;
         if (path_widget.has_popover ())
             return true;
-        return false;
-    }
-
-    internal virtual bool previous_match ()
-    {
-        return false;
-    }
-
-    internal virtual bool next_match ()
-    {
         return false;
     }
 
@@ -226,11 +135,5 @@ private abstract class BrowserHeaderBar : NightTimeAwareHeaderBar, AdaptativeWid
         path_widget.set_path (type, path);
 
         update_hamburger_menu ();
-    }
-
-    internal virtual void toggle_hamburger_menu ()
-    {
-        if (info_button.visible)
-            info_button.active = !info_button.active;
     }
 }
