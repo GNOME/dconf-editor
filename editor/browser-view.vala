@@ -53,8 +53,9 @@ private class BrowserView : Stack, AdaptativeWidget
 {
     [CCode (notify = false)] internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
 
-    [GtkChild] private BrowserInfoBar info_bar;
-    [GtkChild] private BrowserStack current_child;
+    [GtkChild] private BrowserInfoBar   info_bar;
+    [GtkChild] private BrowserStack     current_child;
+    [GtkChild] private Grid             current_child_grid;
 
     private SortingOptions sorting_options;
     private GLib.ListStore? key_model = null;
@@ -96,6 +97,8 @@ private class BrowserView : Stack, AdaptativeWidget
     construct
     {
         install_action_entries ();
+
+        create_bookmarks_list ();
 
         info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"),
                                                   _("Refresh"), "bro.refresh-folder");
@@ -218,7 +221,8 @@ private class BrowserView : Stack, AdaptativeWidget
 
     private void create_about_list ()
     {
-        about_list = new AboutList (false, true);
+        about_list = new AboutList (/* needs shadows   */ false,
+                                    /* big placeholder */ true);
         about_list.set_window_size (window_size);
         about_list.show ();
         add (about_list);
@@ -259,7 +263,8 @@ private class BrowserView : Stack, AdaptativeWidget
 
     private void create_modifications_list ()
     {
-        modifications_list = new ModificationsList (false, true);
+        modifications_list = new ModificationsList (/* needs shadows   */ false,
+                                                    /* big placeholder */ true);
         modifications_list.set_window_size (window_size);
         // modifications_list.selection_changed.connect (() => ...);
         modifications_list.show ();
@@ -312,8 +317,19 @@ private class BrowserView : Stack, AdaptativeWidget
     [CCode (notify = false)] internal bool in_window_bookmarks           { internal get; private set; default = false; }
     [CCode (notify = false)] internal bool in_window_bookmarks_edit_mode { internal get; private set; default = false; }
 
-    [GtkChild] private BookmarksList bookmarks_list;
-    [GtkChild] private Grid          current_child_grid;
+    private BookmarksList bookmarks_list;
+
+    private void create_bookmarks_list ()
+    {
+        bookmarks_list = new BookmarksList (/* needs shadows            */ false,
+                                            /* big placeholder          */ true,
+                                            /* edit-mode action prefix  */ "bmk",
+                                            /* schema path              */ "/ca/desrt/dconf-editor/");
+        bookmarks_list.selection_changed.connect (on_bookmarks_selection_changed);
+        bookmarks_list.update_bookmarks_icons.connect (on_update_bookmarks_icons);
+        bookmarks_list.show ();
+        add (bookmarks_list);
+    }
 
     private string [] old_bookmarks = new string [0];
 
@@ -395,7 +411,6 @@ private class BrowserView : Stack, AdaptativeWidget
         bookmarks_list.move_bottom ();
     }
 
-    [GtkCallback]
     private void on_bookmarks_selection_changed ()
     {
         if (!in_window_bookmarks)
@@ -406,7 +421,6 @@ private class BrowserView : Stack, AdaptativeWidget
     internal signal void bookmarks_selection_changed ();
 
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
-    [GtkCallback]
     private void on_update_bookmarks_icons (Variant bookmarks_variant)
     {
         update_bookmarks_icons (bookmarks_variant);

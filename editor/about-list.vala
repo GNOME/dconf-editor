@@ -35,7 +35,9 @@ private class AboutList : OverlayedList
 
     internal AboutList (bool needs_shadows, bool big_placeholder)
     {
-        Object (needs_shadows: needs_shadows, big_placeholder: big_placeholder, edit_mode_action_prefix: "about");
+        Object (needs_shadows           : needs_shadows,
+                big_placeholder         : big_placeholder,
+                edit_mode_action_prefix : "about");
     }
 
     internal override void reset ()

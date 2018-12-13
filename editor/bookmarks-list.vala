@@ -35,6 +35,14 @@ private class BookmarksList : OverlayedList
         second_mode_name = _("Edit");
     }
 
+    internal BookmarksList (bool needs_shadows, bool big_placeholder, string edit_mode_action_prefix, string schema_path)
+    {
+        Object (needs_shadows           : needs_shadows,
+                big_placeholder         : big_placeholder,
+                edit_mode_action_prefix : edit_mode_action_prefix,
+                schema_path             : schema_path);
+    }
+
     internal override void reset ()
     {
     }

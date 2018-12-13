@@ -35,7 +35,8 @@ private class ModificationsList : OverlayedList
 
     internal ModificationsList (bool needs_shadows, bool big_placeholder)
     {
-        Object (needs_shadows: needs_shadows, big_placeholder: big_placeholder);
+        Object (needs_shadows   : needs_shadows,
+                big_placeholder : big_placeholder);
     }
 
     internal override void reset ()
