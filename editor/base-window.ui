@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="BrowserWindow" parent="AdaptativeWindow">
+  <template class="BaseWindow" parent="AdaptativeWindow">
     <property name="visible">False</property>
     <property name="height-request">283</property> <!-- 294 max for Purism Librem 5 landscape -->
     <property name="width-request">349</property>  <!-- 360 max for Purism Librem 5 portrait -->
     <signal name="key-press-event" handler="on_key_press_event"/>
-    <signal name="button-press-event" handler="on_button_press_event"/>
-    <signal name="destroy" handler="on_destroy"/>
+    <signal name="destroy"         handler="on_destroy"/>
     <child>
       <object class="GtkOverlay" id="main_overlay">
         <property name="visible">True</property>

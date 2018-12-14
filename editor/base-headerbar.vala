@@ -107,7 +107,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
     private static inline void append_about_entry (string about_action_label, ref GLib.Menu section)
     {
-        section.append (about_action_label, "browser.about");
+        section.append (about_action_label, "base.about");
     }
 
     protected inline void hide_hamburger_menu ()

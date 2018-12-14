@@ -29,6 +29,8 @@ private class BaseView : Stack, AdaptativeWidget
         return null;
     }
 
+    internal virtual void close_popovers () {}
+
     /*\
     * * adaptative stuff
     \*/

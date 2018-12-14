@@ -102,6 +102,7 @@ private class DConfWindow : BrowserWindow
     private ulong bookmarks_selection_changed_handler = 0;
 
     private DConfHeaderBar headerbar;
+    private BrowserView    browser_view;
 
     private StyleContext context;
     construct
@@ -110,6 +111,9 @@ private class DConfWindow : BrowserWindow
         context = get_style_context ();
         context.add_class ("dconf-editor");
 
+        headerbar = (DConfHeaderBar) nta_headerbar;
+        browser_view = (BrowserView) base_view;
+
         create_modifications_revealer ();
 
         install_ui_action_entries ();
@@ -117,16 +121,16 @@ private class DConfWindow : BrowserWindow
         install_bmk_action_entries ();
 
         bookmarks_selection_changed_handler = browser_view.bookmarks_selection_changed.connect (on_bookmarks_selection_changed);
+
+          headerbar_update_bookmarks_icons_handler =    headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        browserview_update_bookmarks_icons_handler = browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
     }
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, NightLightMonitor night_light_monitor)
     {
         DConfHeaderBar _headerbar = new DConfHeaderBar (night_light_monitor);
-        Object (nta_headerbar: (NightTimeAwareHeaderBar) _headerbar);
-        headerbar = _headerbar;
-
-        headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
-        browserview_update_bookmarks_icons_handler = browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        BrowserView _browser_view = new BrowserView ();
+        Object (nta_headerbar: (NightTimeAwareHeaderBar) _headerbar, base_view: (BaseView) _browser_view);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -762,7 +766,7 @@ private class DConfWindow : BrowserWindow
 
     private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
         if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
          && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
         {
@@ -781,7 +785,7 @@ private class DConfWindow : BrowserWindow
         if (is_in_in_window_mode ())        // TODO better
             return;
 
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
         headerbar.bookmark_current_path ();
     }
 
@@ -790,7 +794,7 @@ private class DConfWindow : BrowserWindow
         if (is_in_in_window_mode ())        // TODO better
             return;
 
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
         headerbar.unbookmark_current_path ();
     }
 
@@ -830,7 +834,7 @@ private class DConfWindow : BrowserWindow
         if (row_action_blocked ())
             return;
 
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
         browser_view.toggle_boolean_key ();
     }
 
@@ -844,7 +848,7 @@ private class DConfWindow : BrowserWindow
             reload_view ();
             return;
         }
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
         string selected_row = browser_view.get_selected_row_name ();
         if (selected_row.has_suffix ("/"))
             reset_path ((!) selected_row, true);

@@ -17,8 +17,7 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-window.ui")]
-private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
+private abstract class BrowserWindow : BaseWindow
 {
     private const string root_path = "/";   // TODO allow changing that
 
@@ -28,19 +27,18 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     protected string    saved_view      = "/";
     protected string    saved_selection = "";
 
-    private   BrowserHeaderBar headerbar;
-    protected BrowserView      browser_view;
+    private BrowserHeaderBar headerbar;
+    private BrowserView      browser_view;
 
     construct
     {
         headerbar = (BrowserHeaderBar) nta_headerbar;
+        browser_view = (BrowserView) base_view;
+
         headerbar.search_changed.connect (search_changed_cb);
         headerbar.search_stopped.connect (search_stopped_cb);
 
-        browser_view = new BrowserView ();
-        browser_view.vexpand = true;
-        browser_view.visible = true;
-        add_to_main_grid (browser_view);
+        this.button_press_event.connect (on_button_press_event);
 
         install_browser_action_entries ();
         install_key_action_entries ();
@@ -50,17 +48,6 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         add_adaptative_child (headerbar);
         add_adaptative_child (browser_view);
         add_adaptative_child (this);
-    }
-
-    /*\
-    * * main grid
-    \*/
-
-    [GtkChild] private Grid main_grid;
-
-    protected void add_to_main_grid (Widget widget)
-    {
-        main_grid.add (widget);
     }
 
     /*\
@@ -109,10 +96,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
 
         { "hide-search",        hide_search },
         { "show-search",        show_search },
-        { "toggle-search",      toggle_search, "b", "false" },
-
-        { "show-default-panel", show_default_view },
-        { "about",              about }
+        { "toggle-search",      toggle_search, "b", "false" }
     };
 
     private void empty (/* SimpleAction action, Variant? variant */) {}
@@ -237,40 +221,6 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     }
 
     /*\
-    * * global callbacks
-    \*/
-
-    [GtkCallback]
-    private void on_destroy ()
-    {
-        before_destroy ();
-        base.destroy ();
-    }
-
-    protected abstract void before_destroy ();
-
-    /*\
-    * * adaptative stuff
-    \*/
-
-    private bool disable_popovers = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (disable_popovers != _disable_popovers)
-        {
-            disable_popovers = _disable_popovers;
-            if (in_window_about)
-                show_default_view ();
-        }
-
-        chain_set_window_size (new_size);
-    }
-
-    protected abstract void chain_set_window_size (AdaptativeWidget.WindowSize new_size);
-
-    /*\
     * * actions and callbacks helpers
     \*/
 
@@ -349,15 +299,6 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         return false;
     }
 
-    // action
-    protected virtual void close_in_window_panels ()
-    {
-        hide_notification ();
-        headerbar.close_popovers ();
-        if (in_window_about)
-            show_default_view ();
-    }
-
     /*\
     * * search callbacks
     \*/
@@ -389,7 +330,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
             return;
 
         headerbar.close_popovers ();        // by symmetry with go_forward()
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
 
         if (current_path == root_path)
             return;
@@ -409,7 +350,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         headerbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
 
         headerbar.close_popovers ();
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
 
         if (current_path == complete_path)  // TODO something?
             return;
@@ -508,7 +449,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
             }
         }
 
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
 
         _copy (get_copy_text ());
     }
@@ -518,7 +459,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         if (is_in_in_window_mode ())        // TODO better
             return;
 
-        browser_view.discard_row_popover ();
+        browser_view.close_popovers ();
 
         _copy (get_copy_path_text ());
     }
@@ -589,7 +530,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
             return;
 
         headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
-        browser_view.discard_row_popover ();   // could be needed if headerbar.search_mode_enabled
+        browser_view.close_popovers ();   // could be needed if headerbar.search_mode_enabled
 
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.SEARCH);
@@ -706,92 +647,21 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         else
         {
             headerbar.toggle_hamburger_menu ();
-            browser_view.discard_row_popover ();
+            browser_view.close_popovers ();
         }
-    }
-
-    /*\
-    * * about dialog or in-window panel
-    \*/
-
-    private void about (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
-         && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
-            show_about_dialog ();       // TODO hide the dialog if visible
-        else
-            toggle_in_window_about ();
-    }
-
-    private void show_about_dialog ()
-    {
-        string [] authors = AboutDialogInfos.authors;
-        Gtk.show_about_dialog (this,
-                               "program-name",          AboutDialogInfos.program_name,
-                               "version",               AboutDialogInfos.version,
-                               "comments",              AboutDialogInfos.comments,
-                               "copyright",             AboutDialogInfos.copyright,
-                               "license-type",          AboutDialogInfos.license_type,
-                               "wrap-license", true,
-                               "authors",               authors,
-                               "translator-credits",    AboutDialogInfos.translator_credits,
-                               "logo-icon-name",        AboutDialogInfos.logo_icon_name,
-                               "website",               AboutDialogInfos.website,
-                               "website-label",         AboutDialogInfos.website_label,
-                               null);
-    }
-
-    // in-window about
-    [CCode (notify = false)] protected bool in_window_about { protected get; private set; default = false; }
-
-    private void toggle_in_window_about ()
-    {
-        if (in_window_about)
-            show_default_view ();
-        else
-            show_about_view ();
-    }
-
-    private inline void show_about_view ()
-        requires (in_window_about == false)
-    {
-        close_in_window_panels ();
-
-        in_window_about = true;
-        headerbar.show_about_view ();
-        browser_view.show_in_window_about ();
-    }
-
-    protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (in_window_about)
-        {
-            in_window_about = false;
-            headerbar.show_default_view ();
-            browser_view.show_default_view ();
-        }
-        else
-            assert_not_reached ();
     }
 
     /*\
     * * keyboard callback
     \*/
 
-    [GtkCallback]
-    private bool on_key_press_event (Widget widget, Gdk.EventKey event)
+    protected override bool on_key_press_event (Widget widget, Gdk.EventKey event)
     {
+        if (base.on_key_press_event (widget, event))
+            return true;
+
         uint keyval = event.keyval;
         string name = (!) (Gdk.keyval_name (keyval) ?? "");
-
-        if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
-        {
-            browser_view.discard_row_popover ();
-            if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
-                return false;   // help overlay
-            about ();
-            return true;
-        }
 
         /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
         if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
@@ -872,7 +742,6 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
                        "mouse-forward-button",    SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
     }
 
-    [GtkCallback]
     private bool on_button_press_event (Widget widget, Gdk.EventButton event)
     {
         if (!mouse_use_extra_buttons)
@@ -895,40 +764,5 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
             return true;
         }
         return false;
-    }
-
-    /*\
-    * * notifications
-    \*/
-
-    [GtkChild] private Overlay main_overlay;
-
-    private bool notifications_revealer_created = false;
-    private NotificationsRevealer notifications_revealer;
-
-    private void create_notifications_revealer ()
-    {
-        notifications_revealer = new NotificationsRevealer ();
-        add_adaptative_child (notifications_revealer);
-        notifications_revealer.set_window_size (window_size);
-        notifications_revealer.show ();
-        main_overlay.add_overlay (notifications_revealer);
-        notifications_revealer_created = true;
-    }
-
-    protected void show_notification (string notification)
-    {
-        if (!notifications_revealer_created)
-            create_notifications_revealer ();
-
-        notifications_revealer.show_notification (notification);
-    }
-
-    protected void hide_notification ()
-    {
-        if (!notifications_revealer_created)
-            return;
-
-        notifications_revealer.hide_notification ();
     }
 }
