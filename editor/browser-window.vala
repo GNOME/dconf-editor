@@ -49,7 +49,6 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
 
         add_adaptative_child (headerbar);
         add_adaptative_child (browser_view);
-        add_adaptative_child (notifications_revealer);
         add_adaptative_child (this);
     }
 
@@ -902,15 +901,34 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
     * * notifications
     \*/
 
-    [GtkChild] private NotificationsRevealer notifications_revealer;
+    [GtkChild] private Overlay main_overlay;
+
+    private bool notifications_revealer_created = false;
+    private NotificationsRevealer notifications_revealer;
+
+    private void create_notifications_revealer ()
+    {
+        notifications_revealer = new NotificationsRevealer ();
+        add_adaptative_child (notifications_revealer);
+        notifications_revealer.set_window_size (window_size);
+        notifications_revealer.show ();
+        main_overlay.add_overlay (notifications_revealer);
+        notifications_revealer_created = true;
+    }
 
     protected void show_notification (string notification)
     {
+        if (!notifications_revealer_created)
+            create_notifications_revealer ();
+
         notifications_revealer.show_notification (notification);
     }
 
     protected void hide_notification ()
     {
+        if (!notifications_revealer_created)
+            return;
+
         notifications_revealer.hide_notification ();
     }
 }

@@ -9,17 +9,12 @@
     <signal name="button-press-event" handler="on_button_press_event"/>
     <signal name="destroy" handler="on_destroy"/>
     <child>
-      <object class="GtkOverlay">
+      <object class="GtkOverlay" id="main_overlay">
         <property name="visible">True</property>
         <child>
           <object class="GtkGrid" id="main_grid">
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
-          </object>
-        </child>
-        <child type="overlay">
-          <object class="NotificationsRevealer" id="notifications_revealer">
-            <property name="visible">True</property>
           </object>
         </child>
       </object>
