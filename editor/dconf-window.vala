@@ -135,10 +135,6 @@ private class DConfWindow : BrowserWindow
         revealer.modifications_handler = modifications_handler;
         browser_view.modifications_handler = modifications_handler;
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                if (!AdaptativeWidget.WindowSize.is_extra_thin (window_size)
-                 && !AdaptativeWidget.WindowSize.is_extra_flat (window_size))
-                    return;
-
                 uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
                 if (total_changes_count == 0)
                     headerbar.set_apply_modifications_button_sensitive (false);

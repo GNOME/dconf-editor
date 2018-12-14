@@ -44,7 +44,7 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
         add_show_modifications_button       (out show_modifications_button,     ref quit_button_stack);
         add_modifications_actions_button    (out modifications_actions_button,  ref this);
-        construct_changes_pending_menu      (out changes_pending_menu,          ref modifications_actions_button);
+        construct_changes_pending_menu      (out changes_pending_menu);
         construct_quit_delayed_mode_menu    (out quit_delayed_mode_menu);
 
         register_bookmarks_modes ();
@@ -239,14 +239,12 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         _this.pack_end (modifications_actions_button);
     }
 
-    private static void construct_changes_pending_menu (out GLib.Menu changes_pending_menu, ref MenuButton modifications_actions_button)
+    private static void construct_changes_pending_menu (out GLib.Menu changes_pending_menu)
     {
         changes_pending_menu = new GLib.Menu ();
         changes_pending_menu.append (_("Apply all"), "ui.apply-delayed-settings");
         changes_pending_menu.append (_("Dismiss all"), "ui.dismiss-delayed-settings");
         changes_pending_menu.freeze ();
-
-        modifications_actions_button.set_menu_model (changes_pending_menu);
     }
 
     private static void construct_quit_delayed_mode_menu (out GLib.Menu quit_delayed_mode_menu)
