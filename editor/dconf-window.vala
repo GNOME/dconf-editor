@@ -503,12 +503,12 @@ private class DConfWindow : BrowserWindow
             if (browser_view.in_window_bookmarks_edit_mode)
                 leave_edit_mode ();     // TODO place after
             headerbar.show_default_view ();
-            browser_view.hide_in_window_bookmarks ();
+            browser_view.show_default_view ();
         }
         else if (browser_view.in_window_modifications)
         {
             headerbar.show_default_view ();
-            browser_view.hide_in_window_modifications ();
+            browser_view.show_default_view ();
         }
         else
             base.show_default_view ();

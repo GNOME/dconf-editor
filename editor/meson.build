@@ -70,6 +70,7 @@ sources = files(
   'adaptative-pathbar.vala',
   'adaptative-window.vala',
   'base-headerbar.vala',
+  'base-view.vala',
   'bookmarks.vala',
   'bookmarks-controller.vala',
   'bookmarks-list.vala',
@@ -108,12 +109,12 @@ sources = files(
 
 resource_data = files(
   'base-headerbar.ui',
+  'base-view.ui',
   'bookmarks.ui',
   'bookmarks-controller.ui',
   'bookmark.ui',
   'browser-infobar.ui',
   'browser-stack.ui',
-  'browser-view.ui',
   'browser-window.ui',
   'config-list-box-row.ui',
   'dconf-editor.css',

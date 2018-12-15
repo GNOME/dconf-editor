@@ -769,7 +769,7 @@ private abstract class BrowserWindow : AdaptativeWindow, AdaptativeWidget
         {
             in_window_about = false;
             headerbar.show_default_view ();
-            browser_view.hide_in_window_about ();
+            browser_view.show_default_view ();
         }
         else
             assert_not_reached ();

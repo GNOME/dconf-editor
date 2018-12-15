@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="dconf-editor">
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="BrowserView" parent="GtkStack">
+  <template class="BaseView" parent="GtkStack">
     <property name="transition-type">over-down-up</property>
     <property name="transition-duration">300</property>
     <child>
       <object class="GtkGrid" id="current_child_grid">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
-        <child>
-          <object class="BrowserInfoBar" id="info_bar">
-            <property name="visible">True</property>
-          </object>
-        </child>
-        <child>
-          <object class="BrowserStack" id="current_child">
-            <property name="visible">True</property>
-          </object>
-        </child>
       </object>
     </child>
   </template>

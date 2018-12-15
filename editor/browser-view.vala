@@ -48,28 +48,23 @@ private class SimpleSettingObject : Object
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-view.ui")]
-private class BrowserView : Stack, AdaptativeWidget
+private class BrowserView : BaseView, AdaptativeWidget
 {
     [CCode (notify = false)] internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
 
-    [GtkChild] private BrowserInfoBar   info_bar;
-    [GtkChild] private BrowserStack     current_child;
-    [GtkChild] private Grid             current_child_grid;
+    private BrowserInfoBar  info_bar;
+    private BrowserStack    current_child;
 
     private SortingOptions sorting_options;
     private GLib.ListStore? key_model = null;
 
-    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        window_size = new_size;
+        base.set_window_size (new_size);
         current_child.set_window_size (new_size);
         bookmarks_list.set_window_size (new_size);
         if (modifications_list_created)
             modifications_list.set_window_size (new_size);
-        if (about_list_created)
-            about_list.set_window_size (new_size);
     }
 
     private ModificationsHandler _modifications_handler;
@@ -98,19 +93,44 @@ private class BrowserView : Stack, AdaptativeWidget
     {
         install_action_entries ();
 
-        create_bookmarks_list ();
-
+        info_bar = new BrowserInfoBar ();
         info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"),
                                                   _("Refresh"), "bro.refresh-folder");
         info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"),
                                                   _("Reload"), "browser.reload-folder");
         info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"),
                                                   _("Reload"), "browser.reload-object");   // TODO also for key removing?
+        info_bar.show ();
+        current_child_grid.add (info_bar);
+
+        current_child = new BrowserStack ();
+        current_child.show ();
+        current_child_grid.add (current_child);
+
+        create_bookmarks_list ();
     }
 
-    internal bool is_in_in_window_mode ()
+    internal override bool is_in_in_window_mode ()
     {
-        return (in_window_bookmarks || in_window_modifications || in_window_about);
+        return (in_window_bookmarks || in_window_modifications || base.is_in_in_window_mode ());
+    }
+
+    internal override void show_default_view ()
+    {
+        if (in_window_bookmarks)
+        {
+            if (in_window_bookmarks_edit_mode)
+                leave_bookmarks_edit_mode ();
+            in_window_bookmarks = false;
+            set_visible_child (current_child_grid);
+        }
+        else if (in_window_modifications)
+        {
+            in_window_modifications = false;
+            set_visible_child (current_child_grid);
+        }
+        else
+            base.show_default_view ();
     }
 
     /*\
@@ -211,48 +231,6 @@ private class BrowserView : Stack, AdaptativeWidget
     }
 
     /*\
-    * * in-window about
-    \*/
-
-    private bool in_window_about = false;
-
-    private bool about_list_created = false;
-    private AboutList about_list;
-
-    private void create_about_list ()
-    {
-        about_list = new AboutList (/* needs shadows   */ false,
-                                    /* big placeholder */ true);
-        about_list.set_window_size (window_size);
-        about_list.show ();
-        add (about_list);
-        about_list_created = true;
-    }
-
-    internal void show_in_window_about ()
-    {
-        if (in_window_bookmarks)
-            hide_in_window_bookmarks ();
-        else if (in_window_modifications)
-            hide_in_window_modifications ();
-
-        if (about_list_created)
-            about_list.reset ();
-        else
-            create_about_list ();
-
-        set_visible_child (about_list);
-        in_window_about = true;
-    }
-
-    internal void hide_in_window_about ()
-        requires (in_window_about == true)
-    {
-        in_window_about = false;
-        set_visible_child (current_child_grid);
-    }
-
-    /*\
     * * modifications
     \*/
 
@@ -265,7 +243,7 @@ private class BrowserView : Stack, AdaptativeWidget
     {
         modifications_list = new ModificationsList (/* needs shadows   */ false,
                                                     /* big placeholder */ true);
-        modifications_list.set_window_size (window_size);
+        modifications_list.set_window_size (saved_window_size);
         // modifications_list.selection_changed.connect (() => ...);
         modifications_list.show ();
         add (modifications_list);
@@ -275,22 +253,13 @@ private class BrowserView : Stack, AdaptativeWidget
     internal void show_in_window_modifications ()
         requires (modifications_list_created == true)
     {
-        if (in_window_bookmarks)
-            hide_in_window_bookmarks ();
-        else if (in_window_about)
-            hide_in_window_about ();
+        if (in_window_bookmarks || in_window_about)
+            show_default_view ();
 
         modifications_list.reset ();
 
         set_visible_child (modifications_list);
         in_window_modifications = true;
-    }
-
-    internal void hide_in_window_modifications ()
-        requires (in_window_modifications == true)
-    {
-        in_window_modifications = false;
-        set_visible_child (current_child_grid);
     }
 
     private void update_in_window_modifications ()
@@ -302,7 +271,7 @@ private class BrowserView : Stack, AdaptativeWidget
         modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
 
         if (in_window_modifications && modifications_handler.mode == ModificationsMode.NONE)
-            hide_in_window_modifications ();
+            show_default_view ();
     }
     private Widget delayed_setting_row_create (Object object)
     {
@@ -335,10 +304,8 @@ private class BrowserView : Stack, AdaptativeWidget
 
     internal void show_in_window_bookmarks (string [] bookmarks)
     {
-        if (in_window_modifications)
-            hide_in_window_modifications ();
-        else if (in_window_about)
-            hide_in_window_about ();
+        if (in_window_modifications || in_window_about)
+            show_default_view ();
 
         bookmarks_list.reset ();
 
@@ -356,15 +323,6 @@ private class BrowserView : Stack, AdaptativeWidget
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
         bookmarks_list.update_bookmark_icon (bookmark, icon);
-    }
-
-    internal void hide_in_window_bookmarks ()
-        requires (in_window_bookmarks == true)
-    {
-        if (in_window_bookmarks_edit_mode)
-            leave_bookmarks_edit_mode ();
-        in_window_bookmarks = false;
-        set_visible_child (current_child_grid);
     }
 
     internal void enter_bookmarks_edit_mode ()
@@ -572,16 +530,16 @@ private class BrowserView : Stack, AdaptativeWidget
 
     // current row property
     internal string get_selected_row_name () { return current_child.get_selected_row_name (); }
-    internal string? get_copy_text ()
+    internal override string? get_copy_text ()
     {
         if (in_window_bookmarks)
             return bookmarks_list.get_copy_text ();
         if (in_window_modifications)
             return modifications_list.get_copy_text ();
-        if (in_window_about)
-            return about_list.get_copy_text (); // TODO copying logo...
-        else
-            return current_child.get_copy_text ();
+        string? base_copy_text = base.get_copy_text ();
+        if (base_copy_text != null)
+            return base_copy_text;
+        return current_child.get_copy_text ();
     }
     internal string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
 
