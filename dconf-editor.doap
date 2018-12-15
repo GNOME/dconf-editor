@@ -11,7 +11,7 @@
 
   <homepage rdf:resource="https://wiki.gnome.org/Apps/DconfEditor"/>
   <download-page rdf:resource="https://download.gnome.org/sources/dconf-editor/"/>
-  <bug-database rdf:resource="https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor"/>
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/dconf-editor/issues/" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#core" />
 
   <programming-language>Vala</programming-language>
