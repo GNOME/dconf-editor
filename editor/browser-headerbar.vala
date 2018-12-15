@@ -17,13 +17,85 @@
 
 using Gtk;
 
-private abstract class BrowserHeaderBar : BaseHeaderBar
+private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
 {
-    protected ViewType current_type = ViewType.FOLDER;
-    protected string current_path = "/";
+    protected PathWidget path_widget;
+
+    internal virtual void set_path (ViewType type, string path)
+    {
+        path_widget.set_path (type, path);
+
+        update_hamburger_menu ();
+    }
+
+    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    {
+        base.set_window_size (new_size);
+
+        path_widget.set_window_size (new_size);
+    }
+
+    /*\
+    * * path_widget creation
+    \*/
+
+    construct
+    {
+        add_path_widget ();
+
+        this.change_mode.connect (mode_changed_browser);
+    }
+
+    private void add_path_widget ()
+    {
+        path_widget = new PathWidget ();
+        path_widget.hexpand = false;
+
+        connect_path_widget_signals ();
+
+        path_widget.visible = true;
+        center_box.add (path_widget);
+    }
+
+    private static void mode_changed_browser (BaseHeaderBar _this, uint8 mode_id)
+    {
+        if (mode_id == default_mode_id)
+        {
+            PathWidget path_widget = ((BrowserHeaderBar) _this).path_widget;
+            path_widget.show ();
+            if (path_widget.search_mode_enabled)
+                path_widget.entry_grab_focus_without_selecting ();
+        }
+        else
+            ((BrowserHeaderBar) _this).path_widget.hide ();
+    }
+
+    /*\
+    * * path_widget proxy signals
+    \*/
 
     internal signal void search_changed ();
     internal signal void search_stopped ();
+
+    private void connect_path_widget_signals ()
+    {
+        path_widget.search_changed.connect (search_changed_cb);
+        path_widget.search_stopped.connect (search_stopped_cb);
+    }
+
+    private void search_changed_cb ()
+    {
+        search_changed ();
+    }
+
+    private void search_stopped_cb ()
+    {
+        search_stopped ();
+    }
+
+    /*\
+    * * path_widget proxy calls
+    \*/
 
     [CCode (notify = false)] internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
     [CCode (notify = false)] internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
@@ -54,67 +126,26 @@ private abstract class BrowserHeaderBar : BaseHeaderBar
     }
 
     /*\
-    * * path widget
+    * * keyboard calls
     \*/
 
-    protected PathWidget path_widget;
-
-    construct
+    internal virtual bool next_match ()
     {
-        add_path_widget ();
-
-        this.change_mode.connect (mode_changed_browser);
+        return false;
     }
 
-    private void add_path_widget ()
+    internal virtual bool previous_match ()
     {
-        path_widget = new PathWidget ();
-        path_widget.hexpand = false;
-
-        path_widget.search_changed.connect (search_changed_cb);
-        path_widget.search_stopped.connect (search_stopped_cb);
-
-        path_widget.visible = true;
-        center_box.add (path_widget);
-    }
-
-    private void search_changed_cb ()
-    {
-        search_changed ();
-    }
-
-    private void search_stopped_cb ()
-    {
-        search_stopped ();
-    }
-
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
-        path_widget.set_window_size (new_size);
-    }
-
-    private void mode_changed_browser (uint8 mode_id)
-    {
-        if (mode_id == default_mode_id)
-        {
-            path_widget.show ();
-            if (path_widget.search_mode_enabled)
-                path_widget.entry_grab_focus_without_selecting ();
-        }
-        else
-        {
-            path_widget.hide ();
-        }
+        return false;
     }
 
     /*\
-    * *
+    * * popovers methods
     \*/
 
     internal override void close_popovers ()
     {
-        hide_hamburger_menu ();
+        base.close_popovers ();
         path_widget.close_popovers ();
     }
 
@@ -125,15 +156,5 @@ private abstract class BrowserHeaderBar : BaseHeaderBar
         if (path_widget.has_popover ())
             return true;
         return false;
-    }
-
-    internal virtual void set_path (ViewType type, string path)
-    {
-        current_type = type;
-        current_path = path;
-
-        path_widget.set_path (type, path);
-
-        update_hamburger_menu ();
     }
 }

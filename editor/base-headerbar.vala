@@ -63,48 +63,6 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     }
 
     /*\
-    * * popovers methods
-    \*/
-
-    internal virtual void close_popovers ()
-    {
-        hide_hamburger_menu ();
-    }
-
-    protected inline void hide_hamburger_menu ()
-    {
-        if (info_button.active)
-            info_button.active = false;
-    }
-
-    internal virtual bool has_popover ()
-    {
-        if (info_button.active)
-            return true;
-        return false;
-    }
-
-    /*\
-    * * keyboard calls
-    \*/
-
-    internal virtual bool previous_match ()
-    {
-        return false;
-    }
-
-    internal virtual bool next_match ()
-    {
-        return false;
-    }
-
-    internal virtual void toggle_hamburger_menu ()
-    {
-        if (info_button.visible)
-            info_button.active = !info_button.active;
-    }
-
-    /*\
     * * hamburger menu
     \*/
 
@@ -152,6 +110,18 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         section.append (about_action_label, "browser.about");
     }
 
+    protected inline void hide_hamburger_menu ()
+    {
+        if (info_button.active)
+            info_button.active = false;
+    }
+
+    internal virtual void toggle_hamburger_menu ()
+    {
+        if (info_button.visible)
+            info_button.active = !info_button.active;
+    }
+
     /*\
     * * modes
     \*/
@@ -164,7 +134,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         return ++last_mode_id;
     }
 
-    protected bool is_not_requested_mode (uint8 mode_id, uint8 requested_mode_id, ref bool mode_is_active)
+    protected static bool is_not_requested_mode (uint8 mode_id, uint8 requested_mode_id, ref bool mode_is_active)
     {
         if (mode_id == requested_mode_id)
         {
@@ -188,9 +158,9 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
         this.change_mode.connect (update_current_mode_id);
     }
-    private void update_current_mode_id (uint8 requested_mode_id)
+    private static void update_current_mode_id (BaseHeaderBar _this, uint8 requested_mode_id)
     {
-        current_mode_id = requested_mode_id;
+        _this.current_mode_id = requested_mode_id;
     }
 
     /*\
@@ -246,17 +216,17 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         this.change_mode.connect (mode_changed_default);
     }
 
-    private void mode_changed_default (uint8 requested_mode_id)
+    private static void mode_changed_default (BaseHeaderBar _this, uint8 requested_mode_id)
     {
-        if (is_not_requested_mode (default_mode_id, requested_mode_id, ref default_mode_on))
+        if (is_not_requested_mode (default_mode_id, requested_mode_id, ref _this.default_mode_on))
             return;
 
-        set_default_widgets_states (/* show go_back_button      */ false,
-                                    /* show ltr_left_separator  */ false,
-                                    /* title_label text or null */ null,
-                                    /* show info_button         */ true,
-                                    /* show ltr_right_separator */ disable_action_bar,
-                                    /* show quit_button_stack   */ disable_action_bar);
+        _this.set_default_widgets_states (/* show go_back_button      */ false,
+                                          /* show ltr_left_separator  */ false,
+                                          /* title_label text or null */ null,
+                                          /* show info_button         */ true,
+                                          /* show ltr_right_separator */ _this.disable_action_bar,
+                                          /* show quit_button_stack   */ _this.disable_action_bar);
     }
 
     /*\
@@ -279,17 +249,33 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         this.change_mode.connect (mode_changed_about);
     }
 
-    private void mode_changed_about (uint8 requested_mode_id)
-        requires (about_mode_id > 0)
+    private static void mode_changed_about (BaseHeaderBar _this, uint8 requested_mode_id)
+        requires (_this.about_mode_id > 0)
     {
-        if (is_not_requested_mode (about_mode_id, requested_mode_id, ref about_mode_on))
+        if (is_not_requested_mode (_this.about_mode_id, requested_mode_id, ref _this.about_mode_on))
             return;
 
-        set_default_widgets_states (/* show go_back_button      */ true,
-                                    /* show ltr_left_separator  */ false,
-                                    /* title_label text or null */ _("About"),
-                                    /* show info_button         */ false,
-                                    /* show ltr_right_separator */ false,
-                                    /* show quit_button_stack   */ true);
+        _this.set_default_widgets_states (/* show go_back_button      */ true,
+                                          /* show ltr_left_separator  */ false,
+                                          /* title_label text or null */ _("About"),
+                                          /* show info_button         */ false,
+                                          /* show ltr_right_separator */ false,
+                                          /* show quit_button_stack   */ true);
+    }
+
+    /*\
+    * * popovers methods
+    \*/
+
+    internal virtual void close_popovers ()
+    {
+        hide_hamburger_menu ();
+    }
+
+    internal virtual bool has_popover ()
+    {
+        if (info_button.active)
+            return true;
+        return false;
     }
 }

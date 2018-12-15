@@ -17,10 +17,8 @@
 
 using Gtk;
 
-private class DConfHeaderBar : BrowserHeaderBar
+private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 {
-    private Bookmarks bookmarks_button;
-
     private bool _delay_mode = false;
     [CCode (notify = false)] internal bool delay_mode
     {
@@ -39,17 +37,21 @@ private class DConfHeaderBar : BrowserHeaderBar
     {
         install_action_entries ();
 
-        add_bookmarks_revealer ();
-        add_bookmarks_controller ();
-        add_show_modifications_button ();
-        add_modifications_actions_button ();
-        construct_modifications_actions_button_menu ();
+        add_bookmarks_revealer              (out bookmarks_revealer,
+                                             out bookmarks_button,              ref center_box);
+        connect_bookmarks_signals ();
+        add_bookmarks_controller            (out bookmarks_controller,          ref this);
+
+        add_show_modifications_button       (out show_modifications_button,     ref quit_button_stack);
+        add_modifications_actions_button    (out modifications_actions_button,  ref this);
+        construct_changes_pending_menu      (out changes_pending_menu,          ref modifications_actions_button);
+        construct_quit_delayed_mode_menu    (out quit_delayed_mode_menu);
 
         register_bookmarks_modes ();
         register_modifications_mode ();
     }
 
-    internal DConfHeaderBar (NightLightMonitor _night_light_monitor)
+    internal static DConfHeaderBar (NightLightMonitor _night_light_monitor)
     {
         Object (night_light_monitor: _night_light_monitor, about_action_label: _("About Dconf Editor"));
     }
@@ -68,28 +70,32 @@ private class DConfHeaderBar : BrowserHeaderBar
     private void update_bookmarks_button_visibility ()
     {
         if (disable_popovers || modifications_mode_on)
-        {
-            bookmarks_button.active = false;
-
-            bookmarks_button.sensitive = false;
-            bookmarks_revealer.set_reveal_child (false);
-        }
+            hide_bookmarks_button (ref bookmarks_revealer, ref bookmarks_button);
         else
-        {
-            bookmarks_button.sensitive = true;
-            bookmarks_revealer.set_reveal_child (true);
-        }
+            show_bookmarks_button (ref bookmarks_revealer, ref bookmarks_button);
+    }
+    private static inline void hide_bookmarks_button (ref Revealer bookmarks_revealer, ref Bookmarks bookmarks_button)
+    {
+        bookmarks_button.active = false;
+
+        bookmarks_button.sensitive = false;
+        bookmarks_revealer.set_reveal_child (false);
+    }
+    private static inline void show_bookmarks_button (ref Revealer bookmarks_revealer, ref Bookmarks bookmarks_button)
+    {
+        bookmarks_button.sensitive = true;
+        bookmarks_revealer.set_reveal_child (true);
     }
 
     /*\
-    * * bookmarks revealer
+    * * bookmarks widget
     \*/
 
-    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
+    private Revealer            bookmarks_revealer;
+    private Bookmarks           bookmarks_button;
+    private BookmarksController bookmarks_controller;
 
-    private Revealer bookmarks_revealer;
-
-    private void add_bookmarks_revealer ()
+    private static void add_bookmarks_revealer (out Revealer bookmarks_revealer, out Bookmarks bookmarks_button, ref Box center_box)
     {
         bookmarks_revealer = new Revealer ();
         bookmarks_revealer.transition_type = RevealerTransitionType.SLIDE_LEFT;
@@ -99,7 +105,6 @@ private class DConfHeaderBar : BrowserHeaderBar
         bookmarks_button = new Bookmarks ("/ca/desrt/dconf-editor/");
         bookmarks_button.valign = Align.CENTER;
         bookmarks_button.focus_on_click = false;
-        bookmarks_button.update_bookmarks_icons.connect (update_bookmarks_icons_cb);
         bookmarks_button.get_style_context ().add_class ("image-button");   // TODO check https://bugzilla.gnome.org/show_bug.cgi?id=756731
 
         bookmarks_button.visible = true;
@@ -108,24 +113,25 @@ private class DConfHeaderBar : BrowserHeaderBar
         center_box.pack_end (bookmarks_revealer);
     }
 
-    private void update_bookmarks_icons_cb (Variant bookmarks_variant)
-    {
-        update_bookmarks_icons (bookmarks_variant);
-    }
-
-    /*\
-    * * bookmarks stack
-    \*/
-
-    private BookmarksController bookmarks_controller;
-
-    private void add_bookmarks_controller ()
+    private static void add_bookmarks_controller (out BookmarksController bookmarks_controller, ref unowned DConfHeaderBar _this)
     {
         bookmarks_controller = new BookmarksController ("bmk", false);
         bookmarks_controller.hexpand = true;
 
         bookmarks_controller.visible = false;
-        pack_start (bookmarks_controller);
+        _this.pack_start (bookmarks_controller);
+    }
+
+    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
+
+    private inline void connect_bookmarks_signals ()
+    {
+        bookmarks_button.update_bookmarks_icons.connect (update_bookmarks_icons_cb);
+    }
+
+    private void update_bookmarks_icons_cb (Variant bookmarks_variant)
+    {
+        update_bookmarks_icons (bookmarks_variant);
     }
 
     /*\
@@ -149,24 +155,25 @@ private class DConfHeaderBar : BrowserHeaderBar
         this.change_mode.connect (mode_changed_bookmarks);
     }
 
-    private void mode_changed_bookmarks (uint8 requested_mode_id)
+    private static void mode_changed_bookmarks (BaseHeaderBar _this, uint8 requested_mode_id)
     {
-        mode_changed_use_bookmarks (requested_mode_id);
-        mode_changed_edit_bookmarks (requested_mode_id);
+        DConfHeaderBar real_this = (DConfHeaderBar) _this;
+        mode_changed_use_bookmarks (real_this, requested_mode_id);
+        mode_changed_edit_bookmarks (real_this, requested_mode_id);
     }
 
-    private void mode_changed_use_bookmarks (uint8 requested_mode_id)
-        requires (use_bookmarks_mode_id > 0)
+    private static void mode_changed_use_bookmarks (DConfHeaderBar _this, uint8 requested_mode_id)
+        requires (_this.use_bookmarks_mode_id > 0)
     {
-        if (is_not_requested_mode (use_bookmarks_mode_id, requested_mode_id, ref use_bookmarks_mode_on))
+        if (is_not_requested_mode (_this.use_bookmarks_mode_id, requested_mode_id, ref _this.use_bookmarks_mode_on))
             return;
 
-        set_default_widgets_states (/* show go_back_button      */ true,
-                                    /* show ltr_left_separator  */ false,
-                                    /* title_label text or null */ _("Bookmarks"),
-                                    /* show info_button         */ false,
-                                    /* show ltr_right_separator */ false,
-                                    /* show quit_button_stack   */ true);
+        _this.set_default_widgets_states (/* show go_back_button      */ true,
+                                          /* show ltr_left_separator  */ false,
+                                          /* title_label text or null */ _("Bookmarks"),
+                                          /* show info_button         */ false,
+                                          /* show ltr_right_separator */ false,
+                                          /* show quit_button_stack   */ true);
     }
 
     /*\
@@ -182,31 +189,34 @@ private class DConfHeaderBar : BrowserHeaderBar
         change_mode (edit_bookmarks_mode_id);
     }
 
-    private void mode_changed_edit_bookmarks (uint8 requested_mode_id)
-        requires (edit_bookmarks_mode_id > 0)
+    private static void mode_changed_edit_bookmarks (DConfHeaderBar _this, uint8 requested_mode_id)
+        requires (_this.edit_bookmarks_mode_id > 0)
     {
-        if (is_not_requested_mode (edit_bookmarks_mode_id, requested_mode_id, ref edit_bookmarks_mode_on))
+        if (is_not_requested_mode (_this.edit_bookmarks_mode_id, requested_mode_id, ref _this.edit_bookmarks_mode_on))
         {
-            bookmarks_controller.hide ();
+            _this.bookmarks_controller.hide ();
             return;
         }
 
-        set_default_widgets_states (/* show go_back_button      */ true,
-                                    /* show ltr_left_separator  */ true,
-                                    /* title_label text or null */ null,
-                                    /* show info_button         */ false,
-                                    /* show ltr_right_separator */ false,
-                                    /* show quit_button_stack   */ true);
-        bookmarks_controller.show ();
+        _this.set_default_widgets_states (/* show go_back_button      */ true,
+                                          /* show ltr_left_separator  */ true,
+                                          /* title_label text or null */ null,
+                                          /* show info_button         */ false,
+                                          /* show ltr_right_separator */ false,
+                                          /* show quit_button_stack   */ true);
+        _this.bookmarks_controller.show ();
     }
 
     /*\
-    * * show-modifications button
+    * * modifications buttons and actions
     \*/
 
-    private Button show_modifications_button;
+    private Button      show_modifications_button;
+    private MenuButton  modifications_actions_button;
+    private GLib.Menu   changes_pending_menu;
+    private GLib.Menu   quit_delayed_mode_menu;
 
-    private void add_show_modifications_button ()
+    private static void add_show_modifications_button (out Button show_modifications_button, ref Stack quit_button_stack)
     {
         show_modifications_button = new Button.from_icon_name ("document-open-recent-symbolic");
         show_modifications_button.valign = Align.CENTER;
@@ -217,13 +227,7 @@ private class DConfHeaderBar : BrowserHeaderBar
         quit_button_stack.add (show_modifications_button);
     }
 
-    /*\
-    * *
-    \*/
-
-    private MenuButton modifications_actions_button;
-
-    private void add_modifications_actions_button ()
+    private static void add_modifications_actions_button (out MenuButton modifications_actions_button, ref unowned DConfHeaderBar _this)
     {
         modifications_actions_button = new MenuButton ();
         Image view_more_image = new Image.from_icon_name ("view-more-symbolic", IconSize.BUTTON);
@@ -232,11 +236,36 @@ private class DConfHeaderBar : BrowserHeaderBar
         modifications_actions_button.get_style_context ().add_class ("image-button");
 
         modifications_actions_button.visible = false;
-        pack_end (modifications_actions_button);
+        _this.pack_end (modifications_actions_button);
+    }
+
+    private static void construct_changes_pending_menu (out GLib.Menu changes_pending_menu, ref MenuButton modifications_actions_button)
+    {
+        changes_pending_menu = new GLib.Menu ();
+        changes_pending_menu.append (_("Apply all"), "ui.apply-delayed-settings");
+        changes_pending_menu.append (_("Dismiss all"), "ui.dismiss-delayed-settings");
+        changes_pending_menu.freeze ();
+
+        modifications_actions_button.set_menu_model (changes_pending_menu);
+    }
+
+    private static void construct_quit_delayed_mode_menu (out GLib.Menu quit_delayed_mode_menu)
+    {
+        quit_delayed_mode_menu = new GLib.Menu ();
+        quit_delayed_mode_menu.append (_("Quit mode"), "ui.dismiss-delayed-settings");
+        quit_delayed_mode_menu.freeze ();
+    }
+
+    internal void set_apply_modifications_button_sensitive (bool new_value)
+    {
+        if (new_value)
+            modifications_actions_button.set_menu_model (changes_pending_menu);
+        else
+            modifications_actions_button.set_menu_model (quit_delayed_mode_menu);
     }
 
     /*\
-    * *
+    * * bookmarks_button proxy calls
     \*/
 
     internal string [] get_bookmarks ()     { return bookmarks_button.get_bookmarks (); }
@@ -247,48 +276,16 @@ private class DConfHeaderBar : BrowserHeaderBar
     * * should move back
     \*/
 
+    private ViewType current_type = ViewType.FOLDER;
+    private string current_path = "/";
+
     internal override void set_path (ViewType type, string path)
     {
         current_type = type;
         current_path = path;
 
-        path_widget.set_path (type, path);
         bookmarks_button.set_path (type, path);
-
-        update_hamburger_menu ();
-    }
-
-    internal override bool has_popover ()
-    {
-        if (base.has_popover ())
-            return true;
-        if (bookmarks_button.active)
-            return true;
-        return false;
-    }
-
-
-
-    internal override bool next_match ()
-    {
-        if (bookmarks_button.active)
-            return bookmarks_button.next_match ();
-        return false;
-    }
-
-    internal override bool previous_match ()
-    {
-        if (bookmarks_button.active)
-            return bookmarks_button.previous_match ();
-        return false;
-    }
-
-    internal override void close_popovers ()
-    {
-        hide_hamburger_menu ();
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
-        path_widget.close_popovers ();
+        base.set_path (type, path);
     }
 
     internal void click_bookmarks_button ()
@@ -391,46 +388,31 @@ private class DConfHeaderBar : BrowserHeaderBar
         this.change_mode.connect (mode_changed_modifications);
     }
 
-    private void mode_changed_modifications (uint8 requested_mode_id)
+    private static void mode_changed_modifications (BaseHeaderBar _this, uint8 requested_mode_id)
     {
-        if (is_not_requested_mode (modifications_mode_id, requested_mode_id, ref modifications_mode_on))
+        DConfHeaderBar real_this = (DConfHeaderBar) _this;
+        if (is_not_requested_mode (real_this.modifications_mode_id, requested_mode_id, ref real_this.modifications_mode_on))
         {
-            modifications_actions_button.hide ();
-            bookmarks_revealer.show ();
-            update_bookmarks_button_visibility ();
+            real_this.modifications_actions_button.hide ();
+            real_this.bookmarks_revealer.show ();
+            real_this.update_bookmarks_button_visibility ();
             // if (path_widget.search_mode_enabled)
             //    path_widget.entry_grab_focus_without_selecting ();
             return;
         }
 
-        set_default_widgets_states (/* show go_back_button      */ true,
-                                    /* show ltr_left_separator  */ false,
-                                    /* title_label text or null */ _("Pending"),
-                                    /* show info_button         */ false,
-                                    /* show ltr_right_separator */ false,
-                                    /* show quit_button_stack   */ false);
-        if (disable_action_bar && !disable_popovers)
+        real_this.set_default_widgets_states (/* show go_back_button      */ true,
+                                              /* show ltr_left_separator  */ false,
+                                              /* title_label text or null */ _("Pending"),
+                                              /* show info_button         */ false,
+                                              /* show ltr_right_separator */ false,
+                                              /* show quit_button_stack   */ false);
+        if (real_this.disable_action_bar && !real_this.disable_popovers)
         {
-            bookmarks_button.sensitive = false;
-            bookmarks_revealer.hide ();
+            real_this.bookmarks_button.sensitive = false;
+            real_this.bookmarks_revealer.hide ();
         }
-        modifications_actions_button.show ();
-    }
-
-    GLib.Menu changes_pending_menu;
-    GLib.Menu quit_delayed_mode_menu;
-    private void construct_modifications_actions_button_menu ()
-    {
-        changes_pending_menu = new GLib.Menu ();
-        changes_pending_menu.append (_("Apply all"), "ui.apply-delayed-settings");
-        changes_pending_menu.append (_("Dismiss all"), "ui.dismiss-delayed-settings");
-        changes_pending_menu.freeze ();
-
-        quit_delayed_mode_menu = new GLib.Menu ();
-        quit_delayed_mode_menu.append (_("Quit mode"), "ui.dismiss-delayed-settings");
-        quit_delayed_mode_menu.freeze ();
-
-        modifications_actions_button.set_menu_model (changes_pending_menu);
+        real_this.modifications_actions_button.show ();
     }
 
     private void update_modifications_button ()
@@ -450,14 +432,6 @@ private class DConfHeaderBar : BrowserHeaderBar
             else
                 quit_button_stack.set_visible_child_name ("quit-button");
         }
-    }
-
-    internal void set_apply_modifications_button_sensitive (bool new_value)
-    {
-        if (new_value)
-            modifications_actions_button.set_menu_model (changes_pending_menu);
-        else
-            modifications_actions_button.set_menu_model (quit_delayed_mode_menu);
     }
 
     /*\
@@ -485,5 +459,43 @@ private class DConfHeaderBar : BrowserHeaderBar
     private void unbookmark_current (/* SimpleAction action, Variant? variant */)
     {
         unbookmark_current_path ();
+    }
+
+    /*\
+    * * keyboard calls
+    \*/
+
+    internal override bool next_match ()
+    {
+        if (bookmarks_button.active)
+            return bookmarks_button.next_match ();
+        return base.next_match ();      // false
+    }
+
+    internal override bool previous_match ()
+    {
+        if (bookmarks_button.active)
+            return bookmarks_button.previous_match ();
+        return base.previous_match ();  // false
+    }
+
+    /*\
+    * * popovers methods
+    \*/
+
+    internal override void close_popovers ()
+    {
+        base.close_popovers ();
+        if (bookmarks_button.active)
+            bookmarks_button.active = false;
+    }
+
+    internal override bool has_popover ()
+    {
+        if (base.has_popover ())
+            return true;
+        if (bookmarks_button.active)
+            return true;
+        return false;
     }
 }
