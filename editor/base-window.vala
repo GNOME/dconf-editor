@@ -366,6 +366,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         in_window_about = true;
         headerbar.show_about_view ();
         base_view.show_about_view ();
+        set_focus_visible (false);  // about-list grabs focus
     }
 
     protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)

@@ -83,7 +83,8 @@ private class AboutList : OverlayedList
     {
         main_list_store.remove_all ();
         main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name, AboutDialogInfos.program_name));
-        main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.program_name, "bold-label"));
+        AboutListItem program = new AboutListItem.from_label        (AboutDialogInfos.program_name, "bold-label");
+        main_list_store.append (program);
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.version));
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.comments));
         main_list_store.append (new AboutListItem.from_link         (AboutDialogInfos.website,
@@ -93,13 +94,16 @@ private class AboutList : OverlayedList
         if (AboutDialogInfos.license_type != License.GPL_3_0)
             assert_not_reached ();  // TODO support all licenses type
         main_list_store.append (new AboutListItem.from_link         ("https://www.gnu.org/licenses/gpl-3.0.html", _("GNU General Public License\nversion 3 or later")));    // TODO better
+
+        program.grab_focus ();
     }
 
     private static inline void show_credits (ref GLib.ListStore main_list_store)
     {
         main_list_store.remove_all ();
         main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name, AboutDialogInfos.program_name));
-        main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.program_name, "bold-label"));
+        AboutListItem program = new AboutListItem.from_label        (AboutDialogInfos.program_name, "bold-label");
+        main_list_store.append (program);
 
         string authors = "";
         uint position = 0;
@@ -114,6 +118,8 @@ private class AboutList : OverlayedList
         main_list_store.append (new AboutListItem.with_title        (authors, _("Creators")));
 
         main_list_store.append (new AboutListItem.with_title        (AboutDialogInfos.translator_credits, _("Translators")));
+
+        program.grab_focus ();
     }
 }
 
