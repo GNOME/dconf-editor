@@ -650,25 +650,27 @@ private abstract class BrowserWindow : BaseWindow
                        "mouse-forward-button",    SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
     }
 
-    private bool on_button_press_event (Widget widget, Gdk.EventButton event)
+    private static bool on_button_press_event (Widget widget, Gdk.EventButton event)
     {
-        if (!mouse_use_extra_buttons)
+        BrowserWindow _this = (BrowserWindow) widget;
+
+        if (!_this.mouse_use_extra_buttons)
             return false;
 
-        if (event.button == mouse_back_button)
+        if (event.button == _this.mouse_back_button)
         {
-            if (mouse_back_button == mouse_forward_button)
+            if (_this.mouse_back_button == _this.mouse_forward_button)
             {
                 warning (_("The same mouse button is set for going backward and forward. Doing nothing."));
                 return false;
             }
 
-            go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+            _this.go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
             return true;
         }
-        if (event.button == mouse_forward_button)
+        if (event.button == _this.mouse_forward_button)
         {
-            go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+            _this.go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
             return true;
         }
         return false;

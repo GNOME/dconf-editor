@@ -258,16 +258,22 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     [GtkCallback]
     protected virtual bool on_key_press_event (Widget widget, Gdk.EventKey event)
     {
+        return _on_key_press_event (widget, event);
+    }
+    private static bool _on_key_press_event (Widget widget, Gdk.EventKey event)
+    {
         uint keyval = event.keyval;
         string name = (!) (Gdk.keyval_name (keyval) ?? "");
 
         if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
         {
-            headerbar.close_popovers ();
-            base_view.close_popovers ();
+            BaseWindow _this = (BaseWindow) widget;
+
+            _this.headerbar.close_popovers ();
+            _this.base_view.close_popovers ();
             if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
                 return false;   // help overlay
-            about ();
+            _this.about ();
             return true;
         }
 
