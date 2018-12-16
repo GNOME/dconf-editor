@@ -166,7 +166,10 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         requires (_this.use_bookmarks_mode_id > 0)
     {
         if (is_not_requested_mode (_this.use_bookmarks_mode_id, requested_mode_id, ref _this.use_bookmarks_mode_on))
+        {
+            _this.update_hamburger_menu ();   // should not be useful, but <Ctrl>c-ing a bookmarks calls somehow a menu update  1/2
             return;
+        }
 
         _this.set_default_widgets_states (/* show go_back_button      */ true,
                                           /* show ltr_left_separator  */ false,
@@ -195,6 +198,7 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         if (is_not_requested_mode (_this.edit_bookmarks_mode_id, requested_mode_id, ref _this.edit_bookmarks_mode_on))
         {
             _this.bookmarks_controller.hide ();
+            _this.update_hamburger_menu ();   // should not be useful, but <Ctrl>c-ing a bookmarks calls somehow a menu update  2/2
             return;
         }
 
