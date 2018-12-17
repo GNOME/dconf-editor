@@ -221,11 +221,11 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
         adjustment.set_value (adjustment.get_upper ());
     }
 
-    internal string? get_copy_text ()
+    internal bool handle_copy_text (out string copy_text)
     {
-        return _get_copy_text (ref main_list_box);
+        return _handle_copy_text (out copy_text, ref main_list_box);
     }
-    private static inline string? _get_copy_text (ref ListBox main_list_box)
+    private static inline bool _handle_copy_text (out string copy_text, ref ListBox main_list_box)
     {
         List<weak ListBoxRow> selected_rows = main_list_box.get_selected_rows ();
         OverlayedListRow row;
@@ -234,7 +234,9 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
             case 0:
                 Widget? focus_child = main_list_box.get_focus_child ();
                 if (focus_child == null)
-                    return null;
+                    return BaseWindow.copy_clipboard_text (out copy_text);
+                if (BaseWindow.copy_clipboard_text (out copy_text))
+                    return true;
                 if (!((!) focus_child is OverlayedListRow))
                     assert_not_reached ();
                 row = (OverlayedListRow) (!) focus_child;
@@ -246,9 +248,9 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
                 row = (OverlayedListRow) selected_row;
                 break;
             default:
-                return null;
+                return BaseWindow.no_copy_text (out copy_text);
         }
-        return row.get_copy_text ();  // FIXME row should keep focus
+        return row.handle_copy_text (out copy_text);  // FIXME row should keep focus
     }
 
     /*\
@@ -377,5 +379,5 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
 
 private abstract class OverlayedListRow : ListBoxRow
 {
-    internal abstract string? get_copy_text ();
+    internal abstract bool handle_copy_text (out string copy_text);
 }

@@ -400,7 +400,7 @@ private class BrowserView : BaseView, AdaptativeWidget
     internal void select_row (string selected)
         requires (ViewType.displays_objects_list (current_view))
     {
-        current_child.select_row (selected, last_context_id);
+        current_child.select_row (selected, last_context_id, !is_in_in_window_mode ());
     }
 
     internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)
@@ -530,18 +530,20 @@ private class BrowserView : BaseView, AdaptativeWidget
 
     // current row property
     internal string get_selected_row_name () { return current_child.get_selected_row_name (); }
-    internal override string? get_copy_text ()
+    internal override bool handle_copy_text (out string copy_text)
     {
         if (in_window_bookmarks)
-            return bookmarks_list.get_copy_text ();
+            return bookmarks_list.handle_copy_text (out copy_text);
         if (in_window_modifications)
-            return modifications_list.get_copy_text ();
-        string? base_copy_text = base.get_copy_text ();
-        if (base_copy_text != null)
-            return base_copy_text;
-        return current_child.get_copy_text ();
+            return modifications_list.handle_copy_text (out copy_text);
+        if (base.handle_copy_text (out copy_text))
+            return true;
+        return current_child.handle_copy_text (out copy_text);
     }
-    internal string? get_copy_path_text ()   { return current_child.get_copy_path_text ();    }
+    internal bool handle_alt_copy_text (out string copy_text)
+    {
+        return current_child.handle_alt_copy_text (out copy_text);
+    }
 
     // values changes
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)

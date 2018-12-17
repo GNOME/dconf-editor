@@ -477,6 +477,13 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         return base.previous_match ();  // false
     }
 
+    internal bool handle_copy_text (out string copy_text)
+    {
+        if (bookmarks_button.active)
+            return bookmarks_button.handle_copy_text (out copy_text);
+        return BaseWindow.no_copy_text (out copy_text);
+    }
+
     /*\
     * * popovers methods
     \*/

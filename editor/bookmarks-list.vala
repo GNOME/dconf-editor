@@ -534,9 +534,10 @@ private class Bookmark : OverlayedListRow
             set_detailed_action_name (inactive_action_name);
     }
 
-    internal override string? get_copy_text ()
+    internal override bool handle_copy_text (out string copy_text)
     {
-        return bookmark_name;
+        copy_text = bookmark_name;
+        return true;
     }
 
     /*\

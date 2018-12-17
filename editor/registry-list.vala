@@ -171,8 +171,6 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         return ((SimpleSettingObject) list_model.get_object (position)).full_name;
     }
 
-    internal abstract void select_first_row ();
-
     internal void select_row_named (string selected, uint16 context_id, bool grab_focus)
     {
         check_resize ();
@@ -290,19 +288,24 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         return true;
     }
 
-    internal string? get_copy_text () // can compile with "private", but is public 1/2
+    internal bool handle_copy_text (out string copy_text) // can compile with "private", but is public 1/2
+    {
+        return _handle_copy_text (out copy_text, ref key_list_box);
+    }
+    private bool _handle_copy_text (out string copy_text, ref ListBox key_list_box)
     {
         ListBoxRow? selected_row = (ListBoxRow?) key_list_box.get_selected_row ();
         if (selected_row == null)
-            return null;
+            return BaseWindow.no_copy_text (out copy_text);
 
         ClickableListBoxRow row = (ClickableListBoxRow) ((!) selected_row).get_child ();
 
         if (ModelUtils.is_folder_context_id (row.context_id)
          || ModelUtils.is_undefined_context_id (row.context_id))
-            return _get_folder_or_search_copy_text (row);
+            copy_text = _get_folder_or_search_copy_text (row);
         else
-            return _get_key_copy_text (row, modifications_handler);
+            copy_text = _get_key_copy_text (row, modifications_handler);
+        return true;
     }
     private static inline string _get_folder_or_search_copy_text (ClickableListBoxRow row)
     {

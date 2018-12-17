@@ -389,15 +389,18 @@ private class RegistryInfo : Grid, BrowsableView
         return Key.cool_text_value_from_variant ((!) key_value);
     }
 
-    internal string? get_copy_text () // can compile with "private", but is public 2/2
+    internal bool handle_copy_text (out string copy_text) // can compile with "private", but is public 2/2
     {
+        if (BaseWindow.copy_clipboard_text (out copy_text))
+            return true;
+
         Widget? focused_row = properties_list_box.get_focus_child ();
         if (focused_row == null)
-            return null;
+            return BaseWindow.no_copy_text (out copy_text);
         else if ((!) focused_row is PropertyRow)
-            return ((PropertyRow) (!) focused_row).get_copy_text ();
+            return ((PropertyRow) (!) focused_row).handle_copy_text (out copy_text);
         else    // separator
-            return null;
+            return BaseWindow.no_copy_text (out copy_text);
     }
 
     private static void on_value_has_changed (ModificationsHandler _modifications_handler, KeyEditorChild key_editor_child, string full_name, uint16 context_id, bool has_schema, string type_code, bool is_valid)
@@ -613,6 +616,8 @@ private class PropertyRow : ListBoxRowWrapper
         value_label.yalign = 0;
         value_label.wrap = true;
         value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+        value_label.selectable = true;
+        value_label.can_focus = false;
 
         StyleContext context = value_label.get_style_context ();
         if (use_italic)
@@ -651,11 +656,14 @@ private class PropertyRow : ListBoxRowWrapper
         grid.valign = Align.CENTER;
     }
 
-    internal string? get_copy_text ()
+    internal bool handle_copy_text (out string copy_text)
     {
         if (value_widget != null)
-            return ((Label) (!) value_widget).get_label ();
+        {
+            copy_text = ((Label) (!) value_widget).get_label ();
+            return true;
+        }
         else
-            return null;
+            return BaseWindow.no_copy_text (out copy_text);
     }
 }

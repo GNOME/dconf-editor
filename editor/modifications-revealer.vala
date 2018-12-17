@@ -149,6 +149,13 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         return modifications_list.previous_match ();
     }
 
+    internal bool handle_copy_text (out string copy_text)
+    {
+        if (delayed_list_button.active)
+            return modifications_list.handle_copy_text (out copy_text);
+        return BaseWindow.no_copy_text (out copy_text);
+    }
+
     /*\
     * * Modifications list public functions
     \*/

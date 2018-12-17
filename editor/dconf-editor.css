@@ -143,8 +143,16 @@
 \*/
 
 .about-list            > scrolledwindow > viewport > list > row {
-  padding:4px;
   min-height:1.3rem;
+}
+
+.about-list            > scrolledwindow > viewport > list > row > label {
+  margin:4px;
+}
+
+.about-list            > scrolledwindow > viewport > list > row > button {
+  margin-top:2px;
+  margin-bottom:2px;
 }
 
 /*\

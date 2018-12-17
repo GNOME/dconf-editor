@@ -88,13 +88,20 @@ private class BrowserStack : Grid, AdaptativeWidget
         stack.set_transition_type (is_ancestor && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
-    internal void select_row (string selected, uint16 last_context_id)
+    internal void select_row (string selected, uint16 last_context_id, bool grab_focus_if_needed)
         requires (ViewType.displays_objects_list (current_view))
     {
         if (selected == "")
-            ((RegistryList) stack.get_visible_child ()).select_first_row ();
+        {
+            if (current_view == ViewType.SEARCH)
+                ((RegistrySearch) stack.get_visible_child ()).select_first_row ();
+            else if (current_view == ViewType.FOLDER)
+                ((RegistryView) stack.get_visible_child ()).select_first_row (grab_focus_if_needed);
+            else
+                assert_not_reached ();
+        }
         else
-            ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context_id, current_view == ViewType.FOLDER);
+            ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context_id, (current_view == ViewType.FOLDER) && grab_focus_if_needed);
     }
 
     internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)
@@ -130,18 +137,18 @@ private class BrowserStack : Grid, AdaptativeWidget
             search_view.clean ();
     }
 
-    internal string? get_copy_text ()
+    internal bool handle_copy_text (out string copy_text)
     {
-        return ((BrowsableView) stack.get_visible_child ()).get_copy_text ();
+        return ((BrowsableView) stack.get_visible_child ()).handle_copy_text (out copy_text);
     }
 
-    internal string? get_copy_path_text ()
+    internal bool handle_alt_copy_text (out string copy_text)
     {
         if (current_view == ViewType.SEARCH)
-            return search_view.get_copy_path_text ();
+            return search_view.handle_alt_copy_text (out copy_text);
 
         warning ("BrowserView get_copy_path_text() called but current view is not search results view.");
-        return null;
+        return BaseWindow.no_copy_text (out copy_text);
     }
 
     internal bool toggle_row_popover ()
@@ -252,5 +259,5 @@ private class BrowserStack : Grid, AdaptativeWidget
 
 private interface BrowsableView
 {
-    internal abstract string? get_copy_text ();
+    internal abstract bool handle_copy_text (out string copy_text);
 }

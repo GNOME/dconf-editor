@@ -34,7 +34,7 @@ private class RegistrySearch : RegistryList
     * * Simple public calls
     \*/
 
-    internal override void select_first_row ()
+    internal void select_first_row ()
     {
         if (old_term != null)   //happens when pasting an invalid path
             _select_first_row (key_list_box, (!) old_term);
@@ -45,9 +45,9 @@ private class RegistrySearch : RegistryList
         return _return_pressed (key_list_box);
     }
 
-    internal string? get_copy_path_text ()
+    internal bool handle_alt_copy_text (out string copy_text)
     {
-        return _get_copy_path_text (key_list_box);
+        return _handle_alt_copy_text (out copy_text, ref key_list_box);
     }
 
     internal void clean ()
@@ -146,21 +146,21 @@ private class RegistrySearch : RegistryList
     * * Keyboard calls
     \*/
 
-    private static string? _get_copy_path_text (ListBox key_list_box)
+    private static bool _handle_alt_copy_text (out string copy_text, ref ListBox key_list_box)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
-            return null;
-        return _get_action_target ((!) selected_row);
+            return BaseWindow.no_copy_text (out copy_text);
+        _get_action_target ((!) selected_row, out copy_text);
+        return true;
     }
 
-    private static string _get_action_target (ListBoxRow selected_row)
+    private static void _get_action_target (ListBoxRow selected_row, out string action_target)
     {
         Variant? variant = selected_row.get_action_target_value ();
         if (variant == null)
             assert_not_reached ();
 
-        string action_target;
         if (((!) variant).get_type_string () == "s")    // directory
             action_target = ((!) variant).get_string ();
         else
@@ -168,7 +168,6 @@ private class RegistrySearch : RegistryList
             uint16 unused;
             ((!) variant).@get ("(sq)", out action_target, out unused);
         }
-        return action_target;
     }
 
     /*\

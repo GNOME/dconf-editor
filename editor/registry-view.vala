@@ -89,7 +89,7 @@ private class RegistryView : RegistryList
         return false;
     }
 
-    internal override void select_first_row ()
+    internal void select_first_row (bool grab_focus_if_needed)
     {
         uint n_items = list_model.get_n_items ();
         if (n_items == 0)
@@ -111,7 +111,7 @@ private class RegistryView : RegistryList
         }
         if (row == null)
             assert_not_reached ();
-        select_row_and_if_true_grab_focus ((!) row, true);
+        select_row_and_if_true_grab_focus ((!) row, grab_focus_if_needed);
     }
 
     /*\

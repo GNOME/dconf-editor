@@ -50,9 +50,10 @@ private class DelayedSettingView : OverlayedListRow
         }
     }
 
-    internal override string? get_copy_text ()
+    internal override bool handle_copy_text (out string copy_text)
     {
-        return full_name;
+        copy_text = full_name;
+        return true;
     }
 
     /*\

@@ -401,9 +401,6 @@ private abstract class BrowserWindow : BaseWindow
 
     private const GLib.ActionEntry [] key_action_entries =
     {
-        { "copy",               copy                },  // <P>c
-        { "copy-path",          copy_path           },  // <P>C
-
         { "next-match",         next_match          },  // <P>g // usual shortcut for "next-match"     in a SearchEntry; see also "Down"
         { "previous-match",     previous_match      },  // <P>G // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
 
@@ -413,61 +410,11 @@ private abstract class BrowserWindow : BaseWindow
         { "edit-path-end",      edit_path_end       },  // <P>l
         { "edit-path-last",     edit_path_last      },  // <P>L
 
-        { "paste",              paste               },  // <P>v
-        { "paste-force",        paste_force         },  // <P>V
-
         { "open-root",          open_root           },  // <S><A>Up
         { "open-parent",        open_current_parent },  //    <A>Up
         { "open-child",         open_child          },  //    <A>Down
         { "open-last-child",    open_last_child     },  // <S><A>Down
-
-        { "toggle-hamburger",   toggle_hamburger    },  // F10
-        { "menu",               menu_pressed        },  // Menu
     };
-
-    /*\
-    * * keyboard copy actions
-    \*/
-
-    protected abstract string get_copy_text ();
-    protected abstract string get_copy_path_text ();
-
-    private void copy                                   (/* SimpleAction action, Variant? path_variant */)
-    {
-        Widget? focus = get_focus ();
-        if (focus != null)
-        {
-            if ((!) focus is Entry)
-            {
-                ((Entry) (!) focus).copy_clipboard ();
-                return;
-            }
-            if ((!) focus is TextView)
-            {
-                ((TextView) (!) focus).copy_clipboard ();
-                return;
-            }
-        }
-
-        browser_view.close_popovers ();
-
-        _copy (get_copy_text ());
-    }
-
-    private void copy_path                              (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (is_in_in_window_mode ())        // TODO better
-            return;
-
-        browser_view.close_popovers ();
-
-        _copy (get_copy_path_text ());
-    }
-
-    private inline void _copy (string text)
-    {
-        ((ConfigurationEditor) get_application ()).copy (text);
-    }
 
     /*\
     * * keyboard "Down" and "<Primary>g" (next match), "Up" and "<Primary><Shift>G" (previous match)
@@ -562,44 +509,10 @@ private abstract class BrowserWindow : BaseWindow
     * * keyboard paste actions
     \*/
 
-    private void paste                                  (/* SimpleAction action, Variant? variant */)
+    protected override void paste_text (string? text)
     {
-        if (is_in_in_window_mode ())
-            return;
-
-        Widget? focus = get_focus ();
-        if (focus != null)
-        {
-            if ((!) focus is Entry)
-            {
-                ((Entry) (!) focus).paste_clipboard ();
-                return;
-            }
-            if ((!) focus is TextView)
-            {
-                ((TextView) (!) focus).paste_clipboard ();
-                return;
-            }
-        }
-
-        search_clipboard_content ();
-    }
-
-    private void paste_force                            (/* SimpleAction action, Variant? variant */)
-    {
-        close_in_window_panels ();
-        search_clipboard_content ();
-    }
-
-    private void search_clipboard_content ()
-    {
-        Gdk.Display? display = Gdk.Display.get_default ();
-        if (display == null)    // ?
-            return;
-
-        string? clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
-        if (clipboard_content != null)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, clipboard_content);
+        if (text != null)
+            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, text);
         else
             request_search (true, PathEntry.SearchMode.SEARCH);
     }
@@ -635,12 +548,7 @@ private abstract class BrowserWindow : BaseWindow
     * * keyboard open menus actions
     \*/
 
-    private void toggle_hamburger                       (/* SimpleAction action, Variant? variant */)
-    {
-        headerbar.toggle_hamburger_menu ();
-    }
-
-    private void menu_pressed                           (/* SimpleAction action, Variant? variant */)
+    protected override void menu_pressed ()
     {
         if (browser_view.toggle_row_popover ()) // handles in-window bookmarks
             headerbar.close_popovers ();

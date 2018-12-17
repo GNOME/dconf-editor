@@ -82,7 +82,7 @@ private class AboutList : OverlayedList
     private static inline void show_apropos (ref GLib.ListStore main_list_store)
     {
         main_list_store.remove_all ();
-        main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name));
+        main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name, AboutDialogInfos.program_name));
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.program_name, "bold-label"));
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.version));
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.comments));
@@ -98,7 +98,7 @@ private class AboutList : OverlayedList
     private static inline void show_credits (ref GLib.ListStore main_list_store)
     {
         main_list_store.remove_all ();
-        main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name));
+        main_list_store.append (new AboutListItem.from_icon_name    (AboutDialogInfos.logo_icon_name, AboutDialogInfos.program_name));
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.program_name, "bold-label"));
 
         string authors = "";
@@ -119,18 +119,12 @@ private class AboutList : OverlayedList
 
 private class AboutListItem : OverlayedListRow
 {
-    [CCode (notify = false)] public string? copy_text { internal get; construct; default = null; }
+    [CCode (notify = false)] public string copy_text { internal get; construct; default = ""; }
 
-    internal override string? get_copy_text ()
+    internal override bool handle_copy_text (out string text)
     {
-        string? nullable_selection = Clipboard.@get (Gdk.SELECTION_PRIMARY).wait_for_text ();
-        if (nullable_selection != null)
-        {
-             string selection = ((!) nullable_selection).dup ();
-             if (selection != "" && copy_text != null && selection in (!) copy_text)
-                return selection;
-        }
-        return copy_text;
+        text = copy_text;
+        return true;
     }
 
     internal AboutListItem.from_label (string text, string? css_class = null)
@@ -144,13 +138,16 @@ private class AboutListItem : OverlayedListRow
         label.wrap = true;
         label.justify = Justification.CENTER;
         label.selectable = true;
+        label.can_focus = false;
         if (css_class != null)
             label.get_style_context ().add_class ((!) css_class);
         add (label);
     }
 
-    internal AboutListItem.from_icon_name (string icon_name)
+    internal AboutListItem.from_icon_name (string icon_name, string copy_text)
     {
+        Object (copy_text: copy_text);
+
         Image image = new Image.from_icon_name (icon_name, IconSize.DIALOG);
         image.pixel_size = 128;
         image.visible = true;
@@ -158,7 +155,7 @@ private class AboutListItem : OverlayedListRow
         add (image);
     }
 
-    internal AboutListItem.from_link (string link, string text)
+    internal AboutListItem.from_link (string link, string text) // TODO do not allow button focus, and activate it on row activation
     {
         Object (copy_text: link);
 

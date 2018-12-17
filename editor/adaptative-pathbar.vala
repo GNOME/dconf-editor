@@ -212,6 +212,6 @@ private interface Pathbar
     /* called from inside the pathbar, by ShortPathbar and LargePathbarItem (so cannot make "protected") */
     internal static void add_copy_path_entry (ref GLib.Menu section)
     {
-        section.append (_("Copy current path"), "key.copy-path"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
+        section.append (_("Copy current path"), "base.copy-alt"); // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
     }
 }

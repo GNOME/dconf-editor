@@ -22,11 +22,12 @@ private class BaseView : Stack, AdaptativeWidget
 {
     [GtkChild] protected Grid current_child_grid;
 
-    internal virtual string? get_copy_text ()
+    internal virtual bool handle_copy_text (out string copy_text)
     {
         if (in_window_about)
-            return about_list.get_copy_text (); // TODO copying logo...
-        return null;
+            return about_list.handle_copy_text (out copy_text); // TODO copying logo...
+        else
+            return BaseWindow.no_copy_text (out copy_text);
     }
 
     internal virtual void close_popovers () {}

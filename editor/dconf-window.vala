@@ -994,28 +994,35 @@ private class DConfWindow : BrowserWindow
     * * navigation helpers
     \*/
 
-    protected override string get_copy_text ()
+    protected override bool handle_copy_text (out string copy_text)
     {
         model.copy_action_called ();
 
-        string? selected_row_text = browser_view.get_copy_text ();
-        if (selected_row_text == null && current_type == ViewType.OBJECT)
-            selected_row_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
-        return selected_row_text == null ? current_path : (!) selected_row_text;
+        if (headerbar.handle_copy_text (out copy_text))     // for bookmarks popovers
+            return true;
+        if (revealer.handle_copy_text (out copy_text))      // for delayed settings popovers
+            return true;
+        if (browser_view.handle_copy_text (out copy_text))  // for in-window panels and for content
+            return true;
+        if (current_type == ViewType.OBJECT)
+            copy_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
+        if (BaseWindow.is_empty_text (copy_text))
+            copy_text = current_path;
+        return true;
     }
 
-    protected override string get_copy_path_text ()
+    protected override bool get_alt_copy_text (out string copy_text)
     {
+        model.copy_action_called ();
+
         if (headerbar.search_mode_enabled)
         {
-            model.copy_action_called ();
-            return browser_view.get_copy_path_text () ?? saved_view;
+            if (!browser_view.handle_alt_copy_text (out copy_text))
+                copy_text = saved_view;
         }
-
-        if (browser_view.current_view == ViewType.OBJECT)
-            model.copy_action_called ();
-
-        return current_path;
+        else
+            copy_text = current_path;
+        return true;
     }
 
     /*\

@@ -212,6 +212,11 @@ private class Bookmarks : MenuButton
         return bookmarks_list.previous_match ();
     }
 
+    internal bool handle_copy_text (out string copy_text)
+    {
+        return bookmarks_list.handle_copy_text (out copy_text);
+    }
+
     internal void bookmark_current_path ()
     {
         if (bookmarked_switch.get_active ())
