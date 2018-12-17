@@ -595,7 +595,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         {
             bool key_value_boolean = key_value.get_boolean ();
             Variant switch_variant = new Variant ("(sqbb)", row.full_name, row.context_id, !key_value_boolean, key_value_boolean ? is_key_default : !is_key_default);
-            row.update_switch (key_value_boolean, "bro.toggle-gsettings-key-switch(" + switch_variant.print (true) + ")");
+            row.update_switch (key_value_boolean, "view.toggle-gsettings-key-switch(" + switch_variant.print (true) + ")");
         }
 
         StyleContext css_context = row.get_style_context ();
@@ -626,7 +626,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             {
                 bool key_value_boolean = ((!) key_value).get_boolean ();
                 Variant switch_variant = new Variant ("(sb)", row.full_name, !key_value_boolean);
-                row.update_switch (key_value_boolean, "bro.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
+                row.update_switch (key_value_boolean, "view.toggle-dconf-key-switch(" + switch_variant.print (false) + ")");
                 row.use_switch (true);
             }
 
@@ -1001,7 +1001,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             popover.new_section ();
 
             if (!is_key_default)
-                popover.new_gaction ("default2", "bro.set-to-default(" + variant_sq.print (true) + ")");
+                popover.new_gaction ("default2", "view.set-to-default(" + variant_sq.print (true) + ")");
 
             string [] all_flags = range_content.get_strv ();
             popover.create_flags_list (modifications_handler.get_key_custom_value (full_name, context_id).get_strv (), all_flags);
@@ -1020,12 +1020,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             popover.new_gaction ("dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
 
             if (planned_value != null)
-                popover.new_gaction ("default1", "bro.set-to-default(" + variant_sq.print (true) + ")");
+                popover.new_gaction ("default1", "view.set-to-default(" + variant_sq.print (true) + ")");
         }
         else if (!is_key_default)
         {
             popover.new_section ();
-            popover.new_gaction ("default1", "bro.set-to-default(" + variant_sq.print (true) + ")");
+            popover.new_gaction ("default1", "view.set-to-default(" + variant_sq.print (true) + ")");
         }
         properties.clear ();
         return true;

@@ -50,36 +50,22 @@ private class SimpleSettingObject : Object
 
 private class BrowserView : BaseView, AdaptativeWidget
 {
-    [CCode (notify = false)] internal uint16 last_context_id { get; private set; default = ModelUtils.undefined_context_id; }
+    [CCode (notify = false)] internal uint16 last_context_id { internal get; private set; default = ModelUtils.undefined_context_id; }
 
-    private BrowserInfoBar  info_bar;
-    private BrowserStack    current_child;
+    [CCode (notify = false)] public BrowserContent browser_content { private get; construct; }
 
-    private SortingOptions sorting_options;
+    protected BrowserInfoBar info_bar;
+    protected SortingOptions sorting_options;
+
     private GLib.ListStore? key_model = null;
 
     protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         base.set_window_size (new_size);
-        current_child.set_window_size (new_size);
-        bookmarks_list.set_window_size (new_size);
-        if (modifications_list_created)
-            modifications_list.set_window_size (new_size);
+        browser_content.set_window_size (new_size);
     }
 
-    private ModificationsHandler _modifications_handler;
-    [CCode (notify = false)] internal ModificationsHandler modifications_handler
-    {
-        private get { return _modifications_handler; }
-        set {
-            _modifications_handler = value;
-            current_child.modifications_handler = value;
-            sorting_options = new SortingOptions (value.model);
-            sorting_options.notify ["case-sensitive"].connect (on_case_sensitive_changed);
-            _modifications_handler.delayed_changes_changed.connect (update_in_window_modifications);
-        }
-    }
-    private void on_case_sensitive_changed ()
+    protected void on_case_sensitive_changed ()
     {
         if (current_view != ViewType.FOLDER)
             return;
@@ -103,34 +89,7 @@ private class BrowserView : BaseView, AdaptativeWidget
         info_bar.show ();
         main_grid.add (info_bar);
 
-        current_child = new BrowserStack ();
-        current_child.show ();
-        main_grid.add (current_child);
-
-        create_bookmarks_list ();
-    }
-
-    internal override bool is_in_in_window_mode ()
-    {
-        return (in_window_bookmarks || in_window_modifications || base.is_in_in_window_mode ());
-    }
-
-    internal override void show_default_view ()
-    {
-        if (in_window_bookmarks)
-        {
-            if (in_window_bookmarks_edit_mode)
-                leave_bookmarks_edit_mode ();
-            in_window_bookmarks = false;
-            set_visible_child_name ("main-view");
-        }
-        else if (in_window_modifications)
-        {
-            in_window_modifications = false;
-            set_visible_child_name ("main-view");
-        }
-        else
-            base.show_default_view ();
+        main_grid.add (browser_content);
     }
 
     /*\
@@ -146,14 +105,7 @@ private class BrowserView : BaseView, AdaptativeWidget
 
     private const GLib.ActionEntry [] action_entries =
     {
-        { "refresh-folder", refresh_folder },
-
-        { "set-key-value",               set_key_value,                 "(sqv)"  },
-        { "set-to-default",              set_to_default,                "(sq)"   },
-        { "delay-erase",                 delay_erase,                   "s"      },  // see also ui.erase(s)
-
-        { "toggle-dconf-key-switch",     toggle_dconf_key_switch,       "(sb)"   },
-        { "toggle-gsettings-key-switch", toggle_gsettings_key_switch,   "(sqbb)" }
+        { "refresh-folder", refresh_folder }
     };
 
     private void refresh_folder (/* SimpleAction action, Variant? path_variant */)
@@ -161,227 +113,6 @@ private class BrowserView : BaseView, AdaptativeWidget
     {
         sorting_options.sort_key_model ((!) key_model);
         hide_reload_warning ();
-    }
-
-    private void set_key_value (SimpleAction action, Variant? value_variant)
-        requires (value_variant != null)
-    {
-        string full_name;
-        uint16 context_id;
-        Variant key_value_request;
-        ((!) value_variant).@get ("(sqv)", out full_name, out context_id, out key_value_request);
-
-        if (modifications_handler.get_current_delay_mode ())
-            modifications_handler.add_delayed_setting (full_name, key_value_request, context_id);
-        else if (!ModelUtils.is_dconf_context_id (context_id))
-            modifications_handler.set_gsettings_key_value (full_name, context_id, key_value_request);
-        else
-            modifications_handler.set_dconf_key_value (full_name, key_value_request);
-    }
-
-    private void delay_erase (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        string full_name_or_empty = ((!) path_variant).get_string ();
-        if (full_name_or_empty == "")
-            return;
-        modifications_handler.enter_delay_mode ();
-        modifications_handler.add_delayed_setting (full_name_or_empty, null, ModelUtils.dconf_context_id);
-    }
-
-    private void set_to_default (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
-    {
-        string full_name;
-        uint16 context_id;
-        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
-        modifications_handler.set_to_default (full_name, context_id);
-        invalidate_popovers ();
-    }
-
-    private void toggle_dconf_key_switch (SimpleAction action, Variant? value_variant)
-        requires (value_variant != null)
-    {
-        if (modifications_handler.get_current_delay_mode ())
-            assert_not_reached ();
-
-        string full_name;
-        bool key_value_request;
-        ((!) value_variant).@get ("(sb)", out full_name, out key_value_request);
-
-        modifications_handler.set_dconf_key_value (full_name, key_value_request);
-    }
-
-    private void toggle_gsettings_key_switch (SimpleAction action, Variant? value_variant)
-        requires (value_variant != null)
-    {
-        if (modifications_handler.get_current_delay_mode ())
-            assert_not_reached ();
-
-        string full_name;
-        uint16 context_id;
-        bool key_value_request;
-        bool key_default_value;
-        ((!) value_variant).@get ("(sqbb)", out full_name, out context_id, out key_value_request, out key_default_value);
-
-        if (key_value_request == key_default_value)
-            modifications_handler.set_to_default (full_name, context_id);
-        else
-            modifications_handler.set_gsettings_key_value (full_name, context_id, new Variant.boolean (key_value_request));
-    }
-
-    /*\
-    * * modifications
-    \*/
-
-    [CCode (notify = false)] internal bool in_window_modifications           { internal get; private set; default = false; }
-
-    private bool modifications_list_created = false;
-    private ModificationsList modifications_list;
-
-    private void create_modifications_list ()
-    {
-        modifications_list = new ModificationsList (/* needs shadows   */ false,
-                                                    /* big placeholder */ true);
-        modifications_list.set_window_size (saved_window_size);
-        // modifications_list.selection_changed.connect (() => ...);
-        modifications_list.show ();
-        add (modifications_list);
-        modifications_list_created = true;
-    }
-
-    internal void show_modifications_view ()
-        requires (modifications_list_created == true)
-    {
-        if (in_window_bookmarks || in_window_about)
-            show_default_view ();
-
-        modifications_list.reset ();
-
-        set_visible_child (modifications_list);
-        in_window_modifications = true;
-    }
-
-    private void update_in_window_modifications ()
-    {
-        if (!modifications_list_created)
-            create_modifications_list ();
-
-        GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
-        modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
-
-        if (in_window_modifications && modifications_handler.mode == ModificationsMode.NONE)
-            show_default_view ();
-    }
-    private Widget delayed_setting_row_create (Object object)
-    {
-        SimpleSettingObject sso = (SimpleSettingObject) object;
-        return ModificationsRevealer.create_delayed_setting_row (modifications_handler, sso.name, sso.full_name, sso.context_id);
-    }
-
-    /*\
-    * * bookmarks
-    \*/
-
-    [CCode (notify = false)] internal bool in_window_bookmarks           { internal get; private set; default = false; }
-    [CCode (notify = false)] internal bool in_window_bookmarks_edit_mode { internal get; private set; default = false; }
-
-    private BookmarksList bookmarks_list;
-
-    private void create_bookmarks_list ()
-    {
-        bookmarks_list = new BookmarksList (/* needs shadows            */ false,
-                                            /* big placeholder          */ true,
-                                            /* edit-mode action prefix  */ "bmk",
-                                            /* schema path              */ "/ca/desrt/dconf-editor/");
-        bookmarks_list.selection_changed.connect (on_bookmarks_selection_changed);
-        bookmarks_list.update_bookmarks_icons.connect (on_update_bookmarks_icons);
-        bookmarks_list.show ();
-        add (bookmarks_list);
-    }
-
-    private string [] old_bookmarks = new string [0];
-
-    internal void show_bookmarks_view (string [] bookmarks)
-    {
-        if (in_window_modifications || in_window_about)
-            show_default_view ();
-
-        bookmarks_list.reset ();
-
-        if (bookmarks != old_bookmarks)
-        {
-            Variant variant = new Variant.strv (bookmarks);
-            bookmarks_list.create_bookmark_rows (variant);
-
-            old_bookmarks = bookmarks;
-        }
-        set_visible_child (bookmarks_list);
-        in_window_bookmarks = true;
-    }
-
-    internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
-    {
-        bookmarks_list.update_bookmark_icon (bookmark, icon);
-    }
-
-    internal void enter_bookmarks_edit_mode ()
-        requires (in_window_bookmarks == true)
-    {
-        bookmarks_list.enter_edit_mode ();
-        in_window_bookmarks_edit_mode = true;
-    }
-
-    internal bool leave_bookmarks_edit_mode ()
-        requires (in_window_bookmarks == true)
-    {
-        in_window_bookmarks_edit_mode = false;
-        return bookmarks_list.leave_edit_mode ();
-    }
-
-    internal OverlayedList.SelectionState get_bookmarks_selection_state ()
-    {
-        return bookmarks_list.get_selection_state ();
-    }
-
-    internal void trash_bookmark ()
-    {
-        bookmarks_list.trash_bookmark ();
-    }
-
-    internal void move_top ()
-    {
-        bookmarks_list.move_top ();
-    }
-
-    internal void move_up ()
-    {
-        bookmarks_list.move_up ();
-    }
-
-    internal void move_down ()
-    {
-        bookmarks_list.move_down ();
-    }
-
-    internal void move_bottom ()
-    {
-        bookmarks_list.move_bottom ();
-    }
-
-    private void on_bookmarks_selection_changed ()
-    {
-        if (!in_window_bookmarks)
-            return;
-        bookmarks_selection_changed ();
-    }
-
-    internal signal void bookmarks_selection_changed ();
-
-    internal signal void update_bookmarks_icons (Variant bookmarks_variant);
-    private void on_update_bookmarks_icons (Variant bookmarks_variant)
-    {
-        update_bookmarks_icons (bookmarks_variant);
     }
 
     /*\
@@ -393,27 +124,26 @@ private class BrowserView : BaseView, AdaptativeWidget
         key_model = _key_model;
         sorting_options.sort_key_model ((!) key_model);
 
-        current_child.prepare_folder_view ((!) key_model, is_ancestor);
+        browser_content.prepare_folder_view ((!) key_model, is_ancestor);
         hide_reload_warning ();
     }
 
     internal void select_row (string selected)
         requires (ViewType.displays_objects_list (current_view))
     {
-        current_child.select_row (selected, last_context_id, !is_in_in_window_mode ());
+        browser_content.select_row (selected, last_context_id, !is_in_in_window_mode ());
     }
 
     internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)
     {
-        current_child.prepare_object_view (full_name, context_id, properties, is_parent);
+        browser_content.prepare_object_view (full_name, context_id, properties, is_parent);
         hide_reload_warning ();
         last_context_id = context_id;
     }
 
-    internal void set_path (ViewType type, string path)
+    internal virtual void set_path (ViewType type, string path)
     {
-        current_child.set_path (type, path);
-        modifications_handler.path_changed ();
+        browser_content.set_path (type, path);
         invalidate_popovers ();
     }
 
@@ -421,7 +151,7 @@ private class BrowserView : BaseView, AdaptativeWidget
     * * Reload
     \*/
 
-    private void hide_reload_warning ()
+    protected void hide_reload_warning ()
     {
         info_bar.hide_warning ();
     }
@@ -432,127 +162,54 @@ private class BrowserView : BaseView, AdaptativeWidget
             info_bar.show_warning ("soft-reload-folder");
     }
 
-    internal void set_search_parameters (string current_path, string [] bookmarks)
-    {
-        hide_reload_warning ();
-        current_child.set_search_parameters (current_path, last_context_id, bookmarks, sorting_options);
-    }
-
-    internal bool check_reload (ViewType type, string path, bool show_infobar)
-    {
-        SettingsModel model = modifications_handler.model;
-
-        if (type == ViewType.FOLDER || (type == ViewType.CONFIG && ModelUtils.is_folder_path (path)))
-        {
-            if (!current_child.check_reload_folder (model.get_children (path)))
-                return false;
-            if (show_infobar)
-            {
-                info_bar.show_warning ("hard-reload-folder");
-                return false;
-            }
-        }
-        else if (type == ViewType.OBJECT || type == ViewType.CONFIG)
-        {
-            if (model.key_exists (path, last_context_id))
-            {
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (path, last_context_id, (uint16) PropertyQuery.HASH));
-                uint properties_hash;
-                if (!properties.lookup (PropertyQuery.HASH, "u", out properties_hash))
-                    assert_not_reached ();
-                if (!current_child.check_reload_object (properties_hash))
-                    return false;
-            }
-            if (show_infobar)
-            {
-                info_bar.show_warning ("hard-reload-object");
-                return false;
-            }
-        }
-        else if (type == ViewType.SEARCH)
-            assert_not_reached ();
-        else
-            assert_not_reached ();
-        return true;
-    }
-
     /*\
     * * Proxy calls
     \*/
 
     internal void row_grab_focus ()
     {
-        current_child.row_grab_focus ();
+        browser_content.row_grab_focus ();
     }
 
-    [CCode (notify = false)] internal ViewType current_view { get { return current_child.current_view; }}
+    [CCode (notify = false)] internal ViewType current_view { get { return browser_content.current_view; }}
 
-    // popovers invalidation and toggles hiding/revealing
-    internal override void close_popovers () { current_child.discard_row_popover (); }
-    internal void invalidate_popovers ()     { current_child.invalidate_popovers (); }
-
-    internal void hide_or_show_toggles (bool show) { current_child.hide_or_show_toggles (show); }
+    // popovers invalidation
+    internal override void close_popovers () { browser_content.discard_row_popover (); }
+    internal void invalidate_popovers ()     { browser_content.invalidate_popovers (); }
 
     // keyboard
-    internal bool return_pressed ()   { return current_child.return_pressed ();   }
-    internal bool next_match ()
+    internal bool return_pressed ()   { return browser_content.return_pressed ();   }
+    internal virtual bool next_match ()
     {
-        if (in_window_bookmarks)
-            return bookmarks_list.next_match ();
-        if (in_window_modifications)
-            return modifications_list.next_match ();
         if (in_window_about)
             return false;       // TODO scroll down at last line
         else
-            return current_child.next_match ();
+            return browser_content.next_match ();
     }
-    internal bool previous_match ()
+    internal virtual bool previous_match ()
     {
-        if (in_window_bookmarks)
-            return bookmarks_list.previous_match ();
-        if (in_window_modifications)
-            return modifications_list.previous_match ();
         if (in_window_about)
             return false;
         else
-            return current_child.previous_match ();
+            return browser_content.previous_match ();
     }
 
-    internal bool toggle_row_popover ()     // Menu
+    internal virtual bool toggle_row_popover ()     // Menu
     {
-        if (in_window_bookmarks)
-            return false;
-        return current_child.toggle_row_popover ();
+        return browser_content.toggle_row_popover ();
     }
-
-    internal void toggle_boolean_key ()      { current_child.toggle_boolean_key ();      }
-    internal void set_selected_to_default () { current_child.set_selected_to_default (); }
 
     // current row property
-    internal string get_selected_row_name () { return current_child.get_selected_row_name (); }
+    internal string get_selected_row_name () { return browser_content.get_selected_row_name (); }
     internal override bool handle_copy_text (out string copy_text)
     {
-        if (in_window_bookmarks)
-            return bookmarks_list.handle_copy_text (out copy_text);
-        if (in_window_modifications)
-            return modifications_list.handle_copy_text (out copy_text);
         if (base.handle_copy_text (out copy_text))
             return true;
-        return current_child.handle_copy_text (out copy_text);
+        return browser_content.handle_copy_text (out copy_text);
     }
     internal bool handle_alt_copy_text (out string copy_text)
     {
-        return current_child.handle_alt_copy_text (out copy_text);
-    }
-
-    // values changes
-    internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
-    {
-        current_child.gkey_value_push (full_name, context_id, key_value, is_key_default);
-    }
-    internal void dkey_value_push (string full_name, Variant? key_value_or_null)
-    {
-        current_child.dkey_value_push (full_name, key_value_or_null);
+        return browser_content.handle_alt_copy_text (out copy_text);
     }
 }
 

@@ -87,6 +87,7 @@ sources = files(
   'dconf-view.vala',
   'dconf-window.vala',
   'delayed-setting-view.vala',
+  'key-editor-child.vala',
   'key-list-box-row.vala',
   'large-pathbar.vala',
   'model-utils.vala',

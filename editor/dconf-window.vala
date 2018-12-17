@@ -96,13 +96,13 @@ private class DConfWindow : BrowserWindow
     private ulong behaviour_changed_handler = 0;
 
     private ulong headerbar_update_bookmarks_icons_handler = 0;
-    private ulong browserview_update_bookmarks_icons_handler = 0;
+    private ulong main_view_update_bookmarks_icons_handler = 0;
 
     private ulong delayed_changes_changed_handler = 0;
     private ulong bookmarks_selection_changed_handler = 0;
 
     private DConfHeaderBar headerbar;
-    private BrowserView    browser_view;
+    private DConfView      main_view;
 
     private StyleContext context;
     construct
@@ -112,7 +112,7 @@ private class DConfWindow : BrowserWindow
         context.add_class ("dconf-editor");
 
         headerbar = (DConfHeaderBar) nta_headerbar;
-        browser_view = (BrowserView) base_view;
+        main_view = (DConfView) base_view;
 
         create_modifications_revealer ();
 
@@ -120,24 +120,24 @@ private class DConfWindow : BrowserWindow
         install_kbd_action_entries ();
         install_bmk_action_entries ();
 
-        bookmarks_selection_changed_handler = browser_view.bookmarks_selection_changed.connect (on_bookmarks_selection_changed);
+        bookmarks_selection_changed_handler = main_view.bookmarks_selection_changed.connect (on_bookmarks_selection_changed);
 
-          headerbar_update_bookmarks_icons_handler =    headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
-        browserview_update_bookmarks_icons_handler = browser_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
+        main_view_update_bookmarks_icons_handler = main_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
     }
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, NightLightMonitor night_light_monitor)
     {
         DConfHeaderBar _headerbar = new DConfHeaderBar (night_light_monitor);
-        BrowserView _browser_view = new BrowserView ();
-        Object (nta_headerbar: (NightTimeAwareHeaderBar) _headerbar, base_view: (BaseView) _browser_view);
+        DConfView _main_view = new DConfView ();
+        Object (nta_headerbar: (NightTimeAwareHeaderBar) _headerbar, base_view: (BaseView) _main_view);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
-        browser_view.modifications_handler = modifications_handler;
+        main_view.modifications_handler = modifications_handler;
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                 uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
                 if (total_changes_count == 0)
@@ -295,19 +295,19 @@ private class DConfWindow : BrowserWindow
             if (!internal_changes)  // TODO do not react to value changes
                 reload_search_action.set_enabled (true);
         }
-        else if (browser_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
+        else if (main_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
             reload_view ();
 
         headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (headerbar.get_complete_path ()));
     }
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        browser_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
+        main_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
         revealer.gkey_value_push     (full_name, context_id, key_value, is_key_default);
     }
     private void propagate_dkey_value_push (string full_name, Variant? key_value_or_null)
     {
-        browser_view.dkey_value_push (full_name, key_value_or_null);
+        main_view.dkey_value_push (full_name, key_value_or_null);
         revealer.dkey_value_push     (full_name, key_value_or_null);
     }
 
@@ -374,11 +374,11 @@ private class DConfWindow : BrowserWindow
     {
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
-        browser_view.disconnect (bookmarks_selection_changed_handler);
+        main_view.disconnect (bookmarks_selection_changed_handler);
         modifications_handler.disconnect (delayed_changes_changed_handler);
 
         headerbar.disconnect (headerbar_update_bookmarks_icons_handler);
-        browser_view.disconnect (browserview_update_bookmarks_icons_handler);
+        main_view.disconnect (main_view_update_bookmarks_icons_handler);
 
         settings.disconnect (settings_user_paths_changed_handler);
         settings.disconnect (settings_enabled_mappings_changed_handler);
@@ -455,7 +455,7 @@ private class DConfWindow : BrowserWindow
 
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_modifications)
+        if (main_view.in_window_modifications)
             show_default_view ();
         modifications_handler.apply_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
@@ -463,7 +463,7 @@ private class DConfWindow : BrowserWindow
 
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_modifications)
+        if (main_view.in_window_modifications)
             show_default_view ();
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
@@ -473,7 +473,7 @@ private class DConfWindow : BrowserWindow
         requires (path_variant != null)
     {
         modifications_handler.dismiss_change (((!) path_variant).get_string ());
-        browser_view.invalidate_popovers ();
+        main_view.invalidate_popovers ();
         reload_view ();
     }
 
@@ -487,8 +487,8 @@ private class DConfWindow : BrowserWindow
     private void invalidate_popovers_with_ui_reload ()
     {
         bool delay_mode = modifications_handler.get_current_delay_mode ();
-        browser_view.hide_or_show_toggles (!delay_mode);
-        browser_view.invalidate_popovers ();
+        main_view.hide_or_show_toggles (!delay_mode);
+        main_view.invalidate_popovers ();
         headerbar.delay_mode = delay_mode;
     }
 
@@ -498,17 +498,17 @@ private class DConfWindow : BrowserWindow
 
     protected override void show_default_view ()
     {
-        if (browser_view.in_window_bookmarks)
+        if (main_view.in_window_bookmarks)
         {
-            if (browser_view.in_window_bookmarks_edit_mode)
+            if (main_view.in_window_bookmarks_edit_mode)
                 leave_edit_mode ();     // TODO place after
             headerbar.show_default_view ();
-            browser_view.show_default_view ();
+            main_view.show_default_view ();
         }
-        else if (browser_view.in_window_modifications)
+        else if (main_view.in_window_modifications)
         {
             headerbar.show_default_view ();
-            browser_view.show_default_view ();
+            main_view.show_default_view ();
         }
         else
             base.show_default_view ();
@@ -520,7 +520,7 @@ private class DConfWindow : BrowserWindow
 
         headerbar.show_use_bookmarks_view ();
         string [] bookmarks = headerbar.get_bookmarks ();
-        browser_view.show_bookmarks_view (bookmarks);
+        main_view.show_bookmarks_view (bookmarks);
         update_bookmarks_icons_from_array (bookmarks);
     }
 
@@ -529,7 +529,7 @@ private class DConfWindow : BrowserWindow
         close_in_window_panels ();
 
         headerbar.show_modifications_view ();
-        browser_view.show_modifications_view ();
+        main_view.show_modifications_view ();
     }
 
     /*\
@@ -597,7 +597,7 @@ private class DConfWindow : BrowserWindow
     {
         if (AdaptativeWidget.WindowSize.is_extra_thin (window_size)
          || AdaptativeWidget.WindowSize.is_extra_flat (window_size))
-            browser_view.update_bookmark_icon (bookmark, icon);
+            main_view.update_bookmark_icon (bookmark, icon);
         else
             headerbar.update_bookmark_icon (bookmark, icon);
     }
@@ -615,7 +615,7 @@ private class DConfWindow : BrowserWindow
         if (disable_popovers != _disable_popovers)
         {
             disable_popovers = _disable_popovers;
-            if (browser_view.in_window_bookmarks)
+            if (main_view.in_window_bookmarks)
                 show_default_view ();
         }
 
@@ -624,7 +624,7 @@ private class DConfWindow : BrowserWindow
         if (disable_action_bar != _disable_action_bar)
         {
             disable_action_bar = _disable_action_bar;
-            if (browser_view.in_window_modifications)
+            if (main_view.in_window_modifications)
                 show_default_view ();
         }
     }
@@ -644,7 +644,7 @@ private class DConfWindow : BrowserWindow
     private void update_actions ()
         requires (actions_init_done)
     {
-        Bookmarks._update_actions (browser_view.get_bookmarks_selection_state (), ref move_top_action, ref move_up_action, ref move_down_action, ref move_bottom_action, ref trash_bookmark_action);
+        Bookmarks._update_actions (main_view.get_bookmarks_selection_state (), ref move_top_action, ref move_up_action, ref move_down_action, ref move_bottom_action, ref trash_bookmark_action);
     }
 
     private void install_bmk_action_entries ()
@@ -693,14 +693,14 @@ private class DConfWindow : BrowserWindow
         update_actions ();
 
         headerbar.show_edit_bookmarks_view ();
-        browser_view.enter_bookmarks_edit_mode ();
+        main_view.enter_bookmarks_edit_mode ();
     }
 
     private void leave_edit_mode ()
     {
         edit_mode_state_action.set_state (false);
 
-        bool give_focus_to_info_button = browser_view.leave_bookmarks_edit_mode ();
+        bool give_focus_to_info_button = main_view.leave_bookmarks_edit_mode ();
         headerbar.show_use_bookmarks_view ();
 
 /*        if (give_focus_to_info_button)
@@ -709,28 +709,28 @@ private class DConfWindow : BrowserWindow
 
     private void trash_bookmark (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.trash_bookmark ();
+        main_view.trash_bookmark ();
 //        update_bookmarks_icons_from_array (new_bookmarks);
     }
 
     private void move_top       (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.move_top ();
+        main_view.move_top ();
     }
 
     private void move_up        (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.move_up ();
+        main_view.move_up ();
     }
 
     private void move_down      (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.move_down ();
+        main_view.move_down ();
     }
 
     private void move_bottom    (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.move_bottom ();
+        main_view.move_bottom ();
     }
 
     private void on_bookmarks_selection_changed ()
@@ -764,15 +764,15 @@ private class DConfWindow : BrowserWindow
 
     private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
     {
-        browser_view.close_popovers ();
+        main_view.close_popovers ();
         if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
          && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
         {
-            if (browser_view.in_window_modifications)
+            if (main_view.in_window_modifications)
                 show_default_view ();
             headerbar.click_bookmarks_button ();
         }
-        else if (browser_view.in_window_bookmarks)
+        else if (main_view.in_window_bookmarks)
             show_default_view ();
         else
             show_use_bookmarks_view ();
@@ -783,7 +783,7 @@ private class DConfWindow : BrowserWindow
         if (is_in_in_window_mode ())        // TODO better
             return;
 
-        browser_view.close_popovers ();
+        main_view.close_popovers ();
         headerbar.bookmark_current_path ();
     }
 
@@ -792,7 +792,7 @@ private class DConfWindow : BrowserWindow
         if (is_in_in_window_mode ())        // TODO better
             return;
 
-        browser_view.close_popovers ();
+        main_view.close_popovers ();
         headerbar.unbookmark_current_path ();
     }
 
@@ -804,7 +804,7 @@ private class DConfWindow : BrowserWindow
         if (!AdaptativeWidget.WindowSize.is_extra_thin (window_size)
          && !AdaptativeWidget.WindowSize.is_extra_flat (window_size))
             revealer.toggle_modifications_list ();
-        else if (browser_view.in_window_modifications)
+        else if (main_view.in_window_modifications)
             show_default_view ();
         else
             show_modifications_view ();
@@ -812,14 +812,14 @@ private class DConfWindow : BrowserWindow
 
     private void escape_pressed                         (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.in_window_bookmarks)
+        if (main_view.in_window_bookmarks)
         {
-            if (browser_view.in_window_bookmarks_edit_mode)
+            if (main_view.in_window_bookmarks_edit_mode)
                 leave_edit_mode ();
             else
                 show_default_view ();
         }
-        else if (browser_view.in_window_modifications || in_window_about)
+        else if (main_view.in_window_modifications || in_window_about)
             show_default_view ();
         else if (headerbar.search_mode_enabled)
             stop_search ();
@@ -832,8 +832,8 @@ private class DConfWindow : BrowserWindow
         if (row_action_blocked ())
             return;
 
-        browser_view.close_popovers ();
-        browser_view.toggle_boolean_key ();
+        main_view.close_popovers ();
+        main_view.toggle_boolean_key ();
     }
 
     private void set_to_default                         (/* SimpleAction action, Variant? variant */)
@@ -846,12 +846,12 @@ private class DConfWindow : BrowserWindow
             reload_view ();
             return;
         }
-        browser_view.close_popovers ();
-        string selected_row = browser_view.get_selected_row_name ();
+        main_view.close_popovers ();
+        string selected_row = main_view.get_selected_row_name ();
         if (selected_row.has_suffix ("/"))
             reset_path ((!) selected_row, true);
         else
-            browser_view.set_selected_to_default ();
+            main_view.set_selected_to_default ();
     }
 
     /*\
@@ -894,12 +894,17 @@ private class DConfWindow : BrowserWindow
     * * Path requests
     \*/
 
+    protected override void reconfigure_search ()
+    {
+        main_view.set_search_parameters (saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
+    }
+
     protected override void close_in_window_panels ()
     {
         hide_notification ();
         headerbar.close_popovers ();
         revealer.hide_modifications_list ();
-        if (browser_view.in_window_bookmarks || browser_view.in_window_modifications || in_window_about)
+        if (main_view.in_window_bookmarks || main_view.in_window_modifications || in_window_about)
             show_default_view ();
     }
 
@@ -910,7 +915,7 @@ private class DConfWindow : BrowserWindow
 
     protected override void request_config (string full_name)
     {
-        browser_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
+        main_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
                                           model.get_folder_properties (full_name),
                                           true);
         update_current_path (ViewType.CONFIG, strdup (full_name));
@@ -926,13 +931,13 @@ private class DConfWindow : BrowserWindow
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        browser_view.prepare_folder_view (create_key_model (fallback_path, model.get_children (fallback_path, true, true)), current_path.has_prefix (fallback_path));
+        main_view.prepare_folder_view (create_key_model (fallback_path, model.get_children (fallback_path, true, true)), current_path.has_prefix (fallback_path));
         update_current_path (ViewType.FOLDER, fallback_path);
 
         if (selected_or_empty == "")
-            browser_view.select_row (headerbar.get_selected_child (fallback_path));
+            main_view.select_row (headerbar.get_selected_child (fallback_path));
         else
-            browser_view.select_row (selected_or_empty);
+            main_view.select_row (selected_or_empty);
 
         stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
@@ -978,7 +983,7 @@ private class DConfWindow : BrowserWindow
         }
         else
         {
-            browser_view.prepare_object_view (full_name, context_id,
+            main_view.prepare_object_view (full_name, context_id,
                                               model.get_key_properties (full_name, context_id, 0),
                                               current_path == ModelUtils.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
@@ -1000,10 +1005,10 @@ private class DConfWindow : BrowserWindow
             return true;
         if (revealer.handle_copy_text (out copy_text))      // for delayed settings popovers
             return true;
-        if (browser_view.handle_copy_text (out copy_text))  // for in-window panels and for content
+        if (main_view.handle_copy_text (out copy_text))  // for in-window panels and for content
             return true;
         if (current_type == ViewType.OBJECT)
-            copy_text = model.get_suggested_key_copy_text (current_path, browser_view.last_context_id);
+            copy_text = model.get_suggested_key_copy_text (current_path, main_view.last_context_id);
         if (BaseWindow.is_empty_text (copy_text))
             copy_text = current_path;
         return true;
@@ -1015,7 +1020,7 @@ private class DConfWindow : BrowserWindow
 
         if (headerbar.search_mode_enabled)
         {
-            if (!browser_view.handle_alt_copy_text (out copy_text))
+            if (!main_view.handle_alt_copy_text (out copy_text))
                 copy_text = saved_view;
         }
         else

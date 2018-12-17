@@ -110,7 +110,7 @@
                       <object class="GtkButton" id="erase_button">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Erase key</property>
-                        <property name="action-name">bro.delay-erase</property>
+                        <property name="action-name">view.delay-erase</property>
                         <property name="action-target">''</property>
                       </object>
                     </child>

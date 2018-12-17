@@ -258,7 +258,7 @@ private abstract class BrowserWindow : BaseWindow
         if (reload)
         {
             reload_search_action.set_enabled (false);
-            browser_view.set_search_parameters (saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
+            reconfigure_search ();
             reload_search_next = false;
         }
         if (mode != PathEntry.SearchMode.UNCLEAR)
@@ -270,6 +270,8 @@ private abstract class BrowserWindow : BaseWindow
         if (!headerbar.entry_has_focus)
             headerbar.entry_grab_focus (false);
     }
+
+    protected abstract void reconfigure_search ();
 
     /*\
     * * window state

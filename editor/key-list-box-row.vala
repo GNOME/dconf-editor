@@ -315,7 +315,7 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
             if (has_schema)
             {
                 variant = new Variant ("(sq)", full_name, context_id);
-                actionable.set_detailed_action_name ("bro.set-to-default(" + variant.print (true) + ")");
+                actionable.set_detailed_action_name ("view.set-to-default(" + variant.print (true) + ")");
             }
             else
             {
@@ -326,7 +326,7 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
         else
         {
             variant = new Variant ("(sqv)", full_name, context_id, (!) new_value);
-            actionable.set_detailed_action_name ("bro.set-key-value(" + variant.print (true) + ")");
+            actionable.set_detailed_action_name ("view.set-key-value(" + variant.print (true) + ")");
         }
         Container child = (Container) get_child ();
         child.add (actionable);
