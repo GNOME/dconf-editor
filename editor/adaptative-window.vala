@@ -162,12 +162,38 @@ private abstract class AdaptativeWindow : ApplicationWindow
 {
     [CCode (notify = false)] public NightTimeAwareHeaderBar nta_headerbar { protected get; protected construct; }
 
-    private StyleContext context;
+    private StyleContext window_style_context;
+
+    [CCode (notify = false)] public string window_title
+    {
+        protected construct
+        {
+            string? _value = value;
+            if (_value == null)
+                assert_not_reached ();
+
+            title = value;
+        }
+    }
+
+    [CCode (notify = false)] public string specific_css_class_or_empty
+    {
+        protected construct
+        {
+            string? _value = value;
+            if (_value == null)
+                assert_not_reached ();
+
+            window_style_context = get_style_context ();
+            if (value != "")
+                window_style_context.add_class (value);
+        }
+    }
 
     construct
     {
-        context = get_style_context ();
-        context.add_class ("startup");
+        // window_style_context is created by specific_css_class_or_empty
+        window_style_context.add_class ("startup");
 
         height_request = 283;   // 294px max for Purism Librem 5 landscape, for 720px width
         width_request = 349;    // 360px max for Purism Librem 5 portrait, for 654px height
@@ -183,7 +209,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
 
         load_window_state ();
 
-        Timeout.add (300, () => { context.remove_class ("startup"); return Source.REMOVE; });
+        Timeout.add (300, () => { window_style_context.remove_class ("startup"); return Source.REMOVE; });
     }
 
     /*\
@@ -295,9 +321,9 @@ private abstract class AdaptativeWindow : ApplicationWindow
     {
         old_state = new_state;
         if (new_state)
-            context.add_class (class_name);
+            window_style_context.add_class (class_name);
         else
-            context.remove_class (class_name);
+            window_style_context.remove_class (class_name);
     }
 
     /*\
@@ -372,8 +398,8 @@ private abstract class AdaptativeWindow : ApplicationWindow
         nta_headerbar.set_highcontrast_state (highcontrast_new_state);
 
         if (highcontrast_new_state)
-            context.add_class ("hc-theme");
+            window_style_context.add_class ("hc-theme");
         else
-            context.remove_class ("hc-theme");
+            window_style_context.remove_class ("hc-theme");
     }
 }

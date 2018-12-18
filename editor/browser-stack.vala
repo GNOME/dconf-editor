@@ -33,9 +33,9 @@ private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
         search_view.set_window_size (new_size);
     }
 
-    [CCode (notify = false)] internal ModificationsHandler modifications_handler
+    [CCode (notify = false)] public ModificationsHandler modifications_handler
     {
-        set
+        internal construct
         {
             folder_view.modifications_handler = value;
             object_view.modifications_handler = value;
@@ -68,6 +68,11 @@ private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
         search_view.small_keys_list_rows = has_small_keys_list_rows_class;
 
         destroy.connect (() => settings.disconnect (small_keys_list_rows_handler));
+    }
+
+    internal BrowserStack (ModificationsHandler modifications_handler)
+    {
+        Object (modifications_handler: modifications_handler);
     }
 
     /*\

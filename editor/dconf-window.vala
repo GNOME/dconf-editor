@@ -87,7 +87,7 @@ internal enum ViewType {
 
 private class DConfWindow : BrowserWindow
 {
-    private SettingsModel model = new SettingsModel ();
+    private SettingsModel model;
     private ModificationsHandler modifications_handler;
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
@@ -104,15 +104,22 @@ private class DConfWindow : BrowserWindow
     private DConfHeaderBar headerbar;
     private DConfView      main_view;
 
-    private StyleContext context;
-    construct
+    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, NightLightMonitor night_light_monitor)
     {
-        title = _("dconf Editor");
-        context = get_style_context ();
-        context.add_class ("dconf-editor");
+        SettingsModel _model = new SettingsModel ();
+        ModificationsHandler _modifications_handler = new ModificationsHandler (_model);
+        DConfHeaderBar _headerbar = new DConfHeaderBar (night_light_monitor);
+        DConfView _main_view = new DConfView (_modifications_handler);
 
-        headerbar = (DConfHeaderBar) nta_headerbar;
-        main_view = (DConfView) base_view;
+        Object (nta_headerbar               : (NightTimeAwareHeaderBar) _headerbar,
+                base_view                   : (BaseView) _main_view,
+                window_title                : _("dconf Editor"),
+                specific_css_class_or_empty : "dconf-editor");
+
+        model = _model;
+        modifications_handler = _modifications_handler;
+        headerbar = _headerbar;
+        main_view = _main_view;
 
         create_modifications_revealer ();
 
@@ -124,20 +131,11 @@ private class DConfWindow : BrowserWindow
 
         headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
         main_view_update_bookmarks_icons_handler = main_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
-    }
-
-    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, NightLightMonitor night_light_monitor)
-    {
-        DConfHeaderBar _headerbar = new DConfHeaderBar (night_light_monitor);
-        DConfView _main_view = new DConfView ();
-        Object (nta_headerbar: (NightTimeAwareHeaderBar) _headerbar, base_view: (BaseView) _main_view);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
-        modifications_handler = new ModificationsHandler (model);
         revealer.modifications_handler = modifications_handler;
-        main_view.modifications_handler = modifications_handler;
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                 uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
                 if (total_changes_count == 0)

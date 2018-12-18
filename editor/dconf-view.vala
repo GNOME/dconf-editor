@@ -28,11 +28,11 @@ private class DConfView : BrowserView, AdaptativeWidget
         create_bookmarks_list ();
     }
 
-    internal DConfView ()
+    internal DConfView (ModificationsHandler modifications_handler)
     {
-        BrowserStack _dconf_content = new BrowserStack ();
+        BrowserStack _dconf_content = new BrowserStack (modifications_handler);
         _dconf_content.show ();
-        Object (browser_content: (BrowserContent) _dconf_content);
+        Object (browser_content: (BrowserContent) _dconf_content, modifications_handler: modifications_handler);
         dconf_content = _dconf_content;
     }
 
@@ -45,13 +45,12 @@ private class DConfView : BrowserView, AdaptativeWidget
     }
 
     private ModificationsHandler _modifications_handler;
-    [CCode (notify = false)] internal ModificationsHandler modifications_handler
+    [CCode (notify = false)] public ModificationsHandler modifications_handler
     {
         private get { return _modifications_handler; }
-        set
+        internal construct
         {
             _modifications_handler = value;
-            dconf_content.modifications_handler = value;
             sorting_options = new SortingOptions (value.model);
             sorting_options.notify ["case-sensitive"].connect (on_case_sensitive_changed);
             _modifications_handler.delayed_changes_changed.connect (update_in_window_modifications);
