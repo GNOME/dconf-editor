@@ -4,7 +4,6 @@
   <template class="BaseWindow" parent="AdaptativeWindow">
     <property name="visible">False</property>
     <signal name="key-press-event" handler="on_key_press_event"/>
-    <signal name="destroy"         handler="on_destroy"/>
     <child>
       <object class="GtkGrid" id="main_grid">
         <property name="visible">True</property>

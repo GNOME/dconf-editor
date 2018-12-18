@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="dconf-editor">
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="AdaptativeWindow" parent="GtkApplicationWindow">
+    <property name="height-request">283</property>  <!-- 294px max for Purism Librem 5 landscape, for 720px width -->
+    <property name="width-request">349</property>   <!-- 360px max for Purism Librem 5 portrait, for 654px height -->
+    <signal name="window-state-event"   handler="on_window_state_event"/>
+    <signal name="size-allocate"        handler="on_size_allocate"/>
+    <signal name="destroy"              handler="on_destroy"/>
+  </template>
+</interface>

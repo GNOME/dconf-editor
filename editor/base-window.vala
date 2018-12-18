@@ -20,17 +20,28 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-window.ui")]
 private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 {
-    [CCode (notify = false)] public BaseView base_view { protected get; protected construct; }
+    private BaseView main_view;
+    [CCode (notify = false)] public BaseView base_view
+    {
+        protected get { return main_view; }
+        protected construct
+        {
+            BaseView? _value = value;
+            if (_value == null)
+                assert_not_reached ();
+
+            main_view = value;
+            value.vexpand = true;
+            value.visible = true;
+            add_to_main_grid (value);
+        }
+    }
 
     private BaseHeaderBar headerbar;
 
     construct
     {
         headerbar = (BaseHeaderBar) nta_headerbar;
-
-        base_view.vexpand = true;
-        base_view.visible = true;
-        add_to_main_grid (base_view);
 
         install_action_entries ();
     }
@@ -78,7 +89,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     protected virtual bool handle_copy_text (out string copy_text)
     {
-        return base_view.handle_copy_text (out copy_text);
+        return main_view.handle_copy_text (out copy_text);
     }
     protected virtual bool get_alt_copy_text (out string copy_text)
     {
@@ -141,7 +152,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
             }
         }
 
-        base_view.close_popovers ();
+        main_view.close_popovers ();
 
         string text;
         if (handle_copy_text (out text))
@@ -150,10 +161,10 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     private void copy_alt (/* SimpleAction action, Variant? path_variant */)
     {
-        if (base_view.is_in_in_window_mode ())        // TODO better
+        if (main_view.is_in_in_window_mode ())        // TODO better
             return;
 
-        base_view.close_popovers ();
+        main_view.close_popovers ();
 
         string text;
         if (get_alt_copy_text (out text))
@@ -174,7 +185,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     private void paste (/* SimpleAction action, Variant? variant */)
     {
-        if (base_view.is_in_in_window_mode ())
+        if (main_view.is_in_in_window_mode ())
             return;
 
         Widget? focus = get_focus ();
@@ -233,27 +244,18 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     private void toggle_hamburger (/* SimpleAction action, Variant? variant */)
     {
         headerbar.toggle_hamburger_menu ();
-        base_view.close_popovers ();
+        main_view.close_popovers ();
     }
 
     protected virtual void menu_pressed (/* SimpleAction action, Variant? variant */)
     {
         headerbar.toggle_hamburger_menu ();
-        base_view.close_popovers ();
+        main_view.close_popovers ();
     }
 
     /*\
     * * global callbacks
     \*/
-
-    [GtkCallback]
-    private void on_destroy ()
-    {
-        before_destroy ();
-        base.destroy ();
-    }
-
-    protected virtual void before_destroy () {}
 
     [GtkCallback]
     protected virtual bool on_key_press_event (Widget widget, Gdk.EventKey event)
@@ -270,7 +272,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
             BaseWindow _this = (BaseWindow) widget;
 
             _this.headerbar.close_popovers ();
-            _this.base_view.close_popovers ();
+            _this.main_view.close_popovers ();
             if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
                 return false;   // help overlay
             _this.about ();
@@ -365,7 +367,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
         in_window_about = true;
         headerbar.show_about_view ();
-        base_view.show_about_view ();
+        main_view.show_about_view ();
         set_focus_visible (false);  // about-list grabs focus
     }
 
@@ -375,7 +377,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         {
             in_window_about = false;
             headerbar.show_default_view ();
-            base_view.show_default_view ();
+            main_view.show_default_view ();
         }
         else
             assert_not_reached ();
@@ -387,11 +389,11 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     protected void show_notification (string notification)
     {
-        base_view.show_notification (notification);
+        main_view.show_notification (notification);
     }
 
     protected void hide_notification ()
     {
-        base_view.hide_notification ();
+        main_view.hide_notification ();
     }
 }

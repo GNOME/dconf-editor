@@ -158,11 +158,24 @@ private abstract class NightTimeAwareHeaderBar : HeaderBar
     }
 }
 
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-window.ui")]
 private abstract class AdaptativeWindow : ApplicationWindow
 {
-    [CCode (notify = false)] public NightTimeAwareHeaderBar nta_headerbar { protected get; protected construct; }
+    private NightTimeAwareHeaderBar headerbar;
+    [CCode (notify = false)] public NightTimeAwareHeaderBar nta_headerbar
+    {
+        protected get { return headerbar; }
+        protected construct
+        {
+            NightTimeAwareHeaderBar? _value = value;
+            if (_value == null)
+                assert_not_reached ();
 
-    private StyleContext window_style_context;
+            headerbar = value;
+            value.show ();
+            set_titlebar (value);
+        }
+    }
 
     [CCode (notify = false)] public string window_title
     {
@@ -176,6 +189,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
         }
     }
 
+    private StyleContext window_style_context;
     [CCode (notify = false)] public string specific_css_class_or_empty
     {
         protected construct
@@ -195,17 +209,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
         // window_style_context is created by specific_css_class_or_empty
         window_style_context.add_class ("startup");
 
-        height_request = 283;   // 294px max for Purism Librem 5 landscape, for 720px width
-        width_request = 349;    // 360px max for Purism Librem 5 portrait, for 654px height
-
-        nta_headerbar.show ();
-        set_titlebar (nta_headerbar);
-
         manage_high_contrast ();
-
-        window_state_event.connect (on_window_state_event);
-        size_allocate.connect (on_size_allocate);
-        destroy.connect (on_destroy);
 
         load_window_state ();
 
@@ -216,6 +220,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
     * * callbacks
     \*/
 
+    [GtkCallback]
     private bool on_window_state_event (Widget widget, Gdk.EventWindowState event)
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
@@ -227,6 +232,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
         return false;
     }
 
+    [GtkCallback]
     private void on_size_allocate (Allocation allocation)
     {
         int height = allocation.height;
@@ -236,11 +242,15 @@ private abstract class AdaptativeWindow : ApplicationWindow
         update_window_state ();
     }
 
+    [GtkCallback]
     private void on_destroy ()
     {
+        before_destroy ();
         save_window_state ();
         base.destroy ();
     }
+
+    protected virtual void before_destroy () {}
 
     /*\
     * * manage adaptative children
@@ -395,7 +405,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
         if (highcontrast_new_state == highcontrast_state)
             return;
         highcontrast_state = highcontrast_new_state;
-        nta_headerbar.set_highcontrast_state (highcontrast_new_state);
+        headerbar.set_highcontrast_state (highcontrast_new_state);
 
         if (highcontrast_new_state)
             window_style_context.add_class ("hc-theme");

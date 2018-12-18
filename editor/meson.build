@@ -111,6 +111,7 @@ sources = files(
 )
 
 resource_data = files(
+  'adaptative-window.ui',
   'base-headerbar.ui',
   'base-view.ui',
   'base-window.ui',
