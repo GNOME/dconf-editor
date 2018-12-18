@@ -516,22 +516,20 @@ private class DConfWindow : BrowserWindow
 
     private void show_use_bookmarks_view (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_modifications || in_window_about)
-            show_default_view ();
+        close_in_window_panels ();
 
         headerbar.show_use_bookmarks_view ();
         string [] bookmarks = headerbar.get_bookmarks ();
-        browser_view.show_in_window_bookmarks (bookmarks);
+        browser_view.show_bookmarks_view (bookmarks);
         update_bookmarks_icons_from_array (bookmarks);
     }
 
     private void show_modifications_view (/* SimpleAction action, Variant? path_variant */)
     {
-        if (browser_view.in_window_bookmarks || in_window_about)
-            show_default_view ();
+        close_in_window_panels ();
 
         headerbar.show_modifications_view ();
-        browser_view.show_in_window_modifications ();
+        browser_view.show_modifications_view ();
     }
 
     /*\

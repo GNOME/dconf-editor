@@ -5,10 +5,18 @@
     <property name="transition-type">over-down-up</property>
     <property name="transition-duration">300</property>
     <child>
-      <object class="GtkGrid" id="current_child_grid">
+      <object class="GtkOverlay" id="notifications_overlay"> <!-- or "main-view", see packing -->
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkGrid" id="main_grid">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+          </object>
+        </child>
       </object>
+      <packing>
+        <property name="name">main-view</property>
+      </packing>
     </child>
   </template>
 </interface>

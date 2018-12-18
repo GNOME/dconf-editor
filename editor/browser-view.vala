@@ -101,11 +101,11 @@ private class BrowserView : BaseView, AdaptativeWidget
         info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"),
                                                   _("Reload"), "browser.reload-object");   // TODO also for key removing?
         info_bar.show ();
-        current_child_grid.add (info_bar);
+        main_grid.add (info_bar);
 
         current_child = new BrowserStack ();
         current_child.show ();
-        current_child_grid.add (current_child);
+        main_grid.add (current_child);
 
         create_bookmarks_list ();
     }
@@ -122,12 +122,12 @@ private class BrowserView : BaseView, AdaptativeWidget
             if (in_window_bookmarks_edit_mode)
                 leave_bookmarks_edit_mode ();
             in_window_bookmarks = false;
-            set_visible_child (current_child_grid);
+            set_visible_child_name ("main-view");
         }
         else if (in_window_modifications)
         {
             in_window_modifications = false;
-            set_visible_child (current_child_grid);
+            set_visible_child_name ("main-view");
         }
         else
             base.show_default_view ();
@@ -250,7 +250,7 @@ private class BrowserView : BaseView, AdaptativeWidget
         modifications_list_created = true;
     }
 
-    internal void show_in_window_modifications ()
+    internal void show_modifications_view ()
         requires (modifications_list_created == true)
     {
         if (in_window_bookmarks || in_window_about)
@@ -302,7 +302,7 @@ private class BrowserView : BaseView, AdaptativeWidget
 
     private string [] old_bookmarks = new string [0];
 
-    internal void show_in_window_bookmarks (string [] bookmarks)
+    internal void show_bookmarks_view (string [] bookmarks)
     {
         if (in_window_modifications || in_window_about)
             show_default_view ();

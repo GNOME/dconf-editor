@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-view.ui")]
 private class BaseView : Stack, AdaptativeWidget
 {
-    [GtkChild] protected Grid current_child_grid;
+    [GtkChild] protected Grid main_grid;
 
     internal virtual bool handle_copy_text (out string copy_text)
     {
@@ -42,6 +42,8 @@ private class BaseView : Stack, AdaptativeWidget
         saved_window_size = new_size;
         if (about_list_created)
             about_list.set_window_size (new_size);
+        if (notifications_revealer_created)
+            notifications_revealer.set_window_size (new_size);
     }
 
     /*\
@@ -53,7 +55,7 @@ private class BaseView : Stack, AdaptativeWidget
         if (in_window_about)
         {
             in_window_about = false;
-            set_visible_child (current_child_grid);
+            set_visible_child (notifications_overlay);   // or set_visible_child_name ("main-view");
         }
         else
             assert_not_reached ();
@@ -83,7 +85,7 @@ private class BaseView : Stack, AdaptativeWidget
         about_list_created = true;
     }
 
-    internal void show_in_window_about ()
+    internal void show_about_view ()
         requires (in_window_about == false)
     {
         if (about_list_created)
@@ -93,5 +95,39 @@ private class BaseView : Stack, AdaptativeWidget
 
         set_visible_child (about_list);
         in_window_about = true;
+    }
+
+    /*\
+    * * notifications
+    \*/
+
+    [GtkChild] private Overlay notifications_overlay;
+
+    private bool notifications_revealer_created = false;
+    private NotificationsRevealer notifications_revealer;
+
+    private void create_notifications_revealer ()
+    {
+        notifications_revealer = new NotificationsRevealer ();
+        notifications_revealer.set_window_size (saved_window_size);
+        notifications_revealer.show ();
+        notifications_overlay.add_overlay (notifications_revealer);
+        notifications_revealer_created = true;
+    }
+
+    internal void show_notification (string notification)
+    {
+        if (!notifications_revealer_created)
+            create_notifications_revealer ();
+
+        notifications_revealer.show_notification (notification);
+    }
+
+    internal void hide_notification ()
+    {
+        if (!notifications_revealer_created)
+            return;
+
+        notifications_revealer.hide_notification ();
     }
 }

@@ -169,6 +169,9 @@ private abstract class AdaptativeWindow : ApplicationWindow
         context = get_style_context ();
         context.add_class ("startup");
 
+        height_request = 283;   // 294px max for Purism Librem 5 landscape, for 720px width
+        width_request = 349;    // 360px max for Purism Librem 5 portrait, for 654px height
+
         nta_headerbar.show ();
         set_titlebar (nta_headerbar);
 
