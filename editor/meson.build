@@ -136,8 +136,8 @@ resource_data = files(
   'pathwidget.ui',
   'property-row.ui',
   'registry-info.ui',
+  'registry-list.ui',
   'registry-placeholder.ui',
-  'registry-view.ui',
   'return-list-box-row.ui',
   'search-list-box-row.ui',
   'short-pathbar.ui'

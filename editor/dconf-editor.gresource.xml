@@ -25,8 +25,8 @@
     <file preprocess="xml-stripblanks">pathwidget.ui</file>
     <file preprocess="xml-stripblanks">property-row.ui</file>
     <file preprocess="xml-stripblanks">registry-info.ui</file>
+    <file preprocess="xml-stripblanks">registry-list.ui</file>
     <file preprocess="xml-stripblanks">registry-placeholder.ui</file>
-    <file preprocess="xml-stripblanks">registry-view.ui</file>
     <file preprocess="xml-stripblanks">return-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">search-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">short-pathbar.ui</file>

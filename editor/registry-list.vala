@@ -17,7 +17,7 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-view.ui")]
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-list.ui")]
 private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 {
     [GtkChild] protected ListBox key_list_box;
