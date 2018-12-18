@@ -28,12 +28,12 @@ private abstract class BrowserWindow : BaseWindow
     protected string    saved_selection = "";
 
     private BrowserHeaderBar headerbar;
-    private BrowserView      browser_view;
+    private BrowserView      main_view;
 
     construct
     {
         headerbar = (BrowserHeaderBar) nta_headerbar;
-        browser_view = (BrowserView) base_view;
+        main_view = (BrowserView) base_view;
 
         headerbar.search_changed.connect (search_changed_cb);
         headerbar.search_stopped.connect (search_stopped_cb);
@@ -46,7 +46,7 @@ private abstract class BrowserWindow : BaseWindow
         bind_mouse_config ();
 
         add_adaptative_child (headerbar);
-        add_adaptative_child (browser_view);
+        add_adaptative_child (main_view);
         add_adaptative_child (this);
     }
 
@@ -181,7 +181,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void reload_folder (/* SimpleAction action, Variant? path_variant */)
     {
-        request_folder (current_path, browser_view.get_selected_row_name ());
+        request_folder (current_path, main_view.get_selected_row_name ());
     }
 
     private void reload_object (/* SimpleAction action, Variant? path_variant */)
@@ -233,14 +233,14 @@ private abstract class BrowserWindow : BaseWindow
             reload_search_next = true;
         }
         else if (current_type == ViewType.FOLDER)
-            saved_selection = browser_view.get_selected_row_name ();
+            saved_selection = main_view.get_selected_row_name ();
         else if (current_type == ViewType.OBJECT)
             saved_selection = "";
 
         current_type = type;
         current_path = path;
 
-        browser_view.set_path (type, path);
+        main_view.set_path (type, path);
         headerbar.set_path (type, path);
 
         Variant variant = new Variant ("(sq)", path, (type == ViewType.FOLDER) || (type == ViewType.CONFIG) ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id);
@@ -254,7 +254,7 @@ private abstract class BrowserWindow : BaseWindow
 
     protected void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null)
     {
-        string selected_row = browser_view.get_selected_row_name ();
+        string selected_row = main_view.get_selected_row_name ();
         if (reload)
         {
             reload_search_action.set_enabled (false);
@@ -266,7 +266,7 @@ private abstract class BrowserWindow : BaseWindow
         string search_text = search == null ? headerbar.text : (!) search;
         update_current_path (ViewType.SEARCH, search_text);
         if (mode != PathEntry.SearchMode.UNCLEAR)
-            browser_view.select_row (selected_row);
+            main_view.select_row (selected_row);
         if (!headerbar.entry_has_focus)
             headerbar.entry_grab_focus (false);
     }
@@ -280,14 +280,14 @@ private abstract class BrowserWindow : BaseWindow
     // query
     protected bool is_in_in_window_mode ()
     {
-        return browser_view.is_in_in_window_mode ();
+        return main_view.is_in_in_window_mode ();
     }
 
     private bool navigation_blocked ()
     {
         if (headerbar.search_mode_enabled)
             return true;
-        if (browser_view.is_in_in_window_mode ())
+        if (main_view.is_in_in_window_mode ())
             return true;
         return false;
     }
@@ -296,7 +296,7 @@ private abstract class BrowserWindow : BaseWindow
     {
         if (headerbar.has_popover ())
             return true;
-        if (browser_view.is_in_in_window_mode ())
+        if (main_view.is_in_in_window_mode ())
             return true;
         return false;
     }
@@ -312,7 +312,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void search_stopped_cb ()
     {
-        browser_view.row_grab_focus ();
+        main_view.row_grab_focus ();
 
         reload_search_action.set_enabled (false);
         if (saved_type == ViewType.FOLDER)
@@ -332,7 +332,7 @@ private abstract class BrowserWindow : BaseWindow
             return;
 
         headerbar.close_popovers ();        // by symmetry with go_forward()
-        browser_view.close_popovers ();
+        main_view.close_popovers ();
 
         if (current_path == root_path)
             return;
@@ -352,7 +352,7 @@ private abstract class BrowserWindow : BaseWindow
         headerbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
 
         headerbar.close_popovers ();
-        browser_view.close_popovers ();
+        main_view.close_popovers ();
 
         if (current_path == complete_path)  // TODO something?
             return;
@@ -382,11 +382,11 @@ private abstract class BrowserWindow : BaseWindow
 
     protected void reload_view ()   // not used by BrowserWindow
     {
-        if (browser_view.current_view == ViewType.FOLDER)
-            request_folder (current_path, browser_view.get_selected_row_name ());
-        else if (browser_view.current_view == ViewType.OBJECT)
+        if (main_view.current_view == ViewType.FOLDER)
+            request_folder (current_path, main_view.get_selected_row_name ());
+        else if (main_view.current_view == ViewType.OBJECT)
             request_object (current_path, ModelUtils.undefined_context_id, false);
-        else if (browser_view.current_view == ViewType.SEARCH)
+        else if (main_view.current_view == ViewType.SEARCH)
             request_search (true);
     }
 
@@ -433,7 +433,7 @@ private abstract class BrowserWindow : BaseWindow
         if (intercept_next_match (out interception_result))     // for hypothetical popovers
             return interception_result;
         else
-            return browser_view.next_match ();                  // for in-window things and main list
+            return main_view.next_match ();                  // for in-window things and main list
     }
     private bool _previous_match ()
     {
@@ -441,7 +441,7 @@ private abstract class BrowserWindow : BaseWindow
         if (intercept_previous_match (out interception_result)) // for hypothetical popovers
             return interception_result;
         else
-            return browser_view.previous_match ();              // for in-window things and main list
+            return main_view.previous_match ();              // for in-window things and main list
     }
 
     // override if you know something more has to be done
@@ -465,7 +465,7 @@ private abstract class BrowserWindow : BaseWindow
         if (is_in_in_window_mode ())        // TODO better
             return;
 
-        if (browser_view.current_view == ViewType.FOLDER)
+        if (main_view.current_view == ViewType.FOLDER)
             request_config (current_path);
     }
 
@@ -479,7 +479,7 @@ private abstract class BrowserWindow : BaseWindow
             return;
 
         headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
-        browser_view.close_popovers ();   // could be needed if headerbar.search_mode_enabled
+        main_view.close_popovers ();   // could be needed if headerbar.search_mode_enabled
 
         if (!headerbar.search_mode_enabled)
             request_search (true, PathEntry.SearchMode.SEARCH);
@@ -530,7 +530,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
     {
-        if (browser_view.current_view == ViewType.CONFIG)   // assumes "navigation_blocked () == false"
+        if (main_view.current_view == ViewType.CONFIG)   // assumes "navigation_blocked () == false"
             request_folder (current_path);
         else
             go_backward (false);
@@ -552,12 +552,12 @@ private abstract class BrowserWindow : BaseWindow
 
     protected override void menu_pressed ()
     {
-        if (browser_view.toggle_row_popover ()) // handles in-window bookmarks
+        if (main_view.toggle_row_popover ()) // handles in-window bookmarks
             headerbar.close_popovers ();
         else
         {
             headerbar.toggle_hamburger_menu ();
-            browser_view.close_popovers ();
+            main_view.close_popovers ();
         }
     }
 
@@ -586,7 +586,7 @@ private abstract class BrowserWindow : BaseWindow
         if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
         {
             Widget? focus = get_focus ();
-            if (focus != null && (((!) focus is Entry) || ((!) focus is TextView))) // && browser_view.current_view != ViewType.SEARCH
+            if (focus != null && (((!) focus is Entry) || ((!) focus is TextView))) // && main_view.current_view != ViewType.SEARCH
                 return false;
 
             headerbar.toggle_pathbar_menu ();
@@ -595,9 +595,9 @@ private abstract class BrowserWindow : BaseWindow
 
         if (name == "Return" || name == "KP_Enter")
         {
-            if (browser_view.current_view == ViewType.SEARCH
+            if (main_view.current_view == ViewType.SEARCH
              && headerbar.entry_has_focus
-             && browser_view.return_pressed ())
+             && main_view.return_pressed ())
                 return true;
             return false;
         }
