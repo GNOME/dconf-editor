@@ -220,53 +220,56 @@ private class RegistrySearch : RegistryList
 
                 insert_first_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
 
-                post_local = 1;
-                paths_search (model, term, ref list_model, ref post_local);
+                local_search (model, sorting_options, (!) current_path_if_search_mode, ModelUtils.get_name_or_empty (term), ref list_model);
+                post_local = (int) list_model.get_n_items ();
 
                 key_list_box.bind_model (list_model, new_list_box_row);
                 _select_first_row (key_list_box, term);
             }
             model.keys_value_push ();
         }
-        else if (old_term_is_term_prefix)
-        {
-            pause_global_search (ref search_source);
-            refine_local_results (term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
-            refine_bookmarks_results (term, post_local, ref list_model, ref post_bookmarks, ref post_folders);
-            if ((!) old_term == "")
-                start_global_search ((!) current_path_if_search_mode, term);
-            else
-            {
-                refine_global_results (term, post_bookmarks, ref list_model, ref post_folders);
-                resume_global_search ((!) current_path_if_search_mode, term); // update search term
-            }
-
-            ensure_selection (key_list_box, term);
-
-            model.keys_value_push ();
-        }
         else
         {
-            search_is_path_search = false;
+            if (old_term_is_term_prefix)
+            {
+                pause_global_search (ref search_source);
+                refine_local_results (term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
+                refine_bookmarks_results (term, post_local, ref list_model, ref post_bookmarks, ref post_folders);
+                if ((!) old_term == "")
+                    start_global_search ((!) current_path_if_search_mode, term);
+                else
+                {
+                    refine_global_results (term, post_bookmarks, ref list_model, ref post_folders);
+                    resume_global_search ((!) current_path_if_search_mode, term); // update search term
+                }
 
-            model.clean_watched_keys ();
-            stop_global_search ();
+                ensure_selection (key_list_box, term);
 
-            insert_first_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
+                model.keys_value_push ();
+            }
+            else
+            {
+                search_is_path_search = false;
 
-            local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
-            post_local      = (int) list_model.get_n_items ();
-            post_bookmarks  = post_local;
-            bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, ref list_model, ref post_bookmarks);
-            post_folders    = post_bookmarks;
+                model.clean_watched_keys ();
+                stop_global_search ();
 
-            key_list_box.bind_model (list_model, new_list_box_row);
-            _select_first_row (key_list_box, term);
+                insert_first_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
 
-            model.keys_value_push ();
+                local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
+                post_local      = (int) list_model.get_n_items ();
+                post_bookmarks  = post_local;
+                bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, ref list_model, ref post_bookmarks);
+                post_folders    = post_bookmarks;
 
-            if (term != "")
-                start_global_search ((!) current_path_if_search_mode, term);
+                key_list_box.bind_model (list_model, new_list_box_row);
+                _select_first_row (key_list_box, term);
+
+                model.keys_value_push ();
+
+                if (term != "")
+                    start_global_search ((!) current_path_if_search_mode, term);
+            }
         }
         old_term = term;
     }
@@ -369,12 +372,12 @@ private class RegistrySearch : RegistryList
     private static void local_search (SettingsModel model, SortingOptions sorting_options, string current_path, string term, ref GLib.ListStore list_model)
         requires (ModelUtils.is_folder_path (current_path))
     {
-        SettingComparator comparator = sorting_options.get_comparator ();
-        GLib.CompareDataFunc compare = (a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b);
-
         Variant? key_model = model.get_children (current_path, true, false); // here to update watched keys even coming from RegistryInfo
         if (key_model == null)
             return;
+
+        SettingComparator comparator = sorting_options.get_comparator ();
+        GLib.CompareDataFunc compare = (a, b) => comparator.compare ((SimpleSettingObject) a, (SimpleSettingObject) b);
 
         VariantIter iter = new VariantIter ((!) key_model);
         uint16 context_id;
@@ -385,38 +388,6 @@ private class RegistrySearch : RegistryList
             {
                 SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, current_path);
                 list_model.insert_sorted (sso, compare);
-            }
-        }
-    }
-
-    private static void paths_search (SettingsModel model, string term, ref GLib.ListStore list_model, ref int post_local)
-    {
-        string base_path = ModelUtils.get_base_path (term);
-
-        Variant? key_model = model.get_children (base_path, true, false);
-        if (key_model == null)
-            return;
-
-        uint16 context_id;
-        string name;
-
-        int post_subfolders = post_local;
-        VariantIter iter = new VariantIter ((!) key_model);
-        while (iter.next ("(qs)", out context_id, out name))
-        {
-            bool is_folder = context_id == ModelUtils.folder_context_id;
-            string full_name = ModelUtils.recreate_full_name (base_path, name, is_folder);
-            if (term in full_name)
-            {
-                SimpleSettingObject sso = new SimpleSettingObject.from_full_name (context_id, name, full_name);
-                if (is_folder)
-                {
-                    list_model.insert (post_subfolders, sso);
-                    post_subfolders++;
-                }
-                else
-                    list_model.insert (post_local, sso);
-                post_local++;
             }
         }
     }

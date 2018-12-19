@@ -182,6 +182,11 @@ namespace ModelUtils
         return path.slice (0, path.last_index_of_char ('/') + 1);
     }
 
+    internal static string get_name_or_empty (string path)
+    {
+        return path.slice (path.last_index_of_char ('/') + 1, path.length);
+    }
+
     internal static string get_name (string path)
     {
         if (path.length <= 1)
