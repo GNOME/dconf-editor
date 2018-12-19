@@ -502,7 +502,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
-        if (navigation_blocked (/* allow search */ false))
+        if (navigation_blocked (/* allow search */ true))
             return;
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
@@ -510,7 +510,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
     {
-        if (navigation_blocked (/* allow search */ false))
+        if (navigation_blocked (/* allow search */ true))
             return;
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);

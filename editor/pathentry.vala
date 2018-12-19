@@ -152,6 +152,7 @@ private class PathEntry : Box, AdaptativeWidget
                 return;
 
             case SearchMode.EDIT_PATH_SELECT_LAST_WORD:
+                search_entry.move_cursor (MovementStep.DISPLAY_LINE_ENDS, -1, false);
                 search_entry.text = current_path;
                 if (search_entry.text_length == 1)  // root
                 {
