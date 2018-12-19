@@ -283,15 +283,6 @@ private abstract class BrowserWindow : BaseWindow
         return main_view.is_in_in_window_mode ();
     }
 
-    private bool navigation_blocked (bool allow_search)
-    {
-        if (!allow_search && headerbar.search_mode_enabled)
-            return true;
-        if (main_view.is_in_in_window_mode ())
-            return true;
-        return false;
-    }
-
     protected bool row_action_blocked ()
     {
         if (headerbar.has_popover ())
@@ -328,7 +319,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void go_backward (bool shift)
     {
-        if (navigation_blocked (/* allow search */ true))
+        if (is_in_in_window_mode ())
             return;
 
         headerbar.close_popovers ();        // by symmetry with go_forward()
@@ -353,11 +344,17 @@ private abstract class BrowserWindow : BaseWindow
 
     private void go_forward (bool shift)
     {
-        if (navigation_blocked (/* allow search */ false))
+        if (is_in_in_window_mode ())
             return;
 
         headerbar.close_popovers ();
         main_view.close_popovers ();
+
+        if (main_view.current_view == ViewType.SEARCH)
+        {
+            request_search (false, PathEntry.SearchMode.EDIT_PATH_MOVE_END);   // TODO when (!shift), move at next ‘/’
+            return;
+        }
 
         string fallback_path;
         string complete_path;
@@ -502,7 +499,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
-        if (navigation_blocked (/* allow search */ true))
+        if (is_in_in_window_mode ())
             return;
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
@@ -510,7 +507,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
     {
-        if (navigation_blocked (/* allow search */ true))
+        if (is_in_in_window_mode ())
             return;
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
