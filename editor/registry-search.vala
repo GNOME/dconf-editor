@@ -57,7 +57,6 @@ private class RegistrySearch : RegistryList
         stop_global_search ();
 
         post_local = -1;
-        post_paths = -1;
         post_bookmarks = -1;
         post_folders = -1;
 
@@ -178,7 +177,6 @@ private class RegistrySearch : RegistryList
     // indices for the start of each section. used to know where to insert search hits and to update the headers
     // must be updated before changing the list model, so that the header function works correctly
     private int post_local;
-    private int post_paths;
     private int post_bookmarks;
     private int post_folders;
     private uint? search_source = null;
@@ -207,7 +205,7 @@ private class RegistrySearch : RegistryList
         {
             if (old_term_is_term_prefix && !(term.slice (((!) old_term).length, term.length).contains ("/")))
             {
-                refine_paths_results (term, post_local, ref list_model, ref post_paths, ref post_bookmarks, ref post_folders);
+                refine_paths_results (term, ref list_model, ref post_local);
 
                 ensure_selection (key_list_box, term);
             }
@@ -222,11 +220,8 @@ private class RegistrySearch : RegistryList
 
                 insert_first_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
 
-                post_local      = 1;
-                post_paths      = 1;
-                paths_search    (model, term, ref list_model, ref post_paths);
-                post_bookmarks  = post_paths;
-                post_folders    = post_paths;
+                post_local = 1;
+                paths_search (model, term, ref list_model, ref post_local);
 
                 key_list_box.bind_model (list_model, new_list_box_row);
                 _select_first_row (key_list_box, term);
@@ -236,9 +231,8 @@ private class RegistrySearch : RegistryList
         else if (old_term_is_term_prefix)
         {
             pause_global_search (ref search_source);
-            refine_local_results (term, ref list_model, ref post_local, ref post_paths, ref post_bookmarks, ref post_folders);
-            refine_paths_results (term, post_local, ref list_model, ref post_paths, ref post_bookmarks, ref post_folders);
-            refine_bookmarks_results (term, post_paths, ref list_model, ref post_bookmarks, ref post_folders);
+            refine_local_results (term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
+            refine_bookmarks_results (term, post_local, ref list_model, ref post_bookmarks, ref post_folders);
             if ((!) old_term == "")
                 start_global_search ((!) current_path_if_search_mode, term);
             else
@@ -262,7 +256,6 @@ private class RegistrySearch : RegistryList
 
             local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
             post_local      = (int) list_model.get_n_items ();
-            post_paths      = post_local;
             post_bookmarks  = post_local;
             bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, ref list_model, ref post_bookmarks);
             post_folders    = post_bookmarks;
@@ -289,7 +282,27 @@ private class RegistrySearch : RegistryList
         list_model.insert (0, sso);
     }
 
-    private static void refine_local_results (string term, ref GLib.ListStore list_model, ref int post_local, ref int post_paths, ref int post_bookmarks, ref int post_folders)
+    private static void refine_paths_results (string term, ref GLib.ListStore list_model, ref int post_local)
+    {
+        if (post_local < 1)
+            assert_not_reached ();
+        if (post_local == 1)
+            return;
+
+        for (int i = post_local - 1; i >= 1; i--)
+        {
+            SimpleSettingObject? item = (SimpleSettingObject?) list_model.get_item (i);
+            if (item == null)
+                assert_not_reached ();
+            if (!(term in ((!) item).full_name))
+            {
+                post_local--;
+                list_model.remove (i);
+            }
+        }
+    }
+
+    private static void refine_local_results (string term, ref GLib.ListStore list_model, ref int post_local, ref int post_bookmarks, ref int post_folders)
     {
         if (post_local < 1)
             assert_not_reached ();
@@ -304,7 +317,6 @@ private class RegistrySearch : RegistryList
             if (!(term.casefold () in ((!) item).casefolded_name))
             {
                 post_local--;
-                post_paths--;
                 post_bookmarks--;
                 post_folders--;
                 list_model.remove (i);
@@ -312,36 +324,14 @@ private class RegistrySearch : RegistryList
         }
     }
 
-    private static void refine_paths_results (string term, int post_local, ref GLib.ListStore list_model, ref int post_paths, ref int post_bookmarks, ref int post_folders)
+    private static void refine_bookmarks_results (string term, int post_local, ref GLib.ListStore list_model, ref int post_bookmarks, ref int post_folders)
     {
-        if (post_paths < post_local)
+        if (post_bookmarks < post_local)
             assert_not_reached ();
-        if (post_paths == post_local)
+        if (post_bookmarks == post_local)
             return;
 
-        for (int i = post_paths - 1; i >= post_local; i--)
-        {
-            SimpleSettingObject? item = (SimpleSettingObject?) list_model.get_item (i);
-            if (item == null)
-                assert_not_reached ();
-            if (!(term in ((!) item).full_name))
-            {
-                post_paths--;
-                post_bookmarks--;
-                post_folders--;
-                list_model.remove (i);
-            }
-        }
-    }
-
-    private static void refine_bookmarks_results (string term, int post_paths, ref GLib.ListStore list_model, ref int post_bookmarks, ref int post_folders)
-    {
-        if (post_bookmarks < post_paths)
-            assert_not_reached ();
-        if (post_bookmarks == post_paths)
-            return;
-
-        for (int i = post_bookmarks - 1; i >= post_paths; i--)
+        for (int i = post_bookmarks - 1; i >= post_local; i--)
         {
             SimpleSettingObject? item = (SimpleSettingObject?) list_model.get_item (i);
             if (item == null)
@@ -399,7 +389,7 @@ private class RegistrySearch : RegistryList
         }
     }
 
-    private static void paths_search (SettingsModel model, string term, ref GLib.ListStore list_model, ref int post_paths)
+    private static void paths_search (SettingsModel model, string term, ref GLib.ListStore list_model, ref int post_local)
     {
         string base_path = ModelUtils.get_base_path (term);
 
@@ -410,7 +400,7 @@ private class RegistrySearch : RegistryList
         uint16 context_id;
         string name;
 
-        int post_subfolders = post_paths;
+        int post_subfolders = post_local;
         VariantIter iter = new VariantIter ((!) key_model);
         while (iter.next ("(qs)", out context_id, out name))
         {
@@ -425,8 +415,8 @@ private class RegistrySearch : RegistryList
                     post_subfolders++;
                 }
                 else
-                    list_model.insert (post_paths, sso);
-                post_paths++;
+                    list_model.insert (post_local, sso);
+                post_local++;
             }
         }
     }
@@ -544,19 +534,22 @@ private class RegistrySearch : RegistryList
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
-        string? label_text = get_header_text (row.get_index (), post_local, post_paths, post_bookmarks, post_folders);
-        ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
-        row.set_header (header);
+        if (search_is_path_search)
+            update_row_header_with_context (row, before, modifications_handler.model);
+        else
+        {
+            string? label_text = get_header_text (row.get_index (), post_local, post_bookmarks, post_folders);
+            ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
+            row.set_header (header);
+        }
     }
-    private static string? get_header_text (int row_index, int post_local, int post_paths, int post_bookmarks, int post_folders)
+    private static string? get_header_text (int row_index, int post_local, int post_bookmarks, int post_folders)
     {
         if (row_index == 0)
             return null;
         if (row_index == 1 && post_local > 1)
             return _("Current folder");
-        if (row_index == post_local && post_local != post_paths)
-            return _("Paths");
-        if (row_index == post_paths && post_paths != post_bookmarks)
+        if (row_index == post_local && post_local != post_bookmarks)
             return _("Bookmarks");
         if (row_index == post_bookmarks && post_bookmarks != post_folders)
             return _("Folders");

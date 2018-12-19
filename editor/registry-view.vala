@@ -120,54 +120,6 @@ private class RegistryView : RegistryList
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
-        _update_row_header (row, before, modifications_handler.model);
-    }
-    private static void _update_row_header (ListBoxRow row, ListBoxRow? before, SettingsModel model)
-    {
-        string? label_text = null;
-        ClickableListBoxRow? row_content = (ClickableListBoxRow) row.get_child ();
-        if (row_content == null)
-            assert_not_reached ();
-
-        if ((!) row_content is KeyListBoxRow)
-        {
-            if (before == null)
-                return; // TODO assert_not_reached (); 1/2
-
-            KeyListBoxRow key_list_box_row = (KeyListBoxRow) (!) row_content;
-            uint16 context_id = key_list_box_row.context_id;
-            if (((ClickableListBoxRow) ((!) before).get_child ()).context_id != context_id)
-            {
-                if (key_list_box_row.has_schema)
-                {
-                    if (!model.key_exists (((KeyListBoxRow) ((!) row).get_child ()).full_name, context_id))
-                        return; // FIXME that happens when reloading a now-empty folder
-
-                    RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (key_list_box_row.full_name, context_id, (uint16) PropertyQuery.SCHEMA_ID));
-                    string schema_id;
-                    if (!properties.lookup (PropertyQuery.SCHEMA_ID, "s", out schema_id))
-                        assert_not_reached ();
-                    label_text = schema_id;
-                }
-                else
-                    label_text = _("Keys not defined by a schema");
-            }
-        }
-        else if ((!) row_content is FolderListBoxRow)
-        {
-            if (before == null)
-                return; // TODO assert_not_reached (); 2/2
-
-            ClickableListBoxRow? before_content = (ClickableListBoxRow?) ((!) before).get_child ();
-            if (before_content == null)
-                assert_not_reached ();
-            if ((!) before_content is ConfigListBoxRow)
-                label_text = _("Subfolders");
-        }
-        else if (!((!) row_content is ConfigListBoxRow))
-            assert_not_reached ();
-
-        ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
-        row.set_header (header);
+        update_row_header_with_context (row, before, modifications_handler.model);
     }
 }
