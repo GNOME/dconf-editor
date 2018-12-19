@@ -283,9 +283,9 @@ private abstract class BrowserWindow : BaseWindow
         return main_view.is_in_in_window_mode ();
     }
 
-    private bool navigation_blocked ()
+    private bool navigation_blocked (bool allow_search)
     {
-        if (headerbar.search_mode_enabled)
+        if (!allow_search && headerbar.search_mode_enabled)
             return true;
         if (main_view.is_in_in_window_mode ())
             return true;
@@ -328,31 +328,40 @@ private abstract class BrowserWindow : BaseWindow
 
     private void go_backward (bool shift)
     {
-        if (navigation_blocked ())
+        if (navigation_blocked (/* allow search */ true))
             return;
 
         headerbar.close_popovers ();        // by symmetry with go_forward()
         main_view.close_popovers ();
 
-        if (current_path == root_path)
+        if (current_path == root_path && main_view.current_view != ViewType.CONFIG)
             return;
         if (shift)
-            request_folder (root_path);
+        {
+            if (main_view.current_view == ViewType.SEARCH)
+                request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, "/");
+            else
+                request_folder (root_path);
+        }
+        else if (main_view.current_view == ViewType.SEARCH)
+            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, ModelUtils.get_parent_path (current_path));
+        else if (main_view.current_view == ViewType.CONFIG)
+            request_folder (current_path);
         else
             request_folder (ModelUtils.get_parent_path (current_path), current_path.dup ());
     }
 
     private void go_forward (bool shift)
     {
-        if (navigation_blocked ())
+        if (navigation_blocked (/* allow search */ false))
             return;
+
+        headerbar.close_popovers ();
+        main_view.close_popovers ();
 
         string fallback_path;
         string complete_path;
         headerbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
-
-        headerbar.close_popovers ();
-        main_view.close_popovers ();
 
         if (current_path == complete_path)  // TODO something?
             return;
@@ -493,7 +502,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
     {
-        if (navigation_blocked ())
+        if (navigation_blocked (/* allow search */ false))
             return;
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
@@ -501,7 +510,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
     {
-        if (navigation_blocked ())
+        if (navigation_blocked (/* allow search */ false))
             return;
 
         request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
@@ -530,10 +539,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void open_current_parent                    (/* SimpleAction action, Variant? variant */)
     {
-        if (main_view.current_view == ViewType.CONFIG)   // assumes "navigation_blocked () == false"
-            request_folder (current_path);
-        else
-            go_backward (false);
+        go_backward (false);
     }
 
     private void open_child                             (/* SimpleAction action, Variant? variant */)
