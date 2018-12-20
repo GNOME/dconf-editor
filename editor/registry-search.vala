@@ -95,9 +95,7 @@ private class RegistrySearch : RegistryList
         ListBoxRow? row;
         if (term.has_prefix ("/"))
         {
-            row = key_list_box.get_row_at_index (0);
-            if (row == null)
-                assert_not_reached ();
+            row = _get_first_row (ref key_list_box);
 
             ClickableListBoxRow? row_child = (ClickableListBoxRow?) ((!) row).get_child ();
             if (row_child != null)
@@ -111,24 +109,23 @@ private class RegistrySearch : RegistryList
             }
         }
         else if (term.length == 0)
-        {
-            row = key_list_box.get_row_at_index (0);
-            if (row == null)
-                assert_not_reached ();
-        }
+            row = _get_first_row (ref key_list_box);
         else
         {
             row = key_list_box.get_row_at_index (1);
             if (row == null)
-            {
-                row = key_list_box.get_row_at_index (0);
-                if (row == null)
-                    assert_not_reached ();
-            }
+                row = _get_first_row (ref key_list_box);
         }
 
         key_list_box.select_row ((!) row);
         key_list_box.get_adjustment ().set_value (0);
+    }
+    private static ListBoxRow _get_first_row (ref unowned ListBox key_list_box)
+    {
+        ListBoxRow? row = key_list_box.get_row_at_index (0);
+        if (row == null)
+            assert_not_reached ();
+        return (!) row;
     }
 
     private static bool _return_pressed (ListBox key_list_box)
@@ -528,8 +525,7 @@ private class RegistrySearch : RegistryList
         }
 
         string? label_text = get_header_text (row_index, post_local, post_bookmarks, post_folders);
-        ListBoxRowHeader header = new ListBoxRowHeader (false, label_text);
-        row.set_header (header);
+        row.set_header (new ListBoxRowHeader (false, label_text));
     }
     private static string? get_header_text (int row_index, int post_local, int post_bookmarks, int post_folders)
     {

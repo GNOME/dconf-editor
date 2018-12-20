@@ -1189,7 +1189,6 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         else if (!((!) row_content is ConfigListBoxRow || (!) row_content is ReturnListBoxRow || (!) row_content is SearchListBoxRow))
             assert_not_reached ();
 
-        ListBoxRowHeader header = new ListBoxRowHeader (false, label_text);
-        row.set_header (header);
+        row.set_header (new ListBoxRowHeader (false, label_text));
     }
 }
