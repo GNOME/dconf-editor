@@ -70,16 +70,20 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
     private void update_bookmarks_button_visibility ()
     {
         if (disable_popovers || modifications_mode_on)
-            hide_bookmarks_button (ref bookmarks_revealer, ref bookmarks_button);
+            hide_bookmarks_button (in_window_properties, ref bookmarks_revealer, ref bookmarks_button);
         else
             show_bookmarks_button (ref bookmarks_revealer, ref bookmarks_button);
     }
-    private static inline void hide_bookmarks_button (ref Revealer bookmarks_revealer, ref Bookmarks bookmarks_button)
+    private static inline void hide_bookmarks_button (bool no_transition, ref Revealer bookmarks_revealer, ref Bookmarks bookmarks_button)
     {
         bookmarks_button.active = false;
 
         bookmarks_button.sensitive = false;
+        if (no_transition)
+            bookmarks_revealer.set_transition_duration (0);
         bookmarks_revealer.set_reveal_child (false);
+        if (no_transition)
+            bookmarks_revealer.set_transition_duration (300);
     }
     private static inline void show_bookmarks_button (ref Revealer bookmarks_revealer, ref Bookmarks bookmarks_button)
     {
