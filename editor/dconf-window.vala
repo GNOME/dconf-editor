@@ -502,11 +502,17 @@ private class DConfWindow : BrowserWindow
                 leave_edit_mode ();     // TODO place after
             headerbar.show_default_view ();
             main_view.show_default_view ();
+
+            if (current_type == ViewType.CONFIG)
+                request_folder (current_path);
         }
         else if (main_view.in_window_modifications)
         {
             headerbar.show_default_view ();
             main_view.show_default_view ();
+
+            if (current_type == ViewType.CONFIG)
+                request_folder (current_path);
         }
         else
             base.show_default_view ();

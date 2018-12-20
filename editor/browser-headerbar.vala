@@ -21,15 +21,28 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
 {
     protected PathWidget path_widget;
 
+    construct
+    {
+        init_path_widget ();
+
+        register_properties_mode ();
+    }
+
+    private ViewType current_type = ViewType.FOLDER;
     internal virtual void set_path (ViewType type, string path)
     {
         path_widget.set_path (type, path);
 
-        update_hamburger_menu ();
+        current_type = type;
+        update_properties_view ();  // takes care of the hamburger menu
     }
 
+    private bool is_extra_thin = false;
     protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
+        is_extra_thin = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        update_properties_view ();
+
         base.set_window_size (new_size);
 
         path_widget.set_window_size (new_size);
@@ -39,7 +52,7 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     * * path_widget creation
     \*/
 
-    construct
+    private void init_path_widget ()
     {
         add_path_widget ();
 
@@ -123,6 +136,62 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     internal bool handle_event (Gdk.EventKey event)
     {
         return path_widget.handle_event (event);
+    }
+
+    /*\
+    * * properties mode
+    \*/
+
+    private uint8 properties_mode_id = 0;
+    private bool properties_mode_on = false;
+    internal bool in_window_properties { get { return properties_mode_on; }}
+
+    private void update_properties_view ()
+    {
+        if (is_extra_thin)
+        {
+            if (current_type == ViewType.CONFIG)
+                show_properties_view ();
+            else
+                hide_properties_view ();
+        }
+        else
+            hide_properties_view ();
+    }
+
+    private void show_properties_view ()
+        requires (properties_mode_id > 0)
+    {
+        if (!properties_mode_on)
+            change_mode (properties_mode_id);
+    }
+
+    private void hide_properties_view ()
+    {
+        if (properties_mode_on)
+            change_mode (default_mode_id);
+        update_hamburger_menu ();
+    }
+
+    private void register_properties_mode ()
+    {
+        properties_mode_id = register_new_mode ();
+
+        this.change_mode.connect (mode_changed_properties);
+    }
+
+    private static void mode_changed_properties (BaseHeaderBar _this, uint8 requested_mode_id)
+    {
+        BrowserHeaderBar real_this = (BrowserHeaderBar) _this;
+        if (is_not_requested_mode (real_this.properties_mode_id, requested_mode_id, ref real_this.properties_mode_on))
+            return;
+
+        real_this.set_default_widgets_states (/* show go_back_button      */ true,
+                                              /* show ltr_left_separator  */ false,
+                                              /* title_label text or null */ _("Properties"),
+                                              /* show info_button         */ false,
+                                              /* show ltr_right_separator */ false,
+                                              /* show quit_button_stack   */ true);
     }
 
     /*\
