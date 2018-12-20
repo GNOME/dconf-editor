@@ -37,12 +37,12 @@ private class PathWidget : Box, AdaptativeWidget
         search_button.icon = search_icon;
     }
 
-    private bool thin_window;
+    private bool thin_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         pathbar.set_window_size (new_size);
 
-        bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        bool _thin_window = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
         if (thin_window != _thin_window)
         {
             thin_window = _thin_window;

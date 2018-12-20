@@ -45,7 +45,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         adjustment = key_list_box.get_adjustment ();
     }
 
-    private bool _small_keys_list_rows;
+    private bool _small_keys_list_rows = false;
     [CCode (notify = false)] internal bool small_keys_list_rows
     {
         set

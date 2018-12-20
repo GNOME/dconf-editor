@@ -31,7 +31,7 @@ private interface AdaptativeWidget : Object
        ┃ EXTRA ┃ QUITE ╿ USUAL
        ╿ _THIN │ _THIN │ _SIZE
        ╵       ╵       ╵
-       ╎     thin      ╎
+       ╎   quite thin  ╎
                               */
 
     internal enum WindowSize {
