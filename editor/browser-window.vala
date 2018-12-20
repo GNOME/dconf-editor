@@ -426,7 +426,7 @@ private abstract class BrowserWindow : BaseWindow
         { "next-match",         next_match          },  // <P>g // usual shortcut for "next-match"     in a SearchEntry; see also "Down"
         { "previous-match",     previous_match      },  // <P>G // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
 
-        { "request-config",     _request_config     },  // <P>i // TODO fusion with ui.open-config?
+        { "toggle-config",      toggle_config       },  // <P>i
 
         { "toggle-search",      _toggle_search      },  // <P>f // TODO unduplicate (at least name)
         { "edit-path-end",      edit_path_end       },  // <P>l
@@ -480,12 +480,13 @@ private abstract class BrowserWindow : BaseWindow
     * * config
     \*/
 
-    private void _request_config                        (/* SimpleAction action, Variant? variant */)  // TODO unduplicate method name
+    private void toggle_config                          (/* SimpleAction action, Variant? variant */)
     {
-        if (is_in_in_window_mode ())        // TODO better
+        if (main_view.current_view == ViewType.CONFIG)
+            request_folder (current_path);
+        else if (main_view.is_in_in_window_mode ())
             return;
-
-        if (main_view.current_view == ViewType.FOLDER)
+        else if (main_view.current_view == ViewType.FOLDER)
             request_config (current_path);
     }
 
