@@ -484,6 +484,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             bool italic_summary;
             if (summary == "")
             {
+                /* Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use */
                 summary = _("No summary provided");
                 italic_summary = true;
             }
@@ -510,6 +511,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             else if (key_conflict == KeyConflict.HARD)
             {
                 row.get_style_context ().add_class ("hard-conflict");
+                /* Translators: two strings with the same meaning, one used on large windows, one on small windows; means that the key has (at least) one other key defined by a different schema but at the same path and with the same name */
                 row.update_label (_("conflicting keys"), true, _("conflict"), true);
                 if (type_code == "b")
                     row.use_switch (false);
@@ -524,7 +526,8 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             return new KeyListBoxRow (false,
                                       type_code,
                                       ModelUtils.dconf_context_id,
-                                      _("No Schema Found"),
+                                      /* Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use */
+                                      _("No schema found"),
                                       true,
                                       delay_mode,
                                       key_name,
@@ -616,6 +619,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
     {
         if (key_value == null)
         {
+            /* Translators: two strings with the same meaning, one used on large windows, one on small windows; means that the key has been erased */
             row.update_label (_("key erased"), true, _("erased"), true);
             if (type_string == "b")
                 row.use_switch (false);
@@ -651,6 +655,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             if ((type_string != "<enum>")
              && (type_string != "<flags>")
              && (key_type_label == type_string || key_type_label.length > 12))
+                /* Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code) */
                 key_type_label = _("type “%s”").printf (type_string);
             key_type_italic = true;
         }
@@ -1127,7 +1132,15 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
     * * headers
     \*/
 
-    protected static void update_row_header_with_context (ListBoxRow row, ListBoxRow? before, SettingsModel model)
+    protected static bool is_first_row (int row_index, ref unowned ListBoxRow? before)
+    {
+        bool is_first_row = row_index == 0;
+        if (is_first_row != (before == null))
+            assert_not_reached ();
+        return is_first_row;
+    }
+
+    protected static void update_row_header_with_context (ListBoxRow row, ListBoxRow before, SettingsModel model, bool local_search_header)
     {
         string? label_text = null;
         ClickableListBoxRow? row_content = (ClickableListBoxRow) row.get_child ();
@@ -1136,12 +1149,9 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
         if ((!) row_content is KeyListBoxRow)
         {
-            if (before == null)
-                return; // TODO assert_not_reached (); 1/2
-
             KeyListBoxRow key_list_box_row = (KeyListBoxRow) (!) row_content;
             uint16 context_id = key_list_box_row.context_id;
-            if (((ClickableListBoxRow) ((!) before).get_child ()).context_id != context_id)
+            if (((ClickableListBoxRow) before.get_child ()).context_id != context_id)
             {
                 if (key_list_box_row.has_schema)
                 {
@@ -1152,27 +1162,34 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
                     string schema_id;
                     if (!properties.lookup (PropertyQuery.SCHEMA_ID, "s", out schema_id))
                         assert_not_reached ();
-                    label_text = schema_id;
+                    if (local_search_header)
+                        /* Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started */
+                        label_text = _("%s (local keys)").printf (schema_id);
+                    else
+                        label_text = schema_id;
                 }
+                else if (local_search_header)
+                    /* Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started */
+                    label_text = _("Local keys not defined by a schema");
+
                 else
+                    /* Translators: header displayed in the keys list during a search or during browsing */
                     label_text = _("Keys not defined by a schema");
             }
         }
         else if ((!) row_content is FolderListBoxRow)
         {
-            if (before == null)
-                return; // TODO assert_not_reached (); 2/2
-
-            ClickableListBoxRow? before_content = (ClickableListBoxRow?) ((!) before).get_child ();
+            ClickableListBoxRow? before_content = (ClickableListBoxRow?) before.get_child ();
             if (before_content == null)
                 assert_not_reached ();
             if ((!) before_content is ConfigListBoxRow || (!) before_content is ReturnListBoxRow)
+                /* Translators: header displayed in the keys list during a search or during browsing */
                 label_text = _("Subfolders");
         }
         else if (!((!) row_content is ConfigListBoxRow || (!) row_content is ReturnListBoxRow || (!) row_content is SearchListBoxRow))
             assert_not_reached ();
 
-        ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
+        ListBoxRowHeader header = new ListBoxRowHeader (false, label_text);
         row.set_header (header);
     }
 }

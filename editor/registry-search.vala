@@ -505,27 +505,42 @@ private class RegistrySearch : RegistryList
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
+        int row_index = row.get_index ();
+        if (is_first_row (row_index, ref before))
+            return;
+
         if (search_is_path_search)
-            update_row_header_with_context (row, before, modifications_handler.model);
-        else
         {
-            string? label_text = get_header_text (row.get_index (), post_local, post_bookmarks, post_folders);
-            ListBoxRowHeader header = new ListBoxRowHeader (before == null, label_text);
-            row.set_header (header);
+            update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ false);
+            return;
         }
+
+        if (row_index >= 1 && post_local > 1 && row_index < post_local)
+        {
+            update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ true);
+            return;
+        }
+
+        if (row_index >= post_folders)
+        {
+            update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ false);
+            return;
+        }
+
+        string? label_text = get_header_text (row_index, post_local, post_bookmarks, post_folders);
+        ListBoxRowHeader header = new ListBoxRowHeader (false, label_text);
+        row.set_header (header);
     }
     private static string? get_header_text (int row_index, int post_local, int post_bookmarks, int post_folders)
     {
-        if (row_index == 0)
-            return null;
-        if (row_index == 1 && post_local > 1)
-            return _("Current folder");
         if (row_index == post_local && post_local != post_bookmarks)
+            /* Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks */
             return _("Bookmarks");
+
         if (row_index == post_bookmarks && post_bookmarks != post_folders)
+            /* Translators: header displayed in the keys list during a search only */
             return _("Folders");
-        if (row_index == post_folders)
-            return _("Keys");
+
         return null;
     }
 }
