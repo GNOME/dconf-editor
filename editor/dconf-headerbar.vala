@@ -53,6 +53,7 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
     internal static DConfHeaderBar (NightLightMonitor _night_light_monitor)
     {
+        /* Translators: usual menu entry of the hamburger menu */
         Object (night_light_monitor: _night_light_monitor, about_action_label: _("About Dconf Editor"));
     }
 
@@ -177,7 +178,9 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
         _this.set_default_widgets_states (/* show go_back_button      */ true,
                                           /* show ltr_left_separator  */ false,
-                                          /* title_label text or null */ _("Bookmarks"),
+                                          /* title_label text or null */
+                                          /* Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar */
+                                                                         _("Bookmarks"),
                                           /* show info_button         */ false,
                                           /* show ltr_right_separator */ false,
                                           /* show quit_button_stack   */ true);
@@ -250,7 +253,10 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
     private static void construct_changes_pending_menu (out GLib.Menu changes_pending_menu)
     {
         changes_pending_menu = new GLib.Menu ();
+        /* Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes) */
         changes_pending_menu.append (_("Apply all"), "ui.apply-delayed-settings");
+
+        /* Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes) */
         changes_pending_menu.append (_("Dismiss all"), "ui.dismiss-delayed-settings");
         changes_pending_menu.freeze ();
     }
@@ -258,6 +264,7 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
     private static void construct_quit_delayed_mode_menu (out GLib.Menu quit_delayed_mode_menu)
     {
         quit_delayed_mode_menu = new GLib.Menu ();
+        /* Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes) */
         quit_delayed_mode_menu.append (_("Quit mode"), "ui.dismiss-delayed-settings");
         quit_delayed_mode_menu.freeze ();
     }
@@ -343,14 +350,18 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         GLib.Menu section = new GLib.Menu ();
 
         if (bookmarks_mode_on)
-            section.append (_("Hide bookmarks"), "ui.empty");    // button hidden in current design
+            /* Translators: hamburger menu entry on small windows (not used in current design) */
+            section.append (_("Hide bookmarks"), "ui.empty");
         else
         {
             if (is_in_bookmarks)
+                /* Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path */
                 section.append (_("Unbookmark"), "headerbar.unbookmark-current");
             else
+                /* Translators: hamburger menu entry on small windows, to bookmark the currently browsed path */
                 section.append (_("Bookmark"), "headerbar.bookmark-current");
 
+            /* Translators: hamburger menu entry on small windows, to show the bookmarks list */
             section.append (_("Show bookmarks"), "ui.show-in-window-bookmarks");
         }
         section.freeze ();
@@ -364,11 +375,16 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
         GLib.Menu section = new GLib.Menu ();
         if (!delay_mode)
+            /* Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation */
             section.append (_("Enter delay mode"), "ui.enter-delay-mode");
         if (is_folder_view)
         {
             Variant variant = new Variant.string (current_path);
+
+            /* Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders */
             section.append (_("Reset visible keys"), "ui.reset-visible(" + variant.print (false) + ")");
+
+            /* Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders */
             section.append (_("Reset view recursively"), "ui.reset-recursive(" + variant.print (false) + ")");
         }
         section.freeze ();
@@ -409,7 +425,9 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
         real_this.set_default_widgets_states (/* show go_back_button      */ true,
                                               /* show ltr_left_separator  */ false,
-                                              /* title_label text or null */ _("Pending"),
+                                              /* title_label text or null */
+                                            /* Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar */
+                                                                             _("Pending"),
                                               /* show info_button         */ false,
                                               /* show ltr_right_separator */ false,
                                               /* show quit_button_stack   */ false);

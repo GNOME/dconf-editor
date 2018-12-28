@@ -26,7 +26,11 @@ private interface KeyEditorChild : Widget
 
     internal abstract void reload (Variant gvariant);
 
+    /* Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range */
     protected const string out_of_range_text = _("Given value is out of range.");
+
+    /* Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type */
+    protected const string invalid_value_text = _("This value is invalid for the key type.");
 
     /*\
     * * for entries and textviews
@@ -372,6 +376,7 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
         if (range_error)
             set_icon_tooltip_text (EntryIconPosition.SECONDARY, out_of_range_text);
         else
+            /* Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed */
             set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as double."));
     }
 
@@ -440,6 +445,7 @@ private class KeyEditorChildNumberInt64 : KeyEditorChildNumberCustom
         if (range_error)
             set_icon_tooltip_text (EntryIconPosition.SECONDARY, out_of_range_text);
         else
+            /* Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed */
             set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as 64-bit integer."));
     }
 
@@ -508,6 +514,7 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
         if (range_error)
             set_icon_tooltip_text (EntryIconPosition.SECONDARY, out_of_range_text);
         else
+            /* Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed */
             set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("Failed to parse as unsigned 64-bit integer."));
     }
 
@@ -790,7 +797,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         error_icon.visible = true;
         error_bar.pack_start (error_icon);
 
-        Label error_label = new Label (_("This value is invalid for the key type."));
+        Label error_label = new Label (invalid_value_text);
         error_label.visible = true;
         error_label.wrap = true;
         error_bar.pack_start (error_label);
@@ -885,7 +892,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
-        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, _("This value is invalid for the key type."));
+        this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, invalid_value_text);
 
         this.is_string = type_string == "s" || type_string == "o" || type_string == "g";
         this.text = is_string ? initial_value.get_string () : initial_value.print (false);

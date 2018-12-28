@@ -681,6 +681,7 @@ private abstract class BrowserWindow : BaseWindow
         {
             if (_this.mouse_back_button == _this.mouse_forward_button)
             {
+                /* Translators: command-line message, when the user uses the backward/forward buttons of the mouse */
                 warning (_("The same mouse button is set for going backward and forward. Doing nothing."));
                 return false;
             }

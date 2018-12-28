@@ -145,15 +145,15 @@ private abstract class NightTimeAwareHeaderBar : HeaderBar
     private static inline void append_night_mode_entry (bool dark_theme, bool auto_night, ref GLib.Menu section)
     {
         if (dark_theme)
-            /* Translators: there are three related actions: "use", "reuse" and "pause" */
+            /* Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night */
             section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
 
         else if (auto_night)
-            /* Translators: there are three related actions: "use", "reuse" and "pause" */
+            /* Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night */
             section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
 
         else
-            /* Translators: there are three related actions: "use", "reuse" and "pause" */
+            /* Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night */
             section.append (_("Use night mode"), "app.set-use-night-mode(true)");
     }
 }

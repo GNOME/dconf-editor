@@ -81,6 +81,7 @@ private class RegistryInfo : Grid, BrowsableView
             string folder_name;
             if (!properties.lookup (PropertyQuery.KEY_NAME,             "s",    out folder_name))
                 assert_not_reached ();
+            /* Translators: field description when displaying folder properties; name of the folder */
             add_row_from_label (_("Name"),                                          folder_name);
 
             conflicting_key_warning_revealer.set_reveal_child (false);
@@ -139,16 +140,21 @@ private class RegistryInfo : Grid, BrowsableView
 
         if (!properties.lookup (PropertyQuery.FIXED_SCHEMA,             "b",    out tmp_bool))
             tmp_bool = false;
+        /* Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine */
         add_row_from_label (_("Defined by"),                                        get_defined_by (has_schema, tmp_bool));
 
         if (properties.lookup (PropertyQuery.SCHEMA_ID,                 "s",    out tmp_string))
+            /* Translators: field description when displaying key properties; the schema id (if the key is defined by a schema) */
             add_row_from_label (_("Schema"),                                        tmp_string);
 
         add_separator ();
         if (properties.lookup (PropertyQuery.SUMMARY,                   "s",    out tmp_string))
         {
             tmp_bool = tmp_string == "";
+            /* Translators: field description when displaying key properties; a summary describing the key use*/
             add_row_from_label (_("Summary"),
+
+            /* Translators: field content when displaying key properties; if the key does not have a summary describing its use*/
                                 tmp_bool ?                                          _("No summary provided")
                                          :                                          tmp_string,
                                 tmp_bool);
@@ -156,12 +162,15 @@ private class RegistryInfo : Grid, BrowsableView
         if (properties.lookup (PropertyQuery.DESCRIPTION,               "s",    out tmp_string))
         {
             tmp_bool = tmp_string == "";
+            /* Translators: field description when displaying key properties; a description describing deeply the key use*/
             add_row_from_label (_("Description"),
+
+            /* Translators: field content when displaying key properties; if the key does not have a description describing deeply its use*/
                                 tmp_bool ?                                          _("No description provided")
                                          :                                          tmp_string,
                                 tmp_bool);
         }
-        /* Translators: as in datatype (integer, boolean, string, etc.) */
+        /* Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.) */
         add_row_from_label (_("Type"),                                              ModelUtils.key_to_description (type_code, true));
 
         bool range_type_is_range = false;
@@ -174,7 +183,11 @@ private class RegistryInfo : Grid, BrowsableView
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
                 range_type_is_range = ((RangeType) range_type) == RangeType.RANGE;
-                add_row_from_label (_("Forced range"),                              range_type_is_range ? _("Yes") : _("No"));
+                /* Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set */
+                add_row_from_label (_("Forced range"),
+
+                /* Translators: field content when displaying key properties; "yes" if the key has a range set, "no" if not */
+                                                                                    range_type_is_range ? _("Yes") : _("No"));
             }
         }
 
@@ -182,8 +195,10 @@ private class RegistryInfo : Grid, BrowsableView
         string tmp = "";
         tmp_string = "";
         if (properties.lookup (PropertyQuery.MINIMUM,                   "s",    out tmp_string))
+            /* Translators: field description when displaying key properties; the minimum value a numeral key can take */
             add_row_from_label (_("Minimum"),                                       tmp_string);
         if (properties.lookup (PropertyQuery.MAXIMUM,                   "s",    out tmp       ))
+            /* Translators: field description when displaying key properties; the maximum value a numeral key can take */
             add_row_from_label (_("Maximum"),                                       tmp       );
         if (tmp != "" && tmp == tmp_string)
             minimum_is_maximum = true;
@@ -195,10 +210,14 @@ private class RegistryInfo : Grid, BrowsableView
             assert_not_reached ();
 
         if (properties.lookup (PropertyQuery.DEFAULT_VALUE,             "s",    out tmp_string))
+            /* Translators: field description when displaying key properties; the default value of the key (defined if it has a schema) */
             add_row_from_label (_("Default"),                                       tmp_string);
+        else if (has_schema)
+            assert_not_reached ();
 
         if ( /* has_schema && */ key_conflict == KeyConflict.HARD)
         {
+            /* Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys */
             current_value_label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
             current_value_label.get_style_context ().add_class ("italic-label");
         }
@@ -219,6 +238,7 @@ private class RegistryInfo : Grid, BrowsableView
         current_value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         current_value_label.hexpand = true;
         current_value_label.show ();
+        /* Translators: field description when displaying key properties; the current value of the key */
         add_row_from_widget (_("Current value"), current_value_label);
 
         add_separator ();
@@ -323,6 +343,7 @@ private class RegistryInfo : Grid, BrowsableView
             custom_value_switch.halign = Align.START;
             custom_value_switch.hexpand = true;
             custom_value_switch.show ();
+            /* Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema */
             add_switch_row (_("Use default value"), custom_value_switch);
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
@@ -341,6 +362,7 @@ private class RegistryInfo : Grid, BrowsableView
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect ((_modifications_handler) => on_revealer_reload_2 (_modifications_handler, key_editor_child, value_has_changed_handler, full_name, context_id, has_schema));
+        /* Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.) */
         add_row_from_widget (_("Custom value"), key_editor_child, type_code, minimum_is_maximum);
 
         key_editor_child.destroy.connect (() => {
@@ -385,6 +407,7 @@ private class RegistryInfo : Grid, BrowsableView
     private static string get_current_value_text (Variant? key_value)
     {
         if (key_value == null)
+            /* Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value */
             return _("Default value");
         return Key.cool_text_value_from_variant ((!) key_value);
     }
@@ -529,24 +552,27 @@ private class RegistryInfo : Grid, BrowsableView
         {
             if (minimum_is_maximum)
                 return null;
+            /* Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double" */
             return warning_label (_("Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z notation."));
         }
 
         if ("v" in type)
+            /* Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant) */
             return warning_label (_("Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://developer.gnome.org/glib/stable/gvariant-text.html for complete documentation."));
 
         /* the "<flags>" special type is not concerned but has an 's' and a 'g' in it; "s", "g" and "o" types have a specific UI */
         if (type != "<flags>" && ((type != "s" && "s" in type) || (type != "g" && "g" in type)) || (type != "o" && "o" in type))
         {
             if ("m" in type)
-                /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+                /* Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
                 return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object paths should be surrounded by quotation marks."));
             else
+                /* Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar) */
                 return warning_label (_("Strings, signatures and object paths should be surrounded by quotation marks."));
         }
         /* the "mb" type has a specific UI; the "<enum>" special type is not concerned but has an 'm' in it */
         else if (type != "mb" && type != "<enum>" && "m" in type)
-            /* Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
+            /* Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable. */
             return warning_label (_("Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."));
         return null;
     }
@@ -585,6 +611,7 @@ private class RegistryInfo : Grid, BrowsableView
         if (key_value_or_null == null)
         {
             current_value_label.get_style_context ().add_class ("italic-label");
+            /* Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore) */
             current_value_label.set_text (_("Key erased."));
         }
         else

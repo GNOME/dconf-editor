@@ -26,8 +26,8 @@ private class AboutList : OverlayedList
         main_list_box.selection_mode = SelectionMode.NONE;
         get_style_context ().add_class ("about-list");
 
-        first_mode_name = _("About");
-        second_mode_name = _("Credits");
+        /* Translators: on really small windows, the about dialog is replaced by an in-window view; here are the two buttons that have the same role as the stack switcher in the usual about dialog */
+        first_mode_name = _("About"); second_mode_name = _("Credits");
         change_editability (true);
 
         show_apropos (ref main_list_store);
@@ -91,9 +91,11 @@ private class AboutList : OverlayedList
                                                                      AboutDialogInfos.website_label));
         main_list_store.append (new AboutListItem.from_label        (AboutDialogInfos.copyright, "small-label"));
 
-        if (AboutDialogInfos.license_type != License.GPL_3_0)
-            assert_not_reached ();  // TODO support all licenses type
-        main_list_store.append (new AboutListItem.from_link         ("https://www.gnu.org/licenses/gpl-3.0.html", _("GNU General Public License\nversion 3 or later")));    // TODO better
+        if (AboutDialogInfos.license_type != License.GPL_3_0)   // TODO support all licenses type
+            assert_not_reached ();
+
+        /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog */
+        main_list_store.append (new AboutListItem.from_link         ("https://www.gnu.org/licenses/gpl-3.0.html", _("GNU General Public License\nversion 3 or later")));
 
         program.grab_focus ();
     }
@@ -115,8 +117,11 @@ private class AboutList : OverlayedList
                 authors += "\n";
             position++;
         }
+        /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names */
         main_list_store.append (new AboutListItem.with_title        (authors, _("Creators")));
 
+
+        /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names */
         main_list_store.append (new AboutListItem.with_title        (AboutDialogInfos.translator_credits, _("Translators")));
 
         program.grab_focus ();

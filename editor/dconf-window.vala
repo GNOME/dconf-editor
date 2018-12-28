@@ -113,7 +113,7 @@ private class DConfWindow : BrowserWindow
 
         Object (nta_headerbar               : (NightTimeAwareHeaderBar) _headerbar,
                 base_view                   : (BaseView) _main_view,
-                window_title                : _("dconf Editor"),
+                window_title                : ConfigurationEditor.PROGRAM_NAME,
                 specific_css_class_or_empty : "dconf-editor");
 
         model = _model;
@@ -185,6 +185,7 @@ private class DConfWindow : BrowserWindow
         {
             if (first_path == null)
             {
+                /* Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable' */
                 warning (_("Schema is relocatable, a path is needed."));
                 if (restore_view)
                     first_path = settings_saved_view;
@@ -197,6 +198,7 @@ private class DConfWindow : BrowserWindow
                 RelocatableSchemasEnabledMappings enabled_mappings_flags = (RelocatableSchemasEnabledMappings) settings.get_flags ("relocatable-schemas-enabled-mappings");
                 if (!(RelocatableSchemasEnabledMappings.STARTUP in enabled_mappings_flags))
                 {
+                    /* Translators: command-line startup warning */
                     warning (_("Startup mappings are disabled."));
                     first_path = "/";
                 }
@@ -211,6 +213,7 @@ private class DConfWindow : BrowserWindow
                 assert_not_reached (); // TODO warning?
             else if (first_path != null && first_path != schema_path)
             {
+                /* Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/' */
                 warning (_("Schema is not installed on given path."));
                 if (restore_view)
                     first_path = settings_saved_view;
@@ -226,6 +229,7 @@ private class DConfWindow : BrowserWindow
         else
         {
             if ((!) schema != "")
+                /* Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id */
                 warning (_("Unknown schema “%s”.").printf ((!) schema));
             if (restore_view)
                 first_path = settings_saved_view;
@@ -329,12 +333,18 @@ private class DConfWindow : BrowserWindow
 
     private void show_initial_warning ()
     {
+        /* Translators: initial "use at your own risk" dialog, the welcoming text */
         Gtk.MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.INFO, ButtonsType.NONE, _("Thanks for using Dconf Editor for editing your settings!"));
+
+        /* Translators: initial "use at your own risk" dialog, the warning text */
         dialog.format_secondary_text (_("Don’t forget that some options may break applications, so be careful."));
+
+        /* Translators: initial "use at your own risk" dialog, the button label */
         dialog.add_buttons (_("I’ll be careful."), ResponseType.ACCEPT);
 
         // TODO don't show box if the user explicitely said she wanted to see the dialog next time?
         Box box = (Box) dialog.get_message_area ();
+        /* Translators: initial "use at your own risk" dialog, the checkbox label */
         CheckButton checkbutton = new CheckButton.with_label (_("Show this dialog next time."));
         checkbutton.visible = true;
         checkbutton.active = true;
@@ -1041,6 +1051,7 @@ private class DConfWindow : BrowserWindow
     {
         string full_name = ((!) path_variant).get_string ();
 
+        /* Translators: notification text, when the requested folder has been removed; the %s is the folder path */
         show_notification (_("Folder “%s” is now empty.").printf (full_name));
     }
 
@@ -1051,16 +1062,19 @@ private class DConfWindow : BrowserWindow
         uint16 unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
         ((!) path_variant).@get ("(sq)", out full_name, out unused);
 
+        /* Translators: notification text, when the requested key has been removed; the %s is the key path */
         show_notification (_("Key “%s” has been deleted.").printf (full_name));
     }
 
     private void cannot_find_key (string full_name)
     {
+        /* Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path */
         show_notification (_("Cannot find key “%s”.").printf (full_name));
     }
 
     private void cannot_find_folder (string full_name)
     {
+        /* Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path */
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
     }
 }
@@ -1068,16 +1082,23 @@ private class DConfWindow : BrowserWindow
 namespace AboutDialogInfos
 {
     // strings
-    internal const string program_name = _("dconf Editor");
+
+    internal const string program_name = ConfigurationEditor.PROGRAM_NAME;
     internal const string version = Config.VERSION;
+
+    /* Translators: about dialog text */
     internal const string comments = _("A graphical viewer and editor of applications’ internal settings.");
+
+    /* Translators: about dialog text */
     internal const string copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2018 – Arnaud Bonatti\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger");
-    /* Translators: This string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
+
+    /* Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
     internal const string translator_credits = _("translator-credits");
 
     // various
     internal const string logo_icon_name = "ca.desrt.dconf-editor";
     internal const string website = "https://wiki.gnome.org/Apps/DconfEditor";
+    /* Translators: about dialog text; label of the website link */
     internal const string website_label = _("Page on GNOME wiki");
     internal const string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
     internal const License license_type = License.GPL_3_0; /* means "version 3.0 or later" */

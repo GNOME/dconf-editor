@@ -24,11 +24,12 @@ private class ModificationsList : OverlayedList
         get_style_context ().add_class ("delayed-list");
 
         placeholder_icon = "document-open-recent-symbolic";
+        /* Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications */
         placeholder_text = _("Delayed mode is on\nbut\nno pending changes");
         add_placeholder ();
 
-        first_mode_name = _("Rule all");
-        second_mode_name = _("Select");
+        /* Translators: labels of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted) */
+        first_mode_name = _("Rule all"); second_mode_name = _("Select");
 
         main_list_box.set_header_func (delayed_setting_row_update_header);
     }

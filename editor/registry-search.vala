@@ -22,6 +22,7 @@ private class RegistrySearch : RegistryList
     private string [] bookmarks;
     private SortingOptions sorting_options;
 
+    /* Translators: placeholder text of the search list when there's no search results (not used in current design) */
     [CCode (notify = false)] public override string placeholder_label { protected get { return _("No matches"); }}
 
     construct

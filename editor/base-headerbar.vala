@@ -101,7 +101,9 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
     private static inline void append_or_not_keyboard_shortcuts_entry (bool has_keyboard_shortcuts, ref GLib.Menu section)
     {
-        if (has_keyboard_shortcuts)    // FIXME is used also for hiding keyboard shortcuts in small window
+        // FIXME is used also for hiding keyboard shortcuts in small window
+        if (has_keyboard_shortcuts)
+            /* Translators: usual menu entry of the hamburger menu*/
             section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
     }
 
@@ -257,7 +259,9 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
         _this.set_default_widgets_states (/* show go_back_button      */ true,
                                           /* show ltr_left_separator  */ false,
-                                          /* title_label text or null */ _("About"),
+                                          /* title_label text or null */
+                                          /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar */
+                                                                         _("About"),
                                           /* show info_button         */ false,
                                           /* show ltr_right_separator */ false,
                                           /* show quit_button_stack   */ true);

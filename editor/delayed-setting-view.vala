@@ -40,13 +40,25 @@ private class DelayedSettingView : OverlayedListRow
         if (cool_default_value == null)
         {
             // at row creation, key is never ghost
-            update_dconf_key_current_value (key_value);
-            update_dconf_key_planned_value (cool_planned_value);
+            _update_dconf_key_current_value (key_value,
+                                         ref key_value_label,
+                                         ref key_value_default);
+
+            _update_dconf_key_planned_value (cool_planned_value,
+                                         ref planned_value_label,
+                                         ref planned_value_default);
         }
         else
         {
-            update_gsettings_key_current_value (key_value, has_schema_and_is_default);
-            update_gsettings_key_planned_value (cool_planned_value, (!) cool_default_value);
+            _update_gsettings_key_current_value (key_value,
+                                                 has_schema_and_is_default,
+                                             ref key_value_label,
+                                             ref key_value_default);
+
+            _update_gsettings_key_planned_value (cool_planned_value,
+                                                 (!) cool_default_value,
+                                             ref planned_value_label,
+                                             ref planned_value_default);
         }
     }
 
@@ -57,69 +69,86 @@ private class DelayedSettingView : OverlayedListRow
     }
 
     /*\
-    * * "Updating" planned value
+    * * "updating" planned value
     \*/
 
-    private void update_gsettings_key_planned_value (string? cool_planned_value, string cool_default_value)
+    private static inline void _update_gsettings_key_planned_value (string? cool_planned_value,
+                                                                    string  cool_default_value,
+                                                                ref Label   planned_value_label,
+                                                                ref Label   planned_value_default)
     {
-        if (cool_planned_value == null)
-        {
-            planned_value_label.label = cool_default_value;
-            planned_value_default.label = _("Default value");
-            planned_value_default.visible = true;
-        }
-        else
-        {
-            planned_value_label.label = (!) cool_planned_value;
-            planned_value_default.visible = false;
-        }
+        bool is_default = cool_planned_value == null;
+        planned_value_label.label = is_default ? cool_default_value : (!) cool_planned_value;
+        update_value_default_label (is_default, ref planned_value_default);
     }
 
-    private void update_dconf_key_planned_value (string? cool_planned_value)
+    private static inline void _update_dconf_key_planned_value (string? cool_planned_value,
+                                                            ref Label   planned_value_label,
+                                                            ref Label   planned_value_default)
     {
         if (cool_planned_value == null)
-        {
-            planned_value_label.visible = false;
-            planned_value_default.label = _("Key erased.");
-            planned_value_default.visible = true;
-        }
+            update_labels_dconf_key_erased (ref planned_value_label, ref planned_value_default);
         else
-        {
-            planned_value_label.label = (!) cool_planned_value;
-            planned_value_label.visible = true;
-            planned_value_default.visible = false;
-        }
+            update_labels_dconf_key_values ((!) cool_planned_value,
+                                            ref planned_value_label, ref planned_value_default);
     }
 
     /*\
-    * * Updating current value
+    * * updating current value
     \*/
 
     internal void update_gsettings_key_current_value (Variant key_value, bool is_default)
     {
+        _update_gsettings_key_current_value (key_value, is_default, ref key_value_label, ref key_value_default);
+    }
+    private static void _update_gsettings_key_current_value (Variant key_value,
+                                                             bool    is_default,
+                                                         ref Label   key_value_label,
+                                                         ref Label   key_value_default)
+    {
         key_value_label.label = Key.cool_text_value_from_variant (key_value);
-        if (is_default)
-        {
-            key_value_default.label = _("Default value");
-            key_value_default.visible = true;
-        }
-        else
-            key_value_default.visible = false;
+        update_value_default_label (is_default, ref key_value_default);
     }
 
     internal void update_dconf_key_current_value (Variant? key_value_or_null)
     {
+        _update_dconf_key_current_value (key_value_or_null, ref key_value_label, ref key_value_default);
+    }
+    private static void _update_dconf_key_current_value (Variant? key_value_or_null,
+                                                     ref Label    key_value_label,
+                                                     ref Label    key_value_default)
+    {
         if (key_value_or_null == null)
-        {
-            key_value_label.visible = false;
-            key_value_default.label = _("Key erased");
-            key_value_default.visible = true;
-        }
+            update_labels_dconf_key_erased (ref key_value_label, ref key_value_default);
         else
-        {
-            key_value_default.visible = false;
-            key_value_label.label = Key.cool_text_value_from_variant ((!) key_value_or_null);
-            key_value_label.visible = true;
-        }
+            update_labels_dconf_key_values (Key.cool_text_value_from_variant ((!) key_value_or_null),
+                                            ref key_value_label, ref key_value_default);
+    }
+
+    /*\
+    * * common utilities
+    \*/
+
+    private static void update_labels_dconf_key_erased (ref Label value_label, ref Label value_default)
+    {
+        value_label.visible = false;
+        /* Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys */
+        value_default.label = _("Key erased");
+        value_default.visible = true;
+    }
+
+    private static void update_labels_dconf_key_values (string key_value, ref Label value_label, ref Label value_default)
+    {
+        value_default.visible = false;
+        value_label.label = key_value;  // TODO move Key.cool_text_value_from_variant here?
+        value_label.visible = true;
+    }
+
+    private static void update_value_default_label (bool is_default, ref Label value_default)
+    {
+        if (is_default)
+            /* Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys */
+            value_default.label = _("Default value");
+        value_default.visible = is_default;
     }
 }

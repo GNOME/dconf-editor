@@ -392,8 +392,12 @@ private class Bookmarks : MenuButton
     * * Bookmarks management
     \*/
 
+    /* Translators: label of the switch in the bookmarks popover, when searching */
     private const string bookmark_this_search_text = _("Bookmark this Search");
+
+    /* Translators: label of the switch in the bookmarks popover, when browsing */
     private const string bookmark_this_location_text = _("Bookmark this Location");
+
     private static void update_switch_label (ViewType old_type, ViewType new_type, ref Label switch_label)
     {
         if (new_type == ViewType.SEARCH && old_type != ViewType.SEARCH)

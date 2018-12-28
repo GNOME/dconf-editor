@@ -226,7 +226,8 @@ namespace ModelUtils
 
     private static string key_to_untranslated_description (string type, bool capitalized)
     {
-        switch (type)   // TODO byte, bytestring, bytestring array
+        // FIXME D-Bus things
+        switch (type)   // TODO bytestring, bytestring array, better for byte, dict-entry?, dictionary?, vardict?
         {
             case "b":       return capitalized ? "Boolean"      : "boolean";
             case "s":       return capitalized ? "String"       : "string";

@@ -28,11 +28,12 @@ private class BookmarksList : OverlayedList
     construct
     {
         placeholder_icon = "starred-symbolic";
+        /* Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks */
         placeholder_text = _("Bookmarks will\nbe added here");
         add_placeholder ();
 
-        first_mode_name = _("Use");
-        second_mode_name = _("Edit");
+        /* Translators: labels of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list */
+        first_mode_name = _("Use"); second_mode_name = _("Edit");
     }
 
     internal BookmarksList (bool needs_shadows, bool big_placeholder, string edit_mode_action_prefix, string schema_path)

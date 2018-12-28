@@ -114,6 +114,7 @@ private class ReturnListBoxRow : ClickableListBoxRow
     internal ReturnListBoxRow (string _full_name, uint16 _context_id)
     {
         Object (full_name: _full_name, context_id: _context_id, search_result_mode: true);
+        /* Translators: first item of the keys list displayed during a search, the %s is a folder path usually */
         folder_name_label.set_text (_("Go to “%s”").printf (_full_name));
     }
 }
@@ -140,6 +141,7 @@ private class ConfigListBoxRow : ClickableListBoxRow
     internal ConfigListBoxRow (string name, string path)
     {
         Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: false);
+        /* Translators: first item of the keys list displayed during browsing, the %s is the current folder name */
         folder_name_label.set_text (_("Show “%s” folder properties").printf (name));
     }
 }

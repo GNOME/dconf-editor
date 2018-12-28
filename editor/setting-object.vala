@@ -169,18 +169,27 @@ private abstract class Key : SettingObject
         if (capitalized)
         {
             if (nullable_boolean == true)
+                /* Translators: the boolean "true" value; capitalized (if that makes sense) */
                 return _("True");
+
             if (nullable_boolean == false)
+                /* Translators: the boolean "false" value; capitalized (if that makes sense) */
                 return _("False");
+
+            /* Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word */
             return _("Nothing");
         }
         else
         {
             if (nullable_boolean == true)
+                /* Translators: the boolean "true" value; non capitalized (if that makes sense) */
                 return _("true");
+
             if (nullable_boolean == false)
+                /* Translators: the boolean "false" value; non capitalized (if that makes sense) */
                 return _("false");
-            /* Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)" */
+
+            /* Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); "nothing" here is a keyword that should appear for consistence, so please translate as "yourtranslation (nothing)" */
             return _("nothing");
         }
     }
@@ -390,8 +399,13 @@ private class GSettingsKey : Key
 private string get_defined_by (bool has_schema, bool fixed_schema = false)
 {
     if (fixed_schema)
+        /* Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable) */
         return _("Schema with path");
+
     if (has_schema)
+        /* Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path) */
         return _("Relocatable schema");
+
+    /* Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions) */
     return _("DConf backend");
 }

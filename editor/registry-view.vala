@@ -19,6 +19,7 @@ using Gtk;
 
 private class RegistryView : RegistryList
 {
+    /* Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design) */
     [CCode (notify = false)] public override string placeholder_label { protected get { return _("No keys in this path"); }}
 
     construct

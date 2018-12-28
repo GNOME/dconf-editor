@@ -941,6 +941,7 @@ private abstract class SettingsModelCore : Object
     {
         Variant? key_value = get_dconf_key_value_or_null (key_path, client);
         if (key_value == null)
+            /* Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path */
             return _("%s (key erased)").printf (key_path);
         else
             return key_path + " " + ((!) key_value).print (false);

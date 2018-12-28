@@ -17,6 +17,9 @@
 
 private class ConfigurationEditor : Gtk.Application
 {
+    /* Translators: application name, as used in the window manager, the window title, the about dialog... */
+    internal const string PROGRAM_NAME = _("dconf Editor");
+
     internal static string [,] internal_mappings = {
             {"ca.desrt.dconf-editor.Bookmarks",
                 "/ca/desrt/dconf-editor/"},
@@ -140,9 +143,13 @@ private class ConfigurationEditor : Gtk.Application
 
     private const OptionEntry [] option_entries =
     {
+        /* Translators: command-line option description, see 'dconf-editor --help' */
         { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
+
+        /* Translators: command-line option description, see 'dconf-editor --help' */
         { "list-relocatable-schemas", 0, 0, OptionArg.NONE, null, N_("Print relocatable schemas and exit"), null },
 
+        /* Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog */
         { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
 
         { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, ref remaining, "args", null },
@@ -180,28 +187,34 @@ private class ConfigurationEditor : Gtk.Application
         Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN);
 
         set_option_context_parameter_string ("[ PATH | [FIXED_SCHEMA|RELOC_SCHEMA:PATH] [KEY] ]");
-        /* Translators: try to put that string in 80 characters or less, if possible. */
+        /* Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
         set_option_context_summary (_("Graphical interface for editing other applications settings.") + "\n\n" + _("Uses the gsettings API of the glib library, and other ways."));
 
+        /* Translators: command-line header description, see 'dconf-editor --help' */
         set_option_context_description (_("Arguments description:") +
+/* FIXME: PATH can only be a folder path if describing a relocatable schema */
 "\n  PATH" +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("a folder path or a key path") +
 "\n    " + _("example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”") +
 
 "\n  FIXED_SCHEMA" +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the name of a schema with fixed path") +
 "\n    " + _("example: “ca.desrt.dconf-editor.Settings”") +
 
 "\n  RELOC_SCHEMA" +
-/* Translators: no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA" */
+/* Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA" */
 "\n    " + _("the name of a “relocatable” schema, without fixed path") +
 "\n    " + _("see list with the “--list-relocatable-schemas” option") +
 
 "\n  MAPPING" +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the path where to map the relocatable schema") +
 "\n    " + _("example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”") +
 
 "\n  KEY" +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the name of a key from the schema") +
 "\n    " + _("example: “bookmarks”") +
 "\n");
@@ -258,29 +271,35 @@ private class ConfigurationEditor : Gtk.Application
 
             if (known_schemas_installed.length > 0)
             {
+                /* Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids */
                 stdout.printf (_("Known schemas installed:") + "\n");
                 foreach (string schema_id in known_schemas_installed)
                     stdout.printf (@"  $schema_id\n");
             }
             else
+                /* Translators: command-line text, if --list-relocatable-schemas is given */
                 stdout.printf (_("No known schemas installed.") + "\n");
             stdout.printf ("\n");
             if (known_schemas_skipped.length > 0)
             {
+                /* Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids */
                 stdout.printf (_("Known schemas skipped:") + "\n");
                 foreach (string schema_id in known_schemas_skipped)
                     stdout.printf (@"  $schema_id\n");
             }
             else
+                /* Translators: command-line text, if --list-relocatable-schemas is given */
                 stdout.printf (_("No known schemas skipped.") + "\n");
             stdout.printf ("\n");
             if (unknown_schemas.length > 0)
             {
+                /* Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids */
                 stdout.printf (_("Unknown schemas:") + "\n");
                 foreach (string schema_id in unknown_schemas)
                     stdout.printf (@"  $schema_id\n");
             }
             else
+                /* Translators: command-line text, if --list-relocatable-schemas is given */
                 stdout.printf (_("No unknown schemas.") + "\n");
             return Posix.EXIT_SUCCESS;
         }
@@ -291,7 +310,7 @@ private class ConfigurationEditor : Gtk.Application
     {
         base.startup ();
 
-        Environment.set_application_name (_("dconf Editor"));
+        Environment.set_application_name (PROGRAM_NAME);
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
@@ -409,6 +428,7 @@ private class ConfigurationEditor : Gtk.Application
         Gtk.Window? test_window = get_active_window ();
         if (test_window != null)
         {
+            /* Translators: command-line error message, when the user requests a specific path while there is already a window opened */
             commands.print (_("Only one window can be opened for now.\n"));
             ((!) test_window).present ();
             return Posix.EXIT_FAILURE;
@@ -428,6 +448,7 @@ private class ConfigurationEditor : Gtk.Application
 
         if (args.length > 2)
         {
+            /* Translators: command-line error message, try 'dconf-editor a b c d' */
             commands.print (_("Cannot understand: too many arguments.\n"));
             simple_activation ();
             return Posix.EXIT_FAILURE;
@@ -441,6 +462,7 @@ private class ConfigurationEditor : Gtk.Application
             Gtk.Window window = get_new_window (null, arg0, null);
             if (args.length == 2)
             {
+                /* Translators: command-line error message, try 'dconf-editor / a' */
                 commands.print (_("Cannot understand second argument in this context.\n"));
                 window.present ();
                 return Posix.EXIT_FAILURE;
@@ -461,6 +483,7 @@ private class ConfigurationEditor : Gtk.Application
                 return failure_space (commands);
             if ("/" in (!) key_name)
             {
+                /* Translators: command-line error message, try 'dconf-editor org.example /' */
                 commands.print (_("Cannot understand: slash character in second argument.\n"));
                 simple_activation ();
                 return Posix.EXIT_FAILURE;
@@ -475,6 +498,7 @@ private class ConfigurationEditor : Gtk.Application
             path = test_format [1];
             if (!((!) path).has_prefix ("/") || !((!) path).has_suffix ("/"))
             {
+                /* Translators: command-line error message, try 'dconf-editor org.example:a' */
                 commands.print (_("Schema path should start and end with a “/”.\n"));
                 simple_activation ();
                 return Posix.EXIT_FAILURE;
@@ -490,6 +514,7 @@ private class ConfigurationEditor : Gtk.Application
 
     private int failure_double_slash (ApplicationCommandLine commands)
     {
+        /* Translators: command-line error message, try 'dconf-editor //' */
         commands.print (_("Cannot understand: given path contains “//”.\n"));
         simple_activation ();
         return Posix.EXIT_FAILURE;
@@ -497,6 +522,7 @@ private class ConfigurationEditor : Gtk.Application
 
     private int failure_space (ApplicationCommandLine commands)
     {
+        /* Translators: command-line error message, try 'dconf-editor "org example" a' */
         commands.print (_("Cannot understand: space character in argument.\n"));
         simple_activation ();
         return Posix.EXIT_FAILURE;
@@ -522,6 +548,7 @@ private class ConfigurationEditor : Gtk.Application
     * * Copy action
     \*/
 
+    /* Translators: notification header, try ctrl-c while in the keys list */
     private Notification notification = new Notification (_("Copied to clipboard"));
     private uint notification_number = 0;
 
