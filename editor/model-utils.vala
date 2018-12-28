@@ -209,49 +209,161 @@ namespace ModelUtils
     * * Types translations
     \*/
 
-    internal static string key_to_description (string type, bool capitalized)
+    internal static string key_to_short_description (string type)
     {
-        string untranslated1 = key_to_untranslated_description (type, capitalized);
-        string test = _(untranslated1);
-        if (test != untranslated1)
-            return test;
+        string translation;
 
-        string untranslated2 = key_to_untranslated_description (type, !capitalized);
-        test = _(untranslated2);
-        if (test != untranslated2)
-            return test;
+        // if untranslated_description and translation are equal, either there is no translation, or we're in an English-based locale
+        string non_capitalized_untranslated_short_description;
+        get_type_non_capitalized_short_description (type, out non_capitalized_untranslated_short_description, out translation);
+        if (translation != non_capitalized_untranslated_short_description)
+            return translation;
 
-        return untranslated1;
+        // fallback to the type capitalized short description; should also fail if we're in an English-based locale
+        string capitalized_untranslated_short_description;
+        get_type_capitalized_short_description (type, out capitalized_untranslated_short_description, out translation);
+        if (translation != capitalized_untranslated_short_description)
+            return translation;
+
+        // either there is no translation at all (and then we show the type description untranslated), or we're in an English-based locale
+        if (non_capitalized_untranslated_short_description != _garbage_)
+            return non_capitalized_untranslated_short_description;
+        else if (capitalized_untranslated_short_description != _garbage_)
+            assert_not_reached ();
+        else
+            return type;
     }
 
-    private static string key_to_untranslated_description (string type, bool capitalized)
+    internal static string key_to_long_description (string type)
     {
-        // FIXME D-Bus things
-        switch (type)   // TODO bytestring, bytestring array, better for byte, dict-entry?, dictionary?, vardict?
+        string translation;
+
+        // if untranslated_description and translation are equal, either there is no translation, or we're in an English-based locale
+        string untranslated_long_description;
+        get_type_capitalized_long_description (type, out untranslated_long_description, out translation);
+        if (translation != untranslated_long_description)
+            return translation;
+
+        // fallback to the type capitalized short description; should fail if we're in an English-based locale
+        string capitalized_untranslated_short_description;
+        get_type_capitalized_short_description (type, out capitalized_untranslated_short_description, out translation);
+        if (translation != capitalized_untranslated_short_description)
+            return translation;
+
+        // fallback to the type non-capitalized short description; should also fail if we're in an English-based locale
+        string non_capitalized_untranslated_short_description;
+        get_type_non_capitalized_short_description (type, out non_capitalized_untranslated_short_description, out translation);
+        if (translation != non_capitalized_untranslated_short_description)
+            return translation;
+
+        // either there is no translation at all (and then we show the type description untranslated), or we're in an English-based locale
+        if (untranslated_long_description != _garbage_)
+            return untranslated_long_description;
+        else if (capitalized_untranslated_short_description != _garbage_)
+            return capitalized_untranslated_short_description;
+        else if (non_capitalized_untranslated_short_description != _garbage_)
+            assert_not_reached ();
+        else
+            return type;
+    }
+
+    private static void get_type_capitalized_long_description (string type,
+                                                           out string untranslated_description,
+                                                           out string translated_description)
+    {
+        switch (type)   // TODO double, byte, bytestring, bytestring array, dict-entry?, dictionary?, vardict, mb...
         {
-            case "b":       return capitalized ? "Boolean"      : "boolean";
-            case "s":       return capitalized ? "String"       : "string";
-            case "as":      return capitalized ? "String array" : "string array";
-            case "<enum>":  return capitalized ? "Enumeration"  : "enumeration";
-            case "<flags>": return capitalized ? "Flags"        : "flags";
-            case "d":       return capitalized ? "Double"       : "double";
-            case "h":       return "D-Bus handle type";
-            case "o":       return "D-Bus object path";
-            case "ao":      return "D-Bus object path array";
-            case "g":       return "D-Bus signature";
+            // large integers
+            case "n":       untranslated_description = "Signed 16-bit integer";     translated_description = _desc_N_;      return;
+            case "q":       untranslated_description = "Unsigned 16-bit integer";   translated_description = _desc_Q_;      return;
+            case "i":       untranslated_description = "Signed 32-bit integer";     translated_description = _desc_I_;      return;
+            case "u":       untranslated_description = "Unsigned 32-bit integer";   translated_description = _desc_U_;      return;
+            case "x":       untranslated_description = "Signed 64-bit integer";     translated_description = _desc_X_;      return;
+            case "t":       untranslated_description = "Unsigned 64-bit integer";   translated_description = _desc_T_;      return;
+            // garbage
+            default:        untranslated_description = _garbage_;                   translated_description = _garbage_;     return;
+        }
+    }
+
+    private static void get_type_capitalized_short_description (string type,
+                                                            out string untranslated_description,
+                                                            out string translated_description)
+    {
+        switch (type)   // TODO bytestring, bytestring array, better for byte, dict-entry?, dictionary?, vardict?, D-Bus things?
+        {
+            case "b":       untranslated_description = "Boolean";                   translated_description = _B_;           return;
+            case "s":       untranslated_description = "String";                    translated_description = _S_;           return;
+            case "as":      untranslated_description = "String array";              translated_description = _As_;          return;
+            case "<enum>":  untranslated_description = "Enumeration";               translated_description = _Enum_;        return;
+            case "<flags>": untranslated_description = "Flags";                     translated_description = _Flags_;       return;
+            case "d":       untranslated_description = "Double";                    translated_description = _D_;           return;
+            case "h":       untranslated_description = "D-Bus handle type";         translated_description = _H_;           return;
+            case "o":       untranslated_description = "D-Bus object path";         translated_description = _O_;           return;
+            case "ao":      untranslated_description = "D-Bus object path array";   translated_description = _Ao_;          return;
+            case "g":       untranslated_description = "D-Bus signature";           translated_description = _G_;           return;
             case "y":
             case "n":
             case "q":
             case "i":
             case "u":
             case "x":
-            case "t":       return capitalized ? "Integer"      : "integer";
-            case "v":       return capitalized ? "Variant"      : "variant";
-            case "()":      return capitalized ? "Empty tuple"  : "empty tuple";
-            default:
-                return type;
+            case "t":       untranslated_description = "Integer";                   translated_description = _Integer_;     return;
+            case "v":       untranslated_description = "Variant";                   translated_description = _V_;           return;
+            case "()":      untranslated_description = "Empty tuple";               translated_description = _Empty_tuple_; return;
+            // garbage
+            default:        untranslated_description = _garbage_;                   translated_description = _garbage_;     return;
         }
     }
+
+    private static void get_type_non_capitalized_short_description (string type,
+                                                                out string untranslated_description,
+                                                                out string translated_description)
+    {
+        switch (type)   // TODO bytestring, bytestring array, better for byte, dict-entry?, dictionary?, vardict?, D-Bus things?
+        {
+            case "b":       untranslated_description = "boolean";                   translated_description = _b_;           return;
+            case "s":       untranslated_description = "string";                    translated_description = _s_;           return;
+            case "as":      untranslated_description = "string array";              translated_description = _as_;          return;
+            case "<enum>":  untranslated_description = "enumeration";               translated_description = _enum_;        return;
+            case "<flags>": untranslated_description = "flags";                     translated_description = _flags_;       return;
+            case "d":       untranslated_description = "double";                    translated_description = _d_;           return;
+            case "h":       untranslated_description = "D-Bus handle type";         translated_description = _h_;           return;
+            case "o":       untranslated_description = "D-Bus object path";         translated_description = _o_;           return;
+            case "ao":      untranslated_description = "D-Bus object path array";   translated_description = _ao_;          return;
+            case "g":       untranslated_description = "D-Bus signature";           translated_description = _g_;           return;
+            case "y":
+            case "n":
+            case "q":
+            case "i":
+            case "u":
+            case "x":
+            case "t":       untranslated_description = "integer";                   translated_description = _integer_;     return;
+            case "v":       untranslated_description = "variant";                   translated_description = _v_;           return;
+            case "()":      untranslated_description = "empty tuple";               translated_description = _empty_tuple_; return;
+            // garbage
+            default:        untranslated_description = _garbage_;                   translated_description = _garbage_;     return;
+        }
+    }
+
+    private const string _garbage_ = "";
+
+    /* Translators: that's a name of a data type; capitalized (if that makes sense) */
+    private const string _desc_N_ = _("Signed 16-bit integer");
+
+    /* Translators: that's a name of a data type; capitalized (if that makes sense) */
+    private const string _desc_Q_ = _("Unsigned 16-bit integer");
+
+    /* Translators: that's a name of a data type; capitalized (if that makes sense) */
+    private const string _desc_I_ = _("Signed 32-bit integer");
+
+    /* Translators: that's a name of a data type; capitalized (if that makes sense) */
+    private const string _desc_U_ = _("Unsigned 32-bit integer");
+
+    /* Translators: that's a name of a data type; capitalized (if that makes sense) */
+    private const string _desc_X_ = _("Signed 64-bit integer");
+
+    /* Translators: that's a name of a data type; capitalized (if that makes sense) */
+    private const string _desc_T_ = _("Unsigned 64-bit integer");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
     private const string _B_ = _("Boolean");

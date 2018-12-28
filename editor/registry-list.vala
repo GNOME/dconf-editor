@@ -652,7 +652,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
         else
         {
-            string label = ModelUtils.key_to_description (type_string, false);
+            string label = ModelUtils.key_to_short_description (type_string);
             if ((type_string != "<enum>")
              && (type_string != "<flags>")
              && (label == type_string || label.length > 12))

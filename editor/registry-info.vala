@@ -171,7 +171,7 @@ private class RegistryInfo : Grid, BrowsableView
                                 tmp_bool);
         }
         /* Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.) */
-        add_row_from_label (_("Type"),                                              ModelUtils.key_to_description (type_code, true));
+        add_row_from_label (_("Type"),                                              ModelUtils.key_to_long_description (type_code));
 
         bool range_type_is_range = false;
         uint8 range_type;
