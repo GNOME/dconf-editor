@@ -65,6 +65,53 @@ private class RegistryInfo : Grid, BrowsableView
     * * Populating
     \*/
 
+    /* Translators: field description when displaying folder properties; name of the folder */
+    private const string          NAME_FIELD_DESCRIPTION = _("Name");
+
+    /* Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine */
+    private const string    DEFINED_BY_FIELD_DESCRIPTION = _("Defined by");
+
+    /* Translators: field description when displaying key properties; the schema id (if the key is defined by a schema) */
+    private const string        SCHEMA_FIELD_DESCRIPTION = _("Schema");
+
+    /* Translators: field description when displaying key properties; a summary describing the key use*/
+    private const string       SUMMARY_FIELD_DESCRIPTION = _("Summary");
+
+    /* Translators: field description when displaying key properties; a description describing deeply the key use*/
+    private const string   DESCRIPTION_FIELD_DESCRIPTION = _("Description");
+
+    /* Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.) */
+    private const string          TYPE_FIELD_DESCRIPTION = _("Type");
+    private const string         _TYPE_FIELD_DESCRIPTION = "Type";
+
+    /* Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example) */
+    private const string     TYPE_NAME_FIELD_DESCRIPTION = _("Type name");
+    private const string    _TYPE_NAME_FIELD_DESCRIPTION = "Type name";
+
+    /* Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.) */
+    private const string     TYPE_CODE_FIELD_DESCRIPTION = _("Type code");
+
+    /* Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set */
+    private const string  FORCED_RANGE_FIELD_DESCRIPTION = _("Forced range");
+
+    /* Translators: field description when displaying key properties; the minimum value a numeral key can take */
+    private const string       MINIMUM_FIELD_DESCRIPTION = _("Minimum");
+
+    /* Translators: field description when displaying key properties; the maximum value a numeral key can take */
+    private const string       MAXIMUM_FIELD_DESCRIPTION = _("Maximum");
+
+    /* Translators: field description when displaying key properties; the default value of the key (defined if it has a schema) */
+    private const string       DEFAULT_FIELD_DESCRIPTION = _("Default");
+
+    /* Translators: field description when displaying key properties; the current value of the key */
+    private const string CURRENT_VALUE_FIELD_DESCRIPTION = _("Current value");
+
+    /* Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema */
+    private const string   USE_DEFAULT_FIELD_DESCRIPTION = _("Use default value");
+
+    /* Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.) */
+    private const string  CUSTOM_VALUE_FIELD_DESCRIPTION = _("Custom value");
+
     internal void populate_properties_list_box (string _full_name, uint16 _context_id, Variant current_key_info)
     {
         full_name = _full_name;
@@ -81,8 +128,7 @@ private class RegistryInfo : Grid, BrowsableView
             string folder_name;
             if (!properties.lookup (PropertyQuery.KEY_NAME,             "s",    out folder_name))
                 assert_not_reached ();
-            /* Translators: field description when displaying folder properties; name of the folder */
-            add_row_from_label (_("Name"),                                          folder_name);
+            add_row_from_label (NAME_FIELD_DESCRIPTION,                             folder_name);
 
             conflicting_key_warning_revealer.set_reveal_child (false);
             hard_conflicting_key_error_revealer.set_reveal_child (false);
@@ -140,21 +186,18 @@ private class RegistryInfo : Grid, BrowsableView
 
         if (!properties.lookup (PropertyQuery.FIXED_SCHEMA,             "b",    out tmp_bool))
             tmp_bool = false;
-        /* Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine */
-        add_row_from_label (_("Defined by"),                                        get_defined_by (has_schema, tmp_bool));
+        add_row_from_label (DEFINED_BY_FIELD_DESCRIPTION,                           get_defined_by (has_schema, tmp_bool));
 
         if (properties.lookup (PropertyQuery.SCHEMA_ID,                 "s",    out tmp_string))
-            /* Translators: field description when displaying key properties; the schema id (if the key is defined by a schema) */
-            add_row_from_label (_("Schema"),                                        tmp_string);
+            add_row_from_label (SCHEMA_FIELD_DESCRIPTION,                           tmp_string);
 
         add_separator ();
         if (properties.lookup (PropertyQuery.SUMMARY,                   "s",    out tmp_string))
         {
             tmp_bool = tmp_string == "";
-            /* Translators: field description when displaying key properties; a summary describing the key use*/
-            add_row_from_label (_("Summary"),
+            add_row_from_label (SUMMARY_FIELD_DESCRIPTION,
 
-            /* Translators: field content when displaying key properties; if the key does not have a summary describing its use*/
+            /* Translators: field content when displaying key properties; if the key does not have a summary describing its use */
                                 tmp_bool ?                                          _("No summary provided")
                                          :                                          tmp_string,
                                 tmp_bool);
@@ -162,16 +205,33 @@ private class RegistryInfo : Grid, BrowsableView
         if (properties.lookup (PropertyQuery.DESCRIPTION,               "s",    out tmp_string))
         {
             tmp_bool = tmp_string == "";
-            /* Translators: field description when displaying key properties; a description describing deeply the key use*/
-            add_row_from_label (_("Description"),
+            add_row_from_label (DESCRIPTION_FIELD_DESCRIPTION,
 
-            /* Translators: field content when displaying key properties; if the key does not have a description describing deeply its use*/
+            /* Translators: field content when displaying key properties; if the key does not have a description describing deeply its use */
                                 tmp_bool ?                                          _("No description provided")
                                          :                                          tmp_string,
                                 tmp_bool);
         }
-        /* Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.) */
-        add_row_from_label (_("Type"),                                              ModelUtils.key_to_long_description (type_code));
+
+        tmp_string = ModelUtils.key_to_long_description (type_code);
+        if (type_code == tmp_string                     // no type name found; could use "type code", but then why saying "code"?
+         || type_code == "<enum>"                       // not really a datatype name; and the type code
+         || type_code == "<flags>")                     //   is weird, so do not show it        // TODO show it anyway for learning 1/2
+            add_row_from_label (TYPE_FIELD_DESCRIPTION,                             tmp_string);
+        else
+        {
+            string type_name_field_description;
+            if (TYPE_NAME_FIELD_DESCRIPTION != _TYPE_NAME_FIELD_DESCRIPTION)
+                type_name_field_description = TYPE_NAME_FIELD_DESCRIPTION;
+            else if (TYPE_FIELD_DESCRIPTION != _TYPE_FIELD_DESCRIPTION)
+                type_name_field_description = TYPE_FIELD_DESCRIPTION;   // FIXME this fallback do not work if the translation is "Type"...
+            else
+                type_name_field_description = _TYPE_NAME_FIELD_DESCRIPTION;
+
+            add_row_from_label (type_name_field_description,                        tmp_string);
+            if (type_code != "b" && type_code != "s")   // quite obvious and omnipresent types  // TODO show it anyway for learning 2/2
+                add_row_from_label (TYPE_CODE_FIELD_DESCRIPTION,                    type_code);
+        }
 
         bool range_type_is_range = false;
         uint8 range_type;
@@ -183,8 +243,7 @@ private class RegistryInfo : Grid, BrowsableView
              || type_code == "x" || type_code == "t")   // signed and unsigned 64 bits
             {
                 range_type_is_range = ((RangeType) range_type) == RangeType.RANGE;
-                /* Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set */
-                add_row_from_label (_("Forced range"),
+                add_row_from_label (FORCED_RANGE_FIELD_DESCRIPTION,
 
                 /* Translators: field content when displaying key properties; "yes" if the key has a range set, "no" if not */
                                                                                     range_type_is_range ? _("Yes") : _("No"));
@@ -195,11 +254,9 @@ private class RegistryInfo : Grid, BrowsableView
         string tmp = "";
         tmp_string = "";
         if (properties.lookup (PropertyQuery.MINIMUM,                   "s",    out tmp_string))
-            /* Translators: field description when displaying key properties; the minimum value a numeral key can take */
-            add_row_from_label (_("Minimum"),                                       tmp_string);
+            add_row_from_label (MINIMUM_FIELD_DESCRIPTION,                          tmp_string);
         if (properties.lookup (PropertyQuery.MAXIMUM,                   "s",    out tmp       ))
-            /* Translators: field description when displaying key properties; the maximum value a numeral key can take */
-            add_row_from_label (_("Maximum"),                                       tmp       );
+            add_row_from_label (MAXIMUM_FIELD_DESCRIPTION,                          tmp       );
         if (tmp != "" && tmp == tmp_string)
             minimum_is_maximum = true;
 
@@ -210,8 +267,7 @@ private class RegistryInfo : Grid, BrowsableView
             assert_not_reached ();
 
         if (properties.lookup (PropertyQuery.DEFAULT_VALUE,             "s",    out tmp_string))
-            /* Translators: field description when displaying key properties; the default value of the key (defined if it has a schema) */
-            add_row_from_label (_("Default"),                                       tmp_string);
+            add_row_from_label (DEFAULT_FIELD_DESCRIPTION,                          tmp_string);
         else if (has_schema)
             assert_not_reached ();
 
@@ -238,8 +294,7 @@ private class RegistryInfo : Grid, BrowsableView
         current_value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         current_value_label.hexpand = true;
         current_value_label.show ();
-        /* Translators: field description when displaying key properties; the current value of the key */
-        add_row_from_widget (_("Current value"), current_value_label);
+        add_row_from_widget (CURRENT_VALUE_FIELD_DESCRIPTION, current_value_label);
 
         add_separator ();
 
@@ -343,8 +398,7 @@ private class RegistryInfo : Grid, BrowsableView
             custom_value_switch.halign = Align.START;
             custom_value_switch.hexpand = true;
             custom_value_switch.show ();
-            /* Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema */
-            add_switch_row (_("Use default value"), custom_value_switch);
+            add_switch_row (USE_DEFAULT_FIELD_DESCRIPTION, custom_value_switch);
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
 
@@ -362,8 +416,7 @@ private class RegistryInfo : Grid, BrowsableView
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect ((_modifications_handler) => on_revealer_reload_2 (_modifications_handler, key_editor_child, value_has_changed_handler, full_name, context_id, has_schema));
-        /* Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.) */
-        add_row_from_widget (_("Custom value"), key_editor_child, type_code, minimum_is_maximum);
+        add_row_from_widget (CUSTOM_VALUE_FIELD_DESCRIPTION, key_editor_child, type_code, minimum_is_maximum);
 
         key_editor_child.destroy.connect (() => {
                 key_editor_child.disconnect (value_has_changed_handler);
