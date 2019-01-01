@@ -365,7 +365,8 @@ private class DConfWindow : BrowserWindow
     {
         if (modifications_handler.has_pending_changes ())
         {
-            show_notification ("There are pending changes. Use <ctrl><shift>q to apply changes and quit.");
+            /* Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application */
+            show_notification (_("There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt+F4 to dismiss changes and quit."));
             return false;
         }
         destroy ();

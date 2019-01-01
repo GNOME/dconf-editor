@@ -262,6 +262,13 @@
                 <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;q</property>
               </object>
             </child>
+            <child>
+              <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a dialog is opened -->
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Dismiss pending changes and quit</property>
+                <property name="accelerator">&lt;Alt&gt;F4</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>
