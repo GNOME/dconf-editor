@@ -1091,7 +1091,7 @@ namespace AboutDialogInfos
     internal const string comments = _("A graphical viewer and editor of applications’ internal settings.");
 
     /* Translators: about dialog text */
-    internal const string copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2015-2018 – Arnaud Bonatti\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger");
+    internal const string copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger\nCopyright \xc2\xa9 2015-2019 – Arnaud Bonatti");
 
     /* Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
     internal const string translator_credits = _("translator-credits");
