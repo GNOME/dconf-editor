@@ -139,12 +139,14 @@ private class DConfWindow : BrowserWindow
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                 uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
                 if (total_changes_count == 0)
-                    headerbar.set_apply_modifications_button_sensitive (false);
+                    headerbar.set_has_pending_changes (/* has pending changes */ false,
+                                                       /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
                 else
                 {
                     if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count != 1)
                         assert_not_reached ();
-                    headerbar.set_apply_modifications_button_sensitive (true);
+                    headerbar.set_has_pending_changes (/* has pending changes */ true,
+                                                       /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
                 }
             });
 

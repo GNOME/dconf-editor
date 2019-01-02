@@ -43,6 +43,7 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         add_bookmarks_controller            (out bookmarks_controller,          ref this);
 
         add_show_modifications_button       (out show_modifications_button,     ref quit_button_stack);
+        add_modification_actions_button     (out modification_actions_button,   ref quit_button_stack);
         add_modifications_actions_button    (out modifications_actions_button,  ref this);
         construct_changes_pending_menu      (out changes_pending_menu);
         construct_quit_delayed_mode_menu    (out quit_delayed_mode_menu);
@@ -223,6 +224,7 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
     \*/
 
     private Button      show_modifications_button;
+    private MenuButton  modification_actions_button;
     private MenuButton  modifications_actions_button;
     private GLib.Menu   changes_pending_menu;
     private GLib.Menu   quit_delayed_mode_menu;
@@ -236,6 +238,28 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
         show_modifications_button.visible = true;
         quit_button_stack.add (show_modifications_button);
+    }
+
+    private static void add_modification_actions_button (out MenuButton modification_actions_button, ref Stack quit_button_stack)
+    {
+        modification_actions_button = new MenuButton ();
+        Image view_more_image = new Image.from_icon_name ("document-open-recent-symbolic", IconSize.BUTTON);
+        modification_actions_button.set_image (view_more_image);
+        modification_actions_button.valign = Align.CENTER;
+        modification_actions_button.get_style_context ().add_class ("titlebutton");
+
+        GLib.Menu change_pending_menu = new GLib.Menu ();
+        /* Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button */
+        change_pending_menu.append (_("Apply"), "ui.apply-delayed-settings");
+
+        /* Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button */
+        change_pending_menu.append (_("Dismiss"), "ui.dismiss-delayed-settings");
+        change_pending_menu.freeze ();
+
+        modification_actions_button.set_menu_model (change_pending_menu);
+
+        modification_actions_button.visible = true;
+        quit_button_stack.add (modification_actions_button);
     }
 
     private static void add_modifications_actions_button (out MenuButton modifications_actions_button, ref unowned DConfHeaderBar _this)
@@ -269,12 +293,22 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         quit_delayed_mode_menu.freeze ();
     }
 
-    internal void set_apply_modifications_button_sensitive (bool new_value)
+    private bool has_pending_changes = false;
+    internal void set_has_pending_changes (bool new_value, bool mode_is_temporary)
     {
+        has_pending_changes = new_value;
         if (new_value)
+        {
             modifications_actions_button.set_menu_model (changes_pending_menu);
+            if (mode_is_temporary)
+                quit_button_stack.set_visible_child (modification_actions_button);
+        }
         else
+        {
             modifications_actions_button.set_menu_model (quit_delayed_mode_menu);
+            if (mode_is_temporary)
+                quit_button_stack.set_visible_child_name ("quit-button");
+        }
     }
 
     /*\
@@ -453,6 +487,8 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
             quit_button_stack.show ();
             if (delay_mode)
                 quit_button_stack.set_visible_child (show_modifications_button);
+            else if (has_pending_changes)
+                quit_button_stack.set_visible_child (modification_actions_button);
             else
                 quit_button_stack.set_visible_child_name ("quit-button");
         }
