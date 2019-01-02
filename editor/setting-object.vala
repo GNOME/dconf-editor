@@ -271,7 +271,8 @@ private class DConfKey : Key
         if (all_properties_queried || PropertyQuery.TYPE_CODE       in query)
             variantdict.insert_value (PropertyQuery.TYPE_CODE,                  new Variant.string (dkey.type_string));
 
-        if (show_min_and_max (dkey.type_string) && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
+        if (show_min_and_max (dkey.type_string)
+         && (all_properties_queried || PropertyQuery.MINIMUM in query || PropertyQuery.MAXIMUM in query))
         {
             string min, max;
             get_min_and_max_string (out min, out max, dkey.type_string);

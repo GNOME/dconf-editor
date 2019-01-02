@@ -311,7 +311,7 @@ private class RegistryInfo : Grid, BrowsableView
             case "q":   // uint16
             case "y":   // uint8
             case "h":   // handle type
-                if (minimum_is_maximum)
+                if (minimum_is_maximum && type_code != "h")
                     key_editor_child = (KeyEditorChild) new KeyEditorChildSingle (initial_value, initial_value.print (false));
                 else
                 {
