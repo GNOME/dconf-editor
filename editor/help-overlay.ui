@@ -247,7 +247,7 @@
           <object class="GtkShortcutsGroup">
             <property name="visible">True</property>
             <property name="title" translatable="yes" context="shortcut window">Quit</property>
-            <!-- TODO missing "discard and quit", as <alt>F4 has a different behaviour when a dialog is opened (and is WM-specific) -->
+            <!-- TODO rething "discard and quit", as <alt>F4 has a different behaviour when a dialog is opened, and is WM-specific -->
             <child>
               <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a dialog is opened -->
                 <property name="visible">True</property>
@@ -263,7 +263,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a dialog is opened -->
+              <object class="GtkShortcutsShortcut"> <!-- TODO doesn't quit if a dialog is opened, but closes the dialog -->
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Dismiss pending changes and quit</property>
                 <property name="accelerator">&lt;Alt&gt;F4</property>

@@ -511,8 +511,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             else if (key_conflict == KeyConflict.HARD)
             {
                 row.get_style_context ().add_class ("hard-conflict");
-                /* Translators: two strings with the same meaning, one used on large windows, one on small windows; means that the key has (at least) one other key defined by a different schema but at the same path and with the same name */
-                row.update_label (_("conflicting keys"), true, _("conflict"), true);
+                /* Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows) */
+                row.update_label (_("conflicting keys"), true,
+
+                /* Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows) */
+                                  _("conflict"), true);
+
                 if (type_code == "b")
                     row.use_switch (false);
             }
@@ -619,8 +623,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
     {
         if (key_value == null)
         {
-            /* Translators: two strings with the same meaning, one used on large windows, one on small windows; means that the key has been erased */
-            row.update_label (_("key erased"), true, _("erased"), true);
+            /* Translators: means that the key has been erased; used on large windows ("erased" is used on small windows) */
+            row.update_label (_("key erased"), true,
+
+            /* Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows) */
+                              _("erased"), true);
+
             if (type_string == "b")
                 row.use_switch (false);
         }

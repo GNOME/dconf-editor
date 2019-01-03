@@ -80,14 +80,23 @@ private class BrowserView : BaseView, AdaptativeWidget
         install_action_entries ();
 
         info_bar = new BrowserInfoBar ();
-        /* Translators: text and button of an infobar to sort again the keys list ("refresh" only, no "reload") */
-        info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"), _("Refresh"), "bro.refresh-folder");
+        /* Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload") */
+        info_bar.add_label ("soft-reload-folder", _("Sort preferences have changed. Do you want to refresh the view?"),
+
+        /* Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload") */
+                                                  _("Refresh"), "bro.refresh-folder");
 
         /* Translators: text of an infobar to reload the keys list because of a new key (for example) */
-        info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"), _("Reload"), "browser.reload-folder");
+        info_bar.add_label ("hard-reload-folder", _("This folder content has changed. Do you want to reload the view?"),
+
+        /* Translators: button of an infobar to reload the keys list because of a new key (for example) */
+                                                  _("Reload"), "browser.reload-folder");
 
         /* Translators: text of an infobar to reload the key properties because something has changed */
-        info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"), _("Reload"), "browser.reload-object");
+        info_bar.add_label ("hard-reload-object", _("This key’s properties have changed. Do you want to reload the view?"),
+
+        /* Translators: button of an infobar to reload the key properties because something has changed */
+                                                  _("Reload"), "browser.reload-object");
         // TODO use the same for key removing?
 
         info_bar.show ();

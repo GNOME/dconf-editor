@@ -17,11 +17,6 @@
             <signal name="search-changed" handler="search_changed_cb"/>
             <signal name="search-stopped" handler="search_stopped_cb"/>
           </object>
-          <packing>
-            <!-- property name="icon-name">document-edit-symbolic</property>    TODO document-edit-symbolic ? -->
-            <property name="title" translatable="yes">Edit path</property> <!-- TODO reuse translation... 1/2 -->
-            <!-- property name="name">entry</property -->
-          </packing>
         </child>
         <child>
           <object class="GtkGrid" id="pathbar_grid">
@@ -47,18 +42,15 @@
                 </style>
                 <child internal-child="accessible">
                   <object class="AtkObject">
+                    <!-- Translators: accessible name of the enter-search button displayed in small-size windows -->
                     <property name="AtkObject::accessible-name" translatable="yes">Search</property>
+                    <!-- Translators: accessible description of the enter-search button displayed in small-size windows -->
                     <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
                   </object>
                 </child>
               </object>
             </child>
           </object>
-          <packing>
-            <!-- property name="icon-name">folder-visiting-symbolic</property -->
-            <property name="title" translatable="yes">Browse keys</property> <!-- TODO reuse translation... 2/2 -->
-            <!-- property name="name">pathbar</property -->
-          </packing>
         </child>
       </object>
     </child>
@@ -76,7 +68,9 @@
         </style>
         <child internal-child="accessible">
           <object class="AtkObject">
+            <!-- Translators: accessible name of the search togglebutton displayed in usual-size windows -->
             <property name="AtkObject::accessible-name" translatable="yes">Search</property>
+            <!-- Translators: accessible description of the search togglebutton displayed in usual-size windows -->
             <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
           </object>
         </child>

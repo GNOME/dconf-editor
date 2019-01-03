@@ -344,14 +344,13 @@ private class DConfWindow : BrowserWindow
         /* Translators: initial "use at your own risk" dialog, the button label */
         dialog.add_buttons (_("I’ll be careful."), ResponseType.ACCEPT);
 
-        // TODO don't show box if the user explicitely said she wanted to see the dialog next time?
         Box box = (Box) dialog.get_message_area ();
         /* Translators: initial "use at your own risk" dialog, the checkbox label */
         CheckButton checkbutton = new CheckButton.with_label (_("Show this dialog next time."));
         checkbutton.visible = true;
         checkbutton.active = true;
         checkbutton.margin_top = 5;
-        box.add (checkbutton);
+        box.add (checkbutton);  // TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 
         ulong dialog_response_handler = dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
         dialog.run ();
@@ -1061,8 +1060,8 @@ private class DConfWindow : BrowserWindow
     private void notify_object_deleted (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        string full_name;
         uint16 unused;  // GAction parameter type switch is a little touchy, see pathbar.vala
+        string full_name;
         ((!) path_variant).@get ("(sq)", out full_name, out unused);
 
         /* Translators: notification text, when the requested key has been removed; the %s is the key path */

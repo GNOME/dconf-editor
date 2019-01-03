@@ -49,7 +49,9 @@
                     <property name="action-target">('',byte 255)</property>
                     <child internal-child="accessible">
                       <object class="AtkObject">
+                        <!-- Translators: accessible name of the switch for bookmarking current path in the bookmarks popover -->
                         <property name="AtkObject::accessible-name" translatable="yes">Location bookmarked</property>
+                        <!-- Translators: accessible description of the switch for bookmarking current path in the bookmarks popover -->
                         <property name="AtkObject::accessible-description" translatable="yes">Toggle to bookmark this location</property>
                       </object>
                     </child>
@@ -74,6 +76,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="halign">center</property>
+                <!-- Translators: text that might appear in the bookmarks popover in place of the switch and its label -->
                 <property name="label" translatable="yes">The bookmarks list is not editable.</property>
                 <style>
                   <class name="italic-label"/>
@@ -108,7 +111,9 @@
     </style> -->
     <child internal-child="accessible">
       <object class="AtkObject">
+        <!-- Translators: accessible name of the button for opening the bookmarks popover -->
         <property name="AtkObject::accessible-name" translatable="yes">Bookmarks</property>
+        <!-- Translators: accessible description of the button for opening the bookmarks popover -->
         <property name="AtkObject::accessible-description" translatable="yes">Manage your bookmarks</property>
       </object>
     </child>

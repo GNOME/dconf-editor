@@ -28,8 +28,10 @@ private class ModificationsList : OverlayedList
         placeholder_text = _("Delayed mode is on\nbut\nno pending changes");
         add_placeholder ();
 
-        /* Translators: labels of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted) */
-        first_mode_name = _("Rule all"); second_mode_name = _("Select");
+        /* Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select" */
+        first_mode_name = _("Rule all");
+        /* Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all" */
+        second_mode_name = _("Select");
 
         main_list_box.set_header_func (delayed_setting_row_update_header);
     }

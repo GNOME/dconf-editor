@@ -189,6 +189,9 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
         real_this.set_default_widgets_states (/* show go_back_button      */ true,
                                               /* show ltr_left_separator  */ false,
                                               /* title_label text or null */
+
+
+
                                               /* Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar */
                                                                              _("Properties"),
                                               /* show info_button         */ false,

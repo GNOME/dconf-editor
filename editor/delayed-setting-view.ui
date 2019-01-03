@@ -79,7 +79,6 @@
                 <property name="visible">True</property>
                 <property name="halign">start</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Default value</property>
                 <style>
                   <class name="bold-label"/>
                 </style>
@@ -125,7 +124,6 @@
                 <property name="visible">True</property>
                 <property name="halign">start</property>
                 <property name="hexpand">True</property>
-                <property name="label" translatable="yes">Default value</property>
                 <style>
                   <class name="bold-label"/>
                 </style>

@@ -180,6 +180,9 @@ private class DConfHeaderBar : BrowserHeaderBar, AdaptativeWidget
         _this.set_default_widgets_states (/* show go_back_button      */ true,
                                           /* show ltr_left_separator  */ false,
                                           /* title_label text or null */
+
+
+
                                           /* Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar */
                                                                          _("Bookmarks"),
                                           /* show info_button         */ false,

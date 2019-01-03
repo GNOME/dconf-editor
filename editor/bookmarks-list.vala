@@ -32,8 +32,10 @@ private class BookmarksList : OverlayedList
         placeholder_text = _("Bookmarks will\nbe added here");
         add_placeholder ();
 
-        /* Translators: labels of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list */
-        first_mode_name = _("Use"); second_mode_name = _("Edit");
+        /* Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit" */
+        first_mode_name = _("Use");
+        /* Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use" */
+        second_mode_name = _("Edit");
     }
 
     internal BookmarksList (bool needs_shadows, bool big_placeholder, string edit_mode_action_prefix, string schema_path)

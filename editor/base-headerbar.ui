@@ -92,14 +92,16 @@
         </style>
         <child internal-child="accessible">
           <object class="AtkObject">
-            <property name="AtkObject::accessible-name" translatable="yes">Actions</property> <!-- TODO 1/3 Informations -->
-            <property name="AtkObject::accessible-description" translatable="yes">Current view actions</property> <!-- TODO 2/3 About the current view -->
+            <!-- Translators: accessible name of the hamburger menu -->
+            <property name="AtkObject::accessible-name" translatable="yes">Actions</property>
+            <!-- Translators: accessible description of the hamburger menu -->
+            <property name="AtkObject::accessible-description" translatable="yes">Current view actions</property>
           </object>
         </child>
         <child>
           <object class="GtkImage">
             <property name="visible">True</property>
-            <property name="icon-name">open-menu-symbolic</property> <!-- TODO 3/3 dialog-information-symbolic -->
+            <property name="icon-name">open-menu-symbolic</property>
             <property name="icon-size">1</property>
           </object>
         </child>

@@ -35,8 +35,6 @@ private class RegistryInfo : Grid, BrowsableView
     [CCode (notify = false)] internal ModificationsHandler modifications_handler { private get; set; }
 
     private uint current_key_info_hash = 0;
-    [CCode (notify = false)] internal string full_name   { get; private set; default = ""; }
-    [CCode (notify = false)] internal uint16 context_id  { get; private set; default = ModelUtils.undefined_context_id; }
 
     /*\
     * * Cleaning
@@ -64,6 +62,9 @@ private class RegistryInfo : Grid, BrowsableView
     /*\
     * * Populating
     \*/
+
+    [CCode (notify = false)] internal string full_name   { internal get; private set; default = ""; }
+    [CCode (notify = false)] internal uint16 context_id  { internal get; private set; default = ModelUtils.undefined_context_id; }
 
     /* Translators: field description when displaying folder properties; name of the folder */
     private const string          NAME_FIELD_DESCRIPTION = _("Name");
@@ -244,9 +245,11 @@ private class RegistryInfo : Grid, BrowsableView
             {
                 range_type_is_range = ((RangeType) range_type) == RangeType.RANGE;
                 add_row_from_label (FORCED_RANGE_FIELD_DESCRIPTION,
+                /* Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not */
+                                                                                    range_type_is_range ? _("Yes")
 
-                /* Translators: field content when displaying key properties; "yes" if the key has a range set, "no" if not */
-                                                                                    range_type_is_range ? _("Yes") : _("No"));
+                /* Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not */
+                                                                                                        : _("No"));
             }
         }
 
@@ -558,6 +561,7 @@ private class RegistryInfo : Grid, BrowsableView
         //    key.planned_value = key.value;
         SignalHandler.unblock (key_editor_child, value_has_changed_handler);
     }
+
     /*\
     * * Rows creation
     \*/

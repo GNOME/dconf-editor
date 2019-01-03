@@ -188,7 +188,10 @@ private class ConfigurationEditor : Gtk.Application
 
         set_option_context_parameter_string ("[ PATH | [FIXED_SCHEMA|RELOC_SCHEMA:PATH] [KEY] ]");
         /* Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
-        set_option_context_summary (_("Graphical interface for editing other applications settings.") + "\n\n" + _("Uses the gsettings API of the glib library, and other ways."));
+        set_option_context_summary (_("Graphical interface for editing other applications settings.")
+                                  + "\n\n"
+        /* Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
+                                  + _("Uses the gsettings API of the glib library, and other ways."));
 
         /* Translators: command-line header description, see 'dconf-editor --help' */
         set_option_context_description (_("Arguments description:") +
@@ -196,26 +199,31 @@ private class ConfigurationEditor : Gtk.Application
 "\n  PATH" +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("a folder path or a key path") +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”") +
 
 "\n  FIXED_SCHEMA" +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the name of a schema with fixed path") +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("example: “ca.desrt.dconf-editor.Settings”") +
 
 "\n  RELOC_SCHEMA" +
 /* Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA" */
 "\n    " + _("the name of a “relocatable” schema, without fixed path") +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("see list with the “--list-relocatable-schemas” option") +
 
 "\n  MAPPING" +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the path where to map the relocatable schema") +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”") +
 
 "\n  KEY" +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the name of a key from the schema") +
+/* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("example: “bookmarks”") +
 "\n");
 
@@ -548,9 +556,10 @@ private class ConfigurationEditor : Gtk.Application
     * * Copy action
     \*/
 
+    private uint notification_number = 0;
+
     /* Translators: notification header, try ctrl-c while in the keys list */
     private Notification notification = new Notification (_("Copied to clipboard"));
-    private uint notification_number = 0;
 
     private void copy_cb (SimpleAction action, Variant? gvariant)
         requires (gvariant != null)

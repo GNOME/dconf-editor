@@ -29,6 +29,7 @@
                         <property name="xalign">0.5</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
+                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar' -->
                         <property name="label" translatable="yes">This key is defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
                       </object>
                     </child>
@@ -66,6 +67,7 @@
                         <property name="xalign">0.5</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
+                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict' -->
                         <property name="label" translatable="yes">This key is incompatibly defined and used by more than one schema. It is impossible to work with its value in a meaningful way.</property>
                       </object>
                     </child>
@@ -103,12 +105,14 @@
                         <property name="xalign">0</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
+                        <!-- Translators: warning text of an infobar, when a key is not defined by a schema -->
                         <property name="label" translatable="yes">No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one associated with this key. If the application that was using this key has been uninstalled, or if this key is obsolete, you may want to erase it.</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkButton" id="erase_button">
                         <property name="visible">True</property>
+                        <!-- Translators: label of the action button of an infobar, when a key is not defined by a schema -->
                         <property name="label" translatable="yes">Erase key</property>
                         <property name="action-name">view.delay-erase</property>
                         <property name="action-target">''</property>
@@ -148,6 +152,7 @@
                         <property name="xalign">0.5</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
+                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum' -->
                         <property name="label" translatable="yes">This enumeration offers only one choice. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
@@ -158,6 +163,7 @@
                         <property name="xalign">0.5</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
+                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range' -->
                         <property name="label" translatable="yes">This integer key can only take one value. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
@@ -168,6 +174,7 @@
                         <property name="xalign">0.5</property>
                         <property name="max-width-chars">40</property>
                         <property name="wrap">True</property>
+                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv' -->
                         <property name="label" translatable="yes">This key has a special “empty tuple” type. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>

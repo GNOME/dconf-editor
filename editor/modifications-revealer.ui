@@ -66,6 +66,7 @@
         <child>
           <object class="GtkModelButton" id="apply_button">
             <property name="visible">True</property>
+            <!-- Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows-->
             <property name="text" translatable="yes">Apply</property>
             <property name="centered">True</property>
             <property name="iconic">True</property>
