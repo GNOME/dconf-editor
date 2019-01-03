@@ -574,6 +574,9 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         double min_double, max_double;
         if (range_content_or_null != null)
         {
+            if (type_string == "h")
+                assert_not_reached ();
+
             Variant min_variant = ((!) range_content_or_null).get_child_value (0);
             Variant max_variant = ((!) range_content_or_null).get_child_value (1);
             min_double = get_variant_as_double (min_variant);
@@ -614,12 +617,12 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (variant_type)
         {
-            case "y": min = (double) uint8.MIN;     max = (double) uint8.MAX;   break;
-            case "n": min = (double) int16.MIN;     max = (double) int16.MAX;   break;
-            case "q": min = (double) uint16.MIN;    max = (double) uint16.MAX;  break;
-            case "i": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
+            case "i": min = (double)  int32.MIN;    max = (double)  int32.MAX;  break;
             case "u": min = (double) uint32.MIN;    max = (double) uint32.MAX;  break;
-            case "h": min = (double) int32.MIN;     max = (double) int32.MAX;   break;
+            case "n": min = (double)  int16.MIN;    max = (double)  int16.MAX;  break;
+            case "q": min = (double) uint16.MIN;    max = (double) uint16.MAX;  break;
+            case "y": min = (double) uint8.MIN;     max = (double) uint8.MAX;   break;
+            case "h": min = (double)  int32.MIN;    max = (double)  int32.MAX;  break;
             default: assert_not_reached ();
         }
     }
@@ -627,12 +630,12 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (variant_type)
         {
-            case "y": min = (int64) uint8.MIN;      max = (int64) uint8.MAX;    break;
-            case "n": min = (int64) int16.MIN;      max = (int64) int16.MAX;    break;
-            case "q": min = (int64) uint16.MIN;     max = (int64) uint16.MAX;   break;
-            case "i": min = (int64) int32.MIN;      max = (int64) int32.MAX;    break;
+            case "i": min = (int64)  int32.MIN;     max = (int64)  int32.MAX;   break;
             case "u": min = (int64) uint32.MIN;     max = (int64) uint32.MAX;   break;
-            case "h": min = (int64) int32.MIN;      max = (int64) int32.MAX;    break;
+            case "n": min = (int64)  int16.MIN;     max = (int64)  int16.MAX;   break;
+            case "q": min = (int64) uint16.MIN;     max = (int64) uint16.MAX;   break;
+            case "y": min = (int64) uint8.MIN;      max = (int64) uint8.MAX;    break;
+            case "h": min = (int64)  int32.MIN;     max = (int64)  int32.MAX;   break;
             default: assert_not_reached ();
         }
     }
@@ -641,11 +644,11 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (variant.classify ())
         {
-            case Variant.Class.BYTE:    return (double) variant.get_byte ();
-            case Variant.Class.INT16:   return (double) variant.get_int16 ();
-            case Variant.Class.UINT16:  return (double) variant.get_uint16 ();
             case Variant.Class.INT32:   return (double) variant.get_int32 ();
             case Variant.Class.UINT32:  return (double) variant.get_uint32 ();
+            case Variant.Class.INT16:   return (double) variant.get_int16 ();
+            case Variant.Class.UINT16:  return (double) variant.get_uint16 ();
+            case Variant.Class.BYTE:    return (double) variant.get_byte ();
             case Variant.Class.HANDLE:  return (double) variant.get_handle ();
             default: assert_not_reached ();
         }
@@ -654,11 +657,11 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (variant.classify ())
         {
-            case Variant.Class.BYTE:    return (int64) variant.get_byte ();
-            case Variant.Class.INT16:   return (int64) variant.get_int16 ();
-            case Variant.Class.UINT16:  return (int64) variant.get_uint16 ();
             case Variant.Class.INT32:   return (int64) variant.get_int32 ();
             case Variant.Class.UINT32:  return (int64) variant.get_uint32 ();
+            case Variant.Class.INT16:   return (int64) variant.get_int16 ();
+            case Variant.Class.UINT16:  return (int64) variant.get_uint16 ();
+            case Variant.Class.BYTE:    return (int64) variant.get_byte ();
             case Variant.Class.HANDLE:  return (int64) variant.get_handle ();
             default: assert_not_reached ();
         }
@@ -730,12 +733,12 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     {
         switch (key_type)
         {
-            case "y": return new Variant.byte   ((uint8)  int64_value);
-            case "n": return new Variant.int16  ((int16)  int64_value);
-            case "q": return new Variant.uint16 ((uint16) int64_value);
-            case "i": return new Variant.int32  ((int32)  int64_value);
+            case "i": return new Variant.int32  ( (int32) int64_value);
             case "u": return new Variant.uint32 ((uint32) int64_value);
-            case "h": return new Variant.handle ((int32)  int64_value);
+            case "n": return new Variant.int16  ( (int16) int64_value);
+            case "q": return new Variant.uint16 ((uint16) int64_value);
+            case "y": return new Variant.byte   ((uint8)  int64_value);
+            case "h": return new Variant.handle ( (int32) int64_value);
             default: assert_not_reached ();
         }
     }
