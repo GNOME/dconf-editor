@@ -338,10 +338,10 @@ private class DConfView : BrowserView, AdaptativeWidget
     * * reload
     \*/
 
-    internal void set_search_parameters (string current_path, string [] bookmarks)
+    internal void set_search_parameters (bool local_search, string current_path, string [] bookmarks)
     {
         hide_reload_warning ();
-        dconf_content.set_search_parameters (current_path, last_context_id, bookmarks, sorting_options);
+        dconf_content.set_search_parameters (local_search, current_path, last_context_id, bookmarks, sorting_options);
     }
 
     internal bool check_reload (ViewType type, string path, bool show_infobar)

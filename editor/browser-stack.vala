@@ -197,9 +197,9 @@ private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
     * * Reload
     \*/
 
-    internal void set_search_parameters (string current_path, uint16 current_context_id, string [] bookmarks, SortingOptions sorting_options)
+    internal void set_search_parameters (bool local_search, string current_path, uint16 current_context_id, string [] bookmarks, SortingOptions sorting_options)
     {
-        search_view.set_search_parameters (current_path, current_context_id, bookmarks, sorting_options);
+        search_view.set_search_parameters (local_search, current_path, current_context_id, bookmarks, sorting_options);
     }
 
     internal bool check_reload_folder (Variant? fresh_key_model)

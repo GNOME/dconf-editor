@@ -910,9 +910,9 @@ private class DConfWindow : BrowserWindow
     * * Path requests
     \*/
 
-    protected override void reconfigure_search ()
+    protected override void reconfigure_search (bool local_search)
     {
-        main_view.set_search_parameters (saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
+        main_view.set_search_parameters (local_search, saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
     }
 
     protected override void close_in_window_panels ()
@@ -966,8 +966,8 @@ private class DConfWindow : BrowserWindow
         SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ ModelUtils.folder_context_id,
                                                                           /* name       */ name,
                                                                           /* base path  */ base_path,
-                                                                          /* is search  */ false,
-                                                                          /* is special */ true);
+                                                                          /* is search  */ true,
+                                                                          /* is pinned  */ true);
         key_model.append (sso);
 
         if (children != null)

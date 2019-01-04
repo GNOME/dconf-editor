@@ -328,7 +328,8 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("base.copy-alt",         { "<Shift><Primary>c" });
         set_accels_for_action ("kbd.bookmark",          {        "<Primary>d" });
         set_accels_for_action ("kbd.unbookmark",        { "<Shift><Primary>d" });
-        set_accels_for_action ("key.toggle-search",     {        "<Primary>f" });   // TODO <Shift><Primary>f something?
+        set_accels_for_action ("key.search-global",     {        "<Primary>f" });   // TODO <Alt><Primary>f for using last search text?
+        set_accels_for_action ("key.search-local",      { "<Shift><Primary>f" });   // TODO similarly, <Shift><Alt><Primary>f also?
         set_accels_for_action ("key.next-match",        {        "<Primary>g" });
         set_accels_for_action ("key.previous-match",    { "<Shift><Primary>g" });
         set_accels_for_action ("key.toggle-config",     {        "<Primary>i" });   // <Shift><Primary>i is gtk editor

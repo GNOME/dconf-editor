@@ -255,8 +255,8 @@ window:not(.extra-small-window)     .keys-list:dir(rtl) > row > .key    > grid >
              row        >          .erase.folder               { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
              row >                       .search               { background-image:-gtk-icontheme("edit-find-symbolic"); }
 
+          /* row >                       .config               { background-image:-gtk-icontheme("dialog-information-symbolic"); } */
              row >                       .return               { background-image:-gtk-icontheme("edit-undo-symbolic"); }
-             row >                       .config               { background-image:-gtk-icontheme("dialog-information-symbolic"); }
 
              row >                       .key.delayed,
              row >             .dconf-key.key.delayed,

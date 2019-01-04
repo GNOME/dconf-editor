@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="ConfigListBoxRow" parent="ClickableListBoxRow">
+  <template class="FilterListBoxRow" parent="ClickableListBoxRow">
     <property name="visible">True</property>
     <style>
       <class name="managed"/>
-      <class name="config"/>
+      <class name="search"/>
       <class name="small"/>
     </style>
     <child>

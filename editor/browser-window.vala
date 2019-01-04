@@ -58,7 +58,6 @@ private abstract class BrowserWindow : BaseWindow
     private SimpleAction open_path_action;
 
     protected SimpleAction reload_search_action;
-    protected bool reload_search_next = true;
 
     private void install_browser_action_entries ()
     {
@@ -86,6 +85,8 @@ private abstract class BrowserWindow : BaseWindow
         { "open-config",        open_config, "s" },
         { "open-config-local",  open_config_local },
         { "open-search",        open_search, "s" },
+        { "open-search-local",  open_search_local },
+        { "open-search-global", open_search_global },
         { "next-search",        next_search, "s" },
         { "open-parent",        open_parent, "s" },
 
@@ -148,7 +149,27 @@ private abstract class BrowserWindow : BaseWindow
 
         string search = ((!) search_variant).get_string ();
 
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL, search);
+        init_next_search = true;
+        request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL, /* search term or null */ search);
+    }
+
+    private void open_search_local (/* SimpleAction action, Variant? search_variant */)
+    {
+        close_in_window_panels ();
+
+        init_next_search = true;
+        if (main_view.current_view == ViewType.SEARCH)  // possible call from keyboard, then do not clear entry
+            request_search (PathEntry.SearchMode.UNCLEAR, /* search term or null */ null, /* local search */ true);
+        else
+            request_search (PathEntry.SearchMode.SEARCH, /* search term or null */ null, /* local search */ true);
+    }
+
+    private void open_search_global (/* SimpleAction action, Variant? search_variant */)
+    {
+        close_in_window_panels ();
+
+        init_next_search = true;
+        request_search ();
     }
 
     private void next_search (SimpleAction action, Variant? search_variant)
@@ -157,7 +178,8 @@ private abstract class BrowserWindow : BaseWindow
         saved_type = ViewType.FOLDER;
         saved_view = ((!) search_variant).get_string ();
 
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, saved_view);
+        init_next_search = true;
+        request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END, /* search term or null */ saved_view);
     }
 
     private void open_parent (SimpleAction action, Variant? path_variant)
@@ -199,7 +221,8 @@ private abstract class BrowserWindow : BaseWindow
 
     private void reload_search (/* SimpleAction action, Variant? path_variant */)
     {
-        request_search (true);
+        init_next_search = true;
+        request_search ();
     }
 
     private void hide_search (/* SimpleAction action, Variant? path_variant */)
@@ -214,7 +237,8 @@ private abstract class BrowserWindow : BaseWindow
 
     private void show_search (/* SimpleAction action, Variant? path_variant */)
     {
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+        init_next_search = true;
+        request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
     }
 
     private void toggle_search (SimpleAction action, Variant? path_variant)
@@ -223,7 +247,10 @@ private abstract class BrowserWindow : BaseWindow
         bool search_request = ((!) path_variant).get_boolean ();
         action.change_state (search_request);
         if (search_request && !headerbar.search_mode_enabled)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+        }
         else if (!search_request && headerbar.search_mode_enabled)
             stop_search ();
     }
@@ -238,7 +265,7 @@ private abstract class BrowserWindow : BaseWindow
         {
             saved_type = type;
             saved_view = path;
-            reload_search_next = true;
+            init_next_search = true;
         }
         else if (current_type == ViewType.FOLDER)
             saved_selection = main_view.get_selected_row_name ();
@@ -260,15 +287,12 @@ private abstract class BrowserWindow : BaseWindow
     protected abstract void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "");
     protected abstract void request_config (string full_name);
 
-    protected void request_search (bool reload, PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null)
+    private bool init_next_search = true;
+    private void request_search (PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null, bool local_search = false)
     {
         string selected_row = main_view.get_selected_row_name ();
-        if (reload)
-        {
-            reload_search_action.set_enabled (false);
-            reconfigure_search ();
-            reload_search_next = false;
-        }
+        if (init_next_search)
+            init_search (local_search);
         if (mode != PathEntry.SearchMode.UNCLEAR)
             headerbar.prepare_search (mode, search);
         string search_text = search == null ? headerbar.text : (!) search;
@@ -276,10 +300,16 @@ private abstract class BrowserWindow : BaseWindow
         if (mode != PathEntry.SearchMode.UNCLEAR)
             main_view.select_row (selected_row);
         if (!headerbar.entry_has_focus)
-            headerbar.entry_grab_focus (false);
+            headerbar.entry_grab_focus (/* select text */ false); // FIXME keep cursor position
     }
-
-    protected abstract void reconfigure_search ();
+    private void init_search (bool local_search)
+    {
+        reload_search_action.set_enabled (false);
+        reconfigure_search (local_search);
+        search_is_local = local_search;
+        init_next_search = false;
+    }
+    protected abstract void reconfigure_search (bool local_search);
 
     /*\
     * * window state
@@ -320,7 +350,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private void search_changed_cb ()
     {
-        request_search (reload_search_next);
+        request_search ();
     }
 
     private void search_stopped_cb ()
@@ -332,7 +362,7 @@ private abstract class BrowserWindow : BaseWindow
             request_folder (saved_view, saved_selection);
         else
             update_current_path (saved_type, strdup (saved_view));
-        reload_search_next = true;
+        init_next_search = true;
     }
 
     /*\
@@ -352,12 +382,18 @@ private abstract class BrowserWindow : BaseWindow
         if (shift)
         {
             if (main_view.current_view == ViewType.SEARCH)
-                request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, "/");
+            {
+                init_next_search = true;
+                request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END, /* search term or null */ "/");
+            }
             else
                 request_folder (root_path);
         }
         else if (main_view.current_view == ViewType.SEARCH)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, ModelUtils.get_parent_path (current_path));
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END, /* search term or null */ ModelUtils.get_parent_path (current_path));
+        }
         else if (main_view.current_view == ViewType.CONFIG)
             request_folder (current_path);
         else
@@ -374,7 +410,8 @@ private abstract class BrowserWindow : BaseWindow
 
         if (main_view.current_view == ViewType.SEARCH)
         {
-            request_search (false, PathEntry.SearchMode.EDIT_PATH_MOVE_END);   // TODO when (!shift), move at next ‘/’
+            init_next_search = false;
+            request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END);   // TODO when (!shift), move at next ‘/’
             return;
         }
 
@@ -415,7 +452,10 @@ private abstract class BrowserWindow : BaseWindow
         else if (main_view.current_view == ViewType.OBJECT)
             request_object (current_path, ModelUtils.undefined_context_id, false);
         else if (main_view.current_view == ViewType.SEARCH)
-            request_search (true);
+        {
+            init_next_search = true;
+            request_search ();
+        }
     }
 
     /*\
@@ -431,19 +471,20 @@ private abstract class BrowserWindow : BaseWindow
 
     private const GLib.ActionEntry [] key_action_entries =
     {
-        { "next-match",         next_match          },  // <P>g // usual shortcut for "next-match"     in a SearchEntry; see also "Down"
-        { "previous-match",     previous_match      },  // <P>G // usual shortcut for "previous-match" in a SearchEntry; see also "Up"
+        { "next-match",         next_match              },  // <P>g, usual shortcut for "next-match"     in a SearchEntry; see also "Down"
+        { "previous-match",     previous_match          },  // <P>G, usual shortcut for "previous-match" in a SearchEntry; see also "Up"
 
-        { "toggle-config",      toggle_config       },  // <P>i
+        { "toggle-config",      toggle_config           },  // <P>i
 
-        { "toggle-search",      _toggle_search      },  // <P>f // TODO unduplicate (at least name)
-        { "edit-path-end",      edit_path_end       },  // <P>l
-        { "edit-path-last",     edit_path_last      },  // <P>L
+        { "search-global",      toggle_search_global    },  // <P>f
+        { "search-local",       toggle_search_local     },  // <P>F
+        { "edit-path-end",      edit_path_end           },  // <P>l
+        { "edit-path-last",     edit_path_last          },  // <P>L
 
-        { "open-root",          open_root           },  // <S><A>Up
-        { "open-parent",        open_current_parent },  //    <A>Up
-        { "open-child",         open_child          },  //    <A>Down
-        { "open-last-child",    open_last_child     },  // <S><A>Down
+        { "open-root",          open_root               },  // <S><A>Up
+        { "open-parent",        open_current_parent     },  //    <A>Up
+        { "open-child",         open_child              },  //    <A>Down
+        { "open-last-child",    open_last_child         },  // <S><A>Down
     };
 
     /*\
@@ -502,7 +543,9 @@ private abstract class BrowserWindow : BaseWindow
     * * keyboard search actions
     \*/
 
-    private void _toggle_search                         (/* SimpleAction action, Variant? variant */)   // TODO unduplicate?
+    private bool search_is_local = false;
+
+    private void toggle_search_global                   (/* SimpleAction action, Variant? variant */)   // TODO unduplicate?
     {
         if (is_in_in_window_mode ())        // TODO better
             return;
@@ -511,13 +554,54 @@ private abstract class BrowserWindow : BaseWindow
         main_view.close_popovers ();   // could be needed if headerbar.search_mode_enabled
 
         if (!headerbar.search_mode_enabled)
-            request_search (true, PathEntry.SearchMode.SEARCH);
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.SEARCH);
+        }
         else if (!headerbar.entry_has_focus)
             headerbar.entry_grab_focus (true);
+        else if (search_is_local)
+        {
+            init_next_search = true;
+            request_search ();
+        }
         else if (headerbar.text.has_prefix ("/"))
-            request_search (true, PathEntry.SearchMode.SEARCH);
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.SEARCH);
+        }
         else
             stop_search ();
+    }
+
+    private void toggle_search_local                    (/* SimpleAction action, Variant? variant */)
+    {
+        if (is_in_in_window_mode ())        // TODO better
+            return;
+
+        headerbar.close_popovers ();    // should never be needed if headerbar.search_mode_enabled
+        main_view.close_popovers ();   // could be needed if headerbar.search_mode_enabled
+
+        if (!headerbar.search_mode_enabled)
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.SEARCH, /* search term or null */ null, /* local search */ current_path != "/");
+        }
+        else if (!headerbar.entry_has_focus)
+            headerbar.entry_grab_focus (true);
+        else if (search_is_local)
+            stop_search ();
+        else if (headerbar.text.has_prefix ("/"))
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.SEARCH, /* search term or null */ null, /* local search */ true);
+        }
+        else if (saved_view != root_path)
+        {
+            init_next_search = true;
+            request_search (PathEntry.SearchMode.UNCLEAR, /* search term or null */ null, /* local search */ true);
+        }
+        // do nothing if search is started from root path
     }
 
     private void edit_path_end                          (/* SimpleAction action, Variant? variant */)
@@ -525,7 +609,8 @@ private abstract class BrowserWindow : BaseWindow
         if (is_in_in_window_mode ())
             return;
 
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END);
+        init_next_search = true;
+        request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END);
     }
 
     private void edit_path_last                         (/* SimpleAction action, Variant? variant */)
@@ -533,7 +618,8 @@ private abstract class BrowserWindow : BaseWindow
         if (is_in_in_window_mode ())
             return;
 
-        request_search (true, PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
+        init_next_search = true;
+        request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
     }
 
     /*\
@@ -542,10 +628,11 @@ private abstract class BrowserWindow : BaseWindow
 
     protected override void paste_text (string? text)
     {
+        init_next_search = true;
         if (text != null)
-            request_search (true, PathEntry.SearchMode.EDIT_PATH_MOVE_END, text);
+            request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END, /* search term or null */ text);
         else
-            request_search (true, PathEntry.SearchMode.SEARCH);
+            request_search (PathEntry.SearchMode.SEARCH);
     }
 
     /*\

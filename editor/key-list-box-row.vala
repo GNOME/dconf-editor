@@ -133,16 +133,24 @@ private class FolderListBoxRow : ClickableListBoxRow
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/config-list-box-row.ui")]
-private class ConfigListBoxRow : ClickableListBoxRow
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/filter-list-box-row.ui")]
+private class FilterListBoxRow : ClickableListBoxRow
 {
+    public bool is_local_search { internal get; protected construct; }
+
     [GtkChild] private Label folder_name_label;
 
-    internal ConfigListBoxRow (string name, string path)
+    internal FilterListBoxRow (string name, string path)
     {
-        Object (full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: false);
-        /* Translators: first item of the keys list displayed during browsing, the %s is the current folder name */
-        folder_name_label.set_text (_("Show “%s” folder properties").printf (name));
+        Object (is_local_search: name != "" && path != "/", full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: true);
+
+        if (is_local_search)
+            /* Translators: first item of the keys list displayed during browsing, the %s is the current folder name */
+            folder_name_label.set_text (_("Search in “%s” folder").printf (name));
+
+        else
+            /* Translators: last item of the keys list displayed during a local search */
+            folder_name_label.set_text (_("Search everywhere"));
     }
 }
 

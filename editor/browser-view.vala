@@ -20,8 +20,6 @@ using Gtk;
 private class SimpleSettingObject : Object
 {
     [CCode (notify = false)] public bool is_pinned           { internal get; internal construct; }
-
-    [CCode (notify = false)] public bool is_config           { internal get; private construct; }
     [CCode (notify = false)] public bool is_search           { internal get; internal construct; }
 
     [CCode (notify = false)] public uint16 context_id        { internal get; internal construct; }
@@ -32,19 +30,18 @@ private class SimpleSettingObject : Object
 
     construct
     {
-        is_config = is_pinned && !is_search;
         casefolded_name = name.casefold ();
     }
 
-    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path, bool _is_search = false, bool _is_config_or_is_pinned_search = false)
+    internal SimpleSettingObject.from_base_path (uint16 _context_id, string _name, string _base_path, bool _is_search = false, bool _is_pinned = false)
     {
         string _full_name = ModelUtils.recreate_full_name (_base_path, _name, ModelUtils.is_folder_context_id (_context_id));
-        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search, is_pinned: _is_config_or_is_pinned_search);
+        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search, is_pinned: _is_pinned);
     }
 
-    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name, bool _is_search = false, bool _is_config_or_is_pinned_search = false)
+    internal SimpleSettingObject.from_full_name (uint16 _context_id, string _name, string _full_name, bool _is_search = false, bool _is_pinned = false)
     {
-        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search, is_pinned: _is_config_or_is_pinned_search);
+        Object (context_id: _context_id, name: _name, full_name: _full_name, is_search: _is_search, is_pinned: _is_pinned);
     }
 }
 

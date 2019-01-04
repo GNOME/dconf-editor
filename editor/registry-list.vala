@@ -423,21 +423,23 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             assert_not_reached ();
         bool search_mode_non_local_result = search_mode && ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
-        if (setting_object.is_config)
+        if (setting_object.is_pinned)
         {
-            row = new ConfigListBoxRow (setting_object.name, full_name);
+            if (setting_object.is_search)
+                row = new FilterListBoxRow (setting_object.name, full_name);
+            else
+                row = new ReturnListBoxRow (full_name, context_id);
         }
-        else if (setting_object.is_pinned)  // setting_object.is_config == false
+        else if (setting_object.is_search)  // setting_object.is_pinned == false
         {
-            row = new ReturnListBoxRow (full_name, context_id);
+            if (setting_object.name == "")
+                row = new FilterListBoxRow ("", full_name);
+            else
+                row = new SearchListBoxRow (full_name.slice (1, full_name.length));
         }
         else if (ModelUtils.is_folder_context_id (context_id))
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode && search_is_path_search, search_mode_non_local_result);
-        }
-        else if (setting_object.is_search)
-        {
-            row = new SearchListBoxRow (full_name.slice (1, full_name.length));
         }
         else
         {
@@ -540,18 +542,20 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
     }
 
-    private static ListBoxRowWrapper put_row_in_wrapper (ClickableListBoxRow row)
+    private static inline ListBoxRowWrapper put_row_in_wrapper (ClickableListBoxRow row)
     {
         /* Wrapper ensures max width for rows */
         ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
 
         wrapper.set_halign (Align.CENTER);
         wrapper.add (row);
-        if (row is SearchListBoxRow)
+        if (row is FilterListBoxRow)
         {
             wrapper.get_style_context ().add_class ("f-or-s-row");
-            wrapper.action_name = "browser.open-search";
-            wrapper.set_action_target ("s", row.full_name);
+            if (((FilterListBoxRow) row).is_local_search)
+                wrapper.action_name = "browser.open-search-local";
+            else
+                wrapper.action_name = "browser.open-search-global";
         }
         else if (row is ReturnListBoxRow)
         {
@@ -567,6 +571,12 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
                 wrapper.set_action_target ("(sq)", row.full_name, row.context_id);
             }
         }
+        else if (row is SearchListBoxRow)
+        {
+            wrapper.get_style_context ().add_class ("f-or-s-row");
+            wrapper.action_name = "browser.open-search";
+            wrapper.set_action_target ("s", row.full_name);
+        }
         else if (ModelUtils.is_folder_context_id (row.context_id))
         {
             wrapper.get_style_context ().add_class ("f-or-s-row");
@@ -577,8 +587,6 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
                 else
                     wrapper.action_name = "browser.open-folder";
             }
-            else if (row is ConfigListBoxRow)
-                wrapper.action_name = "browser.open-config";
             else assert_not_reached ();
             wrapper.set_action_target ("s", row.full_name);
         }
@@ -847,11 +855,9 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             else
                 return generate_dconf_popover ((KeyListBoxRow) row, modifications_handler, _get_key_copy_text_variant (row, modifications_handler));
         }
-        else if (row is ConfigListBoxRow)
-            return generate_config_popover (row);
         else if (row is ReturnListBoxRow)
             return generate_return_popover (row);
-        else if (row is SearchListBoxRow)
+        else if (row is SearchListBoxRow || row is FilterListBoxRow)
             return generate_search_popover (row);
         else assert_not_reached ();
     }
@@ -866,20 +872,6 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
         popover.new_gaction ("open-search", "browser.open-search(" + variant.print (false) + ")");
         popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
-
-        return true;
-    }
-
-    private static bool generate_config_popover (ClickableListBoxRow row)
-    {
-        if (row.nullable_popover == null)   // do not place in requires 2/7
-            assert_not_reached ();
-
-        ContextPopover popover = (!) row.nullable_popover;
-        Variant variant = new Variant.string (row.full_name);
-
-        popover.new_gaction ("open-config", "browser.open-config(" + variant.print (false) + ")");
-//        popover.new_gaction ("copy", "app.copy(" + _get_folder_or_search_copy_text_variant (row).print (false) + ")");
 
         return true;
     }
@@ -1193,11 +1185,15 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             ClickableListBoxRow? before_content = (ClickableListBoxRow?) before.get_child ();
             if (before_content == null)
                 assert_not_reached ();
-            if ((!) before_content is ConfigListBoxRow || (!) before_content is ReturnListBoxRow)
+            if ((!) before_content is FilterListBoxRow || (!) before_content is ReturnListBoxRow)
                 /* Translators: header displayed in the keys list during a search or during browsing */
                 label_text = _("Subfolders");
         }
-        else if (!((!) row_content is ConfigListBoxRow || (!) row_content is ReturnListBoxRow || (!) row_content is SearchListBoxRow))
+        else if ((!) row_content is FilterListBoxRow)
+        {
+            label_text = _("Other actions");
+        }
+        else if (!((!) row_content is SearchListBoxRow))
             assert_not_reached ();
 
         row.set_header (new ListBoxRowHeader (false, label_text));

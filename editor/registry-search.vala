@@ -64,11 +64,13 @@ private class RegistrySearch : RegistryList
         old_term = null;
     }
 
+    bool is_local = false;
     uint16 fallback_context_id = ModelUtils.undefined_context_id;
-    internal void set_search_parameters (string current_path, uint16 current_context_id, string [] _bookmarks, SortingOptions _sorting_options)
+    internal void set_search_parameters (bool local_search, string current_path, uint16 current_context_id, string [] _bookmarks, SortingOptions _sorting_options)
     {
         clean ();
 
+        is_local = local_search;
         current_path_if_search_mode = current_path;
         fallback_context_id = current_context_id;
         bookmarks = _bookmarks;
@@ -201,6 +203,7 @@ private class RegistrySearch : RegistryList
         SettingsModel model = modifications_handler.model;
         if (term.has_prefix ("/"))
         {
+            is_local = false;
             if (old_term_is_term_prefix && !(term.slice (((!) old_term).length, term.length).contains ("/")))
             {
                 refine_paths_results (term, ref list_model, ref post_local);
@@ -237,7 +240,7 @@ private class RegistrySearch : RegistryList
                     start_global_search ((!) current_path_if_search_mode, term);
                 else
                 {
-                    refine_global_results (term, post_bookmarks, ref list_model, ref post_folders);
+                    refine_global_results (term, post_bookmarks, is_local, ref list_model, ref post_folders);
                     resume_global_search ((!) current_path_if_search_mode, term); // update search term
                 }
 
@@ -257,7 +260,7 @@ private class RegistrySearch : RegistryList
                 local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
                 post_local      = (int) list_model.get_n_items ();
                 post_bookmarks  = post_local;
-                bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, ref list_model, ref post_bookmarks);
+                bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, is_local, ref list_model, ref post_bookmarks);
                 post_folders    = post_bookmarks;
 
                 key_list_box.bind_model (list_model, new_list_box_row);
@@ -267,6 +270,9 @@ private class RegistrySearch : RegistryList
 
                 if (term != "")
                     start_global_search ((!) current_path_if_search_mode, term);
+
+                if (is_local)
+                    insert_global_search_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
             }
         }
         old_term = term;
@@ -278,9 +284,19 @@ private class RegistrySearch : RegistryList
         SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ fallback_context_id,
                                                                           /* name       */ name,
                                                                           /* base path  */ current_path,
-                                                                          /* is search  */ true,
-                                                                          /* is special */ true);
+                                                                          /* is search  */ false,
+                                                                          /* is pinned  */ true);
         list_model.insert (0, sso);
+    }
+    private static void insert_global_search_row (string current_path, uint16 _fallback_context_id, ref GLib.ListStore list_model)
+    {
+        uint16 fallback_context_id = ModelUtils.is_folder_path (current_path) ? ModelUtils.folder_context_id : _fallback_context_id;
+        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ fallback_context_id,
+                                                                          /* name       */ "",
+                                                                          /* base path  */ current_path,
+                                                                          /* is search  */ true,
+                                                                          /* is pinned  */ false);
+        list_model.insert (list_model.get_n_items (), sso);
     }
 
     private static void refine_paths_results (string term, ref GLib.ListStore list_model, ref int post_local)
@@ -348,9 +364,9 @@ private class RegistrySearch : RegistryList
         }
     }
 
-    private static void refine_global_results (string term, int post_bookmarks, ref GLib.ListStore list_model, ref int post_folders)
+    private static void refine_global_results (string term, int post_bookmarks, bool is_local, ref GLib.ListStore list_model, ref int post_folders)
     {
-        for (int i = (int) list_model.get_n_items () - 1; i >= post_folders; i--)
+        for (int i = (int) list_model.get_n_items () - (is_local ? 2 : 1); i >= post_folders; i--)
         {
             SimpleSettingObject item = (SimpleSettingObject) list_model.get_item (i);
             if (!(term.casefold () in item.casefolded_name))
@@ -390,32 +406,30 @@ private class RegistrySearch : RegistryList
         }
     }
 
-    private static void bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks, ref GLib.ListStore list_model, ref int post_bookmarks)
+    private static void bookmark_search (SettingsModel model, string current_path, string term, string [] bookmarks, bool is_local, ref GLib.ListStore list_model, ref int post_bookmarks)
     {
         foreach (string bookmark in bookmarks)
         {
             if (bookmark == current_path)
                 continue;
-            if (ModelUtils.get_parent_path (bookmark) == ModelUtils.get_base_path (current_path))
+            string bookmark_parent_path = ModelUtils.get_parent_path (bookmark);
+            if (bookmark_parent_path == ModelUtils.get_base_path (current_path))
                 continue;
             if (bookmark == "?" + term)
+                continue;
+            if (is_local && !(bookmark_parent_path.has_prefix (ModelUtils.get_base_path (current_path))))
                 continue;
 
             uint16 context_id;
             string name;
-            bool is_search;
-            if (bookmark.has_prefix ("?"))
+            bool is_search = bookmark.has_prefix ("?");
+            if (is_search)
             {
                 context_id = ModelUtils.undefined_context_id;
                 name = ModelUtils.get_name (bookmark.slice (1, bookmark.length));
-                is_search = true;
             }
-            else
-            {
-                if (!model.get_object (bookmark, out context_id, out name, !(ModelUtils.get_parent_path (bookmark) in bookmarks)))
-                    continue;
-                is_search = false;
-            }
+            else if (!model.get_object (bookmark, out context_id, out name, !(bookmark_parent_path in bookmarks)))
+                continue;
 
             if (term.casefold () in name.casefold ())
             {
@@ -435,7 +449,10 @@ private class RegistrySearch : RegistryList
 
     private void start_global_search (string current_path, string term)
     {
-        search_nodes.push_head ("/");
+        if (is_local)
+            search_nodes.push_head (ModelUtils.get_base_path (current_path));
+        else
+            search_nodes.push_head ("/");
         resume_global_search (current_path, term);
     }
 
@@ -492,7 +509,7 @@ private class RegistrySearch : RegistryList
                 if (!local_again && !(full_name in bookmarks) && term.casefold () in name.casefold ())
                 {
                     SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, next);
-                    list_model.append (sso);
+                    list_model.insert (is_local ? list_model.get_n_items () - 1 : list_model.get_n_items (), sso);
                     model.key_value_push (next + name, context_id);
                 }
             }
