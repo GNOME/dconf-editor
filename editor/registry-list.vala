@@ -1154,7 +1154,10 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         {
             KeyListBoxRow key_list_box_row = (KeyListBoxRow) (!) row_content;
             uint16 context_id = key_list_box_row.context_id;
-            if (((ClickableListBoxRow) before.get_child ()).context_id != context_id)
+            ClickableListBoxRow? before_content = (ClickableListBoxRow?) before.get_child ();
+            if (before_content == null)
+                assert_not_reached ();
+            if ((!) before_content is ReturnListBoxRow || ((!) before_content).context_id != context_id)
             {
                 if (key_list_box_row.has_schema)
                 {
