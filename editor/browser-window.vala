@@ -84,6 +84,7 @@ private abstract class BrowserWindow : BaseWindow
         { "open-folder",        open_folder, "s" },
         { "open-object",        open_object, "(sq)" },
         { "open-config",        open_config, "s" },
+        { "open-config-local",  open_config_local },
         { "open-search",        open_search, "s" },
         { "next-search",        next_search, "s" },
         { "open-parent",        open_parent, "s" },
@@ -131,6 +132,13 @@ private abstract class BrowserWindow : BaseWindow
         string full_name = ((!) path_variant).get_string ();    // TODO use current_path instead?
 
         request_config (full_name);
+    }
+
+    private void open_config_local (/* SimpleAction action, Variant? path_variant */)
+    {
+        headerbar.close_popovers ();
+
+        request_config (current_path);
     }
 
     private void open_search (SimpleAction action, Variant? search_variant)

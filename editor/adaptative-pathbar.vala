@@ -209,11 +209,33 @@ private interface Pathbar
         return index_of_last_slash == -1 ? complete_path : complete_path.slice (0, index_of_last_slash + 1);
     }
 
-    /* called from inside the pathbar, by ShortPathbar and LargePathbarItem (so cannot make "protected") */
-    internal static void add_copy_path_entry (ref GLib.Menu section)
+    /* called from inside the pathbar, by ShortPathbar and LargePathbar*Item* (so cannot make "protected") */
+    internal static void populate_pathbar_menu (bool is_folder, ref GLib.Menu menu)
     {
+        add_copy_path_section (ref menu);
+        if (is_folder)
+            add_open_config_section (ref menu);
+    }
+
+    private static void add_copy_path_section (ref GLib.Menu menu)
+    {
+        GLib.Menu section = new GLib.Menu ();
         /* Translators: menu entry of the pathbar menu */
         section.append (_("Copy current path"), "base.copy-alt");
         // or "app.copy(\"" + get_action_target_value ().get_string () + "\")"
+        section.freeze ();
+        menu.append_section (null, section);
+    }
+
+    private static void add_open_config_section (ref GLib.Menu menu)
+    {
+        // method "disabled" for now
+        return;
+
+        GLib.Menu section = new GLib.Menu ();
+        /* Translators: menu entry of the pathbar menu (not displayed for now) */
+        section.append (_("Show properties"), "browser.open-config-local");
+        section.freeze ();
+        menu.append_section (null, section);
     }
 }

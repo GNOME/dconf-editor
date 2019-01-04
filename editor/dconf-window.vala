@@ -963,7 +963,11 @@ private class DConfWindow : BrowserWindow
         GLib.ListStore key_model = new GLib.ListStore (typeof (SimpleSettingObject));
 
         string name = ModelUtils.get_name (base_path);
-        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (ModelUtils.folder_context_id, name, base_path, false, true);
+        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ ModelUtils.folder_context_id,
+                                                                          /* name       */ name,
+                                                                          /* base path  */ base_path,
+                                                                          /* is search  */ false,
+                                                                          /* is special */ true);
         key_model.append (sso);
 
         if (children != null)

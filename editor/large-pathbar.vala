@@ -278,13 +278,13 @@ private class LargePathbar : Box, Pathbar
     {
         Variant variant = new Variant.string (complete_path);
         string _variant = variant.print (false);
-        path_bar_item = new LargePathbarItem (label, "browser.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")");
+        path_bar_item = new LargePathbarItem (label, "browser.open-folder(" + _variant + ")", "ui.notify-folder-emptied(" + _variant + ")", true);
     }
     private static inline void init_object_path_bar_item (string label, string complete_path, out LargePathbarItem path_bar_item)
     {
         Variant variant = new Variant ("(sq)", complete_path, ModelUtils.undefined_context_id);
         string _variant = variant.print (true);
-        path_bar_item = new LargePathbarItem (label, "browser.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")");
+        path_bar_item = new LargePathbarItem (label, "browser.open-object(" + _variant + ")", "ui.notify-object-deleted(" + _variant + ")", false);
     }
 
     private void activate_item (LargePathbarItem item, bool state)   // never called when current_view is search
@@ -336,7 +336,8 @@ private class LargePathbarItem : Button
     [CCode (notify = false)] public string alternative_action { internal get; internal construct; }
     [CCode (notify = false)] public string default_action     { internal get; internal construct; }
     [CCode (notify = false)] public string text_string        { internal get; internal construct; }
- 
+    [CCode (notify = false)] public bool   has_config_menu    { private get;  internal construct; }
+
     [GtkChild] private Label text_label;
     private Popover? popover = null;
 
@@ -397,9 +398,9 @@ private class LargePathbarItem : Button
         ((!) popover).popup ();
     }
 
-    internal LargePathbarItem (string label, string _default_action, string _alternative_action)
+    internal LargePathbarItem (string label, string _default_action, string _alternative_action, bool _has_config_menu)
     {
-        Object (text_string: label, default_action: _default_action, alternative_action: _alternative_action);
+        Object (text_string: label, default_action: _default_action, alternative_action: _alternative_action, has_config_menu: _has_config_menu);
         text_label.set_text (label);
         set_detailed_action_name (_default_action);
     }
@@ -429,7 +430,7 @@ private class LargePathbarItem : Button
     private void generate_popover ()
     {
         GLib.Menu menu = new GLib.Menu ();
-        Pathbar.add_copy_path_entry (ref menu);
+        Pathbar.populate_pathbar_menu (/* is folder */ has_config_menu, ref menu);
         menu.freeze ();
 
         popover = new Popover.from_model (this, (MenuModel) menu);

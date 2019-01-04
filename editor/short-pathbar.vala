@@ -142,12 +142,7 @@ private class ShortPathbar : Grid, Pathbar
         section.freeze ();
         menu.append_section (null, section);
 
-        section = new GLib.Menu ();
-
-        Pathbar.add_copy_path_entry (ref section);
-
-        section.freeze ();
-        menu.append_section (null, section);
+        Pathbar.populate_pathbar_menu (/* is folder */ last == "", ref menu);
 
         menu.freeze ();
     }
