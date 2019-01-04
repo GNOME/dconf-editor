@@ -31,7 +31,7 @@
               <object class="GtkModelButton" id="search_button">
                 <property name="visible">False</property>
                 <property name="halign">end</property>
-                <property name="hexpand">True</property>
+                <property name="hexpand">False</property>
                 <property name="valign">center</property>
                 <property name="focus-on-click">False</property>
                 <property name="iconic">True</property>
