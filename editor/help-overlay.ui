@@ -186,7 +186,8 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="visible">True</property>
+                <property name="visible">False</property>
+                <!-- Translators: entry disabled for now -->
                 <property name="title" translatable="yes" context="shortcut window">Toggle folder properties</property>
                 <property name="accelerator">&lt;Primary&gt;i</property>
               </object>

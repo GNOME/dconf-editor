@@ -334,7 +334,7 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("key.search-local(true)",    { "<Shift><Primary><Alt>f"  });
         set_accels_for_action ("key.next-match",            {        "<Primary>g"       });
         set_accels_for_action ("key.previous-match",        { "<Shift><Primary>g"       });
-        set_accels_for_action ("key.toggle-config",         {        "<Primary>i"       });   // <Shift><Primary>i is gtk editor
+     // set_accels_for_action ("key.toggle-config",         {        "<Primary>i"       });   // <Shift><Primary>i is gtk editor
         set_accels_for_action ("kbd.modifications",         {        "<Alt>i"           });
         set_accels_for_action ("key.edit-path-end",         {        "<Primary>l"       });
         set_accels_for_action ("key.edit-path-last",        { "<Shift><Primary>l"       });
