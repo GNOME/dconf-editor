@@ -247,7 +247,10 @@ private abstract class BrowserWindow : BaseWindow
     private void show_search (/* SimpleAction action, Variant? path_variant */)
     {
         init_next_search = true;
-        request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+        if (current_path == "/")
+            request_search (PathEntry.SearchMode.SEARCH);
+        else
+            request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
     }
 
     private void toggle_search (SimpleAction action, Variant? path_variant)
@@ -258,7 +261,10 @@ private abstract class BrowserWindow : BaseWindow
         if (search_request && !headerbar.search_mode_enabled)
         {
             init_next_search = true;
-            request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
+            if (current_path == "/")
+                request_search (PathEntry.SearchMode.SEARCH);
+            else
+                request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_ALL);
         }
         else if (!search_request && headerbar.search_mode_enabled)
             stop_search ();
