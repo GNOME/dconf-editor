@@ -30,7 +30,8 @@ private interface BrowserContent : Widget, AdaptativeWidget
     \*/
 
     internal abstract string get_selected_row_name ();
-    internal abstract void select_row (string selected, uint16 last_context_id, bool grab_focus_if_needed);
+    internal abstract void select_row_named (string selected, uint16 last_context_id, bool grab_focus_if_needed);
+    internal abstract void select_first_row ();
     internal abstract void row_grab_focus ();
     /*\
     * * popovers

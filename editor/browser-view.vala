@@ -138,10 +138,13 @@ private class BrowserView : BaseView, AdaptativeWidget
         hide_reload_warning ();
     }
 
-    internal void select_row (string selected)
+    internal void select_row (string selected_or_empty)
         requires (ViewType.displays_objects_list (current_view))
     {
-        browser_content.select_row (selected, last_context_id, !is_in_in_window_mode ());
+        if (selected_or_empty == "")
+            browser_content.select_first_row ();
+        else
+            browser_content.select_row_named (selected_or_empty, last_context_id, !is_in_in_window_mode ());
     }
 
     internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)

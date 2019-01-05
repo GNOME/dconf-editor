@@ -90,29 +90,22 @@ private class RegistryView : RegistryList
         return false;
     }
 
-    internal void select_first_row (bool grab_focus_if_needed)
+    internal override void select_first_row ()
     {
         uint n_items = list_model.get_n_items ();
         if (n_items == 0)
             assert_not_reached ();
 
         ListBoxRow? row;
-        if (n_items == 1)
-            row = key_list_box.get_row_at_index (0);
-        else if (n_items == 2)
+        if (n_items == 2)
             row = key_list_box.get_row_at_index (1);
         else
-        {
-            SimpleSettingObject sso = (SimpleSettingObject) list_model.get_object (n_items - 1);
+            row = key_list_box.get_row_at_index (0);
 
-            if (ModelUtils.is_folder_context_id (sso.context_id)) // if do not contain at least one key
-                row = key_list_box.get_row_at_index (1);
-            else
-                row = key_list_box.get_row_at_index (0);
-        }
         if (row == null)
             assert_not_reached ();
-        select_row_and_if_true_grab_focus ((!) row, grab_focus_if_needed);
+        key_list_box.select_row ((!) row);
+        ((!) row).grab_focus ();
     }
 
     /*\

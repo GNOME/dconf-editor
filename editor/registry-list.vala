@@ -70,12 +70,13 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             });
     }
 
-    protected void select_row_and_if_true_grab_focus (ListBoxRow row, bool grab_focus)
+    private void select_row_and_if_true_grab_focus (ListBoxRow row, bool grab_focus)
     {
         key_list_box.select_row (row);
         if (grab_focus)
             row.grab_focus ();
     }
+    internal abstract void select_first_row ();
 
     private enum ScrollToRowBehaviour {
         CENTER,

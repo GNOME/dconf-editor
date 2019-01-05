@@ -35,7 +35,7 @@ private class RegistrySearch : RegistryList
     * * Simple public calls
     \*/
 
-    internal void select_first_row ()
+    internal override void select_first_row ()
     {
         if (old_term != null)   //happens when pasting an invalid path
             _select_first_row (key_list_box, (!) old_term);

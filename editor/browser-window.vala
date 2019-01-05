@@ -19,7 +19,7 @@ using Gtk;
 
 private abstract class BrowserWindow : BaseWindow
 {
-    private const string root_path = "/";   // TODO allow changing that
+    protected const string root_path    = "/";   // TODO allow changing that
 
     protected string    current_path    = root_path;
     protected ViewType  current_type    = ViewType.FOLDER;

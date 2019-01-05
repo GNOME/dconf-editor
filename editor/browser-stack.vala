@@ -93,20 +93,22 @@ private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
         stack.set_transition_type (is_ancestor && current_view != ViewType.SEARCH ? StackTransitionType.CROSSFADE : StackTransitionType.NONE);
     }
 
-    internal void select_row (string selected, uint16 last_context_id, bool grab_focus_if_needed)
+    internal void select_row_named (string selected, uint16 last_context_id, bool grab_focus_if_needed)
+        requires (ViewType.displays_objects_list (current_view))
+        requires (selected != "")
+    {
+        ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context_id, (current_view == ViewType.FOLDER) && grab_focus_if_needed);
+    }
+
+    internal void select_first_row ()
         requires (ViewType.displays_objects_list (current_view))
     {
-        if (selected == "")
-        {
-            if (current_view == ViewType.SEARCH)
-                ((RegistrySearch) stack.get_visible_child ()).select_first_row ();
-            else if (current_view == ViewType.FOLDER)
-                ((RegistryView) stack.get_visible_child ()).select_first_row (grab_focus_if_needed);
-            else
-                assert_not_reached ();
-        }
+        if (current_view == ViewType.SEARCH)
+            ((RegistrySearch) stack.get_visible_child ()).select_first_row ();
+        else if (current_view == ViewType.FOLDER)
+            ((RegistryView) stack.get_visible_child ()).select_first_row ();
         else
-            ((RegistryList) stack.get_visible_child ()).select_row_named (selected, last_context_id, (current_view == ViewType.FOLDER) && grab_focus_if_needed);
+            assert_not_reached ();
     }
 
     internal void prepare_object_view (string full_name, uint16 context_id, Variant properties, bool is_parent)
