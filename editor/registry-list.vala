@@ -554,6 +554,8 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             wrapper.get_style_context ().add_class ("f-or-s-row");
             if (((FilterListBoxRow) row).is_local_search)
                 wrapper.action_name = "browser.open-search-local";
+            else if (row.full_name == "/")
+                wrapper.action_name = "browser.open-search-root";
             else
                 wrapper.action_name = "browser.open-search-global";
         }

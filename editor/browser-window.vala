@@ -87,6 +87,7 @@ private abstract class BrowserWindow : BaseWindow
         { "open-search",        open_search, "s" },
         { "open-search-local",  open_search_local },
         { "open-search-global", open_search_global },
+        { "open-search-root",   open_search_root },
         { "next-search",        next_search, "s" },
         { "open-parent",        open_parent, "s" },
 
@@ -170,6 +171,14 @@ private abstract class BrowserWindow : BaseWindow
 
         init_next_search = true;
         request_search ();
+    }
+
+    private void open_search_root (/* SimpleAction action, Variant? search_variant */)
+    {
+        close_in_window_panels ();
+
+        init_next_search = true;
+        request_search (PathEntry.SearchMode.EDIT_PATH_MOVE_END, "/");
     }
 
     private void next_search (SimpleAction action, Variant? search_variant)

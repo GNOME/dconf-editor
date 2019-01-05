@@ -148,6 +148,10 @@ private class FilterListBoxRow : ClickableListBoxRow
             /* Translators: first item of the keys list displayed during browsing, the %s is the current folder name */
             folder_name_label.set_text (_("Search in “%s” folder").printf (name));
 
+        else if (path == "/")
+            /* Translators: first item of the keys list displayed during browsing at root path */
+            folder_name_label.set_text (_("Open path entry"));
+
         else
             /* Translators: last item of the keys list displayed during a local search */
             folder_name_label.set_text (_("Search everywhere"));
