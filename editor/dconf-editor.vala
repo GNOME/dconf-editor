@@ -322,44 +322,46 @@ private class ConfigurationEditor : Gtk.Application
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
-        set_accels_for_action ("kbd.toggle-bookmark",   {        "<Primary>b",
-                                                          "<Shift><Primary>b" });
-        set_accels_for_action ("base.copy",             {        "<Primary>c" });
-        set_accels_for_action ("base.copy-alt",         { "<Shift><Primary>c" });
-        set_accels_for_action ("kbd.bookmark",          {        "<Primary>d" });
-        set_accels_for_action ("kbd.unbookmark",        { "<Shift><Primary>d" });
-        set_accels_for_action ("key.search-global",     {        "<Primary>f" });   // TODO <Alt><Primary>f for using last search text?
-        set_accels_for_action ("key.search-local",      { "<Shift><Primary>f" });   // TODO similarly, <Shift><Alt><Primary>f also?
-        set_accels_for_action ("key.next-match",        {        "<Primary>g" });
-        set_accels_for_action ("key.previous-match",    { "<Shift><Primary>g" });
-        set_accels_for_action ("key.toggle-config",     {        "<Primary>i" });   // <Shift><Primary>i is gtk editor
-        set_accels_for_action ("kbd.modifications",     {        "<Alt>i"     });
-        set_accels_for_action ("key.edit-path-end",     {        "<Primary>l" });
-        set_accels_for_action ("key.edit-path-last",    { "<Shift><Primary>l" });
-        set_accels_for_action ("app.quit",              {        "<Primary>q" });
-        set_accels_for_action ("app.apply-and-quit",    { "<Shift><Primary>q" });
-        set_accels_for_action ("base.paste",            {        "<Primary>v" });   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
-        set_accels_for_action ("base.paste-alt",        { "<Shift><Primary>v" });
+        set_accels_for_action ("kbd.toggle-bookmark",       {        "<Primary>b",
+                                                              "<Shift><Primary>b"       });
+        set_accels_for_action ("base.copy",                 {        "<Primary>c"       });
+        set_accels_for_action ("base.copy-alt",             { "<Shift><Primary>c"       });
+        set_accels_for_action ("kbd.bookmark",              {        "<Primary>d"       });
+        set_accels_for_action ("kbd.unbookmark",            { "<Shift><Primary>d"       });
+        set_accels_for_action ("key.search-global(false)",  {        "<Primary>f"       });
+        set_accels_for_action ("key.search-local(false)",   { "<Shift><Primary>f"       });
+        set_accels_for_action ("key.search-global(true)",   {        "<Primary><Alt>f"  });
+        set_accels_for_action ("key.search-local(true)",    { "<Shift><Primary><Alt>f"  });
+        set_accels_for_action ("key.next-match",            {        "<Primary>g"       });
+        set_accels_for_action ("key.previous-match",        { "<Shift><Primary>g"       });
+        set_accels_for_action ("key.toggle-config",         {        "<Primary>i"       });   // <Shift><Primary>i is gtk editor
+        set_accels_for_action ("kbd.modifications",         {        "<Alt>i"           });
+        set_accels_for_action ("key.edit-path-end",         {        "<Primary>l"       });
+        set_accels_for_action ("key.edit-path-last",        { "<Shift><Primary>l"       });
+        set_accels_for_action ("app.quit",                  {        "<Primary>q"       });
+        set_accels_for_action ("app.apply-and-quit",        { "<Shift><Primary>q"       });
+        set_accels_for_action ("base.paste",                {        "<Primary>v"       });   // https://bugzilla.gnome.org/show_bug.cgi?id=762257 is WONTFIX
+        set_accels_for_action ("base.paste-alt",            { "<Shift><Primary>v"       });
 
-        set_accels_for_action ("key.open-root",         { "<Shift><Alt>Up"    });
-        set_accels_for_action ("key.open-parent",       {        "<Alt>Up"    });
-        set_accels_for_action ("key.open-child",        {        "<Alt>Down"  });
-        set_accels_for_action ("key.open-last-child",   { "<Shift><Alt>Down"  });
+        set_accels_for_action ("key.open-root",             { "<Shift><Alt>Up"          });
+        set_accels_for_action ("key.open-parent",           {        "<Alt>Up"          });
+        set_accels_for_action ("key.open-child",            {        "<Alt>Down"        });
+        set_accels_for_action ("key.open-last-child",       { "<Shift><Alt>Down"        });
 
-        set_accels_for_action ("base.toggle-hamburger", {          "F10"      });
-        set_accels_for_action ("kbd.escape",            {          "Escape"   });
-        set_accels_for_action ("base.menu",             {          "Menu"     });
+        set_accels_for_action ("base.toggle-hamburger",     {          "F10"            });
+        set_accels_for_action ("kbd.escape",                {          "Escape"         });
+        set_accels_for_action ("base.menu",                 {          "Menu"           });
 
-        set_accels_for_action ("kbd.set-to-default",    { "<Primary>Delete",
-                                                          "<Primary>KP_Delete",
-                                                          "<Primary>decimalpoint",
-                                                          "<Primary>period",
-                                                          "<Primary>KP_Decimal" }); // TODO "BackSpace"?
-        set_accels_for_action ("kbd.toggle-boolean",    { "<Primary>Return",
-                                                          "<Primary>KP_Enter"   });
+        set_accels_for_action ("kbd.set-to-default",        { "<Primary>Delete",
+                                                              "<Primary>KP_Delete",
+                                                              "<Primary>decimalpoint",
+                                                              "<Primary>period",
+                                                              "<Primary>KP_Decimal"     }); // TODO "BackSpace"?
+        set_accels_for_action ("kbd.toggle-boolean",        { "<Primary>Return",
+                                                              "<Primary>KP_Enter"       });
 
-     // set_accels_for_action ("app.about",             { "<Shift><Primary>F1"  }); // TODO report bug: needs a dance in the window
-        set_accels_for_action ("win.show-help-overlay", {                 "F1"  }); // "<Primary>F1" is automatically done
+     // set_accels_for_action ("app.about",                 { "<Shift><Primary>F1"      }); // TODO bug: needs a dance in the window
+        set_accels_for_action ("win.show-help-overlay",     {                 "F1"      }); // "<Primary>F1" is automatically done
 
         init_night_mode ();
 

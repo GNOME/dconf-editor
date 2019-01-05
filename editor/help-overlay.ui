@@ -13,7 +13,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Bookmarks menu</property>
-                <property name="accelerator">&lt;Primary&gt;b</property>
+                <property name="accelerator">&lt;Primary&gt;b</property> <!-- &lt;Primary&gt;&lt;Shift&gt;b does the same -->
               </object>
             </child>
             <child>
@@ -94,8 +94,24 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">True</property>
+                <!-- Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text -->
+                <property name="title" translatable="yes" context="shortcut window">Search again</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Alt&gt;f</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Toggle local search</property>
                 <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;f</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">False</property>
+                <!-- Translators: does the same thing as "Toggle local search", but loads the search entry with the last searched text; entry hidden for now -->
+                <property name="title" translatable="yes" context="shortcut window">Search locally again</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;&lt;Alt&gt;f</property>
               </object>
             </child>
             <child>
@@ -103,6 +119,14 @@
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Paste as search</property>
                 <property name="accelerator">&lt;Primary&gt;v</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">False</property>
+                <!-- Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now -->
+                <property name="title" translatable="yes" context="shortcut window">Paste as search (force)</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;v</property>
               </object>
             </child>
             <child>
@@ -131,26 +155,6 @@
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Browse keys tree</property>
                 <property name="accelerator">Escape</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkShortcutsGroup">
-            <property name="visible">True</property>
-            <property name="title" translatable="yes" context="shortcut window">Generic</property>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">True</property>
-                <property name="title" translatable="yes" context="shortcut window">About</property>
-                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;F1</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="visible">True</property>
-                <property name="title" translatable="yes" context="shortcut window">Show this help</property>
-                <property name="accelerator">&lt;Primary&gt;question &lt;Primary&gt;F1</property>
               </object>
             </child>
           </object>
@@ -226,6 +230,26 @@
                 <property name="visible">True</property>
                 <property name="title" translatable="yes" context="shortcut window">Dismiss modification</property>
                 <property name="accelerator">&lt;Primary&gt;Delete</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="visible">True</property>
+            <property name="title" translatable="yes" context="shortcut window">Generic</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">Show this help</property>
+                <property name="accelerator">&lt;Primary&gt;question &lt;Primary&gt;F1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">True</property>
+                <property name="title" translatable="yes" context="shortcut window">About</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;F1</property>
               </object>
             </child>
           </object>
