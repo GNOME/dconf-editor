@@ -97,6 +97,7 @@
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
+      <!-- start in "usual window" size (notably for pathbar items spacing), so with a large enough width -->
       <default>800</default>
       <!-- see AdaptativeWindow.width-request at adaptative-window.ui:6 -->
       <range min="283"/>
@@ -106,7 +107,8 @@
       <description>The width of the main window in pixels.</description>
     </key>
     <key name="window-height" type="i">
-      <default>600</default>
+      <!-- first launch is at root, that only contains few subfolders, so start with a not-too-big height -->
+      <default>420</default>
       <!-- see AdaptativeWindow.height-request at adaptative-window.ui:5 -->
       <range min="349"/>
       <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
