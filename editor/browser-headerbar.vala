@@ -114,7 +114,7 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     [CCode (notify = false)] internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
     [CCode (notify = false)] internal string text                { get { return path_widget.text; }}
 
-    internal string get_complete_path ()    { return path_widget.get_complete_path (); }
+    internal void get_complete_path (out string complete_path)   { path_widget.get_complete_path (out complete_path); }
     internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)
     {
         path_widget.get_fallback_path_and_complete_path (out fallback_path, out complete_path);

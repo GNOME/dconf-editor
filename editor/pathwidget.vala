@@ -126,9 +126,9 @@ private class PathWidget : Box, AdaptativeWidget
     }
 
     /* path bar */
-    internal string get_complete_path ()
+    internal void get_complete_path (out string complete_path)
     {
-        return pathbar.get_complete_path ();
+        pathbar.get_complete_path (out complete_path);
     }
     internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)
     {

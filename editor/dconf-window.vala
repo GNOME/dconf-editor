@@ -165,8 +165,8 @@ private class DConfWindow : BrowserWindow
             if (((!) settings_saved_view).contains ("//"))
                 settings_saved_view = "/";
 
-            string saved_path = settings.get_string ("saved-pathbar-path");
-            string fallback_path = model.get_fallback_path (saved_path);
+            /* string saved_path = settings.get_string ("saved-pathbar-path"); */
+            string fallback_path = model.get_fallback_path (settings.get_string ("saved-pathbar-path"));
             /* headerbar.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
             headerbar.update_ghosts (fallback_path);  // TODO allow a complete state restoration (including search and this) */
             headerbar.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
@@ -302,7 +302,9 @@ private class DConfWindow : BrowserWindow
         else if (main_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
             reload_view ();
 
-        headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (headerbar.get_complete_path ()));
+        string complete_path;
+        headerbar.get_complete_path (out complete_path);
+        headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (complete_path));
     }
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
@@ -402,7 +404,9 @@ private class DConfWindow : BrowserWindow
 
         settings.delay ();
         settings.set_string ("saved-view", saved_view);
-        settings.set_string ("saved-pathbar-path", headerbar.get_complete_path ());
+        string complete_path;
+        headerbar.get_complete_path (out complete_path);
+        settings.set_string ("saved-pathbar-path", complete_path);
         settings.apply ();
     }
 
@@ -999,7 +1003,9 @@ private class DConfWindow : BrowserWindow
                     cannot_find_folder (full_name);
             }
             request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
-            headerbar.update_ghosts (model.get_fallback_path (headerbar.get_complete_path ()));
+            string complete_path;
+            headerbar.get_complete_path (out complete_path);
+            headerbar.update_ghosts (model.get_fallback_path (complete_path));
         }
         else
         {

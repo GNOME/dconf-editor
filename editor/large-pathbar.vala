@@ -24,9 +24,9 @@ private class LargePathbar : Box, Pathbar
     private LargePathbarItem active_button;
 
     private string complete_path = "";
-    internal string get_complete_path ()
+    internal void get_complete_path (out string _complete_path)
     {
-        return complete_path;
+        _complete_path = complete_path;
     }
     private string fallback_path = "";
     internal void get_fallback_path_and_complete_path (out string _fallback_path, out string _complete_path)
@@ -45,10 +45,15 @@ private class LargePathbar : Box, Pathbar
         add_slash_label ();
     }
 
- // internal LargePathbar (string complete_path_or_empty)   // TODO
- // {
- //     complete_path = complete_path_or_empty;
- // }
+    internal LargePathbar (string complete_path_or_empty, ViewType type, string path)
+    {
+        if (complete_path_or_empty != "")
+        {
+            complete_path = complete_path_or_empty;
+            _set_path (ModelUtils.is_folder_path (complete_path_or_empty) ? ViewType.FOLDER : ViewType.OBJECT, complete_path_or_empty);
+        }
+        set_path (type, path);
+    }
 
     /*\
     * * keyboard

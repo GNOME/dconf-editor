@@ -29,16 +29,18 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     * * pathbars creation
     \*/
 
-    private bool is_startup = true;
+    private bool start_infos_not_given = true;
+    private bool window_size_not_given = true;
+
     private bool large_pathbar_created = false;
     private bool short_pathbar_created = false;
 
     private LargePathbar large_pathbar;
     private ShortPathbar short_pathbar;
 
-    private void create_large_pathbar ()        // FIXME large pathbar is created at startup, even on thin window
+    private void create_large_pathbar ()
     {
-        large_pathbar = new LargePathbar ();    // TODO _get_complete_path (/* allow empty */ true));
+        large_pathbar = new LargePathbar (complete_path, current_type, current_path);
         large_pathbar.valign = Align.FILL;
         large_pathbar.vexpand = true;
         large_pathbar.show ();
@@ -48,11 +50,25 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 
     private void create_short_pathbar ()
     {
-        short_pathbar = new ShortPathbar (_get_complete_path (/* allow empty */ true));
+        short_pathbar = new ShortPathbar (complete_path, current_type, current_path);
         short_pathbar.valign = Align.CENTER;
         short_pathbar.show ();
         add (short_pathbar);
         short_pathbar_created = true;
+    }
+
+    private void create_initial_pathbar ()
+    {
+        if (thin_window)
+        {
+            create_short_pathbar ();
+            set_visible_child (short_pathbar);
+        }
+        else
+        {
+            create_large_pathbar ();
+            set_visible_child (large_pathbar);
+        }
     }
 
     /*\
@@ -62,30 +78,34 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     private bool thin_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
+        if (window_size_not_given)
+        {
+            thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+            window_size_not_given = false;
+            if (start_infos_not_given)
+                return;
+            create_initial_pathbar ();
+            return;
+        }
+
         bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
         if (thin_window == _thin_window)
             return;
         thin_window = _thin_window;
 
-        if (is_startup)
+        if (start_infos_not_given)
             return;
 
         if (_thin_window)
         {
             if (!short_pathbar_created)
-            {
                 create_short_pathbar ();
-                short_pathbar.set_path (current_type, current_path);
-            }
             set_visible_child (short_pathbar);
         }
         else
         {
             if (!large_pathbar_created)
-            {
                 create_large_pathbar ();
-                large_pathbar.set_path (current_type, current_path);
-            }
             set_visible_child (large_pathbar);
         }
     }
@@ -96,20 +116,29 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 
     private ViewType current_type;
     private string current_path;
+    private string complete_path = "";
 
     internal void set_path (ViewType type, string path)
     {
         current_type = type;
         current_path = path;
 
-        if (is_startup)
+        if (complete_path == ""
+         || !path.has_suffix ("/")
+         || !complete_path.has_prefix (path))
+            complete_path = path;
+
+        if (start_infos_not_given)
         {
-            is_startup = false;
-            if (thin_window)
-                create_short_pathbar ();
-            else
-                create_large_pathbar ();
+            start_infos_not_given = false;
+            if (window_size_not_given)
+                return;
+            create_initial_pathbar ();
+            return;
         }
+
+        if (window_size_not_given)
+            return;
 
         if (large_pathbar_created)
             large_pathbar.set_path (type, path);
@@ -155,28 +184,17 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     * * public calls
     \*/
 
-    internal string get_complete_path ()
+    internal void get_complete_path (out string _complete_path)
     {
-        return _get_complete_path (false);
-    }
-    private string _get_complete_path (bool private_call)
-    {
-        if (large_pathbar_created)
-            return large_pathbar.get_complete_path ();
-        else if (short_pathbar_created)
-            return short_pathbar.get_complete_path ();
-        else if (private_call)
-            return "";
-        else
-            assert_not_reached ();
+        _complete_path = complete_path;
     }
 
-    internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)
+    internal void get_fallback_path_and_complete_path (out string _fallback_path, out string _complete_path)
     {
         if (large_pathbar_created)
-            large_pathbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
+            large_pathbar.get_fallback_path_and_complete_path (out _fallback_path, out _complete_path);
         else if (short_pathbar_created)
-            short_pathbar.get_fallback_path_and_complete_path (out fallback_path, out complete_path);
+            short_pathbar.get_fallback_path_and_complete_path (out _fallback_path, out _complete_path);
         else
             assert_not_reached ();
     }
@@ -201,12 +219,14 @@ private interface Pathbar
     internal abstract void update_ghosts (string non_ghost_path, bool is_search);
 
     /* complex proxy calls */
-    internal abstract string get_complete_path ();
-    internal abstract void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path);
+    internal abstract void get_complete_path (out string _complete_path);
+    internal abstract void get_fallback_path_and_complete_path (out string _fallback_path, out string _complete_path);
 
     internal virtual string get_selected_child (string current_path)
     {
-        return _get_selected_child (current_path, get_complete_path ());
+        string complete_path;
+        get_complete_path (out complete_path);
+        return _get_selected_child (current_path, complete_path);
     }
     private static string _get_selected_child (string current_path, string complete_path)
     {

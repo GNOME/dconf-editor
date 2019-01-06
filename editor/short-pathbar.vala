@@ -23,9 +23,9 @@ private class ShortPathbar : Grid, Pathbar
     private string non_ghost_path = "";
 
     private string complete_path = "";
-    internal string get_complete_path ()
+    internal void get_complete_path (out string _complete_path)
     {
-        return complete_path;
+        _complete_path = complete_path;
     }
     internal void get_fallback_path_and_complete_path (out string _fallback_path, out string _complete_path)
     {
@@ -40,11 +40,11 @@ private class ShortPathbar : Grid, Pathbar
     [GtkChild] private MenuButton   menu_button;
     [GtkChild] private Label        view_label;
 
-    internal ShortPathbar (string complete_path_or_empty)
+    internal ShortPathbar (string complete_path_or_empty, ViewType type, string path)
     {
         complete_path = complete_path_or_empty;
         non_ghost_path = complete_path_or_empty;
-        update_menu ();
+        set_path (type, path);
     }
 
     /*\
@@ -75,7 +75,8 @@ private class ShortPathbar : Grid, Pathbar
         if (type == ViewType.SEARCH)
             return;
 
-        if (!path.has_suffix ("/")
+        if (complete_path == ""
+         || !path.has_suffix ("/")
          || !complete_path.has_prefix (path))
         {
             complete_path = path;
