@@ -370,10 +370,8 @@ private abstract class AdaptativeWindow : ApplicationWindow
     private void save_window_state ()   // called on destroy
     {
         settings.delay ();
-        if (window_width <= 630)    settings.set_int ("window-width", 630);
-        else                        settings.set_int ("window-width", window_width);
-        if (window_height <= 420)   settings.set_int ("window-height", 420);
-        else                        settings.set_int ("window-height", window_height);
+        settings.set_int ("window-width", window_width);
+        settings.set_int ("window-height", window_height);
         settings.set_boolean ("window-is-maximized", window_is_maximized);
         settings.apply ();
     }

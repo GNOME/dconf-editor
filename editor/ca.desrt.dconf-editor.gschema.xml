@@ -98,7 +98,8 @@
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
     <key name="window-width" type="i">
       <default>800</default>
-      <range min="630"/>
+      <!-- see AdaptativeWindow.width-request at adaptative-window.ui:6 -->
+      <range min="283"/>
       <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width' -->
       <summary>The width of the window</summary>
       <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width' -->
@@ -106,7 +107,8 @@
     </key>
     <key name="window-height" type="i">
       <default>600</default>
-      <range min="420"/>
+      <!-- see AdaptativeWindow.height-request at adaptative-window.ui:5 -->
+      <range min="349"/>
       <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
       <summary>The height of the window</summary>
       <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
