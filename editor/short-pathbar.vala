@@ -40,6 +40,13 @@ private class ShortPathbar : Grid, Pathbar
     [GtkChild] private MenuButton   menu_button;
     [GtkChild] private Label        view_label;
 
+    internal ShortPathbar (string complete_path_or_empty)
+    {
+        complete_path = complete_path_or_empty;
+        non_ghost_path = complete_path_or_empty;
+        update_menu ();
+    }
+
     /*\
     * * keyboard
     \*/

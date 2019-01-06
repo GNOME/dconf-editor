@@ -36,9 +36,9 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     private LargePathbar large_pathbar;
     private ShortPathbar short_pathbar;
 
-    private void create_large_pathbar ()
+    private void create_large_pathbar ()        // FIXME large pathbar is created at startup, even on thin window
     {
-        large_pathbar = new LargePathbar ();
+        large_pathbar = new LargePathbar ();    // TODO _get_complete_path (/* allow empty */ true));
         large_pathbar.valign = Align.FILL;
         large_pathbar.vexpand = true;
         large_pathbar.show ();
@@ -48,7 +48,7 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 
     private void create_short_pathbar ()
     {
-        short_pathbar = new ShortPathbar ();
+        short_pathbar = new ShortPathbar (_get_complete_path (/* allow empty */ true));
         short_pathbar.valign = Align.CENTER;
         short_pathbar.show ();
         add (short_pathbar);
@@ -157,11 +157,18 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
 
     internal string get_complete_path ()
     {
+        return _get_complete_path (false);
+    }
+    private string _get_complete_path (bool private_call)
+    {
         if (large_pathbar_created)
             return large_pathbar.get_complete_path ();
         else if (short_pathbar_created)
             return short_pathbar.get_complete_path ();
-        assert_not_reached ();
+        else if (private_call)
+            return "";
+        else
+            assert_not_reached ();
     }
 
     internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)

@@ -45,6 +45,11 @@ private class LargePathbar : Box, Pathbar
         add_slash_label ();
     }
 
+ // internal LargePathbar (string complete_path_or_empty)   // TODO
+ // {
+ //     complete_path = complete_path_or_empty;
+ // }
+
     /*\
     * * keyboard
     \*/
