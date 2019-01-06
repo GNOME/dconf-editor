@@ -1,14 +1,14 @@
 # Lithuanian translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Aurimas Černius <aurisc4@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
+# Aurimas Černius <aurisc4@gmail.com>, 2012-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2018-08-17 19:33+0000\n"
-"PO-Revision-Date: 2018-08-17 23:04+0300\n"
+"POT-Creation-Date: 2019-01-05 16:52+0000\n"
+"PO-Revision-Date: 2019-01-06 23:09+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -17,21 +17,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 3.30.1\n"
 
-#: editor/bookmarks.ui:19
-msgid "Bookmark this Location"
-msgstr "Pažymėti šią vietą"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. show go_back_button
+#. show ltr_left_separator
+#. title_label text or null
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:30 editor/base-headerbar.vala:270
+#| msgctxt "shortcut window"
+#| msgid "About"
+msgid "About"
+msgstr "Apie"
 
-#: editor/bookmarks.ui:36
-msgid "Location bookmarked"
-msgstr "Vieta pažymėta"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:32
+msgid "Credits"
+msgstr "Autoriai"
 
-#: editor/bookmarks.ui:37
-msgid "Toggle to bookmark this location"
-msgstr "Perjungti šios vietos žymėjimą"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
+#: editor/about-list.vala:101
+msgid ""
+"GNU General Public License\n"
+"version 3 or later"
+msgstr ""
+"GNU Bendroji Viešą Licencija\n"
+"versija 3 arba vėlesnė"
 
-#: editor/bookmarks.ui:62
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:124
+msgid "Creators"
+msgstr "Kūrėjai"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:128
+#| msgid "translator-credits"
+msgid "Translators"
+msgstr "Vertėjai"
+
+#. Translators: menu entry of the pathbar menu
+#: editor/adaptative-pathbar.vala:224
+msgid "Copy current path"
+msgstr "Kopijuoti dabartinį kelią"
+
+#. Translators: menu entry of the pathbar menu (not displayed for now)
+#. Translators: "open" action in the right-click menu on a "show folder info" row
+#: editor/adaptative-pathbar.vala:237 editor/key-list-box-row.vala:475
+#| msgid "Show details…"
+msgid "Show properties"
+msgstr "Rodyti savybes"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:149
+msgid "Pause night mode"
+msgstr "Pristabdyti naktinę veikseną"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:153
+msgid "Reuse night mode"
+msgstr "Panaudoti naktinę veikseną"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:157
+msgid "Use night mode"
+msgstr "Naudoti naktinę veikseną"
+
+#. Translators: accessible name of the hamburger menu
+#: editor/base-headerbar.ui:96
+msgid "Actions"
+msgstr "Veiksmai"
+
+#. Translators: accessible description of the hamburger menu
+#: editor/base-headerbar.ui:98
+msgid "Current view actions"
+msgstr "Dabartinio rodinio veiksmai"
+
+#. Translators: usual menu entry of the hamburger menu
+#: editor/base-headerbar.vala:109
+msgid "Keyboard Shortcuts"
+msgstr "Klaviatūros trumpiniai"
+
+#. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
+#: editor/bookmarks-list.vala:32
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -39,41 +106,101 @@ msgstr ""
 "Žymelės bus\n"
 "pridėtos čia"
 
-#: editor/bookmarks.ui:88 editor/registry-search.vala:379
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
+#: editor/bookmarks-list.vala:36
+msgid "Use"
+msgstr "Naudoti"
+
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
+#: editor/bookmarks-list.vala:38
+msgid "Edit"
+msgstr "Keisti"
+
+#. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:53
+msgid "Location bookmarked"
+msgstr "Vieta pažymėta"
+
+#. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:55
+msgid "Toggle to bookmark this location"
+msgstr "Perjungti šios vietos žymėjimą"
+
+#. Translators: text that might appear in the bookmarks popover in place of the switch and its label
+#: editor/bookmarks.ui:80
+msgid "The bookmarks list is not editable."
+msgstr "Žymelių sąrašas yra neredaguojamas."
+
+#. Translators: accessible name of the button for opening the bookmarks popover
+#. show go_back_button
+#. show ltr_left_separator
+#. title_label text or null
+#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
+#: editor/bookmarks.ui:115 editor/dconf-headerbar.vala:187
+#: editor/registry-search.vala:552
 msgid "Bookmarks"
 msgstr "Žymelės"
 
-#: editor/bookmarks.ui:89
+#. Translators: accessible description of the button for opening the bookmarks popover
+#: editor/bookmarks.ui:117
 msgid "Manage your bookmarks"
 msgstr "Tvarkyti žymeles"
 
-#: editor/bookmark.ui:33
-msgid "Remove"
-msgstr "Pašalinti"
+#. Translators: label of the switch in the bookmarks popover, when searching
+#: editor/bookmarks.vala:404
+#| msgctxt "shortcut window"
+#| msgid "Bookmark this path"
+msgid "Bookmark this Search"
+msgstr "Pažymėti šią paiešką"
 
-#: editor/bookmark.ui:34
-msgid "Remove this bookmark"
-msgstr "Pašalinti šią žymelę"
+#. Translators: label of the switch in the bookmarks popover, when browsing
+#: editor/bookmarks.vala:407
+msgid "Bookmark this Location"
+msgstr "Pažymėti šią vietą"
 
-#: editor/browser-view.vala:83
+#. show go_back_button
+#. show ltr_left_separator
+#. title_label text or null
+#. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
+#: editor/browser-headerbar.vala:196
+msgid "Properties"
+msgstr "Savybės"
+
+#. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
+#: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr "Rikiavimo nustatymai pasikeitė. Ar norite atnaujinti rodinį?"
 
-#: editor/browser-view.vala:84 editor/dconf-editor.ui:159
+#. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
+#. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
+#: editor/browser-view.vala:84 editor/pathentry.ui:67
 msgid "Refresh"
 msgstr "Atnaujinti"
 
-#: editor/browser-view.vala:85
+#. Translators: text of an infobar to reload the keys list because of a new key (for example)
+#: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
 msgstr "Šio aplanko turinys pasikeitė. Ar norite iš naujo įkelti rodinį?"
 
-#: editor/browser-view.vala:86 editor/browser-view.vala:88
+#. Translators: button of an infobar to reload the keys list because of a new key (for example)
+#. Translators: button of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:90 editor/browser-view.vala:96
 msgid "Reload"
 msgstr "Įkelti iš naujo"
 
-#: editor/browser-view.vala:87
+#. Translators: text of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr "Šio rakto savybės pasikeitė. Ar norite iš naujo įkelti rodinį?"
+
+#. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
+#: editor/browser-window.vala:811
+msgid ""
+"The same mouse button is set for going backward and forward. Doing nothing."
+msgstr ""
+"Tas pats pelės mygtukas yra nustatytas judėjimui pirmyn ir atgal. Nieko "
+"nedaroma."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -114,8 +241,8 @@ msgstr "Skaityti raktų aprašymus bei keisti jų vertes"
 msgid "The GNOME Project"
 msgstr "GNOME projektas"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:478
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
 msgstr "dconf Redaktorius"
 
@@ -137,32 +264,40 @@ msgstr "nustatymai;konfigūracija;"
 msgid "ca.desrt.dconf-editor"
 msgstr "ca.desrt.dconf-editor"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:102
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid "The width of the window"
 msgstr "Lango plotis"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
 msgid "The width of the main window in pixels."
 msgstr "Lango plotis pikseliais."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:111
 msgid "The height of the window"
 msgstr "Lango aukštis"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid "The height of the main window in pixels."
 msgstr "Lango aukštis pikseliais."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#: editor/ca.desrt.dconf-editor.gschema.xml:120
 msgid "A flag to enable maximized mode"
 msgstr "Požymis išdidinimo veiksenai įjungti"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:125
 msgid "A flag to restore the last view"
 msgstr "Požymis paskutinio rodinio atkūrimui"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:127
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -170,11 +305,33 @@ msgstr ""
 "Jei „teigiama“, Dconf redaktorius bandys paleidimo metu nueiti į „saved-"
 "view“ rakto nurodytą kelią."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:132
+#| msgid "A path to restore the last view"
+msgid "A path to restore the pathbar state"
+msgstr "Kelias kelio juostos būsenai atkurti"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:134
+#| msgid ""
+#| "If the “restore-view” key is set to “true”, Dconf Editor tries at launch "
+#| "to navigate to this path."
+msgid ""
+"If the “restore-view” key is set to “true”, and if the path requested at "
+"startup is a parent path of this one, Dconf Editor tries to restore the "
+"pathbar state at this path."
+msgstr ""
+"Jei „restore-view“ raktas yra nustatytas į „teigiama“ ir jei paleidimo metu "
+"prašomas kelias yra šio kelio tėvas, Dconf redaktorius bandys atkurti kelio "
+"juostos būseną šiame kelyje."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:139
 msgid "A path to restore the last view"
 msgstr "Kelias paskutiniam vaizdui atkurti"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:141
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -182,11 +339,13 @@ msgstr ""
 "Jei „restore-view“ raktas yra nustatytas į „teigiama“, Dconf redaktorius "
 "bandys paleidimo metu nueiti į šį kelią."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:128
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:146
 msgid "Show initial warning"
 msgstr "Rodyti pradinį įspėjimą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:148
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -194,27 +353,23 @@ msgstr ""
 "Jei „teigiama“, Dconf redaktorius paleidimo metu atvers langelį, perspėjantį "
 "naudotoją būti atsargiu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:133
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:153
 msgid "A flag to enable small rows for keys list"
 msgstr "Požymis mažoms eilutėms klavišams įjungti"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:134
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:155
 msgid "If “true”, the keys list use smaller rows."
 msgstr "Jei teigiama, klavišams naudojamos mažesnės eilutės."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A flag to enable small rows for bookmarks list"
-msgstr "Požymis mažoms eilutėms žymėlėms įjungti"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:139
-msgid "If “true”, the bookmarks list use smaller rows."
-msgstr "Jei teigiama, žymelėms naudojamos mažesnės eilutės."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:160
 msgid "Change the behaviour of a key value change request"
 msgstr "Pakeisti rakto vertės pakeitimo užklausos elgseną"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:162
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -235,11 +390,13 @@ msgstr ""
 "antroji atmeta ją. Vertė „always-delay“ kiekvieną vertę pridedą prie "
 "delsiamos veiksenos, leisdama vienu metu pakeisti kelis raktus."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:148
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:167
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Požymis raktų rikiavimui neskiriant raidžių dydžio"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:149
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:169
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -250,11 +407,13 @@ msgstr ""
 "sąrašas yra rikiuojamas skiriant raidžių dydį, kur aplankai didžiąją raide "
 "yra pirmiau."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:153
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:174
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Naudoti pelės mygtukų „Atgal“ bei „Pirmyn“ įvykius"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:176
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -263,11 +422,13 @@ msgstr ""
 "Naudotojams, kurių pelė turi „Pirmyn“ ir „Atgal“ mygtukus, šis raktas "
 "nurodo, ar imamasi kokių nors veiksmų, jei bet kuris iš jų yra paspaudžiamas."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Pelės mygtukas, suaktyvinantis komandą „Atgal“ naršyklės lange"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:160
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:184
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -277,11 +438,13 @@ msgstr ""
 "nurodo, kuris mygtukas suaktyvina komandą „Atgal“ naršyklės lange. Galimos "
 "reikšmės tarp 6 ir 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:165
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:190
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Pelės mygtukas, suaktyvinantis komandą „Pirmyn“ naršyklės lange"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -291,11 +454,13 @@ msgstr ""
 "nurodo, kuris mygtukas suaktyvina komandą „Pirmyn“ naršyklės lange. Galimos "
 "reikšmės tarp 6 ir 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:170
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid "A flag to check for added or removed schemas"
 msgstr "Požymis pridėtų ar pašalintų schemų tikrinimui"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:199
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -309,11 +474,13 @@ msgstr ""
 "nustatant šį raktą į neigiamą vertę. Pastebėsime, kad šis parametras bus "
 "pašalintas, kai bus rastas geresnis būdas."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:204
 msgid "Enabled relocatable schema mapping facilities"
 msgstr "Įjungtos perkeliamų schemų galimybės"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:206
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -327,11 +494,13 @@ msgstr ""
 "redaktoriaus susiejimams; „Startup“ yra perkeliamos schemos susiejimui iš "
 "komandų eilutės."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:211
 msgid "Mapping of paths to manually associated schemas"
 msgstr "Kelių susiejimai pasirinktinai susietoms schemoms"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:213
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -345,11 +514,13 @@ msgstr ""
 "ca/desrt/dconf-editor//), apibrėžiančių galimus kelis kelius. Tas pats "
 "schemos ID gali būti susietas su keliomis kelių specifikacijomis."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:185
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:218
 msgid "A flag for skipping unnecessary subfolders"
 msgstr "Požymis nereikalingų poaplankių praleidimui"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:220
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
@@ -357,28 +528,55 @@ msgstr ""
 "Kai aplankas turi tik vieno poaplankį ir neturi raktų, Dconf redaktorius "
 "gali peršokti tiesiai į poaplankį. Šis požymis įjungia tokią veikseną."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:227
+msgid "Follow system night light"
+msgstr "Sekti sistemos nakties veikseną"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:229
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr "Naudoti GNOME naktinio apšvietimo nustatymą nakties veiksenai įjungti."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:236
 msgid "A list of bookmarked paths"
 msgstr "Pažymėtų kelių sąrašas"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:193
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:238
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr "Čia yra visi naudotojo pažymėti keliai kaip simbolių eilučių masyvas."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
-#: editor/ca.desrt.dconf-editor.gschema.xml:373
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:243
+msgid "A flag to enable small rows for bookmarks list"
+msgstr "Požymis mažoms eilutėms žymėlėms įjungti"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:245
+msgid "If “true”, the bookmarks list use smaller rows."
+msgstr "Jei teigiama, žymelėms naudojamos mažesnės eilutės."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:271
+#: editor/ca.desrt.dconf-editor.gschema.xml:483
 msgid "A boolean, type ‘b’"
 msgstr "Loginis, tipas „b“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#: editor/ca.desrt.dconf-editor.gschema.xml:273
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Loginiai kintamieji gali būti dviejų verčių: „teigiama“ ir „neigiama“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:278
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Galimai nenurodytas loginis, tipas „mb“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:280
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -388,11 +586,13 @@ msgstr ""
 "tipus, bet gali būti vertės „nieko“. Galimai nenurodytas loginis gali būti "
 "trijų verčių: „teigiama“, „neigiama“ ir „nieko“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:228
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:285
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Baitas (be ženklo), tipas „y“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:229
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:287
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -400,11 +600,13 @@ msgstr ""
 "Baito vertė yra sveikasis skaičius nuo 0 iki 255. Jį galima naudoti "
 "simboliams."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:233
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:292
 msgid "A bytestring, type ‘ay’"
 msgstr "Baitų eilutė, tipas „ay“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:234
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:294
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -414,11 +616,13 @@ msgstr ""
 "tinkamu utf8. Tokiu atveju skirtumas yra tas, kad nulinis pabaigos simbolis "
 "turi būti įterpiamas kaip paskutinis masyvo elementas."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:238
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:299
 msgid "A bytestring array, type ‘aay’"
 msgstr "Baitų eilučių masyvas, tipas „aay“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:239
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:301
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -426,11 +630,13 @@ msgstr ""
 "Šis tipas yra baitų eilučių masyvas. Baitų eilutės tipas dažnai naudojamas "
 "eilutėms, kurios nebūtinai yra tinkamos utf8."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:243
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:306
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "D-Bus rankenėlės tipas, tipas „h“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:244
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:308
 msgid ""
 "The handle type is a 32-bit signed integer value that is, by convention, "
 "used as an index into an array of file descriptors that are sent alongside a "
@@ -442,11 +648,13 @@ msgstr ""
 "kartu su D-Bus pranešimu. Jei nenaudojate D-Bus, nėra priežasties naudoti šį "
 "tipą."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:248
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:313
 msgid "A D-Bus object path, type ‘o’"
 msgstr "D-Bus objekto kelias, tipas „o“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:249
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:315
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -456,11 +664,13 @@ msgstr ""
 "magistralės kryptyje. Jei nenaudojate D-Bus, nėra priežasties naudoti šį "
 "tipą."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:253
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:320
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "D-Bus objektų kelių masyvas, tipas „ao“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:254
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:322
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -469,11 +679,13 @@ msgstr ""
 "Objektų kelių masyvas gali turėti bet kokį objektų kelių skaičių (įskaitant "
 "nė vieno: „[]“). Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:258
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:327
 msgid "A D-Bus signature, type ‘g’"
 msgstr "D-Bus aprašas, tipas „g“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:259
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:329
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -483,11 +695,13 @@ msgstr ""
 "ar pranešimui. \n"
 "Jei nenaudojate D-Bus, nėra priežasties naudoti šį tipą."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:263
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:334
 msgid "A dictionary entry of type ‘{ss}’"
 msgstr "Tipo „{ss}“ žodyno įrašas"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:264
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:336
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
@@ -495,11 +709,13 @@ msgstr ""
 "Žodynas susieja bazinio tipo vertes su kitomis vertėmis (bet kokio tipo). "
 "Žodyno įrašas yra vienos toks susiejimas."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:268
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:341
 msgid "A “vardict”, type ‘a{sv}’"
 msgstr "„vardict“, tipas „a{sv}“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:269
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:343
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
@@ -507,19 +723,23 @@ msgstr ""
 "Žodynas susieja bazinio tipo vertes su kitomis vertėmis (bet kokio tipo). "
 "Vienas paprastas naudojimas yra susieti simbolių eilutes su variantais."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:273
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:348
 msgid "A double, type ‘d’"
 msgstr "Dvigubas, tipas „d“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:274
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:350
 msgid "A double value could represent any real number."
 msgstr "Dviguba vertė gali nurodyti bet kokį realų skaičių."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:278
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:355
 msgid "A 5-choices enumeration"
 msgstr "5 pasirinkimų išvardinimas"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:279
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:357
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -527,82 +747,101 @@ msgstr ""
 "Išvardinimus galima sukurti naudojant arba „enum“ atributą, arba su "
 "„choices“ žyma."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:283
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:362
+#: editor/ca.desrt.dconf-editor.gschema.xml:497
+msgid "Flags: choose-colors-you-love"
+msgstr "Požymiai: choose-colors-you-love"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:364
+#: editor/ca.desrt.dconf-editor.gschema.xml:499
+msgid "Flags could be set by the “enum” attribute."
+msgstr "Požymiai gali būti nustatyti „enum“ atributu."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:369
 msgid "A short integer, type ‘n’"
 msgstr "Trumpas sveikasis skaičius, tipas „n“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:284
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:371
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "16 bitų sveikasis skaičius su ženklu. Dar žiūrėkite raktą „integer-16-"
 "unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:288
-#: editor/ca.desrt.dconf-editor.gschema.xml:383
-msgid "Flags: choose-colors-you-love"
-msgstr "Požymiai: choose-colors-you-love"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:384
-msgid "Flags could be set by the “enum” attribute."
-msgstr "Požymiai gali būti nustatyti „enum“ atributu."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:293
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:376
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Sveikasis skaičius be ženklo, tipas „q“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:294
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:378
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16 bitų sveikasis skaičius be ženklo. Dar žiūrėkite raktą „integer-16-"
 "signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:298
-#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:383
+#: editor/ca.desrt.dconf-editor.gschema.xml:490
 msgid "An usual integer, type ‘i’"
 msgstr "Įprastinis sveikasis skaičius, tipas „i“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:299
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:385
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32 bitų sveikasis skaičius su ženklu. Dar žiūrėkite raktą „integer-32-"
 "unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:303
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:390
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Įprastinis sveikasis skaičius be ženklo, tipas „u“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:304
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:392
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32 bitų sveikasis skaičius be ženklo. Dar žiūrėkite raktą „integer-32-"
 "signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:308
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:397
 msgid "A long integer, type ‘x’"
 msgstr "Ilgas sveikasis skaičius, tipas „x“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:309
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:399
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64 bitų sveikasis skaičius su ženklu. Dar žiūrėkite raktą „integer-64-"
 "unsigned“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:313
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:404
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Ilgasis sveikas skaičius be ženklo, tipas „t“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:314
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:406
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64 bitų sveikasis skaičius be ženklo. Dar žiūrėkite raktą „integer-64-"
 "signed“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:320
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:413
 msgid "A number with range"
 msgstr "Aprėžtas skaičius"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:321
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:415
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -612,12 +851,13 @@ msgstr ""
 "bei dvigubi) gali būti apriboti tam tikro rėžio vertėmis. Pavyzdžiui, šis "
 "sveikasis skaičius gali būti nuo -2 iki 10."
 
-#. Translators: do not forget the parenthesis, they are meaningful.
-#: editor/ca.desrt.dconf-editor.gschema.xml:326
+#. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:420
 msgid "A custom type, here ‘(ii)’"
 msgstr "Pasirinktinis tipas, čia „(ii)“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:327
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:422
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -627,11 +867,13 @@ msgstr ""
 "nustatymus, pereidamas prie simbolių eilutės, kai nėra geresnio būdo. Čia "
 "yra dviejų 32 bitų sveikų skaičių su ženklu junginys."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:331
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:427
 msgid "A string, type ‘s’"
 msgstr "Simbolių eilutė, tipas „s“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:332
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:429
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -640,11 +882,13 @@ msgstr ""
 "eilutė „''“ yra ne tas pats kaip NULL (nieko); taip pat žiūrėkite raktą "
 "„string-nullable“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:336
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:434
 msgid "A string array, type ‘as’"
 msgstr "Simbolių eilučių masyvas, tipas „as“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:337
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:436
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -652,11 +896,13 @@ msgstr ""
 "Simbolių eilučių masyvas turi bet kokį skaičių bet kokio ilgio eilučių. Tai "
 "gali būti tuščias masyvas, „[]“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:341
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:441
 msgid "A nullable string, type ‘ms’"
 msgstr "Galimai nenurodyta simbolių eilutė, tipas „ms“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:342
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:443
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -667,11 +913,13 @@ msgstr ""
 "būti bet kokia simbolių seka, įskaitant tuščią eilutę „''“, arba ji gali "
 "būti NULL (nieko)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:346
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:448
 msgid "A variant, type ‘v’"
 msgstr "Variantas, tipas „v“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:347
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:450
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
@@ -689,11 +937,13 @@ msgstr ""
 "dokumentaciją rasite adresu https://developer.gnome.org/glib/stable/gvariant-"
 "text.html."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:455
 msgid "A 1-choice enumeration"
 msgstr "1 pasirinkimo išvardinimas"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:457
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -701,11 +951,13 @@ msgstr ""
 "Išvardinimas gali turėti tik vieną elementą, bet tai greičiausiai yra "
 "klaida. Dconf redaktorius jus įspėja tokiu atveju."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:463
 msgid "A 1-choice integer value"
 msgstr "1 pasirinkimo išvardinimas"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:358
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:465
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -713,11 +965,13 @@ msgstr ""
 "Išvardinimas gali turėti tik vieną elementą, bet tai greičiausiai yra "
 "klaida. Dconf redaktorius jus įspėja tokiu atveju."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:362
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:470
 msgid "The empty tuple, type and value “()”"
 msgstr "Tuščias junginys, tipas ir vertė „()“"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:363
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:472
 msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
@@ -725,20 +979,25 @@ msgstr ""
 "Yra tuščios junginio tipas (kartais vadinamas „triv“), kuris yra junginys be "
 "turinio, vienintelė galima vertė yra „()“."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:485
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr "Įprastinė loginė vertė, apibrėžta perkeliamoje schemoje."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:379
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:492
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr "32 bitų sveikasis skaičius, apibrėžtas perkeliamoje schemoje."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:390
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:506
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Normalus nekonfliktuojantis raktas iš Conflict1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:391
-#: editor/ca.desrt.dconf-editor.gschema.xml:418
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:508
+#: editor/ca.desrt.dconf-editor.gschema.xml:545
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
@@ -747,12 +1006,15 @@ msgstr ""
 "konfliktuojančiais raktais. Nekonfliktuojantys raktai neturėtų turėti "
 "problemų."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:513
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr "Konfliktuojantis raktas numatytas į „1“ turėtų sukelti klaidą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
-#: editor/ca.desrt.dconf-editor.gschema.xml:423
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:515
+#: editor/ca.desrt.dconf-editor.gschema.xml:552
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -762,12 +1024,15 @@ msgstr ""
 "raktais. Jis neturėtų būti redaguojamas, kadangi raktas susietas su tuo "
 "pačiu kelių turi kitokią vertę."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:400
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:520
 msgid "Conflicting key with no range that should give an error"
 msgstr "Konfliktuojantis taktas be rėžio, kuris turėtų sukelti klaidą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
-#: editor/ca.desrt.dconf-editor.gschema.xml:429
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:522
+#: editor/ca.desrt.dconf-editor.gschema.xml:560
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -777,13 +1042,16 @@ msgstr ""
 "konfliktuojančiais raktais. Jis neturėtų būti redaguojamas, kadangi raktas "
 "susietas su tuo pačiu keliu turi kitokį rėžį."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:405
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:527
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
 "Paprastas simbolių eilutės konfliktuojantis raktas, kuris turi sukelti klaidą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:406
-#: editor/ca.desrt.dconf-editor.gschema.xml:434
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:529
+#: editor/ca.desrt.dconf-editor.gschema.xml:567
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -793,12 +1061,15 @@ msgstr ""
 "konfliktuojančiais raktais. Jis neturėtų būti redaguojamas, kadangi raktas "
 "susietas su tuo pačiu keliu yra kito tipo."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:410
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:534
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Konfliktuojantis raktas iš Conflict1, kuris turėtų sukelti perspėjimą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:411
-#: editor/ca.desrt.dconf-editor.gschema.xml:439
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:536
+#: editor/ca.desrt.dconf-editor.gschema.xml:574
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
@@ -808,258 +1079,396 @@ msgstr ""
 "konfliktuojančiais raktais. Jį galima redaguoti, kadangi tipai yra "
 "suderinami, bet tai vis tiek yra problema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:543
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Normalus nekonfliktuojantis raktas iš Conflict2"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:422
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:550
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 "Konfliktuojantis raktas su numatytąja verte „2“, kuris turėtų sukelti klaidą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:428
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:558
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr "Konfliktuojantis raktas su rėžiu 0~5, kuris turėtų sukelti klaidą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:433
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:565
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
 "Galimai nenurodytos simbolių eilutės raktas, kuris turėtų sukelti klaidą"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:438
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:572
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Konfliktuojantis raktas iš Conflict2, kuris turėtų sukelti įspėjimą"
 
-#: editor/dconf-editor-menu.ui:6
-msgid "Keyboard Shortcuts"
-msgstr "Klaviatūros trumpiniai"
-
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_Apie"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "_Išeiti"
-
-#: editor/dconf-editor.ui:34
-msgid "Actions"
-msgstr "Veiksmai"
-
-#. TODO 1/3 Informations
-#: editor/dconf-editor.ui:35
-msgid "Current view actions"
-msgstr "Dabartinio rodinio veiksmai"
-
-#: editor/dconf-editor.ui:62
-msgid "Search"
-msgstr "Paieška"
-
-#: editor/dconf-editor.ui:63
-msgid "Search keys"
-msgstr "Paieškos raktai"
-
-#: editor/dconf-editor.ui:160
-msgid "Refresh search results"
-msgstr "Atnaujinti paieškos rezultatus"
-
-#: editor/dconf-editor.vala:134
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:147
 msgid "Print release version and exit"
 msgstr "Atspausdinti versiją ir išeiti"
 
-#: editor/dconf-editor.vala:135
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:150
 msgid "Print relocatable schemas and exit"
 msgstr "Atspausdinti perkeliamas schemas ir išeiti"
 
-#: editor/dconf-editor.vala:137
+#. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
+#: editor/dconf-editor.vala:153
 msgid "Do not show initial warning"
 msgstr "Nerodyti pradinio įspėjimo"
 
-#: editor/dconf-editor.vala:139
-msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-msgstr "[KELIAS|FIKSUOTA_SCHEMA [RAKTAS]|PERKELIAMAS_SCHEMA:KELIAS [RAKTAS]]"
+#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:191
+#| msgid "A graphical viewer and editor of applications’ internal settings."
+msgid "Graphical interface for editing other applications settings."
+msgstr "Grafinės sąsajos kitų programų redagavimui nustatymai."
 
-#: editor/dconf-editor.vala:229
+#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:194
+msgid "Uses the gsettings API of the glib library, and other ways."
+msgstr "Naudoja glib bibliotekos gsettings API ir kitus būdus."
+
+#. Translators: command-line header description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:197
+#| msgid "Description"
+msgid "Arguments description:"
+msgstr "Argumentų aprašymas:"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:201
+msgid "a folder path or a key path"
+msgstr "aplanko kelias arba rakto kelias"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:203
+msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr "pavyzdys: „/org/gnome/“ arba „/ca/desrt/dconf-editor/Demo/boolean“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:207
+msgid "the name of a schema with fixed path"
+msgstr "schemos su fiksuotu keliu pavadinimas"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:209
+#| msgid "ca.desrt.dconf-editor"
+msgid "example: “ca.desrt.dconf-editor.Settings”"
+msgstr "pavyzdys: „ca.desrt.dconf-editor.Settings“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
+#: editor/dconf-editor.vala:213
+msgid "the name of a “relocatable” schema, without fixed path"
+msgstr "„perkeliamos“ schemos pavadinimas be fiksuoto kelio"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:215
+msgid "see list with the “--list-relocatable-schemas” option"
+msgstr "pamatykite sąrašą su „--list-relocatable-schemas“ parametru"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:219
+msgid "the path where to map the relocatable schema"
+msgstr "kelias iki perkeliamos schemos susiejimo"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:221
+msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
+msgstr "pavyzdys: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:225
+msgid "the name of a key from the schema"
+msgstr "rakto iš schemos pavadinimas"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:227
+msgid "example: “bookmarks”"
+msgstr "pavyzdys: „bookmarks“"
+
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:283
 msgid "Known schemas installed:"
 msgstr "Žinomos įdiegtos schemos:"
 
-#: editor/dconf-editor.vala:234
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:289
 msgid "No known schemas installed."
 msgstr "Nėra žinomų įdiegtų schemų."
 
-#: editor/dconf-editor.vala:238
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:294
 msgid "Known schemas skipped:"
 msgstr "Žinomos schemos praleistos:"
 
-#: editor/dconf-editor.vala:243
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:300
 msgid "No known schemas skipped."
 msgstr "Nėra praleistų žinomų schemų."
 
-#: editor/dconf-editor.vala:247
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:305
 msgid "Unknown schemas:"
 msgstr "Nežinomos schemos:"
 
-#: editor/dconf-editor.vala:252
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:311
 msgid "No unknown schemas."
 msgstr "Nėra nežinomų schemų."
 
-#: editor/dconf-editor.vala:325
+#. Translators: command-line error message, when the user requests a specific path while there is already a window opened
+#: editor/dconf-editor.vala:443
 msgid "Only one window can be opened for now.\n"
 msgstr "Šiuo metu gali būti atvertas tik vienas langas.\n"
 
-#: editor/dconf-editor.vala:344
+#. Translators: command-line error message, try 'dconf-editor a b c d'
+#: editor/dconf-editor.vala:463
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nepavyksta suprasti: per daug argumentų.\n"
 
-#: editor/dconf-editor.vala:354
+#. Translators: command-line error message, try 'dconf-editor / a'
+#: editor/dconf-editor.vala:477
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Nepavyksta suprasti antro argumento šiame kontekste.\n"
 
-#: editor/dconf-editor.vala:374
+#. Translators: command-line error message, try 'dconf-editor org.example /'
+#: editor/dconf-editor.vala:498
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nepavyksta suprasti: pasvirasis brūkšnelis antrame argumente.\n"
 
-#: editor/dconf-editor.vala:388
+#. Translators: command-line error message, try 'dconf-editor org.example:a'
+#: editor/dconf-editor.vala:513
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Schemos kelias turi prasidėti ir baigtis „/“.\n"
 
-#: editor/dconf-editor.vala:401
+#. Translators: command-line error message, try 'dconf-editor //'
+#: editor/dconf-editor.vala:529
+#| msgid "Cannot understand second argument in this context.\n"
+msgid "Cannot understand: given path contains “//”.\n"
+msgstr "Nepavyksta suprasti: pateiktame kelyje yra „//“.\n"
+
+#. Translators: command-line error message, try 'dconf-editor "org example" a'
+#: editor/dconf-editor.vala:537
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nepavyksta suprasti: tarpo simbolis argumente.\n"
 
-#. #. * * Copy action
-#. #: editor/dconf-editor.vala:425
+#. Translators: notification header, try ctrl-c while in the keys list
+#: editor/dconf-editor.vala:565
 msgid "Copied to clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
-#: editor/dconf-editor.vala:480
-msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr "Grafinio rodinio bei programų redaktoriaus vidiniai nustatymai."
+#. Translators: usual menu entry of the hamburger menu
+#: editor/dconf-headerbar.vala:58
+#| msgid "Dconf Editor"
+msgid "About Dconf Editor"
+msgstr "Apie Dconf redaktorių"
 
-#: editor/dconf-editor.vala:481
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
-"Autorių teisės priklauso © 2010-2014 – Canonical Ltd\n"
-"Autorių teisės priklauso © 2015-2018 – Arnaud Bonatti\n"
-"Autorių teisės priklauso © 2017-2018 – Davi da Silva Böger"
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
+#: editor/dconf-headerbar.vala:256 editor/modifications-revealer.ui:70
+msgid "Apply"
+msgstr "Pritaikyti"
 
-#: editor/dconf-editor.vala:485
-msgid "translator-credits"
-msgstr "išvertė:Aurimas Černius <aurisc4@gmail.com>"
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#: editor/dconf-headerbar.vala:259
+#| msgid "Dismiss change"
+msgid "Dismiss"
+msgstr "Atmesti"
 
-#: editor/dconf-model.vala:939
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
+#: editor/dconf-headerbar.vala:284
+#| msgid "Apply"
+msgid "Apply all"
+msgstr "Pritaikyti viską"
+
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
+#: editor/dconf-headerbar.vala:287
+#| msgid "Dismiss change"
+msgid "Dismiss all"
+msgstr "Atmesti viską"
+
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
+#: editor/dconf-headerbar.vala:295
+#| msgctxt "shortcut window"
+#| msgid "Quit"
+msgid "Quit mode"
+msgstr "Išėjimo veiksena"
+
+#. Translators: hamburger menu entry on small windows (not used in current design)
+#: editor/dconf-headerbar.vala:391
+#| msgid "Bookmarks"
+msgid "Hide bookmarks"
+msgstr "Slėpti žymeles"
+
+#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
+#: editor/dconf-headerbar.vala:396
+#| msgid "Bookmarks"
+msgid "Unbookmark"
+msgstr "Pašalinti žymelę"
+
+#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
+#: editor/dconf-headerbar.vala:399
+#| msgid "Bookmarks"
+msgid "Bookmark"
+msgstr "Pridėti žymelę"
+
+#. Translators: hamburger menu entry on small windows, to show the bookmarks list
+#: editor/dconf-headerbar.vala:402
+#| msgid "Bookmarks"
+msgid "Show bookmarks"
+msgstr "Rodyti žymeles"
+
+#. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
+#: editor/dconf-headerbar.vala:416
+msgid "Enter delay mode"
+msgstr "Pradėti delsiamą veikseną"
+
+#. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
+#: editor/dconf-headerbar.vala:422
+msgid "Reset visible keys"
+msgstr "Atstatyti matomus raktus"
+
+#. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
+#: editor/dconf-headerbar.vala:425
+msgid "Reset view recursively"
+msgstr "Rekursyviai atstatyti rodinį"
+
+#. show go_back_button
+#. show ltr_left_separator
+#. title_label text or null
+#. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/dconf-headerbar.vala:467
+msgid "Pending"
+msgstr "Laukia"
+
+#. Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path
+#: editor/dconf-model.vala:945
 #, c-format
 msgid "%s (key erased)"
 msgstr "%s (raktas ištrintas)"
 
-#: editor/dconf-view.vala:335
-msgid "Failed to parse as double."
-msgstr "Nepavyko perskaityti kai dvigubo slankaus kablelio skaičiaus."
-
-#: editor/dconf-view.vala:394 editor/dconf-view.vala:453
-#: editor/dconf-view.vala:671 editor/dconf-view.vala:780
-msgid "This value is invalid for the key type."
-msgstr "Vertė yra netinkama šio tipo raktui."
-
-#: editor/dconf-window.vala:119
+#. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
+#: editor/dconf-window.vala:191
 msgid "Schema is relocatable, a path is needed."
 msgstr "Schema yra perkeliama, būtinas kelias."
 
-#: editor/dconf-window.vala:131
+#. Translators: command-line startup warning
+#: editor/dconf-window.vala:204
 msgid "Startup mappings are disabled."
 msgstr "Paleidimo susiejimas yra išjungti."
 
-#: editor/dconf-window.vala:145
+#. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
+#: editor/dconf-window.vala:219
 msgid "Schema is not installed on given path."
 msgstr "Schema nėra įdiegta nurodytame kelyje."
 
-#: editor/dconf-window.vala:160
+#. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
+#: editor/dconf-window.vala:235
 #, c-format
 msgid "Unknown schema “%s”."
 msgstr "Nežinoma schema „%s“."
 
-#: editor/dconf-window.vala:301
+#. Translators: initial "use at your own risk" dialog, the welcoming text
+#: editor/dconf-window.vala:339
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Ačių, kad naudojatės Dconf redaktoriumi savo konfigūracijų redagavimui!"
 
-#: editor/dconf-window.vala:302
+#. Translators: initial "use at your own risk" dialog, the warning text
+#: editor/dconf-window.vala:342
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Nepamirškite, kai dėl kai kurių parametrų programos gali nebeveikti, tad "
 "būkite atsargus."
 
-#: editor/dconf-window.vala:303
+#. Translators: initial "use at your own risk" dialog, the button label
+#: editor/dconf-window.vala:345
 msgid "I’ll be careful."
 msgstr "Būsiu atsargus."
 
-#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:307
+#. Translators: initial "use at your own risk" dialog, the checkbox label
+#: editor/dconf-window.vala:349
 msgid "Show this dialog next time."
 msgstr "Rodyti šį dialogą kitą kartą."
 
-#: editor/dconf-window.vala:428
+#. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
+#: editor/dconf-window.vala:370
+msgid ""
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
+"+F4 to dismiss changes and quit."
+msgstr ""
+"Yra laukiančių pakeitimų. Naudokite Lyg2+Vald+Q pakeitimams pritaikyti ir "
+"išeiti arba Alt+F4 pakeitimams atmesti ir išeiti."
+
+#. Translators: notification text, when the requested folder has been removed; the %s is the folder path
+#: editor/dconf-window.vala:1061
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Aplankas „%s“ dabar yra tuščias."
 
-#. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:438
+#. Translators: notification text, when the requested key has been removed; the %s is the key path
+#: editor/dconf-window.vala:1072
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Raktas „%s“ buvo pašalintas."
 
-#: editor/dconf-window.vala:691
-msgid "Copy descriptor"
-msgstr "Kopijuoti deskriptorių"
-
-#: editor/dconf-window.vala:697
-msgid "Reset visible keys"
-msgstr "Atstatyti matomus raktus"
-
-#: editor/dconf-window.vala:698
-msgid "Reset view recursively"
-msgstr "Rekursyviai atstatyti rodinį"
-
-#: editor/dconf-window.vala:706
-msgid "Enter delay mode"
-msgstr "Pradėti delsiamą veikseną"
-
-#: editor/dconf-window.vala:771
-msgid ""
-"The same mouse button is set for going backward and forward. Doing nothing."
-msgstr ""
-"Tas pats pelės mygtukas yra nustatytas judėjimui pirmyn ir atgal. Nieko "
-"nedaroma."
-
-#: editor/dconf-window.vala:1035
+#. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
+#: editor/dconf-window.vala:1078
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nepavyko rasti rakto „%s“."
 
-#: editor/dconf-window.vala:1039
+#. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
+#: editor/dconf-window.vala:1084
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nieko nėra prašomame aplanke „%s“."
 
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
-#: editor/delayed-setting-view.vala:62 editor/delayed-setting-view.vala:97
-#: editor/key-list-box-row.vala:567 editor/registry-info.vala:372
-msgid "Default value"
-msgstr "Numatyta vertė"
+#. Translators: about dialog text
+#: editor/dconf-window.vala:1096
+msgid "A graphical viewer and editor of applications’ internal settings."
+msgstr "Grafinio rodinio bei programų redaktoriaus vidiniai nustatymai."
 
-#: editor/delayed-setting-view.vala:77 editor/registry-info.vala:569
-#: editor/registry-list.vala:433
-msgid "Key erased."
-msgstr "Raktas ištrintas."
+#. Translators: about dialog text
+#: editor/dconf-window.vala:1099
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015-2018 – Arnaud Bonatti\n"
+#| "Copyright © 2017-2018 – Davi da Silva Böger"
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
+msgstr ""
+"Autorių teisės priklauso © 2010-2014 – Canonical Ltd\n"
+"Autorių teisės priklauso © 2017-2018 – Davi da Silva Böger\n"
+"Autorių teisės priklauso © 2015-2019 – Arnaud Bonatti"
 
-#: editor/delayed-setting-view.vala:109
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-window.vala:1102
+msgid "translator-credits"
+msgstr "išvertė:Aurimas Černius <aurisc4@gmail.com>"
+
+#. Translators: about dialog text; label of the website link
+#: editor/dconf-window.vala:1108
+msgid "Page on GNOME wiki"
+msgstr "GNOME wiki puslapis"
+
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
+#: editor/delayed-setting-view.vala:136
 msgid "Key erased"
 msgstr "Raktas ištrintas."
+
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
+msgid "Default value"
+msgstr "Numatyta vertė"
 
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
@@ -1083,202 +1492,541 @@ msgstr "Atžymėti šį kelią"
 
 #: editor/help-overlay.ui:36
 msgctxt "shortcut window"
-msgid "Search bar"
-msgstr "Paieškos juosta"
-
-#: editor/help-overlay.ui:43
-msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Veiksmų meniu"
 
+#: editor/help-overlay.ui:43
+#| msgctxt "shortcut window"
+#| msgid "Path bar navigation"
+msgctxt "shortcut window"
+msgid "Path bar menu"
+msgstr "Kelio juostos meniu"
+
 #: editor/help-overlay.ui:52
-msgctxt "shortcut window"
-msgid "Clipboard"
-msgstr "Iškarpinė"
-
-#: editor/help-overlay.ui:56
-msgctxt "shortcut window"
-msgid "Copy descriptor"
-msgstr "Kopijuoti deskriptorių"
-
-#: editor/help-overlay.ui:63
-msgctxt "shortcut window"
-msgid "Copy path"
-msgstr "Kopijuoti kelią"
-
-#: editor/help-overlay.ui:72
-msgctxt "shortcut window"
-msgid "Modifications list actions"
-msgstr "Pakeitimų sąrašo veiksmai"
-
-#: editor/help-overlay.ui:76
-msgctxt "shortcut window"
-msgid "Toggle modifications list"
-msgstr "Perjungti pakeitimų sąrašą"
-
-#: editor/help-overlay.ui:83
-msgctxt "shortcut window"
-msgid "Open selected row key"
-msgstr "Atverti pažymėtos eilutės raktą"
-
-#: editor/help-overlay.ui:90
-msgctxt "shortcut window"
-msgid "Dismiss modification"
-msgstr "Atmesti pakeitimą"
-
-#: editor/help-overlay.ui:99
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Kelio juostos naršymas"
 
-#: editor/help-overlay.ui:103
+#: editor/help-overlay.ui:56
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Atverti šakninį aplanką"
 
-#: editor/help-overlay.ui:110
+#: editor/help-overlay.ui:63
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Atverti tėvinį aplanką"
 
-#: editor/help-overlay.ui:117
+#: editor/help-overlay.ui:70
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Atverti aktyvų tiesioginį vaiką"
 
-#: editor/help-overlay.ui:124
+#: editor/help-overlay.ui:77
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Atverti paskutinį aktyvų vaiką"
 
-#: editor/help-overlay.ui:133
+#: editor/help-overlay.ui:86
+#| msgid "Search keys"
+msgctxt "shortcut window"
+msgid "Search options"
+msgstr "Paieškos parametrai"
+
+#: editor/help-overlay.ui:90
+#| msgctxt "shortcut window"
+#| msgid "Toggle search bar"
+msgctxt "shortcut window"
+msgid "Toggle search"
+msgstr "Perjungti paiešką"
+
+#. Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:98
+#| msgctxt "shortcut window"
+#| msgid "Search bar"
+msgctxt "shortcut window"
+msgid "Search again"
+msgstr "Ieškoti dar kartą"
+
+#: editor/help-overlay.ui:105
+#| msgctxt "shortcut window"
+#| msgid "Toggle search bar"
+msgctxt "shortcut window"
+msgid "Toggle local search"
+msgstr "Perjungti vietinę paiešką"
+
+#. Translators: does the same thing as "Toggle local search", but loads the search entry with the last searched text; entry hidden for now
+#: editor/help-overlay.ui:113
+msgctxt "shortcut window"
+msgid "Search locally again"
+msgstr "Ieškoti vietoje dar kartą"
+
+#: editor/help-overlay.ui:120
+msgctxt "shortcut window"
+msgid "Paste as search"
+msgstr "Įdėti kaip paiešką"
+
+#. Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:128
+msgctxt "shortcut window"
+msgid "Paste as search (force)"
+msgstr "Įdėti kaip paiešką (priverstinę)"
+
+#: editor/help-overlay.ui:135
+msgctxt "shortcut window"
+msgid "Edit path"
+msgstr "Keisti kelią"
+
+#: editor/help-overlay.ui:142
+#| msgid "Copy current path"
+msgctxt "shortcut window"
+msgid "Edit parent path"
+msgstr "Keisti tėvinį kelią"
+
+#: editor/help-overlay.ui:149
+msgctxt "shortcut window"
+msgid "Edit root path"
+msgstr "Keisti šakninį kelią"
+
+#: editor/help-overlay.ui:156
+msgctxt "shortcut window"
+msgid "Browse keys tree"
+msgstr "Naršyti raktų medį"
+
+#: editor/help-overlay.ui:165
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr "Raktų sąrašo veiksmai"
 
-#: editor/help-overlay.ui:137
+#: editor/help-overlay.ui:169
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Kontekstinis meniu"
 
-#: editor/help-overlay.ui:144
+#: editor/help-overlay.ui:176
+msgctxt "shortcut window"
+msgid "Previous line"
+msgstr "Ankstesnė eilutė"
+
+#: editor/help-overlay.ui:183
+#| msgid "Next"
+msgctxt "shortcut window"
+msgid "Next line"
+msgstr "Kita eilutė"
+
+#. Translators: entry disabled for now
+#: editor/help-overlay.ui:191
+msgctxt "shortcut window"
+msgid "Toggle folder properties"
+msgstr "Perjungti palanko savybes"
+
+#: editor/help-overlay.ui:198
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Nustatyti į numatytą"
 
-#: editor/help-overlay.ui:151
+#: editor/help-overlay.ui:205
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Perjungti loginę vertę"
 
-#: editor/help-overlay.ui:160
+#: editor/help-overlay.ui:214
+msgctxt "shortcut window"
+msgid "Modifications list actions"
+msgstr "Pakeitimų sąrašo veiksmai"
+
+#: editor/help-overlay.ui:218
+msgctxt "shortcut window"
+msgid "Toggle modifications list"
+msgstr "Perjungti pakeitimų sąrašą"
+
+#: editor/help-overlay.ui:225
+msgctxt "shortcut window"
+msgid "Open selected row key"
+msgstr "Atverti pažymėtos eilutės raktą"
+
+#: editor/help-overlay.ui:232
+msgctxt "shortcut window"
+msgid "Dismiss modification"
+msgstr "Atmesti pakeitimą"
+
+#: editor/help-overlay.ui:241
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Bendra"
 
-#: editor/help-overlay.ui:164
+#: editor/help-overlay.ui:245
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Rodyti šį žinyną"
 
-#: editor/help-overlay.ui:171
+#: editor/help-overlay.ui:252
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Apie"
 
-#: editor/help-overlay.ui:178
+#: editor/help-overlay.ui:261
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Iškarpinė"
+
+#: editor/help-overlay.ui:265
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Kopijuoti deskriptorių"
+
+#: editor/help-overlay.ui:272
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopijuoti kelią"
+
+#: editor/help-overlay.ui:281
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Išeiti"
 
+#: editor/help-overlay.ui:286
+msgctxt "shortcut window"
+msgid "Quit if there’s no pending changes"
+msgstr "Išeiti, jei nėra laukiančių pakeitimų"
+
+#: editor/help-overlay.ui:293
+msgctxt "shortcut window"
+msgid "Apply pending changes and quit"
+msgstr "Pritaikyti laukiančius pakeitimus ir išeiti"
+
+#: editor/help-overlay.ui:300
+#| msgid "Dismiss change"
+msgctxt "shortcut window"
+msgid "Dismiss pending changes and quit"
+msgstr "Atmesti laukiančius pakeitimus ir išeiti"
+
+#. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
+#: editor/key-editor-child.vala:30
+msgid "Given value is out of range."
+msgstr "Pateikta vertė yra už ribų"
+
+#. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
+#: editor/key-editor-child.vala:33
+msgid "This value is invalid for the key type."
+msgstr "Vertė yra netinkama šio tipo raktui."
+
+#. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:380
+msgid "Failed to parse as double."
+msgstr "Nepavyko perskaityti kaip dvigubo slankaus kablelio skaičiaus."
+
+#. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:449
+#| msgid "Failed to parse as double."
+msgid "Failed to parse as 64-bit integer."
+msgstr "Nepavyko perskaityti kaip 64-bitų sveiko skaičiaus."
+
+#. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:518
+#| msgid "Failed to parse as double."
+msgid "Failed to parse as unsigned 64-bit integer."
+msgstr "Nepavyko perskaityti kaip 64-bitų sveiko skaičiaus be ženklo."
+
+#. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
+#: editor/key-list-box-row.vala:118
+#, c-format
+msgid "Go to “%s”"
+msgstr "Eiti į „%s“"
+
+#. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
+#: editor/key-list-box-row.vala:149
+#, c-format
+msgid "Search in “%s” folder"
+msgstr "Ieškoti aplanke „%s“"
+
+#. Translators: first item of the keys list displayed during browsing at root path
+#: editor/key-list-box-row.vala:153
+#| msgid "Open parent folder"
+msgid "Open path entry"
+msgstr "Atverti kelio įrašą"
+
+#. Translators: last item of the keys list displayed during a local search
+#: editor/key-list-box-row.vala:157
+#| msgid "Search keys"
+msgid "Search everywhere"
+msgstr "Ieškoti visur"
+
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:376
+#: editor/key-list-box-row.vala:449
 msgid "Copy"
 msgstr "Kopijuoti"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:379
+#: editor/key-list-box-row.vala:452
 msgid "Customize…"
 msgstr "Tinkinti…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:382
+#: editor/key-list-box-row.vala:455
 msgid "Set to default"
 msgstr "Nustatyti į numatytą"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:387
+#: editor/key-list-box-row.vala:460
 msgid "Show details…"
 msgstr "Rodyti informaciją…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:390
+#: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
 msgstr "Atmesti pakeitimą"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:393 editor/key-list-box-row.vala:500
-#: editor/registry-info.ui:112
+#. Translators: label of the action button of an infobar, when a key is not defined by a schema
+#: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
+#: editor/registry-info.ui:116
 msgid "Erase key"
 msgstr "Ištrinti raktą"
 
+#. Translators: "go to" action in the right-click menu on a "go back" line during search
+#: editor/key-list-box-row.vala:469
+#| msgctxt "shortcut window"
+#| msgid "Bookmark this path"
+msgid "Go to this path"
+msgstr "Eiti į šį kelią"
+
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:396
+#: editor/key-list-box-row.vala:472
 msgid "Open"
 msgstr "Atverti"
 
+#. Translators: "open search" action in the right-click menu on a search
+#. Translators: accessible name of the enter-search button displayed in small-size windows
+#. Translators: accessible name of the search togglebutton displayed in usual-size windows
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:46
+#: editor/pathwidget.ui:72
+msgid "Search"
+msgstr "Paieška"
+
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:399
+#: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
 msgstr "Atverti tėvinį aplanką"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:402
+#: editor/key-list-box-row.vala:484
 msgid "Reset recursively"
 msgstr "Rekursyviai atstatyti"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:405
+#: editor/key-list-box-row.vala:487
 msgid "Do not erase"
 msgstr "Neištrinti"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:494
+#: editor/key-list-box-row.vala:576
 msgid "No change"
 msgstr "Nėra pakeitimo"
 
-#: editor/modifications-revealer.ui:66
-msgid "Apply"
-msgstr "Pritaikyti"
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:351
+msgid "Signed 16-bit integer"
+msgstr "16-bitų sveikas skaičius su ženklu"
 
-#: editor/modifications-revealer.ui:104
-msgid "Delayed setting changes will be shown here"
-msgstr "Atidėti nustatymų pakeitimai bus rodomi čia"
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgid "Unsigned 16-bit integer"
+msgstr "16-bitų sveikas skaičius be ženklo"
 
-#: editor/modifications-revealer.vala:132
-#: editor/modifications-revealer.vala:340
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:357
+msgid "Signed 32-bit integer"
+msgstr "32-bitų sveikas skaičius su ženklu"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:360
+msgid "Unsigned 32-bit integer"
+msgstr "32-bitų sveikas skaičius be ženklo"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:363
+msgid "Signed 64-bit integer"
+msgstr "64-bitų sveikas skaičius su ženklu"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:366
+msgid "Unsigned 64-bit integer"
+msgstr "64-bitų sveikas skaičius be ženklo"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:369
+msgid "Boolean"
+msgstr "Loginis"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:372
+#| msgid "Boolean"
+msgid "boolean"
+msgstr "loginis"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:375
+msgid "String"
+msgstr "Simbolių eilutė"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:378
+#| msgid "String"
+msgid "string"
+msgstr "simbolių eilutė"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:381
+msgid "String array"
+msgstr "Simbolių eilučių masyvas"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:384
+#| msgid "String array"
+msgid "string array"
+msgstr "simbolių eilučių masyvas"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:387
+msgid "Enumeration"
+msgstr "Išvardinimas"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:390
+#| msgid "Enumeration"
+msgid "enumeration"
+msgstr "išvardinimas"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:393
+msgid "Flags"
+msgstr "Požymiai"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:396
+#| msgid "Flags"
+msgid "flags"
+msgstr "požymiai"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:399
+msgid "Double"
+msgstr "Dvigubo tikslumo"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:402
+#| msgid "Double"
+msgid "double"
+msgstr "dvigubo tikslumo"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:405 editor/model-utils.vala:408
+msgid "D-Bus handle type"
+msgstr "D-Bus rankenėlės tipas"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:411 editor/model-utils.vala:414
+msgid "D-Bus object path"
+msgstr "D-Bus objekto kelias"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:417 editor/model-utils.vala:420
+msgid "D-Bus object path array"
+msgstr "D-Bus objektų kelių masyvas"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:423 editor/model-utils.vala:426
+msgid "D-Bus signature"
+msgstr "D-Bus aprašas"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:429
+msgid "Integer"
+msgstr "Sveikas skaičius"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:432
+#| msgid "Integer"
+msgid "integer"
+msgstr "sveikas skaičius"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:435
+msgid "Variant"
+msgstr "Variantas"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:438
+#| msgid "Variant"
+msgid "variant"
+msgstr "variantas"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:441
+msgid "Empty tuple"
+msgstr "Tuščias junginys"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:444
+#| msgid "Empty tuple"
+msgid "empty tuple"
+msgstr "tuščias junginys"
+
+#. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
+#: editor/modifications-list.vala:28
+msgid ""
+"Delayed mode is on\n"
+"but\n"
+"no pending changes"
+msgstr ""
+"Įjungta atidėta veiksena,\n"
+"bet\n"
+"nėra laukiančių pakeitimų"
+
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
+#: editor/modifications-list.vala:32
+msgid "Rule all"
+msgstr "Pritaikyti visiems"
+
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
+#: editor/modifications-list.vala:34
+msgid "Select"
+msgstr "Pasirinkti"
+
+#. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
+#: editor/modifications-revealer.vala:136
+#: editor/modifications-revealer.vala:323
 msgid "Nothing to reset."
 msgstr "Nėra ką atstatyti."
 
-#: editor/modifications-revealer.vala:319
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
+#: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
 msgstr "Vertė yra netinkama."
 
-#: editor/modifications-revealer.vala:326
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
+#: editor/modifications-revealer.vala:307
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr "Pakeitimas bus atmestas, jei užversite šį rodinį jo nepritaikę."
 
-#: editor/modifications-revealer.vala:331
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
+#: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
 msgstr "Pakeitimas bus pritaikytas jo paprašius arba jei užversite šį rodinį."
 
-#: editor/modifications-revealer.vala:352
+#. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
+#: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
 msgstr "Pakeitimai bus atidėti iki jų paprašysite."
 
-#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:354
+#. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -1286,8 +2034,8 @@ msgstr[0] "Laukia %u gsettings veiksmas."
 msgstr[1] "Laukia %u gsettings veiksmai."
 msgstr[2] "Laukia %u gsettings veiksmų."
 
-#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:358
+#. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -1295,14 +2043,15 @@ msgstr[0] "Atidėtas %u dconf veiksmas."
 msgstr[1] "Atidėti %u dconf veiksmai."
 msgstr[2] "Atidėta %u dconf veiksmų."
 
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:361
+#. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
+#: editor/modifications-revealer.vala:347
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:361
+#. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:351
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -1310,11 +2059,11 @@ msgstr[0] "%u gsettings veiksmas."
 msgstr[1] "%u gsettings veiksmai."
 msgstr[2] "%u gsettings veiksmų."
 
-#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, and
+#. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:366
+#: editor/modifications-revealer.vala:357
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
@@ -1322,11 +2071,32 @@ msgstr[0] " ir %u atidėtas dconf veiksmas."
 msgstr[1] " ir %u atidėti dconf veiksmai."
 msgstr[2] " ir %u atidėtų dconf veiksmų."
 
-#: editor/pathbar.vala:316
-msgid "Copy current path"
-msgstr "Kopijuoti dabartinį kelią"
+#. Translators: accessible name of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:43
+#| msgctxt "shortcut window"
+#| msgid "Toggle search bar"
+msgid "Close search"
+msgstr "Užverti paiešką"
 
-#: editor/registry-info.ui:32
+#. Translators: accessible description of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:45
+#| msgid "Refresh search results"
+msgid "Close search results"
+msgstr "Užverti paieškos rezultatus"
+
+#. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
+#: editor/pathentry.ui:69
+msgid "Refresh search results"
+msgstr "Atnaujinti paieškos rezultatus"
+
+#. Translators: accessible description of the enter-search button displayed in small-size windows
+#. Translators: accessible description of the search togglebutton displayed in usual-size windows
+#: editor/pathwidget.ui:48 editor/pathwidget.ui:74
+msgid "Search keys"
+msgstr "Paieškos raktai"
+
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
+#: editor/registry-info.ui:33
 msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
@@ -1334,7 +2104,8 @@ msgstr ""
 "Šį raktą apibrėžia ir naudoja daugiau nei vienas schema. Tai gali sukelti "
 "problemų. Keisdami vertę rizikuojate."
 
-#: editor/registry-info.ui:69
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
+#: editor/registry-info.ui:71
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
@@ -1342,7 +2113,8 @@ msgstr ""
 "Šis raktas yra nesuderinamai apibrėžtas daugiau nei vienoje schemoje. "
 "Neįmanoma prasmingai dirbti su jo verte."
 
-#: editor/registry-info.ui:106
+#. Translators: warning text of an infobar, when a key is not defined by a schema
+#: editor/registry-info.ui:109
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
 "Editor can’t find one associated with this key. If the application that was "
@@ -1354,7 +2126,8 @@ msgstr ""
 "šį raktą galėjo būti pašalinta arba šis raktas yra pasenę, galite norėti jį "
 "ištrinti."
 
-#: editor/registry-info.ui:151
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/registry-info.ui:156
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1363,7 +2136,8 @@ msgstr ""
 "Šiame išvardinime yra tik vienas pasirinkimas. Tai greičiausiai yra klaida "
 "šią schemą įdiegusioje programoje. Jei įmanoma, praneškite apie klaidą."
 
-#: editor/registry-info.ui:161
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/registry-info.ui:167
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1373,7 +2147,8 @@ msgstr ""
 "klaida šią schemą įdiegusioje programoje. Jei įmanoma, praneškite apie "
 "klaidą."
 
-#: editor/registry-info.ui:171
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/registry-info.ui:178
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1383,60 +2158,106 @@ msgstr ""
 "klaida šią schemą įdiegusioje programoje. Jei įmanoma, praneškite apie "
 "klaidą."
 
-#: editor/registry-info.vala:127
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Vardas"
+
+#. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
+#: editor/registry-info.vala:73
 msgid "Defined by"
 msgstr "Apibrėžė"
 
-#: editor/registry-info.vala:130
+#. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
+#: editor/registry-info.vala:76
 msgid "Schema"
 msgstr "Schema"
 
-#: editor/registry-info.vala:136
+#. Translators: field description when displaying key properties; a summary describing the key use
+#: editor/registry-info.vala:79
 msgid "Summary"
 msgstr "Santrauka"
 
-#: editor/registry-info.vala:137 editor/registry-list.vala:337
-msgid "No summary provided"
-msgstr "Nepateikta santrauka"
-
-#: editor/registry-info.vala:144
+#. Translators: field description when displaying key properties; a description describing deeply the key use
+#: editor/registry-info.vala:82
 msgid "Description"
 msgstr "Aprašymas"
 
-#: editor/registry-info.vala:145
-msgid "No description provided"
-msgstr "Nepateikta santrauka"
-
-#. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:150
+#. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
+#: editor/registry-info.vala:85
 msgid "Type"
 msgstr "Tipas"
 
-#: editor/registry-info.vala:162
+#. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
+#: editor/registry-info.vala:89
+#| msgid "Type"
+msgid "Type name"
+msgstr "Tipo pavadinimas"
+
+#. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
+#: editor/registry-info.vala:93
+#| msgid "Type"
+msgid "Type code"
+msgstr "Tipo kodas"
+
+#. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
+#: editor/registry-info.vala:96
 msgid "Forced range"
 msgstr "Privalomi rėžiai"
 
-#: editor/registry-info.vala:162
-msgid "Yes"
-msgstr "Taip"
-
-#: editor/registry-info.vala:162
-msgid "No"
-msgstr "Ne"
-
-#: editor/registry-info.vala:170
+#. Translators: field description when displaying key properties; the minimum value a numeral key can take
+#: editor/registry-info.vala:99
 msgid "Minimum"
 msgstr "Mažiausia"
 
-#: editor/registry-info.vala:172
+#. Translators: field description when displaying key properties; the maximum value a numeral key can take
+#: editor/registry-info.vala:102
 msgid "Maximum"
 msgstr "Didžiausia"
 
-#: editor/registry-info.vala:183
+#. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
+#: editor/registry-info.vala:105
 msgid "Default"
 msgstr "Numatyta"
 
-#: editor/registry-info.vala:187
+#. Translators: field description when displaying key properties; the current value of the key
+#: editor/registry-info.vala:108
+msgid "Current value"
+msgstr "Dabartinė vertė"
+
+#. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
+#: editor/registry-info.vala:111
+msgid "Use default value"
+msgstr "Naudoti numatytąją vertę"
+
+#. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
+#: editor/registry-info.vala:114
+msgid "Custom value"
+msgstr "Pasirinktinė vertė"
+
+#. Translators: field content when displaying key properties; if the key does not have a summary describing its use
+#. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
+#: editor/registry-info.vala:202 editor/registry-list.vala:491
+msgid "No summary provided"
+msgstr "Nepateikta santrauka"
+
+#. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
+#: editor/registry-info.vala:212
+msgid "No description provided"
+msgstr "Nepateikta santrauka"
+
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:249
+msgid "Yes"
+msgstr "Taip"
+
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:252
+msgid "No"
+msgstr "Ne"
+
+#. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
+#: editor/registry-info.vala:280
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
@@ -1444,20 +2265,8 @@ msgstr ""
 "Yra konfliktuojančių šio rakto apibrėžimų, vertės gavimas gali būti "
 "problematiškas arba neprasmingas."
 
-#: editor/registry-info.vala:206
-msgid "Current value"
-msgstr "Dabartinė vertė"
-
-#: editor/registry-info.vala:310
-msgid "Use default value"
-msgstr "Naudoti numatytąją vertę"
-
-#. TODO "only" used for string-based and spin widgets
-#: editor/registry-info.vala:328
-msgid "Custom value"
-msgstr "Pasirinktinė vertė"
-
-#: editor/registry-info.vala:513
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
+#: editor/registry-info.vala:615
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
@@ -1465,7 +2274,8 @@ msgstr ""
 "Naudokite tašką kaip dešimtųjų skirtuką ir nenaudokite tūkstančių skirtuko. "
 "Galit naudoti X.Ye+Z notaciją."
 
-#: editor/registry-info.vala:517
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
+#: editor/registry-info.vala:620
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
@@ -1475,8 +2285,8 @@ msgstr ""
 "dokumentaciją rasite adresu https://developer.gnome.org/glib/stable/gvariant-"
 "text.html."
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:524
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:627
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1486,14 +2296,15 @@ msgstr ""
 "į tuščia vertę. Simbolių eilutės bei objektų keliai turi būti apsupti "
 "kabutėmis."
 
-#: editor/registry-info.vala:526
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
+#: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Simbolių eilutės, aprašai bei objektų keliai turi būti apsupti kabutėmis."
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:531
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:635
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1501,127 +2312,162 @@ msgstr ""
 "Naudokite raktinį žodį „nothing“ galimam tipui (prasidedančiam „m“) "
 "nustatyti į tuščią vertę."
 
-#: editor/registry-list.vala:363
+#. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
+#: editor/registry-info.vala:674
+msgid "Key erased."
+msgstr "Raktas ištrintas."
+
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
+#: editor/registry-list.vala:518
 msgid "conflicting keys"
 msgstr "konfliktuojantys raktai"
 
-#: editor/registry-list.vala:377
-msgid "No Schema Found"
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
+#: editor/registry-list.vala:521
+#| msgid "conflicting keys"
+msgid "conflict"
+msgstr "konfliktas"
+
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+#| msgid "No Schema Found"
+msgid "No schema found"
 msgstr "Nerasta schema"
 
-#: editor/registry-search.vala:28
-msgid "No matches"
-msgstr "Nėra atitikmenų"
+#. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
+#: editor/registry-list.vala:638
+#| msgid "Key erased"
+msgid "key erased"
+msgstr "raktas ištrintas"
 
-#: editor/registry-search.vala:377
-msgid "Current folder"
-msgstr "Dabartinis aplankas"
+#. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
+#: editor/registry-list.vala:641
+#| msgid "Key erased"
+msgid "erased"
+msgstr "ištrintas"
 
-#: editor/registry-search.vala:381
-msgid "Folders"
-msgstr "Aplankai"
+#. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
+#: editor/registry-list.vala:679
+#, c-format
+msgid "type “%s”"
+msgstr "tipas „%s“"
 
-#: editor/registry-search.vala:383
-msgid "Keys"
-msgstr "Raktai"
+#. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
+#: editor/registry-list.vala:1176
+#, c-format
+#| msgid "%s (key erased)"
+msgid "%s (local keys)"
+msgstr "%s (vietiniai raktai)"
 
-#: editor/registry-view.vala:25
-msgid "No keys in this path"
-msgstr "Nėra raktų šiame kelyje"
+#. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
+#: editor/registry-list.vala:1182
+#| msgid "Keys not defined by a schema"
+msgid "Local keys not defined by a schema"
+msgstr "Vietiniai raktai, neapibrėžti schemos"
 
-#: editor/registry-view.vala:126
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1186
 msgid "Keys not defined by a schema"
 msgstr "Raktai, neapibrėžti schemos"
 
-#: editor/setting-object.vala:64
-msgid "Boolean"
-msgstr "Loginis"
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1196
+#| msgid "Folders"
+msgid "Subfolders"
+msgstr "Poaplankiai"
 
-#: editor/setting-object.vala:66
-msgid "String"
-msgstr "Simbolių eilutė"
+#: editor/registry-list.vala:1200
+#| msgid "Current view actions"
+msgid "Other actions"
+msgstr "Kiti veiksmai"
 
-#: editor/setting-object.vala:68
-msgid "String array"
-msgstr "Simbolių eilučių masyvas"
+#. Translators: placeholder text of the search list when there's no search results (not used in current design)
+#: editor/registry-search.vala:26
+msgid "No matches"
+msgstr "Nėra atitikmenų"
 
-#: editor/setting-object.vala:70
-msgid "Enumeration"
-msgstr "Išvardinimas"
+#. Translators: header displayed in the keys list during a search only
+#: editor/registry-search.vala:556
+msgid "Folders"
+msgstr "Aplankai"
 
-#: editor/setting-object.vala:72
-msgid "Flags"
-msgstr "Požymiai"
+#. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
+#: editor/registry-view.vala:23
+msgid "No keys in this path"
+msgstr "Nėra raktų šiame kelyje"
 
-#: editor/setting-object.vala:74
-msgid "Double"
-msgstr "Dvigubo tikslumo"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/setting-object.vala:77
-msgid "D-Bus handle type"
-msgstr "D-Bus rankenėlės tipas"
-
-#: editor/setting-object.vala:79
-msgid "D-Bus object path"
-msgstr "D-Bus objekto kelias"
-
-#: editor/setting-object.vala:81
-msgid "D-Bus object path array"
-msgstr "D-Bus objektų kelių masyvas"
-
-#: editor/setting-object.vala:83
-msgid "D-Bus signature"
-msgstr "D-Bus aprašas"
-
-#: editor/setting-object.vala:91
-msgid "Integer"
-msgstr "Sveikas skaičius"
-
-#: editor/setting-object.vala:93
-msgid "Variant"
-msgstr "Variantas"
-
-#: editor/setting-object.vala:95
-msgid "Empty tuple"
-msgstr "Tuščias junginys"
-
-#: editor/setting-object.vala:214
+#. Translators: the boolean "true" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:173
 msgid "True"
 msgstr "Teigiama"
 
-#: editor/setting-object.vala:216
+#. Translators: the boolean "false" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:177
 msgid "False"
 msgstr "Neigiama"
 
-#: editor/setting-object.vala:217
+#. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
+#: editor/setting-object.vala:180
 msgid "Nothing"
 msgstr "Nieko"
 
-#: editor/setting-object.vala:222
+#. Translators: the boolean "true" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:186
 msgid "true"
 msgstr "teigiama"
 
-#: editor/setting-object.vala:224
+#. Translators: the boolean "false" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:190
 msgid "false"
 msgstr "neigiama"
 
-#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/setting-object.vala:226
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); "nothing" here is a keyword that should appear for consistence, so please translate as "yourtranslation (nothing)"
+#: editor/setting-object.vala:193
 msgid "nothing"
 msgstr "nieko"
 
-#: editor/setting-object.vala:429
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
+#: editor/setting-object.vala:404
 msgid "Schema with path"
 msgstr "Schema su keliu"
 
-#: editor/setting-object.vala:431
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
+#: editor/setting-object.vala:408
 msgid "Relocatable schema"
 msgstr "Perkeliamos schemos"
 
-#: editor/setting-object.vala:432
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
+#: editor/setting-object.vala:411
 msgid "DConf backend"
 msgstr "DConf realizacija"
+
+#~ msgid "Remove"
+#~ msgstr "Pašalinti"
+
+#~ msgid "Remove this bookmark"
+#~ msgstr "Pašalinti šią žymelę"
+
+#~ msgid "_About"
+#~ msgstr "_Apie"
+
+#~ msgid "_Quit"
+#~ msgstr "_Išeiti"
+
+#~ msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
+#~ msgstr ""
+#~ "[KELIAS|FIKSUOTA_SCHEMA [RAKTAS]|PERKELIAMAS_SCHEMA:KELIAS [RAKTAS]]"
+
+#~ msgid "Copy descriptor"
+#~ msgstr "Kopijuoti deskriptorių"
+
+#~ msgid "Delayed setting changes will be shown here"
+#~ msgstr "Atidėti nustatymų pakeitimai bus rodomi čia"
+
+#~ msgid "Current folder"
+#~ msgstr "Dabartinis aplankas"
+
+#~ msgid "Keys"
+#~ msgstr "Raktai"
 
 #~ msgid "A flag to sort folders before, after or mixed with keys"
 #~ msgstr ""
@@ -1692,18 +2538,11 @@ msgstr "DConf realizacija"
 #~ msgstr "Atsisakyti"
 
 #~ msgctxt "shortcut window"
-#~ msgid "Toggle search bar"
-#~ msgstr "Perjungti paieškos juostą"
-
-#~ msgctxt "shortcut window"
 #~ msgid "Bookmarks"
 #~ msgstr "Žymelės"
 
 #~ msgid "_Find…"
 #~ msgstr "_Rasti…"
-
-#~ msgid "Next"
-#~ msgstr "Kitas"
 
 #~ msgid "Not found"
 #~ msgstr "Nerasta"
@@ -1742,9 +2581,6 @@ msgstr "DConf realizacija"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Klaida nustatant reikšmę: %s"
-
-#~ msgid "Name"
-#~ msgstr "Vardas"
 
 #~ msgid "Value"
 #~ msgstr "Vertė"
