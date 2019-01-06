@@ -30,6 +30,12 @@ private class PathEntry : Box, AdaptativeWidget
     [CCode (notify = false)] internal string text { get { return search_entry.text; }}
     [CCode (notify = false)] internal bool entry_has_focus { get { return search_entry.has_focus; }}
 
+    internal override void get_preferred_width (out int minimum_width, out int natural_width)
+    {
+        base.get_preferred_width (out minimum_width, out natural_width);
+        minimum_width = 72; // the search entry does something wrong that makes the first size_allocate ask for 478px width instead of 349
+    }
+
     private ulong can_reload_handler = 0;
     private bool thin_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
