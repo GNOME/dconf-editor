@@ -4,7 +4,7 @@
   <template class="ShortPathbar" parent="GtkGrid">
     <property name="orientation">horizontal</property>
     <property name="column-spacing">6</property>
-    <child>
+    <!-- child>
       <object class="GtkMenuButton" id="menu_button">
         <property name="visible">True</property>
         <style>
@@ -17,21 +17,34 @@
             <property name="icon-size">1</property>
           </object>
         </child>
-        <!-- child internal-child="accessible">
+        <! child internal-child="accessible">
           <object class="AtkObject">
             < Translators: ... >
             <property name="AtkObject::accessible-name" translatable="yes">Search</property>
             < Translators: ... >
             <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
           </object>
-        </child -->
+        </child >
       </object>
-    </child>
+    </child -->
     <child>
-      <object class="GtkLabel" id="view_label">
+      <object class="GtkMenuButton" id="menu_button">
         <property name="visible">True</property>
+        <property name="hexpand">True</property>
         <property name="xalign">0</property>
-        <property name="ellipsize">end</property>
+        <signal name="button-press-event" handler="on_button_press_event"/>
+        <signal name="clicked"            handler="on_button_clicked"/>
+        <style>
+          <class name="invisible"/>
+          <class name="invisible-menu-button"/>
+        </style>
+        <child>
+          <object class="GtkLabel" id="view_label">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="ellipsize">end</property>
+          </object>
+        </child>
       </object>
     </child>
   </template>

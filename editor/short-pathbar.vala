@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/short-pathbar.ui")]
-private class ShortPathbar : Grid, Pathbar
+private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
 {
     private string non_ghost_path = "";
 
@@ -45,6 +45,33 @@ private class ShortPathbar : Grid, Pathbar
         complete_path = complete_path_or_empty;
         non_ghost_path = complete_path_or_empty;
         set_path (type, path);
+    }
+
+    /*\
+    * * callbacks
+    \*/
+
+    private int event_x = 0;
+
+    [GtkCallback]
+    private bool on_button_press_event (Widget widget, Gdk.EventButton event)
+    {
+        event_x = (int) event.x;
+        return false;
+    }
+
+    [GtkCallback]
+    private void on_button_clicked (Button button)
+    {
+        MenuButton menu_button = (MenuButton) button;
+        Popover? popover = menu_button.get_popover ();
+        if (popover == null)
+            assert_not_reached ();
+
+        Allocation allocation;
+        menu_button.get_allocated_size (out allocation, null);
+        Gdk.Rectangle rect = { x:event_x, y:allocation.height, width:0, height:0 };
+        ((!) popover).set_pointing_to (rect);
     }
 
     /*\

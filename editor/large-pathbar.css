@@ -73,7 +73,7 @@ box.pathbar         > label {
   color:currentColor;
 }
 
-.pathbar            > button.invisible {
+button.invisible {
   padding:0;
   min-width:0;
 
@@ -84,6 +84,14 @@ box.pathbar         > label {
   background-color:transparent;
   color:currentColor;
 }
+
+button.invisible.invisible-menu-button {
+  background-repeat:no-repeat;
+  background-size:1.1rem;
+  background-image:-gtk-icontheme("pan-down-symbolic");
+}
+button.invisible.invisible-menu-button:dir(ltr) { padding-left :1.4rem; background-position:0    center; }
+button.invisible.invisible-menu-button:dir(rtl) { padding-right:1.4rem; background-position:100% center; }
 
 /* items hacks */
 .small-window.startup .pathbar  > button                        > label.item { /* class remove after 0.3s */

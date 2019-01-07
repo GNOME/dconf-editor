@@ -650,7 +650,7 @@ private abstract class BrowserWindow : BaseWindow
             return;
 
         init_next_search = true;
-        request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);
+        request_search (PathEntry.SearchMode.EDIT_PATH_SELECT_LAST_WORD);   // TODO make pressing multiple time <ctrl><shift>l select one more parent folder each time
     }
 
     /*\
