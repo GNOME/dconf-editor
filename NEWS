@@ -1,3 +1,19 @@
+dconf-editor 3.31.4
+=====================
+
+The UI and the features should mostly stay the same now until the future release
+3.32 (planned in March). They include a search running from current folder, some
+new keyboard shortcuts and functionalities, the ability to run on a really small
+screen (vertically and horizontally), the (temporary) remove of the "Show folder
+informations", and various big or small improvements everywhere. Happy new year.
+
+Translations updated:
+  Esperanto: Philip Goto
+  Friulian: Fabio Tomat
+  German: Tim Sabsch
+  Lithuanian: Aurimas Černius
+  Spanish: Daniel Mustieles
+
 dconf-editor 3.31.2
 =====================
 
