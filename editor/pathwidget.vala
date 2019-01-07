@@ -27,34 +27,51 @@ private class PathWidget : Box, AdaptativeWidget
     [GtkChild] private AdaptativePathbar    pathbar;
     [GtkChild] private PathEntry            searchentry;
 
+    [GtkChild] private Revealer             parent_revealer;
+    [GtkChild] private ModelButton          parent_button;
+
     internal signal void search_changed ();
     internal signal void search_stopped ();
 
     private ThemedIcon search_icon = new ThemedIcon.from_names ({"edit-find-symbolic"});
+    private ThemedIcon parent_icon = new ThemedIcon.from_names ({"go-up-symbolic"});
     construct
     {
         search_toggle.icon = search_icon;
         search_button.icon = search_icon;
+        parent_button.icon = parent_icon;
     }
 
-    private bool thin_window = false;
+    private bool quite_thin_window = false;
+    private bool extra_thin_window = false;
     private void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         pathbar.set_window_size (new_size);
 
-        bool _thin_window = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
-        if (thin_window != _thin_window)
+        bool _quite_thin_window = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
+        bool _extra_thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        if (quite_thin_window != _quite_thin_window
+         || extra_thin_window != _extra_thin_window)
         {
-            thin_window = _thin_window;
-            if (_thin_window)
+            quite_thin_window = _quite_thin_window;
+            extra_thin_window = _extra_thin_window;
+            if (_extra_thin_window)
             {
                 search_toggle.hide ();
                 search_button.show ();
+                parent_revealer.set_reveal_child (true);
+            }
+            else if (_quite_thin_window)
+            {
+                search_toggle.hide ();
+                search_button.show ();
+                parent_revealer.set_reveal_child (false);
             }
             else
             {
                 search_button.hide ();
                 search_toggle.show ();
+                parent_revealer.set_reveal_child (false);
             }
         }
 
@@ -107,9 +124,22 @@ private class PathWidget : Box, AdaptativeWidget
         pathbar.set_path (type, path);
         searchentry.set_path (type, path);
 
-        if (type == ViewType.SEARCH && !search_mode_enabled)
+        bool is_search = type == ViewType.SEARCH;
+
+        if (!is_search)
+        {
+            if (path != "/")
+            {
+                Variant path_variant = new Variant.string (path);
+                parent_button.set_detailed_action_name ("browser.open-parent(" + path_variant.print (false) + ")");
+            }
+            else
+                parent_button.set_detailed_action_name ("browser.disabled-state-s('/')");
+        }
+
+        if (is_search && !search_mode_enabled)
             enter_search_mode ();
-        else if (type != ViewType.SEARCH && search_mode_enabled)
+        else if (!is_search && search_mode_enabled)
             leave_search_mode ();
     }
 

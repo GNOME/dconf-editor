@@ -65,7 +65,9 @@ private abstract class BrowserWindow : BaseWindow
         action_group.add_action_entries (browser_action_entries, this);
         insert_action_group ("browser", action_group);
 
-        disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state");
+        disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state-s");
+        disabled_state_action.set_enabled (false);
+        disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state-sq");
         disabled_state_action.set_enabled (false);
 
         open_path_action = (SimpleAction) action_group.lookup_action ("open-path");
@@ -78,7 +80,8 @@ private abstract class BrowserWindow : BaseWindow
     {
         { "empty",              empty, "*" },
         { "empty-null",         empty },
-        { "disabled-state",     empty, "(sq)", "('',uint16 65535)" },
+        { "disabled-state-s",   empty, "s", "''" },
+        { "disabled-state-sq",  empty, "(sq)", "('',uint16 65535)" },
 
         { "open-folder",        open_folder, "s" },
         { "open-object",        open_object, "(sq)" },

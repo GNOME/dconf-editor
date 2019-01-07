@@ -155,7 +155,7 @@ private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
             if (non_ghost_path.has_prefix (tmp_path))
                 menu.append (item, "browser.open-path(" + variant.print (true) + ")");  // TODO append or prepend?
             else
-                menu.append (item, "browser.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
+                menu.append (item, "browser.disabled-state-sq(" + variant.print (true) + ")");  // TODO append or prepend?
         }
 
         // key or nothing
@@ -171,7 +171,7 @@ private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
             if (non_ghost_path.has_prefix (tmp_path))   // FIXME problem if key and folder named similarly
                 menu.append (last, "browser.open-path(" + variant.print (true) + ")");
             else
-                menu.append (last, "browser.disabled-state(" + variant.print (true) + ")");  // TODO append or prepend?
+                menu.append (last, "browser.disabled-state-sq(" + variant.print (true) + ")");  // TODO append or prepend?
         }
 
         section.freeze ();
