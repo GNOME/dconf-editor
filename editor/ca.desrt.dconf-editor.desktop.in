@@ -1,8 +1,10 @@
 [Desktop Entry]
 Name=dconf Editor
+# Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 GenericName=Configuration editor for dconf
+# Translators: a Comment that gives the application function, as defined in the desktop file spec
 Comment=Directly edit your entire configuration database
-# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+# Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 Keywords=settings;configuration;
 Exec=dconf-editor
 Terminal=false

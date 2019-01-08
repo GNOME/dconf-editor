@@ -189,8 +189,14 @@ private abstract class Key : SettingObject
                 /* Translators: the boolean "false" value; non capitalized (if that makes sense) */
                 return _("false");
 
-            /* Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); "nothing" here is a keyword that should appear for consistence, so please translate as "yourtranslation (nothing)" */
-            return _("nothing");
+
+            /* Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules */
+            string nothing = _("nothing (%s)").printf ("nothing");
+            if (nothing != "nothing (nothing)")
+                return nothing;
+
+            /* Translators: "nothing" value of a nullable key; non capitalized (if that makes sense) */
+            return _("nothing");    // it has been asked to translate that as "atranslation (nothing)"
         }
     }
 

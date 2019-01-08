@@ -1197,6 +1197,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
         else if ((!) row_content is FilterListBoxRow)
         {
+            /* Translators: last header displayed in the keys list during a local search */
             label_text = _("Other actions");
         }
         else if (!((!) row_content is SearchListBoxRow))
