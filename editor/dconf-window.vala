@@ -85,7 +85,7 @@ internal enum ViewType {
     }
 }
 
-private class DConfWindow : BrowserWindow
+private class DConfWindow : BookmarksWindow
 {
     private SettingsModel model;
     private ModificationsHandler modifications_handler;
@@ -95,11 +95,7 @@ private class DConfWindow : BrowserWindow
     private ulong use_shortpaths_changed_handler = 0;
     private ulong behaviour_changed_handler = 0;
 
-    private ulong headerbar_update_bookmarks_icons_handler = 0;
-    private ulong main_view_update_bookmarks_icons_handler = 0;
-
     private ulong delayed_changes_changed_handler = 0;
-    private ulong bookmarks_selection_changed_handler = 0;
 
     private DConfHeaderBar headerbar;
     private DConfView      main_view;
@@ -125,12 +121,6 @@ private class DConfWindow : BrowserWindow
 
         install_ui_action_entries ();
         install_kbd_action_entries ();
-        install_bmk_action_entries ();
-
-        bookmarks_selection_changed_handler = main_view.bookmarks_selection_changed.connect (on_bookmarks_selection_changed);
-
-        headerbar_update_bookmarks_icons_handler = headerbar.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
-        main_view_update_bookmarks_icons_handler = main_view.update_bookmarks_icons.connect (update_bookmarks_icons_from_variant);
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -384,13 +374,11 @@ private class DConfWindow : BrowserWindow
 
     protected override void before_destroy ()
     {
+        base.before_destroy ();
+
         ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
-        main_view.disconnect (bookmarks_selection_changed_handler);
         modifications_handler.disconnect (delayed_changes_changed_handler);
-
-        headerbar.disconnect (headerbar_update_bookmarks_icons_handler);
-        main_view.disconnect (main_view_update_bookmarks_icons_handler);
 
         settings.disconnect (settings_user_paths_changed_handler);
         settings.disconnect (settings_enabled_mappings_changed_handler);
@@ -434,10 +422,7 @@ private class DConfWindow : BrowserWindow
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
-        { "show-in-window-bookmarks",       show_use_bookmarks_view },
         { "show-in-window-modifications",   show_modifications_view },
-
-        { "update-bookmarks-icons", update_bookmarks_icons, "as" },
 
         { "notify-folder-emptied", notify_folder_emptied, "s" },
         { "notify-object-deleted", notify_object_deleted, "(sq)" }
@@ -516,17 +501,7 @@ private class DConfWindow : BrowserWindow
 
     protected override void show_default_view ()
     {
-        if (main_view.in_window_bookmarks)
-        {
-            if (main_view.in_window_bookmarks_edit_mode)
-                leave_edit_mode ();     // TODO place after
-            headerbar.show_default_view ();
-            main_view.show_default_view ();
-
-            if (current_type == ViewType.CONFIG)
-                request_folder (current_path);
-        }
-        else if (main_view.in_window_modifications)
+        if (main_view.in_window_modifications)
         {
             headerbar.show_default_view ();
             main_view.show_default_view ();
@@ -538,16 +513,6 @@ private class DConfWindow : BrowserWindow
             base.show_default_view ();
     }
 
-    private void show_use_bookmarks_view (/* SimpleAction action, Variant? path_variant */)
-    {
-        close_in_window_panels ();
-
-        headerbar.show_use_bookmarks_view ();
-        string [] bookmarks = headerbar.get_bookmarks ();
-        main_view.show_bookmarks_view (bookmarks);
-        update_bookmarks_icons_from_array (bookmarks);
-    }
-
     private void show_modifications_view (/* SimpleAction action, Variant? path_variant */)
     {
         close_in_window_panels ();
@@ -557,93 +522,51 @@ private class DConfWindow : BrowserWindow
     }
 
     /*\
-    * * updating bookmarks icons
+    * * bookmarks interaction
     \*/
 
-    private void update_bookmarks_icons (SimpleAction action, Variant? bookmarks_variant)
-        requires (bookmarks_variant != null)
+    protected override BookmarkIcon get_bookmark_icon (ref string bookmark)
     {
-        update_bookmarks_icons_from_variant ((!) bookmarks_variant);
-    }
+        uint16 context_id;
+        string name;
+        bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);    // TODO get_folder
 
-    private void update_bookmarks_icons_from_variant (Variant variant)
-    {
-        update_bookmarks_icons_from_array (variant.get_strv ());
-    }
-
-    private void update_bookmarks_icons_from_array (string [] bookmarks)
-    {
-        if (bookmarks.length == 0)
-            return;
-
-        foreach (string bookmark in bookmarks)
+        if (context_id == ModelUtils.folder_context_id)
         {
-            if (bookmark.has_prefix ("?"))  // TODO broken search
-            {
-                update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
-                continue;
-            }
-            if (BrowserWindow.is_path_invalid (bookmark)) // TODO broken folder and broken object
-                continue;
-
-            uint16 context_id;
-            string name;
-            bool bookmark_exists = model.get_object (bookmark, out context_id, out name, false);    // TODO get_folder
-
-            if (context_id == ModelUtils.folder_context_id)
-            {
-                if (bookmark_exists)
-                    update_bookmark_icon (bookmark, BookmarkIcon.VALID_FOLDER);
-                else
-                    update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_FOLDER);
-                continue;
-            }
-
-            if (!bookmark_exists)
-                update_bookmark_icon (bookmark, BookmarkIcon.EMPTY_OBJECT);
-            else if (context_id == ModelUtils.dconf_context_id)
-                update_bookmark_icon (bookmark, BookmarkIcon.DCONF_OBJECT);
+            if (bookmark_exists)
+                return BookmarkIcon.VALID_FOLDER;
             else
-            {
-                RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
-                bool is_default;
-                if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
-                    assert_not_reached ();
-                if (is_default)
-                    update_bookmark_icon (bookmark, BookmarkIcon.KEY_DEFAULTS);
-                else
-                    update_bookmark_icon (bookmark, BookmarkIcon.EDITED_VALUE);
-            }
+                return BookmarkIcon.EMPTY_FOLDER;
         }
-    }
 
-    private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
-    {
-        if (AdaptativeWidget.WindowSize.is_extra_thin (window_size)
-         || AdaptativeWidget.WindowSize.is_extra_flat (window_size))
-            main_view.update_bookmark_icon (bookmark, icon);
+        if (!bookmark_exists)
+            return BookmarkIcon.EMPTY_OBJECT;
+
+        if (context_id == ModelUtils.dconf_context_id)
+            return BookmarkIcon.DCONF_OBJECT;
+
+        RegistryVariantDict bookmark_properties = new RegistryVariantDict.from_aqv (model.get_key_properties (bookmark, context_id, (uint16) PropertyQuery.IS_DEFAULT));
+        bool is_default;
+        if (!bookmark_properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_default))
+            assert_not_reached ();
+
+        if (is_default)
+            return BookmarkIcon.KEY_DEFAULTS;
         else
-            headerbar.update_bookmark_icon (bookmark, icon);
+            return BookmarkIcon.EDITED_VALUE;
     }
 
     /*\
     * * adaptative stuff
     \*/
 
-    private bool disable_popovers = false;
     private bool disable_action_bar = false;
     protected override void chain_set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (disable_popovers != _disable_popovers)
-        {
-            disable_popovers = _disable_popovers;
-            if (main_view.in_window_bookmarks)
-                show_default_view ();
-        }
+        base.chain_set_window_size (new_size);
 
-        bool _disable_action_bar = _disable_popovers
+        bool _disable_action_bar = AdaptativeWidget.WindowSize.is_phone_size (new_size)
+                                || AdaptativeWidget.WindowSize.is_extra_thin (new_size)
                                 || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
         if (disable_action_bar != _disable_action_bar)
         {
@@ -651,115 +574,6 @@ private class DConfWindow : BrowserWindow
             if (main_view.in_window_modifications)
                 show_default_view ();
         }
-    }
-
-    /*\
-    * * bookmarks action entries
-    \*/
-
-    bool actions_init_done = false;
-    private SimpleAction move_top_action;
-    private SimpleAction move_up_action;
-    private SimpleAction move_down_action;
-    private SimpleAction move_bottom_action;
-    private SimpleAction trash_bookmark_action;
-    private SimpleAction edit_mode_state_action;
-
-    private void update_actions ()
-        requires (actions_init_done)
-    {
-        Bookmarks._update_actions (main_view.get_bookmarks_selection_state (), ref move_top_action, ref move_up_action, ref move_down_action, ref move_bottom_action, ref trash_bookmark_action);
-    }
-
-    private void install_bmk_action_entries ()
-    {
-        SimpleActionGroup action_group = new SimpleActionGroup ();
-        action_group.add_action_entries (bmk_action_entries, this);
-        insert_action_group ("bmk", action_group);
-
-        move_top_action         = (SimpleAction) action_group.lookup_action ("move-top");
-        move_up_action          = (SimpleAction) action_group.lookup_action ("move-up");
-        move_down_action        = (SimpleAction) action_group.lookup_action ("move-down");
-        move_bottom_action      = (SimpleAction) action_group.lookup_action ("move-bottom");
-        trash_bookmark_action   = (SimpleAction) action_group.lookup_action ("trash-bookmark");
-        edit_mode_state_action  = (SimpleAction) action_group.lookup_action ("set-edit-mode");
-        actions_init_done = true;
-    }
-
-    private const GLib.ActionEntry [] bmk_action_entries =
-    {
-        { "set-edit-mode", set_edit_mode, "b", "false" },
-
-        { "trash-bookmark", trash_bookmark },
-
-        { "move-top",    move_top    },
-        { "move-up",     move_up     },
-        { "move-down",   move_down   },
-        { "move-bottom", move_bottom }
-    };
-
-    private void set_edit_mode (SimpleAction action, Variant? variant)
-        requires (variant != null)
-    {
-        bool new_state = ((!) variant).get_boolean ();
-        action.set_state (new_state);
-
-        if (new_state)
-            enter_edit_mode ();
-        else
-            leave_edit_mode ();
-    }
-
-    private void enter_edit_mode ()
-    {
-        // edit_mode_state_action.change_state (true);
-
-        update_actions ();
-
-        headerbar.show_edit_bookmarks_view ();
-        main_view.enter_bookmarks_edit_mode ();
-    }
-
-    private void leave_edit_mode ()
-    {
-        edit_mode_state_action.set_state (false);
-
-        bool give_focus_to_info_button = main_view.leave_bookmarks_edit_mode ();
-        headerbar.show_use_bookmarks_view ();
-
-/*        if (give_focus_to_info_button)
-            info_button.grab_focus (); */
-    }
-
-    private void trash_bookmark (/* SimpleAction action, Variant? variant */)
-    {
-        main_view.trash_bookmark ();
-//        update_bookmarks_icons_from_array (new_bookmarks);
-    }
-
-    private void move_top       (/* SimpleAction action, Variant? variant */)
-    {
-        main_view.move_top ();
-    }
-
-    private void move_up        (/* SimpleAction action, Variant? variant */)
-    {
-        main_view.move_up ();
-    }
-
-    private void move_down      (/* SimpleAction action, Variant? variant */)
-    {
-        main_view.move_down ();
-    }
-
-    private void move_bottom    (/* SimpleAction action, Variant? variant */)
-    {
-        main_view.move_bottom ();
-    }
-
-    private void on_bookmarks_selection_changed ()
-    {
-        update_actions ();
     }
 
     /*\
@@ -775,50 +589,11 @@ private class DConfWindow : BrowserWindow
 
     private const GLib.ActionEntry [] kbd_action_entries =
     {
-        { "toggle-bookmark",    toggle_bookmark     },  // <P>b & <P>B
-        { "bookmark",           bookmark            },  // <P>d
-        { "unbookmark",         unbookmark          },  // <P>D
         { "modifications",      modifications_list  },  // <A>i
-
-        { "escape",             escape_pressed      },  // Escape
 
         { "toggle-boolean",     toggle_boolean      },  // <P>Return & <P>KP_Enter
         { "set-to-default",     set_to_default      }   // <P>Delete & <P>KP_Delete & decimalpoint & period & KP_Decimal
     };
-
-    private void toggle_bookmark                        (/* SimpleAction action, Variant? variant */)
-    {
-        main_view.close_popovers ();
-        if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
-         && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
-        {
-            if (main_view.in_window_modifications)
-                show_default_view ();
-            headerbar.click_bookmarks_button ();
-        }
-        else if (main_view.in_window_bookmarks)
-            show_default_view ();
-        else
-            show_use_bookmarks_view ();
-    }
-
-    private void bookmark                               (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())        // TODO better
-            return;
-
-        main_view.close_popovers ();
-        headerbar.bookmark_current_path ();
-    }
-
-    private void unbookmark                             (/* SimpleAction action, Variant? variant */)
-    {
-        if (is_in_in_window_mode ())        // TODO better
-            return;
-
-        main_view.close_popovers ();
-        headerbar.unbookmark_current_path ();
-    }
 
     private void modifications_list                     (/* SimpleAction action, Variant? variant */)
     {
@@ -832,23 +607,6 @@ private class DConfWindow : BrowserWindow
             show_default_view ();
         else
             show_modifications_view ();
-    }
-
-    private void escape_pressed                         (/* SimpleAction action, Variant? variant */)
-    {
-        if (main_view.in_window_bookmarks)
-        {
-            if (main_view.in_window_bookmarks_edit_mode)
-                leave_edit_mode ();
-            else
-                show_default_view ();
-        }
-        else if (main_view.in_window_modifications || in_window_about)
-            show_default_view ();
-        else if (headerbar.search_mode_enabled)
-            stop_search ();
-        else if (current_type == ViewType.CONFIG)
-            request_folder (current_path);
     }
 
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
@@ -879,39 +637,47 @@ private class DConfWindow : BrowserWindow
     }
 
     /*\
+    * * keyboard actions overrides
+    \*/
+
+    protected override void toggle_bookmark_called ()   // TODO better
+    {
+        if (main_view.in_window_modifications)
+            show_default_view ();
+    }
+
+    protected override void escape_pressed_called ()    // TODO better?
+    {
+        if (main_view.in_window_modifications || in_window_about)
+            show_default_view ();
+        else if (headerbar.search_mode_enabled)
+            stop_search ();
+        else if (current_type == ViewType.CONFIG)
+            request_folder (current_path);
+    }
+
+    /*\
     * * keyboard calls helpers
     \*/
 
     protected override bool intercept_next_match (out bool interception_result)
     {
-        if (headerbar.has_popover ())                   // for bookmarks popover
-        {
-            interception_result = headerbar.next_match ();
-            return true;
-        }
         if (revealer.get_modifications_list_state ())   // for modifications popover
         {
             interception_result = revealer.next_match ();
             return true;
         }
-        interception_result = false; // garbage
-        return false;
+        return base.intercept_next_match (out interception_result);
     }
 
     protected override bool intercept_previous_match (out bool interception_result)
     {
-        if (headerbar.has_popover ())                   // for bookmarks popover
-        {
-            interception_result = headerbar.previous_match ();
-            return true;
-        }
         if (revealer.get_modifications_list_state ())   // for modifications popover
         {
             interception_result = revealer.previous_match ();
             return true;
         }
-        interception_result = false; // garbage
-        return false;
+        return base.intercept_previous_match (out interception_result);
     }
 
     /*\

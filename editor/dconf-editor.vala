@@ -322,12 +322,12 @@ private class ConfigurationEditor : Gtk.Application
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         add_action_entries (action_entries, this);
-        set_accels_for_action ("kbd.toggle-bookmark",       {        "<Primary>b",
+        set_accels_for_action ("bw.toggle-bookmark",        {        "<Primary>b",
                                                               "<Shift><Primary>b"       });
         set_accels_for_action ("base.copy",                 {        "<Primary>c"       });
         set_accels_for_action ("base.copy-alt",             { "<Shift><Primary>c"       });
-        set_accels_for_action ("kbd.bookmark",              {        "<Primary>d"       });
-        set_accels_for_action ("kbd.unbookmark",            { "<Shift><Primary>d"       });
+        set_accels_for_action ("bw.bookmark",               {        "<Primary>d"       });
+        set_accels_for_action ("bw.unbookmark",             { "<Shift><Primary>d"       });
         set_accels_for_action ("key.search-global(false)",  {        "<Primary>f"       });
         set_accels_for_action ("key.search-local(false)",   { "<Shift><Primary>f"       });
         set_accels_for_action ("key.search-global(true)",   {        "<Primary><Alt>f"  });
@@ -349,7 +349,7 @@ private class ConfigurationEditor : Gtk.Application
         set_accels_for_action ("key.open-last-child",       { "<Shift><Alt>Down"        });
 
         set_accels_for_action ("base.toggle-hamburger",     {          "F10"            });
-        set_accels_for_action ("kbd.escape",                {          "Escape"         });
+        set_accels_for_action ("bw.escape",                 {          "Escape"         });
         set_accels_for_action ("base.menu",                 {          "Menu"           });
 
         set_accels_for_action ("kbd.set-to-default",        { "<Primary>Delete",

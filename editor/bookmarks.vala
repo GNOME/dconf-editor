@@ -99,7 +99,7 @@ private class Bookmarks : MenuButton
     [GtkCallback]
     private void on_bookmarks_changed (Variant bookmarks_variant, bool writable)
     {
-        set_detailed_action_name ("ui.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
+        set_detailed_action_name ("bw.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
 
         if (bookmarks_variant.get_strv ().length == 0)
         {

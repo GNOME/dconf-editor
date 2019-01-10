@@ -262,7 +262,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
                 section.append (_("Bookmark"), "headerbar.bookmark-current");
 
             /* Translators: hamburger menu entry on small windows, to show the bookmarks list */
-            section.append (_("Show bookmarks"), "ui.show-in-window-bookmarks");
+            section.append (_("Show bookmarks"), "bw.show-in-window-bookmarks");
         }
         section.freeze ();
         menu.append_section (null, section);

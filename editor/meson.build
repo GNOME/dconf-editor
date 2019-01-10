@@ -77,6 +77,7 @@ sources = files(
   'bookmarks-headerbar.vala',
   'bookmarks-list.vala',
   'bookmarks-view.vala',
+  'bookmarks-window.vala',
   'browser-content.vala',
   'browser-headerbar.vala',
   'browser-infobar.vala',
