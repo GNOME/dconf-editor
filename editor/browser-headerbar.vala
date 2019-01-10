@@ -70,8 +70,6 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
         path_widget = new PathWidget ();
         path_widget.hexpand = false;
 
-        connect_path_widget_signals ();
-
         path_widget.visible = true;
         center_box.add (path_widget);
     }
@@ -90,35 +88,11 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     }
 
     /*\
-    * * path_widget proxy signals
-    \*/
-
-    internal signal void search_changed ();
-    internal signal void search_stopped ();
-
-    private void connect_path_widget_signals ()
-    {
-        path_widget.search_changed.connect (search_changed_cb);
-        path_widget.search_stopped.connect (search_stopped_cb);
-    }
-
-    private void search_changed_cb ()
-    {
-        search_changed ();
-    }
-
-    private void search_stopped_cb ()
-    {
-        search_stopped ();
-    }
-
-    /*\
     * * path_widget proxy calls
     \*/
 
     [CCode (notify = false)] internal bool search_mode_enabled   { get { return path_widget.search_mode_enabled; }}
     [CCode (notify = false)] internal bool entry_has_focus       { get { return path_widget.entry_has_focus; }}
-    [CCode (notify = false)] internal string text                { get { return path_widget.text; }}
 
     internal void get_complete_path (out string complete_path)   { path_widget.get_complete_path (out complete_path); }
     internal void get_fallback_path_and_complete_path (out string fallback_path, out string complete_path)

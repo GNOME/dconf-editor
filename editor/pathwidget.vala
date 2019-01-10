@@ -30,9 +30,6 @@ private class PathWidget : Box, AdaptativeWidget
     [GtkChild] private Revealer             parent_revealer;
     [GtkChild] private ModelButton          parent_button;
 
-    internal signal void search_changed ();
-    internal signal void search_stopped ();
-
     private ThemedIcon search_icon = new ThemedIcon.from_names ({"edit-find-symbolic"});
     private ThemedIcon parent_icon = new ThemedIcon.from_names ({"go-up-symbolic"});
     construct
@@ -96,23 +93,6 @@ private class PathWidget : Box, AdaptativeWidget
         search_mode_enabled = false;
         search_toggle.set_action_target_value (true);
         pathwidget_stack.set_visible_child (pathbar_grid);
-    }
-
-    /*\
-    * * callbacks
-    \*/
-
-    [GtkCallback]
-    private void search_changed_cb ()
-    {
-        if (search_mode_enabled)
-            search_changed ();
-    }
-
-    [GtkCallback]
-    private void search_stopped_cb ()
-    {
-        search_stopped ();
     }
 
     /*\
@@ -181,7 +161,6 @@ private class PathWidget : Box, AdaptativeWidget
     }
 
     /* path entry */
-    [CCode (notify = false)] internal string text           { get { return searchentry.text; }}
     [CCode (notify = false)] internal bool entry_has_focus  { get { return searchentry.entry_has_focus; }}
     internal void entry_grab_focus ()                       { searchentry.entry_grab_focus (); }
     internal void entry_grab_focus_without_selecting ()     { searchentry.entry_grab_focus_without_selecting (); }

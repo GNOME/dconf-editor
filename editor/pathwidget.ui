@@ -14,8 +14,6 @@
         <child>
           <object class="PathEntry" id="searchentry">
             <property name="visible">True</property>
-            <signal name="search-changed" handler="search_changed_cb"/>
-            <signal name="search-stopped" handler="search_stopped_cb"/>
           </object>
         </child>
         <child>

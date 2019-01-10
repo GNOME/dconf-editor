@@ -35,9 +35,6 @@ private abstract class BrowserWindow : BaseWindow
         headerbar = (BrowserHeaderBar) nta_headerbar;
         main_view = (BrowserView) base_view;
 
-        headerbar.search_changed.connect (search_changed_cb);
-        headerbar.search_stopped.connect (search_stopped_cb);
-
         this.button_press_event.connect (on_button_press_event);
 
         install_browser_action_entries ();
@@ -102,7 +99,8 @@ private abstract class BrowserWindow : BaseWindow
 
         { "hide-search",        hide_search },
         { "show-search",        show_search },
-        { "toggle-search",      toggle_search, "b", "false" }
+        { "toggle-search",      toggle_search, "b", "false" },
+        { "search-changed",     search_changed, "ms" }
     };
 
     private void empty (/* SimpleAction action, Variant? variant */) {}
@@ -243,8 +241,17 @@ private abstract class BrowserWindow : BaseWindow
     }
     protected void stop_search ()
     {
-        if (headerbar.search_mode_enabled)
-            search_stopped_cb ();
+        if (!headerbar.search_mode_enabled)
+            return;
+
+        main_view.row_grab_focus ();
+
+        reload_search_action.set_enabled (false);
+        if (saved_type == ViewType.FOLDER)
+            request_folder (saved_view, saved_selection);
+        else
+            update_current_path (saved_type, strdup (saved_view));
+        init_next_search = true;
     }
 
     private void show_search (/* SimpleAction action, Variant? path_variant */)
@@ -271,6 +278,20 @@ private abstract class BrowserWindow : BaseWindow
         }
         else if (!search_request && headerbar.search_mode_enabled)
             stop_search ();
+    }
+
+    string last_search_entry_text = "";
+    private void search_changed (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        Variant? variant = ((!) path_variant).get_maybe ();
+        if (variant == null)
+            stop_search ();
+        else
+        {
+            last_search_entry_text = ((!) variant).get_string ();
+            request_search ();
+        }
     }
 
     /*\
@@ -316,7 +337,7 @@ private abstract class BrowserWindow : BaseWindow
             init_search (local_search);
         if (mode != PathEntry.SearchMode.UNCLEAR)
             headerbar.prepare_search (mode, search);
-        string search_text = search == null ? headerbar.text : (!) search;
+        string search_text = search == null ? last_search_entry_text : (!) search;
         update_current_path (ViewType.SEARCH, search_text);
         if (mode != PathEntry.SearchMode.UNCLEAR)
             main_view.select_row (selected_row);
@@ -364,26 +385,6 @@ private abstract class BrowserWindow : BaseWindow
         }
         else
             base.show_default_view ();
-    }
-    /*\
-    * * search callbacks
-    \*/
-
-    private void search_changed_cb ()
-    {
-        request_search ();
-    }
-
-    private void search_stopped_cb ()
-    {
-        main_view.row_grab_focus ();
-
-        reload_search_action.set_enabled (false);
-        if (saved_type == ViewType.FOLDER)
-            request_folder (saved_view, saved_selection);
-        else
-            update_current_path (saved_type, strdup (saved_view));
-        init_next_search = true;
     }
 
     /*\
@@ -591,7 +592,7 @@ private abstract class BrowserWindow : BaseWindow
             init_next_search = true;
             request_search ();
         }
-        else if (headerbar.text.has_prefix ("/"))
+        else if (last_search_entry_text.has_prefix ("/"))
         {
             init_next_search = true;
             request_search (PathEntry.SearchMode.SEARCH);
@@ -625,7 +626,7 @@ private abstract class BrowserWindow : BaseWindow
             headerbar.entry_grab_focus (true);
         else if (search_is_local)
             stop_search ();
-        else if (headerbar.text.has_prefix ("/"))
+        else if (last_search_entry_text.has_prefix ("/"))
         {
             init_next_search = true;
             request_search (PathEntry.SearchMode.SEARCH, /* search term or null */ null, /* local search */ true);

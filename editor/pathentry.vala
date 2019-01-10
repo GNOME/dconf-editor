@@ -24,10 +24,10 @@ private class PathEntry : Box, AdaptativeWidget
     [GtkChild] private Button       reload_search_button;
 
     [GtkChild] private SearchEntry  search_entry;
+    [GtkChild] private Button       search_action_button;
 
     private string current_path = "";
 
-    [CCode (notify = false)] internal string text { get { return search_entry.text; }}
     [CCode (notify = false)] internal bool entry_has_focus { get { return search_entry.has_focus; }}
 
     internal override void get_preferred_width (out int minimum_width, out int natural_width)
@@ -88,13 +88,17 @@ private class PathEntry : Box, AdaptativeWidget
     }
 
     private ulong search_changed_handler = 0;
-    internal signal void search_changed ();
-    internal signal void search_stopped ();
 
     construct
     {
-        search_changed_handler = search_entry.search_changed.connect (() => search_changed ()); 
-        search_entry.stop_search.connect (() => search_stopped ());
+        search_changed_handler = search_entry.search_changed.connect (() => {
+                search_action_button.set_action_target ("ms", search_entry.text);
+                search_action_button.clicked ();
+            });
+        search_entry.stop_search.connect (() => {
+                search_action_button.set_action_target ("ms", null);
+                search_action_button.clicked ();
+            });
     }
 
     internal void entry_grab_focus_without_selecting ()

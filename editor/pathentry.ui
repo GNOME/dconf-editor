@@ -18,6 +18,13 @@
         </style>
       </object>
     </child>
+    <child>
+      <object class="GtkButton" id="search_action_button">
+        <property name="visible">False</property>
+        <property name="action-name">browser.search-changed</property>
+        <property name="action-target">@ms nothing</property>
+      </object>
+    </child>
     <!-- child>
       <object class="GtkButton" id="search_options_button">
         <property name="visible">False</property>
