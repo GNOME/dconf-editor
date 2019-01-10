@@ -121,11 +121,14 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
             info_button.active = false;
     }
 
-    internal virtual void toggle_hamburger_menu ()
+    internal void toggle_hamburger_menu ()
     {
         if (info_button.visible)
             info_button.active = !info_button.active;
+        else
+            toggle_view_menu ();
     }
+    protected virtual void toggle_view_menu () {}
 
     /*\
     * * modes

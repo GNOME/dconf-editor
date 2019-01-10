@@ -166,12 +166,12 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
     * * hamburger menu
     \*/
 
-    internal override void toggle_hamburger_menu ()
+    protected override void toggle_view_menu ()
     {
         if (modifications_actions_button.visible)
             modifications_actions_button.active = !modifications_actions_button.active;
         else
-            base.toggle_hamburger_menu ();
+            base.toggle_view_menu ();
     }
 
     protected override void populate_menu (ref GLib.Menu menu)
