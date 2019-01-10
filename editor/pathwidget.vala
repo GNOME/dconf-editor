@@ -161,7 +161,6 @@ private class PathWidget : Box, AdaptativeWidget
     }
 
     /* path entry */
-    [CCode (notify = false)] internal bool entry_has_focus  { get { return searchentry.entry_has_focus; }}
     internal void entry_grab_focus ()                       { searchentry.entry_grab_focus (); }
     internal void entry_grab_focus_without_selecting ()     { searchentry.entry_grab_focus_without_selecting (); }
 

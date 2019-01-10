@@ -135,7 +135,7 @@ private class BookmarksList : OverlayedList
         string [] unduplicated_bookmarks = {};
         foreach (string bookmark in all_bookmarks)
         {
-            if (DConfWindow.is_path_invalid (bookmark))
+            if (BrowserWindow.is_path_invalid (bookmark))
                 continue;
             if (bookmark in unduplicated_bookmarks)
                 continue;
@@ -164,7 +164,7 @@ private class BookmarksList : OverlayedList
         string [] unduplicated_bookmarks = new string [0];
         foreach (string bookmark in bookmarks)
         {
-            if (DConfWindow.is_path_invalid (bookmark))
+            if (BrowserWindow.is_path_invalid (bookmark))
                 continue;
             if (bookmark in unduplicated_bookmarks)
                 continue;

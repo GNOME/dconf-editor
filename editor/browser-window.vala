@@ -341,7 +341,7 @@ private abstract class BrowserWindow : BaseWindow
         update_current_path (ViewType.SEARCH, search_text);
         if (mode != PathEntry.SearchMode.UNCLEAR)
             main_view.select_row (selected_row);
-        if (!headerbar.entry_has_focus)
+        if (!search_entry_has_focus ())
             headerbar.entry_grab_focus (/* select text */ false); // FIXME keep cursor position
     }
     private void init_search (bool local_search)
@@ -352,6 +352,16 @@ private abstract class BrowserWindow : BaseWindow
         init_next_search = false;
     }
     protected abstract void reconfigure_search (bool local_search);
+
+    private bool search_entry_has_focus ()
+    {
+        return get_focus () is BrowserEntry;
+    }
+
+    public static bool is_path_invalid (string path)
+    {
+        return path.has_prefix ("/") && (path.contains ("//") || path.contains (" "));
+    }
 
     /*\
     * * window state
@@ -585,7 +595,7 @@ private abstract class BrowserWindow : BaseWindow
             else
                 request_search (PathEntry.SearchMode.SEARCH);
         }
-        else if (!headerbar.entry_has_focus)
+        else if (!search_entry_has_focus ())
             headerbar.entry_grab_focus (true);
         else if (search_is_local)
         {
@@ -622,7 +632,7 @@ private abstract class BrowserWindow : BaseWindow
                                 /* search term or null */ null,
                                 /* local search */ current_path != "/");
         }
-        else if (!headerbar.entry_has_focus)
+        else if (!search_entry_has_focus ())
             headerbar.entry_grab_focus (true);
         else if (search_is_local)
             stop_search ();
@@ -748,7 +758,7 @@ private abstract class BrowserWindow : BaseWindow
         if (name == "Return" || name == "KP_Enter")
         {
             if (main_view.current_view == ViewType.SEARCH
-             && headerbar.entry_has_focus
+             && search_entry_has_focus ()
              && main_view.return_pressed ())
                 return true;
             return false;

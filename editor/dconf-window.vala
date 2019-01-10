@@ -583,7 +583,7 @@ private class DConfWindow : BrowserWindow
                 update_bookmark_icon (bookmark, BookmarkIcon.SEARCH);
                 continue;
             }
-            if (is_path_invalid (bookmark)) // TODO broken folder and broken object
+            if (BrowserWindow.is_path_invalid (bookmark)) // TODO broken folder and broken object
                 continue;
 
             uint16 context_id;
@@ -930,11 +930,6 @@ private class DConfWindow : BrowserWindow
         revealer.hide_modifications_list ();
         if (main_view.in_window_bookmarks || main_view.in_window_modifications || in_window_about)
             show_default_view ();
-    }
-
-    public static bool is_path_invalid (string path)
-    {
-        return path.has_prefix ("/") && (path.contains ("//") || path.contains (" "));
     }
 
     protected override void request_config (string full_name)

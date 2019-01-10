@@ -187,7 +187,7 @@ private class RegistrySearch : RegistryList
     {
         string term = _term.strip ();
 
-        if (DConfWindow.is_path_invalid (term))
+        if (BrowserWindow.is_path_invalid (term))
         {
             if (old_term != null)
                 ensure_selection (key_list_box, (!) old_term);

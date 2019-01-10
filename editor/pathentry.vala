@@ -17,18 +17,50 @@
 
 using Gtk;
 
+private class BrowserEntry : SearchEntry
+{
+    private StyleContext context;
+
+    construct
+    {
+        context = get_style_context ();
+    }
+
+    private bool has_error_class = false;
+    internal void check_error (ref string path)
+    {
+        bool is_invalid = BrowserWindow.is_path_invalid (path);
+        if (!has_error_class && is_invalid)
+        {
+            has_error_class = true;
+            context.add_class ("error");
+        }
+        else if (has_error_class && !is_invalid)
+        {
+            has_error_class = false;
+            context.remove_class ("error");
+        }
+    }
+
+    internal void set_is_thin_window (bool thin_window)
+    {
+        if (thin_window)
+            set_icon_from_pixbuf (EntryIconPosition.PRIMARY, null);
+        else
+            set_icon_from_icon_name (EntryIconPosition.PRIMARY, "edit-find-symbolic");
+    }
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathentry.ui")]
 private class PathEntry : Box, AdaptativeWidget
 {
     [GtkChild] private Button       hide_search_button;
     [GtkChild] private Button       reload_search_button;
 
-    [GtkChild] private SearchEntry  search_entry;
+    [GtkChild] private BrowserEntry search_entry;
     [GtkChild] private Button       search_action_button;
 
     private string current_path = "";
-
-    [CCode (notify = false)] internal bool entry_has_focus { get { return search_entry.has_focus; }}
 
     internal override void get_preferred_width (out int minimum_width, out int natural_width)
     {
@@ -45,10 +77,10 @@ private class PathEntry : Box, AdaptativeWidget
             return;
         thin_window = _thin_window;
 
+        search_entry.set_is_thin_window (_thin_window);
+
         if (_thin_window)
         {
-            search_entry.set_icon_from_pixbuf (EntryIconPosition.PRIMARY, null);
-
             can_reload_handler = reload_search_button.notify ["sensitive"].connect (() => {
                     if (reload_search_button.sensitive)
                     {
@@ -70,8 +102,6 @@ private class PathEntry : Box, AdaptativeWidget
         }
         else
         {
-            search_entry.set_icon_from_icon_name (EntryIconPosition.PRIMARY, "edit-find-symbolic");
-
             reload_search_button.disconnect (can_reload_handler);
 
             hide_search_button.hide ();
@@ -105,7 +135,7 @@ private class PathEntry : Box, AdaptativeWidget
     {
         _entry_grab_focus_without_selecting (ref search_entry);
     }
-    private static void _entry_grab_focus_without_selecting (ref SearchEntry search_entry)
+    private static void _entry_grab_focus_without_selecting (ref BrowserEntry search_entry)
     {
         if (search_entry.text_length != 0)
         {
@@ -124,21 +154,11 @@ private class PathEntry : Box, AdaptativeWidget
         return search_entry.handle_event (event);
     }
 
-    private bool has_error_class = false;
     internal void set_path (ViewType type, string _path)
     {
         string path = _path.strip ();
 
-        if (!has_error_class && DConfWindow.is_path_invalid (path))
-        {
-            has_error_class = true;
-            search_entry.get_style_context ().add_class ("error");
-        }
-        else if (has_error_class && !DConfWindow.is_path_invalid (path))
-        {
-            has_error_class = false;
-            search_entry.get_style_context ().remove_class ("error");
-        }
+        search_entry.check_error (ref path);
 
         current_path = path;
 //        if (type == ViewType.SEARCH)
@@ -156,10 +176,10 @@ private class PathEntry : Box, AdaptativeWidget
         SignalHandler.unblock (search_entry, search_changed_handler);
     }
 
-    private static inline void _prepare (SearchMode  mode,
-                                         string?     nullable_search,
-                                     ref string      current_path,
-                                     ref SearchEntry search_entry)
+    private static inline void _prepare (SearchMode   mode,
+                                         string?      nullable_search,
+                                     ref string       current_path,
+                                     ref BrowserEntry search_entry)
     {
         string search;
         switch (mode)
@@ -190,19 +210,19 @@ private class PathEntry : Box, AdaptativeWidget
         }
     }
 
-    private static inline void _prepare_move_end (ref string text, ref SearchEntry search_entry)
+    private static inline void _prepare_move_end (ref string text, ref BrowserEntry search_entry)
     {
         search_entry.text = text;
         _entry_grab_focus_without_selecting (ref search_entry);
     }
 
-    private static inline void _prepare_search (ref string text, ref SearchEntry search_entry)
+    private static inline void _prepare_search (ref string text, ref BrowserEntry search_entry)
     {
         search_entry.text = text;
         search_entry.grab_focus ();
     }
 
-    private static inline void _prepare_select_last_word (ref string current_path, ref SearchEntry search_entry)
+    private static inline void _prepare_select_last_word (ref string current_path, ref BrowserEntry search_entry)
     {
         search_entry.move_cursor (MovementStep.DISPLAY_LINE_ENDS, -1, false);
         search_entry.text = current_path;
