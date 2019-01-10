@@ -66,7 +66,8 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     * * hamburger menu
     \*/
 
-    [CCode (notify = false)] public string about_action_label { private get; protected construct; } // TODO add default = _("About");
+    [CCode (notify = false)] public string about_action_label     { private get; protected construct; } // TODO add default = _("About");
+    [CCode (notify = false)] public bool   has_keyboard_shortcuts { private get; protected construct; default = false; }
 
     protected override void update_hamburger_menu ()
     {
@@ -93,21 +94,22 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     {
         GLib.Menu section = new GLib.Menu ();
         append_or_not_night_mode_entry (ref section);
-        append_or_not_keyboard_shortcuts_entry (!disable_popovers, ref section);
+        append_or_not_keyboard_shortcuts_entry (has_keyboard_shortcuts, !disable_popovers, ref section);
         append_about_entry (about_action_label, ref section);
         section.freeze ();
         menu.append_section (null, section);
     }
 
-    private static inline void append_or_not_keyboard_shortcuts_entry (bool has_keyboard_shortcuts, ref GLib.Menu section)
+    private static inline void append_or_not_keyboard_shortcuts_entry (bool      has_keyboard_shortcuts,
+                                                                       bool      show_keyboard_shortcuts,
+                                                                   ref GLib.Menu section)
     {
-        // FIXME is used also for hiding keyboard shortcuts in small window
-        if (has_keyboard_shortcuts)
-        {
+        // TODO something in small windows
+        if (!has_keyboard_shortcuts || !show_keyboard_shortcuts)
+            return;
 
-            /* Translators: usual menu entry of the hamburger menu*/
-            section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
-        }
+        /* Translators: usual menu entry of the hamburger menu*/
+        section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
     }
 
     private static inline void append_about_entry (string about_action_label, ref GLib.Menu section)
