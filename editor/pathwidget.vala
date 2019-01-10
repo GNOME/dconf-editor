@@ -194,7 +194,7 @@ private class PathWidget : Box, AdaptativeWidget
         } */
 
     /*\
-    * * sizing; TODO should be set by the center box of the headerbar, not by one of its child...
+    * * sizing; TODO should be set by the center box of the headerbar, not by one of its children...
     \*/
 
     internal override void get_preferred_width (out int minimum_width, out int natural_width)

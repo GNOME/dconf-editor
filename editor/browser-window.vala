@@ -721,6 +721,10 @@ private abstract class BrowserWindow : BaseWindow
         uint keyval = event.keyval;
         string name = (!) (Gdk.keyval_name (keyval) ?? "");
 
+        /* never override that */
+        if (keyval == Gdk.Key.Tab || keyval == Gdk.Key.KP_Tab)
+            return false;
+
         /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
         if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
             return _next_match ();
@@ -755,11 +759,11 @@ private abstract class BrowserWindow : BaseWindow
 
         if (!headerbar.search_mode_enabled &&
             // see gtk_search_entry_is_keynav() in gtk+/gtk/gtksearchentry.c:388
-            (keyval == Gdk.Key.Tab          || keyval == Gdk.Key.KP_Tab         ||
-             keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
+            (keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
              keyval == Gdk.Key.Down         || keyval == Gdk.Key.KP_Down        ||
              keyval == Gdk.Key.Left         || keyval == Gdk.Key.KP_Left        ||
              keyval == Gdk.Key.Right        || keyval == Gdk.Key.KP_Right       ||
+          // keyval == Gdk.Key.Tab          || keyval == Gdk.Key.KP_Tab         ||   // already done
              keyval == Gdk.Key.Home         || keyval == Gdk.Key.KP_Home        ||
              keyval == Gdk.Key.End          || keyval == Gdk.Key.KP_End         ||
              keyval == Gdk.Key.Page_Up      || keyval == Gdk.Key.KP_Page_Up     ||
