@@ -180,9 +180,9 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
     [GtkChild] protected Stack      quit_button_stack;
 
-    protected void set_default_widgets_states (bool     show_go_back_button,
+    protected void set_default_widgets_states (string?  title_label_text_or_null,
+                                               bool     show_go_back_button,
                                                bool     show_ltr_left_separator,
-                                               string?  title_label_text_or_null,
                                                bool     show_info_button,
                                                bool     show_ltr_right_separator,
                                                bool     show_quit_button_stack)
@@ -210,6 +210,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
     protected const uint8 default_mode_id = 0;
     private bool default_mode_on = true;
+    protected bool no_in_window_mode { get { return default_mode_on; }}
 
     internal void show_default_view ()
     {
@@ -226,9 +227,9 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         if (is_not_requested_mode (default_mode_id, requested_mode_id, ref _this.default_mode_on))
             return;
 
-        _this.set_default_widgets_states (/* show go_back_button      */ false,
+        _this.set_default_widgets_states (/* title_label text or null */ null,
+                                          /* show go_back_button      */ false,
                                           /* show ltr_left_separator  */ false,
-                                          /* title_label text or null */ null,
                                           /* show info_button         */ true,
                                           /* show ltr_right_separator */ _this.disable_action_bar,
                                           /* show quit_button_stack   */ _this.disable_action_bar);
@@ -260,17 +261,13 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         if (is_not_requested_mode (_this.about_mode_id, requested_mode_id, ref _this.about_mode_on))
             return;
 
-        _this.set_default_widgets_states (/* show go_back_button      */ true,
-                                          /* show ltr_left_separator  */ false,
-                                          /* title_label text or null */
-
-
-
-                                          /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar */
-                                                                         _("About"),
-                                          /* show info_button         */ false,
-                                          /* show ltr_right_separator */ false,
-                                          /* show quit_button_stack   */ true);
+        /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar */
+        _this.set_default_widgets_states (_("About"),   /* title_label text or null */
+                                          true,         /* show go_back_button      */
+                                          false,        /* show ltr_left_separator  */
+                                          false,        /* show info_button         */
+                                          false,        /* show ltr_right_separator */
+                                          true);        /* show quit_button_stack   */
     }
 
     /*\

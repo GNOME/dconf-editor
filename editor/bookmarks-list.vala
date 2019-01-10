@@ -454,9 +454,9 @@ private class BookmarksList : OverlayedList
         return bookmarks;
     } */
 
-    internal void append_bookmark (string bookmark, ViewType type)
+    internal void append_bookmark (ViewType type, string bookmark)
     {
-        _append_bookmark (settings, get_bookmark_name (bookmark, type));
+        _append_bookmark (settings, get_bookmark_name (type, bookmark));
     }
     private static void _append_bookmark (GLib.Settings settings, string bookmark_name)
     {
@@ -468,9 +468,9 @@ private class BookmarksList : OverlayedList
         settings.set_strv ("bookmarks", bookmarks);
     }
 
-    internal void remove_bookmark (string bookmark, ViewType type)
+    internal void remove_bookmark (ViewType type, string bookmark)
     {
-        _remove_bookmark (settings, get_bookmark_name (bookmark, type));
+        _remove_bookmark (settings, get_bookmark_name (type, bookmark));
     }
     private static void _remove_bookmark (GLib.Settings settings, string bookmark_name)
     {
@@ -496,7 +496,7 @@ private class BookmarksList : OverlayedList
         settings.set_strv ("bookmarks", new_bookmarks);
     }
 
-    internal static inline string get_bookmark_name (string path, ViewType type)
+    internal static inline string get_bookmark_name (ViewType type, string path)
     {
         if (type == ViewType.SEARCH)
             return "?" + path;

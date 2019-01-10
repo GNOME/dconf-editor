@@ -221,14 +221,14 @@ private class Bookmarks : MenuButton
     {
         if (bookmarked_switch.get_active ())
             return;
-        bookmarks_list.append_bookmark (current_path, current_type);
+        bookmarks_list.append_bookmark (current_type, current_path);
     }
 
     internal void unbookmark_current_path ()
     {
         if (!bookmarked_switch.get_active ())
             return;
-        bookmarks_list.remove_bookmark (current_path, current_type);
+        bookmarks_list.remove_bookmark (current_type, current_path);
     }
 
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon)
@@ -300,8 +300,8 @@ private class Bookmarks : MenuButton
         { "move-down",   move_down   },
         { "move-bottom", move_bottom },
 
-        {   "bookmark",    bookmark, "(sy)" },
-        { "unbookmark",  unbookmark, "(sy)" }
+        {   "bookmark",    bookmark, "(ys)" },
+        { "unbookmark",  unbookmark, "(ys)" }
     };
 
     private void set_edit_mode (SimpleAction action, Variant? variant)
@@ -371,10 +371,10 @@ private class Bookmarks : MenuButton
     {
         bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 1/2
 
-        string bookmark;
         uint8 type;
-        ((!) path_variant).@get ("(sy)", out bookmark, out type);
-        bookmarks_list.append_bookmark (bookmark, ViewType.from_byte (type));
+        string bookmark;
+        ((!) path_variant).@get ("(ys)", out type, out bookmark);
+        bookmarks_list.append_bookmark (ViewType.from_byte (type), bookmark);
     }
 
     private void unbookmark (SimpleAction action, Variant? path_variant)
@@ -382,10 +382,10 @@ private class Bookmarks : MenuButton
     {
         bookmarks_popover.closed ();    // if the popover is visible, the size of the listbox could change 2/2
 
-        string bookmark;
         uint8 type;
-        ((!) path_variant).@get ("(sy)", out bookmark, out type);
-        bookmarks_list.remove_bookmark (bookmark, ViewType.from_byte (type));
+        string bookmark;
+        ((!) path_variant).@get ("(ys)", out type, out bookmark);
+        bookmarks_list.remove_bookmark (ViewType.from_byte (type), bookmark);
     }
 
     /*\
@@ -408,8 +408,8 @@ private class Bookmarks : MenuButton
 
     private void update_icon_and_switch (Variant bookmarks_variant)
     {
-        Variant variant = new Variant ("(sy)", current_path, ViewType.to_byte (current_type));
-        string bookmark_name = BookmarksList.get_bookmark_name (current_path, current_type);
+        Variant variant = new Variant ("(ys)", ViewType.to_byte (current_type), current_path);
+        string bookmark_name = BookmarksList.get_bookmark_name (current_type, current_path);
         if (bookmark_name in bookmarks_variant.get_strv ())
         {
             if (bookmarks_icon.icon_name != "starred-symbolic")
@@ -429,7 +429,7 @@ private class Bookmarks : MenuButton
     {
         if (bookmarked == bookmarked_switch.active)
             return;
-        bookmarked_switch.set_detailed_action_name ("browser.empty(('',byte 255))");
+        bookmarked_switch.set_detailed_action_name ("browser.empty((byte 255,''))");
         bookmarked_switch.active = bookmarked;
     }
 }

@@ -46,7 +46,7 @@
                     <property name="visible">True</property>
                     <property name="halign">end</property>
                     <property name="action-name">browser.empty</property>
-                    <property name="action-target">('',byte 255)</property>
+                    <property name="action-target">(byte 255,'')</property>
                     <child internal-child="accessible">
                       <object class="AtkObject">
                         <!-- Translators: accessible name of the switch for bookmarking current path in the bookmarks popover -->

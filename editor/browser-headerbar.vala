@@ -19,7 +19,7 @@ using Gtk;
 
 private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
 {
-    protected PathWidget path_widget;
+    private PathWidget path_widget;
 
     construct
     {
@@ -28,20 +28,26 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
         register_properties_mode ();
     }
 
-    private ViewType current_type = ViewType.FOLDER;
+    private bool current_type_is_config = false;
     internal virtual void set_path (ViewType type, string path)
     {
         path_widget.set_path (type, path);
 
-        current_type = type;
-        update_properties_view ();  // takes care of the hamburger menu
+        if (current_type_is_config != (type == ViewType.CONFIG))
+        {
+            current_type_is_config = !current_type_is_config;
+            update_properties_view ();
+        }
     }
 
     private bool is_extra_thin = false;
     protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        is_extra_thin = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        update_properties_view ();
+        if (is_extra_thin != AdaptativeWidget.WindowSize.is_extra_thin (new_size))
+        {
+            is_extra_thin = !is_extra_thin;
+            update_properties_view ();
+        }
 
         base.set_window_size (new_size);
 
@@ -148,13 +154,8 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
 
     private void update_properties_view ()
     {
-        if (is_extra_thin)
-        {
-            if (current_type == ViewType.CONFIG)
-                show_properties_view ();
-            else
-                hide_properties_view ();
-        }
+        if (is_extra_thin && current_type_is_config)
+            show_properties_view ();
         else
             hide_properties_view ();
     }
@@ -170,7 +171,6 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     {
         if (properties_mode_on)
             change_mode (default_mode_id);
-        update_hamburger_menu ();
     }
 
     private void register_properties_mode ()
@@ -186,17 +186,13 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
         if (is_not_requested_mode (real_this.properties_mode_id, requested_mode_id, ref real_this.properties_mode_on))
             return;
 
-        real_this.set_default_widgets_states (/* show go_back_button      */ true,
-                                              /* show ltr_left_separator  */ false,
-                                              /* title_label text or null */
-
-
-
-                                              /* Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar */
-                                                                             _("Properties"),
-                                              /* show info_button         */ false,
-                                              /* show ltr_right_separator */ false,
-                                              /* show quit_button_stack   */ true);
+        /* Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar */
+        real_this.set_default_widgets_states (_("Properties"),  /* title_label text or null */
+                                              true,             /* show go_back_button      */
+                                              false,            /* show ltr_left_separator  */
+                                              false,            /* show info_button         */
+                                              false,            /* show ltr_right_separator */
+                                              true);            /* show quit_button_stack   */
     }
 
     /*\
@@ -225,10 +221,6 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
 
     internal override bool has_popover ()
     {
-        if (base.has_popover ())
-            return true;
-        if (path_widget.has_popover ())
-            return true;
-        return false;
+        return base.has_popover () || path_widget.has_popover ();
     }
 }
