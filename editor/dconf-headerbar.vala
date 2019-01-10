@@ -154,12 +154,10 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
     \*/
 
     private bool is_folder_view = true;
-    private string current_path = "/";
 
     internal override void set_path (ViewType type, string path)
     {
         is_folder_view = type == ViewType.FOLDER;
-        current_path = path;
 
         base.set_path (type, path);
     }
@@ -180,10 +178,10 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
     {
         base.populate_menu (ref menu);
 
-        append_or_not_delay_mode_section (delay_mode, is_folder_view, current_path, ref menu);
+        append_or_not_delay_mode_section (delay_mode, is_folder_view, ref menu);
     }
 
-    private static void append_or_not_delay_mode_section (bool delay_mode, bool is_folder_view, string current_path, ref GLib.Menu menu)
+    private static void append_or_not_delay_mode_section (bool delay_mode, bool is_folder_view, ref GLib.Menu menu)
     {
         if (delay_mode && !is_folder_view)
             return;
@@ -194,13 +192,11 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
             section.append (_("Enter delay mode"), "ui.enter-delay-mode");
         if (is_folder_view)
         {
-            Variant variant = new Variant.string (current_path);
-
             /* Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders */
-            section.append (_("Reset visible keys"), "ui.reset-visible(" + variant.print (false) + ")");
+            section.append (_("Reset visible keys"), "ui.reset-current-non-recursively");
 
             /* Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders */
-            section.append (_("Reset view recursively"), "ui.reset-recursive(" + variant.print (false) + ")");
+            section.append (_("Reset view recursively"), "ui.reset-current-recursively");
         }
         section.freeze ();
         menu.append_section (null, section);

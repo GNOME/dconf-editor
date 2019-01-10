@@ -423,18 +423,18 @@ private class DConfWindow : BrowserWindow
 
     private const GLib.ActionEntry [] ui_action_entries =
     {
-        { "reset-recursive", reset_recursively, "s" },
-        { "reset-visible", reset_visible, "s" },
+        { "reset-recursive",                reset_recursively, "s" },
+        { "reset-current-recursively",      reset_current_recursively },
+        { "reset-current-non-recursively",  reset_current_non_recursively },
 
-        { "enter-delay-mode", enter_delay_mode },
-        { "apply-delayed-settings", apply_delayed_settings },
-        { "dismiss-delayed-settings", dismiss_delayed_settings },
+        { "enter-delay-mode",           enter_delay_mode },
+        { "apply-delayed-settings",     apply_delayed_settings },
+        { "dismiss-delayed-settings",   dismiss_delayed_settings },
 
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
 
         { "show-in-window-bookmarks",       show_use_bookmarks_view },
-
         { "show-in-window-modifications",   show_modifications_view },
 
         { "update-bookmarks-icons", update_bookmarks_icons, "as" },
@@ -449,10 +449,14 @@ private class DConfWindow : BrowserWindow
         reset_path (((!) path_variant).get_string (), true);
     }
 
-    private void reset_visible (SimpleAction action, Variant? path_variant)
-        requires (path_variant != null)
+    private void reset_current_recursively (/* SimpleAction action, Variant? path_variant */)
     {
-        reset_path (((!) path_variant).get_string (), false);
+        reset_path (current_path, true);
+    }
+
+    private void reset_current_non_recursively (/* SimpleAction action, Variant? path_variant */)
+    {
+        reset_path (current_path, false);
     }
 
     private void reset_path (string path, bool recursively)
