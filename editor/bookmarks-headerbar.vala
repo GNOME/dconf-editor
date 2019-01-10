@@ -31,6 +31,15 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
         register_bookmarks_modes ();
     }
 
+    private string bookmark_name = "/";
+    internal override void set_path (ViewType type, string path)
+    {
+        bookmark_name = BookmarksList.get_bookmark_name (type, path);
+
+        bookmarks_button.set_path (type, path);
+        base.set_path (type, path);
+    }
+
     protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         bool _disable_popovers = disable_popovers;
@@ -39,26 +48,6 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
 
         if (disable_popovers != _disable_popovers)
             update_bookmarks_button_visibility (/* run transitions */ true);
-    }
-
-    private void update_bookmarks_button_visibility (bool transition)
-    {
-        bookmarks_revealer.set_transition_duration (transition ? 300 : 0);
-
-        if (!disable_popovers && no_in_window_mode)
-            set_bookmarks_button_visibility (/* visibility */ true, ref bookmarks_revealer, ref bookmarks_button);
-        else
-        {
-            bookmarks_button.active = false;
-            set_bookmarks_button_visibility (/* visibility */ false, ref bookmarks_revealer, ref bookmarks_button);
-        }
-    }
-    private static inline void set_bookmarks_button_visibility (bool visibility,
-                                                            ref Revealer bookmarks_revealer,
-                                                            ref Bookmarks bookmarks_button)
-    {
-        bookmarks_button.sensitive = visibility;
-        bookmarks_revealer.set_reveal_child (visibility);
     }
 
     /*\
@@ -106,6 +95,26 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
     private void update_bookmarks_icons_cb (Variant bookmarks_variant)
     {
         update_bookmarks_icons (bookmarks_variant);
+    }
+
+    private void update_bookmarks_button_visibility (bool transition)
+    {
+        bookmarks_revealer.set_transition_duration (transition ? 300 : 0);
+
+        if (!disable_popovers && no_in_window_mode)
+            set_bookmarks_button_visibility (/* visibility */ true, ref bookmarks_revealer, ref bookmarks_button);
+        else
+        {
+            bookmarks_button.active = false;
+            set_bookmarks_button_visibility (/* visibility */ false, ref bookmarks_revealer, ref bookmarks_button);
+        }
+    }
+    private static inline void set_bookmarks_button_visibility (bool visibility,
+                                                            ref Revealer bookmarks_revealer,
+                                                            ref Bookmarks bookmarks_button)
+    {
+        bookmarks_button.sensitive = visibility;
+        bookmarks_revealer.set_reveal_child (visibility);
     }
 
     /*\
@@ -223,41 +232,6 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
     internal void update_bookmark_icon (string bookmark, BookmarkIcon icon) { bookmarks_button.update_bookmark_icon (bookmark, icon); }
 
     /*\
-    * * should move back
-    \*/
-
-    private string bookmark_name = "/";
-
-    internal override void set_path (ViewType type, string path)
-    {
-        bookmark_name = BookmarksList.get_bookmark_name (type, path);
-
-        bookmarks_button.set_path (type, path);
-        base.set_path (type, path);
-    }
-
-    internal void click_bookmarks_button ()
-    {
-        hide_hamburger_menu ();
-        if (bookmarks_button.sensitive)
-            bookmarks_button.clicked ();
-    }
-
-    internal void bookmark_current_path ()
-    {
-        hide_hamburger_menu ();
-        bookmarks_button.bookmark_current_path ();
-        update_hamburger_menu ();
-    }
-
-    internal void unbookmark_current_path ()
-    {
-        hide_hamburger_menu ();
-        bookmarks_button.unbookmark_current_path ();
-        update_hamburger_menu ();
-    }
-
-    /*\
     * * hamburger menu
     \*/
 
@@ -317,6 +291,27 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
         if (bookmarks_button.active)
             return bookmarks_button.handle_copy_text (out copy_text);
         return BaseWindow.no_copy_text (out copy_text);
+    }
+
+    internal void click_bookmarks_button ()
+    {
+        hide_hamburger_menu ();
+        if (bookmarks_button.sensitive)
+            bookmarks_button.clicked ();
+    }
+
+    internal void bookmark_current_path ()
+    {
+        hide_hamburger_menu ();
+        bookmarks_button.bookmark_current_path ();
+        update_hamburger_menu ();
+    }
+
+    internal void unbookmark_current_path ()
+    {
+        hide_hamburger_menu ();
+        bookmarks_button.unbookmark_current_path ();
+        update_hamburger_menu ();
     }
 
     /*\

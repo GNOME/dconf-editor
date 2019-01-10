@@ -50,6 +50,14 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         Object (night_light_monitor: _night_light_monitor, about_action_label: _("About Dconf Editor"));
     }
 
+    private bool is_folder_view = true;
+    internal override void set_path (ViewType type, string path)
+    {
+        is_folder_view = type == ViewType.FOLDER;
+
+        base.set_path (type, path);
+    }
+
     protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         base.set_window_size (new_size);
@@ -61,11 +69,11 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
     * * modifications buttons and actions
     \*/
 
-    private Button      show_modifications_button;
-    private MenuButton  modification_actions_button;
+    private Button      show_modifications_button;      // for selecting as stack child only
+    private MenuButton  modification_actions_button;    // for selecting as stack child only
     private MenuButton  modifications_actions_button;
-    private GLib.Menu   changes_pending_menu;
-    private GLib.Menu   quit_delayed_mode_menu;
+    private GLib.Menu   changes_pending_menu;           // for selecting as menu only
+    private GLib.Menu   quit_delayed_mode_menu;         // for selecting as menu only
 
     private static void add_show_modifications_button (out Button show_modifications_button, ref Stack quit_button_stack)
     {
@@ -147,19 +155,6 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
             if (mode_is_temporary)
                 quit_button_stack.set_visible_child_name ("quit-button");
         }
-    }
-
-    /*\
-    * * should move back
-    \*/
-
-    private bool is_folder_view = true;
-
-    internal override void set_path (ViewType type, string path)
-    {
-        is_folder_view = type == ViewType.FOLDER;
-
-        base.set_path (type, path);
     }
 
     /*\
