@@ -17,6 +17,65 @@
 
 using Gtk;
 
+internal enum ViewType {
+    OBJECT,
+    FOLDER,
+    SEARCH,
+    CONFIG;
+
+    internal static uint8 to_byte (ViewType type)
+    {
+        switch (type)
+        {
+            case ViewType.OBJECT: return 0;
+            case ViewType.FOLDER: return 1;
+            case ViewType.SEARCH: return 2;
+            case ViewType.CONFIG: return 3;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal static ViewType from_byte (uint8 type)
+    {
+        switch (type)
+        {
+            case 0: return ViewType.OBJECT;
+            case 1: return ViewType.FOLDER;
+            case 2: return ViewType.SEARCH;
+            case 3: return ViewType.CONFIG;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal static bool displays_objects_list (ViewType type)
+    {
+        switch (type)
+        {
+            case ViewType.OBJECT:
+            case ViewType.CONFIG:
+                return false;
+            case ViewType.FOLDER:
+            case ViewType.SEARCH:
+                return true;
+            default: assert_not_reached ();
+        }
+    }
+
+    internal static bool displays_object_infos (ViewType type)
+    {
+        switch (type)
+        {
+            case ViewType.OBJECT:
+            case ViewType.CONFIG:
+                return true;
+            case ViewType.FOLDER:
+            case ViewType.SEARCH:
+                return false;
+            default: assert_not_reached ();
+        }
+    }
+}
+
 private abstract class BrowserWindow : BaseWindow
 {
     protected const string root_path    = "/";   // TODO allow changing that
