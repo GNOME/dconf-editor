@@ -5,6 +5,7 @@ editor/adaptative-pathbar.c
 editor/adaptative-window.c
 editor/base-headerbar.c
 editor/bookmarks.c
+editor/bookmarks-headerbar.c
 editor/bookmarks-list.c
 editor/browser-headerbar.c
 editor/browser-view.c

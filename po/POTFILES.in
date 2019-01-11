@@ -5,6 +5,7 @@ editor/adaptative-pathbar.vala
 editor/adaptative-window.vala
 editor/base-headerbar.ui
 editor/base-headerbar.vala
+editor/bookmarks-headerbar.vala
 editor/bookmarks-list.vala
 editor/bookmarks.ui
 editor/bookmarks.vala
