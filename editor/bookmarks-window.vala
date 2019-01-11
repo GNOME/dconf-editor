@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private abstract class BookmarksWindow : BrowserWindow
+private abstract class BookmarksWindow : BrowserWindow, AdaptativeWidget
 {
     private BookmarksHeaderBar  headerbar;
     private BookmarksView       main_view;
@@ -142,8 +142,7 @@ private abstract class BookmarksWindow : BrowserWindow
 
     private void update_bookmark_icon (string bookmark, BookmarkIcon icon)
     {
-        if (AdaptativeWidget.WindowSize.is_extra_thin (window_size)
-         || AdaptativeWidget.WindowSize.is_extra_flat (window_size))
+        if (disable_popovers)
             main_view.update_bookmark_icon (bookmark, icon);
         else
             headerbar.update_bookmark_icon (bookmark, icon);
@@ -154,9 +153,9 @@ private abstract class BookmarksWindow : BrowserWindow
     \*/
 
     private bool disable_popovers = false;
-    protected override void chain_set_window_size (AdaptativeWidget.WindowSize new_size)
+    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        base.chain_set_window_size (new_size);
+        base.set_window_size (new_size);
 
         bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
                               || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
@@ -175,19 +174,18 @@ private abstract class BookmarksWindow : BrowserWindow
     private void toggle_bookmark (/* SimpleAction action, Variant? variant */)
     {
         main_view.close_popovers ();
-        if (AdaptativeWidget.WindowSize.is_phone_size (window_size)
-         || AdaptativeWidget.WindowSize.is_extra_thin (window_size))
-        {
-            if (main_view.in_window_bookmarks)
-                show_default_view ();
-            else
-                show_use_bookmarks_view ();
-        }
-        else
+
+        // use popover
+        if (!disable_popovers)
         {
             toggle_bookmark_called ();
             headerbar.click_bookmarks_button ();
         }
+        // use in-window
+        else if (main_view.in_window_bookmarks)
+            show_default_view ();
+        else
+            show_use_bookmarks_view ();
     }
     protected abstract void toggle_bookmark_called ();
 

@@ -26,7 +26,7 @@ internal enum RelocatableSchemasEnabledMappings
     STARTUP
 }
 
-private class DConfWindow : BookmarksWindow
+private class DConfWindow : BookmarksWindow, AdaptativeWidget
 {
     private SettingsModel model;
     private ModificationsHandler modifications_handler;
@@ -502,12 +502,11 @@ private class DConfWindow : BookmarksWindow
     \*/
 
     private bool disable_action_bar = false;
-    protected override void chain_set_window_size (AdaptativeWidget.WindowSize new_size)
+    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        base.chain_set_window_size (new_size);
+        base.set_window_size (new_size);
 
-        bool _disable_action_bar = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                                || AdaptativeWidget.WindowSize.is_extra_thin (new_size)
+        bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
                                 || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
         if (disable_action_bar != _disable_action_bar)
         {
@@ -541,9 +540,10 @@ private class DConfWindow : BookmarksWindow
         if (!modifications_handler.get_current_delay_mode ())
             return;
 
-        if (!AdaptativeWidget.WindowSize.is_extra_thin (window_size)
-         && !AdaptativeWidget.WindowSize.is_extra_flat (window_size))
+        // use popover
+        if (!disable_action_bar)
             revealer.toggle_modifications_list ();
+        // use in-window
         else if (main_view.in_window_modifications)
             show_default_view ();
         else

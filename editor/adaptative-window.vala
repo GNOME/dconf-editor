@@ -253,10 +253,10 @@ private abstract class AdaptativeWindow : ApplicationWindow
     protected virtual void before_destroy () {}
 
     /*\
-    * * manage adaptative children
+    * * adaptative stuff
     \*/
 
-    protected AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
+    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
 
     private List<AdaptativeWidget> adaptative_children = new List<AdaptativeWidget> ();
     protected void add_adaptative_child (AdaptativeWidget child)

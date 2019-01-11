@@ -33,12 +33,14 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     * * properties
     \*/
 
+    private bool has_a_phone_size = false;
     protected bool disable_popovers = false;
     protected bool disable_action_bar = false;
     protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
-        disable_popovers   = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                          || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+        has_a_phone_size = AdaptativeWidget.WindowSize.is_phone_size (new_size);
+        disable_popovers = has_a_phone_size
+                        || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
 
         bool _disable_action_bar = disable_popovers
                                 || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
@@ -94,7 +96,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     {
         GLib.Menu section = new GLib.Menu ();
         append_or_not_night_mode_entry (ref section);
-        append_or_not_keyboard_shortcuts_entry (has_keyboard_shortcuts, !disable_popovers, ref section);
+        append_or_not_keyboard_shortcuts_entry (has_keyboard_shortcuts, !has_a_phone_size, ref section);
         append_about_entry (about_action_label, ref section);
         section.freeze ();
         menu.append_section (null, section);

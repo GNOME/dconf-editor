@@ -44,6 +44,10 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         headerbar = (BaseHeaderBar) nta_headerbar;
 
         install_action_entries ();
+
+        add_adaptative_child (headerbar);
+        add_adaptative_child (main_view);
+        add_adaptative_child (this);
     }
 
     /*\
@@ -287,7 +291,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     \*/
 
     private bool disable_popovers = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
     {
         bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
                               || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
@@ -297,11 +301,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
             if (in_window_about)
                 show_default_view ();
         }
-
-        chain_set_window_size (new_size);
     }
-
-    protected virtual void chain_set_window_size (AdaptativeWidget.WindowSize new_size) {}
 
     /*\
     * * in-window panels
@@ -321,11 +321,10 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     private void about (/* SimpleAction action, Variant? path_variant */)
     {
-        if (!AdaptativeWidget.WindowSize.is_phone_size (window_size)
-         && !AdaptativeWidget.WindowSize.is_extra_thin (window_size))
-            show_about_dialog ();       // TODO hide the dialog if visible
-        else
+        if (disable_popovers)
             toggle_in_window_about ();
+        else
+            show_about_dialog ();       // TODO hide the dialog if visible
     }
 
     private void show_about_dialog ()

@@ -100,10 +100,6 @@ private abstract class BrowserWindow : BaseWindow
         install_key_action_entries ();
 
         bind_mouse_config ();
-
-        add_adaptative_child (headerbar);
-        add_adaptative_child (main_view);
-        add_adaptative_child (this);
     }
 
     /*\
