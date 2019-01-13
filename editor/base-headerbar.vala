@@ -69,6 +69,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     \*/
 
     [CCode (notify = false)] public string about_action_label     { private get; protected construct; } // TODO add default = _("About");
+    [CCode (notify = false)] public bool   has_help               { private get; protected construct; default = false; }
     [CCode (notify = false)] public bool   has_keyboard_shortcuts { private get; protected construct; default = false; }
 
     protected override void update_hamburger_menu ()
@@ -92,11 +93,12 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
     protected virtual void populate_menu (ref GLib.Menu menu) {}
 
-    private void append_app_actions_section (ref GLib.Menu menu)
+    private void append_app_actions_section (ref GLib.Menu menu)    // FIXME mnemonics?
     {
         GLib.Menu section = new GLib.Menu ();
         append_or_not_night_mode_entry (ref section);
         append_or_not_keyboard_shortcuts_entry (has_keyboard_shortcuts, !has_a_phone_size, ref section);
+        append_or_not_help_entry (has_help, ref section);
         append_about_entry (about_action_label, ref section);
         section.freeze ();
         menu.append_section (null, section);
@@ -111,7 +113,16 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
             return;
 
         /* Translators: usual menu entry of the hamburger menu*/
-        section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");
+        section.append (_("Keyboard Shortcuts"), "win.show-help-overlay");  // TODO mnemonic?
+    }
+
+    private static inline void append_or_not_help_entry (bool has_help, ref GLib.Menu section)
+    {
+        if (!has_help)
+            return;
+
+        /* Translators: usual menu entry of the hamburger menu (with a mnemonic that appears pressing Alt) */
+     // section.append (_("_Help"), "app.help");    // FIXME uncomment, and choose mnemonic or not
     }
 
     private static inline void append_about_entry (string about_action_label, ref GLib.Menu section)

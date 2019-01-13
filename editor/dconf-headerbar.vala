@@ -49,6 +49,7 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         /* Translators: usual menu entry of the hamburger menu */
         Object (about_action_label:     _("About Dconf Editor"),
                 night_light_monitor:    _night_light_monitor,
+                has_help:               false,
                 has_keyboard_shortcuts: true);
     }
 
