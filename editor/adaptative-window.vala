@@ -158,6 +158,8 @@ private abstract class NightTimeAwareHeaderBar : HeaderBar
     }
 }
 
+private const int LARGE_WINDOW_SIZE = 1042;
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-window.ui")]
 private abstract class AdaptativeWindow : ApplicationWindow
 {
@@ -288,7 +290,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
             if (extra_flat)         change_window_size (AdaptativeWidget.WindowSize.EXTRA_FLAT);
             else                    change_window_size (AdaptativeWidget.WindowSize.USUAL_SIZE);
 
-            if (width > MAX_ROW_WIDTH + 42)
+            if (width > LARGE_WINDOW_SIZE)
                 set_style_classes (false, false, true);
             else
                 set_style_classes (false, false, false);

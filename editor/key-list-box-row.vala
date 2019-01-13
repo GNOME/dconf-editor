@@ -17,7 +17,7 @@
 
 using Gtk;
 
-const int MAX_ROW_WIDTH = 1000;
+private const int MAX_ROW_WIDTH = LARGE_WINDOW_SIZE - 42;
 
 private class ListBoxRowWrapper : ListBoxRow
 {

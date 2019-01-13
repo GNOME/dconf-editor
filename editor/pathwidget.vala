@@ -199,6 +199,6 @@ private class PathWidget : Box, AdaptativeWidget
     internal override void get_preferred_width (out int minimum_width, out int natural_width)
     {
         base.get_preferred_width (out minimum_width, out natural_width);
-        natural_width = MAX_ROW_WIDTH - 38;  // see key-list-box-row.vala
+        natural_width = MAX_ROW_WIDTH - 46;  // see key-list-box-row.vala
     }
 }
