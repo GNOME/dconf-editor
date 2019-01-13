@@ -800,7 +800,6 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
 namespace AboutDialogInfos
 {
     // strings
-
     internal const string program_name = ConfigurationEditor.PROGRAM_NAME;
     internal const string version = Config.VERSION;
 

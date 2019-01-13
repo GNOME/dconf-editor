@@ -47,8 +47,8 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
     internal static DConfHeaderBar (NightLightMonitor _night_light_monitor)
     {
         /* Translators: usual menu entry of the hamburger menu */
-        Object (night_light_monitor:    _night_light_monitor,
-                about_action_label:     _("About Dconf Editor"),
+        Object (about_action_label:     _("About Dconf Editor"),
+                night_light_monitor:    _night_light_monitor,
                 has_keyboard_shortcuts: true);
     }
 
