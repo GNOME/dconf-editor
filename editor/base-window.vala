@@ -17,6 +17,11 @@
 
 using Gtk;
 
+private interface BaseApplication : Gtk.Application
+{
+    internal abstract void copy (string text);
+}
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-window.ui")]
 private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 {
@@ -178,7 +183,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     private inline void copy_text (string text)
         requires (!is_empty_text (text))
     {
-        ((ConfigurationEditor) get_application ()).copy ((!) text);
+        ((BaseApplication) get_application ()).copy ((!) text);
     }
 
     /*\
