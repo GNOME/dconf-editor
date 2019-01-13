@@ -51,6 +51,8 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     {
         construct
         {
+            get_style_context ().add_class ("needs-padding");
+
             // TODO sanitize "value"
             enter_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(true)");
             leave_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(false)");

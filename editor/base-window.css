@@ -1,0 +1,131 @@
+/*
+  This file is part of Dconf Editor
+
+  Dconf Editor is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Dconf Editor is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+/*\
+* * center widget revealers
+\*/
+
+/* hack: fix the double space when the child of the revealer is hidden; 6px is the spacing of the centerwidget box */
+.centerwidget:dir(ltr) .headerbar-revealer { padding-right:6px; }
+.centerwidget:dir(rtl) .headerbar-revealer { padding-left :6px; }
+
+.centerwidget:dir(ltr)                     { margin-right:-6px; }
+.centerwidget:dir(rtl)                     { margin-left :-6px; }
+
+/*\
+* * app notification
+\*/
+
+.extra-small-window .app-notification,
+      .small-window .app-notification {
+  border-radius:0;
+}
+
+/*\
+* * overlayed list
+\*/
+
+  .vertical.overlayed-list.needs-padding          > scrolledwindow > viewport > list {
+  padding-bottom:0;
+  transition:padding-bottom 0.3s,
+             font-size      0.3s;
+}
+  .vertical.overlayed-list.needs-padding          > scrolledwindow > viewport > list:not(.empty-list) {
+  padding-bottom:3rem;
+}
+  .vertical.overlayed-list.needs-padding          > .linked-circular {
+  margin-bottom:0.3rem;
+}
+
+.horizontal.overlayed-list:dir(ltr).needs-padding > scrolledwindow > viewport > list > row {
+  padding-right:calc(160px+1rem); /* width-request of edit_mode_box + a bit */
+}
+.horizontal.overlayed-list:dir(rtl).needs-padding > scrolledwindow > viewport > list > row {
+  padding-left :calc(160px+1rem); /* width-request of edit_mode_box + a bit */
+}
+.horizontal.overlayed-list:dir(ltr).needs-padding > .linked-circular {
+  margin-right:1.5rem;
+}
+.horizontal.overlayed-list:dir(rtl).needs-padding > .linked-circular {
+  margin-left :1.5rem;
+}
+
+  .vertical.overlayed-list:dir(rtl) > .linked-circular > .right-on-ltr,
+  .vertical.overlayed-list:dir(ltr) > .linked-circular > .left-on-ltr {
+  border-radius:2rem 0 0 2rem;
+  -gtk-outline-top-left-radius   :2rem;
+  -gtk-outline-bottom-left-radius:2rem;
+}
+
+  .vertical.overlayed-list:dir(ltr) > .linked-circular > .right-on-ltr,
+  .vertical.overlayed-list:dir(rtl) > .linked-circular > .left-on-ltr {
+  border-radius:0 2rem 2rem 0;
+  -gtk-outline-top-right-radius   :2rem;
+  -gtk-outline-bottom-right-radius:2rem;
+}
+
+.horizontal.overlayed-list:dir(rtl) > .linked-circular > .right-on-ltr,
+.horizontal.overlayed-list:dir(ltr) > .linked-circular > .left-on-ltr {
+  border-radius:1.5rem 1.5rem 0 0;
+  -gtk-outline-top-right-radius:1.4rem;
+  -gtk-outline-top-left-radius :1.4rem;
+}
+.horizontal.overlayed-list:dir(ltr) > .linked-circular > .right-on-ltr,
+.horizontal.overlayed-list:dir(rtl) > .linked-circular > .left-on-ltr {
+  border-radius:0 0 1.5rem 1.5rem;
+  -gtk-outline-bottom-right-radius:1.4rem;
+  -gtk-outline-bottom-left-radius :1.4rem;
+}
+
+/*\
+* * in-window about
+\*/
+
+.about-list            > scrolledwindow > viewport > list > row {
+  min-height:1.3rem;
+}
+
+.about-list            > scrolledwindow > viewport > list > row > label {
+  margin:4px;
+}
+
+.about-list            > scrolledwindow > viewport > list > row > button {
+  margin-top:2px;
+  margin-bottom:2px;
+}
+
+/*\
+* * text formating
+\*/
+
+.small-label {
+  font-size:small;
+}
+.bold-label {
+  font-weight:bold;
+}
+.italic-label {
+  font-style:italic;
+}
+
+.big-popover {
+  font-size:144%;
+}
+
+/*\
+* * the end
+\*/

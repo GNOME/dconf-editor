@@ -4,6 +4,7 @@
     <file preprocess="xml-stripblanks">adaptative-window.ui</file>
     <file preprocess="xml-stripblanks">base-headerbar.ui</file>
     <file preprocess="xml-stripblanks">base-view.ui</file>
+    <file>base-window.css</file>
     <file preprocess="xml-stripblanks">base-window.ui</file>
     <file preprocess="xml-stripblanks">bookmark.ui</file>
     <file preprocess="xml-stripblanks">bookmarks.ui</file>

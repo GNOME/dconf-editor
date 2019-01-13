@@ -113,7 +113,13 @@ sources = files(
   'source-manager.vala'
 )
 
-resource_data = files(
+css_data = files(
+  'base-window.css',
+  'dconf-editor.css',
+  'large-pathbar.css'
+)
+
+ui_data = files(
   'adaptative-window.ui',
   'base-headerbar.ui',
   'base-view.ui',
@@ -123,14 +129,12 @@ resource_data = files(
   'bookmark.ui',
   'browser-infobar.ui',
   'browser-stack.ui',
-  'dconf-editor.css',
   'delayed-setting-view.ui',
   'filter-list-box-row.ui',
   'folder-list-box-row.ui',
   'help-overlay.ui',
   'key-list-box-row.ui',
   'large-pathbar-item.ui',
-  'large-pathbar.css',
   'large-pathbar.ui',
   'modifications-revealer.ui',
   'notifications-revealer.ui',
@@ -145,6 +149,8 @@ resource_data = files(
   'search-list-box-row.ui',
   'short-pathbar.ui'
 )
+
+resource_data = css_data + ui_data
 
 sources += gnome.compile_resources(
   'resources',
