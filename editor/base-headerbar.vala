@@ -245,6 +245,11 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
         if (is_not_requested_mode (default_mode_id, requested_mode_id, ref _this.default_mode_on))
             return;
 
+        _this.set_default_widgets_default_states (_this);
+    }
+
+    protected virtual void set_default_widgets_default_states (BaseHeaderBar _this)
+    {
         _this.set_default_widgets_states (/* title_label text or null */ null,
                                           /* show go_back_button      */ false,
                                           /* show ltr_left_separator  */ false,
