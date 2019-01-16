@@ -796,27 +796,3 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
     }
 }
-
-namespace AboutDialogInfos
-{
-    // strings
-    internal const string program_name = ConfigurationEditor.PROGRAM_NAME;
-    internal const string version = Config.VERSION;
-
-    /* Translators: about dialog text */
-    internal const string comments = _("A graphical viewer and editor of applications’ internal settings.");
-
-    /* Translators: about dialog text */
-    internal const string copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger\nCopyright \xc2\xa9 2015-2019 – Arnaud Bonatti");
-
-    /* Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
-    internal const string translator_credits = _("translator-credits");
-
-    // various
-    internal const string logo_icon_name = "ca.desrt.dconf-editor";
-    internal const string website = "https://wiki.gnome.org/Apps/DconfEditor";
-    /* Translators: about dialog text; label of the website link */
-    internal const string website_label = _("Page on GNOME wiki");
-    internal const string [] authors = { "Robert Ancell", "Arnaud Bonatti" };
-    internal const License license_type = License.GPL_3_0; /* means "version 3.0 or later" */
-}

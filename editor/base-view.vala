@@ -75,10 +75,21 @@ private class BaseView : Stack, AdaptativeWidget
     private bool about_list_created = false;
     private AboutList about_list;
 
-    private void create_about_list ()
+    internal void create_about_list (ref string [] artists,
+                                     ref string [] authors,
+                                     ref string    comments,
+                                     ref string    copyright,
+                                     ref string [] documenters,
+                                     ref string    logo_icon_name,
+                                     ref string    program_name,
+                                     ref string    translator_credits,
+                                     ref string    version,
+                                     ref string    website,
+                                     ref string    website_label)
     {
         about_list = new AboutList (/* needs shadows   */ false,
-                                    /* big placeholder */ true);
+                                    /* big placeholder */ true,
+                                    ref artists, ref authors, ref comments, ref copyright, ref documenters, ref logo_icon_name, ref program_name, ref translator_credits, ref version, ref website, ref website_label);
         about_list.set_window_size (saved_window_size);
         about_list.show ();
         add (about_list);
@@ -86,13 +97,10 @@ private class BaseView : Stack, AdaptativeWidget
     }
 
     internal void show_about_view ()
+        requires (about_list_created == true)
         requires (in_window_about == false)
     {
-        if (about_list_created)
-            about_list.reset ();
-        else
-            create_about_list ();
-
+        about_list.reset ();
         set_visible_child (about_list);
         in_window_about = true;
     }

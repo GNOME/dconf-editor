@@ -621,4 +621,43 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
             ((DConfWindow) (!) window).apply_pending_changes_and_quit ();
         base.quit ();
     }
+
+    /*\
+    * * about dialog infos
+    \*/
+
+    internal void get_about_dialog_infos (out string [] artists,
+                                          out string [] authors,
+                                          out string    comments,
+                                          out string    copyright,
+                                          out string [] documenters,
+                                          out string    logo_icon_name,
+                                          out string    program_name,
+                                          out string    translator_credits,
+                                          out string    version,
+                                          out string    website,
+                                          out string    website_label)
+    {
+        /* Translators: about dialog text */
+        comments = _("A graphical viewer and editor of applications’ internal settings.");
+
+        artists = {};
+        authors = { "Robert Ancell", "Arnaud Bonatti" };
+
+        /* Translators: about dialog text */
+        copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger\nCopyright \xc2\xa9 2015-2019 – Arnaud Bonatti");
+
+        documenters = {};
+        logo_icon_name = "ca.desrt.dconf-editor";
+        program_name = ConfigurationEditor.PROGRAM_NAME;
+
+        /* Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
+        translator_credits = _("translator-credits");
+
+        version = Config.VERSION;
+        website = "https://wiki.gnome.org/Apps/DconfEditor";
+
+        /* Translators: about dialog text; label of the website link */
+        website_label = _("Page on GNOME wiki");
+    }
 }

@@ -20,6 +20,19 @@ using Gtk;
 private interface BaseApplication : Gtk.Application
 {
     internal abstract void copy (string text);
+
+    // same as about dialog; skipped: wrap_license, license, license_type (forced at GPL v3+ == License.GPL_3_0), logo
+    internal abstract void get_about_dialog_infos (out string [] artists,
+                                                   out string [] authors,
+                                                   out string    comments,
+                                                   out string    copyright,
+                                                   out string [] documenters,
+                                                   out string    logo_icon_name,
+                                                   out string    program_name,
+                                                   out string    translator_credits,
+                                                   out string    version,
+                                                   out string    website,
+                                                   out string    website_label);
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-window.ui")]
@@ -273,8 +286,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     }
     private static bool _on_key_press_event (Widget widget, Gdk.EventKey event)
     {
-        uint keyval = event.keyval;
-        string name = (!) (Gdk.keyval_name (keyval) ?? "");
+        string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
 
         if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
         {
@@ -320,8 +332,73 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
             show_default_view ();
     }
 
+    protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)
+    {
+        if (in_window_about)
+        {
+            in_window_about = false;
+            headerbar.show_default_view ();
+            main_view.show_default_view ();
+        }
+        else
+            assert_not_reached ();
+    }
+
     /*\
-    * * about action and dialog
+    * * about dialog
+    \*/
+
+    private AboutDialog about_dialog;
+    private void show_about_dialog ()
+    {
+        if (should_init_about_dialog)
+        {
+            create_about_dialog ();
+            about_dialog.response.connect ((_about_dialog, response) => _about_dialog.hide ());
+            about_dialog.key_press_event.connect (about_dialog_key_press_event);
+            about_dialog.set_transient_for (this);
+            should_init_about_dialog = false;
+        }
+        about_dialog.run ();
+    }
+    private static bool about_dialog_key_press_event (Widget _about_dialog_widget, Gdk.EventKey event)
+    {
+        if (((!) (Gdk.keyval_name (event.keyval) ?? "") == "F1")
+         && ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0))
+        {
+            ((Dialog) _about_dialog_widget).response (ResponseType.CANCEL);
+            return true;
+        }
+        return false;
+    }
+
+    private bool should_init_about_dialog = true;
+    private void create_about_dialog ()
+    {
+        string [] artists, authors, documenters;
+        string comments, copyright, logo_icon_name, program_name, translator_credits, version, website, website_label;
+
+        ((BaseApplication) get_application ()).get_about_dialog_infos (out artists, out authors, out comments, out copyright, out documenters, out logo_icon_name, out program_name, out translator_credits, out version, out website, out website_label);
+
+        about_dialog = new AboutDialog ();
+        about_dialog.set_title (headerbar.about_action_label);
+        about_dialog.set_wrap_license (true);
+        about_dialog.set_license_type (License.GPL_3_0);    // forced, 1/3
+        if (artists.length > 0)         about_dialog.set_artists            (artists);
+        if (authors.length > 0)         about_dialog.set_authors            (authors);
+        if (comments != "")             about_dialog.set_comments           (comments);
+        if (copyright != "")            about_dialog.set_copyright          (copyright);
+        if (documenters.length > 0)     about_dialog.set_documenters        (documenters);
+        if (logo_icon_name != "")       about_dialog.set_logo_icon_name     (logo_icon_name);
+        if (program_name != "")         about_dialog.set_program_name       (program_name);         else assert_not_reached ();
+        if (translator_credits != "")   about_dialog.set_translator_credits (translator_credits);
+        if (version != "")              about_dialog.set_version            (version);
+        if (website != "")              about_dialog.set_website            (website);
+        if (website_label != "")        about_dialog.set_website_label      (website_label);
+    }
+
+    /*\
+    * * in-window about
     \*/
 
     private void about (/* SimpleAction action, Variant? path_variant */)
@@ -329,39 +406,34 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         if (disable_popovers)
             toggle_in_window_about ();
         else
-            show_about_dialog ();       // TODO hide the dialog if visible
+            show_about_dialog ();
     }
-
-    private void show_about_dialog ()
-    {
-        string [] authors = AboutDialogInfos.authors;
-        Gtk.show_about_dialog (this,
-                               "program-name",          AboutDialogInfos.program_name,
-                               "version",               AboutDialogInfos.version,
-                               "comments",              AboutDialogInfos.comments,
-                               "copyright",             AboutDialogInfos.copyright,
-                               "license-type",          AboutDialogInfos.license_type,
-                               "wrap-license", true,
-                               "authors",               authors,
-                               "translator-credits",    AboutDialogInfos.translator_credits,
-                               "logo-icon-name",        AboutDialogInfos.logo_icon_name,
-                               "website",               AboutDialogInfos.website,
-                               "website-label",         AboutDialogInfos.website_label,
-                               null);
-    }
-
-    /*\
-    * * in-window about
-    \*/
 
     [CCode (notify = false)] protected bool in_window_about { protected get; private set; default = false; }
 
     private void toggle_in_window_about ()
     {
-        if (in_window_about)
+        if (should_init_in_window_about)
+        {
+            init_in_window_about ();
+            should_init_in_window_about = false;
+            show_about_view ();
+        }
+        else if (in_window_about)
             show_default_view ();
         else
             show_about_view ();
+    }
+
+    private bool should_init_in_window_about = true;
+    private void init_in_window_about ()
+    {
+        string [] artists, authors, documenters;
+        string comments, copyright, logo_icon_name, program_name, translator_credits, version, website, website_label;
+
+        ((BaseApplication) get_application ()).get_about_dialog_infos (out artists, out authors, out comments, out copyright, out documenters, out logo_icon_name, out program_name, out translator_credits, out version, out website, out website_label);
+
+        main_view.create_about_list                                   (ref artists, ref authors, ref comments, ref copyright, ref documenters, ref logo_icon_name, ref program_name, ref translator_credits, ref version, ref website, ref website_label);
     }
 
     private inline void show_about_view ()
@@ -373,18 +445,6 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         headerbar.show_about_view ();
         main_view.show_about_view ();
         set_focus_visible (false);  // about-list grabs focus
-    }
-
-    protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (in_window_about)
-        {
-            in_window_about = false;
-            headerbar.show_default_view ();
-            main_view.show_default_view ();
-        }
-        else
-            assert_not_reached ();
     }
 
     /*\

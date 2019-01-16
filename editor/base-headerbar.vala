@@ -68,9 +68,9 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     * * hamburger menu
     \*/
 
-    [CCode (notify = false)] public string about_action_label     { private get; protected construct; } // TODO add default = _("About");
-    [CCode (notify = false)] public bool   has_help               { private get; protected construct; default = false; }
-    [CCode (notify = false)] public bool   has_keyboard_shortcuts { private get; protected construct; default = false; }
+    [CCode (notify = false)] public string about_action_label     { internal get; protected construct; } // TODO add default = _("About");
+    [CCode (notify = false)] public bool   has_help               { private  get; protected construct; default = false; }
+    [CCode (notify = false)] public bool   has_keyboard_shortcuts { private  get; protected construct; default = false; }
 
     protected override void update_hamburger_menu ()
     {
