@@ -437,6 +437,28 @@ private abstract class BrowserWindow : BaseWindow
         return false;
     }
 
+    protected override bool escape_pressed ()
+    {
+        if (headerbar.in_window_properties)
+        {
+            show_default_view ();
+            return true;
+        }
+        if (base.escape_pressed ())
+            return true;
+        if (current_type == ViewType.CONFIG)
+        {
+            request_folder (current_path);
+            return true;
+        }
+        if (headerbar.search_mode_enabled)
+        {
+            stop_search ();
+            return true;
+        }
+        return false;
+    }
+
     protected override void show_default_view ()
     {
         if (headerbar.in_window_properties)

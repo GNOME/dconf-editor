@@ -348,8 +348,8 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         set_accels_for_action ("key.open-child",            {        "<Alt>Down"        });
         set_accels_for_action ("key.open-last-child",       { "<Shift><Alt>Down"        });
 
+        set_accels_for_action ("base.escape",               {          "Escape"         });
         set_accels_for_action ("base.toggle-hamburger",     {          "F10"            });
-        set_accels_for_action ("bw.escape",                 {          "Escape"         });
         set_accels_for_action ("base.menu",                 {          "Menu"           });
 
         set_accels_for_action ("kbd.set-to-default",        { "<Primary>Delete",

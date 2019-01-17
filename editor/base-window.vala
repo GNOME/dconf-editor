@@ -98,11 +98,12 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         { "paste",              paste               },  // <P>v
         { "paste-alt",          paste_alt           },  // <P>V
 
+        { "escape",             _escape_pressed     },  // Escape
         { "toggle-hamburger",   toggle_hamburger    },  // F10
         { "menu",               menu_pressed        },  // Menu
 
-        { "show-default-view",  show_default_view },
-        { "about",              about }
+        { "show-default-view",  show_default_view   },
+        { "about",              about               }
     };
 
     /*\
@@ -330,6 +331,20 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         headerbar.close_popovers ();
         if (in_window_about)
             show_default_view ();
+    }
+
+    private void _escape_pressed (/* SimpleAction action, Variant? path_variant */)
+    {
+        escape_pressed ();  // returns true if something is done
+    }
+    protected virtual bool escape_pressed ()
+    {
+        if (in_window_about)
+        {
+            show_default_view ();
+            return true;
+        }
+        return false;
     }
 
     protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)

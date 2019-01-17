@@ -70,14 +70,25 @@ private abstract class BookmarksWindow : BrowserWindow, AdaptativeWidget
         // keyboard
         { "toggle-bookmark",    toggle_bookmark     },  // <P>b & <P>B
         { "bookmark",           bookmark            },  // <P>d
-        { "unbookmark",         unbookmark          },  // <P>D
-
-        { "escape",             escape_pressed      }   // Escape
+        { "unbookmark",         unbookmark          }   // <P>D
     };
 
     /*\
     * * showing or hiding panels
     \*/
+
+    protected override bool escape_pressed ()
+    {
+        if (main_view.in_window_bookmarks)
+        {
+            if (main_view.in_window_bookmarks_edit_mode)
+                leave_edit_mode ();
+            else
+                show_default_view ();
+            return true;
+        }
+        return base.escape_pressed ();
+    }
 
     protected override void show_default_view ()
     {
@@ -206,20 +217,6 @@ private abstract class BookmarksWindow : BrowserWindow, AdaptativeWidget
         main_view.close_popovers ();
         headerbar.unbookmark_current_path ();
     }
-
-    private void escape_pressed (/* SimpleAction action, Variant? variant */)
-    {
-        if (main_view.in_window_bookmarks)
-        {
-            if (main_view.in_window_bookmarks_edit_mode)
-                leave_edit_mode ();
-            else
-                show_default_view ();
-        }
-        else
-            escape_pressed_called ();
-    }
-    protected abstract void escape_pressed_called ();
 
     /*\
     * * keyboard calls helpers

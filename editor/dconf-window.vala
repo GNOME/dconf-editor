@@ -587,14 +587,14 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
             show_default_view ();
     }
 
-    protected override void escape_pressed_called ()    // TODO better?
+    protected override bool escape_pressed ()
     {
-        if (main_view.in_window_modifications || in_window_about)
+        if (main_view.in_window_modifications)
+        {
             show_default_view ();
-        else if (headerbar.search_mode_enabled)
-            stop_search ();
-        else if (current_type == ViewType.CONFIG)
-            request_folder (current_path);
+            return true;
+        }
+        return base.escape_pressed ();
     }
 
     /*\
