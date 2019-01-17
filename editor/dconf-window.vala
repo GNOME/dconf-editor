@@ -240,12 +240,12 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
         main_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
-        revealer.gkey_value_push     (full_name, context_id, key_value, is_key_default);
+        revealer.gkey_value_push  (full_name, context_id, key_value, is_key_default);
     }
     private void propagate_dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         main_view.dkey_value_push (full_name, key_value_or_null);
-        revealer.dkey_value_push     (full_name, key_value_or_null);
+        revealer.dkey_value_push  (full_name, key_value_or_null);
     }
 
     /*\
@@ -642,8 +642,8 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     protected override void request_config (string full_name)
     {
         main_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
-                                          model.get_folder_properties (full_name),
-                                          true);
+                                       model.get_folder_properties (full_name),
+                                       true);
         update_current_path (ViewType.CONFIG, strdup (full_name));
 
         stop_search ();
@@ -716,8 +716,8 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         else
         {
             main_view.prepare_object_view (full_name, context_id,
-                                              model.get_key_properties (full_name, context_id, 0),
-                                              current_path == ModelUtils.get_parent_path (full_name));
+                                           model.get_key_properties (full_name, context_id, 0),
+                                           current_path == ModelUtils.get_parent_path (full_name));
             update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
