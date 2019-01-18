@@ -94,11 +94,11 @@ button.invisible.invisible-menu-button:dir(ltr) { padding-left :1.4rem; backgrou
 button.invisible.invisible-menu-button:dir(rtl) { padding-right:1.4rem; background-position:100% center; }
 
 /* items hacks */
-.small-window.startup .pathbar  > button                        > label.item { /* class remove after 0.3s */
+.thin-window.startup .pathbar  > button                         > label.item { /* class remove after 0.3s */
   transition:padding             0s;
 }
 
-.small-window .pathbar          > button                        > label.item {
+.thin-window .pathbar          > button                         > label.item {
   padding:2px 1px;
 }
 

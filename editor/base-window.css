@@ -30,8 +30,8 @@
 * * app notification
 \*/
 
-.extra-small-window .app-notification,
-      .small-window .app-notification {
+.extra-thin-window .app-notification,
+      .thin-window .app-notification {
   border-radius:0;
 }
 

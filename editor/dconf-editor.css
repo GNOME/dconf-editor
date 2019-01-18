@@ -65,20 +65,20 @@
 * * pending change list popover
 \*/
 
-                    .delayed-settings-popover { padding:6px; }
+                   .delayed-settings-popover { padding:6px; }
 
-                    .delayed-list .list-row-header { padding:5px; padding-top:10px; }
+                   .delayed-list .list-row-header { padding:5px; padding-top:10px; }
 
-                    .delayed-list          > scrolledwindow > viewport > list > row        { padding:10px; }
-                    .delayed-list          > scrolledwindow > viewport > list .key-name    { padding-bottom:5px; }
+                   .delayed-list          > scrolledwindow > viewport > list > row        { padding:10px; }
+                   .delayed-list          > scrolledwindow > viewport > list .key-name    { padding-bottom:5px; }
 
-                    .delayed-list:dir(ltr) > scrolledwindow > viewport > list .value-label { padding-right:6px; }
-                    .delayed-list:dir(rtl) > scrolledwindow > viewport > list .value-label { padding-left :6px; }
+                   .delayed-list:dir(ltr) > scrolledwindow > viewport > list .value-label { padding-right:6px; }
+                   .delayed-list:dir(rtl) > scrolledwindow > viewport > list .value-label { padding-left :6px; }
 
-                    .delayed-list:dir(ltr) > scrolledwindow > viewport > list .diff-bullet { padding-left :20px; padding-right:6px; }
-                    .delayed-list:dir(rtl) > scrolledwindow > viewport > list .diff-bullet { padding-right:20px; padding-left :6px; }
-.extra-small-window .delayed-list:dir(ltr) > scrolledwindow > viewport > list .diff-bullet { padding-left : 8px; }
-.extra-small-window .delayed-list:dir(rtl) > scrolledwindow > viewport > list .diff-bullet { padding-right: 8px; }
+                   .delayed-list:dir(ltr) > scrolledwindow > viewport > list .diff-bullet { padding-left :20px; padding-right:6px; }
+                   .delayed-list:dir(rtl) > scrolledwindow > viewport > list .diff-bullet { padding-right:20px; padding-left :6px; }
+.extra-thin-window .delayed-list:dir(ltr) > scrolledwindow > viewport > list .diff-bullet { padding-left : 8px; }
+.extra-thin-window .delayed-list:dir(rtl) > scrolledwindow > viewport > list .diff-bullet { padding-right: 8px; }
 
 /*\
 * * lists rows height and icon
@@ -122,8 +122,8 @@
                                     .keys-list:dir(ltr) > row > .key    > grid { padding-left: 10px; padding-right:20px; } /* cool  8-) */
                                     .keys-list:dir(rtl) > row > .key    > grid { padding-right:10px; padding-left: 20px; }
 
-window:not(.extra-small-window)     .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
-window:not(.extra-small-window)     .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
+window:not(.extra-thin-window)      .keys-list:dir(ltr) > row > .key    > grid > :last-child { margin-left: 4em; }
+window:not(.extra-thin-window)      .keys-list:dir(rtl) > row > .key    > grid > :last-child { margin-right:4em; }
 
 /* technical padding: icon visual padding + icon size + some padding */
                                     .keys-list          > row > .managed > grid  { transition:padding-left  0.3s,
@@ -248,20 +248,20 @@ window:not(.extra-small-window)     .keys-list:dir(rtl) > row > .key    > grid >
 \*/
 
 /* cool list background and padding */
-            list.properties-list {
+                list.properties-list {
   background-color:initial;
   padding:0.3em 0;
 }
 
-            list.properties-list          > row {
+               list.properties-list > row {
   padding:0;
 }
 
 /* phone mode */
 
-.extra-small-window .properties-list > row { outline-offset:-5px; }   /* just for the left and right */
+.extra-thin-window .properties-list > row { outline-offset:-5px; }   /* just for the left and right */
 
-                    .property-name-label {
+                   .property-name-label {
   margin-left :1rem;
   margin-right:1rem;
 
@@ -277,52 +277,52 @@ window:not(.extra-small-window)     .keys-list:dir(rtl) > row > .key    > grid >
   margin-bottom:0.6rem;
 }
 
-                                .small-keys-list-rows .property-name-label,
-window:not(.extra-small-window) .small-keys-list-rows .property-value {
+                               .small-keys-list-rows .property-name-label,
+window:not(.extra-thin-window) .small-keys-list-rows .property-value {
   margin-top   :0.3rem;
   margin-bottom:0.3rem;
 }
 
-.extra-small-window .property-name-label {
+.extra-thin-window .property-name-label {
   min-width:0;
 }
 
   /* see also ".greyed-label" */
-                             .property-name-label          { color:@theme_fg_color; }
+                            .property-name-label          { color:@theme_fg_color; }
   /* TODO report bug: better would be mix(@theme_fg_color,@theme_bg_color,1.5); but that renders white... */
-.extra-small-window          .property-name-label          { color:mix(@theme_fg_color,@insensitive_fg_color,0.6); }
-                   :backdrop .property-name-label,
-.extra-small-window:backdrop .property-name-label          { color:@theme_unfocused_fg_color; }
-                             .property-name-label:disabled,
-.extra-small-window          .property-name-label:disabled { color:@insensitive_fg_color; }
-                   :backdrop .property-name-label:disabled,
-.extra-small-window:backdrop .property-name-label:disabled { color:@unfocused_insensitive_color; }
+.extra-thin-window          .property-name-label          { color:mix(@theme_fg_color,@insensitive_fg_color,0.6); }
+                  :backdrop .property-name-label,
+.extra-thin-window:backdrop .property-name-label          { color:@theme_unfocused_fg_color; }
+                            .property-name-label:disabled,
+.extra-thin-window          .property-name-label:disabled { color:@insensitive_fg_color; }
+                  :backdrop .property-name-label:disabled,
+.extra-thin-window:backdrop .property-name-label:disabled { color:@unfocused_insensitive_color; }
 
-                                          .property-value          { margin-left  : 1.0rem;
-                                                                     margin-right : 1.0rem;
-                                                                     transition:margin-top    0.3s,   /* both */
-                                                                                margin-bottom 0.3s,   /* small-keys-list-rows */
-                                                                                margin-left   0.5s,   /* extra-small-window */
-                                                                                margin-right  0.5s;   /* extra-small-window */
+                                         .property-value          { margin-left  : 1.0rem;
+                                                                    margin-right : 1.0rem;
+                                                                    transition:margin-top    0.3s,   /* both */
+                                                                               margin-bottom 0.3s,   /* small-keys-list-rows */
+                                                                               margin-left   0.5s,   /* extra-thin-window */
+                                                                               margin-right  0.5s;   /* extra-thin-window */
 
-                                                                     margin-top   : 0.6rem;
-                                                                     margin-bottom: 0.6rem; }
+                                                                    margin-top   : 0.6rem;
+                                                                    margin-bottom: 0.6rem; }
 
-.extra-small-window                       .property-value          { margin-top   : 2.2rem; }
-.extra-small-window .small-keys-list-rows .property-value          { margin-top   : 1.9rem; }
+.extra-thin-window                       .property-value          { margin-top   : 2.2rem; }
+.extra-thin-window .small-keys-list-rows .property-value          { margin-top   : 1.9rem; }
 
-                                          .property-value:dir(ltr) { margin-left  :15.0rem; }
-                                          .property-value:dir(rtl) { margin-right :15.0rem; }
-.extra-small-window                       .property-value:dir(ltr) { margin-left  : 1.0rem; }
-.extra-small-window                       .property-value:dir(rtl) { margin-right : 1.0rem; }
+                                         .property-value:dir(ltr) { margin-left  :15.0rem; }
+                                         .property-value:dir(rtl) { margin-right :15.0rem; }
+.extra-thin-window                       .property-value:dir(ltr) { margin-left  : 1.0rem; }
+.extra-thin-window                       .property-value:dir(rtl) { margin-right : 1.0rem; }
 
-                      .properties-list  .property-warning          { padding-top:0.6rem;
-                                                                     transition:margin-left  0.3s, /* for ltr */
-                                                                                margin-right 0.3s; /* for rtl */ }
-                      .properties-list  .property-warning:dir(ltr) { margin-left :-7.5rem; }
-                      .properties-list  .property-warning:dir(rtl) { margin-right:-7.5rem; }
-.extra-small-window   .properties-list  .property-warning:dir(ltr) { margin-left : 0; }
-.extra-small-window   .properties-list  .property-warning:dir(ltr) { margin-right: 0; }
+                   .properties-list    .property-warning          { padding-top:0.6rem;
+                                                                    transition:margin-left  0.3s, /* for ltr */
+                                                                               margin-right 0.3s; /* for rtl */ }
+                   .properties-list    .property-warning:dir(ltr) { margin-left :-7.5rem; }
+                   .properties-list    .property-warning:dir(rtl) { margin-right:-7.5rem; }
+.extra-thin-window .properties-list    .property-warning:dir(ltr) { margin-left : 0; }
+.extra-thin-window .properties-list    .property-warning:dir(ltr) { margin-right: 0; }
 
 .key-editor-child-array {
   min-height:10em;
@@ -336,35 +336,35 @@ window:not(.extra-small-window) .small-keys-list-rows .property-value {
 * * search entry
 \*/
 
-.extra-small-window .search-entry          > image {
+.extra-thin-window .search-entry          > image {
   padding-left :0;
   padding-right:0;
   min-width:0;
 }
 
 /* hide search image */
-.extra-small-window .search-entry:dir(rtl) > image.right,
-.extra-small-window .search-entry:dir(ltr) > image.left {
+.extra-thin-window .search-entry:dir(rtl) > image.right,
+.extra-thin-window .search-entry:dir(ltr) > image.left {
   margin-left :0;
   margin-right:0;
 }
 
 /* clear-text button: give more place for text */
-.extra-small-window .search-entry:dir(ltr) > image.right{
+.extra-thin-window .search-entry:dir(ltr) > image.right{
   margin-right:0;
   margin-left :4px;     /* instead of 6px */
 }
-.extra-small-window .search-entry:dir(rtl) > image.left {
+.extra-thin-window .search-entry:dir(rtl) > image.left {
   margin-left :0;
   margin-right:4px;     /* instead of 6px */
 }
 
 /* allows 3px less */
-.extra-small-window .search-entry:dir(ltr) {
+.extra-thin-window .search-entry:dir(ltr) {
   padding-left :6px;    /* instead of 8px */
   padding-right:7px;    /* instead of 8px */
 }
-.extra-small-window .search-entry:dir(rtl) {
+.extra-thin-window .search-entry:dir(rtl) {
   padding-right:6px;    /* instead of 8px */
   padding-left :7px;    /* instead of 8px */
 }
