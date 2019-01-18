@@ -269,6 +269,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
     private void update_adaptative_children (ref int width, ref int height)
     {
         bool extra_flat = height < 400;
+        bool flat       = height < 500;
 
         if (width < 590)
         {
@@ -276,24 +277,24 @@ private abstract class AdaptativeWindow : ApplicationWindow
             else if (height < 787)  change_window_size (AdaptativeWidget.WindowSize.PHONE_VERT);
             else                    change_window_size (AdaptativeWidget.WindowSize.EXTRA_THIN);
 
-            set_style_classes (/* extra thin */ true, /* thin */ true, /* large */ false);
+            set_style_classes (/* extra thin */ true, /* thin */ true, /* large */ false,
+                               /* extra flat */ extra_flat, /* flat */ flat);
         }
         else if (width < 787)
         {
             if (extra_flat)         change_window_size (AdaptativeWidget.WindowSize.PHONE_HZTL);
             else                    change_window_size (AdaptativeWidget.WindowSize.QUITE_THIN);
 
-            set_style_classes (/* extra thin */ false, /* thin */ true, /* large */ false);
+            set_style_classes (/* extra thin */ false, /* thin */ true, /* large */ false,
+                               /* extra flat */ extra_flat, /* flat */ flat);
         }
         else
         {
             if (extra_flat)         change_window_size (AdaptativeWidget.WindowSize.EXTRA_FLAT);
             else                    change_window_size (AdaptativeWidget.WindowSize.USUAL_SIZE);
 
-            if (width > LARGE_WINDOW_SIZE)
-                set_style_classes (/* extra thin */ false, /* thin */ false, /* large */ true);
-            else
-                set_style_classes (/* extra thin */ false, /* thin */ false, /* large */ false);
+            set_style_classes (/* extra thin */ false, /* thin */ false, /* large */ (width > LARGE_WINDOW_SIZE),
+                               /* extra flat */ extra_flat, /* flat */ flat);
         }
     }
 
@@ -312,14 +313,17 @@ private abstract class AdaptativeWindow : ApplicationWindow
     private bool has_extra_thin_window_class = false;
     private bool has_thin_window_class = false;
     private bool has_large_window_class = false;
+    private bool has_extra_flat_window_class = false;
+    private bool has_flat_window_class = false;
 
-    private void set_style_classes (bool extra_thin_window, bool thin_window, bool large_window)
+    private void set_style_classes (bool extra_thin_window, bool thin_window, bool large_window,
+                                    bool extra_flat_window, bool flat_window)
     {
-        // remove first
+        // for width
         if (has_extra_thin_window_class && !extra_thin_window)
-            set_style_class ("extra-thin-window", extra_thin_window, ref has_extra_thin_window_class);
+            set_style_class ("extra-thin-window", false, ref has_extra_thin_window_class);
         if (has_thin_window_class && !thin_window)
-            set_style_class ("thin-window", thin_window, ref has_thin_window_class);
+            set_style_class ("thin-window", false, ref has_thin_window_class);
 
         if (large_window != has_large_window_class)
             set_style_class ("large-window", large_window, ref has_large_window_class);
@@ -327,6 +331,15 @@ private abstract class AdaptativeWindow : ApplicationWindow
             set_style_class ("thin-window", thin_window, ref has_thin_window_class);
         if (extra_thin_window != has_extra_thin_window_class)
             set_style_class ("extra-thin-window", extra_thin_window, ref has_extra_thin_window_class);
+
+        // for height
+        if (has_extra_flat_window_class && !extra_flat_window)
+            set_style_class ("extra-flat-window", false, ref has_extra_flat_window_class);
+
+        if (flat_window != has_flat_window_class)
+            set_style_class ("flat-window", flat_window, ref has_flat_window_class);
+        if (extra_flat_window != has_extra_flat_window_class)
+            set_style_class ("extra-flat-window", extra_flat_window, ref has_extra_flat_window_class);
     }
 
     private inline void set_style_class (string class_name, bool new_state, ref bool old_state)
