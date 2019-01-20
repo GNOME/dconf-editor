@@ -21,24 +21,23 @@
 
   <screenshots>
     <screenshot type="default" height="576" width="1024">
-      <image>https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot1.png</image>
+      <image>https://gitlab.gnome.org/GNOME/dconf-editor/raw/master/editor/screenshot1.png</image>
       <caption>Browse the keys used by installed applications</caption>
     </screenshot>
     <screenshot type="default" height="576" width="1024">
-      <image>https://git.gnome.org/browse/dconf-editor/plain/editor/screenshot2.png</image>
+      <image>https://gitlab.gnome.org/GNOME/dconf-editor/raw/master/editor/screenshot2.png</image>
       <caption>Read keys descriptions and edit their values</caption>
     </screenshot>
   </screenshots>
 
   <kudos>
-    <kudo>AppMenu</kudo>
     <kudo>HiDpiIcon</kudo>
     <kudo>ModernToolkit</kudo>
     <kudo>Notifications</kudo>
   </kudos>
 
   <url type="homepage">https://wiki.gnome.org/Apps/DconfEditor</url>
-  <url type="bugtracker">https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=dconf-editor</url>
+  <url type="bugtracker">https://gitlab.gnome.org/GNOME/dconf-editor/issues</url>
   <update_contact>arnaud.bonatti_at_gmail.com</update_contact>
   <project_group>GNOME</project_group>
   <!--a translatable version of project_group-->
