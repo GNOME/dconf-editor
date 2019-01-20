@@ -35,9 +35,12 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
 
     construct
     {
-        add_show_modifications_button       (out show_modifications_button,     ref quit_button_stack);
-        add_modification_actions_button     (out modification_actions_button,   ref quit_button_stack);
-        add_modifications_actions_button    (out modifications_actions_button,  ref this);
+        // delay mode quit_button_stack buttons
+        add_show_modifications_button ();
+        add_modification_actions_button ();
+
+        // modifications view three-dots button
+        add_modifications_actions_button    (out modifications_actions_button, ref this);
         construct_changes_pending_menu      (out changes_pending_menu);
         construct_quit_delayed_mode_menu    (out quit_delayed_mode_menu);
 
@@ -72,13 +75,17 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
     * * modifications buttons and actions
     \*/
 
-    private Button      show_modifications_button;      // for selecting as stack child only
-    private MenuButton  modification_actions_button;    // for selecting as stack child only
     private MenuButton  modifications_actions_button;
     private GLib.Menu   changes_pending_menu;           // for selecting as menu only
     private GLib.Menu   quit_delayed_mode_menu;         // for selecting as menu only
 
-    private static void add_show_modifications_button (out Button show_modifications_button, ref Stack quit_button_stack)
+    private inline void add_show_modifications_button ()
+    {
+        Button show_modifications_button;
+        create_show_modifications_button (out show_modifications_button);
+        add_named_widget_to_quit_button_stack (show_modifications_button, "show-modifications");
+    }
+    private static inline void create_show_modifications_button (out Button show_modifications_button)
     {
         show_modifications_button = new Button.from_icon_name ("document-open-recent-symbolic");
         show_modifications_button.valign = Align.CENTER;
@@ -86,10 +93,15 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         show_modifications_button.get_style_context ().add_class ("titlebutton");
 
         show_modifications_button.visible = true;
-        quit_button_stack.add (show_modifications_button);
     }
 
-    private static void add_modification_actions_button (out MenuButton modification_actions_button, ref Stack quit_button_stack)
+    private inline void add_modification_actions_button ()
+    {
+        MenuButton modification_actions_button;
+        create_modification_actions_button (out modification_actions_button);
+        add_named_widget_to_quit_button_stack (modification_actions_button, "modification-actions");
+    }
+    private static inline void create_modification_actions_button (out MenuButton modification_actions_button)
     {
         modification_actions_button = new MenuButton ();
         Image view_more_image = new Image.from_icon_name ("document-open-recent-symbolic", IconSize.BUTTON);
@@ -108,7 +120,6 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         modification_actions_button.set_menu_model (change_pending_menu);
 
         modification_actions_button.visible = true;
-        quit_button_stack.add (modification_actions_button);
     }
 
     private static void add_modifications_actions_button (out MenuButton modifications_actions_button, ref unowned DConfHeaderBar _this)
@@ -150,13 +161,13 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         {
             modifications_actions_button.set_menu_model (changes_pending_menu);
             if (mode_is_temporary)
-                quit_button_stack.set_visible_child (modification_actions_button);
+                set_quit_button_stack_child ("modification-actions");
         }
         else
         {
             modifications_actions_button.set_menu_model (quit_delayed_mode_menu);
             if (mode_is_temporary)
-                quit_button_stack.set_visible_child_name ("quit-button");
+                set_quit_button_stack_child ("quit-button");
         }
     }
 
@@ -248,17 +259,17 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
 
         if (modifications_mode_on)
         {
-            quit_button_stack.hide ();
+            set_quit_button_stack_visibility (false);
         }
         else
         {
-            quit_button_stack.show ();
+            set_quit_button_stack_visibility (true);
             if (delay_mode)
-                quit_button_stack.set_visible_child (show_modifications_button);
+                set_quit_button_stack_child ("show-modifications");
             else if (has_pending_changes)
-                quit_button_stack.set_visible_child (modification_actions_button);
+                set_quit_button_stack_child ("modification-actions");
             else
-                quit_button_stack.set_visible_child_name ("quit-button");
+                set_quit_button_stack_child ("quit-button");
         }
     }
 }
