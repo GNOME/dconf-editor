@@ -38,6 +38,8 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
             current_type_is_config = !current_type_is_config;
             update_properties_view ();
         }
+
+        update_hamburger_menu ();
     }
 
     private bool is_extra_thin = false;
