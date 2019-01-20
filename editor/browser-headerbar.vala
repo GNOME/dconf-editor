@@ -171,20 +171,6 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     }
 
     /*\
-    * * keyboard calls
-    \*/
-
-    internal virtual bool next_match ()
-    {
-        return false;
-    }
-
-    internal virtual bool previous_match ()
-    {
-        return false;
-    }
-
-    /*\
     * * popovers methods
     \*/
 

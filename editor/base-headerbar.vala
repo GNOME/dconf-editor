@@ -304,8 +304,6 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 
     internal virtual bool has_popover ()
     {
-        if (info_button.active)
-            return true;
-        return false;
+        return info_button.active;
     }
 }

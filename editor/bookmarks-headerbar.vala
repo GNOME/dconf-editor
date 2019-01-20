@@ -272,18 +272,18 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
     * * keyboard calls
     \*/
 
-    internal override bool next_match ()
+    internal virtual bool next_match ()
     {
         if (bookmarks_button.active)
             return bookmarks_button.next_match ();
-        return base.next_match ();      // false
+        return false;
     }
 
-    internal override bool previous_match ()
+    internal virtual bool previous_match ()
     {
         if (bookmarks_button.active)
             return bookmarks_button.previous_match ();
-        return base.previous_match ();  // false
+        return false;
     }
 
     internal bool handle_copy_text (out string copy_text)
