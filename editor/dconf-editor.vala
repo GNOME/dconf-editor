@@ -361,7 +361,9 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
                                                               "<Primary>KP_Enter"       });
 
      // set_accels_for_action ("app.about",                 { "<Shift><Primary>F1"      }); // TODO bug: needs a dance in the window
-        set_accels_for_action ("win.show-help-overlay",     {                 "F1"      }); // "<Primary>F1" is automatically done
+        set_accels_for_action ("win.show-help-overlay",     {                 "F1",
+                                                                     "<Primary>question",
+                                                              "<Shift><Primary>question"}); // "<Primary>F1" is automatically done
 
         init_night_mode ();
 
