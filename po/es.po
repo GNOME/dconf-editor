@@ -2,14 +2,14 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Rodrigo <rodhos92@gmail.com>, 2018.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-01-08 09:43+0000\n"
-"PO-Revision-Date: 2019-01-09 09:34+0100\n"
+"POT-Creation-Date: 2019-01-12 11:40+0000\n"
+"PO-Revision-Date: 2019-01-28 12:35+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -17,15 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 3.31.0\n"
 "X-DamnedLies-Scope: partial\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/about-list.vala:30 editor/base-headerbar.vala:270
+#: editor/about-list.vala:30 editor/base-headerbar.vala:272
 msgid "About"
 msgstr "Acerca de"
 
@@ -90,9 +87,37 @@ msgid "Current view actions"
 msgstr "Acciones de la vista actual"
 
 #. Translators: usual menu entry of the hamburger menu
-#: editor/base-headerbar.vala:109
+#: editor/base-headerbar.vala:114
 msgid "Keyboard Shortcuts"
 msgstr "Atajos del teclado"
+
+#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#. Translators: accessible name of the button for opening the bookmarks popover
+#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
+#: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:115
+#: editor/registry-search.vala:552
+msgid "Bookmarks"
+msgstr "Marcadores"
+
+#. Translators: hamburger menu entry on small windows (not used in current design)
+#: editor/bookmarks-headerbar.vala:254
+msgid "Hide bookmarks"
+msgstr "Ocultar marcadores"
+
+#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:259
+msgid "Unbookmark"
+msgstr "Quitar de marcadores"
+
+#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:262
+msgid "Bookmark"
+msgstr "Marcador"
+
+#. Translators: hamburger menu entry on small windows, to show the bookmarks list
+#: editor/bookmarks-headerbar.vala:265
+msgid "Show bookmarks"
+msgstr "Mostrar marcadores"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -128,17 +153,6 @@ msgstr "Añadir o quitar de marcadores esta ubicación"
 msgid "The bookmarks list is not editable."
 msgstr "La lista de marcadores no es editable."
 
-#. Translators: accessible name of the button for opening the bookmarks popover
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
-#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
-#: editor/bookmarks.ui:115 editor/dconf-headerbar.vala:187
-#: editor/registry-search.vala:552
-msgid "Bookmarks"
-msgstr "Marcadores"
-
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:117
 msgid "Manage your bookmarks"
@@ -154,12 +168,8 @@ msgstr "Añadir esta búsqueda a marcadores"
 msgid "Bookmark this Location"
 msgstr "Añadir esta ubicación a marcadores"
 
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
-#: editor/browser-headerbar.vala:196
-#| msgid "Show properties"
+#: editor/browser-headerbar.vala:163
 msgid "Properties"
 msgstr "Propiedades"
 
@@ -172,7 +182,7 @@ msgstr ""
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
-#: editor/browser-view.vala:84 editor/pathentry.ui:67
+#: editor/browser-view.vala:84 editor/pathentry.ui:74
 msgid "Refresh"
 msgstr "Actualizar"
 
@@ -195,7 +205,7 @@ msgstr ""
 "Las propiedades de esta clave han cambiado. ¿Quiere volver a cargar la vista?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
-#: editor/browser-window.vala:814
+#: editor/browser-window.vala:884
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
@@ -309,13 +319,11 @@ msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:136
-#| msgid "A path to restore the last view"
 msgid "A path to restore the pathbar state"
 msgstr "Una ruta para restaurar el estado de la barra de rutas"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
-#, fuzzy
 #| msgid ""
 #| "If the “restore-view” key is set to “true”, Dconf Editor tries at launch "
 #| "to navigate to this path."
@@ -324,8 +332,9 @@ msgid ""
 "startup is a parent path of this one, Dconf Editor tries to restore the "
 "pathbar state at this path."
 msgstr ""
-"Si la clave «restore-view» es cierta, el edidor de dconf intenta navegar a "
-"esta ruta."
+"Si la clave «restore-view» es cierta, y la ruta solicitada al inicio es la "
+"ruta padre de esta el editor de dconf intenta restaurar el estado de la "
+"barra de rutas a esta ruta."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:143
@@ -1137,7 +1146,6 @@ msgstr "No mostrar la advertencia inicial"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:191
-#| msgid "A graphical viewer and editor of applications’ internal settings."
 msgid "Graphical interface for editing other applications settings."
 msgstr ""
 "Interfaz gráfica para editar otras opciones de configuración de aplicaciones."
@@ -1149,7 +1157,6 @@ msgstr "Usa la API de gsettings de la biblioteca Glib y otras maneras."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:197
-#| msgid "Description"
 msgid "Arguments description:"
 msgstr "Descripción de los argumentos:"
 
@@ -1181,7 +1188,7 @@ msgstr "el nombre de un esquema reubicable, sin ruta fija"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
 msgid "see list with the “--list-relocatable-schemas” option"
-msgstr ""
+msgstr "consulte la lista con la opción “--list-relocatable-schemas”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:219
@@ -1273,80 +1280,53 @@ msgstr "No se entiende: espacio en un argumento.\n"
 msgid "Copied to clipboard"
 msgstr "Copiado al portapapeles"
 
-#. Translators: usual menu entry of the hamburger menu
-#: editor/dconf-headerbar.vala:58
+#: editor/dconf-headerbar.vala:51
 msgid "About Dconf Editor"
 msgstr "Acerca de editor de Dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:256 editor/modifications-revealer.ui:70
+#: editor/dconf-headerbar.vala:101 editor/modifications-revealer.ui:70
 msgid "Apply"
 msgstr "Aplicar"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
-#: editor/dconf-headerbar.vala:259
-#| msgid "Dismiss all"
+#: editor/dconf-headerbar.vala:104
 msgid "Dismiss"
 msgstr "Descartar"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:284
+#: editor/dconf-headerbar.vala:129
 msgid "Apply all"
 msgstr "Aplicar todo"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:287
+#: editor/dconf-headerbar.vala:132
 msgid "Dismiss all"
 msgstr "Descartar todo"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
-#: editor/dconf-headerbar.vala:295
-#| msgctxt "shortcut window"
-#| msgid "Quit"
+#: editor/dconf-headerbar.vala:140
 msgid "Quit mode"
 msgstr "Modo de salir"
 
-#. Translators: hamburger menu entry on small windows (not used in current design)
-#: editor/dconf-headerbar.vala:391
-msgid "Hide bookmarks"
-msgstr "Ocultar marcadores"
-
-#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
-#: editor/dconf-headerbar.vala:396
-msgid "Unbookmark"
-msgstr "Quitar de marcadores"
-
-#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
-#: editor/dconf-headerbar.vala:399
-msgid "Bookmark"
-msgstr "Marcador"
-
-#. Translators: hamburger menu entry on small windows, to show the bookmarks list
-#: editor/dconf-headerbar.vala:402
-msgid "Show bookmarks"
-msgstr "Mostrar marcadores"
-
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
-#: editor/dconf-headerbar.vala:416
+#: editor/dconf-headerbar.vala:189
 msgid "Enter delay mode"
 msgstr "Introducir modo de retardo"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
-#: editor/dconf-headerbar.vala:422
+#: editor/dconf-headerbar.vala:193
 msgid "Reset visible keys"
 msgstr "Restablecer las teclas visibles"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
-#: editor/dconf-headerbar.vala:425
+#: editor/dconf-headerbar.vala:196
 msgid "Reset view recursively"
 msgstr "Restablecer la vista recursivamente"
 
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/dconf-headerbar.vala:467
+#: editor/dconf-headerbar.vala:234
 msgid "Pending"
 msgstr "Pendiente"
 
@@ -1357,50 +1337,50 @@ msgid "%s (key erased)"
 msgstr "%s (clave eliminada)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
-#: editor/dconf-window.vala:191
+#: editor/dconf-window.vala:122
 msgid "Schema is relocatable, a path is needed."
 msgstr "El esquema es reubicable, se necesita una ruta."
 
 #. Translators: command-line startup warning
-#: editor/dconf-window.vala:204
+#: editor/dconf-window.vala:135
 msgid "Startup mappings are disabled."
 msgstr "Los mapeos del inicio están desactivados."
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
-#: editor/dconf-window.vala:219
+#: editor/dconf-window.vala:150
 msgid "Schema is not installed on given path."
 msgstr "Esquema no instalado en la ruta dada."
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
-#: editor/dconf-window.vala:235
+#: editor/dconf-window.vala:166
 #, c-format
 msgid "Unknown schema “%s”."
 msgstr "Esquema desconocido «%s»."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
-#: editor/dconf-window.vala:341
+#: editor/dconf-window.vala:272
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Gracias por usar el editor de dconf para editar su configuración."
 
 #. Translators: initial "use at your own risk" dialog, the warning text
-#: editor/dconf-window.vala:344
+#: editor/dconf-window.vala:275
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "No olvide que algunas opciones pueden hacer que las aplicaciones fallen, por "
 "lo que debe tener cuidado."
 
 #. Translators: initial "use at your own risk" dialog, the button label
-#: editor/dconf-window.vala:347
+#: editor/dconf-window.vala:278
 msgid "I’ll be careful."
 msgstr "Tendré cuidado."
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
-#: editor/dconf-window.vala:351
+#: editor/dconf-window.vala:282
 msgid "Show this dialog next time."
 msgstr "Mostrar este diálogo la próxima vez."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
-#: editor/dconf-window.vala:372
+#: editor/dconf-window.vala:303
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
@@ -1409,40 +1389,36 @@ msgstr ""
 "Alt+F4 para descartar los cambios y salir."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:1067
+#: editor/dconf-window.vala:773
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Ahora la carpeta «%s» está vacía."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:1078
+#: editor/dconf-window.vala:784
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Se ha eliminado la clave «%s»."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:1084
+#: editor/dconf-window.vala:790
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "No se puede encontrar la clave «%s»."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:1090
+#: editor/dconf-window.vala:796
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "No hay nada en la la carpeta «%s» solicitada."
 
 #. Translators: about dialog text
-#: editor/dconf-window.vala:1102
+#: editor/dconf-window.vala:808
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Un visor gráfico y editor de configuración interna de aplicaciones."
 
 #. Translators: about dialog text
-#: editor/dconf-window.vala:1105
-#| msgid ""
-#| "Copyright © 2010-2014 – Canonical Ltd\n"
-#| "Copyright © 2015-2018 – Arnaud Bonatti\n"
-#| "Copyright © 2017-2018 – Davi da Silva Böger"
+#: editor/dconf-window.vala:811
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1453,12 +1429,12 @@ msgstr ""
 "Copyright © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-window.vala:1108
+#: editor/dconf-window.vala:814
 msgid "translator-credits"
 msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2016"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-window.vala:1114
+#: editor/dconf-window.vala:820
 msgid "Page on GNOME wiki"
 msgstr "Página en la wiki de GNOME"
 
@@ -1501,12 +1477,11 @@ msgid "Actions menu"
 msgstr "Menú de acciones"
 
 #: editor/help-overlay.ui:43
-#, fuzzy
 #| msgctxt "shortcut window"
 #| msgid "Path bar navigation"
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr "Navegación con la barra de rutas"
+msgstr "Menú de barra de rutas"
 
 #: editor/help-overlay.ui:52
 msgctxt "shortcut window"
@@ -1545,8 +1520,6 @@ msgstr "Conmutar la búsqueda"
 
 #. Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:98
-#| msgctxt "shortcut window"
-#| msgid "Search bar"
 msgctxt "shortcut window"
 msgid "Search again"
 msgstr "Buscar de nuevo"
@@ -1569,8 +1542,6 @@ msgstr "Pegar como búsqueda"
 
 #. Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:128
-#| msgctxt "shortcut window"
-#| msgid "Paste as search"
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
 msgstr "Pegar como búsqueda (forzar)"
@@ -1617,7 +1588,6 @@ msgstr "Línea siguiente"
 
 #. Translators: entry disabled for now
 #: editor/help-overlay.ui:191
-#| msgid "Show properties"
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
 msgstr "Conmutar las propiedades de la carpeta"
@@ -1698,7 +1668,6 @@ msgid "Apply pending changes and quit"
 msgstr "Aplicar los cambios pendientes y salir"
 
 #: editor/help-overlay.ui:300
-#| msgid "Dismiss change"
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
 msgstr "Descartar cambios pendientes y salir"
@@ -1720,13 +1689,11 @@ msgstr "Falló al analizar como doble."
 
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
-#| msgid "Failed to parse as double."
 msgid "Failed to parse as 64-bit integer."
 msgstr "Falló al analizar como entero de 64 bits."
 
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
-#| msgid "Failed to parse as double."
 msgid "Failed to parse as unsigned 64-bit integer."
 msgstr "Falló al analizar como entero de 64 bits sin signo."
 
@@ -1744,13 +1711,11 @@ msgstr "Buscar en la carpeta «%s»"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
-#| msgid "Open parent folder"
 msgid "Open path entry"
 msgstr "Abrir ruta de la entrada"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
-#| msgid "Search keys"
 msgid "Search everywhere"
 msgstr "Buscar en todos los sitios"
 
@@ -1800,8 +1765,8 @@ msgstr "Abrir"
 #. Translators: "open search" action in the right-click menu on a search
 #. Translators: accessible name of the enter-search button displayed in small-size windows
 #. Translators: accessible name of the search togglebutton displayed in usual-size windows
-#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:69
-#: editor/pathwidget.ui:95
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:67
+#: editor/pathwidget.ui:93
 msgid "Search"
 msgstr "Buscar"
 
@@ -1827,13 +1792,11 @@ msgstr "Sin cambio"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:351
-#| msgid "Failed to parse as double."
 msgid "Signed 16-bit integer"
 msgstr "Entero de 16 con signo"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:354
-#| msgid "Failed to parse as double."
 msgid "Unsigned 16-bit integer"
 msgstr "Entero de 16 sin signo"
 
@@ -1844,19 +1807,16 @@ msgstr "Entero de 32 bits con signo"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:360
-#| msgid "Failed to parse as double."
 msgid "Unsigned 32-bit integer"
 msgstr "Entero de 32 sin signo"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:363
-#| msgid "Failed to parse as double."
 msgid "Signed 64-bit integer"
 msgstr "Entero de 64 con signo"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:366
-#| msgid "Failed to parse as double."
 msgid "Unsigned 64-bit integer"
 msgstr "Entero de 64 sin signo"
 
@@ -1981,6 +1941,9 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
+"El modo retardado está activo\n"
+"pero\n"
+"no hay cambios pendientes"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
@@ -2061,26 +2024,23 @@ msgstr[0] " y una operación de dconf retrasada."
 msgstr[1] " y %u operaciones de dconf retrasada."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
-#: editor/pathentry.ui:43
-#| msgctxt "shortcut window"
-#| msgid "Paste as search"
+#: editor/pathentry.ui:50
 msgid "Close search"
 msgstr "Cerrar la búsqueda"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
-#: editor/pathentry.ui:45
-#| msgid "Refresh search results"
+#: editor/pathentry.ui:52
 msgid "Close search results"
 msgstr "Cerrar resultados de la búsqueda"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
-#: editor/pathentry.ui:69
+#: editor/pathentry.ui:76
 msgid "Refresh search results"
 msgstr "Actualizar resultados de la búsqueda"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
-#: editor/pathwidget.ui:71 editor/pathwidget.ui:97
+#: editor/pathwidget.ui:69 editor/pathwidget.ui:95
 msgid "Search keys"
 msgstr "Buscar claves"
 
@@ -2180,13 +2140,11 @@ msgstr "Tipo"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
 #: editor/registry-info.vala:89
-#| msgid "Type"
 msgid "Type name"
 msgstr "Nombre del tipo"
 
 #. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
 #: editor/registry-info.vala:93
-#| msgid "Type"
 msgid "Type code"
 msgstr "Código del tipo"
 
@@ -2318,7 +2276,6 @@ msgstr "conflicto"
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
-#| msgid "No Schema Found"
 msgid "No schema found"
 msgstr "No se ha encontrado el esquema"
 
@@ -2341,13 +2298,11 @@ msgstr "tipo «%s»"
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
 #, c-format
-#| msgid "%s (key erased)"
 msgid "%s (local keys)"
 msgstr "%s (claves locales)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
-#| msgid "Keys not defined by a schema"
 msgid "Local keys not defined by a schema"
 msgstr "Claves locales no definidas por un esquema"
 
@@ -2363,7 +2318,6 @@ msgstr "Subcarpetas"
 
 #. Translators: last header displayed in the keys list during a local search
 #: editor/registry-list.vala:1201
-#| msgid "Current view actions"
 msgid "Other actions"
 msgstr "Otras acciones"
 
@@ -2410,7 +2364,6 @@ msgstr "falso"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
 #: editor/setting-object.vala:194
 #, c-format
-#| msgid "nothing"
 msgid "nothing (%s)"
 msgstr "nada (%s)"
 
