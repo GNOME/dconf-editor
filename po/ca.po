@@ -550,7 +550,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:313
 msgid "A string, type ‘s’"
-msgstr "Una cadena de caràcters,tipus «s»"
+msgstr "Una cadena de caràcters, tipus «s»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:314
 msgid ""
