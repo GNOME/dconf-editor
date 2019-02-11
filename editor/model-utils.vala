@@ -348,98 +348,98 @@ namespace ModelUtils
     private const string _garbage_ = "";
 
     /* Translators: that's a name of a data type; capitalized (if that makes sense) */
-    private const string _desc_N_ = _("Signed 16-bit integer");
+    private const string _desc_N_ = N_("Signed 16-bit integer");
 
     /* Translators: that's a name of a data type; capitalized (if that makes sense) */
-    private const string _desc_Q_ = _("Unsigned 16-bit integer");
+    private const string _desc_Q_ = N_("Unsigned 16-bit integer");
 
     /* Translators: that's a name of a data type; capitalized (if that makes sense) */
-    private const string _desc_I_ = _("Signed 32-bit integer");
+    private const string _desc_I_ = N_("Signed 32-bit integer");
 
     /* Translators: that's a name of a data type; capitalized (if that makes sense) */
-    private const string _desc_U_ = _("Unsigned 32-bit integer");
+    private const string _desc_U_ = N_("Unsigned 32-bit integer");
 
     /* Translators: that's a name of a data type; capitalized (if that makes sense) */
-    private const string _desc_X_ = _("Signed 64-bit integer");
+    private const string _desc_X_ = N_("Signed 64-bit integer");
 
     /* Translators: that's a name of a data type; capitalized (if that makes sense) */
-    private const string _desc_T_ = _("Unsigned 64-bit integer");
+    private const string _desc_T_ = N_("Unsigned 64-bit integer");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _B_ = _("Boolean");
+    private const string _B_ = N_("Boolean");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _b_ = _("boolean");
+    private const string _b_ = N_("boolean");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _S_ = _("String");
+    private const string _S_ = N_("String");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _s_ = _("string");
+    private const string _s_ = N_("string");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _As_ = _("String array");
+    private const string _As_ = N_("String array");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _as_ = _("string array");
+    private const string _as_ = N_("string array");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _Enum_ = _("Enumeration");
+    private const string _Enum_ = N_("Enumeration");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _enum_ = _("enumeration");
+    private const string _enum_ = N_("enumeration");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _Flags_ = _("Flags");
+    private const string _Flags_ = N_("Flags");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _flags_ = _("flags");
+    private const string _flags_ = N_("flags");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _D_ = _("Double");
+    private const string _D_ = N_("Double");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _d_ = _("double");
+    private const string _d_ = N_("double");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
-    private const string _H_ = _("D-Bus handle type");
+    private const string _H_ = NC_("capitalized", "D-Bus handle type");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
-    private const string _h_ = _("D-Bus handle type");
+    private const string _h_ = NC_("non-capitalized", "D-Bus handle type");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _O_ = _("D-Bus object path");
+    private const string _O_ = NC_("capitalized", "D-Bus object path");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _o_ = _("D-Bus object path");
+    private const string _o_ = NC_("non-capitalized", "D-Bus object path");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _Ao_ = _("D-Bus object path array");
+    private const string _Ao_ = NC_("capitalized", "D-Bus object path array");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _ao_ = _("D-Bus object path array");
+    private const string _ao_ = NC_("non-capitalized", "D-Bus object path array");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _G_ = _("D-Bus signature");
+    private const string _G_ = NC_("capitalized", "D-Bus signature");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _g_ = _("D-Bus signature");
+    private const string _g_ = NC_("non-capitalized", "D-Bus signature");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _Integer_ = _("Integer");
+    private const string _Integer_ = N_("Integer");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _integer_ = _("integer");
+    private const string _integer_ = N_("integer");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _V_ = _("Variant");
+    private const string _V_ = N_("Variant");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _v_ = _("variant");
+    private const string _v_ = N_("variant");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _Empty_tuple_ = _("Empty tuple");
+    private const string _Empty_tuple_ = N_("Empty tuple");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _empty_tuple_ = _("empty tuple");
+    private const string _empty_tuple_ = N_("empty tuple");
 }
