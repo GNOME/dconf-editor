@@ -297,10 +297,21 @@ namespace ModelUtils
             case "<enum>":  untranslated_description = "Enumeration";               translated_description = _Enum_;        return;
             case "<flags>": untranslated_description = "Flags";                     translated_description = _Flags_;       return;
             case "d":       untranslated_description = "Double";                    translated_description = _D_;           return;
-            case "h":       untranslated_description = "D-Bus handle type";         translated_description = _H_;           return;
-            case "o":       untranslated_description = "D-Bus object path";         translated_description = _O_;           return;
-            case "ao":      untranslated_description = "D-Bus object path array";   translated_description = _Ao_;          return;
-            case "g":       untranslated_description = "D-Bus signature";           translated_description = _G_;           return;
+            /* Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
+            case "h":         translated_description = C_("capitalized", "D-Bus handle type");
+                            untranslated_description =                   "D-Bus handle type" ;                              return;
+
+            /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+            case "o":         translated_description = C_("capitalized", "D-Bus object path");
+                            untranslated_description =                   "D-Bus object path" ;                              return;
+
+            /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+            case "ao":        translated_description = C_("capitalized", "D-Bus object path array");
+                            untranslated_description =                   "D-Bus object path array" ;                        return;
+
+            /* Translators: that's the name of a data type; capitalized (if that makes sense) */
+            case "g":         translated_description = C_("capitalized", "D-Bus signature");
+                            untranslated_description =                   "D-Bus signature" ;                                return;
             case "y":
             case "n":
             case "q":
@@ -327,10 +338,21 @@ namespace ModelUtils
             case "<enum>":  untranslated_description = "enumeration";               translated_description = _enum_;        return;
             case "<flags>": untranslated_description = "flags";                     translated_description = _flags_;       return;
             case "d":       untranslated_description = "double";                    translated_description = _d_;           return;
-            case "h":       untranslated_description = "D-Bus handle type";         translated_description = _h_;           return;
-            case "o":       untranslated_description = "D-Bus object path";         translated_description = _o_;           return;
-            case "ao":      untranslated_description = "D-Bus object path array";   translated_description = _ao_;          return;
-            case "g":       untranslated_description = "D-Bus signature";           translated_description = _g_;           return;
+            /* Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
+            case "h":         translated_description = C_("non-capitalized", "D-Bus handle type");
+                            untranslated_description =                       "D-Bus handle type" ;                          return;
+
+            /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+            case "o":         translated_description = C_("non-capitalized", "D-Bus object path");
+                            untranslated_description =                       "D-Bus object path" ;                          return;
+
+            /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+            case "ao":        translated_description = C_("non-capitalized", "D-Bus object path array");
+                            untranslated_description =                       "D-Bus object path array" ;                    return;
+
+            /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
+            case "g":         translated_description = C_("non-capitalized", "D-Bus signature");
+                            untranslated_description =                       "D-Bus signature" ;                            return;
             case "y":
             case "n":
             case "q":
@@ -402,28 +424,28 @@ namespace ModelUtils
     private const string _d_ = _("double");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
-    private const string _H_ = _("D-Bus handle type");
+//  private const string _H_ = C_("capitalized", "D-Bus handle type");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle" */
-    private const string _h_ = _("D-Bus handle type");
+//  private const string _h_ = C_("non-capitalized", "D-Bus handle type");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _O_ = _("D-Bus object path");
+//  private const string _O_ = C_("capitalized", "D-Bus object path");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _o_ = _("D-Bus object path");
+//  private const string _o_ = C_("non-capitalized", "D-Bus object path");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _Ao_ = _("D-Bus object path array");
+//  private const string _Ao_ = C_("capitalized", "D-Bus object path array");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _ao_ = _("D-Bus object path array");
+//  private const string _ao_ = C_("non-capitalized", "D-Bus object path array");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
-    private const string _G_ = _("D-Bus signature");
+//  private const string _G_ = C_("capitalized", "D-Bus signature");
 
     /* Translators: that's the name of a data type; non capitalized (if that makes sense) */
-    private const string _g_ = _("D-Bus signature");
+//  private const string _g_ = C_("non-capitalized", "D-Bus signature");
 
     /* Translators: that's the name of a data type; capitalized (if that makes sense) */
     private const string _Integer_ = _("Integer");
