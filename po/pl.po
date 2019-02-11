@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-01-12 11:40+0000\n"
-"PO-Revision-Date: 2019-02-10 13:11+0100\n"
+"POT-Creation-Date: 2019-02-11 16:38+0000\n"
+"PO-Revision-Date: 2019-02-11 20:57+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -21,17 +21,17 @@ msgstr ""
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/about-list.vala:30 editor/base-headerbar.vala:272
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
 msgid "About"
 msgstr "O programie"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
-#: editor/about-list.vala:32
+#: editor/about-list.vala:46
 msgid "Credits"
 msgstr "Zasługi"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
-#: editor/about-list.vala:101
+#: editor/about-list.vala:135
 msgid ""
 "GNU General Public License\n"
 "version 3 or later"
@@ -40,12 +40,12 @@ msgstr ""
 "wersja 3 lub późniejsza"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
-#: editor/about-list.vala:124
+#: editor/about-list.vala:154
 msgid "Creators"
 msgstr "Program"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
-#: editor/about-list.vala:128
+#: editor/about-list.vala:166
 msgid "Translators"
 msgstr "Tłumaczenie"
 
@@ -76,24 +76,24 @@ msgid "Use night mode"
 msgstr "Włącz tryb nocny"
 
 #. Translators: accessible name of the hamburger menu
-#: editor/base-headerbar.ui:96
+#: editor/base-headerbar.ui:112
 msgid "Actions"
 msgstr "Działania"
 
 #. Translators: accessible description of the hamburger menu
-#: editor/base-headerbar.ui:98
+#: editor/base-headerbar.ui:114
 msgid "Current view actions"
 msgstr "Działania bieżącego widoku"
 
 #. Translators: usual menu entry of the hamburger menu
-#: editor/base-headerbar.vala:114
+#: editor/base-headerbar.vala:116
 msgid "Keyboard Shortcuts"
 msgstr "Skróty klawiszowe"
 
 #. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #. Translators: accessible name of the button for opening the bookmarks popover
 #. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
-#: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:115
+#: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
 #: editor/registry-search.vala:552
 msgid "Bookmarks"
 msgstr "Zakładki"
@@ -138,22 +138,22 @@ msgid "Edit"
 msgstr "Modyfikuj"
 
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
-#: editor/bookmarks.ui:53
+#: editor/bookmarks.ui:69
 msgid "Location bookmarked"
 msgstr "Dodano zakładkę do położenia"
 
 #. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
-#: editor/bookmarks.ui:55
+#: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
 msgstr "Przełączenie dodaje zakładkę do tego położenia"
 
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
-#: editor/bookmarks.ui:80
+#: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
 msgstr "Nie można modyfikować listy zakładek."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
-#: editor/bookmarks.ui:117
+#: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
 msgstr "Zarządzanie zakładkami"
 
@@ -168,7 +168,7 @@ msgid "Bookmark this Location"
 msgstr "Zakładka do tego położenia"
 
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
-#: editor/browser-headerbar.vala:163
+#: editor/browser-headerbar.vala:165
 msgid "Properties"
 msgstr "Właściwości"
 
@@ -179,7 +179,7 @@ msgstr "Preferencje porządkowania uległy zmianie. Odświeżyć widok?"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
-#: editor/browser-view.vala:84 editor/pathentry.ui:74
+#: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
 msgstr "Odśwież"
 
@@ -200,7 +200,7 @@ msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr "Właściwości tego klucza uległy zmianie. Ponownie wczytać widok?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
-#: editor/browser-window.vala:884
+#: editor/browser-window.vala:906
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
@@ -242,7 +242,7 @@ msgid "Read keys descriptions and edit their values"
 msgstr "Opisy kluczy i modyfikowanie ich wartości"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
@@ -1232,92 +1232,121 @@ msgid "No unknown schemas."
 msgstr "Brak nieznanych schematów."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:443
+#: editor/dconf-editor.vala:445
 msgid "Only one window can be opened for now.\n"
 msgstr "Na razie tylko jedno okno może być otwarte.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:463
+#: editor/dconf-editor.vala:465
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nie można przetworzyć: za dużo parametrów.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:477
+#: editor/dconf-editor.vala:479
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Nie można przetworzyć drugiego parametru w tym kontekście.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:498
+#: editor/dconf-editor.vala:500
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nie można przetworzyć: ukośnik w drugim parametrze.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:513
+#: editor/dconf-editor.vala:515
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Ścieżka do schematu musi zaczynać się i kończyć znakiem „/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:529
+#: editor/dconf-editor.vala:531
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Nie można przetworzyć: podana ścieżka zawiera „//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:537
+#: editor/dconf-editor.vala:539
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nie można przetworzyć: spacja w parametrze.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:565
+#: editor/dconf-editor.vala:567
 msgid "Copied to clipboard"
 msgstr "Skopiowano do schowka"
 
-#: editor/dconf-headerbar.vala:51
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:644
+msgid "A graphical viewer and editor of applications’ internal settings."
+msgstr "Graficzna przeglądarka i edytor wewnętrznych ustawień programów."
+
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:650
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
+msgstr ""
+"Copyright © 2010-2014 Canonical Ltd\n"
+"Copyright © 2017-2018 Davi da Silva Böger\n"
+"Copyright © 2015-2019 Arnaud Bonatti"
+
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:657
+msgid "translator-credits"
+msgstr ""
+"Piotr Drąg <piotrdrag@gmail.com>, 2012-2019\n"
+"Aviary.pl <community-poland@mozilla.org>, 2012-2019"
+
+#. Translators: about dialog text; label of the website link
+#: editor/dconf-editor.vala:663
+msgid "Page on GNOME wiki"
+msgstr "Strona na wiki projektu GNOME"
+
+#. Translators: usual menu entry of the hamburger menu
+#: editor/dconf-headerbar.vala:53
 msgid "About Dconf Editor"
 msgstr "O programie"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:101 editor/modifications-revealer.ui:70
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
 msgid "Apply"
 msgstr "Zastosuj"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
-#: editor/dconf-headerbar.vala:104
+#: editor/dconf-headerbar.vala:117
 msgid "Dismiss"
 msgstr "Odrzuć"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:129
+#: editor/dconf-headerbar.vala:141
 msgid "Apply all"
 msgstr "Zastosuj wszystko"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:132
+#: editor/dconf-headerbar.vala:144
 msgid "Dismiss all"
 msgstr "Odrzuć wszystko"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
-#: editor/dconf-headerbar.vala:140
+#: editor/dconf-headerbar.vala:152
 msgid "Quit mode"
 msgstr "Tryb kończenia"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
-#: editor/dconf-headerbar.vala:189
+#: editor/dconf-headerbar.vala:201
 msgid "Enter delay mode"
 msgstr "Przejdź do trybu opóźnienia"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
-#: editor/dconf-headerbar.vala:193
+#: editor/dconf-headerbar.vala:205
 msgid "Reset visible keys"
 msgstr "Przywróć widoczne klucze"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
-#: editor/dconf-headerbar.vala:196
+#: editor/dconf-headerbar.vala:208
 msgid "Reset view recursively"
 msgstr "Przywróć widok rekursywnie"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/dconf-headerbar.vala:234
+#: editor/dconf-headerbar.vala:246
 msgid "Pending"
 msgstr "Oczekujące"
 
@@ -1403,34 +1432,6 @@ msgstr "Nie można odnaleźć klucza „%s”."
 msgid "There’s nothing in requested folder “%s”."
 msgstr "W żądanym katalogu „%s” nic nie ma."
 
-#. Translators: about dialog text
-#: editor/dconf-window.vala:808
-msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr "Graficzna przeglądarka i edytor wewnętrznych ustawień programów."
-
-#. Translators: about dialog text
-#: editor/dconf-window.vala:811
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
-msgstr ""
-"Copyright © 2010-2014 Canonical Ltd\n"
-"Copyright © 2017-2018 Davi da Silva Böger\n"
-"Copyright © 2015-2019 Arnaud Bonatti"
-
-#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-window.vala:814
-msgid "translator-credits"
-msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2012-2019\n"
-"Aviary.pl <community-poland@mozilla.org>, 2012-2019"
-
-#. Translators: about dialog text; label of the website link
-#: editor/dconf-window.vala:820
-msgid "Page on GNOME wiki"
-msgstr "Strona na wiki projektu GNOME"
-
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
 msgid "Key erased"
@@ -1444,221 +1445,221 @@ msgstr "Wyczyszczono klucz"
 msgid "Default value"
 msgstr "Domyślna wartość"
 
-#: editor/help-overlay.ui:11
+#: editor/help-overlay.ui:28
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Działania"
 
-#: editor/help-overlay.ui:15
+#: editor/help-overlay.ui:32
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Menu zakładek"
 
-#: editor/help-overlay.ui:22
+#: editor/help-overlay.ui:39
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Dodanie zakładki do tej ścieżki"
 
-#: editor/help-overlay.ui:29
+#: editor/help-overlay.ui:46
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Usunięcie zakładki z tej ścieżki"
 
-#: editor/help-overlay.ui:36
+#: editor/help-overlay.ui:53
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Menu działań"
 
-#: editor/help-overlay.ui:43
+#: editor/help-overlay.ui:60
 msgctxt "shortcut window"
 msgid "Path bar menu"
 msgstr "Menu paska ścieżki"
 
-#: editor/help-overlay.ui:52
+#: editor/help-overlay.ui:69
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Nawigacja na pasku ścieżki"
 
-#: editor/help-overlay.ui:56
+#: editor/help-overlay.ui:73
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Otwarcie głównego katalogu"
 
-#: editor/help-overlay.ui:63
+#: editor/help-overlay.ui:80
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Otwarcie katalogu nadrzędnego"
 
-#: editor/help-overlay.ui:70
+#: editor/help-overlay.ui:87
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Otwarcie aktywnego bezpośredniego elementu potomnego"
 
-#: editor/help-overlay.ui:77
+#: editor/help-overlay.ui:94
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Otwarcie aktywnego ostatniego elementu potomnego"
 
-#: editor/help-overlay.ui:86
+#: editor/help-overlay.ui:103
 msgctxt "shortcut window"
 msgid "Search options"
 msgstr "Opcje wyszukiwania"
 
-#: editor/help-overlay.ui:90
+#: editor/help-overlay.ui:107
 msgctxt "shortcut window"
 msgid "Toggle search"
 msgstr "Przełączenie wyszukiwania"
 
 #. Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text
-#: editor/help-overlay.ui:98
+#: editor/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Search again"
 msgstr "Ponowne wyszukanie"
 
-#: editor/help-overlay.ui:105
+#: editor/help-overlay.ui:122
 msgctxt "shortcut window"
 msgid "Toggle local search"
 msgstr "Przełączenie lokalnego wyszukiwania"
 
 #. Translators: does the same thing as "Toggle local search", but loads the search entry with the last searched text; entry hidden for now
-#: editor/help-overlay.ui:113
+#: editor/help-overlay.ui:130
 msgctxt "shortcut window"
 msgid "Search locally again"
 msgstr "Ponowne wyszukanie lokalne"
 
-#: editor/help-overlay.ui:120
+#: editor/help-overlay.ui:137
 msgctxt "shortcut window"
 msgid "Paste as search"
 msgstr "Wklejenie jako wyszukiwanie"
 
 #. Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
-#: editor/help-overlay.ui:128
+#: editor/help-overlay.ui:145
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
 msgstr "Wklejenie jako wyszukiwanie (wymuszenie)"
 
-#: editor/help-overlay.ui:135
+#: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Edit path"
 msgstr "Modyfikacja ścieżki"
 
-#: editor/help-overlay.ui:142
+#: editor/help-overlay.ui:159
 msgctxt "shortcut window"
 msgid "Edit parent path"
 msgstr "Modyfikacja nadrzędnej ścieżki"
 
-#: editor/help-overlay.ui:149
+#: editor/help-overlay.ui:166
 msgctxt "shortcut window"
 msgid "Edit root path"
 msgstr "Modyfikacja głównej ścieżki"
 
-#: editor/help-overlay.ui:156
+#: editor/help-overlay.ui:173
 msgctxt "shortcut window"
 msgid "Browse keys tree"
 msgstr "Przeglądanie drzewa kluczy"
 
-#: editor/help-overlay.ui:165
+#: editor/help-overlay.ui:182
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr "Działania listy kluczy"
 
-#: editor/help-overlay.ui:169
+#: editor/help-overlay.ui:186
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Menu kontekstowe"
 
-#: editor/help-overlay.ui:176
+#: editor/help-overlay.ui:193
 msgctxt "shortcut window"
 msgid "Previous line"
 msgstr "Poprzedni wiersz"
 
-#: editor/help-overlay.ui:183
+#: editor/help-overlay.ui:200
 msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Następny wiersz"
 
 #. Translators: entry disabled for now
-#: editor/help-overlay.ui:191
+#: editor/help-overlay.ui:208
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
 msgstr "Przełączenie właściwości katalogu"
 
-#: editor/help-overlay.ui:198
+#: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Ustawienie na domyślną wartość"
 
-#: editor/help-overlay.ui:205
+#: editor/help-overlay.ui:222
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Przełączenie wartości zmiennej logicznej"
 
-#: editor/help-overlay.ui:214
+#: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Modifications list actions"
 msgstr "Działania listy modyfikacji"
 
-#: editor/help-overlay.ui:218
+#: editor/help-overlay.ui:235
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
 msgstr "Przełączenie listy modyfikacji"
 
-#: editor/help-overlay.ui:225
+#: editor/help-overlay.ui:242
 msgctxt "shortcut window"
 msgid "Open selected row key"
 msgstr "Otwarcie zaznaczonego rzędu klucza"
 
-#: editor/help-overlay.ui:232
+#: editor/help-overlay.ui:249
 msgctxt "shortcut window"
 msgid "Dismiss modification"
 msgstr "Odrzucenie modyfikacji"
 
-#: editor/help-overlay.ui:241
+#: editor/help-overlay.ui:258
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Ogólne"
 
-#: editor/help-overlay.ui:245
+#: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Wyświetlenie tej pomocy"
 
-#: editor/help-overlay.ui:252
+#: editor/help-overlay.ui:269
 msgctxt "shortcut window"
 msgid "About"
 msgstr "O programie"
 
-#: editor/help-overlay.ui:261
+#: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Schowek"
 
-#: editor/help-overlay.ui:265
+#: editor/help-overlay.ui:282
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Skopiowanie deskryptora"
 
-#: editor/help-overlay.ui:272
+#: editor/help-overlay.ui:289
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Skopiowanie ścieżki"
 
-#: editor/help-overlay.ui:281
+#: editor/help-overlay.ui:298
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Zakończenie działania"
 
-#: editor/help-overlay.ui:286
+#: editor/help-overlay.ui:303
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
 msgstr "Zakończenie działania, jeśli nie ma oczekujących zmian"
 
-#: editor/help-overlay.ui:293
+#: editor/help-overlay.ui:310
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
 msgstr "Zastosowanie oczekujących zmian i zakończenie działania"
 
-#: editor/help-overlay.ui:300
+#: editor/help-overlay.ui:317
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
 msgstr "Odrzucenie oczekujących zmian i zakończenie działania"
@@ -1740,7 +1741,7 @@ msgstr "Odrzuć zmianę"
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
 #. Translators: label of the action button of an infobar, when a key is not defined by a schema
 #: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
-#: editor/registry-info.ui:116
+#: editor/registry-info.ui:132
 msgid "Erase key"
 msgstr "Wyczyść klucz"
 
@@ -1757,8 +1758,8 @@ msgstr "Otwórz"
 #. Translators: "open search" action in the right-click menu on a search
 #. Translators: accessible name of the enter-search button displayed in small-size windows
 #. Translators: accessible name of the search togglebutton displayed in usual-size windows
-#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:67
-#: editor/pathwidget.ui:93
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
+#: editor/pathwidget.ui:109
 msgid "Search"
 msgstr "Znajdź"
 
@@ -1873,28 +1874,52 @@ msgid "double"
 msgstr "wartość „double”"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#: editor/model-utils.vala:405 editor/model-utils.vala:408
+#: editor/model-utils.vala:405
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Typ elementu obsługującego usługi D-Bus"
 
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:408
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "typ elementu obsługującego usługi D-Bus"
+
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:411 editor/model-utils.vala:414
+#: editor/model-utils.vala:411
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Ścieżka do obiektu usługi D-Bus"
 
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:417 editor/model-utils.vala:420
+#: editor/model-utils.vala:414
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "ścieżka do obiektu usługi D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:417
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Macierz ścieżek obiektu usługi D-Bus"
 
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:423 editor/model-utils.vala:426
+#: editor/model-utils.vala:420
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "macierz ścieżek obiektu usługi D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:423
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Podpis usługi D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:426
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "podpis usługi D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:429
@@ -2022,28 +2047,28 @@ msgstr[1] " i %u działania dconf."
 msgstr[2] " i %u działań dconf."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
-#: editor/pathentry.ui:50
+#: editor/pathentry.ui:66
 msgid "Close search"
 msgstr "Zamyka wyszukiwanie"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
-#: editor/pathentry.ui:52
+#: editor/pathentry.ui:68
 msgid "Close search results"
 msgstr "Zamyka wyniki wyszukiwania"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
-#: editor/pathentry.ui:76
+#: editor/pathentry.ui:92
 msgid "Refresh search results"
 msgstr "Odświeża wyniki wyszukiwania"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
-#: editor/pathwidget.ui:69 editor/pathwidget.ui:95
+#: editor/pathwidget.ui:85 editor/pathwidget.ui:111
 msgid "Search keys"
 msgstr "Wyszukuje klucze"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
-#: editor/registry-info.ui:33
+#: editor/registry-info.ui:49
 msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
@@ -2052,7 +2077,7 @@ msgstr ""
 "powodować problemy. Należy modyfikować wartość na własne ryzyko."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
-#: editor/registry-info.ui:71
+#: editor/registry-info.ui:87
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
@@ -2061,7 +2086,7 @@ msgstr ""
 "schemat. Działanie na jego wartości w sensowny sposób jest niemożliwe."
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
-#: editor/registry-info.ui:109
+#: editor/registry-info.ui:125
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
 "Editor can’t find one associated with this key. If the application that was "
@@ -2074,7 +2099,7 @@ msgstr ""
 "przestarzały, to można go wyczyścić."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
-#: editor/registry-info.ui:156
+#: editor/registry-info.ui:172
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -2085,7 +2110,7 @@ msgstr ""
 "możliwe."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
-#: editor/registry-info.ui:167
+#: editor/registry-info.ui:183
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -2096,7 +2121,7 @@ msgstr ""
 "jeśli to możliwe."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
-#: editor/registry-info.ui:178
+#: editor/registry-info.ui:194
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
