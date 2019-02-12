@@ -554,6 +554,8 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     {
         if (row_action_blocked ())
             return;
+        if (modifications_handler.get_current_delay_mode ())    // TODO better
+            return;
 
         main_view.close_popovers ();
         main_view.toggle_boolean_key ();
