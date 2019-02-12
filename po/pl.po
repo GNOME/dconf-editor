@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-11 16:38+0000\n"
-"PO-Revision-Date: 2019-02-11 20:57+0100\n"
+"POT-Creation-Date: 2019-02-12 16:37+0000\n"
+"PO-Revision-Date: 2019-02-12 17:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1409,25 +1409,25 @@ msgstr ""
 "i zakończy działanie, a Alt+F4 odrzuci zmiany i zakończy działanie."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:773
+#: editor/dconf-window.vala:775
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Katalog „%s” jest teraz pusty."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:784
+#: editor/dconf-window.vala:786
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Klucz „%s” został usunięty."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:790
+#: editor/dconf-window.vala:792
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nie można odnaleźć klucza „%s”."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:796
+#: editor/dconf-window.vala:798
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "W żądanym katalogu „%s” nic nie ma."
@@ -1445,221 +1445,260 @@ msgstr "Wyczyszczono klucz"
 msgid "Default value"
 msgstr "Domyślna wartość"
 
-#: editor/help-overlay.ui:28
+#. Translators: header in the shortcut window, for usual headerbar menus actions
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Działania"
 
-#: editor/help-overlay.ui:32
+#. Translators: Ctrl-B action
+#: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Menu zakładek"
 
-#: editor/help-overlay.ui:39
+#. Translators: Ctrl-D action
+#: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Dodanie zakładki do tej ścieżki"
 
-#: editor/help-overlay.ui:46
+#. Translators: Ctrl-Shift-D action
+#: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Usunięcie zakładki z tej ścieżki"
 
-#: editor/help-overlay.ui:53
+#. Translators: F10 key action
+#: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Menu działań"
 
-#: editor/help-overlay.ui:60
+#. Translators: Shift-F10 action
+#: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
 msgstr "Menu paska ścieżki"
 
-#: editor/help-overlay.ui:69
+#. Translators: header in the shortcut window, for moving to paths known by the headerbar
+#: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Nawigacja na pasku ścieżki"
 
-#: editor/help-overlay.ui:73
+#. Translators: Alt-Shift-Up action; browse to the '/' folder
+#: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Otwarcie głównego katalogu"
 
-#: editor/help-overlay.ui:80
+#. Translators: Alt-Up action; browse to the parent folder
+#: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Otwarcie katalogu nadrzędnego"
 
-#: editor/help-overlay.ui:87
+#. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Otwarcie aktywnego bezpośredniego elementu potomnego"
 
-#: editor/help-overlay.ui:94
+#. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
+#: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Otwarcie aktywnego ostatniego elementu potomnego"
 
-#: editor/help-overlay.ui:103
+#. Translators: header in the shortcut window, for the various ways of opening search
+#: editor/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Search options"
 msgstr "Opcje wyszukiwania"
 
-#: editor/help-overlay.ui:107
+#. Translators: Ctrl-F action; opens search, searching everywhere
+#: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
 msgstr "Przełączenie wyszukiwania"
 
-#. Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text
-#: editor/help-overlay.ui:115
+#. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:128
 msgctxt "shortcut window"
 msgid "Search again"
 msgstr "Ponowne wyszukanie"
 
-#: editor/help-overlay.ui:122
+#. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
+#: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
 msgstr "Przełączenie lokalnego wyszukiwania"
 
-#. Translators: does the same thing as "Toggle local search", but loads the search entry with the last searched text; entry hidden for now
-#: editor/help-overlay.ui:130
+#. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:144
 msgctxt "shortcut window"
-msgid "Search locally again"
+msgid "Search again, locally"
 msgstr "Ponowne wyszukanie lokalne"
 
-#: editor/help-overlay.ui:137
+#. Translators: Ctrl-V action; open search with clipboard content
+#: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
 msgstr "Wklejenie jako wyszukiwanie"
 
-#. Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
-#: editor/help-overlay.ui:145
+#. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
 msgstr "Wklejenie jako wyszukiwanie (wymuszenie)"
 
-#: editor/help-overlay.ui:152
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
 msgstr "Modyfikacja ścieżki"
 
-#: editor/help-overlay.ui:159
+#. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
+#: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
 msgstr "Modyfikacja nadrzędnej ścieżki"
 
-#: editor/help-overlay.ui:166
+#. Translators: '/' key action when browsing; opens search on root path
+#: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
 msgstr "Modyfikacja głównej ścieżki"
 
-#: editor/help-overlay.ui:173
+#. Translators: Escape key action, when searching; cancels search
+#: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
 msgstr "Przeglądanie drzewa kluczy"
 
-#: editor/help-overlay.ui:182
+#. Translators: header in the shortcut window, for when browsing
+#: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr "Działania listy kluczy"
 
-#: editor/help-overlay.ui:186
+#. Translators: Menu key action, when browsing
+#: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Menu kontekstowe"
 
-#: editor/help-overlay.ui:193
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
 msgstr "Poprzedni wiersz"
 
-#: editor/help-overlay.ui:200
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Następny wiersz"
 
-#. Translators: entry disabled for now
-#: editor/help-overlay.ui:208
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
 msgstr "Przełączenie właściwości katalogu"
 
-#: editor/help-overlay.ui:215
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Ustawienie na domyślną wartość"
 
-#: editor/help-overlay.ui:222
+#. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
+#: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Przełączenie wartości zmiennej logicznej"
 
-#: editor/help-overlay.ui:231
+#. Translators: header in the shortcut window, for when there are pending changes
+#: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
 msgstr "Działania listy modyfikacji"
 
-#: editor/help-overlay.ui:235
+#. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
+#: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
 msgstr "Przełączenie listy modyfikacji"
 
-#: editor/help-overlay.ui:242
+#. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
+#: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
 msgstr "Otwarcie zaznaczonego rzędu klucza"
 
-#: editor/help-overlay.ui:249
+#. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
+#: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
 msgstr "Odrzucenie modyfikacji"
 
-#: editor/help-overlay.ui:258
+#. Translators: header in the shortcut window, for opening the usual helpful dialogs
+#: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Ogólne"
 
-#: editor/help-overlay.ui:262
+#. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
+#: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Wyświetlenie tej pomocy"
 
-#: editor/help-overlay.ui:269
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
 msgctxt "shortcut window"
 msgid "About"
 msgstr "O programie"
 
-#: editor/help-overlay.ui:278
+#. Translators: header in the shortcut window, for the copy-to-clipboard actions
+#: editor/help-overlay.ui:311
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Schowek"
 
-#: editor/help-overlay.ui:282
+#. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
+#: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Skopiowanie deskryptora"
 
-#: editor/help-overlay.ui:289
+#. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
+#: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Skopiowanie ścieżki"
 
-#: editor/help-overlay.ui:298
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Zakończenie działania"
 
-#: editor/help-overlay.ui:303
+#. Translators: Ctrl-Q action; displays a notification if there are pending changes
+#: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
 msgstr "Zakończenie działania, jeśli nie ma oczekujących zmian"
 
-#: editor/help-overlay.ui:310
+#. Translators: Ctrl-Shift-Q action
+#: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
 msgstr "Zastosowanie oczekujących zmian i zakończenie działania"
 
-#: editor/help-overlay.ui:317
+#. Translators: Alt-F4 action
+#: editor/help-overlay.ui:356
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
 msgstr "Odrzucenie oczekujących zmian i zakończenie działania"
@@ -1783,171 +1822,187 @@ msgstr "Nie czyść"
 msgid "No change"
 msgstr "Bez zmian"
 
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:351
-msgid "Signed 16-bit integer"
-msgstr "16-bitowa liczba całkowita ze znakiem"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:354
-msgid "Unsigned 16-bit integer"
-msgstr "16-bitowa liczba całkowita bez znaku"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:357
-msgid "Signed 32-bit integer"
-msgstr "32-bitowa liczba całkowita ze znakiem"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:360
-msgid "Unsigned 32-bit integer"
-msgstr "32-bitowa liczba całkowita bez znaku"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:363
-msgid "Signed 64-bit integer"
-msgstr "64-bitowa liczba całkowita ze znakiem"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:366
-msgid "Unsigned 64-bit integer"
-msgstr "64-bitowa liczba całkowita bez znaku"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:369
-msgid "Boolean"
-msgstr "Zmienna logiczna"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:372
-msgid "boolean"
-msgstr "zmienna logiczna"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:375
-msgid "String"
-msgstr "Ciąg"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:378
-msgid "string"
-msgstr "ciąg"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:381
-msgid "String array"
-msgstr "Macierz ciągów"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:384
-msgid "string array"
-msgstr "macierz ciągów"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:387
-msgid "Enumeration"
-msgstr "Wyliczenie"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:390
-msgid "enumeration"
-msgstr "wyliczenie"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:393
-msgid "Flags"
-msgstr "Flagi"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:396
-msgid "flags"
-msgstr "flagi"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:399
-msgid "Double"
-msgstr "Wartość „double”"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:402
-msgid "double"
-msgstr "wartość „double”"
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#: editor/model-utils.vala:405
+#: editor/model-utils.vala:301
 msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Typ elementu obsługującego usługi D-Bus"
 
-#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#: editor/model-utils.vala:408
-msgctxt "non-capitalized"
-msgid "D-Bus handle type"
-msgstr "typ elementu obsługującego usługi D-Bus"
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:411
+#: editor/model-utils.vala:305
 msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Ścieżka do obiektu usługi D-Bus"
 
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:414
-msgctxt "non-capitalized"
-msgid "D-Bus object path"
-msgstr "ścieżka do obiektu usługi D-Bus"
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:417
+#: editor/model-utils.vala:309
 msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Macierz ścieżek obiektu usługi D-Bus"
 
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:420
-msgctxt "non-capitalized"
-msgid "D-Bus object path array"
-msgstr "macierz ścieżek obiektu usługi D-Bus"
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:423
+#: editor/model-utils.vala:313
 msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Podpis usługi D-Bus"
 
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "typ elementu obsługującego usługi D-Bus"
+
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:426
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "ścieżka do obiektu usługi D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "macierz ścieżek obiektu usługi D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
 msgstr "podpis usługi D-Bus"
 
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:373
+msgid "Signed 16-bit integer"
+msgstr "16-bitowa liczba całkowita ze znakiem"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:376
+msgid "Unsigned 16-bit integer"
+msgstr "16-bitowa liczba całkowita bez znaku"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:379
+msgid "Signed 32-bit integer"
+msgstr "32-bitowa liczba całkowita ze znakiem"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:382
+msgid "Unsigned 32-bit integer"
+msgstr "32-bitowa liczba całkowita bez znaku"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:385
+msgid "Signed 64-bit integer"
+msgstr "64-bitowa liczba całkowita ze znakiem"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:388
+msgid "Unsigned 64-bit integer"
+msgstr "64-bitowa liczba całkowita bez znaku"
+
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:429
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Zmienna logiczna"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "zmienna logiczna"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Ciąg"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "ciąg"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Macierz ciągów"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "macierz ciągów"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Wyliczenie"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "wyliczenie"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Flagi"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "flagi"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Wartość „double”"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "wartość „double”"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _H_ = C_("capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _h_ = C_("non-capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _O_ = C_("capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _o_ = C_("non-capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _Ao_ = C_("capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _ao_ = C_("non-capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _G_ = C_("capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _g_ = C_("non-capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Wartość całkowita"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:432
+#: editor/model-utils.vala:454
 msgid "integer"
 msgstr "wartość całkowita"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:435
+#: editor/model-utils.vala:457
 msgid "Variant"
 msgstr "Odmiana"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:438
+#: editor/model-utils.vala:460
 msgid "variant"
 msgstr "odmiana"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:441
+#: editor/model-utils.vala:463
 msgid "Empty tuple"
 msgstr "Pusta krotka"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:444
+#: editor/model-utils.vala:466
 msgid "empty tuple"
 msgstr "pusta krotka"
 
