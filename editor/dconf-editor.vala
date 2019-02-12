@@ -62,6 +62,8 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings//"},
             {"org.gnome.settings-daemon.plugins.sharing.service",
                 "/org/gnome/settings-daemon/plugins/sharing//"},
+            {"org.gnome.software.auth",
+                "/org/gnome/software/auth//"},
             {"org.gnome.Taquin.NightLight",
                 "/org/gnome/taquin/"},
             {"org.gnome.Terminal.Legacy.Profile",
