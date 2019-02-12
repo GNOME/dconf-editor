@@ -84,11 +84,6 @@ private class LargePathbar : Box, Pathbar
             return;
 
         _set_path (type, path);
-        if (invisible_button != null)
-        {
-            Variant variant = new Variant.string (complete_path);
-            ((!) invisible_button).set_detailed_action_name ("browser.open-search(" + variant.print (false) + ")");
-        }
         update_active_button_cursor (type, ref active_button);
     }
     private void _set_path (ViewType type, string path)
@@ -104,12 +99,6 @@ private class LargePathbar : Box, Pathbar
         bool destroy_all = false;
         bool maintain_all = false;
         @foreach ((child) => {
-                if (child is InvisibleButton)
-                {
-                    child.destroy ();
-                    invisible_button = null;
-                    return;
-                }
 
                 if (child is Label)
                 {
@@ -170,7 +159,6 @@ private class LargePathbar : Box, Pathbar
             }
         }
 
-        add_invisible_button ();
         @foreach ((child) => child.show ());
     }
     private static inline void update_config_style_class (bool type_is_config, StyleContext context)
@@ -256,14 +244,6 @@ private class LargePathbar : Box, Pathbar
     * * widgets management
     \*/
 
-    InvisibleButton? invisible_button = null;
-
-    private void add_invisible_button ()
-    {
-        invisible_button = new InvisibleButton ();
-        add ((!) invisible_button);
-    }
-
     private void add_slash_label ()
     {
         add (new Label ("/"));
@@ -321,20 +301,6 @@ private class LargePathbar : Box, Pathbar
             item.set_detailed_action_name (item.default_action);
             item.get_style_context ().remove_class ("active");
         }
-    }
-}
-
-private class InvisibleButton : Button
-{
-    construct
-    {
-        set_detailed_action_name ("browser.open-search('/')");
-        hexpand = true;
-        vexpand = true;
-        can_focus = false;
-        focus_on_click = false;
-        StyleContext context = get_style_context ();
-        context.add_class ("invisible");
     }
 }
 
