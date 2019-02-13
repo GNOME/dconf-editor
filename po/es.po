@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-12 09:24+0000\n"
-"PO-Revision-Date: 2019-02-12 11:02+0100\n"
+"POT-Creation-Date: 2019-02-12 16:37+0000\n"
+"PO-Revision-Date: 2019-02-13 11:52+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1413,25 +1413,25 @@ msgstr ""
 "Alt+F4 para descartar los cambios y salir."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:773
+#: editor/dconf-window.vala:775
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Ahora la carpeta «%s» está vacía."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:784
+#: editor/dconf-window.vala:786
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Se ha eliminado la clave «%s»."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:790
+#: editor/dconf-window.vala:792
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "No se puede encontrar la clave «%s»."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:796
+#: editor/dconf-window.vala:798
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "No hay nada en la la carpeta «%s» solicitada."
@@ -1449,221 +1449,262 @@ msgstr "Clave eliminada"
 msgid "Default value"
 msgstr "Valor predeterminado"
 
-#: editor/help-overlay.ui:28
+#. Translators: header in the shortcut window, for usual headerbar menus actions
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Acciones"
 
-#: editor/help-overlay.ui:32
+#. Translators: Ctrl-B action
+#: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Menú de marcadores"
 
-#: editor/help-overlay.ui:39
+#. Translators: Ctrl-D action
+#: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Añadir esta ubicación a marcadores"
 
-#: editor/help-overlay.ui:46
+#. Translators: Ctrl-Shift-D action
+#: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Quitar esta ubicación de marcadores"
 
-#: editor/help-overlay.ui:53
+#. Translators: F10 key action
+#: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Menú de acciones"
 
-#: editor/help-overlay.ui:60
+#. Translators: Shift-F10 action
+#: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
 msgstr "Menú de barra de rutas"
 
-#: editor/help-overlay.ui:69
+#. Translators: header in the shortcut window, for moving to paths known by the headerbar
+#: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Navegación con la barra de rutas"
 
-#: editor/help-overlay.ui:73
+#. Translators: Alt-Shift-Up action; browse to the '/' folder
+#: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Abrir carpeta raíz"
 
-#: editor/help-overlay.ui:80
+#. Translators: Alt-Up action; browse to the parent folder
+#: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Abrir carpeta padre"
 
-#: editor/help-overlay.ui:87
+#. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Abrir el hijo directo activo"
 
-#: editor/help-overlay.ui:94
+#. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
+#: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Abrir el último hijo activo"
 
-#: editor/help-overlay.ui:103
+#. Translators: header in the shortcut window, for the various ways of opening search
+#: editor/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Search options"
 msgstr "Opciones de búsqueda"
 
-#: editor/help-overlay.ui:107
+#. Translators: Ctrl-F action; opens search, searching everywhere
+#: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
 msgstr "Conmutar la búsqueda"
 
-#. Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text
-#: editor/help-overlay.ui:115
+#. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:128
 msgctxt "shortcut window"
 msgid "Search again"
 msgstr "Buscar de nuevo"
 
-#: editor/help-overlay.ui:122
+#. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
+#: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
 msgstr "Conmutar la búsqueda local"
 
-#. Translators: does the same thing as "Toggle local search", but loads the search entry with the last searched text; entry hidden for now
-#: editor/help-overlay.ui:130
+#. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:144
+#| msgctxt "shortcut window"
+#| msgid "Search again"
 msgctxt "shortcut window"
-msgid "Search locally again"
-msgstr "Buscar en local otra vez"
+msgid "Search again, locally"
+msgstr "Buscar en local de nuevo"
 
-#: editor/help-overlay.ui:137
+#. Translators: Ctrl-V action; open search with clipboard content
+#: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
 msgstr "Pegar como búsqueda"
 
-#. Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
-#: editor/help-overlay.ui:145
+#. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
 msgstr "Pegar como búsqueda (forzar)"
 
-#: editor/help-overlay.ui:152
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
 msgstr "Editar ruta"
 
-#: editor/help-overlay.ui:159
+#. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
+#: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
 msgstr "Editar la ruta padre"
 
-#: editor/help-overlay.ui:166
+#. Translators: '/' key action when browsing; opens search on root path
+#: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
 msgstr "Editar la ruta raíz"
 
-#: editor/help-overlay.ui:173
+#. Translators: Escape key action, when searching; cancels search
+#: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
 msgstr "Examinar el árbol de claves"
 
-#: editor/help-overlay.ui:182
+#. Translators: header in the shortcut window, for when browsing
+#: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr "Acciones de listado de claves"
 
-#: editor/help-overlay.ui:186
+#. Translators: Menu key action, when browsing
+#: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Menú contextual"
 
-#: editor/help-overlay.ui:193
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
 msgstr "Línea anterior"
 
-#: editor/help-overlay.ui:200
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Línea siguiente"
 
-#. Translators: entry disabled for now
-#: editor/help-overlay.ui:208
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
 msgstr "Conmutar las propiedades de la carpeta"
 
-#: editor/help-overlay.ui:215
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Establecer el predeterminado"
 
-#: editor/help-overlay.ui:222
+#. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
+#: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Cambiar valor booleano"
 
-#: editor/help-overlay.ui:231
+#. Translators: header in the shortcut window, for when there are pending changes
+#: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
 msgstr "Acciones del listado de modificaciones"
 
-#: editor/help-overlay.ui:235
+#. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
+#: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
 msgstr "Conmutar listado de modificaciones"
 
-#: editor/help-overlay.ui:242
+#. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
+#: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
 msgstr "Abrir la clave de la fila seleccionada"
 
-#: editor/help-overlay.ui:249
+#. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
+#: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
 msgstr "Descartar modificación"
 
-#: editor/help-overlay.ui:258
+#. Translators: header in the shortcut window, for opening the usual helpful dialogs
+#: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Genérico"
 
-#: editor/help-overlay.ui:262
+#. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
+#: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Mostrar esta ayuda"
 
-#: editor/help-overlay.ui:269
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Acerca de"
 
-#: editor/help-overlay.ui:278
+#. Translators: header in the shortcut window, for the copy-to-clipboard actions
+#: editor/help-overlay.ui:311
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Portapapeles"
 
-#: editor/help-overlay.ui:282
+#. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
+#: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Copiar descriptor"
 
-#: editor/help-overlay.ui:289
+#. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
+#: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Copiar ruta"
 
-#: editor/help-overlay.ui:298
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Salir"
 
-#: editor/help-overlay.ui:303
+#. Translators: Ctrl-Q action; displays a notification if there are pending changes
+#: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
 msgstr "Salir si no hay cambios pendientes"
 
-#: editor/help-overlay.ui:310
+#. Translators: Ctrl-Shift-Q action
+#: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
 msgstr "Aplicar los cambios pendientes y salir"
 
-#: editor/help-overlay.ui:317
+#. Translators: Alt-F4 action
+#: editor/help-overlay.ui:356
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
 msgstr "Descartar cambios pendientes y salir"
@@ -1788,56 +1829,48 @@ msgstr "Sin cambio"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:301
-#| msgid "D-Bus handle type"
 msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Tipo de gestor D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
-#| msgid "D-Bus object path"
 msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Ruta al objeto de D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
-#| msgid "D-Bus object path array"
 msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Vector de la ruta del objeto de D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
-#| msgid "D-Bus signature"
 msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Firma de D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
-#| msgid "D-Bus handle type"
 msgctxt "non-capitalized"
 msgid "D-Bus handle type"
 msgstr "Tipo de gestor D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
-#| msgid "D-Bus object path"
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
 msgstr "Ruta al objeto de D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
-#| msgid "D-Bus object path array"
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
 msgstr "Vector de la ruta del objeto de D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
-#| msgid "D-Bus signature"
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
 msgstr "Firma de D-Bus"
@@ -2430,6 +2463,10 @@ msgstr "Esquema reubicable"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "«Backend» de DConf"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Search locally again"
+#~ msgstr "Buscar en local otra vez"
 
 #~ msgid "Edit path"
 #~ msgstr "Editar ruta"
