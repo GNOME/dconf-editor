@@ -227,9 +227,15 @@ private abstract class AdaptativeWindow : ApplicationWindow
     {
         if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
             window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
+
         /* We don’t save this state, but track it for saving size allocation */
-        if ((event.changed_mask & Gdk.WindowState.TILED) != 0)
-            window_is_tiled = (event.new_window_state & Gdk.WindowState.TILED) != 0;
+        Gdk.WindowState tiled_state = Gdk.WindowState.TILED
+                                    | Gdk.WindowState.TOP_TILED
+                                    | Gdk.WindowState.BOTTOM_TILED
+                                    | Gdk.WindowState.LEFT_TILED
+                                    | Gdk.WindowState.RIGHT_TILED;
+        if ((event.changed_mask & tiled_state) != 0)
+            window_is_tiled = (event.new_window_state & tiled_state) != 0;
 
         return false;
     }
