@@ -20,18 +20,18 @@ using Gtk;
 private class AboutList : OverlayedList
 {
     // same as about dialog; skipped: wrap_license, license, logo
-    public string []    artists             { private get; protected construct; default = {}; }
-    public string []    authors             { private get; protected construct; default = {}; }
-    public string       comments            { private get; protected construct; default = ""; }
-    public string       copyright           { private get; protected construct; default = ""; }
-    public string []    documenters         { private get; protected construct; default = {}; }
-    private License     license_type        { private get { return License.GPL_3_0;  }}     // forced, 2/3
-    public string       logo_icon_name      { private get; protected construct; default = ""; }
-    public string       program_name        { private get; protected construct; default = ""; }
-    public string       translator_credits  { private get; protected construct; default = ""; }
-    public string       version             { private get; protected construct; default = ""; }
-    public string       website             { private get; protected construct; default = ""; }
-    public string       website_label       { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string []   artists             { private get; protected construct; default = {}; }
+    [CCode (notify = false)] public string []   authors             { private get; protected construct; default = {}; }
+    [CCode (notify = false)] public string      comments            { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string      copyright           { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string []   documenters         { private get; protected construct; default = {}; }
+    [CCode (notify = false)] private License    license_type        { private get { return License.GPL_3_0;  }}     // forced, 2/3
+    [CCode (notify = false)] public string      logo_icon_name      { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string      program_name        { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string      translator_credits  { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string      version             { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string      website             { private get; protected construct; default = ""; }
+    [CCode (notify = false)] public string      website_label       { private get; protected construct; default = ""; }
 
     construct
     {
