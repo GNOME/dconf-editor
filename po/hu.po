@@ -4,19 +4,20 @@
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2012, 2015, 2016, 2017, 2018.
 # Balázs Úr <ur.balazs at fsf dot hu>, 2012, 2013, 2014, 2015, 2016, 2018, 2019.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-12 16:37+0000\n"
-"PO-Revision-Date: 2019-02-12 23:05+0100\n"
-"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2019-02-18 10:22+0000\n"
+"PO-Revision-Date: 2019-02-18 13:04+0100\n"
+"Last-Translator: Meskó Balázs <mesko.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -1112,164 +1113,163 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Ütköző kulcs innen: Conflict2, amely figyelmeztetést kell adjon"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Kiadási verzió kiírása és kilépés"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:158
 msgid "Print relocatable schemas and exit"
 msgstr "Áthelyezhető sémák kiírása és kilépés"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:153
+#: editor/dconf-editor.vala:161
 msgid "Do not show initial warning"
 msgstr "Ne jelenítse meg a kezdeti figyelmeztetést"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:191
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:199
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafikus felület egyéb alkalmazások beállításainak szerkesztéséhez."
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:194
-msgid "Uses the gsettings API of the glib library, and other ways."
-msgstr ""
-"A glib programkönyvtár gsettings API-ját használja, valamint egyéb módokat."
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:202
+msgid "Uses the gsettings API of the glib library, among others."
+msgstr "A glib programkönyvtár gsettings API-ját használja többek között."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:197
+#: editor/dconf-editor.vala:205
 msgid "Arguments description:"
 msgstr "Argumentumok leírása:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:201
+#: editor/dconf-editor.vala:209
 msgid "a folder path or a key path"
 msgstr "egy mappaútvonal vagy egy kulcsútvonal"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "példa: „/org/gnome/” vagy „/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:207
+#: editor/dconf-editor.vala:215
 msgid "the name of a schema with fixed path"
 msgstr "egy séma neve rögzített útvonallal"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:217
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "példa: „ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:221
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "egy áthelyezhető séma neve rögzített útvonal nélkül"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:223
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "nézze meg a listát a „--list-relocatable-schemas” kapcsolóval"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:227
 msgid "the path where to map the relocatable schema"
 msgstr "az útvonal, ahova az áthelyezhető sémát le kell képezni"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "példa: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:233
 msgid "the name of a key from the schema"
 msgstr "egy kulcs neve a sémából"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
 msgstr "példa: „bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:283
+#: editor/dconf-editor.vala:291
 msgid "Known schemas installed:"
 msgstr "Ismert telepített sémák:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:289
+#: editor/dconf-editor.vala:297
 msgid "No known schemas installed."
 msgstr "Nincsenek ismert sémák telepítve."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:302
 msgid "Known schemas skipped:"
 msgstr "Kihagyott ismert sémák:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:308
 msgid "No known schemas skipped."
 msgstr "Nincsenek kihagyott ismert sémák."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:313
 msgid "Unknown schemas:"
 msgstr "Ismeretlen sémák:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:319
 msgid "No unknown schemas."
 msgstr "Nincsenek ismeretlen sémák."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:445
+#: editor/dconf-editor.vala:453
 msgid "Only one window can be opened for now.\n"
 msgstr "Jelenleg csak egy ablak nyitható meg.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:473
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nem értelmezhető: túl sok argumentum.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:479
+#: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
 msgstr "A második argumentum nem értelmezhető ebben a környezetben.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:500
+#: editor/dconf-editor.vala:508
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nem értelmezhető: ferde vonal karakter a második argumentumban.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:515
+#: editor/dconf-editor.vala:523
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "A sémaútvonal „/” karakterrel kell kezdődjön és végződjön.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:531
+#: editor/dconf-editor.vala:539
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Nem értelmezhető: a megadott útvonal „//” karaktereket tartalmaz.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:547
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nem értelmezhető: szóköz karakter az argumentumban.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:567
+#: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
 msgstr "Vágólapra másolva"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:644
+#: editor/dconf-editor.vala:652
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Az alkalmazások belső beállításainak grafikus megjelenítője és szerkesztője."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:658
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1280,7 +1280,7 @@ msgstr ""
 "Copyright © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr ""
 "Kelemen Gábor <kelemeng at gnome dot hu>\n"
@@ -1288,7 +1288,7 @@ msgstr ""
 "Úr Balázs <urbalazs at gmail dot com>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:663
+#: editor/dconf-editor.vala:671
 msgid "Page on GNOME wiki"
 msgstr "Szócikk a GNOME wikin"
 
