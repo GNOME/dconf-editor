@@ -194,16 +194,16 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
     {
         Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN);
 
-        set_option_context_parameter_string ("[ PATH | [FIXED_SCHEMA|RELOC_SCHEMA:PATH] [KEY] ]");
-        /* Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
+        set_option_context_parameter_string ("[ PATH | [FIXED_SCHEMA|RELOC_SCHEMA:DIR] [KEY] ]");
+        /* Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
         set_option_context_summary (_("Graphical interface for editing other applications settings.")
                                   + "\n\n"
-        /* Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
+        /* Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
                                   + _("Uses the gsettings API of the glib library, and other ways."));
 
         /* Translators: command-line header description, see 'dconf-editor --help' */
         set_option_context_description (_("Arguments description:") +
-/* FIXME: PATH can only be a folder path if describing a relocatable schema */
+
 "\n  PATH" +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("a folder path or a key path") +
@@ -222,7 +222,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("see list with the “--list-relocatable-schemas” option") +
 
-"\n  MAPPING" +
+"\n  DIR" +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
 "\n    " + _("the path where to map the relocatable schema") +
 /* Translators: command-line argument description, see 'dconf-editor --help' */
