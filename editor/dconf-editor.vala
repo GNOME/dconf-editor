@@ -199,7 +199,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         set_option_context_summary (_("Graphical interface for editing other applications settings.")
                                   + "\n\n"
         /* Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
-                                  + _("Uses the gsettings API of the glib library, and other ways."));
+                                  + _("Uses the gsettings API of the glib library, among others."));
 
         /* Translators: command-line header description, see 'dconf-editor --help' */
         set_option_context_description (_("Arguments description:") +
