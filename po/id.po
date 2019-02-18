@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-12 16:37+0000\n"
-"PO-Revision-Date: 2019-02-17 04:47+0700\n"
+"POT-Creation-Date: 2019-02-18 10:22+0000\n"
+"PO-Revision-Date: 2019-02-18 18:08+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -1123,162 +1123,162 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Kunci berkonflik dari Conflict2 yang harus memberikan peringatan"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Cetak versi rilis dan keluar"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:158
 msgid "Print relocatable schemas and exit"
 msgstr "Cetak skema yang dapat dipindah dan keluar"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:153
+#: editor/dconf-editor.vala:161
 msgid "Do not show initial warning"
 msgstr "Jangan tampilkan peringatan awal mula"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:191
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:199
 msgid "Graphical interface for editing other applications settings."
 msgstr "Antarmuka grafis untuk menyunting pengaturan aplikasi lain."
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:194
-msgid "Uses the gsettings API of the glib library, and other ways."
-msgstr "Gunakan API gsettings dari pustaka glib, dan cara lainnya."
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:202
+msgid "Uses the gsettings API of the glib library, among others."
+msgstr "Gunakan API gsettings dari pustaka glib, diantara yang lain."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:197
+#: editor/dconf-editor.vala:205
 msgid "Arguments description:"
 msgstr "Keterangan argumen:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:201
+#: editor/dconf-editor.vala:209
 msgid "a folder path or a key path"
 msgstr "path folder atau path kunci"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "contoh: “/org/gnome/” atau “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:207
+#: editor/dconf-editor.vala:215
 msgid "the name of a schema with fixed path"
 msgstr "nama skema dengan path tetap"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:217
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "contoh: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:221
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "nama skema \"relocatable\", tanpa path tetap"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:223
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "lihat daftar dengan opsi “--list-relocatable-schemas”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:227
 msgid "the path where to map the relocatable schema"
 msgstr "path tempat memetakan skema yang dapat dipindahkan"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "contoh: “ca.desrt.dconf-editor.Penanda taut:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:233
 msgid "the name of a key from the schema"
 msgstr "nama kunci dari skema"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
 msgstr "contoh: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:283
+#: editor/dconf-editor.vala:291
 msgid "Known schemas installed:"
 msgstr "Skema yang diketahui terpasang:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:289
+#: editor/dconf-editor.vala:297
 msgid "No known schemas installed."
 msgstr "Tidak ada skema yang diketahui terpasang."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:302
 msgid "Known schemas skipped:"
 msgstr "Skema yang diketahui dilewati:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:308
 msgid "No known schemas skipped."
 msgstr "Tidak diketahui skema yang dilewati."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:313
 msgid "Unknown schemas:"
 msgstr "Skema tidak diketahui:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:319
 msgid "No unknown schemas."
 msgstr "Tidak ada skema yang tidak diketahui."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:445
+#: editor/dconf-editor.vala:453
 msgid "Only one window can be opened for now.\n"
 msgstr "Hanya satu jendela yang bisa dibuka untuk saat ini.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:473
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Tidak dapat memahami: terlalu banyak argumen.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:479
+#: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Tidak dapat memahami argumen kedua dalam konteks ini.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:500
+#: editor/dconf-editor.vala:508
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Tidak dapat memahami: karakter slash dalam argumen kedua.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:515
+#: editor/dconf-editor.vala:523
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Path skema harus dimulai dan diakhiri dengan \"/\".\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:531
+#: editor/dconf-editor.vala:539
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Tidak bisa memahami: path yang diberikan mengandung \"//\".\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:547
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Tidak dapat memahami: karakter spasi dalam argumen.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:567
+#: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
 msgstr "Disalin ke papan klip"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:644
+#: editor/dconf-editor.vala:652
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Penampil grafis dan penyunting pengaturan internal aplikasi."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:658
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1289,7 +1289,7 @@ msgstr ""
 "Hak Cipta © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
@@ -1297,7 +1297,7 @@ msgstr ""
 "Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018, 2019."
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:663
+#: editor/dconf-editor.vala:671
 msgid "Page on GNOME wiki"
 msgstr "Halaman di wiki GNOME"
 
