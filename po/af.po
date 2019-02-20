@@ -158,12 +158,12 @@ msgstr "Na knipbord gekopieer"
 #: editor/dconf-editor.vala:479
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Kopiereg © 2010-2014 – Canonical Ltd\n"
-"Kopiereg © 2015-2018 – Arnaud Bonatti\n"
-"Kopiereg © 2017-2018 – Davi da Silva Böger"
+"Kopiereg © 2017-2018 – Davi da Silva Böger\n"
+"Kopiereg © 2015-2019 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:483
 msgid "translator-credits"
@@ -364,13 +364,6 @@ msgstr "Niks om te herstel nie."
 msgid "The value is invalid."
 msgstr "Die waarde is ongeldig."
 
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:300
-#, c-format
-msgid "%s%s"
-msgstr "%s%s"
-
 #: editor/pathbar.vala:313
 msgid "Copy current path"
 msgstr "Kopieer huidige roete"
@@ -474,7 +467,7 @@ msgstr "Integer"
 
 #: editor/setting-object.vala:210
 msgid "True"
-msgstr "True"
+msgstr "Waar"
 
 #: editor/setting-object.vala:212
 msgid "False"
