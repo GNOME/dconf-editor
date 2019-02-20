@@ -342,18 +342,6 @@ msgstr "Seuraa järjestelmän yövaloa"
 msgid "Use GNOME night light setting to activate night-mode."
 msgstr "Käytä Gnomen yövaloasetusta aktivoidaksesi yötilan."
 
-#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
-#: editor/ca.desrt.dconf-editor.gschema.xml:459
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Enumeraatio"
-
-#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
-#: editor/ca.desrt.dconf-editor.gschema.xml:467
-#, fuzzy
-msgid "A 1-choice integer value"
-msgstr "Enumeraatio"
-
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:147
 msgid "Print release version and exit"
@@ -451,11 +439,8 @@ msgstr "Hylkää kaikki"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:140
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgid "Quit mode"
-msgstr "Lopeta"
+msgstr "Peru"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:189
@@ -469,8 +454,6 @@ msgstr "Nollaa näkyvät avaimet"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:196
-#, fuzzy
-#| msgid "Reset recursively"
 msgid "Reset view recursively"
 msgstr "Nollaa rekursiivisesti"
 
@@ -868,28 +851,14 @@ msgid "string"
 msgstr "merkkijono"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:381
-#, fuzzy
-msgid "String array"
-msgstr "Merkkijono"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:384
-#, fuzzy
-msgid "string array"
-msgstr "Merkkijono"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:387
 msgid "Enumeration"
 msgstr "Enumeraatio"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:390
-#, fuzzy
-#| msgid "Enumeration"
 msgid "enumeration"
-msgstr "Enumeraatio"
+msgstr "enumeraatio"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
