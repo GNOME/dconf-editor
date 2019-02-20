@@ -678,30 +678,6 @@ msgstr "Тастау үшін ешнәрсе жоқ."
 msgid "The value is invalid."
 msgstr "Бұл мәні жарамсыз."
 
-#. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
-#: editor/modifications-revealer.vala:347
-#, c-format
-msgid "%s%s"
-msgstr "%s%s"
-
-#. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:351
-#, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "%u gsettings әрекеті"
-
-#. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
-#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:357
-#, c-format
-msgid " and one dconf operation delayed."
-msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
@@ -879,36 +855,6 @@ msgstr "ешнәрсе (nothing)"
 
 #~ msgid "Not found"
 #~ msgstr "Табылмады"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Бұл бағдарлама еркін бағдарламалық қамтама болып табылады; сіз оны Free "
-#~ "Software Foundation шығарған GNU General Public License аясында еркін "
-#~ "тарата не/және өзгерте аласыз; лицензия нұсқасы 2 не (тандауыңызша) кез-"
-#~ "келген кейін шыққан.\n"
-#~ "\n"
-#~ "Бұл бағдарлама пайдалы болады деген сеніммен таратылады, бірақ ЕШҚАНДАЙ "
-#~ "КЕПІЛДЕМЕ берілмейді; КОММЕРЦИЯЛЫҚ ҚҰНДЫЛЫҚ немесе белгілі бір "
-#~ "МАҚСАТТАРҒА СӘЙКЕС КЕЛЕТІНІ үшін де.  Көбірек білу үшін GNU General "
-#~ "Public License қараңыз.\n"
-#~ "\n"
-#~ "Сіз осы бағдарламасымен бірге GNU General Public License көшірмесін "
-#~ "алуыңыз керек еді; олай болмаса, Free Software Foundation, Inc. ұйымына, "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA адресі "
-#~ "бойынша жазыңыз."
 
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "Copyright © Canonical Ltd"
