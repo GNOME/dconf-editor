@@ -1,3 +1,27 @@
+dconf-editor 3.31.91
+=====================
+
+There was an hidden way to toggle search by clicking on an empty
+space of the headerbar, but it was blocking the use of a double-
+click to maximize the window, so that was removed. There is also
+some strings capitalization fixes, an improvement for the --help
+text, various small changes, and some relocatable schemas added.
+
+Translations updated:
+  Catalan: Jordi Mas
+  Czech: Marek Cernocky
+  Finnish: Jiri Grönroos
+  Galician: Fran Dieguez
+  Hungarian: Balázs Úr and Balázs Meskó
+  Indonesian: Kukuh Syafaat
+  Kazakh: Baurzhan Muftakhidinov
+  Lithuanian: Aurimas Černius
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Turkish: Sabri Ünal
+
 dconf-editor 3.31.90
 =====================
 
