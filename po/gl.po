@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-15 11:21+0000\n"
-"PO-Revision-Date: 2019-02-16 11:53+0200\n"
+"POT-Creation-Date: 2019-02-18 10:22+0000\n"
+"PO-Revision-Date: 2019-02-20 01:30+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -1131,15 +1131,16 @@ msgstr "Imprime os esquemas relocalizábeis e sae"
 msgid "Do not show initial warning"
 msgstr "Non mostrar o aviso inicial"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:199
 msgid "Graphical interface for editing other applications settings."
 msgstr "A interface gráfica para editar preferencias doutros aplicativos."
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:202
-msgid "Uses the gsettings API of the glib library, and other ways."
-msgstr "Usa a API de gsettings da biblioteca glib, e outras formas."
+#| msgid "Uses the gsettings API of the glib library, and other ways."
+msgid "Uses the gsettings API of the glib library, among others."
+msgstr "Usa a API de gsettings da biblioteca glib, entre outras."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:205
@@ -1534,8 +1535,6 @@ msgstr "Trocar a busca local"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
-#| msgctxt "shortcut window"
-#| msgid "Search again"
 msgctxt "shortcut window"
 msgid "Search again, locally"
 msgstr "Buscar de novo, de forma local"
@@ -1822,56 +1821,48 @@ msgstr "Non eliminar"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:301
-#| msgid "D-Bus handle type"
 msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Tipo de xestor D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
-#| msgid "D-Bus object path"
 msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Ruta ao obxecto de D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
-#| msgid "D-Bus object path array"
 msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Matriz de rutas de obxectos D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
-#| msgid "D-Bus signature"
 msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Sinatura de D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
-#| msgid "D-Bus handle type"
 msgctxt "non-capitalized"
 msgid "D-Bus handle type"
 msgstr "Tipo de xestor D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
-#| msgid "D-Bus object path"
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
 msgstr "Ruta ao obxecto de D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
-#| msgid "D-Bus object path array"
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
 msgstr "Matriz de rutas de obxectos D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
-#| msgid "D-Bus signature"
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
 msgstr "Sinatura de D-Bus"
