@@ -64,13 +64,6 @@ msgstr "Legosignoj"
 msgid "Manage your bookmarks"
 msgstr "Administri viajn legosignojn"
 
-#. #. * * Bookmarks management
-#. #: editor/bookmarks.vala:398
-#, fuzzy
-#| msgid "Bookmarks"
-msgid "Bookmark this Search"
-msgstr "Legosignoj"
-
 #: editor/browser-headerbar.ui:135
 msgid "Pending"
 msgstr "Atendanta"
@@ -80,8 +73,6 @@ msgid "Actions"
 msgstr "Agoj"
 
 #: editor/browser-headerbar.vala:212
-#, fuzzy
-#| msgid "Apply"
 msgid "Apply all"
 msgstr "Apliki"
 
@@ -90,33 +81,10 @@ msgid "Dismiss all"
 msgstr "Malakcepi ĉion"
 
 #: editor/browser-headerbar.vala:217
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgid "Quit mode"
-msgstr "Ĉesi"
-
-#: editor/browser-headerbar.vala:438
-#, fuzzy
-#| msgid "Bookmarks"
-msgid "Hide bookmarks"
-msgstr "Legosignoj"
-
-#: editor/browser-headerbar.vala:442
-#, fuzzy
-#| msgid "Bookmarks"
-msgid "Unbookmark"
-msgstr "Legosignoj"
-
-#: editor/browser-headerbar.vala:444
-#, fuzzy
-#| msgid "Bookmarks"
-msgid "Bookmark"
-msgstr "Legosignoj"
+msgstr "Nuligi"
 
 #: editor/browser-headerbar.vala:446
-#, fuzzy
-#| msgid "Bookmarks"
 msgid "Show bookmarks"
 msgstr "Legosignoj"
 
@@ -124,16 +92,13 @@ msgstr "Legosignoj"
 msgid "Enter delay mode"
 msgstr "Eniri malfruan reĝimon"
 
-#. TODO else...
 #: editor/browser-headerbar.vala:475
 msgid "Keyboard Shortcuts"
 msgstr "Klavkombinoj"
 
 #: editor/browser-headerbar.vala:476
-#, fuzzy
-#| msgid "Dconf Editor"
 msgid "About Dconf Editor"
-msgstr "Dconf-redaktilo"
+msgstr "Pri"
 
 #: editor/browser-view.vala:98 editor/pathentry.ui:42 editor/pathentry.ui:64
 msgid "Refresh"
@@ -167,11 +132,6 @@ msgstr "Rekte redakti vian totan agordan datumbazon"
 msgid "settings;configuration;"
 msgstr "agordoj;"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:15
-msgid "ca.desrt.dconf-editor"
-msgstr "ca.desrt.dconf-editor"
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
 msgid "The width of the window"
 msgstr "La larĝo de la fenestro"
@@ -193,17 +153,7 @@ msgstr "La alto de la fenestro en bilderoj."
 msgid "A flag to enable maximized mode"
 msgstr "Flago por ŝalti maksimuman reĝimon"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
-#, fuzzy
-msgid "A flag to enable small rows for keys list"
-msgstr "Flago por ŝalti plenekranan reĝimon"
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
-#, fuzzy
-#| msgid ""
-#| "For users with mice that have buttons for “Forward” and “Back”, this key "
-#| "will set which button activates the “Back” command in a browser window. "
-#| "Possible values range between 6 and 14."
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -241,8 +191,6 @@ msgstr ""
 "amplekso de valoroj inter 6 kaj 14."
 
 #: editor/dconf-editor.vala:186
-#, fuzzy
-#| msgid "Description"
 msgid "Arguments description:"
 msgstr "Priskribo de argumentoj:"
 
@@ -281,8 +229,6 @@ msgid "Cannot find key “%s”."
 msgstr "Ne eblas trovi ŝlosilon “%s”."
 
 #: editor/dconf-window.vala:1821
-#, fuzzy, c-format
-#| msgid "Cannot find folder “%s”."
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nenio estas en la demand-dosierujon “%s”."
 
@@ -579,7 +525,7 @@ msgstr "konflikto"
 
 #: editor/registry-list.vala:473
 #, fuzzy
-msgid "No Schema Found"
+msgid "No schema found"
 msgstr "Nenion skemon"
 
 #: editor/registry-search.vala:530
@@ -668,35 +614,6 @@ msgstr "Skemo kun vojo"
 
 #~ msgid "Not found"
 #~ msgstr "Ne trovita"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Ĉi tiu verko estas libera programo; vi povas ĝin pludistribui kaj/aŭ "
-#~ "modifi je la kondiĉoj de la Ĝenerala Publika Permesilo de GNU, eldonita "
-#~ "de «Free Software Foundation», laŭ la versio 2 de tiu Permesilo aŭ, se vi "
-#~ "preferas, ajna posta versio.\n"
-#~ "\n"
-#~ "Ni distribuas ĉi tiun programon esperante ke ĝi estos utila, tamen SEN IA "
-#~ "AJN GARANTIO, i.a. sen la implica garantio pri SURMERKATIGEBLO aŭ TAŬGECO "
-#~ "POR IU KONKRETA CELO.  Pliajn detalojn vidu en la Ĝenerala Publika "
-#~ "Permesilo de GNU.\n"
-#~ "\n"
-#~ "Ekzemplero de la Ĝenerala Publika Permesilo de GNU devas esti liverita al "
-#~ "vi kun ĉi tiu programo; icevis, turnu vin al Free Software Foundation, "
-#~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Eraro dum agordo de la valoro: %s"
