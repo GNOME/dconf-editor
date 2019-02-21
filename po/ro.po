@@ -1429,34 +1429,6 @@ msgstr ""
 "Se va aplica modificarea la asemenea cerere sau dacă ieșiți din această "
 "vizualizare."
 
-#. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
-#: editor/modifications-revealer.vala:347
-#, c-format
-msgid "%s%s"
-msgstr "%s%s"
-
-#. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:351
-#, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "O operație gsettings"
-msgstr[1] "%u operații gsettings"
-msgstr[2] "%u de operații gsettings"
-
-#. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
-#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:357
-#, c-format
-msgid " and one dconf operation delayed."
-msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
 msgid "Close search"
@@ -1701,42 +1673,6 @@ msgstr "Suport DConf"
 #~ msgid "_Find…"
 #~ msgstr "Găs_ește…"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Acesta este un program liber; puteți să îl redistribuiți și/sau să îl "
-#~ "modificați în conformitate cu prevederile Licenței Publice Generale GNU "
-#~ "publicată de către Fundația pentru Programe Libere; fie versiunea a doua "
-#~ "a acestei licențe fie (la alegerea dumneavoastră) orice altă versiune "
-#~ "ultirioară.\n"
-#~ "\n"
-#~ "Acest program este distribuit în speranța că va fi folositor, dar fără "
-#~ "nicio garanție; Consultați Licența Publică Generală GNU pentru mai multe "
-#~ "detalii.\n"
-#~ "\n"
-#~ "Ar trebui să fi primit o copie a Licenței Publice Generale GNU împreună "
-#~ "cu acest program; dacă nu este așa, scrieți Fundației pentru Programe "
-#~ "Libere,  Inc., 51 strada Franklin , etajul cinci, Boston, MA 02110-1301, "
-#~ "SUA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Drepturi de autor © Canonical Ltd"
-
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Dublu [%s..%s]"
-
 #~ msgid "Not found"
 #~ msgstr "Nu a fost găsit"
 
@@ -1745,6 +1681,3 @@ msgstr "Suport DConf"
 
 #~ msgid "Value"
 #~ msgstr "Valoare"
-
-#~ msgid "yelp-quote-201C.png"
-#~ msgstr "201E"
