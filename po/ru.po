@@ -23,59 +23,58 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.6\n"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
 msgstr "Редактор dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
 msgstr "Редактор dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
 msgstr "Прямое редактирование базы данных настроек среды"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:7
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "настройка;параметры;конфигурация;"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "Редактор dconf"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
 msgid "The width of the window"
 msgstr "Ширина окна"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The width of the main window in pixels."
 msgstr "Ширина главного окна в пикселах."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:115
 msgid "The height of the window"
 msgstr "Высота окна"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid "The height of the main window in pixels."
 msgstr "Высота главного окна в пикселах."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:122
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A flag to enable maximized mode"
 msgstr "Флаг включения режима максимального размера окна"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
-#, fuzzy
-msgid "A flag to enable small rows for keys list"
-msgstr "Флаг включения полноэкранного режима"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Кнопка мыши для запуска команды «Назад» в окне обозревателя"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -85,11 +84,13 @@ msgstr ""
 "определяет, по какой из кнопок в окне обозревателя нужно выполнить команду "
 "«Назад». Возможные значения имеют диапазон от 6 до 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Кнопка мыши для запуска команды «Вперёд» в окне обозревателя"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:196
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -99,108 +100,112 @@ msgstr ""
 "определяет, по какой из кнопок в окне обозревателя нужно выполнить команду "
 "«Вперёд». Возможные значения имеют диапазон от 6 до 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Перечисление"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "О программе"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_О программе"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "_Закончить"
-
-#: editor/dconf-editor.vala:22
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Показать версию программы и выйти"
 
-#: editor/dconf-editor.vala:154
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr "Alexsey Nadtochey <irbis4lan@yandex.com>, 2012"
 
-#: editor/dconf-model.vala:195
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
 msgid "Boolean"
 msgstr "Логическое"
 
-#: editor/dconf-model.vala:197
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
 msgid "String"
 msgstr "Строка"
 
-#: editor/dconf-model.vala:199
-#, fuzzy
-msgid "String array"
-msgstr "Строка"
-
-#: editor/dconf-model.vala:201
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
 msgid "Enumeration"
 msgstr "Перечисление"
 
-#: editor/dconf-model.vala:222
-#, fuzzy
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "С плавающей запятой"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
-msgstr "Целое [%s..%s]"
+msgstr "Целое"
 
-#: editor/help-overlay.ui:124
-#, fuzzy
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
-msgid "About"
-msgstr "_О программе"
-
-#: editor/help-overlay.ui:131
-#, fuzzy
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "_Закончить"
-
-#: editor/key-list-box-row.vala:162
-#, fuzzy
-msgid "No Schema Found"
-msgstr "Без схемы"
-
-#: editor/key-list-box-row.vala:392
-#, fuzzy
 msgid "Set to default"
 msgstr "Установить значение по умолчанию"
 
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
-#, fuzzy
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
+msgctxt "shortcut window"
+msgid "About"
+msgstr "О программе"
+
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Закончить"
+
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
+msgstr "Без схемы"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:455
+msgid "Set to default"
+msgstr "Установить значение по умолчанию"
+
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
 msgid "Default value"
-msgstr "Значение по умолчанию:"
+msgstr "Значение по умолчанию"
 
-#: editor/modifications-revealer.vala:273
-#, fuzzy, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "настройка;параметры;конфигурация;"
-msgstr[1] "настройка;параметры;конфигурация;"
-msgstr[2] "настройка;параметры;конфигурация;"
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Имя"
 
-#: editor/registry-info.vala:80
-#, fuzzy
+#. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
+#: editor/registry-info.vala:76
 msgid "Schema"
-msgstr "Схема:"
+msgstr "Схема"
 
-#: editor/registry-info.vala:81
-#, fuzzy
+#. Translators: field description when displaying key properties; a summary describing the key use
+#: editor/registry-info.vala:79
 msgid "Summary"
-msgstr "Сводка:"
+msgstr "Сводка"
 
+#. Translators: field description when displaying key properties; a description describing deeply the key use
 #: editor/registry-info.vala:82
-#, fuzzy
 msgid "Description"
-msgstr "Описание:"
+msgstr "Описание"
 
-#: editor/registry-info.vala:84
-#, fuzzy
+#. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
+#: editor/registry-info.vala:85
 msgid "Type"
-msgstr "Тип:"
+msgstr "Тип"
 
-#: editor/registry-info.vala:88
-#, fuzzy
+#. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
+#: editor/registry-info.vala:105
 msgid "Default"
-msgstr "Значение по умолчанию:"
+msgstr "Значение по умолчанию"
 
 #~ msgid "_Find…"
 #~ msgstr "_Найти…"
@@ -208,51 +213,14 @@ msgstr "Значение по умолчанию:"
 #~ msgid "Next"
 #~ msgstr "Далее"
 
-#~ msgid "Double [%s..%s]"
-#~ msgstr "С плавающей запятой [%s..%s]"
-
 #~ msgid "Not found"
 #~ msgstr "Не найдено"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Это свободное программное обеспечение; вы можете распространять и/или "
-#~ "изменять его на условиях лицензии GNU General Public License, "
-#~ "опубликованной Фондом свободного программного обеспечения; либо версии 2 "
-#~ "этой лицензии, либо (по вашему выбору) любой более поздней версии.\n"
-#~ "\n"
-#~ "Это программа распространяется в надежде, что она может быть полезна, но "
-#~ "БЕЗ КАКОГО-ЛИБО ВИДА ГАРАНТИЙ, ВЫРАЖЕННЫХ ЯВНО ИЛИ ПОДРАЗУМЕВАЕМЫХ, "
-#~ "ВКЛЮЧАЯ, НО НЕ ОГРАНИЧИВАЯСЬ, ПОДРАЗУМЕВАЕМЫМИ ГАРАНТИЯМИ КОММЕРЧЕСКОЙ "
-#~ "ЦЕННОСТИ И ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ. Для получения дополнительных "
-#~ "сведений обратитесь к лицензии GNU General Public License.\n"
-#~ "\n"
-#~ "Вы должны были получить копию лицензии GNU General Public License c этой "
-#~ "программой. Если это не так, известите об этом Фонд свободного "
-#~ "программного обеспечения по адресу Free Software Foundation, Inc., 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "Авторские права © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Ошибка установки значения: %s"
-
-#~ msgid "Name"
-#~ msgstr "Имя"
 
 #~ msgid "Value"
 #~ msgstr "Значение"
