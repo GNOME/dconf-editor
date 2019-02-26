@@ -98,26 +98,6 @@ msgstr "Hæð aðalgluggans í mynddílum."
 msgid "A flag to enable maximized mode"
 msgstr "Flagg til að virkja hámarkaða glugga"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:133
-#, fuzzy
-msgid "A flag to enable small rows for keys list"
-msgstr "Flagg til að virkja heilsjásham"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
-#, fuzzy
-#| msgid ""
-#| "For users with mice that have buttons for “Forward” and “Back”, this key "
-#| "will set which button activates the “Back” command in a browser window. "
-#| "Possible values range between 6 and 14."
-msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key "
-"will determine if any action is taken inside of a browser window when either "
-"is pressed."
-msgstr ""
-"Fyrir þá notendur sem hafa mýs með \"Áfram\" og \"Afturábak\" hnöppum, þá "
-"virkjar þessi lykill hvaða hnappur það er sem gefur \"Afturábak\" skipunina "
-"í vafraglugga. Möguleg gildi eru 6 og 14."
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Músarhnappur sem virkjar \"Til baka\" skipunina í vafraglugga"
@@ -146,27 +126,13 @@ msgstr ""
 "virkjar þessi lykill hvaða hnappur það er sem gefur \"Áfram\" skipunina í "
 "vafraglugga. Möguleg gildi eru 6 og 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Talning"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
-#, fuzzy
-msgid "A 1-choice integer value"
-msgstr "Talning"
-
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
 msgstr "Flýtilyklar"
 
 #: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_Um hugbúnaðinn"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "_Hætta"
+msgid "About"
+msgstr "Um hugbúnaðinn"
 
 #: editor/dconf-editor.ui:34
 msgid "Actions"
@@ -180,12 +146,6 @@ msgstr "Leita"
 msgid "Print release version and exit"
 msgstr "Birta upplýsingar um útgáfu og hætta"
 
-#: editor/dconf-editor.vala:135
-#, fuzzy
-#| msgid "Print release version and exit"
-msgid "Print relocatable schemas and exit"
-msgstr "Birta upplýsingar um útgáfu og hætta"
-
 #. #. * * Copy action
 #. #: editor/dconf-editor.vala:425
 msgid "Copied to clipboard"
@@ -194,12 +154,12 @@ msgstr "Afritað á klippispjald"
 #: editor/dconf-editor.vala:481
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Höfundarréttur © 2010-2014 – Canonical Ltd\n"
-"Höfundarréttur © 2015-2018 – Arnaud Bonatti\n"
-"Höfundarréttur © 2017-2018 – Davi da Silva Böger"
+"Höfundarréttur © 2017-2018 – Davi da Silva Böger\n"
+"Höfundarréttur © 2015-2019 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:485
 msgid "translator-credits"
@@ -213,11 +173,6 @@ msgstr "%s (lykli eytt)"
 #: editor/dconf-window.vala:304
 msgid "I’ll be careful."
 msgstr "Ég mun fara varlega."
-
-#: editor/dconf-window.vala:694
-#, fuzzy
-msgid "Copy descriptor"
-msgstr "Lýsing:"
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
@@ -418,6 +373,10 @@ msgid_plural " and %u dconf operations delayed."
 msgstr[0] ""
 msgstr[1] "%'d skráaraðgerðir í gangi"
 
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Heiti"
+
 #: editor/registry-info.vala:127
 msgid "Defined by"
 msgstr "Skilgreint af"
@@ -472,8 +431,9 @@ msgstr "Nota sjálfgefið gildi"
 msgid "Custom value"
 msgstr "Sérsniðið gildi"
 
-#: editor/registry-list.vala:377
-msgid "No Schema Found"
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
 msgstr "Ekkert skema fannst"
 
 #: editor/registry-search.vala:28
@@ -565,42 +525,11 @@ msgstr "DConf-bakendi"
 #~ msgid "Not found"
 #~ msgstr "Fannst ekki"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Þetta forrit er frjáls hugbúnaður; þú mátt endurrita hann og/eða breyta "
-#~ "samkvæmt skilmálum \"GNU General Public License\" eins og það er útgefið "
-#~ "af \"Free Software Foundation;\"; annað hvort útgáfa 2 af leyfinu, eða "
-#~ "(að þínu vali) einhver síðari útgáfa.\n"
-#~ "\n"
-#~ "Þessu forriti er dreift í þeirri von að það sé gagnlegt, en ÁN NOKKURAR "
-#~ "ÁBYRGÐAR; einnig án óbeinnar SÖLUÁBYRGÐAR eða HÆFNI TIL NOKKURS HLUTAR. "
-#~ "Sjá nánar í \"GNU General Public License\" leyfinu.\n"
-#~ "\n"
-#~ "Þú ættir að hafa fengið afrit af \"GNU General Public License\" með þessu "
-#~ "forriti; ef ekki, skrifaðu til Free Software Foundation, Inc., 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "Höfundarréttur © Canonical Ltd."
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Villa við að setja gildi: %s"
-
-#~ msgid "Name"
-#~ msgstr "Heiti"
 
 #~ msgid "Value"
 #~ msgstr "Gildi"
