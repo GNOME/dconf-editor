@@ -4,40 +4,37 @@
 # Christian Kirbach <christian.kirbach@gmail.com>, 2013.
 # Simon Linden <xhi2018@googlemail.com>, 2015.
 # Franco Della-Monica <franco.della.monica@gmail.com>, 2016.
-# Tim Sabsch <tim@sabsch.com>, 2017-2018.
+# Tim Sabsch <tim@sabsch.com>, 2017-2019.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2012-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2018-12-29 14:39+0000\n"
-"PO-Revision-Date: 2019-01-01 17:19+0100\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"POT-Creation-Date: 2019-02-25 12:51+0000\n"
+"PO-Revision-Date: 2019-02-26 20:24+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.30.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
 
-#. Translators: on really small windows, the about dialog is replaced by an in-window view; here are the two buttons that have the same role as the stack switcher in the usual about dialog
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/about-list.vala:30 editor/base-headerbar.vala:264
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
 msgid "About"
 msgstr "Info"
 
-#: editor/about-list.vala:30
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
 msgid "Credits"
 msgstr "Mitwirkende"
 
-#. TODO support all licenses type
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
-#: editor/about-list.vala:98
+#: editor/about-list.vala:135
 msgid ""
 "GNU General Public License\n"
 "version 3 or later"
@@ -46,19 +43,25 @@ msgstr ""
 "Version 3 oder neuer"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
-#: editor/about-list.vala:121
+#: editor/about-list.vala:154
 msgid "Creators"
 msgstr "Ersteller"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
-#: editor/about-list.vala:125
+#: editor/about-list.vala:166
 msgid "Translators"
 msgstr "Übersetzer"
 
 #. Translators: menu entry of the pathbar menu
-#: editor/adaptative-pathbar.vala:216
+#: editor/adaptative-pathbar.vala:251
 msgid "Copy current path"
 msgstr "Aktuellen Pfad kopieren"
+
+#. Translators: menu entry of the pathbar menu (not displayed for now)
+#. Translators: "open" action in the right-click menu on a "show folder info" row
+#: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
+msgid "Show properties"
+msgstr "Eigenschaften anzeigen"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:149
@@ -75,20 +78,48 @@ msgstr "Nachtmodus wieder einschalten"
 msgid "Use night mode"
 msgstr "Nachtmodus verwenden"
 
-#: editor/base-headerbar.ui:95
+#. Translators: accessible name of the hamburger menu
+#: editor/base-headerbar.ui:112
 msgid "Actions"
 msgstr "Aktionen"
 
-#. TODO 1/3 Informations
-#: editor/base-headerbar.ui:96
+#. Translators: accessible description of the hamburger menu
+#: editor/base-headerbar.ui:114
 msgid "Current view actions"
 msgstr "Aktuelle Ansichtsaktionen"
 
-#. FIXME is used also for hiding keyboard shortcuts in small window
 #. Translators: usual menu entry of the hamburger menu
-#: editor/base-headerbar.vala:107
+#: editor/base-headerbar.vala:116
 msgid "Keyboard Shortcuts"
 msgstr "Tastenkombinationen"
+
+#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#. Translators: accessible name of the button for opening the bookmarks popover
+#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
+#: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
+#: editor/registry-search.vala:552
+msgid "Bookmarks"
+msgstr "Lesezeichen"
+
+#. Translators: hamburger menu entry on small windows (not used in current design)
+#: editor/bookmarks-headerbar.vala:254
+msgid "Hide bookmarks"
+msgstr "Lesezeichen ausblenden"
+
+#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:259
+msgid "Unbookmark"
+msgstr "Lesezeichen entfernen"
+
+#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:262
+msgid "Bookmark"
+msgstr "Lesezeichen"
+
+#. Translators: hamburger menu entry on small windows, to show the bookmarks list
+#: editor/bookmarks-headerbar.vala:265
+msgid "Show bookmarks"
+msgstr "Lesezeichen anzeigen"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -99,67 +130,60 @@ msgstr ""
 "Lesezeichen werden\n"
 "hier hinzugefügt"
 
-#. Translators: labels of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
 msgid "Use"
 msgstr "Verwenden"
 
-#: editor/bookmarks-list.vala:36
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
+#: editor/bookmarks-list.vala:38
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: editor/bookmarks.ui:52
+#. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:69
 msgid "Location bookmarked"
 msgstr "Ort wurde als Lesezeichen gespeichert"
 
-#: editor/bookmarks.ui:53
+#. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
 msgstr "Diesen Ort als Lesezeichen speichern"
 
-#: editor/bookmarks.ui:77
+#. Translators: text that might appear in the bookmarks popover in place of the switch and its label
+#: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
 msgstr "Die Liste der Lesezeichen ist nicht bearbeitbar."
 
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
-#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
-#: editor/bookmarks.ui:111 editor/dconf-headerbar.vala:183
-#: editor/registry-search.vala:535
-msgid "Bookmarks"
-msgstr "Lesezeichen"
-
-#: editor/bookmarks.ui:112
+#. Translators: accessible description of the button for opening the bookmarks popover
+#: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
 msgstr "Verwalten Sie Ihre Lesezeichen"
 
-#. #. * * Bookmarks management
-#. #. Translators: label of the switch in the bookmarks popover, when searching
-#: editor/bookmarks.vala:396
+#. Translators: label of the switch in the bookmarks popover, when searching
+#: editor/bookmarks.vala:404
 msgid "Bookmark this Search"
 msgstr "Diese Suche als Lesezeichen speichern"
 
 #. Translators: label of the switch in the bookmarks popover, when browsing
-#: editor/bookmarks.vala:399
+#: editor/bookmarks.vala:407
 msgid "Bookmark this Location"
 msgstr "Diesen Ort als Lesezeichen speichern"
 
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
-#: editor/browser-headerbar.vala:193
+#: editor/browser-headerbar.vala:165
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#. Translators: text and button of an infobar to sort again the keys list ("refresh" only, no "reload")
-#: editor/browser-view.vala:84
+#. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
+#: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr ""
 "Die Sortiervorgaben haben sich geändert. Wollen Sie die Ansicht neu laden?"
 
-#: editor/browser-view.vala:84 editor/pathentry.ui:42 editor/pathentry.ui:64
+#. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
+#. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
+#: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
 msgstr "Aktualisieren"
 
@@ -169,19 +193,21 @@ msgid "This folder content has changed. Do you want to reload the view?"
 msgstr ""
 "Dieser Ordnerinhalt hat sich geändert. Wollen Sie die Ansicht neu laden?"
 
-#: editor/browser-view.vala:87 editor/browser-view.vala:90
+#. Translators: button of an infobar to reload the keys list because of a new key (for example)
+#. Translators: button of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:90 editor/browser-view.vala:96
 msgid "Reload"
 msgstr "Neu laden"
 
 #. Translators: text of an infobar to reload the key properties because something has changed
-#: editor/browser-view.vala:90
+#: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr ""
 "Die Eigenschaften dieses Schlüssels haben sich geändert. Wollen Sie die "
 "Ansicht neu laden?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
-#: editor/browser-window.vala:685
+#: editor/browser-window.vala:906
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
@@ -224,7 +250,7 @@ msgid "Read keys descriptions and edit their values"
 msgstr "Schlüsselbeschreibungen lesen und deren Werte bearbeiten"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Das GNOME-Projekt"
 
@@ -233,50 +259,60 @@ msgstr "Das GNOME-Projekt"
 msgid "dconf Editor"
 msgstr "dconf-Editor"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:4
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Configuration editor for dconf"
 msgstr "Konfigurationseditor für dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
 msgstr "Direkter Zugriff auf Ihre gesamte Konfigurationsdatenbank"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:7
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "Einstellungen;Konfiguration;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:15
+#: editor/ca.desrt.dconf-editor.desktop.in:17
 msgid "ca.desrt.dconf-editor"
 msgstr "ca.desrt.dconf-editor"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:102
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
 msgid "The width of the window"
 msgstr "Die Breite des Fensters"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The width of the main window in pixels."
 msgstr "Die Breite des Hauptfensters in Pixel."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:115
 msgid "The height of the window"
 msgstr "Die Höhe des Fensters"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid "The height of the main window in pixels."
 msgstr "Die Höhe des Hauptfensters in Pixel."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:122
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A flag to enable maximized mode"
 msgstr "Aktivieren des maximierten Modus"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:129
 msgid "A flag to restore the last view"
 msgstr "Wiederherstellen der letzten Ansicht"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -284,11 +320,13 @@ msgstr ""
 "Wenn dies »wahr« gesetzt ist, versucht Dconf-Editor beim Start zum Pfad im "
 "Schlüssel »saved-view« zu navigieren."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:136
 msgid "A path to restore the pathbar state"
 msgstr "Ein Pfad zum Wiederherstellen des Pfadleistenstatus"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at "
 "startup is a parent path of this one, Dconf Editor tries to restore the "
@@ -298,11 +336,13 @@ msgstr ""
 "Pfad ein übergeordneter Pfad davon ist, versucht Dconf-Editor beim Start den "
 "Status der Pfadleiste wiederherzustellen."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:128
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:143
 msgid "A path to restore the last view"
 msgstr "Ein Pfad zum Wiederherstellen der letzten Ansicht"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -310,11 +350,13 @@ msgstr ""
 "Wenn »restore-view« auf »wahr« gesetzt ist, versucht Dconf-Editor beim Start "
 "zu diesem Pfad zu navigieren."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:133
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:150
 msgid "Show initial warning"
 msgstr "Anfängliche Warnung anzeigen"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:134
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -322,21 +364,25 @@ msgstr ""
 "Wenn auf wahr gesetzt, öffnet Dconf-Editor beim Start einen Warnhinweis an "
 "den Benutzer, vorsichtig zu sein."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:157
 msgid "A flag to enable small rows for keys list"
 msgstr "Kleine Zeilen für die Schlüsselliste"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:139
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "If “true”, the keys list use smaller rows."
 msgstr ""
 "Wenn auf »wahr« gesetzt, werden in der Schlüsselliste kleinere Zeilen "
 "verwendet."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:164
 msgid "Change the behaviour of a key value change request"
 msgstr "Ändert das Verhalten einer Schlüsselwert Änderungsanfrage"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -360,12 +406,14 @@ msgstr ""
 "wendet jede Änderung im Verzögerungsmodus an, so dass mehrere "
 "Schlüsseländerungen zusammen bestätigt werden können."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:148
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:171
 msgid "A flag to sort keys list case-sensitively"
 msgstr ""
 "Schalter zum Sortieren der Schlüsselliste nach Groß- oder Kleinschreibung"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:149
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -376,11 +424,13 @@ msgstr ""
 "sein. Falls »wahr«, wird diese Schlüsselliste unter Beachtung von Groß- oder "
 "Kleinschreibung sortiert, wobei Großbuchstaben bevorzugt werden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:153
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Maus für »Vorwärts« und »Zurück« verwenden"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -390,11 +440,13 @@ msgstr ""
 "verwenden, bestimmt dieser Schlüssel, welche Taste den »Zurück«-Befehl in "
 "einem Browser-Fenster auslöst."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Maustaste zum Auslösen des »Zurück«-Befehls in einem Browser-Fenster"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:160
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -404,11 +456,13 @@ msgstr ""
 "verwenden, bestimmt dieser Schlüssel, welche Taste den »Zurück«-Befehl in "
 "einem Browser-Fenster auslöst. Mögliche Werte liegen zwischen 6 und 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:165
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Maustaste zum Auslösen des »Vorwärts«-Befehls in einem Browser-Fenster"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:196
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -418,11 +472,13 @@ msgstr ""
 "verwenden, bestimmt dieser Schlüssel, welche Taste den »Vorwärts«-Befehl in "
 "einem Browser-Fenster auslöst. Mögliche Werte liegen zwischen 6 und 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:170
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:201
 msgid "A flag to check for added or removed schemas"
 msgstr "Ein Schalter zum Prüfen auf hinzugefügte oder entfernte Schemata"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -437,11 +493,13 @@ msgstr ""
 "deaktiviert werden. Beachten Sie, dass diese Option deaktiviert wird, sobald "
 "ein besserer Weg gefunden wurde."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "Enabled relocatable schema mapping facilities"
 msgstr "Aktivierte Einrichtungen zur Zuordnung von verschiebbaren Schemata"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -457,11 +515,13 @@ msgstr ""
 "»Startup« (Bei Start) ist für die Zuordnung eines verschiebbaren Schemas von "
 "der Befehlszeile."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:215
 msgid "Mapping of paths to manually associated schemas"
 msgstr "Zuordnung von Pfaden zu manuell zugeordneten Schemata"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -476,11 +536,13 @@ msgstr ""
 "definieren. Die gleiche Schemakennung kann zu mehreren Pfadspezifikationen "
 "zugeordnet werden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:185
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:222
 msgid "A flag for skipping unnecessary subfolders"
 msgstr "Ein Schalter zum Überspringen von unnötigen Unterordnern"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
@@ -489,50 +551,61 @@ msgstr ""
 "Dconf-Editor direkt in den Unterordner springen. Dieser Schalter aktiviert "
 "dieses Verhalten."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid "Follow system night light"
 msgstr "System-Nachtmodus verwenden"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:193
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid "Use GNOME night light setting to activate night-mode."
 msgstr "Aktiviert den Nachtmodus gemäß der GNOME-Nachtmodus-Einstellung."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:199
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A list of bookmarked paths"
 msgstr "Liste der als Lesezeichen gespeicherten Pfade"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:200
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Enthält alle vom Benutzer als Lesezeichen gespeicherten Pfade als ein Feld "
 "aus Zeichenketten."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:204
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
 msgid "A flag to enable small rows for bookmarks list"
 msgstr "Kleine Zeilen für die Lesezeichenliste"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:205
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:249
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr ""
 "Wenn auf »wahr« gesetzt, werden in der Lesezeichenliste kleinere Zeilen "
 "verwendet."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:230
-#: editor/ca.desrt.dconf-editor.gschema.xml:385
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
+#: editor/ca.desrt.dconf-editor.gschema.xml:487
 msgid "A boolean, type ‘b’"
 msgstr "Ein boolescher Wert des Typs »b«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:231
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Boolesche Werte können nur »wahr« oder »falsch« sein."
 
 # https://en.wikipedia.org/wiki/Nullable_type
-#: editor/ca.desrt.dconf-editor.gschema.xml:235
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Ein nullbarer boolescher Wert des Typs »mb«"
 
 # Ich bin mir hier nicht sicher, aber meiner Meinung nach erscheinen boolesche Werte in dconf nicht im Klartext, können also übersetzt werden.
-#: editor/ca.desrt.dconf-editor.gschema.xml:236
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:284
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -542,11 +615,13 @@ msgstr ""
 "den Wert »nichts« annehmen können. Ein nullbarer boolescher Ausdruck kann "
 "drei Werte haben, »wahr«, »falsch« oder »nichts«."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:240
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Ein Byte (vorzeichenlos), Typ »y«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:241
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -554,11 +629,13 @@ msgstr ""
 "Ein Byte-Wert ist eine Ganzzahl zwischen 0 und 255. Er kann dazu verwendet "
 "werden, Zeichen unverändert weiterzugeben."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:245
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
 msgid "A bytestring, type ‘ay’"
 msgstr "Ein Bytestring, Typ »ay«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:246
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:298
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -568,11 +645,13 @@ msgstr ""
 "weiterzugeben, die nicht zwingend gültiges UTF-8 sein müssen. In diesem Fall "
 "ist es üblich, das NUL-Zeichen als letztes Zeichen im Feld zu verwenden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:250
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
 msgid "A bytestring array, type ‘aay’"
 msgstr "Ein Bytestring-Feld, Typ »aay«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:251
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -581,11 +660,13 @@ msgstr ""
 "Zeichenketten unverändert weiterzugeben, die nicht zwingend gültiges UTF-8 "
 "sein müssen."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:255
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:310
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Ein D-Bus-Handle-Typ, Typ »h«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:256
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:312
 msgid ""
 "The handle type is a 32-bit signed integer value that is, by convention, "
 "used as an index into an array of file descriptors that are sent alongside a "
@@ -597,11 +678,13 @@ msgstr ""
 "die mit einer D-Bus-Meldung versendet werden. Wenn Sie nicht mit D-Bus "
 "interagieren, gibt es keinen Grund, diesen Typ zu verwenden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:260
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Ein D-Bus-Objektpfad des Typs »o«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:261
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -611,11 +694,13 @@ msgstr ""
 "Ziel auf dem Bus verwendet. Wenn Sie nicht mit D-Bus interagieren, gibt es "
 "keinen Grund, diesen Typ zu verwenden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:265
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Ein D-Bus-Objektpfad-Feld des Typs »ao«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:266
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:326
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -625,11 +710,13 @@ msgstr ""
 "leere: »[]«). Wenn Sie nicht mit D-Bus interagieren, gibt es keinen Grund, "
 "diesen Typ zu verwenden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:270
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:331
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Eine D-Bus-Signatur des Typs »g«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:271
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:333
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -639,11 +726,13 @@ msgstr ""
 "Methode oder -Meldung verwendet wird. Wenn Sie nicht mit D-Bus interagieren, "
 "gibt es keinen Grund, diesen Typ zu verwenden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:275
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:338
 msgid "A dictionary entry of type ‘{ss}’"
 msgstr "Ein Dictionary-Eintrag des Typs »{ss}«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:276
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:340
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
@@ -651,11 +740,13 @@ msgstr ""
 "Ein Dictionary bildet Werte eines einfachen Typs auf einen anderen "
 "(beliebigen anderen) Wert ab. Ein Dictionary-Eintrag ist so eine Zuordnung."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:280
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid "A “vardict”, type ‘a{sv}’"
 msgstr "Ein »vardict« des Typs »a{sv}«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:281
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:347
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
@@ -664,21 +755,25 @@ msgstr ""
 "anderen Wert ab. Ein einfacher Anwendungsfall ist die Zuordnung von "
 "Zeichenketten zu Variants."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:285
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "A double, type ‘d’"
 msgstr "Eine Gleitkommazahl doppelter Genauigkeit, Typ »d«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:286
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
 msgid "A double value could represent any real number."
 msgstr ""
 "Ein Gleitkommawert doppelter Genauigkeit kann jede reelle Zahl "
 "repräsentieren."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:290
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
 msgid "A 5-choices enumeration"
 msgstr "Eine Aufzählung mit fünf Auswahlmöglichkeiten"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:291
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -686,82 +781,101 @@ msgstr ""
 "Aufzählungen können entweder mit dem »enum«-Attribut oder mit einer "
 "»choices«-Markierung realisiert werden."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:295
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
+#: editor/ca.desrt.dconf-editor.gschema.xml:501
+msgid "Flags: choose-colors-you-love"
+msgstr "Schalter: choose-colors-you-love"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:503
+msgid "Flags could be set by the “enum” attribute."
+msgstr "Schalter können mit dem »enum«-Attribut gesetzt werden."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "A short integer, type ‘n’"
 msgstr "Eine kurze Ganzzahl, Typ »n«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:296
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "Eine vorzeichenbehaftete 16-Bit-Ganzzahl. Schauen Sie sich auch den "
 "Schlüssel »integer-16-unsigned« an."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:300
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
-msgid "Flags: choose-colors-you-love"
-msgstr "Schalter: choose-colors-you-love"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:301
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
-msgid "Flags could be set by the “enum” attribute."
-msgstr "Schalter können mit dem »enum«-Attribut gesetzt werden."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:305
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Eine vorzeichenlose kurze Ganzzahl, Typ »n«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:306
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:382
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "Eine vorzeichenlose 16-Bit-Ganzzahl. Schauen Sie sich auch den Schlüssel "
 "»integer-16-signed« an."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:310
-#: editor/ca.desrt.dconf-editor.gschema.xml:390
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
+#: editor/ca.desrt.dconf-editor.gschema.xml:494
 msgid "An usual integer, type ‘i’"
 msgstr "Eine normale Ganzzahl, Typ »i«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:311
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "Eine vorzeichenbehaftete 32-Bit-Ganzzahl. Schauen Sie sich auch den "
 "Schlüssel »integer-32-unsigned« an."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:315
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Eine normale vorzeichenlose Ganzzahl, Typ »u«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:316
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "Eine vorzeichenlose 32-Bit-Ganzzahl. Schauen Sie sich auch den Schlüssel "
 "»integer-32-signed« an."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:320
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid "A long integer, type ‘x’"
 msgstr "Eine lange Ganzzahl, Typ »x«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:321
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "Eine vorzeichenbehaftete 64-Bit-Ganzzahl. Schauen Sie sich auch den "
 "Schlüssel »integer-64-unsigned« an."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:325
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Eine vorzeichenlose lange Ganzzahl, Typ »t«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:326
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "Eine vorzeichenlose 64-Bit-Ganzzahl. Schauen Sie sich auch den Schlüssel "
 "»integer-64-signed« an."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:332
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid "A number with range"
 msgstr "Eine Zahl mit Bereichsangabe"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:333
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -772,12 +886,13 @@ msgstr ""
 "benutzerdefinierten Bereich begrenzt werden. Zum Beispiel kann diese "
 "Ganzzahl nur einen Wert zwischen -2 und 10 haben."
 
-#. Translators: do not forget the parenthesis, they are meaningful.
-#: editor/ca.desrt.dconf-editor.gschema.xml:338
+#. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A custom type, here ‘(ii)’"
 msgstr "Ein benutzerdefinierter Typ, hier »(ii)«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:339
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -788,11 +903,13 @@ msgstr ""
 "wird, wenn keine bessere Möglichkeit vorhanden ist. Hier ist ein Tupel aus "
 "zwei vorzeichenbehafteten 32-Bit-Ganzzahlen."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:343
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
 msgid "A string, type ‘s’"
 msgstr "Eine Zeichenkette des Typs »s«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:344
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:433
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -801,11 +918,13 @@ msgstr ""
 "dass die leere Zeichenkette »''« nicht mit NULL (nichts) gleichzusetzen ist. "
 "Siehe Schlüssel »string-nullable«."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:348
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:438
 msgid "A string array, type ‘as’"
 msgstr "Ein Zeichenketten-Feld des Typs »as«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:349
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:440
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -813,11 +932,13 @@ msgstr ""
 "Ein Zeichenketten-Feld enthält Zeichenketten von beliebiger Anzahl und "
 "Länge. Es darf auch ein leeres Feld sein, »[]«."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:353
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:445
 msgid "A nullable string, type ‘ms’"
 msgstr "Eine nullbare Zeichenkette des Typs »ms«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:354
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:447
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -828,11 +949,13 @@ msgstr ""
 "Zeichenkette als Wert annehmen, auch die leere Zeichenkette »''«, oder kann "
 "NULL (nichts) sein."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:358
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A variant, type ‘v’"
 msgstr "Ein Variant des Typs »v«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:454
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
@@ -850,11 +973,13 @@ msgstr ""
 "versehen werden. Sehen Sie für eine vollständige Dokumentation https://"
 "developer.gnome.org/glib/stable/gvariant-text.html."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:363
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:459
 msgid "A 1-choice enumeration"
 msgstr "Eine Aufzählung mit einer Auswahlmöglichkeit"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:364
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:461
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -862,11 +987,13 @@ msgstr ""
 "Eine Aufzählung kann auch nur einen einzigen Eintrag enthalten, doch das "
 "könnte möglicherweise ein Fehler sein. Dconf-Editor warnt Sie in diesem Fall."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:369
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:467
 msgid "A 1-choice integer value"
 msgstr "Ein Ganzzahlwert mit einer Auswahlmöglichkeit"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:370
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:469
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -875,11 +1002,13 @@ msgstr ""
 "beschränken, doch das könnte möglicherweise ein Fehler sein. Dconf-Editor "
 "warnt Sie in diesem Fall."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:474
 msgid "The empty tuple, type and value “()”"
 msgstr "Das leere Tupel, mit Typ und Wert »()«"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:375
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:476
 msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
@@ -887,23 +1016,28 @@ msgstr ""
 "Es existiert ein Typ »leeres Tupel« (gelegentlich »triv« genannt), das ein "
 "Tupel ohne Inhalt ist und ausschließlich den Wert »()« annehmen kann."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:386
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr ""
 "Eine normaler Boolescher Wert, definiert durch ein verschiebbares Schema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:391
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:496
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 "Eine vorzeichenbehaftete 32-Bit-Ganzzahl, definiert durch ein verschiebbares "
 "Schema."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:402
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:510
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Ein normaler, kollisionsfreier Schlüssel von Konflikt1"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:403
-#: editor/ca.desrt.dconf-editor.gschema.xml:430
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:512
+#: editor/ca.desrt.dconf-editor.gschema.xml:549
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
@@ -912,14 +1046,17 @@ msgstr ""
 "kollidierenden Schlüsseln. Kollisionsfreie Schlüssel sollten keine Probleme "
 "haben."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:407
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:517
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 "Ein kollidierender Schlüssel mit Vorgabewert »1«, der einen Fehler ergeben "
 "sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:408
-#: editor/ca.desrt.dconf-editor.gschema.xml:435
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:519
+#: editor/ca.desrt.dconf-editor.gschema.xml:556
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -930,13 +1067,16 @@ msgstr ""
 "ein Schlüssel, der in den selben Pfad abgebildet wird, einen anderen "
 "Vorgabewert hat."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:412
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:524
 msgid "Conflicting key with no range that should give an error"
 msgstr ""
 "Ein kollidierender Schlüssel ohne Bereich, der einen Fehler ergeben sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:413
-#: editor/ca.desrt.dconf-editor.gschema.xml:441
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:526
+#: editor/ca.desrt.dconf-editor.gschema.xml:564
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -947,14 +1087,17 @@ msgstr ""
 "ein Schlüssel, der in den selben Pfad abgebildet wird, einen anderen Bereich "
 "hat."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:531
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
 "Ein kollidierender Schlüssel mit einer (einfachen) Zeichenkette, der einen "
 "Fehler ergeben sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:418
-#: editor/ca.desrt.dconf-editor.gschema.xml:446
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:533
+#: editor/ca.desrt.dconf-editor.gschema.xml:571
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
@@ -964,13 +1107,16 @@ msgstr ""
 "kollidierenden Schlüsseln. Er sollte nicht bearbeitet werden können, weil "
 "ein Schlüssel, der in den selben Pfad abgebildet wird, einen anderen Typ hat."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:422
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:538
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr ""
 "Ein kollidierender Schlüssel von Konflikt1, der eine Warnung geben sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:423
-#: editor/ca.desrt.dconf-editor.gschema.xml:451
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:540
+#: editor/ca.desrt.dconf-editor.gschema.xml:578
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
@@ -980,242 +1126,272 @@ msgstr ""
 "kollidierenden Schlüsseln. Er kann bearbeitet werden, da die Schlüssel-Typen "
 "miteinander kompatibel sind. Dennoch stellt es ein Problem dar."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:429
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:547
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Ein normaler, kollisionsfreier Schlüssel von Konflikt2"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:434
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:554
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 "Ein kollidierender Schlüssel mit Vorgabewert »2«, der einen Fehler ergeben "
 "sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:440
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:562
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr ""
 "Ein kollidierender Schlüssel mit Bereich 0..5, der einen Fehler ergeben "
 "sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:445
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:569
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
 "Ein kollidierender Schlüssel mit einer »nullable« Zeichenkette, der einen "
 "Fehler ergeben sollte"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:450
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:576
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr ""
 "Ein kollidierender Schlüssel von Konflikt2, der eine Warnung geben sollte"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Programmversion ausgeben und das Programm beenden"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:158
 msgid "Print relocatable schemas and exit"
 msgstr "Verschiebbare Schemata ausgeben und das Programm beenden"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:153
+#: editor/dconf-editor.vala:161
 msgid "Do not show initial warning"
 msgstr "Anfängliche Warnung nicht anzeigen"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:191
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:199
 msgid "Graphical interface for editing other applications settings."
 msgstr ""
 "Eine grafische Oberfläche zum Bearbeiten von Einstellungen anderer "
 "Anwendungen."
 
-#: editor/dconf-editor.vala:191
-msgid "Uses the gsettings API of the glib library, and other ways."
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:202
+msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Verwendet unter anderem die gsettings-API der glib-Bibliothek."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:194
+#: editor/dconf-editor.vala:205
 msgid "Arguments description:"
 msgstr "Argumentbeschreibung:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:198
+#: editor/dconf-editor.vala:209
 msgid "a folder path or a key path"
 msgstr "ein Ordner- oder Schlüsselpfad"
 
-#: editor/dconf-editor.vala:199
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "Beispiel: »/org/gnome/« oder »/ca/desrt/dconf-editor/Demo/boolean«"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "the name of a schema with fixed path"
 msgstr "der Name eines Schemas mit festem Pfad"
 
-#: editor/dconf-editor.vala:204
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:217
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "Beispiel: »ca.desrt.dconf-editor.Settings«"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:208
+#: editor/dconf-editor.vala:221
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "der Name eines »verschiebbaren« Schemas, ohne festen Pfad"
 
-#: editor/dconf-editor.vala:209
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:223
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr ""
 "die Liste kann über die Option »--list-relocatable-schemas« aufgerufen werden"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:227
 msgid "the path where to map the relocatable schema"
 msgstr "der Pfad, dem das verschiebbare Schema zugeordnet wird"
 
-#: editor/dconf-editor.vala:214
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "Beispiel: »ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/«"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:218
+#: editor/dconf-editor.vala:233
 msgid "the name of a key from the schema"
 msgstr "der Schlüsselname in einem Schema"
 
-#: editor/dconf-editor.vala:219
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
 msgstr "Beispiel: »bookmarks«"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:275
+#: editor/dconf-editor.vala:291
 msgid "Known schemas installed:"
 msgstr "Installierte bekannte Schemata:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:281
+#: editor/dconf-editor.vala:297
 msgid "No known schemas installed."
 msgstr "Keine bekannten Schemata installiert."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:286
+#: editor/dconf-editor.vala:302
 msgid "Known schemas skipped:"
 msgstr "Übersprungene bekannte Schemata:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:292
+#: editor/dconf-editor.vala:308
 msgid "No known schemas skipped."
 msgstr "Keine bekannten Schemata übersprungen."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:297
+#: editor/dconf-editor.vala:313
 msgid "Unknown schemas:"
 msgstr "Unbekannte Schemata:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:303
+#: editor/dconf-editor.vala:319
 msgid "No unknown schemas."
 msgstr "Keine unbekannten Schemata."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:432
+#: editor/dconf-editor.vala:453
 msgid "Only one window can be opened for now.\n"
 msgstr "Derzeit kann nur ein Fenster geöffnet werden.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:452
+#: editor/dconf-editor.vala:473
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Kann nicht interpretiert werden: zu viele Argumente.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:466
+#: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
 msgstr ""
 "Das zweite Argument kann in diesem Kontext nicht interpretiert werden.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:487
+#: editor/dconf-editor.vala:508
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Kann nicht interpretiert werden: Schrägstrich im zweiten Argument.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:502
+#: editor/dconf-editor.vala:523
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Der Pfad sollte mit einem »/« beginnen und enden.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:518
+#: editor/dconf-editor.vala:539
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Kann nicht interpretiert werden: Der angegebene Pfad enthält »//«.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:526
+#: editor/dconf-editor.vala:547
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Kann nicht interpretiert werden: Leerzeichen im Argument.\n"
 
-#. #. * * Copy action
-#. #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:552
+#. Translators: notification header, try ctrl-c while in the keys list
+#: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
 msgstr "In Zwischenablage kopiert"
 
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:652
+msgid "A graphical viewer and editor of applications’ internal settings."
+msgstr ""
+"Ein grafischer Betrachter und Editor für die internen Einstellungen von "
+"Anwendungen."
+
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:658
+msgid ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
+msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
+
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:665
+msgid "translator-credits"
+msgstr ""
+"Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"Christian Kirbach <Christian.Kirbach@gmail.com>\n"
+"Franco Della-Monica <franco.della.monica@gmail.com>\n"
+"Tim Sabsch <tim@sabsch.com>"
+
+#. Translators: about dialog text; label of the website link
+#: editor/dconf-editor.vala:671
+msgid "Page on GNOME wiki"
+msgstr "Seite im GNOME-Wiki"
+
 #. Translators: usual menu entry of the hamburger menu
-#: editor/dconf-headerbar.vala:57
+#: editor/dconf-headerbar.vala:53
 msgid "About Dconf Editor"
 msgstr "Info zu Dconf-Editor"
 
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+msgid "Apply"
+msgstr "Anwenden"
+
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#: editor/dconf-headerbar.vala:117
+msgid "Dismiss"
+msgstr "Verwerfen"
+
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:257
+#: editor/dconf-headerbar.vala:141
 msgid "Apply all"
 msgstr "Alle anwenden"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:260
+#: editor/dconf-headerbar.vala:144
 msgid "Dismiss all"
 msgstr "Alle verwerfen"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
-#: editor/dconf-headerbar.vala:268
+#: editor/dconf-headerbar.vala:152
 msgid "Quit mode"
 msgstr "Modus beenden"
 
-#. Translators: hamburger menu entry on small windows (not used in current design)
-#: editor/dconf-headerbar.vala:354
-msgid "Hide bookmarks"
-msgstr "Lesezeichen ausblenden"
-
-#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
-#: editor/dconf-headerbar.vala:359
-msgid "Unbookmark"
-msgstr "Lesezeichen entfernen"
-
-#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
-#: editor/dconf-headerbar.vala:362
-msgid "Bookmark"
-msgstr "Lesezeichen"
-
-#. Translators: hamburger menu entry on small windows, to show the bookmarks list
-#: editor/dconf-headerbar.vala:365
-msgid "Show bookmarks"
-msgstr "Lesezeichen anzeigen"
-
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
-#: editor/dconf-headerbar.vala:379
+#: editor/dconf-headerbar.vala:201
 msgid "Enter delay mode"
 msgstr "Eingabe des Verzögerungsmodus"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
-#: editor/dconf-headerbar.vala:385
+#: editor/dconf-headerbar.vala:205
 msgid "Reset visible keys"
 msgstr "Sichtbare Schlüssel zurücksetzen"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
-#: editor/dconf-headerbar.vala:388
+#: editor/dconf-headerbar.vala:208
 msgid "Reset view recursively"
 msgstr "Ansicht rekursiv zurücksetzen"
 
-#. show go_back_button
-#. show ltr_left_separator
-#. title_label text or null
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/dconf-headerbar.vala:430
+#: editor/dconf-headerbar.vala:246
 msgid "Pending"
 msgstr "Ausstehend"
 
@@ -1226,310 +1402,353 @@ msgid "%s (key erased)"
 msgstr "%s (Schlüssel gelöscht)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
-#: editor/dconf-window.vala:189
+#: editor/dconf-window.vala:122
 msgid "Schema is relocatable, a path is needed."
 msgstr "Schema ist verschiebbar, ein Pfad wird benötigt."
 
 #. Translators: command-line startup warning
-#: editor/dconf-window.vala:202
+#: editor/dconf-window.vala:135
 msgid "Startup mappings are disabled."
 msgstr "Zuordnungen beim Startvorgang sind ausgeschaltet."
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
-#: editor/dconf-window.vala:217
+#: editor/dconf-window.vala:150
 msgid "Schema is not installed on given path."
 msgstr "Schema ist im angegebenem Pfad nicht installiert."
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
-#: editor/dconf-window.vala:233
+#: editor/dconf-window.vala:166
 #, c-format
 msgid "Unknown schema “%s”."
 msgstr "Unbekanntes Schema »%s«."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
-#: editor/dconf-window.vala:337
+#: editor/dconf-window.vala:272
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Danke, dass Sie Dconf-Editor zum Bearbeiten Ihrer Konfigurationen verwenden!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
-#: editor/dconf-window.vala:340
+#: editor/dconf-window.vala:275
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Denken Sie daran, dass Optionen unter Umständen die korrekte Ausführung von "
 "Anwendungen beeinträchtigen könne, seien Sie daher vorsichtig."
 
 #. Translators: initial "use at your own risk" dialog, the button label
-#: editor/dconf-window.vala:343
+#: editor/dconf-window.vala:278
 msgid "I’ll be careful."
 msgstr "Ich werde vorsichtig sein."
 
-#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
 #. Translators: initial "use at your own risk" dialog, the checkbox label
-#: editor/dconf-window.vala:348
+#: editor/dconf-window.vala:282
 msgid "Show this dialog next time."
 msgstr "Diesen Dialog beim nächsten Mal anzeigen."
 
+#. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
+#: editor/dconf-window.vala:303
+msgid ""
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
+"+F4 to dismiss changes and quit."
+msgstr ""
+"Es stehen Änderungen aus. Drücken Sie Umschalt+Strg+Q, um vor der Beendigung "
+"die Änderungen anzuwenden, oder Alt+F4, um vor der Beendigung die Änderungen "
+"zu verwerfen."
+
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:1055
+#: editor/dconf-window.vala:775
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Der Ordner »%s« ist nun leer."
 
-#. GAction parameter type switch is a little touchy, see pathbar.vala
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:1066
+#: editor/dconf-window.vala:786
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Der Schlüssel »%s« wurde gelöscht."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:1072
+#: editor/dconf-window.vala:792
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Der Schlüssel »%s« kann nicht gefunden werden."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:1078
+#: editor/dconf-window.vala:798
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Es befindet sich nichts im angeforderten Ordner »%s«."
-
-#. Translators: about dialog text
-#: editor/dconf-window.vala:1090
-msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr ""
-"Ein grafischer Betrachter und Editor für die internen Einstellungen von "
-"Anwendungen."
-
-#. Translators: about dialog text
-#: editor/dconf-window.vala:1093
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
-
-#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-window.vala:1096
-msgid "translator-credits"
-msgstr ""
-"Mario Blättermann <mario.blaettermann@gmail.com>\n"
-"Christian Kirbach <Christian.Kirbach@gmail.com>\n"
-"Franco Della-Monica <franco.della.monica@gmail.com>\n"
-"Tim Sabsch <tim@sabsch.com>"
-
-#. Translators: about dialog text; label of the website link
-#: editor/dconf-window.vala:1102
-msgid "Page on GNOME wiki"
-msgstr "Seite im GNOME-Wiki"
-
-#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
-#: editor/delayed-setting-view.ui:82 editor/delayed-setting-view.ui:128
-#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:637
-#: editor/registry-info.vala:464
-msgid "Default value"
-msgstr "Vorgabewert"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
 msgid "Key erased"
 msgstr "Schlüssel gelöscht"
 
-#: editor/help-overlay.ui:11
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
+msgid "Default value"
+msgstr "Vorgabewert"
+
+#. Translators: header in the shortcut window, for usual headerbar menus actions
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Aktionen"
 
-#: editor/help-overlay.ui:15
+#. Translators: Ctrl-B action
+#: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Lesezeichen-Menü"
 
-#: editor/help-overlay.ui:22
+#. Translators: Ctrl-D action
+#: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Diesen Pfad als Lesezeichen speichern"
 
-#: editor/help-overlay.ui:29
+#. Translators: Ctrl-Shift-D action
+#: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Lesezeichen für diesen Pfad löschen"
 
-#: editor/help-overlay.ui:36
+#. Translators: F10 key action
+#: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Aktionen-Menü"
 
-#: editor/help-overlay.ui:43
+#. Translators: Shift-F10 action
+#: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
 msgstr "Pfadleistenmenü"
 
-#: editor/help-overlay.ui:52
-msgctxt "shortcut window"
-msgid "Search options"
-msgstr "Sucheinstellungen"
-
-#: editor/help-overlay.ui:56
-msgctxt "shortcut window"
-msgid "Toggle search"
-msgstr "Suche ein-/ausschalten"
-
-#: editor/help-overlay.ui:63
-msgctxt "shortcut window"
-msgid "Paste as search"
-msgstr "Als Suche einfügen"
-
-#: editor/help-overlay.ui:70
-msgctxt "shortcut window"
-msgid "Edit path"
-msgstr "Pfad bearbeiten"
-
-#: editor/help-overlay.ui:77
-msgctxt "shortcut window"
-msgid "Edit parent path"
-msgstr "Übergeordneten Pfad bearbeiten"
-
-#: editor/help-overlay.ui:84
-msgctxt "shortcut window"
-msgid "Edit root path"
-msgstr "Wurzelpfad bearbeiten"
-
-#: editor/help-overlay.ui:91
-msgctxt "shortcut window"
-msgid "Browse keys tree"
-msgstr "Schlüsselbaum durchsuchen"
-
-#: editor/help-overlay.ui:100
+#. Translators: header in the shortcut window, for moving to paths known by the headerbar
+#: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Pfadleistennavigation"
 
-#: editor/help-overlay.ui:104
+#. Translators: Alt-Shift-Up action; browse to the '/' folder
+#: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Wurzelordner öffnen"
 
-#: editor/help-overlay.ui:111
+#. Translators: Alt-Up action; browse to the parent folder
+#: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Übergeordneten Ordner öffnen"
 
-#: editor/help-overlay.ui:118
+#. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Aktives direktes Unterlement öffnen"
 
-#: editor/help-overlay.ui:125
+#. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
+#: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Aktives letztes Unterlement öffnen"
 
-#: editor/help-overlay.ui:134
+#. Translators: header in the shortcut window, for the various ways of opening search
+#: editor/help-overlay.ui:115
+msgctxt "shortcut window"
+msgid "Search options"
+msgstr "Sucheinstellungen"
+
+#. Translators: Ctrl-F action; opens search, searching everywhere
+#: editor/help-overlay.ui:120
+msgctxt "shortcut window"
+msgid "Toggle search"
+msgstr "Suche ein-/ausschalten"
+
+#. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:128
+msgctxt "shortcut window"
+msgid "Search again"
+msgstr "Erneut suchen"
+
+#. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
+#: editor/help-overlay.ui:136
+msgctxt "shortcut window"
+msgid "Toggle local search"
+msgstr "Lokale Suche ein-/ausschalten"
+
+#. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:144
+msgctxt "shortcut window"
+msgid "Search again, locally"
+msgstr "Erneut lokal suchen"
+
+#. Translators: Ctrl-V action; open search with clipboard content
+#: editor/help-overlay.ui:152
+msgctxt "shortcut window"
+msgid "Paste as search"
+msgstr "Als Suche einfügen"
+
+#. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:160
+msgctxt "shortcut window"
+msgid "Paste as search (force)"
+msgstr "Als Suche einfügen (erzwingen)"
+
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
+msgctxt "shortcut window"
+msgid "Edit path"
+msgstr "Pfad bearbeiten"
+
+#. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
+#: editor/help-overlay.ui:176
+msgctxt "shortcut window"
+msgid "Edit parent path"
+msgstr "Übergeordneten Pfad bearbeiten"
+
+#. Translators: '/' key action when browsing; opens search on root path
+#: editor/help-overlay.ui:184
+msgctxt "shortcut window"
+msgid "Edit root path"
+msgstr "Wurzelpfad bearbeiten"
+
+#. Translators: Escape key action, when searching; cancels search
+#: editor/help-overlay.ui:192
+msgctxt "shortcut window"
+msgid "Browse keys tree"
+msgstr "Schlüsselbaum durchsuchen"
+
+#. Translators: header in the shortcut window, for when browsing
+#: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr "Aktionen der Schlüsselliste"
 
-#: editor/help-overlay.ui:138
+#. Translators: Menu key action, when browsing
+#: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Kontextmenü"
 
-#: editor/help-overlay.ui:145
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
 msgstr "Vorherige Zeile"
 
-#: editor/help-overlay.ui:152
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Nächste Zeile"
 
-#: editor/help-overlay.ui:159
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
 msgstr "Ordnereigenschaften umschalten"
 
-#: editor/help-overlay.ui:166
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Auf Vorgabewert setzen"
 
-#: editor/help-overlay.ui:173
+#. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
+#: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Booleschen Wert umschalten"
 
-#: editor/help-overlay.ui:182
-msgctxt "shortcut window"
-msgid "Generic"
-msgstr "Allgemein"
-
-#: editor/help-overlay.ui:186
-msgctxt "shortcut window"
-msgid "Show this help"
-msgstr "Diese Hilfe anzeigen"
-
-#: editor/help-overlay.ui:193
-msgctxt "shortcut window"
-msgid "About"
-msgstr "Info"
-
-#: editor/help-overlay.ui:202
-msgctxt "shortcut window"
-msgid "Clipboard"
-msgstr "Zwischenablage"
-
-#: editor/help-overlay.ui:206
-msgctxt "shortcut window"
-msgid "Copy descriptor"
-msgstr "Deskriptor kopieren"
-
-#: editor/help-overlay.ui:213
-msgctxt "shortcut window"
-msgid "Copy path"
-msgstr "Pfad kopieren"
-
-#: editor/help-overlay.ui:222
+#. Translators: header in the shortcut window, for when there are pending changes
+#: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
 msgstr "Aktionen der Änderungsliste"
 
-#: editor/help-overlay.ui:226
+#. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
+#: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
 msgstr "Änderungsliste ein- oder ausklappen"
 
-#: editor/help-overlay.ui:233
+#. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
+#: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
 msgstr "Schlüssel der ausgewählten Zeile öffnen"
 
-#: editor/help-overlay.ui:240
+#. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
+#: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
 msgstr "Änderung verwerfen"
 
-#: editor/help-overlay.ui:249
+#. Translators: header in the shortcut window, for opening the usual helpful dialogs
+#: editor/help-overlay.ui:288
+msgctxt "shortcut window"
+msgid "Generic"
+msgstr "Allgemein"
+
+#. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
+#: editor/help-overlay.ui:293
+msgctxt "shortcut window"
+msgid "Show this help"
+msgstr "Diese Hilfe anzeigen"
+
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Info"
+
+#. Translators: header in the shortcut window, for the copy-to-clipboard actions
+#: editor/help-overlay.ui:311
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Zwischenablage"
+
+#. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
+#: editor/help-overlay.ui:316
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Deskriptor kopieren"
+
+#. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
+#: editor/help-overlay.ui:324
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Pfad kopieren"
+
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Beenden"
 
-#: editor/help-overlay.ui:254
+#. Translators: Ctrl-Q action; displays a notification if there are pending changes
+#: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
-msgstr "Schließen, falls keine Änderungen ausstehen"
+msgstr "Beenden, falls keine Änderungen ausstehen"
 
-#: editor/help-overlay.ui:261
+#. Translators: Ctrl-Shift-Q action
+#: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr "Ausstehende Änderungen anwenden und schließen"
+msgstr "Ausstehende Änderungen anwenden und beenden"
+
+#. Translators: Alt-F4 action
+#: editor/help-overlay.ui:356
+msgctxt "shortcut window"
+msgid "Dismiss pending changes and quit"
+msgstr "Ausstehende Änderungen verwerfen und beenden"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
@@ -1564,225 +1783,273 @@ msgid "Go to “%s”"
 msgstr "Gehe zu »%s«"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
-#: editor/key-list-box-row.vala:145
+#: editor/key-list-box-row.vala:149
 #, c-format
-msgid "Show “%s” folder properties"
-msgstr "Ordnereigenschaften von »%s« anzeigen"
+msgid "Search in “%s” folder"
+msgstr "In Order »%s« suchen"
+
+#. Translators: first item of the keys list displayed during browsing at root path
+#: editor/key-list-box-row.vala:153
+msgid "Open path entry"
+msgstr "Pfadeintrag öffnen"
+
+#. Translators: last item of the keys list displayed during a local search
+#: editor/key-list-box-row.vala:157
+msgid "Search everywhere"
+msgstr "Überall suchen"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:437
+#: editor/key-list-box-row.vala:449
 msgid "Copy"
 msgstr "Kopieren"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:440
+#: editor/key-list-box-row.vala:452
 msgid "Customize…"
 msgstr "Anpassen …"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:443
+#: editor/key-list-box-row.vala:455
 msgid "Set to default"
 msgstr "Auf Vorgabewert setzen"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:448
+#: editor/key-list-box-row.vala:460
 msgid "Show details…"
 msgstr "Details anzeigen …"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:451
+#: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
 msgstr "Änderung verwerfen"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:454 editor/key-list-box-row.vala:570
-#: editor/registry-info.ui:112
+#. Translators: label of the action button of an infobar, when a key is not defined by a schema
+#: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
+#: editor/registry-info.ui:132
 msgid "Erase key"
 msgstr "Schlüssel löschen"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
-#: editor/key-list-box-row.vala:457
+#: editor/key-list-box-row.vala:469
 msgid "Go to this path"
 msgstr "Zu diesem Pfad gehen"
 
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:460
+#: editor/key-list-box-row.vala:472
 msgid "Open"
 msgstr "Öffnen"
 
-#. Translators: "open" action in the right-click menu on a "show folder info" row
-#: editor/key-list-box-row.vala:463
-msgid "Show properties"
-msgstr "Eigenschaften anzeigen"
-
 #. Translators: "open search" action in the right-click menu on a search
-#: editor/key-list-box-row.vala:466 editor/pathwidget.ui:50
-#: editor/pathwidget.ui:79
+#. Translators: accessible name of the enter-search button displayed in small-size windows
+#. Translators: accessible name of the search togglebutton displayed in usual-size windows
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
+#: editor/pathwidget.ui:109
 msgid "Search"
 msgstr "Suchen"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:469
+#: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
 msgstr "Übergeordneten Ordner öffnen"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:472
+#: editor/key-list-box-row.vala:484
 msgid "Reset recursively"
 msgstr "Rekursiv zurücksetzen"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:475
+#: editor/key-list-box-row.vala:487
 msgid "Do not erase"
 msgstr "Nicht löschen"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:564
+#: editor/key-list-box-row.vala:576
 msgid "No change"
 msgstr "Keine Änderung"
 
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:351
-msgid "Signed 16-bit integer"
-msgstr "Vorzeichenbehaftete 16-Bit-Ganzzahl"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:354
-msgid "Unsigned 16-bit integer"
-msgstr "Vorzeichenlose 16-Bit-Ganzzahl"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:357
-msgid "Signed 32-bit integer"
-msgstr "Vorzeichenbehaftete 32-Bit-Ganzzahl"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:360
-msgid "Unsigned 32-bit integer"
-msgstr "Vorzeichenlose 32-Bit-Ganzzahl"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:363
-msgid "Signed 64-bit integer"
-msgstr "Vorzeichenbehaftete 64-Bit-Ganzzahl"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:366
-msgid "Unsigned 64-bit integer"
-msgstr "Vorzeichenlose 64-Bit-Ganzzahl"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:369
-msgid "Boolean"
-msgstr "Wahrheitswert"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:372
-msgid "boolean"
-msgstr "Wahrheitswert"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:375
-msgid "String"
-msgstr "Zeichenkette"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:378
-msgid "string"
-msgstr "Zeichenkette"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:381
-msgid "String array"
-msgstr "Feld von Zeichenketten"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:384
-msgid "string array"
-msgstr "Feld von Zeichenketten"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:387
-msgid "Enumeration"
-msgstr "Aufzählung"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:390
-msgid "enumeration"
-msgstr "Aufzählung"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:393
-msgid "Flags"
-msgstr "Schalter"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:396
-msgid "flags"
-msgstr "Schalter"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:399
-msgid "Double"
-msgstr "Gleitkommazahl doppelter Genauigkeit"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:402
-msgid "double"
-msgstr "Gleitkommazahl doppelter Genauigkeit"
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#: editor/model-utils.vala:405 editor/model-utils.vala:408
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "D-Bus-Handle-Typ"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:411 editor/model-utils.vala:414
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "D-Bus-Objektpfad"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:417 editor/model-utils.vala:420
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "D-Bus-Objektpfad-Feld"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:423 editor/model-utils.vala:426
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr "D-Bus Signatur"
+msgstr "D-Bus-Signatur"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "D-Bus-Handle-Typ"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "D-Bus-Objektpfad"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "D-Bus-Objektpfad-Feld"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "D-Bus-Signatur"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:373
+msgid "Signed 16-bit integer"
+msgstr "Vorzeichenbehaftete 16-Bit-Ganzzahl"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:376
+msgid "Unsigned 16-bit integer"
+msgstr "Vorzeichenlose 16-Bit-Ganzzahl"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:379
+msgid "Signed 32-bit integer"
+msgstr "Vorzeichenbehaftete 32-Bit-Ganzzahl"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:382
+msgid "Unsigned 32-bit integer"
+msgstr "Vorzeichenlose 32-Bit-Ganzzahl"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:385
+msgid "Signed 64-bit integer"
+msgstr "Vorzeichenbehaftete 64-Bit-Ganzzahl"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:388
+msgid "Unsigned 64-bit integer"
+msgstr "Vorzeichenlose 64-Bit-Ganzzahl"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:429
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Wahrheitswert"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "Wahrheitswert"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Zeichenkette"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "Zeichenkette"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Feld von Zeichenketten"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "Feld von Zeichenketten"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Aufzählung"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "Aufzählung"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Schalter"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "Schalter"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Gleitkommazahl doppelter Genauigkeit"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "Gleitkommazahl doppelter Genauigkeit"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _H_ = C_("capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _h_ = C_("non-capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _O_ = C_("capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _o_ = C_("non-capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _Ao_ = C_("capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _ao_ = C_("non-capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _G_ = C_("capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _g_ = C_("non-capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Ganzzahl"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:432
+#: editor/model-utils.vala:454
 msgid "integer"
 msgstr "Ganzzahl"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:435
+#: editor/model-utils.vala:457
 msgid "Variant"
 msgstr "Variant"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:438
+#: editor/model-utils.vala:460
 msgid "variant"
 msgstr "Variant"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:441
+#: editor/model-utils.vala:463
 msgid "Empty tuple"
 msgstr "Leeres Tupel"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:444
+#: editor/model-utils.vala:466
 msgid "empty tuple"
 msgstr "leeres Tupel"
 
@@ -1797,18 +2064,15 @@ msgstr ""
 "aber\n"
 "es stehen keine Änderungen aus"
 
-#. Translators: labels of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted)
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
 msgid "Rule all"
 msgstr "Alle anwenden"
 
-#: editor/modifications-list.vala:32
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
+#: editor/modifications-list.vala:34
 msgid "Select"
 msgstr "Auswählen"
-
-#: editor/modifications-revealer.ui:69
-msgid "Apply"
-msgstr "Anwenden"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
 #: editor/modifications-revealer.vala:136
@@ -1882,25 +2146,29 @@ msgid_plural " and %u dconf operations delayed."
 msgstr[0] " und eine dconf-Operation wird verzögert."
 msgstr[1] " und %u dconf-Operationen werden verzögert."
 
-#: editor/pathentry.ui:43 editor/pathentry.ui:65
+#. Translators: accessible name of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:66
+msgid "Close search"
+msgstr "Suche schließen"
+
+#. Translators: accessible description of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:68
+msgid "Close search results"
+msgstr "Suchergebnisse schließen"
+
+#. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
+#: editor/pathentry.ui:92
 msgid "Refresh search results"
 msgstr "Suchergebnisse aktualisieren"
 
-#. property name="icon-name">document-edit-symbolic</property>    TODO document-edit-symbolic ?
-#: editor/pathwidget.ui:22
-msgid "Edit path"
-msgstr "Pfad bearbeiten"
-
-#: editor/pathwidget.ui:51 editor/pathwidget.ui:80
+#. Translators: accessible description of the enter-search button displayed in small-size windows
+#. Translators: accessible description of the search togglebutton displayed in usual-size windows
+#: editor/pathwidget.ui:85 editor/pathwidget.ui:111
 msgid "Search keys"
 msgstr "Schlüssel suchen"
 
-#. property name="icon-name">folder-visiting-symbolic</property
-#: editor/pathwidget.ui:59
-msgid "Browse keys"
-msgstr "Schlüssel durchsuchen"
-
-#: editor/registry-info.ui:32
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
+#: editor/registry-info.ui:49
 msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
@@ -1908,7 +2176,8 @@ msgstr ""
 "Dieser Schlüssel wird von mehr als einem Schema definiert und verwendet. "
 "Dies könnte zu Problemen führen. Bearbeiten Sie den Wert auf eigene Gefahr."
 
-#: editor/registry-info.ui:69
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
+#: editor/registry-info.ui:87
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
@@ -1916,7 +2185,8 @@ msgstr ""
 "Dieser Schlüssel ist inkompatibel definiert und wird von mehreren Schemata "
 "verwendet. Es ist nicht möglich, sinnvoll mit dessen Wert zu arbeiten."
 
-#: editor/registry-info.ui:106
+#. Translators: warning text of an infobar, when a key is not defined by a schema
+#: editor/registry-info.ui:125
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
 "Editor can’t find one associated with this key. If the application that was "
@@ -1929,7 +2199,8 @@ msgstr ""
 "entfernt wurde, oder falls dieser Schlüssel überholt ist, könnten Sie ihn "
 "löschen wollen."
 
-#: editor/registry-info.ui:151
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/registry-info.ui:172
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1939,7 +2210,8 @@ msgstr ""
 "ein Fehler der Anwendung, die dieses Schema installiert hat. Wenn möglich, "
 "öffnen Sie dafür bitte einen Fehlerbericht."
 
-#: editor/registry-info.ui:161
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/registry-info.ui:183
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1949,7 +2221,8 @@ msgstr ""
 "ein Fehler der Anwendung, die dieses Schema installiert hat. Wenn möglich, "
 "erstellen Sie dafür bitte einen Fehlerbericht."
 
-#: editor/registry-info.ui:171
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/registry-info.ui:194
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1959,104 +2232,104 @@ msgstr ""
 "ein Fehler der Anwendung, die dieses Schema installiert hat. Falls möglich, "
 "melden Sie diesen Fehler."
 
-#. #. * * Populating
-#. #. Translators: field description when displaying folder properties; name of the folder
-#: editor/registry-info.vala:69
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
 msgid "Name"
 msgstr "Name"
 
 #. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
-#: editor/registry-info.vala:72
+#: editor/registry-info.vala:73
 msgid "Defined by"
 msgstr "Definiert durch"
 
 #. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
-#: editor/registry-info.vala:75
+#: editor/registry-info.vala:76
 msgid "Schema"
 msgstr "Schema"
 
 #. Translators: field description when displaying key properties; a summary describing the key use
-#: editor/registry-info.vala:78
+#: editor/registry-info.vala:79
 msgid "Summary"
 msgstr "Zusammenfassung"
 
 #. Translators: field description when displaying key properties; a description describing deeply the key use
-#: editor/registry-info.vala:81
+#: editor/registry-info.vala:82
 msgid "Description"
 msgstr "Beschreibung"
 
 #. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
-#: editor/registry-info.vala:84
+#: editor/registry-info.vala:85
 msgid "Type"
 msgstr "Typ"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
-#: editor/registry-info.vala:88
+#: editor/registry-info.vala:89
 msgid "Type name"
 msgstr "Typname"
 
 #. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
-#: editor/registry-info.vala:92
+#: editor/registry-info.vala:93
 msgid "Type code"
 msgstr "Typcode"
 
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
-#: editor/registry-info.vala:95
+#: editor/registry-info.vala:96
 msgid "Forced range"
 msgstr "Erzwungener Bereich"
 
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
-#: editor/registry-info.vala:98
+#: editor/registry-info.vala:99
 msgid "Minimum"
 msgstr "Minimum"
 
 #. Translators: field description when displaying key properties; the maximum value a numeral key can take
-#: editor/registry-info.vala:101
+#: editor/registry-info.vala:102
 msgid "Maximum"
 msgstr "Maximum"
 
 #. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
-#: editor/registry-info.vala:104
+#: editor/registry-info.vala:105
 msgid "Default"
 msgstr "Voreinstellung"
 
 #. Translators: field description when displaying key properties; the current value of the key
-#: editor/registry-info.vala:107
+#: editor/registry-info.vala:108
 msgid "Current value"
 msgstr "Aktueller Wert"
 
 #. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
-#: editor/registry-info.vala:110
+#: editor/registry-info.vala:111
 msgid "Use default value"
 msgstr "Vorgabewerte verwenden"
 
 #. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
-#: editor/registry-info.vala:113
+#: editor/registry-info.vala:114
 msgid "Custom value"
 msgstr "Eigener Wert"
 
 #. Translators: field content when displaying key properties; if the key does not have a summary describing its use
 #. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
-#: editor/registry-info.vala:201 editor/registry-list.vala:488
+#: editor/registry-info.vala:202 editor/registry-list.vala:491
 msgid "No summary provided"
 msgstr "Keine Zusammenfassung angegeben"
 
 #. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
-#: editor/registry-info.vala:211
+#: editor/registry-info.vala:212
 msgid "No description provided"
 msgstr "Keine Beschreibung angegeben"
 
-#. Translators: field content when displaying key properties; "yes" if the key has a range set, "no" if not
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
 msgid "Yes"
 msgstr "Ja"
 
-#: editor/registry-info.vala:249
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:252
 msgid "No"
 msgstr "Nein"
 
 #. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
-#: editor/registry-info.vala:277
+#: editor/registry-info.vala:280
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
@@ -2065,7 +2338,7 @@ msgstr ""
 "Wertes wäre entweder problematisch oder sinnlos."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
-#: editor/registry-info.vala:609
+#: editor/registry-info.vala:615
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
@@ -2074,7 +2347,7 @@ msgstr ""
 "können die Schreibweise X.Ye+Z verwenden."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:614
+#: editor/registry-info.vala:620
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
@@ -2085,7 +2358,7 @@ msgstr ""
 "gnome.org/glib/stable/gvariant-text.html."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:621
+#: editor/registry-info.vala:627
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -2096,7 +2369,7 @@ msgstr ""
 "Objektpfade sollten in Anführungszeichen gesetzt werden."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
-#: editor/registry-info.vala:624
+#: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
@@ -2104,7 +2377,7 @@ msgstr ""
 "gesetzt werden."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:629
+#: editor/registry-info.vala:635
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -2113,59 +2386,66 @@ msgstr ""
 "(beginnend mit »m«) auf einen leeren Wert."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
-#: editor/registry-info.vala:668
+#: editor/registry-info.vala:674
 msgid "Key erased."
 msgstr "Schlüssel gelöscht."
 
-#. Translators: two strings with the same meaning, one used on large windows, one on small windows; means that the key has (at least) one other key defined by a different schema but at the same path and with the same name
-#: editor/registry-list.vala:515
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
+#: editor/registry-list.vala:518
 msgid "conflicting keys"
 msgstr "Kollidierende Schlüssel"
 
-#: editor/registry-list.vala:515
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
+#: editor/registry-list.vala:521
 msgid "conflict"
 msgstr "Kollision"
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
-#: editor/registry-list.vala:530
+#: editor/registry-list.vala:537
 msgid "No schema found"
 msgstr "Kein Schema gefunden"
 
-#. Translators: two strings with the same meaning, one used on large windows, one on small windows; means that the key has been erased
-#: editor/registry-list.vala:623
+#. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
+#: editor/registry-list.vala:638
 msgid "key erased"
 msgstr "Schlüssel gelöscht"
 
-#: editor/registry-list.vala:623
+#. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
+#: editor/registry-list.vala:641
 msgid "erased"
 msgstr "gelöscht"
 
 #. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
-#: editor/registry-list.vala:660
+#: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
 msgstr "Typ »%s«"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
-#: editor/registry-list.vala:1170
+#: editor/registry-list.vala:1176
 #, c-format
 msgid "%s (local keys)"
 msgstr "%s (lokale Schlüssel)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
-#: editor/registry-list.vala:1176
+#: editor/registry-list.vala:1182
 msgid "Local keys not defined by a schema"
 msgstr "Lokale Schlüssel werden nicht von einem Schema definiert"
 
 #. Translators: header displayed in the keys list during a search or during browsing
-#: editor/registry-list.vala:1180
+#: editor/registry-list.vala:1186
 msgid "Keys not defined by a schema"
 msgstr "Schlüssel werden nicht von einem Schema definiert"
 
 #. Translators: header displayed in the keys list during a search or during browsing
-#: editor/registry-list.vala:1190
+#: editor/registry-list.vala:1196
 msgid "Subfolders"
 msgstr "Unterordner"
+
+#. Translators: last header displayed in the keys list during a local search
+#: editor/registry-list.vala:1201
+msgid "Other actions"
+msgstr "Weitere Aktionen"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
@@ -2173,7 +2453,7 @@ msgid "No matches"
 msgstr "Keine Übereinstimmungen"
 
 #. Translators: header displayed in the keys list during a search only
-#: editor/registry-search.vala:539
+#: editor/registry-search.vala:556
 msgid "Folders"
 msgstr "Ordner"
 
@@ -2207,25 +2487,37 @@ msgstr "wahr"
 msgid "false"
 msgstr "falsch"
 
-#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); "nothing" here is a keyword that should appear for consistence, so please translate as "yourtranslation (nothing)"
-#: editor/setting-object.vala:193
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
+#: editor/setting-object.vala:194
+#, c-format
+msgid "nothing (%s)"
+msgstr "nichts (%s)"
+
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
+#: editor/setting-object.vala:199
 msgid "nothing"
 msgstr "nichts"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
-#: editor/setting-object.vala:403
+#: editor/setting-object.vala:410
 msgid "Schema with path"
 msgstr "Schema mit Pfad"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
-#: editor/setting-object.vala:407
+#: editor/setting-object.vala:414
 msgid "Relocatable schema"
 msgstr "Verschiebbares Schema"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
-#: editor/setting-object.vala:410
+#: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "DConf-Backend"
+
+#~ msgid "Edit path"
+#~ msgstr "Pfad bearbeiten"
+
+#~ msgid "Browse keys"
+#~ msgstr "Schlüssel durchsuchen"
 
 #~ msgid "Current folder"
 #~ msgstr "Aktueller Ordner"
@@ -2251,10 +2543,6 @@ msgstr "DConf-Backend"
 
 #~ msgid "Copy descriptor"
 #~ msgstr "Deskriptor kopieren"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search bar"
-#~ msgstr "Suchleiste"
 
 #~ msgid "Delayed setting changes will be shown here"
 #~ msgstr "Verzögerte Einstellungsänderungen werden hier angezeigt"
