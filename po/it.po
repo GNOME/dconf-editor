@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-18 10:22+0000\n"
-"PO-Revision-Date: 2019-02-25 14:31+0100\n"
+"POT-Creation-Date: 2019-02-25 13:32+0000\n"
+"PO-Revision-Date: 2019-02-26 08:54+0100\n"
 "Last-Translator: Milo Casagrande <milo@milo.name>\n"
 "Language-Team: Italiano <gnome-it-list@gnome.org>\n"
 "Language: it\n"
@@ -1393,7 +1393,7 @@ msgstr "Schema «%s» sconosciuto."
 #: editor/dconf-window.vala:272
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
-"Grazie per star usando Editor Dconf per modificare le proprie impostazioni."
+"Grazie per aver scelto Editor Dconf per modificare le proprie impostazioni."
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:275
