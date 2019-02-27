@@ -2171,7 +2171,7 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Esta chave ten un tipo de valor \"valor baleiro\". Isto probablemente sexa "
+"Esta chave ten un tipo de valor «valor baleiro». Isto probablemente sexa "
 "un erro no aplicativo que instala este esquema. Se é posíbel, reporte o erro."
 
 #. Translators: field description when displaying folder properties; name of the folder
