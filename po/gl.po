@@ -70,7 +70,7 @@ msgstr "Mostrar as preferencias"
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:149
 msgid "Pause night mode"
-msgstr "Deter  o modo noite"
+msgstr "Deter o modo noite"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:153
@@ -437,7 +437,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "Botón do rato que activa a orde «Anterior» na xanela  de navegación"
+msgstr "Botón do rato que activa a orde «Anterior» na xanela de navegación"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
@@ -463,7 +463,7 @@ msgid ""
 "Possible values range between 6 and 14."
 msgstr ""
 "Para os usuarios con rato que teñen botóns «Seguinte» e «Anterior», esta "
-"chave determinará  que botón activa a orde «Seguinte» nunha xanela de "
+"chave determinará que botón activa a orde «Seguinte» nunha xanela de "
 "navegador. O intervalo de valores posíbeis está entre 6 e 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
@@ -1155,7 +1155,7 @@ msgstr "unha ruta a cartafol ou unha ruta a unha chave"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr "exemplo:  «/org/gnome/» ou «/ca/desrt/dconf-editor/Demo/boolean»"
+msgstr "exemplo: «/org/gnome/» ou «/ca/desrt/dconf-editor/Demo/boolean»"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
