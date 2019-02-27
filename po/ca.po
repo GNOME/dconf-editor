@@ -389,7 +389,7 @@ msgid ""
 msgstr ""
 "El tipus de gestor és un enter amb signe de 32-bit que s'usa, per convenció, "
 "com un índex cap a una matriu de descriptors de fitxers que s'envien "
-"conjuntament amb un missatge D-Bus. Si no esteu interactuant amb D-Bus, "
+"conjuntament amb un missatge D-Bus. Si no esteu interactuant amb el D-Bus, "
 "aleshores no hi ha cap raó per usar aquest tipus."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:241
