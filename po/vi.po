@@ -21,59 +21,58 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
 msgstr "Trình soạn thảo dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
 msgstr "Trình soạn thảo dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
 msgstr "Sửa trực tiếp toàn bộ cơ sở dữ liệu cấu hình của bạn"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:7
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "settings;cài;đặt;cai;dat;configuration;cấu;hình;cau;hinh;"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "Trình soạn thảo dconf"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
 msgid "The width of the window"
 msgstr "Chiều rộng cửa sổ"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The width of the main window in pixels."
 msgstr "Chiều rộng cửa sổ, tính theo điểm ảnh."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:115
 msgid "The height of the window"
 msgstr "Chiều cao cửa sổ"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid "The height of the main window in pixels."
 msgstr "Chiều cao cửa sổ, tính theo điểm ảnh."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:122
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A flag to enable maximized mode"
 msgstr "Cờ bật chế độ phóng to hết cỡ"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
-#, fuzzy
-msgid "A flag to enable small rows for keys list"
-msgstr "Cờ bật chế độ toàn màn hình"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Nút chuột để kích hoạt lệnh “Lùi” trong cửa sổ trình duyệt"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -83,11 +82,13 @@ msgstr ""
 "gán giá trị mà nút kích hoạt lệnh “Lùi” trong cửa sổ trình duyệt. Giá trị có "
 "thể giữa 6 và 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Nút chuột để kích hoạt lệnh “Kế tiếp” trong cửa sổ trình duyệt"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:196
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -97,106 +98,112 @@ msgstr ""
 "gán giá trị mà nút kích hoạt lệnh “Kế tiếp” trong cửa sổ trình duyệt. Giá "
 "trị có thể giữa 6 và 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Liệt kê"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "Giới thiệu"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_Giới thiệu"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "T_hoát"
-
-#: editor/dconf-editor.vala:22
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Hiển thị phiên bản phát hành rồi thoát"
 
-#: editor/dconf-editor.vala:154
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr "Nhóm dịch GNOME <gnome-vi-list@gnome.org>"
 
-#: editor/dconf-model.vala:195
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
 msgid "Boolean"
 msgstr "Lôgíc"
 
-#: editor/dconf-model.vala:197
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
 msgid "String"
 msgstr "Chuỗi"
 
-#: editor/dconf-model.vala:199
-#, fuzzy
-msgid "String array"
-msgstr "Chuỗi"
-
-#: editor/dconf-model.vala:201
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
 msgid "Enumeration"
 msgstr "Liệt kê"
 
-#: editor/dconf-model.vala:222
-#, fuzzy
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Số chính đôi"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
-msgstr "Số nguyên [%s..%s]"
+msgstr "Số nguyên"
 
-#: editor/help-overlay.ui:124
-#, fuzzy
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
-msgid "About"
-msgstr "_Giới thiệu"
-
-#: editor/help-overlay.ui:131
-#, fuzzy
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "T_hoát"
-
-#: editor/key-list-box-row.vala:162
-#, fuzzy
-msgid "No Schema Found"
-msgstr "Không có lược đồ"
-
-#: editor/key-list-box-row.vala:392
-#, fuzzy
 msgid "Set to default"
 msgstr "Đặt thành mặc định"
 
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
-#, fuzzy
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
+msgctxt "shortcut window"
+msgid "About"
+msgstr "Giới thiệu"
+
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Thoát"
+
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
+msgstr "Không có lược đồ"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:455
+msgid "Set to default"
+msgstr "Đặt thành mặc định"
+
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
 msgid "Default value"
-msgstr "Mặc định:"
+msgstr "Mặc định"
 
-#: editor/modifications-revealer.vala:273
-#, fuzzy, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "settings;cài;đặt;cai;dat;configuration;cấu;hình;cau;hinh;"
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Tên"
 
-#: editor/registry-info.vala:80
-#, fuzzy
+#. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
+#: editor/registry-info.vala:76
 msgid "Schema"
-msgstr "Lược đồ:"
+msgstr "Lược đồ"
 
-#: editor/registry-info.vala:81
-#, fuzzy
+#. Translators: field description when displaying key properties; a summary describing the key use
+#: editor/registry-info.vala:79
 msgid "Summary"
-msgstr "Tóm tắt:"
+msgstr "Tóm tắt"
 
+#. Translators: field description when displaying key properties; a description describing deeply the key use
 #: editor/registry-info.vala:82
-#, fuzzy
 msgid "Description"
-msgstr "Mô tả:"
+msgstr "Mô tả"
 
-#: editor/registry-info.vala:84
-#, fuzzy
+#. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
+#: editor/registry-info.vala:85
 msgid "Type"
-msgstr "Kiểu:"
+msgstr "Kiểu"
 
-#: editor/registry-info.vala:88
-#, fuzzy
+#. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
+#: editor/registry-info.vala:105
 msgid "Default"
-msgstr "Mặc định:"
+msgstr "Mặc định"
 
 #~ msgid "_Find…"
 #~ msgstr "Tì_m…"
@@ -204,49 +211,14 @@ msgstr "Mặc định:"
 #~ msgid "Next"
 #~ msgstr "Tiếp"
 
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Số chính đôi [%s..%s]"
-
 #~ msgid "Not found"
 #~ msgstr "Không tìm thấy"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hoặc "
-#~ "sửa đổi nó với điều kiện của Giấy Phép Công Cộng GNU như được xuất bản "
-#~ "bởi Tổ Chức Phần Mềm Tự Do; hoặc phiên bản 3 của Giấy Phép này, hoặc (tùy "
-#~ "chọn) bất kỳ phiên bản sau nào.\n"
-#~ "\n"
-#~ "Chương trình này được phát hành vì mong muốn nó có ích, nhưng KHÔNG CÓ "
-#~ "BẢO HÀNH GÌ CẢ, THẬM CHÍ KHÔNG CÓ BẢO ĐẢM ĐƯỢC NGỤ Ý KHẢ NĂNG BÁN HAY KHẢ "
-#~ "NĂNG LÀM ĐƯỢC VIỆC DỨT KHOÁT. Xem Giấy Phép Công Cộng GNU để biết thêm "
-#~ "chi tiết.\n"
-#~ "\n"
-#~ "Bạn nên lấy một bản Giấy Phép Công Cộng GNU cùng với chương trình này; "
-#~ "nếu không thì hãy viết thư cho Tổ chức Phần mềm Tự do theo địa chỉ: 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA (Mỹ)"
 
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "Bản quyền © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Gặp lỗi khi đặt giá trị: %s"
-
-#~ msgid "Name"
-#~ msgstr "Tên"
 
 #~ msgid "Value"
 #~ msgstr "Giá trị"
