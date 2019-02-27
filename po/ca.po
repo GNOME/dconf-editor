@@ -1004,7 +1004,7 @@ msgstr "Estableix-lo al valor predeterminat"
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:657
 msgid "Show details…"
-msgstr "Mostra detalls..."
+msgstr "Mostra detalls…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:660
