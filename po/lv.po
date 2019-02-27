@@ -930,12 +930,12 @@ msgstr "Lietotņu iekšējo iestatījumu grafiskais skatītājs un redaktors."
 #: editor/dconf-editor.vala:481
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Autortiesības © 2010-2014 – Canonical Ltd\n"
-"Autortiesības © 2015-2018 – Arnaud Bonatti\n"
-"Autortiesības © 2017-2018 – Davi da Silva Böger"
+"Autortiesības © 2017-2018 – Davi da Silva Böger\n"
+"Autortiesības © 2015-2019 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:485
 msgid "translator-credits"
