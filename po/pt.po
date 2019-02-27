@@ -589,12 +589,12 @@ msgstr "Copiado para a área de transferência"
 #: editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Direitos de autor © 2010-2014 – Canonical Ltd\n"
-"Direitos de autor © 2015-2018 – Arnaud Bonatti\n"
-"Direitos de autor © 2017-2018 – Davi da Silva Böger"
+"Direitos de autor © 2017-2018 – Davi da Silva Böger\n"
+"Direitos de autor © 2015-2019 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:154
 msgid "translator-credits"
