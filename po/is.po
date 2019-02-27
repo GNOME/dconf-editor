@@ -332,47 +332,6 @@ msgstr "Engin breyting"
 msgid "Apply"
 msgstr "Virkja"
 
-#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:354
-#, fuzzy, c-format
-msgid "One gsettings operation delayed."
-msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] "%u inntök"
-
-#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:358
-#, fuzzy, c-format
-msgid "One dconf operation delayed."
-msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] "%u inntök"
-
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:361
-#, c-format
-msgid "%s%s"
-msgstr "%s%s"
-
-#: editor/modifications-revealer.vala:361
-#, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "Ein gsettings-aðgerð"
-msgstr[1] "%u gsettings-aðgerðir"
-
-#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, and
-#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:366
-#, c-format
-msgid " and one dconf operation delayed."
-msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] "%'d skráaraðgerðir í gangi"
-
 #: editor/registry-info.vala:70
 msgid "Name"
 msgstr "Heiti"
