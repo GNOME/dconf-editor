@@ -232,7 +232,7 @@ msgstr ""
 "slučajevima, ali dopušta trenutne promjene booleove i nullable booleove, "
 "nabrajanja i oznake. Vrijednosti “always-confirm-implicit” i “always-confirm-"
 "explicit” uvijek pitaju za potvrdu, ali prva primijenjuje promjenu ako "
-"promijenite putanju gdje ju druga odbacuje. Vrijednost always-delay” dodaje "
+"promijenite putanju gdje ju druga odbacuje. Vrijednost “always-delay” dodaje "
 "svaku promjenu u stanje odgode, omogućujući vam primjenu više ključeva "
 "odjednom."
 
@@ -247,13 +247,13 @@ msgid ""
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
 "GSettings ne dopušta ključevima korištenje velikih slova u njihovim "
-"nazivima, ali instalacijskim putanjama shema dopušta. Ako je \"true\", popis "
+"nazivima, ali instalacijskim putanjama shema dopušta. Ako je “true”, popis "
 "ključeva je poredan osjetljivo na velika slova, sa uobičajenim poredkom prvo "
 "mape s velikim slovima."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:153
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr "Koristi \"Natrag\" i \"Naprijed\" tipke događaja miša"
+msgstr "Koristi “Natrag” i “Naprijed” tipke događaja miša"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
@@ -261,13 +261,13 @@ msgid ""
 "will determine if any action is taken inside of a browser window when either "
 "is pressed."
 msgstr ""
-"Za korisnike koji koriste miševe s tipkama \"Naprijed\" i \"Natrag\", ovaj "
+"Za korisnike koji koriste miševe s tipkama “Naprijed” i “Natrag”, ovaj "
 "ključ određuje je li poduzeta bilo koja radnja unutar prozora preglednika "
 "ako su tipke pritisnute."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "Tipka miša za aktivaciju naredbe \"Natrag\" u prozoru preglednika"
+msgstr "Tipka miša za aktivaciju naredbe “Natrag” u prozoru preglednika"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:160
 msgid ""
@@ -275,13 +275,13 @@ msgid ""
 "will set which button activates the “Back” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr ""
-"Za korisnike koji koriste miševe s tipkama \"Naprijed\" i \"Natrag\", ovaj "
-"ključ postavlja tipku koja aktivira naredbu \"Natrag\" u prozoru "
+"Za korisnike koji koriste miševe s tipkama “Naprijed” i “Natrag”, ovaj "
+"ključ postavlja tipku koja aktivira naredbu “Natrag” u prozoru "
 "preglednika. Moguće vrijednosti su između 6 i 14."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:165
 msgid "Mouse button to activate the “Forward” command in browser window"
-msgstr "Tipka miša za aktivaciju naredbe \"Naprijed\" u prozoru preglednika"
+msgstr "Tipka miša za aktivaciju naredbe “Naprijed” u prozoru preglednika"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid ""
@@ -289,8 +289,8 @@ msgid ""
 "will set which button activates the “Forward” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr ""
-"Za korisnike koji koriste miševe s tipkama \"Naprijed\" i \"Nazad\", ovaj "
-"ključ postavlja tipku koja aktivira naredbu \"Naprijed\" u prozoru "
+"Za korisnike koji koriste miševe s tipkama “Naprijed” i “Nazad”, ovaj "
+"ključ postavlja tipku koja aktivira naredbu “Naprijed” u prozoru "
 "pregledniku. Moguće vrijednosti su između 6 i 14."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:170
@@ -657,7 +657,7 @@ msgid ""
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
 "GSettings dopušta neutralne vrste, koje su slične ostalim vrstama ali mogu "
-"sadržavati \"ništa\" vrijednost. Neutralni izraz može sadržavati bilo koju "
+"sadržavati “ništa” vrijednost. Neutralni izraz može sadržavati bilo koju "
 "vrijednost izraza, uključujući prazni izraz “''”, ili može biti NULL (ništa)."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:346
