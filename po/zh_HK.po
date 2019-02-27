@@ -19,173 +19,173 @@ msgstr ""
 "X-Generator: Poedit 1.6.5\n"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
 msgstr "dconf 編輯器"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
 msgstr "dconf 編輯器"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
 msgstr "直接編輯你的整個組態資料庫"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:7
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "settings;configuration;設定值;組態;"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "dconf 編輯器"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
 msgid "The width of the window"
 msgstr "視窗闊度"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The width of the main window in pixels."
 msgstr "主視窗的闊度 (像素)。"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:115
 msgid "The height of the window"
 msgstr "視窗高度"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid "The height of the main window in pixels."
 msgstr "主視窗的高度 (像素)。"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:122
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A flag to enable maximized mode"
 msgstr "決定是否啟用最大化模式的旗標"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
-#, fuzzy
-msgid "A flag to enable small rows for keys list"
-msgstr "決定是否啟用全螢幕模式的旗標"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "用來觸發瀏覽器視窗中「上一頁」指令的滑鼠按鈕"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr "用於使用者的滑鼠有「往前」和「往後」按鈕時，這個設定鍵會決定哪個按鈕會觸發瀏覽器視窗中的「上一頁」指令。可能的數值範圍在 6 到 14 之間。"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "用來觸發瀏覽器視窗中「下一頁」指令的滑鼠按鈕"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:196
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
 "Possible values range between 6 and 14."
 msgstr "用於使用者的滑鼠有「往前」和「往後」按鈕時，這個設定鍵會決定哪個按鈕會觸發瀏覽器視窗中的「下一頁」指令。可能的數值範圍在 6 到 14 之間。"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "列舉"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "關於"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "關於(_A)"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "結束(_Q)"
-
-#: editor/dconf-editor.vala:154
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr "Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>, 2012"
 
-#: editor/dconf-model.vala:195
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
 msgid "Boolean"
 msgstr "邏輯值"
 
-#: editor/dconf-model.vala:197
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
 msgid "String"
 msgstr "字串"
 
-#: editor/dconf-model.vala:199
-#, fuzzy
-msgid "String array"
-msgstr "字串"
-
-#: editor/dconf-model.vala:201
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
 msgid "Enumeration"
 msgstr "列舉"
 
-#: editor/dconf-model.vala:222
-#, fuzzy
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "雙數"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
-msgstr "整數 [%s..%s]"
+msgstr "整數"
 
-#: editor/help-overlay.ui:124
-#, fuzzy
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
-msgid "About"
-msgstr "關於(_A)"
-
-#: editor/help-overlay.ui:131
-#, fuzzy
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "結束(_Q)"
-
-#: editor/key-list-box-row.vala:162
-#, fuzzy
-msgid "No Schema Found"
-msgstr "沒有 schema"
-
-#: editor/key-list-box-row.vala:392
-#, fuzzy
 msgid "Set to default"
 msgstr "設為預設值"
 
-#: editor/key-list-box-row.vala:575 editor/registry-info.vala:235
-#, fuzzy
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
+msgctxt "shortcut window"
+msgid "About"
+msgstr "關於"
+
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "結束"
+
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
+msgstr "沒有 schema"
+
+#. Translators: "reset key value" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:455
+msgid "Set to default"
+msgstr "設為預設值"
+
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
 msgid "Default value"
-msgstr "預設值："
+msgstr "預設值"
 
-#: editor/modifications-revealer.vala:273
-#, fuzzy, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "settings;configuration;設定值;組態;"
-msgstr[1] "settings;configuration;設定值;組態;"
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "名稱"
 
-#: editor/registry-info.vala:80
-#, fuzzy
-msgid "Schema"
-msgstr "Schema："
-
-#: editor/registry-info.vala:81
-#, fuzzy
+#. Translators: field description when displaying key properties; a summary describing the key use
+#: editor/registry-info.vala:79
 msgid "Summary"
-msgstr "摘要："
+msgstr "摘要"
 
+#. Translators: field description when displaying key properties; a description describing deeply the key use
 #: editor/registry-info.vala:82
-#, fuzzy
 msgid "Description"
-msgstr "描述："
+msgstr "描述"
 
-#: editor/registry-info.vala:84
-#, fuzzy
+#. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
+#: editor/registry-info.vala:85
 msgid "Type"
-msgstr "類型："
+msgstr "類型"
 
-#: editor/registry-info.vala:88
-#, fuzzy
+#. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
+#: editor/registry-info.vala:105
 msgid "Default"
-msgstr "預設值："
+msgstr "預設值"
 
 #~ msgid "_Find…"
 #~ msgstr "尋找(_F)…"
@@ -193,47 +193,14 @@ msgstr "預設值："
 #~ msgid "Next"
 #~ msgstr "下一個"
 
-#~| msgid "Integer [%s..%s]"
-#~ msgid "Double [%s..%s]"
-#~ msgstr "雙數 [%s..%s]"
-
 #~ msgid "Not found"
 #~ msgstr "找不到"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "本程式是自由軟件，你可以遵照自由軟件基金會 (Free Software Foundation) 出版"
-#~ "的 GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新"
-#~ "發佈這一程式，或者自由選擇使用任何更新的版本。\n"
-#~ "\n"
-#~ "發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的而隱含"
-#~ "的擔保。更詳細的情況請參閱 GNU 通用公共許可證。\n"
-#~ "\n"
-#~ "你應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，寫信"
-#~ "給：Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, "
-#~ "Boston, MA 02110-1301, USA"
 
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "版權所有 © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "設定數值錯誤：%s"
-
-#~ msgid "Name"
-#~ msgstr "名稱"
 
 #~ msgid "Value"
 #~ msgstr "數值"
