@@ -7,10 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-05-26 14:22+0000\n"
-"PO-Revision-Date: 2018-05-31 20:14+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
+"POT-Creation-Date: 2018-10-23 14:32+0000\n"
+"PO-Revision-Date: 2019-02-27 18:29+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -20,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -325,10 +324,15 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
+"Zastavice za sheme preselitve, ki preslikavajo možnosti. Vrednost "
+"»uporabnik« omogoči preslikave, določene s ključem »relocatable-schemas-user-"
+"paths«, vrednost »built-in« omogoči privzete preslikave programa Dconf "
+"Editor, »internal« je rezervirano lastne programske preslikave, vrednost "
+"»startup« pa sheme preslikave, prejete prek ukazne vrstice."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "Mapping of paths to manually associated schemas"
-msgstr ""
+msgstr "Preslikava poti v ročno določene sheme"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:179
 msgid ""
@@ -338,6 +342,11 @@ msgid ""
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
 msgstr ""
+"Slovar preslikave sheme vrednosti ID poti. Uporablja se za povezovanje "
+"preselitvene sheme z določenimi potmi. Določila poti lahko vsebujejo tudi "
+"nadomestne znake v obliki praznih segmentov (na primer. /ca/desrt/dconf-"
+"editor//), določujoč po možnosti več poti. Isti ID v shemi lahko povezuje "
+"več poti."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
 msgid "A list of bookmarked paths"
@@ -645,15 +654,16 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:346
 msgid "An usual boolean value, defined by a relocatable schema."
-msgstr ""
+msgstr "Običajna logična vrednost, kot jo določa preselitvena shema."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:351
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
+"Podpisana 32-bitna celoštevilčna vrednost, kot jo določa preselitvena shema."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "A normal non-conflicting key from Conflict1"
-msgstr ""
+msgstr "Običajen ne-sporen ključ Spor1"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:363
 #: editor/ca.desrt.dconf-editor.gschema.xml:390
@@ -661,10 +671,12 @@ msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ne-"
+"sporni ključi bi morali ostati brez objavljenih napak."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:367
 msgid "Conflicting key defaulting to “1” that should give an error"
-msgstr ""
+msgstr "Ključ spora z vrednostjo »1«, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:368
 #: editor/ca.desrt.dconf-editor.gschema.xml:395
@@ -673,10 +685,13 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj ima ključ, preslikan na isto pot, različno privzeto "
+"vrednost."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:372
 msgid "Conflicting key with no range that should give an error"
-msgstr ""
+msgstr "Ključ spora brez vrednosti, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:373
 #: editor/ca.desrt.dconf-editor.gschema.xml:401
@@ -685,10 +700,12 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj ima ključ, preslikan na isto pot, različen obseg."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:377
 msgid "A (simple) string conflicting key that should give a error"
-msgstr ""
+msgstr "Ključ spora z enostavnim nizom, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:378
 #: editor/ca.desrt.dconf-editor.gschema.xml:406
@@ -697,10 +714,13 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
+"Ključ je namenjen preizkusu več shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj ima ključ, preslikan na isto pot, različno privzeto "
+"vrsto."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:382
 msgid "Conflicting key from Conflict1 that should give a warning"
-msgstr ""
+msgstr "Ključ spora Spor1, ki mora vrniti opozorilo"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:383
 #: editor/ca.desrt.dconf-editor.gschema.xml:411
@@ -709,26 +729,28 @@ msgid ""
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj sta vrsti skladni, vseeno pa mora vrniti napako."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:389
 msgid "A normal non-conflicting key from Conflict2"
-msgstr ""
+msgstr "Običajen ne-sporen ključ Spor2"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "Conflicting key defaulting to “2” that should give an error"
-msgstr ""
+msgstr "Ključ spora z vrednostjo »2«, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:400
 msgid "Conflicting key with range 0~5 that should give an error"
-msgstr ""
+msgstr "Ključ spora z obsegom med 0 in 5, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:405
 msgid "A nullable-string conflicting key that should give an error"
-msgstr ""
+msgstr "Ključ spora brez vrednosti, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "Conflicting key from Conflict2 that should give a warning"
-msgstr ""
+msgstr "Ključ spora Spor2, ki mora vrniti opozorilo"
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -965,7 +987,7 @@ msgstr "Ključ je izbrisan!"
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr "Dejanja"
+msgstr ""
 
 #: editor/help-overlay.ui:15
 msgctxt "shortcut window"
