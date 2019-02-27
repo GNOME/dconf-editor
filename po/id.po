@@ -2307,7 +2307,7 @@ msgid ""
 "documentation."
 msgstr ""
 "Konten varian harus dikelilingi oleh braket XML (‘<’ dan ‘>’). Lihat https://"
-"developer.gnome.org/glib/stable/gvariant-text.html  untuk dokumentasi "
+"developer.gnome.org/glib/stable/gvariant-text.html untuk dokumentasi "
 "lengkap."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
