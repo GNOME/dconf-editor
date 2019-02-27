@@ -81,7 +81,7 @@ msgid ""
 msgstr ""
 "माउस रखने वाले उपयोक्ता के लिए जो “Forward” और “Back” बटन रखते हैं, यह "
 "कुंजी "
-"निर्धारित करेगा कि कौन बटन  “Back” कमांड को सक्रिय करता है किसी ब्राउजर "
+"निर्धारित करेगा कि कौन बटन “Back” कमांड को सक्रिय करता है किसी ब्राउजर "
 "विंडो में. "
 "कृपया 6 से 14 के बीच का मान दें."
 
@@ -99,7 +99,7 @@ msgid ""
 msgstr ""
 "माउस रखने वाले उपयोक्ता के लिए जो “Forward” और “Back” बटन रखते हैं, यह "
 "कुंजी "
-"निर्धारित करेगा कि कौन बटन  “Forward” कमांड को सक्रिय करता है किसी ब्राउजर "
+"निर्धारित करेगा कि कौन बटन “Forward” कमांड को सक्रिय करता है किसी ब्राउजर "
 "विंडो "
 "में. कृपया 6 से 14 के बीच का मान दें."
 
@@ -160,7 +160,7 @@ msgstr "बाहर"
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
 msgid "No schema found"
-msgstr "कोई योजना नहीं   "
+msgstr "कोई योजना नहीं"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
