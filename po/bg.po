@@ -111,13 +111,7 @@ msgstr "Извеждане на версията и спиране на прог
 #: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr ""
-"Александър Шопов <ash@kambanaria.org>\n"
-"\n"
-"Проектът за превод на GNOME има нужда от подкрепа.\n"
-"Научете повече за нас на <a href=\"http://gnome.cult.bg\">http://gnome.cult."
-"bg</a>\n"
-"Докладвайте за грешки на <a href=\"http://gnome.cult.bg/bugs\">http://gnome."
-"cult.bg/bugs</a>"
+"Александър Шопов <ash@kambanaria.org>"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
