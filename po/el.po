@@ -924,12 +924,12 @@ msgstr ""
 #: editor/dconf-editor.vala:481
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Πνευματικά δικαιώματα © 2010-2014 – Canonical Ltd\n"
-"Πνευματικά δικαιώματα © 2015-2018 – Arnaud Bonatti\n"
-"Πνευματικά δικαιώματα © 2017-2018 – Davi da Silva Böger"
+"Πνευματικά δικαιώματα © 2017-2018 – Davi da Silva Böger\n"
+"Πνευματικά δικαιώματα © 2015-2019 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:485
 msgid "translator-credits"
