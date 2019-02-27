@@ -74,7 +74,7 @@ msgid ""
 msgstr ""
 "“Forward” আৰু “Back” বুটাম সহ মাউছৰ ক্ষেত্ৰত এই দুটাৰ কোন কি টিপা হ'লে ব্ৰাউজাৰ "
 "উইন্ডোত “Back” কমান্ড সঞ্চালিত হ'ব সেইটো,"
-"এই কি' দ্বাৰা নিৰ্ধাৰিত হ'ব।  সম্ভাব্য মান 6 ৰ পৰা 14 হ'ব।"
+"এই কি' দ্বাৰা নিৰ্ধাৰিত হ'ব। সম্ভাব্য মান 6 ৰ পৰা 14 হ'ব।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:194
