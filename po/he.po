@@ -539,19 +539,22 @@ msgstr "שימוש במפתח „כלום” להגדרת ערך לא וודאי
 msgid "No keys in this path"
 msgstr "אין מפתחות בנתיב זה"
 
-#: editor/registry-view.vala:170
+#. Translators: notification text, when the requested folder has been removed; the %s is the folder path
+#: editor/dconf-window.vala:775
 #, c-format
-msgid "Cannot find folder \"%s\"."
+msgid "Folder “%s” is now empty."
 msgstr "לא נתן למצוא את התיקייה „%s”."
 
-#: editor/registry-view.vala:188
+#. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
+#: editor/dconf-window.vala:792
 #, c-format
-msgid "Cannot find key \"%s\" here."
+msgid "Cannot find key “%s”."
 msgstr "לא נתן למצוא את המפתח „%s” כאן."
 
-#: editor/registry-view.vala:194
+#. Translators: notification text, when the requested key has been removed; the %s is the key path
+#: editor/dconf-window.vala:786
 #, c-format
-msgid "Key \"%s\" has been removed."
+msgid "Key “%s” has been deleted."
 msgstr "המפתח „%s” הוסר."
 
 #~ msgid "The GNOME Project"
