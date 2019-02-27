@@ -1733,7 +1733,7 @@ msgstr "Şuraya git: “%s”"
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr "\"%s\" klasöründe ara"
+msgstr "“%s” klasöründe ara"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
