@@ -1889,32 +1889,32 @@ msgstr "signature D-Bus"
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr "Entier signé 16 bits"
+msgstr "Entier signé 16 bits"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr "Entier non signé 16 bits"
+msgstr "Entier non signé 16 bits"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr "Entier signé 32 bits"
+msgstr "Entier signé 32 bits"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr "Entier non signé 32 bits"
+msgstr "Entier non signé 32 bits"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr "Entier signé 64 bits"
+msgstr "Entier signé 64 bits"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr "Entier non signé 64 bits"
+msgstr "Entier non signé 64 bits"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
