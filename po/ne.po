@@ -209,11 +209,11 @@ msgstr "बुलिएनमा दुई मान मात्र आउछ ,
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:103
 msgid "A nullable boolean, type ‘mb’"
-msgstr "खाली बुलिएन , 'mb' प्रकार"
+msgstr "खाली बुलिएन , ‘mb’ प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:113
 msgid "A bytestring, type ‘ay’"
-msgstr "बाइट स्ट्रिंग , 'ay’ प्रकार"
+msgstr "बाइट स्ट्रिंग , ‘ay’ प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:123
 #, fuzzy
@@ -284,7 +284,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "A string, type ‘s’"
-msgstr "स्ट्रिङ्ग 's' प्रकार"
+msgstr "स्ट्रिङ्ग ‘s’ प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:209
 msgid ""
@@ -306,11 +306,6 @@ msgid ""
 msgstr ""
 "स्ट्रिङ्ग सरणीमा कुनै पनि लामो स्ट्रिङ्ग सङ्ख्या समावेश गर्दछ। यो खाली सरण पनि हुन सक्छ, "
 "\"[]\"।"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
-#, fuzzy
-msgid "A nullable string, type ‘ms’"
-msgstr "खाली बुलिएन , 'mb' प्रकार"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
