@@ -862,12 +862,12 @@ msgstr "Grafički pregledač i uređivač unutrašnjih podešavanja programa."
 #: editor/dconf-editor.vala:479
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Autorska prava © 2010-2014 – Kanonikal d.o.o. (Canonical Ltd)\n"
-"Autorska prava © 2015-2016 – Arno Bonati (Arnaud Bonatti)\n"
-"Autorska prava © 2017-2018 – Davi da Silva Boeger (Davi da Silva Böger)"
+"Autorska prava © 2017-2018 – Davi da Silva Boeger (Davi da Silva Böger)\n"
+"Autorska prava © 2015-2019 – Arno Bonati (Arnaud Bonatti)"
 
 #: editor/dconf-editor.vala:483
 msgid "translator-credits"
