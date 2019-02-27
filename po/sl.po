@@ -2,14 +2,14 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2012–2019.
+# Matej Urbančič <mateju@svn.gnome.org>, 2012–2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-03 10:46+0000\n"
-"PO-Revision-Date: 2019-02-14 20:40+0100\n"
+"POT-Creation-Date: 2019-02-24 16:39+0000\n"
+"PO-Revision-Date: 2019-02-27 18:28+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: editor/bookmarks.ui:19
 msgid "Bookmark this Location"
@@ -324,10 +324,15 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
+"Zastavice za sheme preselitve, ki preslikavajo možnosti. Vrednost "
+"»uporabnik« omogoči preslikave, določene s ključem »relocatable-schemas-user-"
+"paths«, vrednost »built-in« omogoči privzete preslikave programa Dconf "
+"Editor, »internal« je rezervirano lastne programske preslikave, vrednost "
+"»startup« pa sheme preslikave, prejete prek ukazne vrstice."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "Mapping of paths to manually associated schemas"
-msgstr ""
+msgstr "Preslikava poti v ročno določene sheme"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:181
 msgid ""
@@ -337,16 +342,23 @@ msgid ""
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
 msgstr ""
+"Slovar preslikave sheme vrednosti ID poti. Uporablja se za povezovanje "
+"preselitvene sheme z določenimi potmi. Določila poti lahko vsebujejo tudi "
+"nadomestne znake v obliki praznih segmentov (na primer. /ca/desrt/dconf-"
+"editor//), določujoč po možnosti več poti. Isti ID v shemi lahko povezuje "
+"več poti."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:185
 msgid "A flag for skipping unnecessary subfolders"
-msgstr ""
+msgstr "Zastavica za izpuščanje ne-nujnih podrejenih map"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
+"Izbrana možnost omogoča, da lahko program, kadar vsebuje mapa le eno "
+"podrejeno mapo brez ključev, preskoči preiskovanje."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:192
 msgid "A list of bookmarked paths"
@@ -477,13 +489,15 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:263
 msgid "A dictionary entry of type ‘{ss}’"
-msgstr "Vnos slovarja vrste »{ss}«"
+msgstr "Polje slovarskega vnosa vrste »{ss}«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:264
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
+"Slovarske vrednosti preslikave osnovnih vrst v drugo vrednost (katerekoli "
+"vrste). Vrednost je ena izmed možnih preslikav."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:268
 #, fuzzy
@@ -496,6 +510,8 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
 msgstr ""
+"Slovarske vrednosti preslikave osnovnih vrst v drugo vrednost (katerekoli "
+"vrste). Ena izmed možnosti je uporaba niza za preslikavo v različico."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:273
 msgid "A double, type ‘d’"
@@ -652,10 +668,8 @@ msgstr ""
 "vrednostjo » '' « in pravo prazno vrednostjo (NULL)"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:346
-#, fuzzy
-#| msgid "A string, type ‘s’"
 msgid "A variant, type ‘v’"
-msgstr "Niz, vrste »s«"
+msgstr "Različica vrste »v«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:347
 msgid ""
@@ -694,7 +708,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "The empty tuple, type and value “()”"
-msgstr ""
+msgstr "Prazna enterica vrste in vrednosti »()«"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:363
 msgid ""
@@ -704,15 +718,16 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:374
 msgid "An usual boolean value, defined by a relocatable schema."
-msgstr ""
+msgstr "Običajna logična vrednost, kot jo določa preselitvena shema."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:379
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
+"Podpisana 32-bitna celoštevilčna vrednost, kot jo določa preselitvena shema."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:390
 msgid "A normal non-conflicting key from Conflict1"
-msgstr "Običajen ne-sporen ključ Spora1"
+msgstr "Običajen ne-sporen ključ Spor1"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:391
 #: editor/ca.desrt.dconf-editor.gschema.xml:418
@@ -720,10 +735,12 @@ msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ne-"
+"sporni ključi bi morali ostati brez objavljenih napak."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:395
 msgid "Conflicting key defaulting to “1” that should give an error"
-msgstr ""
+msgstr "Ključ spora z vrednostjo »1«, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:396
 #: editor/ca.desrt.dconf-editor.gschema.xml:423
@@ -732,10 +749,13 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj ima ključ, preslikan na isto pot, različno privzeto "
+"vrednost."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:400
 msgid "Conflicting key with no range that should give an error"
-msgstr ""
+msgstr "Ključ spora brez vrednosti, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:401
 #: editor/ca.desrt.dconf-editor.gschema.xml:429
@@ -744,10 +764,12 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj ima ključ, preslikan na isto pot, različen obseg."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:405
 msgid "A (simple) string conflicting key that should give a error"
-msgstr ""
+msgstr "Ključ spora z enostavnim nizom, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:406
 #: editor/ca.desrt.dconf-editor.gschema.xml:434
@@ -756,10 +778,13 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
+"Ključ je namenjen preizkusu več shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj ima ključ, preslikan na isto pot, različno privzeto "
+"vrsto."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "Conflicting key from Conflict1 that should give a warning"
-msgstr ""
+msgstr "Ključ spora Spor1, ki mora vrniti opozorilo"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:411
 #: editor/ca.desrt.dconf-editor.gschema.xml:439
@@ -768,26 +793,28 @@ msgid ""
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
+"Ključ je namenjen preizkusu večih shem na isti poti s ključi v sporih. Ključ "
+"mora biti uredljiv, saj sta vrsti skladni, vseeno pa mora vrniti napako."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid "A normal non-conflicting key from Conflict2"
-msgstr "Običajen ne-sporen ključ Spora2"
+msgstr "Običajen ne-sporen ključ Spor2"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:422
 msgid "Conflicting key defaulting to “2” that should give an error"
-msgstr ""
+msgstr "Ključ spora z vrednostjo »2«, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:428
 msgid "Conflicting key with range 0~5 that should give an error"
-msgstr ""
+msgstr "Ključ spora z obsegom med 0 in 5, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:433
 msgid "A nullable-string conflicting key that should give an error"
-msgstr ""
+msgstr "Ključ spora brez vrednosti, ki mora vrniti napako"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
 msgid "Conflicting key from Conflict2 that should give a warning"
-msgstr ""
+msgstr "Ključ spora Spor2, ki mora vrniti opozorilo"
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -904,7 +931,7 @@ msgid ""
 msgstr ""
 "Avtorske pravice © 2010–2014 – Canonical Ltd\n"
 "Avtorske pravice © 2015–2018 – Arnaud Bonatti\n"
-"Avtorske pravice © 2017–2018 – Davi da Silva Böger"
+"Avtorske pravice © 2015–2018 – Davi da Silva Böger"
 
 #: editor/dconf-editor.vala:503
 msgid "translator-credits"
@@ -1224,7 +1251,7 @@ msgstr "Ni sprememb za ponastavitev."
 
 #: editor/modifications-revealer.vala:319
 msgid "The value is invalid."
-msgstr "Vrednost ni veljavna."
+msgstr "Vrednost ni veljavna"
 
 #: editor/modifications-revealer.vala:326
 msgid "The change will be dismissed if you quit this view without applying."
@@ -1475,7 +1502,7 @@ msgstr "Ni najdene sheme"
 
 #: editor/registry-search.vala:28
 msgid "No matches"
-msgstr "Ni zadetkov"
+msgstr "Ni zadetkov."
 
 #: editor/registry-search.vala:382
 msgid "Current folder"
@@ -1548,7 +1575,7 @@ msgstr "Različica"
 
 #: editor/setting-object.vala:95
 msgid "Empty tuple"
-msgstr ""
+msgstr "Prazna enterica"
 
 #: editor/setting-object.vala:214
 msgid "True"
@@ -1586,330 +1613,6 @@ msgstr "Prenosljiva shema"
 #: editor/setting-object.vala:432
 msgid "DConf backend"
 msgstr "Ozadnji program DConf"
-
-#~ msgid "About"
-#~ msgstr "O programu"
-
-#~ msgid "Credits"
-#~ msgstr "Zasluge"
-
-#~ msgid ""
-#~ "GNU General Public License\n"
-#~ "version 3 or later"
-#~ msgstr ""
-#~ "Splošno Javno dovoljenje GNU,\n"
-#~ "različice 3 ali kasnejše"
-
-#~ msgid "Creators"
-#~ msgstr "Ustvarjalci"
-
-#~ msgid "Translators"
-#~ msgstr "Prevajalci"
-
-#~ msgid "Show properties"
-#~ msgstr "Pokaži podrobnosti"
-
-#~ msgid "Pause night mode"
-#~ msgstr "Začasno ustavi nočni način"
-
-#~ msgid "Reuse night mode"
-#~ msgstr "Ponovno uporabi nočni način"
-
-#~ msgid "Use night mode"
-#~ msgstr "Uporabi nočni način"
-
-#, fuzzy
-#~| msgid "Bookmarks"
-#~ msgid "Hide bookmarks"
-#~ msgstr "Zaznamki"
-
-#~ msgid "Unbookmark"
-#~ msgstr "Odstrani zaznamek"
-
-#~ msgid "Bookmark"
-#~ msgstr "Zaznamek"
-
-#~ msgid "Show bookmarks"
-#~ msgstr "pokaži zaznamke"
-
-#~ msgid "Use"
-#~ msgstr "Uporabi"
-
-#~ msgid "Edit"
-#~ msgstr "Uredi"
-
-#~ msgid "The bookmarks list is not editable."
-#~ msgstr "Seznam zaznamkov ni uredljiv."
-
-#, fuzzy
-#~| msgctxt "shortcut window"
-#~| msgid "Bookmark this path"
-#~ msgid "Bookmark this Search"
-#~ msgstr "Ustvari zaznamek te poti"
-
-#~ msgid "Properties"
-#~ msgstr "Lastnosti"
-
-#, fuzzy
-#~| msgid "A path to restore the last view"
-#~ msgid "A path to restore the pathbar state"
-#~ msgstr "Pot za obnovitev zadnjega pogleda"
-
-#, fuzzy
-#~| msgid ""
-#~| "If the “restore-view” key is set to “true”, Dconf Editor tries at launch "
-#~| "to navigate to this path."
-#~ msgid ""
-#~ "If the “restore-view” key is set to “true”, and if the path requested at "
-#~ "startup is a parent path of this one, Dconf Editor tries to restore the "
-#~ "pathbar state at this path."
-#~ msgstr ""
-#~ "V kolikor je za ključ za obnovitev pogleda »restore-view« možnost "
-#~ "izbrana, poskuša program zagnati program na tej poti."
-
-#~ msgid "Follow system night light"
-#~ msgstr "Upoštevaj sistemsko nočno osvetlitev"
-
-#~ msgid "Use GNOME night light setting to activate night-mode."
-#~ msgstr "Nastavitev nočne osvetlitve GNOME za uporabo v nočnem času."
-
-#, fuzzy
-#~| msgid "A graphical viewer and editor of applications’ internal settings."
-#~ msgid "Graphical interface for editing other applications settings."
-#~ msgstr ""
-#~ "Grafični pregledovalnik in urejevalnik notranjih nastavitev programov."
-
-#, fuzzy
-#~| msgid "Description:"
-#~ msgid "Arguments description:"
-#~ msgstr "Opis:"
-
-#~ msgid "example: “ca.desrt.dconf-editor.Settings”"
-#~ msgstr "primer: »ca.desrt.dconf-editor.Settings«"
-
-#, fuzzy
-#~| msgid "Cannot understand second argument in this context.\n"
-#~ msgid "Cannot understand: given path contains “//”.\n"
-#~ msgstr "Neustrezen zapis drugega argumenta v tem kontekstu.\n"
-
-#~ msgid "Page on GNOME wiki"
-#~ msgstr "Stran na GNOME Wiki"
-
-#~ msgid "About Dconf Editor"
-#~ msgstr "O programu"
-
-#~ msgid "Dismiss"
-#~ msgstr "Opusti"
-
-#~ msgid "Apply all"
-#~ msgstr "Uveljavi vse"
-
-#~ msgid "Dismiss all"
-#~ msgstr "Opusti vse"
-
-#, fuzzy
-#~| msgctxt "shortcut window"
-#~| msgid "Quit"
-#~ msgid "Quit mode"
-#~ msgstr "Končaj"
-
-#~ msgid "Pending"
-#~ msgstr "Na čakanju"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Path bar menu"
-#~ msgstr "Meni orodne vrstice poti"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search options"
-#~ msgstr "Možnosti iskanja"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Toggle search"
-#~ msgstr "Preklopi iskanje"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search again"
-#~ msgstr "Poišči znova"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Toggle local search"
-#~ msgstr "Preklopi krajevno iskanje"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search again, locally"
-#~ msgstr "Poišči nova, krajevno"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Paste as search"
-#~ msgstr "Prilepi kot iskalni niz"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Paste as search (force)"
-#~ msgstr "Prilepi kot iskalni niz (vsiljeno)"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Edit path"
-#~ msgstr "Uredi pot"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Edit parent path"
-#~ msgstr "Uredi nadrejeno pot"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Edit root path"
-#~ msgstr "Uredi korensko pot"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Browse keys tree"
-#~ msgstr "Prebrskaj drevesno strukturo ključev"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Previous line"
-#~ msgstr "Predhodna vrstica"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Next line"
-#~ msgstr "Naslednja vrstica"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Toggle folder properties"
-#~ msgstr "Preklopi lastnosti mape"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Quit if there’s no pending changes"
-#~ msgstr "Končaj, če ni sprememb na čakanju"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Apply pending changes and quit"
-#~ msgstr "Uveljavi spremembe in končaj"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Dismiss pending changes and quit"
-#~ msgstr "Opusti spremembe in končaj"
-
-#, fuzzy
-#~| msgid "Failed to parse as double."
-#~ msgid "Failed to parse as 64-bit integer."
-#~ msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
-
-#, fuzzy
-#~| msgid "Failed to parse as double."
-#~ msgid "Failed to parse as unsigned 64-bit integer."
-#~ msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
-
-#, fuzzy
-#~| msgid "Open parent folder"
-#~ msgid "Open path entry"
-#~ msgstr "Odpri nadrejeno mapo"
-
-#, fuzzy
-#~| msgid "Search keys"
-#~ msgid "Search everywhere"
-#~ msgstr "Poišči ključe"
-
-#, fuzzy
-#~| msgctxt "shortcut window"
-#~| msgid "Bookmark this path"
-#~ msgid "Go to this path"
-#~ msgstr "Ustvari zaznamek te poti"
-
-#~ msgctxt "non-capitalized"
-#~ msgid "D-Bus handle type"
-#~ msgstr "Vrsta ročnika vodila D-Bus"
-
-#~ msgctxt "non-capitalized"
-#~ msgid "D-Bus object path"
-#~ msgstr "Pot predmeta vodila D-Bus"
-
-#~ msgctxt "non-capitalized"
-#~ msgid "D-Bus object path array"
-#~ msgstr "Polje poti predmeta D-Bus"
-
-#~ msgctxt "non-capitalized"
-#~ msgid "D-Bus signature"
-#~ msgstr "Podpis vodila D-Bus"
-
-#~ msgid "boolean"
-#~ msgstr "boolova vrednost"
-
-#~ msgid "string"
-#~ msgstr "niz"
-
-#~ msgid "string array"
-#~ msgstr "polje nizov"
-
-#~ msgid "enumeration"
-#~ msgstr "oštevilčenje"
-
-#~ msgid "flags"
-#~ msgstr "zastavice"
-
-#~ msgid "double"
-#~ msgstr "dvojno"
-
-#~ msgid "integer"
-#~ msgstr "celo število"
-
-#~ msgid "variant"
-#~ msgstr "različica"
-
-#~ msgid "Select"
-#~ msgstr "Izberi"
-
-#, fuzzy
-#~| msgid "Refresh search results"
-#~ msgid "Close search results"
-#~ msgstr "Osveži zadetke iskanja"
-
-#~ msgid "Name"
-#~ msgstr "Ime"
-
-#, fuzzy
-#~| msgid "Type"
-#~ msgid "Type name"
-#~ msgstr "Vrsta"
-
-#, fuzzy
-#~| msgid "Type"
-#~ msgid "Type code"
-#~ msgstr "Vrsta"
-
-#, fuzzy
-#~| msgid "conflicting keys"
-#~ msgid "conflict"
-#~ msgstr "ključi v sporu"
-
-#~ msgid "key erased"
-#~ msgstr "izbrisan ključ"
-
-#~ msgid "erased"
-#~ msgstr "izbrisan"
-
-#, fuzzy
-#~| msgid "%s (key erased)"
-#~ msgid "%s (local keys)"
-#~ msgstr "%s (ključ je izbrisan)"
-
-#, fuzzy
-#~| msgid "Keys not defined by a schema"
-#~ msgid "Local keys not defined by a schema"
-#~ msgstr "Ključi, ki niso določeni s shemo"
-
-#, fuzzy
-#~| msgid "Folders"
-#~ msgid "Subfolders"
-#~ msgstr "Mape"
-
-#, fuzzy
-#~| msgid "Current view actions"
-#~ msgid "Other actions"
-#~ msgstr "Pogled trenutnih dejanj"
-
-#, fuzzy
-#~| msgid "nothing"
-#~ msgid "nothing (%s)"
-#~ msgstr "nič"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
@@ -1962,11 +1665,17 @@ msgstr "Ozadnji program DConf"
 #~ msgid "Summary:"
 #~ msgstr "Povzetek:"
 
+#~ msgid "Description:"
+#~ msgstr "Opis:"
+
 #~ msgid "Type:"
 #~ msgstr "Vrsta:"
 
 #~ msgid "Default:"
 #~ msgstr "Privzeto:"
+
+#~ msgid "Next"
+#~ msgstr "Naprej"
 
 #~ msgid "Not found"
 #~ msgstr "Ni zadetkov"
@@ -2005,6 +1714,9 @@ msgstr "Ozadnji program DConf"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Napaka med nastavljanjem vrednosti: %s"
+
+#~ msgid "Name"
+#~ msgstr "Ime"
 
 #~ msgid "Value"
 #~ msgstr "Vrednost"
