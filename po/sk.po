@@ -598,12 +598,12 @@ msgstr "Skopírované do schránky"
 #: editor/dconf-editor.vala:150
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Autorské práva © 2010-2014 – Canonical Ltd\n"
-"Autorské práva © 2015-2018 – Arnaud Bonatti\n"
-"Autorské práva © 2017-2018 – Davi da Silva Böger"
+"Autorské práva © 2017-2018 – Davi da Silva Böger\n"
+"Autorské práva © 2015-2019 – Arnaud Bonatti"
 
 #: editor/dconf-editor.vala:154
 msgid "translator-credits"
