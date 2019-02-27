@@ -509,7 +509,8 @@ msgid ""
 "“''” is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
 "O tipo cadeia pode aceitar qualquer cadeia UTF8. Note que uma cadeia vazia "
-"\"''\" não é o mesmo que NULL (nada); veja também a chave \"string-nullable\""
+"\"''\" não é o mesmo que NULL (nada); veja também a chave \"string-"
+"nullable\"."
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:207
 msgid "A string array, type ‘as’"
