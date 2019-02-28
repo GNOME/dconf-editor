@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-03 10:47+0000\n"
-"PO-Revision-Date: 2019-02-12 12:29+0100\n"
+"POT-Creation-Date: 2019-02-27 17:41+0000\n"
+"PO-Revision-Date: 2019-02-28 10:57+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1099,162 +1099,162 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Konfliktní klíč z Conflict2, který by měl způsobit varování"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Vypsat verzi vydání a skončit"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:158
 msgid "Print relocatable schemas and exit"
 msgstr "Vypsat přemístitelná schémata a skončit"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:153
+#: editor/dconf-editor.vala:161
 msgid "Do not show initial warning"
 msgstr "Nezobrazovat úvodní varování"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:191
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:199
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafické rozhraní pro úpravy nastavení ostatních aplikací."
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:194
-msgid "Uses the gsettings API of the glib library, and other ways."
-msgstr "Používá API gsettings z knihovny glib a další způsoby."
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:202
+msgid "Uses the gsettings API of the glib library, among others."
+msgstr "Používá API gsettings z knihovny glib, spolu s dalšími způsoby."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:197
+#: editor/dconf-editor.vala:205
 msgid "Arguments description:"
 msgstr "Popis argumentů"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:201
+#: editor/dconf-editor.vala:209
 msgid "a folder path or a key path"
 msgstr "cesta ke složce nebo ke klíči"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "příklad: „/org/gnome/“ nebo „/ca/desrt/dconf-editor/Demo/boolean“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:207
+#: editor/dconf-editor.vala:215
 msgid "the name of a schema with fixed path"
 msgstr "název schématu s pevnou cestou"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:217
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "příklad: „ca.desrt.dconf-editor.Settings“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:221
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "název „přemístitelného“ (relocatable) schématu, bez pevné cesty"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:223
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "viz výpis s volbou „--list-relocatable-schemas“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:227
 msgid "the path where to map the relocatable schema"
 msgstr "cesta, kam mapovat přemístitelné schéma"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "příklad: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:233
 msgid "the name of a key from the schema"
 msgstr "název klíče ze schématu"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
 msgstr "příklad: „bookmarks“"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:283
+#: editor/dconf-editor.vala:291
 msgid "Known schemas installed:"
 msgstr "Nainstalovaná známá schémata:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:289
+#: editor/dconf-editor.vala:297
 msgid "No known schemas installed."
 msgstr "Nejsou žádná nainstalovaná známá schémata."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:302
 msgid "Known schemas skipped:"
 msgstr "Vynechaná známá schémata."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:308
 msgid "No known schemas skipped."
 msgstr "Nejsou žádná vynechaná známá schémata."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:313
 msgid "Unknown schemas:"
 msgstr "Neznámá schémata:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:319
 msgid "No unknown schemas."
 msgstr "Nejsou žádná neznámá schémata."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:445
+#: editor/dconf-editor.vala:453
 msgid "Only one window can be opened for now.\n"
 msgstr "V tuto chvíli může být otevřené jen jedno okno.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:473
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nelze zpracovat: příliš mnoho argumentů.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:479
+#: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
 msgstr "V tomto kontextu nelze zpracovat druhý argument.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:500
+#: editor/dconf-editor.vala:508
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nelze zpracovat: znak lomítko v druhém argumentu.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:515
+#: editor/dconf-editor.vala:523
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Cesta schématu by měla začínat a končit znakem „/“.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:531
+#: editor/dconf-editor.vala:539
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Nelze zpracovat: zadaná cesta obsahuje „//“.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:547
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nelze zpracovat: znak mezera v argumentu.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:567
+#: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
 msgstr "Zkopírováno do schránky"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:644
+#: editor/dconf-editor.vala:652
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Grafický prohlížeč a editor interních nastavení aplikací."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:658
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1265,12 +1265,12 @@ msgstr ""
 "Copyright © 2015 - 2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr "Marek Černocký <marek@manet.cz>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:663
+#: editor/dconf-editor.vala:671
 msgid "Page on GNOME wiki"
 msgstr "Stránka na wiki GNOME"
 
@@ -1384,25 +1384,25 @@ msgstr ""
 "ukončení nebo Alt+F4 pro zahození změn a ukončení."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:773
+#: editor/dconf-window.vala:775
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Složka „%s“ je nyní prázdná."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:784
+#: editor/dconf-window.vala:786
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Klíč „%s“ byl smazán."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:790
+#: editor/dconf-window.vala:792
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nelze najít klíč „%s“."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:796
+#: editor/dconf-window.vala:798
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "V požadované složce „%s“ nic není."
@@ -1420,223 +1420,260 @@ msgstr "Klíč vymazán"
 msgid "Default value"
 msgstr "Výchozí hodnota"
 
-#: editor/help-overlay.ui:28
+#. Translators: header in the shortcut window, for usual headerbar menus actions
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Činnosti"
 
-#: editor/help-overlay.ui:32
+#. Translators: Ctrl-B action
+#: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Přidat nabídku do záložek"
 
-#: editor/help-overlay.ui:39
+#. Translators: Ctrl-D action
+#: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Přidat cestu do záložek"
 
-#: editor/help-overlay.ui:46
+#. Translators: Ctrl-Shift-D action
+#: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Odebrat cestu ze záložek"
 
-#: editor/help-overlay.ui:53
+#. Translators: F10 key action
+#: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Nabídka činností"
 
-#: editor/help-overlay.ui:60
+#. Translators: Shift-F10 action
+#: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
 msgstr "Nabídka adresní lišty"
 
-#: editor/help-overlay.ui:69
+#. Translators: header in the shortcut window, for moving to paths known by the headerbar
+#: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Navigační lišta pro cesty"
 
-#: editor/help-overlay.ui:73
+#. Translators: Alt-Shift-Up action; browse to the '/' folder
+#: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Otevřít kořenovou složku"
 
-#: editor/help-overlay.ui:80
+#. Translators: Alt-Up action; browse to the parent folder
+#: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Otevřít rodičovskou složku"
 
-#: editor/help-overlay.ui:87
+#. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Otevřít přímého potomka"
 
-#: editor/help-overlay.ui:94
+#. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
+#: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Otevřít posledního potomka"
 
-#: editor/help-overlay.ui:103
+#. Translators: header in the shortcut window, for the various ways of opening search
+#: editor/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Search options"
 msgstr "Volby hledání"
 
-#: editor/help-overlay.ui:107
+#. Translators: Ctrl-F action; opens search, searching everywhere
+#: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
 msgstr "Zobrazit/skrýt hledání"
 
-#. Translators: does the same thing as "Toggle search", but loads the search entry with the last searched text
-#: editor/help-overlay.ui:115
+#. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:128
 msgctxt "shortcut window"
 msgid "Search again"
 msgstr "Hledat znovu"
 
-#: editor/help-overlay.ui:122
+#. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
+#: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
 msgstr "Zobrazit/skrýt místní hledání"
 
-#. Translators: does the same thing as "Toggle local search", but loads the search entry with the last searched text; entry hidden for now
-#: editor/help-overlay.ui:130
+#. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:144
 msgctxt "shortcut window"
-msgid "Search locally again"
-msgstr "Hledat znovu místně"
+msgid "Search again, locally"
+msgstr "Hledat znovu, místně"
 
-#: editor/help-overlay.ui:137
+#. Translators: Ctrl-V action; open search with clipboard content
+#: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
 msgstr "Vložit jako hledání"
 
-#. Translators: does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
-#: editor/help-overlay.ui:145
+#. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
 msgstr "Vložit jako hledání (vynuceně)"
 
-#: editor/help-overlay.ui:152
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
 msgstr "Upravit cestu"
 
-#: editor/help-overlay.ui:159
+#. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
+#: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
 msgstr "Upravit cestu k rodiči"
 
-#: editor/help-overlay.ui:166
+#. Translators: '/' key action when browsing; opens search on root path
+#: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
 msgstr "Upravit kořenovou cestu"
 
-#: editor/help-overlay.ui:173
+#. Translators: Escape key action, when searching; cancels search
+#: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
 msgstr "Procházet strom klíčů"
 
-#: editor/help-overlay.ui:182
+#. Translators: header in the shortcut window, for when browsing
+#: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr "Činnosti se seznamem klíčů"
 
-#: editor/help-overlay.ui:186
+#. Translators: Menu key action, when browsing
+#: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Kontextová nabídka"
 
-#: editor/help-overlay.ui:193
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
 msgstr "Předchozí řádek"
 
-#: editor/help-overlay.ui:200
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Následující řádek"
 
-#. Translators: entry disabled for now
-#: editor/help-overlay.ui:208
-#| msgctxt "shortcut window"
-#| msgid "Show folder properties"
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
 msgstr "Zobrazit/skrýt vlastnosti složky"
 
-#: editor/help-overlay.ui:215
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Nastavit na výchozí"
 
-#: editor/help-overlay.ui:222
+#. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
+#: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr "Přepnout pravdivostní hodnotu"
 
-#: editor/help-overlay.ui:231
+#. Translators: header in the shortcut window, for when there are pending changes
+#: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
 msgstr "Činnosti se seznamem změn"
 
-#: editor/help-overlay.ui:235
+#. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
+#: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
 msgstr "Zobrazit/skrýt seznam změn"
 
-#: editor/help-overlay.ui:242
+#. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
+#: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
 msgstr "Otevřít klíč na vybraném řádku"
 
-#: editor/help-overlay.ui:249
+#. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
+#: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
 msgstr "Zahodit změnu"
 
-#: editor/help-overlay.ui:258
+#. Translators: header in the shortcut window, for opening the usual helpful dialogs
+#: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Obecné"
 
-#: editor/help-overlay.ui:262
+#. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
+#: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Zobrazit tuto nápovědu"
 
-#: editor/help-overlay.ui:269
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
 msgctxt "shortcut window"
 msgid "About"
 msgstr "O aplikaci"
 
-#: editor/help-overlay.ui:278
+#. Translators: header in the shortcut window, for the copy-to-clipboard actions
+#: editor/help-overlay.ui:311
 msgctxt "shortcut window"
 msgid "Clipboard"
 msgstr "Schránka"
 
-#: editor/help-overlay.ui:282
+#. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
+#: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
 msgstr "Kopírovat popisovač"
 
-#: editor/help-overlay.ui:289
+#. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
+#: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Kopírovat cestu"
 
-#: editor/help-overlay.ui:298
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončit"
 
-#: editor/help-overlay.ui:303
+#. Translators: Ctrl-Q action; displays a notification if there are pending changes
+#: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
 msgstr "Ukončit, pokud nečekají žádné změny na zpracování"
 
-#: editor/help-overlay.ui:310
+#. Translators: Ctrl-Shift-Q action
+#: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
 msgstr "Použít čekající změny a ukončit"
 
-#: editor/help-overlay.ui:317
+#. Translators: Alt-F4 action
+#: editor/help-overlay.ui:356
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
 msgstr "Odvolat čekající změny a ukončit"
@@ -1680,7 +1717,6 @@ msgstr "Hledat ve složce „%s“"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
-#| msgid "Open parent folder"
 msgid "Open path entry"
 msgstr "Otevřít cestu k položce"
 
@@ -1760,147 +1796,187 @@ msgstr "Nemazat"
 msgid "No change"
 msgstr "Žádná změna"
 
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:351
-msgid "Signed 16-bit integer"
-msgstr "16bitové celé číslo se znaménkem"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:354
-msgid "Unsigned 16-bit integer"
-msgstr "16bitové celé číslo bez znaménka"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:357
-msgid "Signed 32-bit integer"
-msgstr "32bitové celé číslo se znaménkem"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:360
-msgid "Unsigned 32-bit integer"
-msgstr "32bitové celé číslo bez znaménka"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:363
-msgid "Signed 64-bit integer"
-msgstr "64bitové celé číslo se znaménkem"
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:366
-msgid "Unsigned 64-bit integer"
-msgstr "64bitové celé číslo bez znaménka"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:369
-msgid "Boolean"
-msgstr "Pravdivostní hodnota"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:372
-msgid "boolean"
-msgstr "pravdivostní hodnota"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:375
-msgid "String"
-msgstr "Řetězec"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:378
-msgid "string"
-msgstr "řetězec"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:381
-msgid "String array"
-msgstr "Pole řetězců"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:384
-msgid "string array"
-msgstr "pole řetězců"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:387
-msgid "Enumeration"
-msgstr "Výčet"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:390
-msgid "enumeration"
-msgstr "výčet"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:393
-msgid "Flags"
-msgstr "Příznaky"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:396
-msgid "flags"
-msgstr "příznaky"
-
-#. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:399
-msgid "Double"
-msgstr "Desetinné číslo s dvojitou přesností"
-
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:402
-msgid "double"
-msgstr "desetinné číslo s dvojitou přesností"
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
-#: editor/model-utils.vala:405 editor/model-utils.vala:408
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Obsluha D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:411 editor/model-utils.vala:414
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Cesta k objektu D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:417 editor/model-utils.vala:420
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Pole cest k objektům D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:423 editor/model-utils.vala:426
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Podpis D-Bus"
 
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "obsluha D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "cesta k objektu D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "pole cest k objektům D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "podpis D-Bus"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:373
+msgid "Signed 16-bit integer"
+msgstr "16bitové celé číslo se znaménkem"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:376
+msgid "Unsigned 16-bit integer"
+msgstr "16bitové celé číslo bez znaménka"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:379
+msgid "Signed 32-bit integer"
+msgstr "32bitové celé číslo se znaménkem"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:382
+msgid "Unsigned 32-bit integer"
+msgstr "32bitové celé číslo bez znaménka"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:385
+msgid "Signed 64-bit integer"
+msgstr "64bitové celé číslo se znaménkem"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:388
+msgid "Unsigned 64-bit integer"
+msgstr "64bitové celé číslo bez znaménka"
+
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:429
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Pravdivostní hodnota"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "pravdivostní hodnota"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Řetězec"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "řetězec"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Pole řetězců"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "pole řetězců"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Výčet"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "výčet"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Příznaky"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "příznaky"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Desetinné číslo s dvojitou přesností"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "desetinné číslo s dvojitou přesností"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _H_ = C_("capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _h_ = C_("non-capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _O_ = C_("capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _o_ = C_("non-capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _Ao_ = C_("capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _ao_ = C_("non-capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _G_ = C_("capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _g_ = C_("non-capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Celé číslo"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:432
+#: editor/model-utils.vala:454
 msgid "integer"
 msgstr "celé číslo"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:435
+#: editor/model-utils.vala:457
 msgid "Variant"
 msgstr "Variabilní typ"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:438
+#: editor/model-utils.vala:460
 msgid "variant"
 msgstr "variabilní typ"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:441
+#: editor/model-utils.vala:463
 msgid "Empty tuple"
 msgstr "Prázdná n-tice"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
-#: editor/model-utils.vala:444
+#: editor/model-utils.vala:466
 msgid "empty tuple"
 msgstr "prázdná n-tice"
 
@@ -2358,36 +2434,3 @@ msgstr "Přemístitelné schéma"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Výkonná část DConf"
-
-#~ msgid "Remove"
-#~ msgstr "Odebrat"
-
-#~ msgid "Remove this bookmark"
-#~ msgstr "Odebrat tuto záložku"
-
-#~ msgid "Copy descriptor"
-#~ msgstr "Kopírovat popisovač"
-
-#~ msgid "Delayed setting changes will be shown here"
-#~ msgstr "Odložené změny nastavení budou zobrazené zde"
-
-#~ msgid "Browse keys"
-#~ msgstr "Procházet klíče"
-
-#~ msgid "Current folder"
-#~ msgstr "Aktuální složka"
-
-#~ msgid "Paths"
-#~ msgstr "Cesty"
-
-#~ msgid "Keys"
-#~ msgstr "Klíče"
-
-#~ msgid "_About"
-#~ msgstr "O _aplikaci"
-
-#~ msgid "_Quit"
-#~ msgstr "U_končit"
-
-#~ msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-#~ msgstr "[CESTA|PEVNÉ_SCHÉMA [KLÍČ]|PŘEMÍSTITELNÉ_SCHÉMA:CESTA [KLÍČ]]"
