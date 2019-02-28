@@ -930,18 +930,6 @@ msgstr ""
 msgid "A variant, type ‘v’"
 msgstr "Različica vrste »v«"
 
-#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
-#: editor/ca.desrt.dconf-editor.gschema.xml:454
-msgid ""
-"Variants could be stored inside variants, and consequently as a GSettings "
-"type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
-"a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-"representation of their content inside. If unclear, the type can be given in "
-"the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
-"for complete documentation."
-msgstr ""
-
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
 msgid "A 1-choice enumeration"
@@ -974,13 +962,6 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:474
 msgid "The empty tuple, type and value “()”"
 msgstr "Prazna enterica vrste in vrednosti »()«"
-
-#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
-#: editor/ca.desrt.dconf-editor.gschema.xml:476
-msgid ""
-"There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
-"no content, and can only take “()” as value."
-msgstr ""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
@@ -1126,11 +1107,6 @@ msgstr "Ne pokaži začetnega opozorila"
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafični pregledovalnik in urejevalnik notranjih nastavitev programov."
 
-#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:202
-msgid "Uses the gsettings API of the glib library, among others."
-msgstr ""
-
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:205
 #, fuzzy
@@ -1139,18 +1115,8 @@ msgid "Arguments description:"
 msgstr "Opis:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
-msgid "a folder path or a key path"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
-msgid "the name of a schema with fixed path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
@@ -1158,29 +1124,9 @@ msgstr ""
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "primer: »ca.desrt.dconf-editor.Settings«"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:221
-msgid "the name of a “relocatable” schema, without fixed path"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:223
-msgid "see list with the “--list-relocatable-schemas” option"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
-msgid "the path where to map the relocatable schema"
-msgstr ""
-
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
-msgid "the name of a key from the schema"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
@@ -1396,13 +1342,6 @@ msgstr "Razumem opozorilo!"
 #: editor/dconf-window.vala:282
 msgid "Show this dialog next time."
 msgstr "Naslednjič znova pokaži to pogovorno okno."
-
-#. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
-#: editor/dconf-window.vala:303
-msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
-msgstr ""
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:775
@@ -1699,11 +1638,6 @@ msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
 msgstr "Opusti spremembe in končaj"
 
-#. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
-#: editor/key-editor-child.vala:30
-msgid "Given value is out of range."
-msgstr ""
-
 #. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
 #: editor/key-editor-child.vala:33
 msgid "This value is invalid for the key type."
@@ -1727,18 +1661,6 @@ msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
 #| msgid "Failed to parse as double."
 msgid "Failed to parse as unsigned 64-bit integer."
 msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
-
-#. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
-#: editor/key-list-box-row.vala:118
-#, c-format
-msgid "Go to “%s”"
-msgstr ""
-
-#. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
-#: editor/key-list-box-row.vala:149
-#, c-format
-msgid "Search in “%s” folder"
-msgstr ""
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
@@ -1876,36 +1798,6 @@ msgctxt "non-capitalized"
 msgid "D-Bus signature"
 msgstr "Podpis vodila D-Bus"
 
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:373
-msgid "Signed 16-bit integer"
-msgstr ""
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:376
-msgid "Unsigned 16-bit integer"
-msgstr ""
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:379
-msgid "Signed 32-bit integer"
-msgstr ""
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:382
-msgid "Unsigned 32-bit integer"
-msgstr ""
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:385
-msgid "Signed 64-bit integer"
-msgstr ""
-
-#. Translators: that's a name of a data type; capitalized (if that makes sense)
-#: editor/model-utils.vala:388
-msgid "Unsigned 64-bit integer"
-msgstr ""
-
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
 msgid "Boolean"
@@ -2011,19 +1903,6 @@ msgstr "Prazna enterica"
 #: editor/model-utils.vala:466
 msgid "empty tuple"
 msgstr "prazna enterica"
-
-#. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
-#: editor/modifications-list.vala:28
-msgid ""
-"Delayed mode is on\n"
-"but\n"
-"no pending changes"
-msgstr ""
-
-#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
-#: editor/modifications-list.vala:32
-msgid "Rule all"
-msgstr ""
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
@@ -2306,14 +2185,6 @@ msgid ""
 msgstr ""
 "Uporabi piko kot ločilnik decimalne vrednosti in ne uporabi ločilnika "
 "tisočic. Uporabiti je mogoče zapis X.Ye+Z."
-
-#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:620
-msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
-msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
