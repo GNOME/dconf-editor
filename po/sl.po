@@ -725,13 +725,6 @@ msgstr ""
 "Slovarske vrednosti preslikave osnovnih vrst v drugo vrednost (katerekoli "
 "vrste). Vrednost je ena izmed možnih preslikav."
 
-#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
-#: editor/ca.desrt.dconf-editor.gschema.xml:345
-#, fuzzy
-#| msgid "A string, type ‘s’"
-msgid "A “vardict”, type ‘a{sv}’"
-msgstr "Niz, vrste »s«"
-
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:347
 msgid ""
@@ -782,7 +775,7 @@ msgstr "Zastavice je mogoče nastaviti tudi prek atributa »enum«"
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "A short integer, type ‘n’"
-msgstr "Kratko celo število, vpis »n«"
+msgstr "Kratko celo število, vrste »n«"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:375
@@ -793,7 +786,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:380
 msgid "An unsigned short integer, type ‘q’"
-msgstr "Nepodpisano kratko celo število vrste »q«"
+msgstr "Nepodpisano kratko celo število, vrste »q«"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:382
@@ -806,7 +799,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:387
 #: editor/ca.desrt.dconf-editor.gschema.xml:494
 msgid "An usual integer, type ‘i’"
-msgstr "Običajno celo število vrste »i«"
+msgstr "Običajno celo število, vrste »i«"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:389
@@ -817,7 +810,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "An unsigned usual integer, type ‘u’"
-msgstr "Nepodpisano običajno celo število, vpis »u«"
+msgstr "Nepodpisano običajno celo število, vrste »u«"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:396
@@ -828,7 +821,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid "A long integer, type ‘x’"
-msgstr "Dolgo celo število vrste »x«"
+msgstr "Dolgo celo število, vrste »x«"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:403
@@ -839,7 +832,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:408
 msgid "An unsigned long integer, type ‘t’"
-msgstr "Nepodpisano dolgo celo število, vpis »t«"
+msgstr "Nepodpisano dolgo celo število, vrste »t«"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:410
@@ -928,7 +921,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A variant, type ‘v’"
-msgstr "Različica vrste »v«"
+msgstr "Različica, vrste »v«"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
@@ -1117,7 +1110,7 @@ msgstr "Opis:"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
+msgstr "primer: »/org/gnome/«, »/ca/desrt/dconf-editor/Demo/boolean«"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:217
@@ -1127,12 +1120,12 @@ msgstr "primer: »ca.desrt.dconf-editor.Settings«"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgstr "primer: »ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/«"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "primer: »bookmarks«"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:291
@@ -1191,10 +1184,8 @@ msgstr "Pot sheme se mora začeti in končati z desno poševnico » / «.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:539
-#, fuzzy
-#| msgid "Cannot understand second argument in this context.\n"
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr "Neustrezen zapis drugega argumenta v tem kontekstu.\n"
+msgstr "Neustrezen zapis: »//«.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:547
@@ -1214,19 +1205,14 @@ msgstr "Grafični pregledovalnik in urejevalnik notranjih nastavitev programov."
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:658
-#, fuzzy
-#| msgid ""
-#| "Copyright © 2010-2014 – Canonical Ltd\n"
-#| "Copyright © 2015-2018 – Arnaud Bonatti\n"
-#| "Copyright © 2017-2018 – Davi da Silva Böger"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
 "Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Avtorske pravice © 2010–2014 – Canonical Ltd\n"
-"Avtorske pravice © 2015–2018 – Arnaud Bonatti\n"
-"Avtorske pravice © 2015–2018 – Davi da Silva Böger"
+"Avtorske pravice © 2017–2018 – Davi da Silva Böger\n"
+"Avtorske pravice © 2015–2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:665
@@ -1647,27 +1633,6 @@ msgstr "Vrednost je za to vrsto ključa neveljavna."
 #: editor/key-editor-child.vala:380
 msgid "Failed to parse as double."
 msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
-
-#. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
-#: editor/key-editor-child.vala:449
-#, fuzzy
-#| msgid "Failed to parse as double."
-msgid "Failed to parse as 64-bit integer."
-msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
-
-#. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
-#: editor/key-editor-child.vala:518
-#, fuzzy
-#| msgid "Failed to parse as double."
-msgid "Failed to parse as unsigned 64-bit integer."
-msgstr "Razčlenjevanje kot dvojna vrednost je spodletelo."
-
-#. Translators: first item of the keys list displayed during browsing at root path
-#: editor/key-list-box-row.vala:153
-#, fuzzy
-#| msgid "Open parent folder"
-msgid "Open path entry"
-msgstr "Odpri nadrejeno mapo"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
@@ -2371,12 +2336,6 @@ msgstr "Ozadnji program DConf"
 #~ msgid "Current row menu"
 #~ msgstr "Trenutni meni vrstice"
 
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Dvojno [%s..%s]"
-
-#~ msgid "Integer [%s..%s]"
-#~ msgstr "Celo število [%s ... %s]"
-
 #~ msgid "Oops! Cannot find something at this path."
 #~ msgstr "Ops! Na tej poti ni ničesar."
 
@@ -2412,49 +2371,8 @@ msgstr "Ozadnji program DConf"
 #~ msgid "Set to Default"
 #~ msgstr "Povrni na privzeto"
 
-#~ msgid "Schema:"
-#~ msgstr "Shema:"
-
-#~ msgid "Summary:"
-#~ msgstr "Povzetek:"
-
-#~ msgid "Type:"
-#~ msgstr "Vrsta:"
-
-#~ msgid "Default:"
-#~ msgstr "Privzeto:"
-
 #~ msgid "Not found"
 #~ msgstr "Ni zadetkov"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Program je prosta programska oprema; lahko jo razširjate in/ali "
-#~ "spreminjate pod pogoji Splošnega javnega dovoljenja GNU (GNU General "
-#~ "Public License), kot ga je objavila ustanova Free Software Foundation; "
-#~ "bodisi različice 2 ali (po vaši izbiri) katerekoli poznejše različice.\n"
-#~ "\n"
-#~ "Program se razširja v upanju, da bo uporaben, vendar BREZ VSAKRŠNEGA "
-#~ "JAMSTVA; tudi brez posredne zagotovitve CENOVNE VREDNOSTI ali PRIMERNOSTI "
-#~ "ZA DOLOČEN NAMEN.  Za podrobnosti glejte besedilo Javnega dovoljenja "
-#~ "GNU.\n"
-#~ "\n"
-#~ "Skupaj s programom bi morali prejeti izvod splošne javne licence GNU (GNU "
-#~ "General Public License); če ga niste pišite na Free Software Foundation, "
-#~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "Avtorske pravice © Canonical Ltd"
