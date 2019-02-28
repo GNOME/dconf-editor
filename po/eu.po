@@ -298,7 +298,7 @@ msgstr "Azken ikuspegia leheneratzeko bandera"
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
-msgstr "”'true” (egia) bada, Dconf editoreak abiarazten saiatuko da 'saved-view' gakoan azaldutako bide-izenera nabigatzeko."
+msgstr "“true” (egia) bada, Dconf editoreak abiarazten saiatuko da “saved-view” gakoan azaldutako bide-izenera nabigatzeko."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:136
@@ -311,7 +311,7 @@ msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at "
 "startup is a parent path of this one, Dconf Editor tries to restore the "
 "pathbar state at this path."
-msgstr "”restore-view” gakoa ”true” (egia) gisa ezartzen bada, eta abioan eskatutako bide-izena honen guraso bada, Dconf editoreak bide-barraren egoera bide-izen honetan leheneratzen saiatuko da."
+msgstr "“restore-view” gakoa “true” (egia) gisa ezartzen bada, eta abioan eskatutako bide-izena honen guraso bada, Dconf editoreak bide-barraren egoera bide-izen honetan leheneratzen saiatuko da."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:143
@@ -323,7 +323,7 @@ msgstr "Azken ikuspegia leheneratzeko bide-izena"
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
-msgstr "”restore-view” gakoa ”true” (egia) gisa ezartzen bada, Dconf editoreak abiarazten saiatuko da bere bide-izenera nabigatzeko."
+msgstr "“restore-view” gakoa “true” (egia) gisa ezartzen bada, Dconf editoreak abiarazten saiatuko da bere bide-izenera nabigatzeko."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:150
@@ -335,7 +335,7 @@ msgstr "Erakutsi hasierako abisua"
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
-msgstr "'”true” (egia) bada, Dconf editoreak laster-leiho bat irekiko du abiaraztean erabiltzaileari kontu handiz ibiltzeko gogoraraziz."
+msgstr "“true” (egia) bada, Dconf editoreak laster-leiho bat irekiko du abiaraztean erabiltzaileari kontu handiz ibiltzeko gogoraraziz."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:157
@@ -345,7 +345,7 @@ msgstr "Gakoen zerrendan errenkada txikiak baimentzeko bandera"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "If “true”, the keys list use smaller rows."
-msgstr "”true” (egia) bada, gakoen zerrendak errenkada txikiagoak erabiliko ditu."
+msgstr "“true” (egia) bada, gakoen zerrendak errenkada txikiagoak erabiliko ditu."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:164
@@ -363,7 +363,7 @@ msgid ""
 "values always asks for confirmation, but the first applies the change if you "
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
-msgstr "”unsafe” balioa ez da gomendagarria mota berezia ez duten gakoetan, honek gakoaren balioa eguneratzen du sarreran zerbait aldatzen den bakoitzean, tarteko egoerak barne. ”safe” balioak berrespena eskatuko du egoera horietan, baina boolearretan eta nuluak izan daitezkeen boolearretan, zerrendapenetan eta banderetan aldaketa berehala baimentzen ditu. ”always-confirm-implicit” eta ”always-confirm-explicit” balioek beti eskatuko dute berrespena, aurrenekoak aldaketak aplikatzen ditu bide-izenak aldatzen dituzunean, bigarrengoak berriz baztertu egiten du. ”always-delay” balioak aldaketa bakoitza atzerapen moduan gehitzen du, hainbat gako aldi berean aplikatzea baimenduz."
+msgstr "“unsafe” balioa ez da gomendagarria mota berezia ez duten gakoetan, honek gakoaren balioa eguneratzen du sarreran zerbait aldatzen den bakoitzean, tarteko egoerak barne. “safe” balioak berrespena eskatuko du egoera horietan, baina boolearretan eta nuluak izan daitezkeen boolearretan, zerrendapenetan eta banderetan aldaketa berehala baimentzen ditu. “always-confirm-implicit” eta “always-confirm-explicit” balioek beti eskatuko dute berrespena, aurrenekoak aldaketak aplikatzen ditu bide-izenak aldatzen dituzunean, bigarrengoak berriz baztertu egiten du. “always-delay” balioak aldaketa bakoitza atzerapen moduan gehitzen du, hainbat gako aldi berean aplikatzea baimenduz."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
@@ -381,7 +381,7 @@ msgstr "GSetteings-ek ez du hizki maiuskularik baimentzen gakoen izenetan, baina
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr "Erabili saguaren botoien \"Atzera\" eta \"Aurrera\" gertaerak"
+msgstr "Erabili saguaren botoien “Atzera” eta “Aurrera” gertaerak"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
@@ -389,12 +389,12 @@ msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
 "is pressed."
-msgstr "\"Aurrera\" eta \"Atzera\" botoidun saguak dituzten erabiltzaileentzako, gako honek zehaztuko du nabigatzailearen barruan ekintzarik landuko den botoi hauetariko bat sakatzean."
+msgstr "“Aurrera” eta “Atzera” botoidun saguak dituzten erabiltzaileentzako, gako honek zehaztuko du nabigatzailearen barruan ekintzarik landuko den botoi hauetariko bat sakatzean."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "Saguaren botoia \"Atzera\" komandoa aktibatzeko arakatzailearen leihoan"
+msgstr "Saguaren botoia “Atzera” komandoa aktibatzeko arakatzailearen leihoan"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
@@ -402,12 +402,12 @@ msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
 "Possible values range between 6 and 14."
-msgstr "“Aurrera“ eta “Atzera“ botoidun saguak dituzten erabiltzaileentzako, gako honek “Atzera“ komandoa zein botoik aktibatuko duen arakatzailearen leihoan zehazten du. Balio erabilgarriak 6 eta 14 artekoa dira."
+msgstr "“Aurrera” eta “Atzera” botoidun saguak dituzten erabiltzaileentzako, gako honek “Atzera” komandoa zein botoik aktibatuko duen arakatzailearen leihoan zehazten du. Balio erabilgarriak 6 eta 14 artekoa dira."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "Mouse button to activate the “Forward” command in browser window"
-msgstr "Saguaren botoia \"Aurrera\" komandoa aktibatzeko arakatzailearen leihoan"
+msgstr "Saguaren botoia “Aurrera” komandoa aktibatzeko arakatzailearen leihoan"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:196
@@ -415,7 +415,7 @@ msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
 "Possible values range between 6 and 14."
-msgstr "“Aurrera“ eta “Atzera“ botoidun saguak dituzten erabiltzaileentzako, gako honek “Aurrera“ komandoa zein botoik aktibatuko duen arakatzailearen leihoan zehazten du. Balio erabilgarriak 6 eta 14 artekoa dira."
+msgstr "“Aurrera” eta “Atzera” botoidun saguak dituzten erabiltzaileentzako, gako honek “Aurrera” komandoa zein botoik aktibatuko duen arakatzailearen leihoan zehazten du. Balio erabilgarriak 6 eta 14 artekoa dira."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
 #: editor/ca.desrt.dconf-editor.gschema.xml:201
@@ -430,7 +430,7 @@ msgid ""
 "schemas list has changed. As this way to do is suboptimal, this function can "
 "be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
-msgstr "Dconf editoreak eskemak kokaleku anitzetatik gehitu edo kendu diren ikuskatu dezake. Hori egiteko, hiru segundotik behin egiaztatuko du eskemen zerrenda aldatu den. Modu hori ez denez oso optimoa, funtzioa desgaitu egin daiteke bandera hau \"false\" moduan ezarrita. Kontuan izan aukera hori kendu egingo dela gauzak egiteko modu hobea aurkitzen denean."
+msgstr "Dconf editoreak eskemak kokaleku anitzetatik gehitu edo kendu diren ikuskatu dezake. Hori egiteko, hiru segundotik behin egiaztatuko du eskemen zerrenda aldatu den. Modu hori ez denez oso optimoa, funtzioa desgaitu egin daiteke bandera hau “false” moduan ezarrita. Kontuan izan aukera hori kendu egingo dela gauzak egiteko modu hobea aurkitzen denean."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
@@ -445,7 +445,7 @@ msgid ""
 "enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
-msgstr "Lekuz alda daitezkeen eskeman mapatze-zerbitzuetarako banderak. “User“ aukerak “relocatable-schemas-user-paths” gakoak definitutako mapatzeak gaitzen ditu; “Built-in” aukerak Dconf editoreak kodean barneratutako mapatze ezagunak gaitzen ditu; “Internal” aukerak Dconf editorearen mapatze propietarako da; “Startup” aukera komando-lerrotik lekuz alda daitekeen eskemak mapatzeko da."
+msgstr "Lekuz alda daitezkeen eskeman mapatze-zerbitzuetarako banderak. “User” aukerak “relocatable-schemas-user-paths” gakoak definitutako mapatzeak gaitzen ditu; “Built-in” aukerak Dconf editoreak kodean barneratutako mapatze ezagunak gaitzen ditu; “Internal” aukerak Dconf editorearen mapatze propietarako da; “Startup” aukera komando-lerrotik lekuz alda daitekeen eskemak mapatzeko da."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:215
@@ -502,7 +502,7 @@ msgstr "Laster-marken zerrendan errenkada txikiak baimentzeko bandera"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:249
 msgid "If “true”, the bookmarks list use smaller rows."
-msgstr "”true” (egia) bada, laster-marken zerrendak errenkada txikiagoak erabiliko ditu."
+msgstr "“true” (egia) bada, laster-marken zerrendak errenkada txikiagoak erabiliko ditu."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
@@ -514,7 +514,7 @@ msgstr "Balio boolearra, ‘b’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "Booleans can only take two values, “true” or “false”."
-msgstr "Boolearrek soilik bi balio erabil ditzakete: “true“ (egia) edo “false“ (faltsua)"
+msgstr "Boolearrek soilik bi balio erabil ditzakete: “true” (egia) edo “false” (faltsua)"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
@@ -527,7 +527,7 @@ msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
 "“true”, “false” and “nothing”."
-msgstr "GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina “nothing“ (ezer ere ez) balioa har dezakete. Balio boolear nulu batek hiru balio soilik eduki ditzake: “true“, “false“ eta “nothing“."
+msgstr "GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina “nothing” (ezer ere ez) balioa har dezakete. Balio boolear nulu batek hiru balio soilik eduki ditzake: “true”, “false” eta “nothing”."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
@@ -604,7 +604,7 @@ msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
-msgstr "Objektuen bide-izenen matrize batek hainbat objektuen bide-izen eduki ditzake (hutsa baita ere: \"[]\"). Ez baduzu D-Bus-arekin elkarreragiten, ez dago mota hau erabiltzeko arrazoirik."
+msgstr "Objektuen bide-izenen matrize batek hainbat objektuen bide-izen eduki ditzake (hutsa baita ere: “[]”). Ez baduzu D-Bus-arekin elkarreragiten, ez dago mota hau erabiltzeko arrazoirik."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:331
@@ -663,7 +663,7 @@ msgstr "5 aukeretako zerrendapena"
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
-msgstr "Zerrendapenak “enum“ atributuarekin egin daiteke, edo “choices“ etiketa batekin."
+msgstr "Zerrendapenak “enum” atributuarekin egin daiteke, edo “choices” etiketa batekin."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
@@ -677,7 +677,7 @@ msgstr "Banderak: choose-colors-you-love (aukeratu maite dituzun koloreak)"
 #: editor/ca.desrt.dconf-editor.gschema.xml:368
 #: editor/ca.desrt.dconf-editor.gschema.xml:503
 msgid "Flags could be set by the “enum” attribute."
-msgstr "banderak “enum“ atributuarekin ezar daitezke."
+msgstr "banderak “enum” atributuarekin ezar daitezke."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:373
@@ -687,7 +687,7 @@ msgstr "Osoko laburra, ‘n’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:375
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
-msgstr "16 bit-eko zeinudun osokoa. Ikus “integer-16-unsigned“ gakoa."
+msgstr "16 bit-eko zeinudun osokoa. Ikus “integer-16-unsigned” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:380
@@ -697,7 +697,7 @@ msgstr "Zeinurik gabeko osoko laburra, ‘q’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:382
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
-msgstr "16 bit-eko zeinurik gabeko osokoa. Ikus “integer-16-signed“ gakoa."
+msgstr "16 bit-eko zeinurik gabeko osokoa. Ikus “integer-16-signed” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
@@ -709,7 +709,7 @@ msgstr "Ohiko osokoa, ‘i’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:389
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
-msgstr "32 bit-eko zeinudun osokoa. Ikus “integer-32-unsigned“ gakoa."
+msgstr "32 bit-eko zeinudun osokoa. Ikus “integer-32-unsigned” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:394
@@ -719,7 +719,7 @@ msgstr "Zeinurik gabeko ohiko osokoa, ‘u’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:396
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
-msgstr "32 bit-eko zeinurik gabeko osokoa. Ikus “integer-32-signed“ gakoa."
+msgstr "32 bit-eko zeinurik gabeko osokoa. Ikus “integer-32-signed” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:401
@@ -729,7 +729,7 @@ msgstr "Osoko luzea, ‘x’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:403
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
-msgstr "64 bit-eko zeinudun osokoa. Ikus “integer-64-unsigned“ gakoa."
+msgstr "64 bit-eko zeinudun osokoa. Ikus “integer-64-unsigned” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:408
@@ -739,7 +739,7 @@ msgstr "Zeinurik gabeko osoko luzea, ‘t’ mota"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
-msgstr "64 bit-eko zeinurik gabeko osokoa. Ikus “integer-64-signed“ gakoa."
+msgstr "64 bit-eko zeinurik gabeko osokoa. Ikus “integer-64-signed” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:417
@@ -777,7 +777,7 @@ msgstr "Kate bat, ‘s’ mota"
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
-msgstr "Kate motak edozer utf8 kate onar dezake. Jakin ezazu “''“ kate hutsa ez dela NULL-en (nulua) berdina; ikus “string-nullable“ gakoa."
+msgstr "Kate motak edozer utf8 kate onar dezake. Jakin ezazu “''” kate hutsa ez dela NULL-en (nulua) berdina; ikus “string-nullable” gakoa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
@@ -789,7 +789,7 @@ msgstr "Kateen matrize bat, ‘as’ mota"
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
-msgstr "Kateen matrize batek edozer luzerako edozer kate kopuru eduki dezake. Kate hutsa ere izan daiteke: “[]“."
+msgstr "Kateen matrize batek edozer luzerako edozer kate kopuru eduki dezake. Kate hutsa ere izan daiteke: “[]”."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
@@ -802,7 +802,7 @@ msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
 "including the empty string “''”, or can be NULL (nothing)."
-msgstr "GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina “nothing“ (ezer ere ez) balioa har dezakete). Nulua izan daitekeen kate edozer kate eduki dezake balio gisa, bai “''“ kate hutsa baita NULL (nulua) ere."
+msgstr "GSettings-ek mota nuluak baimentzen ditu, beste moten antzekoak dira baina “nothing” (ezer ere ez) balioa har dezakete). Nulua izan daitekeen kate edozer kate eduki dezake balio gisa, bai “''” kate hutsa baita NULL (nulua) ere."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1019,7 +1019,7 @@ msgstr "adibidea: “ca.desrt.dconf-editor.Settings”"
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:221
 msgid "the name of a “relocatable” schema, without fixed path"
-msgstr "\"lekuz alda daitekeen\" eskema baten izena, bide-izen finkorik gabe"
+msgstr "“lekuz alda daitekeen” eskema baten izena, bide-izen finkorik gabe"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:223
@@ -1250,25 +1250,25 @@ msgstr "Zenbait aldaketa zain daude. Erabili Shift+Ctrl+Q aldaketak aplikatu eta
 #: editor/dconf-window.vala:775
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr "“%s“ karpeta orain hutsik dago."
+msgstr "“%s” karpeta orain hutsik dago."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:786
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr "“%s“ gakoa ezabatu egin da."
+msgstr "“%s” gakoa ezabatu egin da."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:792
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr "Ezin da “%s“ gakoa aurkitu."
+msgstr "Ezin da “%s” gakoa aurkitu."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:798
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
-msgstr "Ez dago ezer eskatutako ”%s” karpetan."
+msgstr "Ez dago ezer eskatutako “%s” karpetan."
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
@@ -1894,16 +1894,16 @@ msgstr "Aldaketak atzeratu egingo dira zuk eskatu arte."
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] "'gsettings' eragiketa bat atzeratuta."
-msgstr[1] "%u 'gsettings' eragiketa atzeratuta."
+msgstr[0] "“gsettings” eragiketa bat atzeratuta."
+msgstr[1] "%u “gsettings” eragiketa atzeratuta."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] "'dconf' eragiketa bat atzeratuta."
-msgstr[1] "%u 'dconf' eragiketa atzeratuta."
+msgstr[0] "“dconf” eragiketa bat atzeratuta."
+msgstr[1] "%u “dconf” eragiketa atzeratuta."
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -1917,8 +1917,8 @@ msgstr "%s%s"
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "'gsettings' eragiketa bat"
-msgstr[1] "%u 'gsettings' eragiketa"
+msgstr[0] "“gsettings” eragiketa bat"
+msgstr[1] "%u “gsettings” eragiketa"
 
 #. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
@@ -1928,8 +1928,8 @@ msgstr[1] "%u 'gsettings' eragiketa"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] " eta 'dconf' eragiketa bat atzeratuta."
-msgstr[1] " eta %u 'dconf' eragiketa atzeratuta."
+msgstr[0] " eta “dconf” eragiketa bat atzeratuta."
+msgstr[1] " eta %u “dconf” eragiketa atzeratuta."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
@@ -1997,7 +1997,7 @@ msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
-msgstr "Gako honek \"tupla hutsa\" mota berezia dauka. Baliteke eskema hau instalatu zuen aplikazioaren errore bat izatea. Horrela bada, mesedez, bidali erroreari buruzko txosten bat."
+msgstr "Gako honek “tupla hutsa” mota berezia dauka. Baliteke eskema hau instalatu zuen aplikazioaren errore bat izatea. Horrela bada, mesedez, bidali erroreari buruzko txosten bat."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -2123,7 +2123,7 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
-msgstr "Erabili \"nothing\" gako-hitza mota posible bat (\"m\" hizkiarekin hasitakoa) bere balio hutsera ezartzeko. Kateak, sinadurak eta objektuen bide-izenak komatxoz (\") inguratuta egon beharko lukete."
+msgstr "Erabili “nothing” gako-hitza mota posible bat (“m” hizkiarekin hasitakoa) bere balio hutsera ezartzeko. Kateak, sinadurak eta objektuen bide-izenak komatxoz (\") inguratuta egon beharko lukete."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
@@ -2136,7 +2136,7 @@ msgstr "Kateak, sinadurak eta objektuen bide-izenak komatxoz (\") inguratuta ego
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
-msgstr "Erabili \"nothing\" gako-hitza mota posible bat (\"m\" hizkiarekin hasitakoa) bere balio hutsera ezartzeko."
+msgstr "Erabili “nothing” gako-hitza mota posible bat (“m” hizkiarekin hasitakoa) bere balio hutsera ezartzeko."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
