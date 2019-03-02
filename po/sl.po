@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2018-10-23 14:32+0000\n"
-"PO-Revision-Date: 2019-02-27 18:29+0100\n"
+"PO-Revision-Date: 2019-02-28 19:49+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -987,7 +987,7 @@ msgstr "Ključ je izbrisan!"
 #: editor/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Dejanja"
 
 #: editor/help-overlay.ui:15
 msgctxt "shortcut window"
@@ -1134,7 +1134,7 @@ msgstr "Kopiraj"
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:649
 msgid "Customize…"
-msgstr "Prilagodi ..."
+msgstr "Prilagodi …"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:652
@@ -1144,7 +1144,7 @@ msgstr "Nastavi na privzeto"
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:657
 msgid "Show details…"
-msgstr "Pokaži podrobnosti ..."
+msgstr "Pokaži podrobnosti …"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:660
@@ -1198,7 +1198,7 @@ msgstr "Ni sprememb za ponastavitev."
 
 #: editor/modifications-revealer.vala:258
 msgid "The value is invalid."
-msgstr "Vrednost ni veljavna"
+msgstr "Vrednost ni veljavna."
 
 #: editor/modifications-revealer.vala:265
 msgid "The change will be dismissed if you quit this view without applying."
