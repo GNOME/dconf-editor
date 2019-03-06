@@ -605,7 +605,7 @@ msgid ""
 msgstr ""
 "Svaka brojčana postavka (cijeli brojevi, nepotpisani cijeli brojevi svih "
 "vrsta plus duplikati) može se ograničiti na prilagođeni raspon vrijednosti. "
-"Na primjer, ovaj cijeli broj može imati samo vrijednost između -2 i10."
+"Na primjer, ovaj cijeli broj može imati samo vrijednost između -2 i 10."
 
 #. Translators: do not forget the parenthesis, they are meaningful.
 #: editor/ca.desrt.dconf-editor.gschema.xml:326
