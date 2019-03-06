@@ -30,7 +30,7 @@ msgstr "À propos"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
 #: editor/about-list.vala:46
 msgid "Credits"
-msgstr "Remerciements"
+msgstr "Crédits"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
 #: editor/about-list.vala:135
