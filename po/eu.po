@@ -752,7 +752,7 @@ msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -2 and 10."
-msgstr "Zenbakizko ezarpen bakoitza (edozer motatako osokoak eta zeinurik gabeko osokoak baita bikoitzak ere)  balioen barruti pertsonalizatu batera muga daiteke. Adibidez, osoko honek -2 eta 10 arteko balio bat har dezake soilik."
+msgstr "Zenbakizko ezarpen bakoitza (edozer motatako osokoak eta zeinurik gabeko osokoak baita bikoitzak ere) balioen barruti pertsonalizatu batera muga daiteke. Adibidez, osoko honek -2 eta 10 arteko balio bat har dezake soilik."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
@@ -819,7 +819,7 @@ msgid ""
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
 "or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
 "for complete documentation."
-msgstr "Aldagaiak aldagaien barruan biltegiratu daitezke, eta beraz, GSettings mota gisa. Haien adierazpenak XML kakoak erabiltzen ditu (‘<’ eta ‘>’ karaktereak, gschema fitxategi batean “&#60;” eta “&#62;” hurrenez hurren), bere eduiaren adierazpen analizagarri bat duela barruan. Argi ez badago, mota balioan bertan eman daiteke, “@x” formako aurrizki-oharpen gisa (“x” katearen mota dela) edo “int64” gisa. Ikusi https://developer.gnome.org/glib/stable/gvariant-text.html  dokumentazio gehiagorako."
+msgstr "Aldagaiak aldagaien barruan biltegiratu daitezke, eta beraz, GSettings mota gisa. Haien adierazpenak XML kakoak erabiltzen ditu (‘<’ eta ‘>’ karaktereak, gschema fitxategi batean “&#60;” eta “&#62;” hurrenez hurren), bere eduiaren adierazpen analizagarri bat duela barruan. Argi ez badago, mota balioan bertan eman daiteke, “@x” formako aurrizki-oharpen gisa (“x” katearen mota dela) edo “int64” gisa. Ikusi https://developer.gnome.org/glib/stable/gvariant-text.html dokumentazio gehiagorako."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
@@ -855,7 +855,7 @@ msgstr "Tupla hutsa, “()” mota eta balioa"
 msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
-msgstr "Tupla huts bat dago (zenbaitetan “triv” deritzo) edukirik gabe,  balio modura “()”  soilik har dezakeena."
+msgstr "Tupla huts bat dago (zenbaitetan “triv” deritzo) edukirik gabe, balio modura “()” soilik har dezakeena."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
