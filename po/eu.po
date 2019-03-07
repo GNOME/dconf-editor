@@ -1606,7 +1606,7 @@ msgstr "Ezarri lehenetsira"
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr "Erakutsi xehetasunak..."
+msgstr "Erakutsi xehetasunak…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
