@@ -57,10 +57,6 @@ msgstr "Αφαίρεση"
 msgid "Remove this bookmark"
 msgstr "Αφαίρεση σελιδοδείκτη"
 
-#: editor/browser-view.vala:83
-msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr ""
-
 #: editor/browser-view.vala:84 editor/dconf-editor.ui:159
 msgid "Refresh"
 msgstr "Ανανέωση"
@@ -74,10 +70,6 @@ msgstr ""
 #: editor/browser-view.vala:86 editor/browser-view.vala:88
 msgid "Reload"
 msgstr "Επαναφόρτωση"
-
-#: editor/browser-view.vala:87
-msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -109,10 +101,6 @@ msgstr ""
 msgid "Browse the keys used by installed applications"
 msgstr ""
 "Εξερευνήστε τα κλειδιά που χρησιμοποιούνται από εγκατεστημένες εφαρμογές"
-
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
-msgid "Read keys descriptions and edit their values"
-msgstr ""
 
 #. a translatable version of project_group
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:45
@@ -204,50 +192,11 @@ msgstr ""
 msgid "A flag to enable small rows for keys list"
 msgstr "Μια σημαία για την ενεργοποίηση της λειτουργίας πλήρους οθόνης"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:134
-msgid "If “true”, the keys list use smaller rows."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A flag to enable small rows for bookmarks list"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:139
-msgid "If “true”, the bookmarks list use smaller rows."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
-msgid "Change the behaviour of a key value change request"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
-msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased "
-"type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The “safe” value asks for confirmation in "
-"these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
-"values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The “always-delay” value adds "
-"each change in delay mode, allowing to apply multiple keys at once."
-msgstr ""
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:148
 #, fuzzy
 #| msgid "A flag to restore the last view"
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Μια σημαία που θα επαναφέρετε στην τελευταία προβολή"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:149
-msgid ""
-"GSettings doesn’t allow keys to use upper-case in their names, but "
-"installation paths of schemas can. If “true”, the keys list is sorted case-"
-"sensitively, with in usual order upper-case folders first."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:153
-msgid "Use “Back” and “Forward” mouse button events"
-msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
 #, fuzzy
@@ -293,49 +242,6 @@ msgstr ""
 "Για χρήστες με ποντίκια που διαθέτουν κουμπιά «Μπροστά» και «Πίσω», αυτό το "
 "κλειδί καθορίζει ποιο κουμπί θα ενεργοποιεί την εντολή «Μπροστά» στο "
 "παράθυρο περιηγητή. Οι επιτρεπτές τιμές είναι από 6 μέχρι 14."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:170
-msgid "A flag to check for added or removed schemas"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
-msgid ""
-"Dconf Editor can monitor if schemas are added or removed from the multiple "
-"possible locations. That’s done by checking every three seconds if the "
-"schemas list has changed. As this way to do is suboptimal, this function can "
-"be disabled by setting this flag to “false”. Note that this option will be "
-"removed when a better way to do things is found."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
-msgid "Enabled relocatable schema mapping facilities"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
-msgid ""
-"Flags for the relocatable schemas mapping facilities. “User” enables "
-"mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
-"enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
-"reserved for Dconf Editor own mappings; “Startup” is for mapping a "
-"relocatable schema from the command-line."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
-msgid "Mapping of paths to manually associated schemas"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
-msgid ""
-"A dictionary that maps schema IDs with path specifications. It is used to "
-"allow the user to associate a relocatable schema to certain paths. Path "
-"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
-"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
-"may be associated with multiple path specifications."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:185
-msgid "A flag for skipping unnecessary subfolders"
-msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid ""
@@ -492,22 +398,6 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:263
 msgid "A dictionary entry of type ‘{ss}’"
 msgstr "Μια καταχώρηση λεξικού τύπου «{ss}»"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:264
-msgid ""
-"A dictionary maps values of a basic type to another value (of any type). A "
-"dictionary entry is one such mapping."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:268
-msgid "A “vardict”, type ‘a{sv}’"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:269
-msgid ""
-"A dictionary maps values of a basic type to another value (of any type). One "
-"simple use case is to map strings to variants."
-msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:273
 msgid "A double, type ‘d’"
@@ -680,136 +570,24 @@ msgstr ""
 msgid "A variant, type ‘v’"
 msgstr "Μια παραλλαγή, τύπου «v»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:347
-msgid ""
-"Variants could be stored inside variants, and consequently as a GSettings "
-"type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
-"a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-"representation of their content inside. If unclear, the type can be given in "
-"the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
-"for complete documentation."
-msgstr ""
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:351
 #, fuzzy
 msgid "A 1-choice enumeration"
 msgstr "Μια αρίθμηση 5 επιλογών"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
-msgid ""
-"An enumeration could contain only one item, but that’s probably an error. "
-"Dconf Editor warns you in that case."
-msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:357
 #, fuzzy
 msgid "A 1-choice integer value"
 msgstr "Μια αρίθμηση 5 επιλογών"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:358
-msgid ""
-"A range could limit an integer key to only allow one value, but that’s "
-"probably an error. Dconf Editor warns you in that case."
-msgstr ""
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "The empty tuple, type and value “()”"
 msgstr "Η κενή πλειάδα, ο τύπος και η τιμή «()»"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:363
-msgid ""
-"There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
-"no content, and can only take “()” as value."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
-msgid "An usual boolean value, defined by a relocatable schema."
-msgstr ""
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:379
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 "Υπογεγραμμένος ακέραιος 32-bit, ο οποίος ορίζεται από ένα μετατοπίζον σχήμα."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:390
-msgid "A normal non-conflicting key from Conflict1"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:391
-#: editor/ca.desrt.dconf-editor.gschema.xml:418
-msgid ""
-"This key is a test for multiple schemas in the same path with conflicting "
-"keys. Non-conflicting keys should have no issues."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
-msgid "Conflicting key defaulting to “1” that should give an error"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
-#: editor/ca.desrt.dconf-editor.gschema.xml:423
-msgid ""
-"This key is a test for multiple schemas in the same path with conflicting "
-"keys. It shouldn’t be editable as a key mapped to the same path has a "
-"different default value."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:400
-msgid "Conflicting key with no range that should give an error"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
-#: editor/ca.desrt.dconf-editor.gschema.xml:429
-msgid ""
-"This key is a test for multiple schemas in the same path with conflicting "
-"keys. It shouldn’t be editable as a key mapped to the same path has a "
-"different range."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:405
-msgid "A (simple) string conflicting key that should give a error"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:406
-#: editor/ca.desrt.dconf-editor.gschema.xml:434
-msgid ""
-"This key is a test for multiple schemas in the same path with conflicting "
-"keys. It shouldn’t be editable as a key mapped to the same path has a "
-"different type."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:410
-msgid "Conflicting key from Conflict1 that should give a warning"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:411
-#: editor/ca.desrt.dconf-editor.gschema.xml:439
-msgid ""
-"This key is a test for multiple schemas in the same path with conflicting "
-"keys. It can be edited, since the types are compatible, but it is still an "
-"issue."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
-msgid "A normal non-conflicting key from Conflict2"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:422
-msgid "Conflicting key defaulting to “2” that should give an error"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:428
-msgid "Conflicting key with range 0~5 that should give an error"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:433
-msgid "A nullable-string conflicting key that should give an error"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:438
-msgid "Conflicting key from Conflict2 that should give a warning"
-msgstr ""
 
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
@@ -860,66 +638,14 @@ msgstr "Προβολή της έκδοσης και έξοδος"
 msgid "Do not show initial warning"
 msgstr "Εμφάνιση αρχικής προειδοποίησης"
 
-#: editor/dconf-editor.vala:139
-msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-msgstr ""
-
 #: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
 msgstr "Εγκατεστημένα γνωστά σχήματα:"
-
-#: editor/dconf-editor.vala:234
-msgid "No known schemas installed."
-msgstr ""
-
-#: editor/dconf-editor.vala:238
-msgid "Known schemas skipped:"
-msgstr ""
-
-#: editor/dconf-editor.vala:243
-msgid "No known schemas skipped."
-msgstr ""
-
-#: editor/dconf-editor.vala:247
-msgid "Unknown schemas:"
-msgstr ""
-
-#: editor/dconf-editor.vala:252
-msgid "No unknown schemas."
-msgstr ""
-
-#: editor/dconf-editor.vala:325
-msgid "Only one window can be opened for now.\n"
-msgstr ""
-
-#: editor/dconf-editor.vala:344
-msgid "Cannot understand: too many arguments.\n"
-msgstr ""
-
-#: editor/dconf-editor.vala:354
-msgid "Cannot understand second argument in this context.\n"
-msgstr ""
-
-#: editor/dconf-editor.vala:374
-msgid "Cannot understand: slash character in second argument.\n"
-msgstr ""
-
-#: editor/dconf-editor.vala:388
-msgid "Schema path should start and end with a “/”.\n"
-msgstr ""
-
-#: editor/dconf-editor.vala:401
-msgid "Cannot understand: space character in argument.\n"
-msgstr ""
 
 #. #. * * Copy action
 #. #: editor/dconf-editor.vala:425
 msgid "Copied to clipboard"
 msgstr "Αντιγράφτηκε στο πρόχειρο"
-
-#: editor/dconf-editor.vala:480
-msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr ""
 
 #: editor/dconf-editor.vala:481
 msgid ""
@@ -943,37 +669,6 @@ msgstr ""
 "\n"
 "Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα\n"
 "http://gnome.gr/"
-
-#: editor/dconf-model.vala:939
-#, c-format
-msgid "%s (key erased)"
-msgstr ""
-
-#: editor/dconf-view.vala:335
-msgid "Failed to parse as double."
-msgstr ""
-
-#: editor/dconf-view.vala:394 editor/dconf-view.vala:453
-#: editor/dconf-view.vala:671 editor/dconf-view.vala:780
-msgid "This value is invalid for the key type."
-msgstr ""
-
-#: editor/dconf-window.vala:119
-msgid "Schema is relocatable, a path is needed."
-msgstr ""
-
-#: editor/dconf-window.vala:131
-msgid "Startup mappings are disabled."
-msgstr ""
-
-#: editor/dconf-window.vala:145
-msgid "Schema is not installed on given path."
-msgstr ""
-
-#: editor/dconf-window.vala:160
-#, c-format
-msgid "Unknown schema “%s”."
-msgstr ""
 
 #: editor/dconf-window.vala:301
 msgid "Thanks for using Dconf Editor for editing your settings!"
@@ -1001,12 +696,6 @@ msgstr "Εμφάνιση αυτού του διαλόγου την επόμεν�
 msgid "Folder “%s” is now empty."
 msgstr "Ο φάκελος «%s» είναι τώρα κενός."
 
-#. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:438
-#, c-format
-msgid "Key “%s” has been deleted."
-msgstr ""
-
 #: editor/dconf-window.vala:691
 #, fuzzy
 #| msgctxt "shortcut window"
@@ -1024,24 +713,10 @@ msgstr "Επαναφορά ορατών κλειδιών"
 msgid "Reset view recursively"
 msgstr "Επαναφορά ορατών κλειδιών"
 
-#: editor/dconf-window.vala:706
-msgid "Enter delay mode"
-msgstr ""
-
-#: editor/dconf-window.vala:771
-msgid ""
-"The same mouse button is set for going backward and forward. Doing nothing."
-msgstr ""
-
 #: editor/dconf-window.vala:1035
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Αδυναμία εύρεσης κλειδιού «%s»."
-
-#: editor/dconf-window.vala:1039
-#, c-format
-msgid "There’s nothing in requested folder “%s”."
-msgstr ""
 
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
@@ -1104,21 +779,6 @@ msgctxt "shortcut window"
 msgid "Copy path"
 msgstr "Αντιγραφή διαδρομής"
 
-#: editor/help-overlay.ui:72
-msgctxt "shortcut window"
-msgid "Modifications list actions"
-msgstr ""
-
-#: editor/help-overlay.ui:76
-msgctxt "shortcut window"
-msgid "Toggle modifications list"
-msgstr ""
-
-#: editor/help-overlay.ui:83
-msgctxt "shortcut window"
-msgid "Open selected row key"
-msgstr ""
-
 #: editor/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Dismiss modification"
@@ -1135,42 +795,12 @@ msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Άνοιγμα φακέλου root"
 
-#: editor/help-overlay.ui:110
-msgctxt "shortcut window"
-msgid "Open parent folder"
-msgstr ""
-
-#: editor/help-overlay.ui:117
-msgctxt "shortcut window"
-msgid "Open active direct child"
-msgstr ""
-
-#: editor/help-overlay.ui:124
-msgctxt "shortcut window"
-msgid "Open active last child"
-msgstr ""
-
-#: editor/help-overlay.ui:133
-msgctxt "shortcut window"
-msgid "Keys list actions"
-msgstr ""
-
-#: editor/help-overlay.ui:137
-msgctxt "shortcut window"
-msgid "Contextual menu"
-msgstr ""
-
 #: editor/help-overlay.ui:144
 #, fuzzy
 #| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Ορισμός προεπιλεγμένης τιμής"
-
-#: editor/help-overlay.ui:151
-msgctxt "shortcut window"
-msgid "Toggle boolean value"
-msgstr ""
 
 #: editor/help-overlay.ui:160
 msgctxt "shortcut window"
@@ -1234,11 +864,6 @@ msgstr "Άνοιγμα"
 msgid "Open parent folder"
 msgstr "Άνοιγμα γονικού φακέλου"
 
-#. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:402
-msgid "Reset recursively"
-msgstr ""
-
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
 #: editor/key-list-box-row.vala:405
 msgid "Do not erase"
@@ -1252,10 +877,6 @@ msgstr "Καμία αλλαγή"
 #: editor/modifications-revealer.ui:66
 msgid "Apply"
 msgstr "Εφαρμογή"
-
-#: editor/modifications-revealer.ui:104
-msgid "Delayed setting changes will be shown here"
-msgstr ""
 
 #: editor/modifications-revealer.vala:132
 #: editor/modifications-revealer.vala:340
@@ -1325,18 +946,6 @@ msgstr[1] ""
 msgid "Copy current path"
 msgstr "Αντιγραφή τρέχουσας διαδρομής"
 
-#: editor/registry-info.ui:32
-msgid ""
-"This key is defined and used by more than one schema. This could lead to "
-"problems. Edit value at your own risk."
-msgstr ""
-
-#: editor/registry-info.ui:69
-msgid ""
-"This key is incompatibly defined and used by more than one schema. It is "
-"impossible to work with its value in a meaningful way."
-msgstr ""
-
 #: editor/registry-info.ui:106
 #, fuzzy
 #| msgid ""
@@ -1355,31 +964,6 @@ msgstr ""
 "κλειδί μπορεί να έχει αφαιρεθεί, ή έχει σταματήσει να το χρησιμοποιεί ή "
 "μπορεί να χρησιμοποιεί μια άλλη διάταξη που ορίζει τα κλειδιά της."
 
-#: editor/registry-info.ui:151
-msgid ""
-"This enumeration offers only one choice. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about "
-"it."
-msgstr ""
-
-#: editor/registry-info.ui:161
-msgid ""
-"This integer key can only take one value. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about "
-"it."
-msgstr ""
-
-#: editor/registry-info.ui:171
-msgid ""
-"This key has a special “empty tuple” type. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about "
-"it."
-msgstr ""
-
-#: editor/registry-info.vala:127
-msgid "Defined by"
-msgstr ""
-
 #: editor/registry-info.vala:130
 msgid "Schema"
 msgstr "Διάταξη"
@@ -1387,10 +971,6 @@ msgstr "Διάταξη"
 #: editor/registry-info.vala:136
 msgid "Summary"
 msgstr "Σύνοψη"
-
-#: editor/registry-info.vala:137 editor/registry-list.vala:337
-msgid "No summary provided"
-msgstr ""
 
 #: editor/registry-info.vala:144
 msgid "Description"
@@ -1404,10 +984,6 @@ msgstr "Δεν παρέχεται περιγραφή"
 #: editor/registry-info.vala:150
 msgid "Type"
 msgstr "Τύπος"
-
-#: editor/registry-info.vala:162
-msgid "Forced range"
-msgstr ""
 
 #: editor/registry-info.vala:162
 msgid "Yes"
@@ -1429,12 +1005,6 @@ msgstr "Μέγιστο"
 msgid "Default"
 msgstr "Προεπιλεγμένο"
 
-#: editor/registry-info.vala:187
-msgid ""
-"There are conflicting definitions of this key, getting value would be either "
-"problematic or meaningless."
-msgstr ""
-
 #: editor/registry-info.vala:206
 msgid "Current value"
 msgstr "Τρέχουσα τιμή"
@@ -1447,19 +1017,6 @@ msgstr "Χρήση προεπιλεγμένης τιμής"
 #: editor/registry-info.vala:328
 msgid "Custom value"
 msgstr "Προσαρμοσμένη τιμή"
-
-#: editor/registry-info.vala:513
-msgid ""
-"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
-"notation."
-msgstr ""
-
-#: editor/registry-info.vala:517
-msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
-msgstr ""
 
 #. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:524
@@ -1488,17 +1045,9 @@ msgstr ""
 "Χρησιμοποιήστε τη λέξη κλειδί «nothing» για να ορίσετε τον τύπο maybe "
 "(ξεκινά με «m») στην κενή τιμή του."
 
-#: editor/registry-list.vala:363
-msgid "conflicting keys"
-msgstr ""
-
 #: editor/registry-list.vala:377
 msgid "No Schema Found"
 msgstr "Δεν βρέθηκε διάταξη"
-
-#: editor/registry-search.vala:28
-msgid "No matches"
-msgstr ""
 
 #: editor/registry-search.vala:377
 msgid "Current folder"
@@ -1515,10 +1064,6 @@ msgstr "Κλειδιά"
 #: editor/registry-view.vala:25
 msgid "No keys in this path"
 msgstr "Δεν υπάρχουν κλειδιά σε αυτή τη διαδρομή"
-
-#: editor/registry-view.vala:126
-msgid "Keys not defined by a schema"
-msgstr ""
 
 #: editor/setting-object.vala:64
 msgid "Boolean"
@@ -1597,14 +1142,6 @@ msgstr "ψευδές"
 #: editor/setting-object.vala:226
 msgid "nothing"
 msgstr "τίποτα (nothing)"
-
-#: editor/setting-object.vala:429
-msgid "Schema with path"
-msgstr ""
-
-#: editor/setting-object.vala:431
-msgid "Relocatable schema"
-msgstr ""
 
 #: editor/setting-object.vala:432
 msgid "DConf backend"
