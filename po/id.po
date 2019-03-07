@@ -863,7 +863,7 @@ msgstr ""
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A custom type, here ‘(ii)’"
-msgstr "Sebuah tipe ubahan, di sini \"ii\""
+msgstr "Sebuah tipe ubahan, di sini \"(ii)\""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
