@@ -626,7 +626,7 @@ msgstr ""
 " Μαρία Μαυρίδου <mavridou@gmail.com>\n"
 "\n"
 "Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα\n"
-"http://gnome.gr/"
+"https://gnome.gr/"
 
 #: editor/dconf-window.vala:301
 msgid "Thanks for using Dconf Editor for editing your settings!"
