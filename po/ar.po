@@ -72,7 +72,7 @@ msgstr "حول"
 #: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr ""
-"فريق عربآيز للترجمة http://www.arabeyes.org:\n"
+"فريق عربآيز للترجمة https://www.arabeyes.org\n"
 "محمد تهامي مهدي <dragnucs@gmail.com>\n"
 "عبد الرحيم قيطوني <a.kitouni@gmail.com>"
 
