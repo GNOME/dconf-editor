@@ -1350,7 +1350,7 @@ msgstr "Schéma není nainstalováno v zadané cestě."
 #: editor/dconf-window.vala:166
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr "Neznámé schémata „%s“"
+msgstr "Neznámé schémata „%s“."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:272
