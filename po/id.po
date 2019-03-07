@@ -941,7 +941,7 @@ msgid ""
 msgstr ""
 "Varian dapat disimpan di dalam varian, dan akibatnya sebagai tipe GSettings. "
 "Representasinya menggunakan tanda kurung XML (karakter ‘<’ dan ‘>’, dalam "
-"berkas gschema masing-masing “&#60;” dan “&#62;”), dengan representasi yang "
+"berkas gschema masing-masing \"&#60;\" dan \"&#62;\"), dengan representasi yang "
 "dapat diuraikan dari konten mereka di dalamnya. Jika tidak jelas, tipe dapat "
 "diberikan dalam nilai dengan anotasi awalan seperti \"@x\" (di mana \"x\" "
 "adalah string tipe) atau \"int64\". Lihat https://developer.gnome.org/glib/"
@@ -979,7 +979,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:474
 msgid "The empty tuple, type and value “()”"
-msgstr "Tuple kosong, tipe dan nilai “()”"
+msgstr "Tuple kosong, tipe dan nilai \"()\""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:476
@@ -987,8 +987,8 @@ msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
-"Ada jenis tupel kosong (kadang-kadang disebut “triv”) yaitu tupel tanpa "
-"konten, dan hanya dapat mengambil “()” sebagai nilai."
+"Ada jenis tupel kosong (kadang-kadang disebut \"triv\") yaitu tupel tanpa "
+"konten, dan hanya dapat mengambil \"()\" sebagai nilai."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
@@ -1160,7 +1160,7 @@ msgstr "path folder atau path kunci"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:211
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr "contoh: “/org/gnome/” atau “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr "contoh: \"/org/gnome/\" atau \"/ca/desrt/dconf-editor/Demo/boolean\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
@@ -1170,7 +1170,7 @@ msgstr "nama skema dengan path tetap"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:217
 msgid "example: “ca.desrt.dconf-editor.Settings”"
-msgstr "contoh: “ca.desrt.dconf-editor.Settings”"
+msgstr "contoh: \"ca.desrt.dconf-editor.Settings\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:221
@@ -1180,7 +1180,7 @@ msgstr "nama skema \"relocatable\", tanpa path tetap"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:223
 msgid "see list with the “--list-relocatable-schemas” option"
-msgstr "lihat daftar dengan opsi “--list-relocatable-schemas”"
+msgstr "lihat daftar dengan opsi \"--list-relocatable-schemas\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
@@ -1190,7 +1190,7 @@ msgstr "path tempat memetakan skema yang dapat dipindahkan"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:229
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr "contoh: “ca.desrt.dconf-editor.Penanda taut:/ca/desrt/dconf-editor/”"
+msgstr "contoh: \"ca.desrt.dconf-editor.Penanda taut:/ca/desrt/dconf-editor/\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
@@ -1200,7 +1200,7 @@ msgstr "nama kunci dari skema"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
-msgstr "contoh: “bookmarks”"
+msgstr "contoh: \"bookmarks\""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:291
@@ -1377,7 +1377,7 @@ msgstr "Skema tidak dipasang pada path yang diberikan."
 #: editor/dconf-window.vala:166
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr "Skema “%s” tidak diketahui."
+msgstr "Skema \"%s\" tidak diketahui."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:272
@@ -1416,13 +1416,13 @@ msgstr ""
 #: editor/dconf-window.vala:775
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr "Folder “%s” sekarang kosong."
+msgstr "Folder \"%s\" sekarang kosong."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:786
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr "Kunci “%s” telah dihapus."
+msgstr "Kunci \"%s\" telah dihapus."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:792
