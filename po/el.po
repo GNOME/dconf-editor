@@ -198,21 +198,6 @@ msgstr "Μια σημαία για την ενεργοποίηση της λει
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Μια σημαία που θα επαναφέρετε στην τελευταία προβολή"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
-#, fuzzy
-#| msgid ""
-#| "For users with mice that have buttons for “Forward” and “Back”, this key "
-#| "will set which button activates the “Back” command in a browser window. "
-#| "Possible values range between 6 and 14."
-msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key "
-"will determine if any action is taken inside of a browser window when either "
-"is pressed."
-msgstr ""
-"Για χρήστες με ποντίκια που διαθέτουν κουμπιά «Μπροστά» και «Πίσω», αυτό το "
-"κλειδί καθορίζει ποιο κουμπί θα ενεργοποιεί την εντολή «Πίσω» στο παράθυρο "
-"περιηγητή. Οι επιτρεπτές τιμές είναι από 6 μέχρι 14."
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr ""
@@ -512,11 +497,6 @@ msgid "A custom type, here ‘(ii)’"
 msgstr "Ένας προσαρμοσμένος τύπος, εδώ «(ii)»"
 
 #: editor/ca.desrt.dconf-editor.gschema.xml:327
-#, fuzzy
-#| msgid ""
-#| "Dconf Editor lets you edit any settings type supported by GSettings, "
-#| "falling back on a string entry when it doesn't have a better way to do. "
-#| "Here is a tuple of two 32bit signed integers."
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -570,16 +550,6 @@ msgstr ""
 msgid "A variant, type ‘v’"
 msgstr "Μια παραλλαγή, τύπου «v»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
-#, fuzzy
-msgid "A 1-choice enumeration"
-msgstr "Μια αρίθμηση 5 επιλογών"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
-#, fuzzy
-msgid "A 1-choice integer value"
-msgstr "Μια αρίθμηση 5 επιλογών"
-
 #: editor/ca.desrt.dconf-editor.gschema.xml:362
 msgid "The empty tuple, type and value “()”"
 msgstr "Η κενή πλειάδα, ο τύπος και η τιμή «()»"
@@ -625,18 +595,6 @@ msgstr "Ανανέωση των αποτελεσμάτων αναζήτησης"
 #: editor/dconf-editor.vala:134
 msgid "Print release version and exit"
 msgstr "Προβολή της έκδοσης και έξοδος"
-
-#: editor/dconf-editor.vala:135
-#, fuzzy
-#| msgid "Print release version and exit"
-msgid "Print relocatable schemas and exit"
-msgstr "Προβολή της έκδοσης και έξοδος"
-
-#: editor/dconf-editor.vala:137
-#, fuzzy
-#| msgid "Show initial warning"
-msgid "Do not show initial warning"
-msgstr "Εμφάνιση αρχικής προειδοποίησης"
 
 #: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
@@ -697,20 +655,11 @@ msgid "Folder “%s” is now empty."
 msgstr "Ο φάκελος «%s» είναι τώρα κενός."
 
 #: editor/dconf-window.vala:691
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Copy descriptor"
 msgid "Copy descriptor"
 msgstr "Αντιγραφή περιγραφέα"
 
 #: editor/dconf-window.vala:697
 msgid "Reset visible keys"
-msgstr "Επαναφορά ορατών κλειδιών"
-
-#: editor/dconf-window.vala:698
-#, fuzzy
-#| msgid "Reset visible keys"
-msgid "Reset view recursively"
 msgstr "Επαναφορά ορατών κλειδιών"
 
 #: editor/dconf-window.vala:1035
@@ -796,8 +745,6 @@ msgid "Open root folder"
 msgstr "Άνοιγμα φακέλου root"
 
 #: editor/help-overlay.ui:144
-#, fuzzy
-#| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Ορισμός προεπιλεγμένης τιμής"
@@ -906,8 +853,8 @@ msgstr "Οι αλλαγές θα καθυστερήσουν μέχρι να το
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Μία λειτουργία gsettings καθυστέρησε."
+msgstr[1] "%u λειτουργίες gsettings καθυστέρησαν."
 
 #. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:358
@@ -917,42 +864,11 @@ msgid_plural "%u dconf operations delayed."
 msgstr[0] "Μία λειτουργία dconf καθυστέρησε."
 msgstr[1] "%u λειτουργίες dconf καθυστέρησαν."
 
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:361
-#, c-format
-msgid "%s%s"
-msgstr "%s%s"
-
-#: editor/modifications-revealer.vala:361
-#, c-format
-msgid "One gsettings operation"
-msgid_plural "%u gsettings operations"
-msgstr[0] "Μία λειτουργία gsettings"
-msgstr[1] "%u λειτουργίες gsettings"
-
-#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, and
-#. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:366
-#, c-format
-msgid " and one dconf operation delayed."
-msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-
 #: editor/pathbar.vala:316
 msgid "Copy current path"
 msgstr "Αντιγραφή τρέχουσας διαδρομής"
 
 #: editor/registry-info.ui:106
-#, fuzzy
-#| msgid ""
-#| "No schema available. Dconf Editor can’t find a schema associated with "
-#| "this key. The application that installed this key may have been removed, "
-#| "may have stop the use of this key, or may use a relocatable schema for "
-#| "defining its keys."
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
 "Editor can’t find one associated with this key. If the application that was "
@@ -963,6 +879,11 @@ msgstr ""
 "διάταξη συσχετισμένη με αυτό το κλειδί. Η εφαρμογή που εγκατέστησε αυτό το "
 "κλειδί μπορεί να έχει αφαιρεθεί, ή έχει σταματήσει να το χρησιμοποιεί ή "
 "μπορεί να χρησιμοποιεί μια άλλη διάταξη που ορίζει τα κλειδιά της."
+
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Όνομα"
 
 #: editor/registry-info.vala:130
 msgid "Schema"
@@ -1175,60 +1096,6 @@ msgstr "Σύστημα υποστήριξης DConf"
 #~ msgid "Cancel"
 #~ msgstr "Aκύρωση"
 
-#, fuzzy
-#~| msgid ""
-#~| "This program is free software; you can redistribute it and/or modify it "
-#~| "under the terms of the GNU General Public License as published by the "
-#~| "Free Software Foundation; either version 2 of the License, or (at your "
-#~| "option) any later version.\n"
-#~| "\n"
-#~| "This program is distributed in the hope that it will be useful, but "
-#~| "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~| "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU "
-#~| "General Public License for more details.\n"
-#~| "\n"
-#~| "You should have received a copy of the GNU General Public License along "
-#~| "with this program; if not, write to the Free Software Foundation, Inc., "
-#~| "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgid ""
-#~ "Dconf Editor is free software: you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation, either version 3 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "Dconf Editor is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program. If not, see <http://www.gnu.org/licenses/>."
-#~ msgstr ""
-#~ "Αυτή η εφαρμογή είναι ελεύθερο λογισμικό: Μπορείτε να το διανείμετε εκ "
-#~ "νέου και/ή να το τροποποιήσετε κάτω από τους όρους της GNU Γενικής "
-#~ "Δημόσιας Άδειας Χρήσης (GPL) όπως είναι δημοσιευμένη από το Free Software "
-#~ "Foundation· είτε με την έκδοση 2 της Άδειας, είτε (κατά την επιλογή σας) "
-#~ "με οποιαδήποτε μεταγενέστερη έκδοση.\n"
-#~ "\n"
-#~ "Η εφαρμογή διανέμεται με την ελπίδα οτι θα είναι χρήσιμη, αλλά ΧΩΡΙΣ "
-#~ "ΚΑΜΜΙΑ ΑΠΟΛΥΤΩΣ ΕΓΓΥΗΣΗ, χωρίς ακόμη και την έμμεση εγγύηση "
-#~ "ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την "
-#~ "Γενική Άδεια Δημόσιας Χρήσης GNU (GNU General Public License) για "
-#~ "περισσότερες λεπτομέρειες.\n"
-#~ "\n"
-#~ "Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Άδειας Δημόσιας Χρήσης "
-#~ "GNU  (GNU General Public License) μαζί με αυτό το πρόγραμμα. Αν όχι, "
-#~ "επικοινωνήστε γραπτώς με το Ίδρυμα Ελεύθερου λογισμικού (Free Software "
-#~ "Foundation, Inc.), 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301, USA."
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Πνευματικά δικαιώματα © Canonical Ltd"
-
-#, fuzzy
-#~ msgid "I'd be careful."
-#~ msgstr "Προσέξτε να μην χάσετε το κωδικό πρόσβασής σας."
-
 #~ msgid "_Find…"
 #~ msgstr "Εύ_ρεση…"
 
@@ -1240,9 +1107,6 @@ msgstr "Σύστημα υποστήριξης DConf"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Σφάλμα κατά την ανάθεση τιμής: %s"
-
-#~ msgid "Name"
-#~ msgstr "Όνομα"
 
 #~ msgid "Value"
 #~ msgstr "Τιμή"
