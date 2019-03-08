@@ -38,10 +38,15 @@ msgstr ""
 "GNU General Public License,\n"
 "нұсқасы 3 не одан кейін шыққан"
 
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Жасаған"
+
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr "Аудармашылар"
+msgstr "Аударған"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
