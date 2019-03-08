@@ -1264,7 +1264,7 @@ msgstr ""
 "Ask Hjorth Larsen\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-"Mere info: http://www.dansk-gruppen.dk"
+"Mere info:\nhttp://www.dansk-gruppen.dk"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:671
