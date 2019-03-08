@@ -110,22 +110,15 @@ msgstr "עריכה ישירה של כל מסד נתוני התצורה שלך"
 msgid "settings;configuration;"
 msgstr "הגדרות;תצורה;קונפיגורציה;"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:12
-#, fuzzy
-msgid "dconf-editor"
-msgstr "עורך dconf"
-
 #: editor/dconf-editor-menu.ui:6
 msgid "Keyboard Shortcuts"
 msgstr "צירופי מקשים"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "על _אודות"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "י_ציאה"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "על אודות"
 
 #: editor/dconf-editor.ui:49
 msgid "Actions"
@@ -349,7 +342,7 @@ msgid "Quit"
 msgstr "יציאה"
 
 #: editor/key-list-box-row.vala:162
-msgid "No Schema Found"
+msgid "No schema found"
 msgstr "לא נמצא תרשים"
 
 #: editor/key-list-box-row.vala:171
@@ -474,6 +467,11 @@ msgid ""
 msgstr ""
 "רשומה זו מציעה בחירה אחת בלבד. זו כנראה שגיאה של היישום שהתקין תרשים זה. אם "
 "אפשרי, נא לפתוח באג על כך."
+
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "שם"
 
 #: editor/registry-info.vala:80
 msgid "Schema"
@@ -613,41 +611,11 @@ msgstr "המפתח „%s” הוסר."
 #~ msgid "Not found"
 #~ msgstr "לא נמצא"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "תכנית זו הנה תכנה חופשית; ניתן להפיץ ו/או לשנות אותה תחת תנאי הרישיון "
-#~ "הציבורי הכללי של GNU כפי שפורסם על ידי מוסד התכנה החופשית; או גרסה 2, או "
-#~ "(לבחירתך) כל גרסהעדכנית יותר.\n"
-#~ "\n"
-#~ "תכנית זו מופצת בתקווה שתביא תועלת, אך ללא שום אחריות אפילו לא מרומזת "
-#~ "למטרות מסחר או התאמה לצרכים מסוימים ניתן לעיין ברישיון הציבורי הכללי של "
-#~ "GNU לקבלת פרטים נוספים.\n"
-#~ "\n"
-#~ "לתכנית זו אמור היה להיות מצורף עותק של הרישיון הציבורי הכללי של GNU; אם "
-#~ "לא כך הדבר, נא לכתוב ל־Free Software Foundation, Inc., 51 Franklin "
-#~ "Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "כל הזכויות שמורות © Canonical בע״מ"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "שגיאה בהגדרת הערך: %s"
-
-#~ msgid "Name"
-#~ msgstr "שם"
 
 #~ msgid "Value"
 #~ msgstr "ערך"
