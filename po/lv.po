@@ -825,13 +825,26 @@ msgstr "Konfliktējoša atslēga no Conflict2, kam vajadzētu dot brīdinājumu"
 msgid "Keyboard Shortcuts"
 msgstr "Tastatūras saīsnes"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "P_ar"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "Par"
 
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "I_ziet"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "Autori"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Veidotājs"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "Tulkojuši"
 
 #: editor/dconf-editor.ui:34
 msgid "Actions"
