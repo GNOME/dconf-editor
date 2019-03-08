@@ -120,6 +120,21 @@ msgstr "צירופי מקשים"
 msgid "About"
 msgstr "על אודות"
 
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "תודות"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "נוצר על ידי"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "תורגם על ידי"
+
 #: editor/dconf-editor.ui:49
 msgid "Actions"
 msgstr "פעולות"
