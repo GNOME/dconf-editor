@@ -664,7 +664,7 @@ msgid "conflicting keys"
 msgstr "വിരുദ്ധമായ കീകൾ"
 
 #: editor/registry-list.vala:377
-msgid "No Schema Found"
+msgid "No schema found"
 msgstr "സ്കീമ കണ്ടില്ല"
 
 #: editor/registry-search.vala:28
@@ -777,23 +777,20 @@ msgstr "മാറ്റാവുന്ന സ്കീമ"
 msgid "DConf backend"
 msgstr "Dconf ബാക്കെന്റ്"
 
-#~ msgid "The bookmarks list is not editable."
-#~ msgstr "അടയാളക്കുറിപ്പുകള്‍ പട്ടിക എഡിറ്റുചെയ്യാനാവില്ല."
+#. Translators: text that might appear in the bookmarks popover in place of the switch and its label
+#: editor/bookmarks.ui:96
+msgid "The bookmarks list is not editable."
+msgstr "അടയാളക്കുറിപ്പുകള്‍ പട്ടിക എഡിറ്റുചെയ്യാനാവില്ല."
 
-#, fuzzy
-#~| msgid "Bookmark this Location"
-#~ msgid "Bookmark this Search"
-#~ msgstr "ഈ ലൊക്കേഷന്‍ ഓര്‍മിച്ചു വയ്ക്കുക"
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
+msgid "Follow system night light"
+msgstr "സിസ്റ്റം രാത്രി വെളിച്ചം പിന്തുടരുക"
 
-#, fuzzy
-#~ msgid "A path to restore the pathbar state"
-#~ msgstr "അവസാനം കണ്ട ഭാഗത്തേക്ക് പോകാനുള്ള ഫ്ലാഗ്"
-
-#~ msgid "Follow system night light"
-#~ msgstr "സിസ്റ്റം രാത്രി വെളിച്ചം പിന്തുടരുക"
-
-#~ msgid "Use GNOME night light setting to activate night-mode."
-#~ msgstr "രാത്രി-മോഡ് സജീവമാക്കുന്നതിന് ഗ്നോം രാത്രി വെളിച്ചത്തിൽ സജ്ജമാക്കുക."
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr "രാത്രി-മോഡ് സജീവമാക്കുന്നതിന് ഗ്നോം രാത്രി വെളിച്ചത്തിൽ സജ്ജമാക്കുക."
 
 #, fuzzy
 #~| msgid "A graphical tool for editing the dconf database"
@@ -808,62 +805,53 @@ msgstr "Dconf ബാക്കെന്റ്"
 #~ msgid "example: “bookmarks”"
 #~ msgstr "ഉദാഹരണം: \"അടയാളക്കുറിപ്പുകള്‍ \""
 
-#~ msgid "Reuse night mode"
-#~ msgstr "രാത്രി മോഡ് പുനരാരംഭിക്കുക"
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:153
+msgid "Reuse night mode"
+msgstr "രാത്രി മോഡ് പുനരാരംഭിക്കുക"
 
-#~ msgid "Use night mode"
-#~ msgstr "രാത്രി മോഡ് ഉപയോഗിക്കുക"
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:157
+msgid "Use night mode"
+msgstr "രാത്രി മോഡ് ഉപയോഗിക്കുക"
 
-#, fuzzy
-#~| msgid "Dconf Editor"
-#~ msgid "About Dconf Editor"
-#~ msgstr "Dconf എഡിറ്റര്‍"
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
+msgctxt "shortcut window"
+msgid "Previous line"
+msgstr "മുമ്പത്തെ വരി"
 
-#, fuzzy
-#~| msgid "Search keys"
-#~ msgctxt "shortcut window"
-#~ msgid "Search options"
-#~ msgstr "കീകള്‍ തിരയുക"
-
-#, fuzzy
-#~| msgid "Copy current path"
-#~ msgctxt "shortcut window"
-#~ msgid "Edit parent path"
-#~ msgstr "ഇപ്പോളുള്ള വഴി കോപ്പി ചെയ്യുക"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Previous line"
-#~ msgstr "മുമ്പത്തെ വരി"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Next line"
-#~ msgstr "അടുത്ത വരി"
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
+msgctxt "shortcut window"
+msgid "Next line"
+msgstr "അടുത്ത വരി"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Show folder properties"
 #~ msgstr "ഫോൾഡർ ഗുണവിശേഷങ്ങള്‍ കാണിക്കുക"
 
-#, fuzzy
-#~| msgid "No keys in this path"
-#~ msgid "Go to this path"
-#~ msgstr "ഈ വഴിയില്‍ കീകള്‍ ഒന്നുമില്ല"
+#. Translators: menu entry of the pathbar menu (not displayed for now)
+#. Translators: "open" action in the right-click menu on a "show folder info" row
+#: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
+msgid "Show properties"
+msgstr "ഗുണവിശേഷതകള് കാണിക്കുക"
 
-#~ msgid "Show properties"
-#~ msgstr "ഗുണവിശേഷതകള് കാണിക്കുക"
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
+msgctxt "shortcut window"
+msgid "Edit path"
+msgstr "പാത എഡിറ്റുചെയ്യുക"
 
-#~ msgid "Edit path"
-#~ msgstr "പാത എഡിറ്റുചെയ്യുക"
-
-#, fuzzy
-#~| msgid "Erase key"
-#~ msgid "Browse keys"
-#~ msgstr "കീ മായ്ച്ചുകളയുക"
-
-#~ msgid "Name"
-#~ msgstr "പേര്"
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "പേര്"
 
 #~ msgid "Paths"
 #~ msgstr "പാതകള്‍"
 
-#~ msgid "Subfolders"
-#~ msgstr "സബ്ഫോൾഡറുകൾ"
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1196
+msgid "Subfolders"
+msgstr "സബ്ഫോൾഡറുകൾ"
