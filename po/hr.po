@@ -823,13 +823,26 @@ msgstr "Sukobljujući ključ iz Sukob2 koji bi trebao dati upozorenje"
 msgid "Keyboard Shortcuts"
 msgstr "Prečaci tipkovnice"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_O programu"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "O programu"
 
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "_Zatvori"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "Zasluge"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Stvorio"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "Preveli"
 
 #: editor/dconf-editor.ui:34
 msgid "Actions"
