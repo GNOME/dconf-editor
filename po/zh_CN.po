@@ -508,13 +508,26 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr "快捷键"
 
-#: ../editor/dconf-editor-menu.ui.h:2
-msgid "_About"
-msgstr "关于(_A)"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "关于"
 
-#: ../editor/dconf-editor-menu.ui.h:3
-msgid "_Quit"
-msgstr "退出(_Q)"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "鸣谢"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "作者："
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "翻译："
 
 #: ../editor/dconf-editor.ui.h:2
 msgid "Actions"
