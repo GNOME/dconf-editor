@@ -50,10 +50,7 @@ msgstr "Creato da"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr ""
-"Milo Casagrande <milo@milo.name>\n"
-"Luca Ferretti <elle.uca@libero.it>\n"
-"Alessio Frusciante <algol@firenze.linux.it>"
+msgstr "Tradotto da"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
