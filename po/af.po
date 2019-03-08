@@ -114,13 +114,26 @@ msgstr "Vertoon aanvanklike waarde"
 msgid "Keyboard Shortcuts"
 msgstr "Sleutelbordkortpaaie"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_Aangaande"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "Aangaande"
 
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "_Sluit af"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "Bedankings"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Geskep deur"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "Vertaal deur"
 
 #: editor/dconf-editor.ui:34
 msgid "Actions"
@@ -283,7 +296,7 @@ msgid "Quit"
 msgstr "Sluit af"
 
 #: editor/key-list-box-row.vala:343
-msgid "No Schema Found"
+msgid "No schema found"
 msgstr "Geen skema gevind nie"
 
 #: editor/key-list-box-row.vala:467 editor/registry-info.vala:121
@@ -429,41 +442,102 @@ msgstr "Gidse"
 msgid "Keys"
 msgstr "Sleutels"
 
-#: editor/setting-object.vala:67
-msgid "String"
-msgstr "String"
-
-#: editor/setting-object.vala:69
-msgid "String array"
-msgstr "String skikking"
-
-#: editor/setting-object.vala:71
-msgid "Enumeration"
-msgstr "Opsomming"
-
-#: editor/setting-object.vala:73
-msgid "Flags"
-msgstr "Vlae"
-
-#: editor/setting-object.vala:75
-msgid "Double"
-msgstr "Dubbel"
-
-#: editor/setting-object.vala:80
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "D-Bus voorwerp roete"
 
-#: editor/setting-object.vala:82
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "D-Bus voorwerp roete skikking"
 
-#: editor/setting-object.vala:84
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "D-Bus handtekeninge"
 
-#: editor/setting-object.vala:92
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "D-Bus voorwerp roete"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "D-Bus voorwerp roete skikking"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "D-Bus handtekeninge"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "String"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "string"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "String skikking"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "string skikking"
+
+# Lad os bruge det typiske korte 'internationale' navn Enum; der er ikke nogen oversættelse som giver mening i sig selv
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Opsomming"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "opsomming"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Vlae"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "vlae"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Dubbel"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "dubbel"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Integer"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "integer"
 
 #: editor/setting-object.vala:210
 msgid "True"
