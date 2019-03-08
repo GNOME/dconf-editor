@@ -44,12 +44,12 @@ msgstr ""
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
 msgid "Creators"
-msgstr "Ustvarjalci"
+msgstr "Ustvarili"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr "Matej Urbančič <matej.u@svn.gnome.org>"
+msgstr "Prevod"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
