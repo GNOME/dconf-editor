@@ -635,50 +635,123 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Walter Garcia-Fontes <walter.garcia@upf.edu>"
 
-#: editor/dconf-model.vala:220
-msgid "Boolean"
-msgstr "Booleà"
-
-#: editor/dconf-model.vala:222
-msgid "String"
-msgstr "Text"
-
-#: editor/dconf-model.vala:224
-msgid "String array"
-msgstr "Matriu de cadena de caràcters"
-
-#: editor/dconf-model.vala:226
-msgid "Enumeration"
-msgstr "Enumeració"
-
-#: editor/dconf-model.vala:228
-msgid "Flags"
-msgstr "Senyaladors"
-
-#: editor/dconf-model.vala:230
-msgid "Double"
-msgstr "Doble"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:233
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Tipus de gestor D-Bus"
 
-#: editor/dconf-model.vala:235
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Camí d'objectes D-Bus"
 
-#: editor/dconf-model.vala:237
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Matriu de camins d'objectes D-Bus"
 
-#: editor/dconf-model.vala:239
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Signatura D-Bus"
 
-#: editor/dconf-model.vala:247
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "tipus de gestor D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "camí d'objectes D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "matriu de camins d'objectes D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "signatura D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Booleà"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "booleà"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Text"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "text"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Matriu de cadena de caràcters"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "matriu de cadena de caràcters"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Enumeració"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "enumeració"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Senyaladors"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "senyaladors"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Doble"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "doble"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Enter"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "enter"
 
 #: editor/dconf-model.vala:362
 msgid "True"
@@ -856,8 +929,9 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ix"
 
-#: editor/key-list-box-row.vala:188
-msgid "No Schema Found"
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
 msgstr "No s'ha trobat cap esquema"
 
 #: editor/key-list-box-row.vala:202
@@ -1017,6 +1091,11 @@ msgstr ""
 "l'aplicació que va instal·lar este esquema. Si és possible, obriu un "
 "informe d'error sobre això."
 
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Nom"
+
 #: editor/registry-info.vala:82
 msgid "Schema"
 msgstr "Esquema"
@@ -1154,44 +1233,8 @@ msgstr "S'ha suprimit la clau «%s»."
 #~ msgid "Not found"
 #~ msgstr "No s'ha trobat"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Aquest programa és programari lliure; podeu redistribuir-lo i/o modificar-"
-#~ "lo sota els termes de la Llicència Pública General GNU tal com ha estat "
-#~ "publicada per la Free Software Foundation; ja sigui la versió 2 de la "
-#~ "Llicència o bé (si ho preferiu) qualsevol altra versió posterior.\n"
-#~ "\n"
-#~ "Aquest programa es distribueix amb l'expectativa que serà útil, però "
-#~ "SENSE CAP GARANTIA; ni tan sols la garantia implícita de COMERCIABILITAT "
-#~ "o ADEQUACIÓ PER UN PROPÒSIT PARTICULAR. Vegeu la Llicència Pública "
-#~ "General GNU per obtenir-ne més detalls.\n"
-#~ "\n"
-#~ "Hauríeu d'haver rebut una còpia de la Llicència Pública General GNU "
-#~ "juntament amb aquest programa; en cas contrari, escriviu a la Free "
-#~ "Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301, USA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
-
 #~ msgid "Error setting value: %s"
 #~ msgstr "S'ha produït un error en establir el valor: %s"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
 
 #~ msgid "Value"
 #~ msgstr "Valor"
