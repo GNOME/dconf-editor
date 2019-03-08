@@ -72,6 +72,21 @@ msgstr "Un indicador ta activar o modo maximizau"
 msgid "About"
 msgstr "Arredol"
 
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "Creditos"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Creyau por"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "Traduciu por"
+
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
