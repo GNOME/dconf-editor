@@ -553,13 +553,26 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de teclado"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_Sobre"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "Sobre"
 
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "_Sair"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "Créditos"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Criado por"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "Traduzido por"
 
 #: editor/dconf-editor.ui:49
 msgid "Actions"
@@ -603,49 +616,123 @@ msgstr ""
 "Pedro Albuqerque <palbuquerque73@gmail.com>\n"
 "Tiago Santos <tiagofsantos81@sapo.pt>"
 
-#: editor/dconf-model.vala:195
-msgid "Boolean"
-msgstr "Booliano"
-
-#: editor/dconf-model.vala:197
-msgid "String"
-msgstr "Cadeia"
-
-#: editor/dconf-model.vala:199
-msgid "String array"
-msgstr "Matriz de cadeias"
-
-#: editor/dconf-model.vala:201
-msgid "Enumeration"
-msgstr "Enumeração"
-
-#: editor/dconf-model.vala:203
-msgid "Flags"
-msgstr "Parâmetros"
-
-#: editor/dconf-model.vala:205
-msgid "Double"
-msgstr "Duplo"
-
-#: editor/dconf-model.vala:208
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Tipo de gestor do D-Bus"
 
-#: editor/dconf-model.vala:210
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Caminho do objeto D-Bus"
 
-#: editor/dconf-model.vala:212
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr "Uma matriz de caminhos de objeto D-Bus"
+msgstr "Matriz de caminhos de objeto D-Bus"
 
-#: editor/dconf-model.vala:214
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Assinatura D-Bus"
 
-#: editor/dconf-model.vala:222
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "tipo de gestor do D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "caminho do objeto D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "matriz de caminhos de objeto D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "assinatura D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Booliano"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "booliano"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Cadeia"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "cadeia"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Matriz de cadeias"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "matriz de cadeias"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Enumeração"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "enumeração"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Parâmetros"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "parâmetros"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Duplo"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "duplo"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Inteiro"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "inteiro"
 
 #: editor/dconf-model.vala:337
 msgid "True"
@@ -801,7 +888,7 @@ msgid "Quit"
 msgstr "Sair"
 
 #: editor/key-list-box-row.vala:162
-msgid "No Schema Found"
+msgid "No schema found"
 msgstr "Nenhum esquema encontrado"
 
 #: editor/key-list-box-row.vala:171
@@ -925,6 +1012,11 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Nome"
 
 #: editor/registry-info.vala:80
 msgid "Schema"
@@ -1056,9 +1148,6 @@ msgstr "Chave \"%s\" foi removida."
 #~ msgid "Dismiss"
 #~ msgstr "Dispensar"
 
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Duplo [%s..%s]"
-
 #~ msgctxt "shortcut window"
 #~ msgid "Expand"
 #~ msgstr "Expandir"
@@ -1084,44 +1173,8 @@ msgstr "Chave \"%s\" foi removida."
 #~ msgid "Not found"
 #~ msgstr "Não encontrado"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Esta é uma aplicação livre; pode redistribuí-la e/ou alterá-la de acordo "
-#~ "com os termos da Licença Pública Genérica GNU tal como publicada pela "
-#~ "Free Software Foundation; ou a versão 2 da Licença ou (à sua discrição) "
-#~ "qualquer versão posterior.\n"
-#~ "\n"
-#~ "Esta aplicação é distribuído na expectativa de poder ser útil, mas SEM "
-#~ "QUALQUER GARANTIA; sem sequer a garantia implícita de COMERCIALIZAÇÃO ou "
-#~ "ADEQUAÇÃO A UM FIM EM ESPECÍFICO.  Consulte a Licença Pública Genérica "
-#~ "GNU para mais detalhes.\n"
-#~ "\n"
-#~ "Deverá ter recebido uma cópia da Licença Pública Genérica GNU juntamente "
-#~ "com o Glade; caso contrário, escreva para a Free Software Foundation, "
-#~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA (em "
-#~ "inglês)"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
-
 #~ msgid "Error setting value: %s"
 #~ msgstr "Erro ao definir valor: %s"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
 
 #~ msgid "Value"
 #~ msgstr "Valor"
