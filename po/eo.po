@@ -524,14 +524,8 @@ msgid "conflict"
 msgstr "konflikto"
 
 #: editor/registry-list.vala:473
-#, fuzzy
 msgid "No schema found"
 msgstr "Nenion skemon"
-
-#: editor/registry-search.vala:530
-#, fuzzy
-msgid "Current folder"
-msgstr "Nuna valoro"
 
 #: editor/registry-search.vala:536
 msgid "Folders"
