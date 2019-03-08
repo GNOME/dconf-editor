@@ -44,17 +44,12 @@ msgstr ""
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
 msgid "Creators"
-msgstr "Creadores"
+msgstr "Creado por"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr ""
-"Fran Dieguez <frandieguez@gnome.org>, 2015-2019.\n"
-"Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
-"\n"
-"Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas\n"
-"colaborar connosco, podes atopar máis información en <http://www.trasno.net>"
+msgstr "Traducido por"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
