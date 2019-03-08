@@ -762,13 +762,26 @@ msgstr "應該對來自 Conflict2 的衝突設定鍵給出警告"
 msgid "Keyboard Shortcuts"
 msgstr "鍵盤捷徑鍵"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "關於(_A)"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "關於"
 
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "結束(_Q)"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "鳴謝"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "建立者"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "翻譯"
 
 #: editor/dconf-editor.ui:34
 msgid "Actions"
@@ -802,10 +815,6 @@ msgstr "顯示可重定向基模後退出"
 #: editor/dconf-editor.vala:137
 msgid "Do not show initial warning"
 msgstr "不顯示初始警告"
-
-#: editor/dconf-editor.vala:139
-msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-msgstr "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
 
 #: editor/dconf-editor.vala:229
 msgid "Known schemas installed:"
@@ -1295,6 +1304,11 @@ msgstr ""
 "這個設定鍵有個特別的「空元組」類別。這可能是安裝此基模的應用程式發生錯誤的原"
 "因。若能請開個關於此的 bug 回報。"
 
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "名稱"
+
 #: editor/registry-info.vala:127
 msgid "Defined by"
 msgstr "定義由"
@@ -1409,7 +1423,7 @@ msgid "conflicting keys"
 msgstr "衝突設定鍵"
 
 #: editor/registry-list.vala:377
-msgid "No Schema Found"
+msgid "No schema found"
 msgstr "找不到基模"
 
 #: editor/registry-search.vala:28
@@ -1563,40 +1577,8 @@ msgstr "DConf 後端"
 #~ msgid "Not found"
 #~ msgstr "找不到"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "本程式是自由軟體，您可以遵照自由軟體基金會 (Free Software Foundation) 出版"
-#~ "的 GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新"
-#~ "發佈這一程式，或者自由選擇使用任何更新的版本。\n"
-#~ "\n"
-#~ "發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的而隱含"
-#~ "的擔保。更詳細的情況請參閱 GNU 通用公共許可證。\n"
-#~ "\n"
-#~ "您應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，寫信"
-#~ "給：Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, "
-#~ "Boston, MA 02110-1301, USA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "版權所有 © Canonical Ltd"
-
 #~ msgid "Error setting value: %s"
 #~ msgstr "設定數值錯誤：%s"
-
-#~ msgid "Name"
-#~ msgstr "名稱"
 
 #~ msgid "Value"
 #~ msgstr "數值"
