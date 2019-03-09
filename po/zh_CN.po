@@ -777,8 +777,9 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "退出"
 
-#: ../editor/key-list-box-row.vala:162
-msgid "No Schema Found"
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
 msgstr "未找到方案"
 
 #: ../editor/key-list-box-row.vala:171
@@ -918,6 +919,11 @@ msgstr ""
 "此枚举只提供一个选择。这可能是应用程序在安装此方案时的一个错误。如果可能的"
 "话，请将此以 bug 形式报告。"
 
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "名称"
+
 # damned-lies 里面提到 reduce 的时候这么翻译的 schema，不过讲真我也不大相信…
 #: ../editor/registry-info.vala:80
 msgid "Schema"
@@ -1038,39 +1044,11 @@ msgstr "已经移除设置键“%s”。"
 #~ msgid "Not found"
 #~ msgstr "未发现"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款规定，"
-#~ "就本程序再为发布与／或修改；无论您依据的是本授权的第二版或（您自行选择的）"
-#~ "任一日后发行的版本。\n"
-#~ "\n"
-#~ "本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目"
-#~ "的适用性所为的默示性担保。详情请参照GNU通用公共授权。\n"
-#~ "\n"
-#~ "您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请写信至自由软件"
-#~ "基金会：59 Temple Place - Suite 330, Boston, Ma 02111-1307, USA。"
-
 #~ msgid "Copyright © Canonical Ltd"
 #~ msgstr "版权所有 © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "错误的设定值：%s"
-
-#~ msgid "Name"
-#~ msgstr "名称"
 
 #~ msgid "Value"
 #~ msgstr "值"
