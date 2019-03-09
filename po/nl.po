@@ -2442,7 +2442,7 @@ msgstr "Onwaar"
 #. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
 #: editor/setting-object.vala:180
 msgid "Nothing"
-msgstr "Niets (Nothing)"
+msgstr "Niets"
 
 #. Translators: the boolean "true" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:186
@@ -2463,7 +2463,7 @@ msgstr "niets (%s)"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
 msgid "nothing"
-msgstr "niets (nothing)"
+msgstr "niets"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
@@ -2534,38 +2534,6 @@ msgstr "DConf-backend"
 
 #~ msgid "Not found"
 #~ msgstr "Niet gevonden"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Fout bij instellen waarde: %s"
