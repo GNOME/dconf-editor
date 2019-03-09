@@ -624,75 +624,159 @@ msgstr ""
 "Pavol Klačanský <pavol@klacansky.com>\n"
 "Dušan Kazik <prescott66@gmail.com>"
 
-#: editor/dconf-model.vala:220
-msgid "Boolean"
-msgstr "Logická hodnota"
-
-#: editor/dconf-model.vala:222
-msgid "String"
-msgstr "Reťazec"
-
-#: editor/dconf-model.vala:224
-msgid "String array"
-msgstr "Pole reťazcov"
-
-#: editor/dconf-model.vala:226
-msgid "Enumeration"
-msgstr "Vymenovanie hodnôt"
-
-#: editor/dconf-model.vala:228
-msgid "Flags"
-msgstr "Príznaky"
-
-#: editor/dconf-model.vala:230
-msgid "Double"
-msgstr "Desatinné číslo"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:233
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Typ obsluhy zbernice D-Bus"
 
-#: editor/dconf-model.vala:235
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Cesta objektu zbernice D-Bus"
 
-#: editor/dconf-model.vala:237
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Pole ciest objektov zbernice D-Bus"
 
-#: editor/dconf-model.vala:239
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Podpis zbernice D-Bus"
 
-#: editor/dconf-model.vala:247
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "typ obsluhy zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "cesta objektu zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "pole ciest objektov zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "podpis zbernice D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Logická hodnota"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "logická hodnota"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Reťazec"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "reťazec"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Pole reťazcov"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "pole reťazcov"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Vymenovanie hodnôt"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "vymenovanie hodnôt"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Príznaky"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "príznaky"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Desatinné číslo"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "desatinné číslo"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Celé číslo"
 
-#: editor/dconf-model.vala:362
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "celé číslo"
+
+#. Translators: the boolean "true" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:173
 msgid "True"
-msgstr "Pravda (True)"
+msgstr "Pravda"
 
-#: editor/dconf-model.vala:364
+#. Translators: the boolean "false" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:177
 msgid "False"
-msgstr "Nepravda (False)"
+msgstr "Nepravda"
 
-#: editor/dconf-model.vala:365
+#. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
+#: editor/setting-object.vala:180
 msgid "Nothing"
-msgstr "Nič (Nothing)"
+msgstr "Nič"
 
-#: editor/dconf-model.vala:370
+#. Translators: the boolean "true" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:186
 msgid "true"
-msgstr "pravda (true)"
+msgstr "pravda"
 
-#: editor/dconf-model.vala:372
+#. Translators: the boolean "false" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:190
 msgid "false"
-msgstr "nepravda (false)"
+msgstr "nepravda"
 
-#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:374
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
+#: editor/setting-object.vala:194
+#, c-format
+msgid "nothing (%s)"
+msgstr "nič (%s)"
+
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
+#: editor/setting-object.vala:199
 msgid "nothing"
-msgstr "nič (nothing)"
+msgstr "nič"
 
 #: editor/dconf-view.vala:438
 msgid "This value is invalid for the key type."
@@ -846,9 +930,9 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončenie"
 
-# Schema:
-#: editor/key-list-box-row.vala:188
-msgid "No Schema Found"
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
 msgstr "Nenašla sa žiadna schéma"
 
 #: editor/key-list-box-row.vala:202
@@ -1014,6 +1098,11 @@ msgstr ""
 "pravdepodobne chyba aplikácie, ktorá inštalovala túto schému. Ak je to "
 "možné, prosím podajte o tomto chybové hlásenie."
 
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Názov"
+
 #: editor/registry-info.vala:82
 msgid "Schema"
 msgstr "Schéma"
@@ -1108,20 +1197,12 @@ msgstr "Tu sa nedá nájsť kľúč „%s”."
 msgid "Key “%s” has been removed."
 msgstr "Kľúč „%s” bol odstránený."
 
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "Editor systému dconf"
-
 #~ msgctxt "shortcut window"
 #~ msgid "Current row menu"
 #~ msgstr "Ponuka pre aktuálny riadok"
 
 #~ msgid "The theme of the navigation list"
 #~ msgstr "Téma navigačného zoznamu"
-
-# %s %s range
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Double [%s..%s]"
 
 #~ msgid "Oops! Cannot find something at this path."
 #~ msgstr "Ale nie! Na tejto ceste sa nepodarilo niečo nájsť."
@@ -1159,43 +1240,8 @@ msgstr "Kľúč „%s” bol odstránený."
 #~ msgid "Not found"
 #~ msgstr "Nenajdený"
 
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Tento program je slobodný softvér. Môžete ho ďalej šíriť a/alebo "
-#~ "upravovať podľa ustanovení licencie GNU General Public License "
-#~ "(Všeobecnej zverejňovacej licencie GNU), vydávanej nadáciou Free Software "
-#~ "Foundation, a to buď 2. verzie tejto licencie, alebo (podľa vášho "
-#~ "uváženia) ktorejkoľvek neskoršej verzie.\n"
-#~ "\n"
-#~ "Tento program je rozširovaný v nádeji, že bude užitočný, avšak BEZ "
-#~ "AKEJKOĽVEK ZÁRUKY. Neposkytujú sa ani odvodené záruky PREDAJNOSTI alebo "
-#~ "VHODNOSTI NA URČITÝ ÚČEL. Ďalšie podrobnosti hľadajte  v licencii GNU "
-#~ "General Public License.\n"
-#~ "Kópiu licencie GNU General Public License ste mali dostať spolu s týmto "
-#~ "programom Ak sa tak nestalo, napíšte na adresu Free Software Foundation, "
-#~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Autorské práva © Canonical Ltd"
-
 #~ msgid "Error setting value: %s"
 #~ msgstr "Chyba pri nastavovaní hodnoty: %s"
-
-#~ msgid "Name"
-#~ msgstr "Názov"
 
 #~ msgid "Value"
 #~ msgstr "Hodnota"
