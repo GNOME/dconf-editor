@@ -1505,15 +1505,15 @@ msgstr "空位元"
 
 #: editor/setting-object.vala:214
 msgid "True"
-msgstr "真 (True)"
+msgstr "真 (true)"
 
 #: editor/setting-object.vala:216
 msgid "False"
-msgstr "假 (False)"
+msgstr "假 (false)"
 
 #: editor/setting-object.vala:217
 msgid "Nothing"
-msgstr "沒有"
+msgstr "沒有 (nothing)"
 
 #: editor/setting-object.vala:222
 msgid "true"
