@@ -1127,8 +1127,9 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Izlaz"
 
-#: editor/key-list-box-row.vala:343
-msgid "No Schema Found"
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
 msgstr "Nema šeme"
 
 #: editor/key-list-box-row.vala:467 editor/registry-info.vala:121
@@ -1444,50 +1445,123 @@ msgstr "Nema ključeva u ovoj putanji"
 msgid "Keys not defined by a schema"
 msgstr "Ključevi nenavedeni u šemi"
 
-#: editor/setting-object.vala:65
-msgid "Boolean"
-msgstr "Logička vrednost"
-
-#: editor/setting-object.vala:67
-msgid "String"
-msgstr "Niska"
-
-#: editor/setting-object.vala:69
-msgid "String array"
-msgstr "Niz niski"
-
-#: editor/setting-object.vala:71
-msgid "Enumeration"
-msgstr "Nabrajanje"
-
-#: editor/setting-object.vala:73
-msgid "Flags"
-msgstr "Zastavice"
-
-#: editor/setting-object.vala:75
-msgid "Double"
-msgstr "Dvostruko"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/setting-object.vala:78
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
 msgid "D-Bus handle type"
 msgstr "Vrsta ručke D-sabirnice"
 
-#: editor/setting-object.vala:80
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
 msgid "D-Bus object path"
 msgstr "Putanja objekta D-sabirnice"
 
-#: editor/setting-object.vala:82
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
 msgid "D-Bus object path array"
 msgstr "Niz putanje objekta D-sabirnice"
 
-#: editor/setting-object.vala:84
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "Potpis D-sabirnice"
 
-#: editor/setting-object.vala:92
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "vrsta ručke D-sabirnice"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "putanja objekta D-sabirnice"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "niz putanje objekta D-sabirnice"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "potpis D-sabirnice"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Logička vrednost"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "logička vrednost"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Niska"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "niska"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Niz niski"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "niz niski"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Nabrajanje"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "nabrajanje"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Zastavice"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "zastavice"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Dvostruko"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "dvostruko"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
 msgid "Integer"
 msgstr "Ceo broj"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "ceo broj"
 
 #: editor/setting-object.vala:210
 msgid "True"
