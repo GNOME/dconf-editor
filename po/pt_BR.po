@@ -2431,13 +2431,13 @@ msgstr "Nada"
 #. Translators: the boolean "true" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:186
 msgid "true"
-msgstr "verdadeiro (true)"
+msgstr "verdadeiro"
 
 # traduzi seguindo "yourtranslation (not-translated)", conforme solicitado pelo desenvolvedor em "nothing"
 #. Translators: the boolean "false" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:190
 msgid "false"
-msgstr "falso (false)"
+msgstr "falso"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
 #: editor/setting-object.vala:194
@@ -2449,7 +2449,7 @@ msgstr "nada (%s)"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
 msgid "nothing"
-msgstr "nada (nothing)"
+msgstr "nada"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
