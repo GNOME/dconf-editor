@@ -1,3 +1,29 @@
+dconf-editor 3.32.0
+=====================
+
+No code changes since last unstable release, new stable release!
+Since the last one, some UI changes, notably an editable pathbar
+and an improved bookmarks popover. The application will also run
+correctly on phone-sized screens, and gained keyboard shortcuts.
+
+Translations updated (since 3.31.91):
+  Basque: Asier Sarasua Garmendia
+  Czech: Marek Cernocky
+  Danish: Ask Hjorth Larsen
+  Dutch: Nathan Follens
+  French: Claude Paroz
+  Friulian: Fabio Tomat
+  German: Tim Sabsch
+  Icelandic: Sveinn í Felli
+  Italian: Milo Casagrande
+  Korean: Changwoo Ryu
+  Lithuanian: Aurimas Černius
+  Romanian: Daniel Șerbănescu
+  Serbian: Марко Костић
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Swedish: Anders Jonsson
+
 dconf-editor 3.31.91
 =====================
 
