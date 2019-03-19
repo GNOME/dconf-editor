@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-25 13:32+0000\n"
-"PO-Revision-Date: 2019-02-26 08:54+0100\n"
+"POT-Creation-Date: 2019-03-12 15:50+0000\n"
+"PO-Revision-Date: 2019-03-19 09:38+0100\n"
 "Last-Translator: Milo Casagrande <milo@milo.name>\n"
 "Language-Team: Italiano <gnome-it-list@gnome.org>\n"
 "Language: it\n"
@@ -40,7 +40,7 @@ msgid ""
 "version 3 or later"
 msgstr ""
 "GNU General Public License\n"
-"version 3 or later"
+"versione 3 o successiva"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
@@ -50,10 +50,7 @@ msgstr "Creato da"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr ""
-"Milo Casagrande <milo@milo.name>\n"
-"Luca Ferretti <elle.uca@libero.it>\n"
-"Alessio Frusciante <algol@firenze.linux.it>"
+msgstr "Tradotto da"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
@@ -2456,7 +2453,7 @@ msgstr "niente (%s)"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
 msgid "nothing"
-msgstr "niente (nothing)"
+msgstr "niente"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
