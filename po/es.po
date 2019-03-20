@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-18 10:22+0000\n"
-"PO-Revision-Date: 2019-02-20 15:19+0100\n"
+"POT-Creation-Date: 2019-03-02 22:18+0000\n"
+"PO-Revision-Date: 2019-03-20 10:14+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -112,7 +112,7 @@ msgstr "Quitar de marcadores"
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
 msgid "Bookmark"
-msgstr "Marcador"
+msgstr "Añadir a marcadores"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
@@ -1149,7 +1149,6 @@ msgstr ""
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:202
-#| msgid "Uses the gsettings API of the glib library, and other ways."
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Usa la API de gsettings de la biblioteca Glib entre otras."
 
@@ -1251,7 +1250,7 @@ msgstr "No se entiende: demasiados argumentos.\n"
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
-msgstr "No se entiende en segundo argumento en este contexto.\n"
+msgstr "No se entiende el segundo argumento en este contexto.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:508
@@ -1297,7 +1296,7 @@ msgstr ""
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:665
 msgid "translator-credits"
-msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2016"
+msgstr "Daniel Mustieles <daniel.mustieles@gmail.com>, 2012 - 2019"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:671
@@ -1937,7 +1936,7 @@ msgstr "vector de cadena"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:409
 msgid "Enumeration"
-msgstr "Enumeración"
+msgstr "Enumerado"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
@@ -2446,7 +2445,7 @@ msgstr "nada (%s)"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
 msgid "nothing"
-msgstr "nada (nothing)"
+msgstr "nada"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
