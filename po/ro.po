@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-12 16:37+0000\n"
-"PO-Revision-Date: 2019-02-17 19:13+0100\n"
+"POT-Creation-Date: 2019-03-12 15:50+0000\n"
+"PO-Revision-Date: 2019-03-21 20:15+0100\n"
 "Last-Translator: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>\n"
 "Language-Team: Gnome Romanian Translation Team <gnomero-list@lists."
 "sourceforge.net>\n"
@@ -1027,185 +1027,187 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:547
 msgid "A normal non-conflicting key from Conflict2"
-msgstr ""
+msgstr "O cheie normală neconflictuală din Conflict2"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:554
 msgid "Conflicting key defaulting to “2” that should give an error"
-msgstr ""
+msgstr "Cheie în conflict ce are ca implicit „2” care ar trebui să dea eroare"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:562
 msgid "Conflicting key with range 0~5 that should give an error"
-msgstr ""
+msgstr "Cheie în conflict cu intervalul 0~5 care ar trebui sa dea eroare"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:569
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
+"Un cheie șir de caractere nulabil în conflict care ar trebui să dea eroare"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:576
 msgid "Conflicting key from Conflict2 that should give a warning"
-msgstr ""
+msgstr "Cheie în conflict din Conflict2 care ar trebui să dea un avertisment"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Afișează informații despre versiune și ieși"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:158
 msgid "Print relocatable schemas and exit"
 msgstr "Afișează scheme relocabile și ieși"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:153
+#: editor/dconf-editor.vala:161
 msgid "Do not show initial warning"
-msgstr ""
+msgstr "Nu afișa avertismentul inițial"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:191
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:199
 msgid "Graphical interface for editing other applications settings."
-msgstr ""
+msgstr "Interfață grafică pentru editarea altor configurări ale aplicațiilor."
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:194
-msgid "Uses the gsettings API of the glib library, and other ways."
-msgstr ""
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:202
+msgid "Uses the gsettings API of the glib library, among others."
+msgstr "Utilizează API-ul gsettings al bibliotecii glib, printre altele."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:197
+#: editor/dconf-editor.vala:205
 msgid "Arguments description:"
 msgstr "Descrierea argumentelor:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:201
-msgid "a folder path or a key path"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:203
-msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:207
-msgid "the name of a schema with fixed path"
-msgstr ""
-
-#. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
-msgid "example: “ca.desrt.dconf-editor.Settings”"
-msgstr ""
+msgid "a folder path or a key path"
+msgstr "calea unui dosar sau a unei chei"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:213
-msgid "the name of a “relocatable” schema, without fixed path"
-msgstr ""
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:211
+msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr "exemplu: „/org/gnome/” sau „/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
-msgid "see list with the “--list-relocatable-schemas” option"
-msgstr ""
+msgid "the name of a schema with fixed path"
+msgstr "numele unei scheme cu calea fixă"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
-msgid "the path where to map the relocatable schema"
-msgstr ""
+#: editor/dconf-editor.vala:217
+msgid "example: “ca.desrt.dconf-editor.Settings”"
+msgstr "exemplu: „ca.desrt.dconf-editor.Settings”"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'
+#. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:221
-msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgid "the name of a “relocatable” schema, without fixed path"
+msgstr "numele unei scheme „relocatabilă”, fără calea fixă"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:225
-msgid "the name of a key from the schema"
-msgstr ""
+#: editor/dconf-editor.vala:223
+msgid "see list with the “--list-relocatable-schemas” option"
+msgstr "vizualizează lista cu opțiunea „--list-relocatable-schemas”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
+msgid "the path where to map the relocatable schema"
+msgstr "calea unde să se cartografieze schema relocatabilă"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:229
+msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
+msgstr "exemplu: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:233
+msgid "the name of a key from the schema"
+msgstr "numele cheii din schemă"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:235
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "exemplu: „bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:283
+#: editor/dconf-editor.vala:291
 msgid "Known schemas installed:"
-msgstr ""
+msgstr "Scheme cunoscute instalate:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:289
+#: editor/dconf-editor.vala:297
 msgid "No known schemas installed."
-msgstr ""
+msgstr "Nicio schemă cunoscută nu a fost instalată."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:302
 msgid "Known schemas skipped:"
-msgstr ""
+msgstr "Scheme cunoscute omise:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:308
 msgid "No known schemas skipped."
-msgstr ""
+msgstr "Nicio schemă cunoscută nu a fost omisă."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:313
 msgid "Unknown schemas:"
-msgstr ""
+msgstr "Scheme necunoscute:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:319
 msgid "No unknown schemas."
-msgstr ""
+msgstr "Nicio schemă necunoscută."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:445
+#: editor/dconf-editor.vala:453
 msgid "Only one window can be opened for now.\n"
-msgstr ""
+msgstr "Doar o fereastră poate fi deschisă acum.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:473
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "Nu se înțelege: prea multe argumente.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:479
+#: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
-msgstr ""
+msgstr "Nu se înțelege argumentul al doilea în acest context.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:500
+#: editor/dconf-editor.vala:508
 msgid "Cannot understand: slash character in second argument.\n"
-msgstr ""
+msgstr "Nu se înțelege: caracterul slash în argumentul al doilea.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:515
+#: editor/dconf-editor.vala:523
 msgid "Schema path should start and end with a “/”.\n"
-msgstr ""
+msgstr "Calea schemei ar trebui să înceapă și să se sfârșească cu un „/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:531
+#: editor/dconf-editor.vala:539
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr ""
+msgstr "Nu se înțelege: calea dată conține „//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:547
 msgid "Cannot understand: space character in argument.\n"
-msgstr ""
+msgstr "Nu se înțelege: caracter spațiu în argument.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:567
+#: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "Copiat în clipboard."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:644
+#: editor/dconf-editor.vala:652
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
+"Un vizualizator grafic și editor de configurări interne ale aplicațiilor."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:658
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1216,14 +1218,14 @@ msgstr ""
 "Drepturi de autor © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr ""
 "Adrian Gabor <raziel_theripper [at] yahoo [dot ] com>, 2015\n"
 "Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2019"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:663
+#: editor/dconf-editor.vala:671
 msgid "Page on GNOME wiki"
 msgstr "Pagina pe wiki-ul GNOME"
 
@@ -1287,7 +1289,7 @@ msgstr "%s (chei șterse)"
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:122
 msgid "Schema is relocatable, a path is needed."
-msgstr ""
+msgstr "Schema este relocatabilă, o cale este necesară."
 
 #. Translators: command-line startup warning
 #: editor/dconf-window.vala:135
@@ -1505,7 +1507,7 @@ msgstr "Editează calea rădăcinii"
 #: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
-msgstr ""
+msgstr "Navighează arborele cheilor"
 
 #. Translators: header in the shortcut window, for when browsing
 #: editor/help-overlay.ui:202
@@ -1601,7 +1603,7 @@ msgstr "Clipboard"
 #: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "Descriptor copiere"
 
 #. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
 #: editor/help-overlay.ui:324
@@ -1755,49 +1757,49 @@ msgstr "Nu modifica"
 #: editor/model-utils.vala:301
 msgctxt "capitalized"
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "Tip mâner D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "Cale obiect D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
 msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "Matrice de căi D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
 msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "Semnătură D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
 msgctxt "non-capitalized"
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "tip mâner D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "cale obiect D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "matrice de căi obiecte D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "semnătură D-Bus"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
@@ -1942,11 +1944,14 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
+"Modul de întârziere este pornit\n"
+"dar\n"
+"nicio modificare nu este în așteptare"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
 msgid "Rule all"
-msgstr ""
+msgstr "Rulează toate"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
@@ -1981,25 +1986,25 @@ msgstr ""
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "Modificările vor fi întârziate până le cereți aplicarea."
 
 #. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "O operație gsettings întârziată."
+msgstr[1] "%u operații gsettings întârziate."
+msgstr[2] "%u de operații gsettings întârziate."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "O operație dconf întârziată."
+msgstr[1] "%u operații dconf întârziate."
+msgstr[2] "%u de operații dconf întârziate."
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -2025,9 +2030,9 @@ msgstr[2] "%u de operații gsettings"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "și o operație dconf întârziată."
+msgstr[1] "și %u operații dconf întârziate."
+msgstr[2] "și %u de operații dconf întârziate."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
@@ -2056,6 +2061,8 @@ msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
+"Această cheie este definită și folosită de mai mult de o schemă. Aceasta "
+"poate duce la probleme. Editați valoarea pe propria răspundere."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
@@ -2063,6 +2070,9 @@ msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
 msgstr ""
+"Această cheie este incompatibil definită și folosită de mai mult de o "
+"schemă. Este imposibil să lucrați cu valoarea ei într-un mod în care are "
+"sens."
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
@@ -2072,6 +2082,10 @@ msgid ""
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
 msgstr ""
+"Nicio schemă disponibilă. O schemă este ceea ce descrie utilizarea unei "
+"chei, și Editorul Dconf nu poate găsi una asociată acestei chei. Dacă "
+"aplicația care a folosit această cheie a fost dezinstalată, sau dacă această "
+"cheie este învechită, probabil doriți să o ștergeți."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -2080,6 +2094,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"Această enumerație oferă doar o singură alegere. Aceasta este probabil o "
+"eroare a aplicației care a instalat schema. Dacă este posibil, raportați de "
+"defect despre asta."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
@@ -2088,6 +2105,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"Acest cheie întreg poate lua doar o singură valoare. Asta este probabil o "
+"eroare a aplicației care a instalat schema, Dacă este posibil, raportați un "
+"defect despre asta."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
@@ -2096,6 +2116,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"Cheia are un tip special „tuplu gol”. Asta este probabil o eroare a "
+"aplicației care a instalat această schemă. Dacă este posibil, raportați un "
+"defect despre asta."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -2140,7 +2163,7 @@ msgstr "Codul tipului"
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
 msgid "Forced range"
-msgstr ""
+msgstr "Interval forțat"
 
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
@@ -2199,6 +2222,8 @@ msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
 msgstr ""
+"Există definiții conflictuale ale acestei chei, valoare de obținere va fi "
+"fie problematică fie fără sens."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
@@ -2206,6 +2231,8 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"Utilizați un punct ca marcă zecimală și niciun separator pentru mii. Puteți "
+"folosi notația X.Ye+Z."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
@@ -2214,6 +2241,9 @@ msgid ""
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
 "documentation."
 msgstr ""
+"Conținutul variantelor ar trebui înconjurate de paranteze angulare XML („<” "
+"și „>”). Consultați https://developer.gnome.org/glib/stable/gvariant-text."
+"html pentru o documentație completă"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2222,12 +2252,17 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"Utilizați cuvântul cheie „nothing” pentru a stabili un tip posibil (care "
+"începe cu „m”) la valoarea sa goală. Șirurile de caractere, semnăturile și "
+"căile de obiecte ar trebui înconjurate de ghilimele."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
+"Șiruri de caractere, semnături și căile de obiecte ar trebui înconjurate de "
+"ghilimele."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:635
@@ -2235,6 +2270,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"Utilizați cuvântul cheie „nothing” pentru a stabili un tip posibil (care "
+"începe cu „m”) la valoarea sa goală."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
@@ -2357,7 +2394,7 @@ msgstr "Schemă cu cale"
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
 #: editor/setting-object.vala:414
 msgid "Relocatable schema"
-msgstr ""
+msgstr "Schemă relocatabilă"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
