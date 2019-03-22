@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-03-12 15:50+0000\n"
-"PO-Revision-Date: 2019-03-21 20:15+0100\n"
+"POT-Creation-Date: 2019-03-21 19:16+0000\n"
+"PO-Revision-Date: 2019-03-22 18:42+0100\n"
 "Last-Translator: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>\n"
 "Language-Team: Gnome Romanian Translation Team <gnomero-list@lists."
 "sourceforge.net>\n"
@@ -2030,9 +2030,9 @@ msgstr[2] "%u de operații gsettings"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] "și o operație dconf întârziată."
-msgstr[1] "și %u operații dconf întârziate."
-msgstr[2] "și %u de operații dconf întârziate."
+msgstr[0] " și o operație dconf întârziată."
+msgstr[1] " și %u operații dconf întârziate."
+msgstr[2] " și %u de operații dconf întârziate."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
