@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-03-21 19:16+0000\n"
-"PO-Revision-Date: 2019-03-22 18:42+0100\n"
+"POT-Creation-Date: 2019-03-22 17:44+0000\n"
+"PO-Revision-Date: 2019-03-24 09:04+0100\n"
 "Last-Translator: Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>\n"
 "Language-Team: Gnome Romanian Translation Team <gnomero-list@lists."
 "sourceforge.net>\n"
@@ -491,7 +491,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "Enabled relocatable schema mapping facilities"
-msgstr ""
+msgstr "Facilitățile de cartografiere scheme relocatabile au fost activate"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
@@ -502,11 +502,17 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
+"Fanioane pentru facilitățile de cartografiere ale schemelor relocatabile. "
+"„User” activează cartografierile definite de cheia „relocatable-schemas-user-"
+"paths”; „Built-in” activează cartografieri cunoscute hardcodate în Editorul "
+"Dconf; „Internal” este rezervat pentru propriile cartografieri ale "
+"Editorului Dconf; „Startup” este pentru cartografierea unei scheme "
+"relocatabile din linia de comandă."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:215
 msgid "Mapping of paths to manually associated schemas"
-msgstr ""
+msgstr "Cartografierea de căi la scheme asociate manual"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
@@ -517,11 +523,17 @@ msgid ""
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
 msgstr ""
+"Un dicționar care cartografiază ID-urile schemelor cu proprietăți de căi. "
+"Este utilizat pentru a permite utilizatorului să asocieze o schemă "
+"relocatabilă la anumite căi. Proprietățile căii pot conține metacaractere în "
+"formă de segmente goale (de exemplu /ca/desrt/dconf-editor//), definind mai "
+"multe căi posibile. ID-ul schemei poate fi asociat cu mai multe proprietăți "
+"ale căii."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:222
 msgid "A flag for skipping unnecessary subfolders"
-msgstr ""
+msgstr "Un fanion pentru omiterea subdosarelor nenecesare"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:224
@@ -529,6 +541,8 @@ msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
+"Când un dosar conține numai un subdosar și nicio cheie, Editorul Dconf poate "
+"sări direct la acel subdosar. Acest fanion activează acel comportament."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:231
@@ -637,7 +651,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:310
 msgid "A D-Bus handle type, type ‘h’"
-msgstr ""
+msgstr "Un tip de mâner D-Bus, tip „h”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:312
@@ -647,11 +661,15 @@ msgid ""
 "D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
 msgstr ""
+"Tipul de mâner este o valoare de tip de întreg semnal de 32 de biți care "
+"este prin convenție folosit ca un index într-o matrice de descriptori de "
+"fișiere ce sunt trimiși odată cu un mesaj D-Bus. Dacă nu interacționați cu D-"
+"Bus, nu există niciun motiv de a folosi acest tip."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid "A D-Bus object path, type ‘o’"
-msgstr ""
+msgstr "O cale de obiect D-Bus, tip „o”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:319
@@ -660,11 +678,14 @@ msgid ""
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"O cale de obiect este folosită pentru a identifica obiecte D-Bus la o "
+"destinație dată pe bus. Dacă nu interacționați cu D-Bus, nu există niciun "
+"motiv să folosiți acest tip."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:324
 msgid "A D-Bus object path array, type ‘ao’"
-msgstr ""
+msgstr "O matrice de căi de obiecte D-Bus, tip „ao”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:326
@@ -673,11 +694,14 @@ msgid ""
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
+"O matrice de căi de obiecte ar putea conține orice număr de căi de obiecte "
+"(incluzând niciuna: „[]”). Dacă nu interacționați cu D-Bus, atunci nu este "
+"niciun motiv să folosiți acest tip."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:331
 msgid "A D-Bus signature, type ‘g’"
-msgstr ""
+msgstr "O semnătură D-Bus, tip „g”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:333
@@ -686,11 +710,14 @@ msgid ""
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"O semnătură D-Bus este un șir de caractere folosit ca tip de semnătură "
+"pentru o metodă sau mesaj D-Bus. Dacă nu interacționați cu D-Bus, atunci nu "
+"există niciun motiv să folosiți acest tip."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:338
 msgid "A dictionary entry of type ‘{ss}’"
-msgstr ""
+msgstr "O intrare în dicționar de tip „{ss}”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:340
@@ -698,11 +725,13 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
+"Un dicționar cartografiază valori de tipuri de bază la o altă valoare (de "
+"orice tip). O intrare în dicționar este una dintre aceste cartografieri."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid "A “vardict”, type ‘a{sv}’"
-msgstr ""
+msgstr "Un „vardict”, tip „a{sv}”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:347
@@ -710,6 +739,9 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
 msgstr ""
+"Un dicționar cartografiază valori de un tip de bază către o altă valoare (de "
+"orice alt tip). Un simplu mod de folosire este cartografierea șirurilor de "
+"caractere la variante."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
 #: editor/ca.desrt.dconf-editor.gschema.xml:352
@@ -840,7 +872,7 @@ msgstr ""
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A custom type, here ‘(ii)’"
-msgstr ""
+msgstr "Un tip personalizat, aici „(ii)”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
@@ -849,11 +881,15 @@ msgid ""
 "back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32-bit signed integers."
 msgstr ""
+"Editorul Dconf vă permite să editați orice tip de configurări suportate de "
+"GSettings, revenind la rezerva unui șir de caractere când nu are un mod mai "
+"bun de administra configurările. Aici este un tuplu de doi întregi de 32 de "
+"biți semnați."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:431
 msgid "A string, type ‘s’"
-msgstr ""
+msgstr "Un șir de caractere, tip „s”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:433
@@ -861,11 +897,14 @@ msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
+"Tipul de șir de caractere poate accepta orice șir de caractere utf8. Luați "
+"aminte că șirul gol „''” nu este același lucru ca NULL (nimic); consultați "
+"de asemenea cheia „șir de caractere nullabil”."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
 msgid "A string array, type ‘as’"
-msgstr ""
+msgstr "O matrice de șiruri de caractere, tip „as”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:440
@@ -873,11 +912,13 @@ msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
 msgstr ""
+"O matrice de șiruri conține orice număr de șiruiri de orice lungime. Poate "
+"fi o matrice goală, „[]”."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
 msgid "A nullable string, type ‘ms’"
-msgstr ""
+msgstr "Un șir de caractere nullabil, tip „ms”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
@@ -886,11 +927,14 @@ msgid ""
 "take a “nothing” value. A nullable string can take any string as value, "
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
+"GSettings permite tipuri nullabile, care sunt similare cu alte tipuri dar "
+"pot lua „nimic” ca valoare. Un șir de caractere nullabil poate lua orice "
+"string ca valoare, incluzând șirul gol „''”, sau poate fi NULL (nimic)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A variant, type ‘v’"
-msgstr ""
+msgstr "O variantă, tip „v”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:454
@@ -903,11 +947,18 @@ msgid ""
 "or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
 "for complete documentation."
 msgstr ""
+"Variantele pot fi stocate în interiorul altor variante, și în consecință ca "
+"un tip GSettings. Reprezentarea lor folosește paranteze XML (caracterele „<” "
+"și „>”, într-un fișier gschema „&#60;” și „&#62;”), cu o reprezentare a "
+"conținutului parsabilă. Dacă este neclar, tipul poate fi dat în valoarea cu "
+"o adnotare prefix  cum ar fi „@x” (unde „x” este de tip șir de caractere) "
+"sau „int64”. Consultați https://developer.gnome.org/glib/stable/gvariant-"
+"text.html pentru o documentație completă."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
 msgid "A 1-choice enumeration"
-msgstr ""
+msgstr "O enumerație cu o alegere"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:461
@@ -915,11 +966,13 @@ msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
+"O enumerație ar putea conține doar un element, dar asta este probabil o "
+"eroare. Editorul Dconf vă va avertiza în acel caz."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:467
 msgid "A 1-choice integer value"
-msgstr ""
+msgstr "O valoare întreagă cu o alegere"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:469
@@ -927,11 +980,13 @@ msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
+"Un interval ar putea limita o cheie de tip întreg să permită o valoare, dar "
+"asta este probabil o eroare. Editorul Dconf vă avertizează în acel caz."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:474
 msgid "The empty tuple, type and value “()”"
-msgstr ""
+msgstr "Tuplul gol, tip și valoare „()”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:476
@@ -939,21 +994,23 @@ msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
+"Există un tip de tuplu gol (numit câteodată „triv”) care este un tuplu fără "
+"continut, poate lua o valoare de numai „()”."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "An usual boolean value, defined by a relocatable schema."
-msgstr ""
+msgstr "O valoare obișnuită booleană, definită de o schemă relocatabilă."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:496
 msgid "A 32-bit signed integer, defined by a relocatable schema."
-msgstr ""
+msgstr "Un întreg de 32 biți semnat, definit de o schemă relocatabilă."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:510
 msgid "A normal non-conflicting key from Conflict1"
-msgstr ""
+msgstr "O cheie care nu este în conflict din Conflict1"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
@@ -963,11 +1020,14 @@ msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
+"Această cheie este un test pentru scheme multiple în aceeași cale cu chei în "
+"conflict. Cheile ce nu sunt în conflict nu ar trebui să aibă probleme."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:517
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
+"Cheie în conflict ce are implicit valoarea „1” care ar trebui să dea eroare"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
@@ -978,11 +1038,14 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
+"Această cheie este un test pentru scheme multiple în aceeași cale cu chei în "
+"conflict. Nu ar trebui să fie editabilă pentru că o cheie cartografiată la "
+"aceeași cale are o valoare implicită diferită."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:524
 msgid "Conflicting key with no range that should give an error"
-msgstr ""
+msgstr "Cheie în conflict fără interval care ar trebui să dea eroare"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
@@ -993,11 +1056,16 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
+"O cheie este un test pentru scheme multiple în aceeași cale cu chei în "
+"conflict. Nu ar trebui editabilă pentru că o cheie cartografiată la aceeași "
+"cale are un interval diferit."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:531
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
+"O cheie (simplă) în conflict de tip șir de caractere care ar trebui să dea "
+"eroare"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
@@ -1008,11 +1076,14 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
+"Această cheie este un test pentru scheme multiple în aceeași cale cu chei în "
+"conflict. Nu ar trebui să fie editabilă pentru că cheia cartografiată la "
+"aceeași cale  are un tip diferit."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:538
 msgid "Conflicting key from Conflict1 that should give a warning"
-msgstr ""
+msgstr "Cheie în conflict de la Conflict1 ce ar trebui să dea un avertisment"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
@@ -1023,6 +1094,9 @@ msgid ""
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
+"Această cheie este un test pentru scheme multiple în aceeași cale cu chei în "
+"conflict. Poate fi editată, pentru că tipurile sunt compatibile, dar totuși "
+"este o problemă."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:547
@@ -1198,7 +1272,7 @@ msgstr "Nu se înțelege: caracter spațiu în argument.\n"
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
-msgstr "Copiat în clipboard."
+msgstr "Copiat în clipboard"
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:652
@@ -1638,7 +1712,7 @@ msgstr "Renunță la modificările neaplicate și ieși"
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
 msgid "Given value is out of range."
-msgstr "Valoarea dată este în afara intervalului"
+msgstr "Valoarea dată este în afara intervalului."
 
 #. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
 #: editor/key-editor-child.vala:33
@@ -2243,7 +2317,7 @@ msgid ""
 msgstr ""
 "Conținutul variantelor ar trebui înconjurate de paranteze angulare XML („<” "
 "și „>”). Consultați https://developer.gnome.org/glib/stable/gvariant-text."
-"html pentru o documentație completă"
+"html pentru o documentație completă."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2276,7 +2350,7 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
 msgid "Key erased."
-msgstr "Cheie ștearsă"
+msgstr "Cheie ștearsă."
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
