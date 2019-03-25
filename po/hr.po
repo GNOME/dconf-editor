@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2019-03-24 08:05+0000\n"
-"PO-Revision-Date: 2019-03-25 23:26+0100\n"
+"PO-Revision-Date: 2019-03-25 23:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -152,7 +152,7 @@ msgstr "Uklj/Isklj za zabilješku ove lokacije"
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr ""
+msgstr "Popis zabilješki ne može se uređivati."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
