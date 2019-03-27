@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2019-03-24 08:05+0000\n"
-"PO-Revision-Date: 2019-03-25 23:29+0100\n"
+"PO-Revision-Date: 2019-03-27 10:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -47,9 +47,7 @@ msgstr "Stvaratelji"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr ""
-"Launchpad Contributions:\n"
-"  gogo https://launchpad.net/~trebelnik-stefina"
+msgstr "Preveli"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
@@ -385,9 +383,9 @@ msgstr ""
 "slučajevima, ali dopušta trenutne promjene booleove i nullable booleove, "
 "nabrajanja i oznake. Vrijednosti “always-confirm-implicit” i “always-confirm-"
 "explicit” uvijek pitaju za potvrdu, ali prva primijenjuje promjenu ako "
-"promijenite putanju gdje ju druga odbacuje. Vrijednost always-delay” dodaje "
-"svaku promjenu u stanje odgode, omogućujući vam primjenu više ključeva "
-"odjednom."
+"promijenite putanju gdje ju druga odbacuje. Vrijednost \"always-delay” "
+"dodaje svaku promjenu u stanje odgode, omogućujući vam primjenu više "
+"ključeva odjednom."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
@@ -472,7 +470,7 @@ msgstr ""
 "višestrukih lokacija. To je učinjeno provjerom svake tri sekunde ima li "
 "promjena u popisu shema. Budući da ovo nije baš optimalno, ova funkcija može "
 "biti onemogućena postavljanjem ove oznake na “false”. Zapamtite da će ova "
-"mogućnost biti uklonjena kada se pronađe bolji način da se to ućini."
+"mogućnost biti uklonjena kada se pronađe bolji način da se to učini."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:208
@@ -842,7 +840,7 @@ msgid ""
 msgstr ""
 "Svaka brojčana postavka (cijeli brojevi, nepotpisani cijeli brojevi svih "
 "vrsta plus duplikati) može se ograničiti na prilagođeni raspon vrijednosti. "
-"Na primjer, ovaj cijeli broj može imati samo vrijednost između -2 i10."
+"Na primjer, ovaj cijeli broj može imati samo vrijednost između -2 i 10."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
@@ -1126,7 +1124,7 @@ msgstr "Opis argumenata:"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
 msgid "a folder path or a key path"
-msgstr "putanja mepe ili putanja ključa"
+msgstr "putanja mape ili putanja ključa"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:211
