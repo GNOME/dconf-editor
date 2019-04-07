@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-25 12:51+0000\n"
+"POT-Creation-Date: 2019-03-24 08:05+0000\n"
 "PO-Revision-Date: 2019-02-25 20:30+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -203,7 +203,8 @@ msgstr "Genindlæs"
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr "Denne nøgles egenskaber er blevet ændret. Vil du genindlæse visningen?"
+msgstr ""
+"Denne nøgles egenskaber er blevet ændret. Vil du genindlæse visningen?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
@@ -270,11 +271,6 @@ msgstr "Redigér direkte i hele din konfigurationsdatabase"
 #: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "indstillinger;valgmuligheder;valg;konfiguration;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:17
-msgid "ca.desrt.dconf-editor"
-msgstr "ca.desrt.dconf-editor"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
 #: editor/ca.desrt.dconf-editor.gschema.xml:105
@@ -357,7 +353,9 @@ msgstr "Vis indledende advarsel"
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
-msgstr "Hvis “sand”, åbner Dconf-redigering ved opstart en pop-op for at minde brugeren om at være forsigtig."
+msgstr ""
+"Hvis “sand”, åbner Dconf-redigering ved opstart en pop-op for at minde "
+"brugeren om at være forsigtig."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:157
@@ -385,7 +383,17 @@ msgid ""
 "values always asks for confirmation, but the first applies the change if you "
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
-msgstr "Værdien “unsafe” er frarådet: for nøgler som har en type, som ikke er et specialtilfælde, vil den opdatere nøgleværdien hver gang noget ændrer sig i elementet, hvilket inkluderer mellemtilstande. Værdien “safe” vil bede om bekræftelse i disse tilfælde, men vil tillade øjeblikkelige ændringer for booleske variable, booleske variable som kan sættes til null, nummereringer og flag. Værdierne “always-confirm-implicit” og “always-confirm-explicit” vil altid bede om bekræftelse, men førstnævnte vil anvende ændringen hvis du skifter sti, hvorimod sidstnævnte forkaster den. Værdien “always-delay” tilføjer alle ændringer i ventetilstand, hvilket muliggør anvendelse af flere nøgler på en gang."
+msgstr ""
+"Værdien “unsafe” er frarådet: for nøgler som har en type, som ikke er et "
+"specialtilfælde, vil den opdatere nøgleværdien hver gang noget ændrer sig i "
+"elementet, hvilket inkluderer mellemtilstande. Værdien “safe” vil bede om "
+"bekræftelse i disse tilfælde, men vil tillade øjeblikkelige ændringer for "
+"booleske variable, booleske variable som kan sættes til null, nummereringer "
+"og flag. Værdierne “always-confirm-implicit” og “always-confirm-explicit” "
+"vil altid bede om bekræftelse, men førstnævnte vil anvende ændringen hvis du "
+"skifter sti, hvorimod sidstnævnte forkaster den. Værdien “always-delay” "
+"tilføjer alle ændringer i ventetilstand, hvilket muliggør anvendelse af "
+"flere nøgler på en gang."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:171
@@ -396,8 +404,8 @@ msgstr "Et flag til at sortere nøgler med forskel på store og små bogstaver"
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
-"installation paths of schemas can. If “true”, the keys list is sorted case-"
-"sensitively, with in usual order upper-case folders first."
+"installation paths of schemas can. If “true”, the keys list is sorted "
+"case-sensitively, with in usual order upper-case folders first."
 msgstr ""
 "GSettings tillader ikke, at nøgler bruger store bogstaver i deres navne, men "
 "installationsstier for skemaer må godt. Hvis “sand” vil nøglelisten blive "
@@ -488,10 +496,11 @@ msgid ""
 "relocatable schema from the command-line."
 msgstr ""
 "Flag til afbildningsfunktioner for flytbare skemaer. “User” aktiverer "
-"afbildninger defineret af nøglen “relocatable-schemas-user-paths”; “Built-"
-"in” aktiverer velkendte afbildninger som ligger fast i Dconf-redigeringen; "
-"“Internal” er reserveret til Dconf-redigeringens egne afbildninger; "
-"“Startup” er til at afbilde et flytbart skema fra kommandolinjen."
+"afbildninger defineret af nøglen “relocatable-schemas-user-paths”; "
+"“Built-in” aktiverer velkendte afbildninger som ligger fast i "
+"Dconf-redigeringen; “Internal” er reserveret til Dconf-redigeringens egne "
+"afbildninger; “Startup” er til at afbilde et flytbart skema fra "
+"kommandolinjen."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:215
@@ -503,10 +512,14 @@ msgstr "Afbildninger af stier til manuelt tilknyttede skemaer"
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
-"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
-"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
-"may be associated with multiple path specifications."
-msgstr "En ordbog som afbilder skema-id’er på stiangivelser. Tillader brugeren at knytte et flytbart skema til visse stier. Stiangivelser kan indeholde jokere i form af tomme dele (f.eks. /ca/desrt/dconf-editor//) og dermed definere mere end en sti. Samme skema-id kan tilknyttes flere stiangivelser."
+"specifications may contain wildcards in the form of empty segments (e.g. "
+"/ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema "
+"ID may be associated with multiple path specifications."
+msgstr ""
+"En ordbog som afbilder skema-id’er på stiangivelser. Tillader brugeren at "
+"knytte et flytbart skema til visse stier. Stiangivelser kan indeholde jokere "
+"i form af tomme dele (f.eks. /ca/desrt/dconf-editor//) og dermed definere "
+"mere end en sti. Samme skema-id kan tilknyttes flere stiangivelser."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:222
@@ -519,9 +532,9 @@ msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
-"Når en mappe kun indeholder én undermappe og ingen nøgler, kan Dconf-"
-"redigeringen hoppe direkte til den undermappe. Dette flag aktiverer den "
-"funktion."
+"Når en mappe kun indeholder én undermappe og ingen nøgler, kan "
+"Dconf-redigeringen hoppe direkte til den undermappe. Dette flag aktiverer "
+"den funktion."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:231
@@ -609,8 +622,8 @@ msgid ""
 "character should be included as the last character in the array."
 msgstr ""
 "Typen bytestreng bruges almindeligvis til at videregive strenge som måske "
-"ikke er gyldig utf8. I dette tilfælde er konventionen sådan at nul-"
-"terminatortegnet skal inkluderes som det sidste tegn i arrayet."
+"ikke er gyldig utf8. I dette tilfælde er konventionen sådan at "
+"nul-terminatortegnet skal inkluderes som det sidste tegn i arrayet."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:303
@@ -688,9 +701,9 @@ msgid ""
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
-"En D-Bus-signatur er en streng, der bruges som typesignatur for en D-Bus-"
-"metode eller -meddelelse. Hvis du ikke interagerer med D-Bus, er der ikke "
-"nogen grund til at gøre brug af denne type."
+"En D-Bus-signatur er en streng, der bruges som typesignatur for en "
+"D-Bus-metode eller -meddelelse. Hvis du ikke interagerer med D-Bus, er der "
+"ikke nogen grund til at gøre brug af denne type."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:338
@@ -743,8 +756,8 @@ msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
 msgstr ""
-"Nummerering kan enten gøres med “enum”-attributten eller med et “valg”-"
-"mærkat."
+"Nummerering kan enten gøres med “enum”-attributten eller med et "
+"“valg”-mærkat."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
@@ -835,8 +848,8 @@ msgid ""
 "integer could only take a value between -2 and 10."
 msgstr ""
 "Enhver talindstilling (heltal og heltal uden fortegn for hver type samt "
-"decimaltal) kan være begrænset til et brugerdefineret område af værdier. F."
-"eks. kan dette heltal kun tage en værdi mellem -2 og 10."
+"decimaltal) kan være begrænset til et brugerdefineret område af værdier. "
+"F.eks. kan dette heltal kun tage en værdi mellem -2 og 10."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
@@ -919,8 +932,8 @@ msgstr ""
 "henholdsvis “&#60;” og “&#62;” i en gschema-fil) som omslutter en læselig "
 "repræsentation af deres indhold. Hvis typen ikke fremgår klart, kan denne "
 "angives i værdien med præfiksnotationen “@x”, hvor “x” er typestrengen, "
-"eller “int64”. Se den fuldstændige dokumentation på https://developer.gnome."
-"org/glib/stable/gvariant-text.html."
+"eller “int64”. Se den fuldstændige dokumentation på "
+"https://developer.gnome.org/glib/stable/gvariant-text.html."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
@@ -1263,8 +1276,9 @@ msgstr ""
 "scootergrisen\n"
 "Ask Hjorth Larsen\n"
 "\n"
-"Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-"Mere info: http://www.dansk-gruppen.dk"
+"Dansk-gruppen\n"
+"Websted <http://dansk-gruppen.dk>\n"
+"E-mail <dansk@dansk-gruppen.dk>"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:671
@@ -1376,8 +1390,8 @@ msgstr "Vis denne dialog næste gang."
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:303
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
+"Alt+F4 to dismiss changes and quit."
 msgstr ""
 "Der er ventende ændringer. Brug Shift+Ctrl+Q til at udføre ændringerne og "
 "afslutte eller Alt+F4 for at afvise ændringerne og afslutte."
@@ -2287,8 +2301,8 @@ msgid ""
 "documentation."
 msgstr ""
 "Variantens indhold skal være omsluttet af XML-klammer (“<” og “>”). Se den "
-"fuldstændige dokumentation på https://developer.gnome.org/glib/stable/"
-"gvariant-text.html."
+"fuldstændige dokumentation på "
+"https://developer.gnome.org/glib/stable/gvariant-text.html."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2443,6 +2457,9 @@ msgstr "Flytbart skema"
 msgid "DConf backend"
 msgstr "DConf-motor"
 
+#~ msgid "ca.desrt.dconf-editor"
+#~ msgstr "ca.desrt.dconf-editor"
+
 #~ msgctxt "shortcut window"
 #~ msgid "Search locally again"
 #~ msgstr "Søg lokalt igen"
@@ -2465,7 +2482,7 @@ msgstr "DConf-motor"
 #~ msgid "Copy descriptor"
 #~ msgstr "Kopiér deskriptor"
 
-# (Ikke sikker på udskudt versus ventende)
+#~ # (Ikke sikker på udskudt versus ventende)
 #~ msgid "Delayed setting changes will be shown here"
 #~ msgstr "Udskudte/ventende indstillingsændringer vil blive vist her"
 
@@ -2479,7 +2496,7 @@ msgstr "DConf-motor"
 #~ msgid "Current row menu"
 #~ msgstr "Aktuelle rækkemenu"
 
-# Strengt taget dobbelt præcision, men der er ikke nogen float her
+#~ # Strengt taget dobbelt præcision, men der er ikke nogen float her
 #~ msgid "Double [%s..%s]"
 #~ msgstr "Decimaltal [%s..%s]"
 
@@ -2507,3 +2524,4 @@ msgstr "DConf-motor"
 
 #~ msgid "Cancel"
 #~ msgstr "Annullér"
+
