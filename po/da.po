@@ -1277,7 +1277,7 @@ msgstr ""
 "Ask Hjorth Larsen\n"
 "\n"
 "Dansk-gruppen\n"
-"Websted <http://dansk-gruppen.dk>\n"
+"Websted http://dansk-gruppen.dk\n"
 "E-mail <dansk@dansk-gruppen.dk>"
 
 #. Translators: about dialog text; label of the website link
