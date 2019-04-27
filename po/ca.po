@@ -228,7 +228,7 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
-"L'editor del dconf és una eina per permetre l'edició directa de la "
+"L'editor del dconf és una eina que permet l'edició directa de la "
 "configuració de la base dades del dconf. Això és útil quan es desenvolupen "
 "aplicacions que usen aquestes configuracions."
 
@@ -504,10 +504,10 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
-"Banderes per a les instal·lacions de mapatge d'esquemes reubicables.L' "
+"Banderes per a les instal·lacions de mapatge d'esquemes reubicables. L' "
 "«Usuari» permet mapatges definits per la clau «relocatable-schemas-user-"
 "paths»; «Built-in» permet  els mapatges coneguts que s'hagin codificat en "
-"l'Editor de Dconf; «Intern» està reservat per als mapatges propis del editor "
+"l'Editor de Dconf; «Intern» està reservat per als mapatges propis de l'editor "
 "Dconf; «Startup» és per mapatges d'esquemes reubicables des de la línia "
 "d'ordres."
 
@@ -528,7 +528,7 @@ msgstr ""
 "Un diccionari que mapeja identificadors d'esquema amb especificacions de "
 "camí. S'utilitza per permetre a l'usuari associar un esquema reubicable a "
 "certs camins. Les especificacions de camí poden contenir comodins en forma "
-"de segments buits (p. Ex. /ca/desrt/dconf-editor//), que defineixen "
+"de segments buits (p. ex. /ca/desrt/dconf-editor//), que defineixen "
 "múltiples camins possibles. El mateix identificador d'esquema pot estar "
 "associat amb especificacions de camí múltiples."
 
@@ -948,7 +948,7 @@ msgid ""
 "for complete documentation."
 msgstr ""
 "Les variants han d'emmagatzemar-se dins de variants, i en conseqüència com "
-"tipus GSettings . La seua representació usa els claudàtors XML (caràcters "
+"tipus GSettings . La seva representació usa els claudàtors XML (caràcters "
 "«<» and «>» en un fitxer gschema «&#60;» i «&#62;»  respectivament), amb una "
 "representació analitzable del contingut interior. Si no està clar, el tipus "
 "pot donar al valor amb una anotació de prefix com «@x» (on «x» és un tipus "
@@ -1055,7 +1055,7 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
-"Aquesta clau és una prova per a esquemes múltiples en la mateix camí amb "
+"Aquesta clau és una prova per a esquemes múltiples en el mateix camí amb "
 "claus conflictives. No s'ha de modificar com una clau assignada al mateix "
 "camí ja que té un rang diferent."
 
@@ -1074,7 +1074,7 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
-"Aquesta clau és una prova per a esquemes múltiples en la mateix camí amb "
+"Aquesta clau és una prova per a esquemes múltiples en el mateix camí amb "
 "claus conflictives. No s'ha de modificar com una clau assignada al mateix "
 "camí ja que té un tipus diferent."
 
@@ -1735,7 +1735,7 @@ msgstr "Errada en analitzar com a enter de 64 bits sense signe."
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr "Ves a «%s»"
+msgstr "Vés a «%s»"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
@@ -1789,7 +1789,7 @@ msgstr "Suprimeix la clau"
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr "Ves a aquest camí"
+msgstr "Vés a aquest camí"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
@@ -2191,7 +2191,7 @@ msgid ""
 "it."
 msgstr ""
 "La clau té el tipus «tupla buida» especial. Això és probablement un error de "
-"la aplicació que ha instal·lat aquest esquema. Si és possible obriu un error "
+"l'aplicació que ha instal·lat aquest esquema. Si és possible obriu un error "
 "sobre això."
 
 #. Translators: field description when displaying folder properties; name of the folder
@@ -2328,7 +2328,7 @@ msgid ""
 msgstr ""
 "Useu la paraula clau «nothing» per establir un tipus anul·lable (que comença "
 "amb «m») al seu valor buit. Les cadenes de caràcters, signatures i camins "
-"d'objectes s'haurien d'envoltar amb cometes."
+"d'objectes s'haurien d'estar entre cometes."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
@@ -2336,7 +2336,7 @@ msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Les cadenes de caràcters, signatures i camins d'objectes s'haurien "
-"d'envoltar per cometes."
+"d'estar entre cometes."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:635
@@ -2355,7 +2355,7 @@ msgstr "S'ha suprimit la clau."
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
 msgid "conflicting keys"
-msgstr "Claus conflictives"
+msgstr "claus conflictives"
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
