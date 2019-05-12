@@ -130,7 +130,7 @@ msgid ""
 "be added here"
 msgstr ""
 "Les adreces d'interès\n"
-"s'afegiran ací"
+"s'afegiran aquí"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
@@ -376,7 +376,7 @@ msgstr "Si «true», la llista de tecles usa files més petites."
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:164
 msgid "Change the behaviour of a key value change request"
-msgstr "Canvia el comportament d'una demanda de canvi de valor de clau"
+msgstr "Canvia el comportament d'una petició de canvi de valor de clau"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
@@ -871,7 +871,7 @@ msgstr ""
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A custom type, here ‘(ii)’"
-msgstr "Un tipus personalitzat, ací «(ii)»"
+msgstr "Un tipus personalitzat, aquí «(ii)»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
@@ -882,8 +882,8 @@ msgid ""
 msgstr ""
 "L'editor del dconf us deia editar tots els tipus de paràmetres de "
 "configuració amb suport del GSettings, recorrent a una entrada de cadena de "
-"caràcters quan no té una manera millor de fer-ho. Ací hi ha una tupla de dos "
-"enters amb signe de 32bit."
+"caràcters quan no té una manera millor de fer-ho. Aquí hi ha una tupla de dos "
+"enters amb signe de 32-bit."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:431
@@ -2060,7 +2060,7 @@ msgstr "Es descartarà el canvi si sortiu d'aquesta vista sense aplicar-lo."
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
 #: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
-msgstr "El canvi s'aplicarà per aquesta demanda o si sortiu d'aquesta vista."
+msgstr "El canvi s'aplicarà per aquesta petició o si sortiu d'aquesta vista."
 
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
@@ -2159,7 +2159,7 @@ msgstr ""
 "No hi ha cap esquema disponible. Un esquema descriu com usar una clau i "
 "l'editor del Dconf no pot trobar un esquema associat amb aquesta clau. "
 "L'aplicació que va instal·lar aquesta clau pot haver-se eliminat, o bé "
-"aquesta clau és obsoleta, tal vegada voldreu suprimir-la."
+"aquesta clau és obsoleta, potser voldreu suprimir-la."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
