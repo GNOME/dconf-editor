@@ -19,6 +19,10 @@
     </p>
   </description>
 
+  <releases>
+    <release version="3.32" date="2019-03-13" />
+  </releases>
+
   <screenshots>
     <screenshot type="default" height="576" width="1024">
       <image>https://gitlab.gnome.org/GNOME/dconf-editor/raw/master/editor/screenshot1.png</image>
@@ -44,6 +48,7 @@
   <developer_name>The GNOME Project</developer_name>
   <!--GNOME Projects usually have no per-app donation page-->
   <url type="donation">https://www.gnome.org/friends/</url>
+  <content_rating type="oars-1.1"/>
 
   <provides>
     <binary>dconf-editor</binary>
