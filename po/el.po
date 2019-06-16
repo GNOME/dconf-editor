@@ -9,31 +9,126 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2018-08-17 19:33+0000\n"
-"PO-Revision-Date: 2018-09-05 02:02+0300\n"
-"Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
+"POT-Creation-Date: 2019-05-12 06:48+0000\n"
+"PO-Revision-Date: 2019-06-16 19:02+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Project-Style: gnome\n"
 
-#: editor/bookmarks.ui:19
-msgid "Bookmark this Location"
-msgstr "Προσθήκη σελιδοδείκτη σε αυτή την τοποθεσία"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "Περί"
 
-#: editor/bookmarks.ui:36
-msgid "Location bookmarked"
-msgstr "Η τοποθεσία προστέθηκε στους σελιδοδείκτες"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr ""
 
-#: editor/bookmarks.ui:37
-msgid "Toggle to bookmark this location"
-msgstr "Εναλλαγή σε προσθήκη σελιδοδείκτη σε αυτή την τοποθεσία"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
+#: editor/about-list.vala:135
+msgid ""
+"GNU General Public License\n"
+"version 3 or later"
+msgstr ""
 
-#: editor/bookmarks.ui:62
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr ""
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr ""
+"Ελληνική μεταφραστική ομάδα GNOME\n"
+" Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
+" Θάνος Τρυφωνίδης <tomtryf@gnome.org>\n"
+" Ευστάθιος Ιωσηφίδης <iosifidis@opensuse.org>\n"
+" Μαρία Θουκυδίδου <marablack3@gmail.com>\n"
+" Μαρία Μαυρίδου <mavridou@gmail.com>\n"
+"\n"
+"Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα\n"
+"http://gnome.gr/"
+
+#. Translators: menu entry of the pathbar menu
+#: editor/adaptative-pathbar.vala:251
+msgid "Copy current path"
+msgstr "Αντιγραφή τρέχουσας διαδρομής"
+
+#. Translators: menu entry of the pathbar menu (not displayed for now)
+#. Translators: "open" action in the right-click menu on a "show folder info" row
+#: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
+msgid "Show properties"
+msgstr "Εμφάνιση ιδιοτήτων"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:149
+msgid "Pause night mode"
+msgstr ""
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:153
+msgid "Reuse night mode"
+msgstr ""
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:157
+msgid "Use night mode"
+msgstr ""
+
+#. Translators: accessible name of the hamburger menu
+#: editor/base-headerbar.ui:112
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#. Translators: accessible description of the hamburger menu
+#: editor/base-headerbar.ui:114
+msgid "Current view actions"
+msgstr "Τρέχουσες ενέργειες προβολής"
+
+#. Translators: usual menu entry of the hamburger menu
+#: editor/base-headerbar.vala:116
+msgid "Keyboard Shortcuts"
+msgstr "Συντομεύσεις πληκτρολογίου"
+
+#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#. Translators: accessible name of the button for opening the bookmarks popover
+#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
+#: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
+#: editor/registry-search.vala:552
+msgid "Bookmarks"
+msgstr "Σελιδοδείκτες"
+
+#. Translators: hamburger menu entry on small windows (not used in current design)
+#: editor/bookmarks-headerbar.vala:254
+msgid "Hide bookmarks"
+msgstr "Απόκρυψη σελιδοδεικτών"
+
+#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:259
+msgid "Unbookmark"
+msgstr "Κατάργηση σελιδοδείκτες"
+
+#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:262
+msgid "Bookmark"
+msgstr "Σελιδοδείκτες"
+
+#. Translators: hamburger menu entry on small windows, to show the bookmarks list
+#: editor/bookmarks-headerbar.vala:265
+msgid "Show bookmarks"
+msgstr "Εμφάνιση σελιδοδεικτών"
+
+#. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
+#: editor/bookmarks-list.vala:32
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -41,42 +136,84 @@ msgstr ""
 "Οι σελιδοδείκτες\n"
 "θα προστεθούν εδώ"
 
-#: editor/bookmarks.ui:88 editor/registry-search.vala:379
-msgid "Bookmarks"
-msgstr "Σελιδοδείκτες"
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
+#: editor/bookmarks-list.vala:36
+msgid "Use"
+msgstr "Χρήση"
 
-#: editor/bookmarks.ui:89
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
+#: editor/bookmarks-list.vala:38
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:69
+msgid "Location bookmarked"
+msgstr "Η τοποθεσία προστέθηκε στους σελιδοδείκτες"
+
+#. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:71
+msgid "Toggle to bookmark this location"
+msgstr "Εναλλαγή σε προσθήκη σελιδοδείκτη σε αυτή την τοποθεσία"
+
+#. Translators: text that might appear in the bookmarks popover in place of the switch and its label
+#: editor/bookmarks.ui:96
+msgid "The bookmarks list is not editable."
+msgstr ""
+
+#. Translators: accessible description of the button for opening the bookmarks popover
+#: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
 msgstr "Διαχείριση σελιδοδεικτών"
 
-#: editor/bookmark.ui:33
-msgid "Remove"
-msgstr "Αφαίρεση"
+#. Translators: label of the switch in the bookmarks popover, when searching
+#: editor/bookmarks.vala:404
+msgid "Bookmark this Search"
+msgstr "Προσθήκη σελιδοδείκτη αυτής της αναζήτησης"
 
-#: editor/bookmark.ui:34
-msgid "Remove this bookmark"
-msgstr "Αφαίρεση σελιδοδείκτη"
+#. Translators: label of the switch in the bookmarks popover, when browsing
+#: editor/bookmarks.vala:407
+msgid "Bookmark this Location"
+msgstr "Προσθήκη σελιδοδείκτη σε αυτή την τοποθεσία"
 
-#: editor/browser-view.vala:83
+#. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
+#: editor/browser-headerbar.vala:165
+msgid "Properties"
+msgstr "Ιδιότητες"
+
+#. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
+#: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
 msgstr ""
 
-#: editor/browser-view.vala:84 editor/dconf-editor.ui:159
+#. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
+#. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
+#: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
 msgstr "Ανανέωση"
 
-#: editor/browser-view.vala:85
+#. Translators: text of an infobar to reload the keys list because of a new key (for example)
+#: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
 msgstr ""
 "Το περιεχόμενο αυτού του φακέλου έχει αλλάξει. Θέλετε να επαναφορτώσετε την "
 "προβολή;"
 
-#: editor/browser-view.vala:86 editor/browser-view.vala:88
+#. Translators: button of an infobar to reload the keys list because of a new key (for example)
+#. Translators: button of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:90 editor/browser-view.vala:96
 msgid "Reload"
 msgstr "Επαναφόρτωση"
 
-#: editor/browser-view.vala:87
+#. Translators: text of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
+msgstr ""
+
+#. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
+#: editor/browser-window.vala:906
+msgid ""
+"The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
@@ -115,75 +252,99 @@ msgid "Read keys descriptions and edit their values"
 msgstr ""
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Το έργο GNOME"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:262 editor/dconf-editor.vala:478
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
 msgstr "επεξεργαστής Dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:4
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Configuration editor for dconf"
 msgstr "Επεξεργαστής ρυθμίσεων για το Dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:5
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
 msgstr "Άμεση επεξεργασία όλης της βάσης με τα δεδομένα των ρυθμίσεων"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:7
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "ρυθμίσεις;διαμόρφωση;settings;configuration;"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:15
-msgid "ca.desrt.dconf-editor"
-msgstr "ca.desrt.dconf-editor"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:102
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:105
 msgid "The width of the window"
 msgstr "Το πλάτος του παραθύρου"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The width of the main window in pixels."
 msgstr "Το πλάτος του κυρίως παραθύρου σε εικονοστοιχεία."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:115
 msgid "The height of the window"
 msgstr "Το ύψος του παραθύρου"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:117
 msgid "The height of the main window in pixels."
 msgstr "Το ύψος του κυρίως παραθύρου σε εικονοστοιχεία."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:122
+#: editor/ca.desrt.dconf-editor.gschema.xml:124
 msgid "A flag to enable maximized mode"
 msgstr "Σημαία για την ενεργοποίηση της λειτουργίας μεγιστοποίησης"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:129
 msgid "A flag to restore the last view"
 msgstr "Μια σημαία που θα επαναφέρετε στην τελευταία προβολή"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
-#, fuzzy
-#| msgid ""
-#| "If 'true', Dconf Editor tries at launch to navigate to the path described "
-#| "in the 'saved-view' key."
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
-"Αν είναι αληθές, ο επεξεργαστής Dconf θα προσπαθήσει να περιηγηθεί στην "
-"διαδρομή του κλειδιού «saved-view»."
+"Αν είναι «αληθές», ο επεξεργαστής Dconf θα προσπαθήσει στην εκκίνηση να "
+"περιηγηθεί στην διαδρομή του κλειδιού «saved-view»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:136
+#, fuzzy
+#| msgid "A path to restore the last view"
+msgid "A path to restore the pathbar state"
+msgstr "Μια διαδρομή που θα επαναφέρεται στην τελευταία προβολή"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#, fuzzy
+#| msgid ""
+#| "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch "
+#| "to navigate to this path."
+msgid ""
+"If the “restore-view” key is set to “true”, and if the path requested at "
+"startup is a parent path of this one, Dconf Editor tries to restore the "
+"pathbar state at this path."
+msgstr ""
+"Αν είναι αληθές το κλειδί «restore-view», ο επεξεργαστής Dconf θα "
+"προσπαθήσει να περιηγηθεί στην διαδρομή."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:143
 msgid "A path to restore the last view"
 msgstr "Μια διαδρομή που θα επαναφέρεται στην τελευταία προβολή"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 #, fuzzy
 #| msgid ""
 #| "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch "
@@ -195,11 +356,13 @@ msgstr ""
 "Αν είναι αληθές το κλειδί «restore-view», ο επεξεργαστής Dconf θα "
 "προσπαθήσει να περιηγηθεί στην διαδρομή."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:128
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:150
 msgid "Show initial warning"
 msgstr "Εμφάνιση αρχικής προειδοποίησης"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 #, fuzzy
 #| msgid ""
 #| "If 'true', Dconf Editor opens a popup when launched reminding the user to "
@@ -211,28 +374,24 @@ msgstr ""
 "Αν είναι αληθές, όταν εκκινηθεί ο επεξεργαστής Dconf θα ανοίξει ένα "
 "αναδυόμενο που θα προειδοποιεί τον χρήστη να είναι προσεκτικός."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:133
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:157
 #, fuzzy
 msgid "A flag to enable small rows for keys list"
 msgstr "Μια σημαία για την ενεργοποίηση της λειτουργίας πλήρους οθόνης"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:134
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "If “true”, the keys list use smaller rows."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
-msgid "A flag to enable small rows for bookmarks list"
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:139
-msgid "If “true”, the bookmarks list use smaller rows."
-msgstr ""
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:164
 msgid "Change the behaviour of a key value change request"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -244,24 +403,28 @@ msgid ""
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:148
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:171
 #, fuzzy
 #| msgid "A flag to restore the last view"
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Μια σημαία που θα επαναφέρετε στην τελευταία προβολή"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:149
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:153
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:178
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 #, fuzzy
 #| msgid ""
 #| "For users with mice that have buttons for “Forward” and “Back”, this key "
@@ -276,12 +439,14 @@ msgstr ""
 "κλειδί καθορίζει ποιο κουμπί θα ενεργοποιεί την εντολή «Πίσω» στο παράθυρο "
 "περιηγητή. Οι επιτρεπτές τιμές είναι από 6 μέχρι 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:186
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr ""
 "Κουμπί ποντικιού που θα εκτελεί την εντολή «Πίσω» στο παράθυρο περιηγητή"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:160
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -291,12 +456,14 @@ msgstr ""
 "κλειδί καθορίζει ποιο κουμπί θα ενεργοποιεί την εντολή «Πίσω» στο παράθυρο "
 "περιηγητή. Οι επιτρεπτές τιμές είναι από 6 μέχρι 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:165
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:194
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr ""
 "Κουμπί ποντικιού που θα εκτελεί την εντολή «Μπροστά» στο παράθυρο περιηγητή"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:196
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -306,11 +473,13 @@ msgstr ""
 "κλειδί καθορίζει ποιο κουμπί θα ενεργοποιεί την εντολή «Μπροστά» στο "
 "παράθυρο περιηγητή. Οι επιτρεπτές τιμές είναι από 6 μέχρι 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:170
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:201
 msgid "A flag to check for added or removed schemas"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -319,11 +488,13 @@ msgid ""
 "removed when a better way to do things is found."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:208
 msgid "Enabled relocatable schema mapping facilities"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -332,11 +503,13 @@ msgid ""
 "relocatable schema from the command-line."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:215
 msgid "Mapping of paths to manually associated schemas"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -345,11 +518,13 @@ msgid ""
 "may be associated with multiple path specifications."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:185
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:222
 msgid "A flag for skipping unnecessary subfolders"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
@@ -358,36 +533,61 @@ msgstr ""
 "επεξεργαστής Dconf μπορεί να μεταβεί απευθείας σε αυτόν τον υποφάκελο. Αυτή "
 "η σημαία ενεργοποιεί αυτή τη συμπεριφορά."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
+msgid "Follow system night light"
+msgstr ""
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr ""
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A list of bookmarked paths"
 msgstr "Μια λίστα με τις διαδρομές σελιδοδεικτών"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:193
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Περιέχει όλες τις διαδρομές του χρήστη που έχει προσθέσει στους "
 "σελιδοδείκτες σε ένα πίνακα συμβολοσειρών."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
-#: editor/ca.desrt.dconf-editor.gschema.xml:373
-#, fuzzy
-#| msgid "A boolean, type \"b\""
-msgid "A boolean, type ‘b’"
-msgstr "Μια λογική μεταβλητή, πληκτρολογήστε \"b\""
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
+msgid "A flag to enable small rows for bookmarks list"
+msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:249
+msgid "If “true”, the bookmarks list use smaller rows."
+msgstr ""
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
+#: editor/ca.desrt.dconf-editor.gschema.xml:487
+msgid "A boolean, type ‘b’"
+msgstr "Μια λογική μεταβλητή, πληκτρολογήστε «b»"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 #, fuzzy
 #| msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Μια λογική μεταβλητή μπορεί να πάρει δύο τιμές, «true» ή «false»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
 #, fuzzy
 #| msgid "A nullable boolean, type \"mb\""
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Μια λογική μεταβλητή nullable, πληκτρολογήστε \"mb\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:284
 #, fuzzy
 #| msgid ""
 #| "GSettings allows nullable types, that are similar to other types but "
@@ -402,13 +602,15 @@ msgstr ""
 "αλλά μπορούν να πάρουν την τιμή «nothing». Μια λογική τιμή nullable μπορεί "
 "να πάρει τρεις τιμές, «true», «false» και «nothing»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:228
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
 #, fuzzy
 #| msgid "A byte (unsigned), type \"y\""
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Ένα byte (χωρίς πρόσημο), πληκτρολογήστε \"y\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:229
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -416,13 +618,15 @@ msgstr ""
 "Μια τιμή byte είναι ένας ακέραιος μεταξύ 0 και 255. Μπορεί να χρησιμοποιηθεί "
 "για να μεταβιβάσει χαρακτήρες."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:233
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
 #, fuzzy
 #| msgid "A bytestring, type \"ay\""
 msgid "A bytestring, type ‘ay’"
 msgstr "Ένα bytestring, πληκτρολογήστε \"ay\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:234
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:298
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -433,13 +637,15 @@ msgstr ""
 "ο χαρακτήρας τερματισμού nul πρέπει να συμπεριληφθεί ως ο τελευταίος "
 "χαρακτήρας του πίνακα."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:238
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
 #, fuzzy
 #| msgid "A bytestring array, type \"aay\""
 msgid "A bytestring array, type ‘aay’"
 msgstr "Ένας πίνακας bytestring, πληκτρολογήστε \"aay\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:239
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -448,13 +654,15 @@ msgstr ""
 "χρησιμοποιείται για να μεταβιβάσει συμβολοσειρές που μπορεί να μην είναι "
 "έγκυρα utf8."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:243
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:310
 #, fuzzy
 #| msgid "A D-Bus handle type, type \"h\""
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Ένας τύπος χειριστή D-Bus, πληκτρολογήστε \"h\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:244
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:312
 #, fuzzy
 msgid ""
 "The handle type is a 32-bit signed integer value that is, by convention, "
@@ -469,13 +677,15 @@ msgstr ""
 "Αν δεν αλληλεπιδράτε με το D-Bus, τότε δεν υπάρχει λόγος να χρησιμοποιήσετε "
 "τον τύπο."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:248
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
 #, fuzzy
 #| msgid "A D-Bus object path, type \"o\""
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Μια διαδρομή αντικειμένου D-Bus, πληκτρολογήστε \"o\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:249
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:319
 #, fuzzy
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
@@ -488,13 +698,15 @@ msgstr ""
 "Αν δεν αλληλεπιδράτε με το D-Bus, τότε δεν υπάρχει λόγος να χρησιμοποιήσετε "
 "τον τύπο."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:253
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
 #, fuzzy
 #| msgid "A D-Bus object path array, type \"ao\""
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Ένας πίνακας διαδρομής αντικειμένου D-Bus, πληκτρολογήστε \"ao\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:254
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:326
 #, fuzzy
 msgid ""
 "An object path array could contain any number of object paths (including "
@@ -507,13 +719,15 @@ msgstr ""
 "Αν δεν αλληλεπιδράτε με το D-Bus, τότε δεν υπάρχει λόγος να χρησιμοποιήσετε "
 "τον τύπο."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:258
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:331
 #, fuzzy
 #| msgid "A D-Bus signature, type \"g\""
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Μια υπογραφή D-Bus, πληκτρολογήστε \"g\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:259
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:333
 #, fuzzy
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
@@ -526,41 +740,49 @@ msgstr ""
 "Αν δεν αλληλεπιδράτε με το D-Bus, τότε δεν υπάρχει λόγος να χρησιμοποιήσετε "
 "τον τύπο."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:263
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:338
 msgid "A dictionary entry of type ‘{ss}’"
 msgstr "Μια καταχώρηση λεξικού τύπου «{ss}»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:264
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:340
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:268
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid "A “vardict”, type ‘a{sv}’"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:269
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:347
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:273
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "A double, type ‘d’"
 msgstr "Μια μεταβλητή διπλής ακρίβειας, τύπου «d»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:274
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
 msgid "A double value could represent any real number."
 msgstr ""
 "Μια μεταβλητή διπλής ακρίβειας μπορεί να αναπαρασταθεί από έναν πραγματικό "
 "αριθμό."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:278
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
 msgid "A 5-choices enumeration"
 msgstr "Μια αρίθμηση 5 επιλογών"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:279
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 #, fuzzy
 #| msgid ""
 #| "Enumerations could be done either with the \"enum\" attribute, or with a "
@@ -572,38 +794,46 @@ msgstr ""
 "Η αρίθμηση μπορεί να γίνει είτε με ένα όρισμα \"enum\", ή με μια σημαία "
 "\"choices\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:283
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
+#: editor/ca.desrt.dconf-editor.gschema.xml:501
+msgid "Flags: choose-colors-you-love"
+msgstr "Σημαίες: choose-colors-you-love"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:503
+#, fuzzy
+#| msgid "Flags could be set by the \"enum\" attribute."
+msgid "Flags could be set by the “enum” attribute."
+msgstr "Σημαίες που μπορούν να οριστούν από το γνώρισμα «enum»."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
 #, fuzzy
 #| msgid "A short integer, type \"n\""
 msgid "A short integer, type ‘n’"
 msgstr "Ένας ακέραιος short, πληκτρολογήστε \"n\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:284
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
 #, fuzzy
 #| msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr ""
 "Ένας ακέραιος 16bit με πρόσημο. Δείτε επίσης το κλειδί «integer-16-unsigned»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:288
-#: editor/ca.desrt.dconf-editor.gschema.xml:383
-msgid "Flags: choose-colors-you-love"
-msgstr "Σημαίες: choose-colors-you-love"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:289
-#: editor/ca.desrt.dconf-editor.gschema.xml:384
-#, fuzzy
-#| msgid "Flags could be set by the \"enum\" attribute."
-msgid "Flags could be set by the “enum” attribute."
-msgstr "Σημαίες που μπορούν να οριστούν από το γνώρισμα «enum»."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:293
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
 #, fuzzy
 #| msgid "An unsigned short integer, type \"q\""
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Ένας ακέραιος short χωρίς πρόσημο, πληκτρολογήστε \"q\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:294
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:382
 #, fuzzy
 #| msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
@@ -611,27 +841,32 @@ msgstr ""
 "Ένας ακέραιος 16bit χωρίς πρόσημο. Δείτε επίσης το κλειδί «integer-16-"
 "signed»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:298
-#: editor/ca.desrt.dconf-editor.gschema.xml:378
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
+#: editor/ca.desrt.dconf-editor.gschema.xml:494
 #, fuzzy
 #| msgid "An usual integer, type \"i\""
 msgid "An usual integer, type ‘i’"
 msgstr "Ένας ακέραιος, πληκτρολογήστε \"i\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:299
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
 #, fuzzy
 #| msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "Ένας ακέραιος 32bit με πρόσημο. Δείτε επίσης το κλειδί «integer-32-unsigned»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:303
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
 #, fuzzy
 #| msgid "An unsigned usual integer, type \"u\""
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Ένας ακέραιος χωρίς πρόσημο, πληκτρολογήστε \"u\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:304
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
 #, fuzzy
 #| msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
@@ -639,26 +874,30 @@ msgstr ""
 "Ένας ακέραιος 32bit χωρίς πρόσημο. Δείτε επίσης το κλειδί «integer-32-"
 "signed»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:308
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 #, fuzzy
 #| msgid "A long integer, type \"x\""
 msgid "A long integer, type ‘x’"
 msgstr "Ένας ακέραιος long, πληκτρολογήστε «x»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:309
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
 #, fuzzy
 #| msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "Ένας ακέραιος 64bit με πρόσημο. Δείτε επίσης το κλειδί «integer-64-unsigned»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:313
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
 #, fuzzy
 #| msgid "An unsigned long integer, type \"t\""
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Ένας ακέραιος long χωρίς πρόσημο, πληκτρολογήστε \"t\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:314
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:410
 #, fuzzy
 #| msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
@@ -666,11 +905,13 @@ msgstr ""
 "Ένας ακέραιος 64bit χωρίς πρόσημο. Δείτε επίσης το κλειδί «integer-64-"
 "signed»."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:320
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid "A number with range"
 msgstr "Ένας αριθμός με εύρος"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:321
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -680,12 +921,13 @@ msgstr ""
 "double) μπορεί να περιοριστεί σε ένα προσαρμοσμένο εύρος τιμών. Για "
 "παράδειγμα, αυτός ο ακέραιος μπορεί να πάρει μια τιμή μεταξύ -2 και 10."
 
-#. Translators: do not forget the parenthesis, they are meaningful.
-#: editor/ca.desrt.dconf-editor.gschema.xml:326
+#. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A custom type, here ‘(ii)’"
 msgstr "Ένας προσαρμοσμένος τύπος, εδώ «(ii)»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:327
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:426
 #, fuzzy
 #| msgid ""
 #| "Dconf Editor lets you edit any settings type supported by GSettings, "
@@ -700,13 +942,15 @@ msgstr ""
 "GSettings, χρησιμοποιώντας μια συμβολοσειρά όταν δεν υπάρχει ο κατάλληλος "
 "τύπος. Εδώ είναι μια λίστα δύο ακεραίων 32bit με πρόσημο."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:331
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
 #, fuzzy
 #| msgid "A string, type \"s\""
 msgid "A string, type ‘s’"
 msgstr "Μια συμβολοσειρά, πληκτρολογήστε \"s\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:332
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:433
 #, fuzzy
 #| msgid ""
 #| "The string type could accept any utf8 string. Note that an empty string "
@@ -720,13 +964,15 @@ msgstr ""
 "ότι μια κενή συμβολοσειρά \"''\" δεν είναι το ίδιο με το NULL (τίποτα). "
 "Δείτε επίσης το κλειδί \"string-nullable\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:336
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:438
 #, fuzzy
 #| msgid "A string array, type \"as\""
 msgid "A string array, type ‘as’"
 msgstr "Ένας πίνακας συμβολοσειρών, πληκτρολογήστε \"as\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:337
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:440
 #, fuzzy
 #| msgid ""
 #| "A string array contains any number of strings of whatever length. It may "
@@ -738,13 +984,15 @@ msgstr ""
 "Ένας πίνακας συμβολοσειρών μπορεί να περιέχει αριθμούς και συμβολοσειρές "
 "οποιουδήποτε μεγέθους. Μπορεί να περιέχει και τον κενό πίνακα, \"[]\"."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:341
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:445
 #, fuzzy
 #| msgid "A nullable string, type \"ms\""
 msgid "A nullable string, type ‘ms’"
 msgstr "Μια συμβολοσειρά nullable, πληκτρολογήστε \"ms\""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:342
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:447
 #, fuzzy
 #| msgid ""
 #| "GSettings allows nullable types, that are similar to other types but "
@@ -760,11 +1008,13 @@ msgstr ""
 "μπορεί να πάρει οποιαδήποτε συμβολοσειρά ως τιμή, συμπεριλαμβανομένης της "
 "κενής \"''\", ή μπορεί να είναι NULL (τίποτα)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:346
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A variant, type ‘v’"
 msgstr "Μια παραλλαγή, τύπου «v»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:347
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:454
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
@@ -775,247 +1025,337 @@ msgid ""
 "for complete documentation."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:351
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:459
 #, fuzzy
 msgid "A 1-choice enumeration"
 msgstr "Μια αρίθμηση 5 επιλογών"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:461
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:357
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:467
 #, fuzzy
 msgid "A 1-choice integer value"
 msgstr "Μια αρίθμηση 5 επιλογών"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:358
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:469
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:362
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:474
 msgid "The empty tuple, type and value “()”"
 msgstr "Η κενή πλειάδα, ο τύπος και η τιμή «()»"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:363
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:476
 msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:374
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:379
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:496
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 "Υπογεγραμμένος ακέραιος 32-bit, ο οποίος ορίζεται από ένα μετατοπίζον σχήμα."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:390
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:510
 msgid "A normal non-conflicting key from Conflict1"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:391
-#: editor/ca.desrt.dconf-editor.gschema.xml:418
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:512
+#: editor/ca.desrt.dconf-editor.gschema.xml:549
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:395
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:517
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
-#: editor/ca.desrt.dconf-editor.gschema.xml:423
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:519
+#: editor/ca.desrt.dconf-editor.gschema.xml:556
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:400
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:524
 msgid "Conflicting key with no range that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
-#: editor/ca.desrt.dconf-editor.gschema.xml:429
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:526
+#: editor/ca.desrt.dconf-editor.gschema.xml:564
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:405
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:531
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:406
-#: editor/ca.desrt.dconf-editor.gschema.xml:434
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:533
+#: editor/ca.desrt.dconf-editor.gschema.xml:571
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:410
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:538
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:411
-#: editor/ca.desrt.dconf-editor.gschema.xml:439
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:540
+#: editor/ca.desrt.dconf-editor.gschema.xml:578
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:547
 msgid "A normal non-conflicting key from Conflict2"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:422
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:554
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:428
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:562
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:433
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:569
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:438
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:576
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr ""
 
-#: editor/dconf-editor-menu.ui:6
-msgid "Keyboard Shortcuts"
-msgstr "Συντομεύσεις πληκτρολογίου"
-
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_Περί"
-
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "Έ_ξοδος"
-
-#: editor/dconf-editor.ui:34
-msgid "Actions"
-msgstr "Ενέργειες"
-
-#. TODO 1/3 Informations
-#: editor/dconf-editor.ui:35
-msgid "Current view actions"
-msgstr "Τρέχουσες ενέργειες προβολής"
-
-#: editor/dconf-editor.ui:62
-msgid "Search"
-msgstr "Αναζήτηση"
-
-#: editor/dconf-editor.ui:63
-msgid "Search keys"
-msgstr "Κλειδιά αναζήτησης"
-
-#: editor/dconf-editor.ui:160
-msgid "Refresh search results"
-msgstr "Ανανέωση των αποτελεσμάτων αναζήτησης"
-
-#: editor/dconf-editor.vala:134
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:155
 msgid "Print release version and exit"
 msgstr "Προβολή της έκδοσης και έξοδος"
 
-#: editor/dconf-editor.vala:135
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:158
 #, fuzzy
 #| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
 msgstr "Προβολή της έκδοσης και έξοδος"
 
-#: editor/dconf-editor.vala:137
+#. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
+#: editor/dconf-editor.vala:161
 #, fuzzy
 #| msgid "Show initial warning"
 msgid "Do not show initial warning"
 msgstr "Εμφάνιση αρχικής προειδοποίησης"
 
-#: editor/dconf-editor.vala:139
-msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:199
+#, fuzzy
+#| msgid "A graphical tool for editing the dconf database"
+msgid "Graphical interface for editing other applications settings."
+msgstr "Ένα εργαλείο για επεξεργασία της βάσης δεδομένων του Dconf"
+
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:202
+msgid "Uses the gsettings API of the glib library, among others."
 msgstr ""
 
+#. Translators: command-line header description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:205
+#, fuzzy
+#| msgid "Description"
+msgid "Arguments description:"
+msgstr "Περιγραφή"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:209
+msgid "a folder path or a key path"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:211
+msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:215
+msgid "the name of a schema with fixed path"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:217
+#, fuzzy
+#| msgid "ca.desrt.dconf-editor"
+msgid "example: “ca.desrt.dconf-editor.Settings”"
+msgstr "ca.desrt.dconf-editor"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
+#: editor/dconf-editor.vala:221
+msgid "the name of a “relocatable” schema, without fixed path"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:223
+msgid "see list with the “--list-relocatable-schemas” option"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:227
+msgid "the path where to map the relocatable schema"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:229
+msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:233
+msgid "the name of a key from the schema"
+msgstr ""
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:235
+msgid "example: “bookmarks”"
+msgstr ""
+
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:291
 msgid "Known schemas installed:"
 msgstr "Εγκατεστημένα γνωστά σχήματα:"
 
-#: editor/dconf-editor.vala:234
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:297
 msgid "No known schemas installed."
 msgstr ""
 
-#: editor/dconf-editor.vala:238
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:302
 msgid "Known schemas skipped:"
 msgstr ""
 
-#: editor/dconf-editor.vala:243
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:308
 msgid "No known schemas skipped."
 msgstr ""
 
-#: editor/dconf-editor.vala:247
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:313
 msgid "Unknown schemas:"
 msgstr ""
 
-#: editor/dconf-editor.vala:252
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:319
 msgid "No unknown schemas."
 msgstr ""
 
-#: editor/dconf-editor.vala:325
+#. Translators: command-line error message, when the user requests a specific path while there is already a window opened
+#: editor/dconf-editor.vala:453
 msgid "Only one window can be opened for now.\n"
 msgstr ""
 
-#: editor/dconf-editor.vala:344
+#. Translators: command-line error message, try 'dconf-editor a b c d'
+#: editor/dconf-editor.vala:473
 msgid "Cannot understand: too many arguments.\n"
 msgstr ""
 
-#: editor/dconf-editor.vala:354
+#. Translators: command-line error message, try 'dconf-editor / a'
+#: editor/dconf-editor.vala:487
 msgid "Cannot understand second argument in this context.\n"
 msgstr ""
 
-#: editor/dconf-editor.vala:374
+#. Translators: command-line error message, try 'dconf-editor org.example /'
+#: editor/dconf-editor.vala:508
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr ""
 
-#: editor/dconf-editor.vala:388
+#. Translators: command-line error message, try 'dconf-editor org.example:a'
+#: editor/dconf-editor.vala:523
 msgid "Schema path should start and end with a “/”.\n"
 msgstr ""
 
-#: editor/dconf-editor.vala:401
+#. Translators: command-line error message, try 'dconf-editor //'
+#: editor/dconf-editor.vala:539
+msgid "Cannot understand: given path contains “//”.\n"
+msgstr ""
+
+#. Translators: command-line error message, try 'dconf-editor "org example" a'
+#: editor/dconf-editor.vala:547
 msgid "Cannot understand: space character in argument.\n"
 msgstr ""
 
-#. #. * * Copy action
-#. #: editor/dconf-editor.vala:425
+#. Translators: notification header, try ctrl-c while in the keys list
+#: editor/dconf-editor.vala:575
 msgid "Copied to clipboard"
 msgstr "Αντιγράφτηκε στο πρόχειρο"
 
-#: editor/dconf-editor.vala:480
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:652
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 
-#: editor/dconf-editor.vala:481
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:658
+#, fuzzy
+#| msgid ""
+#| "Copyright © 2010-2014 – Canonical Ltd\n"
+#| "Copyright © 2015-2018 – Arnaud Bonatti\n"
+#| "Copyright © 2017-2018 – Davi da Silva Böger"
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
 "Πνευματικά δικαιώματα © 2010-2014 – Canonical Ltd\n"
 "Πνευματικά δικαιώματα © 2015-2018 – Arnaud Bonatti\n"
 "Πνευματικά δικαιώματα © 2017-2018 – Davi da Silva Böger"
 
-#: editor/dconf-editor.vala:485
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:665
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
@@ -1028,400 +1368,896 @@ msgstr ""
 "Για περισσότερες πληροφορίες, επισκεφθείτε την σελίδα\n"
 "http://gnome.gr/"
 
-#: editor/dconf-model.vala:939
-#, c-format
-msgid "%s (key erased)"
+#. Translators: about dialog text; label of the website link
+#: editor/dconf-editor.vala:671
+msgid "Page on GNOME wiki"
 msgstr ""
 
-#: editor/dconf-view.vala:335
-msgid "Failed to parse as double."
-msgstr ""
+#. Translators: usual menu entry of the hamburger menu
+#: editor/dconf-headerbar.vala:53
+msgid "About Dconf Editor"
+msgstr "Περί του Επεξεργαστή Dconf"
 
-#: editor/dconf-view.vala:394 editor/dconf-view.vala:453
-#: editor/dconf-view.vala:671 editor/dconf-view.vala:780
-msgid "This value is invalid for the key type."
-msgstr ""
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+msgid "Apply"
+msgstr "Εφαρμογή"
 
-#: editor/dconf-window.vala:119
-msgid "Schema is relocatable, a path is needed."
-msgstr ""
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#: editor/dconf-headerbar.vala:117
+#, fuzzy
+#| msgid "Dismiss change"
+msgid "Dismiss"
+msgstr "Απόρριψη αλλαγής"
 
-#: editor/dconf-window.vala:131
-msgid "Startup mappings are disabled."
-msgstr ""
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
+#: editor/dconf-headerbar.vala:141
+msgid "Apply all"
+msgstr "Εφαρμογή όλων"
 
-#: editor/dconf-window.vala:145
-msgid "Schema is not installed on given path."
-msgstr ""
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
+#: editor/dconf-headerbar.vala:144
+#, fuzzy
+#| msgid "Dismiss change"
+msgid "Dismiss all"
+msgstr "Απόρριψη αλλαγής"
 
-#: editor/dconf-window.vala:160
-#, c-format
-msgid "Unknown schema “%s”."
-msgstr ""
-
-#: editor/dconf-window.vala:301
-msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr ""
-"Σας ευχαριστούμε που χρησιμοποιείτε τον επεξεργαστή Dconf για την αλλαγή των "
-"ρυθμίσεων σας!"
-
-#: editor/dconf-window.vala:302
-msgid "Don’t forget that some options may break applications, so be careful."
-msgstr ""
-"Μην ξεχνάτε πως ορισμένες επιλογές μπορεί να κάνουν τις εφαρμογές να μη "
-"λειτουργούν σωστά, γι αυτό να είστε προσεκτικοί."
-
-#: editor/dconf-window.vala:303
-msgid "I’ll be careful."
-msgstr "Θα είμαι προσεκτικός."
-
-#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:307
-msgid "Show this dialog next time."
-msgstr "Εμφάνιση αυτού του διαλόγου την επόμενη φορά."
-
-#: editor/dconf-window.vala:428
-#, c-format
-msgid "Folder “%s” is now empty."
-msgstr "Ο φάκελος «%s» είναι τώρα κενός."
-
-#. GAction parameter type switch is a little touchy, see pathbar.vala
-#: editor/dconf-window.vala:438
-#, c-format
-msgid "Key “%s” has been deleted."
-msgstr ""
-
-#: editor/dconf-window.vala:691
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
+#: editor/dconf-headerbar.vala:152
 #, fuzzy
 #| msgctxt "shortcut window"
-#| msgid "Copy descriptor"
-msgid "Copy descriptor"
-msgstr "Αντιγραφή περιγραφέα"
+#| msgid "Quit"
+msgid "Quit mode"
+msgstr "Έξοδος"
 
-#: editor/dconf-window.vala:697
+#. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
+#: editor/dconf-headerbar.vala:201
+msgid "Enter delay mode"
+msgstr ""
+
+#. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
+#: editor/dconf-headerbar.vala:205
 msgid "Reset visible keys"
 msgstr "Επαναφορά ορατών κλειδιών"
 
-#: editor/dconf-window.vala:698
+#. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
+#: editor/dconf-headerbar.vala:208
 #, fuzzy
 #| msgid "Reset visible keys"
 msgid "Reset view recursively"
 msgstr "Επαναφορά ορατών κλειδιών"
 
-#: editor/dconf-window.vala:706
-msgid "Enter delay mode"
+#. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/dconf-headerbar.vala:246
+msgid "Pending"
+msgstr "Εκκρεμεί"
+
+#. Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path
+#: editor/dconf-model.vala:945
+#, c-format
+msgid "%s (key erased)"
 msgstr ""
 
-#: editor/dconf-window.vala:771
+#. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
+#: editor/dconf-window.vala:122
+msgid "Schema is relocatable, a path is needed."
+msgstr ""
+
+#. Translators: command-line startup warning
+#: editor/dconf-window.vala:135
+msgid "Startup mappings are disabled."
+msgstr ""
+
+#. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
+#: editor/dconf-window.vala:150
+msgid "Schema is not installed on given path."
+msgstr ""
+
+#. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
+#: editor/dconf-window.vala:166
+#, c-format
+msgid "Unknown schema “%s”."
+msgstr ""
+
+#. Translators: initial "use at your own risk" dialog, the welcoming text
+#: editor/dconf-window.vala:272
+msgid "Thanks for using Dconf Editor for editing your settings!"
+msgstr ""
+"Σας ευχαριστούμε που χρησιμοποιείτε τον επεξεργαστή Dconf για την αλλαγή των "
+"ρυθμίσεων σας!"
+
+#. Translators: initial "use at your own risk" dialog, the warning text
+#: editor/dconf-window.vala:275
+msgid "Don’t forget that some options may break applications, so be careful."
+msgstr ""
+"Μην ξεχνάτε πως ορισμένες επιλογές μπορεί να κάνουν τις εφαρμογές να μη "
+"λειτουργούν σωστά, γι αυτό να είστε προσεκτικοί."
+
+#. Translators: initial "use at your own risk" dialog, the button label
+#: editor/dconf-window.vala:278
+msgid "I’ll be careful."
+msgstr "Θα είμαι προσεκτικός."
+
+#. Translators: initial "use at your own risk" dialog, the checkbox label
+#: editor/dconf-window.vala:282
+msgid "Show this dialog next time."
+msgstr "Εμφάνιση αυτού του διαλόγου την επόμενη φορά."
+
+#. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
+#: editor/dconf-window.vala:303
 msgid ""
-"The same mouse button is set for going backward and forward. Doing nothing."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
+"+F4 to dismiss changes and quit."
 msgstr ""
 
-#: editor/dconf-window.vala:1035
+#. Translators: notification text, when the requested folder has been removed; the %s is the folder path
+#: editor/dconf-window.vala:775
+#, c-format
+msgid "Folder “%s” is now empty."
+msgstr "Ο φάκελος «%s» είναι τώρα κενός."
+
+#. Translators: notification text, when the requested key has been removed; the %s is the key path
+#: editor/dconf-window.vala:786
+#, c-format
+msgid "Key “%s” has been deleted."
+msgstr ""
+
+#. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
+#: editor/dconf-window.vala:792
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Αδυναμία εύρεσης κλειδιού «%s»."
 
-#: editor/dconf-window.vala:1039
+#. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
+#: editor/dconf-window.vala:798
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr ""
 
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/delayed-setting-view.ui:79 editor/delayed-setting-view.ui:124
-#: editor/delayed-setting-view.vala:62 editor/delayed-setting-view.vala:97
-#: editor/key-list-box-row.vala:567 editor/registry-info.vala:372
-msgid "Default value"
-msgstr "Προεπιλεγμένη τιμή"
-
-#: editor/delayed-setting-view.vala:77 editor/registry-info.vala:569
-#: editor/registry-list.vala:433
-msgid "Key erased."
-msgstr "Το κλειδί διαγράφηκε."
-
-#: editor/delayed-setting-view.vala:109
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
+#: editor/delayed-setting-view.vala:136
 msgid "Key erased"
 msgstr "Το κλειδί διαγράφηκε"
 
-#: editor/help-overlay.ui:11
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
+msgid "Default value"
+msgstr "Προεπιλεγμένη τιμή"
+
+#. Translators: header in the shortcut window, for usual headerbar menus actions
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: editor/help-overlay.ui:15
+#. Translators: Ctrl-B action
+#: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Μενού σελιδοδεικτών"
 
-#: editor/help-overlay.ui:22
+#. Translators: Ctrl-D action
+#: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Προσθήκη σελιδοδείκτη της διαδρομής"
 
-#: editor/help-overlay.ui:29
+#. Translators: Ctrl-Shift-D action
+#: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Αφαίρεση σελιδοδείκτη της διαδρομής"
 
-#: editor/help-overlay.ui:36
-msgctxt "shortcut window"
-msgid "Search bar"
-msgstr "Γραμμή αναζήτησης"
-
-#: editor/help-overlay.ui:43
+#. Translators: F10 key action
+#: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Μενού ενεργειών"
 
-#: editor/help-overlay.ui:52
+#. Translators: Shift-F10 action
+#: editor/help-overlay.ui:66
+#, fuzzy
 msgctxt "shortcut window"
-msgid "Clipboard"
-msgstr "Πρόχειρο"
+msgid "Path bar menu"
+msgstr "Περιήγηση δένδρου"
 
-#: editor/help-overlay.ui:56
-msgctxt "shortcut window"
-msgid "Copy descriptor"
-msgstr "Αντιγραφή περιγραφέα"
-
-#: editor/help-overlay.ui:63
-msgctxt "shortcut window"
-msgid "Copy path"
-msgstr "Αντιγραφή διαδρομής"
-
-#: editor/help-overlay.ui:72
-msgctxt "shortcut window"
-msgid "Modifications list actions"
-msgstr ""
-
+#. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
-msgctxt "shortcut window"
-msgid "Toggle modifications list"
-msgstr ""
-
-#: editor/help-overlay.ui:83
-msgctxt "shortcut window"
-msgid "Open selected row key"
-msgstr ""
-
-#: editor/help-overlay.ui:90
-msgctxt "shortcut window"
-msgid "Dismiss modification"
-msgstr "Απόρριψη τροποποίησης"
-
-#: editor/help-overlay.ui:99
 #, fuzzy
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Περιήγηση δένδρου"
 
-#: editor/help-overlay.ui:103
+#. Translators: Alt-Shift-Up action; browse to the '/' folder
+#: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Άνοιγμα φακέλου root"
 
-#: editor/help-overlay.ui:110
+#. Translators: Alt-Up action; browse to the parent folder
+#: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr ""
 
-#: editor/help-overlay.ui:117
+#. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr ""
 
-#: editor/help-overlay.ui:124
+#. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
+#: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr ""
 
-#: editor/help-overlay.ui:133
+#. Translators: header in the shortcut window, for the various ways of opening search
+#: editor/help-overlay.ui:115
+#, fuzzy
+#| msgid "Search keys"
+msgctxt "shortcut window"
+msgid "Search options"
+msgstr "Κλειδιά αναζήτησης"
+
+#. Translators: Ctrl-F action; opens search, searching everywhere
+#: editor/help-overlay.ui:120
+msgctxt "shortcut window"
+msgid "Toggle search"
+msgstr ""
+
+#. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:128
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Search bar"
+msgctxt "shortcut window"
+msgid "Search again"
+msgstr "Γραμμή αναζήτησης"
+
+#. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
+#: editor/help-overlay.ui:136
+msgctxt "shortcut window"
+msgid "Toggle local search"
+msgstr ""
+
+#. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:144
+msgctxt "shortcut window"
+msgid "Search again, locally"
+msgstr ""
+
+#. Translators: Ctrl-V action; open search with clipboard content
+#: editor/help-overlay.ui:152
+msgctxt "shortcut window"
+msgid "Paste as search"
+msgstr ""
+
+#. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:160
+msgctxt "shortcut window"
+msgid "Paste as search (force)"
+msgstr ""
+
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
+msgctxt "shortcut window"
+msgid "Edit path"
+msgstr "Επεξεργασία διαδρομής"
+
+#. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
+#: editor/help-overlay.ui:176
+#, fuzzy
+#| msgid "Copy current path"
+msgctxt "shortcut window"
+msgid "Edit parent path"
+msgstr "Αντιγραφή τρέχουσας διαδρομής"
+
+#. Translators: '/' key action when browsing; opens search on root path
+#: editor/help-overlay.ui:184
+msgctxt "shortcut window"
+msgid "Edit root path"
+msgstr ""
+
+#. Translators: Escape key action, when searching; cancels search
+#: editor/help-overlay.ui:192
+msgctxt "shortcut window"
+msgid "Browse keys tree"
+msgstr ""
+
+#. Translators: header in the shortcut window, for when browsing
+#: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
 msgstr ""
 
-#: editor/help-overlay.ui:137
+#. Translators: Menu key action, when browsing
+#: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr ""
 
-#: editor/help-overlay.ui:144
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
+msgctxt "shortcut window"
+msgid "Previous line"
+msgstr "Προηγούμενη γραμμή"
+
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
+msgctxt "shortcut window"
+msgid "Next line"
+msgstr "Επόμενη γραμμή"
+
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#: editor/help-overlay.ui:231
+msgctxt "shortcut window"
+msgid "Toggle folder properties"
+msgstr ""
+
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 #, fuzzy
 #| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "Ορισμός προεπιλεγμένης τιμής"
 
-#: editor/help-overlay.ui:151
+#. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
+#: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
 msgstr ""
 
-#: editor/help-overlay.ui:160
+#. Translators: header in the shortcut window, for when there are pending changes
+#: editor/help-overlay.ui:257
+msgctxt "shortcut window"
+msgid "Modifications list actions"
+msgstr ""
+
+#. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
+#: editor/help-overlay.ui:262
+msgctxt "shortcut window"
+msgid "Toggle modifications list"
+msgstr ""
+
+#. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
+#: editor/help-overlay.ui:270
+msgctxt "shortcut window"
+msgid "Open selected row key"
+msgstr ""
+
+#. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
+#: editor/help-overlay.ui:278
+msgctxt "shortcut window"
+msgid "Dismiss modification"
+msgstr "Απόρριψη τροποποίησης"
+
+#. Translators: header in the shortcut window, for opening the usual helpful dialogs
+#: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Γενικά"
 
-#: editor/help-overlay.ui:164
+#. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
+#: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
 msgstr "Εμφάνιση αυτής της βοήθειας"
 
-#: editor/help-overlay.ui:171
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
 msgctxt "shortcut window"
 msgid "About"
 msgstr "Περί"
 
-#: editor/help-overlay.ui:178
+#. Translators: header in the shortcut window, for the copy-to-clipboard actions
+#: editor/help-overlay.ui:311
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Πρόχειρο"
+
+#. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
+#: editor/help-overlay.ui:316
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Αντιγραφή περιγραφέα"
+
+#. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
+#: editor/help-overlay.ui:324
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Αντιγραφή διαδρομής"
+
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Έξοδος"
 
+#. Translators: Ctrl-Q action; displays a notification if there are pending changes
+#: editor/help-overlay.ui:340
+msgctxt "shortcut window"
+msgid "Quit if there’s no pending changes"
+msgstr ""
+
+#. Translators: Ctrl-Shift-Q action
+#: editor/help-overlay.ui:348
+msgctxt "shortcut window"
+msgid "Apply pending changes and quit"
+msgstr ""
+
+#. Translators: Alt-F4 action
+#: editor/help-overlay.ui:356
+#, fuzzy
+#| msgid "Dismiss change"
+msgctxt "shortcut window"
+msgid "Dismiss pending changes and quit"
+msgstr "Απόρριψη αλλαγής"
+
+#. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
+#: editor/key-editor-child.vala:30
+msgid "Given value is out of range."
+msgstr ""
+
+#. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
+#: editor/key-editor-child.vala:33
+msgid "This value is invalid for the key type."
+msgstr ""
+
+#. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:380
+msgid "Failed to parse as double."
+msgstr ""
+
+#. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:449
+msgid "Failed to parse as 64-bit integer."
+msgstr ""
+
+#. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:518
+msgid "Failed to parse as unsigned 64-bit integer."
+msgstr ""
+
+#. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
+#: editor/key-list-box-row.vala:118
+#, c-format
+msgid "Go to “%s”"
+msgstr "Μετάβαση σε «%s»"
+
+#. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
+#: editor/key-list-box-row.vala:149
+#, c-format
+msgid "Search in “%s” folder"
+msgstr "Αναζήτηση στον φάκελο «%s»"
+
+#. Translators: first item of the keys list displayed during browsing at root path
+#: editor/key-list-box-row.vala:153
+#, fuzzy
+#| msgid "Open parent folder"
+msgid "Open path entry"
+msgstr "Άνοιγμα γονικού φακέλου"
+
+#. Translators: last item of the keys list displayed during a local search
+#: editor/key-list-box-row.vala:157
+#, fuzzy
+#| msgid "Search keys"
+msgid "Search everywhere"
+msgstr "Κλειδιά αναζήτησης"
+
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:376
+#: editor/key-list-box-row.vala:449
 msgid "Copy"
 msgstr "Αντιγραφή"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:379
+#: editor/key-list-box-row.vala:452
 msgid "Customize…"
 msgstr "Προσαρμογή…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:382
+#: editor/key-list-box-row.vala:455
 msgid "Set to default"
 msgstr "Ορισμός προεπιλεγμένης τιμής"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
-#: editor/key-list-box-row.vala:387
+#: editor/key-list-box-row.vala:460
 msgid "Show details…"
 msgstr "Εμφάνιση πληροφοριών…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:390
+#: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
 msgstr "Απόρριψη αλλαγής"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:393 editor/key-list-box-row.vala:500
-#: editor/registry-info.ui:112
+#. Translators: label of the action button of an infobar, when a key is not defined by a schema
+#: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
+#: editor/registry-info.ui:132
 msgid "Erase key"
 msgstr "Διαγραφή κλειδιού"
 
+#. Translators: "go to" action in the right-click menu on a "go back" line during search
+#: editor/key-list-box-row.vala:469
+msgid "Go to this path"
+msgstr "Μετάβαση σε αυτή τη διαδρομή"
+
 #. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:396
+#: editor/key-list-box-row.vala:472
 msgid "Open"
 msgstr "Άνοιγμα"
 
+#. Translators: "open search" action in the right-click menu on a search
+#. Translators: accessible name of the enter-search button displayed in small-size windows
+#. Translators: accessible name of the search togglebutton displayed in usual-size windows
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
+#: editor/pathwidget.ui:109
+msgid "Search"
+msgstr "Αναζήτηση"
+
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
-#: editor/key-list-box-row.vala:399
+#: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
 msgstr "Άνοιγμα γονικού φακέλου"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:402
+#: editor/key-list-box-row.vala:484
 msgid "Reset recursively"
 msgstr ""
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:405
+#: editor/key-list-box-row.vala:487
 msgid "Do not erase"
 msgstr "Να μην διαγραφεί"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:494
+#: editor/key-list-box-row.vala:576
 msgid "No change"
 msgstr "Καμία αλλαγή"
 
-#: editor/modifications-revealer.ui:66
-msgid "Apply"
-msgstr "Εφαρμογή"
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:301
+#, fuzzy
+#| msgid "D-Bus handle type"
+msgctxt "capitalized"
+msgid "D-Bus handle type"
+msgstr "Τύπος χειριστή D-Bus"
 
-#: editor/modifications-revealer.ui:104
-msgid "Delayed setting changes will be shown here"
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+#, fuzzy
+#| msgid "D-Bus object path"
+msgctxt "capitalized"
+msgid "D-Bus object path"
+msgstr "Διαδρομή αντικειμένου D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+#, fuzzy
+#| msgid "D-Bus object path array"
+msgctxt "capitalized"
+msgid "D-Bus object path array"
+msgstr "Πίνακας διαδρομής αντικειμένου D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+#, fuzzy
+#| msgid "D-Bus signature"
+msgctxt "capitalized"
+msgid "D-Bus signature"
+msgstr "Υπογραφή D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+#, fuzzy
+#| msgid "D-Bus handle type"
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "Τύπος χειριστή D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+#, fuzzy
+#| msgid "D-Bus object path"
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "Διαδρομή αντικειμένου D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+#, fuzzy
+#| msgid "D-Bus object path array"
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "Πίνακας διαδρομής αντικειμένου D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+#, fuzzy
+#| msgid "D-Bus signature"
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "Υπογραφή D-Bus"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:373
+msgid "Signed 16-bit integer"
 msgstr ""
 
-#: editor/modifications-revealer.vala:132
-#: editor/modifications-revealer.vala:340
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:376
+msgid "Unsigned 16-bit integer"
+msgstr ""
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:379
+msgid "Signed 32-bit integer"
+msgstr ""
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:382
+msgid "Unsigned 32-bit integer"
+msgstr ""
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:385
+msgid "Signed 64-bit integer"
+msgstr ""
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:388
+msgid "Unsigned 64-bit integer"
+msgstr ""
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Λογική τιμή"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+#, fuzzy
+#| msgid "Boolean"
+msgid "boolean"
+msgstr "Λογική τιμή"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Συμβολοσειρά"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+#, fuzzy
+#| msgid "String"
+msgid "string"
+msgstr "Συμβολοσειρά"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Πίνακας συμβολοσειρών"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+#, fuzzy
+#| msgid "String array"
+msgid "string array"
+msgstr "Πίνακας συμβολοσειρών"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Αρίθμηση"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+#, fuzzy
+#| msgid "Enumeration"
+msgid "enumeration"
+msgstr "Αρίθμηση"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Σημαίες"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "σημαίες"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Διπλό"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "διπλό"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _H_ = C_("capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _h_ = C_("non-capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _O_ = C_("capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _o_ = C_("non-capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _Ao_ = C_("capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _ao_ = C_("non-capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _G_ = C_("capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _g_ = C_("non-capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
+msgid "Integer"
+msgstr "Ακέραιος"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "ακέραιος"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:457
+msgid "Variant"
+msgstr "Παραλλαγή"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:460
+msgid "variant"
+msgstr "παραλλαγή"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:463
+msgid "Empty tuple"
+msgstr "Άδεια πλειάδα"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:466
+#, fuzzy
+#| msgid "Empty tuple"
+msgid "empty tuple"
+msgstr "Άδεια πλειάδα"
+
+#. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
+#: editor/modifications-list.vala:28
+msgid ""
+"Delayed mode is on\n"
+"but\n"
+"no pending changes"
+msgstr ""
+
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
+#: editor/modifications-list.vala:32
+msgid "Rule all"
+msgstr ""
+
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
+#: editor/modifications-list.vala:34
+msgid "Select"
+msgstr "Επιλέξτε"
+
+#. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
+#: editor/modifications-revealer.vala:136
+#: editor/modifications-revealer.vala:323
 msgid "Nothing to reset."
 msgstr "Τίποτα για επαναφορά."
 
-#: editor/modifications-revealer.vala:319
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
+#: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
 msgstr "Μη έγκυρη τιμή."
 
-#: editor/modifications-revealer.vala:326
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
+#: editor/modifications-revealer.vala:307
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
 "Η αλλαγή θα απορριφθεί εάν κλείσετε αυτήν την προβολή χωρίς να την υποβάλετε."
 
-#: editor/modifications-revealer.vala:331
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
+#: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
 "Η αλλαγή θα εφαρμοστεί κατόπιν αιτήματος ή αν τερματίσετε αυτήν την προβολή."
 
-#: editor/modifications-revealer.vala:352
+#. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
+#: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
 msgstr "Οι αλλαγές θα καθυστερήσουν μέχρι να το ζητήσετε."
 
-#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:354
+#. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
 msgstr[0] ""
 msgstr[1] ""
 
-#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:358
+#. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
 msgstr[0] "Μία λειτουργία dconf καθυστέρησε."
 msgstr[1] "%u λειτουργίες dconf καθυστέρησαν."
 
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:361
+#. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
+#: editor/modifications-revealer.vala:347
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:361
+#. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:351
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
 msgstr[0] "Μία λειτουργία gsettings"
 msgstr[1] "%u λειτουργίες gsettings"
 
-#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, and
+#. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:366
+#: editor/modifications-revealer.vala:357
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
 msgstr[0] ""
 msgstr[1] ""
 
-#: editor/pathbar.vala:316
-msgid "Copy current path"
-msgstr "Αντιγραφή τρέχουσας διαδρομής"
+#. Translators: accessible name of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:66
+msgid "Close search"
+msgstr "Κλείσιμο αναζήτησης"
 
-#: editor/registry-info.ui:32
+#. Translators: accessible description of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:68
+#, fuzzy
+#| msgid "Refresh search results"
+msgid "Close search results"
+msgstr "Ανανέωση των αποτελεσμάτων αναζήτησης"
+
+#. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
+#: editor/pathentry.ui:92
+msgid "Refresh search results"
+msgstr "Ανανέωση των αποτελεσμάτων αναζήτησης"
+
+#. Translators: accessible description of the enter-search button displayed in small-size windows
+#. Translators: accessible description of the search togglebutton displayed in usual-size windows
+#: editor/pathwidget.ui:85 editor/pathwidget.ui:111
+msgid "Search keys"
+msgstr "Κλειδιά αναζήτησης"
+
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
+#: editor/registry-info.ui:49
 msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
 
-#: editor/registry-info.ui:69
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
+#: editor/registry-info.ui:87
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
 msgstr ""
 
-#: editor/registry-info.ui:106
+#. Translators: warning text of an infobar, when a key is not defined by a schema
+#: editor/registry-info.ui:125
 #, fuzzy
 #| msgid ""
 #| "No schema available. Dconf Editor can’t find a schema associated with "
@@ -1439,114 +2275,154 @@ msgstr ""
 "κλειδί μπορεί να έχει αφαιρεθεί, ή έχει σταματήσει να το χρησιμοποιεί ή "
 "μπορεί να χρησιμοποιεί μια άλλη διάταξη που ορίζει τα κλειδιά της."
 
-#: editor/registry-info.ui:151
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/registry-info.ui:172
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
 
-#: editor/registry-info.ui:161
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/registry-info.ui:183
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
 
-#: editor/registry-info.ui:171
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/registry-info.ui:194
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
 
-#: editor/registry-info.vala:127
-msgid "Defined by"
-msgstr ""
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Όνομα"
 
-#: editor/registry-info.vala:130
+#. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
+#: editor/registry-info.vala:73
+msgid "Defined by"
+msgstr "Καθορίστηκε από"
+
+#. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
+#: editor/registry-info.vala:76
 msgid "Schema"
 msgstr "Διάταξη"
 
-#: editor/registry-info.vala:136
+#. Translators: field description when displaying key properties; a summary describing the key use
+#: editor/registry-info.vala:79
 msgid "Summary"
 msgstr "Σύνοψη"
 
-#: editor/registry-info.vala:137 editor/registry-list.vala:337
-msgid "No summary provided"
-msgstr ""
-
-#: editor/registry-info.vala:144
+#. Translators: field description when displaying key properties; a description describing deeply the key use
+#: editor/registry-info.vala:82
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: editor/registry-info.vala:145
-msgid "No description provided"
-msgstr "Δεν παρέχεται περιγραφή"
-
-#. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:150
+#. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
+#: editor/registry-info.vala:85
 msgid "Type"
 msgstr "Τύπος"
 
-#: editor/registry-info.vala:162
+#. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
+#: editor/registry-info.vala:89
+#, fuzzy
+#| msgid "Type"
+msgid "Type name"
+msgstr "Τύπος"
+
+#. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
+#: editor/registry-info.vala:93
+#, fuzzy
+#| msgid "Type"
+msgid "Type code"
+msgstr "Τύπος"
+
+#. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
+#: editor/registry-info.vala:96
 msgid "Forced range"
 msgstr ""
 
-#: editor/registry-info.vala:162
-msgid "Yes"
-msgstr "Ναι"
-
-#: editor/registry-info.vala:162
-msgid "No"
-msgstr "Όχι"
-
-#: editor/registry-info.vala:170
+#. Translators: field description when displaying key properties; the minimum value a numeral key can take
+#: editor/registry-info.vala:99
 msgid "Minimum"
 msgstr "Ελάχιστο"
 
-#: editor/registry-info.vala:172
+#. Translators: field description when displaying key properties; the maximum value a numeral key can take
+#: editor/registry-info.vala:102
 msgid "Maximum"
 msgstr "Μέγιστο"
 
-#: editor/registry-info.vala:183
+#. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
+#: editor/registry-info.vala:105
 msgid "Default"
 msgstr "Προεπιλεγμένο"
 
-#: editor/registry-info.vala:187
+#. Translators: field description when displaying key properties; the current value of the key
+#: editor/registry-info.vala:108
+msgid "Current value"
+msgstr "Τρέχουσα τιμή"
+
+#. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
+#: editor/registry-info.vala:111
+msgid "Use default value"
+msgstr "Χρήση προεπιλεγμένης τιμής"
+
+#. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
+#: editor/registry-info.vala:114
+msgid "Custom value"
+msgstr "Προσαρμοσμένη τιμή"
+
+#. Translators: field content when displaying key properties; if the key does not have a summary describing its use
+#. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
+#: editor/registry-info.vala:202 editor/registry-list.vala:491
+msgid "No summary provided"
+msgstr "Δεν παρέχεται περίληψη"
+
+#. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
+#: editor/registry-info.vala:212
+msgid "No description provided"
+msgstr "Δεν παρέχεται περιγραφή"
+
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:249
+msgid "Yes"
+msgstr "Ναι"
+
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:252
+msgid "No"
+msgstr "Όχι"
+
+#. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
+#: editor/registry-info.vala:280
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
 msgstr ""
 
-#: editor/registry-info.vala:206
-msgid "Current value"
-msgstr "Τρέχουσα τιμή"
-
-#: editor/registry-info.vala:310
-msgid "Use default value"
-msgstr "Χρήση προεπιλεγμένης τιμής"
-
-#. TODO "only" used for string-based and spin widgets
-#: editor/registry-info.vala:328
-msgid "Custom value"
-msgstr "Προσαρμοσμένη τιμή"
-
-#: editor/registry-info.vala:513
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
+#: editor/registry-info.vala:615
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
 
-#: editor/registry-info.vala:517
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
+#: editor/registry-info.vala:620
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
 "documentation."
 msgstr ""
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:524
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:627
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1556,15 +2432,16 @@ msgstr ""
 "(ξεκινά με \"m\") στην κενή τιμή του. Συμβολοσειρές, υπογραφές και διαδρομές "
 "αντικειμένων πρέπει να έχουν εισαγωγικά."
 
-#: editor/registry-info.vala:526
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
+#: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Οι συμβολοσειρές, υπογραφές και διαδρομές αντικειμένων πρέπει να έχουν "
 "εισαγωγικά."
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:531
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:635
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1572,127 +2449,159 @@ msgstr ""
 "Χρησιμοποιήστε τη λέξη κλειδί \"nothing\" για να ορίσετε τον τύπο maybe "
 "(ξεκινά με \"m\") στην κενή τιμή του."
 
-#: editor/registry-list.vala:363
+#. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
+#: editor/registry-info.vala:674
+msgid "Key erased."
+msgstr "Το κλειδί διαγράφηκε."
+
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
+#: editor/registry-list.vala:518
 msgid "conflicting keys"
 msgstr ""
 
-#: editor/registry-list.vala:377
-msgid "No Schema Found"
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
+#: editor/registry-list.vala:521
+msgid "conflict"
+msgstr "σύγκρουση"
+
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+#, fuzzy
+#| msgid "No Schema Found"
+msgid "No schema found"
 msgstr "Δεν βρέθηκε διάταξη"
 
-#: editor/registry-search.vala:28
-msgid "No matches"
+#. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
+#: editor/registry-list.vala:638
+msgid "key erased"
+msgstr "το κλειδί διαγράφηκε"
+
+#. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
+#: editor/registry-list.vala:641
+msgid "erased"
+msgstr "διαγράφηκε"
+
+#. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
+#: editor/registry-list.vala:679
+#, c-format
+msgid "type “%s”"
+msgstr "τύπος «%s»"
+
+#. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
+#: editor/registry-list.vala:1176
+#, c-format
+msgid "%s (local keys)"
 msgstr ""
 
-#: editor/registry-search.vala:377
-msgid "Current folder"
-msgstr "Τρέχων κατάλογος"
+#. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
+#: editor/registry-list.vala:1182
+msgid "Local keys not defined by a schema"
+msgstr ""
 
-#: editor/registry-search.vala:381
-msgid "Folders"
-msgstr "Φάκελοι"
-
-#: editor/registry-search.vala:383
-msgid "Keys"
-msgstr "Κλειδιά"
-
-#: editor/registry-view.vala:25
-msgid "No keys in this path"
-msgstr "Δεν υπάρχουν κλειδιά σε αυτή τη διαδρομή"
-
-#: editor/registry-view.vala:126
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1186
 msgid "Keys not defined by a schema"
 msgstr ""
 
-#: editor/setting-object.vala:64
-msgid "Boolean"
-msgstr "Λογική τιμή"
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1196
+msgid "Subfolders"
+msgstr "Υποφάκελοι"
 
-#: editor/setting-object.vala:66
-msgid "String"
-msgstr "Συμβολοσειρά"
+#. Translators: last header displayed in the keys list during a local search
+#: editor/registry-list.vala:1201
+msgid "Other actions"
+msgstr "Άλλες ενέργειες"
 
-#: editor/setting-object.vala:68
-msgid "String array"
-msgstr "Πίνακας συμβολοσειρών"
+#. Translators: placeholder text of the search list when there's no search results (not used in current design)
+#: editor/registry-search.vala:26
+msgid "No matches"
+msgstr ""
 
-#: editor/setting-object.vala:70
-msgid "Enumeration"
-msgstr "Αρίθμηση"
+#. Translators: header displayed in the keys list during a search only
+#: editor/registry-search.vala:556
+msgid "Folders"
+msgstr "Φάκελοι"
 
-#: editor/setting-object.vala:72
-msgid "Flags"
-msgstr "Σημαίες"
+#. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
+#: editor/registry-view.vala:23
+msgid "No keys in this path"
+msgstr "Δεν υπάρχουν κλειδιά σε αυτή τη διαδρομή"
 
-#: editor/setting-object.vala:74
-msgid "Double"
-msgstr "Διπλό"
-
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/setting-object.vala:77
-msgid "D-Bus handle type"
-msgstr "Τύπος χειριστή D-Bus"
-
-#: editor/setting-object.vala:79
-msgid "D-Bus object path"
-msgstr "Διαδρομή αντικειμένου D-Bus"
-
-#: editor/setting-object.vala:81
-msgid "D-Bus object path array"
-msgstr "Πίνακας διαδρομής αντικειμένου D-Bus"
-
-#: editor/setting-object.vala:83
-msgid "D-Bus signature"
-msgstr "Υπογραφή D-Bus"
-
-#: editor/setting-object.vala:91
-msgid "Integer"
-msgstr "Ακέραιος"
-
-#: editor/setting-object.vala:93
-msgid "Variant"
-msgstr "Παραλλαγή"
-
-#: editor/setting-object.vala:95
-msgid "Empty tuple"
-msgstr "Άδεια πλειάδα"
-
-#: editor/setting-object.vala:214
+#. Translators: the boolean "true" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:173
 msgid "True"
 msgstr "Αληθές"
 
-#: editor/setting-object.vala:216
+#. Translators: the boolean "false" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:177
 msgid "False"
 msgstr "Ψευδές"
 
-#: editor/setting-object.vala:217
+#. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
+#: editor/setting-object.vala:180
 msgid "Nothing"
 msgstr "Τίποτα"
 
-#: editor/setting-object.vala:222
+#. Translators: the boolean "true" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:186
 msgid "true"
 msgstr "αληθές"
 
-#: editor/setting-object.vala:224
+#. Translators: the boolean "false" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:190
 msgid "false"
 msgstr "ψευδές"
 
-#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/setting-object.vala:226
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
+#: editor/setting-object.vala:194
+#, c-format
+msgid "nothing (%s)"
+msgstr "τίποτα (%s)"
+
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
+#: editor/setting-object.vala:199
 msgid "nothing"
 msgstr "τίποτα (nothing)"
 
-#: editor/setting-object.vala:429
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
+#: editor/setting-object.vala:410
 msgid "Schema with path"
 msgstr ""
 
-#: editor/setting-object.vala:431
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
+#: editor/setting-object.vala:414
 msgid "Relocatable schema"
 msgstr ""
 
-#: editor/setting-object.vala:432
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
+#: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Σύστημα υποστήριξης DConf"
+
+#~ msgid "Remove"
+#~ msgstr "Αφαίρεση"
+
+#~ msgid "Remove this bookmark"
+#~ msgstr "Αφαίρεση σελιδοδείκτη"
+
+#~ msgid "_About"
+#~ msgstr "_Περί"
+
+#~ msgid "_Quit"
+#~ msgstr "Έ_ξοδος"
+
+#, fuzzy
+#~| msgctxt "shortcut window"
+#~| msgid "Copy descriptor"
+#~ msgid "Copy descriptor"
+#~ msgstr "Αντιγραφή περιγραφέα"
+
+#~ msgid "Current folder"
+#~ msgstr "Τρέχων κατάλογος"
+
+#~ msgid "Keys"
+#~ msgstr "Κλειδιά"
 
 #~ msgid "Double [%s..%s]"
 #~ msgstr "Πραγματικός διπλής ακρίβειας [%s..%s]"
@@ -1779,17 +2688,11 @@ msgstr "Σύστημα υποστήριξης DConf"
 #~ msgid "_Find…"
 #~ msgstr "Εύ_ρεση…"
 
-#~ msgid "Next"
-#~ msgstr "Επόμενο"
-
 #~ msgid "Not found"
 #~ msgstr "Δε βρέθηκε"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Σφάλμα κατά την ανάθεση τιμής: %s"
-
-#~ msgid "Name"
-#~ msgstr "Όνομα"
 
 #~ msgid "Value"
 #~ msgstr "Τιμή"
