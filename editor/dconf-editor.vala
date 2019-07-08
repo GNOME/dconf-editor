@@ -192,7 +192,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
 
     private ConfigurationEditor ()
     {
-        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN);
+        Object (application_id: "ca.desrt.dconf-editor", flags: ApplicationFlags.HANDLES_COMMAND_LINE|ApplicationFlags.HANDLES_OPEN|ApplicationFlags.CAN_OVERRIDE_APP_ID);
 
         set_option_context_parameter_string ("[ PATH | [FIXED_SCHEMA|RELOC_SCHEMA:DIR] [KEY] ]");
         /* Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible. */
