@@ -1,3 +1,22 @@
+dconf-editor 3.33.4
+=====================
+
+Some updates of the DTD and the appdata fields; and just a small
+change, that allows running multiple instances, for a hacky use.
+
+Translations updated:
+  Catalan: Carles Ferrando Garcia and Jordi Mas
+  Croatian: Goran Vidović
+  Danish: Ask Hjorth Larsen
+  British English: Bruce Cowan
+  Greek: Efstathios Iosifidis
+  Italian: Milo Casagrande
+  Latvian: Rūdolfs Mazurs
+  Romanian: Daniel Șerbănescu
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Turkish: Sabri Ünal
+
 dconf-editor 3.32.0
 =====================
 
