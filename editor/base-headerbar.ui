@@ -68,6 +68,7 @@
             <property name="action-name">app.quit</property>
             <style>
               <class name="titlebutton"/>
+              <class name="close"/>
             </style>
             <child>
               <object class="GtkImage">
