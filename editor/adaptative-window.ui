@@ -18,8 +18,8 @@
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <template class="AdaptativeWindow" parent="GtkApplicationWindow">
-    <property name="height-request">277</property>  <!-- 288px max for Purism Librem 5 landscape, for 720px width -->
-    <property name="width-request">349</property>   <!-- 360px max for Purism Librem 5 portrait, for 648px height -->
+    <property name="height-request">284</property>  <!-- 288px max for Purism Librem 5 landscape, for 720px width; update gschema also -->
+    <property name="width-request">350</property>   <!-- 360px max for Purism Librem 5 portrait, for 648px height; update gschema also -->
     <signal name="window-state-event"   handler="on_window_state_event"/>
     <signal name="size-allocate"        handler="on_size_allocate"/>
     <signal name="destroy"              handler="on_destroy"/>

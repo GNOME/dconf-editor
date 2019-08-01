@@ -100,8 +100,8 @@
     <key name="window-width" type="i">
       <!-- start in "usual window" size (notably for pathbar items spacing), so with a large enough width -->
       <default>800</default>
-      <!-- see AdaptativeWindow.width-request at adaptative-window.ui:6 -->
-      <range min="283"/>
+      <!-- see AdaptativeWindow.width-request at adaptative-window.ui:22 -->
+      <range min="284"/>
       <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width' -->
       <summary>The width of the window</summary>
       <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width' -->
@@ -110,8 +110,8 @@
     <key name="window-height" type="i">
       <!-- first launch is at root, that only contains few subfolders, so start with a not-too-big height -->
       <default>420</default>
-      <!-- see AdaptativeWindow.height-request at adaptative-window.ui:5 -->
-      <range min="349"/>
+      <!-- see AdaptativeWindow.height-request at adaptative-window.ui:21 -->
+      <range min="350"/>
       <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
       <summary>The height of the window</summary>
       <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
