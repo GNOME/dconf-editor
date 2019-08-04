@@ -82,6 +82,41 @@
 ]>
 
 <schemalist gettext-domain='dconf-editor'>
+  <schema id="ca.desrt.dconf-editor.Lib">
+    <key name="automatic-night-mode" type="b">
+      <default>false</default>
+      <!-- Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode' -->
+      <summary>A flag to follow system night light</summary>
+      <!-- Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode' -->
+      <description>Use GNOME night light setting to activate night-mode.</description>
+    </key>
+    <key name="window-width" type="i">
+      <default>540</default>
+      <!-- see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22 -->
+      <!-- range min="350"/ FIXME -->
+      <!-- Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width' -->
+      <summary>The width of the window</summary>
+      <!-- Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width' -->
+      <description>The width of the main window in pixels.</description>
+    </key>
+    <key name="window-height" type="i">
+      <default>500</default>
+      <!-- see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21 -->
+      <!-- range min="284"/ FIXME -->
+      <!-- Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height' -->
+      <summary>The height of the window</summary>
+      <!-- Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height' -->
+      <description>The height of the main window in pixels.</description>
+    </key>
+    <key name="window-is-maximized" type="b">
+      <default>false</default>
+      <!-- Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized' -->
+      <summary>A flag to enable maximized mode</summary>
+      <!-- Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized' -->
+      <description>If “true”, the main window starts in maximized mode.</description>
+    </key>
+  </schema>
+
   <enum id="ca.desrt.dconf-editor.Behaviour">
     <value value="0" nick="unsafe"/>
     <value value="1" nick="safe"/>
@@ -97,33 +132,6 @@
   </flags>
   <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
     <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
-    <key name="window-width" type="i">
-      <!-- start in "usual window" size (notably for pathbar items spacing), so with a large enough width -->
-      <default>800</default>
-      <!-- see AdaptativeWindow.width-request at adaptative-window.ui:22 -->
-      <!-- range min="284"/ FIXME -->
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width' -->
-      <summary>The width of the window</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width' -->
-      <description>The width of the main window in pixels.</description>
-    </key>
-    <key name="window-height" type="i">
-      <!-- first launch is at root, that only contains few subfolders, so start with a not-too-big height -->
-      <default>420</default>
-      <!-- see AdaptativeWindow.height-request at adaptative-window.ui:21 -->
-      <!-- range min="350"/ FIXME -->
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
-      <summary>The height of the window</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height' -->
-      <description>The height of the main window in pixels.</description>
-    </key>
-    <key name="window-is-maximized" type="b">
-      <default>false</default>
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized' -->
-      <summary>A flag to enable maximized mode</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized' -->
-      <description>A flag to enable maximized mode</description>
-    </key>
     <key name="restore-view" type="b">
       <default>true</default>
       <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view' -->
@@ -223,15 +231,6 @@
       <summary>A flag for skipping unnecessary subfolders</summary>
       <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths' -->
       <description>When a folder only contains one subfolder and no keys, Dconf Editor can jump to that subfolder directly. This flag enables that behaviour.</description>
-    </key>
-  </schema>
-  <schema id="ca.desrt.dconf-editor.NightLight">
-    <key name="automatic-night-mode" type="b">
-      <default>false</default>
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode' -->
-      <summary>Follow system night light</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode' -->
-      <description>Use GNOME night light setting to activate night-mode.</description>
     </key>
   </schema>
   <schema id="ca.desrt.dconf-editor.Bookmarks">

@@ -23,7 +23,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
     internal static string [,] internal_mappings = {
             {"ca.desrt.dconf-editor.Bookmarks",
                 "/ca/desrt/dconf-editor/"},
-            {"ca.desrt.dconf-editor.NightLight",
+            {"ca.desrt.dconf-editor.Lib",
                 "/ca/desrt/dconf-editor/"},
 
             {"ca.desrt.dconf-editor.Demo.EmptyRelocatable",

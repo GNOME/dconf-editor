@@ -51,7 +51,8 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         Object (nta_headerbar               : (NightTimeAwareHeaderBar) _headerbar,
                 base_view                   : (BaseView) _main_view,
                 window_title                : ConfigurationEditor.PROGRAM_NAME,
-                specific_css_class_or_empty : "dconf-editor");
+                specific_css_class_or_empty : "dconf-editor",
+                schema_path                 : "/ca/desrt/dconf-editor/");
 
         model = _model;
         modifications_handler = _modifications_handler;

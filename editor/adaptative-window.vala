@@ -361,7 +361,18 @@ private abstract class AdaptativeWindow : ApplicationWindow
     * * manage window state
     \*/
 
-    private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
+    [CCode (notify = false)] public string schema_path
+    {
+        protected construct
+        {
+            string? _value = value;
+            if (_value == null)
+                assert_not_reached ();
+
+            settings = new GLib.Settings.with_path ("ca.desrt.dconf-editor.Lib", value);
+        }
+    }
+    private GLib.Settings settings;
 
     private int window_width = 0;
     private int window_height = 0;
