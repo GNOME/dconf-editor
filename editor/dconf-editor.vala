@@ -64,7 +64,11 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
                 "/org/gnome/settings-daemon/plugins/sharing//"},
             {"org.gnome.software.auth",
                 "/org/gnome/software/auth//"},
-            {"org.gnome.Taquin.NightLight",
+            {"org.gnome.Reversi.Lib",
+                "/org/gnome/iagno/"},
+            {"org.gnome.Taquin.Lib",
+                "/org/gnome/taquin/"},
+            {"org.gnome.Taquin.NightLight", // removed in 3.34
                 "/org/gnome/taquin/"},
             {"org.gnome.Terminal.Legacy.Profile",
                 "/org/gnome/terminal/legacy/profiles://"},
