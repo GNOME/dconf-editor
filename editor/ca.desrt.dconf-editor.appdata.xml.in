@@ -20,7 +20,8 @@
   </description>
 
   <releases>
-    <release version="3.32" date="2019-03-13" />
+  ​  <release version="3.33.90" date="2019-08-05" type="development" urgency="low"/>
+    <release version="3.32" date="2019-03-13" type="stable" urgency="medium"/>
   </releases>
 
   <screenshots>
