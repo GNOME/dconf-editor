@@ -47,6 +47,7 @@
             <style>
               <class name="flat"/>
               <class name="circular"/>
+              <class name="image-button"/>
             </style>
             <child>
               <object class="GtkImage">
