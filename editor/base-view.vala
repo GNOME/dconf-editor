@@ -120,6 +120,7 @@ private class BaseView : Stack, AdaptativeWidget
         notifications_revealer.set_window_size (saved_window_size);
         notifications_revealer.show ();
         notifications_overlay.add_overlay (notifications_revealer);
+        notifications_overlay.set_overlay_pass_through (notifications_revealer, true);
         notifications_revealer_created = true;
     }
 
