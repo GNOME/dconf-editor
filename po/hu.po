@@ -9,15 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-18 10:22+0000\n"
-"PO-Revision-Date: 2019-02-18 13:04+0100\n"
-"Last-Translator: Meskó Balázs <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2019-08-04 10:23+0000\n"
+"PO-Revision-Date: 2019-08-24 23:13+0200\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Lokalize 18.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -77,12 +77,12 @@ msgid "Use night mode"
 msgstr "Éjszakai mód használata"
 
 #. Translators: accessible name of the hamburger menu
-#: editor/base-headerbar.ui:112
+#: editor/base-headerbar.ui:113
 msgid "Actions"
 msgstr "Műveletek"
 
 #. Translators: accessible description of the hamburger menu
-#: editor/base-headerbar.ui:114
+#: editor/base-headerbar.ui:115
 msgid "Current view actions"
 msgstr "Jelenlegi nézet műveletei"
 
@@ -234,16 +234,16 @@ msgstr ""
 "A konfiguráció közvetlen szerkesztése speciális funkció, és az alkalmazások "
 "nem megfelelő működését okozhatja."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:25
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
 msgid "Browse the keys used by installed applications"
 msgstr "A telepített alkalmazások által használt kulcsot böngészése"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
 msgid "Read keys descriptions and edit their values"
 msgstr "Kulcsok leírásainak olvasása és azok értékeinek szerkesztése"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:44
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
 msgid "The GNOME Project"
 msgstr "A GNOME projekt"
 
@@ -267,45 +267,60 @@ msgstr "A konfigurációs adatbázis közvetlen szerkesztése"
 msgid "settings;configuration;"
 msgstr "beállítások;konfiguráció;"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:17
-msgid "ca.desrt.dconf-editor"
-msgstr "ca.desrt.dconf-editor"
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:89
+#| msgid "Follow system night light"
+msgid "A flag to follow system night light"
+msgstr "Egy jelző a rendszer éjszakai fényének követéséhez"
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:105
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr ""
+"A GNOME éjjeli fény beállításának használata az éjszaki mód aktiválásához."
+
+#. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
+#. range min="350"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "The width of the window"
 msgstr "Az ablak szélessége"
 
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:107
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The width of the main window in pixels."
 msgstr "A főablak szélessége képpontokban."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:115
+#. see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21
+#. range min="284"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The height of the window"
 msgstr "Az ablak magassága"
 
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:117
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "The height of the main window in pixels."
 msgstr "A főablak magassága képpontokban."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
-#: editor/ca.desrt.dconf-editor.gschema.xml:122
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid "A flag to enable maximized mode"
 msgstr "A teljes méretű mód engedélyezése"
 
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:116
+#| msgid "If “true”, the bookmarks list use smaller rows."
+msgid "If “true”, the main window starts in maximized mode."
+msgstr "Ha „igaz”, akkor a főablak teljes méretben indul."
+
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
 msgstr "Az utolsó nézet helyreállítása"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -314,12 +329,12 @@ msgstr ""
 "útvonalra navigálni, ami a „saved-view” kulcsnál be van állítva."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:136
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the pathbar state"
 msgstr "Egy útvonal az útvonalsáv állapotának visszaállításához"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at "
 "startup is a parent path of this one, Dconf Editor tries to restore the "
@@ -330,12 +345,12 @@ msgstr ""
 "visszaállítani az útvonalsáv állapotát erre az útvonalra."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A path to restore the last view"
 msgstr "Az utolsó nézet helyreállítási útvonala"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -344,12 +359,12 @@ msgstr ""
 "indításkor megpróbál erre az útvonalra navigálni."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:150
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Show initial warning"
 msgstr "Kezdeti figyelmeztetés megjelenítése"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -358,22 +373,22 @@ msgstr ""
 "figyelmezteti a felhasználót, hogy legyen óvatos."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "A flag to enable small rows for keys list"
 msgstr "Egy jelző a kis sorok engedélyezéséhez a kulcsok listájánál"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "If “true”, the keys list use smaller rows."
 msgstr "Ha be van állítva, akkor a kulcsok listája kisebb sorokat használ."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:164
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Change the behaviour of a key value change request"
 msgstr "Egy kulcs-érték változáskérés viselkedésének megváltoztatása"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -396,12 +411,12 @@ msgstr ""
 "hozzá, lehetővé téve egyszerre több kulcs alkalmazását."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Jelző a kulcslista kis- és nagybetűket megkülönböztető rendezéséhez"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:173
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -413,12 +428,12 @@ msgstr ""
 "nagybetűs mappák vannak előbb."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:178
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Az „Előre” és „Vissza” egérgomb események használata"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#: editor/ca.desrt.dconf-editor.gschema.xml:189
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -429,12 +444,12 @@ msgstr ""
 "kerül."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:195
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "A böngészőablakban a „Vissza” parancs aktiválására szolgáló egérgomb"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:188
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -445,12 +460,12 @@ msgstr ""
 "böngészőablakban. A lehetséges értékek 6 és 14 között vannak."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:194
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "A böngészőablakban az „Előre” parancs aktiválására szolgáló egérgomb"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:196
+#: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -461,12 +476,12 @@ msgstr ""
 "böngészőablakban. A lehetséges értékek 6 és 14 között vannak."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:201
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "A flag to check for added or removed schemas"
 msgstr "Jelző a hozzáadott vagy eltávolított sémák ellenőrzéséhez"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -482,12 +497,12 @@ msgstr ""
 "jobb módot találnak."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Enabled relocatable schema mapping facilities"
 msgstr "Engedélyezett áthelyezhető séma leképezési funkciók"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:210
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -503,12 +518,12 @@ msgstr ""
 "szolgál."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:215
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid "Mapping of paths to manually associated schemas"
 msgstr "Útvonalak leképezése kézzel hozzárendelt sémákra"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -524,12 +539,12 @@ msgstr ""
 "több útvonal-megadáshoz társítva."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:222
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid "A flag for skipping unnecessary subfolders"
 msgstr "Jelző a felesleges almappák kihagyásához"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
@@ -537,17 +552,6 @@ msgstr ""
 "Ha egy mappa csak egy almappát tartalmaz, de kulcsot nem, akkor a Dconf "
 "szerkesztő közvetlenül az almappához ugorhat. Ez a jelző ezt a viselkedést "
 "engedélyezi."
-
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:231
-msgid "Follow system night light"
-msgstr "Rendszer éjjeli fényének követése"
-
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:233
-msgid "Use GNOME night light setting to activate night-mode."
-msgstr ""
-"A GNOME éjjeli fény beállításának használata az éjszaki mód aktiválásához."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
@@ -1113,163 +1117,163 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Ütköző kulcs innen: Conflict2, amely figyelmeztetést kell adjon"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:155
+#: editor/dconf-editor.vala:159
 msgid "Print release version and exit"
 msgstr "Kiadási verzió kiírása és kilépés"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:158
+#: editor/dconf-editor.vala:162
 msgid "Print relocatable schemas and exit"
 msgstr "Áthelyezhető sémák kiírása és kilépés"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:161
+#: editor/dconf-editor.vala:165
 msgid "Do not show initial warning"
 msgstr "Ne jelenítse meg a kezdeti figyelmeztetést"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:199
+#: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafikus felület egyéb alkalmazások beállításainak szerkesztéséhez."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:202
+#: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "A glib programkönyvtár gsettings API-ját használja többek között."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:205
+#: editor/dconf-editor.vala:209
 msgid "Arguments description:"
 msgstr "Argumentumok leírása:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
 msgstr "egy mappaútvonal vagy egy kulcsútvonal"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:211
+#: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "példa: „/org/gnome/” vagy „/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:219
 msgid "the name of a schema with fixed path"
 msgstr "egy séma neve rögzített útvonallal"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:217
+#: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "példa: „ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "egy áthelyezhető séma neve rögzített útvonal nélkül"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:223
+#: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "nézze meg a listát a „--list-relocatable-schemas” kapcsolóval"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
 msgstr "az útvonal, ahova az áthelyezhető sémát le kell képezni"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:229
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "példa: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
 msgstr "egy kulcs neve a sémából"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:235
+#: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
 msgstr "példa: „bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:291
+#: editor/dconf-editor.vala:295
 msgid "Known schemas installed:"
 msgstr "Ismert telepített sémák:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:297
+#: editor/dconf-editor.vala:301
 msgid "No known schemas installed."
 msgstr "Nincsenek ismert sémák telepítve."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:302
+#: editor/dconf-editor.vala:306
 msgid "Known schemas skipped:"
 msgstr "Kihagyott ismert sémák:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:308
+#: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
 msgstr "Nincsenek kihagyott ismert sémák."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:313
+#: editor/dconf-editor.vala:317
 msgid "Unknown schemas:"
 msgstr "Ismeretlen sémák:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:319
+#: editor/dconf-editor.vala:323
 msgid "No unknown schemas."
 msgstr "Nincsenek ismeretlen sémák."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:453
+#: editor/dconf-editor.vala:457
 msgid "Only one window can be opened for now.\n"
 msgstr "Jelenleg csak egy ablak nyitható meg.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:473
+#: editor/dconf-editor.vala:477
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nem értelmezhető: túl sok argumentum.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:487
+#: editor/dconf-editor.vala:491
 msgid "Cannot understand second argument in this context.\n"
 msgstr "A második argumentum nem értelmezhető ebben a környezetben.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:508
+#: editor/dconf-editor.vala:512
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nem értelmezhető: ferde vonal karakter a második argumentumban.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:523
+#: editor/dconf-editor.vala:527
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "A sémaútvonal „/” karakterrel kell kezdődjön és végződjön.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Nem értelmezhető: a megadott útvonal „//” karaktereket tartalmaz.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:547
+#: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nem értelmezhető: szóköz karakter az argumentumban.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:575
+#: editor/dconf-editor.vala:579
 msgid "Copied to clipboard"
 msgstr "Vágólapra másolva"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:652
+#: editor/dconf-editor.vala:656
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Az alkalmazások belső beállításainak grafikus megjelenítője és szerkesztője."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:662
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1280,7 +1284,7 @@ msgstr ""
 "Copyright © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:665
+#: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr ""
 "Kelemen Gábor <kelemeng at gnome dot hu>\n"
@@ -1288,7 +1292,7 @@ msgstr ""
 "Úr Balázs <urbalazs at gmail dot com>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:671
+#: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
 msgstr "Szócikk a GNOME wikin"
 
@@ -1350,50 +1354,50 @@ msgid "%s (key erased)"
 msgstr "%s (kulcs törölve)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
-#: editor/dconf-window.vala:122
+#: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
 msgstr "A séma áthelyezhető, útvonal szükséges."
 
 #. Translators: command-line startup warning
-#: editor/dconf-window.vala:135
+#: editor/dconf-window.vala:137
 msgid "Startup mappings are disabled."
 msgstr "Az indítási leképezések le vannak tiltva."
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
-#: editor/dconf-window.vala:150
+#: editor/dconf-window.vala:152
 msgid "Schema is not installed on given path."
 msgstr "Nincs séma telepítve a megadott útvonalon."
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
-#: editor/dconf-window.vala:166
+#: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
 msgstr "Ismeretlen séma: „%s”."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
-#: editor/dconf-window.vala:272
+#: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Köszönjük, hogy a Dconf szerkesztővel szerkeszti a konfigurációt."
 
 #. Translators: initial "use at your own risk" dialog, the warning text
-#: editor/dconf-window.vala:275
+#: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Ne feledje, hogy egyes beállítások tönkretehetik az alkalmazásokat, legyen "
 "óvatos!"
 
 #. Translators: initial "use at your own risk" dialog, the button label
-#: editor/dconf-window.vala:278
+#: editor/dconf-window.vala:280
 msgid "I’ll be careful."
 msgstr "Óvatos leszek."
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
-#: editor/dconf-window.vala:282
+#: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
 msgstr "Mutassa ezt legközelebb is."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
-#: editor/dconf-window.vala:303
+#: editor/dconf-window.vala:305
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
@@ -1403,25 +1407,25 @@ msgstr ""
 "változtatások elvetéséhez és kilépéshez."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:775
+#: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "A(z) „%s” mappa most már üres."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:786
+#: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "A(z) „%s” kulcs törölve lett."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:792
+#: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nem található a(z) „%s” kulcs."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:798
+#: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nincs semmi a kért „%s” mappában."
