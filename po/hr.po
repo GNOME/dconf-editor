@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-03-24 08:05+0000\n"
-"PO-Revision-Date: 2019-03-27 10:53+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2019-08-04 10:23+0000\n"
+"PO-Revision-Date: 2019-09-03 15:36+0200\n"
+"Last-Translator: gogo <linux.hr@protonmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -76,12 +76,12 @@ msgid "Use night mode"
 msgstr "Koristi noćni način rada"
 
 #. Translators: accessible name of the hamburger menu
-#: editor/base-headerbar.ui:112
+#: editor/base-headerbar.ui:113
 msgid "Actions"
 msgstr "Radnje"
 
 #. Translators: accessible description of the hamburger menu
-#: editor/base-headerbar.ui:114
+#: editor/base-headerbar.ui:115
 msgid "Current view actions"
 msgstr "Trenutne radnje prikaza"
 
@@ -232,16 +232,16 @@ msgstr ""
 "Uređivanje vaših podešavanja izravno je napredna značajka i može uzrokovati "
 "neispravan rad aplikacija."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:25
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
 msgid "Browse the keys used by installed applications"
 msgstr "Pregledajte ključeve koje koriste instalirane aplikacije"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
 msgid "Read keys descriptions and edit their values"
 msgstr "Pročitajte opise ključeva i uredite njihove vrijednosti"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:44
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
 msgid "The GNOME Project"
 msgstr "GNOME projekt"
 
@@ -265,40 +265,57 @@ msgstr "Izravno uređujete svoju cjelokupnu bazu podataka podešavanja"
 msgid "settings;configuration;"
 msgstr "postavke;podešavanje;"
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:105
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:89
+msgid "A flag to follow system night light"
+msgstr "Oznaka za praćenje noćnog rada sustava"
+
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr "Koristi postavke GNOME noćnog rada za aktiviranje noćnog načina rada."
+
+#. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
+#. range min="350"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "The width of the window"
 msgstr "Širina prozora"
 
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:107
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The width of the main window in pixels."
 msgstr "Širina glavnog prozora u pikselima."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:115
+#. see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21
+#. range min="284"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The height of the window"
 msgstr "Visina prozora"
 
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:117
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "The height of the main window in pixels."
 msgstr "Visina glavnog prozora u pikselima."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
-#: editor/ca.desrt.dconf-editor.gschema.xml:122
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid "A flag to enable maximized mode"
 msgstr "Oznaka za omogućavanje uvećanog stanja"
 
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:116
+msgid "If “true”, the main window starts in maximized mode."
+msgstr "Ako je “true”, glavni prozor se pokreće u smanjenom načinu rada."
+
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
 msgstr "Oznaka za vraćanje posljednjeg prikaza"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -307,12 +324,12 @@ msgstr ""
 "“saved-view” ključu."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:136
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the pathbar state"
 msgstr "Putanja za vraćanje stanja trake putanje"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at "
 "startup is a parent path of this one, Dconf Editor tries to restore the "
@@ -323,12 +340,12 @@ msgstr ""
 "će pokušati obnoviti stanje trake putanje u ovoj putanji."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A path to restore the last view"
 msgstr "Putanja za vraćanje posljednjeg prikaza"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -337,12 +354,12 @@ msgstr ""
 "pokrenuti u ovoj putanji."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:150
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Show initial warning"
 msgstr "Prikaži početno upozorenje"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -351,22 +368,22 @@ msgstr ""
 "za korisnika da bude oprezan."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "A flag to enable small rows for keys list"
 msgstr "Oznaka za omogućavanje malih redaka za popis ključeva"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "If “true”, the keys list use smaller rows."
 msgstr "Ako je “true”, popis ključeva koristi male redke."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:164
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Change the behaviour of a key value change request"
 msgstr "Promijeni ponašanje vrijednosti ključa zahtjeva promjene"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -388,12 +405,12 @@ msgstr ""
 "ključeva odjednom."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Oznaka razvrstavanja ključeva osjetljiva na velika slova"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:173
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -405,12 +422,12 @@ msgstr ""
 "mape s velikim slovima."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:178
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Koristi \"Natrag\" i \"Naprijed\" tipke događaja miša"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#: editor/ca.desrt.dconf-editor.gschema.xml:189
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -421,12 +438,12 @@ msgstr ""
 "ako su tipke pritisnute."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:195
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Tipka miša za aktivaciju naredbe \"Natrag\" u prozoru preglednika"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:188
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -437,12 +454,12 @@ msgstr ""
 "preglednika. Moguće vrijednosti su između 6 i 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:194
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Tipka miša za aktivaciju naredbe \"Naprijed\" u prozoru preglednika"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:196
+#: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -453,12 +470,12 @@ msgstr ""
 "pregledniku. Moguće vrijednosti su između 6 i 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:201
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "A flag to check for added or removed schemas"
 msgstr "Oznaka provjere dodanih ili uklonjenih shema"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -473,12 +490,12 @@ msgstr ""
 "mogućnost biti uklonjena kada se pronađe bolji način da se to učini."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Enabled relocatable schema mapping facilities"
 msgstr "Omogućeni preseljivo mapiranje sadržaja shema"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:210
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -493,12 +510,12 @@ msgstr ""
 "preseljivih shema iz naredbenog redka."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:215
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid "Mapping of paths to manually associated schemas"
 msgstr "Mapiranje putanja ručno povezanih shema"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -513,28 +530,18 @@ msgstr ""
 "putanje. Isti ID sheme može biti povezan sa više specifičnih putanja."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:222
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid "A flag for skipping unnecessary subfolders"
 msgstr "Oznaka za preskakanje nepotrebnih podmapa"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
 "Kada mapa samo sadrži jednu podmapu bez ključeva, Dconf uređivač može "
 "skočiti na tu podmapu izravno. Ova oznaka omogućuje takvo ponašanje."
-
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:231
-msgid "Follow system night light"
-msgstr "Slijedi noćni rad sustava"
-
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:233
-msgid "Use GNOME night light setting to activate night-mode."
-msgstr "Koristi postavke GNOME noćnog rada za aktiviranje noćnog načina rada."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
@@ -1092,162 +1099,162 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Sukobljujući ključ iz Sukob2 koji bi trebao dati upozorenje"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:155
+#: editor/dconf-editor.vala:159
 msgid "Print release version and exit"
 msgstr "Prikaži inačicu izdanja i zatvori"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:158
+#: editor/dconf-editor.vala:162
 msgid "Print relocatable schemas and exit"
 msgstr "Prikaži promjenjive sheme i zatvori"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:161
+#: editor/dconf-editor.vala:165
 msgid "Do not show initial warning"
 msgstr "Ne prikazuje početno upozorenje"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:199
+#: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafičko sučelje za uređivanje postavki drugih aplikacija."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:202
+#: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Koristi gsettings API od glib biblioteke, između ostalog."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:205
+#: editor/dconf-editor.vala:209
 msgid "Arguments description:"
 msgstr "Opis argumenata:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
 msgstr "putanja mape ili putanja ključa"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:211
+#: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "primjer: “/org/gnome/” ili “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:219
 msgid "the name of a schema with fixed path"
 msgstr "naziv sheme s nepromjenjivom putanjom"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:217
+#: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "primjer: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "naziv “relocatable” sheme bez nepromjenjive putanje"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:223
+#: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "pogledajte popis s “--list-relocatable-schemas” mogućnosti"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
 msgstr "putanja je za mapiranje premjestive sheme"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:229
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "primjer: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
 msgstr "naziv ključa iz sheme"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:235
+#: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
 msgstr "primjer: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:291
+#: editor/dconf-editor.vala:295
 msgid "Known schemas installed:"
 msgstr "Poznate instalirane sheme:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:297
+#: editor/dconf-editor.vala:301
 msgid "No known schemas installed."
 msgstr "Nema poznatih instaliranih shema."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:302
+#: editor/dconf-editor.vala:306
 msgid "Known schemas skipped:"
 msgstr "Preskočene poznate sheme:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:308
+#: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
 msgstr "Nema preskočenih poznatih shema."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:313
+#: editor/dconf-editor.vala:317
 msgid "Unknown schemas:"
 msgstr "Nepoznate sheme:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:319
+#: editor/dconf-editor.vala:323
 msgid "No unknown schemas."
 msgstr "Nema nepoznatih shema."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:453
+#: editor/dconf-editor.vala:457
 msgid "Only one window can be opened for now.\n"
 msgstr "Samo jedan prozor može biti otvoren za sada.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:473
+#: editor/dconf-editor.vala:477
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nerazumljivo: previše argumenata.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:487
+#: editor/dconf-editor.vala:491
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Nerazumljiv drugi argument u ovom sadržaju.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:508
+#: editor/dconf-editor.vala:512
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nerazumljivo: znak kose crte u drugom argumentu.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:523
+#: editor/dconf-editor.vala:527
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Putanja sheme treba započeti i završiti sa “/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Nerazumljivo: zadana putanja sadrži “//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:547
+#: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nerazumljivo: znak razmaka u argumentu.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:575
+#: editor/dconf-editor.vala:579
 msgid "Copied to clipboard"
 msgstr "Kopirano u međuspremnik"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:652
+#: editor/dconf-editor.vala:656
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Grafički preglednik i uređivač unutarnjih postavki aplikacija."
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:662
 msgid ""
 "Copyright © 2010-2014 – Canonical Ltd\n"
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
@@ -1258,14 +1265,14 @@ msgstr ""
 "Autorsko pravo © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:665
+#: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  gogo https://launchpad.net/~trebelnik-stefina"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:671
+#: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
 msgstr "Stranica na GNOME wiki"
 
@@ -1327,50 +1334,50 @@ msgid "%s (key erased)"
 msgstr "%s (ključ obrisan)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
-#: editor/dconf-window.vala:122
+#: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
 msgstr "Shema je premjestiva, potrebna je putanja."
 
 #. Translators: command-line startup warning
-#: editor/dconf-window.vala:135
+#: editor/dconf-window.vala:137
 msgid "Startup mappings are disabled."
 msgstr "Pokretanje mapiranja je onemogućeno."
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
-#: editor/dconf-window.vala:150
+#: editor/dconf-window.vala:152
 msgid "Schema is not installed on given path."
 msgstr "Shema nije instalirana u zadanu putanju."
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
-#: editor/dconf-window.vala:166
+#: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
 msgstr "Nepoznata shema “%s”."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
-#: editor/dconf-window.vala:272
+#: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr "Hvala što koristite Dconf uređivač za uređivanje svojih postavki!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
-#: editor/dconf-window.vala:275
+#: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Ne zaboravite da neke mogućnosti mogu slomiti aplikacije, stoga budite "
 "oprezni."
 
 #. Translators: initial "use at your own risk" dialog, the button label
-#: editor/dconf-window.vala:278
+#: editor/dconf-window.vala:280
 msgid "I’ll be careful."
 msgstr "Biti ću oprezan."
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
-#: editor/dconf-window.vala:282
+#: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
 msgstr "Prikaži ovaj dijalog sljedeći puta."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
-#: editor/dconf-window.vala:303
+#: editor/dconf-window.vala:305
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
@@ -1379,25 +1386,25 @@ msgstr ""
 "zatvaranja, ili Alt+F4 za odbacivanje promjena i zatvaranje."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:775
+#: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "Mapa “%s” je sada prazna."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:786
+#: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "Ključ “%s” je obrisan."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:792
+#: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "Nemoguć pronalazak ključa “%s”."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:798
+#: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Nema ništa u zahtjevanoj mapi “%s”."
