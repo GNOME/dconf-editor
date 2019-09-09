@@ -1,3 +1,8 @@
+dconf-editor 3.34.1
+=====================
+
+Fix the appdata file (I probably should add a validation here…).
+
 dconf-editor 3.34.0
 =====================
 
