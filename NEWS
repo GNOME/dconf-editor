@@ -1,3 +1,28 @@
+dconf-editor 3.34.0
+=====================
+
+New stable 3.34 release. No changes since last unstable release,
+and –surprise– mostly no changes since last stable release also.
+
+Translations updated:
+  Catalan: Jordi Mas
+  Croatian: Goran Vidović
+  French: Claude Paroz
+  Friulian: Fabio Tomat
+  Galician: Fran Dieguez
+  German: Tim Sabsch
+  Greek: Efstathios Iosifidis
+  Hungarian: Balázs Úr
+  Italian: Milo Casagrande
+  Korean: Changwoo Ryu
+  Latvian: Rūdolfs Mazurs
+  Polish: Piotr Drąg
+  Brazilian Portuguese: Rafael Fontenelle
+  Serbian: Марко Костић
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Turkish: Sabri Ünal
+
 dconf-editor 3.33.91
 =====================
 
