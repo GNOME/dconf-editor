@@ -1391,7 +1391,7 @@ msgstr ""
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
-"No us oblideu que alguna opció pot trencar aplicacions, així que aneu amb "
+"No us oblideu que algunes opcions poden malmetre aplicacions, així que aneu amb "
 "compte."
 
 #. Translators: initial "use at your own risk" dialog, the button label
@@ -1410,7 +1410,7 @@ msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
 msgstr ""
-"Hi ha canvis pendents. Useu Maj+Ctrl+Q per aplicar els canvis i sortit o ALT"
+"Hi ha canvis pendents. Useu Maj+Ctrl+Q per aplicar els canvis i sortir o ALT"
 "+F4 per descartar els canvis i sortir."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
@@ -1676,13 +1676,13 @@ msgstr "Porta-retalls"
 #: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr "Descriptor de còpia"
+msgstr "Copia el descriptor"
 
 #. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
 #: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr "Camí de còpia"
+msgstr "Copia el camí"
 
 #. Translators: header in the shortcut window, for the various ways of quitting the application
 #: editor/help-overlay.ui:334
