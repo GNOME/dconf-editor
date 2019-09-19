@@ -1,33 +1,35 @@
 # dconf ja.po.
-# Copyright (C) 2012 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2012-2019 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2012.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2013, 2015.
+# Ryo Nakano <ryonakaknock3@gmail.com>, 2019.
+# sicklylife <translation@sicklylife.jp>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2015-03-21 21:14+0900\n"
-"Last-Translator: Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
+"POT-Creation-Date: 2019-09-10 06:36+0000\n"
+"PO-Revision-Date: 2019-09-19 21:30+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/about-list.vala:44 editor/base-headerbar.vala:310
-#, fuzzy
 msgid "About"
-msgstr "このアプリケーションについて(_A)"
+msgstr "情報"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
 #: editor/about-list.vala:46
 msgid "Credits"
-msgstr ""
+msgstr "クレジット"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
 #: editor/about-list.vala:135
@@ -35,25 +37,27 @@ msgid ""
 "GNU General Public License\n"
 "version 3 or later"
 msgstr ""
+"GNU General Public License\n"
+"version 3 or later"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
 msgid "Creators"
-msgstr ""
+msgstr "作成者"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
-#, fuzzy
-#| msgid "translator-credits"
 msgid "Translators"
 msgstr ""
 "相花 毅 <takeshi.aihana@gmail.com>\n"
-"松澤 二郎 <jmatsuzawa@gnome.org>"
+"松澤 二郎 <jmatsuzawa@gnome.org>\n"
+"Ryo Nakano <ryonakaknock3@gmail.com>\n"
+"sicklylife <translation@sicklylife.jp>"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
 msgid "Copy current path"
-msgstr ""
+msgstr "現在のパスをコピー"
 
 #. Translators: menu entry of the pathbar menu (not displayed for now)
 #. Translators: "open" action in the right-click menu on a "show folder info" row
@@ -64,17 +68,17 @@ msgstr ""
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:149
 msgid "Pause night mode"
-msgstr ""
+msgstr "ナイトモードを休止"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:153
 msgid "Reuse night mode"
-msgstr ""
+msgstr "ナイトモードを再使用"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:157
 msgid "Use night mode"
-msgstr ""
+msgstr "ナイトモードを使用"
 
 #. Translators: accessible name of the hamburger menu
 #: editor/base-headerbar.ui:113
@@ -89,7 +93,7 @@ msgstr ""
 #. Translators: usual menu entry of the hamburger menu
 #: editor/base-headerbar.vala:116
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "キーボードショートカット"
 
 #. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #. Translators: accessible name of the button for opening the bookmarks popover
@@ -97,27 +101,27 @@ msgstr ""
 #: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
 #: editor/registry-search.vala:552
 msgid "Bookmarks"
-msgstr ""
+msgstr "ブックマーク"
 
 #. Translators: hamburger menu entry on small windows (not used in current design)
 #: editor/bookmarks-headerbar.vala:254
 msgid "Hide bookmarks"
-msgstr ""
+msgstr "ブックマークを隠す"
 
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
 msgid "Unbookmark"
-msgstr ""
+msgstr "ブックマークを削除"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
 msgid "Bookmark"
-msgstr ""
+msgstr "ブックマーク"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
 msgid "Show bookmarks"
-msgstr ""
+msgstr "ブックマークを表示"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -125,16 +129,18 @@ msgid ""
 "Bookmarks will\n"
 "be added here"
 msgstr ""
+"ここにブックマーク\n"
+"が追加されます"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
 msgid "Use"
-msgstr ""
+msgstr "使用"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
 #: editor/bookmarks-list.vala:38
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
@@ -149,7 +155,7 @@ msgstr ""
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr ""
+msgstr "ブックマーク一覧を編集できません。"
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
@@ -159,44 +165,44 @@ msgstr ""
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
 msgid "Bookmark this Search"
-msgstr ""
+msgstr "この検索をブックマーク"
 
 #. Translators: label of the switch in the bookmarks popover, when browsing
 #: editor/bookmarks.vala:407
 msgid "Bookmark this Location"
-msgstr ""
+msgstr "この場所をブックマーク"
 
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
 #: editor/browser-headerbar.vala:165
 msgid "Properties"
-msgstr ""
+msgstr "プロパティ"
 
 #. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
 #: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr ""
+msgstr "並び順が変更されました。ビューを更新しますか?"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
 #: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
-msgstr ""
+msgstr "更新"
 
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr ""
+msgstr "このフォルダーの内容が変更されました。ビューを再読み込みしますか?"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:90 editor/browser-view.vala:96
 msgid "Reload"
-msgstr ""
+msgstr "再読み込み"
 
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
+msgstr "このキーのプロパティが変更されました。ビューを再読み込みしますか?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
@@ -205,13 +211,12 @@ msgid ""
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
-msgstr "dconf エディター"
+msgstr "Dconf エディター"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
-msgstr ""
+msgstr "dconf データベースを編集するためのグラフィカルツールです"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
@@ -226,18 +231,18 @@ msgid ""
 "applications to not work correctly."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr ""
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
-msgstr ""
+msgstr "The GNOME Project"
 
 #. Translators: application name, as used in the window manager, the window title, the about dialog...
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
@@ -843,9 +848,8 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
-#, fuzzy
 msgid "A 1-choice enumeration"
-msgstr "列挙値"
+msgstr ""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:461
@@ -856,9 +860,8 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:467
-#, fuzzy
 msgid "A 1-choice integer value"
-msgstr "列挙値"
+msgstr ""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:469
@@ -995,10 +998,8 @@ msgstr "リリースバージョンを表示して終了する"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:162
-#, fuzzy
-#| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
-msgstr "リリースバージョンを表示して終了する"
+msgstr ""
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
 #: editor/dconf-editor.vala:165
@@ -1008,38 +1009,37 @@ msgstr ""
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
-msgstr ""
+msgstr "他のアプリケーションの設定を編集するためのグラフィカルインターフェースです。"
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
-msgstr ""
+msgstr "特に glib ライブラリの gsettings API を使用します。"
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
-#, fuzzy
 msgid "Arguments description:"
-msgstr "説明:"
+msgstr "引数の説明:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
-msgstr ""
+msgstr "フォルダーのパスまたはキーのパス"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
+msgstr "例: “/org/gnome/” または “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:219
 msgid "the name of a schema with fixed path"
-msgstr ""
+msgstr "スキーマ名 (固定パス)"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
-msgstr ""
+msgstr "例: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:225
@@ -1064,12 +1064,12 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
-msgstr ""
+msgstr "スキーマのキーの名前"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "例: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:295
@@ -1139,12 +1139,12 @@ msgstr ""
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:579
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "クリップボードにコピーしました"
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:656
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr ""
+msgstr "アプリケーションの内部設定用グラフィカルビューアー/エディター"
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:662
@@ -1153,71 +1153,74 @@ msgid ""
 "Copyright © 2017-2018 – Davi da Silva Böger\n"
 "Copyright © 2015-2019 – Arnaud Bonatti"
 msgstr ""
+"Copyright © 2010-2014 – Canonical Ltd\n"
+"Copyright © 2017-2018 – Davi da Silva Böger\n"
+"Copyright © 2015-2019 – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr ""
 "相花 毅 <takeshi.aihana@gmail.com>\n"
-"松澤 二郎 <jmatsuzawa@gnome.org>"
+"松澤 二郎 <jmatsuzawa@gnome.org>\n"
+"Ryo Nakano <ryonakaknock3@gmail.com>\n"
+"sicklylife <translation@sicklylife.jp>"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
-msgstr ""
+msgstr "GNOME Wiki のページ"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
-#, fuzzy
 msgid "About Dconf Editor"
-msgstr "dconf エディター"
+msgstr "Dconf エディターについて"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #: editor/dconf-headerbar.vala:117
 msgid "Dismiss"
-msgstr ""
+msgstr "却下"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:141
 msgid "Apply all"
-msgstr ""
+msgstr "すべて適用"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:144
 msgid "Dismiss all"
-msgstr ""
+msgstr "すべて却下"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:152
-#, fuzzy
 msgid "Quit mode"
-msgstr "終了(_Q)"
+msgstr "モードを終了"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
 msgid "Enter delay mode"
-msgstr ""
+msgstr "遅延モードに入る"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:205
 msgid "Reset visible keys"
-msgstr ""
+msgstr "表示しているキーをリセット"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:208
 msgid "Reset view recursively"
-msgstr ""
+msgstr "ビューを再帰的にリセット"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/dconf-headerbar.vala:246
 msgid "Pending"
-msgstr ""
+msgstr "保留中"
 
 #. Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path
 #: editor/dconf-model.vala:945
@@ -1244,7 +1247,7 @@ msgstr ""
 #: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr ""
+msgstr "“%s”は不明なスキーマです。"
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
@@ -1603,33 +1606,33 @@ msgstr ""
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "“%s”に移動"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "“%s”フォルダーを検索"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
 msgid "Open path entry"
-msgstr ""
+msgstr "パスエントリーを開く"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
 msgid "Search everywhere"
-msgstr ""
+msgstr "他の場所も検索"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
 msgid "Copy"
-msgstr ""
+msgstr "コピー"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:452
 msgid "Customize…"
-msgstr ""
+msgstr "カスタマイズ…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
@@ -1653,17 +1656,17 @@ msgstr ""
 #: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
 #: editor/registry-info.ui:132
 msgid "Erase key"
-msgstr ""
+msgstr "キーを消去"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr ""
+msgstr "このパスに移動"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #. Translators: "open search" action in the right-click menu on a search
 #. Translators: accessible name of the enter-search button displayed in small-size windows
@@ -1671,27 +1674,27 @@ msgstr ""
 #: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
 #: editor/pathwidget.ui:109
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
-msgstr ""
+msgstr "親フォルダーを開く"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:484
 msgid "Reset recursively"
-msgstr ""
+msgstr "再帰的にリセット"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
 #: editor/key-list-box-row.vala:487
 msgid "Do not erase"
-msgstr ""
+msgstr "消去しない"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
 #: editor/key-list-box-row.vala:576
 msgid "No change"
-msgstr ""
+msgstr "変更なし"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:301
@@ -1894,6 +1897,8 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
+"遅延モードが有効ですが\n"
+"保留中の変更はありません"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
@@ -1929,38 +1934,35 @@ msgstr ""
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "手動で適用するまで変更を遅延します。"
 
 #. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u 個の gsettings 操作を遅延しました。"
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u 個の dconf 操作を遅延しました。"
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
 #, c-format
 msgid "%s%s"
-msgstr ""
+msgstr "%s%s"
 
 #. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:351
-#, fuzzy, c-format
+#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "settings;configuration;設定;gsettings;gschema;"
-msgstr[1] "settings;configuration;設定;gsettings;gschema;"
+msgstr[0] "%u 個の gsettings 操作"
 
 #. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
@@ -1970,8 +1972,7 @@ msgstr[1] "settings;configuration;設定;gsettings;gschema;"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "と %u 個の dconf 操作を遅延しました。"
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
@@ -2049,43 +2050,37 @@ msgstr "名前"
 #. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
 #: editor/registry-info.vala:73
 msgid "Defined by"
-msgstr ""
+msgstr "定義"
 
 #. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
 #: editor/registry-info.vala:76
-#, fuzzy
 msgid "Schema"
-msgstr "スキーマ:"
+msgstr "スキーマ"
 
 #. Translators: field description when displaying key properties; a summary describing the key use
 #: editor/registry-info.vala:79
-#, fuzzy
 msgid "Summary"
-msgstr "概要:"
+msgstr "概要"
 
 #. Translators: field description when displaying key properties; a description describing deeply the key use
 #: editor/registry-info.vala:82
-#, fuzzy
 msgid "Description"
-msgstr "説明:"
+msgstr "説明"
 
 #. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
 #: editor/registry-info.vala:85
-#, fuzzy
 msgid "Type"
-msgstr "型:"
+msgstr "型"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
 #: editor/registry-info.vala:89
-#, fuzzy
 msgid "Type name"
-msgstr "型:"
+msgstr "型名"
 
 #. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
 #: editor/registry-info.vala:93
-#, fuzzy
 msgid "Type code"
-msgstr "型:"
+msgstr "型コード"
 
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
@@ -2095,33 +2090,32 @@ msgstr ""
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
 msgid "Minimum"
-msgstr ""
+msgstr "最小"
 
 #. Translators: field description when displaying key properties; the maximum value a numeral key can take
 #: editor/registry-info.vala:102
 msgid "Maximum"
-msgstr ""
+msgstr "最大"
 
 #. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
 #: editor/registry-info.vala:105
-#, fuzzy
 msgid "Default"
-msgstr "デフォルト値:"
+msgstr "デフォルト"
 
 #. Translators: field description when displaying key properties; the current value of the key
 #: editor/registry-info.vala:108
 msgid "Current value"
-msgstr ""
+msgstr "現在値"
 
 #. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
 #: editor/registry-info.vala:111
 msgid "Use default value"
-msgstr ""
+msgstr "デフォルト値を使用する"
 
 #. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
 #: editor/registry-info.vala:114
 msgid "Custom value"
-msgstr ""
+msgstr "カスタム値"
 
 #. Translators: field content when displaying key properties; if the key does not have a summary describing its use
 #. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
@@ -2137,12 +2131,12 @@ msgstr ""
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:252
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 #. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
 #: editor/registry-info.vala:280
@@ -2205,9 +2199,8 @@ msgstr "dconf エディター"
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
-#, fuzzy
 msgid "No schema found"
-msgstr "スキーマなし"
+msgstr "スキーマが見つかりません"
 
 #. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
 #: editor/registry-list.vala:638
@@ -2234,22 +2227,22 @@ msgstr ""
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
 msgid "Local keys not defined by a schema"
-msgstr ""
+msgstr "スキーマで未定義のローカルキー"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1186
 msgid "Keys not defined by a schema"
-msgstr ""
+msgstr "スキーマで未定義のキー"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1196
 msgid "Subfolders"
-msgstr ""
+msgstr "サブフォルダー"
 
 #. Translators: last header displayed in the keys list during a local search
 #: editor/registry-list.vala:1201
 msgid "Other actions"
-msgstr ""
+msgstr "その他のアクション"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
@@ -2259,7 +2252,7 @@ msgstr ""
 #. Translators: header displayed in the keys list during a search only
 #: editor/registry-search.vala:556
 msgid "Folders"
-msgstr ""
+msgstr "フォルダー"
 
 #. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
 #: editor/registry-view.vala:23
@@ -2315,7 +2308,7 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
 msgid "DConf backend"
-msgstr ""
+msgstr "DConf バックエンド"
 
 #, fuzzy
 #~ msgid "dconf-editor"
