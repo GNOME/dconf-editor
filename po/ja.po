@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-09-10 06:36+0000\n"
-"PO-Revision-Date: 2019-09-19 21:30+0900\n"
+"POT-Creation-Date: 2019-09-19 12:45+0000\n"
+"PO-Revision-Date: 2019-09-20 22:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -63,32 +63,32 @@ msgstr "現在のパスをコピー"
 #. Translators: "open" action in the right-click menu on a "show folder info" row
 #: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
 msgid "Show properties"
-msgstr ""
+msgstr "プロパティを表示"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:149
 msgid "Pause night mode"
-msgstr "ナイトモードを休止"
+msgstr "夜間モードを一時停止"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:153
 msgid "Reuse night mode"
-msgstr "ナイトモードを再使用"
+msgstr "夜間モードを再使用"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:157
 msgid "Use night mode"
-msgstr "ナイトモードを使用"
+msgstr "夜間モードを使用"
 
 #. Translators: accessible name of the hamburger menu
 #: editor/base-headerbar.ui:113
 msgid "Actions"
-msgstr ""
+msgstr "アクション"
 
 #. Translators: accessible description of the hamburger menu
 #: editor/base-headerbar.ui:115
 msgid "Current view actions"
-msgstr ""
+msgstr "現在のビューのアクション"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/base-headerbar.vala:116
@@ -111,7 +111,7 @@ msgstr "ブックマークを隠す"
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
 msgid "Unbookmark"
-msgstr "ブックマークを削除"
+msgstr "ブックマークから削除"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
@@ -252,7 +252,7 @@ msgstr "dconf エディター"
 #. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "dconf 用の設定エディター"
 
 #. Translators: a Comment that gives the application function, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:7
@@ -1004,12 +1004,13 @@ msgstr ""
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
 #: editor/dconf-editor.vala:165
 msgid "Do not show initial warning"
-msgstr ""
+msgstr "起動時の警告を表示しない"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
-msgstr "他のアプリケーションの設定を編集するためのグラフィカルインターフェースです。"
+msgstr ""
+"他のアプリケーションの設定を編集するためのグラフィカルインターフェースです。"
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:206
@@ -1029,7 +1030,7 @@ msgstr "フォルダーのパスまたはキーのパス"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr "例: “/org/gnome/” または “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr "例: “/org/gnome/” や “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:219
@@ -1059,7 +1060,7 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgstr "例: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
@@ -1185,7 +1186,7 @@ msgstr "適用"
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #: editor/dconf-headerbar.vala:117
 msgid "Dismiss"
-msgstr "却下"
+msgstr "取り消す"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:141
@@ -1195,7 +1196,7 @@ msgstr "すべて適用"
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:144
 msgid "Dismiss all"
-msgstr "すべて却下"
+msgstr "すべて取り消す"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:152
@@ -1252,53 +1253,56 @@ msgstr "“%s”は不明なスキーマです。"
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr ""
+msgstr "設定の編集に Dconf エディターをご使用いただきありがとうございます。"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
+"変更するとアプリケーションが正常に動作しなくなる可能性のあるオプションもある"
+"ことを忘れないようご注意ください。"
 
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
 msgid "I’ll be careful."
-msgstr ""
+msgstr "注意する"
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "このダイアログを次回も表示する"
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
-msgstr ""
+msgstr "保留中の変更があります。Shift + Ctrl + Q で変更を適用して終了するか、"
+"Alt + F4 で変更を取り消して終了してください。"
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr ""
+msgstr "フォルダー“%s”を空にしました。"
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr ""
+msgstr "キー“%s”を削除しました。"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr ""
+msgstr "キー“%s”が見つかりません。"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
-msgstr ""
+msgstr "指定したフォルダー“%s”には何もありません。"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
@@ -1310,63 +1314,62 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
 #: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
 #: editor/registry-info.vala:469
-#, fuzzy
 msgid "Default value"
-msgstr "デフォルト値:"
+msgstr "デフォルト値"
 
 #. Translators: header in the shortcut window, for usual headerbar menus actions
 #: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "アクション"
 
 #. Translators: Ctrl-B action
 #: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "ブックマークを表示する"
 
 #. Translators: Ctrl-D action
 #: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "現在のパスをブックマークする"
 
 #. Translators: Ctrl-Shift-D action
 #: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "現在のパスをブックマークから削除する"
 
 #. Translators: F10 key action
 #: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "メニューを開く"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr ""
+msgstr "パスバーのメニューを開く"
 
 #. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr ""
+msgstr "パスバーのナビゲーション"
 
 #. Translators: Alt-Shift-Up action; browse to the '/' folder
 #: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "ルートフォルダーを開く"
 
 #. Translators: Alt-Up action; browse to the parent folder
 #: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "親フォルダーを開く"
 
 #. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
 #: editor/help-overlay.ui:97
@@ -1384,198 +1387,193 @@ msgstr ""
 #: editor/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Search options"
-msgstr ""
+msgstr "検索オプション"
 
 #. Translators: Ctrl-F action; opens search, searching everywhere
 #: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
-msgstr ""
+msgstr "検索を切り替える"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
 msgctxt "shortcut window"
 msgid "Search again"
-msgstr ""
+msgstr "再検索する"
 
 #. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
 #: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
-msgstr ""
+msgstr "ローカル検索を切り替える"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "Search again, locally"
-msgstr ""
+msgstr "再検索する (ローカル)"
 
 #. Translators: Ctrl-V action; open search with clipboard content
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr ""
+msgstr "貼り付けて検索する"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
-msgstr ""
+msgstr "貼り付けて検索を強制する"
 
 #. Translators: Ctrl-L action when browsing; opens search on current path
 #: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
-msgstr ""
+msgstr "パスを編集する"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr ""
+msgstr "親フォルダーを編集する"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
-msgstr ""
+msgstr "ルートパスを編集する"
 
 #. Translators: Escape key action, when searching; cancels search
 #: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
-msgstr ""
+msgstr "キーツリーを表示する"
 
 #. Translators: header in the shortcut window, for when browsing
 #: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "キー一覧のアクション"
 
 #. Translators: Menu key action, when browsing
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "コンテキストメニューを開く"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "前の行へ"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
-#, fuzzy
-#| msgid "Next"
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr "次へ"
+msgstr "次の行へ"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "フォルダーのプロパティを切り替える"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Set to default"
-msgstr "デフォルトにリセット"
+msgstr "デフォルト値に設定する"
 
 #. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
 #: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "論理値を切り替える"
 
 #. Translators: header in the shortcut window, for when there are pending changes
 #: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
-msgstr ""
+msgstr "変更一覧のアクション"
 
 #. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
 #: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
-msgstr ""
+msgstr "変更一覧を切り替える"
 
 #. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
 #: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
-msgstr ""
+msgstr "選択した行のキーを開く"
 
 #. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
 #: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
-msgstr ""
+msgstr "変更を取り消す"
 
 #. Translators: header in the shortcut window, for opening the usual helpful dialogs
 #: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
-msgstr ""
+msgstr "全般"
 
 #. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
 #: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr ""
+msgstr "ヘルプを表示する"
 
 #. Translators: Shift-F1 action; opens the About dialog
 #: editor/help-overlay.ui:301
-#, fuzzy
 msgctxt "shortcut window"
 msgid "About"
-msgstr "このアプリケーションについて(_A)"
+msgstr "情報を表示する"
 
 #. Translators: header in the shortcut window, for the copy-to-clipboard actions
 #: editor/help-overlay.ui:311
 msgctxt "shortcut window"
 msgid "Clipboard"
-msgstr ""
+msgstr "クリップボード"
 
 #. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
 #: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "記述子をコピーする"
 
 #. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
 #: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr ""
+msgstr "パスをコピーする"
 
 #. Translators: header in the shortcut window, for the various ways of quitting the application
 #: editor/help-overlay.ui:334
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "終了(_Q)"
+msgstr "終了"
 
 #. Translators: Ctrl-Q action; displays a notification if there are pending changes
 #: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
-msgstr ""
+msgstr "保留中の変更がなければ終了する"
 
 #. Translators: Ctrl-Shift-Q action
 #: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr ""
+msgstr "保留中の変更を適用して終了する"
 
 #. Translators: Alt-F4 action
 #: editor/help-overlay.ui:356
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
-msgstr ""
+msgstr "保留中の変更を取り消して終了する"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
@@ -1636,19 +1634,18 @@ msgstr "カスタマイズ…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
-#, fuzzy
 msgid "Set to default"
-msgstr "デフォルトにリセット"
+msgstr "初期化"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr ""
+msgstr "詳細を表示…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
-msgstr ""
+msgstr "変更を取り消す"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
@@ -1781,8 +1778,6 @@ msgstr "論理値"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:394
-#, fuzzy
-#| msgid "Boolean"
 msgid "boolean"
 msgstr "論理値"
 
@@ -1793,22 +1788,18 @@ msgstr "文字列"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:400
-#, fuzzy
-#| msgid "String"
 msgid "string"
 msgstr "文字列"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:403
-#, fuzzy
 msgid "String array"
-msgstr "文字列"
+msgstr "文字列配列"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:406
-#, fuzzy
 msgid "string array"
-msgstr "文字列"
+msgstr "文字列配列"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:409
@@ -1817,8 +1808,6 @@ msgstr "列挙値"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
-#, fuzzy
-#| msgid "Enumeration"
 msgid "enumeration"
 msgstr "列挙値"
 
@@ -1860,15 +1849,13 @@ msgstr ""
 #. private const string _g_ = C_("non-capitalized", "D-Bus signature");
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:451
-#, fuzzy
 msgid "Integer"
-msgstr "整数 [%s..%s]"
+msgstr ""
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
-#, fuzzy
 msgid "integer"
-msgstr "整数 [%s..%s]"
+msgstr ""
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
@@ -2193,9 +2180,8 @@ msgstr ""
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
-#, fuzzy
 msgid "conflict"
-msgstr "dconf エディター"
+msgstr ""
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
