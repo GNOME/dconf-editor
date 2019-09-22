@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-09-19 12:45+0000\n"
-"PO-Revision-Date: 2019-09-20 22:00+0900\n"
+"POT-Creation-Date: 2019-09-20 13:07+0000\n"
+"PO-Revision-Date: 2019-09-22 18:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -49,10 +49,10 @@ msgstr "作成者"
 #: editor/about-list.vala:166
 msgid "Translators"
 msgstr ""
-"相花 毅 <takeshi.aihana@gmail.com>\n"
-"松澤 二郎 <jmatsuzawa@gnome.org>\n"
-"Ryo Nakano <ryonakaknock3@gmail.com>\n"
-"sicklylife <translation@sicklylife.jp>"
+"相花 毅\n"
+"松澤 二郎\n"
+"Ryo Nakano\n"
+"sicklylife"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
@@ -116,7 +116,7 @@ msgstr "ブックマークから削除"
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
 msgid "Bookmark"
-msgstr "ブックマーク"
+msgstr "ブックマークに追加"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
@@ -212,7 +212,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
-msgstr "Dconf エディター"
+msgstr "dconf エディター"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
@@ -1175,7 +1175,7 @@ msgstr "GNOME Wiki のページ"
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
 msgid "About Dconf Editor"
-msgstr "Dconf エディターについて"
+msgstr "dconf エディターについて"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
@@ -1253,7 +1253,7 @@ msgstr "“%s”は不明なスキーマです。"
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr "設定の編集に Dconf エディターをご使用いただきありがとうございます。"
+msgstr "設定の編集に dconf エディターをご使用いただきありがとうございます。"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
@@ -1277,8 +1277,9 @@ msgstr "このダイアログを次回も表示する"
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
-msgstr "保留中の変更があります。Shift + Ctrl + Q で変更を適用して終了するか、"
-"Alt + F4 で変更を取り消して終了してください。"
+msgstr ""
+"保留中の変更があります。Shift + Ctrl + Q で変更を適用して終了するか、Alt + "
+"F4 で変更を取り消して終了してください。"
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
@@ -1921,21 +1922,21 @@ msgstr ""
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
-msgstr "手動で適用するまで変更を遅延します。"
+msgstr "手動で適用するまで変更を保留します。"
 
 #. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] "%u 個の gsettings 操作を遅延しました。"
+msgstr[0] "%u 個の gsettings 操作を保留しました。"
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] "%u 個の dconf 操作を遅延しました。"
+msgstr[0] "%u 個の dconf 操作を保留しました。"
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -1959,7 +1960,7 @@ msgstr[0] "%u 個の gsettings 操作"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] "と %u 個の dconf 操作を遅延しました。"
+msgstr[0] "と %u 個の dconf 操作を保留しました。"
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
