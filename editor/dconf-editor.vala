@@ -156,15 +156,15 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
     private const OptionEntry [] option_entries =
     {
         /* Translators: command-line option description, see 'dconf-editor --help' */
-        { "version", 'v', 0, OptionArg.NONE, null, N_("Print release version and exit"), null },
+        { "version", 'v', OptionFlags.NONE, OptionArg.NONE, null, N_("Print release version and exit"), null },
 
         /* Translators: command-line option description, see 'dconf-editor --help' */
-        { "list-relocatable-schemas", 0, 0, OptionArg.NONE, null, N_("Print relocatable schemas and exit"), null },
+        { "list-relocatable-schemas", 0, OptionFlags.NONE, OptionArg.NONE, null, N_("Print relocatable schemas and exit"), null },
 
         /* Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog */
-        { "I-understand-that-changing-options-can-break-applications", 0, 0, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
+        { "I-understand-that-changing-options-can-break-applications", 0, OptionFlags.NONE, OptionArg.NONE, ref disable_warning, N_("Do not show initial warning"), null },
 
-        { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, ref remaining, "args", null },
+        { OPTION_REMAINING, 0, OptionFlags.NONE, OptionArg.STRING_ARRAY, ref remaining, "args", null },
         {}
     };
 
