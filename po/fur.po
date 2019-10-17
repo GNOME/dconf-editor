@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-08-28 07:28+0200\n"
+"POT-Creation-Date: 2019-09-19 12:47+0000\n"
+"PO-Revision-Date: 2019-10-17 15:49+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -233,16 +233,16 @@ msgstr ""
 "Modificâ in maniere direte la configurazion e je une funzionalitât avanzade "
 "e e pues causâ il malfunzionament des aplicazions."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr "Esplore lis clâfs dopradis par aplicazions instaladis"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Lei lis descrizions des clâfs e modifiche i lôr valôrs"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
@@ -456,7 +456,7 @@ msgid ""
 msgstr ""
 "Pai utents cui mouse che a àn botons par “indenant” e “indaûr”, cheste clâf "
 "e stabilìs cuâl boton al ative il comant “indaûr” intun barcon di "
-"navigazion. I valôrs pussibii a varin tra 6 e 14."
+"navigazion. I valôrs pussibii a variin tra 6 e 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
@@ -472,7 +472,7 @@ msgid ""
 msgstr ""
 "Pai utents cui mouse che a àn botons par “indenant” e “indaûr”, cheste clâf "
 "e configure cuâl boton al ative il comant “indenant” intun barcon di "
-"navigazion. I valôrs pussibii a varin tra 6 e 14."
+"navigazion. I valôrs pussibii a variin tra 6 e 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
@@ -1301,7 +1301,7 @@ msgstr "Informazions su Editôr di Dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Apliche"
 
