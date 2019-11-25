@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-08-20 09:48+0200\n"
+"POT-Creation-Date: 2019-09-19 12:47+0000\n"
+"PO-Revision-Date: 2019-11-25 09:36+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 3.32.1\n"
+"X-Generator: Gtranslator 3.34.0\n"
 "X-DamnedLies-Scope: partial\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -238,16 +238,16 @@ msgstr ""
 "Editar su configuración directamente es una característica avanzada que "
 "puede hacer que las aplicaciones no funcionen correctamente."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr "Explorar las claves usadas por la aplicaciones instaladas"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Leer las descripciones y editar sus valores"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "El proyecto GNOME"
 
@@ -273,7 +273,6 @@ msgstr "configuración;ajustes;"
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:89
-#| msgid "Follow system night light"
 msgid "A flag to follow system night light"
 msgstr "Una opción para seguir la luz nocturna del sistema"
 
@@ -313,7 +312,6 @@ msgstr "Un indicador para activar el modo maximizado"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:116
-#| msgid "If “true”, the bookmarks list use smaller rows."
 msgid "If “true”, the main window starts in maximized mode."
 msgstr "Si es cierto, la ventana se inicia en modo maximizado."
 
@@ -444,7 +442,7 @@ msgid ""
 "is pressed."
 msgstr ""
 "Para usuarios con ratones que tienen botones «Adelante» y «Atrás», esta "
-"tecla determinará si cualquier acción se lleva acabo en una ventana del "
+"clave determinará si cualquier acción se lleva acabo en una ventana del "
 "examinador cuando se pulsa."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
@@ -461,7 +459,7 @@ msgid ""
 "Possible values range between 6 and 14."
 msgstr ""
 "Para usuarios con ratones que tienen botones «Adelante» y «Atrás», esta "
-"tecla establecerá qué botón activa el comando «Atrás» en una ventana del "
+"clave establecerá qué botón activa el comando «Atrás» en una ventana del "
 "examinador. Los posibles rangos de valores están entre 6 y 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
@@ -479,7 +477,7 @@ msgid ""
 "Possible values range between 6 and 14."
 msgstr ""
 "Para usuarios con ratones que tienen botones «Adelante» y «Atrás», esta "
-"tecla establecerá qué botón activa el comando «Adelante» en una ventana del "
+"clave establecerá qué botón activa el comando «Adelante» en una ventana del "
 "examinador. Los posibles rangos de valores están entre 6 y 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
@@ -1314,7 +1312,7 @@ msgstr "Acerca de editor de Dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Aplicar"
 
@@ -1346,7 +1344,7 @@ msgstr "Introducir modo de retardo"
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:205
 msgid "Reset visible keys"
-msgstr "Restablecer las teclas visibles"
+msgstr "Restablecer las claves visibles"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:208
