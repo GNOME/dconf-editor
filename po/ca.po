@@ -116,7 +116,7 @@ msgstr "Suprimeix l'adreça d'interès"
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
 msgid "Bookmark"
-msgstr "Adreces d'interès"
+msgstr "Adreça d'interès"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
@@ -516,9 +516,9 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
-"Banderes per a les instal·lacions de mapatge d'esquemes reubicables. L' "
+"Banderes per a les instal·lacions de mapatge d'esquemes reubicables. L'"
 "«Usuari» permet mapatges definits per la clau «relocatable-schemas-user-"
-"paths»; «Built-in» permet  els mapatges coneguts que s'hagin codificat en "
+"paths»; «Built-in» permet els mapatges coneguts que s'hagin codificat en "
 "l'Editor de Dconf; «Intern» està reservat per als mapatges propis de "
 "l'editor Dconf; «Startup» és per mapatges d'esquemes reubicables des de la "
 "línia d'ordres."
@@ -723,7 +723,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:338
 msgid "A dictionary entry of type ‘{ss}’"
-msgstr "Una entrada de diccionari del tipus  «{ss}»"
+msgstr "Una entrada de diccionari del tipus «{ss}»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:340
@@ -737,7 +737,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid "A “vardict”, type ‘a{sv}’"
-msgstr "Un «vardict» del tipus  «a{sv}»"
+msgstr "Un «vardict» del tipus «a{sv}»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:347
@@ -951,7 +951,7 @@ msgid ""
 msgstr ""
 "Les variants han d'emmagatzemar-se dins de variants, i en conseqüència com "
 "tipus GSettings . La seva representació usa els claudàtors XML (caràcters "
-"«<» and «>» en un fitxer gschema «&#60;» i «&#62;»  respectivament), amb una "
+"«<» and «>» en un fitxer gschema «&#60;» i «&#62;» respectivament), amb una "
 "representació analitzable del contingut interior. Si no està clar, el tipus "
 "pot donar al valor amb una anotació de prefix com «@x» (on «x» és un tipus "
 "de cadena) o «int64». Mireu per una documentació més completa https://"
@@ -1158,7 +1158,7 @@ msgstr "Descripció dels arguments:"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
-msgstr "Un camí a  la carpeta o un camí a la clau"
+msgstr "Un camí a la carpeta o un camí a la clau"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
@@ -1410,7 +1410,7 @@ msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
 msgstr ""
-"Hi ha canvis pendents. Useu Maj+Ctrl+Q per aplicar els canvis i sortir o ALT"
+"Hi ha canvis pendents. Useu Maj+Ctrl+Q per aplicar els canvis i sortir o Alt"
 "+F4 per descartar els canvis i sortir."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
@@ -1726,7 +1726,7 @@ msgstr "Errada en analitzar com a doble."
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
 msgid "Failed to parse as 64-bit integer."
-msgstr "Errada en analitzar com  a enter de 64 bits."
+msgstr "Errada en analitzar com a enter de 64 bits."
 
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
