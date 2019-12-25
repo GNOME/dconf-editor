@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-08-25 12:10+0200\n"
+"POT-Creation-Date: 2019-11-27 14:29+0000\n"
+"PO-Revision-Date: 2019-12-25 02:21+0100\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -230,26 +230,26 @@ msgid ""
 msgstr ""
 "O Editor de Dconf é unha ferramenta que permite editar directamente a base "
 "de datos de configuracións de dconf. Isto é útil para desenvolver "
-"aplicativos que usa estas preferencias."
+"aplicacións que usa estas preferencias."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
-"A edición da súa configuración directamente é unha característica avanzada e "
-"pode causar que os aplicativos non funcionen correctamente."
+"A edición a configuración directamente é unha característica avanzada que "
+"pode causar que as aplicacións non funcionen correctamente."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
-msgstr "Explore as chaves usadas polos aplicativos instalados"
+msgstr "Explore as chaves usadas polas aplicacións instaladas"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Lea as descricións das chaves e edite os seus valores"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "O Proxecto GNOME"
 
@@ -384,7 +384,7 @@ msgstr "Un parámetro para activar as filas pequenas para as listas de chaves"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "If “true”, the keys list use smaller rows."
-msgstr "Se é «true», a lista de chaves usará filas máis pequenas"
+msgstr "Se é «true», a lista de chaves usará filas máis pequenas."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
@@ -434,7 +434,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr "Usar os eventos do rato «Atrás» e «Adiante» "
+msgstr "Usar os eventos do rato «Atrás» e «Adiante»"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:189
@@ -575,7 +575,7 @@ msgstr "Un parámetro para activar as filas pequenas no listado de marcadores"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:249
 msgid "If “true”, the bookmarks list use smaller rows."
-msgstr "Se é «true», a lista de marcadores usará filas máis pequenas"
+msgstr "Se é «true», a lista de marcadores usará filas máis pequenas."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
@@ -601,9 +601,9 @@ msgid ""
 "take a “nothing” value. A nullable boolean can only take three values, "
 "“true”, “false” and “nothing”."
 msgstr ""
-"GSettings permíte os tipos con valor null, que son similares aos tipos pero "
-"que poiden conter o valor «nulo». O boleano nuleable pode ter tres valores "
-"«true», «false» e «nothing». "
+"GSettings permite os tipos con valor null, que son similares aos tipos pero "
+"que poden conter o valor «nulo». O boleano con valor nulo pode ter tres "
+"valores «true», «false» e «nothing»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
@@ -891,9 +891,9 @@ msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"O tipo string non pode aceptar calquera cadea utf8. Teña en conta que unha "
+"O tipo «string» non pode aceptar calquera cadea utf8. Teña en conta que unha "
 "cadea baleira «''» non é o mesmo que NULL (nada); vexa tamén a chave «string-"
-"nullable»"
+"nullable»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
@@ -1136,7 +1136,7 @@ msgstr "Non mostrar o aviso inicial"
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
-msgstr "A interface gráfica para editar preferencias doutros aplicativos."
+msgstr "A interface gráfica para editar preferencias doutras aplicacións."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:206
@@ -1216,7 +1216,7 @@ msgstr "Esquemas omitidos instalados:"
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
-msgstr "Esquemas omitidos non coñecidos:"
+msgstr "Esquemas omitidos non coñecidos."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:317
@@ -1271,7 +1271,7 @@ msgstr "Copiado ao portapapeis"
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:656
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr "Un visor e editor gráfico das preferencias internas dos aplicativos."
+msgstr "Un visor e editor gráfico das preferencias internas das aplicacións."
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:662
@@ -1288,7 +1288,7 @@ msgstr ""
 #: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr ""
-"Fran Dieguez <frandieguez@gnome.org>, 2015-2018.\n"
+"Fran Dieguez <frandieguez@gnome.org>, 2015-2020.\n"
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
 "\n"
 "Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas\n"
@@ -1306,7 +1306,7 @@ msgstr "Sobre o Editor de Dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Aplicar"
 
@@ -1386,7 +1386,7 @@ msgstr "Grazas por usar o Editor de Dconf para editar as súas configuracións!"
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
-"Non esqueza que algunhas opcións poden romper aplicativos, teña coidado."
+"Non esqueza que algunhas opcións poden romper aplicacións, teña coidado."
 
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
@@ -1604,7 +1604,7 @@ msgstr "Seguinte liña"
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr "Trocar as preferencias do cartafol."
+msgstr "Trocar as preferencias do cartafol"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
@@ -2142,8 +2142,8 @@ msgid ""
 msgstr ""
 "Non hai un esquema dispoñíbel. Un esquema é o que describe o uso dunha "
 "chave, e o Editor de DConf non pode atopar un esquema asociado a esta chave. "
-"Se o aplicativo que estaba usando esta chave foi deinstalado, ou esta chave "
-"está obsoleta, pode quere eliminalo."
+"Se as aplicacións que estaba usando esta chave se desinstalaron, ou esta "
+"chave está obsoleta, pode quere eliminalo."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -2152,8 +2152,8 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Esta enumeración ofrece só unha opción. Isto probablemente sexa un erro no "
-"aplicativo que instala este esquema. Se é posíbel, reporte o erro."
+"Esta enumeración ofrece só unha opción. Isto probablemente sexa un erro na "
+"aplicación que instala este esquema. Se é posíbel, reporte o erro."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
@@ -2162,8 +2162,8 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Esta enumeración ofrece só unha opción. Isto probablemente sexa un erro no "
-"aplicativo que instala este esquema. Se é posíbel, reporte o erro."
+"Esta enumeración ofrece só unha opción. Isto probablemente sexa un erro na "
+"aplicación que instala este esquema. Se é posíbel, reporte o erro."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
@@ -2173,7 +2173,7 @@ msgid ""
 "it."
 msgstr ""
 "Esta chave ten un tipo de valor \"valor baleiro\". Isto probablemente sexa "
-"un erro no aplicativo que instala este esquema. Se é posíbel, reporte o erro."
+"un erro na aplicación que instala este esquema. Se é posíbel, reporte o erro."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
