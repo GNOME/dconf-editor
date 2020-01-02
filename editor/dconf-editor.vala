@@ -656,10 +656,25 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         comments = _("A graphical viewer and editor of applications’ internal settings.");
 
         artists = {};
-        authors = { "Robert Ancell", "Arnaud Bonatti" };
+        authors = {
+        /* Translators: text crediting a game author, seen in the About dialog */
+            _("Robert Ancell"),
 
-        /* Translators: about dialog text */
-        copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger\nCopyright \xc2\xa9 2015-2019 – Arnaud Bonatti");
+
+        /* Translators: text crediting a game author, seen in the About dialog */
+            _("Arnaud Bonatti")
+        };
+
+        /* Translators: text crediting a maintainer, seen in the About dialog */
+        copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd") + "\n" +
+
+
+        /* Translators: text crediting a maintainer, seen in the About dialog */
+                    _("Copyright \xc2\xa9 2017-2018 – Davi da Silva Böger") + "\n" +
+
+
+        /* Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end */
+                    _("Copyright \xc2\xa9 %u-%u – Arnaud Bonatti").printf (2015, 2020);
 
         documenters = {};
         logo_icon_name = "ca.desrt.dconf-editor";
