@@ -659,7 +659,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         authors = { "Robert Ancell", "Arnaud Bonatti" };
 
         /* Translators: about dialog text */
-        copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger\nCopyright \xc2\xa9 2015-2019 – Arnaud Bonatti");
+        copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd\nCopyright \xc2\xa9 2017-2018 – Davi da Silva Böger\nCopyright \xc2\xa9 2015-2019 – Arnaud Bonatti").replace ("2019", "2020");
 
         documenters = {};
         logo_icon_name = "ca.desrt.dconf-editor";
