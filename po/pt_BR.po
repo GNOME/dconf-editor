@@ -1,17 +1,17 @@
 # Brazilian Portuguese translation for dconf-editor.
-# Copyright (C) 2018 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2020 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf-editor package.
 # Enrico Nicoletto <liverig@gmail.com>, 2012-2014.
 # Gabriel Speckhahn <gabspeck@gmail.com>, 2016.
 # Fábio Nogueira <fnogueira@gnome.org>, 2016, 2018.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2016-2019.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2016-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-09-04 03:30-0300\n"
+"POT-Creation-Date: 2020-01-02 12:36+0000\n"
+"PO-Revision-Date: 2020-01-04 23:17-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -236,16 +236,16 @@ msgstr ""
 "Editar suas configurações diretamente é um recurso avançado e pode fazer com "
 "que as aplicações não funcionem corretamente."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr "Navega pelas chaves usadas pelos aplicativos instalados"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Lê as descrições das chaves e edita seus valores"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "O projeto GNOME"
 
@@ -271,7 +271,6 @@ msgstr "ajustes;configuração;"
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:89
-#| msgid "Follow system night light"
 msgid "A flag to follow system night light"
 msgstr "Uma opção para seguir luz noturna do sistema"
 
@@ -311,7 +310,6 @@ msgstr "Um sinalizador para ativar o modo maximizado"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:116
-#| msgid "If “true”, the bookmarks list use smaller rows."
 msgid "If “true”, the main window starts in maximized mode."
 msgstr "Se “verdadeiro”, a janela principal inicia em modo maximizado."
 
@@ -1272,27 +1270,43 @@ msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Um visualizador e editor gráfico de configurações internas dos aplicativos."
 
-#. Translators: about dialog text
-#: editor/dconf-editor.vala:662
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
-msgstr ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
+msgstr "Robert Ancell"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr "Arnaud Bonatti"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+#| msgid "Copyright © Canonical Ltd"
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Copyright © 2010-2014 – Canonical Ltd"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
-"Enrico Nicoletto <liverig@gmail.com>, 2012-2014.\n"
-"Fábio Nogueira <fnogueira@gnome.org>, 2016-2018.\n"
-"Rafael Fontenelle <rafaelff@gnome.org>, 2016-2018."
+"Enrico Nicoletto <liverig@gmail.com>\n"
+"Fábio Nogueira <fnogueira@gnome.org>\n"
+"Rafael Fontenelle <rafaelff@gnome.org>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
 msgstr "Página no wiki do GNOME"
 
@@ -1303,7 +1317,7 @@ msgstr "Sobre o Editor dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Aplicar"
 
@@ -2458,6 +2472,15 @@ msgstr "Esquema relocável"
 msgid "DConf backend"
 msgstr "Backend de DConf"
 
+#~ msgid ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
+#~ "Copyright © 2015-2019 – Arnaud Bonatti"
+#~ msgstr ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
+#~ "Copyright © 2015-2019 – Arnaud Bonatti"
+
 #~ msgid "ca.desrt.dconf-editor"
 #~ msgstr "ca.desrt.dconf-editor"
 
@@ -2570,9 +2593,6 @@ msgstr "Backend de DConf"
 #~ "Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com "
 #~ "este programa; caso contrário, escreva para Free Software Foundation, "
 #~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Erro ao configurar o valor: %s"
