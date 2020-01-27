@@ -2316,14 +2316,14 @@ msgid ""
 msgstr ""
 "Useu la paraula clau «nothing» per establir un tipus anul·lable (que comença "
 "amb «m») al seu valor buit. Les cadenes de caràcters, signatures i camins "
-"d'objectes s'haurien d'estar entre cometes."
+"d'objectes haurien d'estar entre cometes."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
-"Les cadenes de caràcters, signatures i camins d'objectes s'haurien d'estar "
+"Les cadenes de caràcters, signatures i camins d'objectes haurien d'estar "
 "entre cometes."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
