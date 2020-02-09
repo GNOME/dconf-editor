@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-08-21 21:42+0200\n"
+"POT-Creation-Date: 2020-01-02 12:36+0000\n"
+"PO-Revision-Date: 2020-02-09 10:55+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -233,16 +233,16 @@ msgstr ""
 "Уређивање ваших подешавања директно је напредна могућност и може довести до "
 "неисправног рада програма."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr "Разгледајте кључеве које користе инсталирани програми"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Читајте описе кључева и уређујте њихове вредности"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "Гномов пројекат"
 
@@ -1258,19 +1258,34 @@ msgstr "Умножено у оставу"
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Графички прегледач и уређивач унутрашњих подешавања програма."
 
-#. Translators: about dialog text
-#: editor/dconf-editor.vala:662
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
-msgstr ""
-"Ауторска права © 2010-2014 – Каноникал д.о.о. (Canonical Ltd)\n"
-"Ауторска права © 2017-2018 – Дави да Силва Боегер (Davi da Silva Böger)\n"
-"Ауторска права © 2015-2019 – Арно Бонати (Arnaud Bonatti)"
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
+msgstr "Роберт Ансел (Robert Ancell)"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr "Арнауд Бонати (Arnaud Bonatti)"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Ауторска права © 2010-2014 – Каноникал д.о.о. (Canonical Ltd)"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr "Ауторска права © 2017-2018 – Davi da Silva Böger"
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr "Ауторска права © %u-%u – Арнауд Бонати (Arnaud Bonatti)"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
 "Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
@@ -1279,7 +1294,7 @@ msgstr ""
 "http://prevod.org — превод на српски језик"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
 msgstr "Страница на Гномовом викију"
 
@@ -1290,7 +1305,7 @@ msgstr "О Дконф уређивачу"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Примени"
 
@@ -2449,6 +2464,15 @@ msgstr "Премостива шема"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Дконф позадинац"
+
+#~ msgid ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
+#~ "Copyright © 2015-2019 – Arnaud Bonatti"
+#~ msgstr ""
+#~ "Ауторска права © 2010-2014 – Каноникал д.о.о. (Canonical Ltd)\n"
+#~ "Ауторска права © 2017-2018 – Дави да Силва Боегер (Davi da Silva Böger)\n"
+#~ "Ауторска права © 2015-2019 – Арно Бонати (Arnaud Bonatti)"
 
 #~ msgid "ca.desrt.dconf-editor"
 #~ msgstr "ca.desrt.dconf-editor"
