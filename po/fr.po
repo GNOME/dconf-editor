@@ -1,8 +1,8 @@
 # French translation of dconf.
-# Copyright (C) 2012-2019 dconf copyright holder
+# Copyright (C) 2012-2020 dconf copyright holder
 # This file is distributed under the same license as the dconf package.
 # Frederic Peters <fpeters@0d.be>, 2012.
-# Claude Paroz <claude@2xlibre.net>, 2017-2019
+# Claude Paroz <claude@2xlibre.net>, 2017-2020
 # Alain Lojewski <allomervan@gmail.com>, 2016-2018.
 # Guillaume Bernard <associations@guillaume-bernard.fr>, 2018.
 # Charles Monzat <charles.monzat@numericable.fr>, 2017-2018.
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-08-25 10:37+0200\n"
+"POT-Creation-Date: 2020-01-02 12:36+0000\n"
+"PO-Revision-Date: 2020-02-09 10:32+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -236,16 +236,16 @@ msgstr ""
 "La modification directe de la configuration est une fonctionnalité avancée "
 "et pourrait perturber le bon fonctionnement des applications."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr "Consulter les clés utilisées par les applications installées"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Lire les informations des clés et modifier leurs valeurs"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "Le projet GNOME"
 
@@ -1292,19 +1292,34 @@ msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Un visionneur et éditeur graphique des paramètres internes des applications."
 
-#. Translators: about dialog text
-#: editor/dconf-editor.vala:662
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
-msgstr ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
+msgstr "Robert Ancell"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr "Arnaud Bonatti"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Copyright © 2010-2014 – Canonical Ltd"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
 "Frédéric Péters <fpeters@0d.be>\n"
@@ -1313,7 +1328,7 @@ msgstr ""
 "Guillaume Bernard <associations@guillaume-bernard.fr>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
 msgstr "Page du wiki GNOME"
 
@@ -1324,7 +1339,7 @@ msgstr "À propos de l’Éditeur Dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Appliquer"
 
