@@ -1,3 +1,21 @@
+dconf-editor 3.35.91
+=====================
+
+Just a translations release. Note: the announce for 3.35.90 only
+credited one translator, while there is a long list of them; not
+sure of why it failed. Check the NEWS file for complete credits!
+
+Translations updated:
+  Basque: Asier Sarasua Garmendia
+  Czech: Marek Černocký
+  Finnish: Jiri Grönroos
+  French: Claude Paroz
+  Galician: Fran Dieguez
+  Hungarian: Balázs Úr
+  Lithuanian: Aurimas Černius
+  Serbian: Марко Костић
+  Turkish: Sabri Ünal
+
 dconf-editor 3.35.90
 =====================
 
