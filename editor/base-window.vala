@@ -323,7 +323,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         bool success;
         try
         {
-            show_uri (_this.get_screen (), help_string_or_empty, get_current_event_time ());
+            show_uri_on_window (_this, help_string_or_empty, get_current_event_time ());
             success = true;
         }
         catch (Error e)
