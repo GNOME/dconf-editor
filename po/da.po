@@ -13,16 +13,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-08-04 10:23+0000\n"
-"PO-Revision-Date: 2019-09-09 00:29+0200\n"
-"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
+"POT-Creation-Date: 2020-01-02 12:36+0000\n"
+"PO-Revision-Date: 2020-02-26 16:57+0100\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -238,16 +238,16 @@ msgstr ""
 "Direkte redigering af dine indstillinger er en avanceret funktion og kan få "
 "programmer til ikke at virke korrekt."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
 msgid "Browse the keys used by installed applications"
 msgstr "Gennemse nøgler som bruges af installerede programmer"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Read keys descriptions and edit their values"
 msgstr "Indlæs nøglebeskrivelser og redigér deres værdier"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:48
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
 msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
@@ -1262,19 +1262,34 @@ msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "En grafisk fremviser og redigering af programmeers interne indstillinger."
 
-#. Translators: about dialog text
-#: editor/dconf-editor.vala:662
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
-msgstr ""
-"Ophavsret © 2010–2014 — Canonical Ltd\n"
-"Ophavsret © 2017–2018 — Davi da Silva Böger\n"
-"Ophavsret © 2015–2019 — Arnaud Bonatti"
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
+msgstr "Robert Ancell"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr "Arnaud Bonatti"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Ophavsret © 2010-2014 – Canonical Ltd"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr "Ophavsret © 2017-2018 – Davi da Silva Böger"
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr "Ophavsret © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
 "Kenneth Nielsen\n"
@@ -1286,7 +1301,7 @@ msgstr ""
 "E-mail <dansk@dansk-gruppen.dk>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
 msgstr "Side på GNOMEs wiki"
 
@@ -1297,7 +1312,7 @@ msgstr "Om Dconf-redigering"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Anvend"
 
@@ -2461,6 +2476,15 @@ msgstr "Flytbart skema"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "DConf-motor"
+
+#~ msgid ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
+#~ "Copyright © 2015-2019 – Arnaud Bonatti"
+#~ msgstr ""
+#~ "Ophavsret © 2010–2014 — Canonical Ltd\n"
+#~ "Ophavsret © 2017–2018 — Davi da Silva Böger\n"
+#~ "Ophavsret © 2015–2019 — Arnaud Bonatti"
 
 #~ msgid "ca.desrt.dconf-editor"
 #~ msgstr "ca.desrt.dconf-editor"
