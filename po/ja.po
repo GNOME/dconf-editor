@@ -1,17 +1,17 @@
 # dconf ja.po.
-# Copyright (C) 2012-2019 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2012-2015, 2019-2020 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2012.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2013, 2015.
 # Ryo Nakano <ryonakaknock3@gmail.com>, 2019.
-# sicklylife <translation@sicklylife.jp>, 2019.
+# sicklylife <translation@sicklylife.jp>, 2019-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2020-01-02 12:36+0000\n"
-"PO-Revision-Date: 2019-09-22 18:00+0900\n"
+"PO-Revision-Date: 2020-03-02 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1110,7 +1110,7 @@ msgstr ""
 #. Translators: command-line error message, try 'dconf-editor a b c d'
 #: editor/dconf-editor.vala:477
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "解釈できません: 引数が多すぎます\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:491
@@ -1120,22 +1120,22 @@ msgstr ""
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:512
 msgid "Cannot understand: slash character in second argument.\n"
-msgstr ""
+msgstr "解釈できません: 第二引数にスラッシュがあります\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
 #: editor/dconf-editor.vala:527
 msgid "Schema path should start and end with a “/”.\n"
-msgstr ""
+msgstr "スキーマのパスは“/”で始まり“/”で終わる必要があります\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr ""
+msgstr "解釈できません: 指定したパスに“//”が含まれています\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
-msgstr ""
+msgstr "解釈できません: 引数に空白文字が含まれています\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:579
@@ -1150,30 +1150,28 @@ msgstr "アプリケーションの内部設定用グラフィカルビューア
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:661
 msgid "Robert Ancell"
-msgstr ""
+msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:665
 msgid "Arnaud Bonatti"
-msgstr ""
+msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:669
-#, fuzzy
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
+msgstr "Copyright © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:673
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
+msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
 #: editor/dconf-editor.vala:677
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
-msgstr ""
+msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:684
@@ -1244,7 +1242,7 @@ msgstr "保留中"
 #: editor/dconf-model.vala:945
 #, c-format
 msgid "%s (key erased)"
-msgstr ""
+msgstr "%s (キーは消去されました)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
@@ -1259,7 +1257,7 @@ msgstr ""
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
 #: editor/dconf-window.vala:152
 msgid "Schema is not installed on given path."
-msgstr ""
+msgstr "スキーマは指定したパスにインストールされていません。"
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
 #: editor/dconf-window.vala:168
@@ -1270,7 +1268,7 @@ msgstr "“%s”は不明なスキーマです。"
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr "設定の編集に dconf エディターをご使用いただきありがとうございます。"
+msgstr "設定の編集に dconf エディターをお使いいただきありがとうございます。"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
@@ -1325,7 +1323,7 @@ msgstr "指定したフォルダー“%s”には何もありません。"
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
 msgid "Key erased"
-msgstr ""
+msgstr "キーは消去されました"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
@@ -1596,12 +1594,12 @@ msgstr "保留中の変更を取り消して終了する"
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
 msgid "Given value is out of range."
-msgstr ""
+msgstr "指定した値は範囲外です。"
 
 #. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
 #: editor/key-editor-child.vala:33
 msgid "This value is invalid for the key type."
-msgstr ""
+msgstr "この値はこのキーの種類では無効です。"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:380
@@ -1611,18 +1609,18 @@ msgstr ""
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
 msgid "Failed to parse as 64-bit integer."
-msgstr ""
+msgstr "64 ビット整数としての解析に失敗しました。"
 
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
 msgid "Failed to parse as unsigned 64-bit integer."
-msgstr ""
+msgstr "符号なし 64 ビット整数としての解析に失敗しました。"
 
 #. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr "“%s”に移動"
+msgstr "“%s”へ移動"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
@@ -1676,7 +1674,7 @@ msgstr "キーを消去"
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr "このパスに移動"
+msgstr "このパスへ移動"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
@@ -1721,19 +1719,19 @@ msgstr ""
 #: editor/model-utils.vala:305
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "D-Bus オブジェクトパス"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
 msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "D-Bus オブジェクトパス配列"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
 msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "D-Bus のシグネチャ"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
@@ -1745,49 +1743,49 @@ msgstr ""
 #: editor/model-utils.vala:346
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "D-Bus オブジェクトパス"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "D-Bus オブジェクトパス配列"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "D-Bus のシグネチャ"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr ""
+msgstr "符号付き 16 ビット整数"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr ""
+msgstr "符号なし 16 ビット整数"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr ""
+msgstr "符号付き 32 ビット整数"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr ""
+msgstr "符号なし 32 ビット整数"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr ""
+msgstr "符号付き 64 ビット整数"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr ""
+msgstr "符号なし 64 ビット整数"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
@@ -1832,12 +1830,12 @@ msgstr "列挙値"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:415
 msgid "Flags"
-msgstr ""
+msgstr "フラグ"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:418
 msgid "flags"
-msgstr ""
+msgstr "フラグ"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:421
@@ -1868,12 +1866,12 @@ msgstr ""
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:451
 msgid "Integer"
-msgstr ""
+msgstr "整数"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
 msgid "integer"
-msgstr ""
+msgstr "整数"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
@@ -1924,17 +1922,17 @@ msgstr ""
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
 #: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
-msgstr ""
+msgstr "値が不正です。"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
 #: editor/modifications-revealer.vala:307
 msgid "The change will be dismissed if you quit this view without applying."
-msgstr ""
+msgstr "適用せずにこのビューから遷移すると変更を取り消します。"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
 #: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
-msgstr ""
+msgstr "手動で適用するか、このビューから遷移すると変更が適用されます。"
 
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
@@ -2126,12 +2124,12 @@ msgstr "カスタム値"
 #. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
 #: editor/registry-info.vala:202 editor/registry-list.vala:491
 msgid "No summary provided"
-msgstr ""
+msgstr "概要はありません"
 
 #. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
 #: editor/registry-info.vala:212
 msgid "No description provided"
-msgstr ""
+msgstr "説明はありません"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
@@ -2177,7 +2175,7 @@ msgstr ""
 #: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr ""
+msgstr "文字列、シグネチャ、オブジェクトパスは引用符で括る必要があります。"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:635
@@ -2189,7 +2187,7 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
 msgid "Key erased."
-msgstr ""
+msgstr "キーは消去されました。"
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
@@ -2209,24 +2207,24 @@ msgstr "スキーマが見つかりません"
 #. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
 #: editor/registry-list.vala:638
 msgid "key erased"
-msgstr ""
+msgstr "キーは消去されました"
 
 #. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
 #: editor/registry-list.vala:641
 msgid "erased"
-msgstr ""
+msgstr "消去されました"
 
 #. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
 #: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
-msgstr ""
+msgstr "種類“%s”"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
 #, c-format
 msgid "%s (local keys)"
-msgstr ""
+msgstr "%s (ローカルキー)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
@@ -2251,7 +2249,7 @@ msgstr "その他のアクション"
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
 msgid "No matches"
-msgstr ""
+msgstr "一致なし"
 
 #. Translators: header displayed in the keys list during a search only
 #: editor/registry-search.vala:556
@@ -2261,7 +2259,7 @@ msgstr "フォルダー"
 #. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
 #: editor/registry-view.vala:23
 msgid "No keys in this path"
-msgstr ""
+msgstr "このパスにキーはありません"
 
 #. Translators: the boolean "true" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:173
@@ -2314,65 +2312,5 @@ msgstr ""
 msgid "DConf backend"
 msgstr "DConf バックエンド"
 
-#~ msgid ""
-#~ "Copyright © 2010-2014 – Canonical Ltd\n"
-#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
-#~ "Copyright © 2015-2019 – Arnaud Bonatti"
-#~ msgstr ""
-#~ "Copyright © 2010-2014 – Canonical Ltd\n"
-#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
-#~ "Copyright © 2015-2019 – Arnaud Bonatti"
-
-#, fuzzy
-#~ msgid "dconf-editor"
-#~ msgstr "dconf エディター"
-
-#~ msgid "_About"
-#~ msgstr "このアプリケーションについて(_A)"
-
-#~ msgid "_Quit"
-#~ msgstr "終了(_Q)"
-
-#~ msgid "_Find…"
-#~ msgstr "検索(_F)…"
-
 #~ msgid "Double [%s..%s]"
 #~ msgstr "倍精度浮動小数点数 [%s..%s]"
-
-#~ msgid "Not found"
-#~ msgstr "なし"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#~ msgid "Error setting value: %s"
-#~ msgstr "値の設定エラー: %s"
-
-#~ msgid "Value"
-#~ msgstr "値"
