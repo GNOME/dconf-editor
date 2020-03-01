@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-09-20 13:07+0000\n"
+"POT-Creation-Date: 2020-01-02 12:36+0000\n"
 "PO-Revision-Date: 2019-09-22 18:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -1147,19 +1147,36 @@ msgstr "クリップボードにコピーしました"
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "アプリケーションの内部設定用グラフィカルビューアー/エディター"
 
-#. Translators: about dialog text
-#: editor/dconf-editor.vala:662
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
 msgstr ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr ""
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+#, fuzzy
+#| msgid "Copyright © Canonical Ltd"
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Copyright © Canonical Ltd"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr ""
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr ""
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
 "相花 毅 <takeshi.aihana@gmail.com>\n"
@@ -1168,7 +1185,7 @@ msgstr ""
 "sicklylife <translation@sicklylife.jp>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
 msgstr "GNOME Wiki のページ"
 
@@ -2297,6 +2314,15 @@ msgstr ""
 msgid "DConf backend"
 msgstr "DConf バックエンド"
 
+#~ msgid ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
+#~ "Copyright © 2015-2019 – Arnaud Bonatti"
+#~ msgstr ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
+#~ "Copyright © 2015-2019 – Arnaud Bonatti"
+
 #, fuzzy
 #~ msgid "dconf-editor"
 #~ msgstr "dconf エディター"
@@ -2344,9 +2370,6 @@ msgstr "DConf バックエンド"
 #~ "You should have received a copy of the GNU General Public License along "
 #~ "with this program; if not, write to the Free Software Foundation, Inc., "
 #~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "値の設定エラー: %s"
