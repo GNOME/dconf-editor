@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-01-02 12:36+0000\n"
-"PO-Revision-Date: 2020-03-02 00:00+0900\n"
+"POT-Creation-Date: 2020-03-01 16:21+0000\n"
+"PO-Revision-Date: 2020-03-02 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1922,7 +1922,7 @@ msgstr ""
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
 #: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
-msgstr "値が不正です。"
+msgstr "無効な値です。"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
 #: editor/modifications-revealer.vala:307
